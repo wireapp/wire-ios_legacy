@@ -81,7 +81,7 @@ class CallParticipantsView: UICollectionView, Themeable {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }
 
 extension CallParticipantsView: UICollectionViewDataSource {

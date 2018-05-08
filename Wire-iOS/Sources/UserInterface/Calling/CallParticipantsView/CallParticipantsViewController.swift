@@ -25,6 +25,7 @@ protocol CallParticipantsViewControllerDelegate: class {
 class CallParticipantsViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     private let cellHeight: CGFloat = 56
+    private var topConstraint: NSLayoutConstraint?
     weak var delegate: CallParticipantsViewControllerDelegate?
     
     var participants: CallParticipantsList {
@@ -33,7 +34,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         }
     }
     
-    var collectionView: CallParticipantsView!
+    fileprivate var collectionView: CallParticipantsView!
     let allowsScrolling: Bool
     
     var variant: ColorSchemeVariant = .light {
@@ -48,7 +49,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience init(scrollableWithConfiguration configuration: CallInfoConfiguration) {
+    convenience init(scrollableWithConfiguration configuration: CallInfoViewControllerInput) {
         self.init(participants: configuration.accessoryType.participants, allowsScrolling: true)
         variant = configuration.effectiveColorVariant
         view.backgroundColor = configuration.overlayBackgroundColor
@@ -67,6 +68,11 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         setupViews()
         createConstraints()
         updateAppearance()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        topConstraint?.constant = navigationController?.navigationBar.frame.maxY ?? 0
     }
     
     private func setupViews() {
@@ -90,9 +96,11 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         NSLayoutConstraint.activate([
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+
+        topConstraint = collectionView.topAnchor.constraint(equalTo: view.topAnchor)
+        topConstraint?.isActive = true
     }
     
     override func viewDidLayoutSubviews() {

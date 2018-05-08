@@ -54,25 +54,15 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     }
     
     private func setupViews() {
-        addChildViewController(participantsViewController)
-        [participantsViewController.view, avatarView].forEach(view.addSubview)
-        participantsViewController.didMove(toParentViewController: self)
+        addToSelf(participantsViewController)
+        view.addSubview(avatarView)
     }
     
     private func createConstraints() {
-        [participantsViewController.view!, avatarView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                $0.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                $0.topAnchor.constraint(equalTo: view.topAnchor),
-                $0.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                $0.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
-        }
-        
-        let heightAnchor = view.heightAnchor.constraint(equalToConstant: .greatestFiniteMagnitude)
-        heightAnchor.priority = UILayoutPriorityDefaultLow
-        heightAnchor.isActive = true
+        participantsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        avatarView.translatesAutoresizingMaskIntoConstraints = false
+        participantsViewController.view.fitInSuperview()
+        avatarView.fitInSuperview()
     }
     
     private func updateState() {

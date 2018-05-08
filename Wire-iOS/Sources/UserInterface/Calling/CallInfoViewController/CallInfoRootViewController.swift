@@ -20,26 +20,36 @@ import Foundation
 
 protocol CallInfoRootViewControllerDelegate: class {
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction)
+    func infoRootViewController(_ viewController: CallInfoRootViewController, contextDidChange context: CallInfoRootViewController.Context)
 }
 
-final class CallInfoRootViewController: UIViewController, CallInfoViewControllerDelegate {
+final class CallInfoRootViewController: UIViewController, UINavigationControllerDelegate, CallInfoViewControllerDelegate {
+    
+    enum Context {
+        case overview, participants
+    }
 
     weak var delegate: CallInfoRootViewControllerDelegate?
     private let contentController: CallInfoViewController
     private let contentNavigationController: UINavigationController
+
+    var context: Context = .overview {
+        didSet {
+            delegate?.infoRootViewController(self, contextDidChange: context)
+        }
+    }
     
-    var configuration: CallInfoConfiguration {
+    var configuration: CallInfoViewControllerInput {
         didSet {
             updateConfiguration(animated: true)
         }
     }
     
-    init(configuration: CallInfoConfiguration) {
+    init(configuration: CallInfoViewControllerInput) {
         self.configuration = configuration
         contentController = CallInfoViewController(configuration: configuration)
         contentNavigationController = contentController.wrapInNavigationController()
         super.init(nibName: nil, bundle: nil)
-        contentController.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,18 +64,13 @@ final class CallInfoRootViewController: UIViewController, CallInfoViewController
     }
     
     private func setupViews() {
-        addChildViewController(contentNavigationController)
-        view.addSubview(contentNavigationController.view)
-        contentNavigationController.didMove(toParentViewController: self)
+        addToSelf(contentNavigationController)
+        contentController.delegate = self
+        contentNavigationController.delegate = self
     }
     
     private func createConstraints() {
-        NSLayoutConstraint.activate([
-            contentNavigationController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentNavigationController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            contentNavigationController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentNavigationController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        contentNavigationController.view.fitInSuperview()
     }
     
     private func updateConfiguration(animated: Bool = false) {
@@ -81,6 +86,7 @@ final class CallInfoRootViewController: UIViewController, CallInfoViewController
     }
     
     private func presentParticipantsList() {
+        context = .participants
         let participantsList = CallParticipantsViewController(scrollableWithConfiguration: configuration)
         contentNavigationController.pushViewController(participantsList, animated: true)
     }
@@ -92,6 +98,11 @@ final class CallInfoRootViewController: UIViewController, CallInfoViewController
         case .showParticipantsList: presentParticipantsList()
         default: delegate?.infoRootViewController(self, perform: action)
         }
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        guard viewController is CallInfoViewController else { return }
+        context = .overview
     }
 
 }

@@ -16,12 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+extension VoiceChannel {
 
-extension AVSMediaManager {
-
-    func toggleSpeaker() {
-        isSpeakerEnabled = !isSpeakerEnabled
+    func toggleMuteState(userSession: ZMUserSession) {
+        mute(!AVSMediaManager.sharedInstance().isMicrophoneMuted, userSession: userSession)
     }
 
 }

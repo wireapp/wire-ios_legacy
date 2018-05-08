@@ -18,39 +18,6 @@
 
 import Foundation
 
-// TODO: Do we need this or should the adapting be done in CallInfoViewControllerInput or even on a higher level?
-//extension CallProperties {
-//    func configuration(variant: ColorSchemeVariant) -> CallStatusViewInputType {
-//        return .init(
-//            state: configurationState,
-//            isVideoCall: isVideoCall,
-//            variant: variant,
-//            isConstantBitRate: isConstantBitRateAudioActive,
-//            title: conversation?.displayName ?? ""
-//        )
-//    }
-//
-//    private var configurationState: CallStatusViewState {
-//        // TODO: Add case returning .reconnecting?
-//        switch state {
-//        case .terminating: return .terminating
-//        case .incoming: return .ringingIncoming(name: initiator?.displayName ?? "") // TODO
-//        case .outgoing: return .ringingOutgoing
-//        case .answered, .establishedDataChannel: return .connecting
-//        case .established: return .established(duration: duration)
-//        case .none, .unknown: return .none
-//        }
-//    }
-//
-//    var duration: TimeInterval {
-//        if let callStartDate = conversation?.voiceChannel?.callStartDate {
-//            return -callStartDate.timeIntervalSinceNow
-//        } else {
-//            return 0
-//        }
-//    }
-//}
-
 final class CallStatusViewController: UIViewController {
     
     var configuration: CallStatusViewInputType {

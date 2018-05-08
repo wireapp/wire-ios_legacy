@@ -36,7 +36,7 @@ protocol ColorVariantProvider {
 extension CallStatusViewInputType {
     var overlayBackgroundColor: UIColor {
         switch (isVideoCall, state) {
-        case (false, _): return .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: variant)
+        case (false, _): return variant == .light ? .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: .light) : .black
         case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4)
         case (true, _): return UIColor.black.withAlphaComponent(0.64)
         }

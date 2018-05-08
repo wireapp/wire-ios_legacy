@@ -853,6 +853,9 @@
 		BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */; };
 		BFAAB23F1DED95B100CBC096 /* UserNameDetailViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB23E1DED95B100CBC096 /* UserNameDetailViewTests.swift */; };
 		BFAAB2431DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */; };
+		BFAC71F920A1CC5C002711C4 /* CallInfoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC71F820A1CC5B002711C4 /* CallInfoConfiguration.swift */; };
+		BFAC71FB20A1CDAF002711C4 /* VoiceChannel+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC71FA20A1CDAF002711C4 /* VoiceChannel+Helper.swift */; };
+		BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAC71FD20A1CE0D002711C4 /* VideoConfiguration.swift */; };
 		BFAD3A171CD0F14800F0FBED /* ConversationTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */; };
 		BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */; };
 		BFAD540D1E6972CD0015C677 /* NotificationFetchComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = BFAD53FD1E6972CD0015C677 /* NotificationFetchComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2459,6 +2462,9 @@
 		BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Handles.swift"; sourceTree = "<group>"; };
 		BFAAB23E1DED95B100CBC096 /* UserNameDetailViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameDetailViewTests.swift; sourceTree = "<group>"; };
 		BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Transitions.swift"; sourceTree = "<group>"; };
+		BFAC71F820A1CC5B002711C4 /* CallInfoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoConfiguration.swift; sourceTree = "<group>"; };
+		BFAC71FA20A1CDAF002711C4 /* VoiceChannel+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VoiceChannel+Helper.swift"; sourceTree = "<group>"; };
+		BFAC71FD20A1CE0D002711C4 /* VideoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConfiguration.swift; sourceTree = "<group>"; };
 		BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationTitleViewTests.m; sourceTree = "<group>"; };
 		BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewControllerTests.m; sourceTree = "<group>"; };
 		BFAD53FB1E6972CC0015C677 /* NotificationFetchComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NotificationFetchComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3764,6 +3770,7 @@
 		871BC1EB1D34F8F800DF0793 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D58191FF2091CEBF003BA7EC /* UIStackView+Helper.swift */,
 				EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */,
 				CE8E4FB41DF17BBE0009F437 /* CASStyler+Variables.h */,
 				CE8E4FB51DF17BBE0009F437 /* CASStyler+Variables.m */,
@@ -5278,6 +5285,27 @@
 			path = Emoji/EmojiRessources;
 			sourceTree = "<group>";
 		};
+		BFAC71FC20A1CDFC002711C4 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				BFE4185C209B06D600503C7C /* AVSMediaManager+Helper.swift */,
+				BFAC71FA20A1CDAF002711C4 /* VoiceChannel+Helper.swift */,
+				BFE41862209B15F800503C7C /* Calling+Logs.swift */,
+				BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		BFAC71FF20A1CE82002711C4 /* CallViewController */ = {
+			isa = PBXGroup;
+			children = (
+				16A94AFA209C553A008A5718 /* CallViewController.swift */,
+				BFAC71F820A1CC5B002711C4 /* CallInfoConfiguration.swift */,
+				BFAC71FD20A1CE0D002711C4 /* VideoConfiguration.swift */,
+			);
+			path = CallViewController;
+			sourceTree = "<group>";
+		};
 		BFAD3A1B1CD1078500F0FBED /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -5316,6 +5344,7 @@
 			children = (
 				BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */,
 				BFCCA4FD20A0A03D000A4F33 /* CallInfoRootViewController.swift */,
+				BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */,
 				BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */,
 				BFE41869209B6E3700503C7C /* UserImageViewContainer.swift */,
 				BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */,
@@ -5364,16 +5393,12 @@
 		D58191FE2091CB01003BA7EC /* Calling */ = {
 			isa = PBXGroup;
 			children = (
+				BFAC71FF20A1CE82002711C4 /* CallViewController */,
 				16A94AF2209A1A53008A5718 /* VideoGridView */,
 				16A94AE72093235B008A5718 /* CallParticipantsView */,
 				D58192032091E3B8003BA7EC /* CallActionsView */,
 				BFE4186B209B6E6900503C7C /* CallInfoViewController */,
-				BFE4185C209B06D600503C7C /* AVSMediaManager+Helper.swift */,
-				BFE3FEE9209747D6003D9AB5 /* CallStatusView.swift */,
-				BFE41862209B15F800503C7C /* Calling+Logs.swift */,
-				D58191FF2091CEBF003BA7EC /* UIStackView+Helper.swift */,
-				16A94AFA209C553A008A5718 /* CallViewController.swift */,
-				BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */,
+				BFAC71FC20A1CDFC002711C4 /* Helper */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -6435,6 +6460,7 @@
 				8744489E1C22FCE500E7B947 /* LinkAttachmentViewControllerFactory.m in Sources */,
 				55DD5C341FA236F60082170C /* CallQualityController.swift in Sources */,
 				87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */,
+				BFAC71F920A1CC5C002711C4 /* CallInfoConfiguration.swift in Sources */,
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
@@ -6912,6 +6938,7 @@
 				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,
 				160DECE01AB3347B000FB575 /* CameraExposureSlider.m in Sources */,
 				87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */,
+				BFAC71FB20A1CDAF002711C4 /* VoiceChannel+Helper.swift in Sources */,
 				7C17ECA51F74F4540056600C /* ConversationCell+Preview.swift in Sources */,
 				871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */,
 				87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */,
@@ -7087,6 +7114,7 @@
 				EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */,
 				87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */,
 				871BC0221D34F56300DF0793 /* AnalyticsTracker+Registration.m in Sources */,
+				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
 				BF8ECC331E5AED6C0015177D /* UIMenuItem+MessageActions.swift in Sources */,
 				DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */,
