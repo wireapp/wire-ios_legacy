@@ -32,7 +32,7 @@ extension ConversationInputBarViewController {
                                   mediaTypes: [String],
                                   allowsEditing: Bool) {
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
-            #if (TARGET_OS_SIMULATOR)
+            #if TARGET_OS_SIMULATOR
             let testFilePath = "/var/tmp/video.mp4"
             if FileManager.default.fileExists(atPath: testFilePath) {
                 uploadFile(at: URL(fileURLWithPath: testFilePath))
