@@ -30,7 +30,6 @@ extension TermsOfUseStepViewController {
         let horizontalInset: CGFloat = 28
 
         constrain(titleLabel, termsOfUseText, agreeButton, containerView) { titleLabel, termsOfUseText, agreeButton, containerView in
-            titleLabel.top == containerView.top + horizontalInset
             titleLabel.right == containerView.right - horizontalInset
             titleLabel.left == containerView.left + horizontalInset
 
@@ -47,6 +46,7 @@ extension TermsOfUseStepViewController {
         if self.isIPadRegular(device: UIDevice.current) {
             constrain(containerView, self.view) { containerView, selfView in
                 containerView.width == self.registrationForm().maximumFormSize.width
+                containerView.height == self.registrationForm().maximumFormSize.height
 
                 containerView.center == selfView.center
             }
