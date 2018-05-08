@@ -51,6 +51,22 @@ enum CallParticipantsCellConfiguration {
             collectionView.register($0, forCellWithReuseIdentifier: $0.reuseIdentifier)
         }
     }
+    
+}
+
+extension CallParticipantsCellConfiguration: Equatable {
+    
+    static func ==(lhs: CallParticipantsCellConfiguration, rhs: CallParticipantsCellConfiguration) -> Bool {
+        switch (lhs, rhs) {
+        case (.showAll(let lhsCount), .showAll(let rhsCount)):
+            return lhsCount == rhsCount
+        case (.callParticipant(let lhsUser), .callParticipant(let rhsUser)):
+            return lhsUser == rhsUser
+        default:
+            return false
+        }
+    }
+    
 }
 
 class CallParticipantsView: UICollectionView, Themeable {

@@ -33,6 +33,289 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var variant: ColorSchemeVariant
 }
 
+struct CallInfoTestFixture {
+    
+    enum GroupSize: Int {
+        case large = 10
+        case small = 4
+    }
+    
+    let otherUser: ZMUser
+    let groupSize: GroupSize
+    
+    init(otherUser: ZMUser, groupSize: GroupSize = .small) {
+        self.otherUser = otherUser
+        self.groupSize = groupSize
+    }
+    
+    // MARK: - Outgoing OneToOne Audio
+    
+    var oneToOneOutgoingAudioRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var oneToOneOutgoingAudioConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var oneToOneOutgoingAudioEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    // MARK: - Incoming OneToOne Audio
+    
+    var oneToOneIncomingAudioRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingIncoming(name: otherUser.displayName),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var oneToOneIncomingAudioConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var oneToOneIncomingAudioEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var oneToOneIncomingAudioEstablishedCBR: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: true,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    // MARK: - Outgoing OneToOne Video
+    
+    var oneToOneOutgoingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: false,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+    }
+    
+    var oneToOneOutgoingVideoConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: false,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+    }
+    
+    var oneToOneOutgoingVideoEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: false,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+    }
+    
+    // MARK: - Incoming OneToOne Video
+    
+    var oneToOneIncomingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingIncoming(name: otherUser.displayName),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+    }
+    
+    var oneToOneIncomingVideoConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+    }
+    
+    var oneToOneIncomingVideoEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+    }
+    
+    // MARK: - Outgoing Group Audio
+    
+    var groupOutgoingAudioRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: false,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var groupOutgoingAudioConnecting: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .connecting,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var groupOutgoingAudioEstablished: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+}
+
 final class CallInfoViewControllerTests: CoreDataSnapshotTestCase {
 
     var sut: CallInfoViewController!
