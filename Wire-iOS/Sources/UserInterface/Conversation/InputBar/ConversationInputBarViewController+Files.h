@@ -26,4 +26,5 @@ FOUNDATION_EXPORT NSTimeInterval const ConversationUploadMaxVideoDuration;
 
 - (void)docUploadPressed:(id)sender;
 - (void)uploadFileAtURL:(NSURL *)URL;
+- (void)executeWithVideoPermissions:(dispatch_block_t)toExecute;
 @end

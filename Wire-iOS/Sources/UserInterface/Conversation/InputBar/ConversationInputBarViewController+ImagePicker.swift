@@ -19,6 +19,14 @@
 import Foundation
 
 extension ConversationInputBarViewController {
+    var popoverSourceRectFromPhotoButton: CGRect {
+        let sourceView: UIView = self.parent?.view ?? self.view
+        let buttonCenter = self.photoButton.convert(self.photoButton.center, to: sourceView)
+        let sourceRect = CGRect(origin: buttonCenter, size: .zero)
+
+        return sourceRect
+    }
+
     @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:)
     func presentImagePicker(with sourceType: UIImagePickerControllerSourceType,
                                   mediaTypes: [String],
@@ -35,12 +43,16 @@ extension ConversationInputBarViewController {
         }
 
         let presentController = {() -> Void in
-            ///TODO: camera button
-            let pickerController = UIImagePickerController.popoverForIPadRegular(sourceRect:self.view.bounds, sourceView: self.view, presentViewController: self, sourceType: .photoLibrary)
+
+            let sourceView: UIView = self.parent?.view ?? self.view
+
+            let pickerController = UIImagePickerController.popoverForIPadRegular(sourceRect:self.popoverSourceRectFromPhotoButton, sourceView: sourceView, presentViewController: self, sourceType: .photoLibrary)
             pickerController.delegate = self
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes
             pickerController.videoMaximumDuration = TimeInterval(ConversationUploadMaxVideoDuration)
+            pickerController.preferredContentSize = sourceView.frame.size
+
 
             if sourceType == .camera {
                 switch Settings.shared().preferredCamera {
