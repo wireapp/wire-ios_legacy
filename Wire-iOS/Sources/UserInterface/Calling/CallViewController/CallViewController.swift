@@ -30,6 +30,7 @@ final class CallViewController: UIViewController {
     private var observerTokens: [Any] = []
     private let videoConfiguration: VideoConfiguration
     private let videoGridViewController: VideoGridViewController
+    private var cameraType: CaptureDevice = .front
     
     var conversation: ZMConversation? {
         return voiceChannel.conversation
@@ -84,6 +85,25 @@ final class CallViewController: UIViewController {
         guard canHideOverlay else { return }
         toggleOverlayVisibility()
     }
+    
+    fileprivate func toggleVideoState() {
+        // TODO:
+    }
+    
+    fileprivate func toggleCameraAnimated() {
+        // TODO: Animations
+        toggleCameraType()
+    }
+    
+    private func toggleCameraType() {
+        do {
+            let newType: CaptureDevice = cameraType == .front ? .back : .front
+            try voiceChannel.setVideoCaptureDevice(device: newType)
+            cameraType = newType
+        } catch {
+            Calling.log.error("error toggling capture device: \(error)")
+        }
+    }
 
 }
 
@@ -101,7 +121,7 @@ extension CallViewController: VoiceChannelParticipantObserver {
     func voiceChannelParticipantsDidChange(_ changeInfo: VoiceChannelParticipantNotification) {
         updateConfiguration()
     }
-    
+
 }
 
 extension CallViewController: CallInfoRootViewControllerDelegate {
@@ -116,7 +136,9 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()
         case .minimizeOverlay: minimizeOverlay()
-        default: break
+        case .toggleVideoState: toggleVideoState()
+        case .flipCamera: toggleCameraAnimated()
+        case .showParticipantsList: /* Handled in `CallInfoRootViewController` */ break
         }
         
         updateConfiguration()
@@ -151,13 +173,11 @@ extension CallViewController {
     
     private func animateOverlay(show: Bool) {
         if show {
-            Calling.log.debug("showing call info overlay")
             startOverlayTimer()
         } else {
-            Calling.log.debug("hiding call info overlay")
             stopOverlayTimer()
         }
-        
+
         UIView.animate(
             withDuration: 0.2,
             delay: 0,
