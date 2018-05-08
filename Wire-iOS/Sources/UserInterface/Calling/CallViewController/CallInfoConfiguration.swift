@@ -25,12 +25,17 @@ struct CallInfoConfiguration  {
 extension CallInfoConfiguration: CallInfoViewControllerInput {
     
     var accessoryType: CallInfoViewControllerAccessoryType {
-        guard !voiceChannel.isVideoCall else { return .none }
         let conversation = voiceChannel.conversation
         
+        if voiceChannel.isVideoCall, conversation?.conversationType == .oneOnOne {
+            return .none
+        }
+        
         switch voiceChannel.state {
-        case .incoming(_, shouldRing: true, _):
+        case .incoming(video: false, shouldRing: true, degraded: _):
             return voiceChannel.initiator.map { .avatar($0) } ?? .none
+        case .incoming(video: true, shouldRing: true, degraded: _):
+            return .none
         case .answered, .establishedDataChannel, .outgoing:
             if conversation?.conversationType == .oneOnOne, let remoteParticipant = conversation?.connectedUser {
                 return .avatar(remoteParticipant)
