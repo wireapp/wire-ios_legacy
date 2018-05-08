@@ -144,58 +144,6 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
     }];
 }
 
-- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes allowsEditing:(BOOL)allowsEditing
-{
-    if (! [UIImagePickerController isSourceTypeAvailable:sourceType]) {
-#if (TARGET_OS_SIMULATOR)
-        NSString *testFilePath = @"/var/tmp/video.mp4";
-        if ([[NSFileManager defaultManager] fileExistsAtPath:testFilePath]) {
-            [self uploadFileAtURL:[NSURL fileURLWithPath:testFilePath]];
-        }
-#endif
-        return; // Don't crash on Simulator
-    }
-
-    dispatch_block_t presentController = ^() {
-        UIImagePickerController* pickerController = [[UIImagePickerController alloc] init];
-        pickerController.sourceType = sourceType;
-        pickerController.delegate = self;
-        pickerController.allowsEditing = allowsEditing;
-        pickerController.mediaTypes = mediaTypes;
-        pickerController.videoMaximumDuration = ConversationUploadMaxVideoDuration;
-        if (IS_IPAD_FULLSCREEN) {
-            pickerController.modalPresentationStyle = UIModalPresentationPopover;
-            UIPopoverPresentationController *popover = pickerController.popoverPresentationController;
-            popover.sourceRect = CGRectInset([self.view bounds], 4, 4); ///TODO: sender is camera button
-            popover.sourceView = self.view;
-            popover.backgroundColor = UIColor.whiteColor;
-        }
-        else {
-            pickerController.transitioningDelegate = [FastTransitioningDelegate sharedDelegate];
-        }
-
-        if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-            switch ([Settings sharedSettings].preferredCamera) {
-                case CameraControllerCameraBack:
-                    pickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-                    break;
-                case CameraControllerCameraFront:
-                    pickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-                    break;
-            }
-        }
-
-        [self.parentViewController presentViewController:pickerController animated:YES completion:nil];
-    };
-    
-    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
-        [self executeWithVideoPermissions:presentController];
-    }
-    else {
-        presentController();
-    }
-}
-
 - (void)executeWithVideoPermissions:(dispatch_block_t)toExecute {
     [UIApplication wr_requestOrWarnAboutVideoAccess:^(BOOL granted) {
         if (granted) {

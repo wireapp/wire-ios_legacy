@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateButtonIconsForEphemeral;
 - (void)updateAccessoryViews;
 - (void)updateNewButtonTitleLabel;
+- (void)executeWithVideoPermissions:(dispatch_block_t)toExecute;
 @end
 
 NS_ASSUME_NONNULL_END
