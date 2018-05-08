@@ -121,6 +121,7 @@
 #import "RegistrationFormController.h"
 #import "PhoneSignInViewController.h"
 #import "NoHistoryViewController.h"
+#import "TermsOfUseStepViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

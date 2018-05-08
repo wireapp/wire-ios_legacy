@@ -23,11 +23,18 @@
 
 @class ZMIncompleteRegistrationUser;
 @class AnalyticsTracker;
-
+//TODO: internal
+@class Button;
 
 
 @interface TermsOfUseStepViewController : RegistrationStepViewController
 @property (nonatomic, readonly) ZMIncompleteRegistrationUser *unregisteredUser;
+//TODO: internal
+@property (nonatomic) UILabel *titleLabel;
+@property (nonatomic) UITextView *termsOfUseText;
+@property (nonatomic) Button *agreeButton;
+@property (nonatomic) UIView *containerView;
+@property (nonatomic) BOOL initialConstraintsCreated;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
