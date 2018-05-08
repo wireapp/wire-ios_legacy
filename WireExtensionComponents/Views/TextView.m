@@ -26,6 +26,7 @@
 #import "UILabel+TextTransform.h"
 #import "UIPasteboard+Compatibility.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
+#import "Wire-Swift.h"
 @import Classy;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
