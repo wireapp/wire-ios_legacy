@@ -187,16 +187,11 @@
 
 - (IBAction)openPhotoLibrary:(id)sender
 {
-    UIImagePickerController *picker = [UIImagePickerController imagePickerControllerWithSender:self.libraryButton presentViewController:self];
+    UIImagePickerController *picker = [UIImagePickerController popoverForIPadRegularWithSourceRect:CGRectInset(self.libraryButton.bounds, 4, 4) sourceView:self.libraryButton presentViewController:self sourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     
     picker.delegate = self.imagePickerConfirmationController;
     self.imagePickerConfirmationController.previewTitle = self.previewTitle;
-    
-    if (IS_IPAD_FULLSCREEN) {
-        UIPopoverPresentationController *popover = picker.popoverPresentationController;
-        popover.backgroundColor = UIColor.whiteColor;
-    }
-    
+        
     [self presentViewController:picker animated:YES completion:nil];
 }
 

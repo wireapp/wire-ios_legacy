@@ -166,7 +166,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         if (IS_IPAD_FULLSCREEN) {
             pickerController.modalPresentationStyle = UIModalPresentationPopover;
             UIPopoverPresentationController *popover = pickerController.popoverPresentationController;
-            popover.sourceRect = CGRectInset([self.view bounds], 4, 4);
+            popover.sourceRect = CGRectInset([self.view bounds], 4, 4); ///TODO: sender is camera button
             popover.sourceView = self.view;
             popover.backgroundColor = UIColor.whiteColor;
         }

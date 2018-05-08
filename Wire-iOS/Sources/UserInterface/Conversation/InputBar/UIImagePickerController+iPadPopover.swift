@@ -19,16 +19,23 @@
 import Foundation
 
 extension UIImagePickerController {
-    @objc class func imagePickerController(sender: UIView, presentViewController: UIViewController) -> UIImagePickerController {
+    @objc class func popoverForIPadRegular(sourceRect: CGRect,
+                                           sourceView: UIView,
+                                           presentViewController: UIViewController,
+                                           sourceType: UIImagePickerControllerSourceType) -> UIImagePickerController {
         let picker = UIImagePickerController()
-        picker.sourceType = .photoLibrary
+        picker.sourceType = sourceType
 
         if presentViewController.isIPadRegular(device: UIDevice.current) {
 
             picker.modalPresentationStyle = .popover
-            let popover: UIPopoverPresentationController? = picker.popoverPresentationController
-            popover?.sourceRect = sender.bounds.insetBy(dx: 4, dy: 4)
-            popover?.sourceView = sender
+            if let popover = picker.popoverPresentationController {
+
+                popover.sourceRect = sourceRect
+                popover.sourceView = sourceView
+
+                popover.backgroundColor = .white
+            }
         }
 
         return picker

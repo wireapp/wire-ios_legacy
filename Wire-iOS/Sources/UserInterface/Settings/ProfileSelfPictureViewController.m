@@ -181,7 +181,7 @@
 
 #pragma mark - Button Handling
 
-- (void)libraryButtonTapped:(id)sender
+- (void)libraryButtonTapped:(id)sender ///TODO: new method
 {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
