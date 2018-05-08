@@ -59,7 +59,6 @@ FOUNDATION_EXPORT NSString *SplitLayoutObservableDidChangeToLayoutSizeNotificati
 - (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 - (void)setRightViewController:(nullable UIViewController *)rightViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 - (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
-
 @end
 
 NS_ASSUME_NONNULL_END
