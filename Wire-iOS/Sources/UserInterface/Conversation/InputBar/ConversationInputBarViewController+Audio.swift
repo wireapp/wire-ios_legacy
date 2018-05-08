@@ -149,7 +149,7 @@ extension ConversationInputBarViewController {
     }
     
     public func hideCameraKeyboardViewController(_ completion: @escaping ()->()) {
-        self.inputBar.textView.resignFirstResponder() ///TODO: sender rect
+        self.inputBar.textView.resignFirstResponder()
         delay(0.3) {
             self.mode = .textInput
             completion()
