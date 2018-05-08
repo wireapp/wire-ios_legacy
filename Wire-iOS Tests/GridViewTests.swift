@@ -38,7 +38,6 @@ class GridViewTests: ZMSnapshotTestCase {
         
         sut = GridView()
         snapshotBackgroundColor = .darkGray
-        recordMode = true
     }
     
     override func tearDown() {
