@@ -76,14 +76,13 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
     
     func configure(deniedAuthorization: DeniedAuthorizationType) {
         var title = ""
-        let deniedAuthorization: DeniedAuthorizationType = .ongoingCall
         
-       /* switch deniedAuthorization {
+        switch deniedAuthorization {
         case .camera:           title = "keyboard_photos_access.denied.keyboard.camera"
         case .photos:           title = "keyboard_photos_access.denied.keyboard.photos"
         case .cameraAndPhotos:  title = "keyboard_photos_access.denied.keyboard.camera_and_photos"
-        case .ongoingCall:      */title = "keyboard_photos_access.denied.keyboard.ongoing_call"
-       // }
+        case .ongoingCall:      title = "keyboard_photos_access.denied.keyboard.ongoing_call"
+        }
         
         descriptionLabel.font = UIFont.systemFont(ofSize: (deniedAuthorization == .ongoingCall ? 14.0 : 16.0),
                                                   weight: UIFontWeightLight)
@@ -99,39 +98,49 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell, Reusable {
     
     private func createConstraints(deniedAuthorization: DeniedAuthorizationType) {
         
-        if deniedAuthorization == .ongoingCall {
-            if settingsButton.superview != nil {
-                settingsButton.removeFromSuperview()
-            }
-            containerView.addSubview(cameraIcon)
-        } else {
-            if cameraIcon.superview != nil {
-                cameraIcon.removeFromSuperview()
-            }
-            containerView.addSubview(settingsButton)
-        }
-        
         constrain(self, containerView, descriptionLabel, settingsButton, cameraIcon) { (selfView, container, description, settings, cameraIcon) in
-            
             description.leading == container.leading + 16
             description.trailing == container.trailing - 16
-
             container.centerY == selfView.centerY
             container.leading == selfView.leading
             container.trailing == selfView.trailing
-            
-            if deniedAuthorization == .ongoingCall {
-                description.bottom == container.bottom
-                description.top == cameraIcon.bottom + 16
-                cameraIcon.top == container.top
-                cameraIcon.centerX == container.centerX
-            } else {
-                settings.bottom == container.bottom
-                settings.top == description.bottom + 24
-                settings.height == 44.0
-                settings.centerX == container.centerX
-                description.top == container.top
-            }
+        }
+        
+        if deniedAuthorization == .ongoingCall {
+            createConstraintsForOngoingCallAlert()
+        } else {
+            createConstraintsForPermissionsAlert()
+        }
+    }
+    
+    private func createConstraintsForPermissionsAlert() {
+        
+        if cameraIcon.superview != nil {
+            cameraIcon.removeFromSuperview()
+        }
+        containerView.addSubview(settingsButton)
+        
+        constrain(self, containerView, descriptionLabel, settingsButton) { (selfView, container, description, settings) in
+            settings.bottom == container.bottom
+            settings.top == description.bottom + 24
+            settings.height == 44.0
+            settings.centerX == container.centerX
+            description.top == container.top
+        }
+    }
+    
+    private func createConstraintsForOngoingCallAlert() {
+        
+        if settingsButton.superview != nil {
+            settingsButton.removeFromSuperview()
+        }
+        containerView.addSubview(cameraIcon)
+        
+        constrain(self, containerView, descriptionLabel, cameraIcon) { (selfView, container, description, cameraIcon) in
+            description.bottom == container.bottom
+            description.top == cameraIcon.bottom + 16
+            cameraIcon.top == container.top
+            cameraIcon.centerX == container.centerX
         }
     }
 

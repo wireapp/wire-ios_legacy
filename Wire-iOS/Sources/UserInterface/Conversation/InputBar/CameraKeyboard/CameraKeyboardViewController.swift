@@ -40,6 +40,7 @@ open class CameraKeyboardViewController: UIViewController {
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate let sideMargin: CGFloat = 14
     fileprivate var viewWasHidden: Bool = false
+    fileprivate var callStateObserverToken: Any?
     fileprivate var goBackButtonRevealed: Bool = false {
         didSet {
             if goBackButtonRevealed {
@@ -76,6 +77,10 @@ open class CameraKeyboardViewController: UIViewController {
         self.assetLibrary.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: NSNotification.Name.SplitLayoutObservableDidChangeToLayoutSize, object: self.splitLayoutObservable)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        
+        if let userSession = ZMUserSession.shared() {
+            self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -344,6 +349,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return deniedAuthorizationCell(for: .cameraAndPhotos, collectionView: collectionView, indexPath: indexPath)
         }
@@ -353,6 +359,10 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             
             guard permissions.isCameraAuthorized else {
                 return deniedAuthorizationCell(for: .camera, collectionView: collectionView, indexPath: indexPath)
+            }
+            
+            if ConversationViewController.shouldBlockCallingRelatedActions {
+                return deniedAuthorizationCell(for: .ongoingCall, collectionView: collectionView, indexPath: indexPath)
             }
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.reuseIdentifier, for: indexPath) as! CameraCell
@@ -467,6 +477,12 @@ extension CameraKeyboardViewController: CameraCellDelegate {
 extension CameraKeyboardViewController: AssetLibraryDelegate {
     public func assetLibraryDidChange(_ library: AssetLibrary) {
         self.collectionView.reloadData()
+    }
+}
+
+extension CameraKeyboardViewController: WireCallCenterCallStateObserver {
+    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+        self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
     }
 }
 
