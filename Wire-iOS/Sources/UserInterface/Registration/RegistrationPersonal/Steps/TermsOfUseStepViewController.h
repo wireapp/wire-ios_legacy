@@ -26,7 +26,9 @@
 
 @interface TermsOfUseStepViewController : RegistrationStepViewController
 @property (nonatomic, readonly) ZMIncompleteRegistrationUser *unregisteredUser;
+@property (nonatomic) id device;
 
+- (instancetype)initWithDevice:(id)device;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;

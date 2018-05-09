@@ -26,9 +26,9 @@
 @property (nonatomic) UIView *containerView;
 @property (nonatomic) BOOL initialConstraintsCreated;
 
-- (void)createContainerView;
-- (void)createTitleLabel;
-- (void)createTermsOfUseText;
-- (void)createAgreeButton;
+@property (nonatomic) NSArray<NSLayoutConstraint *> *containerViewEdges;
+@property (nonatomic) NSLayoutConstraint *containerViewWidth;
+@property (nonatomic) NSLayoutConstraint *containerViewHeight;
+@property (nonatomic) NSArray<NSLayoutConstraint *> *containerViewCenter;
 
 @end

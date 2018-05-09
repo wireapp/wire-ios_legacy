@@ -40,12 +40,24 @@
 
 @implementation TermsOfUseStepViewController
 
+- (instancetype)initWithDevice:(id)device
+{
+    self = [super initWithNibName:nil bundle:nil];
+
+    if (self) {
+        self.device = device;
+    }
+
+    return self;
+}
+
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
     self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
+        self.device = UIDevice.currentDevice;
     }
 
     return self;
@@ -61,6 +73,7 @@
     [self createAgreeButton];
     
     [self updateViewConstraints];
+    [self updateConstraintsForSizeClass];
 }
 
 - (void)createContainerView {

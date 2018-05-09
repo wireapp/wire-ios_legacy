@@ -23,16 +23,17 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: TermsOfUseStepViewController!
     var mockDevice: MockDevice!
+    var mockParentViewControler: UIViewController!
 
     override func setUp() {
         super.setUp()
 
-        sut = TermsOfUseStepViewController()
         mockDevice = MockDevice()
+        sut = TermsOfUseStepViewController(device: mockDevice)
 
         recordMode = true
     }
-    
+
     override func tearDown() {
         sut = nil
         mockDevice = nil
@@ -41,21 +42,20 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
 
-    func testTestForIPhoneSize() {
+    func testForIPhone() {
         self.verify(view: sut.view)
     }
 
-    func testTestForIPadSize() {
-        // GIVEN
+    func testForIPadRegular() {
+        // GIVEN & WHEN
         mockDevice.userInterfaceIdiom = .pad
+//        let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+//        mockParentViewControler = UIViewController()
+//        mockParentViewControler.addToSelf(sut)
+//        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
 
-        // WHEN
-        sut.createContainerView()
-        sut.createTitleLabel()
-        sut.createTermsOfUseText()
-        sut.createAgreeButton()
-        sut.updateViewConstraints(device: mockDevice)
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 768, height: 1024))
+//        mockParentViewControler = nil
 
         // THEN
         self.verify(view: sut.view)

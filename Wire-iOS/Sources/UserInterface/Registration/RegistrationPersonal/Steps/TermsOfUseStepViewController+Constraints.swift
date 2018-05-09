@@ -20,15 +20,41 @@ import Foundation
 import Cartography
 
 extension TermsOfUseStepViewController {
-    override open func updateViewConstraints() {
-        updateViewConstraints(device: UIDevice.current)
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateConstraintsForSizeClass()
     }
 
+    @objc func updateConstraintsForSizeClass() {
+        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
 
-    /// updateViewConstraints with arugument for mocking UIDevice for testing
-    ///
-    /// - Parameter device: this value is only for testing
-    func updateViewConstraints(device: DeviceProtocol = UIDevice.current) {
+        switch self.traitCollection.horizontalSizeClass {
+        case .compact:
+            containerViewWidth.isActive = false
+            containerViewHeight.isActive = false
+            containerViewCenter.forEach {
+                $0.isActive = false
+            }
+
+            containerViewEdges.forEach {
+                $0.isActive = true
+            }
+        default:
+            containerViewEdges.forEach {
+                $0.isActive = false
+            }
+
+            containerViewWidth.isActive = true
+            containerViewHeight.isActive = true
+            containerViewCenter.forEach {
+                $0.isActive = true
+            }
+        }
+    }
+
+    override open func updateViewConstraints() {
         super.updateViewConstraints()
 
         guard false == self.initialConstraintsCreated else { return }
@@ -51,17 +77,17 @@ extension TermsOfUseStepViewController {
             align(left: titleLabel, termsOfUseText, agreeButton)
         }
 
-        if self.isIPadRegular(device: device) {
+        if let device = (self.device as? DeviceProtocol), device.userInterfaceIdiom == .pad {
             constrain(containerView, self.view) { containerView, selfView in
-                containerView.width == self.registrationForm().maximumFormSize.width
-                containerView.height == self.registrationForm().maximumFormSize.height
+                self.containerViewWidth = containerView.width == self.registrationForm().maximumFormSize.width
+                self.containerViewHeight = containerView.height == self.registrationForm().maximumFormSize.height
 
-                containerView.center == selfView.center
+                self.containerViewCenter = containerView.center == selfView.center
             }
-        } else {
-            constrain(containerView, self.view) { containerView, selfView in
-                containerView.edges == selfView.edges
-            }
+        }
+
+        constrain(containerView, self.view) { containerView, selfView in
+            self.containerViewEdges = containerView.edges == selfView.edges
         }
     }
 }
