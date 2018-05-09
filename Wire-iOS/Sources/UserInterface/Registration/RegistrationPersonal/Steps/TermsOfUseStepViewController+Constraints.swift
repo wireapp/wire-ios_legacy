@@ -28,7 +28,7 @@ extension TermsOfUseStepViewController {
     }
 
     @objc func updateConstraintsForSizeClass() {
-        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
+        guard isiPad else { return }
 
         switch self.traitCollection.horizontalSizeClass {
         case .compact:
@@ -77,17 +77,21 @@ extension TermsOfUseStepViewController {
             align(left: titleLabel, termsOfUseText, agreeButton)
         }
 
-        if let device = (self.device as? DeviceProtocol), device.userInterfaceIdiom == .pad {
-            constrain(containerView, self.view) { containerView, selfView in
-                self.containerViewWidth = containerView.width == self.registrationForm().maximumFormSize.width
-                self.containerViewHeight = containerView.height == self.registrationForm().maximumFormSize.height
+        constrain(containerView, self.view) { containerView, selfView in
+            self.containerViewWidth = containerView.width == self.registrationForm().maximumFormSize.width
+            self.containerViewHeight = containerView.height == self.registrationForm().maximumFormSize.height
 
-                self.containerViewCenter = containerView.center == selfView.center
-            }
+            self.containerViewCenter = containerView.center == selfView.center
         }
 
         constrain(containerView, self.view) { containerView, selfView in
             self.containerViewEdges = containerView.edges == selfView.edges
         }
+    }
+
+    var isiPad: Bool{
+        guard let device = (self.device as? DeviceProtocol) else { return false }
+
+        return device.userInterfaceIdiom == .pad
     }
 }

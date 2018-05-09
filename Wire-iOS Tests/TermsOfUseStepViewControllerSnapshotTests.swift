@@ -23,13 +23,11 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: TermsOfUseStepViewController!
     var mockDevice: MockDevice!
-    var mockParentViewControler: UIViewController!
+    var mockParentViewControler: UINavigationController!
 
     override func setUp() {
         super.setUp()
-
         mockDevice = MockDevice()
-        sut = TermsOfUseStepViewController(device: mockDevice)
 
         recordMode = true
     }
@@ -43,19 +41,24 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
 
 
     func testForIPhone() {
+        sut = TermsOfUseStepViewController(device: mockDevice)
+
         self.verify(view: sut.view)
     }
 
     func testForIPadRegular() {
-        // GIVEN & WHEN
+        // GIVEN
         mockDevice.userInterfaceIdiom = .pad
-//        let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
-//        mockParentViewControler = UIViewController()
-//        mockParentViewControler.addToSelf(sut)
-//        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        sut = TermsOfUseStepViewController(device: mockDevice)
+
+        // WHEN
+        let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+        mockParentViewControler = UINavigationController(rootViewController: sut)
+
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        sut.traitCollectionDidChange(nil)
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 768, height: 1024))
-//        mockParentViewControler = nil
 
         // THEN
         self.verify(view: sut.view)
