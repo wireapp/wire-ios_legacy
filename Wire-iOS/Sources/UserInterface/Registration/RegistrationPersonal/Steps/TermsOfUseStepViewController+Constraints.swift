@@ -21,6 +21,14 @@ import Cartography
 
 extension TermsOfUseStepViewController {
     override open func updateViewConstraints() {
+        updateViewConstraints(device: UIDevice.current)
+    }
+
+
+    /// updateViewConstraints with arugument for mocking UIDevice for testing
+    ///
+    /// - Parameter device: this value is only for testing
+    func updateViewConstraints(device: DeviceProtocol = UIDevice.current) {
         super.updateViewConstraints()
 
         guard false == self.initialConstraintsCreated else { return }
@@ -43,7 +51,7 @@ extension TermsOfUseStepViewController {
             align(left: titleLabel, termsOfUseText, agreeButton)
         }
 
-        if self.isIPadRegular(device: UIDevice.current) {
+        if self.isIPadRegular(device: device) {
             constrain(containerView, self.view) { containerView, selfView in
                 containerView.width == self.registrationForm().maximumFormSize.width
                 containerView.height == self.registrationForm().maximumFormSize.height
