@@ -40,25 +40,9 @@
 
 @implementation TermsOfUseStepViewController
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nil bundle:nil];
-
-    if (self) {
-        [self createContainerView];
-        [self createTitleLabel];
-        [self createTermsOfUseText];
-        [self createAgreeButton];
-
-        [self updateViewConstraints];
-    }
-
-    return self;
-}
-
 - (instancetype)initWithDevice:(id)device
 {
-    self = [self initWithNibName:nil bundle:nil];
+    self = [self initWithUnregisteredUser:nil];
 
     if (self) {
         self.device = device;
@@ -69,11 +53,17 @@
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
-    self = [self initWithNibName:nil bundle:nil];
+    self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
-        self.device = UIDevice.currentDevice;
+
+        [self createContainerView];
+        [self createTitleLabel];
+        [self createTermsOfUseText];
+        [self createAgreeButton];
+
+        [self updateViewConstraints];
     }
 
     return self;
