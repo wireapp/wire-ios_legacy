@@ -361,7 +361,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
                 return deniedAuthorizationCell(for: .camera, collectionView: collectionView, indexPath: indexPath)
             }
             
-            if ConversationViewController.shouldBlockCallingRelatedActions {
+            if shouldBlockCallingRelatedActions {
                 return deniedAuthorizationCell(for: .ongoingCall, collectionView: collectionView, indexPath: indexPath)
             }
             
@@ -381,6 +381,10 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             }
             return cell
         }
+    }
+    
+    var shouldBlockCallingRelatedActions: Bool {
+        return ConversationViewController.shouldBlockCallingRelatedActions
     }
     
     private func deniedAuthorizationCell(for type: DeniedAuthorizationType, collectionView: UICollectionView, indexPath: IndexPath) -> CameraKeyboardPermissionsCell {
