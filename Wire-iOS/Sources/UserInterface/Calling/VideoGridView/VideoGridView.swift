@@ -25,8 +25,10 @@ protocol VideoGridConfiguration {
 
 class VideoGridViewController: UIViewController {
     
-    var gridVideoStreams: [UUID] = []
-    let gridView = GridView()
+    private var gridVideoStreams: [UUID] = []
+    private let gridView = GridView()
+    private let thumbnailViewController = PinnableThumbnailViewController()
+    
     
     var configuration: VideoGridConfiguration {
         didSet {
@@ -36,7 +38,6 @@ class VideoGridViewController: UIViewController {
     
     init(configuration: VideoGridConfiguration) {
         self.configuration = configuration
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,23 +47,20 @@ class VideoGridViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupViews()
         createConstraints()
     }
     
     func setupViews() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
+        thumbnailViewController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(gridView)
+        addToSelf(thumbnailViewController)
     }
     
     func createConstraints() {
-        NSLayoutConstraint.activate([
-            gridView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            gridView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            gridView.topAnchor.constraint(equalTo: view.topAnchor),
-            gridView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        gridView.fitInSuperview()
+        thumbnailViewController.view.fitInSuperview()
     }
     
     func updateState() {
@@ -71,7 +69,17 @@ class VideoGridViewController: UIViewController {
     }
     
     private func updateFloatingVideo(with stream: UUID?) {
-        // TODO fill in when available
+        thumbnailViewController.view.isHidden = nil != stream
+
+        guard stream == ZMUser.selfUser().remoteIdentifier else {
+            return Calling.log.error("Invalid operation: Trying to set non self user floating video")
+        }
+        
+        let previewView = AVSVideoPreview()
+        previewView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // TODO: Calculate correct size based on device and orientation
+        thumbnailViewController.setThumbnailContentView(previewView, contentSize: CGSize(width: 400, height: 400))
     }
     
     private func updateVideoGrid(with videoStreams: [UUID]) {
@@ -109,6 +117,5 @@ class VideoGridViewController: UIViewController {
         gridView.remove(view: videoView)
         gridVideoStreams.index(of: streamId).apply({ gridVideoStreams.remove(at: $0)})
     }
-    
     
 }

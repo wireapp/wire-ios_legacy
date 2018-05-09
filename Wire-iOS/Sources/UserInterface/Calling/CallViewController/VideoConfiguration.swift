@@ -23,21 +23,27 @@ struct VideoConfiguration {
 extension VideoConfiguration: VideoGridConfiguration {
     
     var floatingVideoStream: UUID? {
-        return nil
+        return computeVideoStreams().preview
     }
     
     var videoStreams: [UUID] {
+        return computeVideoStreams().grid
+    }
+    
+    private func computeVideoStreams() -> (preview: UUID?, grid: [UUID]) {
         let otherParticipants: [UUID] = voiceChannel.participants.compactMap { user in
             guard let user = user as? ZMUser else { return nil }
-            
             if case .connected(.started) = voiceChannel.state(forParticipant: user) {
                 return user.remoteIdentifier
             }
-            
             return nil
         }
         
-        return [ZMUser.selfUser().remoteIdentifier] + otherParticipants
+        if 1 == otherParticipants.count {
+            return (ZMUser.selfUser().remoteIdentifier, otherParticipants)
+        } else {
+            return (nil, [ZMUser.selfUser().remoteIdentifier] + otherParticipants)
+        }
     }
 
 }
