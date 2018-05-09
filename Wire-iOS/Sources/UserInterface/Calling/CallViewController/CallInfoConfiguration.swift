@@ -25,14 +25,19 @@ struct CallInfoConfiguration  {
 extension CallInfoConfiguration: CallInfoViewControllerInput {
     
     var accessoryType: CallInfoViewControllerAccessoryType {
-        guard !voiceChannel.isVideoCall else { return .none }
         let conversation = voiceChannel.conversation
         
+        if voiceChannel.isVideoCall, conversation?.conversationType == .oneOnOne {
+            return .none
+        }
+        
         switch voiceChannel.state {
-        case .incoming(_, shouldRing: true, _):
+        case .incoming(video: false, shouldRing: true, degraded: _):
             return voiceChannel.initiator.map { .avatar($0) } ?? .none
+        case .incoming(video: true, shouldRing: true, degraded: _):
+            return .none
         case .answered, .establishedDataChannel, .outgoing:
-            if conversation?.conversationType == .oneOnOne, let remoteParticipant = conversation?.firstActiveParticipantOtherThanSelf() {
+            if conversation?.conversationType == .oneOnOne, let remoteParticipant = conversation?.connectedUser {
                 return .avatar(remoteParticipant)
             } else {
                 return .none
@@ -42,7 +47,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
                 return .participantsList(voiceChannel.connectedParticipants.map {
                     .callParticipant(user: $0.0, sendsVideo: $0.1.isSendingVideo)
                 })
-            } else if let remoteParticipant = conversation?.firstActiveParticipantOtherThanSelf() {
+            } else if let remoteParticipant = conversation?.connectedUser {
                 return .avatar(remoteParticipant)
             } else {
                 return .none
@@ -51,7 +56,11 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var canToggleMediaType: Bool {
-        return voiceChannel.state == .established
+        if case .outgoing = voiceChannel.state {
+            return false
+        } else {
+            return true
+        }
     }
     
     var isMuted: Bool {
@@ -79,7 +88,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
         case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: voiceChannel.initiator?.displayName ?? "")
         case .outgoing: return .ringingOutgoing
         case .answered, .establishedDataChannel: return .connecting
-        case .established: return .established(duration: -(voiceChannel.callStartDate?.timeIntervalSinceNow ?? 0))
+        case .established: return .established(duration: -(voiceChannel.callStartDate?.timeIntervalSinceNow.rounded() ?? 0))
         case .terminating, .incoming(_ , shouldRing: false, _): return .terminating
         case .none, .unknown: return .none
         }

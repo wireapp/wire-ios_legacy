@@ -41,6 +41,21 @@ enum MediaState {
     }
 }
 
+extension MediaState: Equatable {
+    
+    static func ==(lhs: MediaState, rhs: MediaState) -> Bool {
+        switch (lhs, rhs) {
+        case (.sendingVideo, .sendingVideo):
+            return true
+        case (.notSendingVideo(let lhsSpeakerEnabled), .notSendingVideo(let rhsSpeakerEnabled)):
+            return lhsSpeakerEnabled == rhsSpeakerEnabled
+        default:
+            return false
+        }
+    }
+    
+}
+
 // This protocol describes the input for a `CallActionsView`.
 protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canToggleMediaType: Bool { get }

@@ -47,3 +47,20 @@ enum CallInfoViewControllerAccessoryType {
     }
     
 }
+
+extension CallInfoViewControllerAccessoryType: Equatable {
+    
+    static func ==(lhs: CallInfoViewControllerAccessoryType, rhs: CallInfoViewControllerAccessoryType) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none):
+            return true
+        case (.avatar(let lhsUser), .avatar(let rhsUser)):
+            return lhsUser == rhsUser
+        case (.participantsList(let lhsParticipants), .participantsList(let rhsParticipants)):
+            return lhsParticipants == rhsParticipants
+        default:
+            return false
+        }
+    }
+    
+}

@@ -53,6 +53,23 @@ enum CallStatusViewState {
     case terminating // "Ending call..."
 }
 
+extension CallStatusViewState: Equatable {
+    
+    static func ==(lhs: CallStatusViewState, rhs: CallStatusViewState) -> Bool {
+        switch (lhs, rhs) {
+        case (.none, .none), (.connecting, .connecting), (.reconnecting, .reconnecting), (.terminating, .terminating), (.ringingOutgoing, .ringingOutgoing):
+            return true
+        case (.ringingIncoming(let lhsName), .ringingIncoming(let rhsName)):
+            return lhsName == rhsName
+        case (.established(let lhsDuration), .established(let rhsDuration)):
+            return lhsDuration == rhsDuration
+        default:
+            return false
+        }
+    }
+    
+}
+
 final class CallStatusView: UIView {
 
     private let titleLabel = UILabel()

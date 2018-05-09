@@ -27,11 +27,8 @@ protocol CallParticipantsCellConfigurationConfigurable: Reusable {
 
 extension UICollectionView {
     func reloadData<T: Hashable>(old: [T], new: [T], animated: Bool) {
-        if animated {
-            reload(changes: diff(old: old, new: new), completion: { _ in })
-        } else {
-            reloadData()
-        }
+        guard animated && !ProcessInfo.processInfo.isRunningTests else { return reloadData() }
+        reload(changes: diff(old: old, new: new), completion: { _ in })
     }
 }
 
@@ -65,6 +62,21 @@ enum CallParticipantsCellConfiguration: Hashable {
         switch self {
         case let .callParticipant(user: user, sendsVideo: sendsVideo): return user.hashValue ^ sendsVideo.hashValue
         case let .showAll(totalCount: count): return count.hashValue
+        }
+    }
+
+}
+
+extension CallParticipantsCellConfiguration: Equatable {
+    
+    static func ==(lhs: CallParticipantsCellConfiguration, rhs: CallParticipantsCellConfiguration) -> Bool {
+        switch (lhs, rhs) {
+        case (.showAll(let lhsCount), .showAll(let rhsCount)):
+            return lhsCount == rhsCount
+        case (.callParticipant(let lhsUser), .callParticipant(let rhsUser)):
+            return lhsUser == rhsUser
+        default:
+            return false
         }
     }
     
