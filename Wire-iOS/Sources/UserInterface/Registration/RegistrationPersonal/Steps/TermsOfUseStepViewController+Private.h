@@ -26,4 +26,9 @@
 @property (nonatomic) UIView *containerView;
 @property (nonatomic) BOOL initialConstraintsCreated;
 
+- (void)createContainerView;
+- (void)createTitleLabel;
+- (void)createTermsOfUseText;
+- (void)createAgreeButton;
+
 @end
