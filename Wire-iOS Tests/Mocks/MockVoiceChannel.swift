@@ -40,6 +40,10 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
         return mockIsVideoCall
     }
     
+    var videoState: VideoState {
+        return .stopped
+    }
+    
     var state: CallState {
         return .incoming(video: false, shouldRing: true, degraded: false)
     }
@@ -56,11 +60,11 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
     
     var selfUserConnectionState: CallParticipantState = CallParticipantState.connected(videoState: .stopped)
     
-    func setVideoCaptureDevice(device: CaptureDevice) throws {
+    func setVideoState(_ videoState: VideoState) {
         
     }
     
-    func toggleVideo(active: Bool) throws {
+    func setVideoCaptureDevice(_ device: CaptureDevice) throws {
         
     }
     
@@ -110,7 +114,7 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
         return NSObject()
     }
     
-    func addParticipantObserver(_ observer: VoiceChannelParticipantObserver) -> Any {
+    func addParticipantObserver(_ observer: WireCallCenterCallParticipantObserver) -> Any {
         return NSObject()
     }
     

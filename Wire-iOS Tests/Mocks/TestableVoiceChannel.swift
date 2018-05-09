@@ -29,6 +29,7 @@ class TestableVoiceChannel: NSObject, VoiceChannel {
     var mockInitiator: ZMUser? = nil
     var mockIsVideoCall: Bool = false
     var mockCallParticipantState: CallParticipantState = .unconnected
+    var mockVideoState: VideoState = .stopped
     
     required init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -38,7 +39,7 @@ class TestableVoiceChannel: NSObject, VoiceChannel {
         return "token"
     }
     
-    func addParticipantObserver(_ observer: VoiceChannelParticipantObserver) -> Any {
+    func addParticipantObserver(_ observer: WireCallCenterCallParticipantObserver) -> Any {
         return "token"
     }
     
@@ -86,9 +87,13 @@ class TestableVoiceChannel: NSObject, VoiceChannel {
         return mockCallParticipantState
     }
     
-    func toggleVideo(active: Bool) throws {}
+    var videoState: VideoState {
+        return mockVideoState
+    }
     
-    func setVideoCaptureDevice(device: CaptureDevice) throws {}
+    func setVideoState(_ videoState: VideoState) {}
+    
+    func setVideoCaptureDevice(_ device: CaptureDevice) throws {}
     
     func mute(_ muted: Bool, userSession: ZMUserSession) {}
     

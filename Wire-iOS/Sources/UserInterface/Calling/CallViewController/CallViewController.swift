@@ -98,7 +98,7 @@ final class CallViewController: UIViewController {
     private func toggleCameraType() {
         do {
             let newType: CaptureDevice = cameraType == .front ? .back : .front
-            try voiceChannel.setVideoCaptureDevice(device: newType)
+            try voiceChannel.setVideoCaptureDevice( newType)
             cameraType = newType
         } catch {
             Calling.log.error("error toggling capture device: \(error)")
@@ -116,12 +116,12 @@ extension CallViewController: WireCallCenterCallStateObserver {
     
 }
 
-extension CallViewController: VoiceChannelParticipantObserver {
+extension CallViewController: WireCallCenterCallParticipantObserver {
     
-    func voiceChannelParticipantsDidChange(_ changeInfo: VoiceChannelParticipantNotification) {
+    func callParticipantsDidChange(conversation: ZMConversation, participants: [(UUID, CallParticipantState)]) {
         updateConfiguration()
     }
-
+    
 }
 
 extension CallViewController: CallInfoRootViewControllerDelegate {
