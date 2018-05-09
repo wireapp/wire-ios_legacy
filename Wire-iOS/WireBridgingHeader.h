@@ -189,5 +189,3 @@
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
 
-#import <Localytics/Localytics.h>
-
