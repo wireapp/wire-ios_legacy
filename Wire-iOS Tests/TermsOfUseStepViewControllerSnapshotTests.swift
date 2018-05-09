@@ -28,8 +28,6 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         mockDevice = MockDevice()
-
-        recordMode = true
     }
 
     override func tearDown() {
