@@ -45,7 +45,7 @@ class GridViewTests: ZMSnapshotTestCase {
         super.tearDown()
     }
     
-    func testGridView_oneView() {
+    func testOneView() {
         // Given
         sut.append(view: view1)
         
@@ -53,7 +53,7 @@ class GridViewTests: ZMSnapshotTestCase {
         verifyInIPhoneSize(view: sut)
     }
     
-    func testGridView_twoViews() {
+    func testTwoViews() {
         // Given
         sut.append(view: view1)
         sut.append(view: view2)
@@ -62,7 +62,7 @@ class GridViewTests: ZMSnapshotTestCase {
         verifyInIPhoneSize(view: sut)
     }
     
-    func testGridView_threeViews() {
+    func testThreeViews() {
         // Given
         sut.append(view: view1)
         sut.append(view: view2)
@@ -72,7 +72,7 @@ class GridViewTests: ZMSnapshotTestCase {
         verifyInIPhoneSize(view: sut)
     }
     
-    func testGridView_fourViews() {
+    func testFourViews() {
         // Given
         sut.append(view: view1)
         sut.append(view: view2)
@@ -83,13 +83,24 @@ class GridViewTests: ZMSnapshotTestCase {
         verifyInIPhoneSize(view: sut)
     }
     
-    func testGridView_threeViews_afterRemovingFirstView() {
+    func testThreeViewsAfterRemovingTopView() {
         // Given
         sut.append(view: view1)
         sut.append(view: view2)
         sut.append(view: view3)
         sut.append(view: view4)
         sut.remove(view: view1)
+        
+        // Then
+        verifyInIPhoneSize(view: sut)
+    }
+    
+    func testTwoViewsAfterRemovingBottomView() {
+        // Given
+        sut.append(view: view1)
+        sut.append(view: view2)
+        sut.append(view: view3)
+        sut.remove(view: view2)
         
         // Then
         verifyInIPhoneSize(view: sut)

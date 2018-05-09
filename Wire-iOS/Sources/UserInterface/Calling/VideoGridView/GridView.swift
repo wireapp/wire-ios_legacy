@@ -67,10 +67,26 @@ class GridView: UIStackView {
             view.removeFromSuperview()
         }
         
+        rearrangeViews()
         updateVisibleStacksViews()
     }
     
-    func updateVisibleStacksViews() {
+    private func reinsert(view: UIView) {
+        remove(view: view)
+        append(view: view)
+    }
+    
+    private func rearrangeViews() {
+        if lowerHorizontalStackerView.arrangedSubviews.isEmpty && upperHorizontalStackerView.arrangedSubviews.count > 1, let view = upperHorizontalStackerView.arrangedSubviews.last {
+            reinsert(view: view)
+        }
+        
+        if upperHorizontalStackerView.arrangedSubviews.isEmpty && lowerHorizontalStackerView.arrangedSubviews.count > 1, let view = lowerHorizontalStackerView.arrangedSubviews.last {
+            reinsert(view: view)
+        }
+    }
+    
+    private func updateVisibleStacksViews() {
         upperHorizontalStackerView.isHidden = upperHorizontalStackerView.arrangedSubviews.isEmpty
         lowerHorizontalStackerView.isHidden = lowerHorizontalStackerView.arrangedSubviews.isEmpty
     }
