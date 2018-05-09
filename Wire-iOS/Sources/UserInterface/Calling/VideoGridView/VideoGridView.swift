@@ -70,11 +70,7 @@ class VideoGridViewController: UIViewController {
     
     private func updateFloatingVideo(with stream: UUID?) {
         thumbnailViewController.view.isHidden = nil != stream
-
-        guard stream == ZMUser.selfUser().remoteIdentifier else {
-            return Calling.log.error("Invalid operation: Trying to set non self user floating video")
-        }
-        
+        guard stream == ZMUser.selfUser().remoteIdentifier else { return }
         let previewView = AVSVideoPreview()
         previewView.translatesAutoresizingMaskIntoConstraints = false
         

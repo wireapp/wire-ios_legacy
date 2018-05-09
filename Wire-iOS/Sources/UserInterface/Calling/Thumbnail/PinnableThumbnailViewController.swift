@@ -75,7 +75,7 @@ import UIKit
         super.viewWillAppear(animated)
 
         view.layoutIfNeeded()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
 
         updateThumbnailAfterLayoutUpdate()
         animator.addBehavior(self.pinningBehavior)
