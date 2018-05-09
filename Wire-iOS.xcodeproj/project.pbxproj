@@ -5747,6 +5747,7 @@
 				871BE95D1CD0C44A002267E8 /* CopyFiles */,
 				783B15BA51E5BFF2D24E2C0F /* [CP] Embed Pods Frameworks */,
 				82847050AB64B470DA7D5D5F /* [CP] Copy Pods Resources */,
+				BFE731DE20A2F2270088BA22 /* Remove Old Snapshot Results */,
 			);
 			buildRules = (
 			);
@@ -6161,6 +6162,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Wire-iOS/Pods-Wire-iOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		BFE731DE20A2F2270088BA22 /* Remove Old Snapshot Results */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Remove Old Snapshot Results";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"${SOURCE_ROOT}\"/SnapshotResults/*";
 		};
 		C203424DDFCA9902F16DFDB5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
