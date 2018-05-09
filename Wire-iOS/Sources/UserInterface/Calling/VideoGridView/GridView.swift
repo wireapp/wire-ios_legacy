@@ -77,11 +77,11 @@ class GridView: UIStackView {
     }
     
     private func rearrangeViews() {
-        if lowerHorizontalStackerView.arrangedSubviews.isEmpty && upperHorizontalStackerView.arrangedSubviews.count > 1, let view = upperHorizontalStackerView.arrangedSubviews.last {
+        if lowerHorizontalStackerView.arrangedSubviews.isEmpty, upperHorizontalStackerView.arrangedSubviews.count > 1, let view = upperHorizontalStackerView.arrangedSubviews.last {
             reinsert(view: view)
         }
         
-        if upperHorizontalStackerView.arrangedSubviews.isEmpty && lowerHorizontalStackerView.arrangedSubviews.count > 1, let view = lowerHorizontalStackerView.arrangedSubviews.last {
+        if upperHorizontalStackerView.arrangedSubviews.isEmpty, lowerHorizontalStackerView.arrangedSubviews.count > 1, let view = lowerHorizontalStackerView.arrangedSubviews.last {
             reinsert(view: view)
         }
     }
