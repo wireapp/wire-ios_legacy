@@ -160,10 +160,11 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .minimizeOverlay: minimizeOverlay()
         case .toggleVideoState: toggleVideoState()
         case .flipCamera: toggleCameraAnimated()
-        case .showParticipantsList: /* Handled in `CallInfoRootViewController` */ break
+        case .showParticipantsList: return // Handled in `CallInfoRootViewController`, we don't want to update.
         }
         
         updateConfiguration()
+        restartOverlayTimerIfNeeded()
     }
     
     func infoRootViewController(_ viewController: CallInfoRootViewController, contextDidChange context: CallInfoRootViewController.Context) {
@@ -219,6 +220,11 @@ extension CallViewController {
         overlayTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 4, repeats: false) { [animateOverlay] _ in
             animateOverlay(false)
         }
+    }
+    
+    fileprivate func restartOverlayTimerIfNeeded() {
+        guard nil != overlayTimer, canHideOverlay else { return }
+        startOverlayTimer()
     }
     
     fileprivate func stopOverlayTimer() {
