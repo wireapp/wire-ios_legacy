@@ -36,9 +36,9 @@ final class CallViewController: UIViewController {
         return voiceChannel.conversation
     }
     
-    init(voiceChannel: VoiceChannel) {
+    init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance()) {
         self.voiceChannel = voiceChannel
-        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel)
+        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)

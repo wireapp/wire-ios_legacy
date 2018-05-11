@@ -21,6 +21,68 @@ import Foundation
 protocol VideoGridConfiguration {
     var floatingVideoStream: UUID? { get }
     var videoStreams: [UUID] { get }
+    var isMuted: Bool { get }
+}
+
+protocol AVSIdentifierProvider {
+    var identifier: String { get }
+}
+
+extension AVSVideoView: AVSIdentifierProvider {
+    var identifier: String {
+        return userid
+    }
+}
+
+final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
+    private let previewView = AVSVideoPreview()
+    private let mutedOverlayView = UIView()
+    private let mutedIconImageView = UIImageView()
+    let identifier: String
+    
+    var isMuted = false {
+        didSet {
+            mutedOverlayView.isHidden = !isMuted
+            mutedIconImageView.isHidden = !isMuted
+        }
+    }
+    
+    init(identifier: String) {
+        self.identifier = identifier
+        super.init(frame: .zero)
+        setupViews()
+        createConstraints()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupViews() {
+        mutedOverlayView.isHidden = true
+        mutedIconImageView.isHidden = true
+        mutedIconImageView.contentMode = .center
+        mutedOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        let iconColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        mutedIconImageView.image = UIImage(for: .microphoneWithStrikethrough, iconSize: .tiny, color: iconColor)
+        [previewView, mutedOverlayView, mutedIconImageView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            addSubview($0)
+        }
+    }
+    
+    private func createConstraints() {
+        previewView.fitInSuperview()
+        mutedOverlayView.fitInSuperview()
+        mutedIconImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        mutedIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+}
+
+extension CGSize {
+    static let floatingPreviewPortrait = CGSize(width: 108, height: 144)
+    static let floatingPreviewLandscape = CGSize(width: 144, height: 108)
 }
 
 class VideoGridViewController: UIViewController {
@@ -33,7 +95,7 @@ class VideoGridViewController: UIViewController {
         return thumbnailViewController.contentView
     }
     
-    private var thumbnailVideoStream: UUID?
+    private var selfPreviewView: SelfVideoPreviewView?
     
     var configuration: VideoGridConfiguration {
         didSet {
@@ -74,16 +136,29 @@ class VideoGridViewController: UIViewController {
     }
     
     private func updateFloatingVideo(with stream: UUID?) {
-        guard thumbnailVideoStream != stream else { return }
-        thumbnailVideoStream = stream
-        thumbnailViewController.view.isHidden = nil == stream
-        guard stream == ZMUser.selfUser().remoteIdentifier else { return thumbnailViewController.removeCurrentThumbnailContentView() }
+        // No stream, remove floating video if there is any
+        guard let stream = stream else {
+            selfPreviewView = nil
+            return thumbnailViewController.removeCurrentThumbnailContentView()
+        }
         
-        let previewView = AVSVideoPreview()
-        previewView.translatesAutoresizingMaskIntoConstraints = false
+        // We only support the self preview in the floating overlay
+        guard stream == ZMUser.selfUser().remoteIdentifier else {
+            return Calling.log.error("Invalid operation: Non self preview in overlay")
+        }
         
-        // TODO: Calculate correct size based on device and orientation
-        thumbnailViewController.setThumbnailContentView(previewView, contentSize: CGSize(width: 108, height: 144))
+        // We have a stream but don't have a preview view yet
+        if nil == selfPreviewView {
+            let previewView = SelfVideoPreviewView(identifier: stream.transportString())
+            previewView.translatesAutoresizingMaskIntoConstraints = false
+            
+            // TODO: Calculate correct size based on device and orientation
+            thumbnailViewController.setThumbnailContentView(previewView, contentSize: .floatingPreviewPortrait)
+            selfPreviewView = previewView
+        }
+        
+        // Update mute status
+        selfPreviewView?.isMuted = configuration.isMuted
     }
     
     private func updateVideoGrid(with videoStreams: [UUID]) {
@@ -99,7 +174,7 @@ class VideoGridViewController: UIViewController {
         
         let view: UIView
         if streamId == ZMUser.selfUser().remoteIdentifier {
-            let videoView = AVSVideoPreview()
+            let videoView = SelfVideoPreviewView(identifier: streamId.transportString())
             videoView.translatesAutoresizingMaskIntoConstraints = false
             view = videoView
         } else {
@@ -122,10 +197,8 @@ class VideoGridViewController: UIViewController {
     }
     
     private func streamView(for streamId: UUID) -> UIView? {
-        if streamId == ZMUser.selfUser().remoteIdentifier {
-            return gridView.gridSubviews.first { $0 is AVSVideoPreview }
-        } else {
-            return gridView.gridSubviews.first { ($0 as? AVSVideoView)?.userid == streamId.transportString() }
+        return gridView.gridSubviews.first {
+            ($0 as? AVSIdentifierProvider)?.identifier == streamId.transportString()
         }
     }
 
