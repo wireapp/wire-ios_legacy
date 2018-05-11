@@ -70,12 +70,13 @@ class VideoGridViewController: UIViewController {
     
     private func updateFloatingVideo(with stream: UUID?) {
         thumbnailViewController.view.isHidden = nil != stream
-        guard stream == ZMUser.selfUser().remoteIdentifier else { return }
+        guard stream == ZMUser.selfUser().remoteIdentifier else { return thumbnailViewController.removeCurrentThumbnailContentView() }
+        
         let previewView = AVSVideoPreview()
         previewView.translatesAutoresizingMaskIntoConstraints = false
         
         // TODO: Calculate correct size based on device and orientation
-        thumbnailViewController.setThumbnailContentView(previewView, contentSize: CGSize(width: 400, height: 400))
+        thumbnailViewController.setThumbnailContentView(previewView, contentSize: CGSize(width: 108, height: 144))
     }
     
     private func updateVideoGrid(with videoStreams: [UUID]) {

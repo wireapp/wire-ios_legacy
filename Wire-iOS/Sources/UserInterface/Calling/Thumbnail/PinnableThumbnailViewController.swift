@@ -39,11 +39,14 @@ import UIKit
     // MARK: - Changing the Previewed Content
 
     fileprivate(set) var thumbnailContentSize: CGSize = .zero
+    
+    func removeCurrentThumbnailContentView() {
+        thumbnailView.subviews.forEach { $0.removeFromSuperview() }
+    }
 
     func setThumbnailContentView(_ contentView: UIView, contentSize: CGSize) {
-
-        thumbnailView.subviews.forEach { $0.removeFromSuperview() }
-
+        removeCurrentThumbnailContentView()
+        
         thumbnailView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
 
