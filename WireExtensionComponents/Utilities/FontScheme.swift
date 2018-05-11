@@ -131,7 +131,17 @@ public struct FontSpec {
     ///   - fontTextStyle: FontTextStyle enum value, if fontTextStyle == nil, then apply the default style.
     public init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: FontTextStyle? = .none) {
         self.size = size
-        self.weight = weight
+        
+        // bolding a light weight font only makes it very slightly heavier,
+        // not enough to appear bold. In order to support accessibility bold
+        // text, set regular weight whenever light is used.
+        if UIAccessibilityIsBoldTextEnabled() && (weight ?? .light) == .light {
+            self.weight = .regular
+        }
+        else {
+            self.weight = weight
+        }
+        
         self.fontTextStyle = fontTextStyle
     }
 }
