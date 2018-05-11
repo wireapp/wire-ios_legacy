@@ -128,8 +128,8 @@ extension AppStateController : SessionManagerDelegate {
         let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
 
         // We only care about the error if it concerns the selected account, or the loading account.
-        // ignore the error when account is nil (selectedAccount and loadingAccount are nil also) when app launchs
-        if account != nil && (selectedAccount == account || loadingAccount == account) {
+        if account == nil ||
+           (account != nil && (selectedAccount == account || loadingAccount == account)) {
             authenticationError = error as NSError
         }
 
