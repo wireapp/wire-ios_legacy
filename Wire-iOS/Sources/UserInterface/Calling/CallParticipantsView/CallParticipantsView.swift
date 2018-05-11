@@ -139,12 +139,13 @@ extension CallParticipantsView: UICollectionViewDataSource {
 extension UserCell: CallParticipantsCellConfigurationConfigurable {
     
     func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .callParticipant(user, _) = configuration else { preconditionFailure() }
+        guard case let .callParticipant(user, sendsVideo) = configuration else { preconditionFailure() }
         colorSchemeVariant = variant
         contentBackgroundColor = .clear
         hidesSubtitle = true
         configure(with: user)
         accessoryIconView.isHidden = true
+        videoIconView.isHidden = !sendsVideo
     }
     
 }
