@@ -121,6 +121,8 @@
 #import "RegistrationFormController.h"
 #import "PhoneSignInViewController.h"
 #import "NoHistoryViewController.h"
+#import "TermsOfUseStepViewController.h"
+#import "TermsOfUseStepViewController+Private.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -186,6 +188,4 @@
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
-
-#import <Localytics/Localytics.h>
 
