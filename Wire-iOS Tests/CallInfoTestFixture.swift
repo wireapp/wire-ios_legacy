@@ -38,6 +38,7 @@ struct CallInfoTestFixture {
     
     var oneToOneOutgoingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .avatar(otherUser),
             canToggleMediaType: false,
             isMuted: false,
@@ -54,6 +55,41 @@ struct CallInfoTestFixture {
     
     var oneToOneIncomingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingIncoming(name: otherUser.displayName),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var oneToOneOutgoingAudioDegraded: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            degradationState: .outgoing(degradedUser: otherUser),
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: false,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingOutgoing,
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light
+        )
+    }
+    
+    var oneToOneIncomingAudioDegraded: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            degradationState: .incoming(degradedUser: otherUser),
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
@@ -70,6 +106,7 @@ struct CallInfoTestFixture {
     
     var oneToOneAudioConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
@@ -86,6 +123,7 @@ struct CallInfoTestFixture {
     
     var oneToOneAudioEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
@@ -102,6 +140,7 @@ struct CallInfoTestFixture {
     
     var oneToOneAudioEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
@@ -120,6 +159,7 @@ struct CallInfoTestFixture {
     
     var oneToOneOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: false,
             isMuted: false,
@@ -136,6 +176,7 @@ struct CallInfoTestFixture {
     
     var oneToOneIncomingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
@@ -152,6 +193,7 @@ struct CallInfoTestFixture {
     
     var oneToOneVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
@@ -168,6 +210,7 @@ struct CallInfoTestFixture {
     
     var oneToOneVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
@@ -186,6 +229,7 @@ struct CallInfoTestFixture {
     
     var groupOutgoingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: false,
             isMuted: false,
@@ -202,6 +246,7 @@ struct CallInfoTestFixture {
     
     var groupIncomingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .avatar(otherUser),
             canToggleMediaType: true,
             isMuted: false,
@@ -218,6 +263,7 @@ struct CallInfoTestFixture {
     
     var groupAudioConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
@@ -234,6 +280,7 @@ struct CallInfoTestFixture {
     
     var groupAudioEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
             canToggleMediaType: true,
             isMuted: false,
@@ -250,6 +297,7 @@ struct CallInfoTestFixture {
     
     var groupAudioEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
             canToggleMediaType: true,
             isMuted: false,
@@ -268,6 +316,7 @@ struct CallInfoTestFixture {
     
     var groupOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: false,
             isMuted: false,
@@ -284,6 +333,7 @@ struct CallInfoTestFixture {
     
     var groupIncomingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
@@ -300,6 +350,7 @@ struct CallInfoTestFixture {
     
     var groupVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
@@ -316,6 +367,7 @@ struct CallInfoTestFixture {
     
     var groupVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
             canToggleMediaType: true,
             isMuted: false,
@@ -332,6 +384,7 @@ struct CallInfoTestFixture {
     
     var groupVideoEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+            degradationState: .none,
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
             canToggleMediaType: true,
             isMuted: false,
