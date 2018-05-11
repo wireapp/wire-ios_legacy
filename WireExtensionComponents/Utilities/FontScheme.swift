@@ -44,10 +44,12 @@ public enum FontWeight: String {
 
 @available(iOSApplicationExtension 8.2, *)
 extension FontWeight {
+    // lightweight fonts won't bolden if accessibility bold text setting is
+    // enabled, so in this case, use regular weight.
     static let weightMapping: [FontWeight: CGFloat] = [
-        .ultraLight: UIFontWeightUltraLight,
-        .thin:       UIFontWeightThin,
-        .light:      UIFontWeightLight,
+        .ultraLight: UIAccessibilityIsBoldTextEnabled() ? UIFontWeightRegular : UIFontWeightUltraLight,
+        .thin:       UIAccessibilityIsBoldTextEnabled() ? UIFontWeightRegular : UIFontWeightThin,
+        .light:      UIAccessibilityIsBoldTextEnabled() ? UIFontWeightRegular : UIFontWeightLight,
         .regular:    UIFontWeightRegular,
         .medium:     UIFontWeightMedium,
         .semibold:   UIFontWeightSemibold,
