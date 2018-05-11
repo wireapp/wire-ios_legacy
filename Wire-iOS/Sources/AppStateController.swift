@@ -42,7 +42,8 @@ class AppStateController : NSObject {
     fileprivate var hasCompletedRegistration = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
-    fileprivate let isRunningTests = ProcessInfo.processInfo.isRunningTests
+    fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
+    var isRunningSelfUnitTest = false
     
     override init() {
         super.init()
@@ -56,11 +57,8 @@ class AppStateController : NSObject {
     }
 
     func calculateAppState() -> AppState {
-        
-        if isRunningTests {
-            return .unauthenticated(error: nil)
-        }
-        
+        guard !isRunningTests || isRunningSelfUnitTest else { return .unauthenticated(error: nil) }
+
         if !hasEnteredForeground {
             return .headless
         }
@@ -128,8 +126,12 @@ extension AppStateController : SessionManagerDelegate {
         let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
 
         // We only care about the error if it concerns the selected account, or the loading account.
-        if account == nil ||
-           (account != nil && (selectedAccount == account || loadingAccount == account)) {
+        if account != nil && (selectedAccount == account || loadingAccount == account) {
+            authenticationError = error as NSError
+        }
+
+        // When the account is nil, we care about the error if there are some accounts in accountManager
+        if account == nil && SessionManager.shared?.accountManager.accounts.count > 0 {
             authenticationError = error as NSError
         }
 
