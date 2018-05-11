@@ -18,6 +18,7 @@
 
 struct VideoConfiguration {
     let voiceChannel: VoiceChannel
+    let mediaManager: AVSMediaManager
 }
 
 extension VideoConfiguration: VideoGridConfiguration {
@@ -28,6 +29,10 @@ extension VideoConfiguration: VideoGridConfiguration {
     
     var videoStreams: [UUID] {
         return computeVideoStreams().grid
+    }
+    
+    var isMuted: Bool {
+        return AVSMediaManager.sharedInstance().isMicrophoneMuted
     }
     
     private func computeVideoStreams() -> (preview: UUID?, grid: [UUID]) {

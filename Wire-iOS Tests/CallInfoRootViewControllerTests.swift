@@ -25,10 +25,6 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         super.setUp()
     }
     
-    override func tearDown() {
-        super.tearDown()
-    }
-    
     // MARK: - OneToOne Audio
     
     func testOneToOneIncomingAudioRinging() {

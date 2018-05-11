@@ -35,6 +35,7 @@ extension IconButton {
     static func endCall() -> IconButton {
         return .init(
             icon: .endCall,
+            size: .small,
             accessibilityId: "LeaveCallButton",
             backgroundColor: ZMAccentColor.vividRed.color,
             iconColor: .white
@@ -43,13 +44,14 @@ extension IconButton {
     
     fileprivate convenience init(
         icon: ZetaIconType,
+        size: ZetaIconSize = .tiny,
         accessibilityId: String,
         backgroundColor: UIColor,
         iconColor: UIColor
         ) {
         self.init()
         circular = true
-        setIcon(icon, with: .tiny, for: .normal)
+        setIcon(icon, with: size, for: .normal)
         titleLabel?.font = FontSpec(.small, .light).font!
         accessibilityIdentifier = accessibilityId
         translatesAutoresizingMaskIntoConstraints = false
