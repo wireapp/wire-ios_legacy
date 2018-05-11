@@ -202,29 +202,4 @@ class FontSchemeTests: XCTestCase {
         // THEN
         XCTAssertEqual(fontNames, fixedFontNames)
     }
-    
-    
-    func testThatItConvertsLightFontToRegularFontIfAccessibilityBoldEnabled() {
-        [FontSize.small, .medium, .normal, .large].forEach {
-            // GIVEN
-            let fontSpec1 = FontSpec($0, .light, .none, accessibilityBold: true)
-            let fontSpec2 = FontSpec($0, .none, .none, accessibilityBold: true)
-            
-            // THEN
-            XCTAssertEqual(.regular, fontSpec1.weight)
-            XCTAssertEqual(.regular, fontSpec2.weight)
-        }
-    }
-    
-    func testThatItDoesNotConvertLightFontToRegularFontIfAccessibilityBoldDisabled() {
-        [FontSize.small, .medium, .normal, .large].forEach {
-            // GIVEN
-            let fontSpec1 = FontSpec($0, .light, .none, accessibilityBold: false)
-            let fontSpec2 = FontSpec($0, .none, .none, accessibilityBold: false)
-            
-            // THEN
-            XCTAssertEqual(.light, fontSpec1.weight)
-            XCTAssertEqual(nil, fontSpec2.weight)
-        }
-    }
 }

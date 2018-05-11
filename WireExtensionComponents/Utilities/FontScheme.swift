@@ -129,18 +129,9 @@ public struct FontSpec {
     ///   - size: a FontSize enum
     ///   - weight: a FontWeight enum, if weight == nil, then apply the default value .light
     ///   - fontTextStyle: FontTextStyle enum value, if fontTextStyle == nil, then apply the default style.
-    ///   - accessibilityBold: optional argument for testing, if nil, iOS is queried for the accessibility
-    ///     bold setting. Standard use should not include this argument.
-    public init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: FontTextStyle? = .none, accessibilityBold: Bool? = .none) {
+    public init(_ size: FontSize, _ weight: FontWeight?, _ fontTextStyle: FontTextStyle? = .none) {
         self.size = size
-        
-        // bolding a light weight font only makes it very slightly heavier,
-        // not enough to appear bold. In order to support accessibility bold
-        // text, set regular weight whenever light is used.
-        let boldTextEnabled = accessibilityBold ?? UIAccessibilityIsBoldTextEnabled()
-        if boldTextEnabled && (weight ?? .light) == .light { self.weight = .regular }
-        else { self.weight = weight }
-        
+        self.weight = weight
         self.fontTextStyle = fontTextStyle
     }
 }
