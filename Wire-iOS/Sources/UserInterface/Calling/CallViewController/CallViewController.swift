@@ -100,7 +100,7 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func toggleVideoState() {
-        voiceChannel.setVideoState(voiceChannel.videoState.toggledState)
+        voiceChannel.videoState = voiceChannel.videoState.toggledState
         updateConfiguration()
     }
     

@@ -41,7 +41,10 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
     }
     
     var videoState: VideoState {
-        return .stopped
+        get {
+            return .stopped
+        }
+        set { }        
     }
     
     var state: CallState {

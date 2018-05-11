@@ -88,10 +88,14 @@ class TestableVoiceChannel: NSObject, VoiceChannel {
     }
     
     var videoState: VideoState {
-        return mockVideoState
+        get {
+            return mockVideoState
+        }
+        set {
+            mockVideoState = newValue
+        }
+        
     }
-    
-    func setVideoState(_ videoState: VideoState) {}
     
     func setVideoCaptureDevice(_ device: CaptureDevice) throws {}
     
