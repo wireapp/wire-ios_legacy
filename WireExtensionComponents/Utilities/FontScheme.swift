@@ -44,12 +44,10 @@ public enum FontWeight: String {
 
 @available(iOSApplicationExtension 8.2, *)
 extension FontWeight {
-    // lightweight fonts won't bolden if accessibility bold text setting is
-    // enabled, so in this case, use regular weight.
     static let weightMapping: [FontWeight: CGFloat] = [
-        .ultraLight: UIAccessibilityIsBoldTextEnabled() ? UIFontWeightRegular : UIFontWeightUltraLight,
-        .thin:       UIAccessibilityIsBoldTextEnabled() ? UIFontWeightRegular : UIFontWeightThin,
-        .light:      UIAccessibilityIsBoldTextEnabled() ? UIFontWeightRegular : UIFontWeightLight,
+        .ultraLight: UIFontWeightUltraLight,
+        .thin:       UIFontWeightThin,
+        .light:      UIFontWeightLight,
         .regular:    UIFontWeightRegular,
         .medium:     UIFontWeightMedium,
         .semibold:   UIFontWeightSemibold,
@@ -58,10 +56,25 @@ extension FontWeight {
         .black:      UIFontWeightBlack
     ]
     
-    public var fontWeight: CGFloat {
-        get {
-            return type(of: self).weightMapping[self]!
-        }
+    /// Weight mapping used when the bold text accessibility setting is
+    /// enabled. Light weight fonts won't render bold, so we use regular
+    /// weights instead.
+    static let accessibilityWeightMapping: [FontWeight: CGFloat] = [
+        .ultraLight: UIFontWeightRegular,
+        .thin:       UIFontWeightRegular,
+        .light:      UIFontWeightRegular,
+        .regular:    UIFontWeightRegular,
+        .medium:     UIFontWeightMedium,
+        .semibold:   UIFontWeightSemibold,
+        .bold:       UIFontWeightBold,
+        .heavy:      UIFontWeightHeavy,
+        .black:      UIFontWeightBlack
+    ]
+    
+    public func fontWeight(accessibilityBoldText: Bool? = nil) -> CGFloat {
+        let boldTextEnabled = accessibilityBoldText ?? UIAccessibilityIsBoldTextEnabled()
+        let mapping = boldTextEnabled ? type(of: self).accessibilityWeightMapping : type(of: self).weightMapping
+        return mapping[self]!
     }
     
     public init(weight: CGFloat) {
@@ -74,7 +87,7 @@ extension FontWeight {
 extension UIFont {
     static func systemFont(ofSize size: CGFloat, contentSizeCategory: UIContentSizeCategory, weight: FontWeight) -> UIFont {
         if #available(iOSApplicationExtension 8.2, *) {
-            return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: weight.fontWeight)
+            return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: weight.fontWeight())
         } else {
             return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)))
         }
