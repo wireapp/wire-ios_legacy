@@ -123,15 +123,16 @@ public final class InputBarButtonsView: UIView {
     }
     
     fileprivate func layoutAndConstrainButtonRows() {
-        guard bounds.size.width > 0 else { return }
+        let minButtonWidth = constants.minimumButtonWidth(forWidth: bounds.width)
+
+        guard bounds.size.width >= minButtonWidth * 2 else { return }
 
         // Drop existing constraints
         buttons.forEach {
             $0.removeFromSuperview()
             buttonInnerContainer.addSubview($0)
         }
-        
-        let minButtonWidth = constants.minimumButtonWidth(forWidth: bounds.width)
+
         let numberOfButtons = Int(floorf(Float(bounds.width / minButtonWidth)))
         multilineLayout = numberOfButtons < buttons.count
         
