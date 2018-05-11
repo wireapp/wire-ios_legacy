@@ -51,7 +51,7 @@ extension IconButton {
         ) {
         self.init()
         circular = true
-        setIcon(icon, with: .tiny, for: .normal)
+        setIcon(icon, with: size, for: .normal)
         titleLabel?.font = FontSpec(.small, .light).font!
         accessibilityIdentifier = accessibilityId
         translatesAutoresizingMaskIntoConstraints = false
