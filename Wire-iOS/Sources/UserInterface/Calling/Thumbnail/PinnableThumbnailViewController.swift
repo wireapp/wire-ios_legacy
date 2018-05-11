@@ -22,14 +22,15 @@ import UIKit
 
     private let thumbnailView = ContinuousCornersView(cornerRadius: 12)
     private let thumbnailContainerView = UIView()
+    private(set) var contentView: UIView?
 
     // MARK: - Dynamics
 
-    fileprivate let edgeInset: CGFloat = 24
+    fileprivate let edgeInsets = CGPoint(x: 0, y: 24)
     fileprivate var originalCenter: CGPoint = .zero
 
     fileprivate lazy var pinningBehavior: ThumbnailCornerPinningBehavior = {
-        return ThumbnailCornerPinningBehavior(item: self.thumbnailView, edgeInset: self.edgeInset)
+        return ThumbnailCornerPinningBehavior(item: self.thumbnailView, edgeInsets: self.edgeInsets)
     }()
 
     fileprivate lazy var animator: UIDynamicAnimator = {
@@ -41,25 +42,24 @@ import UIKit
     fileprivate(set) var thumbnailContentSize: CGSize = .zero
     
     func removeCurrentThumbnailContentView() {
-        thumbnailView.subviews.forEach { $0.removeFromSuperview() }
+        contentView?.removeFromSuperview()
+        contentView = nil
     }
 
     func setThumbnailContentView(_ contentView: UIView, contentSize: CGSize) {
         removeCurrentThumbnailContentView()
-        
         thumbnailView.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
+        self.contentView = contentView
 
         self.thumbnailContentSize = contentSize
         updateThumbnailFrame(animated: false, parentSize: thumbnailContainerView.frame.size)
-
     }
 
     func updateThumbnailContentSize(_ newSize: CGSize, animated: Bool) {
         self.thumbnailContentSize = newSize
         updateThumbnailFrame(animated: false, parentSize: thumbnailContainerView.frame.size)
     }
-
 
     // MARK: - Configuration
 
@@ -71,7 +71,6 @@ import UIKit
 
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         thumbnailView.addGestureRecognizer(panGestureRecognizer)
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -82,28 +81,28 @@ import UIKit
 
         updateThumbnailAfterLayoutUpdate()
         animator.addBehavior(self.pinningBehavior)
-
     }
 
     private func configureViews() {
-
         view.addSubview(thumbnailContainerView)
 
         thumbnailContainerView.addSubview(thumbnailView)
         thumbnailView.autoresizingMask = []
         thumbnailView.clipsToBounds = true
-        
+        thumbnailContainerView.layer.shadowRadius = 30
+        thumbnailContainerView.layer.shadowOpacity = 0.32
+        thumbnailContainerView.layer.shadowColor = UIColor.black.cgColor
+        thumbnailContainerView.layer.shadowOffset = CGSize(width: 0, height: 8)
+        thumbnailContainerView.layer.masksToBounds = false
     }
 
     private func configureConstraints() {
-
         thumbnailContainerView.translatesAutoresizingMaskIntoConstraints = false
 
         thumbnailContainerView.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor).isActive = true
         thumbnailContainerView.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor).isActive = true
         thumbnailContainerView.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
         thumbnailContainerView.bottomAnchor.constraint(equalTo: safeBottomAnchor).isActive = true
-
     }
 
     // MARK: - Size
@@ -128,7 +127,6 @@ import UIKit
         }, completion: { context in
             self.pinningBehavior.isEnabled = true
         })
-
     }
 
     @available(iOS 11, *)
@@ -181,7 +179,6 @@ import UIKit
         } else {
             changesBlock()
         }
-
     }
 
     private func updateThumbnailAfterLayoutUpdate() {
@@ -190,7 +187,6 @@ import UIKit
     }
 
     private func thumbnailPosition(for size: CGSize, parentSize: CGSize) -> CGPoint {
-
         if let center = pinningBehavior.positionForCurrentCorner() {
             return center
         }
@@ -198,20 +194,18 @@ import UIKit
         let frame: CGRect
 
         if UIApplication.isLeftToRightLayout {
-            frame = CGRect(x: parentSize.width - size.width - edgeInset, y: edgeInset,
+            frame = CGRect(x: parentSize.width - size.width - edgeInsets.x, y: edgeInsets.y,
                            width: size.width, height: size.height)
         } else {
-            frame = CGRect(x: edgeInset, y: edgeInset, width: size.width, height: size.height)
+            frame = CGRect(x: edgeInsets.x, y: edgeInsets.y, width: size.width, height: size.height)
         }
 
         return CGPoint(x: frame.midX, y: frame.midY)
-
     }
 
     // MARK: - Panning
 
     @objc private func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
-
         switch recognizer.state {
         case .began:
             // Disable the pinning while the user moves the thumbnail
@@ -268,7 +262,6 @@ import UIKit
         default:
             break
         }
-
     }
 
 }

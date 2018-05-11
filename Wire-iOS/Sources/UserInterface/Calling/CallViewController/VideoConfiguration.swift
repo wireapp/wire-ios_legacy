@@ -31,18 +31,26 @@ extension VideoConfiguration: VideoGridConfiguration {
     }
     
     private func computeVideoStreams() -> (preview: UUID?, grid: [UUID]) {
-        let otherParticipants: [UUID] = voiceChannel.participants.compactMap { user in
+        var otherParticipants: [UUID] = voiceChannel.participants.compactMap { user in
             guard let user = user as? ZMUser else { return nil }
-            if case .connected(.started) = voiceChannel.state(forParticipant: user) {
-                return user.remoteIdentifier
+            switch voiceChannel.state(forParticipant: user) {
+            case .connected(videoState: let state) where state.isSending: return user.remoteIdentifier
+            default: return nil
             }
-            return nil
         }
         
-        if 1 == otherParticipants.count {
-            return (ZMUser.selfUser().remoteIdentifier, otherParticipants)
+        // TODO: Do we need this? Right now the participants array is empty for 1-1 calls.
+        if otherParticipants.isEmpty, voiceChannel.conversation?.conversationType == .oneOnOne,
+            let otherUser = voiceChannel.conversation?.firstActiveParticipantOtherThanSelf()?.remoteIdentifier {
+            otherParticipants += [otherUser]
+        }
+        
+        let selfStream = voiceChannel.videoState.isSending ? ZMUser.selfUser().remoteIdentifier : nil
+
+        if 1 == otherParticipants.count, let selfStream = selfStream {
+            return (selfStream, otherParticipants)
         } else {
-            return (nil, [ZMUser.selfUser().remoteIdentifier] + otherParticipants)
+            return (nil, nil == selfStream ? otherParticipants : [selfStream!] + otherParticipants)
         }
     }
 

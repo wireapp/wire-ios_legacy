@@ -27,7 +27,7 @@ final class ThumbnailCornerPinningBehavior: UIDynamicBehavior {
     // MARK: - Properties
 
     fileprivate let item: UIDynamicItem
-    fileprivate let edgeInset: CGFloat
+    fileprivate let edgeInsets: CGPoint
 
     fileprivate let collisionBehavior: UICollisionBehavior
     fileprivate let itemTransformBehavior: UIDynamicItemBehavior
@@ -35,10 +35,10 @@ final class ThumbnailCornerPinningBehavior: UIDynamicBehavior {
 
     // MARK: - Initialization
 
-    init(item: UIDynamicItem, edgeInset: CGFloat) {
+    init(item: UIDynamicItem, edgeInsets: CGPoint) {
 
         self.item = item
-        self.edgeInset = edgeInset
+        self.edgeInsets = edgeInsets
 
         // Detect collisions
 
@@ -134,8 +134,8 @@ final class ThumbnailCornerPinningBehavior: UIDynamicBehavior {
 
         // Calculate spacing
 
-        let horizontalPosition = edgeInset + (itemBounds.width / 2)
-        let verticalPosition = edgeInset + (itemBounds.height / 2)
+        let horizontalPosition = edgeInsets.x + (itemBounds.width / 2)
+        let verticalPosition = edgeInsets.y + (itemBounds.height / 2)
 
         let maxX = bounds.maxX
         let maxY = bounds.maxY

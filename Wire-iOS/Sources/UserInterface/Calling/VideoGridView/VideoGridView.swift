@@ -29,6 +29,11 @@ class VideoGridViewController: UIViewController {
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     
+    var previewOverlay: UIView? {
+        return thumbnailViewController.contentView
+    }
+    
+    private var thumbnailVideoStream: UUID?
     
     var configuration: VideoGridConfiguration {
         didSet {
@@ -69,7 +74,9 @@ class VideoGridViewController: UIViewController {
     }
     
     private func updateFloatingVideo(with stream: UUID?) {
-        thumbnailViewController.view.isHidden = nil != stream
+        guard thumbnailVideoStream != stream else { return }
+        thumbnailVideoStream = stream
+        thumbnailViewController.view.isHidden = nil == stream
         guard stream == ZMUser.selfUser().remoteIdentifier else { return thumbnailViewController.removeCurrentThumbnailContentView() }
         
         let previewView = AVSVideoPreview()
@@ -82,7 +89,7 @@ class VideoGridViewController: UIViewController {
     private func updateVideoGrid(with videoStreams: [UUID]) {
         let removed = gridVideoStreams.filter({ !videoStreams.contains($0) })
         let added = videoStreams.filter({ !gridVideoStreams.contains($0) })
-        
+ 
         removed.forEach(removeStream)
         added.forEach(addStream)
     }

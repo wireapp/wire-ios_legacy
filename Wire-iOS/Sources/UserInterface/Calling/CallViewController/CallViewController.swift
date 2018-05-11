@@ -44,13 +44,19 @@ final class CallViewController: UIViewController {
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
+        AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self)]
-        updateAppearance()
+    }
+    
+    deinit {
+        AVSMediaManagerClientChangeNotification.remove(self)
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         setupViews()
         createConstraints()
+        updateConfiguration()
     }
     
     private func setupViews() {
@@ -83,11 +89,19 @@ final class CallViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard canHideOverlay else { return }
+        
+        if let touch = touches.first,
+            let overlay = videoGridViewController.previewOverlay,
+            overlay.point(inside: touch.location(in: overlay), with: event) {
+            return
+        }
+
         toggleOverlayVisibility()
     }
     
     fileprivate func toggleVideoState() {
-        // TODO:
+        voiceChannel.setVideoState(voiceChannel.videoState.toggledState)
+        updateConfiguration()
     }
     
     fileprivate func toggleCameraAnimated() {
@@ -98,7 +112,7 @@ final class CallViewController: UIViewController {
     private func toggleCameraType() {
         do {
             let newType: CaptureDevice = cameraType == .front ? .back : .front
-            try voiceChannel.setVideoCaptureDevice( newType)
+            try voiceChannel.setVideoCaptureDevice(newType)
             cameraType = newType
         } catch {
             Calling.log.error("error toggling capture device: \(error)")
@@ -119,6 +133,14 @@ extension CallViewController: WireCallCenterCallStateObserver {
 extension CallViewController: WireCallCenterCallParticipantObserver {
     
     func callParticipantsDidChange(conversation: ZMConversation, participants: [(UUID, CallParticipantState)]) {
+        updateConfiguration()
+    }
+    
+}
+
+extension CallViewController: AVSMediaManagerClientObserver {
+    
+    func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification!) {
         updateConfiguration()
     }
     

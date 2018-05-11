@@ -80,6 +80,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var mediaState: MediaState {
+        guard !voiceChannel.videoState.isSending else { return .sendingVideo }
         return .notSendingVideo(speakerEnabled: AVSMediaManager.sharedInstance().isSpeakerEnabled)
     }
     
