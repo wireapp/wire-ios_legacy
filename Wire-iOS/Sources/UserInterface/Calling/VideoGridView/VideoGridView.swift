@@ -25,8 +25,15 @@ protocol VideoGridConfiguration {
 
 class VideoGridViewController: UIViewController {
     
-    var gridVideoStreams: [UUID] = []
-    let gridView = GridView()
+    private var gridVideoStreams: [UUID] = []
+    private let gridView = GridView()
+    private let thumbnailViewController = PinnableThumbnailViewController()
+    
+    var previewOverlay: UIView? {
+        return thumbnailViewController.contentView
+    }
+    
+    private var thumbnailVideoStream: UUID?
     
     var configuration: VideoGridConfiguration {
         didSet {
@@ -36,7 +43,6 @@ class VideoGridViewController: UIViewController {
     
     init(configuration: VideoGridConfiguration) {
         self.configuration = configuration
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,23 +52,20 @@ class VideoGridViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupViews()
         createConstraints()
     }
     
     func setupViews() {
         gridView.translatesAutoresizingMaskIntoConstraints = false
+        thumbnailViewController.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(gridView)
+        addToSelf(thumbnailViewController)
     }
     
     func createConstraints() {
-        NSLayoutConstraint.activate([
-            gridView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            gridView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            gridView.topAnchor.constraint(equalTo: view.topAnchor),
-            gridView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        gridView.fitInSuperview()
+        thumbnailViewController.view.fitInSuperview()
     }
     
     func updateState() {
@@ -71,18 +74,27 @@ class VideoGridViewController: UIViewController {
     }
     
     private func updateFloatingVideo(with stream: UUID?) {
-        // TODO fill in when available
+        guard thumbnailVideoStream != stream else { return }
+        thumbnailVideoStream = stream
+        thumbnailViewController.view.isHidden = nil == stream
+        guard stream == ZMUser.selfUser().remoteIdentifier else { return thumbnailViewController.removeCurrentThumbnailContentView() }
+        
+        let previewView = AVSVideoPreview()
+        previewView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // TODO: Calculate correct size based on device and orientation
+        thumbnailViewController.setThumbnailContentView(previewView, contentSize: CGSize(width: 108, height: 144))
     }
     
     private func updateVideoGrid(with videoStreams: [UUID]) {
         let removed = gridVideoStreams.filter({ !videoStreams.contains($0) })
         let added = videoStreams.filter({ !gridVideoStreams.contains($0) })
-        
+ 
         removed.forEach(removeStream)
         added.forEach(addStream)
     }
     
-    func addStream(_ streamId: UUID) {
+    private func addStream(_ streamId: UUID) {
         Calling.log.debug("Adding video stream: \(streamId)")
         
         let view: UIView
@@ -102,13 +114,19 @@ class VideoGridViewController: UIViewController {
         gridVideoStreams.append(streamId)
     }
     
-    func removeStream(_ streamId: UUID) {
+    private func removeStream(_ streamId: UUID) {
         Calling.log.debug("Removing video stream: \(streamId)")
-        
-        guard let videoView = gridView.gridSubviews.first(where: { ($0 as? AVSVideoView)?.userid == streamId.transportString() }) else { return }
+        guard let videoView = streamView(for: streamId) else { return }
         gridView.remove(view: videoView)
         gridVideoStreams.index(of: streamId).apply({ gridVideoStreams.remove(at: $0)})
     }
     
-    
+    private func streamView(for streamId: UUID) -> UIView? {
+        if streamId == ZMUser.selfUser().remoteIdentifier {
+            return gridView.gridSubviews.first { $0 is AVSVideoPreview }
+        } else {
+            return gridView.gridSubviews.first { ($0 as? AVSVideoView)?.userid == streamId.transportString() }
+        }
+    }
+
 }

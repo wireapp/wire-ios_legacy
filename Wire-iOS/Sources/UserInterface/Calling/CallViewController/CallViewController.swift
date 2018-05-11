@@ -44,13 +44,19 @@ final class CallViewController: UIViewController {
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
+        AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self)]
-        updateAppearance()
+    }
+    
+    deinit {
+        AVSMediaManagerClientChangeNotification.remove(self)
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         setupViews()
         createConstraints()
+        updateConfiguration()
     }
     
     private func setupViews() {
@@ -83,11 +89,19 @@ final class CallViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard canHideOverlay else { return }
+        
+        if let touch = touches.first,
+            let overlay = videoGridViewController.previewOverlay,
+            overlay.point(inside: touch.location(in: overlay), with: event) {
+            return
+        }
+
         toggleOverlayVisibility()
     }
     
     fileprivate func toggleVideoState() {
-        // TODO:
+        voiceChannel.setVideoState(voiceChannel.videoState.toggledState)
+        updateConfiguration()
     }
     
     fileprivate func toggleCameraAnimated() {
@@ -98,7 +112,7 @@ final class CallViewController: UIViewController {
     private func toggleCameraType() {
         do {
             let newType: CaptureDevice = cameraType == .front ? .back : .front
-            try voiceChannel.setVideoCaptureDevice( newType)
+            try voiceChannel.setVideoCaptureDevice(newType)
             cameraType = newType
         } catch {
             Calling.log.error("error toggling capture device: \(error)")
@@ -124,6 +138,14 @@ extension CallViewController: WireCallCenterCallParticipantObserver {
     
 }
 
+extension CallViewController: AVSMediaManagerClientObserver {
+    
+    func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification!) {
+        updateConfiguration()
+    }
+    
+}
+
 extension CallViewController: CallInfoRootViewControllerDelegate {
     
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction) {
@@ -138,10 +160,11 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .minimizeOverlay: minimizeOverlay()
         case .toggleVideoState: toggleVideoState()
         case .flipCamera: toggleCameraAnimated()
-        case .showParticipantsList: /* Handled in `CallInfoRootViewController` */ break
+        case .showParticipantsList: return // Handled in `CallInfoRootViewController`, we don't want to update.
         }
         
         updateConfiguration()
+        restartOverlayTimerIfNeeded()
     }
     
     func infoRootViewController(_ viewController: CallInfoRootViewController, contextDidChange context: CallInfoRootViewController.Context) {
@@ -197,6 +220,11 @@ extension CallViewController {
         overlayTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 4, repeats: false) { [animateOverlay] _ in
             animateOverlay(false)
         }
+    }
+    
+    fileprivate func restartOverlayTimerIfNeeded() {
+        guard nil != overlayTimer, canHideOverlay else { return }
+        startOverlayTimer()
     }
     
     fileprivate func stopOverlayTimer() {
