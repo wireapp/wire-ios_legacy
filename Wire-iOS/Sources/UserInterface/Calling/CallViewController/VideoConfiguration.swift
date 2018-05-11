@@ -39,19 +39,46 @@ extension VideoConfiguration: VideoGridConfiguration {
             }
         }
         
-        // TODO: Do we need this? Right now the participants array is empty for 1-1 calls.
-        if otherParticipants.isEmpty, voiceChannel.conversation?.conversationType == .oneOnOne,
-            let otherUser = voiceChannel.conversation?.firstActiveParticipantOtherThanSelf()?.remoteIdentifier {
+        // TODO: Move to SE.
+        if otherParticipants.isEmpty,
+            voiceChannel.isEstablished,
+            voiceChannel.conversation?.conversationType == .oneOnOne,
+            let otherUser = voiceChannel.conversation?.connectedUser?.remoteIdentifier {
             otherParticipants += [otherUser]
         }
         
-        let selfStream = voiceChannel.videoState.isSending ? ZMUser.selfUser().remoteIdentifier : nil
-
-        if 1 == otherParticipants.count, let selfStream = selfStream {
-            return (selfStream, otherParticipants)
+        guard voiceChannel.isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
+        
+        if let selfStream = selfStream {
+            if 1 == otherParticipants.count {
+                return (selfStream, otherParticipants)
+            } else {
+                return (nil, [selfStream] + otherParticipants)
+            }
         } else {
-            return (nil, nil == selfStream ? otherParticipants : [selfStream!] + otherParticipants)
+            return (nil, otherParticipants)
+        }
+    }
+    
+    private var selfStream: UUID? {
+        switch (voiceChannel.isUnconnectedOutgoingVideoCall, voiceChannel.videoState.isSending) {
+        case (true, _), (_, true): return ZMUser.selfUser().remoteIdentifier // Show self preview while connecting
+        case (_, false): return nil
         }
     }
 
+}
+
+extension VoiceChannel {
+    var isUnconnectedOutgoingVideoCall: Bool {
+        switch (state, isVideoCall) {
+        case (.outgoing, true): return true
+        default: return false
+        }
+    }
+    
+    var isEstablished: Bool {
+        guard case .established = state else { return false }
+        return true
+    }
 }

@@ -94,7 +94,7 @@ class VideoGridViewController: UIViewController {
         added.forEach(addStream)
     }
     
-    func addStream(_ streamId: UUID) {
+    private func addStream(_ streamId: UUID) {
         Calling.log.debug("Adding video stream: \(streamId)")
         
         let view: UIView
@@ -114,12 +114,19 @@ class VideoGridViewController: UIViewController {
         gridVideoStreams.append(streamId)
     }
     
-    func removeStream(_ streamId: UUID) {
+    private func removeStream(_ streamId: UUID) {
         Calling.log.debug("Removing video stream: \(streamId)")
-        
-        guard let videoView = gridView.gridSubviews.first(where: { ($0 as? AVSVideoView)?.userid == streamId.transportString() }) else { return }
+        guard let videoView = streamView(for: streamId) else { return }
         gridView.remove(view: videoView)
         gridVideoStreams.index(of: streamId).apply({ gridVideoStreams.remove(at: $0)})
     }
     
+    private func streamView(for streamId: UUID) -> UIView? {
+        if streamId == ZMUser.selfUser().remoteIdentifier {
+            return gridView.gridSubviews.first { $0 is AVSVideoPreview }
+        } else {
+            return gridView.gridSubviews.first { ($0 as? AVSVideoView)?.userid == streamId.transportString() }
+        }
+    }
+
 }
