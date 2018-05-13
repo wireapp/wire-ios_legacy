@@ -1,4 +1,4 @@
-////
+//
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,9 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@protocol ViewControllerDismissable <NSObject>
+import UIKit
 
-- (void)viewControllerWantsToBeDismissed:(UIViewController *)controller completion:(dispatch_block_t)completion;
-
-@end
-
+extension UIStackView {
+    convenience init(axis: UILayoutConstraintAxis) {
+        self.init(frame: .zero)
+        self.axis = axis
+    }
+    
+    var visibleSubviews: [UIView] {
+        return subviews.filter { !$0.isHidden }
+    }
+}

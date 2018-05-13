@@ -27,7 +27,7 @@ protocol CollectionCellMessageChangeDelegate: class {
     func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo)
 }
 
-open class CollectionCell: UICollectionViewCell, Reusable {
+open class CollectionCell: UICollectionViewCell {
     var messageObserverToken: NSObjectProtocol? = .none
     weak var delegate: CollectionCellDelegate?
     // Cell forwards the message changes to the delegate

@@ -20,14 +20,14 @@
 
 
 
-typedef enum : NSInteger
+typedef NS_ENUM(NSInteger, WireStyleKitResizingBehavior)
 {
     WireStyleKitResizingBehaviorAspectFit, //!< The content is proportionally resized to fit into the target rectangle.
     WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
     WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
     WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
     
-} WireStyleKitResizingBehavior;
+};
 
 extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
 
@@ -234,6 +234,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x163_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x221_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfInviteWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x222_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x123_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x128_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x113_32ptWithColor: (UIColor*)color;
@@ -340,4 +341,3 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
 
 @end
-

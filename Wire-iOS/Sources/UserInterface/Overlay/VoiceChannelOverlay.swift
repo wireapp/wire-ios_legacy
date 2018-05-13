@@ -43,6 +43,7 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
     func speakerButtonTapped()
     func videoButtonTapped()
     func switchCameraButtonTapped()
+    func dismissCallOverlayTapped()
 }
 
 @objc enum VoiceChannelOverlayState: Int, CustomStringConvertible {
@@ -79,15 +80,6 @@ fileprivate let VoiceChannelOverlayVideoFeedPositionKey = "VideoFeedPosition"
         }
     }
     
-}
-
-fileprivate extension IconLabelButton {
-    convenience init(icon: ZetaIconType, label: String, accessibilityIdentifier: String) {
-        self.init()
-        self.iconButton.setIcon(icon, with: .small, for: .normal)
-        self.subtitleLabel.text = label
-        self.accessibilityIdentifier = accessibilityIdentifier
-    }
 }
 
 fileprivate extension UILabel {
@@ -217,7 +209,8 @@ class VoiceChannelOverlay: UIView {
     let muteButton = IconLabelButton(icon: .microphoneWithStrikethrough, label: "voice.mute_button.title".localized, accessibilityIdentifier: "CallMuteButton")
     let speakerButton = IconLabelButton(icon: .speaker, label: "voice.speaker_button.title".localized, accessibilityIdentifier: "CallSpeakerButton")
     let videoButton = IconLabelButton(icon: .videoCall, label: "voice.video_button.title".localized, accessibilityIdentifier: "CallVideoButton")
-
+    let dismissCallOverlayButton: IconButton
+    
     let degradationTopLabel = UILabel.multiline
     let degradationBottomLabel = UILabel.multiline
     let topStatusLabel = UILabel.multiline
@@ -234,6 +227,8 @@ class VoiceChannelOverlay: UIView {
         self.callingConversation = callingConversation
         self.participantsCollectionViewLayout = VoiceChannelCollectionViewLayout()
         self.participantsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: participantsCollectionViewLayout)
+        dismissCallOverlayButton = IconButton.iconButtonDefaultLight()
+        
         super.init(frame: frame)
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
@@ -367,6 +362,8 @@ extension VoiceChannelOverlay {
             delegate?.videoButtonTapped()
         case cameraPreviewView.switchCameraButton:
             delegate?.switchCameraButtonTapped()
+        case dismissCallOverlayButton:
+            delegate?.dismissCallOverlayTapped()
         default:
             break
         }
@@ -461,6 +458,11 @@ extension VoiceChannelOverlay {
     fileprivate func setupVoiceOverlay() {
         clipsToBounds = true
         backgroundColor = .clear
+        
+        dismissCallOverlayButton.setIcon(.downArrow, with: .tiny, for: .normal)
+        dismissCallOverlayButton.accessibilityIdentifier = "CallDismissOverlayButton"
+        dismissCallOverlayButton.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        
         callDurationFormatter.allowedUnits = [.minute, .second]
         callDurationFormatter.zeroFormattingBehavior = DateComponentsFormatter.ZeroFormattingBehavior(rawValue: 0)
         
@@ -493,6 +495,7 @@ extension VoiceChannelOverlay {
         configureParticipantsCollectionView(collectionView: participantsCollectionView)
         addSubview(participantsCollectionView)
         
+        contentContainer.addSubview(dismissCallOverlayButton)
         
         [acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, leaveButton, muteButton, videoButton, speakerButton, cancelButton, makeDegradedCallButton].forEach {
             contentContainer.addSubview($0)
@@ -558,6 +561,11 @@ extension VoiceChannelOverlay {
     fileprivate func createConstraints(){
         
         let videoViews: [UIView?] = [shadow, videoNotAvailableBackground]
+        
+        constrain(contentContainer, dismissCallOverlayButton) { contentContainer, dismissCallOverlayButton in
+            dismissCallOverlayButton.leading == contentContainer.leadingMargin
+            dismissCallOverlayButton.top == contentContainer.topMargin
+        }
         
         constrain(videoViews.flatMap{ $0 }) { views in
             let superview = (views.first?.superview)!
@@ -811,7 +819,7 @@ extension VoiceChannelOverlay {
     }
     
     fileprivate var allOverlayViews: Set<UIView> {
-        return [callingUserImage, callingTopUserImage, topStatusLabel, centerStatusLabel, acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, speakerButton, muteButton, leaveButton, videoButton, cameraPreviewView, shadow, videoNotAvailableBackground, participantsCollectionView, cancelButton, makeDegradedCallButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+        return [callingUserImage, callingTopUserImage, topStatusLabel, centerStatusLabel, acceptButton, acceptDegradedButton, acceptVideoButton, ignoreButton, speakerButton, muteButton, leaveButton, videoButton, cameraPreviewView, shadow, videoNotAvailableBackground, participantsCollectionView, cancelButton, makeDegradedCallButton, degradationTopLabel, degradationBottomLabel, shieldOverlay, dismissCallOverlayButton]
     }
     
     fileprivate func connectedStateVisibleViews(videoEnabled: Bool) -> Set<UIView> {
@@ -843,19 +851,21 @@ extension VoiceChannelOverlay {
         case .invalid, .incomingCallInactive:
             visibleViews = []
         case .outgoingCall:
-            visibleViews = [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton]
+            visibleViews = [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton, dismissCallOverlayButton]
         case .outgoingCallDegraded:
-            visibleViews = [callingUserImage, topStatusLabel, cancelButton, makeDegradedCallButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [callingUserImage, topStatusLabel, cancelButton, makeDegradedCallButton, degradationTopLabel, degradationBottomLabel, shieldOverlay, dismissCallOverlayButton]
         case .incomingCall:
-            visibleViews = [callingUserImage, topStatusLabel, acceptButton, ignoreButton]
+            visibleViews = [callingUserImage, topStatusLabel, acceptButton, ignoreButton, dismissCallOverlayButton]
         case .incomingCallDegraded:
-            visibleViews = [callingUserImage, topStatusLabel, acceptDegradedButton, cancelButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [callingUserImage, topStatusLabel, acceptDegradedButton, cancelButton, degradationTopLabel, degradationBottomLabel, shieldOverlay, dismissCallOverlayButton]
         case .joiningCall:
-            visibleViews = [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton]
+            visibleViews = [callingUserImage, topStatusLabel, speakerButton, muteButton, leaveButton, dismissCallOverlayButton]
         case .connected:
-            visibleViews = connectedStateVisibleViews(videoEnabled: false)
+            var connectedStateViews = connectedStateVisibleViews(videoEnabled: false)
+            connectedStateViews.insert(dismissCallOverlayButton)
+            visibleViews = connectedStateViews
         case .leavingCall:
-            visibleViews = [topStatusLabel]
+            visibleViews = [topStatusLabel, dismissCallOverlayButton]
         }
         
         if hidesSpeakerButton {
@@ -872,22 +882,24 @@ extension VoiceChannelOverlay {
         case .invalid, .incomingCallInactive:
             visibleViews = []
         case .outgoingCall:
-            visibleViews = [shadow, callingTopUserImage, topStatusLabel, muteButton, leaveButton, videoButton]
+            visibleViews = [shadow, callingTopUserImage, topStatusLabel, muteButton, leaveButton, videoButton, dismissCallOverlayButton]
         case .outgoingCallDegraded:
-            visibleViews = [shadow, callingUserImage, topStatusLabel, cancelButton, makeDegradedCallButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [shadow, callingUserImage, topStatusLabel, cancelButton, makeDegradedCallButton, degradationTopLabel, degradationBottomLabel, shieldOverlay, dismissCallOverlayButton]
         case .incomingCall:
-            visibleViews = [shadow, callingTopUserImage, topStatusLabel, acceptVideoButton, ignoreButton]
+            visibleViews = [shadow, callingTopUserImage, topStatusLabel, acceptVideoButton, ignoreButton, dismissCallOverlayButton]
         case .incomingCallDegraded:
-            visibleViews = [shadow, callingUserImage, topStatusLabel, acceptDegradedButton, cancelButton, degradationTopLabel, degradationBottomLabel, shieldOverlay]
+            visibleViews = [shadow, callingUserImage, topStatusLabel, acceptDegradedButton, cancelButton, degradationTopLabel, degradationBottomLabel, shieldOverlay, dismissCallOverlayButton]
         case .joiningCall:
-            visibleViews = [callingTopUserImage, topStatusLabel, muteButton, leaveButton, videoButton]
+            visibleViews = [callingTopUserImage, topStatusLabel, muteButton, leaveButton, videoButton, dismissCallOverlayButton]
         case .connected:
-            visibleViews = connectedStateVisibleViews(videoEnabled: true)
+            var connectedStateViews = connectedStateVisibleViews(videoEnabled: true)
+            connectedStateViews.insert(dismissCallOverlayButton)
+            visibleViews = connectedStateViews
             if !outgoingVideoActive {
                 visibleViews.remove(cameraPreviewView)
             }
         case .leavingCall:
-            visibleViews = [callingTopUserImage, topStatusLabel]
+            visibleViews = [callingTopUserImage, topStatusLabel, dismissCallOverlayButton]
         }
         
         return visibleViews

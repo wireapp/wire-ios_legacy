@@ -40,6 +40,13 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
         return mockIsVideoCall
     }
     
+    var videoState: VideoState {
+        get {
+            return .stopped
+        }
+        set { }        
+    }
+    
     var state: CallState {
         return .incoming(video: false, shouldRing: true, degraded: false)
     }
@@ -51,16 +58,16 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
     var participants: NSOrderedSet = NSOrderedSet()
     
     func state(forParticipant: ZMUser) -> CallParticipantState {
-        return .connected(muted: false, sendingVideo: false)
+        return .connected(videoState: .stopped)
     }
     
-    var selfUserConnectionState: CallParticipantState = CallParticipantState.connected(muted: false, sendingVideo: false)
+    var selfUserConnectionState: CallParticipantState = CallParticipantState.connected(videoState: .stopped)
     
-    func setVideoCaptureDevice(device: CaptureDevice) throws {
+    func setVideoState(_ videoState: VideoState) {
         
     }
     
-    func toggleVideo(active: Bool) throws {
+    func setVideoCaptureDevice(_ device: CaptureDevice) throws {
         
     }
     
@@ -110,7 +117,7 @@ class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
         return NSObject()
     }
     
-    func addParticipantObserver(_ observer: VoiceChannelParticipantObserver) -> Any {
+    func addParticipantObserver(_ observer: WireCallCenterCallParticipantObserver) -> Any {
         return NSObject()
     }
     

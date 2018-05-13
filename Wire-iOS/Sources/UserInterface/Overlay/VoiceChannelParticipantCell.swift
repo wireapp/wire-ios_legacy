@@ -33,8 +33,8 @@ extension VoiceChannelParticipantCell {
             userImage.state = .talking
         }
         
-        if case .connected(muted: let muted, sendingVideo: _) = participantState {
-            userImage.badgeIcon = muted ? .microphoneWithStrikethrough : .none
+        if case .connected(videoState: _) = participantState {
+            userImage.badgeIcon = .none
         }
 
     }

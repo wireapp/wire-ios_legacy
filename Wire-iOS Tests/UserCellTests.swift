@@ -122,4 +122,13 @@ class UserCellTests: ZMSnapshotTestCase {
         }))
     }
     
+    
+    func testUserInsideOngoingVideoCall() {
+        let user = MockUser.mockUsers()[0]
+        verifyInAllColorSchemes(view: cell({ (cell) in
+            let config = CallParticipantsCellConfiguration.callParticipant(user: user, sendsVideo: true)
+            cell.configure(with: config, variant: .dark)
+        }))
+    }
+    
 }

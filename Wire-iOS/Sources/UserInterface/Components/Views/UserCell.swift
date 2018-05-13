@@ -40,6 +40,8 @@ class UserCell: UICollectionViewCell, Themeable {
         case none, disclosure, connect
     }
     
+    var hidesSubtitle: Bool = false
+    
     let separator = UIView()
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
@@ -49,6 +51,7 @@ class UserCell: UICollectionViewCell, Themeable {
     let accessoryIconView = UIImageView()
     let guestIconView = UIImageView()
     let verifiedIconView = UIImageView()
+    let videoIconView = UIImageView()
     let checkmarkIconView = UIImageView()
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
@@ -94,7 +97,9 @@ class UserCell: UICollectionViewCell, Themeable {
         super.prepareForReuse()
         
         UIView.performWithoutAnimation {
+            hidesSubtitle = false
             verifiedIconView.isHidden = true
+            videoIconView.isHidden = true
             connectButton.isHidden = true
             accessoryIconView.isHidden = false
             checkmarkIconView.image = nil
@@ -108,6 +113,11 @@ class UserCell: UICollectionViewCell, Themeable {
         guestIconView.contentMode = .center
         guestIconView.accessibilityIdentifier = "img.guest"
         guestIconView.isHidden = true
+        
+        videoIconView.translatesAutoresizingMaskIntoConstraints = false
+        videoIconView.contentMode = .center
+        videoIconView.accessibilityIdentifier = "img.video"
+        videoIconView.isHidden = true
         
         verifiedIconView.image = WireStyleKit.imageOfShieldverified()
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
@@ -144,7 +154,7 @@ class UserCell: UICollectionViewCell, Themeable {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
         
-        iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, guestIconView, connectButton, checkmarkIconView, accessoryIconView])
+        iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, guestIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
         iconStackView.spacing = 8
         iconStackView.axis = .horizontal
         iconStackView.distribution = .fill
@@ -198,6 +208,7 @@ class UserCell: UICollectionViewCell, Themeable {
         let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: colorSchemeVariant)
+        videoIconView.image = UIImage(for: .videoCall, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconGuest, variant: colorSchemeVariant))
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconGuest, variant: colorSchemeVariant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
@@ -222,7 +233,7 @@ class UserCell: UICollectionViewCell, Themeable {
             verifiedIconView.isHidden  = true
         }
         
-        if let subtitle = subtitle(for: user), subtitle.length > 0 {
+        if let subtitle = subtitle(for: user), subtitle.length > 0, !hidesSubtitle {
             subtitleLabel.isHidden = false
             subtitleLabel.attributedText = subtitle
         } else {

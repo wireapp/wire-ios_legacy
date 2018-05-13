@@ -82,6 +82,11 @@ fileprivate class MockDelegate: NSObject, VoiceChannelOverlayDelegate {
     func switchCameraButtonTapped() {
         switchCamera = true
     }
+    
+    var dismissOverlay = false
+    func dismissCallOverlayTapped() {
+        dismissOverlay = true
+    }
 }
 
 class VoiceChannelOverlayTests: ZMSnapshotTestCase {

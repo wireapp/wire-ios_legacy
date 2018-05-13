@@ -31,6 +31,6 @@ class DegradationOverlayView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        WireStyleKit.drawDegradation(withFrame: rect, resizing: WireStyleKitResizingBehaviorAspectFit)
+        WireStyleKit.drawDegradation(withFrame: rect, resizing: .aspectFit)
     }
 }

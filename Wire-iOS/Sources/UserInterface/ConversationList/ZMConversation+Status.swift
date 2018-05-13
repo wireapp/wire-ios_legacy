@@ -33,7 +33,7 @@ internal enum ConversationStatusIcon {
     
     case playingMedia
     
-    case activeCall(joined: Bool)
+    case activeCall(showJoin: Bool)
 }
 
 // Describes the status of the conversation.
@@ -255,11 +255,12 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
         let state = conversation.voiceChannel?.state ?? .none
-        
-        if case CallState.established = state {
-            return .activeCall(joined: true)
-        } else {
-            return .activeCall(joined: false)
+
+        switch state {
+        case CallState.incoming(_, false, _):
+            return .activeCall(showJoin: true)
+        default:
+            return .activeCall(showJoin: conversation.isSilenced)
         }
     }
     

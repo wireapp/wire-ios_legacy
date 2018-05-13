@@ -22,6 +22,10 @@ import Classy
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
+protocol VoiceChannelViewControllerDelegate: class {
+    func voiceChannelViewControllerWantsToBeDismissed(_ voiceChannelViewController: VoiceChannelViewController)
+}
+
 class VoiceChannelViewController: UIViewController {
     
     let conversation : ZMConversation
@@ -29,9 +33,11 @@ class VoiceChannelViewController: UIViewController {
     var blurEffectView : UIVisualEffectView!
     var participantsController : VoiceChannelParticipantsController?
     
-    var callStateObserverToken : Any?
-    var receivedVideoObserverToken : Any?
-    var constantBitRateObserverToken : Any?
+    var callStateObserverToken: Any?
+    var receivedVideoObserverToken: Any?
+    var constantBitRateObserverToken: Any?
+    
+    weak var delegate: VoiceChannelViewControllerDelegate?
     
     fileprivate var isSwitchingCamera = false
     fileprivate var currentCaptureDevice: CaptureDevice = .front
@@ -63,7 +69,7 @@ class VoiceChannelViewController: UIViewController {
         voiceChannelView.constantBitRate = conversation.voiceChannel?.isConstantBitRateAudioActive ?? false
         
         callStateObserverToken = conversation.voiceChannel?.addCallStateObserver(self)
-        receivedVideoObserverToken = conversation.voiceChannel?.addReceivedVideoObserver(self)
+//        receivedVideoObserverToken = conversation.voiceChannel?.addReceivedVideoObserver(self)
         constantBitRateObserverToken = conversation.voiceChannel?.addConstantBitRateObserver(self)
         AVSMediaManagerClientChangeNotification.add(self)
         
@@ -229,15 +235,16 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     }
     
     func videoButtonTapped() {
-        zmLog.debug("videoButtonTapped")
-        
-        do {
-            let active = !voiceChannelView.outgoingVideoActive
-            try conversation.voiceChannel?.toggleVideo(active: active)
-            voiceChannelView.outgoingVideoActive = active
-        } catch {
-            zmLog.error("failed to toggle video: \(error)")
-        }
+        // NOTE this class will be deleted
+//        zmLog.debug("videoButtonTapped")
+//
+//        do {
+//            let active = !voiceChannelView.outgoingVideoActive
+//            try conversation.voiceChannel?.toggleVideo(active: active)
+//            voiceChannelView.outgoingVideoActive = active
+//        } catch {
+//            zmLog.error("failed to toggle video: \(error)")
+//        }
     }
     
     func switchCameraButtonTapped() {
@@ -260,16 +267,21 @@ extension VoiceChannelViewController : VoiceChannelOverlayDelegate {
     }
     
     func toggleCaptureDevice() {
+
+        // NOTE this class will be deleted
+//        let newCaptureDevice : CaptureDevice = (currentCaptureDevice == CaptureDevice.front) ? .back : .front
+//
+//        do {
+//            try conversation.voiceChannel?.setVideoCaptureDevice(device: newCaptureDevice)
+//            currentCaptureDevice = newCaptureDevice
+//        } catch {
+//            zmLog.error("failed to toggle capture device: \(error)")
+//        }
         
-        let newCaptureDevice : CaptureDevice = (currentCaptureDevice == CaptureDevice.front) ? .back : .front
-        
-        do {
-            try conversation.voiceChannel?.setVideoCaptureDevice(device: newCaptureDevice)
-            currentCaptureDevice = newCaptureDevice
-        } catch {
-            zmLog.error("failed to toggle capture device: \(error)")
-        }
-        
+    }
+    
+    func dismissCallOverlayTapped() {
+        delegate?.voiceChannelViewControllerWantsToBeDismissed(self)
     }
     
 }
@@ -431,14 +443,16 @@ extension VoiceChannelViewController {
         
         outgoingVideoWasActiveBeforeEnteringEnteringBackground =  voiceChannelView.outgoingVideoActive
         
-        try? conversation.voiceChannel?.toggleVideo(active: false)
+        // NOTE this class will be deleted
+//        try? conversation.voiceChannel?.toggleVideo(active: false)
     }
     
     func applicationDidBecomeActive() {
         guard conversation.voiceChannel?.isVideoCall ?? false else { return }
         
         if outgoingVideoWasActiveBeforeEnteringEnteringBackground {
-            try? conversation.voiceChannel?.toggleVideo(active: true)
+            // NOTE this class will be deleted
+//            try? conversation.voiceChannel?.toggleVideo(active: true)
         }
     }
     
