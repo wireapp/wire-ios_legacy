@@ -24,62 +24,6 @@ protocol VideoGridConfiguration {
     var isMuted: Bool { get }
 }
 
-protocol AVSIdentifierProvider {
-    var identifier: String { get }
-}
-
-extension AVSVideoView: AVSIdentifierProvider {
-    var identifier: String {
-        return userid
-    }
-}
-
-final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
-    private let previewView = AVSVideoPreview()
-    private let mutedOverlayView = UIView()
-    private let mutedIconImageView = UIImageView()
-    let identifier: String
-    
-    var isMuted = false {
-        didSet {
-            mutedOverlayView.isHidden = !isMuted
-            mutedIconImageView.isHidden = !isMuted
-        }
-    }
-    
-    init(identifier: String) {
-        self.identifier = identifier
-        super.init(frame: .zero)
-        setupViews()
-        createConstraints()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupViews() {
-        mutedOverlayView.isHidden = true
-        mutedIconImageView.isHidden = true
-        mutedIconImageView.contentMode = .center
-        mutedOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
-        let iconColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
-        mutedIconImageView.image = UIImage(for: .microphoneWithStrikethrough, iconSize: .tiny, color: iconColor)
-        [previewView, mutedOverlayView, mutedIconImageView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            addSubview($0)
-        }
-    }
-    
-    private func createConstraints() {
-        previewView.fitInSuperview()
-        mutedOverlayView.fitInSuperview()
-        mutedIconImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        mutedIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-    }
-}
-
 extension CGSize {
     static let floatingPreviewPortrait = CGSize(width: 108, height: 144)
     static let floatingPreviewLandscape = CGSize(width: 144, height: 108)
@@ -95,6 +39,7 @@ class VideoGridViewController: UIViewController {
         return thumbnailViewController.contentView
     }
     
+    private var floatingSelfPreviewView: SelfVideoPreviewView?
     private var selfPreviewView: SelfVideoPreviewView?
     
     var configuration: VideoGridConfiguration {
@@ -133,12 +78,16 @@ class VideoGridViewController: UIViewController {
     func updateState() {
         updateFloatingVideo(with: configuration.floatingVideoStream)
         updateVideoGrid(with: configuration.videoStreams)
+        
+        // Update mute status
+        floatingSelfPreviewView?.isMuted = configuration.isMuted
+        selfPreviewView?.isMuted = configuration.isMuted
     }
     
     private func updateFloatingVideo(with stream: UUID?) {
         // No stream, remove floating video if there is any
         guard let stream = stream else {
-            selfPreviewView = nil
+            floatingSelfPreviewView = nil
             return thumbnailViewController.removeCurrentThumbnailContentView()
         }
         
@@ -148,17 +97,14 @@ class VideoGridViewController: UIViewController {
         }
         
         // We have a stream but don't have a preview view yet
-        if nil == selfPreviewView {
+        if nil == floatingSelfPreviewView {
             let previewView = SelfVideoPreviewView(identifier: stream.transportString())
             previewView.translatesAutoresizingMaskIntoConstraints = false
             
             // TODO: Calculate correct size based on device and orientation
             thumbnailViewController.setThumbnailContentView(previewView, contentSize: .floatingPreviewPortrait)
-            selfPreviewView = previewView
+            floatingSelfPreviewView = previewView
         }
-        
-        // Update mute status
-        selfPreviewView?.isMuted = configuration.isMuted
     }
     
     private func updateVideoGrid(with videoStreams: [UUID]) {
@@ -172,18 +118,20 @@ class VideoGridViewController: UIViewController {
     private func addStream(_ streamId: UUID) {
         Calling.log.debug("Adding video stream: \(streamId)")
         
-        let view: UIView
-        if streamId == ZMUser.selfUser().remoteIdentifier {
-            let videoView = SelfVideoPreviewView(identifier: streamId.transportString())
-            videoView.translatesAutoresizingMaskIntoConstraints = false
-            view = videoView
-        } else {
-            let videoView = AVSVideoView()
-            videoView.translatesAutoresizingMaskIntoConstraints = false
-            videoView.userid = streamId.transportString()
-            videoView.shouldFill = true
-            view = videoView
-        }
+        let view: UIView = {
+            if streamId == ZMUser.selfUser().remoteIdentifier {
+                let videoView = SelfVideoPreviewView(identifier: streamId.transportString())
+                videoView.translatesAutoresizingMaskIntoConstraints = false
+                selfPreviewView = videoView
+                return videoView
+            } else {
+                let videoView = AVSVideoView()
+                videoView.translatesAutoresizingMaskIntoConstraints = false
+                videoView.userid = streamId.transportString()
+                videoView.shouldFill = true
+                return videoView
+            }
+        }()
         
         gridView.append(view: view)
         gridVideoStreams.append(streamId)
@@ -193,7 +141,11 @@ class VideoGridViewController: UIViewController {
         Calling.log.debug("Removing video stream: \(streamId)")
         guard let videoView = streamView(for: streamId) else { return }
         gridView.remove(view: videoView)
-        gridVideoStreams.index(of: streamId).apply({ gridVideoStreams.remove(at: $0)})
+        gridVideoStreams.index(of: streamId).apply { gridVideoStreams.remove(at: $0) }
+
+        if streamId.transportString() == selfPreviewView?.identifier {
+            selfPreviewView = nil
+        }
     }
     
     private func streamView(for streamId: UUID) -> UIView? {
