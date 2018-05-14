@@ -99,6 +99,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         target: self,
         action: #selector(minimizeCallOverlay)
         )
+        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "CallDismissOverlayButton"
     }
 
     private func updateState() {
