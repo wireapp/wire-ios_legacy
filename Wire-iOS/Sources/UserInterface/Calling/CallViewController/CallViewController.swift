@@ -36,6 +36,10 @@ final class CallViewController: UIViewController {
         return voiceChannel.conversation
     }
     
+    private var proximityMonitorManager: ProximityMonitorManager? {
+        return ZClientViewController.shared()?.proximityMonitorManager
+    }
+    
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance()) {
         self.voiceChannel = voiceChannel
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
@@ -46,6 +50,7 @@ final class CallViewController: UIViewController {
         callInfoRootViewController.delegate = self
         AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self)]
+        proximityMonitorManager?.stateChanged = proximityStateDidChange
     }
     
     deinit {
@@ -57,6 +62,16 @@ final class CallViewController: UIViewController {
         setupViews()
         createConstraints()
         updateConfiguration()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        proximityMonitorManager?.startListening()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        proximityMonitorManager?.stopListening()
     }
     
     private func setupViews() {
@@ -232,4 +247,13 @@ extension CallViewController {
         overlayTimer = nil
     }
 
+}
+
+extension CallViewController {
+    
+    func proximityStateDidChange(_ raisedToEar: Bool) {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState != .stopped else { return }
+        voiceChannel.videoState = raisedToEar ? .paused : .started
+        updateConfiguration()
+    }
 }
