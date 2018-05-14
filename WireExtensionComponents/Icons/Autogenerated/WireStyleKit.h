@@ -33,16 +33,16 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 
 
 @interface WireStyleKit : NSObject
-
-// iOS Controls Customization Outlets
-@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
-@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
-@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
-
-// Colors
+    
+    // iOS Controls Customization Outlets
+    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
+    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
+    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
+    
+    // Colors
 + (UIColor*)fillColor10;
-
-// Drawing Methods
+    
+    // Drawing Methods
 + (void)drawIcon_0x100_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x102_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x104_32ptWithColor: (UIColor*)color;
@@ -205,8 +205,8 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawRestoreWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color;
 + (void)drawMentionsWithFrame: (CGRect)frame backgroundColor: (UIColor*)backgroundColor;
 + (void)drawTabWithColor: (UIColor*)color;
-
-// Generated Images
+    
+    // Generated Images
 + (UIImage*)imageOfIcon_0x100_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x102_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x104_32ptWithColor: (UIColor*)color;
@@ -339,5 +339,5 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfSpaceFocusWithColor: (UIColor*)color;
 + (UIImage*)imageOfRestoreWithColor: (UIColor*)color;
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
-
-@end
+    
+    @end
