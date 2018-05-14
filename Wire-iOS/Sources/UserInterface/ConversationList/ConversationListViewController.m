@@ -175,6 +175,7 @@
     [self updateArchiveButtonVisibility];
     
     [self updateObserverTokensForActiveTeam];
+    [self showDataUsagePermissionDialogIfNeeded];
     [self showPushPermissionDeniedDialogIfNeeded];
 }
 
