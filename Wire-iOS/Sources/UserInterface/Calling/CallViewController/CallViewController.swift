@@ -125,7 +125,7 @@ extension CallViewController: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateConfiguration()
-        startInitialOverlayTimerIfNeeded()
+        hideOverlayAfterCallEstablishedIfNeeded()
     }
     
 }
@@ -210,9 +210,10 @@ extension CallViewController {
         )
     }
     
-    fileprivate func startInitialOverlayTimerIfNeeded() {
-        guard nil == overlayTimer, canHideOverlay else { return }
-        startOverlayTimer()
+    fileprivate func hideOverlayAfterCallEstablishedIfNeeded() {
+        let isNotAnimating = callInfoRootViewController.view.layer.animationKeys()?.isEmpty ?? true
+        guard nil == overlayTimer, canHideOverlay, isOverlayVisible, isNotAnimating else { return }
+        animateOverlay(show: false)
     }
     
     fileprivate func startOverlayTimer() {
