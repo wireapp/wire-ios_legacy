@@ -496,7 +496,7 @@
 "call.status.incoming" = "Calling…";
 "call.status.outgoing" = "Ringing…";
 "call.status.reconnecting" = "Reconnecting…";
-"call.status.terminating" = "Ending call…";
+"call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Constant Bit Rate";
 
 "call.participants.show_all" = "Show All (%@)";
