@@ -261,6 +261,7 @@
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
+    self.conversationListViewController.isComingFromLaunch = self.isComingFromLaunch;
     [self.conversationListViewController view];
 }
 
@@ -501,8 +502,15 @@
 - (void)setIsComingFromRegistration:(BOOL)isComingFromRegistration
 {
     _isComingFromRegistration = isComingFromRegistration;
-    
+
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
+}
+
+- (void)setIsComingFromLaunch:(BOOL)isComingFromLaunch
+{
+    _isComingFromLaunch = isComingFromLaunch;
+
+    self.conversationListViewController.isComingFromLaunch = self.isComingFromLaunch;
 }
 
 - (BOOL)isConversationViewVisible

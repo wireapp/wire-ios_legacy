@@ -31,6 +31,7 @@ protocol AppStateControllerDelegate : class {
 class AppStateController : NSObject {
     
     private(set) var appState : AppState = .headless
+    private(set) var lastAppState : AppState = .headless
     private var authenticationObserverToken : ZMAuthenticationStatusObserver?
     public weak var delegate : AppStateControllerDelegate? = nil
     
@@ -101,6 +102,7 @@ class AppStateController : NSObject {
         
         if newAppState != appState {
             zmLog.debug("transitioning to app state: \(newAppState)")
+            lastAppState = appState
             appState = newAppState
             delegate?.appStateController(transitionedTo: appState) {
                 completion?()

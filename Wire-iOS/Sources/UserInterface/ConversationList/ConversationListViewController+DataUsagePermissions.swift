@@ -33,12 +33,9 @@ extension ConversationListViewController {
         }))
 
         alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: { (_) in
-            ///TODO: save the timestamp and do not ask again in the future?
         }))
 
 
         ZClientViewController.shared()?.present(alertController, animated: true)
     }
-
-    ///TODO: test on device with notification permission dialogue
 }

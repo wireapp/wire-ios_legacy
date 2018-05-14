@@ -256,6 +256,7 @@ class AppRootViewController: UIViewController {
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
+            clientViewController.isComingFromLaunch = appStateController.lastAppState == .headless
 
             Analytics.shared().team = ZMUser.selfUser().team
 

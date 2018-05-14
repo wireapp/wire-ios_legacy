@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) BOOL isComingFromRegistration;
 
+@property (nonatomic) BOOL isComingFromLaunch;
+
 @property (nonatomic, readonly) SplitViewController *splitViewController;
 
 @property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
