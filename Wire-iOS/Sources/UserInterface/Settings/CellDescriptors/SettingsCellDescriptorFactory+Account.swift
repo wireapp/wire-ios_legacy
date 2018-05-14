@@ -245,17 +245,7 @@ extension SettingsCellDescriptorFactory {
     }
 
     func dateUsagePermissionsElement() -> SettingsCellDescriptorType {
-        return SettingsExternalScreenCellDescriptor(
-            title: "self.settings.data_usage_permissions.title".localized,
-            isDestructive: false,
-            presentationStyle: .navigation,
-            presentationAction: {
-                ///TODO:
-//                    return BackupViewController.init(backupSource: SessionManager.shared!)
-
-                return UIViewController()
-        }
-        )
+        return dataUsagePermissionsGroup()
     }
 
     func ressetPasswordElement() -> SettingsCellDescriptorType {

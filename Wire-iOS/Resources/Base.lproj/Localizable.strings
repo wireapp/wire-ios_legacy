@@ -695,7 +695,6 @@
 "self.settings.account_picture_group.color" = "Color";
 
 "self.settings.account_personal_information_group.title" = "Personal Information";
-"self.settings.data_usage_permissions.title" = "Data Usage Permissions";
 
 "self.settings.account_picture_group.theme" = "Dark Theme";
 
@@ -713,6 +712,15 @@
 
 "self.settings.account_details.log_out.alert.title" = "Log out";
 "self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
+
+"self.settings.receiveNews_and_offers.title" = "Receive News and Offers";
+"self.settings.receiveNews_and_offers.description.title" = "We may use external services like Salesforce an Marketo to process your data. You may still receive other messages from us.";
+
 
 
 // Change Username
@@ -839,10 +847,6 @@
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 
-"self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
-"self.settings.privacy_analytics_menu.description.title" = "Make Wire better by sending anonymous information.\n";
-
 "self.settings.privacy.clear_history.title" = "Clear History";
 "self.settings.privacy.clear_history.subtitle" = "This will permanently erase the content of all your conversations.";
 
@@ -855,6 +859,9 @@
 "self.settings.advanced.reset_push_token_alert.title" = "Push token has been reset";
 "self.settings.advanced.reset_push_token_alert.message" = "Notifications will be restored in a few seconds.";
 "self.settings.advanced.version_technical_details.title" = "Version Technical Details";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Data Usage Permissions";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical Report";
