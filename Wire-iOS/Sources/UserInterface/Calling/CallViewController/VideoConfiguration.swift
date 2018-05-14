@@ -21,13 +21,18 @@ struct VideoConfiguration {
     let mediaManager: AVSMediaManager
 }
 
+struct ParticipantVideoState {
+    let stream: UUID
+    let isPaused: Bool
+}
+
 extension VideoConfiguration: VideoGridConfiguration {
     
-    var floatingVideoStream: UUID? {
+    var floatingVideoStream: ParticipantVideoState? {
         return computeVideoStreams().preview
     }
     
-    var videoStreams: [UUID] {
+    var videoStreams: [ParticipantVideoState] {
         return computeVideoStreams().grid
     }
     
@@ -35,11 +40,14 @@ extension VideoConfiguration: VideoGridConfiguration {
         return AVSMediaManager.sharedInstance().isMicrophoneMuted
     }
     
-    private func computeVideoStreams() -> (preview: UUID?, grid: [UUID]) {
-        var otherParticipants: [UUID] = voiceChannel.participants.compactMap { user in
+    private func computeVideoStreams() -> (preview: ParticipantVideoState?, grid: [ParticipantVideoState]) {
+        var otherParticipants: [ParticipantVideoState] = voiceChannel.participants.compactMap { user in
             guard let user = user as? ZMUser else { return nil }
             switch voiceChannel.state(forParticipant: user) {
-            case .connected(videoState: let state) where state.isSending: return user.remoteIdentifier
+            case .connected(videoState: .started), .connected(videoState: .badConnection):
+                return .init(stream: user.remoteIdentifier, isPaused: false)
+            case .connected(videoState: .paused):
+                return .init(stream: user.remoteIdentifier, isPaused: true)
             default: return nil
             }
         }
@@ -49,7 +57,8 @@ extension VideoConfiguration: VideoGridConfiguration {
             voiceChannel.isEstablished,
             voiceChannel.conversation?.conversationType == .oneOnOne,
             let otherUser = voiceChannel.conversation?.connectedUser?.remoteIdentifier {
-            otherParticipants += [otherUser]
+            let state = ParticipantVideoState(stream: otherUser, isPaused: false)
+            otherParticipants += [state]
         }
         
         guard voiceChannel.isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
@@ -65,10 +74,14 @@ extension VideoConfiguration: VideoGridConfiguration {
         }
     }
     
-    private var selfStream: UUID? {
-        switch (voiceChannel.isUnconnectedOutgoingVideoCall, voiceChannel.videoState.isSending) {
-        case (true, _), (_, true): return ZMUser.selfUser().remoteIdentifier // Show self preview while connecting
-        case (_, false): return nil
+    private var selfStream: ParticipantVideoState? {
+        switch (voiceChannel.isUnconnectedOutgoingVideoCall, voiceChannel.videoState) {
+        case (true, _), (_, .started), (_, .badConnection):
+            return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: false)
+        case (_, .paused):
+            return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: true)
+        case (_, .stopped):
+            return nil
         }
     }
 

@@ -828,6 +828,7 @@
 		BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF735D001E716816003BC61F /* CallSystemMessageTests.swift */; };
 		BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF78687D1D86B36D0063762F /* LocationDataTests.swift */; };
 		BF79B0FC20A98B60001BF4FE /* SelfVideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79B0FB20A98B60001BF4FE /* SelfVideoPreviewView.swift */; };
+		BF79B0FE20A99762001BF4FE /* VideoPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79B0FD20A99762001BF4FE /* VideoPreviewView.swift */; };
 		BF7ED2D61DF18724003A4397 /* UserNameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */; };
 		BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2D71DF1A30C003A4397 /* IncomingConnectionView.swift */; };
 		BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7ED2D91DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift */; };
@@ -2453,6 +2454,7 @@
 		BF735D001E716816003BC61F /* CallSystemMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallSystemMessageTests.swift; sourceTree = "<group>"; };
 		BF78687D1D86B36D0063762F /* LocationDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDataTests.swift; sourceTree = "<group>"; };
 		BF79B0FB20A98B60001BF4FE /* SelfVideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfVideoPreviewView.swift; sourceTree = "<group>"; };
+		BF79B0FD20A99762001BF4FE /* VideoPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewView.swift; sourceTree = "<group>"; };
 		BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameDetailView.swift; sourceTree = "<group>"; };
 		BF7ED2D71DF1A30C003A4397 /* IncomingConnectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingConnectionView.swift; sourceTree = "<group>"; };
 		BF7ED2D91DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutgoingConnectionBottomBar.swift; sourceTree = "<group>"; };
@@ -3112,6 +3114,7 @@
 			children = (
 				16A94AF3209A1A67008A5718 /* GridView.swift */,
 				16A94AF7209B5334008A5718 /* VideoGridView.swift */,
+				BF79B0FD20A99762001BF4FE /* VideoPreviewView.swift */,
 				BF79B0FB20A98B60001BF4FE /* SelfVideoPreviewView.swift */,
 			);
 			path = VideoGridView;
@@ -7108,6 +7111,7 @@
 				1682AEBD20483DA5003A052A /* ServicesSectionController.swift in Sources */,
 				7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */,
 				D5D65A0F2074CFBB00D7F3C3 /* AuthenticationType.swift in Sources */,
+				BF79B0FE20A99762001BF4FE /* VideoPreviewView.swift in Sources */,
 				87A15FDF1E08318B00AED79B /* CollectionLoadingCell.swift in Sources */,
 				F19C3A8F20513532004387E4 /* DatabaseStatisticsController.swift in Sources */,
 				D50892FB2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift in Sources */,
