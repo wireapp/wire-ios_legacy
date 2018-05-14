@@ -29,11 +29,11 @@ extension ConversationListViewController {
         let alertController = UIAlertController(title: "conversation_list.date_usage_permission_alert.title".localized, message: "conversation_list.date_usage_permission_alert.message".localized, preferredStyle: .alert)
 
         alertController.addAction(UIAlertAction(title: "general.accept".localized, style: .default, handler: { (_) in
-//            handler(false)
-            ///TODO: update setting
+            TrackingManager.shared.disableCrashAndAnalyticsSharing = false
         }))
 
         alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: { (_) in
+            ///TODO: save the timestamp and do not ask again in the future?
         }))
 
 
