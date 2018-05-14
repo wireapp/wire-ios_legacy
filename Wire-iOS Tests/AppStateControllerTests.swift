@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class AppStateControllerTests: XCTestCase {
-    
+
     var sut: AppStateController!
 
     override func setUp() {
@@ -35,21 +35,21 @@ final class AppStateControllerTests: XCTestCase {
             }
         }
     }
-    
+
     override func tearDown() {
 
         sut = nil
         super.tearDown()
     }
 
-
-
     /// Example checker method which can be reused in different tests
     fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
         XCTAssert(true, file: file, line: line)
     }
 
-    func testThatErrorIsIgnoredWhenTheAppFrashInstalled(){
+    // MARK: - tests for .unauthenticated state handling
+
+    func testThatErrorIsIgnoredWhenTheAppFrashInstalled() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
 
@@ -66,7 +66,7 @@ final class AppStateControllerTests: XCTestCase {
         XCTAssertEqual(newAppState, .unauthenticated(error: nil))
     }
 
-    func testThatErrorAssignedWhenTheAccountManagerHasSomeAccount(){
+    func testThatErrorIsAssignedWhenTheAccountManagerHasSomeAccounts() {
         // GIVEN
         let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
         // When last time SessionManager store some accounts, but it is invalid
@@ -81,6 +81,44 @@ final class AppStateControllerTests: XCTestCase {
 
         // It should display the login screen in AppRootViewController
         XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
+        XCTAssertEqual(newAppState, .unauthenticated(error: error))
+    }
+
+    func testThatErrorAssignedWhenOtherDeivceRemovedCurrentlyAccount() {
+        // GIVEN
+        let error = NSError(code: ZMUserSessionErrorCode.clientDeletedRemotely, userInfo: nil)
+        // When last time SessionManager store some accounts, but it is invalid
+        let account = Account(userName: "dummy", userIdentifier: UUID())
+        SessionManager.shared?.accountManager.addAndSelect(account)
+
+        // WHEN
+        sut.sessionManagerWillLogout(error: error, userSessionCanBeTornDown: {})
+
+        // THEN
+        let newAppState = sut.calculateAppState()
+
+        // It should display the login screen in AppRootViewController
+        XCTAssertEqual(SessionManager.shared?.accountManager.accounts.count, 1)
+        XCTAssertEqual(newAppState, .unauthenticated(error: error))
+    }
+
+    func testThatErrorAssignedWhenSwitchingToUnauthenticatedAccount() {
+        // GIVEN
+        // When last time SessionManager store some accounts, but it is invalid
+        let account = Account(userName: "dummy", userIdentifier: UUID())
+        SessionManager.shared?.accountManager.addAndSelect(account)
+        let error = NSError(code: ZMUserSessionErrorCode.accessTokenExpired, userInfo: nil)
+
+        // WHEN
+        let accountUnauthenticated = Account(userName: "Unauthenticated", userIdentifier: UUID())
+        SessionManager.shared?.accountManager.addAndSelect(accountUnauthenticated)
+        sut.sessionManagerDidFailToLogin(account: accountUnauthenticated, error: error)
+
+        // THEN
+        let newAppState = sut.calculateAppState()
+
+        // It should display the login screen in AppRootViewController
+        XCTAssertGreaterThanOrEqual((SessionManager.shared?.accountManager.accounts.count)!, 0)
         XCTAssertEqual(newAppState, .unauthenticated(error: error))
     }
 }
