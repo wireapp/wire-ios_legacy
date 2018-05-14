@@ -694,6 +694,9 @@
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
 
+"self.settings.account_personal_information_group.title" = "Personal Information";
+"self.settings.data_usage_permissions.title" = "Data Usage Permissions";
+
 "self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
