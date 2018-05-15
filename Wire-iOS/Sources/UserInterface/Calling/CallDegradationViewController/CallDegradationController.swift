@@ -79,7 +79,6 @@ class CallDegradationController: UIViewController {
         
         if let alertViewController = visisibleAlertController {
             Calling.log.debug("Presenting alert about degraded call")
-//            alertViewController.presentTopmost()
             present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
         }
     }
