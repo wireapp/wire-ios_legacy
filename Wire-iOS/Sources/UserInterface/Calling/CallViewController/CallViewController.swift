@@ -125,6 +125,11 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func toggleVideoState() {
+        if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
+            showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
+            return
+        }
+        
         voiceChannel.videoState = voiceChannel.videoState.toggledState
         updateConfiguration()
     }

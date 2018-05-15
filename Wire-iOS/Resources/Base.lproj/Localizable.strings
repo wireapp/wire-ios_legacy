@@ -504,6 +504,9 @@
 
 "call.video.paused" = "Video paused";
 
+"call.video.too_many.alert.title" = "Too many people for Video";
+"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+
 "call.degraded.alert.title" = "New Device";
 "call.degraded.alert.message.self" = "You started using a new device.";
 "call.degraded.alert.message.user" = "%@ started using a new device.";
