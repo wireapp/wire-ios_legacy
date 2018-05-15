@@ -59,7 +59,7 @@ final class CallViewController: UIViewController {
     }
     
     private func setupApplicationStateObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(restartVideoIfNeeded), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resumeVideoIfNeeded), name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(pauseVideoIfNeeded), name: .UIApplicationDidEnterBackground, object: nil)
     }
     
@@ -73,7 +73,7 @@ final class CallViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         proximityMonitorManager?.startListening()
-        restartVideoIfNeeded()
+        resumeVideoIfNeeded()
         setupApplicationStateObservers()
     }
 
@@ -84,7 +84,7 @@ final class CallViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
-    @objc private func restartVideoIfNeeded() {
+    @objc private func resumeVideoIfNeeded() {
         guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }
         voiceChannel.videoState = .started
         updateConfiguration()
