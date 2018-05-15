@@ -260,9 +260,8 @@ class AppRootViewController: UIViewController {
             /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
             clientViewController.needToShowDataUsagePermissionDialog = false
             if case .unauthenticated(_) = appStateController.lastAppState {
-                clientViewController.needToShowDataUsagePermissionDialog = true ///TODO: rename needToShowDataUsagePermissionDialog
+                clientViewController.needToShowDataUsagePermissionDialog = true
             }
-            /// TODO: dialogue is dismissed automatically after device managment screen
 
             Analytics.shared().team = ZMUser.selfUser().team
 
