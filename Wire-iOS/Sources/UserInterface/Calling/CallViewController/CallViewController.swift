@@ -87,6 +87,16 @@ final class CallViewController: UIViewController {
         dismisser?.dismiss(viewController: self, completion: nil)
     }
     
+    fileprivate func acceptDegradedCall() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
+        userSession.enqueueChanges({
+            self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession)
+        }, completionHandler: {
+            self.conversation?.joinCall()
+        })
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -168,10 +178,11 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         guard let userSession = ZMUserSession.shared() else { return }
         
         switch action {
+        case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
         case .acceptCall: conversation?.joinCall()
-        case .acceptDegradedCall: voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession)
+        case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession)
-        case .terminateDegradedCall: voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession)
+        case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()
         case .minimizeOverlay: minimizeOverlay()

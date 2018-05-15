@@ -117,7 +117,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     }
     
     func continueDegradedCall() {
-        delegate?.infoRootViewController(self, perform: .acceptDegradedCall)
+        delegate?.infoRootViewController(self, perform: .continueDegradedCall)
     }
     
     func cancelDegradedCall() {
