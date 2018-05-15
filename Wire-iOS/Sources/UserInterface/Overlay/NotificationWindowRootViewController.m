@@ -90,6 +90,10 @@
     return NO;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.voiceChannelController.preferredStatusBarStyle;
+}
+
 - (void)transitionToLoggedInSession
 {
     _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];

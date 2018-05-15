@@ -75,7 +75,7 @@ final class CallViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return callInfoConfiguration.effectiveColorVariant == .light ? .lightContent : .default
+        return callInfoConfiguration.effectiveColorVariant == .light ? .default : .lightContent
     }
     
     private func setupViews() {
