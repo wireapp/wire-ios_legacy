@@ -511,6 +511,12 @@
 
 "call.video.paused" = "Video paused";
 
+"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.message.self" = "You started using a new device.";
+"call.degraded.alert.message.user" = "%@ started using a new device.";
+"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.action.continue" = "Call anyway";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 

@@ -23,7 +23,7 @@ protocol CallInfoRootViewControllerDelegate: class {
     func infoRootViewController(_ viewController: CallInfoRootViewController, contextDidChange context: CallInfoRootViewController.Context)
 }
 
-final class CallInfoRootViewController: UIViewController, UINavigationControllerDelegate, CallInfoViewControllerDelegate {
+final class CallInfoRootViewController: UIViewController, UINavigationControllerDelegate, CallInfoViewControllerDelegate, CallDegradationControllerDelegate {
     
     enum Context {
         case overview, participants
@@ -32,7 +32,8 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     weak var delegate: CallInfoRootViewControllerDelegate?
     private let contentController: CallInfoViewController
     private let contentNavigationController: UINavigationController
-
+    private let callDegradationController: CallDegradationController
+    
     var context: Context = .overview {
         didSet {
             delegate?.infoRootViewController(self, contextDidChange: context)
@@ -49,7 +50,12 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         self.configuration = configuration
         contentController = CallInfoViewController(configuration: configuration)
         contentNavigationController = contentController.wrapInNavigationController()
+        callDegradationController = CallDegradationController()
+        
         super.init(nibName: nil, bundle: nil)
+        
+        callDegradationController.targetViewController = self
+        callDegradationController.state = configuration.degradationState
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,18 +68,22 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         createConstraints()
         updateConfiguration()
     }
-    
+        
     private func setupViews() {
         addToSelf(contentNavigationController)
+        addToSelf(callDegradationController)
         contentController.delegate = self
         contentNavigationController.delegate = self
+        callDegradationController.delegate = self
     }
     
     private func createConstraints() {
         contentNavigationController.view.fitInSuperview()
+        callDegradationController.view.fitInSuperview()
     }
     
     private func updateConfiguration(animated: Bool = false) {
+        callDegradationController.state = configuration.degradationState
         contentController.configuration = configuration
         contentNavigationController.navigationBar.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: configuration.effectiveColorVariant)
         contentNavigationController.navigationBar.isTranslucent = true
@@ -94,8 +104,9 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     // MARK: - Delegates
     
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction) {
-        switch action {
-        case .showParticipantsList: presentParticipantsList()
+        switch (action, configuration.degradationState) {
+        case (.showParticipantsList, _): presentParticipantsList()
+        case (.acceptCall, .incoming): delegate?.infoRootViewController(self, perform: .acceptDegradedCall)
         default: delegate?.infoRootViewController(self, perform: action)
         }
     }
@@ -103,6 +114,14 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         guard viewController is CallInfoViewController else { return }
         context = .overview
+    }
+    
+    func continueDegradedCall() {
+        delegate?.infoRootViewController(self, perform: .continueDegradedCall)
+    }
+    
+    func cancelDegradedCall() {
+        delegate?.infoRootViewController(self, perform: .terminateDegradedCall)
     }
 
 }

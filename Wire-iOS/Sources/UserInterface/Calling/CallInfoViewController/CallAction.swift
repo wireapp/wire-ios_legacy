@@ -21,8 +21,11 @@ enum CallAction {
     case toggleMuteState
     case toggleVideoState
     case toggleSpeakerState
+    case continueDegradedCall
     case acceptCall
+    case acceptDegradedCall
     case terminateCall
+    case terminateDegradedCall
     case flipCamera
     case minimizeOverlay
     case showParticipantsList

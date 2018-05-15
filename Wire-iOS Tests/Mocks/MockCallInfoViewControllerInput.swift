@@ -20,6 +20,7 @@ import Foundation
 @testable import Wire
 
 struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
+    var degradationState: CallDegradationState
     var accessoryType: CallInfoViewControllerAccessoryType
     var canToggleMediaType: Bool
     var isMuted: Bool

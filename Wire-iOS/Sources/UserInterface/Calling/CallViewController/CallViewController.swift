@@ -36,6 +36,10 @@ final class CallViewController: UIViewController {
         return voiceChannel.conversation
     }
     
+    private var proximityMonitorManager: ProximityMonitorManager? {
+        return ZClientViewController.shared()?.proximityMonitorManager
+    }
+    
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance()) {
         self.voiceChannel = voiceChannel
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
@@ -46,6 +50,7 @@ final class CallViewController: UIViewController {
         callInfoRootViewController.delegate = self
         AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self)]
+        proximityMonitorManager?.stateChanged = proximityStateDidChange
     }
     
     deinit {
@@ -59,6 +64,16 @@ final class CallViewController: UIViewController {
         updateConfiguration()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        proximityMonitorManager?.startListening()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        proximityMonitorManager?.stopListening()
+    }
+    
     private func setupViews() {
         [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
     }
@@ -70,6 +85,16 @@ final class CallViewController: UIViewController {
     
     fileprivate func minimizeOverlay() {
         dismisser?.dismiss(viewController: self, completion: nil)
+    }
+    
+    fileprivate func acceptDegradedCall() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
+        userSession.enqueueChanges({
+            self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession)
+        }, completionHandler: {
+            self.conversation?.joinCall()
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -153,8 +178,11 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         guard let userSession = ZMUserSession.shared() else { return }
         
         switch action {
+        case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
         case .acceptCall: conversation?.joinCall()
+        case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession)
+        case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()
         case .minimizeOverlay: minimizeOverlay()
@@ -233,4 +261,13 @@ extension CallViewController {
         overlayTimer = nil
     }
 
+}
+
+extension CallViewController {
+    
+    func proximityStateDidChange(_ raisedToEar: Bool) {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState != .stopped else { return }
+        voiceChannel.videoState = raisedToEar ? .paused : .started
+        updateConfiguration()
+    }
 }

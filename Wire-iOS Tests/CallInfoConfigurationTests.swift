@@ -20,7 +20,8 @@ import XCTest
 @testable import Wire
 
 func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> Bool {
-    return lhs.accessoryType == rhs.accessoryType &&
+    return lhs.degradationState == rhs.degradationState &&
+        lhs.accessoryType == rhs.accessoryType &&
         lhs.appearance == rhs.appearance &&
         lhs.canAccept == rhs.canAccept &&
         lhs.canToggleMediaType == rhs.canToggleMediaType &&
@@ -32,14 +33,20 @@ func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> B
 
 class CallInfoConfigurationTests: XCTestCase {
     
+    var mockOtherUser: MockUser!
+    var mockSelfUser: MockUser!
+    
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     
     override func setUp() {
         super.setUp()
         
-        selfUser = (MockUser.mockSelf() as Any) as? ZMUser
-        otherUser = MockUser.mockUsers().first!
+        mockSelfUser = MockUser.mockSelf()
+        mockOtherUser = (MockUser.mockUsers().first! as Any) as? MockUser
+        
+        selfUser = (mockSelfUser as Any) as? ZMUser
+        otherUser = (mockOtherUser as Any) as? ZMUser
     }
     
     override func tearDown() {
@@ -87,6 +94,41 @@ class CallInfoConfigurationTests: XCTestCase {
         assertEquals(fixture.oneToOneOutgoingAudioRinging, configuration)
     }
     
+    func testOneToOneIncomingAudioDegraded() {
+        // given
+        let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
+        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
+        
+        (mockConversation.activeParticipants.lastObject as? MockUser)?.untrusted = true
+        mockVoiceChannel.mockCallState = .incoming(video: false, shouldRing: true, degraded: true)
+        mockVoiceChannel.mockInitiator = otherUser
+        
+        // when
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel)
+        
+        // then
+        assertEquals(fixture.oneToOneIncomingAudioDegraded, configuration)
+    }
+    
+    func testOneToOneOutgoingAudioDegraded() {
+        // given
+        let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
+        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
+        
+        (mockConversation.activeParticipants.lastObject as? MockUser)?.untrusted = true
+        mockVoiceChannel.mockCallState = .outgoing(degraded: true)
+        mockVoiceChannel.mockInitiator = selfUser
+        
+        // when
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel)
+        
+        // then
+        assertEquals(fixture.oneToOneOutgoingAudioDegraded, configuration)
+    }
+    
+
     func testOneToOneAudioConnecting() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
