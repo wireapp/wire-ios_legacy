@@ -81,7 +81,7 @@ class AppRootViewController: UIViewController {
 
         overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
         overlayWindow.backgroundColor = .clear
-        overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
+        overlayWindow.windowLevel = UIWindowLevelStatusBar - 1
         overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         overlayWindow.rootViewController = NotificationWindowRootViewController()
 

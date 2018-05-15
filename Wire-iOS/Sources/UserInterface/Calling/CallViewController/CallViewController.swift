@@ -74,6 +74,10 @@ final class CallViewController: UIViewController {
         proximityMonitorManager?.stopListening()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return callInfoConfiguration.effectiveColorVariant == .light ? .lightContent : .default
+    }
+    
     private func setupViews() {
         [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
     }

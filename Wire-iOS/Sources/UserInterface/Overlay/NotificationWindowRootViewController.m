@@ -87,7 +87,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return NO;
 }
 
 - (void)transitionToLoggedInSession
