@@ -20,8 +20,7 @@ import Foundation
 
 extension ConversationListViewController {
     func showDataUsagePermissionDialogIfNeeded() {
-        guard !isComingFromRegistration,
-              needToShowDataUsagePermissionDialog,
+        guard needToShowDataUsagePermissionDialog,
               ZMUser.selfUser().handle != nil,
               !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 
@@ -33,8 +32,7 @@ extension ConversationListViewController {
             TrackingManager.shared.disableCrashAndAnalyticsSharing = false
         }))
 
-        alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: { (_) in
-        }))
+        alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: nil))
 
 
         ZClientViewController.shared()?.present(alertController, animated: true)

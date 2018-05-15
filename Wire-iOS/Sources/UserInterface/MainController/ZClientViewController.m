@@ -261,7 +261,7 @@
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
-    self.conversationListViewController.needToShowDataUsagePermissionDialog = self.needToShowDataUsagePermissionDialog;
+    self.conversationListViewController.needToShowDataUsagePermissionDialog = false;
     [self.conversationListViewController view];
 }
 
@@ -506,11 +506,14 @@
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
 }
 
-- (void)setneedToShowDataUsagePermissionDialog:(BOOL)needToShowDataUsagePermissionDialog
+- (BOOL)needToShowDataUsagePermissionDialog
 {
-    _needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog;
+    return self.conversationListViewController.needToShowDataUsagePermissionDialog
+}
 
-    self.conversationListViewController.needToShowDataUsagePermissionDialog = self.needToShowDataUsagePermissionDialog;
+- (void)setNeedToShowDataUsagePermissionDialog:(BOOL)needToShowDataUsagePermissionDialog
+{
+    self.conversationListViewController.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog;
 }
 
 - (BOOL)isConversationViewVisible
