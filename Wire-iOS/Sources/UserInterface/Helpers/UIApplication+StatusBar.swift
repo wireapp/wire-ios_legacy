@@ -71,12 +71,11 @@ public extension UIApplication {
                 return false
             }
             
-            if let notificationWindowRootController = controller as? NotificationWindowRootViewController,
-               let activeVoiceChannelController = notificationWindowRootController.voiceChannelController {
-                return activeVoiceChannelController.voiceChannelIsActive
+            if let notificationWindowRootController = controller as? NotificationWindowRootViewController {
+                return notificationWindowRootController.voiceChannelController?.voiceChannelIsActive ?? false
+            } else {
+                return true
             }
-            
-            return true
         }
         
         guard let window = visibleWindow.last,
