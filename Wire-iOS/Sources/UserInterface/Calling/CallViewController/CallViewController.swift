@@ -55,6 +55,12 @@ final class CallViewController: UIViewController {
     
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupApplicationStateObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(restartVideoIfNeeded), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseVideoIfNeeded), name: .UIApplicationDidEnterBackground, object: nil)
     }
     
     override func viewDidLoad() {
@@ -63,17 +69,33 @@ final class CallViewController: UIViewController {
         createConstraints()
         updateConfiguration()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         proximityMonitorManager?.startListening()
+        restartVideoIfNeeded()
+        setupApplicationStateObservers()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         proximityMonitorManager?.stopListening()
+        pauseVideoIfNeeded()
+        NotificationCenter.default.removeObserver(self)
     }
-    
+
+    @objc private func restartVideoIfNeeded() {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }
+        voiceChannel.videoState = .started
+        updateConfiguration()
+    }
+
+    @objc private func pauseVideoIfNeeded() {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState.isSending else { return }
+        voiceChannel.videoState = .paused
+        updateConfiguration()
+    }
+
     private func setupViews() {
         [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
     }
@@ -120,7 +142,6 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func toggleCameraAnimated() {
-        // TODO: Animations
         toggleCameraType()
     }
     
@@ -257,4 +278,5 @@ extension CallViewController {
         voiceChannel.videoState = raisedToEar ? .paused : .started
         updateConfiguration()
     }
+
 }
