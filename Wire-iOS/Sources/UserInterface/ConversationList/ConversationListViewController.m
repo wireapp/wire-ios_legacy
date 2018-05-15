@@ -114,6 +114,8 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
+@property (nonatomic) BOOL isViewDidAppear;
+
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
@@ -142,6 +144,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.isViewDidAppear = NO;
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
     
@@ -175,7 +178,6 @@
     [self updateArchiveButtonVisibility];
     
     [self updateObserverTokensForActiveTeam];
-    [self showDataUsagePermissionDialogIfNeeded];
     [self showPushPermissionDeniedDialogIfNeeded];
 }
 
@@ -204,6 +206,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    if (! self.isViewDidAppear) {
+        self.isViewDidAppear = YES;
+
+        [self showDataUsagePermissionDialogIfNeeded];
+    }
+
 
     if (! IS_IPAD_FULLSCREEN) {
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
