@@ -207,6 +207,7 @@
 {
     [super viewDidAppear:animated];
 
+    // ClientUnregisterFlowViewController's viewWillDisappear calls UIViewController.dismiss method after this class's viewDidLoad is called. We call showDataUsagePermissionDialogIfNeeded here to prevent that.
     if (! self.isViewDidAppear) {
         self.isViewDidAppear = YES;
 
