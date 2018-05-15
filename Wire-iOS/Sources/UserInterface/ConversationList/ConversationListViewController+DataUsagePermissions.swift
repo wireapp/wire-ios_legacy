@@ -21,6 +21,7 @@ import Foundation
 extension ConversationListViewController {
     func showDataUsagePermissionDialogIfNeeded() {
         guard !isComingFromRegistration,
+              needToShowDataUsagePermissionDialog,
               ZMUser.selfUser().handle != nil,
               !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 

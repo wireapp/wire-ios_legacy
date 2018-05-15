@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) BOOL isComingFromRegistration;
 
-@property (nonatomic) BOOL isComingFromLaunch;
+@property (nonatomic) BOOL needToShowDataUsagePermissionDialog;
 
 @property (nonatomic, readonly) SplitViewController *splitViewController;
 
