@@ -16,17 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
+import AVFoundation
 
 final class CallViewController: UIViewController {
     
     weak var dismisser: ViewControllerDismisser? = nil
     
     fileprivate let voiceChannel: VoiceChannel
-    fileprivate let callInfoConfiguration: CallInfoConfiguration
+    fileprivate var callInfoConfiguration: CallInfoConfiguration
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
-    
+
     private var observerTokens: [Any] = []
     private let videoConfiguration: VideoConfiguration
     private let videoGridViewController: VideoGridViewController
@@ -43,7 +44,7 @@ final class CallViewController: UIViewController {
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance()) {
         self.voiceChannel = voiceChannel
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoCallState: .hidden)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
         super.init(nibName: nil, bundle: nil)
@@ -106,11 +107,27 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func updateConfiguration() {
+        refreshAuthorizationState()
         callInfoRootViewController.configuration = callInfoConfiguration
         videoGridViewController.configuration = videoConfiguration
         updateAppearance()
     }
-    
+
+    private func refreshAuthorizationState() {
+
+        let videoCameraAuthorization = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
+        callInfoConfiguration.preferedVideoCallState = CallVideoPlaceholderState(authorizationStatus: videoCameraAuthorization)
+
+        if case .notDetermined = videoCameraAuthorization {
+
+            UIApplication.wr_requestOrWarnAboutVideoAccess { [weak self] _ in
+                self?.refreshAuthorizationState()
+            }
+
+        }
+
+    }
+
     private func updateAppearance() {
         view.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: callInfoConfiguration.variant)
     }

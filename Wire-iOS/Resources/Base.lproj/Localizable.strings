@@ -274,6 +274,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire needs access to the Camera.";
+"video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Enable it in Wire Settings";
 

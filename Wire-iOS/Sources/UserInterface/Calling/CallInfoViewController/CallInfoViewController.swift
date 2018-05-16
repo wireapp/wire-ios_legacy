@@ -25,6 +25,7 @@ protocol CallInfoViewControllerDelegate: class {
 protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType  {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
     var degradationState: CallDegradationState { get }
+    var videoPlaceholderState: CallVideoPlaceholderState { get }
 }
 
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
@@ -35,7 +36,10 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
-    
+
+    private let backgroundViewController: BackgroundViewController
+    private let videoPlaceholderStatusLabel = UILabel()
+
     var configuration: CallInfoViewControllerInput {
         didSet {
             updateState()
@@ -46,6 +50,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         self.configuration = configuration        
         statusViewController = CallStatusViewController(configuration: configuration)
         accessoryViewController = CallAccessoryViewController(configuration: configuration)
+        backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
         super.init(nibName: nil, bundle: nil)
         accessoryViewController.delegate = self
         actionsView.delegate = self
@@ -69,18 +74,30 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     private func setupViews() {
+        addToSelf(backgroundViewController)
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         stackView.alignment = .center
         stackView.distribution = .fill
         stackView.spacing = 40
 
+        videoPlaceholderStatusLabel.text = "video_call.camera_access.denied".localized
+        videoPlaceholderStatusLabel.textColor = .white
+        videoPlaceholderStatusLabel.font = FontSpec(.normal, .semibold).font
+        videoPlaceholderStatusLabel.alpha = 0.64
+        videoPlaceholderStatusLabel.textAlignment = .center
+
+        videoPlaceholderStatusLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .vertical)
+        videoPlaceholderStatusLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+
         addChildViewController(statusViewController)
-        [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
+        [statusViewController.view, accessoryViewController.view, videoPlaceholderStatusLabel, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParentViewController: self)
     }
 
     private func createConstraints() {
+
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.topAnchor),
@@ -90,8 +107,12 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 173),
             actionsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
             actionsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
-            accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
+            accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor),
+            videoPlaceholderStatusLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
+
+        backgroundViewController.view.fitInSuperview()
+
     }
     
     private func updateNavigationItem() {
@@ -103,11 +124,30 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         navigationItem.leftBarButtonItem?.accessibilityIdentifier = "CallDismissOverlayButton"
     }
 
+    private func updateVideoPlaceholder() {
+
+        switch configuration.videoPlaceholderState {
+        case .hidden:
+            backgroundViewController.view.isHidden = true
+            videoPlaceholderStatusLabel.isHidden = true
+
+        case .statusTextDisplayed:
+            backgroundViewController.view.isHidden = false
+            videoPlaceholderStatusLabel.isHidden = false
+
+        case .statusTextHidden:
+            backgroundViewController.view.isHidden = false
+            videoPlaceholderStatusLabel.isHidden = true
+        }
+
+    }
+
     private func updateState() {
         Calling.log.debug("updating info controller with state: \(configuration)")
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         accessoryViewController.configuration = configuration
+        updateVideoPlaceholder()
     }
     
     // MARK: - Actions + Delegates
