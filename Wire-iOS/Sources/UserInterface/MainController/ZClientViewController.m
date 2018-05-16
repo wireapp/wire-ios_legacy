@@ -508,7 +508,7 @@
 
 - (BOOL)needToShowDataUsagePermissionDialog
 {
-    return self.conversationListViewController.needToShowDataUsagePermissionDialog
+    return self.conversationListViewController.needToShowDataUsagePermissionDialog;
 }
 
 - (void)setNeedToShowDataUsagePermissionDialog:(BOOL)needToShowDataUsagePermissionDialog
