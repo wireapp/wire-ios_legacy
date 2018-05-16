@@ -312,7 +312,7 @@ extension ZMConversation {
         
         if self.conversationType == .group &&
            ZMUser.selfUser().isTeamMember &&
-           (self.lastServerSyncedActiveParticipants.count + 1) <= ZMConversation.maxVideoCallParticipants {
+           self.activeParticipants.count <= ZMConversation.maxVideoCallParticipants {
             return true
         }
         
