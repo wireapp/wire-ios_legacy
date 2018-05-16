@@ -172,7 +172,7 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         let sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished)
         
         // then
-        verifyInAllIPhoneSizes(view: sut.view)
+        verifyInAllDeviceSizes(view: sut.view)
     }
     
     // MARK: - Group Video

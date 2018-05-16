@@ -94,11 +94,16 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     
     private func createConstraints() {
         NSLayoutConstraint.activate([
-            collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            collectionView.leftAnchor.constraint(greaterThanOrEqualTo: view.leftAnchor),
+            collectionView.rightAnchor.constraint(lessThanOrEqualTo: view.rightAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
+        let widthConstraint = collectionView.widthAnchor.constraint(equalToConstant: 414)
+        widthConstraint.priority = UILayoutPriorityDefaultHigh
+        widthConstraint.isActive = true
+        
         topConstraint = collectionView.topAnchor.constraint(equalTo: view.topAnchor)
         topConstraint?.isActive = true
     }
