@@ -112,10 +112,21 @@
 
 #pragma mark - Rotation handling (should match up with root)
 
-- (BOOL)shouldAutorotate
+- (UIViewController *)topmostViewController
 {
     UIViewController * topmostViewController = UIApplication.sharedApplication.wr_topmostViewController;
-    if (topmostViewController != nil && topmostViewController != self) {
+    
+    if (topmostViewController != nil && topmostViewController != self && ![topmostViewController isKindOfClass:NotificationWindowRootViewController.class]) {
+        return topmostViewController;
+    } else {
+        return nil;
+    }
+}
+
+- (BOOL)shouldAutorotate
+{
+    UIViewController * topmostViewController = [self topmostViewController];
+    if (topmostViewController != nil) {
         return topmostViewController.shouldAutorotate;
     } else {
         return YES;
@@ -124,8 +135,8 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    UIViewController * topmostViewController = UIApplication.sharedApplication.wr_topmostViewController;
-    if (topmostViewController != nil && topmostViewController != self) {
+    UIViewController * topmostViewController = [self topmostViewController];
+    if (topmostViewController != nil) {
         return topmostViewController.supportedInterfaceOrientations;
     } else {
         return self.wr_supportedInterfaceOrientations;
