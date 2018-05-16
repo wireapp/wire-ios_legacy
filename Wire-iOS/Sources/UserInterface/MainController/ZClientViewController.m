@@ -261,7 +261,7 @@
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
-    self.conversationListViewController.needToShowDataUsagePermissionDialog = false;
+    self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
     [self.conversationListViewController view];
 }
 
