@@ -173,6 +173,8 @@ final class CallActionsView: UIView {
         }()
         topStackView.spacing = isCompact ? verticalStackView.spacing : 32
         bottomStackView.spacing = isCompact ? verticalStackView.spacing : 32
+
+        invalidateIntrinsicContentSize()
     }
     
     // MARK: - Action Output
@@ -191,6 +193,11 @@ final class CallActionsView: UIView {
         case acceptCallButton: return .acceptCall
         default: fatalError("Unexpected Button: \(button)")
         }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let height = IconButton.height + verticalStackView.spacing + IconButton.height
+        return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
     
 }

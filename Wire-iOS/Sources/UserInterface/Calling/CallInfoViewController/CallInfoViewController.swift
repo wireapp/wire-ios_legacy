@@ -29,16 +29,14 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
 }
 
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
-    
+
     weak var delegate: CallInfoViewControllerDelegate?
 
+    private let backgroundViewController: BackgroundViewController
     private let stackView = UIStackView(axis: .vertical)
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
-
-    private let backgroundViewController: BackgroundViewController
-    private let videoPlaceholderStatusLabel = UILabel()
 
     var configuration: CallInfoViewControllerInput {
         didSet {
@@ -82,18 +80,14 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         stackView.distribution = .fill
         stackView.spacing = 40
 
-        videoPlaceholderStatusLabel.text = "video_call.camera_access.denied".localized
-        videoPlaceholderStatusLabel.textColor = .white
-        videoPlaceholderStatusLabel.font = FontSpec(.normal, .semibold).font
-        videoPlaceholderStatusLabel.alpha = 0.64
-        videoPlaceholderStatusLabel.textAlignment = .center
-
-        videoPlaceholderStatusLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .vertical)
-        videoPlaceholderStatusLabel.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        statusViewController.view.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        accessoryViewController.view.setContentHuggingPriority(UILayoutPriorityDefaultLow, for: .vertical)
+        actionsView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
 
         addChildViewController(statusViewController)
-        [statusViewController.view, accessoryViewController.view, videoPlaceholderStatusLabel, actionsView].forEach(stackView.addArrangedSubview)
+        [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParentViewController: self)
+
     }
 
     private func createConstraints() {
@@ -104,11 +98,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -40),
             actionsView.widthAnchor.constraint(equalToConstant: 288),
-            actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 173),
             actionsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
             actionsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
-            accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor),
-            videoPlaceholderStatusLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
+            accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
 
         backgroundViewController.view.fitInSuperview()
@@ -124,30 +116,12 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         navigationItem.leftBarButtonItem?.accessibilityIdentifier = "CallDismissOverlayButton"
     }
 
-    private func updateVideoPlaceholder() {
-
-        switch configuration.videoPlaceholderState {
-        case .hidden:
-            backgroundViewController.view.isHidden = true
-            videoPlaceholderStatusLabel.isHidden = true
-
-        case .statusTextDisplayed:
-            backgroundViewController.view.isHidden = false
-            videoPlaceholderStatusLabel.isHidden = false
-
-        case .statusTextHidden:
-            backgroundViewController.view.isHidden = false
-            videoPlaceholderStatusLabel.isHidden = true
-        }
-
-    }
-
     private func updateState() {
         Calling.log.debug("updating info controller with state: \(configuration)")
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         accessoryViewController.configuration = configuration
-        updateVideoPlaceholder()
+        backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
     }
     
     // MARK: - Actions + Delegates

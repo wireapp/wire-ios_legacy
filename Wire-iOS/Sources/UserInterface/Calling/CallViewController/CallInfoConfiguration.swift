@@ -132,6 +132,10 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
             return .hidden
         }
 
+        if voiceChannel.state == .established {
+            return .hidden
+        }
+
         if case .stopped = voiceChannel.videoState {
             return .statusTextHidden
         }
