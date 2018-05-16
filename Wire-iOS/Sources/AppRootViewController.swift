@@ -81,7 +81,7 @@ class AppRootViewController: UIViewController {
 
         overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
         overlayWindow.backgroundColor = .clear
-        overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
+        overlayWindow.windowLevel = UIWindowLevelStatusBar - 1
         overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         overlayWindow.rootViewController = NotificationWindowRootViewController()
 
@@ -256,6 +256,12 @@ class AppRootViewController: UIViewController {
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
+
+            /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
+            clientViewController.needToShowDataUsagePermissionDialog = false
+            if case .unauthenticated(_) = appStateController.lastAppState {
+                clientViewController.needToShowDataUsagePermissionDialog = true
+            }
 
             Analytics.shared().team = ZMUser.selfUser().team
 

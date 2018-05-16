@@ -103,6 +103,8 @@ final class CallStatusView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         bitrateLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 12
+        titleLabel.accessibilityIdentifier = "CallStatusLabel"
+        subtitleLabel.accessibilityIdentifier = "CallStatusSubtitleLabel"
         [titleLabel, subtitleLabel].forEach(stackView.addArrangedSubview)
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textAlignment = .center

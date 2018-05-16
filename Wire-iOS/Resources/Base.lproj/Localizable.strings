@@ -27,6 +27,9 @@
 "general.edit" = "Edit";
 "general.done" = "Done";
 "general.confirm" = "OK";
+"general.skip" = "Not now";
+"general.accept" = "Accept";
+
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
@@ -114,6 +117,10 @@
 "conversation_list.header.self_team.accessibility_value.inactive" = "Tap to activate.";
 "conversation_list.header.self_team.accessibility_value.active" = "Active now.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.date_usage_permission_alert.message" = "Sending usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";
@@ -503,6 +510,15 @@
 "call.participants.list.title" = "Participants";
 
 "call.video.paused" = "Video paused";
+
+"call.video.too_many.alert.title" = "Too many people for Video";
+"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+
+"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.message.self" = "You started using a new device.";
+"call.degraded.alert.message.user" = "%@ started using a new device.";
+"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.action.continue" = "Call anyway";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants

@@ -84,6 +84,10 @@ final class CallViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return callInfoConfiguration.effectiveColorVariant == .light ? .default : .lightContent
+    }
+
     @objc private func resumeVideoIfNeeded() {
         guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }
         voiceChannel.videoState = .started
@@ -107,6 +111,16 @@ final class CallViewController: UIViewController {
     
     fileprivate func minimizeOverlay() {
         dismisser?.dismiss(viewController: self, completion: nil)
+    }
+    
+    fileprivate func acceptDegradedCall() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
+        userSession.enqueueChanges({
+            self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession)
+        }, completionHandler: {
+            self.conversation?.joinCall()
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -137,6 +151,11 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func toggleVideoState() {
+        if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
+            showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
+            return
+        }
+        
         voiceChannel.videoState = voiceChannel.videoState.toggledState
         updateConfiguration()
     }
@@ -189,8 +208,11 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         guard let userSession = ZMUserSession.shared() else { return }
         
         switch action {
+        case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
         case .acceptCall: conversation?.joinCall()
+        case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession)
+        case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()
         case .minimizeOverlay: minimizeOverlay()

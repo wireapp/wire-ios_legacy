@@ -24,6 +24,7 @@ protocol CallInfoViewControllerDelegate: class {
 
 protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType  {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
+    var degradationState: CallDegradationState { get }
 }
 
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {

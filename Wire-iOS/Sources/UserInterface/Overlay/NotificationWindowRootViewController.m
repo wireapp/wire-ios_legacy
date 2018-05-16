@@ -87,7 +87,11 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return NO;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.voiceChannelController.preferredStatusBarStyle;
 }
 
 - (void)transitionToLoggedInSession
