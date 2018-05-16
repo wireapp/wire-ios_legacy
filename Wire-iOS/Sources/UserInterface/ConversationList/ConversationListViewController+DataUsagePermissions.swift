@@ -33,10 +33,7 @@ extension ConversationListViewController {
         }))
 
         alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: { (_) in
-            // When coming from registration and user click skip, set disableCrashAndAnalyticsSharing to true
-            if self.isComingFromRegistration {
-                TrackingManager.shared.disableCrashAndAnalyticsSharing = true
-            }
+            TrackingManager.shared.disableCrashAndAnalyticsSharing = true
         }))
 
 
