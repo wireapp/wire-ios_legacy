@@ -133,6 +133,7 @@ extension TeamCreationFlowController {
             stepDescription = SetEmailStepDescription(controller: navigationController)
         case let .verifyEmail(teamName: _, email: email):
             stepDescription = VerifyEmailStepDescription(email: email, delegate: self)
+            showNewsletterSubscriptionDialog()
         case .setFullName:
             stepDescription = SetFullNameStepDescription()
         case .setPassword:
@@ -180,6 +181,23 @@ extension TeamCreationFlowController {
             self.currentController = nil
             self.navigationController.popToRootViewController(animated: true)
         }
+    }
+}
+
+// MARK: - Newsletter subscription dialog
+extension TeamCreationFlowController {
+    func showNewsletterSubscriptionDialog() {
+        let alertController = UIAlertController(title: "news_offers.consent.title".localized, message: "news_offers.consent.message".localized, preferredStyle: .alert)
+
+        alertController.addAction(UIAlertAction(title: "general.accept".localized, style: .default, handler: { (_) in
+            // enable newsletter subscription
+        }))
+
+        alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: { (_) in
+            // disable newsletter subscription
+        }))
+
+        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true)
     }
 }
 
