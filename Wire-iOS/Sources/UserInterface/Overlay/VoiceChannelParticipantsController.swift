@@ -33,7 +33,7 @@ class VoiceChannelParticipantsController : NSObject {
         super.init()
         
         voiceGainObserverToken = conversation.voiceChannel?.addVoiceGainObserver(self)
-        participantObserverToken = conversation.voiceChannel?.addParticipantObserver(self)
+//        participantObserverToken = conversation.voiceChannel?.addParticipantObserver(self)
         
         collectionView.register(VoiceChannelParticipantCell.self, forCellWithReuseIdentifier: "VoiceChannelParticipantCell")
         collectionView.dataSource = self
@@ -42,19 +42,20 @@ class VoiceChannelParticipantsController : NSObject {
         // the next layout pass, which is when the collection view normally queries the data source.
         collectionView.performBatchUpdates(nil)
     }
-    
-    fileprivate func playHapticFeedback(for changeInfo: VoiceChannelParticipantNotification) {
-        guard #available(iOS 10, *) else {
-            return
-        }
-        
-        if changeInfo.insertedIndexes.count > 0 {
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
-        }
-        else if changeInfo.deletedIndexes.count > 0 {
-            UINotificationFeedbackGenerator().notificationOccurred(.warning)
-        }
-    }
+
+    // NOTE this class will be deleted
+//    fileprivate func playHapticFeedback(for changeInfo: VoiceChannelParticipantNotification) {
+//        guard #available(iOS 10, *) else {
+//            return
+//        }
+//
+//        if changeInfo.insertedIndexes.count > 0 {
+//            UINotificationFeedbackGenerator().notificationOccurred(.success)
+//        }
+//        else if changeInfo.deletedIndexes.count > 0 {
+//            UINotificationFeedbackGenerator().notificationOccurred(.warning)
+//        }
+//    }
 }
 
 extension VoiceChannelParticipantsController : UICollectionViewDataSource {
@@ -77,35 +78,36 @@ extension VoiceChannelParticipantsController : UICollectionViewDataSource {
     
 }
 
-extension VoiceChannelParticipantsController : VoiceChannelParticipantObserver {
-    
-    func voiceChannelParticipantsDidChange(_ changeInfo: VoiceChannelParticipantNotification) {
-        guard conversation.conversationType == .group else { return }
-        
-        collectionView.performBatchUpdates({ 
-            self.collectionView.insertItems(at: (changeInfo.insertedIndexes as NSIndexSet).indexPaths())
-            self.collectionView.deleteItems(at: (changeInfo.deletedIndexes as NSIndexSet).indexPaths())
-            
-            self.playHapticFeedback(for: changeInfo)
-            
-            for moved in changeInfo.zm_movedIndexPairs {
-                let from = IndexPath(row: Int(moved.from), section: 0)
-                let to = IndexPath(row: Int(moved.to), section: 0)
-                self.collectionView.moveItem(at: from, to: to)
-            }
-        })
-        
-        changeInfo.updatedIndexes.forEach({ (index) in
-            let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VoiceChannelParticipantCell
-            
-            if let user = conversation.voiceChannel?.participants.object(at: index) as? ZMUser,
-               let participantState = conversation.voiceChannel?.state(forParticipant: user) {
-                cell?.configure(for: user, participantState: participantState)
-            }
-        })
-    }
-    
-}
+// NOTE this class will be deleted
+//extension VoiceChannelParticipantsController : VoiceChannelParticipantObserver {
+//
+//    func voiceChannelParticipantsDidChange(_ changeInfo: VoiceChannelParticipantNotification) {
+//        guard conversation.conversationType == .group else { return }
+//
+//        collectionView.performBatchUpdates({
+//            self.collectionView.insertItems(at: (changeInfo.insertedIndexes as NSIndexSet).indexPaths())
+//            self.collectionView.deleteItems(at: (changeInfo.deletedIndexes as NSIndexSet).indexPaths())
+//
+//            self.playHapticFeedback(for: changeInfo)
+//
+//            for moved in changeInfo.zm_movedIndexPairs {
+//                let from = IndexPath(row: Int(moved.from), section: 0)
+//                let to = IndexPath(row: Int(moved.to), section: 0)
+//                self.collectionView.moveItem(at: from, to: to)
+//            }
+//        })
+//
+//        changeInfo.updatedIndexes.forEach({ (index) in
+//            let cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? VoiceChannelParticipantCell
+//
+//            if let user = conversation.voiceChannel?.participants.object(at: index) as? ZMUser,
+//               let participantState = conversation.voiceChannel?.state(forParticipant: user) {
+//                cell?.configure(for: user, participantState: participantState)
+//            }
+//        })
+//    }
+//
+//}
 
 extension VoiceChannelParticipantsController : VoiceGainObserver {
     

@@ -20,29 +20,29 @@
 
 
 
-typedef enum : NSInteger
+typedef NS_ENUM(NSInteger, WireStyleKitResizingBehavior)
 {
     WireStyleKitResizingBehaviorAspectFit, //!< The content is proportionally resized to fit into the target rectangle.
     WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
     WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
     WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
     
-} WireStyleKitResizingBehavior;
+};
 
 extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
 
 
 @interface WireStyleKit : NSObject
-
-// iOS Controls Customization Outlets
-@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
-@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
-@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
-
-// Colors
+    
+    // iOS Controls Customization Outlets
+    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
+    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
+    @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
+    
+    // Colors
 + (UIColor*)fillColor10;
-
-// Drawing Methods
+    
+    // Drawing Methods
 + (void)drawIcon_0x100_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x102_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x104_32ptWithColor: (UIColor*)color;
@@ -205,8 +205,8 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawRestoreWithFrame: (CGRect)targetFrame resizing: (WireStyleKitResizingBehavior)resizing color: (UIColor*)color;
 + (void)drawMentionsWithFrame: (CGRect)frame backgroundColor: (UIColor*)backgroundColor;
 + (void)drawTabWithColor: (UIColor*)color;
-
-// Generated Images
+    
+    // Generated Images
 + (UIImage*)imageOfIcon_0x100_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x102_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x104_32ptWithColor: (UIColor*)color;
@@ -234,6 +234,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x163_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x221_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfInviteWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x222_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x123_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x128_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x113_32ptWithColor: (UIColor*)color;
@@ -338,6 +339,5 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfSpaceFocusWithColor: (UIColor*)color;
 + (UIImage*)imageOfRestoreWithColor: (UIColor*)color;
 + (UIImage*)imageOfTabWithColor: (UIColor*)color;
-
-@end
-
+    
+    @end

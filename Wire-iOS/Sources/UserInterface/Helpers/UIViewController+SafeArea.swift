@@ -20,6 +20,7 @@
 import Foundation
 
 extension UIViewController {
+
     var safeBottomAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11, *) {
             return self.view.safeAreaLayoutGuide.bottomAnchor
@@ -37,9 +38,11 @@ extension UIViewController {
             return self.topLayoutGuide.bottomAnchor
         }
     }
+
 }
 
 extension UIView {
+
     var safeAreaLayoutGuideOrFallback: UILayoutGuide {
         if #available(iOS 11, *) {
             return safeAreaLayoutGuide
@@ -47,4 +50,29 @@ extension UIView {
             return layoutMarginsGuide
         }
     }
+
+    var safeAreaInsetsOfFallback: UIEdgeInsets {
+        if #available(iOS 11, *) {
+            return safeAreaInsets
+        } else {
+            return .zero
+        }
+    }
+
+    var safeLeadingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11, *) {
+            return safeAreaLayoutGuide.leadingAnchor
+        } else {
+            return leadingAnchor
+        }
+    }
+
+    var safeTrailingAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11, *) {
+            return safeAreaLayoutGuide.trailingAnchor
+        } else {
+            return trailingAnchor
+        }
+    }
+
 }

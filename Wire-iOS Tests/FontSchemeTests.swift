@@ -202,5 +202,17 @@ class FontSchemeTests: XCTestCase {
         // THEN
         XCTAssertEqual(fontNames, fixedFontNames)
     }
-
+    
+    
+    func testThatItReturnsRegularWeightForLightFontsWhenAccessibilityBoldTextEnabled() {
+        // GIVEN
+        XCTAssertEqual(UIFontWeightUltraLight, FontWeight.ultraLight.fontWeight(accessibilityBoldText: false))
+        XCTAssertEqual(UIFontWeightThin, FontWeight.thin.fontWeight(accessibilityBoldText: false))
+        XCTAssertEqual(UIFontWeightLight, FontWeight.light.fontWeight(accessibilityBoldText: false))
+        
+        // THEN
+        XCTAssertEqual(UIFontWeightRegular, FontWeight.ultraLight.fontWeight(accessibilityBoldText: true))
+        XCTAssertEqual(UIFontWeightRegular, FontWeight.thin.fontWeight(accessibilityBoldText: true))
+        XCTAssertEqual(UIFontWeightRegular, FontWeight.light.fontWeight(accessibilityBoldText: true))
+    }
 }

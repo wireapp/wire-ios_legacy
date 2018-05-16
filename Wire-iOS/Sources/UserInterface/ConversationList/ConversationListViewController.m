@@ -114,6 +114,8 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
+@property (nonatomic) BOOL isViewDidAppear;
+
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
@@ -142,6 +144,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.isViewDidAppear = NO;
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
     
@@ -203,6 +206,14 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+
+    // ClientUnregisterFlowViewController's viewWillDisappear calls UIViewController.dismiss method after this class's viewDidLoad is called. We call showDataUsagePermissionDialogIfNeeded here to prevent that.
+    if (! self.isViewDidAppear) {
+        self.isViewDidAppear = YES;
+
+        [self showDataUsagePermissionDialogIfNeeded];
+    }
+
 
     if (! IS_IPAD_FULLSCREEN) {
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
@@ -389,14 +400,14 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    [self.networkStatusViewController createConstraintsInContainerWithBottomView: self.topBar containerView:self.contentContainer topMargin:0];
+    [self.networkStatusViewController createConstraintsInParentControllerWithBottomView:self.topBar controller:self];
     
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
-    
+    [self.contentContainer autoPinEdgesToSuperviewEdges];
+
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
     [self.noConversationLabel autoSetDimension:ALDimensionWidth toSize:240.0f];

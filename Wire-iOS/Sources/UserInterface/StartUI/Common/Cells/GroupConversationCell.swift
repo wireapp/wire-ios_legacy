@@ -18,7 +18,7 @@
 
 import Foundation
 
-class GroupConversationCell: UICollectionViewCell, Reusable, Themeable {
+class GroupConversationCell: UICollectionViewCell, Themeable {
     
     let avatarSpacer = UIView()
     let avatarView = ConversationAvatarView()

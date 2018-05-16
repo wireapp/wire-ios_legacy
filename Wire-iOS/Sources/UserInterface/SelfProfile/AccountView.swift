@@ -346,7 +346,7 @@ public final class TeamImageView: UIImageView {
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorAspectFit, color: .black)
+        WireStyleKit.drawSpace(withFrame: bounds, resizing: .aspectFit, color: .black)
         
         if let image = UIGraphicsGetImageFromCurrentImageContext() {
             UIGraphicsEndImageContext()

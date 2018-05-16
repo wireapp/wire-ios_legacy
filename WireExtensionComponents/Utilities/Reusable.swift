@@ -35,3 +35,4 @@ public extension Reusable {
 }
 
 extension UITableViewCell: Reusable {}
+extension UICollectionReusableView: Reusable {}

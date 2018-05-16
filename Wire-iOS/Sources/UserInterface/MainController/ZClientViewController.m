@@ -152,7 +152,7 @@
     self.splitViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.splitViewController.view];
     
-    [self.splitViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [self createTopViewConstraints];
     [self.splitViewController didMoveToParentViewController:self];
     
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
@@ -204,7 +204,10 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    if (nil != self.topOverlayViewController) {
+        return self.topOverlayViewController.preferredStatusBarStyle;
+    }
+    else if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.preferredStatusBarStyle;
         }
@@ -218,7 +221,10 @@
 }
 
 - (BOOL)prefersStatusBarHidden {
-    if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    if (nil != self.topOverlayViewController) {
+        return self.topOverlayViewController.prefersStatusBarHidden;
+    }
+    else if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.prefersStatusBarHidden;
         }
@@ -255,6 +261,7 @@
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
+    self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
     [self.conversationListViewController view];
 }
 
@@ -439,7 +446,7 @@
         ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
         if ([self.conversationRootViewController isKindOfClass:ConversationRootViewController.class]) {
             profileViewController.delegate = (id <ProfileViewControllerDelegate>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
-            profileViewController.viewControllerDismissable = (id <ViewControllerDismissable>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
+            profileViewController.viewControllerDismisser = (id <ViewControllerDismisser>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
         }
         UINavigationController *navWrapperController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
         navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
@@ -495,8 +502,18 @@
 - (void)setIsComingFromRegistration:(BOOL)isComingFromRegistration
 {
     _isComingFromRegistration = isComingFromRegistration;
-    
+
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
+}
+
+- (BOOL)needToShowDataUsagePermissionDialog
+{
+    return self.conversationListViewController.needToShowDataUsagePermissionDialog;
+}
+
+- (void)setNeedToShowDataUsagePermissionDialog:(BOOL)needToShowDataUsagePermissionDialog
+{
+    self.conversationListViewController.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog;
 }
 
 - (BOOL)isConversationViewVisible

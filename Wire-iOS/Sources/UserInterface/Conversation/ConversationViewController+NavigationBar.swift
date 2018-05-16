@@ -114,7 +114,8 @@ public extension ConversationViewController {
             return [joinCallButton]
         }
 
-        if conversation.conversationType == .oneOnOne {
+        // TODO add complete logic for when to show/hide video button
+        if conversation.conversationType == .oneOnOne || conversation.conversationType == .group {
             return [audioCallButton, videoCallButton]
         }
 

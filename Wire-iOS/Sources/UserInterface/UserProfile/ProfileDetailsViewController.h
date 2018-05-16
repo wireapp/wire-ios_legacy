@@ -44,6 +44,6 @@
 - (instancetype)initWithUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, weak) id<ProfileDetailsViewControllerDelegate> delegate;
-@property (nonatomic, weak) id<ViewControllerDismissable> viewControllerDismissable;
+@property (nonatomic, weak) id<ViewControllerDismisser> viewControllerDismisser;
 
 @end
