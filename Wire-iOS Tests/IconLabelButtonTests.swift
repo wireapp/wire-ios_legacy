@@ -39,7 +39,7 @@ class IconLabelButtonTests: ZMSnapshotTestCase {
 
     func testIconLabelButton_Dark_Unselected_Enabled() {
         // When
-        button.appearance = .dark
+        button.appearance = .dark(blurred: false)
         
         // Then
         verify(view: button)
@@ -48,7 +48,7 @@ class IconLabelButtonTests: ZMSnapshotTestCase {
     func testIconLabelButton_Dark_Unselected_Disabled() {
         // When
         button.isEnabled = false
-        button.appearance = .dark
+        button.appearance = .dark(blurred: false)
         
         // Then
         verify(view: button)
@@ -57,7 +57,7 @@ class IconLabelButtonTests: ZMSnapshotTestCase {
     func testIconLabelButton_Dark_Selected_Enabled() {
         // When
         button.isSelected = true
-        button.appearance = .dark
+        button.appearance = .dark(blurred: false)
         
         // Then
         verify(view: button)
@@ -67,7 +67,43 @@ class IconLabelButtonTests: ZMSnapshotTestCase {
         // When
         button.isSelected = true
         button.isEnabled = false
-        button.appearance = .dark
+        button.appearance = .dark(blurred: false)
+        
+        // Then
+        verify(view: button)
+    }
+    
+    func testIconLabelButton_Dark_Unselected_Enabled_Blurred() {
+        // When
+        button.appearance = .dark(blurred: true)
+        
+        // Then
+        verify(view: button)
+    }
+    
+    func testIconLabelButton_Dark_Unselected_Disabled_Blurred() {
+        // When
+        button.isEnabled = false
+        button.appearance = .dark(blurred: true)
+        
+        // Then
+        verify(view: button)
+    }
+    
+    func testIconLabelButton_Dark_Selected_Enabled_Blurred() {
+        // When
+        button.isSelected = true
+        button.appearance = .dark(blurred: true)
+        
+        // Then
+        verify(view: button)
+    }
+    
+    func testIconLabelButton_Dark_Selected_Disabled_Blurred() {
+        // When
+        button.isSelected = true
+        button.isEnabled = false
+        button.appearance = .dark(blurred: true)
         
         // Then
         verify(view: button)

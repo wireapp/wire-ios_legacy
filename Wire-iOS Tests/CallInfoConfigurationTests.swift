@@ -19,6 +19,14 @@
 import XCTest
 @testable import Wire
 
+func ==(lhs: CallActionAppearance, rhs: CallActionAppearance) -> Bool {
+    switch (lhs, rhs) {
+    case (.light, .light): return true
+    case let (.dark(blurred: lhsBlurred), .dark(blurred: rhsBlurred)): return lhsBlurred == rhsBlurred
+    default: return false
+    }
+}
+
 func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> Bool {
     return lhs.degradationState == rhs.degradationState &&
         lhs.accessoryType == rhs.accessoryType &&
