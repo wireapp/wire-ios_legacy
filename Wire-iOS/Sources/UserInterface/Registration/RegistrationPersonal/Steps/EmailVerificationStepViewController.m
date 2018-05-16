@@ -66,6 +66,8 @@
     [self createInstructionsLabel];
     [self createResendInstructions];
     [self createResendButton];
+
+    [UIAlertController showNewsletterSubscriptionDialog];
     
     [self updateViewConstraints];
 }
