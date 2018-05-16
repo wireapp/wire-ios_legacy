@@ -114,8 +114,7 @@ public extension ConversationViewController {
             return [joinCallButton]
         }
 
-        // TODO add complete logic for when to show/hide video button
-        if conversation.conversationType == .oneOnOne || conversation.conversationType == .group {
+        if conversation.canStartVideoCall {
             return [audioCallButton, videoCallButton]
         }
 
@@ -303,5 +302,21 @@ extension ZMConversation {
             return false
         }
     }
-
+    
+    static let maxVideoCallParticipants: Int = 4
+    
+    var canStartVideoCall: Bool {
+        if self.conversationType == .oneOnOne {
+            return true
+        }
+        
+        if self.conversationType == .group &&
+           ZMUser.selfUser().isTeamMember &&
+           (self.lastServerSyncedActiveParticipants.count + 1) <= ZMConversation.maxVideoCallParticipants {
+            return true
+        }
+        
+        return false
+        
+    }
 }
