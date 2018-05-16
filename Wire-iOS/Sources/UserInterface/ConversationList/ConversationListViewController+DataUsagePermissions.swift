@@ -21,10 +21,10 @@ import Foundation
 extension ConversationListViewController {
     func showDataUsagePermissionDialogIfNeeded() {
         guard needToShowDataUsagePermissionDialog,
-              ZMUser.selfUser().handle != nil,
               !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 
-        guard TrackingManager.shared.disableCrashAndAnalyticsSharing else { return }
+        guard isComingFromRegistration ||
+              (!isComingFromRegistration && ZMUser.selfUser().handle != nil && TrackingManager.shared.disableCrashAndAnalyticsSharing) else { return }
 
         let alertController = UIAlertController(title: "conversation_list.date_usage_permission_alert.title".localized, message: "conversation_list.date_usage_permission_alert.message".localized, preferredStyle: .alert)
 
@@ -32,7 +32,12 @@ extension ConversationListViewController {
             TrackingManager.shared.disableCrashAndAnalyticsSharing = false
         }))
 
-        alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: { (_) in
+            // When coming from registration and user click skip, set disableCrashAndAnalyticsSharing to true
+            if self.isComingFromRegistration {
+                TrackingManager.shared.disableCrashAndAnalyticsSharing = true
+            }
+        }))
 
 
         ZClientViewController.shared()?.present(alertController, animated: true)

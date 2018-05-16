@@ -130,6 +130,8 @@
         [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
         [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
         [[UIView appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]] setTintColor:[ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground variant:ColorSchemeVariantLight]];
+
+        [self setupConversationListViewController];
     }
     return self;
 }
@@ -143,8 +145,8 @@
     
     self.view.backgroundColor = [UIColor blackColor];
 
-    [self setupConversationListViewController];
-    
+    [self.conversationListViewController view];
+
     self.splitViewController = [[SplitViewController alloc] init];
     self.splitViewController.delegate = self;
     [self addChildViewController:self.splitViewController];
@@ -256,7 +258,6 @@
     self.conversationListViewController = [[ConversationListViewController alloc] init];
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
-    [self.conversationListViewController view];
 }
 
 #pragma mark - ZMUserObserver
