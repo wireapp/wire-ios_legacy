@@ -719,7 +719,7 @@
 "self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
 
 "self.settings.receiveNews_and_offers.title" = "Receive News and Offers";
-"self.settings.receiveNews_and_offers.description.title" = "We may use external services like Salesforce an Marketo to process your data. You may still receive other messages from us.";
+"self.settings.receiveNews_and_offers.description.title" = "We may use external services like Salesforce and Marketo to process your data. You may still receive other messages from us.";
 
 
 
