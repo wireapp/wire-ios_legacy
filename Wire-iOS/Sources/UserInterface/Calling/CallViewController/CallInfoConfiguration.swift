@@ -82,13 +82,15 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var isTerminating: Bool {
-        guard case .terminating = voiceChannel.state else { return false }
-        return true
+        switch voiceChannel.state {
+        case .terminating, .incoming(video: _, shouldRing: false, degraded: _): return true
+        default: return false
+        }
     }
     
     var canAccept: Bool {
         switch voiceChannel.state {
-        case .incoming: return true
+        case .incoming(video: _, shouldRing: true, degraded: _): return true
         default: return false
         }
     }
