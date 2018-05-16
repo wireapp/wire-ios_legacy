@@ -29,7 +29,7 @@ extension AVSVideoView: AVSIdentifierProvider {
 }
 
 final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
-
+    
     private let previewView = AVSVideoPreview()
     private let mutedOverlayView = UIView()
     private let mutedIconImageView = UIImageView()
@@ -81,6 +81,14 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
         UIView.animate(withDuration: duration) { [mutedOverlayView, isMuted] in
             mutedOverlayView.alpha = isMuted ? 1 : 0
         }
+    }
+    
+    func startCapture() {
+        previewView.startVideoCapture()
+    }
+    
+    func stopCapture() {
+        previewView.stopVideoCapture()
     }
 
 }
