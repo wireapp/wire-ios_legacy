@@ -112,30 +112,11 @@
 
 #pragma mark - Rotation handling (should match up with root)
 
-/**
- guard against a stack overflow (when calling shouldAutorotate or supportedInterfaceOrientations)
-
- @return nil if UIApplication.sharedApplication.wr_topmostViewController is same as self or same class as self or it is a "UIInputWindowController"
- */
--(UIViewController *)topViewController
-{
-    UIViewController * topViewController = UIApplication.sharedApplication.wr_topmostViewController;
-    NSString *className = NSStringFromClass([topViewController class]);
-
-    if (self != topViewController &&
-        ![topViewController isKindOfClass: self.class] &&
-        [className compare:@"UIInputWindowController"] != NSOrderedSame) {
-        return topViewController;
-    }
-
-    return nil;
-}
-
 - (BOOL)shouldAutorotate
 {
-    UIViewController * topViewController = [self topViewController];
-    if (topViewController != nil) {
-        return topViewController.shouldAutorotate;
+    UIViewController * topmostViewController = UIApplication.sharedApplication.wr_topmostViewController;
+    if (topmostViewController != nil && topmostViewController != self) {
+        return topmostViewController.shouldAutorotate;
     } else {
         return YES;
     }
@@ -143,9 +124,9 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    UIViewController * topViewController = [self topViewController];
-    if (topViewController != nil) {
-        return topViewController.supportedInterfaceOrientations;
+    UIViewController * topmostViewController = UIApplication.sharedApplication.wr_topmostViewController;
+    if (topmostViewController != nil && topmostViewController != self) {
+        return topmostViewController.supportedInterfaceOrientations;
     } else {
         return self.wr_supportedInterfaceOrientations;
     }
