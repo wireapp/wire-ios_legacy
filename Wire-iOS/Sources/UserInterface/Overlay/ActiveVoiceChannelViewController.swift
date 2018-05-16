@@ -79,6 +79,10 @@ class ActiveVoiceChannelViewController : UIViewController {
         return false
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return visibleVoiceChannelViewController?.preferredStatusBarStyle ?? .default
+    }
+    
     func updateVisibleVoiceChannelViewController() {
         let conversation = primaryCallingConversation
        

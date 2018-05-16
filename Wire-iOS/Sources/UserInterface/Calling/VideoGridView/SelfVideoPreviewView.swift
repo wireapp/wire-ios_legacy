@@ -37,8 +37,8 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     
     var isMuted = false {
         didSet {
-            mutedOverlayView.isHidden = !isMuted
-            mutedIconImageView.isHidden = !isMuted
+            guard oldValue != isMuted else { return }
+            updateState(animated: true)
         }
     }
     
@@ -47,6 +47,7 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
         super.init(frame: .zero)
         setupViews()
         createConstraints()
+        updateState()
     }
     
     @available(*, unavailable)
@@ -55,16 +56,17 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     }
     
     private func setupViews() {
-        mutedOverlayView.isHidden = true
-        mutedIconImageView.isHidden = true
         mutedIconImageView.contentMode = .center
         mutedOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         let iconColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
         mutedIconImageView.image = UIImage(for: .microphoneWithStrikethrough, iconSize: .tiny, color: iconColor)
-        [previewView, mutedOverlayView, mutedIconImageView].forEach {
+        [previewView, mutedOverlayView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
         }
+        
+        mutedIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        mutedOverlayView.addSubview(mutedIconImageView)
     }
     
     private func createConstraints() {
@@ -72,6 +74,13 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
         mutedOverlayView.fitInSuperview()
         mutedIconImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         mutedIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+    }
+    
+    private func updateState(animated: Bool = false) {
+        let duration: TimeInterval = animated ? 0.2 : 0
+        UIView.animate(withDuration: duration) { [mutedOverlayView, isMuted] in
+            mutedOverlayView.alpha = isMuted ? 1 : 0
+        }
     }
 
 }

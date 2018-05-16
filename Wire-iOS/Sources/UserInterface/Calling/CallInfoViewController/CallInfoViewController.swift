@@ -24,6 +24,7 @@ protocol CallInfoViewControllerDelegate: class {
 
 protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType  {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
+    var degradationState: CallDegradationState { get }
 }
 
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
@@ -99,6 +100,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         target: self,
         action: #selector(minimizeCallOverlay)
         )
+        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "CallDismissOverlayButton"
     }
 
     private func updateState() {

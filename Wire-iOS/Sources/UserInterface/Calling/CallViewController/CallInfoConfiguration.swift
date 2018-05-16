@@ -24,6 +24,20 @@ struct CallInfoConfiguration  {
 
 extension CallInfoConfiguration: CallInfoViewControllerInput {
     
+    var degradationState: CallDegradationState {
+        switch voiceChannel.state {
+        case .incoming(video: _, shouldRing: _, degraded: true):
+            return CallDegradationState.incoming(degradedUser: voiceChannel.firstDegradedUser)
+        case .answered(degraded: true):
+            fallthrough
+        case .outgoing(degraded: true):
+            return CallDegradationState.outgoing(degradedUser: voiceChannel.firstDegradedUser)
+        default:
+            return .none
+        }
+        
+    }
+    
     var accessoryType: CallInfoViewControllerAccessoryType {
         let conversation = voiceChannel.conversation
         
@@ -74,7 +88,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     
     var canAccept: Bool {
         switch voiceChannel.state {
-        case .incoming(video: _, shouldRing: true, degraded: false): return true
+        case .incoming: return true
         default: return false
         }
     }
@@ -123,7 +137,7 @@ extension CallParticipantState {
     
     var isSendingVideo: Bool {
         switch self {
-        case .connected(videoState: .started), .connected(videoState: .badConnection): return true
+        case .connected(videoState: let state) where state.isSending: return true
         default: return false
         }
     }
@@ -138,6 +152,10 @@ fileprivate extension VoiceChannel {
             .compactMap { $0 as? ZMUser }
             .map { ($0, state(forParticipant: $0)) }
             .filter { $0.1.isConnected }
+    }
+    
+    var firstDegradedUser: ZMUser? {
+        return conversation?.activeParticipants.compactMap({ $0 as? ZMUser }).first(where: { $0.untrusted() })
     }
     
 }

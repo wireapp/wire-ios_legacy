@@ -19,8 +19,8 @@
 import Foundation
 
 protocol VideoGridConfiguration {
-    var floatingVideoStream: UUID? { get }
-    var videoStreams: [UUID] { get }
+    var floatingVideoStream: ParticipantVideoState? { get }
+    var videoStreams: [ParticipantVideoState] { get }
     var isMuted: Bool { get }
 }
 
@@ -84,21 +84,21 @@ class VideoGridViewController: UIViewController {
         selfPreviewView?.isMuted = configuration.isMuted
     }
     
-    private func updateFloatingVideo(with stream: UUID?) {
+    private func updateFloatingVideo(with state: ParticipantVideoState?) {
         // No stream, remove floating video if there is any
-        guard let stream = stream else {
+        guard let state = state else {
             floatingSelfPreviewView = nil
             return thumbnailViewController.removeCurrentThumbnailContentView()
         }
         
         // We only support the self preview in the floating overlay
-        guard stream == ZMUser.selfUser().remoteIdentifier else {
+        guard state.stream == ZMUser.selfUser().remoteIdentifier else {
             return Calling.log.error("Invalid operation: Non self preview in overlay")
         }
         
         // We have a stream but don't have a preview view yet
         if nil == floatingSelfPreviewView {
-            let previewView = SelfVideoPreviewView(identifier: stream.transportString())
+            let previewView = SelfVideoPreviewView(identifier: state.stream.transportString())
             previewView.translatesAutoresizingMaskIntoConstraints = false
             
             // TODO: Calculate correct size based on device and orientation
@@ -107,17 +107,22 @@ class VideoGridViewController: UIViewController {
         }
     }
     
-    private func updateVideoGrid(with videoStreams: [UUID]) {
-        let removed = gridVideoStreams.filter({ !videoStreams.contains($0) })
-        let added = videoStreams.filter({ !gridVideoStreams.contains($0) })
+    private func updateVideoGrid(with videoStreams: [ParticipantVideoState]) {
+        let streamIds = videoStreams.map { $0.stream }
+        let removed = gridVideoStreams.filter { !streamIds.contains($0) }
+        let added = streamIds.filter { !gridVideoStreams.contains($0) }
  
         removed.forEach(removeStream)
         added.forEach(addStream)
+        
+        videoStreams.forEach {
+            (streamView(for: $0.stream) as? VideoPreviewView)?.isPaused = $0.isPaused
+        }
     }
     
     private func addStream(_ streamId: UUID) {
         Calling.log.debug("Adding video stream: \(streamId)")
-        
+
         let view: UIView = {
             if streamId == ZMUser.selfUser().remoteIdentifier {
                 let videoView = SelfVideoPreviewView(identifier: streamId.transportString())
@@ -125,18 +130,16 @@ class VideoGridViewController: UIViewController {
                 selfPreviewView = videoView
                 return videoView
             } else {
-                let videoView = AVSVideoView()
+                let videoView = VideoPreviewView(identifier: streamId.transportString())
                 videoView.translatesAutoresizingMaskIntoConstraints = false
-                videoView.userid = streamId.transportString()
-                videoView.shouldFill = true
                 return videoView
             }
         }()
-        
+
         gridView.append(view: view)
         gridVideoStreams.append(streamId)
     }
-    
+
     private func removeStream(_ streamId: UUID) {
         Calling.log.debug("Removing video stream: \(streamId)")
         guard let videoView = streamView(for: streamId) else { return }

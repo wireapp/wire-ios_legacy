@@ -28,5 +28,12 @@ extension VideoState {
         case .stopped: return false
         }
     }
+    
+    var isPaused: Bool {
+        switch self {
+        case .paused: return true
+        default: return false
+        }
+    }
 
 }

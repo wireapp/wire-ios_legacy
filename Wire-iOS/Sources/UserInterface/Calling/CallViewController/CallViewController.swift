@@ -36,6 +36,10 @@ final class CallViewController: UIViewController {
         return voiceChannel.conversation
     }
     
+    private var proximityMonitorManager: ProximityMonitorManager? {
+        return ZClientViewController.shared()?.proximityMonitorManager
+    }
+    
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance()) {
         self.voiceChannel = voiceChannel
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
@@ -46,10 +50,17 @@ final class CallViewController: UIViewController {
         callInfoRootViewController.delegate = self
         AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self)]
+        proximityMonitorManager?.stateChanged = proximityStateDidChange
     }
     
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupApplicationStateObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(resumeVideoIfNeeded), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseVideoIfNeeded), name: .UIApplicationDidEnterBackground, object: nil)
     }
     
     override func viewDidLoad() {
@@ -58,7 +69,37 @@ final class CallViewController: UIViewController {
         createConstraints()
         updateConfiguration()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        proximityMonitorManager?.startListening()
+        resumeVideoIfNeeded()
+        setupApplicationStateObservers()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        proximityMonitorManager?.stopListening()
+        pauseVideoIfNeeded()
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return callInfoConfiguration.effectiveColorVariant == .light ? .default : .lightContent
+    }
+
+    @objc private func resumeVideoIfNeeded() {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }
+        voiceChannel.videoState = .started
+        updateConfiguration()
+    }
+
+    @objc private func pauseVideoIfNeeded() {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState.isSending else { return }
+        voiceChannel.videoState = .paused
+        updateConfiguration()
+    }
+
     private func setupViews() {
         [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
     }
@@ -70,6 +111,16 @@ final class CallViewController: UIViewController {
     
     fileprivate func minimizeOverlay() {
         dismisser?.dismiss(viewController: self, completion: nil)
+    }
+    
+    fileprivate func acceptDegradedCall() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
+        userSession.enqueueChanges({
+            self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession)
+        }, completionHandler: {
+            self.conversation?.joinCall()
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -100,12 +151,16 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func toggleVideoState() {
+        if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
+            showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
+            return
+        }
+        
         voiceChannel.videoState = voiceChannel.videoState.toggledState
         updateConfiguration()
     }
     
     fileprivate func toggleCameraAnimated() {
-        // TODO: Animations
         toggleCameraType()
     }
     
@@ -125,7 +180,7 @@ extension CallViewController: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateConfiguration()
-        startInitialOverlayTimerIfNeeded()
+        hideOverlayAfterCallEstablishedIfNeeded()
     }
     
 }
@@ -153,8 +208,11 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         guard let userSession = ZMUserSession.shared() else { return }
         
         switch action {
+        case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
         case .acceptCall: conversation?.joinCall()
+        case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession)
+        case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()
         case .minimizeOverlay: minimizeOverlay()
@@ -210,9 +268,10 @@ extension CallViewController {
         )
     }
     
-    fileprivate func startInitialOverlayTimerIfNeeded() {
-        guard nil == overlayTimer, canHideOverlay else { return }
-        startOverlayTimer()
+    fileprivate func hideOverlayAfterCallEstablishedIfNeeded() {
+        let isNotAnimating = callInfoRootViewController.view.layer.animationKeys()?.isEmpty ?? true
+        guard nil == overlayTimer, canHideOverlay, isOverlayVisible, isNotAnimating else { return }
+        animateOverlay(show: false)
     }
     
     fileprivate func startOverlayTimer() {
@@ -230,6 +289,16 @@ extension CallViewController {
     fileprivate func stopOverlayTimer() {
         overlayTimer?.invalidate()
         overlayTimer = nil
+    }
+
+}
+
+extension CallViewController {
+    
+    func proximityStateDidChange(_ raisedToEar: Bool) {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState != .stopped else { return }
+        voiceChannel.videoState = raisedToEar ? .paused : .started
+        updateConfiguration()
     }
 
 }
