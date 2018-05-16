@@ -262,7 +262,8 @@
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Ongoing call";
-"conversation.input_bar.ongoing_call_alert.message" = "You can't record an audio message while being on a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
 
 "conversation.guests_present" = "Guests are present";
 
@@ -530,6 +531,7 @@
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
@@ -1320,3 +1322,9 @@
 "url_action.confirm" = "Confirm";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "News and offers";
+"news_offers.consent.message" = "We would like to send you more information about our product. To do so, we may use external services like Salesforce and Marketo.\nYou can unsubscribe at any time. We will not keep your data after that.";

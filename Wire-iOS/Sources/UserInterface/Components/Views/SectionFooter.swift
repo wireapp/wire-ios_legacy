@@ -18,10 +18,10 @@
 
 import Foundation
 
-final class SectionHeader: UICollectionReusableView, Themeable {
+final class SectionFooter: UICollectionReusableView, Themeable {
     
     let titleLabel = UILabel()
- 
+    
     dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
@@ -41,7 +41,7 @@ final class SectionHeader: UICollectionReusableView, Themeable {
     }
     
     private func setupViews() {
-        titleLabel.font = FontSpec(.small, .semibold).font!
+        titleLabel.font = FontSpec(.small, .regular).font!
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         addSubview(titleLabel)
@@ -49,15 +49,15 @@ final class SectionHeader: UICollectionReusableView, Themeable {
     
     private func createConstraints() {
         NSLayoutConstraint.activate([
-            titleLabel.heightAnchor.constraint(equalToConstant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 24),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
         ])
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: colorSchemeVariant)
     }
     
 }

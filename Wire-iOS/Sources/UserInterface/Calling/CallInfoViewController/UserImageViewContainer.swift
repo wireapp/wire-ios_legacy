@@ -46,10 +46,16 @@ final class UserImageViewContainer: UIView {
     private func setupViews() {
         userImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userImageView)
-        userImageView.setContentHuggingPriority(249, for: .vertical)
-        userImageView.setContentHuggingPriority(249, for: .horizontal)
-        userImageView.setContentCompressionResistancePriority(249, for: .vertical)
-        userImageView.setContentCompressionResistancePriority(249, for: .horizontal)
+        
+        let priority: Float = 249
+        userImageView.setContentHuggingPriority(priority, for: .vertical)
+        userImageView.setContentHuggingPriority(priority, for: .horizontal)
+        userImageView.setContentCompressionResistancePriority(priority, for: .vertical)
+        userImageView.setContentCompressionResistancePriority(priority, for: .horizontal)
+        userImageView.imageView.setContentHuggingPriority(priority, for: .vertical)
+        userImageView.imageView.setContentHuggingPriority(priority, for: .horizontal)
+        userImageView.imageView.setContentCompressionResistancePriority(priority, for: .vertical)
+        userImageView.imageView.setContentCompressionResistancePriority(priority, for: .horizontal)
     }
     
     private func createConstraints() {
