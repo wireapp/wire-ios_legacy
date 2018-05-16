@@ -24,7 +24,7 @@ extension ConversationListViewController {
               !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 
         guard isComingFromRegistration ||
-              (!isComingFromRegistration && ZMUser.selfUser().handle != nil && TrackingManager.shared.disableCrashAndAnalyticsSharing) else { return }
+              (ZMUser.selfUser().handle != nil && TrackingManager.shared.disableCrashAndAnalyticsSharing) else { return }
 
         let alertController = UIAlertController(title: "conversation_list.date_usage_permission_alert.title".localized, message: "conversation_list.date_usage_permission_alert.message".localized, preferredStyle: .alert)
 
