@@ -137,7 +137,7 @@ extension CallParticipantState {
     
     var isSendingVideo: Bool {
         switch self {
-        case .connected(videoState: .started), .connected(videoState: .badConnection): return true
+        case .connected(videoState: let state) where state.isSending: return true
         default: return false
         }
     }
