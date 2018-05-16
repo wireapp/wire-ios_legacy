@@ -530,6 +530,7 @@
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
 
 // Meta Menu
 "meta.menu.rename" = "Rename";

@@ -34,6 +34,7 @@ final public class ConversationCreationValues {
 }
 
 @objc protocol ConversationCreationControllerDelegate: class {
+
     func conversationCreationController(
         _ controller: ConversationCreationController,
         didSelectName name: String,
@@ -46,7 +47,6 @@ final public class ConversationCreationValues {
 final class ConversationCreationController: UIViewController {
 
     static let errorFont = FontSpec(.small, .semibold).font!
-
     static let mainViewHeight: CGFloat = 56
 
     fileprivate let errorLabel = UILabel()
@@ -61,6 +61,11 @@ final class ConversationCreationController: UIViewController {
     )
     private let toggleSubtitleLabel = UILabel(
         key: "conversation.create.toggle.subtitle",
+        size: .small,
+        color: ColorSchemeColorTextDimmed
+    )
+    private let textFieldSubtitleLabel = UILabel(
+        key: "participants.section.name.footer",
         size: .small,
         color: ColorSchemeColorTextDimmed
     )
@@ -135,7 +140,7 @@ final class ConversationCreationController: UIViewController {
         textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
         textField.textFieldDelegate = self
         mainViewContainer.addSubview(textField)
-
+        mainViewContainer.addSubview(textFieldSubtitleLabel)
         errorViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
         errorLabel.textAlignment = .center
@@ -145,6 +150,7 @@ final class ConversationCreationController: UIViewController {
         errorViewContainer.addSubview(errorLabel)
 
         toggleSubtitleLabel.numberOfLines = 0
+        textFieldSubtitleLabel.numberOfLines = 0
         [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
         [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)
         
@@ -211,12 +217,15 @@ final class ConversationCreationController: UIViewController {
             mainViewContainer.width == view.width
         }
 
-        constrain(mainViewContainer, textField) { mainViewContainer, textField in
+        constrain(mainViewContainer, textField, textFieldSubtitleLabel) { mainViewContainer, textField, textFieldSubtitleLabel in
             textField.height == TeamCreationStepController.mainViewHeight
             textField.top == mainViewContainer.top
             textField.leading == mainViewContainer.leading
             textField.trailing == mainViewContainer.trailing
-            textField.bottom == mainViewContainer.bottom
+            textField.bottom == textFieldSubtitleLabel.top - 16
+            textFieldSubtitleLabel.leading == mainViewContainer.leading + 16
+            textFieldSubtitleLabel.trailing == mainViewContainer.trailing - 16
+            textFieldSubtitleLabel.bottom == mainViewContainer.bottom - 24
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
