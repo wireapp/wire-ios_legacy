@@ -49,7 +49,7 @@ final class CallViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
         AVSMediaManagerClientChangeNotification.add(self)
-        observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self)]
+        observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
         proximityMonitorManager?.stateChanged = proximityStateDidChange
     }
     
@@ -130,6 +130,7 @@ final class CallViewController: UIViewController {
     fileprivate func updateConfiguration() {
         callInfoRootViewController.configuration = callInfoConfiguration
         videoGridViewController.configuration = videoConfiguration
+        updateOverlayAfterStateChanged()
         updateAppearance()
     }
     
@@ -196,6 +197,14 @@ extension CallViewController: WireCallCenterCallParticipantObserver {
 extension CallViewController: AVSMediaManagerClientObserver {
     
     func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification!) {
+        updateConfiguration()
+    }
+    
+}
+
+extension CallViewController: ConstantBitRateAudioObserver {
+    
+    func callCenterDidChange(constantAudioBitRateAudioEnabled: Bool) {
         updateConfiguration()
     }
     
@@ -278,6 +287,19 @@ extension CallViewController {
         stopOverlayTimer()
         overlayTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 4, repeats: false) { [animateOverlay] _ in
             animateOverlay(false)
+        }
+    }
+    
+    fileprivate func updateOverlayAfterStateChanged() {
+        if canHideOverlay {
+            if overlayTimer == nil {
+                startOverlayTimer()
+            }
+        } else {
+            if !isOverlayVisible {
+                animateOverlay(show: true)
+            }
+            stopOverlayTimer()
         }
     }
     

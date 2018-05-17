@@ -120,7 +120,7 @@
 
 // Conversation List Data Usage Permission Dialog
 "conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.date_usage_permission_alert.message" = "Sending usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
+"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";
@@ -738,8 +738,8 @@
 "self.settings.privacy_analytics.title" = "Send Anonymous Data";
 "self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
 
-"self.settings.receiveNews_and_offers.title" = "Receive News and Offers";
-"self.settings.receiveNews_and_offers.description.title" = "We may use external services like Salesforce and Marketo to process your data. You may still receive other messages from us.";
+"self.settings.receiveNews_and_offers.title" = "Receive News";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product update from Wire via email.";
 
 
 
@@ -1326,5 +1326,6 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // News and offers consent prompt
 
-"news_offers.consent.title" = "News and offers";
-"news_offers.consent.message" = "We would like to send you more information about our product. To do so, we may use external services like Salesforce and Marketo.\nYou can unsubscribe at any time. We will not keep your data after that.";
+"news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
+"news_offers.consent.message" = "You can unsubscribe at any time.";
+"news_offers.consent.button.privacy_policy.title" = "Privacy Policy";
