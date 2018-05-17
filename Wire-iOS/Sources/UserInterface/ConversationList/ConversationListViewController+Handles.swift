@@ -132,7 +132,7 @@ extension ConversationListViewController: UserProfileUpdateObserver {
 
     public func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
-        UIAlertController.showNewsletterSubscriptionDialog()
+        UIAlertController.showNewsletterSubscriptionDialogIfNeeded()
     }
 
 }

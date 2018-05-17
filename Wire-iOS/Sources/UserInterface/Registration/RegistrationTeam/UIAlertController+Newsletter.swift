@@ -19,7 +19,14 @@
 import Foundation
 
 extension UIAlertController {
-    static func showNewsletterSubscriptionDialog() {
+
+    /// flag for prevent showing newsletter subscription dialog again in team creation workflow.
+    /// (team create work flow: newsletter subscription dialog appears after email verification.
+    ///  email regisration work flow: newsletter subscription dialog appears after conversation list shows.)
+    static var didNewsletterSubscriptionDialogShown = false
+
+    static func showNewsletterSubscriptionDialogIfNeeded() {
+        guard !UIAlertController.didNewsletterSubscriptionDialogShown else { return }
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
                                                 message: "news_offers.consent.message".localized,
                                                 preferredStyle: .alert)
@@ -42,6 +49,9 @@ extension UIAlertController {
                                                     // show privacy policy
         }))
 
-        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true)
+        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
+            UIAlertController.didNewsletterSubscriptionDialogShown = true
+        }
+
     }
 }

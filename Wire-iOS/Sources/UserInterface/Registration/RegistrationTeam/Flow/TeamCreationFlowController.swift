@@ -137,7 +137,7 @@ extension TeamCreationFlowController {
             stepDescription = SetFullNameStepDescription()
 
             // newsletter subscription dialog shows right before leaving the screen
-            UIAlertController.showNewsletterSubscriptionDialog()
+            UIAlertController.showNewsletterSubscriptionDialogIfNeeded()
         case .setPassword:
             stepDescription = SetPasswordStepDescription()
         case .createTeam:
