@@ -41,7 +41,7 @@ final class CallViewController: UIViewController {
         return ZClientViewController.shared()?.proximityMonitorManager
     }
 
-    private var permissions: CallPermissionsConfiguration {
+    fileprivate var permissions: CallPermissionsConfiguration {
         return callInfoConfiguration.permissions
     }
     
@@ -136,6 +136,7 @@ final class CallViewController: UIViewController {
 
         if voiceChannel.isVideoCall && permissions.canAcceptVideoCalls == false {
             callInfoConfiguration.preferedVideoCallState = .statusTextDisplayed
+            voiceChannel.videoState = .stopped
             return
         }
 
@@ -190,7 +191,6 @@ final class CallViewController: UIViewController {
             }
             return
         }
-
 
         if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
             showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
@@ -252,7 +252,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         
         switch action {
         case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
-        case .acceptCall: conversation?.joinCall()
+        case .acceptCall: conversation?.joinVoiceChannel(video: voiceChannel.isVideoCall && permissions.canAcceptVideoCalls)
         case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession)
         case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
