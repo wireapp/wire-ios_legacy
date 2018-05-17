@@ -130,6 +130,7 @@ final class CallViewController: UIViewController {
     fileprivate func updateConfiguration() {
         callInfoRootViewController.configuration = callInfoConfiguration
         videoGridViewController.configuration = videoConfiguration
+        updateOverlayAfterStateChanged()
         updateAppearance()
     }
     
@@ -278,6 +279,19 @@ extension CallViewController {
         stopOverlayTimer()
         overlayTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 4, repeats: false) { [animateOverlay] _ in
             animateOverlay(false)
+        }
+    }
+    
+    fileprivate func updateOverlayAfterStateChanged() {
+        if canHideOverlay {
+            if overlayTimer == nil {
+                startOverlayTimer()
+            }
+        } else {
+            if !isOverlayVisible {
+                animateOverlay(show: true)
+            }
+            stopOverlayTimer()
         }
     }
     
