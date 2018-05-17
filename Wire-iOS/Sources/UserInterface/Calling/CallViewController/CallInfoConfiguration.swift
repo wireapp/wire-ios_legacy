@@ -41,7 +41,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     var accessoryType: CallInfoViewControllerAccessoryType {
         let conversation = voiceChannel.conversation
         
-        if voiceChannel.isVideoCall, conversation?.conversationType == .oneOnOne {
+        if isVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
         
@@ -120,7 +120,12 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var isVideoCall: Bool {
-        return voiceChannel.isVideoCall
+        switch voiceChannel.state {
+        case .established, .terminating:
+            return voiceChannel.isAnyParticipantSendingVideo
+        default:
+            return voiceChannel.isVideoCall
+        }
     }
     
     var variant: ColorSchemeVariant {
@@ -148,6 +153,10 @@ extension CallParticipantState {
 fileprivate typealias UserWithParticipantState = (ZMUser, CallParticipantState)
 
 fileprivate extension VoiceChannel {
+    
+    var isAnyParticipantSendingVideo: Bool {
+        return videoState.isSending || connectedParticipants.any({ $0.1.isSendingVideo })
+    }
     
     var connectedParticipants: [UserWithParticipantState] {
         return participants
