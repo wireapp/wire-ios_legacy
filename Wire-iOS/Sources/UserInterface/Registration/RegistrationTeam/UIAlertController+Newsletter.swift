@@ -32,22 +32,22 @@ extension UIAlertController {
                                                 message: "news_offers.consent.message".localized,
                                                 preferredStyle: .alert)
 
-        alertController.addAction(UIAlertAction(title: "general.accept".localized,
-                                                style: .default,
-                                                handler: { (_) in
-                                                    // enable newsletter subscription
-        }))
-
-        alertController.addAction(UIAlertAction(title: "general.skip".localized,
-                                                style: .cancel,
-                                                handler: { (_) in
-                                                    // disable newsletter subscription
-        }))
-
         alertController.addAction(UIAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized,
                                                 style: .default,
                                                 handler: { (_) in
                                                     // show privacy policy
+        }))
+
+        alertController.addAction(UIAlertAction(title: "general.skip".localized,
+                                                style: .default,
+                                                handler: { (_) in
+                                                    // disable newsletter subscription
+        }))
+
+        alertController.addAction(UIAlertAction(title: "general.accept".localized,
+                                                style: .cancel,
+                                                handler: { (_) in
+                                                    // enable newsletter subscription
         }))
 
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
