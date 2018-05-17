@@ -148,8 +148,6 @@ final class CallViewController: UIViewController {
                 self.updateConfiguration()
             }
 
-            return
-
         }
 
         if voiceChannel.isVideoCall && permissions.isPendingVideoPermissionRequest {
@@ -159,8 +157,6 @@ final class CallViewController: UIViewController {
             permissions.requestOrWarnAboutVideoPermission { _ in
                 self.updateConfiguration()
             }
-
-            return
 
         }
 

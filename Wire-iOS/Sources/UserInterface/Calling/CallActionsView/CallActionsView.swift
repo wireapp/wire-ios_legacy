@@ -198,7 +198,7 @@ final class CallActionsView: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        let height = IconButton.height + verticalStackView.spacing + IconButton.height
+        let height = isCompact ? IconButton.height : (IconButton.height * 2) + verticalStackView.spacing
         return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
     
