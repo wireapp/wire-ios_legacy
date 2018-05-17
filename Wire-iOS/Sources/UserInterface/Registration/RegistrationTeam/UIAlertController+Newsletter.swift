@@ -27,13 +27,19 @@ extension UIAlertController {
         alertController.addAction(UIAlertAction(title: "general.accept".localized,
                                                 style: .default,
                                                 handler: { (_) in
-            // enable newsletter subscription
+                                                    // enable newsletter subscription
         }))
 
         alertController.addAction(UIAlertAction(title: "general.skip".localized,
                                                 style: .cancel,
                                                 handler: { (_) in
-            // disable newsletter subscription
+                                                    // disable newsletter subscription
+        }))
+
+        alertController.addAction(UIAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized,
+                                                style: .default,
+                                                handler: { (_) in
+                                                    // show privacy policy
         }))
 
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true)

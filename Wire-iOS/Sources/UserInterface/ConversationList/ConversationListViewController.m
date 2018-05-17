@@ -114,8 +114,6 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
-@property (nonatomic) BOOL isViewDidAppear;
-
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
@@ -144,7 +142,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.isViewDidAppear = NO;
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
     
@@ -206,14 +203,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-    // ClientUnregisterFlowViewController's viewWillDisappear calls UIViewController.dismiss method after this class's viewDidLoad is called. We call showDataUsagePermissionDialogIfNeeded here to prevent that.
-    if (! self.isViewDidAppear) {
-        self.isViewDidAppear = YES;
-
-        [self showDataUsagePermissionDialogIfNeeded];
-    }
-
 
     if (! IS_IPAD_FULLSCREEN) {
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;

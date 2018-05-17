@@ -20,8 +20,7 @@ import Foundation
 
 extension ConversationListViewController {
     func showDataUsagePermissionDialogIfNeeded() {
-        guard needToShowDataUsagePermissionDialog,
-              !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
+        guard needToShowDataUsagePermissionDialog else { return }
 
         guard isComingFromRegistration ||
               TrackingManager.shared.disableCrashAndAnalyticsSharing else { return }
