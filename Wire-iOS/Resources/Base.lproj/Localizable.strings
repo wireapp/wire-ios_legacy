@@ -499,8 +499,7 @@
 // Voice New
 
 "call.status.connecting" = "Connecting…";
-"call.status.incoming.video" = "%@ is video calling…";
-"call.status.incoming.audio" = "%@ is calling…";
+"call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Calling…";
 "call.status.outgoing" = "Ringing…";
 "call.status.reconnecting" = "Reconnecting…";
