@@ -18,6 +18,7 @@
 
 
 #import "CameraBottomToolsViewController.h"
+#import "CameraBottomToolsViewController+Private.h"
 
 @import PureLayout;
 @import Photos;
@@ -36,9 +37,7 @@
 
 @interface CameraBottomToolsViewController ()
 
-@property (nonatomic) ImagePickerConfirmationController *imagePickerConfirmationController;
 @property (nonatomic) CameraController *cameraController;
-@property (nonatomic) ButtonWithLargerHitArea *libraryButton;
 @property (nonatomic) ButtonWithLargerHitArea *shutterButton;
 @property (nonatomic) ButtonWithLargerHitArea *closeButton;
 @property (nonatomic) BOOL initialConstraintsCreated;
@@ -183,16 +182,6 @@
     if ([self.delegate respondsToSelector:@selector(cameraBottomToolsViewControllerDidCancel:)]) {
         [self.delegate cameraBottomToolsViewControllerDidCancel:self];
     }
-}
-
-- (IBAction)openPhotoLibrary:(id)sender
-{
-    UIImagePickerController *picker = [UIImagePickerController popoverForIPadRegularWithSourceRect:CGRectInset(self.libraryButton.bounds, 4, 4) sourceView:self.libraryButton presentViewController:self sourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    
-    picker.delegate = self.imagePickerConfirmationController;
-    self.imagePickerConfirmationController.previewTitle = self.previewTitle;
-        
-    [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark - Device Rotation

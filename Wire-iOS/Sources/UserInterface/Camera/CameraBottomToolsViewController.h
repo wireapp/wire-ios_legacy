@@ -24,7 +24,6 @@
 @class CameraController;
 @class ImageMetadata;
 
-
 @protocol CameraBottomToolsViewControllerDelegate <NSObject>
 
 - (void)cameraBottomToolsViewController:(id)controller didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata;
