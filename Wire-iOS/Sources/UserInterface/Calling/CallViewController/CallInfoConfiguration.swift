@@ -70,9 +70,10 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var canToggleMediaType: Bool {
-        if case .outgoing = voiceChannel.state {
+        switch voiceChannel.state {
+        case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
-        } else {
+        default:
             return true
         }
     }

@@ -57,7 +57,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             degradationState: .none,
             accessoryType: .avatar(otherUser),
-            canToggleMediaType: true,
+            canToggleMediaType: false,
             isMuted: false,
             isTerminating: false,
             canAccept: true,
@@ -91,7 +91,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             degradationState: .incoming(degradedUser: otherUser),
             accessoryType: .avatar(otherUser),
-            canToggleMediaType: true,
+            canToggleMediaType: false,
             isMuted: false,
             isTerminating: false,
             canAccept: true,
@@ -265,7 +265,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             degradationState: .none,
             accessoryType: .avatar(otherUser),
-            canToggleMediaType: true,
+            canToggleMediaType: false,
             isMuted: false,
             isTerminating: false,
             canAccept: true,
