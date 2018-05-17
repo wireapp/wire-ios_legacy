@@ -30,8 +30,12 @@ extension UIAlertController {
                                                 message: "news_offers.consent.message".localized,
                                                 preferredStyle: .alert)
 
-        let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { (_) in
+        let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { _ in
             if let browserViewController = BrowserViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL) {
+                browserViewController.completion = { _ in
+                    UIAlertController.showNewsletterSubscriptionDialog()
+                }
+
                 AppDelegate.shared().notificationsWindow?.rootViewController?.present(browserViewController, animated: true)
             }
         }
