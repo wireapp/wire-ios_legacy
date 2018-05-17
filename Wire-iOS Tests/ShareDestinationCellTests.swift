@@ -21,16 +21,19 @@ import XCTest
 @testable import Wire
 
 class MockDestination: NSObject, ShareDestination {
+    var showsGuestIcon: Bool
+    
     var displayName: String
     
     var securityLevel: ZMConversationSecurityLevel
     
     var avatarView: UIView?
     
-    init(displayName: String, avatarView: UIView? = nil, securityLevel: ZMConversationSecurityLevel = .notSecure) {
+    init(displayName: String, avatarView: UIView? = nil, securityLevel: ZMConversationSecurityLevel = .notSecure, showsGuestIcon: Bool = false) {
         self.displayName = displayName
         self.securityLevel = securityLevel
         self.avatarView = avatarView
+        self.showsGuestIcon = showsGuestIcon
     }
 }
 
