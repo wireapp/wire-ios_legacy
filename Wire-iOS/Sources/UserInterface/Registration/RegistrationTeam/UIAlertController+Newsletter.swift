@@ -25,18 +25,20 @@ extension UIAlertController {
     ///  email regisration work flow: newsletter subscription dialog appears after conversation list shows.)
     static var didNewsletterSubscriptionDialogShown = false
 
-    static func showNewsletterSubscriptionDialogIfNeeded() {
-        guard !UIAlertController.didNewsletterSubscriptionDialogShown else { return }
-        
+    static func showNewsletterSubscriptionDialog() {
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
                                                 message: "news_offers.consent.message".localized,
                                                 preferredStyle: .alert)
 
+        let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { (_) in
+            if let browserViewController = BrowserViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL) {
+                AppDelegate.shared().notificationsWindow?.rootViewController?.present(browserViewController, animated: true)
+            }
+        }
+
         alertController.addAction(UIAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized,
                                                 style: .default,
-                                                handler: { (_) in
-                                                    // show privacy policy
-        }))
+                                                handler: privacyPolicyActionHandler))
 
         alertController.addAction(UIAlertAction(title: "general.skip".localized,
                                                 style: .default,
@@ -53,6 +55,11 @@ extension UIAlertController {
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
             UIAlertController.didNewsletterSubscriptionDialogShown = true
         }
+    }
 
+    static func showNewsletterSubscriptionDialogIfNeeded() {
+        guard !UIAlertController.didNewsletterSubscriptionDialogShown else { return }
+
+        showNewsletterSubscriptionDialog()
     }
 }
