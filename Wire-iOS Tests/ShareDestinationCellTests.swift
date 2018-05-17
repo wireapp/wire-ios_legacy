@@ -62,8 +62,9 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
                                           securityLevel: .notSecure)
         // when
         sut.destination = destination
+        let view = sut.prepareForSnapshots()
         // then
-        verify(view: sut.prepareForSnapshots())
+        verify(view: view)
     }
     
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_NotSecure_Unchecked() {

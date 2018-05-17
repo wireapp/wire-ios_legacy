@@ -87,6 +87,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             avatarView.height == self.avatarSize
         }
         
+        //self.titleLabel.font = UIFont.systemFont(ofSize: 16.0, weight: UIFontWeightLight)
         self.titleLabel.cas_styleClass = "normal-light"
         self.titleLabel.backgroundColor = .clear
         self.titleLabel.textColor = .white
@@ -105,10 +106,10 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
 
             stackView.left == contentView.left + margin
             stackView.right == contentView.right - margin
-            stackView.top == contentView.top //+ margin/2
-            stackView.bottom == contentView.bottom //- margin/2
+            stackView.top == contentView.top
+            stackView.bottom == contentView.bottom
             
-            
+            titleLabel.height == 44
             titleLabel.centerY == contentView.centerY
             
             checkImageView.centerY == contentView.centerY

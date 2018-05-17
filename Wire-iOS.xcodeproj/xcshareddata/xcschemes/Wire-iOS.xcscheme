@@ -79,6 +79,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "-min_version &quot;1000000&quot;"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--debug-data-to-install=/Users/xxxxxxx/Database2.41"
             isEnabled = "NO">
          </CommandLineArgument>
