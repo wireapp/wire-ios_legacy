@@ -92,7 +92,6 @@ class VideoGridViewController: UIViewController {
         // Clear self preview we we shouldn't show it anymore
         if !isShowingSelf, let _ = selfPreviewView {
             selfPreviewView = nil
-            precondition(selfPreviewView == nil)
         }
         
         // Update mute status
