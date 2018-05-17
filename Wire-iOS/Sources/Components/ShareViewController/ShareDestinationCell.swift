@@ -57,6 +57,22 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             if let showsGuestIcon = destination?.showsGuestIcon, showsGuestIcon {
                 self.guestUserIcon = UIImageView(image: UIImage(for: .guest, iconSize: .tiny, color: .white))
             }
+            
+            if let guestUserIcon = self.guestUserIcon {
+                self.stackView.insertArrangedSubview(guestUserIcon, at: self.stackView.arrangedSubviews.count - 1)
+                constrain(guestUserIcon) { guestUserIcon in
+                    guestUserIcon.width == self.shieldSize
+                    guestUserIcon.height == self.shieldSize
+                }
+            }
+            
+            if let shieldView = self.shieldView {
+                self.stackView.insertArrangedSubview(shieldView, at: self.stackView.arrangedSubviews.count - 1)
+                constrain(shieldView) { shieldView in
+                    shieldView.width == self.shieldSize
+                    shieldView.height == self.shieldSize
+                }
+            }
         }
     }
     
@@ -117,21 +133,6 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             checkImageView.height == self.checkmarkSize
          }
         
-        if let guestUserIcon = self.guestUserIcon {
-            self.stackView.addArrangedSubview(guestUserIcon)
-            constrain(guestUserIcon) { guestUserIcon in
-                guestUserIcon.width == self.shieldSize
-                guestUserIcon.height == self.shieldSize
-            }
-        }
-        
-        if let shieldView = self.shieldView {
-            self.stackView.addArrangedSubview(shieldView)
-            constrain(shieldView) { shieldView in
-                shieldView.width == self.shieldSize
-                shieldView.height == self.shieldSize
-            }
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
