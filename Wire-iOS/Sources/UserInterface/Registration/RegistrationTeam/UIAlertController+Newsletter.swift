@@ -20,9 +20,9 @@ import Foundation
 
 extension UIAlertController {
 
-    /// flag for prevent showing newsletter subscription dialog again in team creation workflow.
+    /// flag for preventing newsletter subscription dialog shows again in team creation workflow.
     /// (team create work flow: newsletter subscription dialog appears after email verification.
-    ///  email regisration work flow: newsletter subscription dialog appears after conversation list shows.)
+    ///  email regisration work flow: newsletter subscription dialog appears after conversation list is displayed.)
     static var didNewsletterSubscriptionDialogShown = false
 
     static func showNewsletterSubscriptionDialogIfNeeded() {
