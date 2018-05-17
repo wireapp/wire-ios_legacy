@@ -48,7 +48,7 @@ final class CallViewController: UIViewController {
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance(), permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
         self.voiceChannel = voiceChannel
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoCallState: .hidden, permissions: permissionsConfiguration)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: permissionsConfiguration)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
         super.init(nibName: nil, bundle: nil)
@@ -71,6 +71,7 @@ final class CallViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateVideoStatusPlaceholder()
         proximityMonitorManager?.startListening()
     }
     
@@ -95,7 +96,7 @@ final class CallViewController: UIViewController {
     fileprivate func minimizeOverlay() {
         dismisser?.dismiss(viewController: self, completion: nil)
     }
-    
+
     fileprivate func acceptDegradedCall() {
         guard let userSession = ZMUserSession.shared() else { return }
         
@@ -111,55 +112,9 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func updateConfiguration() {
-        refreshAuthorizationState()
         callInfoRootViewController.configuration = callInfoConfiguration
         videoGridViewController.configuration = videoConfiguration
         updateAppearance()
-    }
-
-    private func refreshAuthorizationState() {
-
-        // If the user denied microphone access, drop the call.
-
-        if !permissions.canAcceptAudioCalls {
-
-            guard let userSession = ZMUserSession.shared() else {
-                return
-            }
-
-            self.voiceChannel.leave(userSession: userSession)
-            return
-
-        }
-
-        // If the user denied video access, switch to an audio call and inform the user.
-
-        if voiceChannel.isVideoCall && permissions.canAcceptVideoCalls == false {
-            callInfoConfiguration.preferedVideoCallState = .statusTextDisplayed
-            voiceChannel.videoState = .stopped
-            return
-        }
-
-        // Request permissions if needed
-
-        if permissions.isPendingAudioPermissionRequest {
-
-            permissions.requestOrWarnAboutAudioPermission { _ in
-                self.updateConfiguration()
-            }
-
-        }
-
-        if voiceChannel.isVideoCall && permissions.isPendingVideoPermissionRequest {
-
-            callInfoConfiguration.preferedVideoCallState = .statusTextHidden
-
-            permissions.requestOrWarnAboutVideoPermission { _ in
-                self.updateConfiguration()
-            }
-
-        }
-
     }
 
     private func updateAppearance() {
@@ -240,6 +195,60 @@ extension CallViewController: AVSMediaManagerClientObserver {
     
 }
 
+extension CallViewController {
+
+    fileprivate func acceptCallIfPossible() {
+
+        permissions.requestOrWarnAboutAudioPermission { audioGranted in
+
+            guard audioGranted else {
+                self.voiceChannel.leave(userSession: ZMUserSession.shared()!)
+                return
+            }
+
+            self.checkVideoPermissions { videoGranted in
+                self.conversation?.joinVoiceChannel(video: videoGranted)
+            }
+
+        }
+
+    }
+
+    private func checkVideoPermissions(resultHandler: @escaping (Bool) -> Void) {
+
+        guard voiceChannel.isVideoCall else {
+            resultHandler(false)
+            return
+        }
+
+        if !permissions.isPendingVideoPermissionRequest {
+            resultHandler(permissions.canAcceptVideoCalls)
+            updateConfiguration()
+            return
+        }
+
+        permissions.requestVideoPermissionWithoutWarning { granted in
+            resultHandler(granted)
+            self.updateVideoStatusPlaceholder()
+        }
+
+    }
+
+    fileprivate func updateVideoStatusPlaceholder() {
+
+        if voiceChannel.isVideoCall && !permissions.canAcceptVideoCalls {
+            callInfoConfiguration.preferedVideoPlaceholderState = permissions.isPendingVideoPermissionRequest ? .statusTextHidden : .statusTextDisplayed
+            voiceChannel.videoState = .stopped
+        } else {
+            callInfoConfiguration.preferedVideoPlaceholderState = .hidden
+        }
+
+        updateConfiguration()
+
+    }
+
+}
+
 extension CallViewController: CallInfoRootViewControllerDelegate {
     
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction) {
@@ -248,7 +257,6 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         
         switch action {
         case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
-        case .acceptCall: conversation?.joinVoiceChannel(video: voiceChannel.isVideoCall && permissions.canAcceptVideoCalls)
         case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession)
         case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
@@ -258,6 +266,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .toggleVideoState: toggleVideoState()
         case .flipCamera: toggleCameraAnimated()
         case .showParticipantsList: return // Handled in `CallInfoRootViewController`, we don't want to update.
+        case .acceptCall: acceptCallIfPossible()
         }
         
         updateConfiguration()

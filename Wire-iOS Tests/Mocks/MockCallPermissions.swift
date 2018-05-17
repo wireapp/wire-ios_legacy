@@ -17,17 +17,22 @@
 //
 
 import Foundation
+@testable import Wire
 
-protocol CallPermissionsConfiguration {
+class MockCallPermissions: CallPermissionsConfiguration {
 
-    var isPendingAudioPermissionRequest: Bool { get }
-    var isPendingVideoPermissionRequest: Bool { get }
+    var isPendingAudioPermissionRequest: Bool = true
+    var isPendingVideoPermissionRequest: Bool = true
 
-    var canAcceptVideoCalls: Bool { get }
-    var canAcceptAudioCalls: Bool { get }
+    var canAcceptVideoCalls: Bool = false
+    var canAcceptAudioCalls: Bool = false
 
-    func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void)
-    func requestOrWarnAboutVideoPermission(resultHandler: @escaping (Bool) -> Void)
-    func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void)
+    func requestOrWarnAboutVideoPermission(resultHandler: @escaping (Bool) -> Void) {
+        resultHandler(canAcceptVideoCalls)
+    }
+
+    func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void) {
+        resultHandler(canAcceptAudioCalls)
+    }
 
 }

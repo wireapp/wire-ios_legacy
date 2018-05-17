@@ -37,6 +37,10 @@ class CallPermissions: CallPermissionsConfiguration {
         return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .authorized
     }
 
+    func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void) {
+        UIApplication.wr_requestVideoAccess(resultHandler)
+    }
+
     func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void) {
         UIApplication.wr_requestOrWarnAboutMicrophoneAccess(resultHandler)
     }

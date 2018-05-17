@@ -316,5 +316,9 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Then
         verify(view: sut)
     }
-    
+
+    // MARK: Permissions Denied
+
+
+
 }

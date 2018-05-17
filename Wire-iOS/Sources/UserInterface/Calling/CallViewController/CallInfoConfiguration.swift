@@ -20,7 +20,7 @@ import Foundation
 
 struct CallInfoConfiguration  {
     let voiceChannel: VoiceChannel
-    var preferedVideoCallState: CallVideoPlaceholderState
+    var preferedVideoPlaceholderState: CallVideoPlaceholderState
     let permissions: CallPermissionsConfiguration
 }
 
@@ -137,11 +137,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
             return .hidden
         }
 
-        if case .stopped = voiceChannel.videoState {
-            return .statusTextHidden
-        }
-
-        return preferedVideoCallState
+        return preferedVideoPlaceholderState
 
     }
     
