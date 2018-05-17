@@ -135,8 +135,6 @@ extension TeamCreationFlowController {
             stepDescription = VerifyEmailStepDescription(email: email, delegate: self)
         case .setFullName:
             stepDescription = SetFullNameStepDescription()
-
-            // newsletter subscription dialog shows right before leaving the screen
             UIAlertController.showNewsletterSubscriptionDialogIfNeeded()
         case .setPassword:
             stepDescription = SetPasswordStepDescription()

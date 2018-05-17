@@ -27,6 +27,7 @@ extension UIAlertController {
 
     static func showNewsletterSubscriptionDialogIfNeeded() {
         guard !UIAlertController.didNewsletterSubscriptionDialogShown else { return }
+        
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
                                                 message: "news_offers.consent.message".localized,
                                                 preferredStyle: .alert)
