@@ -406,8 +406,8 @@
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    [self.contentContainer autoPinEdgesToSuperviewEdges];
-
+    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
+    
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
     [self.noConversationLabel autoSetDimension:ALDimensionWidth toSize:240.0f];
