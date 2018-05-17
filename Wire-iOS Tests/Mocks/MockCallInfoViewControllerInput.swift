@@ -20,6 +20,8 @@ import Foundation
 @testable import Wire
 
 struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
+    var videoPlaceholderState: CallVideoPlaceholderState
+    var permissions: CallPermissionsConfiguration
     var degradationState: CallDegradationState
     var accessoryType: CallInfoViewControllerAccessoryType
     var canToggleMediaType: Bool
