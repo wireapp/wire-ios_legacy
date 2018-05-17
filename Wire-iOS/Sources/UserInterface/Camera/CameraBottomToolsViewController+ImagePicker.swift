@@ -20,8 +20,11 @@ import Foundation
 
 extension CameraBottomToolsViewController {
     @IBAction func openPhotoLibrary(_ sender: Any) {
-        ///TODO: UIViewControllerContextTransitioning
-        let picker = UIImagePickerController.popoverForIPadRegular(sourceRect: libraryButton.bounds.insetBy(dx: 4, dy: 4), sourceView: libraryButton, presentViewController: self, sourceType: .photoLibrary)
+        ///TODO: context
+        let picker = UIImagePickerController.popoverForIPadRegular(sourceRect: libraryButton.bounds.insetBy(dx: 4, dy: 4),
+                                                                   sourceView: libraryButton,
+                                                                   presentViewController: self,
+                                                                   sourceType: .photoLibrary)
         picker.delegate = imagePickerConfirmationController
         imagePickerConfirmationController.previewTitle = previewTitle
         present(picker, animated: true)

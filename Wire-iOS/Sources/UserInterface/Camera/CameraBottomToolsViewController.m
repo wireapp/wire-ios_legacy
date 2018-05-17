@@ -26,7 +26,6 @@
 
 #import "Constants.h"
 #import "CameraController.h"
-#import "ImagePickerConfirmationController.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Analytics.h"
 #import "DeviceOrientationObserver.h"
