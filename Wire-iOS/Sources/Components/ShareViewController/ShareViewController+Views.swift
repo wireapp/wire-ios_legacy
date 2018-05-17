@@ -64,6 +64,7 @@ extension ShareViewController {
         self.destinationsTableView.keyboardDismissMode = .interactive
         self.destinationsTableView.delegate = self
         self.destinationsTableView.dataSource = self
+        self.destinationsTableView.rowHeight = 44.0
 
         self.closeButton.accessibilityLabel = "close"
         self.closeButton.setIcon(.X, with: .tiny, for: .normal)
