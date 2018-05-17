@@ -83,16 +83,14 @@ class VideoGridViewController: UIViewController {
         // Create self preview if there is none but we should show it
         if isShowingSelf && nil == selfPreviewView {
             selfPreviewView = SelfVideoPreviewView(identifier: selfStreamId.transportString())
-            selfPreviewView?.startCapture()
             selfPreviewView?.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        updateFloatingVideo(with: configuration.floatingVideoStream)
         updateVideoGrid(with: configuration.videoStreams)
+        updateFloatingVideo(with: configuration.floatingVideoStream)
         
-        // Stop capture and clear self preview we we shouldn't show it anymore
+        // Clear self preview we we shouldn't show it anymore
         if !isShowingSelf, let _ = selfPreviewView {
-            selfPreviewView?.stopCapture()
             selfPreviewView = nil
             precondition(selfPreviewView == nil)
         }

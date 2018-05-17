@@ -55,6 +55,10 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        stopCapture()
+    }
+    
     private func setupViews() {
         mutedIconImageView.contentMode = .center
         mutedOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
@@ -80,6 +84,14 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
         let duration: TimeInterval = animated ? 0.2 : 0
         UIView.animate(withDuration: duration) { [mutedOverlayView, isMuted] in
             mutedOverlayView.alpha = isMuted ? 1 : 0
+        }
+    }
+    
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        
+        if window != nil {
+            startCapture()
         }
     }
     
