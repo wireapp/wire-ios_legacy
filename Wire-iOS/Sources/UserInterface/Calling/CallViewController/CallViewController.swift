@@ -132,6 +132,7 @@ final class CallViewController: UIViewController {
         videoGridViewController.configuration = videoConfiguration
         updateOverlayAfterStateChanged()
         updateAppearance()
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     private func updateAppearance() {
