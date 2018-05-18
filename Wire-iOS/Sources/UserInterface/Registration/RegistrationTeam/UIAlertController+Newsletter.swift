@@ -48,20 +48,17 @@ extension UIAlertController {
                                                 style: .default,
                                                 handler: { (_) in
                                                     // disable newsletter subscription
-
-                                                    ///show keyboard
         }))
 
         alertController.addAction(UIAlertAction(title: "general.accept".localized,
                                                 style: .cancel,
                                                 handler: { (_) in
                                                     // enable newsletter subscription
-                                                    ///show keyboard
         }))
 
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
             UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
-                    UIApplication.shared.keyWindow?.endEditing(true)
+            UIApplication.shared.keyWindow?.endEditing(true)
         }
     }
 
