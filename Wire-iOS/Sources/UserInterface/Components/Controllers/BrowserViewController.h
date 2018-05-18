@@ -22,6 +22,7 @@
 @interface BrowserViewController : UIViewController
 
 @property (nonatomic) NSURL *URL;
+@property (nonatomic, copy) void (^completion)(void);
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;

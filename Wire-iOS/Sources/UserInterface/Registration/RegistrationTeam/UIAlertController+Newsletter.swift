@@ -20,39 +20,52 @@ import Foundation
 
 extension UIAlertController {
 
-    /// flag for prevent showing newsletter subscription dialog again in team creation workflow.
+    /// flag for preventing newsletter subscription dialog shows again in team creation workflow.
     /// (team create work flow: newsletter subscription dialog appears after email verification.
-    ///  email regisration work flow: newsletter subscription dialog appears after conversation list shows.)
-    static var didNewsletterSubscriptionDialogShown = false
+    /// email regisration work flow: newsletter subscription dialog appears after conversation list is displayed.)
+    static var newsletterSubscriptionDialogWasDisplayed = false
 
-    static func showNewsletterSubscriptionDialogIfNeeded() {
-        guard !UIAlertController.didNewsletterSubscriptionDialogShown else { return }
-        
+    static func showNewsletterSubscriptionDialog() {
+        guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
+
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
                                                 message: "news_offers.consent.message".localized,
                                                 preferredStyle: .alert)
 
-        alertController.addAction(UIAlertAction(title: "general.accept".localized,
+        let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { _ in
+            if let browserViewController = BrowserViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL) {
+                browserViewController.completion = { _ in
+                    UIAlertController.showNewsletterSubscriptionDialog()
+                }
+
+                AppDelegate.shared().notificationsWindow?.rootViewController?.present(browserViewController, animated: true)
+            }
+        }
+
+        alertController.addAction(UIAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized,
                                                 style: .default,
-                                                handler: { (_) in
-                                                    // enable newsletter subscription
-        }))
+                                                handler: privacyPolicyActionHandler))
 
         alertController.addAction(UIAlertAction(title: "general.skip".localized,
-                                                style: .cancel,
+                                                style: .default,
                                                 handler: { (_) in
                                                     // disable newsletter subscription
         }))
 
-        alertController.addAction(UIAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized,
-                                                style: .default,
+        alertController.addAction(UIAlertAction(title: "general.accept".localized,
+                                                style: .cancel,
                                                 handler: { (_) in
-                                                    // show privacy policy
+                                                    // enable newsletter subscription
         }))
 
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
-            UIAlertController.didNewsletterSubscriptionDialogShown = true
+            UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
         }
+    }
 
+    static func showNewsletterSubscriptionDialogIfNeeded() {
+        guard !UIAlertController.newsletterSubscriptionDialogWasDisplayed else { return }
+
+        showNewsletterSubscriptionDialog()
     }
 }

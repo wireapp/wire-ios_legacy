@@ -99,7 +99,7 @@
 
 - (IBAction)dismiss:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:self.completion];
 }
 
 - (IBAction)openShareDialog:(id)sender
