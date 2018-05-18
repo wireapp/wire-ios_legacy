@@ -25,7 +25,7 @@ extension ConversationListViewController {
         guard needToShowDataUsagePermissionDialog else { return }
 
         guard isComingFromRegistration ||
-              isComingFromSetUsername ||
+              (isComingFromSetUsername && ZMUser.selfUser().isTeamMember) ||
               TrackingManager.shared.disableCrashAndAnalyticsSharing else { return }
 
         let alertController = UIAlertController(title: "conversation_list.date_usage_permission_alert.title".localized, message: "conversation_list.date_usage_permission_alert.message".localized, preferredStyle: .alert)

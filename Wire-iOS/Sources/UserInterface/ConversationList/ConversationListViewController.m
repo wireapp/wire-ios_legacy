@@ -115,7 +115,7 @@
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
 /// for data usage dialog
-@property (nonatomic) BOOL isViewDidAppear;
+@property (nonatomic) BOOL viewDidAppearCalled;
 
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
@@ -147,7 +147,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.isViewDidAppear = NO;
+    self.viewDidAppearCalled = NO;
     self.dataUsagePermissionDialogDisplayed = NO;
 
     self.contentControllerBottomInset = 16;
@@ -223,8 +223,8 @@
 
     self.shouldAnimateNetworkStatusView = YES;
 
-    if (! self.isViewDidAppear) {
-        self.isViewDidAppear = YES;
+    if (! self.viewDidAppearCalled) {
+        self.viewDidAppearCalled = YES;
 
         [self showDataUsagePermissionDialogIfNeeded];
     }
