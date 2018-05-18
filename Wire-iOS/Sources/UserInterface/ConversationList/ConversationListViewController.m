@@ -114,6 +114,9 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
+/// for data usage dialog
+@property (nonatomic) BOOL isViewDidAppear;
+
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
@@ -142,6 +145,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.isViewDidAppear = NO;
+
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
     
@@ -214,6 +219,12 @@
     [self closePushPermissionDialogIfNotNeeded];
 
     self.shouldAnimateNetworkStatusView = YES;
+
+    if (! self.isViewDidAppear) {
+        self.isViewDidAppear = YES;
+
+        [self showDataUsagePermissionDialogIfNeeded];
+    }
 }
 
 - (void)requestSuggestedHandlesIfNeeded
