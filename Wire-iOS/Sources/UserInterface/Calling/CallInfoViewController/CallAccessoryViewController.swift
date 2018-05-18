@@ -67,14 +67,16 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     
     private func updateState() {
         switch configuration.accessoryType {
-        case .avatar(let user): avatarView.user = user
-        case .participantsList(let participants): participantsViewController.participants = participants
+        case .avatar(let user):
+            avatarView.user = user
+        case .participantsList(let participants):
+            participantsViewController.variant = configuration.effectiveColorVariant
+            participantsViewController.participants = participants
         case .none: break
         }
         
         avatarView.isHidden = !configuration.accessoryType.showAvatar
         participantsViewController.view.isHidden = !configuration.accessoryType.showParticipantList
-        participantsViewController.variant = configuration.effectiveColorVariant
     }
     
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {
