@@ -134,6 +134,9 @@ extension ConversationListViewController: UserProfileUpdateObserver {
         showUsernameTakeover(with: handle)
         UIAlertController.showNewsletterSubscriptionDialogIfNeeded()
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
+
+        ///TODO: when the user need to set user name, show data usage dialog
+        self.isComingFromSetUsername = true
     }
 
 }

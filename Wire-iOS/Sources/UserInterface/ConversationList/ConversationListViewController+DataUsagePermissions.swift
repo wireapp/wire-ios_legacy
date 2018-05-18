@@ -23,8 +23,10 @@ extension ConversationListViewController {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 
         guard needToShowDataUsagePermissionDialog else { return }
+//        guard !dataUsagePermissionDialogDisplayed else { return }
 
         guard isComingFromRegistration ||
+              isComingFromSetUsername ||
               TrackingManager.shared.disableCrashAndAnalyticsSharing else { return }
 
         let alertController = UIAlertController(title: "conversation_list.date_usage_permission_alert.title".localized, message: "conversation_list.date_usage_permission_alert.message".localized, preferredStyle: .alert)
@@ -38,6 +40,8 @@ extension ConversationListViewController {
         }))
 
 
-        ZClientViewController.shared()?.present(alertController, animated: true)
+        ZClientViewController.shared()?.present(alertController, animated: true) /*{[weak self] in
+            self?.dataUsagePermissionDialogDisplayed = true
+        }*/
     }
 }
