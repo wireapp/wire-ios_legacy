@@ -117,6 +117,8 @@
 /// for data usage dialog
 @property (nonatomic) BOOL isViewDidAppear;
 
+@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
+
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
@@ -146,6 +148,7 @@
 {
     [super viewDidLoad];
     self.isViewDidAppear = NO;
+    self.dataUsagePermissionDialogDisplayed = NO;
 
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
