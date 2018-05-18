@@ -302,7 +302,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
-    ZMLogWarn(@"Received APNS token: %@", newDeviceToken);
+    ZMLogInfo(@"Received APNS token: %@", newDeviceToken);
     
     [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
 }
