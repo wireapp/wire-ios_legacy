@@ -135,7 +135,7 @@ extension ConversationListViewController: UserProfileUpdateObserver {
         UIAlertController.showNewsletterSubscriptionDialogIfNeeded()
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
 
-        ///TODO: when the user need to set user name, show data usage dialog
+        // When the user have to set user name, i.e. the user is a invited team user, show data usage permission dialog
         self.isComingFromSetUsername = true
     }
 

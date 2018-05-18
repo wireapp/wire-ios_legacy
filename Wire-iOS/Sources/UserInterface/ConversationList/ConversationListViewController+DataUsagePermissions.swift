@@ -23,7 +23,6 @@ extension ConversationListViewController {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 
         guard needToShowDataUsagePermissionDialog else { return }
-//        guard !dataUsagePermissionDialogDisplayed else { return }
 
         guard isComingFromRegistration ||
               isComingFromSetUsername ||
@@ -40,8 +39,6 @@ extension ConversationListViewController {
         }))
 
 
-        ZClientViewController.shared()?.present(alertController, animated: true) /*{[weak self] in
-            self?.dataUsagePermissionDialogDisplayed = true
-        }*/
+        ZClientViewController.shared()?.present(alertController, animated: true)
     }
 }
