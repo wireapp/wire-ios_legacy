@@ -178,8 +178,6 @@ final class CallActionsView: UIView {
         }()
         topStackView.spacing = isCompact ? verticalStackView.spacing : 32
         bottomStackView.spacing = isCompact ? verticalStackView.spacing : 32
-
-        invalidateIntrinsicContentSize()
     }
     
     // MARK: - Action Output
