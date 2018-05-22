@@ -219,7 +219,7 @@ struct CallInfoTestFixture {
             isMuted: false,
             isTerminating: false,
             canAccept: true,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .sendingVideo,
             state: .ringingIncoming(name: otherUser.displayName),
             isConstantBitRate: false,
             title: otherUser.displayName,

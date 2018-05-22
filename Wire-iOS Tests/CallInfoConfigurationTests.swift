@@ -166,7 +166,7 @@ class CallInfoConfigurationTests: XCTestCase {
         
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        
+
         // then
         assertEquals(fixture.oneToOneVideoEstablished, configuration)
     }
@@ -239,7 +239,7 @@ class CallInfoConfigurationTests: XCTestCase {
         
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        
+
         // then
         assertEquals(fixture.oneToOneIncomingVideoRingingVideoTurnedOff, configuration)
     }
