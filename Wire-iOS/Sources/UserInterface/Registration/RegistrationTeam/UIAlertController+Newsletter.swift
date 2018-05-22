@@ -50,12 +50,14 @@ extension UIAlertController {
                                                 style: .default,
                                                 handler: { (_) in
                                                     // disable newsletter subscription
+                                                    ZMUser.selfUser().setMarketingConsent(to: false, in: ZMUserSession.shared()!, completion: {_ in})
         }))
 
         alertController.addAction(UIAlertAction(title: "general.accept".localized,
                                                 style: .cancel,
                                                 handler: { (_) in
                                                     // enable newsletter subscription
+                                                    ZMUser.selfUser().setMarketingConsent(to: true, in: ZMUserSession.shared()!, completion: {_ in})
         }))
 
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
