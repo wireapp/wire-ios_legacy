@@ -194,16 +194,17 @@ class SettingsPropertyFactory {
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .receiveNewsAndOffers:
-            ///TODO: wait for backend support
-            
+
             let getAction : GetAction = { /*[unowned self]*/ (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                ///TODO: wait for backend support
                 return .none
             }
 
-            let setAction : SetAction = { /*[unowned self]*/ (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+            let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
-                case .number(_ /* let number*/):
+                case .number(let number):
                     self.userSession?.performChanges {
+                        ZMUser.selfUser().setMarketingConsent(to: number.boolValue, in: ZMUserSession.shared()!, completion: {_ in})
                     }
 
                 default:
