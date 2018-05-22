@@ -24,9 +24,16 @@ protocol VideoGridConfiguration {
     var isMuted: Bool { get }
 }
 
-extension CGSize {
-    static let floatingPreviewPortrait = CGSize(width: 108, height: 144)
-    static let floatingPreviewLandscape = CGSize(width: 144, height: 108)
+fileprivate extension CGSize {
+    static let floatingPreviewSmall = CGSize(width: 108, height: 144)
+    static let floatingPreviewLarge = CGSize(width: 120, height: 160)
+    
+    static func previewSize(for traitCollection: UITraitCollection) -> CGSize {
+        switch traitCollection.horizontalSizeClass {
+        case .regular: return .floatingPreviewLarge
+        case .compact, .unspecified: return .floatingPreviewSmall
+        }
+    }
 }
 
 class VideoGridViewController: UIViewController {
@@ -122,10 +129,15 @@ class VideoGridViewController: UIViewController {
         
         // We have a stream but don't have a preview view yet
         if nil == thumbnailViewController.contentView, let previewView = selfPreviewView {
-            // TODO: Calculate correct size based on device and orientation
             Calling.log.debug("Adding self video to floating preview")
-            thumbnailViewController.setThumbnailContentView(previewView, contentSize: .floatingPreviewPortrait)
+            thumbnailViewController.setThumbnailContentView(previewView, contentSize: .previewSize(for: traitCollection))
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+        thumbnailViewController.updateThumbnailContentSize(.previewSize(for: traitCollection), animated: false)
     }
     
     private func videoConfigurationDescription() -> String {

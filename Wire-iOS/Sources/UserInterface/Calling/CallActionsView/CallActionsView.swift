@@ -199,10 +199,5 @@ final class CallActionsView: UIView {
         default: fatalError("Unexpected Button: \(button)")
         }
     }
-
-    override var intrinsicContentSize: CGSize {
-        let height = isCompact ? IconButton.height : (IconButton.height * 2) + verticalStackView.spacing
-        return CGSize(width: UIViewNoIntrinsicMetric, height: height)
-    }
     
 }

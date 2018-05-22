@@ -155,7 +155,7 @@ class UserCell: UICollectionViewCell, Themeable {
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
         
         iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, guestIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
-        iconStackView.spacing = 8
+        iconStackView.spacing = 16
         iconStackView.axis = .horizontal
         iconStackView.distribution = .fill
         iconStackView.alignment = .center

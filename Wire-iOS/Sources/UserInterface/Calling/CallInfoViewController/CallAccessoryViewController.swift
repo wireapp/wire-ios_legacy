@@ -67,12 +67,19 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     }
     
     private func createConstraints() {
+
         participantsViewController.view.translatesAutoresizingMaskIntoConstraints = false
         avatarView.translatesAutoresizingMaskIntoConstraints = false
         videoPlaceholderStatusLabel.translatesAutoresizingMaskIntoConstraints = false
         participantsViewController.view.fitInSuperview()
         avatarView.fitInSuperview()
-        videoPlaceholderStatusLabel.fitInSuperview()
+
+        NSLayoutConstraint.activate([
+            self.videoPlaceholderStatusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            self.videoPlaceholderStatusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            self.videoPlaceholderStatusLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+
     }
     
     private func updateState() {
