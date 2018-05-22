@@ -25,19 +25,4 @@ enum CallVideoPlaceholderState {
     case statusTextHidden
     case statusTextDisplayed
 
-    init(authorizationStatus: AVAuthorizationStatus) {
-
-        switch authorizationStatus {
-        case .authorized:
-            self = .hidden
-
-        case .denied, .restricted:
-            self = .statusTextDisplayed
-
-        case .notDetermined:
-            self = .statusTextHidden
-        }
-
-    }
-
 }

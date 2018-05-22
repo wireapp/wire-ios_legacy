@@ -244,16 +244,8 @@ extension CallViewController {
     }
 
     fileprivate func updateVideoStatusPlaceholder() {
-
-        if voiceChannel.isVideoCall && !permissions.canAcceptVideoCalls {
-            callInfoConfiguration.preferedVideoPlaceholderState = permissions.isPendingVideoPermissionRequest ? .statusTextHidden : .statusTextDisplayed
-            voiceChannel.videoState = .stopped
-        } else {
-            callInfoConfiguration.preferedVideoPlaceholderState = .hidden
-        }
-
+        callInfoConfiguration.preferedVideoPlaceholderState = permissions.preferredVideoPlaceholderState
         updateConfiguration()
-
     }
 
 }

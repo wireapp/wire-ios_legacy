@@ -31,3 +31,17 @@ protocol CallPermissionsConfiguration {
     func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void)
 
 }
+
+extension CallPermissionsConfiguration {
+
+    var preferredVideoPlaceholderState: CallVideoPlaceholderState {
+
+        guard !canAcceptVideoCalls else {
+            return .hidden
+        }
+
+        return isPendingVideoPermissionRequest ? .statusTextHidden : .statusTextDisplayed
+
+    }
+
+}

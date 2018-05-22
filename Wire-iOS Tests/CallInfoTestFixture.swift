@@ -440,6 +440,56 @@ struct CallInfoTestFixture {
             variant: .light
         )
     }
+
+    var groupVideoIncomingUndeterminedPermissions: CallInfoViewControllerInput {
+
+        let permissions = MockCallPermissions()
+        permissions.canAcceptVideoCalls = false
+        permissions.isPendingVideoPermissionRequest = true
+
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: permissions.preferredVideoPlaceholderState,
+            permissions: permissions,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingIncoming(name: otherUser.displayName),
+            isConstantBitRate: true,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+        
+    }
+
+    var groupVideoIncomingDeniedPermissions: CallInfoViewControllerInput {
+
+        let permissions = MockCallPermissions()
+        permissions.canAcceptVideoCalls = false
+        permissions.isPendingVideoPermissionRequest = false
+
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: permissions.preferredVideoPlaceholderState,
+            permissions: permissions,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingIncoming(name: otherUser.displayName),
+            isConstantBitRate: true,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+
+    }
     
 }
 
