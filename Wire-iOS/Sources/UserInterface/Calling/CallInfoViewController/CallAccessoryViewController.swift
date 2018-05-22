@@ -88,7 +88,10 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
 
         avatarView.isHidden = !configuration.accessoryType.showAvatar
         participantsViewController.view.isHidden = !configuration.accessoryType.showParticipantList
+<<<<<<< HEAD
         videoPlaceholderStatusLabel.isHidden = configuration.videoPlaceholderState != .statusTextDisplayed
+=======
+>>>>>>> develop
     }
     
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {

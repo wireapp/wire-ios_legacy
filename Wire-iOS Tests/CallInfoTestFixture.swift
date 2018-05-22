@@ -211,15 +211,22 @@ struct CallInfoTestFixture {
     
     var oneToOneIncomingVideoRingingVideoTurnedOff: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
+<<<<<<< HEAD
             videoPlaceholderState: CallVideoPlaceholderState.statusTextHidden,
             permissions: CallPermissions(),
+=======
+>>>>>>> develop
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
             isMuted: false,
             isTerminating: false,
             canAccept: true,
+<<<<<<< HEAD
             mediaState: .sendingVideo,
+=======
+            mediaState: .notSendingVideo(speakerEnabled: false),
+>>>>>>> develop
             state: .ringingIncoming(name: otherUser.displayName),
             isConstantBitRate: false,
             title: otherUser.displayName,
