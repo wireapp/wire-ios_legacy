@@ -63,6 +63,7 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
     var mediaState: MediaState { get }
+    var permissions: CallPermissionsConfiguration { get }
 }
 
 extension CallActionsViewInputType {
@@ -151,7 +152,8 @@ final class CallActionsView: UIView {
     func update(with input: CallActionsViewInputType) {
         muteCallButton.isSelected = input.isMuted
         videoButton.isEnabled = input.canToggleMediaType
-        videoButton.isSelected = input.mediaState.isSendingVideo
+        videoButton.isSelected = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
+        flipCameraButton.isEnabled = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
         flipCameraButton.isHidden = input.mediaState.showSpeaker
         speakerButton.isHidden = !input.mediaState.showSpeaker
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled

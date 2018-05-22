@@ -20,6 +20,7 @@ import XCTest
 @testable import Wire
 
 fileprivate struct CallActionsViewInput: CallActionsViewInputType {
+    var permissions: CallPermissionsConfiguration
     let canToggleMediaType, isVideoCall, isMuted, canAccept, isTerminating: Bool
     let mediaState: MediaState
     let variant: ColorSchemeVariant
@@ -49,6 +50,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_CanNotToggle_Video_NotMuted_CanAccept_NotTerminating_NotSendingVideo_SpeakerEnabled() {
         // Given
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: false,
             isVideoCall: true,
             isMuted: false,
@@ -68,6 +70,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_CanToggle_Video_Muted_CanAccept_NotTerminating_NotSendingVideo_SpeakerDisabled() {
         // Given
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: true,
@@ -87,6 +90,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_CanNotToggle_NotMuted_Video_CanNotAccept_VideoUnvailable_FlipCamera_SpeakerDisabled() {
         // Given
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: false,
             isVideoCall: true,
             isMuted: false,
@@ -106,6 +110,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_CanNotToggle_NotMuted_Video_CanNotAccept_SendingVideo_FlipCamera() {
         // Given
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: false,
             isVideoCall: true,
             isMuted: false,
@@ -125,6 +130,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_CanToggle_NotMuted_Video_CanAccept_SendingVideo_FlipCamera_DarkTheme() {
         // Given
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
@@ -144,6 +150,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_NotMuted_CanNotAccept_CanToggleMedia_SendingVideo_FlipCamera() {
         // Given
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
@@ -164,6 +171,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
@@ -184,6 +192,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
@@ -204,6 +213,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         snapshotBackgroundColor = .black
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: true,
@@ -224,6 +234,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: false,
@@ -244,6 +255,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: false,
             isVideoCall: false,
             isMuted: true,
@@ -264,6 +276,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Given
         snapshotBackgroundColor = .white
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: true,
             isVideoCall: false,
             isMuted: false,
@@ -285,6 +298,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_Muted_CanAccept_VideoSending_FlipCamera_Compact() {
         // Given
         let input = CallActionsViewInput(
+            permissions: CallPermissions(),
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: true,
@@ -302,5 +316,5 @@ class CallActionsViewTests: ZMSnapshotTestCase {
         // Then
         verify(view: sut)
     }
-    
+
 }

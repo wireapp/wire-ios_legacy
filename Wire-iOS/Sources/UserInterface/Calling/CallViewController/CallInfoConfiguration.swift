@@ -20,6 +20,8 @@ import Foundation
 
 struct CallInfoConfiguration  {
     let voiceChannel: VoiceChannel
+    var preferedVideoPlaceholderState: CallVideoPlaceholderState
+    let permissions: CallPermissionsConfiguration
 }
 
 extension CallInfoConfiguration: CallInfoViewControllerInput {
@@ -131,6 +133,20 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     
     var variant: ColorSchemeVariant {
         return ColorScheme.default().variant
+    }
+
+    var videoPlaceholderState: CallVideoPlaceholderState {
+
+        guard voiceChannel.isVideoCall else {
+            return .hidden
+        }
+
+        guard case .incoming = voiceChannel.state else {
+            return .hidden
+        }
+
+        return preferedVideoPlaceholderState
+
     }
     
 }

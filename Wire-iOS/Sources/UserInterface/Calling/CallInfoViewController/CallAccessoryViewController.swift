@@ -27,7 +27,8 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     weak var delegate: CallAccessoryViewControllerDelegate?
     private let participantsViewController: CallParticipantsViewController
     private let avatarView = UserImageViewContainer(size: .big, maxSize: 240, yOffset: -8)
-    
+    private let videoPlaceholderStatusLabel = UILabel()
+
     var configuration: CallInfoViewControllerInput {
         didSet {
             updateState()
@@ -56,16 +57,33 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     private func setupViews() {
         addToSelf(participantsViewController)
         view.addSubview(avatarView)
+
+        view.addSubview(videoPlaceholderStatusLabel)
+        videoPlaceholderStatusLabel.textColor = .white
+        videoPlaceholderStatusLabel.font = FontSpec(.normal, .semibold).font
+        videoPlaceholderStatusLabel.alpha = 0.64
+        videoPlaceholderStatusLabel.textAlignment = .center
+        videoPlaceholderStatusLabel.text = "video_call.camera_access.denied".localized
     }
     
     private func createConstraints() {
+
         participantsViewController.view.translatesAutoresizingMaskIntoConstraints = false
         avatarView.translatesAutoresizingMaskIntoConstraints = false
+        videoPlaceholderStatusLabel.translatesAutoresizingMaskIntoConstraints = false
         participantsViewController.view.fitInSuperview()
         avatarView.fitInSuperview()
+
+        NSLayoutConstraint.activate([
+            self.videoPlaceholderStatusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            self.videoPlaceholderStatusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            self.videoPlaceholderStatusLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
+
     }
     
     private func updateState() {
+
         switch configuration.accessoryType {
         case .avatar(let user):
             avatarView.user = user
@@ -74,9 +92,11 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
             participantsViewController.participants = participants
         case .none: break
         }
-        
+
         avatarView.isHidden = !configuration.accessoryType.showAvatar
         participantsViewController.view.isHidden = !configuration.accessoryType.showParticipantList
+        videoPlaceholderStatusLabel.isHidden = configuration.videoPlaceholderState != .statusTextDisplayed
+
     }
     
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {
