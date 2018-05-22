@@ -227,7 +227,6 @@ extension CallViewController: AVSMediaManagerClientObserver {
     
 }
 
-<<<<<<< HEAD
 extension CallViewController {
 
     fileprivate func acceptCallIfPossible() {
@@ -274,8 +273,6 @@ extension CallViewController {
 
 }
 
-=======
->>>>>>> develop
 extension CallViewController: ConstantBitRateAudioObserver {
     
     func callCenterDidChange(constantAudioBitRateAudioEnabled: Bool) {
