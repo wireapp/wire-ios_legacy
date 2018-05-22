@@ -82,13 +82,11 @@ extension ZClientViewController {
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
                     
-                    UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, delay: 1, animations: {
+                    UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, delay: 0.5, animations: {
                         heightConstraint.autoRemove()
                         self.view.setNeedsLayout()
                         self.view.layoutIfNeeded()
-                    }, options: .beginFromCurrentState, completion: { completed in
-                        
-                    })
+                    }, options: .beginFromCurrentState, completion: { _ in })
                 }
                 
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)

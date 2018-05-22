@@ -158,8 +158,7 @@ extension CallStatusViewInputType {
         switch state {
         case .none: return ""
         case .connecting: return "call.status.connecting".localized
-        case .ringingIncoming(name: let name) where !isVideoCall: return "call.status.incoming.audio".localized(args: name)
-        case .ringingIncoming(name: let name): return "call.status.incoming.video".localized(args: name)
+        case .ringingIncoming(name: let name): return "call.status.incoming.user".localized(args: name)
         case .ringingOutgoing: return "call.status.outgoing".localized
         case .established(duration: let duration): return callDurationFormatter.string(from: duration) ?? ""
         case .reconnecting: return "call.status.reconnecting".localized

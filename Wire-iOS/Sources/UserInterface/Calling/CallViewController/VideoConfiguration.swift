@@ -41,7 +41,7 @@ extension VideoConfiguration: VideoGridConfiguration {
     }
     
     private func computeVideoStreams() -> (preview: ParticipantVideoState?, grid: [ParticipantVideoState]) {
-        var otherParticipants: [ParticipantVideoState] = voiceChannel.participants.compactMap { user in
+        let otherParticipants: [ParticipantVideoState] = voiceChannel.participants.compactMap { user in
             guard let user = user as? ZMUser else { return nil }
             switch voiceChannel.state(forParticipant: user) {
             case .connected(videoState: .started), .connected(videoState: .badConnection):
@@ -51,15 +51,7 @@ extension VideoConfiguration: VideoGridConfiguration {
             default: return nil
             }
         }
-        
-        // TODO: Move to SE.
-        if otherParticipants.isEmpty,
-            voiceChannel.isEstablished,
-            voiceChannel.conversation?.conversationType == .oneOnOne,
-            let otherUser = voiceChannel.conversation?.connectedUser?.remoteIdentifier {
-            let state = ParticipantVideoState(stream: otherUser, isPaused: false)
-            otherParticipants += [state]
-        }
+        Calling.log.debug("participants: \(otherParticipants.count)")
         
         guard voiceChannel.isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
         

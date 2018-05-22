@@ -193,7 +193,26 @@ class SettingsPropertyFactory {
                 }
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+        case .receiveNewsAndOffers:
+            ///TODO: wait for backend support
             
+            let getAction : GetAction = { /*[unowned self]*/ (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                return .none
+            }
+
+            let setAction : SetAction = { /*[unowned self]*/ (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
+                switch value {
+                case .number(_ /* let number*/):
+                    self.userSession?.performChanges {
+                    }
+
+                default:
+                    throw SettingsPropertyError.WrongValue("Incorrect type: \(value) for key \(propertyName)")
+                }
+            }
+
+            return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+
         case .notificationContentVisible:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let value = self.userSession?.isNotificationContentHidden {

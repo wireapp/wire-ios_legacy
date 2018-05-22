@@ -68,12 +68,15 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
 
 extension CallActionsViewInputType {
     var appearance: CallActionAppearance {
-        guard !isVideoCall else { return .dark }
-        return variant == .light ? .light : .dark
+        switch (isVideoCall, variant) {
+        case (true, _): return .dark(blurred: true)
+        case (false, .light): return .light
+        case (false, .dark): return .dark(blurred: false)
+        }
     }
 }
 
-// A view showing multiple buttons depenging on the given `CallActionsView.Input`.
+// A view showing multiple buttons depending on the given `CallActionsView.Input`.
 // Button touches result in `CallActionsView.Action` cases to be sent to the objects delegate.
 final class CallActionsView: UIView {
     

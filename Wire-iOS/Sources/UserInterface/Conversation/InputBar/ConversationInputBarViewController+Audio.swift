@@ -68,7 +68,7 @@ extension ConversationInputBarViewController {
         guard ConversationViewController.shouldBlockCallingRelatedActions else { return false }
         
         let alert = UIAlertController(title: "conversation.input_bar.ongoing_call_alert.title".localized,
-                                      message: "conversation.input_bar.ongoing_call_alert.message".localized,
+                                      message: "conversation.input_bar.ongoing_call_alert.audio.message".localized,
                                       cancelButtonTitle: "general.ok".localized)
         self.present(alert, animated: true, completion: nil)
         return true

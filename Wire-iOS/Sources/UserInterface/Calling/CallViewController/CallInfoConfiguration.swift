@@ -43,7 +43,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     var accessoryType: CallInfoViewControllerAccessoryType {
         let conversation = voiceChannel.conversation
         
-        if voiceChannel.isVideoCall, conversation?.conversationType == .oneOnOne {
+        if isVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
         
@@ -72,9 +72,10 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var canToggleMediaType: Bool {
-        if case .outgoing = voiceChannel.state {
+        switch voiceChannel.state {
+        case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
-        } else {
+        default:
             return true
         }
     }
@@ -84,13 +85,15 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var isTerminating: Bool {
-        guard case .terminating = voiceChannel.state else { return false }
-        return true
+        switch voiceChannel.state {
+        case .terminating, .incoming(video: _, shouldRing: false, degraded: _): return true
+        default: return false
+        }
     }
     
     var canAccept: Bool {
         switch voiceChannel.state {
-        case .incoming: return true
+        case .incoming(video: _, shouldRing: true, degraded: _): return true
         default: return false
         }
     }
@@ -120,7 +123,12 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var isVideoCall: Bool {
-        return voiceChannel.isVideoCall
+        switch voiceChannel.state {
+        case .established, .terminating:
+            return voiceChannel.isAnyParticipantSendingVideo
+        default:
+            return voiceChannel.isVideoCall
+        }
     }
     
     var variant: ColorSchemeVariant {
@@ -153,7 +161,7 @@ extension CallParticipantState {
     
     var isSendingVideo: Bool {
         switch self {
-        case .connected(videoState: .started), .connected(videoState: .badConnection): return true
+        case .connected(videoState: let state) where state.isSending: return true
         default: return false
         }
     }
@@ -162,6 +170,10 @@ extension CallParticipantState {
 fileprivate typealias UserWithParticipantState = (ZMUser, CallParticipantState)
 
 fileprivate extension VoiceChannel {
+    
+    var isAnyParticipantSendingVideo: Bool {
+        return videoState.isSending || connectedParticipants.any({ $0.1.isSendingVideo })
+    }
     
     var connectedParticipants: [UserWithParticipantState] {
         return participants

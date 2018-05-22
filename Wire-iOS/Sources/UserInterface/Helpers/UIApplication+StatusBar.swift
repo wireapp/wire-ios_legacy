@@ -73,8 +73,10 @@ public extension UIApplication {
             
             if let notificationWindowRootController = controller as? NotificationWindowRootViewController {
                 return notificationWindowRootController.voiceChannelController?.voiceChannelIsActive ?? false
-            } else {
+            } else if controller is AppRootViewController  {
                 return true
+            } else {
+                return false
             }
         }
         

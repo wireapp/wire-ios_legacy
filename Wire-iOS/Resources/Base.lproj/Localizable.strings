@@ -120,7 +120,7 @@
 
 // Conversation List Data Usage Permission Dialog
 "conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.date_usage_permission_alert.message" = "Sending usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
+"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";
@@ -262,7 +262,8 @@
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Ongoing call";
-"conversation.input_bar.ongoing_call_alert.message" = "You can't record an audio message while being on a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
 
 "conversation.guests_present" = "Guests are present";
 
@@ -499,8 +500,7 @@
 // Voice New
 
 "call.status.connecting" = "Connecting…";
-"call.status.incoming.video" = "%@ is video calling…";
-"call.status.incoming.audio" = "%@ is calling…";
+"call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Calling…";
 "call.status.outgoing" = "Ringing…";
 "call.status.reconnecting" = "Reconnecting…";
@@ -531,6 +531,7 @@
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
@@ -713,6 +714,8 @@
 "self.settings.account_picture_group.picture" = "Picture";
 "self.settings.account_picture_group.color" = "Color";
 
+"self.settings.account_personal_information_group.title" = "Personal Information";
+
 "self.settings.account_picture_group.theme" = "Dark Theme";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire gives every device a unique fingerprint. Compare them and verify your devices and conversations.";
@@ -729,6 +732,15 @@
 
 "self.settings.account_details.log_out.alert.title" = "Log out";
 "self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
+"self.settings.privacy_analytics.title" = "Send Anonymous Data";
+"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
+
+"self.settings.receiveNews_and_offers.title" = "Receive News";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product update from Wire via email.";
+
 
 
 // Change Username
@@ -855,10 +867,6 @@
 
 "self.settings.privacy_analytics_menu.devices.title" = "Devices";
 
-"self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
-"self.settings.privacy_analytics.title" = "Send Anonymous Data";
-"self.settings.privacy_analytics_menu.description.title" = "Make Wire better by sending anonymous information.\n";
-
 "self.settings.privacy.clear_history.title" = "Clear History";
 "self.settings.privacy.clear_history.subtitle" = "This will permanently erase the content of all your conversations.";
 
@@ -871,6 +879,9 @@
 "self.settings.advanced.reset_push_token_alert.title" = "Push token has been reset";
 "self.settings.advanced.reset_push_token_alert.message" = "Notifications will be restored in a few seconds.";
 "self.settings.advanced.version_technical_details.title" = "Version Technical Details";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Data Usage Permissions";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical Report";
@@ -1311,3 +1322,10 @@
 "url_action.confirm" = "Confirm";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
+"news_offers.consent.message" = "You can unsubscribe at any time.";
+"news_offers.consent.button.privacy_policy.title" = "Privacy Policy";

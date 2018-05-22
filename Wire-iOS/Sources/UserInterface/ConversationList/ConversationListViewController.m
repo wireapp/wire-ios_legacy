@@ -114,7 +114,10 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
-@property (nonatomic) BOOL isViewDidAppear;
+/// for data usage dialog
+@property (nonatomic) BOOL viewDidAppearCalled;
+
+@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
@@ -144,7 +147,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.isViewDidAppear = NO;
+    self.viewDidAppearCalled = NO;
+    self.dataUsagePermissionDialogDisplayed = NO;
+
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
     
@@ -207,14 +212,6 @@
 {
     [super viewDidAppear:animated];
 
-    // ClientUnregisterFlowViewController's viewWillDisappear calls UIViewController.dismiss method after this class's viewDidLoad is called. We call showDataUsagePermissionDialogIfNeeded here to prevent that.
-    if (! self.isViewDidAppear) {
-        self.isViewDidAppear = YES;
-
-        [self showDataUsagePermissionDialogIfNeeded];
-    }
-
-
     if (! IS_IPAD_FULLSCREEN) {
         [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
     }
@@ -225,6 +222,12 @@
     [self closePushPermissionDialogIfNotNeeded];
 
     self.shouldAnimateNetworkStatusView = YES;
+
+    if (! self.viewDidAppearCalled) {
+        self.viewDidAppearCalled = YES;
+
+        [self showDataUsagePermissionDialogIfNeeded];
+    }
 }
 
 - (void)requestSuggestedHandlesIfNeeded
@@ -406,8 +409,12 @@
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    [self.contentContainer autoPinEdgesToSuperviewEdges];
-
+    
+    [[self.contentContainer.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor] setActive:YES];
+    [[self.contentContainer.topAnchor constraintEqualToAnchor:self.safeTopAnchor] setActive:YES];
+    [[self.contentContainer.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor] setActive:YES];
+    [[self.contentContainer.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor] setActive:YES];
+    
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
     [self.noConversationLabel autoSetDimension:ALDimensionWidth toSize:240.0f];

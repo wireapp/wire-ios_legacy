@@ -54,12 +54,18 @@ final class CallViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
         AVSMediaManagerClientChangeNotification.add(self)
-        observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self)]
+        observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
         proximityMonitorManager?.stateChanged = proximityStateDidChange
     }
     
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setupApplicationStateObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(resumeVideoIfNeeded), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseVideoIfNeeded), name: .UIApplicationDidEnterBackground, object: nil)
     }
     
     override func viewDidLoad() {
@@ -68,22 +74,38 @@ final class CallViewController: UIViewController {
         createConstraints()
         updateConfiguration()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateVideoStatusPlaceholder()
         proximityMonitorManager?.startListening()
+        resumeVideoIfNeeded()
+        setupApplicationStateObservers()
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         proximityMonitorManager?.stopListening()
+        pauseVideoIfNeeded()
+        NotificationCenter.default.removeObserver(self)
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return callInfoConfiguration.effectiveColorVariant == .light ? .default : .lightContent
     }
-    
+
+    @objc private func resumeVideoIfNeeded() {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }
+        voiceChannel.videoState = .started
+        updateConfiguration()
+    }
+
+    @objc private func pauseVideoIfNeeded() {
+        guard voiceChannel.isVideoCall, voiceChannel.videoState.isSending else { return }
+        voiceChannel.videoState = .paused
+        updateConfiguration()
+    }
+
     private func setupViews() {
         [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
     }
@@ -114,7 +136,9 @@ final class CallViewController: UIViewController {
     fileprivate func updateConfiguration() {
         callInfoRootViewController.configuration = callInfoConfiguration
         videoGridViewController.configuration = videoConfiguration
+        updateOverlayAfterStateChanged()
         updateAppearance()
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     private func updateAppearance() {
@@ -163,7 +187,6 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func toggleCameraAnimated() {
-        // TODO: Animations
         toggleCameraType()
     }
     
@@ -250,6 +273,14 @@ extension CallViewController {
 
 }
 
+extension CallViewController: ConstantBitRateAudioObserver {
+    
+    func callCenterDidChange(constantAudioBitRateAudioEnabled: Bool) {
+        updateConfiguration()
+    }
+    
+}
+
 extension CallViewController: CallInfoRootViewControllerDelegate {
     
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction) {
@@ -330,6 +361,19 @@ extension CallViewController {
         }
     }
     
+    fileprivate func updateOverlayAfterStateChanged() {
+        if canHideOverlay {
+            if overlayTimer == nil {
+                startOverlayTimer()
+            }
+        } else {
+            if !isOverlayVisible {
+                animateOverlay(show: true)
+            }
+            stopOverlayTimer()
+        }
+    }
+    
     fileprivate func restartOverlayTimerIfNeeded() {
         guard nil != overlayTimer, canHideOverlay else { return }
         startOverlayTimer()
@@ -349,4 +393,5 @@ extension CallViewController {
         voiceChannel.videoState = raisedToEar ? .paused : .started
         updateConfiguration()
     }
+
 }

@@ -66,7 +66,7 @@
     [self createInstructionsLabel];
     [self createResendInstructions];
     [self createResendButton];
-    
+
     [self updateViewConstraints];
 }
 

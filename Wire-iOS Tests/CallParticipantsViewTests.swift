@@ -33,11 +33,11 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
         super.tearDown()
     }
     
-    static func participants(count participantCount: Int) -> CallParticipantsList {
+    static func participants(count participantCount: Int, sendsVideo: Bool = false) -> CallParticipantsList {
         var rows: [CallParticipantsCellConfiguration] = []
         
         for index in 0..<participantCount {
-            rows.append(.callParticipant(user: MockUser.mockUsers()[index], sendsVideo: false))
+            rows.append(.callParticipant(user: MockUser.mockUsers()[index], sendsVideo: sendsVideo))
         }
         
         return rows
