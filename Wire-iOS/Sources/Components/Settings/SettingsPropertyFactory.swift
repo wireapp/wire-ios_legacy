@@ -97,7 +97,7 @@ class SettingsPropertyFactory {
                 case .failure(_):
                     self?.marketingConsent = .none
                 case .success(let result):
-                    self?.marketingConsent = SettingsPropertyValue.number(value: NSNumber(value: result))
+                    self?.marketingConsent = SettingsPropertyValue.bool(value: result)
                 }
             })
         }
@@ -208,7 +208,7 @@ class SettingsPropertyFactory {
         case .receiveNewsAndOffers:
 
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return self.marketingConsent ?? .none
+                return self.marketingConsent
             }
 
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
