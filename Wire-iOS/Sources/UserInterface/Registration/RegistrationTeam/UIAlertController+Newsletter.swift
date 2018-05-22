@@ -25,7 +25,7 @@ extension UIAlertController {
     /// email regisration work flow: newsletter subscription dialog appears after conversation list is displayed.)
     static var newsletterSubscriptionDialogWasDisplayed = false
 
-    static func showNewsletterSubscriptionDialog() {
+    static func showNewsletterSubscriptionDialog(completionHandler: @escaping (Bool) -> Void) {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
@@ -35,7 +35,7 @@ extension UIAlertController {
         let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { _ in
             if let browserViewController = BrowserViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL) {
                 browserViewController.completion = { _ in
-                    UIAlertController.showNewsletterSubscriptionDialog()
+                    UIAlertController.showNewsletterSubscriptionDialog(completionHandler: completionHandler)
                 }
 
                 AppDelegate.shared().notificationsWindow?.rootViewController?.present(browserViewController, animated: true)
@@ -49,15 +49,13 @@ extension UIAlertController {
         alertController.addAction(UIAlertAction(title: "general.skip".localized,
                                                 style: .default,
                                                 handler: { (_) in
-                                                    // disable newsletter subscription
-                                                    ZMUser.selfUser().setMarketingConsent(to: false, in: ZMUserSession.shared()!, completion: {_ in})
+                                                    completionHandler(false)
         }))
 
         alertController.addAction(UIAlertAction(title: "general.accept".localized,
                                                 style: .cancel,
                                                 handler: { (_) in
-                                                    // enable newsletter subscription
-                                                    ZMUser.selfUser().setMarketingConsent(to: true, in: ZMUserSession.shared()!, completion: {_ in})
+                                                    completionHandler(true)
         }))
 
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
@@ -66,9 +64,9 @@ extension UIAlertController {
         }
     }
 
-    static func showNewsletterSubscriptionDialogIfNeeded() {
+    static func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping (Bool) -> Void) {
         guard !UIAlertController.newsletterSubscriptionDialogWasDisplayed else { return }
 
-        showNewsletterSubscriptionDialog()
+        showNewsletterSubscriptionDialog(completionHandler: completionHandler)
     }
 }
