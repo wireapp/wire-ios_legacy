@@ -147,8 +147,17 @@ final class CallViewController: UIViewController {
             showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
             return
         }
-        
-        voiceChannel.videoState = voiceChannel.videoState.toggledState
+
+        let newState = voiceChannel.videoState.toggledState
+
+        switch newState {
+        case .stopped:
+            callInfoConfiguration.preferedVideoPlaceholderState = .statusTextHidden
+        default:
+            callInfoConfiguration.preferedVideoPlaceholderState = .hidden
+        }
+
+        voiceChannel.videoState = newState
         updateConfiguration()
 
     }
@@ -257,6 +266,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         
         switch action {
         case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
+        case .acceptCall: acceptCallIfPossible()
         case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession)
         case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
@@ -266,7 +276,6 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .toggleVideoState: toggleVideoState()
         case .flipCamera: toggleCameraAnimated()
         case .showParticipantsList: return // Handled in `CallInfoRootViewController`, we don't want to update.
-        case .acceptCall: acceptCallIfPossible()
         }
         
         updateConfiguration()
