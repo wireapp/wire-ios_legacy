@@ -138,8 +138,8 @@ extension TeamCreationFlowController {
             stepDescription = SetFullNameStepDescription()
 
             UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
-            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { [weak self] marketingconset in
-                self?.marketingConsent = marketingconset
+            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { [weak self] marketingconsent in
+                self?.marketingConsent = marketingconsent
             }
         case .setPassword:
             stepDescription = SetPasswordStepDescription()

@@ -134,8 +134,8 @@ extension ConversationListViewController: UserProfileUpdateObserver {
         showUsernameTakeover(with: handle)
         if let userSession = ZMUserSession.shared() {
             self.showLoadingView = true
-            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { marketingconset in
-                ZMUser.selfUser().setMarketingConsent(to: marketingconset, in: userSession, completion: { _ in
+            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { marketingconsent in
+                ZMUser.selfUser().setMarketingConsent(to: marketingconsent, in: userSession, completion: { _ in
                     self.showLoadingView = false
                 })
             }
