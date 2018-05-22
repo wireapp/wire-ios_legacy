@@ -26,7 +26,7 @@ import UIKit
 
     // MARK: - Dynamics
 
-    fileprivate let edgeInsets = CGPoint(x: 0, y: 24)
+    fileprivate let edgeInsets = CGPoint(x: 16, y: 16)
     fileprivate var originalCenter: CGPoint = .zero
 
     fileprivate lazy var pinningBehavior: ThumbnailCornerPinningBehavior = {
@@ -165,8 +165,8 @@ import UIKit
     }
 
     private func updateThumbnailAfterLayoutUpdate() {
-        pinningBehavior.updateFields(in: thumbnailContainerView.bounds)
         updateThumbnailFrame(animated: false, parentSize: thumbnailContainerView.frame.size)
+        pinningBehavior.updateFields(in: thumbnailContainerView.bounds)
     }
 
     private func thumbnailPosition(for size: CGSize, parentSize: CGSize) -> CGPoint {
