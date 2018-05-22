@@ -120,8 +120,15 @@ extension ZClientViewController {
 
     @objc(refreshSplitViewPositionForRegularContainer:)
     func refreshSplitViewPosition(isRegularContainer: Bool) {
-        contentTopRegularConstraint.isActive = isRegularContainer
-        contentTopCompactConstraint.isActive = !isRegularContainer
+
+        if isRegularContainer {
+            contentTopCompactConstraint.isActive = false
+            contentTopRegularConstraint.isActive = true
+        } else {
+            contentTopRegularConstraint.isActive = false
+            contentTopCompactConstraint.isActive = true
+        }
+
     }
 
 }
