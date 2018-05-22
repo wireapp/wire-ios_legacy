@@ -42,15 +42,16 @@ final class CallViewController: UIViewController {
     
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance()) {
         self.voiceChannel = voiceChannel
-        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
+        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
         AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
         proximityMonitorManager?.stateChanged = proximityStateDidChange
+        videoConfiguration.overlayVisibilityProvider = self
     }
     
     deinit {
@@ -247,9 +248,9 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
 
 // MARK: - Hide + Show Overlay
 
-extension CallViewController {
+extension CallViewController: OverlayVisibilityProvider {
     
-    private var isOverlayVisible: Bool {
+    var isOverlayVisible: Bool {
         return callInfoRootViewController.view.alpha > 0
     }
     
@@ -274,7 +275,7 @@ extension CallViewController {
             delay: 0,
             options: .curveEaseInOut,
             animations: { [callInfoRootViewController] in callInfoRootViewController.view.alpha = show ? 1 : 0 },
-            completion: nil
+            completion: { [updateConfiguration] _ in updateConfiguration() }
         )
     }
     
