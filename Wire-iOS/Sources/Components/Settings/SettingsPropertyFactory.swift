@@ -92,16 +92,14 @@ class SettingsPropertyFactory {
         self.selfUser = selfUser
 
         if let user = self.selfUser as? ZMUser, let userSession = ZMUserSession.shared() {
-            self.userSession?.performChanges {
-                user.fetchMarketingConsent(in: userSession, completion: { [weak self] result in
-                    switch result {
-                    case .failure(_):
-                        self?.marketingConsent = .none
-                    case .success(let result):
-                        self?.marketingConsent = SettingsPropertyValue.number(value: NSNumber(value: result))
-                    }
-                })
-            }
+            user.fetchMarketingConsent(in: userSession, completion: { [weak self] result in
+                switch result {
+                case .failure(_):
+                    self?.marketingConsent = .none
+                case .success(let result):
+                    self?.marketingConsent = SettingsPropertyValue.number(value: NSNumber(value: result))
+                }
+            })
         }
     }
     
@@ -209,8 +207,8 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .receiveNewsAndOffers:
 
-            let getAction : GetAction = { (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return self.marketingConsent
+            let getAction : GetAction = { [weak self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                return self?.marketingConsent ?? .none
             }
 
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
@@ -219,8 +217,10 @@ class SettingsPropertyFactory {
                     AppDelegate.shared().window.rootViewController?.showLoadingView = true
 
                     self.userSession?.performChanges {
-                        ZMUser.selfUser().setMarketingConsent(to: number.boolValue, in: ZMUserSession.shared()!, completion: {_ in
+                        ZMUser.selfUser().setMarketingConsent(to: number.boolValue, in: ZMUserSession.shared()!, completion: { [weak self] _ in
                             AppDelegate.shared().window.rootViewController?.showLoadingView = false
+
+                            self?.marketingConsent = SettingsPropertyValue.number(value: number)
                         })
                     }
 
