@@ -140,7 +140,10 @@ final class ConversationCreationController: UIViewController {
         textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
         textField.textFieldDelegate = self
         mainViewContainer.addSubview(textField)
-        mainViewContainer.addSubview(textFieldSubtitleLabel)
+        if ZMUser.selfUser().hasTeam {
+            mainViewContainer.addSubview(textFieldSubtitleLabel)
+            textFieldSubtitleLabel.numberOfLines = 0
+        }
         errorViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
         errorLabel.textAlignment = .center
@@ -148,9 +151,8 @@ final class ConversationCreationController: UIViewController {
         errorLabel.textColor = UIColor.Team.errorMessageColor
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
-
         toggleSubtitleLabel.numberOfLines = 0
-        textFieldSubtitleLabel.numberOfLines = 0
+        
         [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
         [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)
         
@@ -222,10 +224,15 @@ final class ConversationCreationController: UIViewController {
             textField.top == mainViewContainer.top
             textField.leading == mainViewContainer.leading
             textField.trailing == mainViewContainer.trailing
-            textField.bottom == textFieldSubtitleLabel.top - 16
-            textFieldSubtitleLabel.leading == mainViewContainer.leading + 16
-            textFieldSubtitleLabel.trailing == mainViewContainer.trailing - 16
-            textFieldSubtitleLabel.bottom == mainViewContainer.bottom - 24
+            
+            if ZMUser.selfUser().hasTeam {
+                textFieldSubtitleLabel.leading == mainViewContainer.leading + 16
+                textFieldSubtitleLabel.trailing == mainViewContainer.trailing - 16
+                textFieldSubtitleLabel.bottom == mainViewContainer.bottom - 24
+                textField.bottom == textFieldSubtitleLabel.top - 16
+            } else {
+                textField.bottom == mainViewContainer.bottom
+            }
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in
