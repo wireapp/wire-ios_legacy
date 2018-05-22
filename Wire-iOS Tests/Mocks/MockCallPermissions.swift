@@ -31,6 +31,10 @@ class MockCallPermissions: CallPermissionsConfiguration {
         resultHandler(canAcceptVideoCalls)
     }
 
+    func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void) {
+        resultHandler(canAcceptVideoCalls)
+    }
+
     func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void) {
         resultHandler(canAcceptAudioCalls)
     }

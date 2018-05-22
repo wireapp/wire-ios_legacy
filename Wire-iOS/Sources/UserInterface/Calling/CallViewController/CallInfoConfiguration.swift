@@ -133,7 +133,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
             return .hidden
         }
 
-        if voiceChannel.state == .established {
+        guard case .incoming = voiceChannel.state else {
             return .hidden
         }
 
