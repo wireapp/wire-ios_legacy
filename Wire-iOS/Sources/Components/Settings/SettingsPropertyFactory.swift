@@ -207,8 +207,8 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .receiveNewsAndOffers:
 
-            let getAction : GetAction = { [weak self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return self?.marketingConsent ?? .none
+            let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
+                return self.marketingConsent ?? .none
             }
 
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
