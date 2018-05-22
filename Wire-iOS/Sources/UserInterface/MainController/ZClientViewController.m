@@ -210,7 +210,7 @@
     if (nil != self.topOverlayViewController) {
         return self.topOverlayViewController.preferredStatusBarStyle;
     }
-    else if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.preferredStatusBarStyle;
         }
@@ -227,7 +227,7 @@
     if (nil != self.topOverlayViewController) {
         return self.topOverlayViewController.prefersStatusBarHidden;
     }
-    else if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.prefersStatusBarHidden;
         }
@@ -256,7 +256,7 @@
     }
 
     [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
-    [self setNeedsStatusBarAppearanceUpdate];
+    [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES onlyFullScreen:NO];
     [self.view setNeedsLayout];
 }
 
