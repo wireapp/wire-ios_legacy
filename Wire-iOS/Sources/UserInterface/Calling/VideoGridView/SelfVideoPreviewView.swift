@@ -29,7 +29,7 @@ extension AVSVideoView: AVSIdentifierProvider {
 }
 
 final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
-
+    
     private let previewView = AVSVideoPreview()
     private let mutedOverlayView = UIView()
     private let mutedIconImageView = UIImageView()
@@ -53,6 +53,10 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        stopCapture()
     }
     
     private func setupViews() {
@@ -81,6 +85,22 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
         UIView.animate(withDuration: duration) { [mutedOverlayView, isMuted] in
             mutedOverlayView.alpha = isMuted ? 1 : 0
         }
+    }
+    
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        
+        if window != nil {
+            startCapture()
+        }
+    }
+    
+    func startCapture() {
+        previewView.startVideoCapture()
+    }
+    
+    func stopCapture() {
+        previewView.stopVideoCapture()
     }
 
 }

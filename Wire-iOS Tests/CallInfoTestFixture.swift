@@ -57,7 +57,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             degradationState: .none,
             accessoryType: .avatar(otherUser),
-            canToggleMediaType: true,
+            canToggleMediaType: false,
             isMuted: false,
             isTerminating: false,
             canAccept: true,
@@ -91,7 +91,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             degradationState: .incoming(degradedUser: otherUser),
             accessoryType: .avatar(otherUser),
-            canToggleMediaType: true,
+            canToggleMediaType: false,
             isMuted: false,
             isTerminating: false,
             canAccept: true,
@@ -137,7 +137,7 @@ struct CallInfoTestFixture {
             variant: .light
         )
     }
-    
+        
     var oneToOneAudioEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             degradationState: .none,
@@ -165,7 +165,7 @@ struct CallInfoTestFixture {
             isMuted: false,
             isTerminating: false,
             canAccept: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .sendingVideo,
             state: .ringingOutgoing,
             isConstantBitRate: false,
             title: otherUser.displayName,
@@ -175,6 +175,23 @@ struct CallInfoTestFixture {
     }
     
     var oneToOneIncomingVideoRinging: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .sendingVideo,
+            state: .ringingIncoming(name: otherUser.displayName),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+    }
+    
+    var oneToOneIncomingVideoRingingVideoTurnedOff: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             degradationState: .none,
             accessoryType: .none,
@@ -199,7 +216,7 @@ struct CallInfoTestFixture {
             isMuted: false,
             isTerminating: false,
             canAccept: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .sendingVideo,
             state: .connecting,
             isConstantBitRate: false,
             title: otherUser.displayName,
@@ -216,7 +233,7 @@ struct CallInfoTestFixture {
             isMuted: false,
             isTerminating: false,
             canAccept: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .sendingVideo,
             state: .established(duration: 10),
             isConstantBitRate: false,
             title: otherUser.displayName,
@@ -248,7 +265,7 @@ struct CallInfoTestFixture {
         return MockCallInfoViewControllerInput(
             degradationState: .none,
             accessoryType: .avatar(otherUser),
-            canToggleMediaType: true,
+            canToggleMediaType: false,
             isMuted: false,
             isTerminating: false,
             canAccept: true,
@@ -322,7 +339,7 @@ struct CallInfoTestFixture {
             isMuted: false,
             isTerminating: false,
             canAccept: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .sendingVideo,
             state: .ringingOutgoing,
             isConstantBitRate: false,
             title: otherUser.displayName,
@@ -339,7 +356,7 @@ struct CallInfoTestFixture {
             isMuted: false,
             isTerminating: false,
             canAccept: true,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .sendingVideo,
             state: .ringingIncoming(name: otherUser.displayName),
             isConstantBitRate: false,
             title: otherUser.displayName,
@@ -356,7 +373,7 @@ struct CallInfoTestFixture {
             isMuted: false,
             isTerminating: false,
             canAccept: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .sendingVideo,
             state: .connecting,
             isConstantBitRate: false,
             title: otherUser.displayName,
@@ -368,12 +385,12 @@ struct CallInfoTestFixture {
     var groupVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
             canToggleMediaType: true,
             isMuted: false,
             isTerminating: false,
             canAccept: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .sendingVideo,
             state: .established(duration: 10),
             isConstantBitRate: false,
             title: otherUser.displayName,
@@ -385,7 +402,7 @@ struct CallInfoTestFixture {
     var groupVideoEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             degradationState: .none,
-            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
             canToggleMediaType: true,
             isMuted: false,
             isTerminating: false,
