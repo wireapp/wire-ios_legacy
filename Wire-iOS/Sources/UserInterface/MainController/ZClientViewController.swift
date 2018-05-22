@@ -99,6 +99,9 @@ extension ZClientViewController {
         topOverlayContainer = UIView()
         topOverlayContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topOverlayContainer)
+
+        contentTopRegularConstraint = splitViewController.view.topAnchor.constraint(equalTo: safeTopAnchor)
+        contentTopCompactConstraint = splitViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
         
         NSLayoutConstraint.activate([
             topOverlayContainer.topAnchor.constraint(equalTo: view.topAnchor),
@@ -108,10 +111,17 @@ extension ZClientViewController {
             splitViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             splitViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             splitViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            ])
-        
+        ])
+
         let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
         heightConstraint.priority = UILayoutPriorityDefaultLow
         heightConstraint.isActive = true
     }
+
+    @objc(refreshSplitViewPositionForRegularContainer:)
+    func refreshSplitViewPosition(isRegularContainer: Bool) {
+        contentTopRegularConstraint.isActive = isRegularContainer
+        contentTopCompactConstraint.isActive = !isRegularContainer
+    }
+
 }

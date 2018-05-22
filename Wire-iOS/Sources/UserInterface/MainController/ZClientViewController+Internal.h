@@ -53,6 +53,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nonnull) UIView *topOverlayContainer;
 @property (nonatomic, nullable) UIViewController *topOverlayViewController;
+@property (nonatomic) NSLayoutConstraint *contentTopRegularConstraint;
+@property (nonatomic) NSLayoutConstraint *contentTopCompactConstraint;
+
 
 @end
 

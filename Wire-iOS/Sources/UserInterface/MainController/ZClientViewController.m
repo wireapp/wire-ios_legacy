@@ -156,7 +156,8 @@
     
     [self createTopViewConstraints];
     [self.splitViewController didMoveToParentViewController:self];
-    
+    [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
     
     [self createBackgroundViewController];
@@ -218,7 +219,7 @@
         }
     }
     else {
-        return UIStatusBarStyleDefault;
+        return UIStatusBarStyleLightContent;
     }
 }
 
@@ -253,7 +254,9 @@
             [self attemptToLoadLastViewedConversationWithFocus:NO animated:NO];
         }
     }
-    
+
+    [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    [self setNeedsStatusBarAppearanceUpdate];
     [self.view setNeedsLayout];
 }
 
