@@ -73,7 +73,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneIncomingAudioRinging() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .incoming(video: false, shouldRing: true, degraded: false)
@@ -89,7 +89,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneOutgoingAudioRinging() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .outgoing(degraded: false)
@@ -105,7 +105,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneIncomingAudioDegraded() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         (mockConversation.activeParticipants.lastObject as? MockUser)?.untrusted = true
@@ -122,7 +122,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneOutgoingAudioDegraded() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         (mockConversation.activeParticipants.lastObject as? MockUser)?.untrusted = true
@@ -140,7 +140,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneAudioConnecting() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .answered(degraded: false)
@@ -156,7 +156,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneAudioEstablishedUpgradedToVideo() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .established
@@ -174,7 +174,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneAudioEstablished() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .established
@@ -191,7 +191,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneAudioEstablishedCBR() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .established
@@ -211,7 +211,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneIncomingVideoRinging() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .incoming(video: true, shouldRing: true, degraded: false)
@@ -229,7 +229,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneIncomingVideoRingingVideoTurnedOff() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .incoming(video: true, shouldRing: true, degraded: false)
@@ -247,7 +247,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneOutgoingVideoRinging() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .outgoing(degraded: false)
@@ -265,7 +265,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneVideoConnecting() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .answered(degraded: false)
@@ -283,7 +283,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneVideoEstablished() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .established
@@ -302,7 +302,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testOneToOneVideoEstablishedDowngradedToAudio() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
         mockVoiceChannel.mockCallState = .established
@@ -323,7 +323,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupIncomingAudioRinging() {
         // given
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
         mockVoiceChannel.mockCallState = .incoming(video: false, shouldRing: true, degraded: false)
@@ -339,7 +339,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupOutgoingAudioRinging() {
         // given
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
         mockVoiceChannel.mockCallState = .outgoing(degraded: false)
@@ -355,7 +355,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupAudioConnecting() {
         // given
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
         mockVoiceChannel.mockCallState = .answered(degraded: false)
@@ -371,7 +371,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupAudioEstablished() {
         // given
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let mockUsers: [ZMUser] = MockUser.mockUsers()!
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
@@ -393,7 +393,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupIncomingVideoRinging() {
         // given
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
         mockVoiceChannel.mockCallState = .incoming(video: true, shouldRing: true, degraded: false)
@@ -411,7 +411,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupOutgoingVideoRinging() {
         // given
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
         mockVoiceChannel.mockCallState = .outgoing(degraded: false)
@@ -429,7 +429,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupVideoConnecting() {
         // given
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
         mockVoiceChannel.mockCallState = .answered(degraded: false)
@@ -447,7 +447,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupVideoEstablished() {
         // given
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
-        let mockVoiceChannel = TestableVoiceChannel(conversation: mockConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let mockUsers: [ZMUser] = MockUser.mockUsers()!
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
