@@ -150,6 +150,7 @@ class AppRootViewController: UIViewController {
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
             self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
+            self.sessionManager?.switchingDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
             sessionManager.start(launchOptions: launchOptions)
@@ -540,6 +541,32 @@ extension AppRootViewController: LandingViewControllerDelegate {
             navigationController.pushViewController(registrationViewController, animated: true)
         }
     }
+}
+
+// MARK: - Ask user if they want want switch account if there's an ongoing call
+
+extension AppRootViewController: SessionManagerSwitchingDelegate {
+    
+    func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
+        
+        guard let session = ZMUserSession.shared(), let callCenter = session.callCenter, !callCenter.activeCallConversations(in: session).isEmpty else { return completion(true) }
+        guard let controller = UIApplication.shared.wr_topmostController() else {
+            completion(false)
+            return
+        }
+        
+        let alert = UIAlertController(title: "self.settings.add_account.switch_accounts.title".localized, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "self.settings.add_account.switch_accounts.action".localized, style: .default, handler: { [weak self] (action) in
+            self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
+            completion(true)
+        }))
+        alert.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (action) in
+            completion(false)
+        }))
+        
+        controller.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 public extension SessionManager {

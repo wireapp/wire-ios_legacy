@@ -61,9 +61,7 @@ final internal class SelfProfileViewController: UIViewController {
         profileView = ProfileView(user: ZMUser.selfUser())
         
         super.init(nibName: .none, bundle: .none)
-        
-        SessionManager.shared?.switchingDelegate = self
-        
+                
         profileView.source = self
         profileView.imageView.delegate = self
         
@@ -202,22 +200,3 @@ extension SelfProfileViewController: UserImageViewDelegate {
     }
 }
 
-extension SelfProfileViewController: SessionManagerSwitchingDelegate {
-    
-    func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
-        
-        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else {
-            completion(false)
-            return
-        }
-        
-        let alert = UIAlertController(title: "self.settings.add_account.switch_accounts.title", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "self.settings.add_account.switch_accounts.action", style: .default, handler: { (action) in
-            completion(true)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            completion(false)
-        }))
-        controller.present(alert, animated: true, completion: nil)
-    }
-}
