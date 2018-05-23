@@ -18,10 +18,8 @@
 
 import Foundation
 
-extension RegistrationEmailFlowViewController {
+extension ZMUserSession {
     @objc func submitMarketingConsent(with marketingConsent: Bool) {
-        if let userSession = ZMUserSession.shared() {
-            ZMUser.selfUser().setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
-        }
+        ZMUser.selfUser().setMarketingConsent(to: marketingConsent, in: self, completion: { _ in })
     }
 }

@@ -166,7 +166,7 @@
         [self.analyticsTracker tagAddedPhotoFromSource:step.photoSource];
         [self.formStepDelegate didCompleteFormStep:self];
 
-        [self submitMarketingConsentWith:self.marketingConsent];
+        [[ZMUserSession sharedSession] submitMarketingConsentWith:self.marketingConsent];
     }
 }
 
@@ -232,7 +232,6 @@
 {
     [self.analyticsTracker tagRegistrationSucceded];
     [self presentProfilePictureStep];
-
 }
 
 @end
