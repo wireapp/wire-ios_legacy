@@ -483,6 +483,7 @@
 "voice.speaker_button.title" = "Speaker";
 "voice.cancel_button.title" = "Cancel";
 "voice.call_button.title" = "Call";
+"voice.end_call_button.title" = "End Call";
 
 "voice.alert.call_in_progress.title" = "Call in progress";
 "voice.alert.call_in_progress.message" = "You can have only one active call at a time";

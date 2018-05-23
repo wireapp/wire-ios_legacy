@@ -113,6 +113,7 @@ final class CallActionsView: UIView {
     init() {
         super.init(frame: .zero)
         setupViews()
+        setupAccessibility()
         createConstraints()
     }
     
@@ -129,6 +130,14 @@ final class CallActionsView: UIView {
         [firstBottomRowSpacer, endCallButton, secondBottomRowSpacer, acceptCallButton].forEach(bottomStackView.addArrangedSubview)
         [topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
+    }
+
+    private func setupAccessibility() {
+        muteCallButton.accessibilityLabel = "voice.mute_button.title".localized
+        videoButton.accessibilityLabel = "voice.video_button.title".localized
+        speakerButton.accessibilityLabel = "voice.speaker_button.title".localized
+        flipCameraButton.accessibilityLabel = "voice.flip_video_button.title".localized
+        acceptCallButton.accessibilityLabel = "voice.accept_button.title".localized
     }
     
     private func createConstraints() {
@@ -167,6 +176,12 @@ final class CallActionsView: UIView {
         lastInput = input
         setNeedsLayout()
         layoutIfNeeded()
+    }
+
+    func updateAccessibility(with input: CallActionsViewInputType) {
+
+        
+
     }
     
     override func layoutSubviews() {
