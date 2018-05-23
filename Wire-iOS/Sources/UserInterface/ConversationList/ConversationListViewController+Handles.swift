@@ -133,11 +133,8 @@ extension ConversationListViewController: UserProfileUpdateObserver {
     public func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
         if let userSession = ZMUserSession.shared() {
-            self.showLoadingView = true
             UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { marketingconsent in
-                ZMUser.selfUser().setMarketingConsent(to: marketingconsent, in: userSession, completion: { _ in
-                    self.showLoadingView = false
-                })
+                ZMUser.selfUser().setMarketingConsent(to: marketingconsent, in: userSession, completion: { _ in })
             }
         }
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
