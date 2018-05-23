@@ -78,6 +78,7 @@ final class CallViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        updateVideoConfiguration()
         updateVideoStatusPlaceholder()
         proximityMonitorManager?.startListening()
         resumeVideoIfNeeded()
@@ -135,7 +136,6 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        updateVideoConfiguration()
         callInfoRootViewController.configuration = callInfoConfiguration
         videoGridViewController.configuration = videoConfiguration
         updateOverlayAfterStateChanged()
