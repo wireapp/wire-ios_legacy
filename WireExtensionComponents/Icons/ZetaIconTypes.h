@@ -88,6 +88,7 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     ZetaIconTypeConvMetaAddPerson               = 0x215,
     ZetaIconTypePhone                           = 0x211,
     ZetaIconTypeEndCall                         = 0x222,
+    ZetaIconTypeMissedCall                      = 0x757,
     ZetaIconTypeArchive                         = 0x212,
     ZetaIconTypeSave                            = 0x197,
     ZetaIconTypeExport                          = 0x198,
