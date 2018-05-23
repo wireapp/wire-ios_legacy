@@ -26,9 +26,9 @@ protocol CallParticipantsCellConfigurationConfigurable: Reusable {
 }
 
 extension UICollectionView {
-    func reloadData<T: Hashable>(old: [T], new: [T], animated: Bool) {
-        guard animated && !ProcessInfo.processInfo.isRunningTests else { return reloadData() }
-        reload(changes: diff(old: old, new: new), completion: { _ in })
+    func reloadData<T: Hashable>(old: [T], new: [T], completion: (() -> Void)? = nil) {
+        guard !ProcessInfo.processInfo.isRunningTests else { return reloadData() }
+        reload(changes: diff(old: old, new: new)) { _ in completion?() }
     }
 }
 
@@ -86,7 +86,7 @@ class CallParticipantsView: UICollectionView, Themeable {
     
     var rows = CallParticipantsList() {
         didSet {
-            reloadData(old: oldValue, new: rows, animated: !oldValue.isEmpty)
+            reloadData(old: oldValue, new: rows)
         }
     }
     
