@@ -46,7 +46,12 @@ extension ConversationInputBarViewController {
 
             let sourceView: UIView = self.parent?.view ?? self.view
 
-            let pickerController = UIImagePickerController.popoverForIPadRegular(sourceRect:self.popoverSourceRectFromPhotoButton, sourceView: sourceView, presentViewController: self, sourceType: .photoLibrary)
+            let context = ImagePickerPopoverPresentationContext(sourceRect:self.popoverSourceRectFromPhotoButton,
+                                                    sourceView: sourceView,
+                                                    presentViewController: self,
+                                                    sourceType: .photoLibrary)
+
+            let pickerController = UIImagePickerController.popoverForIPadRegular(with: context)
             pickerController.delegate = self
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes

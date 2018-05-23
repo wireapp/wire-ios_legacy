@@ -18,21 +18,25 @@
 
 import Foundation
 
-extension UIImagePickerController {
-    @objc class func popoverForIPadRegular(sourceRect: CGRect,
-                                           sourceView: UIView,
-                                           presentViewController: UIViewController,
-                                           sourceType: UIImagePickerControllerSourceType) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.sourceType = sourceType
+struct ImagePickerPopoverPresentationContext {
+    let sourceRect: CGRect
+    let sourceView: UIView
+    let presentViewController: UIViewController
+    let sourceType: UIImagePickerControllerSourceType
+}
 
-        if presentViewController.isIPadRegular(device: UIDevice.current) {
+extension UIImagePickerController {
+    class func popoverForIPadRegular(with context: ImagePickerPopoverPresentationContext) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = context.sourceType
+
+        if context.presentViewController.isIPadRegular(device: UIDevice.current) {
 
             picker.modalPresentationStyle = .popover
             if let popover = picker.popoverPresentationController {
 
-                popover.sourceRect = sourceRect
-                popover.sourceView = sourceView
+                popover.sourceRect = context.sourceRect
+                popover.sourceView = context.sourceView
 
                 popover.backgroundColor = .white
             }
