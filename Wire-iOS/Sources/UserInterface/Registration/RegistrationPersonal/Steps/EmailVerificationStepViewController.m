@@ -68,6 +68,8 @@
     [self createResendButton];
 
     [self updateViewConstraints];
+
+    [UIAlertController showNewsletterSubscriptionDialogIfNeededWithCompletionHandler:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
