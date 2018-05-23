@@ -26,7 +26,7 @@ import UIKit
 
     // MARK: - Dynamics
 
-    fileprivate let edgeInsets = CGPoint(x: 0, y: 24)
+    fileprivate let edgeInsets = CGPoint(x: 16, y: 16)
     fileprivate var originalCenter: CGPoint = .zero
 
     fileprivate lazy var pinningBehavior: ThumbnailCornerPinningBehavior = {
@@ -39,7 +39,7 @@ import UIKit
 
     // MARK: - Changing the Previewed Content
 
-    fileprivate(set) var thumbnailContentSize: CGSize = .zero
+    fileprivate(set) var thumbnailContentSize = CGSize(width: 100, height: 100)
     
     func removeCurrentThumbnailContentView() {
         contentView?.removeFromSuperview()
@@ -142,38 +142,21 @@ import UIKit
     }
 
     private func updateThumbnailFrame(animated: Bool, parentSize: CGSize) {
+        guard thumbnailContentSize != .zero else { return }
+        let size = thumbnailContentSize.withOrientation(UIDevice.current.orientation)
+        let position = thumbnailPosition(for: size, parentSize: parentSize)
 
-        let size: CGSize
-        view.layoutIfNeeded()
+        let changesBlock = { [thumbnailView, view] in
+            thumbnailView.frame = CGRect(
+                x: position.x - size.width / 2,
+                y: position.y - size.height / 2,
+                width: size.width,
+                height: size.height
+            )
 
-        switch thumbnailContentSize.aspectRatio {
-        case .square:
-            let sideLength = thumbnailContainerView.bounds.width * 1/3
-            size = CGSize(width: sideLength, height: sideLength)
-
-        case .portrait(let heightRatio):
-            let width = thumbnailContainerView.bounds.width * 1/4
-            let height = width * heightRatio
-            size = CGSize(width: width, height: height)
-
-        case .landscape(let heightRatio):
-            let width = thumbnailContainerView.bounds.width * 1/3
-            let height = width * heightRatio
-            size = CGSize(width: width, height: height)
+            view?.layoutIfNeeded()
         }
-
-        let position = self.thumbnailPosition(for: size, parentSize: parentSize)
-
-        let changesBlock = {
-
-            self.thumbnailView.frame = CGRect(x: position.x - size.width / 2,
-                                              y: position.y - size.height / 2,
-                                              width: size.width, height: size.height)
-
-            self.view.layoutIfNeeded()
-
-        }
-
+        
         if animated {
             UIView.animate(withDuration: 0.2, animations: changesBlock)
         } else {
@@ -182,8 +165,8 @@ import UIKit
     }
 
     private func updateThumbnailAfterLayoutUpdate() {
-        pinningBehavior.updateFields(in: thumbnailContainerView.bounds)
         updateThumbnailFrame(animated: false, parentSize: thumbnailContainerView.frame.size)
+        pinningBehavior.updateFields(in: thumbnailContainerView.bounds)
     }
 
     private func thumbnailPosition(for size: CGSize, parentSize: CGSize) -> CGPoint {

@@ -275,6 +275,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire needs access to the Camera.";
+"video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Enable it in Wire Settings";
 
@@ -499,8 +500,7 @@
 // Voice New
 
 "call.status.connecting" = "Connecting…";
-"call.status.incoming.video" = "%@ is video calling…";
-"call.status.incoming.audio" = "%@ is calling…";
+"call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Calling…";
 "call.status.outgoing" = "Ringing…";
 "call.status.reconnecting" = "Reconnecting…";

@@ -41,13 +41,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import <WireExtensionComponents/DeveloperMenuState.h>
 
-// Layers
-#import <WireExtensionComponents/AnimatedLayer.h>
-#import <WireExtensionComponents/PulseLayer.h>
-#import <WireExtensionComponents/UserConnectingLayer.h>
-#import <WireExtensionComponents/VoiceGainLayer.h>
-#import <WireExtensionComponents/VoiceIndicatorLayer.h>
-
 // Icons
 #import <WireExtensionComponents/ZetaIconTypes.h>
 #import <WireExtensionComponents/WireStyleKit.h>

@@ -63,16 +63,20 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
     var mediaState: MediaState { get }
+    var permissions: CallPermissionsConfiguration { get }
 }
 
 extension CallActionsViewInputType {
     var appearance: CallActionAppearance {
-        guard !isVideoCall else { return .dark }
-        return variant == .light ? .light : .dark
+        switch (isVideoCall, variant) {
+        case (true, _): return .dark(blurred: true)
+        case (false, .light): return .light
+        case (false, .dark): return .dark(blurred: false)
+        }
     }
 }
 
-// A view showing multiple buttons depenging on the given `CallActionsView.Input`.
+// A view showing multiple buttons depending on the given `CallActionsView.Input`.
 // Button touches result in `CallActionsView.Action` cases to be sent to the objects delegate.
 final class CallActionsView: UIView {
     
@@ -148,7 +152,8 @@ final class CallActionsView: UIView {
     func update(with input: CallActionsViewInputType) {
         muteCallButton.isSelected = input.isMuted
         videoButton.isEnabled = input.canToggleMediaType
-        videoButton.isSelected = input.mediaState.isSendingVideo
+        videoButton.isSelected = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
+        flipCameraButton.isEnabled = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
         flipCameraButton.isHidden = input.mediaState.showSpeaker
         speakerButton.isHidden = !input.mediaState.showSpeaker
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled

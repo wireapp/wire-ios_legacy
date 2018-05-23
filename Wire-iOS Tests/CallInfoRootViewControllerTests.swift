@@ -220,5 +220,29 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         // then
         verifyInAllIPhoneSizes(view: sut.view)
     }
+
+    // MARK: - Missing Video Permissions
+
+    func testGroupVideoUndeterminedVideoPermissions() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupVideoIncomingUndeterminedPermissions)
+
+        //then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+
+    func testGroupVideoDeniedVideoPermissions() {
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupVideoIncomingDeniedPermissions)
+
+        //then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
     
 }

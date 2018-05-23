@@ -156,7 +156,8 @@
     
     [self createTopViewConstraints];
     [self.splitViewController didMoveToParentViewController:self];
-    
+    [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
     
     [self createBackgroundViewController];
@@ -209,7 +210,7 @@
     if (nil != self.topOverlayViewController) {
         return self.topOverlayViewController.preferredStatusBarStyle;
     }
-    else if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.preferredStatusBarStyle;
         }
@@ -218,7 +219,7 @@
         }
     }
     else {
-        return UIStatusBarStyleDefault;
+        return UIStatusBarStyleLightContent;
     }
 }
 
@@ -226,7 +227,7 @@
     if (nil != self.topOverlayViewController) {
         return self.topOverlayViewController.prefersStatusBarHidden;
     }
-    else if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.prefersStatusBarHidden;
         }
@@ -253,7 +254,9 @@
             [self attemptToLoadLastViewedConversationWithFocus:NO animated:NO];
         }
     }
-    
+
+    [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES onlyFullScreen:NO];
     [self.view setNeedsLayout];
 }
 
