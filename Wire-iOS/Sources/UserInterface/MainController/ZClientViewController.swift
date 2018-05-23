@@ -100,11 +100,10 @@ extension ZClientViewController {
         topOverlayContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topOverlayContainer)
 
-        contentTopRegularConstraint = splitViewController.view.topAnchor.constraint(equalTo: safeTopAnchor)
-        contentTopCompactConstraint = splitViewController.view.topAnchor.constraint(equalTo: view.topAnchor)
+        contentTopRegularConstraint = topOverlayContainer.topAnchor.constraint(equalTo: safeTopAnchor)
+        contentTopCompactConstraint = topOverlayContainer.topAnchor.constraint(equalTo: view.topAnchor)
         
         NSLayoutConstraint.activate([
-            topOverlayContainer.topAnchor.constraint(equalTo: view.topAnchor),
             topOverlayContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topOverlayContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topOverlayContainer.bottomAnchor.constraint(equalTo: splitViewController.view.topAnchor),
