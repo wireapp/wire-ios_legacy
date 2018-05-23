@@ -76,7 +76,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
         case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
         default:
-            return true
+            return permissions.canAcceptVideoCalls && permissions.canAcceptAudioCalls
         }
     }
     
