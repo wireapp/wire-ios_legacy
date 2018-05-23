@@ -76,7 +76,11 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
         case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
         default:
-            return true
+            if voiceChannel.videoState == .stopped {
+                return voiceChannel.conversation?.canStartVideoCall ?? false
+            } else {
+                return true
+            }
         }
     }
     

@@ -26,7 +26,7 @@ protocol VideoGridConfiguration {
 
 fileprivate extension CGSize {
     static let floatingPreviewSmall = CGSize(width: 108, height: 144)
-    static let floatingPreviewLarge = CGSize(width: 120, height: 160)
+    static let floatingPreviewLarge = CGSize(width: 150, height: 200)
     
     static func previewSize(for traitCollection: UITraitCollection) -> CGSize {
         switch traitCollection.horizontalSizeClass {
