@@ -20,7 +20,7 @@
 enum CallAction {
     case toggleMuteState
     case toggleVideoState
-    case alertVideoUnvailable
+    case alertVideoUnavailable
     case toggleSpeakerState
     case continueDegradedCall
     case acceptCall

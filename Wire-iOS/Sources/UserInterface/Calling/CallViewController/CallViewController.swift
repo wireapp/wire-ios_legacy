@@ -159,7 +159,7 @@ final class CallViewController: UIViewController {
         toggleOverlayVisibility()
     }
     
-    fileprivate func alertVideoUnvailable() {
+    fileprivate func alertVideoUnavailable() {
         if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
             showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
             return
@@ -298,7 +298,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()
         case .minimizeOverlay: minimizeOverlay()
         case .toggleVideoState: toggleVideoState()
-        case .alertVideoUnvailable: alertVideoUnvailable()
+        case .alertVideoUnavailable: alertVideoUnavailable()
         case .flipCamera: toggleCameraAnimated()
         case .showParticipantsList: return // Handled in `CallInfoRootViewController`, we don't want to update.
         }

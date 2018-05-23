@@ -202,7 +202,7 @@ final class CallActionsView: UIView {
         switch button {
         case muteCallButton: return .toggleMuteState
         case videoButton: return .toggleVideoState
-        case videoButtonDisabledTapRecognizer: return .alertVideoUnvailable
+        case videoButtonDisabledTapRecognizer: return .alertVideoUnavailable
         case speakerButton: return .toggleSpeakerState
         case flipCameraButton: return .flipCamera
         case endCallButton: return .terminateCall
