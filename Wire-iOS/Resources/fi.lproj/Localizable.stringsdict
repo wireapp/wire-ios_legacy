@@ -112,7 +112,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d others</string>
+        <string>%d muuta</string>
       </dict>
     </dict>
     <key>content.system.people_started_using</key>
