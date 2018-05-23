@@ -59,6 +59,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
         blurView.translatesAutoresizingMaskIntoConstraints = false
         blurView.clipsToBounds = true
         blurView.layer.cornerRadius = IconLabelButton.width / 2
+        blurView.isUserInteractionEnabled = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.textTransform = .upper
         subtitleLabel.textAlignment = .center

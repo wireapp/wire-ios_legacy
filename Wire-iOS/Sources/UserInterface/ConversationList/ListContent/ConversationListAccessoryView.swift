@@ -98,7 +98,7 @@ final internal class ConversationListAccessoryView: UIView {
             self.accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
+            iconView.image = UIImage(for: .missedCall, fontSize: iconSize, color: .black)
             self.accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
