@@ -138,7 +138,7 @@
         <key>few</key>
         <string>%d</string>
         <key>many</key>
-        <string>%d</string>
+        <string>%d іншими</string>
         <key>other</key>
         <string>%d</string>
       </dict>
