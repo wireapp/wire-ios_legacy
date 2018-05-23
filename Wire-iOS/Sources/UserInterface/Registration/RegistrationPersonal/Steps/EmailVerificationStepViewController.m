@@ -69,7 +69,7 @@
 
     [self updateViewConstraints];
 
-    [UIAlertController showNewsletterSubscriptionDialogIfNeededWithCompletionHandler:nil];
+    [UIAlertController showNewsletterSubscriptionDialogAndSubmit];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

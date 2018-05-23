@@ -25,7 +25,7 @@ extension UIAlertController {
     /// email regisration work flow: newsletter subscription dialog appears after conversation list is displayed.)
     static var newsletterSubscriptionDialogWasDisplayed = false
 
-    static func showNewsletterSubscriptionDialog(completionHandler: ((Bool) -> Void)?) {
+    static func showNewsletterSubscriptionDialog(completionHandler: @escaping (Bool) -> Void) {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
@@ -49,17 +49,13 @@ extension UIAlertController {
         alertController.addAction(UIAlertAction(title: "general.skip".localized,
                                                 style: .default,
                                                 handler: { (_) in
-                                                    if let completionHandler = completionHandler {
-                                                        completionHandler(false)
-                                                    }
+                                                    completionHandler(false)
         }))
 
         alertController.addAction(UIAlertAction(title: "general.accept".localized,
                                                 style: .cancel,
                                                 handler: { (_) in
-                                                    if let completionHandler = completionHandler {
-                                                        completionHandler(true)
-                                                    }
+                                                    completionHandler(true)
         }))
 
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
@@ -68,9 +64,17 @@ extension UIAlertController {
         }
     }
 
-    static func showNewsletterSubscriptionDialogIfNeeded(completionHandler: ((Bool) -> Void)?) {
+    static func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping (Bool) -> Void) {
         guard !UIAlertController.newsletterSubscriptionDialogWasDisplayed else { return }
 
         showNewsletterSubscriptionDialog(completionHandler: completionHandler)
+    }
+
+    static func showNewsletterSubscriptionDialogAndSubmit() {
+        if let userSession = ZMUserSession.shared() {
+            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { marketingconsent in
+                ZMUser.selfUser().setMarketingConsent(to: marketingconsent, in: userSession, completion: { _ in })
+            }
+        }
     }
 }

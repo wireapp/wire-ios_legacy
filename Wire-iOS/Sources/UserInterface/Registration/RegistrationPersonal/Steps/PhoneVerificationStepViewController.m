@@ -98,7 +98,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
-    [UIAlertController showNewsletterSubscriptionDialogIfNeededWithCompletionHandler:nil];
+    [UIAlertController showNewsletterSubscriptionDialogAndSubmit];
 }
 
 - (void)viewDidAppear:(BOOL)animated
