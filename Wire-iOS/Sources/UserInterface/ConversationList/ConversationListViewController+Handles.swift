@@ -87,7 +87,7 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
 
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction) {
         // show data usage dialog after user name take over screen
-        showDataUsagePermissionDialogIfNeeded()
+//        showDataUsagePermissionDialogIfNeeded() ///TODO
 
         tagEvent(for: action)
         perform(action)

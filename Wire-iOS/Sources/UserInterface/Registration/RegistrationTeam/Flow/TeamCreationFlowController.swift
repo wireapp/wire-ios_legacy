@@ -123,6 +123,13 @@ extension TeamCreationFlowController {
         }
     }
 
+    func showNewsletterSubscriptionDialog() {
+        UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
+        UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { [weak self] marketingconsent in
+            self?.marketingConsent = marketingconsent
+        }
+    }
+
     fileprivate func pushController(for state: TeamCreationState) {
 
         var stepDescription: TeamCreationStepDescription?
@@ -134,13 +141,9 @@ extension TeamCreationFlowController {
             stepDescription = SetEmailStepDescription(controller: navigationController)
         case let .verifyEmail(teamName: _, email: email):
             stepDescription = VerifyEmailStepDescription(email: email, delegate: self)
+            showNewsletterSubscriptionDialog()
         case .setFullName:
             stepDescription = SetFullNameStepDescription()
-
-            UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
-            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { [weak self] marketingconsent in
-                self?.marketingConsent = marketingconsent
-            }
         case .setPassword:
             stepDescription = SetPasswordStepDescription()
         case .createTeam:
