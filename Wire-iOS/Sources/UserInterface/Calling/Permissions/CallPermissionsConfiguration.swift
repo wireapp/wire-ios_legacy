@@ -34,6 +34,10 @@ protocol CallPermissionsConfiguration {
 
 extension CallPermissionsConfiguration {
 
+    var isVideoDisabledForever: Bool {
+        return canAcceptVideoCalls == false && isPendingVideoPermissionRequest == false
+    }
+
     var preferredVideoPlaceholderState: CallVideoPlaceholderState {
 
         guard !canAcceptVideoCalls else {
@@ -41,17 +45,6 @@ extension CallPermissionsConfiguration {
         }
 
         return isPendingVideoPermissionRequest ? .statusTextHidden : .statusTextDisplayed
-
-    }
-
-    func videoStateIfAllowed(_ requestedState: VideoState) -> VideoState {
-
-        switch requestedState {
-        case .paused, .started, .badConnection: return
-            canAcceptVideoCalls ? requestedState : .stopped
-        case .stopped:
-            return .stopped
-        }
 
     }
 

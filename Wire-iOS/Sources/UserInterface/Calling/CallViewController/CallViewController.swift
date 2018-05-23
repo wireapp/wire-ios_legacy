@@ -57,6 +57,7 @@ final class CallViewController: UIViewController {
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
         proximityMonitorManager?.stateChanged = proximityStateDidChange
         videoConfiguration.overlayVisibilityProvider = self
+        disableVideoIfNeeded()
     }
     
     deinit {
@@ -78,7 +79,6 @@ final class CallViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateVideoConfiguration()
         updateVideoStatusPlaceholder()
         proximityMonitorManager?.startListening()
         resumeVideoIfNeeded()
@@ -98,13 +98,13 @@ final class CallViewController: UIViewController {
 
     @objc private func resumeVideoIfNeeded() {
         guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }
-        voiceChannel.videoState = permissions.videoStateIfAllowed(.started)
+        voiceChannel.videoState = .started
         updateConfiguration()
     }
 
     @objc private func pauseVideoIfNeeded() {
         guard voiceChannel.isVideoCall, voiceChannel.videoState.isSending else { return }
-        voiceChannel.videoState = permissions.videoStateIfAllowed(.paused)
+        voiceChannel.videoState = .paused
         updateConfiguration()
     }
 
@@ -164,6 +164,8 @@ final class CallViewController: UIViewController {
 
         if permissions.canAcceptVideoCalls == false {
             permissions.requestOrWarnAboutVideoPermission { _ in
+                self.disableVideoIfNeeded()
+                self.updateVideoStatusPlaceholder()
                 self.updateConfiguration()
             }
             return
@@ -183,7 +185,7 @@ final class CallViewController: UIViewController {
             callInfoConfiguration.preferedVideoPlaceholderState = .hidden
         }
 
-        voiceChannel.videoState = permissions.videoStateIfAllowed(newState)
+        voiceChannel.videoState = newState
         updateConfiguration()
 
     }
@@ -247,10 +249,6 @@ extension CallViewController {
 
     }
 
-    fileprivate func updateVideoConfiguration() {
-        voiceChannel.videoState = permissions.canAcceptVideoCalls ? .started : .stopped
-    }
-
     private func checkVideoPermissions(resultHandler: @escaping (Bool) -> Void) {
 
         guard voiceChannel.isVideoCall else {
@@ -266,6 +264,7 @@ extension CallViewController {
 
         permissions.requestVideoPermissionWithoutWarning { granted in
             resultHandler(granted)
+            self.disableVideoIfNeeded()
             self.updateVideoStatusPlaceholder()
         }
 
@@ -274,6 +273,12 @@ extension CallViewController {
     fileprivate func updateVideoStatusPlaceholder() {
         callInfoConfiguration.preferedVideoPlaceholderState = permissions.preferredVideoPlaceholderState
         updateConfiguration()
+    }
+
+    fileprivate func disableVideoIfNeeded() {
+        if permissions.isVideoDisabledForever {
+            voiceChannel.videoState = .stopped
+        }
     }
 
 }
@@ -395,7 +400,7 @@ extension CallViewController {
     
     func proximityStateDidChange(_ raisedToEar: Bool) {
         guard voiceChannel.isVideoCall, voiceChannel.videoState != .stopped else { return }
-        voiceChannel.videoState = permissions.videoStateIfAllowed(raisedToEar ? .paused : .started)
+        voiceChannel.videoState = raisedToEar ? .paused : .started
         updateConfiguration()
     }
 
