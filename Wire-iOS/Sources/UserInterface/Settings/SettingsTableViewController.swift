@@ -140,7 +140,6 @@ extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataS
 
 }
 
-
 class SettingsTableViewController: SettingsBaseTableViewController {
 
     let group: SettingsInternalGroupCellDescriptorType
