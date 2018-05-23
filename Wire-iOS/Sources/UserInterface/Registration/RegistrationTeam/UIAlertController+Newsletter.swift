@@ -58,8 +58,8 @@ extension UIAlertController {
                                                     completionHandler(true)
         }))
 
+        UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
-            UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
             UIApplication.shared.keyWindow?.endEditing(true)
         }
     }
@@ -68,13 +68,5 @@ extension UIAlertController {
         guard !UIAlertController.newsletterSubscriptionDialogWasDisplayed else { return }
 
         showNewsletterSubscriptionDialog(completionHandler: completionHandler)
-    }
-
-    static func showNewsletterSubscriptionDialogAndSubmit() {
-        if let userSession = ZMUserSession.shared() {
-            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { marketingconsent in
-                ZMUser.selfUser().setMarketingConsent(to: marketingconsent, in: userSession, completion: { _ in })
-            }
-        }
     }
 }
