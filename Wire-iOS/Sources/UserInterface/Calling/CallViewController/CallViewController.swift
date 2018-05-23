@@ -97,13 +97,13 @@ final class CallViewController: UIViewController {
 
     @objc private func resumeVideoIfNeeded() {
         guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }
-        voiceChannel.videoState = .started
+        voiceChannel.videoState = permissions.videoStateIfAllowed(.started)
         updateConfiguration()
     }
 
     @objc private func pauseVideoIfNeeded() {
         guard voiceChannel.isVideoCall, voiceChannel.videoState.isSending else { return }
-        voiceChannel.videoState = .paused
+        voiceChannel.videoState = permissions.videoStateIfAllowed(.paused)
         updateConfiguration()
     }
 
@@ -133,8 +133,9 @@ final class CallViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     fileprivate func updateConfiguration() {
+        updateVideoConfiguration()
         callInfoRootViewController.configuration = callInfoConfiguration
         videoGridViewController.configuration = videoConfiguration
         updateOverlayAfterStateChanged()
@@ -182,7 +183,7 @@ final class CallViewController: UIViewController {
             callInfoConfiguration.preferedVideoPlaceholderState = .hidden
         }
 
-        voiceChannel.videoState = newState
+        voiceChannel.videoState = permissions.videoStateIfAllowed(newState)
         updateConfiguration()
 
     }
@@ -244,6 +245,10 @@ extension CallViewController {
 
         }
 
+    }
+
+    fileprivate func updateVideoConfiguration() {
+        voiceChannel.videoState = permissions.canAcceptVideoCalls ? .started : .stopped
     }
 
     private func checkVideoPermissions(resultHandler: @escaping (Bool) -> Void) {
@@ -390,7 +395,7 @@ extension CallViewController {
     
     func proximityStateDidChange(_ raisedToEar: Bool) {
         guard voiceChannel.isVideoCall, voiceChannel.videoState != .stopped else { return }
-        voiceChannel.videoState = raisedToEar ? .paused : .started
+        voiceChannel.videoState = permissions.videoStateIfAllowed(raisedToEar ? .paused : .started)
         updateConfiguration()
     }
 

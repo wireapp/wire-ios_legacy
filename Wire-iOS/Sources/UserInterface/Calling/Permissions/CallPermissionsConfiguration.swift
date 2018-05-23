@@ -44,4 +44,15 @@ extension CallPermissionsConfiguration {
 
     }
 
+    func videoStateIfAllowed(_ requestedState: VideoState) -> VideoState {
+
+        switch requestedState {
+        case .paused, .started, .badConnection: return
+            canAcceptVideoCalls ? requestedState : .stopped
+        case .stopped:
+            return .stopped
+        }
+
+    }
+
 }

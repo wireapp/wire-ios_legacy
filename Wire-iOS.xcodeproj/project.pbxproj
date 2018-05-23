@@ -231,6 +231,7 @@
 		5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
 		5E678063204E959B002F63FB /* ContinuousCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678062204E959B002F63FB /* ContinuousCornersView.swift */; };
+		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */; };
 		5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */; };
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
@@ -1519,6 +1520,7 @@
 		5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CallQuality.swift"; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E678062204E959B002F63FB /* ContinuousCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousCornersView.swift; sourceTree = "<group>"; };
+		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnableThumbnailViewController.swift; sourceTree = "<group>"; };
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
@@ -4650,6 +4652,7 @@
 				163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */,
 				7C69ECF920582A6700203F33 /* UIPasteboard+Compatibility.h */,
 				7C69ECFA20582A6700203F33 /* UIPasteboard+Compatibility.m */,
+				5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -6191,7 +6194,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications";
+			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
 		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6985,6 +6988,7 @@
 				EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */,
 				EEE6310B1F7390D100E56803 /* ChatHeadsViewController.swift in Sources */,
 				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
+				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */,
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,

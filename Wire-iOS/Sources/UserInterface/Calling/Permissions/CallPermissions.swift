@@ -22,6 +22,10 @@ import AVFoundation
 class CallPermissions: CallPermissionsConfiguration {
 
     var isPendingAudioPermissionRequest: Bool {
+        if UIDevice.isSimulator {
+            // on iOS simulator microphone permissions are always granted by default
+            return false
+        }
         return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio) == .notDetermined
     }
 
@@ -30,6 +34,11 @@ class CallPermissions: CallPermissionsConfiguration {
     }
 
     var canAcceptAudioCalls: Bool {
+        if UIDevice.isSimulator {
+            // on iOS simulator, microphone permissions are granted by default, but AVCaptureDevice does not
+            // return the correct status
+            return true
+        }
         return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio) == .authorized
     }
 
@@ -42,6 +51,11 @@ class CallPermissions: CallPermissionsConfiguration {
     }
 
     func requestOrWarnAboutAudioPermission(resultHandler: @escaping (Bool) -> Void) {
+        if UIDevice.isSimulator {
+            // on iOS simulator microphone permissions are always granted by default
+            resultHandler(true)
+            return
+        }
         UIApplication.wr_requestOrWarnAboutMicrophoneAccess(resultHandler)
     }
 
