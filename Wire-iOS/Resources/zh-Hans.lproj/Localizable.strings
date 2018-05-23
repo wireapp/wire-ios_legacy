@@ -27,6 +27,9 @@
 "general.edit" = "修改";
 "general.done" = "完成";
 "general.confirm" = "好";
+"general.skip" = "先跳过";
+"general.accept" = "接听";
+
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
 
@@ -114,6 +117,10 @@
 "conversation_list.header.self_team.accessibility_value.inactive" = "点击激活";
 "conversation_list.header.self_team.accessibility_value.active" = "立即激活";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新消息。";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在联系人中";
@@ -254,6 +261,10 @@
 "conversation.create.toggle.title" = "允许访客";
 "conversation.create.toggle.subtitle" = "对团队以外的人公开此对话。您以后可随时更改。";
 
+"conversation.input_bar.ongoing_call_alert.title" = "正在呼叫";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
+
 "conversation.guests_present" = "访客在对话中";
 
 // Image confirmation dialogue
@@ -264,6 +275,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire需要使用相机的权限。";
+"video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "在Wire设置中启用它";
 
@@ -272,6 +284,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire需要使用你的\n相机和照片。"; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire需要使用你的相机。";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire需要你授权相机权限。";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can't access the camera while you are on a video call.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE / AF锁定";
@@ -390,7 +403,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(设备 %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "您正在使用旧版本的Wire，因此无法显示该信息。";
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
 
 "content.file.uploading" = "上传...";
 "content.file.downloading" = "正在下载...";
@@ -405,6 +418,8 @@
 
 "content.message.delete" = "删除";
 "content.message.save" = "保存";
+
+"content.message.delete_ellipsis" = "Delete…";
 
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
@@ -441,7 +456,7 @@
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire需要存取你的照片库";
-"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.restrictions.explaination" = "由于启用了限制，Wire无法访问您的资料库。";
 "library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
 
 // Voice
@@ -464,6 +479,7 @@
 "voice.hang_up_button.title" = "结束通话";
 "voice.mute_button.title" = "静音";
 "voice.video_button.title" = "视频";
+"voice.flip_video_button.title" = "Flip";
 "voice.speaker_button.title" = "免提";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通话";
@@ -478,6 +494,32 @@
 "voice.alert.camera_warning.title" = "Wire需要使用相机的权限。";
 "voice.alert.camera_warning.explanation" = "请前往手机「设定」并允许Wire使用摄像头权限。";
 
+"voice.top_overlay.tap_to_return" = "Tap to return to call";
+"voice.top_overlay.accessibility_title" = "正在呼叫";
+
+// Voice New
+
+"call.status.connecting" = "Connecting…";
+"call.status.incoming.user" = "%@ is calling…";
+"call.status.incoming" = "Calling…";
+"call.status.outgoing" = "Ringing…";
+"call.status.reconnecting" = "Reconnecting…";
+"call.status.terminating" = "Hanging up…";
+"call.status.constant_bitrate" = "固定码率";
+
+"call.participants.show_all" = "Show All (%@)";
+"call.participants.list.title" = "Participants";
+
+"call.video.paused" = "Video paused";
+
+"call.video.too_many.alert.title" = "Too many people for Video";
+"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+
+"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.message.self" = "您开始使用新的设备。";
+"call.degraded.alert.message.user" = "%@ 开始使用新的设备。";
+"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.action.continue" = "仍然要通话";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -489,17 +531,18 @@
 "participants.section.participants" = "参与者(%d)";
 "participants.section.services" = "服务 (%d)";
 "participants.footer.add_title" = "添加参与者";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
 
 // Meta Menu
 "meta.menu.rename" = "重新命名";
-"meta.menu.leave" = "离开...";
+"meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "归档";
 "meta.menu.unarchive" = "取消归档";
 "meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "静音";
 "meta.menu.silence.unmute" = "关闭静音";
 "meta.menu.cancel" = "取消";
-"meta.menu.cancel_connection_request" = "取消请求";
+"meta.menu.cancel_connection_request" = "Cancel Request…";
 "meta.menu.mark_unread" = "标记为未读";
 "meta.menu.mark_read" = "标记为已读";
 "shortcut.mark_all_as_read.title" = "标记所有为已读";
@@ -671,6 +714,8 @@
 "self.settings.account_picture_group.picture" = "头像";
 "self.settings.account_picture_group.color" = "主色调";
 
+"self.settings.account_personal_information_group.title" = "Personal Information";
+
 "self.settings.account_picture_group.theme" = "暗色系主题";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire为每个设备设置了一个独特的指纹。您可以透過指纹比对来验证您的设备和聊天室。";
@@ -687,6 +732,15 @@
 
 "self.settings.account_details.log_out.alert.title" = "登出";
 "self.settings.account_details.log_out.alert.message" = "你的对话历史记录将从此设备擦除";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "使用与崩溃报告";
+"self.settings.privacy_analytics.title" = "发送匿名数据";
+"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
+
+"self.settings.receiveNews_and_offers.title" = "Receive News";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product update from Wire via email.";
+
 
 
 // Change Username
@@ -813,10 +867,6 @@
 
 "self.settings.privacy_analytics_menu.devices.title" = "设备";
 
-"self.settings.privacy_analytics_section.title" = "使用与崩溃报告";
-"self.settings.privacy_analytics.title" = "发送匿名数据";
-"self.settings.privacy_analytics_menu.description.title" = "通过发送匿名反馈让Wire变得更好。";
-
 "self.settings.privacy.clear_history.title" = "清除历史记录";
 "self.settings.privacy.clear_history.subtitle" = "这将永久删除您的所有对话内容。";
 
@@ -829,6 +879,9 @@
 "self.settings.advanced.reset_push_token_alert.title" = "信息推送Token已被重置";
 "self.settings.advanced.reset_push_token_alert.message" = "信息通知将在几秒钟内恢复。";
 "self.settings.advanced.version_technical_details.title" = "版本与技术信息";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Data Usage Permissions";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "技术报告";
@@ -849,7 +902,7 @@
 
 "self.settings.conversations.title" = "History";
 "self.settings.history_backup.title" = "备份对话";
-"self.settings.history_backup.description" = "建立备份以保留对话历史记录。如果丢失了或切换到一个新的设备，则可以使用此还原历史记录。\n\n备份档案不受Wire端到端加密的保护，因此请将备份档案储存于安全的地方。";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
 "self.settings.history_backup.action" = "Back Up Now";
 "self.settings.history_backup.error.title" = "Error";
 
@@ -1262,3 +1315,17 @@
 "calling.quality_survey.answer.3" = "一般";
 "calling.quality_survey.answer.4" = "很好";
 "calling.quality_survey.answer.5" = "优秀";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Confirm";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
+"news_offers.consent.message" = "You can unsubscribe at any time.";
+"news_offers.consent.button.privacy_policy.title" = "隐私政策";

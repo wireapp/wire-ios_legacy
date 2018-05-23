@@ -140,7 +140,6 @@
         
         ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
         [[UnauthenticatedSession sharedSession] registerUser:completeUser];
-        
     }
     else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]] ||
              ([viewController isKindOfClass:[EmailStepViewController class]] && [self hasUserAcceptedTOS]))

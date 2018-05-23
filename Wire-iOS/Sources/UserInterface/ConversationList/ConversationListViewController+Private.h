@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
+@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
 - (void)removeUserProfileObserver;
 - (void)presentSettings;

@@ -26,7 +26,7 @@ public protocol CameraCellDelegate: class {
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }
 
-open class CameraCell: UICollectionViewCell, Reusable {
+open class CameraCell: UICollectionViewCell {
     let cameraController: CameraController?
     
     let expandButton = IconButton()

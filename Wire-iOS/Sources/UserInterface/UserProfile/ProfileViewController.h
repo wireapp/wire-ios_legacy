@@ -19,11 +19,11 @@
 
 #import <UIKit/UIKit.h>
 @import WireExtensionComponents;
-#import "ViewControllerDismissable.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZMSearchableUser;
+@protocol ViewControllerDismisser;
 @class ZMConversation;
 @class ZMUser;
 @class ProfileViewController;
@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 
 @property (nonatomic, readonly) id<ZMSearchableUser, AccentColorProvider> bareUser;
 @property (nonatomic, weak, nullable) id<ProfileViewControllerDelegate> delegate;
-@property (nonatomic, weak, nullable) id<ViewControllerDismissable> viewControllerDismissable;
+@property (nonatomic, weak, nullable) id<ViewControllerDismisser> viewControllerDismisser;
 @property (nonatomic, nullable) id<UINavigationControllerDelegate> navigationControllerDelegate;
 
 @end
