@@ -20,11 +20,11 @@ import Foundation
 
 protocol CallPermissionsConfiguration {
 
+    var canAcceptAudioCalls: Bool { get }
     var isPendingAudioPermissionRequest: Bool { get }
-    var isPendingVideoPermissionRequest: Bool { get }
 
     var canAcceptVideoCalls: Bool { get }
-    var canAcceptAudioCalls: Bool { get }
+    var isPendingVideoPermissionRequest: Bool { get }
 
     func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void)
     func requestOrWarnAboutVideoPermission(resultHandler: @escaping (Bool) -> Void)
@@ -33,6 +33,10 @@ protocol CallPermissionsConfiguration {
 }
 
 extension CallPermissionsConfiguration {
+
+    var isAudioDisabledForever: Bool {
+        return canAcceptAudioCalls == false && isPendingAudioPermissionRequest == false
+    }
 
     var isVideoDisabledForever: Bool {
         return canAcceptVideoCalls == false && isPendingVideoPermissionRequest == false
