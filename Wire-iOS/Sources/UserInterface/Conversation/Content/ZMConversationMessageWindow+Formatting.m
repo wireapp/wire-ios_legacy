@@ -45,31 +45,6 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     return layoutProperties;
 }
 
-- (BOOL)isPreviousSenderSameForMessage:(id<ZMConversationMessage>)message
-{
-    if (! [Message isNormalMessage:message]) {
-        return NO;
-    }
-    
-    if ([Message isKnockMessage:message]) {
-        return NO;
-    }
-    
-    NSUInteger messageIndex = [self.messages indexOfObject:message];
-    
-    if (messageIndex == NSNotFound) {
-        return NO;
-    }
-    
-    id<ZMConversationMessage> previousMessage = [self messagePreviousToMessage:message];
-    
-    if (previousMessage && previousMessage.sender == message.sender && [Message isNormalMessage:previousMessage]) {
-        return YES;
-    }
-    
-    return NO;
-}
-
 - (BOOL)shouldShowAlwaysDeliveryStateForMessage:(id<ZMConversationMessage>)message
 {
     // Loop back and check if this was last message sent by us

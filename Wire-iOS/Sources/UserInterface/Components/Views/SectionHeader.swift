@@ -18,8 +18,7 @@
 
 import Foundation
 
-
-class SectionHeader: UICollectionReusableView, Themeable {
+final class SectionHeader: UICollectionReusableView, Themeable {
     
     let titleLabel = UILabel()
  

@@ -31,6 +31,7 @@ protocol AppStateControllerDelegate : class {
 class AppStateController : NSObject {
     
     private(set) var appState : AppState = .headless
+    private(set) var lastAppState : AppState = .headless
     private var authenticationObserverToken : ZMAuthenticationStatusObserver?
     public weak var delegate : AppStateControllerDelegate? = nil
     
@@ -42,7 +43,8 @@ class AppStateController : NSObject {
     fileprivate var hasCompletedRegistration = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
-    fileprivate let isRunningTests = ProcessInfo.processInfo.isRunningTests
+    fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
+    var isRunningSelfUnitTest = false
     
     override init() {
         super.init()
@@ -54,13 +56,10 @@ class AppStateController : NSObject {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     func calculateAppState() -> AppState {
-        
-        if isRunningTests {
-            return .unauthenticated(error: nil)
-        }
-        
+        guard !isRunningTests || isRunningSelfUnitTest else { return .unauthenticated(error: nil) }
+
         if !hasEnteredForeground {
             return .headless
         }
@@ -101,6 +100,7 @@ class AppStateController : NSObject {
         
         if newAppState != appState {
             zmLog.debug("transitioning to app state: \(newAppState)")
+            lastAppState = appState
             appState = newAppState
             delegate?.appStateController(transitionedTo: appState) {
                 completion?()
@@ -116,6 +116,7 @@ extension AppStateController : SessionManagerDelegate {
     
     func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: @escaping () -> Void) {
         authenticationError = error as NSError?
+
         isLoggedIn = false
         isLoggedOut = true
         updateAppState {
@@ -124,13 +125,18 @@ extension AppStateController : SessionManagerDelegate {
     }
     
     func sessionManagerDidFailToLogin(account: Account?, error: Error) {
-        loadingAccount = nil
-        
-        // We only care about the error if it concerns the selected account.
-        if let selectedAccount = SessionManager.shared?.accountManager.selectedAccount, selectedAccount == account {
+        let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
+
+        // We only care about the error if it concerns the selected account, or the loading account.
+        if account != nil && (selectedAccount == account || loadingAccount == account) {
             authenticationError = error as NSError
         }
-        
+        // When the account is nil, we care about the error if there are some accounts in accountManager
+        else if account == nil && SessionManager.shared?.accountManager.accounts.count > 0 {
+            authenticationError = error as NSError
+        }
+
+        loadingAccount = nil
         isLoggedIn = false
         isLoggedOut = true
         updateAppState()

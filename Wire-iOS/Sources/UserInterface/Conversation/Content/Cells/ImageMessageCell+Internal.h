@@ -23,6 +23,7 @@
 @interface ImageMessageCell (Interal)
 
 - (void)setImage:(id<MediaAsset>)image;
+- (BOOL)imageSmallerThanMinimumSize;
 
 @end
 

@@ -57,10 +57,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     // AVS
     case soundAlerts = "SoundAlerts"
     case callingConstantBitRate = "constantBitRate"
-    
-    // Analytics
-    case disableCrashAndAnalyticsSharing = "DisableCrashAndAnalyticsSharing"
-    
+
     // Sounds
     case messageSoundName = "MessageSoundName"
     case callSoundName = "CallSoundName"
@@ -70,7 +67,12 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case tweetOpeningOption = "TweetOpeningOption"
     case mapsOpeningOption = "MapsOpeningOption"
     case browserOpeningOption = "BrowserOpeningOption"
-    
+
+    // Persoanl Information
+    // Analytics
+    case disableCrashAndAnalyticsSharing = "DisableCrashAndAnalyticsSharing"
+    case receiveNewsAndOffers = "ReceiveNewsAndOffers"
+
     // Debug
     case disableCallKit = "DisableCallKit"
     case callingProtocolStrategy = "CallingProtcolStrategy"

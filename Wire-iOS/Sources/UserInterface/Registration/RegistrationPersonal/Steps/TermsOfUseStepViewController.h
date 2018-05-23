@@ -24,8 +24,6 @@
 @class ZMIncompleteRegistrationUser;
 @class AnalyticsTracker;
 
-
-
 @interface TermsOfUseStepViewController : RegistrationStepViewController
 @property (nonatomic, readonly) ZMIncompleteRegistrationUser *unregisteredUser;
 

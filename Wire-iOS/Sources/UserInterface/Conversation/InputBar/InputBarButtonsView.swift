@@ -123,20 +123,21 @@ public final class InputBarButtonsView: UIView {
     }
     
     fileprivate func layoutAndConstrainButtonRows() {
-        guard bounds.size.width > 0 else { return }
+        let minButtonWidth = constants.minimumButtonWidth(forWidth: bounds.width)
+
+        guard bounds.size.width >= minButtonWidth * 2 else { return }
 
         // Drop existing constraints
         buttons.forEach {
             $0.removeFromSuperview()
             buttonInnerContainer.addSubview($0)
         }
-        
-        let minButtonWidth = constants.minimumButtonWidth(forWidth: bounds.width)
+
         let numberOfButtons = Int(floorf(Float(bounds.width / minButtonWidth)))
         multilineLayout = numberOfButtons < buttons.count
         
         let (firstRow, secondRow): ([UIButton], [UIButton])
-        let customButtonCount = numberOfButtons - 1 // Last one is alway the expand button
+        let customButtonCount = numberOfButtons >= 1 ? numberOfButtons - 1 : 0 // Last one is alway the expand button
 
         expandRowButton.isHidden = !multilineLayout
 

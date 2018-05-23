@@ -23,7 +23,6 @@ import WireExtensionComponents
 
 
 @objc public class TrackingManager: NSObject {
-    private let UserDefaultDidMigrateLocalyticsSettingInitially = "DidMigrateLocalyticsSettingInitially"
     private let flowManagerObserver: NSObjectProtocol
     
     private override init() {
@@ -35,15 +34,6 @@ import WireExtensionComponents
     }
     
     public static let shared = TrackingManager()
-    
-    @objc public func migrateFromLocalytics() {
-        if !UserDefaults.shared().bool(forKey: UserDefaultDidMigrateLocalyticsSettingInitially) {
-            Localytics.integrate(LocalyticsAPIKey)
-            let isOptedOut = Localytics.isOptedOut()
-            self.disableCrashAndAnalyticsSharing = isOptedOut
-            UserDefaults.shared().set(true, forKey: UserDefaultDidMigrateLocalyticsSettingInitially)
-        }
-    }
 }
 
 extension TrackingManager: TrackingInterface {

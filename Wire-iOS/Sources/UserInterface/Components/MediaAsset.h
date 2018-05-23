@@ -29,15 +29,9 @@
 
 - (NSData *)data;
 - (BOOL)isGIF;
+- (BOOL)isTransparent;
 
 @end
-
-
-
-@interface UIImage(MediaAsset) <MediaAsset>
-
-@end
-
 
 
 @interface FLAnimatedImage(MediaAsset) <MediaAsset>
@@ -66,13 +60,3 @@
 @interface FLAnimatedImageView(MediaAssetView) <MediaAssetView>
 
 @end
-
-
-
-@interface UIPasteboard(MediaAsset)
-
-- (id<MediaAsset>)mediaAsset;
-- (void)setMediaAsset:(id<MediaAsset>)image;
-
-@end
-

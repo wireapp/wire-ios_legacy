@@ -52,6 +52,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         verifiedIconView.contentMode = .scaleAspectFit
         verifiedIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
         verifiedIconView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        verifiedIconView.accessibilityIdentifier = "img.shield"
         
         accessoryIconView.image = UIImage(for: .pencil, iconSize: .like, color: .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false

@@ -85,13 +85,16 @@ final internal class AccountSelectorView: UIView {
                 
                 accountView.unreadCountStyle = accountView.account.isActive ? .none : .current
                 accountView.onTap = { account in
-                    guard let account = account, account != SessionManager.shared?.accountManager.selectedAccount else { return }
-                    
-                    SessionManager.shared?.select(account, completion: nil, uiSwitchingBlock: { completion in
-                        ZClientViewController.shared()?.conversationListViewController.dismiss(animated: true, completion: {
-                            completion()
-                        })
-                    }, tearDownCompletion: nil)
+                    if let account = account, account != SessionManager.shared?.accountManager.selectedAccount {
+                        if ZClientViewController.shared()?.conversationListViewController.presentedViewController != nil {
+                            ZClientViewController.shared()?.conversationListViewController.dismiss(animated: true, completion: {
+                                SessionManager.shared?.select(account)
+                            })
+                        }
+                        else {
+                            SessionManager.shared?.select(account)
+                        }
+                    }
                 }
             }
 

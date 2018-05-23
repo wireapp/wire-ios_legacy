@@ -112,13 +112,13 @@ public extension ConversationViewController {
 
         if conversation.canJoinCall {
             return [joinCallButton]
-        }
-
-        if conversation.conversationType == .oneOnOne {
+        } else if conversation.isCallOngoing {
+            return []
+        } else if conversation.canStartVideoCall {
             return [audioCallButton, videoCallButton]
+        } else {
+            return [audioCallButton]
         }
-
-        return [audioCallButton]
     }
 
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
@@ -258,7 +258,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
         switch action {
         case .forward:
             viewController.dismiss(animated: true) {
-                self.contentViewController.scroll(to: message) {[weak self] cell in
+                self.contentViewController.scroll(to: message) { [weak self] cell in
                     guard let `self` = self else {
                         return
                     }
@@ -294,13 +294,34 @@ extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
     var canJoinCall: Bool {
-        guard let state = voiceChannel?.state else { return false }
-
-        if case .incoming = state {
-            return true
-        } else {
-            return false
+        switch voiceChannel?.state {
+        case .incoming?: return true
+        default: return false
         }
     }
+    
+    static let maxVideoCallParticipants: Int = 4
+    
+    var canStartVideoCall: Bool {
+        guard !isCallOngoing else { return false }
 
+        if self.conversationType == .oneOnOne {
+            return true
+        }
+        
+        if self.conversationType == .group &&
+           ZMUser.selfUser().isTeamMember &&
+           self.activeParticipants.count <= ZMConversation.maxVideoCallParticipants {
+            return true
+        }
+        
+        return false
+    }
+    
+    var isCallOngoing: Bool {
+        switch voiceChannel?.state {
+        case .none?: return false
+        default: return true
+        }
+    }
 }

@@ -27,6 +27,9 @@
 "general.edit" = "Редактировать";
 "general.done" = "Готово";
 "general.confirm" = "OK";
+"general.skip" = "Не сейчас";
+"general.accept" = "Принять";
+
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
@@ -114,6 +117,10 @@
 "conversation_list.header.self_team.accessibility_value.inactive" = "Нажмите, чтобы активировать.";
 "conversation_list.header.self_team.accessibility_value.active" = "Теперь активна.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Есть новые сообщения.";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.date_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
+"conversation_list.date_usage_permission_alert.message" = "Отправка анонимных отчетов об использовании и сбоях помогает нам улучшать наши продукты и сервисы. Мы не используем эту информацию ни для чего другого.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
@@ -221,7 +228,7 @@
 // Conversation names
 "conversation.displayname.emptygroup" = "Пустая группа";
 
-"conversation.input_bar.verified" = "Проверено";
+"conversation.input_bar.verified" = "Верифицировано";
 "conversation.input_bar.placeholder" = "Наберите сообщение";
 "conversation.input_bar.placeholder_ephemeral" = "Временное сообщение";
 
@@ -254,6 +261,10 @@
 "conversation.create.toggle.title" = "Разрешить гостям";
 "conversation.create.toggle.subtitle" = "Открыть этот разговор для людей не из вашей команды. Вы всегда сможете изменить это позже.";
 
+"conversation.input_bar.ongoing_call_alert.title" = "Исходящий звонок";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Вы не можете записывать аудиосообщение во время разговора.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Вы не можете записывать видео во время разговора.";
+
 "conversation.guests_present" = "Присутствуют гости";
 
 // Image confirmation dialogue
@@ -264,6 +275,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire хочет получить доступ к камере.";
+"video_call.camera_access.denied" = "Wire необходим доступ к камере";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Разрешите доступ к камере в настройках Wire";
 
@@ -272,6 +284,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire необходим доступ к вашим\nкамере и фото."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire необходим доступ к вашим фото.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire необходим доступ к вашей камере.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "Вы не можете получить доступ к камере во время видеовызова.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Фиксация экспозиции/фокуса";
@@ -375,7 +388,7 @@
 "content.system.your_devices" = "ваши устройства";
 "content.system.other_devices" = "Устройства, которыми пользуется %@";
 
-"content.system.missing_messages.title" = "Вы не использовали это устройство некоторое время. Некоторые сообщения могут не отображаться здесь.";
+"content.system.missing_messages.title" = "Вы не использовали это устройство продолжительное время. Некоторые сообщения могут не отображаться.";
 "content.system.missing_messages.subtitle_start" = "Тем временем,";
 
 "content.system.cannot_decrypt" = "Сообщение от %@ не было получено.";
@@ -390,7 +403,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(устройство %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "Вы используете старую версию Wire, которая не может отображать это сообщение.";
+"content.system.unknown_message.body" = "Сообщение не может быть показано. Возможно, вы используете старую версию Wire.";
 
 "content.file.uploading" = "Отправка…";
 "content.file.downloading" = "Загрузка…";
@@ -406,6 +419,8 @@
 "content.message.delete" = "Удалить";
 "content.message.save" = "Сохранить";
 
+"content.message.delete_ellipsis" = "Удаление…";
+
 "content.message.like" = "Нравится";
 "content.message.unlike" = "Не нравится";
 "content.message.forward" = "Поделиться";
@@ -414,7 +429,7 @@
 "content.message.open" = "Открыть";
 "content.message.copy" = "Копировать";
 
-"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.title" = "Перейти по ссылке";
 "content.message.open_link_alert.message" = "Это приведет вас к\n%@";
 "content.message.open_link_alert.open" = "Открыть";
 
@@ -464,11 +479,12 @@
 "voice.hang_up_button.title" = "Повесить трубку";
 "voice.mute_button.title" = "Выкл.звук";
 "voice.video_button.title" = "Видео";
+"voice.flip_video_button.title" = "Перевернуть";
 "voice.speaker_button.title" = "Динамик";
 "voice.cancel_button.title" = "Отменить";
 "voice.call_button.title" = "Позвонить";
 
-"voice.alert.call_in_progress.title" = "Идёт вызов";
+"voice.alert.call_in_progress.title" = "Идет вызов";
 "voice.alert.call_in_progress.message" = "Одновременно вы можете совершать только один звонок";
 "voice.alert.call_in_progress.confirm" = "OK";
 
@@ -478,6 +494,32 @@
 "voice.alert.camera_warning.title" = "Wire необходим доступ к камере.";
 "voice.alert.camera_warning.explanation" = "Перейдите в Настройки и разрешите Wire доступ к камере.";
 
+"voice.top_overlay.tap_to_return" = "Нажмите, чтобы вернуться к вызову";
+"voice.top_overlay.accessibility_title" = "Исходящий звонок";
+
+// Voice New
+
+"call.status.connecting" = "Подключение…";
+"call.status.incoming.user" = "%@ звонит…";
+"call.status.incoming" = "Звонит…";
+"call.status.outgoing" = "Звонит…";
+"call.status.reconnecting" = "Переподключение…";
+"call.status.terminating" = "Разъединение…";
+"call.status.constant_bitrate" = "Постоянный битрейт";
+
+"call.participants.show_all" = "Показать все (%@)";
+"call.participants.list.title" = "Участники";
+
+"call.video.paused" = "Видео приостановлено";
+
+"call.video.too_many.alert.title" = "Слишком много людей для видео";
+"call.video.too_many.alert.message" = "Видеозвонки работают в группах из 4 участников и меньше.";
+
+"call.degraded.alert.title" = "Новое устройство";
+"call.degraded.alert.message.self" = "Вы начали использовать новое устройство.";
+"call.degraded.alert.message.user" = "%@ начал(а) использовать новое устройство.";
+"call.degraded.alert.message.unknown" = "Используется новое устройство.";
+"call.degraded.alert.action.continue" = "Все равно позвонить";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -489,17 +531,18 @@
 "participants.section.participants" = "Участники (%d)";
 "participants.section.services" = "Сервисов (%d)";
 "participants.footer.add_title" = "Добавить участников";
+"participants.section.name.footer" = "К групповому разговору может присоединиться до 128 человек. Видеозвонки работают в группах из 4 участников и меньше.";
 
 // Meta Menu
 "meta.menu.rename" = "Переименовать";
-"meta.menu.leave" = "Leave…";
+"meta.menu.leave" = "Покинуть группу…";
 "meta.menu.archive" = "Архивировать";
 "meta.menu.unarchive" = "Разархивировать";
 "meta.menu.delete" = "Удалить содержимое…";
 "meta.menu.silence.mute" = "Выкл. звук";
 "meta.menu.silence.unmute" = "Вкл.звук";
 "meta.menu.cancel" = "Отменить";
-"meta.menu.cancel_connection_request" = "Отменить запрос";
+"meta.menu.cancel_connection_request" = "Отменить запрос…";
 "meta.menu.mark_unread" = "Отметить как непрочитанное";
 "meta.menu.mark_read" = "Отметить как прочитанное";
 "shortcut.mark_all_as_read.title" = "Отметить все как прочитанные";
@@ -671,11 +714,13 @@
 "self.settings.account_picture_group.picture" = "Изображение";
 "self.settings.account_picture_group.color" = "Цвет";
 
-"self.settings.account_picture_group.theme" = "Тёмная тема";
+"self.settings.account_personal_information_group.title" = "Личная информация";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire дает каждому устройству уникальный отпечаток. Сравните их и заверифицируйте ваши устройства и разговоры.";
+"self.settings.account_picture_group.theme" = "Темная тема";
+
+"self.settings.device_details.fingerprint.subtitle" = "Wire присваивает каждому устройству уникальный отпечаток. Сравните их и верифицируйте ваши устройства и разговоры.";
 "self.settings.device_details.reset_session.subtitle" = "Если отпечатки не совпадают, сбросьте сессию для создания новых ключей шифрования на обеих сторонах.";
-"self.settings.device_details.remove_device.subtitle" = "Удалите это устройство, если вы перестали им пользоваться. На этом устройстве сразу же будет осуществлён выход из аккаунта.";
+"self.settings.device_details.remove_device.subtitle" = "Удалите это устройство, если вы перестали им пользоваться. На этом устройстве сразу же будет осуществлен выход из аккаунта.";
 "self.settings.device_details.reset_session.success" = "Сессия была обновлена";
 
 "self.settings.account_details.actions.title" = "Действия";
@@ -687,6 +732,15 @@
 
 "self.settings.account_details.log_out.alert.title" = "Выйти";
 "self.settings.account_details.log_out.alert.message" = "История сообщений будет удалена с этого устройства.";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Отчеты о сбоях и использовании";
+"self.settings.privacy_analytics.title" = "Отправлять анонимные данные";
+"self.settings.privacy_analytics_menu.description.title" = "Помогите сделать Wire лучше, отправляя отчеты об использовании и сбоях.";
+
+"self.settings.receiveNews_and_offers.title" = "Получение новостей";
+"self.settings.receiveNews_and_offers.description.title" = "Получайте новости и обновления от Wire по электронной почте.";
+
 
 
 // Change Username
@@ -809,13 +863,9 @@
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерировать предпросмотр для ссылок";
-"self.settings.privacy_security.disable_link_previews.footer" = "Предпросмотр всё же может отображаться для ссылок от других людей.";
+"self.settings.privacy_security.disable_link_previews.footer" = "Эта опция не влияет на предварительный просмотр ссылок от других людей.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
-
-"self.settings.privacy_analytics_section.title" = "Отчеты о сбоях и использовании";
-"self.settings.privacy_analytics.title" = "Отправлять анонимные данные";
-"self.settings.privacy_analytics_menu.description.title" = "Сделайте Wire лучше, отправляя анонимную информацию.\n";
 
 "self.settings.privacy.clear_history.title" = "Очистить историю";
 "self.settings.privacy.clear_history.subtitle" = "Это навсегда удалит содержимое всех ваших разговоров.";
@@ -825,10 +875,13 @@
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отчет для отладки звонка";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает отделу поддержки Wire диагностировать проблемы, связанные со звонками.";
 "self.settings.advanced.reset_push_token.title" = "Обновить токен Push уведомления";
-"self.settings.advanced.reset_push_token.subtitle" = "Если у вас возникли проблемы с push-уведомлениями, отдел поддержки Wire может попросить вас его сбросить.";
+"self.settings.advanced.reset_push_token.subtitle" = "При возникновении проблем с push-уведомлениями, служба поддержки Wire может попросить вас обновить токен.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен был обновлен";
 "self.settings.advanced.reset_push_token_alert.message" = "Уведомления будут восстановлены в течение нескольких секунд.";
 "self.settings.advanced.version_technical_details.title" = "Технические детали версии";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Разрешение на использование данных";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Технический отчет";
@@ -849,7 +902,7 @@
 
 "self.settings.conversations.title" = "История";
 "self.settings.history_backup.title" = "Резервная копия разговоров";
-"self.settings.history_backup.description" = "Создайте резервную копию, чтобы сохранить историю разговоров. Это пригодится для восстановления истории в случае потери или замены устройства.\n\nРезервная копия не шифруется, поэтому храните ее в надежном месте.";
+"self.settings.history_backup.description" = "Создайте резервную копию, чтобы сохранить историю разговоров. Это пригодится для восстановления истории в случае потери или замены устройства.\n\nВыберите надежный пароль для защиты резервной копии.";
 "self.settings.history_backup.action" = "Создать резервную копию сейчас";
 "self.settings.history_backup.error.title" = "Ошибка";
 
@@ -992,7 +1045,7 @@
 "registration.verify_email.resend.button_title" = "Отправить повторно";
 
 "registration.select_picture.subtitle" = "Wire выглядит лучше с вашей фотографией.";
-"registration.select_picture.button_title" = "Выберите фотографию";
+"registration.select_picture.button_title" = "Выбрать фотографию";
 "registration.keep_picture.button_title" = "Оставить эту";
 "registration.camera_action.title" = "Сделать фото";
 "registration.photo_gallery_action.title" = "Выберите фото";
@@ -1132,7 +1185,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Username takeover screen
-"registration.select_handle.takeover.subtitle" = "Зарезервируйте свое уникальное имя в Wire.";
+"registration.select_handle.takeover.subtitle" = "Зарегистрируйте свое уникальное имя в Wire.";
 "registration.select_handle.takeover.subtitle_link" = "Подробнее";
 
 "registration.select_handle.takeover.choose_own" = "Выберите ваше";
@@ -1262,3 +1315,17 @@
 "calling.quality_survey.answer.3" = "Приемлемо";
 "calling.quality_survey.answer.4" = "Хорошо";
 "calling.quality_survey.answer.5" = "Прекрасно";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Подтвердить";
+"url_action.title" = "Подтверждение действия по URL";
+"url_action.connect_to_bot.message" = "Вы хотите подключиться к боту?";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Вы хотите получать новости и обновления от Wire по электронной почте?";
+"news_offers.consent.message" = "Вы можете отписаться в любое время.";
+"news_offers.consent.button.privacy_policy.title" = "Политика конфиденциальности";

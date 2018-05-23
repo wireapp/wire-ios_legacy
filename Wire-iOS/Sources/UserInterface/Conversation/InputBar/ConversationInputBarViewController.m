@@ -153,17 +153,26 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationInputBarViewController
 
+
+/**
+ init with a ZMConversation objcet
+
+ @param conversation provide nil only for tests
+ @return a ConversationInputBarViewController
+ */
 - (instancetype)initWithConversation:(ZMConversation *)conversation
 {
     self = [super init];
     if (self) {
-        self.conversation = conversation;
-        self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
-        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+        if (conversation != nil) {
+            self.conversation = conversation;
+            self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
+            self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+            self.typingObserverToken = [conversation addTypingObserver:self];
+            self.typingUsers = conversation.typingUsers;
+        }
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
-        self.typingObserverToken = [conversation addTypingObserver:self];
-        self.typingUsers = conversation.typingUsers;
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         
@@ -225,7 +234,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.gifButton addTarget:self action:@selector(giphyButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.locationButton addTarget:self action:@selector(locationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    if (self.conversationObserverToken == nil) {
+    if (self.conversationObserverToken == nil && self.conversation != nil) {
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
     
@@ -360,12 +369,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self.audioRecordViewContainer addSubview:self.audioRecordViewController.view];
 
-    [self.audioRecordViewContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.inputBar.buttonContainer];
-    
     CGRect recordButtonFrame = [self.inputBar convertRect:self.audioButton.bounds fromView:self.audioButton];
     CGFloat width = CGRectGetMaxX(recordButtonFrame) + 56;
     [self.audioRecordViewController.view autoSetDimension:ALDimensionWidth toSize:width];
 
+    [self.audioRecordViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.audioRecordViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.audioRecordViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.inputBar withOffset:0.5];
 }
@@ -929,6 +937,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)videoButtonPressed:(IconButton *)sender
 {
+    if([ConversationViewController shouldBlockCallingRelatedActions]) {
+    
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"conversation.input_bar.ongoing_call_alert.title", @"")
+                                                                       message:NSLocalizedString(@"conversation.input_bar.ongoing_call_alert.video.message", @"")
+                                                             cancelButtonTitle:NSLocalizedString(@"general.ok", @"")];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    
     [Analytics.shared tagMediaAction:ConversationMediaActionVideoMessage inConversation:self.conversation];
     self.videoSendContext = ConversationMediaVideoContextCursorButton;
     [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];

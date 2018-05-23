@@ -175,6 +175,13 @@ static AppDelegate *sharedAppDelegate = nil;
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (BOOL)application:(UIApplication *)app
+            openURL:(NSURL *)url
+            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    return [self.sessionManager.urlHandler openURL:url options:options];
+}
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     ZMLogInfo(@"applicationWillTerminate:  (applicationState = %ld)", (long)application.applicationState);
@@ -193,9 +200,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)setupTracking
 {
-    // Migrate analytics settings
-    [[TrackingManager shared] migrateFromLocalytics];
-    
     BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isEqualToString:AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey]) {
             *stop = YES;
@@ -295,7 +299,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
-    ZMLogWarn(@"Received APNS token: %@", newDeviceToken);
+    ZMLogInfo(@"Received APNS token: %@", newDeviceToken);
     
     [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
 }

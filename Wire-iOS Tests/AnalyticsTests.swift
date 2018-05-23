@@ -22,33 +22,6 @@ import Wire
 import HockeySDK
 
 class AnalyticsTests : XCTestCase {
-    
-    func testThatItMigratesTheOptOutFromLocalytics() {
-        // GIVEN
-        TrackingManager.shared.disableCrashAndAnalyticsSharing = false
-        UserDefaults.shared().set(false, forKey: "DidMigrateLocalyticsSettingInitially")
-        Localytics.integrate(LocalyticsAPIKey)
-        Localytics.setOptedOut(true)
-        // WHEN
-        XCTAssertFalse(TrackingManager.shared.disableCrashAndAnalyticsSharing)
-        TrackingManager.shared.migrateFromLocalytics()
-        // THEN
-        XCTAssertTrue(TrackingManager.shared.disableCrashAndAnalyticsSharing)
-        XCTAssertTrue(UserDefaults.shared().bool(forKey: "DidMigrateLocalyticsSettingInitially"))
-    }
-    
-    func testThatItMigratesTheOptOutFromLocalytics_Once() {
-        // GIVEN
-        UserDefaults.shared().set(true, forKey: "DidMigrateLocalyticsSettingInitially")
-        Localytics.setOptedOut(true)
-        TrackingManager.shared.disableCrashAndAnalyticsSharing = false
-        // WHEN
-        XCTAssertFalse(TrackingManager.shared.disableCrashAndAnalyticsSharing)
-        TrackingManager.shared.migrateFromLocalytics()
-        // THEN
-        XCTAssertFalse(TrackingManager.shared.disableCrashAndAnalyticsSharing)
-    }
-    
     func testThatItSetsOptOutOnHockey() {
         // GIVEN
         TrackingManager.shared.disableCrashAndAnalyticsSharing = false

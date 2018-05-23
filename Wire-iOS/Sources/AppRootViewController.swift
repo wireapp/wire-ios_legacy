@@ -81,7 +81,7 @@ class AppRootViewController: UIViewController {
 
         overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
         overlayWindow.backgroundColor = .clear
-        overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
+        overlayWindow.windowLevel = UIWindowLevelStatusBar - 1
         overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         overlayWindow.rootViewController = NotificationWindowRootViewController()
 
@@ -109,7 +109,7 @@ class AppRootViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
 
         transition(to: .headless)
@@ -156,6 +156,11 @@ class AppRootViewController: UIViewController {
                 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
+                
+            sessionManager.urlHandler.delegate = self
+            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+                sessionManager.urlHandler.openURL(url, options: [:])
+            }
         }
     }
 
@@ -228,7 +233,7 @@ class AppRootViewController: UIViewController {
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
-            else if (addingNewAccount) {
+            else if addingNewAccount {
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
@@ -251,6 +256,12 @@ class AppRootViewController: UIViewController {
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
+
+            /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
+            clientViewController.needToShowDataUsagePermissionDialog = false
+            if case .unauthenticated(_) = appStateController.lastAppState {
+                clientViewController.needToShowDataUsagePermissionDialog = true
+            }
 
             Analytics.shared().team = ZMUser.selfUser().team
 
@@ -548,5 +559,37 @@ public extension SessionManager {
         }
         
         return nil
+    }
+}
+
+extension AppRootViewController: SessionManagerURLHandlerDelegate {
+    func sessionManagerShouldExecute(URLAction: RawURLAction, callback: @escaping (Bool) -> (Void)) {
+        switch URLAction {
+        case .connectBot:
+            guard let _ = ZMUser.selfUser().team else {
+                callback(false)
+                return
+            }
+            
+            let alert = UIAlertController(title: "url_action.title".localized,
+                                          message: "url_action.connect_to_bot.message".localized,
+                                          preferredStyle: .alert)
+            
+            let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
+                                            style: .default) { _ in
+                                                callback(true)
+            }
+            
+            alert.addAction(agreeAction)
+            
+            let cancelAction = UIAlertAction(title: "general.cancel".localized,
+                                             style: .cancel) { _ in
+                                                callback(false)
+            }
+            
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
