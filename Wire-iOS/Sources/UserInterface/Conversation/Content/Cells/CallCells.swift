@@ -78,7 +78,7 @@ class MissedCallCell: IconSystemCell {
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
-            icon: .endCall,
+            icon: .missedCall,
             iconColor: labelTextColor,
             systemMessageType: .missedCall,
             font: labelFont,
