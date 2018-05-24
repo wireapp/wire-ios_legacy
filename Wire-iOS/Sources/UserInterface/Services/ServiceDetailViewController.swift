@@ -111,6 +111,10 @@ extension Service: Shareable {
 }
 
 extension ServiceConversation: ShareDestination {
+    public var showsGuestIcon: Bool {
+        return false
+    }
+    
     public var displayName: String {
         switch self {
         case .new:

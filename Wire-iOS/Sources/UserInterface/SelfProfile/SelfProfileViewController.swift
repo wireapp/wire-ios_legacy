@@ -61,7 +61,7 @@ final internal class SelfProfileViewController: UIViewController {
         profileView = ProfileView(user: ZMUser.selfUser())
         
         super.init(nibName: .none, bundle: .none)
-        
+                
         profileView.source = self
         profileView.imageView.delegate = self
         
@@ -199,3 +199,4 @@ extension SelfProfileViewController: UserImageViewDelegate {
         self.present(profileImageController, animated: true, completion: .none)
     }
 }
+
