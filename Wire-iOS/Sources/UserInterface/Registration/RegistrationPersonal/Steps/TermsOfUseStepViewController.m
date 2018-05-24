@@ -40,17 +40,6 @@
 
 @implementation TermsOfUseStepViewController
 
-- (instancetype)initWithDevice:(id)device
-{
-    self = [self initWithUnregisteredUser:nil];
-
-    if (self) {
-        self.device = device;
-    }
-
-    return self;
-}
-
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
     self = [super initWithNibName:nil bundle:nil];

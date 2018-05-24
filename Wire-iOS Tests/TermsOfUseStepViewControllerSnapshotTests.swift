@@ -28,6 +28,7 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         mockDevice = MockDevice()
+        sut = TermsOfUseStepViewController(unregisteredUser: nil)
     }
 
     override func tearDown() {
@@ -39,7 +40,7 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
 
 
     func testForIPhone() {
-        sut = TermsOfUseStepViewController(device: mockDevice)
+        sut.device = mockDevice
 
         self.verify(view: sut.view)
     }
@@ -47,7 +48,7 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     func testForIPadRegular() {
         // GIVEN
         mockDevice.userInterfaceIdiom = .pad
-        sut = TermsOfUseStepViewController(device: mockDevice)
+        sut.device = mockDevice
 
         // WHEN
         let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
