@@ -55,14 +55,13 @@ static id<ZMBareUser> mockSelfUser = nil;
 
 + (MockUser *)mockSelfUser
 {
-    static MockUser *selfUser = nil;
-
-    if (selfUser == nil) {
-        selfUser = (MockUser *)self.mockUsers.lastObject;
-        selfUser.isSelfUser = YES;
+    if (mockSelfUser == nil) {
+        MockUser *mockUser = (MockUser *)self.mockUsers.lastObject;
+        mockUser.isSelfUser = YES;
+        mockSelfUser = (MockUser *)mockUser;
     }
     
-    return selfUser;
+    return (MockUser *)mockSelfUser;
 }
 
 + (void)setMockSelfUser:(id<ZMBareUser>)newMockUser

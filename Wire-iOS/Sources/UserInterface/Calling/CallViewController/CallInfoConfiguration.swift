@@ -29,11 +29,9 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     var degradationState: CallDegradationState {
         switch voiceChannel.state {
         case .incoming(video: _, shouldRing: _, degraded: true):
-            return CallDegradationState.incoming(degradedUser: voiceChannel.firstDegradedUser)
-        case .answered(degraded: true):
-            fallthrough
-        case .outgoing(degraded: true):
-            return CallDegradationState.outgoing(degradedUser: voiceChannel.firstDegradedUser)
+            return .incoming(degradedUser: voiceChannel.firstDegradedUser)
+        case .answered(degraded: true), .outgoing(degraded: true):
+            return .outgoing(degradedUser: voiceChannel.firstDegradedUser)
         default:
             return .none
         }
@@ -82,7 +80,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
 
             // The user can only re-enable their video if the conversation allows GVC
             if voiceChannel.videoState == .stopped {
-                return voiceChannel.conversation?.isConversationEligibleForVideoCalls ?? false
+                return voiceChannel.canUpgradeToVideo
             }
 
             // If the user already enabled video, they should be able to disable it
@@ -154,17 +152,16 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
 
     var videoPlaceholderState: CallVideoPlaceholderState {
-
-        guard voiceChannel.isVideoCall else {
-            return .hidden
-        }
-
-        guard case .incoming = voiceChannel.state else {
-            return .hidden
-        }
-
+        guard voiceChannel.isVideoCall else { return .hidden }
+        guard case .incoming = voiceChannel.state else { return .hidden }
         return preferedVideoPlaceholderState
-
+    }
+    
+    var disableIdleTimer: Bool {
+        switch voiceChannel.state {
+        case .none: return false
+        default: return isVideoCall && !isTerminating
+        }
     }
     
 }
@@ -188,6 +185,13 @@ extension CallParticipantState {
 fileprivate typealias UserWithParticipantState = (ZMUser, CallParticipantState)
 
 fileprivate extension VoiceChannel {
+    
+    var canUpgradeToVideo: Bool {
+        guard let conversation = conversation, conversation.conversationType != .oneOnOne else { return true }
+        guard conversation.activeParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
+        
+        return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
+    }
     
     var isAnyParticipantSendingVideo: Bool {
         return videoState.isSending || connectedParticipants.any({ $0.1.isSendingVideo })

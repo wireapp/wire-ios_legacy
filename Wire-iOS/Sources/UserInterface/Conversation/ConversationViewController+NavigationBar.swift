@@ -166,54 +166,16 @@ public extension ConversationViewController {
         }
     }
 
-    private func confirmCallInGroup(completion: @escaping (_ accepted: Bool) -> ()) {
-        let participantsCount = self.conversation.activeParticipants.count - 1
-        let message = "conversation.call.many_participants_confirmation.message".localized(args: participantsCount)
-
-        let confirmation = UIAlertController(title: "conversation.call.many_participants_confirmation.title".localized,
-                                             message: message,
-                                             preferredStyle: .alert)
-
-        let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
-            completion(false)
-        }
-        confirmation.addAction(actionCancel)
-
-        let actionSend = UIAlertAction(title: "conversation.call.many_participants_confirmation.call".localized, style: .default) { _ in
-            completion(true)
-        }
-        confirmation.addAction(actionSend)
-
-        self.present(confirmation, animated: true, completion: .none)
-    }
-
     func voiceCallItemTapped(_ sender: UIBarButtonItem) {
-        let startCall = {
-            ConversationInputBarViewController.endEditingMessage()
-            self.conversation.startAudioCall()
-        }
-
-        if self.conversation.activeParticipants.count <= 4 {
-            startCall()
-        } else {
-            self.confirmCallInGroup { accepted in
-                if accepted {
-                    startCall()
-                }
-            }
-        }
+        startCallController.startAudioCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
     func videoCallItemTapped(_ sender: UIBarButtonItem) {
-        ConversationInputBarViewController.endEditingMessage()
-        conversation.startVideoCall()
+        startCallController.startVideoCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
     private dynamic func joinCallButtonTapped(_sender: AnyObject!) {
-        guard conversation.canJoinCall else { return }
-
-        // This will result in joining an ongoing call.
-        conversation.joinCall()
+        startCallController.joinCall()
     }
 
     func onCollectionButtonPressed(_ sender: AnyObject!) {

@@ -122,6 +122,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) ConversationTitleView *titleView;
 @property (nonatomic) CollectionsViewController *collectionController;
 @property (nonatomic) id conversationListObserverToken;
+@property (nonatomic, readwrite) ConversationCallController *startCallController;
+    
 @end
 
 
@@ -441,6 +443,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (self.conversation != nil) {
         self.voiceChannelStateObserverToken = [self addCallStateObserver];
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+        self.startCallController = [[ConversationCallController alloc] initWithConversation:self.conversation target: self];
     }
 }
 

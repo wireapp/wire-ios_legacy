@@ -82,6 +82,7 @@ import Foundation
     func addAccountOrTeamCell() -> SettingsCellDescriptorType {
         
         let presentationAction: () -> UIViewController? = {
+            
             if SessionManager.shared?.accountManager.accounts.count < SessionManager.maxNumberAccounts {
                 SessionManager.shared?.addAccount()
             }
