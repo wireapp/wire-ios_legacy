@@ -937,7 +937,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)videoButtonPressed:(IconButton *)sender
 {
-    if([CameraAccess shouldBlockCallingRelatedActions]) {
+    if([[ZMUserSession sharedSession] isCallOngoing]) {
         [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureRecordVideo from:self];
         return;
     }

@@ -206,7 +206,7 @@
         return;
     }
     
-    if([CameraAccess shouldBlockCallingRelatedActions]) {
+    if([[ZMUserSession sharedSession] isCallOngoing]) {
         [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureTakePhoto from:self];
         return;
     }

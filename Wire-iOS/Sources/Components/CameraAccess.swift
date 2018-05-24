@@ -26,12 +26,6 @@ import UIKit
 
 public class CameraAccess: NSObject {
 
-    static var shouldBlockCallingRelatedActions: Bool {
-        guard let session = ZMUserSession.shared(),
-            session.callCenter?.activeCallConversations(in: session).count > 0 else { return false }
-        return true
-    }
-    
     static func displayCameraAlertForOngoingCall(at point: CameraAccessFeature, from viewController: UIViewController) {
         
         var message = ""
