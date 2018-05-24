@@ -163,9 +163,9 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = otherUser
         mockVoiceChannel.mockCallDuration = 10
         mockVoiceChannel.videoState = .started
-        
+
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
 
         // then
         assertEquals(fixture.oneToOneVideoEstablished, configuration)
@@ -225,7 +225,7 @@ class CallInfoConfigurationTests: XCTestCase {
         // then
         assertEquals(fixture.oneToOneIncomingVideoRinging, configuration)
     }
-    
+
     func testOneToOneIncomingVideoRingingVideoTurnedOff() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
@@ -291,10 +291,14 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockIsVideoCall = true
         mockVoiceChannel.mockVideoState = .started
         mockVoiceChannel.mockCallDuration = 10
+
+        let permissions = MockCallPermissions()
+        permissions.canAcceptVideoCalls = true
+        permissions.isPendingVideoPermissionRequest = false
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+
         // then
         assertEquals(fixture.oneToOneVideoEstablished, configuration)
     }
@@ -391,7 +395,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupAudioEstablishedLargeGroup() {
         // given
         let mockGroupConversation = MockConversation.groupConversation()
-        mockGroupConversation.isEligibleForVideoCalls = false
+        mockGroupConversation.isConversationEligibleForVideoCalls = false
         
         let mockConversation = ((mockGroupConversation as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
@@ -410,7 +414,44 @@ class CallInfoConfigurationTests: XCTestCase {
         // then
         assertEquals(fixture.groupAudioEstablishedLargeGroup, configuration)
     }
-    
+
+    func testOneToOneIncomingVideoRingingWithVideoPermissionsDeniedForever() {
+        // given
+        let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
+        let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
+
+        mockVoiceChannel.mockCallState = .incoming(video: true, shouldRing: true, degraded: false)
+        mockVoiceChannel.mockInitiator = otherUser
+        mockVoiceChannel.mockIsVideoCall = true
+        mockVoiceChannel.mockVideoState = .started
+
+        // when
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoDeniedForever)
+
+        // then
+        assertEquals(fixture.oneToOneIncomingVideoRingingWithPermissionsDeniedForever, configuration)
+    }
+
+
+    func testOneToOneIncomingVideoRingingWithUndeterminedVideoPermissions() {
+        // given
+        let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
+        let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
+
+        mockVoiceChannel.mockCallState = .incoming(video: true, shouldRing: true, degraded: false)
+        mockVoiceChannel.mockInitiator = otherUser
+        mockVoiceChannel.mockIsVideoCall = true
+        mockVoiceChannel.mockVideoState = .started
+
+        // when
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoPendingApproval)
+
+        // then
+        assertEquals(fixture.oneToOneIncomingVideoRingingWithUndeterminedVideoPermissions, configuration)
+    }
+
     // MARK: - Group Video
     
     func testGroupIncomingVideoRinging() {
@@ -556,4 +597,3 @@ class CallInfoConfigurationTests: XCTestCase {
     }
 
 }
-

@@ -172,12 +172,6 @@ final class CallActionsView: UIView {
         acceptCallButton.isHidden = !input.canAccept
         firstBottomRowSpacer.isHidden = input.canAccept || isCompact
         secondBottomRowSpacer.isHidden = isCompact
-
-        if !input.permissions.canAcceptVideoCalls {
-            speakerButton.isHidden = false
-            flipCameraButton.isHidden = true
-        }
-
         verticalStackView.axis = isCompact ? .horizontal : .vertical
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance }
         alpha = input.isTerminating ? 0.4 : 1

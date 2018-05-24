@@ -32,6 +32,6 @@
 @property (nonatomic) NSTimeInterval messageDestructionTimeout;
 @property (nonatomic) ZMConnectionStatus relatedConnectionState;
 @property (nonatomic) BOOL canStartVideoCall;
-@property (nonatomic) BOOL isEligibleForVideoCalls;
+@property (nonatomic) BOOL isConversationEligibleForVideoCalls;
 
 @end
