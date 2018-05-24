@@ -205,6 +205,7 @@ class SettingsPropertyFactory {
                 }
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+
         case .receiveNewsAndOffers:
 
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
@@ -217,11 +218,13 @@ class SettingsPropertyFactory {
                     AppDelegate.shared().window.rootViewController?.showLoadingView = true
 
                     self.userSession?.performChanges {
-                        ZMUser.selfUser().setMarketingConsent(to: number.boolValue, in: ZMUserSession.shared()!, completion: { [weak self] _ in
-                            AppDelegate.shared().window.rootViewController?.showLoadingView = false
+                        if let userSession = self.userSession as? ZMUserSession {
+                            (self.selfUser as? ZMUser)?.setMarketingConsent(to: number.boolValue, in: userSession, completion: { [weak self] _ in
+                                AppDelegate.shared().window.rootViewController?.showLoadingView = false
 
-                            self?.marketingConsent = SettingsPropertyValue.number(value: number)
-                        })
+                                self?.marketingConsent = SettingsPropertyValue.number(value: number)
+                            })
+                        }
                     }
 
                 default:

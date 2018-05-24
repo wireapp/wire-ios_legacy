@@ -48,6 +48,8 @@ final internal class SelfProfileViewController: UIViewController {
 
     convenience init() {
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
+
+        ///TODO: delegate for spinner start/stop
         let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
         let rootGroup = settingsCellDescriptorFactory.rootGroup()
         
