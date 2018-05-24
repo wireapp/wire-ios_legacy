@@ -222,14 +222,10 @@ class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                 case .number(let number):
-                    AppDelegate.shared().window.rootViewController?.showLoadingView = true
-
                     self.userSession?.performChanges {
                         if let userSession = self.userSession as? ZMUserSession {
                             self.delegate?.asyncMethodDidStart(self)
                             (self.selfUser as? ZMUser)?.setMarketingConsent(to: number.boolValue, in: userSession, completion: { [weak self] _ in
-                                AppDelegate.shared().window.rootViewController?.showLoadingView = false
-
                                 if let weakSelf = self {
                                     weakSelf.marketingConsent = SettingsPropertyValue.number(value: number)
                                     weakSelf.delegate?.asyncMethodDidComplete(weakSelf)

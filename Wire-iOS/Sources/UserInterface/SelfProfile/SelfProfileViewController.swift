@@ -36,11 +36,11 @@ extension Notification.Name {
 
 extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.showLoadingView = true
+        self.navigationController?.topViewController?.showLoadingView = true
     }
 
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.showLoadingView = false
+        self.navigationController?.topViewController?.showLoadingView = false
     }
 
 
