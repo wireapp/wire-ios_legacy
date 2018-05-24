@@ -183,7 +183,7 @@ class CallInfoConfigurationTests: XCTestCase {
         
         // when
         let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        
+
         // then
         assertEquals(fixture.oneToOneAudioEstablished, configuration)
     }
@@ -391,7 +391,7 @@ class CallInfoConfigurationTests: XCTestCase {
     func testGroupAudioEstablishedLargeGroup() {
         // given
         let mockGroupConversation = MockConversation.groupConversation()
-        mockGroupConversation.canStartVideoCall = false
+        mockGroupConversation.isEligibleForVideoCalls = false
         
         let mockConversation = ((mockGroupConversation as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)

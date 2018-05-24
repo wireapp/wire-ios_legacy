@@ -76,12 +76,19 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
         case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
         default:
-            if voiceChannel.videoState == .stopped {
+            // When the call is incoming, we should check if the user has permission and if they're eligible for video calls
+            if case .incoming = voiceChannel.state {
                 let canAcceptMediaCall = !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever
                 return (voiceChannel.conversation?.isEligibleForVideoCalls ?? false) && canAcceptMediaCall
-            } else {
-                return true
             }
+
+            // If the call is already established and video is off, we check if the user can re-enable their video
+            if voiceChannel.videoState == .stopped {
+                return voiceChannel.conversation?.isEligibleForVideoCalls ?? false
+            }
+
+            // If the user already enabled video, they should be able to disable it
+            return true
         }
     }
     

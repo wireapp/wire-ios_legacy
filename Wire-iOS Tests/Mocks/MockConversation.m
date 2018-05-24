@@ -42,7 +42,7 @@
     self = [super init];
     
     if (self) {
-        self.canStartVideoCall = YES;
+        self.isEligibleForVideoCalls = YES;
     }
     
     return self;
@@ -75,6 +75,16 @@
 - (NSTimeInterval)messageDestructionTimeout
 {
     return 15;
+}
+
+- (BOOL)canStartVideoCall
+{
+    return self.isEligibleForVideoCalls;
+}
+
+- (void)setCanStartVideoCall:(BOOL)canStartVideoCall
+{
+    self.isEligibleForVideoCalls = canStartVideoCall;
 }
 
 @end
