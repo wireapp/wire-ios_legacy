@@ -36,12 +36,37 @@ extension UIAlertController {
         )
     }
     
+    static func confirmGroupCall(participants: Int, completion: @escaping (Bool) -> Void) -> UIAlertController {
+        let controller = UIAlertController(
+            title: "conversation.call.many_participants_confirmation.title".localized,
+            message: "conversation.call.many_participants_confirmation.message".localized(args: participants),
+            preferredStyle: .alert
+        )
+        
+        controller.addAction(.cancel { completion(false) })
+        
+        let sendAction = UIAlertAction(
+            title: "conversation.call.many_participants_confirmation.call".localized,
+            style: .default,
+            handler: { _ in completion(true) }
+        )
+        
+        controller.addAction(sendAction)
+        return controller
+    }
+    
+    // MARK: - Helper
+    
     private static func ongoingCallConfirmation(
         titleKey: String,
         buttonTitleKey: String,
         completion: @escaping (Bool) -> Void
         ) -> UIAlertController {
-        let controller = UIAlertController(title: nil, message: titleKey.localized, preferredStyle: .actionSheet)
+        let controller = UIAlertController(
+            title: nil,
+            message: titleKey.localized,
+            preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
+        )
         controller.addAction(.init(title: buttonTitleKey.localized, style: .default) { _ in completion(true) })
         controller.addAction(.cancel { completion(false) })
         return controller

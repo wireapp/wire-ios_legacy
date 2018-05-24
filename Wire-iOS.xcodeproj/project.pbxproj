@@ -802,6 +802,7 @@
 		BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5C37971C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m */; };
 		BF5C379B1C0E0E8700EA11E3 /* ParticipantDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5C379A1C0E0E8700EA11E3 /* ParticipantDeviceCell.m */; };
 		BF5FAC0120B6B738004CEB45 /* UIAlertController+OngoingCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5FAC0020B6B738004CEB45 /* UIAlertController+OngoingCall.swift */; };
+		BF5FAC0520B6C6E9004CEB45 /* ConversationCallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5FAC0420B6C6E9004CEB45 /* ConversationCallController.swift */; };
 		BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF606D6E1CAA8A78002BAC94 /* ConversationListBottomBar.swift */; };
 		BF606D731CAA9EEE002BAC94 /* ConversationListBottomBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */; };
 		BF69C6C31F0CEBC500649C55 /* EphemeralTimeoutFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69C6C21F0CEBC500649C55 /* EphemeralTimeoutFormatter.swift */; };
@@ -2415,6 +2416,7 @@
 		BF5C37991C0E0E8700EA11E3 /* ParticipantDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantDeviceCell.h; sourceTree = "<group>"; };
 		BF5C379A1C0E0E8700EA11E3 /* ParticipantDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantDeviceCell.m; sourceTree = "<group>"; };
 		BF5FAC0020B6B738004CEB45 /* UIAlertController+OngoingCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+OngoingCall.swift"; sourceTree = "<group>"; };
+		BF5FAC0420B6C6E9004CEB45 /* ConversationCallController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCallController.swift; sourceTree = "<group>"; };
 		BF606D6E1CAA8A78002BAC94 /* ConversationListBottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConversationListBottomBar.swift; path = ../Conversation/ConversationListBottomBar.swift; sourceTree = "<group>"; };
 		BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationListBottomBarTests.m; sourceTree = "<group>"; };
 		BF69C6C21F0CEBC500649C55 /* EphemeralTimeoutFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralTimeoutFormatter.swift; sourceTree = "<group>"; };
@@ -5411,6 +5413,7 @@
 			children = (
 				D550F5762044532D009E09DD /* ConversationAction.swift */,
 				5E3A6C21206A3AD500907484 /* ConversationActionController.swift */,
+				BF5FAC0420B6C6E9004CEB45 /* ConversationCallController.swift */,
 				D5F22D4B2048052900879444 /* UIAlertController+RemoveAction.swift */,
 				D52F2C1D205BCA1D00E067C0 /* UIAlertController+ConnectionRequest.swift */,
 				D52F2C1F205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift */,
@@ -6850,6 +6853,7 @@
 				16D3632F1AB05BBE00471F5F /* CameraTopToolsViewController.m in Sources */,
 				EF44784F20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift in Sources */,
 				BAA1F7E41B610D89002402B6 /* SketchColorCollectionViewCell.m in Sources */,
+				BF5FAC0520B6C6E9004CEB45 /* ConversationCallController.swift in Sources */,
 				8723342A1CD0D8F100CF8B11 /* VideoMessageCell.swift in Sources */,
 				EF21271A1FB9DFE300625A9B /* ProfilePictureStepViewController.m in Sources */,
 				7C4789852021F40E00A38442 /* AddBotError+UIHandler.swift in Sources */,
