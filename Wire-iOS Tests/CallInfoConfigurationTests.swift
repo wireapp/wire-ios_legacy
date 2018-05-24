@@ -36,7 +36,8 @@ func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> B
         lhs.displayString == rhs.displayString &&
         lhs.isConstantBitRate == rhs.isConstantBitRate &&
         lhs.state == rhs.state &&
-        lhs.mediaState == rhs.mediaState
+        lhs.mediaState == rhs.mediaState &&
+        lhs.disableIdleTimer == rhs.disableIdleTimer
 }
 
 class CallInfoConfigurationTests: XCTestCase {
