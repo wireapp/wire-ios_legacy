@@ -344,7 +344,26 @@ struct CallInfoTestFixture {
         )
     }
     
-    var groupAudioEstablishedLargeGroup: CallInfoViewControllerInput {
+    var groupAudioEstablishedRemoteTurnedVideoOn: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light
+        )
+    }
+    
+    var groupAudioEstablishedVideoUnavailable: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
             permissions: CallPermissions(),
