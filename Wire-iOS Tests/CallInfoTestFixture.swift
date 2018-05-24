@@ -51,7 +51,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -70,7 +71,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -89,7 +91,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -108,7 +111,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -127,7 +131,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -146,7 +151,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
         
@@ -165,7 +171,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -186,7 +193,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -205,7 +213,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -224,7 +233,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -243,7 +253,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -262,7 +273,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -283,7 +295,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -302,7 +315,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -321,7 +335,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -340,7 +355,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -359,7 +375,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -378,7 +395,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -399,7 +417,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -418,7 +437,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -437,7 +457,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -456,7 +477,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -475,7 +497,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
 
@@ -499,9 +522,9 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
-        
     }
 
     var groupVideoIncomingDeniedPermissions: CallInfoViewControllerInput {
@@ -524,9 +547,9 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
-
     }
     
 }
