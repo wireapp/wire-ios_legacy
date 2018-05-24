@@ -77,7 +77,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
             return false
         default:
             if voiceChannel.videoState == .stopped {
-                return voiceChannel.conversation?.canStartVideoCall ?? false
+                return voiceChannel.canUpgradeToVideo
             } else {
                 return true
             }
@@ -174,6 +174,13 @@ extension CallParticipantState {
 fileprivate typealias UserWithParticipantState = (ZMUser, CallParticipantState)
 
 fileprivate extension VoiceChannel {
+    
+    var canUpgradeToVideo: Bool {
+        guard let conversation = conversation, conversation.conversationType != .oneOnOne else { return true }
+        guard conversation.activeParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
+        
+        return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
+    }
     
     var isAnyParticipantSendingVideo: Bool {
         return videoState.isSending || connectedParticipants.any({ $0.1.isSendingVideo })
