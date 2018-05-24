@@ -34,6 +34,18 @@ extension Notification.Name {
     static let DismissSettings = Notification.Name("DismissSettings")
 }
 
+extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
+    func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
+        self.showLoadingView = true
+    }
+
+    func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
+        self.showLoadingView = false
+    }
+
+
+}
+
 final internal class SelfProfileViewController: UIViewController {
     
      static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
@@ -49,13 +61,14 @@ final internal class SelfProfileViewController: UIViewController {
     convenience init() {
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
 
-        ///TODO: delegate for spinner start/stop
         let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
         let rootGroup = settingsCellDescriptorFactory.rootGroup()
         
         self.init(rootGroup: settingsCellDescriptorFactory.rootGroup())
         self.settingsCellDescriptorFactory = settingsCellDescriptorFactory
         self.rootGroup = rootGroup
+
+        settingsPropertyFactory.delegate = self
     }
     
     init(rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType) {

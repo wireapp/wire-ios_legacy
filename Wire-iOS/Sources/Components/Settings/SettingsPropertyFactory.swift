@@ -55,6 +55,12 @@ enum SettingsPropertyError: Error {
     case WrongValue(String)
 }
 
+
+protocol SettingsPropertyFactoryDelegate: class {
+    func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
+    func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
+}
+
 class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var tracking: TrackingInterface?
@@ -62,6 +68,7 @@ class SettingsPropertyFactory {
     weak var userSession: ZMUserSessionInterface?
     var selfUser: SettingsSelfUser?
     var marketingConsent: SettingsPropertyValue = .none
+    weak var delegate: SettingsPropertyFactoryDelegate?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
         SettingsPropertyName.disableMarkdown            : UserDefaultDisableMarkdown,
@@ -219,10 +226,14 @@ class SettingsPropertyFactory {
 
                     self.userSession?.performChanges {
                         if let userSession = self.userSession as? ZMUserSession {
+                            self.delegate?.asyncMethodDidStart(self)
                             (self.selfUser as? ZMUser)?.setMarketingConsent(to: number.boolValue, in: userSession, completion: { [weak self] _ in
                                 AppDelegate.shared().window.rootViewController?.showLoadingView = false
 
-                                self?.marketingConsent = SettingsPropertyValue.number(value: number)
+                                if let weakSelf = self {
+                                    weakSelf.marketingConsent = SettingsPropertyValue.number(value: number)
+                                    weakSelf.delegate?.asyncMethodDidComplete(weakSelf)
+                                }
                             })
                         }
                     }
