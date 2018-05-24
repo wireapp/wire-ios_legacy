@@ -140,7 +140,12 @@ private let zmLog = ZMSLog(tag: "UI")
         super.viewWillAppear(animated)
         self.clientsTableView?.reloadData()
     }
-    
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.showLoadingView = false
+    }
+
     func openDetailsOfClient(_ client: UserClient) {
         if let navigationController = self.navigationController {
             let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
@@ -230,7 +235,6 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]!) {
-        self.showLoadingView = false
         self.clients = remainingClients
         Analytics.shared().tagDeleteDevice()
     }
