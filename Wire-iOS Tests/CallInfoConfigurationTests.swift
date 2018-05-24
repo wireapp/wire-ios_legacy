@@ -440,7 +440,6 @@ class CallInfoConfigurationTests: XCTestCase {
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
         
         let mockGroupConversation = MockConversation.groupConversation()
-        mockGroupConversation.canStartVideoCall = false
         mockGroupConversation.activeParticipants = NSOrderedSet(array: Array(mockUsers[0..<fixture.groupSize.rawValue]))
         
         let mockConversation = ((mockGroupConversation as Any) as! ZMConversation)
