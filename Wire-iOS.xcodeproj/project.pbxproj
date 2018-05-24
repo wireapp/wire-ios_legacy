@@ -899,7 +899,6 @@
 		BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */; };
 		BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */; };
 		BFE65AB320A047EB00689063 /* CallAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */; };
-		BFE731DC20A1E3200088BA22 /* DeepDiff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE731DB20A1E3200088BA22 /* DeepDiff.framework */; };
 		BFE731E020A58EFD0088BA22 /* VideoState+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE731DF20A58EFD0088BA22 /* VideoState+Helper.swift */; };
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
 		BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */; };
@@ -2521,7 +2520,6 @@
 		BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ImageMessageCell+Internal.h"; sourceTree = "<group>"; };
 		BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationPreviewViewController.swift; sourceTree = "<group>"; };
 		BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAccessoryViewController.swift; sourceTree = "<group>"; };
-		BFE731DB20A1E3200088BA22 /* DeepDiff.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeepDiff.framework; path = Carthage/Build/iOS/DeepDiff.framework; sourceTree = "<group>"; };
 		BFE731DF20A58EFD0088BA22 /* VideoState+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoState+Helper.swift"; sourceTree = "<group>"; };
 		BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = audio_sample.m4a; sourceTree = "<group>"; };
 		BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationAvatarViewTests.swift; sourceTree = "<group>"; };
@@ -2897,7 +2895,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFE731DC20A1E3200088BA22 /* DeepDiff.framework in Frameworks */,
 				F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */,
 				BFBC11E31ED84DB200502AF0 /* WireDataModel.framework in Frameworks */,
 				AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */,
@@ -3414,7 +3411,6 @@
 		8286E48D7CC440448CBD8F48 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BFE731DB20A1E3200088BA22 /* DeepDiff.framework */,
 				878B823F20A1EEEE007455CA /* HTMLString.framework */,
 				874A17472056D9FA001C6760 /* libcmark.framework */,
 				EECDB2532029D7D900D0D268 /* Down.framework */,
