@@ -103,7 +103,6 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             avatarView.height == self.avatarSize
         }
         
-        //self.titleLabel.font = UIFont.systemFont(ofSize: 16.0, weight: UIFontWeightLight)
         self.titleLabel.cas_styleClass = "normal-light"
         self.titleLabel.backgroundColor = .clear
         self.titleLabel.textColor = .white
