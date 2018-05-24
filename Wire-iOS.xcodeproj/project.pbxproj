@@ -6373,7 +6373,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Mixpanel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Down.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libcmark.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/DeepDiff.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/HTMLString.framework",
 			);
 			name = "Copy Frameworks and DSYMs";
