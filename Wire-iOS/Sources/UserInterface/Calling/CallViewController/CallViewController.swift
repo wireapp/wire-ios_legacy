@@ -82,6 +82,7 @@ final class CallViewController: UIViewController {
         proximityMonitorManager?.startListening()
         resumeVideoIfNeeded()
         setupApplicationStateObservers()
+        updateIdleTimer()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -89,6 +90,11 @@ final class CallViewController: UIViewController {
         proximityMonitorManager?.stopListening()
         pauseVideoIfNeeded()
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        UIApplication.shared.isIdleTimerDisabled = false
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -139,7 +145,14 @@ final class CallViewController: UIViewController {
         videoGridViewController.configuration = videoConfiguration
         updateOverlayAfterStateChanged()
         updateAppearance()
+        updateIdleTimer()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+    }
+    
+    private func updateIdleTimer() {
+        let disabled = callInfoConfiguration.disableIdleTimer
+        UIApplication.shared.isIdleTimerDisabled = disabled
+        Calling.log.debug("Updated idle timer: \(disabled ? "disabled" : "enabled")")
     }
 
     private func updateAppearance() {
@@ -167,10 +180,9 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func toggleVideoState() {
-
         if permissions.canAcceptVideoCalls == false {
-            permissions.requestOrWarnAboutVideoPermission { _ in
-                self.updateConfiguration()
+            permissions.requestOrWarnAboutVideoPermission { [updateConfiguration] _ in
+                updateConfiguration()
             }
             return
         }

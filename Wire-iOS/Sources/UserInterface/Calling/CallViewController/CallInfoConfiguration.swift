@@ -29,11 +29,9 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     var degradationState: CallDegradationState {
         switch voiceChannel.state {
         case .incoming(video: _, shouldRing: _, degraded: true):
-            return CallDegradationState.incoming(degradedUser: voiceChannel.firstDegradedUser)
-        case .answered(degraded: true):
-            fallthrough
-        case .outgoing(degraded: true):
-            return CallDegradationState.outgoing(degradedUser: voiceChannel.firstDegradedUser)
+            return .incoming(degradedUser: voiceChannel.firstDegradedUser)
+        case .answered(degraded: true), .outgoing(degraded: true):
+            return .outgoing(degradedUser: voiceChannel.firstDegradedUser)
         default:
             return .none
         }
@@ -140,17 +138,16 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
 
     var videoPlaceholderState: CallVideoPlaceholderState {
-
-        guard voiceChannel.isVideoCall else {
-            return .hidden
-        }
-
-        guard case .incoming = voiceChannel.state else {
-            return .hidden
-        }
-
+        guard voiceChannel.isVideoCall else { return .hidden }
+        guard case .incoming = voiceChannel.state else { return .hidden }
         return preferedVideoPlaceholderState
-
+    }
+    
+    var disableIdleTimer: Bool {
+        switch voiceChannel.state {
+        case .none: return false
+        default: return isVideoCall && !isTerminating
+        }
     }
     
 }
