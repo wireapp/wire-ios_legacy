@@ -20,7 +20,6 @@ import Foundation
 @testable import Wire
 
 struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
-
     var videoPlaceholderState: CallVideoPlaceholderState
     var permissions: CallPermissionsConfiguration
     var degradationState: CallDegradationState
@@ -29,17 +28,12 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var isMuted: Bool
     var isTerminating: Bool
     var canAccept: Bool
-    var preferredMediaState: MediaState
+    var mediaState: MediaState
     var state: CallStatusViewState
     var isConstantBitRate: Bool
     var title: String
     var isVideoCall: Bool
     var variant: ColorSchemeVariant
-
-    var mediaState: MediaState {
-        return permissions.mediaStateIfAllowed(preferredMediaState)
-    }
-
 }
 
 extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {

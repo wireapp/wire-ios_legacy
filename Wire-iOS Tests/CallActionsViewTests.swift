@@ -22,12 +22,8 @@ import XCTest
 fileprivate struct CallActionsViewInput: CallActionsViewInputType {
     var permissions: CallPermissionsConfiguration
     let canToggleMediaType, isVideoCall, isMuted, canAccept, isTerminating: Bool
-    let preferredMediaState: MediaState
+    let mediaState: MediaState
     let variant: ColorSchemeVariant
-
-    var mediaState: MediaState {
-        return permissions.mediaStateIfAllowed(preferredMediaState)
-    }
 }
 
 class CallActionsViewTests: ZMSnapshotTestCase {
@@ -60,7 +56,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: true,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: true),
+            mediaState: .notSendingVideo(speakerEnabled: true),
             variant: .light
         )
         
@@ -80,7 +76,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: true,
             canAccept: true,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerEnabled: false),
             variant: .light
         )
         
@@ -94,13 +90,13 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_CanNotToggle_NotMuted_Video_CanNotAccept_VideoUnvailable_FlipCamera_SpeakerDisabled() {
         // Given
         let input = CallActionsViewInput(
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: false,
             isVideoCall: true,
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerEnabled: false),
             variant: .light
         )
         
@@ -114,13 +110,13 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_CanToggle_NotMuted_Video_CanAccept_SendingVideo_FlipCamera_DarkTheme() {
         // Given
         let input = CallActionsViewInput(
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
             canAccept: true,
             isTerminating: false,
-            preferredMediaState: .sendingVideo,
+            mediaState: .sendingVideo,
             variant: .dark
         )
         
@@ -134,13 +130,13 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     func testCallActionsView_NotMuted_CanNotAccept_CanToggleMedia_SendingVideo_FlipCamera() {
         // Given
         let input = CallActionsViewInput(
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             canToggleMediaType: true,
             isVideoCall: true,
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            preferredMediaState: .sendingVideo,
+            mediaState: .sendingVideo,
             variant: .light
         )
         
@@ -161,7 +157,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: true),
+            mediaState: .notSendingVideo(speakerEnabled: true),
             variant: .light
         )
         
@@ -182,7 +178,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerEnabled: false),
             variant: .light
         )
         
@@ -203,7 +199,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: true,
             canAccept: false,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerEnabled: false),
             variant: .dark
         )
         
@@ -224,7 +220,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: true,
-            preferredMediaState: .notSendingVideo(speakerEnabled: true),
+            mediaState: .notSendingVideo(speakerEnabled: true),
             variant: .light
         )
         
@@ -245,7 +241,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: true,
             canAccept: true,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerEnabled: false),
             variant: .light
         )
         
@@ -266,7 +262,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: true),
+            mediaState: .notSendingVideo(speakerEnabled: true),
             variant: .light
         )
         
@@ -288,7 +284,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: true,
             canAccept: true,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerEnabled: false),
             variant: .light
         )
         
@@ -312,7 +308,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            preferredMediaState: .sendingVideo,
+            mediaState: .notSendingVideo(speakerEnabled: false),
             variant: .light
         )
 
@@ -332,7 +328,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            preferredMediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerEnabled: false),
             variant: .light
         )
 
