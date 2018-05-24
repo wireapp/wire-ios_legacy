@@ -188,16 +188,18 @@ public extension ConversationViewController {
     }
 
     func voiceCallItemTapped(_ sender: UIBarButtonItem) {
-        let startCall = {
+        let startCall = { [conversation] in
             ConversationInputBarViewController.endEditingMessage()
-            self.conversation.startAudioCall()
+            conversation.startAudioCall()
         }
-
-        if self.conversation.activeParticipants.count <= 4 {
-            startCall()
-        } else {
-            self.confirmCallInGroup { accepted in
-                if accepted {
+        
+        confirmStartingCallIfNeeded { [weak self] in
+            guard let `self` = self else { return }
+            if self.conversation.activeParticipants.count <= 4 {
+                startCall()
+            } else {
+                self.confirmCallInGroup { accepted in
+                    guard accepted else { return }
                     startCall()
                 }
             }
@@ -205,15 +207,37 @@ public extension ConversationViewController {
     }
 
     func videoCallItemTapped(_ sender: UIBarButtonItem) {
-        ConversationInputBarViewController.endEditingMessage()
-        conversation.startVideoCall()
+        confirmStartingCallIfNeeded { [conversation] in
+            ConversationInputBarViewController.endEditingMessage()
+            conversation.startVideoCall()
+        }
     }
 
     private dynamic func joinCallButtonTapped(_sender: AnyObject!) {
         guard conversation.canJoinCall else { return }
+        confirmJoiningCallIfNeeded { [conversation] in
+            conversation.joinCall() // This will result in joining an ongoing call.
+        }
+    }
 
-        // This will result in joining an ongoing call.
-        conversation.joinCall()
+    private func confirmStartingCallIfNeeded(completion: @escaping () -> Void) {
+        guard true == ZMUserSession.shared()?.isCallOngoing else { return completion() }
+        let controller = UIAlertController.ongoingCallStartCallConfirmation { confirmed in
+            guard confirmed else { return }
+            ZMUserSession.shared()?.callCenter?.endAllCalls()
+            completion()
+        }
+        present(controller, animated: true)
+    }
+    
+    private func confirmJoiningCallIfNeeded(completion: @escaping () -> Void) {
+        guard true == ZMUserSession.shared()?.isCallOngoing else { return completion() }
+        let controller = UIAlertController.ongoingCallJoinCallConfirmation { confirmed in
+            guard confirmed else { return }
+            ZMUserSession.shared()?.callCenter?.endAllCalls()
+            completion()
+        }
+        present(controller, animated: true)
     }
 
     func onCollectionButtonPressed(_ sender: AnyObject!) {
