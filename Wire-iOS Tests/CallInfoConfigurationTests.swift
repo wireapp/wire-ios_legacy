@@ -388,6 +388,29 @@ class CallInfoConfigurationTests: XCTestCase {
         assertEquals(fixture.groupAudioEstablished, configuration)
     }
     
+    func testGroupAudioEstablishedLargeGroup() {
+        // given
+        let mockGroupConversation = MockConversation.groupConversation()
+        mockGroupConversation.canStartVideoCall = false
+        
+        let mockConversation = ((mockGroupConversation as Any) as! ZMConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
+        let mockUsers: [ZMUser] = MockUser.mockUsers()!
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+        
+        mockVoiceChannel.mockCallState = .established
+        mockVoiceChannel.mockCallDuration = 10
+        mockVoiceChannel.mockInitiator = selfUser
+        mockVoiceChannel.mockParticipants = NSOrderedSet(array: Array(mockUsers[0..<fixture.groupSize.rawValue]))
+        mockVoiceChannel.mockCallParticipantState = .connected(videoState: .stopped)
+        
+        // when
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        
+        // then
+        assertEquals(fixture.groupAudioEstablishedLargeGroup, configuration)
+    }
+    
     // MARK: - Group Video
     
     func testGroupIncomingVideoRinging() {
