@@ -26,19 +26,20 @@ import UIKit
 
 public class CameraAccess: NSObject {
 
-    static func displayCameraAlertForOngoingCall(at point: CameraAccessFeature, from viewController: UIViewController) {
-        
-        var message = ""
-        
-        switch point {
-        case .recordVideo: message = "conversation.input_bar.ongoing_call_alert.video.message"
-        case .recordAudioMessage: message = "conversation.input_bar.ongoing_call_alert.audio.message"
-        case .takePhoto: message = "conversation.input_bar.ongoing_call_alert.photo.message"
-        }
-        
+    static func displayCameraAlertForOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) {
         let alert = UIAlertController(title: "conversation.input_bar.ongoing_call_alert.title".localized,
-                                      message: message.localized,
+                                      message: feature.message.localized,
                                       cancelButtonTitle: "general.ok".localized)
         viewController.present(alert, animated: true, completion: nil)
+    }
+}
+
+fileprivate extension CameraAccessFeature {
+    var message: String {
+        switch self {
+        case .recordVideo: return "conversation.input_bar.ongoing_call_alert.video.message"
+        case .recordAudioMessage: return "conversation.input_bar.ongoing_call_alert.audio.message"
+        case .takePhoto: return "conversation.input_bar.ongoing_call_alert.photo.message"
+        }
     }
 }
