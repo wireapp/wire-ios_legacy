@@ -64,18 +64,17 @@ extension ConversationInputBarViewController {
     }
     
     private func displayAudioMessageAlertIfNeeded() -> Bool {
-        
-        guard ConversationViewController.shouldBlockCallingRelatedActions else { return false }
-        
-        let alert = UIAlertController(title: "conversation.input_bar.ongoing_call_alert.title".localized,
-                                      message: "conversation.input_bar.ongoing_call_alert.audio.message".localized,
-                                      cancelButtonTitle: "general.ok".localized)
-        self.present(alert, animated: true, completion: nil)
+        guard CameraAccess.shouldBlockCallingRelatedActions else { return false }
+        CameraAccess.displayCameraAlertForOngoingCall(at: .recordAudioMessage, from: self)
         return true
     }
     
     func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard self.mode != .audioRecord else {
+            return
+        }
+        
+        if displayAudioMessageAlertIfNeeded() {
             return
         }
         

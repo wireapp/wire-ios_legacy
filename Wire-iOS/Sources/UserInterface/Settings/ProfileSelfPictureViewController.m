@@ -206,6 +206,11 @@
         return;
     }
     
+    if([CameraAccess shouldBlockCallingRelatedActions]) {
+        [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureTakePhoto from:self];
+        return;
+    }
+    
     CameraViewController *cameraViewController = [[CameraViewController alloc] init];
     cameraViewController.analyticsTracker = self.analyticsTracker;
     cameraViewController.savePhotosToCameraRoll = YES;
