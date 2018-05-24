@@ -20,6 +20,8 @@ import Foundation
 
 struct CallInfoConfiguration  {
     let voiceChannel: VoiceChannel
+    var preferedVideoPlaceholderState: CallVideoPlaceholderState
+    let permissions: CallPermissionsConfiguration
 }
 
 extension CallInfoConfiguration: CallInfoViewControllerInput {
@@ -27,11 +29,9 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     var degradationState: CallDegradationState {
         switch voiceChannel.state {
         case .incoming(video: _, shouldRing: _, degraded: true):
-            return CallDegradationState.incoming(degradedUser: voiceChannel.firstDegradedUser)
-        case .answered(degraded: true):
-            fallthrough
-        case .outgoing(degraded: true):
-            return CallDegradationState.outgoing(degradedUser: voiceChannel.firstDegradedUser)
+            return .incoming(degradedUser: voiceChannel.firstDegradedUser)
+        case .answered(degraded: true), .outgoing(degraded: true):
+            return .outgoing(degradedUser: voiceChannel.firstDegradedUser)
         default:
             return .none
         }
@@ -41,7 +41,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     var accessoryType: CallInfoViewControllerAccessoryType {
         let conversation = voiceChannel.conversation
         
-        if voiceChannel.isVideoCall, conversation?.conversationType == .oneOnOne {
+        if isVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
         
@@ -70,10 +70,15 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var canToggleMediaType: Bool {
-        if case .outgoing = voiceChannel.state {
+        switch voiceChannel.state {
+        case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
-        } else {
-            return true
+        default:
+            if voiceChannel.videoState == .stopped {
+                return voiceChannel.conversation?.canStartVideoCall ?? false
+            } else {
+                return true
+            }
         }
     }
     
@@ -120,11 +125,29 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
     }
     
     var isVideoCall: Bool {
-        return voiceChannel.isVideoCall
+        switch voiceChannel.state {
+        case .established, .terminating:
+            return voiceChannel.isAnyParticipantSendingVideo
+        default:
+            return voiceChannel.isVideoCall
+        }
     }
     
     var variant: ColorSchemeVariant {
         return ColorScheme.default().variant
+    }
+
+    var videoPlaceholderState: CallVideoPlaceholderState {
+        guard voiceChannel.isVideoCall else { return .hidden }
+        guard case .incoming = voiceChannel.state else { return .hidden }
+        return preferedVideoPlaceholderState
+    }
+    
+    var disableIdleTimer: Bool {
+        switch voiceChannel.state {
+        case .none: return false
+        default: return isVideoCall && !isTerminating
+        }
     }
     
 }
@@ -148,6 +171,10 @@ extension CallParticipantState {
 fileprivate typealias UserWithParticipantState = (ZMUser, CallParticipantState)
 
 fileprivate extension VoiceChannel {
+    
+    var isAnyParticipantSendingVideo: Bool {
+        return videoState.isSending || connectedParticipants.any({ $0.1.isSendingVideo })
+    }
     
     var connectedParticipants: [UserWithParticipantState] {
         return participants

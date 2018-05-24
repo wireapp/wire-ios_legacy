@@ -70,6 +70,7 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard ZMUser.selfUser().hasTeam else { return .zero }
         return CGSize(width: collectionView.bounds.size.width, height: 56)
     }
     

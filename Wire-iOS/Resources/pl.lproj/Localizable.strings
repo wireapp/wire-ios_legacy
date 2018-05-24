@@ -27,6 +27,9 @@
 "general.edit" = "Edycja";
 "general.done" = "Zakończono";
 "general.confirm" = "OK";
+"general.skip" = "Nie teraz";
+"general.accept" = "Odbierz";
+
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
@@ -114,6 +117,10 @@
 "conversation_list.header.self_team.accessibility_value.inactive" = "Dotknij, aby aktywować.";
 "conversation_list.header.self_team.accessibility_value.active" = "Aktywuj teraz.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ma nowe wiadomości.";
+
+// Conversation List Data Usage Permission Dialog
+"conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "w kontaktach";
@@ -254,6 +261,10 @@
 "conversation.create.toggle.title" = "Allow guests";
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
 
+"conversation.input_bar.ongoing_call_alert.title" = "Bieżące połączenie";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
+
 "conversation.guests_present" = "Guests are present";
 
 // Image confirmation dialogue
@@ -264,6 +275,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire potrzebuje dostępu do kamery.";
+"video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Włącz w ustawieniach Wire";
 
@@ -272,6 +284,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can't access the camera while you are on a video call.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Blokada AE/AF";
@@ -390,7 +403,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(urządzenie %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "Używasz starszej wersji Wire, dlatego nie możesz wyświetlić tej wiadomości.";
+"content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
 
 "content.file.uploading" = "Wysyłanie…";
 "content.file.downloading" = "Pobieranie…";
@@ -405,6 +418,8 @@
 
 "content.message.delete" = "Usuń";
 "content.message.save" = "Zapisz";
+
+"content.message.delete_ellipsis" = "Delete…";
 
 "content.message.like" = "Polub";
 "content.message.unlike" = "Przestań lubić";
@@ -464,6 +479,7 @@
 "voice.hang_up_button.title" = "Rozłącz";
 "voice.mute_button.title" = "Wycisz";
 "voice.video_button.title" = "Wideo";
+"voice.flip_video_button.title" = "Flip";
 "voice.speaker_button.title" = "Głośnik";
 "voice.cancel_button.title" = "Anuluj";
 "voice.call_button.title" = "Połączenie";
@@ -478,6 +494,32 @@
 "voice.alert.camera_warning.title" = "Wire potrzebuje dostępu do kamery.";
 "voice.alert.camera_warning.explanation" = "Przejdź do ustawień i nadaj Wire dostęp do kamery.";
 
+"voice.top_overlay.tap_to_return" = "Tap to return to call";
+"voice.top_overlay.accessibility_title" = "Bieżące połączenie";
+
+// Voice New
+
+"call.status.connecting" = "Connecting…";
+"call.status.incoming.user" = "%@ is calling…";
+"call.status.incoming" = "Calling…";
+"call.status.outgoing" = "Ringing…";
+"call.status.reconnecting" = "Reconnecting…";
+"call.status.terminating" = "Hanging up…";
+"call.status.constant_bitrate" = "Stała szybkość transmisji";
+
+"call.participants.show_all" = "Show All (%@)";
+"call.participants.list.title" = "Participants";
+
+"call.video.paused" = "Video paused";
+
+"call.video.too_many.alert.title" = "Too many people for Video";
+"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+
+"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.message.self" = "Rozpocząłeś korzystanie z nowego urządzenia.";
+"call.degraded.alert.message.user" = "%@ rozpoczął korzystanie z nowego urządzenia.";
+"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.action.continue" = "Dzwoń mimo to";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -489,17 +531,18 @@
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
 
 // Meta Menu
 "meta.menu.rename" = "Zmień nazwę";
-"meta.menu.leave" = "Leave…";
+"meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Archiwum";
 "meta.menu.unarchive" = "Przywróć z archiwum";
 "meta.menu.delete" = "Delete Content…";
 "meta.menu.silence.mute" = "Wycisz";
 "meta.menu.silence.unmute" = "Wyłącz wyciszenie";
 "meta.menu.cancel" = "Anuluj";
-"meta.menu.cancel_connection_request" = "Anuluj żądanie";
+"meta.menu.cancel_connection_request" = "Cancel Request…";
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
@@ -671,6 +714,8 @@
 "self.settings.account_picture_group.picture" = "Zdjęcie profilowe";
 "self.settings.account_picture_group.color" = "Kolor";
 
+"self.settings.account_personal_information_group.title" = "Personal Information";
+
 "self.settings.account_picture_group.theme" = "Ciemny motyw";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire daje każdemu urządzeniowi unikalny klucz. Porównaj i sprawdź swoje urządzenia oraz konwersacje.";
@@ -687,6 +732,15 @@
 
 "self.settings.account_details.log_out.alert.title" = "Wyloguj";
 "self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Raportowanie błędów i statystyk";
+"self.settings.privacy_analytics.title" = "Wysyłaj anonimowe dane";
+"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
+
+"self.settings.receiveNews_and_offers.title" = "Receive News";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product update from Wire via email.";
+
 
 
 // Change Username
@@ -813,10 +867,6 @@
 
 "self.settings.privacy_analytics_menu.devices.title" = "Urządzenia";
 
-"self.settings.privacy_analytics_section.title" = "Raportowanie błędów i statystyk";
-"self.settings.privacy_analytics.title" = "Wysyłaj anonimowe dane";
-"self.settings.privacy_analytics_menu.description.title" = "Pomóż udoskonalić Wire wysyłając anonimowe informacje";
-
 "self.settings.privacy.clear_history.title" = "Wyczyść historię";
 "self.settings.privacy.clear_history.subtitle" = "To nieodwracalnie usunie treść wszystkich twoich rozmów.";
 
@@ -829,6 +879,9 @@
 "self.settings.advanced.reset_push_token_alert.title" = "Powiadomienia zostały zresetowane";
 "self.settings.advanced.reset_push_token_alert.message" = "Powiadomienia zostaną przywrócone w ciągu kilku sekund.";
 "self.settings.advanced.version_technical_details.title" = "Dane techniczne wersji";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Data Usage Permissions";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Wsparcie techniczne";
@@ -849,7 +902,7 @@
 
 "self.settings.conversations.title" = "History";
 "self.settings.history_backup.title" = "Back Up Conversations";
-"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
 "self.settings.history_backup.action" = "Back Up Now";
 "self.settings.history_backup.error.title" = "Error";
 
@@ -1262,3 +1315,17 @@
 "calling.quality_survey.answer.3" = "Fair";
 "calling.quality_survey.answer.4" = "Good";
 "calling.quality_survey.answer.5" = "Excellent";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Confirm";
+"url_action.title" = "Confirm URL action";
+"url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Do you want to receive news and product updates from Wire via email?";
+"news_offers.consent.message" = "You can unsubscribe at any time.";
+"news_offers.consent.button.privacy_policy.title" = "Polityka prywatności";

@@ -21,6 +21,7 @@
 
 @class ZMConversation;
 @class ZClientViewController;
+@class ConversationCallController;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, nullable) ZClientViewController *zClientViewController;
 @property (nonatomic) ZMConversation *conversation;
 @property (nonatomic, getter=isFocused) BOOL focused;
+@property (nonatomic, readonly) ConversationCallController *startCallController;
 
 @end
 

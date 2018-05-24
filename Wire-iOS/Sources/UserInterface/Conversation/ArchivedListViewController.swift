@@ -38,6 +38,7 @@ import Cartography
     fileprivate let viewModel = ArchivedListViewModel()
     fileprivate let layoutCell = ConversationListCell()
     fileprivate var actionController: ConversationActionController?
+    fileprivate var startCallController: ConversationCallController?
     
     weak var delegate: ArchivedListViewControllerDelegate?
     
@@ -158,10 +159,17 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 // MARK: - ConversationListCellDelegate
 
 extension ArchivedListViewController: ConversationListCellDelegate {
+
+    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell!) {
+        startCallController = ConversationCallController(conversation: cell.conversation, target: self)
+        startCallController?.joinCall()
+    }
+    
     func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
         actionController = ConversationActionController(conversation: cell.conversation, target: self)
         actionController?.presentMenu(from: cell)
     }
+
 }
 
 // MARK: - Previewing

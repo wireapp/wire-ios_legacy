@@ -16,9 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-struct VideoConfiguration {
+protocol OverlayVisibilityProvider {
+    var isOverlayVisible: Bool { get }
+}
+
+class VideoConfiguration {
     let voiceChannel: VoiceChannel
     let mediaManager: AVSMediaManager
+    var overlayVisibilityProvider: OverlayVisibilityProvider?
+    
+    init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager) {
+        self.voiceChannel = voiceChannel
+        self.mediaManager = mediaManager
+    }
 }
 
 struct ParticipantVideoState {
@@ -38,8 +48,9 @@ extension VideoConfiguration: VideoGridConfiguration {
     
     var isMuted: Bool {
         return AVSMediaManager.sharedInstance().isMicrophoneMuted
+            && overlayVisibilityProvider?.isOverlayVisible == false
     }
-    
+
     private func computeVideoStreams() -> (preview: ParticipantVideoState?, grid: [ParticipantVideoState]) {
         let otherParticipants: [ParticipantVideoState] = voiceChannel.participants.compactMap { user in
             guard let user = user as? ZMUser else { return nil }

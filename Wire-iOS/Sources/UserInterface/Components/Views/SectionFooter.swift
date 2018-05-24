@@ -41,7 +41,7 @@ final class SectionFooter: UICollectionReusableView, Themeable {
     }
     
     private func setupViews() {
-        titleLabel.font = FontSpec(.small, .regular).font!
+        titleLabel.font = .preferredFont(forTextStyle: .footnote)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         addSubview(titleLabel)
@@ -52,7 +52,7 @@ final class SectionFooter: UICollectionReusableView, Themeable {
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
     }
     

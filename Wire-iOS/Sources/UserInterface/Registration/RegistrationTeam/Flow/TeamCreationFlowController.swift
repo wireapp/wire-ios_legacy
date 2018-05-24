@@ -133,9 +133,9 @@ extension TeamCreationFlowController {
             stepDescription = SetEmailStepDescription(controller: navigationController)
         case let .verifyEmail(teamName: _, email: email):
             stepDescription = VerifyEmailStepDescription(email: email, delegate: self)
-            UIAlertController.showNewsletterSubscriptionDialog()
         case .setFullName:
             stepDescription = SetFullNameStepDescription()
+            UIAlertController.showNewsletterSubscriptionDialogIfNeeded()
         case .setPassword:
             stepDescription = SetPasswordStepDescription()
         case .createTeam:

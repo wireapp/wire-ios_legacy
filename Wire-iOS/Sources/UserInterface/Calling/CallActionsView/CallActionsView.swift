@@ -63,16 +63,20 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var isTerminating: Bool { get }
     var canAccept: Bool { get }
     var mediaState: MediaState { get }
+    var permissions: CallPermissionsConfiguration { get }
 }
 
 extension CallActionsViewInputType {
     var appearance: CallActionAppearance {
-        guard !isVideoCall else { return .dark }
-        return variant == .light ? .light : .dark
+        switch (isVideoCall, variant) {
+        case (true, _): return .dark(blurred: true)
+        case (false, .light): return .light
+        case (false, .dark): return .dark(blurred: false)
+        }
     }
 }
 
-// A view showing multiple buttons depenging on the given `CallActionsView.Input`.
+// A view showing multiple buttons depending on the given `CallActionsView.Input`.
 // Button touches result in `CallActionsView.Action` cases to be sent to the objects delegate.
 final class CallActionsView: UIView {
     
@@ -89,10 +93,12 @@ final class CallActionsView: UIView {
     private let bottomStackView = UIStackView(axis: .horizontal)
     
     private var lastInput: CallActionsViewInputType?
+    private var videoButtonDisabledTapRecognizer: UITapGestureRecognizer?
     
     // Buttons
     private let muteCallButton = IconLabelButton.muteCall()
     private let videoButton = IconLabelButton.video()
+    private let videoButtonDisabled = UIView()
     private let speakerButton = IconLabelButton.speaker()
     private let flipCameraButton = IconLabelButton.flipCamera()
     private let firstBottomRowSpacer = UIView()
@@ -108,6 +114,7 @@ final class CallActionsView: UIView {
     
     init() {
         super.init(frame: .zero)
+        videoButtonDisabledTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(performButtonAction))
         setupViews()
         createConstraints()
     }
@@ -117,6 +124,8 @@ final class CallActionsView: UIView {
     }
     
     private func setupViews() {
+        videoButtonDisabled.translatesAutoresizingMaskIntoConstraints = false
+        videoButtonDisabled.addGestureRecognizer(videoButtonDisabledTapRecognizer!)
         topStackView.distribution = .equalSpacing
         bottomStackView.distribution = .equalSpacing
         bottomStackView.alignment = .top
@@ -125,6 +134,7 @@ final class CallActionsView: UIView {
         [firstBottomRowSpacer, endCallButton, secondBottomRowSpacer, acceptCallButton].forEach(bottomStackView.addArrangedSubview)
         [topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
+        addSubview(videoButtonDisabled)
     }
     
     private func createConstraints() {
@@ -137,7 +147,11 @@ final class CallActionsView: UIView {
             firstBottomRowSpacer.widthAnchor.constraint(equalToConstant: IconButton.width),
             firstBottomRowSpacer.heightAnchor.constraint(equalToConstant: IconButton.height),
             secondBottomRowSpacer.widthAnchor.constraint(equalToConstant: IconButton.width),
-            secondBottomRowSpacer.heightAnchor.constraint(equalToConstant: IconButton.height)
+            secondBottomRowSpacer.heightAnchor.constraint(equalToConstant: IconButton.height),
+            videoButtonDisabled.leftAnchor.constraint(equalTo: videoButton.leftAnchor),
+            videoButtonDisabled.rightAnchor.constraint(equalTo: videoButton.rightAnchor),
+            videoButtonDisabled.topAnchor.constraint(equalTo: videoButton.topAnchor),
+            videoButtonDisabled.bottomAnchor.constraint(equalTo: videoButton.bottomAnchor),
         ])
     }
     
@@ -147,8 +161,11 @@ final class CallActionsView: UIView {
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
         muteCallButton.isSelected = input.isMuted
+        videoButtonDisabled.isUserInteractionEnabled = !input.canToggleMediaType
+        videoButtonDisabledTapRecognizer?.isEnabled = !input.canToggleMediaType
         videoButton.isEnabled = input.canToggleMediaType
-        videoButton.isSelected = input.mediaState.isSendingVideo
+        videoButton.isSelected = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
+        flipCameraButton.isEnabled = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
         flipCameraButton.isHidden = input.mediaState.showSpeaker
         speakerButton.isHidden = !input.mediaState.showSpeaker
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
@@ -185,6 +202,7 @@ final class CallActionsView: UIView {
         switch button {
         case muteCallButton: return .toggleMuteState
         case videoButton: return .toggleVideoState
+        case videoButtonDisabledTapRecognizer: return .alertVideoUnavailable
         case speakerButton: return .toggleSpeakerState
         case flipCameraButton: return .flipCamera
         case endCallButton: return .terminateCall

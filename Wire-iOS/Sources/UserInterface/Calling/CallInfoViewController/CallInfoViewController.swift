@@ -25,17 +25,21 @@ protocol CallInfoViewControllerDelegate: class {
 protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType  {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
     var degradationState: CallDegradationState { get }
+    var videoPlaceholderState: CallVideoPlaceholderState { get }
+    var permissions: CallPermissionsConfiguration { get }
+    var disableIdleTimer: Bool { get }
 }
 
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
-    
+
     weak var delegate: CallInfoViewControllerDelegate?
 
+    private let backgroundViewController: BackgroundViewController
     private let stackView = UIStackView(axis: .vertical)
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
-    
+
     var configuration: CallInfoViewControllerInput {
         didSet {
             updateState()
@@ -46,6 +50,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         self.configuration = configuration        
         statusViewController = CallStatusViewController(configuration: configuration)
         accessoryViewController = CallAccessoryViewController(configuration: configuration)
+        backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
         super.init(nibName: nil, bundle: nil)
         accessoryViewController.delegate = self
         actionsView.delegate = self
@@ -69,29 +74,35 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     private func setupViews() {
+        addToSelf(backgroundViewController)
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         stackView.alignment = .center
         stackView.distribution = .fill
-        stackView.spacing = 40
+        stackView.spacing = DeviceNativeBoundsSize.nativeScreenBoundOfThisDevice == .iPhone3_5Inch ? 6 : 16
 
         addChildViewController(statusViewController)
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParentViewController: self)
+
     }
 
     private func createConstraints() {
+
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.topAnchor),
+            stackView.topAnchor.constraint(equalTo: safeTopAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -40),
             actionsView.widthAnchor.constraint(equalToConstant: 288),
-            actionsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 173),
             actionsView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
             actionsView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
             accessoryViewController.view.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
+
+        backgroundViewController.view.fitInSuperview()
+
     }
     
     private func updateNavigationItem() {
@@ -108,6 +119,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         accessoryViewController.configuration = configuration
+        backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
     }
     
     // MARK: - Actions + Delegates

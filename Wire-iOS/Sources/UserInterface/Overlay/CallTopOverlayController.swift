@@ -149,7 +149,7 @@ final class CallTopOverlayController: UIViewController {
     }
     
     private func updateLabel() {
-        durationLabel.text = ("voice.top_overlay.tap_to_return".localized + "   " + statusString).uppercased()
+        durationLabel.text = statusString.uppercased()
         view.accessibilityValue = durationLabel.text
     }
     
@@ -160,12 +160,9 @@ final class CallTopOverlayController: UIViewController {
         
         switch state {
         case .established, .establishedDataChannel:
-            if let duration = callDurationFormatter.string(from: callDuration) {
-                return duration
-            }
-            else {
-                return ""
-            }
+            let duration = callDurationFormatter.string(from: callDuration) ?? ""
+            
+            return "voice.top_overlay.tap_to_return".localized + "   " + duration
         default:
             return state.description
         }

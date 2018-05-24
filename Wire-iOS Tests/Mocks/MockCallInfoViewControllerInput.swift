@@ -20,6 +20,8 @@ import Foundation
 @testable import Wire
 
 struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
+    var videoPlaceholderState: CallVideoPlaceholderState
+    var permissions: CallPermissionsConfiguration
     var degradationState: CallDegradationState
     var accessoryType: CallInfoViewControllerAccessoryType
     var canToggleMediaType: Bool
@@ -32,4 +34,5 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var title: String
     var isVideoCall: Bool
     var variant: ColorSchemeVariant
+    var disableIdleTimer: Bool
 }

@@ -24,8 +24,9 @@ class IconLabelButton: ButtonWithLargerHitArea {
     
     private(set) var iconButton = IconButton()
     private(set) var subtitleLabel = UILabel()
+    private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     
-    var appearance: CallActionAppearance = .dark {
+    var appearance: CallActionAppearance = .dark(blurred: false) {
         didSet {
             updateState()
         }
@@ -55,11 +56,15 @@ class IconLabelButton: ButtonWithLargerHitArea {
         iconButton.isUserInteractionEnabled = false
         iconButton.borderWidth = 0
         iconButton.circular = true
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.clipsToBounds = true
+        blurView.layer.cornerRadius = IconLabelButton.width / 2
+        blurView.isUserInteractionEnabled = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.textTransform = .upper
         subtitleLabel.textAlignment = .center
         titleLabel?.font = FontSpec(.small, .semibold).font!
-        [iconButton, subtitleLabel].forEach(addSubview)
+        [blurView, iconButton, subtitleLabel].forEach(addSubview)
     }
     
     private func createConstraints() {
@@ -68,6 +73,10 @@ class IconLabelButton: ButtonWithLargerHitArea {
             heightAnchor.constraint(greaterThanOrEqualToConstant: IconLabelButton.height),
             iconButton.widthAnchor.constraint(equalToConstant: IconLabelButton.width),
             iconButton.heightAnchor.constraint(equalToConstant: IconLabelButton.width),
+            blurView.leadingAnchor.constraint(equalTo: iconButton.leadingAnchor),
+            blurView.trailingAnchor.constraint(equalTo: iconButton.trailingAnchor),
+            blurView.topAnchor.constraint(equalTo: iconButton.topAnchor),
+            blurView.bottomAnchor.constraint(equalTo: iconButton.bottomAnchor),
             iconButton.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconButton.topAnchor.constraint(equalTo: topAnchor),
             iconButton.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -76,7 +85,7 @@ class IconLabelButton: ButtonWithLargerHitArea {
             subtitleLabel.heightAnchor.constraint(equalToConstant: 16)
             ])
     }
-    
+
     private func updateState() {
         apply(appearance)
         subtitleLabel.font = titleLabel?.font
@@ -119,8 +128,10 @@ class IconLabelButton: ButtonWithLargerHitArea {
         setTitleColor(configuration.iconColorNormal.withAlphaComponent(0.4), for: .disabledAndSelected)
         iconButton.setIconColor(configuration.iconColorSelected.withAlphaComponent(0.4), for: .disabledAndSelected)
         iconButton.setBackgroundImageColor(configuration.backgroundColorSelected, for: .disabledAndSelected)
+        
+        blurView.isHidden = !configuration.showBlur
     }
-    
+
 }
 
 // MARK: - Helper

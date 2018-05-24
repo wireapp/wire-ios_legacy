@@ -19,7 +19,14 @@
 import UIKit
 
 enum CallActionAppearance {
-    case light, dark
+    case light, dark(blurred: Bool)
+    
+    var showBlur: Bool {
+        switch self {
+        case .light: return false
+        case .dark(blurred: let blurred): return blurred
+        }
+    }
     
     var backgroundColorNormal: UIColor {
         switch self {

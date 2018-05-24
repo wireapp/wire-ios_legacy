@@ -49,10 +49,9 @@ final class ThumbnailCornerPinningBehavior: UIDynamicBehavior {
 
         self.itemTransformBehavior = UIDynamicItemBehavior(items: [item])
         self.itemTransformBehavior.density = 0.01
-        self.itemTransformBehavior.resistance = 10
+        self.itemTransformBehavior.resistance = 7
         self.itemTransformBehavior.friction = 0.1
         self.itemTransformBehavior.allowsRotation = false
-
         super.init()
 
         // Add child behaviors
@@ -64,7 +63,6 @@ final class ThumbnailCornerPinningBehavior: UIDynamicBehavior {
         // to confine the items in their zone once they reach them
 
         for _ in 0 ..< 4 {
-
             let fieldBehavior = UIFieldBehavior.springField()
             fieldBehavior.addItem(item)
 
