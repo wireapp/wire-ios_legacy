@@ -175,7 +175,6 @@ final class CallViewController: UIViewController {
     fileprivate func alertVideoUnavailable() {
         if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
             showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
-            return
         }
     }
     
@@ -190,10 +189,8 @@ final class CallViewController: UIViewController {
         let newState = voiceChannel.videoState.toggledState
 
         switch newState {
-        case .stopped:
-            callInfoConfiguration.preferedVideoPlaceholderState = .statusTextHidden
-        default:
-            callInfoConfiguration.preferedVideoPlaceholderState = .hidden
+        case .stopped: callInfoConfiguration.preferedVideoPlaceholderState = .statusTextHidden
+        default: callInfoConfiguration.preferedVideoPlaceholderState = .hidden
         }
 
         voiceChannel.videoState = newState
@@ -245,26 +242,18 @@ extension CallViewController {
 
     fileprivate func acceptCallIfPossible() {
         permissions.requestOrWarnAboutAudioPermission { audioGranted in
-
             guard audioGranted else {
-                self.voiceChannel.leave(userSession: ZMUserSession.shared()!)
-                return
+                return self.voiceChannel.leave(userSession: ZMUserSession.shared()!)
             }
 
             self.checkVideoPermissions { videoGranted in
                 self.conversation?.joinVoiceChannel(video: videoGranted)
             }
-
         }
-
     }
 
     private func checkVideoPermissions(resultHandler: @escaping (Bool) -> Void) {
-
-        guard voiceChannel.isVideoCall else {
-            resultHandler(false)
-            return
-        }
+        guard voiceChannel.isVideoCall else { return resultHandler(false) }
 
         if !permissions.isPendingVideoPermissionRequest {
             resultHandler(permissions.canAcceptVideoCalls)
@@ -276,7 +265,6 @@ extension CallViewController {
             resultHandler(granted)
             self.updateVideoStatusPlaceholder()
         }
-
     }
 
     fileprivate func updateVideoStatusPlaceholder() {
