@@ -145,10 +145,14 @@ class ProfileClientViewController: UIViewController {
         descriptionTextView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
-        
+
         if let user = self.userClient.user {
-            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && descriptionTextFont) + "\n" +
-                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
+            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
+                descriptionTextFont &&
+                UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)) +
+                "\n" +
+                ("profile.devices.detail.verify_message.link".localized &&
+                    [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
         }
         self.contentView.addSubview(descriptionTextView)
     }
