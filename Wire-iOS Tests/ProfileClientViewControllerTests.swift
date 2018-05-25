@@ -33,6 +33,8 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         client.remoteIdentifier = "102030405060708090"
         client.user = user
         client.deviceClass = "tablet"
+
+        recordMode = true
     }
     
     override func tearDown() {
@@ -47,18 +49,18 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
 
     func testTestForLightTheme(){
         ColorScheme.default().variant = .light
+        
         sut = ProfileClientViewController(client: client)
-
-        sut.view.layer.speed = 0 // freeze animations of the spinner
+        sut.spinner.stopAnimating()
 
         self.verify(view: sut.view)
     }
 
     func testTestForDarkTheme(){
         ColorScheme.default().variant = .dark
-        sut = ProfileClientViewController(client: client)
 
-        sut.view.layer.speed = 0 // freeze animations of the spinner
+        sut = ProfileClientViewController(client: client)
+        sut.spinner.stopAnimating()
 
         self.verify(view: sut.view)
     }
