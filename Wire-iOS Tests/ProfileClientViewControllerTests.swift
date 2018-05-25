@@ -49,7 +49,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         ColorScheme.default().variant = .light
         
         sut = ProfileClientViewController(client: client)
-        sut.spinner.stopAnimating()
+        sut.spinner.isHidden = true
 
         self.verify(view: sut.view)
     }
@@ -58,7 +58,8 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         ColorScheme.default().variant = .dark
 
         sut = ProfileClientViewController(client: client)
-        sut.spinner.stopAnimating()
+        sut.spinner.isHidden = true
+        sut.navigationItem.backBarButtonItem = nil
 
         self.verify(view: sut.view)
     }
