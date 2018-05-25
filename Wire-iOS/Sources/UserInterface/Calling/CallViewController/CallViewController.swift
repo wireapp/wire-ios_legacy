@@ -348,12 +348,18 @@ extension CallViewController: OverlayVisibilityProvider {
         } else {
             stopOverlayTimer()
         }
+        
+        let animations = { [callInfoRootViewController, updateConfiguration] in
+            callInfoRootViewController.view.alpha = show ? 1 : 0
+            // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
+            updateConfiguration()
+        }
 
         UIView.animate(
             withDuration: 0.2,
             delay: 0,
             options: .curveEaseInOut,
-            animations: { [callInfoRootViewController] in callInfoRootViewController.view.alpha = show ? 1 : 0 },
+            animations: animations,
             completion: { [updateConfiguration] _ in updateConfiguration() }
         )
     }
