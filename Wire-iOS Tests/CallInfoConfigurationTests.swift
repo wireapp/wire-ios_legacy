@@ -46,9 +46,8 @@ class CallInfoConfigurationTests: XCTestCase {
         mockOtherUser = nil
         selfUser = nil
         otherUser = nil
-        
         MockUser.setMockSelf(nil)
-        
+
         super.tearDown()
     }
     
@@ -244,7 +243,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockVideoState = .started
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
         
         // then
         assertEquals(fixture.oneToOneOutgoingVideoRinging, configuration)
@@ -535,7 +534,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.videoState = .started
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
         
         // then
         assertEquals(fixture.groupVideoConnecting, configuration)
@@ -579,8 +578,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        var configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        configuration.preferedVideoPlaceholderState = .statusTextHidden
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .statusTextHidden)
@@ -600,8 +598,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        var configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        configuration.preferedVideoPlaceholderState = .statusTextHidden
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .hidden)
@@ -622,8 +619,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        var configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        configuration.preferedVideoPlaceholderState = .statusTextHidden
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .hidden)

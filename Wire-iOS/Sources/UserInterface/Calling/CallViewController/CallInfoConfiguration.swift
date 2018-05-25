@@ -131,7 +131,8 @@ fileprivate extension VoiceChannel {
 }
 
 struct CallInfoConfiguration: CallInfoViewControllerInput  {
-    
+
+    let permissions: CallPermissionsConfiguration
     let state: CallStatusViewState
     let isConstantBitRate: Bool
     let title: String
@@ -147,15 +148,12 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let videoPlaceholderState: CallVideoPlaceholderState
     let disableIdleTimer: Bool
 
-    let voiceChannel: VoiceChannel
-    let preferedVideoPlaceholderState: CallVideoPlaceholderState
-    let permissions: CallPermissionsConfiguration
-    
-    init(voiceChannel: VoiceChannel, preferedVideoPlaceholderState: CallVideoPlaceholderState, permissions: CallPermissionsConfiguration) {
-        self.voiceChannel = voiceChannel
-        self.preferedVideoPlaceholderState = preferedVideoPlaceholderState
+    init(
+        voiceChannel: VoiceChannel,
+        preferedVideoPlaceholderState: CallVideoPlaceholderState,
+        permissions: CallPermissionsConfiguration
+        ) {
         self.permissions = permissions
-        
         state = voiceChannel.statusViewState
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType
