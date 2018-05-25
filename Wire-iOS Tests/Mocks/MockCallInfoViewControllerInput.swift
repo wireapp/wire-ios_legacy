@@ -37,22 +37,4 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var disableIdleTimer: Bool
 }
 
-extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {
-    var debugDescription: String {
-        return """
-        <MockCallInfoConfiguration>
-        "degradationState: \(degradationState)"
-        accessoryType: \(accessoryType.showAvatar ? "avatar" : "participants (\(accessoryType.participants.count)")
-        canToggleMediaType: \(canToggleMediaType)
-        isMuted: \(isMuted)
-        isTerminating: \(isTerminating)
-        canAccept \(canAccept)
-        mediaState: \(mediaState)
-        state: \(state)
-        isConstantBitRate: \(isConstantBitRate)
-        title: \(title)
-        isVideoCall: \(isVideoCall)
-        variant: \(variant)
-        """
-    }
-}
+extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {}

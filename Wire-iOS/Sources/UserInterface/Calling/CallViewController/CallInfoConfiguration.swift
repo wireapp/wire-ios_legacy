@@ -35,7 +35,6 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
         default:
             return .none
         }
-        
     }
     
     var accessoryType: CallInfoViewControllerAccessoryType {
