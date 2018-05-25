@@ -109,11 +109,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         addChildViewController(statusViewController)
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParentViewController: self)
-
     }
 
     private func createConstraints() {
-
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: safeTopAnchor),
@@ -126,14 +124,13 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         ])
 
         backgroundViewController.view.fitInSuperview()
-
     }
     
     private func updateNavigationItem() {
-     navigationItem.leftBarButtonItem = UIBarButtonItem(
-        icon: .downArrow,
-        target: self,
-        action: #selector(minimizeCallOverlay)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            icon: .downArrow,
+            target: self,
+            action: #selector(minimizeCallOverlay)
         )
         navigationItem.leftBarButtonItem?.accessibilityIdentifier = "CallDismissOverlayButton"
     }
