@@ -103,18 +103,7 @@ fileprivate extension VoiceChannel {
         guard !videoState.isSending else { return .sendingVideo }
         return .notSendingVideo(speakerEnabled: isSpeakerEnabled)
     }
-    
-    var statusViewState: CallStatusViewState {
-        switch state {
-        case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: initiator?.displayName ?? "")
-        case .outgoing: return .ringingOutgoing
-        case .answered, .establishedDataChannel: return .connecting
-        case .established: return .established(duration: -(callStartDate?.timeIntervalSinceNow.rounded() ?? 0))
-        case .terminating, .incoming(_ , shouldRing: false, _): return .terminating
-        case .none, .unknown: return .none
-        }
-    }
-    
+
     var videoPlaceholderState: CallVideoPlaceholderState? {
         guard internalIsVideoCall else { return .hidden }
         guard case .incoming = state else { return .hidden }
@@ -133,7 +122,6 @@ fileprivate extension VoiceChannel {
 struct CallInfoConfiguration: CallInfoViewControllerInput  {
 
     let permissions: CallPermissionsConfiguration
-    let state: CallStatusViewState
     let isConstantBitRate: Bool
     let title: String
     let isVideoCall: Bool
@@ -147,6 +135,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let degradationState: CallDegradationState
     let videoPlaceholderState: CallVideoPlaceholderState
     let disableIdleTimer: Bool
+    private let voiceChannelSnapshot: VoiceChannelSnapshot
 
     init(
         voiceChannel: VoiceChannel,
@@ -154,7 +143,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         permissions: CallPermissionsConfiguration
         ) {
         self.permissions = permissions
-        state = voiceChannel.statusViewState
+        voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType
         isMuted = AVSMediaManager.sharedInstance().isMicrophoneMuted
@@ -169,7 +158,31 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer
     }
-    
+
+    // This property has to be computed in order to return the correct call duration
+    var state: CallStatusViewState {
+        switch voiceChannelSnapshot.state {
+        case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
+        case .outgoing: return .ringingOutgoing
+        case .answered, .establishedDataChannel: return .connecting
+        case .established: return .established(duration: -voiceChannelSnapshot.callStartDate.timeIntervalSinceNow.rounded())
+        case .terminating, .incoming(_ , shouldRing: false, _): return .terminating
+        case .none, .unknown: return .none
+        }
+    }
+
+}
+
+fileprivate struct VoiceChannelSnapshot {
+    let callerName: String
+    let state: CallState
+    let callStartDate: Date
+
+    init(_ voiceChannel: VoiceChannel) {
+        callerName = voiceChannel.initiator?.displayName ?? ""
+        state = voiceChannel.state
+        callStartDate = voiceChannel.callStartDate ?? .init()
+    }
 }
 
 // MARK: - Helper
