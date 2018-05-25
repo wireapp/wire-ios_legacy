@@ -49,12 +49,16 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         ColorScheme.default().variant = .light
         sut = ProfileClientViewController(client: client)
 
+        sut.view.layer.speed = 0 // freeze animations of the spinner
+
         self.verify(view: sut.view)
     }
 
     func testTestForDarkTheme(){
         ColorScheme.default().variant = .dark
         sut = ProfileClientViewController(client: client)
+
+        sut.view.layer.speed = 0 // freeze animations of the spinner
 
         self.verify(view: sut.view)
     }
