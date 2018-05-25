@@ -262,9 +262,9 @@
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Ongoing call";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
-"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
-"conversation.input_bar.ongoing_call_alert.photo.message" = "You can't take a picture while being on a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
 
