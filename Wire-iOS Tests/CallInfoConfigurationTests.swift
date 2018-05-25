@@ -19,25 +19,8 @@
 import XCTest
 @testable import Wire
 
-func ==(lhs: CallActionAppearance, rhs: CallActionAppearance) -> Bool {
-    switch (lhs, rhs) {
-    case (.light, .light): return true
-    case let (.dark(blurred: lhsBlurred), .dark(blurred: rhsBlurred)): return lhsBlurred == rhsBlurred
-    default: return false
-    }
-}
-
 func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> Bool {
-    return lhs.degradationState == rhs.degradationState &&
-        lhs.accessoryType == rhs.accessoryType &&
-        lhs.appearance == rhs.appearance &&
-        lhs.canAccept == rhs.canAccept &&
-        lhs.canToggleMediaType == rhs.canToggleMediaType &&
-        lhs.displayString == rhs.displayString &&
-        lhs.isConstantBitRate == rhs.isConstantBitRate &&
-        lhs.state == rhs.state &&
-        lhs.mediaState == rhs.mediaState &&
-        lhs.disableIdleTimer == rhs.disableIdleTimer
+    return lhs.isEqual(toConfiguration: rhs)
 }
 
 class CallInfoConfigurationTests: XCTestCase {

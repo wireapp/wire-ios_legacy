@@ -22,12 +22,36 @@ protocol CallInfoViewControllerDelegate: class {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)
 }
 
-protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType  {
+protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewInputType {
     var accessoryType: CallInfoViewControllerAccessoryType { get }
     var degradationState: CallDegradationState { get }
     var videoPlaceholderState: CallVideoPlaceholderState { get }
-    var permissions: CallPermissionsConfiguration { get }
     var disableIdleTimer: Bool { get }
+}
+
+// Workaround to make the protocol equatable, it might be possible to conform CallInfoConfiguration
+// to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
+// the `CallInfoRootViewController` generic to work around the `Self` requirement of
+// `Equatable` which we want to avoid.
+extension CallInfoViewControllerInput {
+    func isEqual(toConfiguration other: CallInfoViewControllerInput) -> Bool {
+        return accessoryType == other.accessoryType &&
+            degradationState == other.degradationState &&
+            videoPlaceholderState == other.videoPlaceholderState &&
+            permissions == other.permissions &&
+            disableIdleTimer == other.disableIdleTimer &&
+            canToggleMediaType == other.canToggleMediaType &&
+            isMuted == other.isMuted &&
+            isTerminating == other.isTerminating &&
+            canAccept == other.canAccept &&
+            mediaState == other.mediaState &&
+            appearance == other.appearance &&
+            isVideoCall == other.isVideoCall &&
+            variant == other.variant &&
+            state == other.state &&
+            isConstantBitRate == other.isConstantBitRate &&
+            title == other.title
+    }
 }
 
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
