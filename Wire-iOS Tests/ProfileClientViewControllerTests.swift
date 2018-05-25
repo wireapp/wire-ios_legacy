@@ -33,8 +33,6 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         client.remoteIdentifier = "102030405060708090"
         client.user = user
         client.deviceClass = "tablet"
-
-        recordMode = true
     }
     
     override func tearDown() {
