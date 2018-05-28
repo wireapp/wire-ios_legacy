@@ -34,8 +34,8 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     let checkImageView = UIImageView()
     let avatarViewContainer = UIView()
     var avatarView : UIView?
-    var shieldView: UIImageView?
-    var guestUserIcon: UIImageView?
+    var shieldView: UIImageView!
+    var guestUserIcon: UIImageView!
 
     var allowsMultipleSelection: Bool = true {
         didSet {
@@ -45,33 +45,17 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     
     var destination: D? {
         didSet {
-            self.titleLabel.text = destination?.displayName
-            self.shieldView = destination?.securityLevel == .secure ? UIImageView(image: verifiedShieldImage) : nil
+            
+            guard let destination = destination else { return }
+            
+            self.titleLabel.text = destination.displayName
+            self.shieldView.isHidden = destination.securityLevel != .secure
+            self.guestUserIcon.isHidden = !destination.showsGuestIcon
 
-            if let avatarView = destination?.avatarView {
+            if let avatarView = destination.avatarView {
                 avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
                 self.avatarViewContainer.addSubview(avatarView)
                 self.avatarView = avatarView
-            }
-            
-            if let showsGuestIcon = destination?.showsGuestIcon, showsGuestIcon {
-                self.guestUserIcon = UIImageView(image: UIImage(for: .guest, iconSize: .tiny, color: .white))
-            }
-            
-            if let guestUserIcon = self.guestUserIcon {
-                self.stackView.insertArrangedSubview(guestUserIcon, at: self.stackView.arrangedSubviews.count - 1)
-                constrain(guestUserIcon) { guestUserIcon in
-                    guestUserIcon.width == self.shieldSize
-                    guestUserIcon.height == self.shieldSize
-                }
-            }
-            
-            if let shieldView = self.shieldView {
-                self.stackView.insertArrangedSubview(shieldView, at: self.stackView.arrangedSubviews.count - 1)
-                constrain(shieldView) { shieldView in
-                    shieldView.width == self.shieldSize
-                    shieldView.height == self.shieldSize
-                }
             }
         }
     }
@@ -108,6 +92,22 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         self.titleLabel.textColor = .white
         
         self.stackView.addArrangedSubview(self.titleLabel)
+        
+        self.shieldView = UIImageView(image: verifiedShieldImage)
+        self.stackView.addArrangedSubview(self.shieldView)
+        
+        constrain(shieldView) { shieldView in
+            shieldView.width == self.shieldSize
+            shieldView.height == self.shieldSize
+        }
+        
+        self.guestUserIcon = UIImageView(image: UIImage(for: .guest, iconSize: .tiny, color: UIColor(white: 1.0, alpha: 0.64)))
+        self.stackView.addArrangedSubview(self.guestUserIcon)
+        
+        constrain(self.guestUserIcon) { guestUserIcon in
+            guestUserIcon.width == self.shieldSize
+            guestUserIcon.height == self.shieldSize
+        }
         
         self.checkImageView.layer.borderColor = UIColor.white.cgColor
         self.checkImageView.layer.borderWidth = 2

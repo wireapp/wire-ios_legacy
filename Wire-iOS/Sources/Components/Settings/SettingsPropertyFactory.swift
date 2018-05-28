@@ -55,6 +55,12 @@ enum SettingsPropertyError: Error {
     case WrongValue(String)
 }
 
+
+protocol SettingsPropertyFactoryDelegate: class {
+    func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory)
+    func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
+}
+
 class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var tracking: TrackingInterface?
@@ -62,6 +68,7 @@ class SettingsPropertyFactory {
     weak var userSession: ZMUserSessionInterface?
     var selfUser: SettingsSelfUser?
     var marketingConsent: SettingsPropertyValue = .none
+    weak var delegate: SettingsPropertyFactoryDelegate?
     
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
         SettingsPropertyName.disableMarkdown            : UserDefaultDisableMarkdown,
@@ -205,6 +212,7 @@ class SettingsPropertyFactory {
                 }
             }
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
+
         case .receiveNewsAndOffers:
 
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
@@ -214,14 +222,16 @@ class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                 case .number(let number):
-                    AppDelegate.shared().window.rootViewController?.showLoadingView = true
-
                     self.userSession?.performChanges {
-                        ZMUser.selfUser().setMarketingConsent(to: number.boolValue, in: ZMUserSession.shared()!, completion: { [weak self] _ in
-                            AppDelegate.shared().window.rootViewController?.showLoadingView = false
-
-                            self?.marketingConsent = SettingsPropertyValue.number(value: number)
-                        })
+                        if let userSession = self.userSession as? ZMUserSession {
+                            self.delegate?.asyncMethodDidStart(self)
+                            (self.selfUser as? ZMUser)?.setMarketingConsent(to: number.boolValue, in: userSession, completion: { [weak self] _ in
+                                if let weakSelf = self {
+                                    weakSelf.marketingConsent = SettingsPropertyValue.number(value: number)
+                                    weakSelf.delegate?.asyncMethodDidComplete(weakSelf)
+                                }
+                            })
+                        }
                     }
 
                 default:

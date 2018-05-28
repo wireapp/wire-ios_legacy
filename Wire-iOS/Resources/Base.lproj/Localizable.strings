@@ -59,7 +59,7 @@
 "peoplepicker.header.services" = "Services";
 "peoplepicker.services.create_conversation.item" = "Create a new conversation";
 "peoplepicker.services.add_service.button" = "Add service";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
 "peoplepicker.services.add_service.error.full" = "The conversation is full";
 
@@ -93,7 +93,7 @@
 "peoplepicker.quick-action.create-conversation" = "Create group";
 "peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
-"add_participants.all_contacts_added" = "Everyone's here.";
+"add_participants.all_contacts_added" = "Everyone’s here.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Search by name";
@@ -262,9 +262,9 @@
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Ongoing call";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
-"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
-"conversation.input_bar.ongoing_call_alert.photo.message" = "You can't take a picture while being on a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
 
@@ -285,7 +285,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
-"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can't access the camera while you are on a video call.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF Lock";
@@ -524,7 +524,7 @@
 
 "call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.title" = "A call is active in another conversation.\Joining this call will hang up the other one.";
+"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.join.button" = "Join Anyway";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -972,7 +972,7 @@
 "team.email.textfield.accessibility" = "Your company email";
 "team.email.button.learn_more" = "Learn More";
 
-"team.activation_code.headline" = "You've got mail";
+"team.activation_code.headline" = "You’ve got mail";
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Change email";
@@ -1018,7 +1018,7 @@
 "guest_room.error.generic.message" = "Check your connection and try again";
 
 "guest_room.link.header.title" = "Invite others with a link";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
 
 "guest_room.link.button.title" = "Create Link";
 
@@ -1215,7 +1215,7 @@
 "error.user.device_deleted_remotely" = "You have been logged out from another device.";
 "error.user.last_identity_cant_be_deleted" = "Either an email address or a phone number is required.";
 "error.user.account_suspended" = "This account is no longer authorized to log in.";
-"error.user.account_limit_reached" = "You can't add more than 3 accounts.";
+"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

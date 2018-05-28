@@ -103,7 +103,7 @@ class ActiveVoiceChannelViewController : UIViewController {
                     return
                 }
                 
-                if let voiceChannel = conversation.voiceChannel {
+                if let voiceChannel = conversation.voiceChannel, shouldPresentCallOverlay() {
                     visibleVoiceChannelViewController = CallViewController(voiceChannel: voiceChannel)
                 }
                 visibleVoiceChannelTopOverlayVoiceController = nil
@@ -111,6 +111,13 @@ class ActiveVoiceChannelViewController : UIViewController {
         } else {
             visibleVoiceChannelViewController = nil
             visibleVoiceChannelTopOverlayVoiceController = nil
+        }
+    }
+    
+    private func shouldPresentCallOverlay() -> Bool {
+        switch (primaryCallingConversation?.voiceChannel?.state, SessionManager.shared?.callNotificationStyle) {
+        case (.incoming?, .callKit?): return false
+        default: return true
         }
     }
     
@@ -272,9 +279,7 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
             
             answeredCalls[conversation.remoteIdentifier!] = nil
             present(qualityController, animated: true)
-            
         }
-        
     }
     
 }
@@ -294,11 +299,8 @@ extension ActiveVoiceChannelViewController : UIViewControllerTransitioningDelega
 extension ActiveVoiceChannelViewController : CallQualityViewControllerDelegate {
     
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int) {
-        
-        if score >= 4 {
-            if #available(iOS 10.3, *) {
-                SKStoreReviewController.requestReview()
-            }
+        if score >= 4, #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
         }
         
         controller.dismiss(animated: true, completion: nil)
