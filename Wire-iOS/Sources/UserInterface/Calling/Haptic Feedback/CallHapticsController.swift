@@ -18,20 +18,14 @@
 
 final class CallHapticsController {
     
-    private let hapticGenerator: CallHapticsGeneratorType?
-    private let voiceChannel: VoiceChannel
+    private lazy var hapticGenerator: CallHapticsGeneratorType? = {
+        guard #available(iOS 10, *) else { return nil }
+        return CallHapticsGenerator()
+    }()
+
     private var lastCallState: CallState?
     private var participants = Set<UUID>()
     private var videoStates = [UUID: Bool]()
-    
-    init(voiceChannel: VoiceChannel) {
-        self.voiceChannel = voiceChannel
-        if #available(iOS 10, *) {
-            hapticGenerator = CallHapticsGenerator()
-        } else {
-            hapticGenerator = nil
-        }
-    }
     
     func updateParticipants(_ newParticipants: [(UUID, CallParticipantState)]) {
         let newParticipantIdentifiers = newParticipants.map { $0.0 }

@@ -28,16 +28,13 @@ final class CallViewController: UIViewController {
     fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
+    fileprivate var hapticsController = CallHapticsController()
 
     private var observerTokens: [Any] = []
     private let videoConfiguration: VideoConfiguration
     private let videoGridViewController: VideoGridViewController
     private var cameraType: CaptureDevice = .front
-    
-    fileprivate lazy var hapticsController = {
-        CallHapticsController(voiceChannel: self.voiceChannel)
-    }()
-    
+
     var conversation: ZMConversation? {
         return voiceChannel.conversation
     }
