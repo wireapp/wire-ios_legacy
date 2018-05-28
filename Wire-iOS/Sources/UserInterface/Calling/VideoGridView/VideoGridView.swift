@@ -95,6 +95,7 @@ class VideoGridViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         createConstraints()
+        updateState()
     }
     
     func setupViews() {
