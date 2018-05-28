@@ -18,6 +18,7 @@
 
 
 #import "CameraBottomToolsViewController.h"
+#import "CameraBottomToolsViewController+Private.h"
 
 @import PureLayout;
 @import Photos;
@@ -25,7 +26,6 @@
 
 #import "Constants.h"
 #import "CameraController.h"
-#import "ImagePickerConfirmationController.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Analytics.h"
 #import "DeviceOrientationObserver.h"
@@ -36,9 +36,7 @@
 
 @interface CameraBottomToolsViewController ()
 
-@property (nonatomic) ImagePickerConfirmationController *imagePickerConfirmationController;
 @property (nonatomic) CameraController *cameraController;
-@property (nonatomic) ButtonWithLargerHitArea *libraryButton;
 @property (nonatomic) ButtonWithLargerHitArea *shutterButton;
 @property (nonatomic) ButtonWithLargerHitArea *closeButton;
 @property (nonatomic) BOOL initialConstraintsCreated;
@@ -183,25 +181,6 @@
     if ([self.delegate respondsToSelector:@selector(cameraBottomToolsViewControllerDidCancel:)]) {
         [self.delegate cameraBottomToolsViewControllerDidCancel:self];
     }
-}
-
-- (IBAction)openPhotoLibrary:(id)sender
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.delegate = self.imagePickerConfirmationController;
-    self.imagePickerConfirmationController.previewTitle = self.previewTitle;
-    
-    if (IS_IPAD_FULLSCREEN) {
-        picker.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popover = picker.popoverPresentationController;
-        popover.sourceRect = CGRectInset(self.libraryButton.bounds, 4, 4);
-        popover.sourceView = self.libraryButton;
-        popover.backgroundColor = UIColor.whiteColor;
-    }
-    
-    [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark - Device Rotation

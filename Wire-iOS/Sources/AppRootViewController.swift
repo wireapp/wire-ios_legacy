@@ -81,7 +81,7 @@ class AppRootViewController: UIViewController {
 
         overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
         overlayWindow.backgroundColor = .clear
-        overlayWindow.windowLevel = UIWindowLevelStatusBar + 1
+        overlayWindow.windowLevel = UIWindowLevelStatusBar - 1
         overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         overlayWindow.rootViewController = NotificationWindowRootViewController()
 
@@ -109,7 +109,7 @@ class AppRootViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
 
         transition(to: .headless)
@@ -150,6 +150,7 @@ class AppRootViewController: UIViewController {
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
             self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
+            self.sessionManager?.switchingDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
             sessionManager.start(launchOptions: launchOptions)
@@ -233,7 +234,7 @@ class AppRootViewController: UIViewController {
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
-            else if (addingNewAccount) {
+            else if addingNewAccount {
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
@@ -256,6 +257,12 @@ class AppRootViewController: UIViewController {
             executeAuthenticatedBlocks()
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
+
+            /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
+            clientViewController.needToShowDataUsagePermissionDialog = false
+            if case .unauthenticated(_) = appStateController.lastAppState {
+                clientViewController.needToShowDataUsagePermissionDialog = true
+            }
 
             Analytics.shared().team = ZMUser.selfUser().team
 
@@ -534,6 +541,29 @@ extension AppRootViewController: LandingViewControllerDelegate {
             navigationController.pushViewController(registrationViewController, animated: true)
         }
     }
+}
+
+// MARK: - Ask user if they want want switch account if there's an ongoing call
+
+extension AppRootViewController: SessionManagerSwitchingDelegate {
+    
+    func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
+        
+        guard let session = ZMUserSession.shared(), session.isCallOngoing else { return completion(true) }
+        guard let topmostController = UIApplication.shared.wr_topmostController() else { return completion(false) }
+        
+        let alert = UIAlertController(title: "self.settings.switch_account.title".localized, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized, style: .default, handler: { [weak self] (action) in
+            self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
+            completion(true)
+        }))
+        alert.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (action) in
+            completion(false)
+        }))
+        
+        topmostController.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 public extension SessionManager {

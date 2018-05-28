@@ -22,28 +22,18 @@
 
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
-
-
-
-@implementation UIImage(MediaAsset)
-
-- (NSData *)data
-{
-    return UIImageJPEGRepresentation(self, 1.0);
-}
-
-- (BOOL)isGIF
-{
-    return NO;
-}
-
-@end
+#import "Wire-Swift.h"
 
 @implementation FLAnimatedImage(MediaAsset)
 
 - (BOOL)isGIF
 {
     return YES;
+}
+
+- (BOOL)isTransparent
+{
+    return NO;
 }
 
 @end
@@ -114,30 +104,6 @@
             self.image = (UIImage *)image;
         }
     }
-}
-
-@end
-
-
-
-@implementation UIPasteboard(MediaAsset)
-
-- (id<MediaAsset>)mediaAsset
-{
-    if ([self containsPasteboardTypes:@[(__bridge NSString *)kUTTypeGIF]]) {
-        NSData *data = [self dataForPasteboardType:(__bridge NSString *)kUTTypeGIF];
-        return [[FLAnimatedImage alloc] initWithAnimatedGIFData:data];
-    }
-    else if ([self wr_hasImages]) {
-        return [self image];
-    }
-    return nil;
-}
-
-- (void)setMediaAsset:(id<MediaAsset>)image
-{
-    NSString *type = [image isGIF] ? (__bridge NSString *)kUTTypeGIF : (__bridge NSString *)kUTTypeJPEG;
-    [[UIPasteboard generalPasteboard] setData:image.data forPasteboardType:type];
 }
 
 @end

@@ -42,6 +42,7 @@ final class TeamCreationFlowController: NSObject {
     var syncToken: Any?
     var sessionManagerToken: Any?
     let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)!
+    var marketingConsent: Bool?
 
     init(navigationController: UINavigationController, registrationStatus: RegistrationStatus) {
         self.navigationController = navigationController
@@ -135,6 +136,11 @@ extension TeamCreationFlowController {
             stepDescription = VerifyEmailStepDescription(email: email, delegate: self)
         case .setFullName:
             stepDescription = SetFullNameStepDescription()
+
+            UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
+            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { [weak self] marketingconsent in
+                self?.marketingConsent = marketingconsent
+            }
         case .setPassword:
             stepDescription = SetPasswordStepDescription()
         case .createTeam:
@@ -263,6 +269,10 @@ extension TeamCreationFlowController: TeamMemberInviteViewControllerDelegate {
     
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController) {
         registrationDelegate?.registrationViewControllerDidCompleteRegistration()
+
+        if let marketingConsent = self.marketingConsent, let user = ZMUser.selfUser(), let userSession = ZMUserSession.shared() {
+            user.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
+        }
     }
     
 }

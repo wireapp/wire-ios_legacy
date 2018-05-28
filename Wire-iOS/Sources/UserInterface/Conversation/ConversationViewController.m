@@ -83,7 +83,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
-@interface ConversationViewController (ViewControllerDismissable) <ViewControllerDismissable>
+@interface ConversationViewController (ViewControllerDismisser) <ViewControllerDismisser>
 @end
 
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
@@ -122,6 +122,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) ConversationTitleView *titleView;
 @property (nonatomic) CollectionsViewController *collectionController;
 @property (nonatomic) id conversationListObserverToken;
+@property (nonatomic, readwrite) ConversationCallController *startCallController;
+    
 @end
 
 
@@ -441,6 +443,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (self.conversation != nil) {
         self.voiceChannelStateObserverToken = [self addCallStateObserver];
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+        self.startCallController = [[ConversationCallController alloc] initWithConversation:self.conversation target: self];
     }
 }
 
@@ -495,7 +498,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
                                           conversation:self.conversation
                          profileViewControllerDelegate:self
-                             viewControllerDismissable:self];
+                               viewControllerDismisser:self];
 
             break;
         }
@@ -805,9 +808,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@implementation ConversationViewController (ViewControllerDismissable)
+@implementation ConversationViewController (ViewControllerDismisser)
 
-- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)dismissViewController:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self dismissViewControllerAnimated:YES completion:completion];
 }
@@ -896,7 +899,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                     } else {
                         ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
                         profileViewController.delegate = self;
-                        profileViewController.viewControllerDismissable = self;
+                        profileViewController.viewControllerDismisser = self;
                         UINavigationController *navigationController = profileViewController.wrapInNavigationController;
                         navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
                         [self presentViewController:navigationController animated:YES completion:nil];

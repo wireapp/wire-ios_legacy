@@ -34,6 +34,7 @@ final public class ConversationCreationValues {
 }
 
 @objc protocol ConversationCreationControllerDelegate: class {
+
     func conversationCreationController(
         _ controller: ConversationCreationController,
         didSelectName name: String,
@@ -46,7 +47,6 @@ final public class ConversationCreationValues {
 final class ConversationCreationController: UIViewController {
 
     static let errorFont = FontSpec(.small, .semibold).font!
-
     static let mainViewHeight: CGFloat = 56
 
     fileprivate let errorLabel = UILabel()
@@ -54,15 +54,12 @@ final class ConversationCreationController: UIViewController {
     fileprivate let colorSchemeVariant = ColorScheme.default().variant
     private let mainViewContainer = UIView()
     private let bottomViewContainer = UIView()
+    private let toggleSubtitleLabel = UILabel()
+    private let textFieldSubtitleLabel = UILabel()
     private let toggleView = ToggleView(
         title: "conversation.create.toggle.title".localized,
         isOn: true,
         accessibilityIdentifier: "toggle.newgroup.allowguests"
-    )
-    private let toggleSubtitleLabel = UILabel(
-        key: "conversation.create.toggle.subtitle",
-        size: .small,
-        color: ColorSchemeColorTextDimmed
     )
 
     fileprivate var navigationBarBackgroundView = UIView()
@@ -101,7 +98,7 @@ final class ConversationCreationController: UIViewController {
         title = "conversation.create.group_name.title".localized.uppercased()
         
         setupNavigationBar()
-        createViews()
+        setupViews()
         createConstraints()
         
         // try to overtake the first responder from the other view
@@ -124,7 +121,7 @@ final class ConversationCreationController: UIViewController {
         textField.becomeFirstResponder()
     }
 
-    private func createViews() {
+    private func setupViews() {
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
         navigationBarBackgroundView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
         mainViewContainer.addSubview(navigationBarBackgroundView)
@@ -135,7 +132,10 @@ final class ConversationCreationController: UIViewController {
         textField.placeholder = "conversation.create.group_name.placeholder".localized.uppercased()
         textField.textFieldDelegate = self
         mainViewContainer.addSubview(textField)
-
+        if ZMUser.selfUser().hasTeam {
+            mainViewContainer.addSubview(textFieldSubtitleLabel)
+            textFieldSubtitleLabel.numberOfLines = 0
+        }
         errorViewContainer.translatesAutoresizingMaskIntoConstraints = false
 
         errorLabel.textAlignment = .center
@@ -143,8 +143,17 @@ final class ConversationCreationController: UIViewController {
         errorLabel.textColor = UIColor.Team.errorMessageColor
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
-
         toggleSubtitleLabel.numberOfLines = 0
+        
+        [toggleSubtitleLabel, textFieldSubtitleLabel].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.font = .preferredFont(forTextStyle: .footnote)
+            $0.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        }
+        
+        toggleSubtitleLabel.text = "conversation.create.toggle.subtitle".localized
+        textFieldSubtitleLabel.text = "participants.section.name.footer".localized
+        
         [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
         [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)
         
@@ -211,12 +220,20 @@ final class ConversationCreationController: UIViewController {
             mainViewContainer.width == view.width
         }
 
-        constrain(mainViewContainer, textField) { mainViewContainer, textField in
+        constrain(mainViewContainer, textField, textFieldSubtitleLabel) { mainViewContainer, textField, textFieldSubtitleLabel in
             textField.height == TeamCreationStepController.mainViewHeight
             textField.top == mainViewContainer.top
             textField.leading == mainViewContainer.leading
             textField.trailing == mainViewContainer.trailing
-            textField.bottom == mainViewContainer.bottom
+            
+            if ZMUser.selfUser().hasTeam {
+                textFieldSubtitleLabel.leading == mainViewContainer.leading + 16
+                textFieldSubtitleLabel.trailing == mainViewContainer.trailing - 16
+                textFieldSubtitleLabel.bottom == mainViewContainer.bottom - 24
+                textField.bottom == textFieldSubtitleLabel.top - 16
+            } else {
+                textField.bottom == mainViewContainer.bottom
+            }
         }
 
         constrain(errorViewContainer, errorLabel) { errorViewContainer, errorLabel in

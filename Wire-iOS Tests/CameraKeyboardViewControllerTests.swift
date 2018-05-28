@@ -61,7 +61,13 @@ private final class MockAssetLibrary: AssetLibrary {
     }
 }
 
-final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
+fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
+    override var shouldBlockCallingRelatedActions: Bool {
+        return true
+    }
+}
+
+final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     var sut: CameraKeyboardViewController!
     var splitView: SplitLayoutObservableMock!
     var delegateMock: CameraKeyboardViewControllerDelegateMock!
@@ -93,6 +99,12 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         container.setNeedsLayout()
         container.layoutIfNeeded()
         return container
+    }
+    
+    func testWithCallingOverlay() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        self.sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        self.verify(view: self.prepareForSnapshot())
     }
     
     func testThatFirstSectionContainsCameraCellOnly() {

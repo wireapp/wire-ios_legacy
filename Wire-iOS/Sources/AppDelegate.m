@@ -200,9 +200,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)setupTracking
 {
-    // Migrate analytics settings
-    [[TrackingManager shared] migrateFromLocalytics];
-    
     BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isEqualToString:AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey]) {
             *stop = YES;
@@ -302,7 +299,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
-    ZMLogWarn(@"Received APNS token: %@", newDeviceToken);
+    ZMLogInfo(@"Received APNS token: %@", newDeviceToken);
     
     [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
 }

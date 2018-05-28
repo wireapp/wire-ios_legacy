@@ -34,7 +34,6 @@ typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT NSString * LocalyticsAPIKey;
 FOUNDATION_EXPORT NSString * MixpanelAPIKey;
 FOUNDATION_EXPORT BOOL UseAnalytics;
 

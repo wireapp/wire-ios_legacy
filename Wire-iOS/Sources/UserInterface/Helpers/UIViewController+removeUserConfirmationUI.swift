@@ -25,21 +25,21 @@ extension UIViewController {
     /// - Parameters:
     ///   - participant: user to remove
     ///   - conversation: the current converation contains that user
-    ///   - viewControllerDismissable: a ViewControllerDismissable to call when this UIViewController is dismissed
-    @objc(presentRemoveDialogueForParticipant:fromConversation:dismissable:)
+    ///   - viewControllerDismiser: a ViewControllerDismisser to call when this UIViewController is dismissed
+    @objc(presentRemoveDialogueForParticipant:fromConversation:dismisser:)
     func presentRemoveDialogue(
         for participant: ZMUser,
         from conversation: ZMConversation,
-        dismissable: ViewControllerDismissable? = nil
+        dismisser: ViewControllerDismisser? = nil
         ) {
 
         let controller = UIAlertController.remove(participant) { [weak self] remove in
-            guard remove else { return }
+            guard let `self` = self, remove else { return }
             
             conversation.removeOrShowError(participnant: participant) { result in
                 switch result {
                 case .success:
-                    dismissable?.viewControllerWants(toBeDismissed: self, completion: nil)
+                    dismisser?.dismiss(viewController: self, completion: nil)
                 case .failure(_):
                     break
                 }

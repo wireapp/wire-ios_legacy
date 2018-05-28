@@ -39,7 +39,6 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-
         UIView.setAnimationsEnabled(false)
 
         mockContainerViewController = MockContainerViewController()
@@ -55,7 +54,7 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
         mockContentView.backgroundColor = .white
         mockContainerViewController.view.addSubview(mockContentView)
 
-        sut.createConstraintsInContainer(bottomView: mockContentView, containerView: mockContainerViewController.view, topMargin: UIScreen.safeArea.top)
+        sut.createConstraintsInParentController(bottomView: mockContentView, controller: mockContainerViewController)
 
         constrain(mockContentView, mockContainerViewController.view) { mockContentView, view in
             mockContentView.left == view.left
@@ -98,4 +97,3 @@ final class NetworkStatusViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
 }
-

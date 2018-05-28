@@ -57,6 +57,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
 @property (nonatomic) ConversationListCell *layoutCell;
+@property (nonatomic) ConversationCallController *startCallController;
 
 @property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
 @end
@@ -530,6 +531,12 @@ static NSString * const CellReuseIdConversation = @"CellId";
     if ([self.contentDelegate respondsToSelector:@selector(conversationListContentController:wantsActionMenuForConversation:fromSourceView:)]) {
         [self.contentDelegate conversationListContentController:self wantsActionMenuForConversation:conversation fromSourceView:cell];
     }
+}
+    
+- (void)conversationListCellJoinCallButtonTapped:(ConversationListCell *)cell
+{
+    self.startCallController = [[ConversationCallController alloc] initWithConversation:cell.conversation target:self];
+    [self.startCallController joinCall];
 }
 
 @end

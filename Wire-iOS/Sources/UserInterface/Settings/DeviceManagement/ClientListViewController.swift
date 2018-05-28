@@ -32,12 +32,17 @@ private let zmLog = ZMSLog(tag: "UI")
         didSet {
             if (self.editingList) {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+
+                self.navigationItem.setLeftBarButton(nil, animated: true)
             } else {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+
+                self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
             }
             
             self.navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
             self.navigationItem.setHidesBackButton(self.editingList, animated: true)
+
             self.clientsTableView?.setEditing(self.editingList, animated: true)
         }
     }
@@ -58,6 +63,20 @@ private let zmLog = ZMSLog(tag: "UI")
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: Any?
     var userObserverToken : NSObjectProtocol?
+
+
+    var leftBarButtonItem: UIBarButtonItem? {
+        if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
+            return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
+        }
+
+        if let rootViewController = self.navigationController?.viewControllers.first,
+            self.isEqual(rootViewController) {
+            return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
+        }
+
+        return nil
+    }
         
     required init(clientsList: [UserClient]?, credentials: ZMEmailCredentials? = .none, detailedView: Bool = false, showTemporary: Bool = true) {
         let selfClient = ZMUserSession.shared()!.selfUserClient()
@@ -104,7 +123,7 @@ private let zmLog = ZMSLog(tag: "UI")
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return [.portrait]
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -114,21 +133,19 @@ private let zmLog = ZMSLog(tag: "UI")
         self.view.addSubview(self.topSeparator)
         self.createConstraints()
 
-        if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(ClientListViewController.backPressed(_:)))
-        }
-        
-        if let rootViewController = self.navigationController?.viewControllers.first,
-            self.isEqual(rootViewController) {
-                self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ClientListViewController.backPressed(_:)))
-        }
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.clientsTableView?.reloadData()
     }
-    
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.showLoadingView = false
+    }
+
     func openDetailsOfClient(_ client: UserClient) {
         if let navigationController = self.navigationController {
             let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
@@ -218,7 +235,6 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]!) {
-        self.showLoadingView = false
         self.clients = remainingClients
         Analytics.shared().tagDeleteDevice()
     }

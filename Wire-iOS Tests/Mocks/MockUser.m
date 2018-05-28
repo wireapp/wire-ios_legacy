@@ -39,6 +39,15 @@ static id<ZMBareUser> mockSelfUser = nil;
     return self;
 }
 
+- (BOOL)isEqual:(id)otherObject
+{
+    if (![otherObject isKindOfClass:ZMUser.class]) {
+        return NO;
+    }
+    
+    return [self.name isEqual:[(ZMUser *)otherObject name]];
+}
+
 + (NSArray *)mockUsers
 {
     return [MockLoader mockObjectsOfClass:[self class] fromFile:@"people-01.json"];
@@ -46,14 +55,13 @@ static id<ZMBareUser> mockSelfUser = nil;
 
 + (MockUser *)mockSelfUser
 {
-    static MockUser *selfUser = nil;
-
-    if (selfUser == nil) {
-        selfUser = (MockUser *)self.mockUsers.lastObject;
-        selfUser.isSelfUser = YES;
+    if (mockSelfUser == nil) {
+        MockUser *mockUser = (MockUser *)self.mockUsers.lastObject;
+        mockUser.isSelfUser = YES;
+        mockSelfUser = (MockUser *)mockUser;
     }
     
-    return selfUser;
+    return (MockUser *)mockSelfUser;
 }
 
 + (void)setMockSelfUser:(id<ZMBareUser>)newMockUser
@@ -196,6 +204,16 @@ static id<ZMBareUser> mockSelfUser = nil;
 }
 
 - (BOOL)isPendingApproval
+{
+    return false;
+}
+
+- (BOOL)canManageTeam
+{
+    return false;
+}
+
+- (BOOL)hasTeam
 {
     return false;
 }
