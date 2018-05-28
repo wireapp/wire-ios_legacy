@@ -1050,6 +1050,7 @@
 		EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF106E84204D8B4200B9F0F6 /* MockDevice.swift */; };
 		EF106E88204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF106E87204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift */; };
 		EF159F381FD59607006E0A9C /* TextFieldValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */; };
+		EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */; };
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
 		EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */; };
 		EF1EF1C320627075004DB245 /* SignInViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */; };
@@ -2683,6 +2684,7 @@
 		EF106E84204D8B4200B9F0F6 /* MockDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDevice.swift; sourceTree = "<group>"; };
 		EF106E87204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PingCell+PointOfViewString.swift"; sourceTree = "<group>"; };
 		EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldValidatorTests.swift; sourceTree = "<group>"; };
+		EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+SaveImage.swift"; sourceTree = "<group>"; };
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
 		EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+filename.swift"; sourceTree = "<group>"; };
 		EF1EF1C220627075004DB245 /* SignInViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerTests.swift; sourceTree = "<group>"; };
@@ -4818,6 +4820,7 @@
 				8FC851A9199245760008B66B /* ConversationContentViewController.h */,
 				8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */,
 				8FC851AA199245760008B66B /* ConversationContentViewController.m */,
+				EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */,
 				BFE277621D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift */,
 				876113EA1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift */,
 				87AAE4241E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift */,
@@ -7124,6 +7127,7 @@
 				871BC25D1D34F8F800DF0793 /* ColorPickerController.m in Sources */,
 				EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */,
 				BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */,
+				EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */,
 				BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */,
 				D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */,
 				16A94AF12099E11C008A5718 /* ThemeableContainer.swift in Sources */,

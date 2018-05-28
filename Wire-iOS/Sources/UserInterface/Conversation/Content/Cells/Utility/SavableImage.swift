@@ -22,8 +22,9 @@ import Photos
 @objc final public class SavableImage: NSObject {
 
     public typealias ImageSaveCompletion = (Bool) -> Void
-    
-    fileprivate let imageData: Data
+
+    ///TODO: image var
+    let imageData: Data
     fileprivate let imageOrientation: UIImageOrientation
     fileprivate var writeInProgess = false
 
@@ -43,17 +44,21 @@ import Photos
                 return
             }
 
-            PHPhotoLibrary.shared().performChanges({ [weak self] in
-                guard let `self` = self, let image = UIImage(data: self.imageData) else {
+            PHPhotoLibrary.shared().performChanges({ //[weak self] in
+//                guard let `self` = self else { ///FIXME:
+//                    return
+//                }
+                guard let image = UIImage(data: self.imageData) else { ///FIXME:
                     return
                 }
+//                guard let image = UIImage(data: self.imageData) else { return } ///TODO: some waring for image not saved
 
                 PHAssetChangeRequest.creationRequestForAsset(from: image)
-            }) { [weak self] success, error in
+            }) { success, error in
                 DispatchQueue.main.async {
-                    self?.writeInProgess = false
+                    self.writeInProgess = false
                     if let error = error {
-                        self?.warnAboutError(error)
+                        self.warnAboutError(error)
                     }
                     completion?(success)
                 }

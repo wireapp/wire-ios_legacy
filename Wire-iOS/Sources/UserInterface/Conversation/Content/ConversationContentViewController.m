@@ -534,25 +534,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
 }
 
-- (void)saveImageFromMessage:(id<ZMConversationMessage>)message cell:(ImageMessageCell *)cell
-{
-    if (cell == nil) {
-        NSData *imageData = message.imageMessageData.imageData;
-        SavableImage *savableImage = [[SavableImage alloc] initWithData:imageData orientation:UIImageOrientationUp];
-        [savableImage saveToLibraryWithCompletion:nil];
-    }
-    else {
-        [cell.savableImage saveToLibraryWithCompletion:^(BOOL success) {
-            if (nil != self.view.window && success == YES) {
-                UIView *snapshot = [cell.fullImageView snapshotViewAfterScreenUpdates:YES];
-                snapshot.translatesAutoresizingMaskIntoConstraints = YES;
-                CGRect sourceRect = [self.view convertRect:cell.fullImageView.frame fromView:cell.fullImageView.superview];
-                [self.delegate conversationContentViewController:self performImageSaveAnimation:snapshot sourceRect:sourceRect];
-            }
-        }];
-    }
-}
-
 - (void)openSketchForMessage:(id<ZMConversationMessage>)message inEditMode:(CanvasViewControllerEditMode)editMode
 {
     CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
@@ -970,7 +951,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
     ConversationCell *cell = [self cellForMessage:message];
-    [self wantsToPerformAction:action forMessage:message cell:cell];
+    [self wantsToPerformAction:action forMessage:message cell:cell];///TODO: cell is nil
 }
 
 @end
