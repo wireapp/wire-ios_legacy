@@ -34,6 +34,9 @@ final class CallViewController: UIViewController {
     private let videoGridViewController: VideoGridViewController
     private var cameraType: CaptureDevice = .front
     
+    fileprivate lazy var hapticsController = {
+        CallHapticsController(voiceChannel: self.voiceChannel)
+    }()
     
     var conversation: ZMConversation? {
         return voiceChannel.conversation
@@ -219,6 +222,7 @@ extension CallViewController: WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateConfiguration()
         hideOverlayAfterCallEstablishedIfNeeded()
+        hapticsController.updateCallState(callState)
     }
     
 }
@@ -227,6 +231,7 @@ extension CallViewController: WireCallCenterCallParticipantObserver {
     
     func callParticipantsDidChange(conversation: ZMConversation, participants: [(UUID, CallParticipantState)]) {
         updateConfiguration()
+        hapticsController.updateParticipants(participants)
     }
     
 }

@@ -905,6 +905,8 @@
 		BFE731E020A58EFD0088BA22 /* VideoState+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE731DF20A58EFD0088BA22 /* VideoState+Helper.swift */; };
 		BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */; };
 		BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */; };
+		BFF8076420BC072A0063E5D4 /* CallHapticsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8076320BC072A0063E5D4 /* CallHapticsGenerator.swift */; };
+		BFF8076620BC275D0063E5D4 /* CallHapticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8076520BC275D0063E5D4 /* CallHapticsController.swift */; };
 		BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */; };
 		BFFE943A1E782FD70025AD75 /* ConversationRenamedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE94391E782FD70025AD75 /* ConversationRenamedCell.swift */; };
 		BFFE943C1E7839D10025AD75 /* ConversationRenamedCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */; };
@@ -2533,6 +2535,8 @@
 		BFE731DF20A58EFD0088BA22 /* VideoState+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoState+Helper.swift"; sourceTree = "<group>"; };
 		BFEA26581D410F9F000D0ED5 /* audio_sample.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = audio_sample.m4a; sourceTree = "<group>"; };
 		BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationAvatarViewTests.swift; sourceTree = "<group>"; };
+		BFF8076320BC072A0063E5D4 /* CallHapticsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHapticsGenerator.swift; sourceTree = "<group>"; };
+		BFF8076520BC275D0063E5D4 /* CallHapticsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHapticsController.swift; sourceTree = "<group>"; };
 		BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RightToLeft.swift"; sourceTree = "<group>"; };
 		BFFE94391E782FD70025AD75 /* ConversationRenamedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRenamedCell.swift; sourceTree = "<group>"; };
 		BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRenamedCellTests.swift; sourceTree = "<group>"; };
@@ -5409,6 +5413,15 @@
 			path = CallInfoViewController;
 			sourceTree = "<group>";
 		};
+		BFF8076720BC27820063E5D4 /* Haptic Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				BFF8076320BC072A0063E5D4 /* CallHapticsGenerator.swift */,
+				BFF8076520BC275D0063E5D4 /* CallHapticsController.swift */,
+			);
+			path = "Haptic Feedback";
+			sourceTree = "<group>";
+		};
 		CE8E4FB61DF17BBE0009F437 /* TextTransform */ = {
 			isa = PBXGroup;
 			children = (
@@ -5456,6 +5469,7 @@
 				16A94AF2209A1A53008A5718 /* VideoGridView */,
 				16A94AE72093235B008A5718 /* CallParticipantsView */,
 				D58192032091E3B8003BA7EC /* CallActionsView */,
+				BFF8076720BC27820063E5D4 /* Haptic Feedback */,
 				BFE4186B209B6E6900503C7C /* CallInfoViewController */,
 				5EE51CBB2099B8E0008BA4B1 /* Thumbnail */,
 				BFAC71FC20A1CDFC002711C4 /* Helper */,
@@ -6663,6 +6677,7 @@
 				87E3C5081FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift in Sources */,
 				16460A42206412410096B616 /* UIColor+AudioPlayer.swift in Sources */,
 				BFCF31D71DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift in Sources */,
+				BFF8076420BC072A0063E5D4 /* CallHapticsGenerator.swift in Sources */,
 				F1199D411FC849450070FAC3 /* TextFieldDescription.swift in Sources */,
 				D58192002091CEBF003BA7EC /* UIStackView+Helper.swift in Sources */,
 				BF4D99CE1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift in Sources */,
@@ -6965,6 +6980,7 @@
 				871BC2321D34F8F800DF0793 /* StyledTextField.m in Sources */,
 				876113E21DD1DD4D007F5969 /* CanvasViewController.swift in Sources */,
 				870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */,
+				BFF8076620BC275D0063E5D4 /* CallHapticsController.swift in Sources */,
 				BF415B271C3C354C00DF57B7 /* MissingMessagesCell.swift in Sources */,
 				1693D9681CEDB26200D1F13C /* UIApplication+Permissions.m in Sources */,
 				16A95FFE1A6EC3210045E175 /* ZMConversationMessageWindow+Formatting.m in Sources */,
