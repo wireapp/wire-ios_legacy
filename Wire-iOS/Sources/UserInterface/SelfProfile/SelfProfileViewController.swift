@@ -128,12 +128,15 @@ final internal class SelfProfileViewController: UIViewController {
     private func createConstraints() {
         var selfViewTopMargin: CGFloat = 12
 
-        if #available(iOS 10, *) {
+        if #available(iOS 11, *) {
         } else {
             if let naviBarHeight = self.navigationController?.navigationBar.frame.size.height {
                 selfViewTopMargin = 12 + naviBarHeight
             }
-
+        }
+        
+        if #available(iOS 10, *) {
+        } else {
             if let superview = accountSelectorController.view.superview {
                 constrain(accountSelectorController.view, superview) {accountSelectorControllerView, superview in
                     accountSelectorControllerView.centerX == superview.centerX
