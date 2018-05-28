@@ -21,34 +21,21 @@ import Foundation
 extension ConversationContentViewController {
     @objc(saveImageFromMessage:cell:)
     func saveImage(from message: ZMConversationMessage?, cell: ImageMessageCell?) {
-        var savableImage: SavableImage?
-        var snapshot: UIView?
-        var sourceRect: CGRect?
-
         if let cell = cell {
-            savableImage = cell.savableImage
-            snapshot = cell.fullImageView.snapshotView(afterScreenUpdates: true)
-            sourceRect = self.view.convert(cell.fullImageView.frame, from: cell.fullImageView.superview)
+            let savableImage = cell.savableImage
+            let snapshot = cell.fullImageView.snapshotView(afterScreenUpdates: true)
+            let sourceRect = self.view.convert(cell.fullImageView.frame, from: cell.fullImageView.superview)
+            savableImage?.saveToLibrary(withCompletion: {(_ success: Bool) -> Void in
+                if nil != self.view.window && success == true {
+                    snapshot?.translatesAutoresizingMaskIntoConstraints = true
+                    self.delegate.conversationContentViewController(self, performImageSaveAnimation: snapshot, sourceRect: sourceRect)
+                }
+            })
         } else {
             if let imageData = message?.imageMessageData?.imageData {
-                savableImage = SavableImage(data: imageData, orientation: .up)
-                /// TODO: savableImage is not reteined?
-
-                if let savableImage = savableImage {
-                    snapshot = UIImageView(image: UIImage(data: savableImage.imageData))
-                    savableImage.saveToLibrary()
-                }
-                sourceRect = self.view.frame
-
+                let savableImage = SavableImage(data: imageData, orientation: .up)
+                savableImage.saveToLibrary()
             }
         }
-
-        savableImage?.saveToLibrary(withCompletion: {(_ success: Bool) -> Void in
-            if nil != self.view.window && success == true {
-                snapshot?.translatesAutoresizingMaskIntoConstraints = true
-                self.delegate.conversationContentViewController(self, performImageSaveAnimation: snapshot, sourceRect: sourceRect!)
-            }
-        })
-
     }
 }

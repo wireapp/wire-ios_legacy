@@ -36,15 +36,22 @@ final class SavableImageTests: XCTestCase {
         super.tearDown()
     }
 
-    func testSavableImageIsNotRetainedAfter() {
+    func testSavableImageIsNotRetainedAfterSaveToLibrary() {
         autoreleasepool {
             // GIVEN
             var savableImage: SavableImage! = SavableImage(data: imageData!, orientation: .up)
             sut = savableImage
 
             // WHEN
+            let expectation = self.expectation(description: "Wait for image to be saved")
+            savableImage.saveToLibrary() { success in
+                XCTAssert(success)
+                expectation.fulfill()
+                savableImage = nil
+            }
 
-            savableImage = nil
+            self.waitForExpectations(timeout: 2, handler: nil)
+
         }
 
         // THEN
