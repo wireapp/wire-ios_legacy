@@ -23,6 +23,7 @@ final class CallViewController: UIViewController {
     
     weak var dismisser: ViewControllerDismisser? = nil
     
+    fileprivate let mediaManager: AVSMediaManager
     fileprivate let voiceChannel: VoiceChannel
     fileprivate var callInfoConfiguration: CallInfoConfiguration
     fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
@@ -30,7 +31,7 @@ final class CallViewController: UIViewController {
     fileprivate weak var overlayTimer: Timer?
 
     private var observerTokens: [Any] = []
-    private let videoConfiguration: VideoConfiguration
+    private var videoConfiguration: VideoConfiguration
     private let videoGridViewController: VideoGridViewController
     private var cameraType: CaptureDevice = .front
     
@@ -49,7 +50,8 @@ final class CallViewController: UIViewController {
     
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance(), permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
         self.voiceChannel = voiceChannel
-        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
+        self.mediaManager = mediaManager
+        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager,  isOverlayVisible: true)
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
@@ -58,7 +60,6 @@ final class CallViewController: UIViewController {
         AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
         proximityMonitorManager?.stateChanged = proximityStateDidChange
-        videoConfiguration.overlayVisibilityProvider = self
         disableVideoIfNeeded()
     }
     
@@ -146,6 +147,7 @@ final class CallViewController: UIViewController {
     fileprivate func updateConfiguration() {
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions)
         callInfoRootViewController.configuration = callInfoConfiguration
+        videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager, isOverlayVisible: isOverlayVisible)
         videoGridViewController.configuration = videoConfiguration
         updateOverlayAfterStateChanged()
         updateAppearance()
@@ -327,7 +329,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
 
 // MARK: - Hide + Show Overlay
 
-extension CallViewController: OverlayVisibilityProvider {
+extension CallViewController {
     
     var isOverlayVisible: Bool {
         return callInfoRootViewController.view.alpha > 0
