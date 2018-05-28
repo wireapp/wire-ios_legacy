@@ -17,24 +17,17 @@
 //
 
 import Foundation
-@testable import Wire
 
-struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
-    var videoPlaceholderState: CallVideoPlaceholderState
-    var permissions: CallPermissionsConfiguration
-    var degradationState: CallDegradationState
-    var accessoryType: CallInfoViewControllerAccessoryType
-    var canToggleMediaType: Bool
-    var isMuted: Bool
-    var isTerminating: Bool
-    var canAccept: Bool
-    var mediaState: MediaState
-    var state: CallStatusViewState
-    var isConstantBitRate: Bool
-    var title: String
-    var isVideoCall: Bool
-    var variant: ColorSchemeVariant
-    var disableIdleTimer: Bool
+extension CameraBottomToolsViewController {
+    func openPhotoLibrary(_ sender: Any) {
+        let context = ImagePickerPopoverPresentationContext(sourceRect: libraryButton.bounds.insetBy(dx: 4, dy: 4),
+                                                sourceView: libraryButton,
+                                                presentViewController: self,
+                                                sourceType: .photoLibrary)
+
+        let picker = UIImagePickerController.popoverForIPadRegular(with: context)
+        picker.delegate = imagePickerConfirmationController
+        imagePickerConfirmationController.previewTitle = previewTitle
+        present(picker, animated: true)
+    }
 }
-
-extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {}

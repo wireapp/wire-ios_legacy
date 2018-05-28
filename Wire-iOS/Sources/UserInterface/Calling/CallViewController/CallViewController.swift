@@ -25,6 +25,7 @@ final class CallViewController: UIViewController {
     
     fileprivate let voiceChannel: VoiceChannel
     fileprivate var callInfoConfiguration: CallInfoConfiguration
+    fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
 
@@ -32,6 +33,7 @@ final class CallViewController: UIViewController {
     private let videoConfiguration: VideoConfiguration
     private let videoGridViewController: VideoGridViewController
     private var cameraType: CaptureDevice = .front
+    
     
     var conversation: ZMConversation? {
         return voiceChannel.conversation
@@ -48,7 +50,7 @@ final class CallViewController: UIViewController {
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance(), permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
         self.voiceChannel = voiceChannel
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: permissionsConfiguration)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
         super.init(nibName: nil, bundle: nil)
@@ -142,6 +144,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions)
         callInfoRootViewController.configuration = callInfoConfiguration
         videoGridViewController.configuration = videoConfiguration
         updateOverlayAfterStateChanged()
@@ -180,7 +183,7 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func toggleVideoState() {
-        if permissions.canAcceptVideoCalls == false {
+        if !permissions.canAcceptVideoCalls {
             permissions.requestOrWarnAboutVideoPermission { _ in
                 self.disableVideoIfNeeded()
                 self.updateVideoStatusPlaceholder()
@@ -190,12 +193,7 @@ final class CallViewController: UIViewController {
         }
 
         let newState = voiceChannel.videoState.toggledState
-
-        switch newState {
-        case .stopped: callInfoConfiguration.preferedVideoPlaceholderState = .statusTextHidden
-        default: callInfoConfiguration.preferedVideoPlaceholderState = .hidden
-        }
-
+        preferedVideoPlaceholderState = newState == .stopped ? .statusTextHidden : .hidden
         voiceChannel.videoState = newState
         updateConfiguration()
     }
@@ -272,7 +270,7 @@ extension CallViewController {
     }
 
     fileprivate func updateVideoStatusPlaceholder() {
-        callInfoConfiguration.preferedVideoPlaceholderState = permissions.preferredVideoPlaceholderState
+        preferedVideoPlaceholderState = permissions.preferredVideoPlaceholderState
         updateConfiguration()
     }
 
@@ -350,12 +348,18 @@ extension CallViewController: OverlayVisibilityProvider {
         } else {
             stopOverlayTimer()
         }
+        
+        let animations = { [callInfoRootViewController, updateConfiguration] in
+            callInfoRootViewController.view.alpha = show ? 1 : 0
+            // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
+            updateConfiguration()
+        }
 
         UIView.animate(
             withDuration: 0.2,
             delay: 0,
             options: .curveEaseInOut,
-            animations: { [callInfoRootViewController] in callInfoRootViewController.view.alpha = show ? 1 : 0 },
+            animations: animations,
             completion: { [updateConfiguration] _ in updateConfiguration() }
         )
     }

@@ -20,6 +20,40 @@ import Foundation
 import Cartography
 
 extension TermsOfUseStepViewController {
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateConstraintsForSizeClass()
+    }
+
+    @objc func updateConstraintsForSizeClass() {
+        guard isiPad else { return }
+
+        switch self.traitCollection.horizontalSizeClass {
+        case .compact:
+            containerViewWidth.isActive = false
+            containerViewHeight.isActive = false
+            containerViewCenter.forEach {
+                $0.isActive = false
+            }
+
+            containerViewEdges.forEach {
+                $0.isActive = true
+            }
+        default:
+            containerViewEdges.forEach {
+                $0.isActive = false
+            }
+
+            containerViewWidth.isActive = true
+            containerViewHeight.isActive = true
+            containerViewCenter.forEach {
+                $0.isActive = true
+            }
+        }
+    }
+
     override open func updateViewConstraints() {
         super.updateViewConstraints()
 
@@ -43,17 +77,21 @@ extension TermsOfUseStepViewController {
             align(left: titleLabel, termsOfUseText, agreeButton)
         }
 
-        if self.isIPadRegular(device: UIDevice.current) {
-            constrain(containerView, self.view) { containerView, selfView in
-                containerView.width == self.registrationForm().maximumFormSize.width
-                containerView.height == self.registrationForm().maximumFormSize.height
+        constrain(containerView, self.view) { containerView, selfView in
+            self.containerViewWidth = containerView.width == self.registrationForm().maximumFormSize.width
+            self.containerViewHeight = containerView.height == self.registrationForm().maximumFormSize.height
 
-                containerView.center == selfView.center
-            }
-        } else {
-            constrain(containerView, self.view) { containerView, selfView in
-                containerView.edges == selfView.edges
-            }
+            self.containerViewCenter = containerView.center == selfView.center
         }
+
+        constrain(containerView, self.view) { containerView, selfView in
+            self.containerViewEdges = containerView.edges == selfView.edges
+        }
+    }
+
+    var isiPad: Bool{
+        guard let device = (self.device as? DeviceProtocol) else { return false }
+
+        return device.userInterfaceIdiom == .pad
     }
 }

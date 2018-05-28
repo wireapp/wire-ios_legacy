@@ -34,6 +34,18 @@ extension Notification.Name {
     static let DismissSettings = Notification.Name("DismissSettings")
 }
 
+extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
+    func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
+        self.navigationController?.topViewController?.showLoadingView = true
+    }
+
+    func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
+        self.navigationController?.topViewController?.showLoadingView = false
+    }
+
+
+}
+
 final internal class SelfProfileViewController: UIViewController {
     
      static let dismissNotificationName = "SettingsNavigationControllerDismissNotificationName"
@@ -48,12 +60,15 @@ final internal class SelfProfileViewController: UIViewController {
 
     convenience init() {
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
+
         let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
         let rootGroup = settingsCellDescriptorFactory.rootGroup()
         
         self.init(rootGroup: settingsCellDescriptorFactory.rootGroup())
         self.settingsCellDescriptorFactory = settingsCellDescriptorFactory
         self.rootGroup = rootGroup
+
+        settingsPropertyFactory.delegate = self
     }
     
     init(rootGroup: SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType) {
@@ -134,25 +149,15 @@ final internal class SelfProfileViewController: UIViewController {
                 selfViewTopMargin = 12 + naviBarHeight
             }
         }
-        
-        if #available(iOS 10, *) {
-        } else {
-            if let superview = accountSelectorController.view.superview {
-                constrain(accountSelectorController.view, superview) {accountSelectorControllerView, superview in
-                    accountSelectorControllerView.centerX == superview.centerX
-                    accountSelectorControllerView.centerY == superview.centerY
-                }
-            }
-        }
 
         constrain(view, profileContainerView) { selfView, profileContainerView in
             profileContainerView.top == selfView.topMargin + selfViewTopMargin
         }
 
-        constrain(accountSelectorController.view) {accountSelectorControllerView in
+        constrain(accountSelectorController.view) { accountSelectorControllerView in
             accountSelectorControllerView.height == 44
         }
-        
+
         let height = CGFloat(56 * settingsController.tableView.numberOfRows(inSection: 0))
         
         constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in

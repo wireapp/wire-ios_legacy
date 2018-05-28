@@ -18,36 +18,26 @@
 
 import Foundation
 
-struct CallInfoConfiguration  {
-    let voiceChannel: VoiceChannel
-    var preferedVideoPlaceholderState: CallVideoPlaceholderState
-    let permissions: CallPermissionsConfiguration
-}
-
-extension CallInfoConfiguration: CallInfoViewControllerInput {
-    
+fileprivate extension VoiceChannel {
     var degradationState: CallDegradationState {
-        switch voiceChannel.state {
+        switch state {
         case .incoming(video: _, shouldRing: _, degraded: true):
-            return .incoming(degradedUser: voiceChannel.firstDegradedUser)
+            return .incoming(degradedUser: firstDegradedUser)
         case .answered(degraded: true), .outgoing(degraded: true):
-            return .outgoing(degradedUser: voiceChannel.firstDegradedUser)
+            return .outgoing(degradedUser: firstDegradedUser)
         default:
             return .none
         }
-        
     }
     
     var accessoryType: CallInfoViewControllerAccessoryType {
-        let conversation = voiceChannel.conversation
-        
-        if isVideoCall, conversation?.conversationType == .oneOnOne {
+        if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
         
-        switch voiceChannel.state {
+        switch state {
         case .incoming(video: false, shouldRing: true, degraded: _):
-            return voiceChannel.initiator.map { .avatar($0) } ?? .none
+            return initiator.map { .avatar($0) } ?? .none
         case .incoming(video: true, shouldRing: true, degraded: _):
             return .none
         case .answered, .establishedDataChannel, .outgoing:
@@ -58,7 +48,7 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
             }
         case .unknown, .none, .terminating, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
-                return .participantsList(voiceChannel.connectedParticipants.map {
+                return .participantsList(connectedParticipants.map {
                     .callParticipant(user: $0.0, sendsVideo: $0.1.isSendingVideo)
                 })
             } else if let remoteParticipant = conversation?.connectedUser {
@@ -69,101 +59,130 @@ extension CallInfoConfiguration: CallInfoViewControllerInput {
         }
     }
     
-    var canToggleMediaType: Bool {
-        switch voiceChannel.state {
+    var internalIsVideoCall: Bool {
+        switch state {
+        case .established, .terminating: return isAnyParticipantSendingVideo
+        default: return isVideoCall
+        }
+    }
+    
+    func canToggleMediaType(with permissions: CallPermissionsConfiguration) -> Bool {
+        switch state {
         case .outgoing, .incoming(video: false, shouldRing: _, degraded: _):
             return false
         default:
-            guard !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever else {
-                return false
-            }
-
+            guard !permissions.isVideoDisabledForever && !permissions.isAudioDisabledForever else { return false }
+            
             // The user can only re-enable their video if the conversation allows GVC
-            if voiceChannel.videoState == .stopped {
-                return voiceChannel.canUpgradeToVideo
+            if videoState == .stopped {
+                return canUpgradeToVideo
             }
-
+            
             // If the user already enabled video, they should be able to disable it
             return true
         }
     }
     
-    var isMuted: Bool {
-        return AVSMediaManager.sharedInstance().isMicrophoneMuted
-    }
-    
     var isTerminating: Bool {
-        switch voiceChannel.state {
+        switch state {
         case .terminating, .incoming(video: _, shouldRing: false, degraded: _): return true
         default: return false
         }
     }
     
     var canAccept: Bool {
-        switch voiceChannel.state {
+        switch state {
         case .incoming(video: _, shouldRing: true, degraded: _): return true
         default: return false
         }
     }
     
-    var mediaState: MediaState {
-
+    func mediaState(with permissions: CallPermissionsConfiguration) -> MediaState {
         let isSpeakerEnabled = AVSMediaManager.sharedInstance().isSpeakerEnabled
-
-        guard permissions.canAcceptVideoCalls else {
-            return .notSendingVideo(speakerEnabled: isSpeakerEnabled)
-        }
-
-        guard !voiceChannel.videoState.isSending else { return .sendingVideo }
+        guard permissions.canAcceptVideoCalls else { return .notSendingVideo(speakerEnabled: isSpeakerEnabled) }
+        guard !videoState.isSending else { return .sendingVideo }
         return .notSendingVideo(speakerEnabled: isSpeakerEnabled)
+    }
 
+    var videoPlaceholderState: CallVideoPlaceholderState? {
+        guard internalIsVideoCall else { return .hidden }
+        guard case .incoming = state else { return .hidden }
+        return nil
     }
     
+    var disableIdleTimer: Bool {
+        switch state {
+        case .none: return false
+        default: return internalIsVideoCall && !isTerminating
+        }
+    }
+
+}
+
+struct CallInfoConfiguration: CallInfoViewControllerInput  {
+
+    let permissions: CallPermissionsConfiguration
+    let isConstantBitRate: Bool
+    let title: String
+    let isVideoCall: Bool
+    let variant: ColorSchemeVariant
+    let canToggleMediaType: Bool
+    let isMuted: Bool
+    let isTerminating: Bool
+    let canAccept: Bool
+    let mediaState: MediaState
+    let accessoryType: CallInfoViewControllerAccessoryType
+    let degradationState: CallDegradationState
+    let videoPlaceholderState: CallVideoPlaceholderState
+    let disableIdleTimer: Bool
+    private let voiceChannelSnapshot: VoiceChannelSnapshot
+
+    init(
+        voiceChannel: VoiceChannel,
+        preferedVideoPlaceholderState: CallVideoPlaceholderState,
+        permissions: CallPermissionsConfiguration
+        ) {
+        self.permissions = permissions
+        voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
+        degradationState = voiceChannel.degradationState
+        accessoryType = voiceChannel.accessoryType
+        isMuted = AVSMediaManager.sharedInstance().isMicrophoneMuted
+        canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
+        canAccept = voiceChannel.canAccept
+        isVideoCall = voiceChannel.internalIsVideoCall
+        isTerminating = voiceChannel.isTerminating
+        isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
+        title = voiceChannel.conversation?.displayName ?? ""
+        variant = ColorScheme.default().variant
+        mediaState = voiceChannel.mediaState(with: permissions)
+        videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
+        disableIdleTimer = voiceChannel.disableIdleTimer
+    }
+
+    // This property has to be computed in order to return the correct call duration
     var state: CallStatusViewState {
-        switch voiceChannel.state {
-        case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: voiceChannel.initiator?.displayName ?? "")
+        switch voiceChannelSnapshot.state {
+        case .incoming(_ , shouldRing: true, _): return .ringingIncoming(name: voiceChannelSnapshot.callerName)
         case .outgoing: return .ringingOutgoing
         case .answered, .establishedDataChannel: return .connecting
-        case .established: return .established(duration: -(voiceChannel.callStartDate?.timeIntervalSinceNow.rounded() ?? 0))
+        case .established: return .established(duration: -voiceChannelSnapshot.callStartDate.timeIntervalSinceNow.rounded())
         case .terminating, .incoming(_ , shouldRing: false, _): return .terminating
         case .none, .unknown: return .none
         }
     }
-    
-    var isConstantBitRate: Bool {
-        return voiceChannel.isConstantBitRateAudioActive
-    }
-    
-    var title: String {
-        return voiceChannel.conversation?.displayName ?? ""
-    }
-    
-    var isVideoCall: Bool {
-        switch voiceChannel.state {
-        case .established, .terminating:
-            return voiceChannel.isAnyParticipantSendingVideo
-        default:
-            return voiceChannel.isVideoCall
-        }
-    }
-    
-    var variant: ColorSchemeVariant {
-        return ColorScheme.default().variant
-    }
 
-    var videoPlaceholderState: CallVideoPlaceholderState {
-        guard voiceChannel.isVideoCall else { return .hidden }
-        guard case .incoming = voiceChannel.state else { return .hidden }
-        return preferedVideoPlaceholderState
+}
+
+fileprivate struct VoiceChannelSnapshot {
+    let callerName: String
+    let state: CallState
+    let callStartDate: Date
+
+    init(_ voiceChannel: VoiceChannel) {
+        callerName = voiceChannel.initiator?.displayName ?? ""
+        state = voiceChannel.state
+        callStartDate = voiceChannel.callStartDate ?? .init()
     }
-    
-    var disableIdleTimer: Bool {
-        switch voiceChannel.state {
-        case .none: return false
-        default: return isVideoCall && !isTerminating
-        }
-    }
-    
 }
 
 // MARK: - Helper

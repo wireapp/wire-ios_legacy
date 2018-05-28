@@ -82,10 +82,10 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
 
                     ///arrow point to camera button.
                     popover?.permittedArrowDirections = .down
-                    if let parentView = self.parent?.view {
-                        let buttonCenter = self.photoButton.convert(self.photoButton.center, to: parentView)
-                        popover?.sourceRect = CGRect(origin: buttonCenter, size: .zero)
 
+                    popover?.sourceRect = self.popoverSourceRectFromPhotoButton
+
+                    if let parentView = self.parent?.view {
                         videoEditor.preferredContentSize = parentView.frame.size
                     }
                 }

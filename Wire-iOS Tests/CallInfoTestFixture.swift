@@ -181,7 +181,7 @@ struct CallInfoTestFixture {
     var oneToOneOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: false,
@@ -505,7 +505,7 @@ struct CallInfoTestFixture {
     var groupVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,

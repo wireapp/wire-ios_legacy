@@ -46,6 +46,13 @@
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
+
+        [self createContainerView];
+        [self createTitleLabel];
+        [self createTermsOfUseText];
+        [self createAgreeButton];
+
+        [self updateViewConstraints];
     }
 
     return self;
@@ -54,13 +61,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self createContainerView];
-    [self createTitleLabel];
-    [self createTermsOfUseText];
-    [self createAgreeButton];
-    
-    [self updateViewConstraints];
+    [self updateConstraintsForSizeClass];
 }
 
 - (void)createContainerView {

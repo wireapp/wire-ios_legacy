@@ -17,24 +17,9 @@
 //
 
 import Foundation
-@testable import Wire
 
-struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
-    var videoPlaceholderState: CallVideoPlaceholderState
-    var permissions: CallPermissionsConfiguration
-    var degradationState: CallDegradationState
-    var accessoryType: CallInfoViewControllerAccessoryType
-    var canToggleMediaType: Bool
-    var isMuted: Bool
-    var isTerminating: Bool
-    var canAccept: Bool
-    var mediaState: MediaState
-    var state: CallStatusViewState
-    var isConstantBitRate: Bool
-    var title: String
-    var isVideoCall: Bool
-    var variant: ColorSchemeVariant
-    var disableIdleTimer: Bool
+extension ZMUserSession {
+    @objc func submitMarketingConsent(with marketingConsent: Bool) {
+        ZMUser.selfUser().setMarketingConsent(to: marketingConsent, in: self, completion: { _ in })
+    }
 }
-
-extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {}

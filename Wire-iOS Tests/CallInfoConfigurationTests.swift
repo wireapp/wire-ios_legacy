@@ -19,25 +19,8 @@
 import XCTest
 @testable import Wire
 
-func ==(lhs: CallActionAppearance, rhs: CallActionAppearance) -> Bool {
-    switch (lhs, rhs) {
-    case (.light, .light): return true
-    case let (.dark(blurred: lhsBlurred), .dark(blurred: rhsBlurred)): return lhsBlurred == rhsBlurred
-    default: return false
-    }
-}
-
 func ==(lhs: CallInfoViewControllerInput, rhs: CallInfoViewControllerInput) -> Bool {
-    return lhs.degradationState == rhs.degradationState &&
-        lhs.accessoryType == rhs.accessoryType &&
-        lhs.appearance == rhs.appearance &&
-        lhs.canAccept == rhs.canAccept &&
-        lhs.canToggleMediaType == rhs.canToggleMediaType &&
-        lhs.displayString == rhs.displayString &&
-        lhs.isConstantBitRate == rhs.isConstantBitRate &&
-        lhs.state == rhs.state &&
-        lhs.mediaState == rhs.mediaState &&
-        lhs.disableIdleTimer == rhs.disableIdleTimer
+    return lhs.isEqual(toConfiguration: rhs)
 }
 
 class CallInfoConfigurationTests: XCTestCase {
@@ -63,9 +46,8 @@ class CallInfoConfigurationTests: XCTestCase {
         mockOtherUser = nil
         selfUser = nil
         otherUser = nil
-        
         MockUser.setMockSelf(nil)
-        
+
         super.tearDown()
     }
     
@@ -243,7 +225,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockVideoState = .stopped
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
 
         // then
         assertEquals(fixture.oneToOneIncomingVideoRingingVideoTurnedOff, configuration)
@@ -596,8 +578,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        var configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        configuration.preferedVideoPlaceholderState = .statusTextHidden
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .statusTextHidden)
@@ -617,8 +598,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        var configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        configuration.preferedVideoPlaceholderState = .statusTextHidden
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .hidden)
@@ -639,8 +619,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        var configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
-        configuration.preferedVideoPlaceholderState = .statusTextHidden
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .hidden)

@@ -75,6 +75,8 @@ class ProfileClientViewController: UIViewController {
         self.updateFingerprintLabel()
         self.modalPresentationStyle = .overCurrentContext
         self.title = NSLocalizedString("registration.devices.title", comment:"")
+
+        setupViews()
     }
     
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -89,9 +91,7 @@ class ProfileClientViewController: UIViewController {
         return [.portrait]
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func setupViews() {
         view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
 
         self.setupContentView()
@@ -110,7 +110,7 @@ class ProfileClientViewController: UIViewController {
         self.createConstraints()
         self.updateFingerprintLabel()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = ""
@@ -145,10 +145,14 @@ class ProfileClientViewController: UIViewController {
         descriptionTextView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
-        
+
         if let user = self.userClient.user {
-            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && descriptionTextFont) + "\n" +
-                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
+            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
+                descriptionTextFont &&
+                UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)) +
+                "\n" +
+                ("profile.devices.detail.verify_message.link".localized &&
+                    [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
         }
         self.contentView.addSubview(descriptionTextView)
     }

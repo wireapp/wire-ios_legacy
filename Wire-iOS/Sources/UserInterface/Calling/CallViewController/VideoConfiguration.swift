@@ -62,8 +62,7 @@ extension VideoConfiguration: VideoGridConfiguration {
             default: return nil
             }
         }
-        Calling.log.debug("participants: \(otherParticipants.count)")
-        
+
         guard voiceChannel.isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
         
         if let selfStream = selfStream {
