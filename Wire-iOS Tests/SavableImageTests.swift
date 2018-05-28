@@ -19,27 +19,56 @@
 import XCTest
 @testable import Wire
 
+final class MockPhotoLibrary: PhotoLibraryProtocol {
+    func performChanges(_ changeBlock: @escaping () -> Void, completionHandler: ((Bool, Error?) -> Void)?) {
+        changeBlock()
+        completionHandler?(true, nil)
+    }
+}
+
+final class MockAssetChangeRequest: AssetChangeRequestProtocol {
+    static var image: UIImage?
+
+    static func creationRequestForAsset(from image: UIImage) -> Self {
+        MockAssetChangeRequest.image = image
+        return self.init()
+    }
+}
+
+final class MockOwner {
+    var savableImage: SavableImage!
+}
+
 final class SavableImageTests: XCTestCase {
     
     weak var sut: SavableImage!
     var imageData: Data!
+    var image: UIImage!
+
     override func setUp() {
         super.setUp()
-        let image = self.image(inTestBundleNamed: "transparent.png")
+        image = self.image(inTestBundleNamed: "transparent.png")
         imageData = image.data()
+
+        MockAssetChangeRequest.image = nil
     }
     
     override func tearDown() {
         sut = nil
         imageData = nil
+        MockAssetChangeRequest.image = nil
 
         super.tearDown()
     }
 
-    func testSavableImageIsNotRetainedAfterSaveToLibrary() {
+    func testThatSavableImageIsNotRetainedAfterSaveToLibrary() {
         autoreleasepool {
             // GIVEN
             var savableImage: SavableImage! = SavableImage(data: imageData!, orientation: .up)
+            savableImage.assetChangeRequestType = MockAssetChangeRequest.self
+            savableImage.photoLibrary = MockPhotoLibrary()
+            savableImage.applicationType = MockApplication.self
+
             sut = savableImage
 
             // WHEN
@@ -52,6 +81,38 @@ final class SavableImageTests: XCTestCase {
 
             self.waitForExpectations(timeout: 2, handler: nil)
 
+        }
+
+        // THEN
+        XCTAssertNil(sut)
+    }
+
+    func testThatImageIsSavedAfterOwnerOfSavableImageIsDealloced() {
+        autoreleasepool {
+            // GIVEN
+            var mockOwner: MockOwner! = MockOwner()
+            let savableImage = SavableImage(data: imageData!, orientation: .up)
+
+            savableImage.assetChangeRequestType = MockAssetChangeRequest.self
+            savableImage.photoLibrary = MockPhotoLibrary()
+            savableImage.applicationType = MockApplication.self
+
+            mockOwner.savableImage = savableImage
+
+            sut = savableImage
+
+            // WHEN
+            let expectation = self.expectation(description: "Wait for image to be saved")
+            mockOwner.savableImage.saveToLibrary() { success in
+                XCTAssert(success)
+                XCTAssertEqual(MockAssetChangeRequest.image?.size, self.image?.size)
+
+                expectation.fulfill()
+
+                mockOwner = nil
+            }
+
+            self.waitForExpectations(timeout: 2, handler: nil)
         }
 
         // THEN
