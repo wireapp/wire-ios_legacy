@@ -951,7 +951,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)wantsToPerformAction:(MessageAction)action forMessage:(id<ZMConversationMessage>)message
 {
     ConversationCell *cell = [self cellForMessage:message];
-    [self wantsToPerformAction:action forMessage:message cell:cell];///TODO: cell is nil
+    [self wantsToPerformAction:action forMessage:message cell:cell];
 }
 
 @end

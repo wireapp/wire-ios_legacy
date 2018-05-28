@@ -40,7 +40,7 @@ extension PHAssetChangeRequest: AssetChangeRequestProtocol {}
 
     public typealias ImageSaveCompletion = (Bool) -> Void
 
-    let imageData: Data
+    fileprivate let imageData: Data
     fileprivate let imageOrientation: UIImageOrientation
     fileprivate var writeInProgess = false
 
