@@ -23,7 +23,6 @@ import Photos
 
     public typealias ImageSaveCompletion = (Bool) -> Void
 
-    ///TODO: image var
     let imageData: Data
     fileprivate let imageOrientation: UIImageOrientation
     fileprivate var writeInProgess = false
@@ -44,15 +43,8 @@ import Photos
                 return
             }
 
-            PHPhotoLibrary.shared().performChanges({ //[weak self] in
-//                guard let `self` = self else { ///FIXME:
-//                    return
-//                }
-                guard let image = UIImage(data: self.imageData) else { ///FIXME:
-                    return
-                }
-//                guard let image = UIImage(data: self.imageData) else { return } ///TODO: some waring for image not saved
-
+            PHPhotoLibrary.shared().performChanges({
+                guard let image = UIImage(data: self.imageData) else { return }
                 PHAssetChangeRequest.creationRequestForAsset(from: image)
             }) { success, error in
                 DispatchQueue.main.async {

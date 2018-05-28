@@ -21,33 +21,33 @@ import XCTest
 
 final class SavableImageTests: XCTestCase {
     
-    var sut: SavableImage!
-    
+    weak var sut: SavableImage!
+    var imageData: Data!
     override func setUp() {
         super.setUp()
         let image = self.image(inTestBundleNamed: "transparent.png")
-        let imageData = image.data()
-        sut = SavableImage(data: imageData!, orientation: .up)
+        imageData = image.data()
     }
     
     override func tearDown() {
         sut = nil
+        imageData = nil
+
         super.tearDown()
     }
 
+    func testSavableImageIsNotRetainedAfter() {
+        autoreleasepool {
+            // GIVEN
+            var savableImage: SavableImage! = SavableImage(data: imageData!, orientation: .up)
+            sut = savableImage
 
+            // WHEN
 
-    /// Example checker method which can be reused in different tests
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
-    }
-
-    func testExample(){
-        // GIVEN
-
-        // WHEN
+            savableImage = nil
+        }
 
         // THEN
-        checkerExample()
+        XCTAssertNil(sut)
     }
 }
