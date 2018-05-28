@@ -31,11 +31,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)setupHockeyWithCompletion:(dispatch_block_t)completed
 {
-    BOOL shouldUseHockey =
-        AutomationHelper.sharedHelper.useHockey || USE_HOCKEY;  // XXX: in the previous code this
-                                                                // was a XOR, was this on purpose
-                                                                // or by accident? I turned into a OR,
-                                                                // sounds more logical
+    BOOL shouldUseHockey = AutomationHelper.sharedHelper.useHockey || USE_HOCKEY;
     
     if (!shouldUseHockey) {
         if (nil != completed) {
