@@ -48,8 +48,9 @@ final class CallHapticsController {
     // MARK: - Private
     
     private func updateParticipantsList(_ newParticipants: [UUID]) {
-        let removed = !participants.subtracting(newParticipants).isEmpty
-        let added = !Set(newParticipants).subtracting(participants).isEmpty
+        let updated = Set(newParticipants)
+        let removed = !participants.subtracting(updated).isEmpty
+        let added = !updated.subtracting(participants).isEmpty
         
         if removed {
             hapticGenerator?.trigger(event: .leave)
@@ -57,6 +58,8 @@ final class CallHapticsController {
         if added {
             hapticGenerator?.trigger(event: .join)
         }
+        
+        participants = updated
     }
     
     private func updateParticipantsVideoStateList(_ newParticipants: [(UUID, CallParticipantState)]) {

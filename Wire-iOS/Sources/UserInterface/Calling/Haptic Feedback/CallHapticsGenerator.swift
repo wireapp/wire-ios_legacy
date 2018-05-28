@@ -29,14 +29,14 @@ enum CallHapticsEvent: String {
     case toggleVideo
     
     enum FeedbackType {
-        case success, warning, impactMedium
+        case success, warning, impact
     }
     
     var feedbackType: FeedbackType {
         switch self {
         case .start, .reconnect, .join: return .success
         case .leave, .end: return .warning
-        case .toggleVideo: return .impactMedium
+        case .toggleVideo: return .impact
         }
     }
 }
@@ -44,7 +44,7 @@ enum CallHapticsEvent: String {
 @available(iOS 10, *)
 final class CallHapticsGenerator: CallHapticsGeneratorType {
     
-    private let impactGenerator = UIImpactFeedbackGenerator(style: .medium)
+    private let impactGenerator = UIImpactFeedbackGenerator(style: .light)
     private let notificationGenerator = UINotificationFeedbackGenerator()
     
     func trigger(event: CallHapticsEvent) {
@@ -58,7 +58,7 @@ final class CallHapticsGenerator: CallHapticsGeneratorType {
     private func prepareFeedback(for event: CallHapticsEvent) {
         switch event.feedbackType {
         case .success, .warning: notificationGenerator.prepare()
-        case .impactMedium: impactGenerator.prepare()
+        case .impact: impactGenerator.prepare()
         }
     }
     
@@ -66,7 +66,7 @@ final class CallHapticsGenerator: CallHapticsGeneratorType {
         switch event.feedbackType {
         case .success: notificationGenerator.notificationOccurred(.success)
         case .warning: notificationGenerator.notificationOccurred(.warning)
-        case .impactMedium: impactGenerator.impactOccurred()
+        case .impact: impactGenerator.impactOccurred()
         }
     }
 }
