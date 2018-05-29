@@ -20,7 +20,7 @@ import Foundation
 
 extension ConversationContentViewController {
     @objc(saveImageFromMessage:cell:)
-    func saveImage(from message: ZMConversationMessage?, cell: ImageMessageCell?) {
+    func saveImage(from message: ZMConversationMessage, cell: ImageMessageCell?) {
         if let cell = cell {
             let savableImage = cell.savableImage
             let snapshot = cell.fullImageView.snapshotView(afterScreenUpdates: true)
@@ -32,7 +32,7 @@ extension ConversationContentViewController {
                 }
             })
         } else {
-            if let imageData = message?.imageMessageData?.imageData {
+            if let imageData = message.imageMessageData?.imageData {
                 let savableImage = SavableImage(data: imageData, orientation: .up)
                 savableImage.saveToLibrary()
             }
