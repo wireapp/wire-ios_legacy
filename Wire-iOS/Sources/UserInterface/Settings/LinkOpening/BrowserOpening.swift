@@ -22,17 +22,19 @@ private let log = ZMSLog(tag: "link opening")
 
 enum BrowserOpeningOption: Int, LinkOpeningOption {
 
-    case safari, chrome, firefox
+    case safari, chrome, firefox, snowhaze, brave
 
     static var allOptions: [BrowserOpeningOption] {
-        return [.safari, .chrome, .firefox]
+        return [.safari, .chrome, .firefox, .snowhaze, .brave]
     }
 
     var displayString: String {
         switch self {
-        case .safari: return "open_link.browser.option.safari".localized
-        case .chrome: return "open_link.browser.option.chrome".localized
-        case .firefox: return "open_link.browser.option.firefox".localized
+        case .safari:   return "open_link.browser.option.safari".localized
+        case .chrome:   return "open_link.browser.option.chrome".localized
+        case .firefox:  return "open_link.browser.option.firefox".localized
+        case .snowhaze: return "open_link.browser.option.snowhaze".localized
+        case .brave:    return "open_link.browser.option.brave".localized
         }
     }
 
@@ -41,6 +43,8 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
         case .safari: return true
         case .chrome: return UIApplication.shared.chromeInstalled
         case .firefox: return UIApplication.shared.firefoxInstalled
+        case .snowhaze: return UIApplication.shared.snowhazeInstalled
+        case .brave: return UIApplication.shared.braveInstalled
         }
     }
 
@@ -67,6 +71,14 @@ extension URL {
             guard let url = firefoxURL else { return false }
             log.debug("Trying to open firefox app using \"\(url)\"")
             return UIApplication.shared.openURL(url)
+        case .snowhaze:
+            guard let url = snowhazeURL else { return false }
+            log.debug("Trying to open snowhaze app using \"\(url)\"")
+            return UIApplication.shared.openURL(url)
+        case .brave:
+            guard let url = braveURL else { return false }
+            log.debug("Trying to open brave app using \"\(url)\"")
+            return UIApplication.shared.openURL(url)
         }
     }
 
@@ -84,6 +96,14 @@ fileprivate extension UIApplication {
 
     var firefoxInstalled: Bool {
         return canHandleScheme("firefox://")
+    }
+    
+    var snowhazeInstalled: Bool {
+        return canHandleScheme("shtps://")
+    }
+    
+    var braveInstalled: Bool {
+        return canHandleScheme("brave://")
     }
 
 }
@@ -105,4 +125,19 @@ fileprivate extension URL {
         return URL(string: "firefox://open-url?url=\(absoluteString)")
     }
     
+    var snowhazeURL: URL? {
+        // Reference: https://github.com/snowhaze/SnowHaze-iOS/blob/master/SnowHaze/Info.plist
+        if absoluteString.contains("http://") {
+            return URL(string: "shtp://\(absoluteString.replacingOccurrences(of: "http://", with: ""))")
+        }
+        if absoluteString.contains("https://") {
+            return URL(string: "shtps://\(absoluteString.replacingOccurrences(of: "https://", with: ""))")
+        }
+        return URL(string: "shtp://\(absoluteString)")
+    }
+    
+    var braveURL: URL? {
+        // Reference: https://github.com/brave/ios-open-thirdparty-browser/blob/master/OpenInThirdPartyBrowser/OpenInThirdPartyBrowserControllerSwift.swift
+        return URL(string: "brave://open-url?url=\(absoluteString)")
+    }
 }
