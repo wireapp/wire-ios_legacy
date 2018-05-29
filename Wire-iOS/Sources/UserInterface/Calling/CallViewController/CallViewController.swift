@@ -178,7 +178,7 @@ final class CallViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard canHideOverlay else { return }
-        
+
         if let touch = touches.first,
             let overlay = videoGridViewController.previewOverlay,
             overlay.point(inside: touch.location(in: overlay), with: event), !isOverlayVisible {
