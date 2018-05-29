@@ -23,37 +23,37 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSURL (WireURLs)
 
-+ (instancetype)wr_fingerprintLearnMoreURL;
++ (instancetype)wr_fingerprintLearnMoreURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_fingerprintHowToVerifyURL;
++ (instancetype)wr_fingerprintHowToVerifyURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_termsOfServicesURLForTeamAccount:(BOOL)teamAccount;
++ (instancetype)wr_termsOfServicesURLForTeamAccount:(BOOL)teamAccount NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_privacyPolicyURL;
++ (instancetype)wr_privacyPolicyURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_licenseInformationURL;
++ (instancetype)wr_licenseInformationURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_websiteURL;
++ (instancetype)wr_websiteURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_passwordResetURL;
++ (instancetype)wr_passwordResetURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_supportURL;
++ (instancetype)wr_supportURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_askSupportURL;
++ (instancetype)wr_askSupportURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_reportAbuseURL;
++ (instancetype)wr_reportAbuseURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_cannotDecryptHelpURL;
++ (instancetype)wr_cannotDecryptHelpURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_cannotDecryptNewRemoteIDHelpURL;
++ (instancetype)wr_cannotDecryptNewRemoteIDHelpURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_createTeamURL;
++ (instancetype)wr_createTeamURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_createTeamFeaturesURL;
++ (instancetype)wr_createTeamFeaturesURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_manageTeamURL;
++ (instancetype)wr_manageTeamURL NS_REFINED_FOR_SWIFT;
 
-+ (instancetype)wr_emailInUseLearnMoreURL;
++ (instancetype)wr_emailInUseLearnMoreURL NS_REFINED_FOR_SWIFT;
 
 @end
 

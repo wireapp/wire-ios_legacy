@@ -39,7 +39,7 @@ extension UIAlertController {
                                       message: "registration.terms_of_use.terms.message".localized,
                                       preferredStyle: .alert)
         let viewAction = UIAlertAction(title: "registration.terms_of_use.terms.view".localized, style: .default) { [weak controller] action in
-            let url = NSURL.wr_termsOfServicesURL(forTeamAccount: true).wr_URLByAppendingLocaleParameter() as URL
+            let url = URL.wr_termsOfServicesURL(forTeamAccount: true).appendingLocaleParameter
             let webViewController = SafariViewControllerBlockAPI(url: url, entersReaderIfAvailable: true)
             webViewController.onDismiss = { [weak controller] in
                 if let controller = controller {

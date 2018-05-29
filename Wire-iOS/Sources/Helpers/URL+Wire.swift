@@ -46,3 +46,73 @@ extension NSURL {
         return URL.manageTeam(source: source)
     }
 }
+
+// MARK: - Standard URLS
+
+extension URL {
+
+    static var wr_fingerprintLearnMoreURL: URL {
+        return NSURL.__wr_fingerprintLearnMore() as URL
+    }
+
+    static var wr_fingerprintHowToVerify: URL {
+        return NSURL.__wr_fingerprintHowToVerify() as URL
+    }
+
+    static var wr_privacyPolicy: URL {
+        return NSURL.__wr_privacyPolicy() as URL
+    }
+
+    static var wr_licenseInformation: URL {
+        return NSURL.__wr_licenseInformation() as URL
+    }
+
+    static var wr_website: URL {
+        return NSURL.__wr_website() as URL
+    }
+
+    static var wr_passwordReset: URL {
+        return NSURL.__wr_passwordReset() as URL
+    }
+
+    static var wr_support: URL {
+        return NSURL.__wr_support() as URL
+    }
+
+    static var wr_askSupport: URL {
+        return NSURL.__wr_askSupport() as URL
+    }
+
+    static var wr_reportAbuse: URL {
+        return NSURL.__wr_reportAbuse() as URL
+    }
+
+    static var wr_cannotDecryptHelp: URL {
+        return NSURL.__wr_cannotDecryptHelp() as URL
+    }
+
+    static var wr_cannotDecryptNewRemoteIDHelp: URL {
+        return NSURL.__wr_cannotDecryptNewRemoteIDHelp() as URL
+    }
+
+    static var wr_createTeam: URL {
+        return NSURL.__wr_createTeam() as URL
+    }
+
+    static var wr_createTeamFeatures: URL {
+        return NSURL.__wr_createTeamFeatures() as URL
+    }
+
+    static var wr_manageTeam: URL {
+        return NSURL.__wr_manageTeam() as URL
+    }
+
+    static var wr_emailInUseLearnMore: URL {
+        return NSURL.__wr_emailInUseLearnMore() as URL
+    }
+
+    static func wr_termsOfServicesURL(forTeamAccount: Bool) -> URL {
+        return NSURL.__wr_termsOfServicesURL(forTeamAccount: forTeamAccount) as URL
+    }
+
+}

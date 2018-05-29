@@ -152,7 +152,7 @@ class ProfileClientViewController: UIViewController {
                 UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)) +
                 "\n" +
                 ("profile.devices.detail.verify_message.link".localized &&
-                    [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
+                    [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: URL.wr_fingerprintHowToVerify])
         }
         self.contentView.addSubview(descriptionTextView)
     }
@@ -390,14 +390,12 @@ extension ProfileClientViewController: UserClientObserver {
 
 extension ProfileClientViewController: UITextViewDelegate {
 
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        if URL == NSURL.wr_fingerprintHowToVerify() as URL {
-            UIApplication.shared.openURL(URL)
-            return true
-        }
-        else {
+    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange) -> Bool {
+        guard url == .wr_fingerprintHowToVerify else {
             return false
         }
+        url.openInApp()
+        return true
     }
 
 }

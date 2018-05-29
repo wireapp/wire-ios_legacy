@@ -261,17 +261,17 @@ import SafariServices
         
         let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
             Analytics.shared().tagHelp()
-            return TintColorCorrectedSafariViewController(url: NSURL.wr_support().wr_URLByAppendingLocaleParameter() as URL)
+            return TintColorCorrectedSafariViewController(url: URL.wr_support.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return TintColorCorrectedSafariViewController(url: NSURL.wr_askSupport().wr_URLByAppendingLocaleParameter() as URL)
+            return TintColorCorrectedSafariViewController(url: URL.wr_askSupport.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let helpSection = SettingsSectionDescriptor(cellDescriptors: [supportButton, contactButton])
         
         let reportButton = SettingsExternalScreenCellDescriptor(title: "self.report_abuse".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return TintColorCorrectedSafariViewController(url: NSURL.wr_reportAbuse().wr_URLByAppendingLocaleParameter() as URL)
+            return TintColorCorrectedSafariViewController(url: URL.wr_reportAbuse.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let reportSection = SettingsSectionDescriptor(cellDescriptors: [reportButton])
@@ -282,14 +282,14 @@ import SafariServices
     func aboutSection() -> SettingsCellDescriptorType {
         
         let privacyPolicyButton = SettingsExternalScreenCellDescriptor(title: "about.privacy.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return TintColorCorrectedSafariViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL)
+            return TintColorCorrectedSafariViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
         }, previewGenerator: .none)
         let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            let url = NSURL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).wr_URLByAppendingLocaleParameter() as URL
+            let url = URL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).appendingLocaleParameter
             return TintColorCorrectedSafariViewController(url: url)
         }, previewGenerator: .none)
         let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return TintColorCorrectedSafariViewController(url: (NSURL.wr_licenseInformation() as NSURL).wr_URLByAppendingLocaleParameter() as URL)
+            return TintColorCorrectedSafariViewController(url: URL.wr_licenseInformation.appendingLocaleParameter)
         }, previewGenerator: .none)
 
         let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
@@ -310,7 +310,7 @@ import SafariServices
         )
         
         let websiteButton = SettingsExternalScreenCellDescriptor(title: "about.website.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return TintColorCorrectedSafariViewController(url: (NSURL.wr_website().wr_URLByAppendingLocaleParameter() as URL))
+            return TintColorCorrectedSafariViewController(url: URL.wr_website.appendingLocaleParameter)
         }, previewGenerator: .none)
 
         let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
