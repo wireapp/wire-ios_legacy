@@ -171,7 +171,7 @@ final class CallViewController: UIViewController {
         
         if let touch = touches.first,
             let overlay = videoGridViewController.previewOverlay,
-            overlay.point(inside: touch.location(in: overlay), with: event) {
+            overlay.point(inside: touch.location(in: overlay), with: event), !isOverlayVisible {
             return
         }
 
