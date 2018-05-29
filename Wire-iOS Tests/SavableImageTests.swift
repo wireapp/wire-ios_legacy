@@ -88,9 +88,11 @@ final class SavableImageTests: XCTestCase {
     }
 
     func testThatImageIsSavedAfterOwnerOfSavableImageIsDealloced() {
+        weak var weakMockOwner: MockOwner!
         autoreleasepool {
             // GIVEN
             var mockOwner: MockOwner! = MockOwner()
+            weakMockOwner = mockOwner
             let savableImage = SavableImage(data: imageData!, orientation: .up)
 
             savableImage.assetChangeRequestType = MockAssetChangeRequest.self
@@ -105,6 +107,8 @@ final class SavableImageTests: XCTestCase {
             let expectation = self.expectation(description: "Wait for image to be saved")
             mockOwner.savableImage.saveToLibrary() { success in
                 XCTAssert(success)
+
+                // THEN
                 XCTAssertEqual(MockAssetChangeRequest.image?.size, self.image?.size)
 
                 expectation.fulfill()
@@ -117,5 +121,6 @@ final class SavableImageTests: XCTestCase {
 
         // THEN
         XCTAssertNil(sut)
+        XCTAssertNil(weakMockOwner)
     }
 }
