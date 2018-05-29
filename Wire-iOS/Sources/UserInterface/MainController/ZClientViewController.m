@@ -156,7 +156,7 @@
     
     [self createTopViewConstraints];
     [self.splitViewController didMoveToParentViewController:self];
-    [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    [self updateSplitViewTopConstraint];
 
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
     
@@ -255,7 +255,7 @@
         }
     }
 
-    [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    [self updateSplitViewTopConstraint];
     [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES onlyFullScreen:NO];
     [self.view setNeedsLayout];
 }
