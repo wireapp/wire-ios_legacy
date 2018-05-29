@@ -58,11 +58,18 @@ public extension URL {
         }
     }
 
-    func openInApp() {
-        let browser = SFSafariViewController(url: self)
+    func openInApp(above viewController: UIViewController) {
+        let browser = TintColorCorrectedSafariViewController(url: self)
         browser.modalPresentationCapturesStatusBarAppearance = true
-        let topViewController = UIApplication.shared.wr_topmostViewController()
-        topViewController?.present(browser, animated: true, completion: nil)
+        viewController.present(browser, animated: true, completion: nil)
+    }
+
+}
+
+extension NSURL {
+
+    @objc func openInApp(aboveViewController viewController: UIViewController) {
+        (self as URL).openInApp(above: viewController)
     }
 
 }

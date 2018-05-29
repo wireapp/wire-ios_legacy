@@ -23,6 +23,7 @@
 #import "NSURL+WireURLs.h"
 #import "WireExtensionComponents.h"
 #import "NSAttributedString+Wire.h"
+#import "Wire-Swift.h"
 
 @import Classy;
 
@@ -90,7 +91,7 @@
     if ([self.delegate respondsToSelector:@selector(participantsDeviceHeaderViewDidTapLearnMore:)]) {
         [self.delegate participantsDeviceHeaderViewDidTapLearnMore:self];
     }
-    return YES;
+    return NO;
 }
 
 #pragma mark - Attributed Text

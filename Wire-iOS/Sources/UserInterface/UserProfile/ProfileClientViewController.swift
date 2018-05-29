@@ -394,8 +394,8 @@ extension ProfileClientViewController: UITextViewDelegate {
         guard url == .wr_fingerprintHowToVerify else {
             return false
         }
-        url.openInApp()
-        return true
+        url.openInApp(above: self)
+        return false
     }
 
 }
