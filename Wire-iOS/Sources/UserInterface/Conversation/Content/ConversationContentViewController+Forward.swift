@@ -78,7 +78,7 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
         }
     }
     else {
-        fatal("Cannot forward \(message)")
+        fatal("Cannot forward message")
     }
 }
 
@@ -116,7 +116,7 @@ extension ZMConversationMessage {
             cell = FileTransferCell(style: .default, reuseIdentifier: "")
         }
         else {
-            fatal("Cannot create preview for \(self)")
+            fatal("Cannot create preview for \(type(of: self))")
         }
         
         cell.translatesAutoresizingMaskIntoConstraints = false

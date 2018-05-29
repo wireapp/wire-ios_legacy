@@ -50,7 +50,7 @@ final public class CollectionImageCell: CollectionCell {
                 }
                 
                 guard let finalImage = image else {
-                    fatal("Invalid image data cannot be loaded: \(message)")
+                    fatal("Invalid image data cannot be loaded")
                 }
                 
                 return finalImage
