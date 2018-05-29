@@ -24,9 +24,14 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
+protocol ClientListViewControllerDelegate: class {
+    func finishedDeleting(_ clientListViewController: ClientListViewController)
+}
+
 @objc class ClientListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ZMClientUpdateObserver {
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()
+    weak var delegate: ClientListViewControllerDelegate?
 
     override open var showLoadingView: Bool {
         set {
@@ -160,7 +165,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.showLoadingView = false
+        showLoadingView = false
     }
 
     func openDetailsOfClient(_ client: UserClient) {
@@ -224,8 +229,10 @@ private let zmLog = ZMSLog(tag: "UI")
 
 
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
-        self.navigationController?.showLoadingView = true
+        showLoadingView = true
         ZMUserSession.shared()?.delete([userClient], with: credentials);
+
+        delegate?.finishedDeleting(self)
     }
 
     func displayError(_ message: String) {
@@ -257,6 +264,7 @@ private let zmLog = ZMSLog(tag: "UI")
         self.showLoadingView = false
 
         self.clients = remainingClients
+
         Analytics.shared().tagDeleteDevice()
     }
     

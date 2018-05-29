@@ -19,7 +19,7 @@
 import Foundation
 
 extension UIViewController {
-    func isIPadRegular(device: DeviceProtocol) -> Bool {
+    func isIPadRegular(device: DeviceProtocol = UIDevice.current) -> Bool {
         return device.userInterfaceIdiom == .pad && self.traitCollection.horizontalSizeClass == .regular
     }
 
