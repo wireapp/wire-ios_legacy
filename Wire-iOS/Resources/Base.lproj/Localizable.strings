@@ -541,6 +541,8 @@
 "call.actions.label.terminate_call" = "End call";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants

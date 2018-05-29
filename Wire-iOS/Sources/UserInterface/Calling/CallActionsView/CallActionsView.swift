@@ -64,6 +64,7 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canAccept: Bool { get }
     var mediaState: MediaState { get }
     var permissions: CallPermissionsConfiguration { get }
+    var cameraType: CaptureDevice { get }
 }
 
 extension CallActionsViewInputType {
@@ -231,6 +232,9 @@ final class CallActionsView: UIView {
         endCallButton.accessibilityLabel = "call.actions.label.\(input.canAccept ? "reject" : "terminate")_call".localized
         videoButtonDisabled.accessibilityLabel = "call.actions.label.toggle_video_on".localized;
         videoButton.accessibilityLabel = "call.actions.label.toggle_video_\(input.mediaState.isSendingVideo ? "off" : "on")".localized
+
+        let targetCamera = input.cameraType == .front ? "back" : "front"
+        flipCameraButton.accessibilityLabel = "call.actions.label.switch_to_\(targetCamera)_camera".localized
     }
 
 }

@@ -52,7 +52,7 @@ final class CallViewController: UIViewController {
         self.voiceChannel = voiceChannel
         self.mediaManager = mediaManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager,  isOverlayVisible: true)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
         super.init(nibName: nil, bundle: nil)
@@ -151,7 +151,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType)
         callInfoRootViewController.configuration = callInfoConfiguration
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager, isOverlayVisible: isOverlayVisible)
         videoGridViewController.configuration = videoConfiguration

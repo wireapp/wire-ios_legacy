@@ -135,14 +135,18 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let degradationState: CallDegradationState
     let videoPlaceholderState: CallVideoPlaceholderState
     let disableIdleTimer: Bool
+    let cameraType: CaptureDevice
+
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
     init(
         voiceChannel: VoiceChannel,
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
-        permissions: CallPermissionsConfiguration
+        permissions: CallPermissionsConfiguration,
+        cameraType: CaptureDevice
         ) {
         self.permissions = permissions
+        self.cameraType = cameraType
         voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType

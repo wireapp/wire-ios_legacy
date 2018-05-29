@@ -50,7 +50,8 @@ extension CallInfoViewControllerInput {
             variant == other.variant &&
             state == other.state &&
             isConstantBitRate == other.isConstantBitRate &&
-            title == other.title
+            title == other.title &&
+            cameraType == other.cameraType
     }
 }
 
