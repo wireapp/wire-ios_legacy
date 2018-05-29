@@ -1129,6 +1129,7 @@
 		EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
 		EF63528D209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */; };
 		EF6777062073C6C20062F122 /* OfflineBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6777052073C6C20062F122 /* OfflineBar.swift */; };
+		EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF68E71A20BD5B5A003F3594 /* IPadPopoverConstants.swift */; };
 		EF6E3C7A2089F232003F6752 /* animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF6E3C792089F231003F6752 /* animated.gif */; };
 		EF6E3C7C208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E3C7B208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift */; };
 		EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */; };
@@ -2809,6 +2810,7 @@
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
 		EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerTests.swift; sourceTree = "<group>"; };
 		EF6777052073C6C20062F122 /* OfflineBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineBar.swift; sourceTree = "<group>"; };
+		EF68E71A20BD5B5A003F3594 /* IPadPopoverConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPadPopoverConstants.swift; sourceTree = "<group>"; };
 		EF6E3C792089F231003F6752 /* animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animated.gif; sourceTree = "<group>"; };
 		EF6E3C7B208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockConversation+factory.swift"; sourceTree = "<group>"; };
@@ -3879,6 +3881,7 @@
 				871BC2041D34F8F800DF0793 /* UIImage+Transform.m */,
 				871BC2051D34F8F800DF0793 /* UIImagePickerController+GetImage.h */,
 				871BC2061D34F8F800DF0793 /* UIImagePickerController+GetImage.m */,
+				EF68E71A20BD5B5A003F3594 /* IPadPopoverConstants.swift */,
 				EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */,
 				871BC2071D34F8F800DF0793 /* UIResponder+FirstResponder.h */,
 				871BC2081D34F8F800DF0793 /* UIResponder+FirstResponder.m */,
@@ -7324,6 +7327,7 @@
 				EF21271B1FB9DFE300625A9B /* TermsOfUseStepViewController.m in Sources */,
 				D525426B2093637D001C04C1 /* IconButton+CallActions.swift in Sources */,
 				871BC3691D34F94200DF0793 /* MediaPreviewViewController.m in Sources */,
+				EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */,
 				D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,
