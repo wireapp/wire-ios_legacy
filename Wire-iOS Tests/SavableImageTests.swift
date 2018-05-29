@@ -87,7 +87,7 @@ final class SavableImageTests: XCTestCase {
         XCTAssertNil(sut)
     }
 
-    func DISABLE_testThatImageIsSavedAfterOwnerOfSavableImageIsDealloced() {
+    func testThatImageIsSavedAfterOwnerOfSavableImageIsDealloced() {
         weak var weakMockOwner: MockOwner!
         autoreleasepool {
             // GIVEN
