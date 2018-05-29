@@ -104,6 +104,10 @@ final class CallViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return callInfoConfiguration.effectiveColorVariant == .light ? .default : .lightContent
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return !isOverlayVisible
+    }
 
     @objc private func resumeVideoIfNeeded() {
         guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }

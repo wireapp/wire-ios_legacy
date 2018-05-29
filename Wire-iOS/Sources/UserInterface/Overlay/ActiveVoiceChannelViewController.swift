@@ -76,7 +76,7 @@ class ActiveVoiceChannelViewController : UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
-        return false
+        return visibleVoiceChannelViewController?.prefersStatusBarHidden ?? false
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

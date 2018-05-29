@@ -87,7 +87,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return NO;
+    return self.voiceChannelController.prefersStatusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
