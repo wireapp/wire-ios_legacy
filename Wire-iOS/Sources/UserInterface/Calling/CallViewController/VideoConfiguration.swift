@@ -16,45 +16,36 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-protocol OverlayVisibilityProvider {
-    var isOverlayVisible: Bool { get }
-}
-
-class VideoConfiguration {
-    let voiceChannel: VoiceChannel
-    let mediaManager: AVSMediaManager
-    var overlayVisibilityProvider: OverlayVisibilityProvider?
+struct VideoConfiguration: VideoGridConfiguration {
+    let floatingVideoStream: ParticipantVideoState?
+    let videoStreams: [ParticipantVideoState]
+    let isMuted: Bool
     
-    init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager) {
-        self.voiceChannel = voiceChannel
-        self.mediaManager = mediaManager
+    init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager, isOverlayVisible: Bool) {
+        floatingVideoStream = voiceChannel.videoStreamArrangment.preview
+        videoStreams = voiceChannel.videoStreamArrangment.grid
+        isMuted = AVSMediaManager.sharedInstance().isMicrophoneMuted && !isOverlayVisible
+        
     }
 }
 
-struct ParticipantVideoState {
-    let stream: UUID
-    let isPaused: Bool
-}
-
-extension VideoConfiguration: VideoGridConfiguration {
+fileprivate extension VoiceChannel {
     
-    var floatingVideoStream: ParticipantVideoState? {
-        return computeVideoStreams().preview
+    var selfStream: ParticipantVideoState? {
+        switch (isUnconnectedOutgoingVideoCall, videoState) {
+        case (true, _), (_, .started), (_, .badConnection):
+            return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: false)
+        case (_, .paused):
+            return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: true)
+        case (_, .stopped):
+            return nil
+        }
     }
     
-    var videoStreams: [ParticipantVideoState] {
-        return computeVideoStreams().grid
-    }
-    
-    var isMuted: Bool {
-        return AVSMediaManager.sharedInstance().isMicrophoneMuted
-            && overlayVisibilityProvider?.isOverlayVisible == false
-    }
-
-    private func computeVideoStreams() -> (preview: ParticipantVideoState?, grid: [ParticipantVideoState]) {
-        let otherParticipants: [ParticipantVideoState] = voiceChannel.participants.compactMap { user in
+    var videoStreamArrangment: (preview: ParticipantVideoState?, grid: [ParticipantVideoState]) {
+        let otherParticipants: [ParticipantVideoState] = participants.compactMap { user in
             guard let user = user as? ZMUser else { return nil }
-            switch voiceChannel.state(forParticipant: user) {
+            switch state(forParticipant: user) {
             case .connected(videoState: .started), .connected(videoState: .badConnection):
                 return .init(stream: user.remoteIdentifier, isPaused: false)
             case .connected(videoState: .paused):
@@ -62,9 +53,8 @@ extension VideoConfiguration: VideoGridConfiguration {
             default: return nil
             }
         }
-        Calling.log.debug("participants: \(otherParticipants.count)")
         
-        guard voiceChannel.isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
+        guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
         
         if let selfStream = selfStream {
             if 1 == otherParticipants.count {
@@ -77,20 +67,6 @@ extension VideoConfiguration: VideoGridConfiguration {
         }
     }
     
-    private var selfStream: ParticipantVideoState? {
-        switch (voiceChannel.isUnconnectedOutgoingVideoCall, voiceChannel.videoState) {
-        case (true, _), (_, .started), (_, .badConnection):
-            return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: false)
-        case (_, .paused):
-            return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: true)
-        case (_, .stopped):
-            return nil
-        }
-    }
-
-}
-
-extension VoiceChannel {
     var isUnconnectedOutgoingVideoCall: Bool {
         switch (state, isVideoCall) {
         case (.outgoing, true): return true

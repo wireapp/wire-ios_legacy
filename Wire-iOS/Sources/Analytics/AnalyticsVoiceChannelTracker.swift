@@ -111,6 +111,8 @@ private extension CallClosedReason {
             return "io_error"
         case .internalError:
             return "internal_error"
+        case .securityDegraded:
+            return "security_degraded"
         case .anweredElsewhere:
             return "answered_elsewhere"
         case .timeout:

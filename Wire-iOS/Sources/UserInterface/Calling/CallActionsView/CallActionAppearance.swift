@@ -18,7 +18,7 @@
 
 import UIKit
 
-enum CallActionAppearance {
+enum CallActionAppearance: Equatable {
     case light, dark(blurred: Bool)
     
     var showBlur: Bool {
@@ -54,5 +54,13 @@ enum CallActionAppearance {
         case .light: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark)
         case .dark: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
         }
+    }
+}
+
+func ==(lhs: CallActionAppearance, rhs: CallActionAppearance) -> Bool {
+    switch (lhs, rhs) {
+    case (.light, .light): return true
+    case let (.dark(blurred: lhsBlurred), .dark(blurred: rhsBlurred)): return lhsBlurred == rhsBlurred
+    default: return false
     }
 }

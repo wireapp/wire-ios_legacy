@@ -54,20 +54,12 @@ final class ConversationCreationController: UIViewController {
     fileprivate let colorSchemeVariant = ColorScheme.default().variant
     private let mainViewContainer = UIView()
     private let bottomViewContainer = UIView()
+    private let toggleSubtitleLabel = UILabel()
+    private let textFieldSubtitleLabel = UILabel()
     private let toggleView = ToggleView(
         title: "conversation.create.toggle.title".localized,
         isOn: true,
         accessibilityIdentifier: "toggle.newgroup.allowguests"
-    )
-    private let toggleSubtitleLabel = UILabel(
-        key: "conversation.create.toggle.subtitle",
-        size: .small,
-        color: ColorSchemeColorTextDimmed
-    )
-    private let textFieldSubtitleLabel = UILabel(
-        key: "participants.section.name.footer",
-        size: .small,
-        color: ColorSchemeColorTextDimmed
     )
 
     fileprivate var navigationBarBackgroundView = UIView()
@@ -106,7 +98,7 @@ final class ConversationCreationController: UIViewController {
         title = "conversation.create.group_name.title".localized.uppercased()
         
         setupNavigationBar()
-        createViews()
+        setupViews()
         createConstraints()
         
         // try to overtake the first responder from the other view
@@ -129,7 +121,7 @@ final class ConversationCreationController: UIViewController {
         textField.becomeFirstResponder()
     }
 
-    private func createViews() {
+    private func setupViews() {
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
         navigationBarBackgroundView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
         mainViewContainer.addSubview(navigationBarBackgroundView)
@@ -152,6 +144,15 @@ final class ConversationCreationController: UIViewController {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorViewContainer.addSubview(errorLabel)
         toggleSubtitleLabel.numberOfLines = 0
+        
+        [toggleSubtitleLabel, textFieldSubtitleLabel].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.font = .preferredFont(forTextStyle: .footnote)
+            $0.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        }
+        
+        toggleSubtitleLabel.text = "conversation.create.toggle.subtitle".localized
+        textFieldSubtitleLabel.text = "participants.section.name.footer".localized
         
         [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
         [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)

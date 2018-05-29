@@ -17,19 +17,11 @@
 //
 
 import Foundation
-import DeepDiff
 
 typealias CallParticipantsList = [CallParticipantsCellConfiguration]
 
 protocol CallParticipantsCellConfigurationConfigurable: Reusable {
     func configure(with configuration: CallParticipantsCellConfiguration, variant: ColorSchemeVariant)
-}
-
-extension UICollectionView {
-    func reloadData<T: Hashable>(old: [T], new: [T], animated: Bool) {
-        guard animated && !ProcessInfo.processInfo.isRunningTests else { return reloadData() }
-        reload(changes: diff(old: old, new: new), completion: { _ in })
-    }
 }
 
 enum CallParticipantsCellConfiguration: Hashable {
@@ -86,7 +78,7 @@ class CallParticipantsView: UICollectionView, Themeable {
     
     var rows = CallParticipantsList() {
         didSet {
-            reloadData(old: oldValue, new: rows, animated: !oldValue.isEmpty)
+            reloadData()
         }
     }
     

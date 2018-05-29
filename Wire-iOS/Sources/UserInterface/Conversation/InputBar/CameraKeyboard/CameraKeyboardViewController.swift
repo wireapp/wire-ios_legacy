@@ -384,7 +384,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
     }
     
     var shouldBlockCallingRelatedActions: Bool {
-        return ConversationViewController.shouldBlockCallingRelatedActions
+        return ZMUserSession.shared()?.isCallOngoing ?? false
     }
     
     private func deniedAuthorizationCell(for type: DeniedAuthorizationType, collectionView: UICollectionView, indexPath: IndexPath) -> CameraKeyboardPermissionsCell {

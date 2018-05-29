@@ -25,5 +25,11 @@
 @property (nonatomic) Button *agreeButton;
 @property (nonatomic) UIView *containerView;
 @property (nonatomic) BOOL initialConstraintsCreated;
+@property (nonatomic) id device;
+
+@property (nonatomic) NSArray<NSLayoutConstraint *> *containerViewEdges;
+@property (nonatomic) NSLayoutConstraint *containerViewWidth;
+@property (nonatomic) NSLayoutConstraint *containerViewHeight;
+@property (nonatomic) NSArray<NSLayoutConstraint *> *containerViewCenter;
 
 @end

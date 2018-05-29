@@ -51,7 +51,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -70,7 +71,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -89,7 +91,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -108,7 +111,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -127,7 +131,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -146,7 +151,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
         
@@ -165,7 +171,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -174,7 +181,7 @@ struct CallInfoTestFixture {
     var oneToOneOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: false,
@@ -186,14 +193,15 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
     
     var oneToOneIncomingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
@@ -205,10 +213,51 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
-    
+
+    var oneToOneIncomingVideoRingingWithPermissionsDeniedForever: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoDeniedForever,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: false,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingIncoming(name: otherUser.displayName),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light,
+            disableIdleTimer: true
+        )
+    }
+
+    var oneToOneIncomingVideoRingingWithUndeterminedVideoPermissions: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoPendingApproval,
+            degradationState: .none,
+            accessoryType: .none,
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: true,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .ringingIncoming(name: otherUser.displayName),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light,
+            disableIdleTimer: true
+        )
+    }
+
     var oneToOneIncomingVideoRingingVideoTurnedOff: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: CallVideoPlaceholderState.statusTextHidden,
@@ -224,14 +273,15 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
     
     var oneToOneVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
@@ -243,14 +293,15 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
     
     var oneToOneVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
@@ -262,7 +313,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
     
@@ -283,7 +335,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -302,7 +355,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -321,7 +375,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -340,7 +395,48 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
+        )
+    }
+    
+    var groupAudioEstablishedRemoteTurnedVideoOn: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light,
+            disableIdleTimer: true
+        )
+    }
+    
+    var groupAudioEstablishedVideoUnavailable: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue)),
+            canToggleMediaType: false,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerEnabled: false),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -359,7 +455,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: false,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: false
         )
     }
     
@@ -368,7 +465,7 @@ struct CallInfoTestFixture {
     var groupOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: false,
@@ -380,14 +477,15 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
     
     var groupIncomingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
@@ -399,14 +497,15 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
     
     var groupVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .none,
             canToggleMediaType: true,
@@ -418,14 +517,15 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
     
     var groupVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
-            permissions: CallPermissions(),
+            permissions: MockCallPermissions.videoAllowedForever,
             degradationState: .none,
             accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
             canToggleMediaType: true,
@@ -437,7 +537,8 @@ struct CallInfoTestFixture {
             isConstantBitRate: false,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
     
@@ -456,16 +557,13 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
     }
 
     var groupVideoIncomingUndeterminedPermissions: CallInfoViewControllerInput {
-
-        let permissions = MockCallPermissions()
-        permissions.canAcceptVideoCalls = false
-        permissions.isPendingVideoPermissionRequest = true
-
+        let permissions = MockCallPermissions.videoPendingApproval
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: permissions.preferredVideoPlaceholderState,
             permissions: permissions,
@@ -480,17 +578,13 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
-        
     }
 
     var groupVideoIncomingDeniedPermissions: CallInfoViewControllerInput {
-
-        let permissions = MockCallPermissions()
-        permissions.canAcceptVideoCalls = false
-        permissions.isPendingVideoPermissionRequest = false
-
+        let permissions = MockCallPermissions.videoDeniedForever
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: permissions.preferredVideoPlaceholderState,
             permissions: permissions,
@@ -505,9 +599,9 @@ struct CallInfoTestFixture {
             isConstantBitRate: true,
             title: otherUser.displayName,
             isVideoCall: true,
-            variant: .light
+            variant: .light,
+            disableIdleTimer: true
         )
-
     }
     
 }

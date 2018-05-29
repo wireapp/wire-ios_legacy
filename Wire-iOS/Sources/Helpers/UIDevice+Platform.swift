@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,18 +17,15 @@
 //
 
 import UIKit
-import WireSyncEngine
-import Cartography
-import Foundation
 
-extension ConversationViewController {
-    
-    static var shouldBlockCallingRelatedActions: Bool {
-        guard let session = ZMUserSession.shared(),
-            session.callCenter?.activeCallConversations(in: session).count > 0 else { return false }
-        return true
+extension UIDevice {
+
+    @objc static var isSimulator: Bool {
+        #if (arch(i386) || arch(x86_64))
+            return true
+        #else
+            return false
+        #endif
     }
-    
-    
-}
 
+}

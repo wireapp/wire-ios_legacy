@@ -86,11 +86,12 @@ extension ConversationListViewController {
 extension ConversationListViewController: UserNameTakeOverViewControllerDelegate {
 
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction) {
-        // show data usage dialog after user name take over screen
-        showDataUsagePermissionDialogIfNeeded()
 
         tagEvent(for: action)
         perform(action)
+
+        // show data usage dialog after user name take over screen
+        showDataUsagePermissionDialogIfNeeded()
     }
 
     private func perform(_ action: UserNameTakeOverViewControllerAction) {
@@ -132,7 +133,11 @@ extension ConversationListViewController: UserProfileUpdateObserver {
 
     public func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
-        UIAlertController.showNewsletterSubscriptionDialogIfNeeded()
+        if let userSession = ZMUserSession.shared() {
+            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { marketingconsent in
+                ZMUser.selfUser().setMarketingConsent(to: marketingconsent, in: userSession, completion: { _ in })
+            }
+        }
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
 
         // When the user have to set user name, i.e. the user is a invited team user, show data usage permission dialog

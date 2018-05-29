@@ -937,12 +937,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)videoButtonPressed:(IconButton *)sender
 {
-    if([ConversationViewController shouldBlockCallingRelatedActions]) {
-    
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"conversation.input_bar.ongoing_call_alert.title", @"")
-                                                                       message:NSLocalizedString(@"conversation.input_bar.ongoing_call_alert.video.message", @"")
-                                                             cancelButtonTitle:NSLocalizedString(@"general.ok", @"")];
-        [self presentViewController:alert animated:YES completion:nil];
+    if([[ZMUserSession sharedSession] isCallOngoing]) {
+        [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureRecordVideo from:self];
         return;
     }
     

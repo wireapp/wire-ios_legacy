@@ -136,11 +136,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>few</key>
-        <string>%d others</string>
+        <string>%d innych</string>
         <key>many</key>
-        <string>%d others</string>
+        <string>%d innych</string>
         <key>other</key>
-        <string>%d others</string>
+        <string>%d innych</string>
       </dict>
     </dict>
     <key>content.system.people_started_using</key>

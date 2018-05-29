@@ -40,3 +40,48 @@ class MockCallPermissions: CallPermissionsConfiguration {
     }
 
 }
+
+// MARK: - Factories
+
+extension MockCallPermissions {
+
+    static var videoDeniedForever: MockCallPermissions {
+        let permissions = MockCallPermissions()
+        permissions.canAcceptVideoCalls = false
+        permissions.isPendingVideoPermissionRequest = false
+        return permissions
+    }
+
+    static var videoPendingApproval: MockCallPermissions {
+        let permissions = MockCallPermissions()
+        permissions.canAcceptVideoCalls = false
+        permissions.isPendingVideoPermissionRequest = true
+        return permissions
+    }
+
+    static var videoAllowedForever: MockCallPermissions {
+        let permissions = MockCallPermissions()
+        permissions.canAcceptVideoCalls = true
+        permissions.isPendingVideoPermissionRequest = false
+        return permissions
+    }
+
+}
+
+// MARK: - Utilities
+
+extension CallPermissionsConfiguration {
+
+    func mediaStateIfAllowed(_ preferredState: MediaState) -> MediaState {
+
+        if case .sendingVideo = preferredState {
+            guard canAcceptVideoCalls else {
+                return .notSendingVideo(speakerEnabled: false)
+            }
+        }
+
+        return preferredState
+
+    }
+
+}

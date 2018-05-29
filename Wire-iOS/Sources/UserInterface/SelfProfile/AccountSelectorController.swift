@@ -34,6 +34,7 @@ final class AccountSelectorController: UIViewController {
             self.updateShowAccountsIfNeeded()
         })
         
+        accountsView.delegate = self
         self.view.addSubview(accountsView)
         constrain(self.view, accountsView) { selfView, accountsView in
             accountsView.edges == selfView.edges
@@ -58,5 +59,26 @@ final class AccountSelectorController: UIViewController {
         self.showAccounts = showAccounts
         accountsView.isHidden = !showAccounts
     }
+}
+
+extension AccountSelectorController: AccountSelectorViewDelegate {
+    
+    func accountSelectorDidSelect(account: Account) {
+        guard account != SessionManager.shared?.accountManager.selectedAccount else { return }
+        
+        if ZClientViewController.shared()?.conversationListViewController.presentedViewController != nil {
+            AppDelegate.shared().rootViewController.confirmSwitchingAccount { (confirmed) in
+                if confirmed {
+                    ZClientViewController.shared()?.conversationListViewController.dismiss(animated: true, completion: {
+                        SessionManager.shared?.select(account)
+                    })
+                }
+            }
+        }
+        else {
+            SessionManager.shared?.select(account)
+        }
+    }
+    
 }
 

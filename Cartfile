@@ -3,7 +3,7 @@ github "wireapp/Classy" "v0.2.6-swift3.0.2"
 github "wireapp/Cartography" "3.0.2"
 github "wireapp/TTTAttributedLabel" "2.0.0-swift3.0.2"
 github "wireapp/wire-ios-share-engine" ~> 77.0
-github "wireapp/wire-ios-sync-engine" ~> 169.0
+github "wireapp/wire-ios-sync-engine" ~> 170.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2-wire-swift3.0.2"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/AFNetworking" "2.6.3-iOS8"
@@ -13,4 +13,3 @@ github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
 github "wireapp/mixpanel-swift" "v2.3.3"
 github "wireapp/Down" "v2.0.1"
-github "wireapp/DeepDiff" "1.2.0"

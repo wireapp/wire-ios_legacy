@@ -51,6 +51,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) id authToken;
 @property (nonatomic) id<ZMRegistrationObserverToken> registrationToken;
+@property (nonatomic) BOOL marketingConsent;
 
 @end
 
@@ -180,6 +181,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         [[UnauthenticatedSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
                                                        verificationCode:phoneVerificationStepViewController.verificationCode];
+
+        [UIAlertController showNewsletterSubscriptionDialogIfNeededWithCompletionHandler: ^(BOOL marketingConsent) {
+            self.marketingConsent = marketingConsent;
+        }];
     }
     else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]]) {
         [self.analyticsTracker tagAcceptedTermsOfUse];
@@ -198,6 +203,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [[UnauthenticatedSession sharedSession] registerUser:completeUser];
         
         self.navigationController.showLoadingView = YES;
+        [[ZMUserSession sharedSession] submitMarketingConsentWith:self.marketingConsent];
     }
     else {
         [self.formStepDelegate didCompleteFormStep:self];

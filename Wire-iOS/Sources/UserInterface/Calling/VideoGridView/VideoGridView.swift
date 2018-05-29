@@ -18,15 +18,42 @@
 
 import Foundation
 
+struct ParticipantVideoState {
+    let stream: UUID
+    let isPaused: Bool
+}
+
 protocol VideoGridConfiguration {
     var floatingVideoStream: ParticipantVideoState? { get }
     var videoStreams: [ParticipantVideoState] { get }
     var isMuted: Bool { get }
 }
 
+extension ParticipantVideoState: Equatable {
+    
+    static func ==(lhs: ParticipantVideoState, rhs: ParticipantVideoState) -> Bool {
+        return lhs.isPaused == rhs.isPaused && lhs.stream == rhs.stream
+    }
+    
+}
+
+// Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
+// to Equatable with Swift 4.1 and conditional conformances. Right now we would have to make
+// the `VideoGridViewController` generic to work around the `Self` requirement of
+// `Equatable` which we want to avoid.
+extension VideoGridConfiguration {
+    
+    func isEqual(toConfiguration other: VideoGridConfiguration) -> Bool {
+        return floatingVideoStream == other.floatingVideoStream &&
+            videoStreams == other.videoStreams &&
+            isMuted == other.isMuted
+    }
+    
+}
+
 fileprivate extension CGSize {
     static let floatingPreviewSmall = CGSize(width: 108, height: 144)
-    static let floatingPreviewLarge = CGSize(width: 120, height: 160)
+    static let floatingPreviewLarge = CGSize(width: 150, height: 200)
     
     static func previewSize(for traitCollection: UITraitCollection) -> CGSize {
         switch traitCollection.horizontalSizeClass {
@@ -50,6 +77,7 @@ class VideoGridViewController: UIViewController {
     
     var configuration: VideoGridConfiguration {
         didSet {
+            guard !configuration.isEqual(toConfiguration: oldValue) else { return }
             updateState()
         }
     }
@@ -67,6 +95,7 @@ class VideoGridViewController: UIViewController {
         super.viewDidLoad()
         setupViews()
         createConstraints()
+        updateState()
     }
     
     func setupViews() {

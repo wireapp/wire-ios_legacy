@@ -23,12 +23,16 @@ import Cartography
 
 extension ZMConversation: ShareDestination {
     
+    public var showsGuestIcon: Bool {
+        return self.conversationType == .oneOnOne &&
+            self.activeParticipants.first { $0 is ZMUser && ($0 as! ZMUser).isGuest(in: self) } != nil
+    }
+    
     public var avatarView: UIView? {
         let avatarView = ConversationAvatarView()
         avatarView.conversation = self
         return avatarView
     }
-    
 }
 
 extension Array where Element == ZMConversation {

@@ -112,13 +112,13 @@ public extension ConversationViewController {
 
         if conversation.canJoinCall {
             return [joinCallButton]
-        }
-
-        if conversation.canStartVideoCall {
+        } else if conversation.isCallOngoing {
+            return []
+        } else if conversation.canStartVideoCall {
             return [audioCallButton, videoCallButton]
+        } else {
+            return [audioCallButton]
         }
-
-        return [audioCallButton]
     }
 
     public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
@@ -166,54 +166,16 @@ public extension ConversationViewController {
         }
     }
 
-    private func confirmCallInGroup(completion: @escaping (_ accepted: Bool) -> ()) {
-        let participantsCount = self.conversation.activeParticipants.count - 1
-        let message = "conversation.call.many_participants_confirmation.message".localized(args: participantsCount)
-
-        let confirmation = UIAlertController(title: "conversation.call.many_participants_confirmation.title".localized,
-                                             message: message,
-                                             preferredStyle: .alert)
-
-        let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
-            completion(false)
-        }
-        confirmation.addAction(actionCancel)
-
-        let actionSend = UIAlertAction(title: "conversation.call.many_participants_confirmation.call".localized, style: .default) { _ in
-            completion(true)
-        }
-        confirmation.addAction(actionSend)
-
-        self.present(confirmation, animated: true, completion: .none)
-    }
-
     func voiceCallItemTapped(_ sender: UIBarButtonItem) {
-        let startCall = {
-            ConversationInputBarViewController.endEditingMessage()
-            self.conversation.startAudioCall()
-        }
-
-        if self.conversation.activeParticipants.count <= 4 {
-            startCall()
-        } else {
-            self.confirmCallInGroup { accepted in
-                if accepted {
-                    startCall()
-                }
-            }
-        }
+        startCallController.startAudioCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
     func videoCallItemTapped(_ sender: UIBarButtonItem) {
-        ConversationInputBarViewController.endEditingMessage()
-        conversation.startVideoCall()
+        startCallController.startVideoCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
     private dynamic func joinCallButtonTapped(_sender: AnyObject!) {
-        guard conversation.canJoinCall else { return }
-
-        // This will result in joining an ongoing call.
-        conversation.joinCall()
+        startCallController.joinCall()
     }
 
     func onCollectionButtonPressed(_ sender: AnyObject!) {
@@ -258,7 +220,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
         switch action {
         case .forward:
             viewController.dismiss(animated: true) {
-                self.contentViewController.scroll(to: message) {[weak self] cell in
+                self.contentViewController.scroll(to: message) { [weak self] cell in
                     guard let `self` = self else {
                         return
                     }
@@ -294,29 +256,38 @@ extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
     var canJoinCall: Bool {
-        guard let state = voiceChannel?.state else { return false }
-
-        if case .incoming = state {
-            return true
-        } else {
-            return false
+        switch voiceChannel?.state {
+        case .incoming?: return true
+        default: return false
         }
     }
     
-    static let maxVideoCallParticipants: Int = 4
-    
+    @objc static let maxVideoCallParticipants: Int = 4
+
     var canStartVideoCall: Bool {
+        guard !isCallOngoing else { return false }
+
         if self.conversationType == .oneOnOne {
             return true
         }
-        
+
         if self.conversationType == .group &&
-           ZMUser.selfUser().isTeamMember &&
-           self.activeParticipants.count <= ZMConversation.maxVideoCallParticipants {
+            ZMUser.selfUser().isTeamMember &&
+            isConversationEligibleForVideoCalls {
             return true
         }
-        
+
         return false
-        
+    }
+
+    var isConversationEligibleForVideoCalls: Bool {
+        return self.activeParticipants.count <= ZMConversation.maxVideoCallParticipants
+    }
+
+    var isCallOngoing: Bool {
+        switch voiceChannel?.state {
+        case .none?: return false
+        default: return true
+        }
     }
 }

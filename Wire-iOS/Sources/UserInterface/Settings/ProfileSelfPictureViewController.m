@@ -206,6 +206,11 @@
         return;
     }
     
+    if([[ZMUserSession sharedSession] isCallOngoing]) {
+        [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureTakePhoto from:self];
+        return;
+    }
+    
     CameraViewController *cameraViewController = [[CameraViewController alloc] init];
     cameraViewController.analyticsTracker = self.analyticsTracker;
     cameraViewController.savePhotosToCameraRoll = YES;

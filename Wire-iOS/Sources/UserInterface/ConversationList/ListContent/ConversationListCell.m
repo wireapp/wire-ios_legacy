@@ -189,7 +189,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     }
     else if (self.conversation.canJoinCall)
     {
-        [self.conversation joinCall];
+        [self.delegate conversationListCellJoinCallButtonTapped:self];
     }
 }
     

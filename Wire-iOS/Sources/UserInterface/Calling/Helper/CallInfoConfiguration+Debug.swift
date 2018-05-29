@@ -16,22 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-extension CallInfoConfiguration: CustomDebugStringConvertible  {
+extension CallInfoViewControllerInput  {
     var debugDescription: String {
         return """
-        <CallInfoConfiguration>
-        "degradationState: \(degradationState)"
-        accessoryType: \(accessoryType.showAvatar ? "avatar" : "participants (\(accessoryType.participants.count)")
+        <\(type(of: self))>
+        accessoryType: \(accessoryType.showAvatar ? "avatar" : "participants (\(accessoryType.participants.count))")
+        degradationState: \(degradationState)
+        videoPlaceholderState: \(videoPlaceholderState)
+        permissions: \(permissions.canAcceptAudioCalls) \(permissions.isPendingAudioPermissionRequest) \(permissions.canAcceptVideoCalls) \(permissions.isPendingVideoPermissionRequest)
+        disableIdleTimer: \(disableIdleTimer)
         canToggleMediaType: \(canToggleMediaType)
         isMuted: \(isMuted)
         isTerminating: \(isTerminating)
         canAccept \(canAccept)
         mediaState: \(mediaState)
+        appearance: \(appearance)
+        isVideoCall: \(isVideoCall)
+        variant: \(variant.rawValue)
         state: \(state)
         isConstantBitRate: \(isConstantBitRate)
         title: \(title)
-        isVideoCall: \(isVideoCall)
-        variant: \(variant)
         """
     }
 }
+
+extension CallInfoConfiguration: CustomDebugStringConvertible {}
