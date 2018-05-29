@@ -186,16 +186,11 @@ final class CallActionsView: UIView {
         alpha = input.isTerminating ? 0.4 : 1
         isUserInteractionEnabled = !input.isTerminating
         lastInput = input
+        updateAccessibilityElements(with: input)
         setNeedsLayout()
         layoutIfNeeded()
     }
 
-    func updateAccessibility(with input: CallActionsViewInputType) {
-
-        
-
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         verticalStackView.spacing = {
@@ -225,5 +220,17 @@ final class CallActionsView: UIView {
         default: fatalError("Unexpected Button: \(button)")
         }
     }
-    
+
+    // MARK: - Accessibility
+
+    private func updateAccessibilityElements(with input: CallActionsViewInputType) {
+        muteCallButton.accessibilityLabel = "call.actions.label.toggle_mute_\(input.isMuted ? "off" : "on")".localized
+        flipCameraButton.accessibilityLabel = "call.actions.label.flip_camera".localized
+        speakerButton.accessibilityLabel = "call.actions.label.toggle_speaker_\(input.mediaState.isSpeakerEnabled ? "off" : "on")".localized
+        acceptCallButton.accessibilityLabel = "call.actions.label.accept_call".localized
+        endCallButton.accessibilityLabel = "call.actions.label.\(input.canAccept ? "reject" : "terminate")_call".localized
+        videoButtonDisabled.accessibilityLabel = "call.actions.label.toggle_video_on".localized;
+        videoButton.accessibilityLabel = "call.actions.label.toggle_video_\(input.mediaState.isSendingVideo ? "off" : "on")".localized
+    }
+
 }

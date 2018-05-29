@@ -528,6 +528,20 @@
 "call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.join.button" = "Join Anyway";
 
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "Mute";
+"call.actions.label.toggle_mute_off" = "Unmute";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.reject_call" = "Reject call";
+"call.actions.label.terminate_call" = "End call";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
 
