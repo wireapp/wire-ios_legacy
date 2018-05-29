@@ -56,8 +56,6 @@ extension ConversationInputBarViewController {
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes
             pickerController.videoMaximumDuration = TimeInterval(ConversationUploadMaxVideoDuration)
-            pickerController.preferredContentSize = sourceView.frame.size
-
 
             if sourceType == .camera {
                 switch Settings.shared().preferredCamera {

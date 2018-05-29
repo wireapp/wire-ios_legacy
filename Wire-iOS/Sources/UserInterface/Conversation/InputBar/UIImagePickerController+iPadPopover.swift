@@ -18,6 +18,13 @@
 
 import Foundation
 
+extension CGSize {
+    enum IPadPopover {
+        static let preferredContentSize: CGSize = CGSize(width: 320, height: 568)
+    }
+}
+
+
 struct ImagePickerPopoverPresentationContext {
     let sourceRect: CGRect
     let sourceView: UIView
@@ -29,6 +36,7 @@ extension UIImagePickerController {
     class func popoverForIPadRegular(with context: ImagePickerPopoverPresentationContext) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.sourceType = context.sourceType
+        picker.preferredContentSize =  CGSize.IPadPopover.preferredContentSize
 
         if context.presentViewController.isIPadRegular(device: UIDevice.current) {
 
