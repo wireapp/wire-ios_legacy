@@ -52,7 +52,16 @@ class TintColorCorrectedViewController: UIViewController {
 
 class TintColorCorrectedSafariViewController: SFSafariViewController {
     private var overrider = TintColorOverrider()
-    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if #available(iOS 10, *) {
+            preferredControlTintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+        } else {
+            view.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         overrider.override()

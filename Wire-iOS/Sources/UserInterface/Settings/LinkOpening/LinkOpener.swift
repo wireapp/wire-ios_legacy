@@ -18,7 +18,7 @@
 
 
 import Foundation
-
+import SafariServices
 
 private let log = ZMSLog(tag: "link opening")
 
@@ -57,6 +57,14 @@ public extension URL {
             }
         }
     }
+
+    func openInApp() {
+        let browser = SFSafariViewController(url: self)
+        browser.modalPresentationCapturesStatusBarAppearance = true
+        let topViewController = UIApplication.shared.wr_topmostViewController()
+        topViewController?.present(browser, animated: true, completion: nil)
+    }
+
 }
 
 protocol LinkOpeningOption {
