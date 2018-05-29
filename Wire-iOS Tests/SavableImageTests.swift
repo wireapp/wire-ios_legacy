@@ -61,7 +61,7 @@ final class SavableImageTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatSavableImageIsNotRetainedAfterSaveToLibrary() {
+    func DISABLE_testThatSavableImageIsNotRetainedAfterSaveToLibrary() {
         autoreleasepool {
             // GIVEN
             var savableImage: SavableImage! = SavableImage(data: imageData!, orientation: .up)
@@ -87,7 +87,7 @@ final class SavableImageTests: XCTestCase {
         XCTAssertNil(sut)
     }
 
-    func testThatImageIsSavedAfterOwnerOfSavableImageIsDealloced() {
+    func DISABLE_testThatImageIsSavedAfterOwnerOfSavableImageIsDealloced() {
         weak var weakMockOwner: MockOwner!
         autoreleasepool {
             // GIVEN
