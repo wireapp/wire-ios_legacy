@@ -139,6 +139,8 @@ final class CallStatusView: UIView {
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: configuration.effectiveColorVariant)
         }
+
+        accessibilityLabel = stackView.arrangedSubviews.flatMap { $0.accessibilityLabel }.joined(separator: "\n")
     }
     
 }

@@ -56,6 +56,7 @@ final class CallStatusViewController: UIViewController {
     }
     
     private func setupViews() {
+        statusView.isAccessibilityElement = true
         statusView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(statusView)
     }
