@@ -101,6 +101,12 @@ final class CallViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
     }
 
+    override func accessibilityPerformEscape() -> Bool {
+        guard let dismisser = self.dismisser else { return false }
+        dismisser.dismiss(viewController: self, completion: nil)
+        return true
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return callInfoConfiguration.effectiveColorVariant == .light ? .default : .lightContent
     }
