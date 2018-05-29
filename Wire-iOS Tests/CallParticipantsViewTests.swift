@@ -25,7 +25,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .darkGray
+        snapshotBackgroundColor = .white
     }
     
     override func tearDown() {
@@ -58,6 +58,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
         // When
         sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true)
         sut.variant = .dark
+        snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         sut.view.setNeedsLayout()
         sut.view.layoutIfNeeded()
@@ -79,6 +80,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
         // When
         sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false)
         sut.variant = .dark
+        snapshotBackgroundColor = .black
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         
         // Then
