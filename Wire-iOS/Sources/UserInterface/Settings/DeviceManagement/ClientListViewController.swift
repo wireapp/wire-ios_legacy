@@ -28,6 +28,23 @@ private let zmLog = ZMSLog(tag: "UI")
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()
 
+    override open var showLoadingView: Bool {
+        set {
+            if let navigationController = self.navigationController {
+                navigationController.showLoadingView = newValue
+            } else {
+                super.showLoadingView = newValue
+            }
+        }
+        get{
+            if let navigationController = self.navigationController {
+                return navigationController.showLoadingView
+            } else {
+                return super.showLoadingView
+            }
+        }
+    }
+
     var editingList: Bool = false {
         didSet {
             if (self.editingList) {
@@ -203,9 +220,11 @@ private let zmLog = ZMSLog(tag: "UI")
     func backPressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    
+
+
+
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
-        self.showLoadingView = true
+        self.navigationController?.showLoadingView = true
         ZMUserSession.shared()?.delete([userClient], with: credentials);
     }
 
@@ -235,6 +254,8 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]!) {
+        self.showLoadingView = false
+
         self.clients = remainingClients
         Analytics.shared().tagDeleteDevice()
     }
