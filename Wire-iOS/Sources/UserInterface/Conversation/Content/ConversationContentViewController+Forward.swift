@@ -164,7 +164,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
         
-        keyboardAvoiding.preferredContentSize = CGSize(width: 320, height: 568)
+        keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
         
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {

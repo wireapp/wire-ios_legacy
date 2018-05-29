@@ -50,7 +50,8 @@ extension CallInfoViewControllerInput {
             variant == other.variant &&
             state == other.state &&
             isConstantBitRate == other.isConstantBitRate &&
-            title == other.title
+            title == other.title &&
+            cameraType == other.cameraType
     }
 }
 
@@ -127,12 +128,16 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
     
     private func updateNavigationItem() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
+        let minimizeItem = UIBarButtonItem(
             icon: .downArrow,
             target: self,
             action: #selector(minimizeCallOverlay)
         )
-        navigationItem.leftBarButtonItem?.accessibilityIdentifier = "CallDismissOverlayButton"
+
+        minimizeItem.accessibilityLabel = "call.actions.label.minimize_call".localized
+        minimizeItem.accessibilityIdentifier = "CallDismissOverlayButton"
+
+        navigationItem.leftBarButtonItem = minimizeItem
     }
 
     private func updateState() {

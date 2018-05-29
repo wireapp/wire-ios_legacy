@@ -58,6 +58,8 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         addToSelf(participantsViewController)
         view.addSubview(avatarView)
 
+        avatarView.isAccessibilityElement = false
+
         view.addSubview(videoPlaceholderStatusLabel)
         videoPlaceholderStatusLabel.textColor = .white
         videoPlaceholderStatusLabel.font = FontSpec(.normal, .semibold).font

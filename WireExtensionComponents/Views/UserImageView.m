@@ -122,6 +122,8 @@ static CIContext *ciContext(void)
 {
     _shouldDesaturate = YES;
     _size = UserImageViewSizeNormal;
+
+    self.accessibilityElementsHidden = YES;
     
     [self createIndicator];
     [self createConstraints];
