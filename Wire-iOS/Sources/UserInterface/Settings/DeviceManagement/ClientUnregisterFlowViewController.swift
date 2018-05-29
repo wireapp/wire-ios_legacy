@@ -166,14 +166,15 @@ extension ClientUnregisterFlowViewController: PostLoginAuthenticationObserver {
 
 extension ClientUnregisterFlowViewController: ClientListViewControllerDelegate {
     func finishedDeleting(_ clientListViewController: ClientListViewController) {
-//        clientListViewController.dismiss(animated: true, completion: nil)
 
-//        if self.isIPadRegular(device: UIDevice.current) {
-//        } else {
-            self.rootNavigationController?.popViewController(animated: true)
-//        }
+        let completion: (() -> Swift.Void)? = { [weak self] in
+            self?.showLoadingView = true
+        }
 
+        if isIPadRegular() {
+            clientListViewController.dismiss(animated: true, completion: completion)
+        } else {
+            rootNavigationController?.popViewController(animated: true, completion: completion)
+        }
     }
-
-
 }
