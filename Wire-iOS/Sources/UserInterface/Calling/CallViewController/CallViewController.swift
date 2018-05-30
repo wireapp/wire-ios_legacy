@@ -168,7 +168,7 @@ final class CallViewController: UIViewController {
     private func updateIdleTimer() {
         let disabled = callInfoConfiguration.disableIdleTimer
         UIApplication.shared.isIdleTimerDisabled = disabled
-        Calling.log.debug("Updated idle timer: \(disabled ? "disabled" : "enabled")")
+        Log.calling.debug("Updated idle timer: \(disabled ? "disabled" : "enabled")")
     }
 
     private func updateAppearance() {
@@ -220,7 +220,7 @@ final class CallViewController: UIViewController {
             try voiceChannel.setVideoCaptureDevice(newType)
             cameraType = newType
         } catch {
-            Calling.log.error("error toggling capture device: \(error)")
+            Log.calling.error("error toggling capture device: \(error)")
         }
     }
 
@@ -307,7 +307,7 @@ extension CallViewController: ConstantBitRateAudioObserver {
 extension CallViewController: CallInfoRootViewControllerDelegate {
     
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction) {
-        Calling.log.debug("request to perform call action: \(action)")
+        Log.calling.debug("request to perform call action: \(action)")
         guard let userSession = ZMUserSession.shared() else { return }
         
         switch action {

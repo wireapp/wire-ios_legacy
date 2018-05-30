@@ -141,7 +141,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     private func updateState() {
-        Calling.log.debug("updating info controller with state: \(configuration)")
+        Log.calling.debug("updating info controller with state: \(configuration)")
         actionsView.update(with: configuration)
         statusViewController.configuration = configuration
         accessoryViewController.configuration = configuration
