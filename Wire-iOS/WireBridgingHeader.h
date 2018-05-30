@@ -137,7 +137,6 @@
 #import "AnalyticsEvent.h"
 #import "Analytics+Events.h"
 #import "Application+runDuration.h"
-#import "NSURL+WireURLs.h"
 #import "NSURL+WireLocale.h"
 #import "Analytics+ProfileEvents.h"
 #import "DeveloperMenuState.h"

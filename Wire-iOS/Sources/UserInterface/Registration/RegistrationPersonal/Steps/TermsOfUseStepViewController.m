@@ -28,7 +28,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 #import "NSURL+WireLocale.h"
-#import "NSURL+WireURLs.h"
 #import "Button.h"
 
 

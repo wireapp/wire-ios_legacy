@@ -35,7 +35,6 @@
 #import "UIViewController+Errors.h"
 #import "Constants.h"
 #import "NSURL+WireLocale.h"
-#import "NSURL+WireURLS.h"
 #import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Registration.h"
