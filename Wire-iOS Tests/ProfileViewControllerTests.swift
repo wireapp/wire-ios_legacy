@@ -20,15 +20,9 @@ import XCTest
 @testable import Wire
 
 extension MockUser: ZMSearchableUser {
-    public func requestMediumProfileImage(in userSession: ZMUserSession!) {
+    public func requestMediumProfileImage(in userSession: ZMUserSession!) {}
 
-    }
-
-    public func requestSmallProfileImage(in userSession: ZMUserSession!) {
-
-    }
-
-
+    public func requestSmallProfileImage(in userSession: ZMUserSession!) {}
 }
 
 final class ProfileViewControllerTests: ZMSnapshotTestCase {
@@ -38,15 +32,19 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+
         let user = MockUser.mockUsers()[0]
         mockUser = MockUser(for: user)
         mockUser.feature(withUserClients: 6)
+
+        recordMode = true
     }
     
     override func tearDown() {
         sut = nil
         mockUser = nil
 
+        ColorScheme.default().variant = .light
         super.tearDown()
     }
 
@@ -55,10 +53,18 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: sut.view)
     }
 
-    func testForWrapInNavigationControllerWithBackButton(){
+    func testForWrapInNavigationController(){
         sut = ProfileViewController(user: mockUser!, context: .deviceList)
-        let navWrapperController = UINavigationController(rootViewController: sut)
-        navWrapperController.isNavigationBarHidden = false
+        let navWrapperController = sut.wrapInNavigationController()
+
+        self.verify(view: navWrapperController.view)
+    }
+
+    func testForWrapInNavigationControllerInDarkVariant(){
+        ColorScheme.default().variant = .dark
+
+        sut = ProfileViewController(user: mockUser!, context: .deviceList)
+        let navWrapperController = sut.wrapInNavigationController()
 
         self.verify(view: navWrapperController.view)
     }

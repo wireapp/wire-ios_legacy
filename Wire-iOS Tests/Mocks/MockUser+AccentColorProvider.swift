@@ -19,13 +19,11 @@
 import Foundation
 @testable import Wire
 
-extension MockUser: AccentColorProvider{
+extension MockUser: AccentColorProvider {
     public var accentColor: UIColor {
         get {
             return UIColor(red: 0.141, green: 0.552, blue: 0.827, alpha: 1.0)
         }
-        set(accentColor) {
-
-        }
+        set(accentColor) {}
     }
 }
