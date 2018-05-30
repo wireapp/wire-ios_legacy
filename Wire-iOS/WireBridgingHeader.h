@@ -97,7 +97,6 @@
 #import "AddPhoneNumberViewController.h"
 #import "VersionInfoViewController.h"
 #import "SketchColorPickerController.h"
-#import "BrowserViewController.h"
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "FullscreenImageViewController.h"

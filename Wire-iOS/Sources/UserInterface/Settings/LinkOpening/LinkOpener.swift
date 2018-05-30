@@ -59,7 +59,7 @@ public extension URL {
     }
 
     func openInApp(above viewController: UIViewController) {
-        let browser = TintColorCorrectedSafariViewController(url: self)
+        let browser = BrowserViewController(url: self)
         browser.modalPresentationCapturesStatusBarAppearance = true
         viewController.present(browser, animated: true, completion: nil)
     }

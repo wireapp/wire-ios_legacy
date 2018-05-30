@@ -252,7 +252,7 @@ extension SettingsCellDescriptorFactory {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
         return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
             Analytics.shared().tagResetPassword(true, from: ResetFromProfile)
-            return TintColorCorrectedSafariViewController(url: URL.wr_passwordReset.appendingLocaleParameter)
+            return BrowserViewController(url: URL.wr_passwordReset.appendingLocaleParameter)
         }, previewGenerator: .none)
     }
 
