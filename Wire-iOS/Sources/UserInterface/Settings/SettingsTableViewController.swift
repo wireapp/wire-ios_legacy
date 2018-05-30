@@ -66,12 +66,6 @@ class SettingsBaseTableViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tableView.reloadData()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     private func createTableView() {
