@@ -126,7 +126,7 @@
 
 - (void)openTOS:(id)sender
 {
-    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:self.termsOfServiceURL];
+    BrowserViewController *webViewController = [[BrowserViewController alloc] initWithURL:self.termsOfServiceURL];
     [self presentViewController:webViewController animated:YES completion:nil];
 }
 
