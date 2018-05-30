@@ -454,7 +454,7 @@
         }
         UINavigationController *navWrapperController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
         navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        navWrapperController.navigationBarHidden = YES;
+        navWrapperController.navigationBarHidden = NO;
         [self presentViewController:navWrapperController animated:YES completion:nil];
     }
 
