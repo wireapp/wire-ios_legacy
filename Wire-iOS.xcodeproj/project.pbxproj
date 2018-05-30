@@ -11,10 +11,6 @@
 		160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */; };
 		160C311F1E4C78480012E4BC /* UnknownMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */; };
 		160C31211E4C7E770012E4BC /* UnknownMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */; };
-		160DECD71AB329CC000FB575 /* CameraAccessDeniedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 160DECD61AB329CC000FB575 /* CameraAccessDeniedView.m */; };
-		160DECDA1AB32F7D000FB575 /* CameraConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 160DECD91AB32F7D000FB575 /* CameraConfirmationView.m */; };
-		160DECDD1AB333A3000FB575 /* CameraFocusRing.m in Sources */ = {isa = PBXBuildFile; fileRef = 160DECDC1AB333A3000FB575 /* CameraFocusRing.m */; };
-		160DECE01AB3347B000FB575 /* CameraExposureSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 160DECDF1AB3347B000FB575 /* CameraExposureSlider.m */; };
 		1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */; };
 		1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */; };
 		161285DF1DD1E81E004728E9 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* NSString+URL.swift */; };
@@ -106,7 +102,6 @@
 		16A2027C1B677A5D0095BBD1 /* soundcloud-track4.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A2027B1B677A5D0095BBD1 /* soundcloud-track4.json */; };
 		16A293DA1F5FFA2E00B4EB16 /* SkeletonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A293D91F5FFA2E00B4EB16 /* SkeletonViewController.swift */; };
 		16A2C6691AA7752F00DC2905 /* CameraController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A2C6681AA7752F00DC2905 /* CameraController.m */; };
-		16A2C6721AA8AA6500DC2905 /* CameraControlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A2C6711AA8AA6500DC2905 /* CameraControlsViewController.m */; };
 		16A94AE920932386008A5718 /* CallParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AE820932386008A5718 /* CallParticipantsView.swift */; };
 		16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AEA20932841008A5718 /* ShowAllParticipantsCell.swift */; };
 		16A94AED20934AA8008A5718 /* CallParticipantsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AEC20934AA8008A5718 /* CallParticipantsViewTests.swift */; };
@@ -124,9 +119,6 @@
 		16C02A12204EE5EC00811912 /* GroupConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C02A11204EE5EC00811912 /* GroupConversationCellTests.swift */; };
 		16C4BDA320A57E5300BCDB17 /* CallDegradationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C4BDA220A57E5300BCDB17 /* CallDegradationController.swift */; };
 		16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */; };
-		16D3631C1AAB63DB00471F5F /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D3631B1AAB63DB00471F5F /* CameraViewController.m */; };
-		16D3632F1AB05BBE00471F5F /* CameraTopToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D3632E1AB05BBE00471F5F /* CameraTopToolsViewController.m */; };
-		16D3633A1AB073AC00471F5F /* CameraBottomToolsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */; };
 		16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */; };
 		16D49328203DCC88008DDFFA /* GroupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D49327203DCC88008DDFFA /* GroupDetailsViewController.swift */; };
 		16D4932A203DCCCA008DDFFA /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D49329203DCCCA008DDFFA /* UserCell.swift */; };
@@ -425,7 +417,6 @@
 		871BC3621D34F94200DF0793 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC33D1D34F94200DF0793 /* Settings.m */; };
 		871BC3631D34F94200DF0793 /* SoundcloudAudioTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3401D34F94200DF0793 /* SoundcloudAudioTrack.m */; };
 		871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3421D34F94200DF0793 /* SoundcloudService.m */; };
-		871BC3671D34F94200DF0793 /* WRFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3491D34F94200DF0793 /* WRFunctions.m */; };
 		871BC3681D34F94200DF0793 /* MediaPreviewData+YouTube.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC34C1D34F94200DF0793 /* MediaPreviewData+YouTube.m */; };
 		871BC3691D34F94200DF0793 /* MediaPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC34E1D34F94200DF0793 /* MediaPreviewViewController.m */; };
 		871BC36A1D34F94200DF0793 /* YoutubeService.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3501D34F94200DF0793 /* YoutubeService.m */; };
@@ -1100,7 +1091,6 @@
 		EF218AC520A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC420A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift */; };
 		EF218AC720A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC620A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift */; };
 		EF218AC920AC76DB004977BF /* UIAlertController+Newsletter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC820AC76DB004977BF /* UIAlertController+Newsletter.swift */; };
-		EF218ACB20AC89D2004977BF /* CameraBottomToolsViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218ACA20AC89D2004977BF /* CameraBottomToolsViewController+ImagePicker.swift */; };
 		EF24036A20A198CC002813BE /* UIImagePickerController+iPadPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */; };
 		EF24036C20A1A2EF002813BE /* ConversationInputBarViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24036B20A1A2EE002813BE /* ConversationInputBarViewController+ImagePicker.swift */; };
 		EF24036E20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24036D20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift */; };
@@ -1273,14 +1263,6 @@
 		1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsShareDatabaseCellDescriptor.swift; sourceTree = "<group>"; };
 		160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCell.swift; sourceTree = "<group>"; };
 		160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCellTests.swift; sourceTree = "<group>"; };
-		160DECD51AB329CC000FB575 /* CameraAccessDeniedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraAccessDeniedView.h; sourceTree = "<group>"; };
-		160DECD61AB329CC000FB575 /* CameraAccessDeniedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraAccessDeniedView.m; sourceTree = "<group>"; };
-		160DECD81AB32F7D000FB575 /* CameraConfirmationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraConfirmationView.h; sourceTree = "<group>"; };
-		160DECD91AB32F7D000FB575 /* CameraConfirmationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraConfirmationView.m; sourceTree = "<group>"; };
-		160DECDB1AB333A3000FB575 /* CameraFocusRing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraFocusRing.h; sourceTree = "<group>"; };
-		160DECDC1AB333A3000FB575 /* CameraFocusRing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraFocusRing.m; sourceTree = "<group>"; };
-		160DECDE1AB3347B000FB575 /* CameraExposureSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraExposureSlider.h; sourceTree = "<group>"; };
-		160DECDF1AB3347B000FB575 /* CameraExposureSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraExposureSlider.m; sourceTree = "<group>"; };
 		1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelfProfileViewController+NewDeviceAlert.swift"; sourceTree = "<group>"; };
 		1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRootViewController+Appearance.swift"; sourceTree = "<group>"; };
 		161285DD1DD1DA85004728E9 /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
@@ -1380,8 +1362,6 @@
 		16A293D91F5FFA2E00B4EB16 /* SkeletonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkeletonViewController.swift; sourceTree = "<group>"; };
 		16A2C6671AA7752F00DC2905 /* CameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraController.h; sourceTree = "<group>"; };
 		16A2C6681AA7752F00DC2905 /* CameraController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraController.m; sourceTree = "<group>"; };
-		16A2C6701AA8AA6500DC2905 /* CameraControlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraControlsViewController.h; sourceTree = "<group>"; };
-		16A2C6711AA8AA6500DC2905 /* CameraControlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraControlsViewController.m; sourceTree = "<group>"; };
 		16A94AE820932386008A5718 /* CallParticipantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantsView.swift; sourceTree = "<group>"; };
 		16A94AEA20932841008A5718 /* ShowAllParticipantsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAllParticipantsCell.swift; sourceTree = "<group>"; };
 		16A94AEC20934AA8008A5718 /* CallParticipantsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantsViewTests.swift; sourceTree = "<group>"; };
@@ -1401,12 +1381,6 @@
 		16C02A11204EE5EC00811912 /* GroupConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupConversationCellTests.swift; sourceTree = "<group>"; };
 		16C4BDA220A57E5300BCDB17 /* CallDegradationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDegradationController.swift; sourceTree = "<group>"; };
 		16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultNavigationBar.swift; sourceTree = "<group>"; };
-		16D3631A1AAB63DB00471F5F /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
-		16D3631B1AAB63DB00471F5F /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
-		16D3632D1AB05BBE00471F5F /* CameraTopToolsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraTopToolsViewController.h; sourceTree = "<group>"; };
-		16D3632E1AB05BBE00471F5F /* CameraTopToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraTopToolsViewController.m; sourceTree = "<group>"; };
-		16D363381AB073AC00471F5F /* CameraBottomToolsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraBottomToolsViewController.h; sourceTree = "<group>"; };
-		16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraBottomToolsViewController.m; sourceTree = "<group>"; };
 		16D3FD031E3BCCF80052A535 /* BlurEffectTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurEffectTransition.swift; sourceTree = "<group>"; };
 		16D453C61B6F9CB000675246 /* LinkAttachmentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkAttachmentTests.m; sourceTree = "<group>"; };
 		16D49327203DCC88008DDFFA /* GroupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewController.swift; sourceTree = "<group>"; };
@@ -1845,8 +1819,6 @@
 		871BC3401D34F94200DF0793 /* SoundcloudAudioTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundcloudAudioTrack.m; sourceTree = "<group>"; };
 		871BC3411D34F94200DF0793 /* SoundcloudService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundcloudService.h; sourceTree = "<group>"; };
 		871BC3421D34F94200DF0793 /* SoundcloudService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundcloudService.m; sourceTree = "<group>"; };
-		871BC3481D34F94200DF0793 /* WRFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WRFunctions.h; sourceTree = "<group>"; };
-		871BC3491D34F94200DF0793 /* WRFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WRFunctions.m; sourceTree = "<group>"; };
 		871BC34B1D34F94200DF0793 /* MediaPreviewData+YouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MediaPreviewData+YouTube.h"; sourceTree = "<group>"; };
 		871BC34C1D34F94200DF0793 /* MediaPreviewData+YouTube.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MediaPreviewData+YouTube.m"; sourceTree = "<group>"; };
 		871BC34D1D34F94200DF0793 /* MediaPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPreviewViewController.h; sourceTree = "<group>"; };
@@ -2774,8 +2746,6 @@
 		EF218AC420A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+DataUsagePermissions.swift"; sourceTree = "<group>"; };
 		EF218AC620A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+DataUsagePermissions.swift"; sourceTree = "<group>"; };
 		EF218AC820AC76DB004977BF /* UIAlertController+Newsletter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Newsletter.swift"; sourceTree = "<group>"; };
-		EF218ACA20AC89D2004977BF /* CameraBottomToolsViewController+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraBottomToolsViewController+ImagePicker.swift"; sourceTree = "<group>"; };
-		EF218ACC20AD7ABC004977BF /* CameraBottomToolsViewController+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CameraBottomToolsViewController+Private.h"; sourceTree = "<group>"; };
 		EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImagePickerController+iPadPopover.swift"; path = "../Conversation/InputBar/UIImagePickerController+iPadPopover.swift"; sourceTree = "<group>"; };
 		EF24036B20A1A2EE002813BE /* ConversationInputBarViewController+ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+ImagePicker.swift"; sourceTree = "<group>"; };
 		EF24036D20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TermsOfUseStepViewController+Constraints.swift"; sourceTree = "<group>"; };
@@ -2985,24 +2955,6 @@
 			children = (
 				16A2C6671AA7752F00DC2905 /* CameraController.h */,
 				16A2C6681AA7752F00DC2905 /* CameraController.m */,
-				160DECDB1AB333A3000FB575 /* CameraFocusRing.h */,
-				160DECDC1AB333A3000FB575 /* CameraFocusRing.m */,
-				160DECDE1AB3347B000FB575 /* CameraExposureSlider.h */,
-				160DECDF1AB3347B000FB575 /* CameraExposureSlider.m */,
-				16A2C6701AA8AA6500DC2905 /* CameraControlsViewController.h */,
-				16A2C6711AA8AA6500DC2905 /* CameraControlsViewController.m */,
-				16D3632D1AB05BBE00471F5F /* CameraTopToolsViewController.h */,
-				16D3632E1AB05BBE00471F5F /* CameraTopToolsViewController.m */,
-				16D363381AB073AC00471F5F /* CameraBottomToolsViewController.h */,
-				EF218ACC20AD7ABC004977BF /* CameraBottomToolsViewController+Private.h */,
-				16D363391AB073AC00471F5F /* CameraBottomToolsViewController.m */,
-				EF218ACA20AC89D2004977BF /* CameraBottomToolsViewController+ImagePicker.swift */,
-				160DECD51AB329CC000FB575 /* CameraAccessDeniedView.h */,
-				160DECD61AB329CC000FB575 /* CameraAccessDeniedView.m */,
-				160DECD81AB32F7D000FB575 /* CameraConfirmationView.h */,
-				160DECD91AB32F7D000FB575 /* CameraConfirmationView.m */,
-				16D3631A1AAB63DB00471F5F /* CameraViewController.h */,
-				16D3631B1AAB63DB00471F5F /* CameraViewController.m */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -3953,8 +3905,6 @@
 				1EE9DCAA1B5F9A6D00E347DF /* TokenField */,
 				871BC33E1D34F94200DF0793 /* Soundcloud */,
 				876113E51DD1DE70007F5969 /* ShareViewController */,
-				871BC3481D34F94200DF0793 /* WRFunctions.h */,
-				871BC3491D34F94200DF0793 /* WRFunctions.m */,
 				871BC34A1D34F94200DF0793 /* Youtube */,
 				7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */,
 				7C3A82CA20B6E6B800313B4F /* CameraAccess.swift */,
@@ -6219,7 +6169,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications";
+			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
 		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6585,7 +6535,6 @@
 				872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */,
 				8742C2F31E534ED500329FB6 /* SearchResultLabel.swift in Sources */,
 				D5694B5220441EE900C84C8F /* UILabel+Convenience.swift in Sources */,
-				871BC3671D34F94200DF0793 /* WRFunctions.m in Sources */,
 				EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */,
 				8FC85455199245770008B66B /* ConversationViewController.m in Sources */,
 				EF80C0022097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift in Sources */,
@@ -6652,7 +6601,6 @@
 				BF989D081E896D210052BF8F /* ConversationCellBurstTimestampView.swift in Sources */,
 				F1141C971F5EB2DC005340B3 /* WireApplication.swift in Sources */,
 				8759E2C51FC86090008E17C9 /* UIAlertController+TOS.swift in Sources */,
-				160DECDA1AB32F7D000FB575 /* CameraConfirmationView.m in Sources */,
 				874E27CB1E2912860079573D /* ConversationImagesViewController.swift in Sources */,
 				162936BF1F4714D200D4F386 /* AppRootViewController.swift in Sources */,
 				F12CDADE1E43868200CEFCEB /* ChangeEmailViewController.swift in Sources */,
@@ -6789,7 +6737,6 @@
 				871BC0201D34F56300DF0793 /* AnalyticsTracker+Permissions.m in Sources */,
 				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,
 				871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */,
-				16D3631C1AAB63DB00471F5F /* CameraViewController.m in Sources */,
 				EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */,
 				871BC2601D34F8F800DF0793 /* IdentifiableColor+AccentColors.m in Sources */,
 				8FC853FE199245770008B66B /* AppDelegate+Hockey.m in Sources */,
@@ -6807,12 +6754,10 @@
 				879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */,
 				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,
 				16A94AF8209B5334008A5718 /* VideoGridView.swift in Sources */,
-				16D3633A1AB073AC00471F5F /* CameraBottomToolsViewController.m in Sources */,
 				16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */,
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
 				8762BE151D8978F70040E4A5 /* ZMAccentColor+Additions.swift in Sources */,
 				BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */,
-				16D3632F1AB05BBE00471F5F /* CameraTopToolsViewController.m in Sources */,
 				EF44784F20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift in Sources */,
 				BAA1F7E41B610D89002402B6 /* SketchColorCollectionViewCell.m in Sources */,
 				BF5FAC0520B6C6E9004CEB45 /* ConversationCallController.swift in Sources */,
@@ -6965,7 +6910,6 @@
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */,
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
 				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,
-				160DECE01AB3347B000FB575 /* CameraExposureSlider.m in Sources */,
 				87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */,
 				BFAC71FB20A1CDAF002711C4 /* VoiceChannel+Helper.swift in Sources */,
 				7C17ECA51F74F4540056600C /* ConversationCell+Preview.swift in Sources */,
@@ -7075,7 +7019,6 @@
 				BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */,
 				BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */,
 				D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */,
-				EF218ACB20AC89D2004977BF /* CameraBottomToolsViewController+ImagePicker.swift in Sources */,
 				AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */,
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
 				8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */,
@@ -7121,7 +7064,6 @@
 				EF2127121FB9DFE300625A9B /* PhoneSignInViewController.m in Sources */,
 				871BC01B1D34F56300DF0793 /* AnalyticsTracker+FileTransfer.m in Sources */,
 				16829EDF2010D60800F579A0 /* InviteTeamMemberSection.swift in Sources */,
-				160DECD71AB329CC000FB575 /* CameraAccessDeniedView.m in Sources */,
 				8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */,
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
 				871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */,
@@ -7149,11 +7091,9 @@
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
 				BF8ECC331E5AED6C0015177D /* UIMenuItem+MessageActions.swift in Sources */,
 				DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */,
-				16A2C6721AA8AA6500DC2905 /* CameraControlsViewController.m in Sources */,
 				87AAE41F1E423C2A00E1D13A /* CASStyler+Fonts.swift in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,
 				16C02A0D204D407100811912 /* TopPeopleSectionController.swift in Sources */,
-				160DECDD1AB333A3000FB575 /* CameraFocusRing.m in Sources */,
 				EF2127061FB9DFE300625A9B /* GuidanceDotView.m in Sources */,
 				BF4D99CC1E79AAD400A7B08F /* ParticipantsCells.swift in Sources */,
 				EF21271F1FB9DFE300625A9B /* AddPhoneNumberViewController.m in Sources */,

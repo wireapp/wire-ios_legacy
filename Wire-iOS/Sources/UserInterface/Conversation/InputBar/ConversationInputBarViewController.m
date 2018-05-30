@@ -28,7 +28,6 @@
 @import WireExtensionComponents;
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
-#import "CameraViewController.h"
 #import "UIView+Borders.h"
 #import "UIViewController+Errors.h"
 

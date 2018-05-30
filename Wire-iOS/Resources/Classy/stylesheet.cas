@@ -501,18 +501,6 @@ LocationSendViewController {
     }
 }
 
-/* Camera */
-
-CameraViewController {
-    titleLabel: @{
-        font: $font-small-light;
-        textColor: white;
-    }
-    editButton: @{
-        iconColor: white;
-    }
-}
-
 /* Giphy */
 
 GiphyConfirmationViewController {

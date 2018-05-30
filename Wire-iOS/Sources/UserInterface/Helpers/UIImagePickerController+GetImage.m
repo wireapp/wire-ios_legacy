@@ -33,6 +33,9 @@
 + (nullable PHAsset *)loadFromMediaInfo:(nonnull NSDictionary *)mediaInfo
 {
     NSURL *assetURL = [mediaInfo objectForKey:UIImagePickerControllerReferenceURL];
+    if (nil == assetURL) {
+        return nil;
+    }
     PHFetchResult<PHAsset *> *result = [PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil];
     return result.firstObject;
 }

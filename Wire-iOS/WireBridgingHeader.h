@@ -119,8 +119,6 @@
 #import "NoHistoryViewController.h"
 #import "TermsOfUseStepViewController.h"
 #import "TermsOfUseStepViewController+Private.h"
-#import "CameraBottomToolsViewController.h"
-#import "CameraBottomToolsViewController+Private.h"
 
 // Helper objects
 #import "PushTransition.h"
