@@ -24,6 +24,7 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     fileprivate var conversation: ZMConversation
     fileprivate var renameCell: GroupDetailsRenameCell?
     fileprivate var token: AnyObject?
+    private var sizingFooter = SectionFooter(frame: .zero)
     
     var isHidden: Bool {
         return false
@@ -71,7 +72,8 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard ZMUser.selfUser().hasTeam else { return .zero }
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
+        sizingFooter.titleLabel.text = "participants.section.name.footer".localized
+        return sizingFooter.sized(fittingWidth: collectionView.bounds.width).bounds.size
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
