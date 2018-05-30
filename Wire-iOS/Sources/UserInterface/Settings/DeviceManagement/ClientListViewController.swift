@@ -37,6 +37,11 @@ protocol ClientListViewControllerDelegate: class {
         set {
             if let navigationController = self.navigationController {
                 navigationController.showLoadingView = newValue
+
+                // dismiss the loading view that toggled before navigationController is created
+                if !newValue && super.showLoadingView {
+                    super.showLoadingView = newValue
+                }
             } else {
                 super.showLoadingView = newValue
             }
