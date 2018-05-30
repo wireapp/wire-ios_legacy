@@ -63,8 +63,8 @@ extension UIAlertController {
         completion: @escaping (Bool) -> Void
         ) -> UIAlertController {
         let controller = UIAlertController(
-            title: nil,
-            message: titleKey.localized,
+            title: titleKey.localized,
+            message: nil,
             preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
         )
         controller.addAction(.init(title: buttonTitleKey.localized, style: .default) { _ in completion(true) })
