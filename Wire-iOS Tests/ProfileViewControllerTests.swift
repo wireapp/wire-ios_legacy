@@ -36,15 +36,12 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         mockUser = MockUser(for: user)
         mockUser.feature(withUserClients: 6)
-
-        recordMode = true
     }
     
     override func tearDown() {
         sut = nil
         mockUser = nil
 
-        ColorScheme.default().variant = .light
         super.tearDown()
     }
 
@@ -54,15 +51,6 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testForWrapInNavigationController(){
-        sut = ProfileViewController(user: mockUser!, context: .deviceList)
-        let navWrapperController = sut.wrapInNavigationController()
-
-        self.verify(view: navWrapperController.view)
-    }
-
-    func testForWrapInNavigationControllerInDarkVariant(){
-        ColorScheme.default().variant = .dark
-
         sut = ProfileViewController(user: mockUser!, context: .deviceList)
         let navWrapperController = sut.wrapInNavigationController()
 
