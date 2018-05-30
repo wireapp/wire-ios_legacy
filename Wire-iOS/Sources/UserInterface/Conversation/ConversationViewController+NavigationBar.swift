@@ -49,12 +49,14 @@ public extension ConversationViewController {
     var audioCallButton: UIBarButtonItem {
         let button = UIBarButtonItem(icon: .callAudio, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
         button.accessibilityIdentifier = "audioCallBarButton"
+        button.accessibilityLabel = "call.actions.label.make_audio_call".localized
         return button
     }
 
     var videoCallButton: UIBarButtonItem {
         let button = UIBarButtonItem(icon: .callVideo, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
         button.accessibilityIdentifier = "videoCallBarButton"
+        button.accessibilityLabel = "call.actions.label.make_video_call".localized
         return button
     }
 
@@ -79,9 +81,11 @@ public extension ConversationViewController {
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
         let button = UIBarButtonItem(icon: icon, target: self, action: action)
         button.accessibilityIdentifier = "ConversationBackButton"
-        
+        button.accessibilityLabel = "general.back".localized
+
         if hasUnreadInOtherConversations {
             button.tintColor = UIColor.accent()
+            button.accessibilityValue = "conversation_list.voiceover.unread_messages.hint".localized
         }
         
         return button
@@ -92,6 +96,7 @@ public extension ConversationViewController {
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
         let button = UIBarButtonItem(icon: showingSearchResults ? .searchOngoing : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
+        button.accessibilityLabel = "conversation.action.search".localized
         
         if showingSearchResults {
             button.tintColor = UIColor.accent()
