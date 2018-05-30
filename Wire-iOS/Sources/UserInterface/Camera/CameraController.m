@@ -549,7 +549,9 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
         __block AVCaptureVideoOrientation videoOrientation = (AVCaptureVideoOrientation)deviceOrientation;
 
 
-        if (deviceOrientation == UIDeviceOrientationFaceDown || deviceOrientation == UIDeviceOrientationFaceUp) {
+        if (deviceOrientation == UIDeviceOrientationFaceDown ||
+            deviceOrientation == UIDeviceOrientationFaceUp ||
+            deviceOrientation == UIDeviceOrientationUnknown) {
             // Face up/down can't be translated into a video orientation so we fall back to the orientation of the user interface
             dispatch_group_t group = dispatch_group_create();
             dispatch_group_enter(group);

@@ -35,6 +35,7 @@ static DeviceOrientationObserver *sharedInstance = nil;
 @property (nonatomic) CMMotionManager *motionManager;
 @property (nonatomic) NSOperationQueue *operationQueue;
 @property (nonatomic) UIDeviceOrientation currentDeviceOrientation;
+@property (nonatomic) UIDeviceOrientation deviceOrientation;
 
 @end
 
@@ -75,7 +76,7 @@ static DeviceOrientationObserver *sharedInstance = nil;
                 ZM_WEAK(self);
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     ZM_STRONG(self);
-                    self.currentDeviceOrientation = newDeviceOrientation;
+                    self.deviceOrientation = newDeviceOrientation;
                     [self notifyAboutRotationToDeviceOrientation:newDeviceOrientation];
                 }];
             }
