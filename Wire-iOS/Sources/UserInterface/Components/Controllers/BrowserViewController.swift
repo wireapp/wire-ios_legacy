@@ -53,6 +53,7 @@ import SafariServices
     // MARK: - Tint Color
 
     private var overrider = TintColorOverrider()
+    private var originalStatusBarStyle: UIStatusBarStyle = .default
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,12 +66,15 @@ import SafariServices
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        originalStatusBarStyle = UIApplication.shared.statusBarStyle
         overrider.override()
+        UIApplication.shared.wr_setStatusBarStyle(.default, animated: true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         overrider.restore()
+        UIApplication.shared.wr_setStatusBarStyle(originalStatusBarStyle, animated: true)
     }
 
 }
