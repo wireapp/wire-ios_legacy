@@ -253,7 +253,6 @@
 		7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */; };
 		7C72F03D200E0D03001231D3 /* PhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03C200E0D03001231D3 /* PhotoPermissionsController.swift */; };
 		7C9E291A2074F3F100827819 /* EmailVerificationStepViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9E29192074F3F000827819 /* EmailVerificationStepViewControllerTests.swift */; };
-		7CA540831F740B7C00457F4B /* UIScreen+Compact.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA540821F740B7C00457F4B /* UIScreen+Compact.m */; };
 		7CAB951320650F0F004BAFC4 /* ShareDestinationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB951120650EE6004BAFC4 /* ShareDestinationCellTests.swift */; };
 		7CB082DC1FB2137100972488 /* ShareExtensionNetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */; };
 		7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */; };
@@ -334,22 +333,16 @@
 		871BC0291D34F5D200DF0793 /* NSString+EmoticonSubstitution.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0271D34F5D200DF0793 /* NSString+EmoticonSubstitution.m */; };
 		871BC0581D34F60700DF0793 /* NSAttributedString+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0341D34F60700DF0793 /* NSAttributedString+Wire.m */; };
 		871BC0591D34F60700DF0793 /* NSDate+Format.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0361D34F60700DF0793 /* NSDate+Format.m */; };
-		871BC05A1D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0381D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m */; };
 		871BC1261D34F7B700DF0793 /* ZiphyClient+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1251D34F7B700DF0793 /* ZiphyClient+Convenience.m */; };
 		871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1341D34F8F800DF0793 /* BottomOverlayViewController.m */; };
 		871BC2251D34F8F800DF0793 /* BrowserBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1361D34F8F800DF0793 /* BrowserBarView.m */; };
 		871BC2261D34F8F800DF0793 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1381D34F8F800DF0793 /* BrowserViewController.m */; };
-		871BC2271D34F8F800DF0793 /* CameraAccessMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13A1D34F8F800DF0793 /* CameraAccessMessageViewController.m */; };
-		871BC2281D34F8F800DF0793 /* CameraAccessMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 871BC13B1D34F8F800DF0793 /* CameraAccessMessageViewController.xib */; };
 		871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */; };
 		871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */; };
 		871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */; };
 		871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */; };
 		871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */; };
 		871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1461D34F8F800DF0793 /* SplitViewController.m */; };
-		871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC14B1D34F8F800DF0793 /* FormGuidance.m */; };
-		871BC2311D34F8F800DF0793 /* Guidance.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC14D1D34F8F800DF0793 /* Guidance.m */; };
-		871BC2321D34F8F800DF0793 /* StyledTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1501D34F8F800DF0793 /* StyledTextField.m */; };
 		871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */; };
 		871BC23A1D34F8F800DF0793 /* KeyboardFrameObserver+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1611D34F8F800DF0793 /* KeyboardFrameObserver+iOS.m */; };
 		871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1631D34F8F800DF0793 /* KeyboardFrameObserver.m */; };
@@ -377,7 +370,6 @@
 		871BC2731D34F8F800DF0793 /* UpsideDownTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1DB1D34F8F800DF0793 /* UpsideDownTableView.m */; };
 		871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */; };
 		871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */; };
-		871BC27C1D34F8F800DF0793 /* CALayer+EasyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EE1D34F8F800DF0793 /* CALayer+EasyAnimation.m */; };
 		871BC27D1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */; };
 		871BC27F1D34F8F800DF0793 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F41D34F8F800DF0793 /* NSString+Emoji.m */; };
 		871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */; };
@@ -392,7 +384,6 @@
 		871BC28C1D34F8F800DF0793 /* UIScrollView+Zeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20A1D34F8F800DF0793 /* UIScrollView+Zeta.m */; };
 		871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */; };
 		871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */; };
-		871BC28F1D34F8F800DF0793 /* UIView+Borders.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20F1D34F8F800DF0793 /* UIView+Borders.m */; };
 		871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */; };
 		871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2131D34F8F800DF0793 /* UIView+RemoveAnimations.m */; };
 		871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */; };
@@ -706,7 +697,6 @@
 		8FC853D7199245770008B66B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8FC850BA199245760008B66B /* Settings.bundle */; };
 		8FC853FE199245770008B66B /* AppDelegate+Hockey.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC850F4199245760008B66B /* AppDelegate+Hockey.m */; };
 		8FC853FF199245770008B66B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC850F6199245760008B66B /* AppDelegate.m */; };
-		8FC8541C199245770008B66B /* NSError+Zeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC8512C199245760008B66B /* NSError+Zeta.m */; };
 		8FC8541F199245770008B66B /* ZMUserSession+iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85133199245760008B66B /* ZMUserSession+iOS.m */; };
 		8FC85422199245770008B66B /* ZMConversation+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85139199245760008B66B /* ZMConversation+Validation.m */; };
 		8FC85427199245770008B66B /* ZetaKeyValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85143199245760008B66B /* ZetaKeyValueValidation.m */; };
@@ -1101,7 +1091,7 @@
 		EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
 		EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */; };
-		EF2C18A21FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */; };
+		EF2C18A21FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C18A11FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift */; };
 		EF3052452087388000613C45 /* ConfirmEmailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */; };
 		EF305247208742F300613C45 /* ConfirmPhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */; };
 		EF30524B2088927D00613C45 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = EF30524A2088927D00613C45 /* transparent.png */; };
@@ -1110,7 +1100,7 @@
 		EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */; };
 		EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */; };
 		EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BF2059761D00CFBCB0 /* MockApplication.swift */; };
-		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift */; };
+		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */; };
 		EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
 		EF5EF40220B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */; };
@@ -1541,8 +1531,6 @@
 		7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoPermissionsController.swift; sourceTree = "<group>"; };
 		7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPropertyName.swift; sourceTree = "<group>"; };
 		7C9E29192074F3F000827819 /* EmailVerificationStepViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailVerificationStepViewControllerTests.swift; sourceTree = "<group>"; };
-		7CA540811F740B7C00457F4B /* UIScreen+Compact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Compact.h"; sourceTree = "<group>"; };
-		7CA540821F740B7C00457F4B /* UIScreen+Compact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Compact.m"; sourceTree = "<group>"; };
 		7CAB951120650EE6004BAFC4 /* ShareDestinationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDestinationCellTests.swift; sourceTree = "<group>"; };
 		7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionNetworkObserver.swift; sourceTree = "<group>"; };
 		7CC085451F7AA30F0010F96B /* DotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
@@ -1653,8 +1641,6 @@
 		871BC0341D34F60700DF0793 /* NSAttributedString+Wire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Wire.m"; sourceTree = "<group>"; };
 		871BC0351D34F60700DF0793 /* NSDate+Format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Format.h"; sourceTree = "<group>"; };
 		871BC0361D34F60700DF0793 /* NSDate+Format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Format.m"; sourceTree = "<group>"; };
-		871BC0371D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+SimpleTypeAccess.h"; sourceTree = "<group>"; };
-		871BC0381D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+SimpleTypeAccess.m"; sourceTree = "<group>"; };
 		871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationLaunchType.h; sourceTree = "<group>"; };
 		871BC1241D34F7B700DF0793 /* ZiphyClient+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ZiphyClient+Convenience.h"; path = "ziphy/ZiphyClient+Convenience.h"; sourceTree = "<group>"; };
 		871BC1251D34F7B700DF0793 /* ZiphyClient+Convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ZiphyClient+Convenience.m"; path = "ziphy/ZiphyClient+Convenience.m"; sourceTree = "<group>"; };
@@ -1665,9 +1651,6 @@
 		871BC1361D34F8F800DF0793 /* BrowserBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserBarView.m; sourceTree = "<group>"; };
 		871BC1371D34F8F800DF0793 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		871BC1381D34F8F800DF0793 /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
-		871BC1391D34F8F800DF0793 /* CameraAccessMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraAccessMessageViewController.h; sourceTree = "<group>"; };
-		871BC13A1D34F8F800DF0793 /* CameraAccessMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraAccessMessageViewController.m; sourceTree = "<group>"; };
-		871BC13B1D34F8F800DF0793 /* CameraAccessMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraAccessMessageViewController.xib; sourceTree = "<group>"; };
 		871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAssetViewController.h; sourceTree = "<group>"; };
 		871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAssetViewController.m; sourceTree = "<group>"; };
 		871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FullscreenImageViewController+PullToDismiss.h"; sourceTree = "<group>"; };
@@ -1679,13 +1662,6 @@
 		871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationAwareNavigationController.swift; sourceTree = "<group>"; };
 		871BC1451D34F8F800DF0793 /* SplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewController.h; sourceTree = "<group>"; };
 		871BC1461D34F8F800DF0793 /* SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
-		871BC14A1D34F8F800DF0793 /* FormGuidance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormGuidance.h; sourceTree = "<group>"; };
-		871BC14B1D34F8F800DF0793 /* FormGuidance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormGuidance.m; sourceTree = "<group>"; };
-		871BC14C1D34F8F800DF0793 /* Guidance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Guidance.h; sourceTree = "<group>"; };
-		871BC14D1D34F8F800DF0793 /* Guidance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Guidance.m; sourceTree = "<group>"; };
-		871BC14E1D34F8F800DF0793 /* GuidanceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceProtocol.h; sourceTree = "<group>"; };
-		871BC14F1D34F8F800DF0793 /* StyledTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyledTextField.h; sourceTree = "<group>"; };
-		871BC1501D34F8F800DF0793 /* StyledTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyledTextField.m; sourceTree = "<group>"; };
 		871BC15E1D34F8F800DF0793 /* KeyboardAvoidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardAvoidingViewController.h; sourceTree = "<group>"; };
 		871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardAvoidingViewController.m; sourceTree = "<group>"; };
 		871BC1601D34F8F800DF0793 /* KeyboardFrameObserver+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KeyboardFrameObserver+iOS.h"; sourceTree = "<group>"; };
@@ -1742,8 +1718,6 @@
 		871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeUserImageView.m; sourceTree = "<group>"; };
 		871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebLinkTextView.h; sourceTree = "<group>"; };
 		871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebLinkTextView.m; sourceTree = "<group>"; };
-		871BC1ED1D34F8F800DF0793 /* CALayer+EasyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+EasyAnimation.h"; sourceTree = "<group>"; };
-		871BC1EE1D34F8F800DF0793 /* CALayer+EasyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+EasyAnimation.m"; sourceTree = "<group>"; };
 		871BC1EF1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAMediaTimingFunction+AdditionalEquations.h"; sourceTree = "<group>"; };
 		871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAMediaTimingFunction+AdditionalEquations.m"; sourceTree = "<group>"; };
 		871BC1F31D34F8F800DF0793 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
@@ -1768,8 +1742,6 @@
 		871BC20B1D34F8F800DF0793 /* UITableView+RowCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RowCount.h"; sourceTree = "<group>"; };
 		871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RowCount.m"; sourceTree = "<group>"; };
 		871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Reuse.swift"; sourceTree = "<group>"; };
-		871BC20E1D34F8F800DF0793 /* UIView+Borders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Borders.h"; sourceTree = "<group>"; };
-		871BC20F1D34F8F800DF0793 /* UIView+Borders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Borders.m"; sourceTree = "<group>"; };
 		871BC2101D34F8F800DF0793 /* UIView+PopoverBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PopoverBorder.h"; sourceTree = "<group>"; };
 		871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PopoverBorder.m"; sourceTree = "<group>"; };
 		871BC2121D34F8F800DF0793 /* UIView+RemoveAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RemoveAnimations.h"; sourceTree = "<group>"; };
@@ -2201,8 +2173,6 @@
 		8FC850F4199245760008B66B /* AppDelegate+Hockey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+Hockey.m"; sourceTree = "<group>"; };
 		8FC850F5199245760008B66B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8FC850F6199245760008B66B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		8FC8512B199245760008B66B /* NSError+Zeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Zeta.h"; sourceTree = "<group>"; };
-		8FC8512C199245760008B66B /* NSError+Zeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Zeta.m"; sourceTree = "<group>"; };
 		8FC85132199245760008B66B /* ZMUserSession+iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMUserSession+iOS.h"; sourceTree = "<group>"; };
 		8FC85133199245760008B66B /* ZMUserSession+iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMUserSession+iOS.m"; sourceTree = "<group>"; };
 		8FC85138199245760008B66B /* ZMConversation+Validation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMConversation+Validation.h"; sourceTree = "<group>"; };
@@ -2757,7 +2727,7 @@
 		EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
 		EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+BurstTimestamp.swift"; sourceTree = "<group>"; };
-		EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+allVersionCompatibleScheduledTimer.swift"; sourceTree = "<group>"; };
+		EF2C18A11FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+AllVersionCompatibleScheduledTimer.swift"; sourceTree = "<group>"; };
 		EF2CC33C1FF3C567009FFE4C /* ConversationCell+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationCell+Private.h"; sourceTree = "<group>"; };
 		EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailViewControllerTests.swift; sourceTree = "<group>"; };
 		EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2767,7 +2737,7 @@
 		EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBarConstants.swift; sourceTree = "<group>"; };
 		EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProtocol.swift; sourceTree = "<group>"; };
 		EF4018BF2059761D00CFBCB0 /* MockApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockApplication.swift; sourceTree = "<group>"; };
-		EF44784E20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+zoom.swift"; sourceTree = "<group>"; };
+		EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+Zoom.swift"; sourceTree = "<group>"; };
 		EF4478502090BC1800BD9827 /* FullscreenImageViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FullscreenImageViewController+internal.h"; sourceTree = "<group>"; };
 		EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewControllerTests.swift; sourceTree = "<group>"; };
 		EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
@@ -3610,7 +3580,6 @@
 				871BC1281D34F8F800DF0793 /* Controllers */,
 				871BC36B1D34F96000DF0793 /* DeviceOrientationObserver.h */,
 				871BC36C1D34F96000DF0793 /* DeviceOrientationObserver.m */,
-				871BC1491D34F8F800DF0793 /* FormGuidance */,
 				871BC1511D34F8F800DF0793 /* Giphy */,
 				871BC15E1D34F8F800DF0793 /* KeyboardAvoidingViewController.h */,
 				871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */,
@@ -3644,9 +3613,6 @@
 				16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */,
 				871BC1371D34F8F800DF0793 /* BrowserViewController.h */,
 				871BC1381D34F8F800DF0793 /* BrowserViewController.m */,
-				871BC1391D34F8F800DF0793 /* CameraAccessMessageViewController.h */,
-				871BC13A1D34F8F800DF0793 /* CameraAccessMessageViewController.m */,
-				871BC13B1D34F8F800DF0793 /* CameraAccessMessageViewController.xib */,
 				871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */,
 				871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */,
 				871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */,
@@ -3654,7 +3620,7 @@
 				871BC1401D34F8F800DF0793 /* FullscreenImageViewController.h */,
 				EF4478502090BC1800BD9827 /* FullscreenImageViewController+internal.h */,
 				871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */,
-				EF44784E20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift */,
+				EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */,
 				871BC1421D34F8F800DF0793 /* ImagePickerConfirmationController.h */,
 				871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */,
 				871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */,
@@ -3666,20 +3632,6 @@
 				1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		871BC1491D34F8F800DF0793 /* FormGuidance */ = {
-			isa = PBXGroup;
-			children = (
-				871BC14A1D34F8F800DF0793 /* FormGuidance.h */,
-				871BC14B1D34F8F800DF0793 /* FormGuidance.m */,
-				871BC14C1D34F8F800DF0793 /* Guidance.h */,
-				871BC14D1D34F8F800DF0793 /* Guidance.m */,
-				871BC14E1D34F8F800DF0793 /* GuidanceProtocol.h */,
-				871BC14F1D34F8F800DF0793 /* StyledTextField.h */,
-				871BC1501D34F8F800DF0793 /* StyledTextField.m */,
-			);
-			path = FormGuidance;
 			sourceTree = "<group>";
 		};
 		871BC1511D34F8F800DF0793 /* Giphy */ = {
@@ -3809,8 +3761,6 @@
 				87AAE41E1E423C2A00E1D13A /* CASStyler+Fonts.swift */,
 				D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */,
 				CE8E4FB61DF17BBE0009F437 /* TextTransform */,
-				871BC1ED1D34F8F800DF0793 /* CALayer+EasyAnimation.h */,
-				871BC1EE1D34F8F800DF0793 /* CALayer+EasyAnimation.m */,
 				871BC1EF1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.h */,
 				871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */,
 				871BC1F31D34F8F800DF0793 /* NSString+Emoji.h */,
@@ -3841,8 +3791,6 @@
 				871BC20B1D34F8F800DF0793 /* UITableView+RowCount.h */,
 				871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */,
 				871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */,
-				871BC20E1D34F8F800DF0793 /* UIView+Borders.h */,
-				871BC20F1D34F8F800DF0793 /* UIView+Borders.m */,
 				871BC2101D34F8F800DF0793 /* UIView+PopoverBorder.h */,
 				871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */,
 				871BC2121D34F8F800DF0793 /* UIView+RemoveAnimations.h */,
@@ -4576,11 +4524,9 @@
 				8FC8512F199245760008B66B /* syncengine */,
 				DBBC190A1B5E36C400E84607 /* performance */,
 				F95E08B31D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift */,
-				8FC8512B199245760008B66B /* NSError+Zeta.h */,
-				8FC8512C199245760008B66B /* NSError+Zeta.m */,
 				16E6C0FE1A837C0300AA2F32 /* NSIndexSet+IndexPaths.h */,
-				D5189472204D543C00C095C1 /* InitialSyncObserver.swift */,
 				16E6C0FF1A837C0300AA2F32 /* NSIndexSet+IndexPaths.m */,
+				D5189472204D543C00C095C1 /* InitialSyncObserver.swift */,
 				BADA35111B42FEC100396F2C /* NSURL+WireLocale.h */,
 				BADA35121B42FEC100396F2C /* NSURL+WireLocale.m */,
 				BF8042251BFC741F004CD789 /* NSURL+WireURLs.h */,
@@ -4610,8 +4556,6 @@
 				871BC0351D34F60700DF0793 /* NSDate+Format.h */,
 				871BC0361D34F60700DF0793 /* NSDate+Format.m */,
 				F16426F51FCC0FE200D2ABFC /* UIColor+Hex.swift */,
-				871BC0371D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.h */,
-				871BC0381D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m */,
 				871BC06A1D34F64B00DF0793 /* ApplicationLaunchType.h */,
 				168A16A31D95964B005CFA6C /* NSString+URL.swift */,
 				BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */,
@@ -4622,9 +4566,7 @@
 				BF8ECC321E5AED6C0015177D /* UIMenuItem+MessageActions.swift */,
 				8742C2E91E5309FC00329FB6 /* NSAttributedString+Highlight.swift */,
 				162836132016574D0027082D /* ProcessInfo+Tests.swift */,
-				7CA540811F740B7C00457F4B /* UIScreen+Compact.h */,
-				7CA540821F740B7C00457F4B /* UIScreen+Compact.m */,
-				EF2C18A11FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift */,
+				EF2C18A11FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift */,
 				7C4789842021F40E00A38442 /* AddBotError+UIHandler.swift */,
 				1682AEC420484B9B003A052A /* Themeable.swift */,
 				163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */,
@@ -6083,7 +6025,6 @@
 				BF732A7A1D9C14C7003077DB /* emoji_travel.plist in Resources */,
 				1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */,
 				16A2024C1B66505B0095BBD1 /* soundcloud.png in Resources */,
-				871BC2281D34F8F800DF0793 /* CameraAccessMessageViewController.xib in Resources */,
 				874C09361B4A8EF40077393B /* InfoPlist.strings in Resources */,
 				BF732A731D9C14C7003077DB /* emoji_activities.plist in Resources */,
 				87AEDB291DBA619D00010451 /* logo@3x.png in Resources */,
@@ -6555,7 +6496,6 @@
 				8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */,
 				EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */,
 				871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */,
-				7CA540831F740B7C00457F4B /* UIScreen+Compact.m in Sources */,
 				87E3C5081FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift in Sources */,
 				16460A42206412410096B616 /* UIColor+AudioPlayer.swift in Sources */,
 				BFCF31D71DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift in Sources */,
@@ -6651,11 +6591,9 @@
 				BF7ED2D81DF1A30C003A4397 /* IncomingConnectionView.swift in Sources */,
 				EF106E83204D869B00B9F0F6 /* DeviceProtocol.swift in Sources */,
 				8784D4571E81832F007A6867 /* ConversationListViewController+TopBar.swift in Sources */,
-				871BC2311D34F8F800DF0793 /* Guidance.m in Sources */,
 				16E2A09A1F6ADE75005F4DB1 /* ActiveVoiceChannelViewController.swift in Sources */,
 				871BC36A1D34F94200DF0793 /* YoutubeService.m in Sources */,
 				CE2402811E0A992200665A91 /* AnalyticsConsoleProvider.swift in Sources */,
-				871BC28F1D34F8F800DF0793 /* UIView+Borders.m in Sources */,
 				D5168F562010F25000F8222A /* TokenField.m in Sources */,
 				D5168F512010F20300F8222A /* ShareViewController+Views.swift in Sources */,
 				D5168F502010F1FF00F8222A /* ShareViewController.swift in Sources */,
@@ -6758,7 +6696,7 @@
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
 				8762BE151D8978F70040E4A5 /* ZMAccentColor+Additions.swift in Sources */,
 				BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */,
-				EF44784F20906DDD00BD9827 /* FullscreenImageViewController+zoom.swift in Sources */,
+				EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */,
 				BAA1F7E41B610D89002402B6 /* SketchColorCollectionViewCell.m in Sources */,
 				BF5FAC0520B6C6E9004CEB45 /* ConversationCallController.swift in Sources */,
 				8723342A1CD0D8F100CF8B11 /* VideoMessageCell.swift in Sources */,
@@ -6795,7 +6733,6 @@
 				D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
 				EF2127071FB9DFE300625A9B /* RegistrationEmailFlowViewController.m in Sources */,
-				871BC27C1D34F8F800DF0793 /* CALayer+EasyAnimation.m in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
@@ -6837,7 +6774,6 @@
 				D53D390C2057F8ED00B87DAD /* TintCorrectedActivityController.swift in Sources */,
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
 				1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */,
-				871BC2301D34F8F800DF0793 /* FormGuidance.m in Sources */,
 				EF2127171FB9DFE300625A9B /* NoHistoryViewController.m in Sources */,
 				BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */,
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
@@ -6855,7 +6791,6 @@
 				87AAE4231E43234A00E1D13A /* MessagePresenter+ConversationImages.swift in Sources */,
 				16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */,
 				EF21270A1FB9DFE300625A9B /* CheckmarkViewController.m in Sources */,
-				871BC2321D34F8F800DF0793 /* StyledTextField.m in Sources */,
 				876113E21DD1DD4D007F5969 /* CanvasViewController.swift in Sources */,
 				870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */,
 				BFF8076620BC275D0063E5D4 /* CallHapticsController.swift in Sources */,
@@ -6872,7 +6807,7 @@
 				5E4B1385204FE58D00ED5DF1 /* TimeInterval+Days.swift in Sources */,
 				EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */,
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
-				EF2C18A21FED541F00E9F2FD /* Timer+allVersionCompatibleScheduledTimer.swift in Sources */,
+				EF2C18A21FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift in Sources */,
 				871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */,
 				871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */,
 				BFE41863209B15F800503C7C /* Calling+Logs.swift in Sources */,
@@ -6885,10 +6820,8 @@
 				F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
 				EF2127191FB9DFE300625A9B /* EmailVerificationStepViewController.m in Sources */,
 				D550F57920445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift in Sources */,
-				871BC2271D34F8F800DF0793 /* CameraAccessMessageViewController.m in Sources */,
 				871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */,
 				1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */,
-				871BC05A1D34F60700DF0793 /* NSDictionary+SimpleTypeAccess.m in Sources */,
 				879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */,
 				877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */,
 				872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */,
@@ -7047,7 +6980,6 @@
 				87DCF49B1D34E9E600BB420F /* LocationSelectionViewController.swift in Sources */,
 				87DCF4901D34E9BA00BB420F /* ContactsSectionHeaderView.m in Sources */,
 				871067431C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift in Sources */,
-				8FC8541C199245770008B66B /* NSError+Zeta.m in Sources */,
 				87DCF4EE1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m in Sources */,
 				EF2127281FB9E06300625A9B /* LandingViewController.swift in Sources */,
 				F1199D3F1FC849450070FAC3 /* BackButtonDescription.swift in Sources */,

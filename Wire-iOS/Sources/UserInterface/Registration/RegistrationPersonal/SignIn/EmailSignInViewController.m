@@ -27,7 +27,6 @@
 #import "RegistrationTextField.h"
 
 #import "GuidanceLabel.h"
-#import "Guidance.h"
 #import "WebLinkTextView.h"
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import "UIImage+ImageUtilities.h"

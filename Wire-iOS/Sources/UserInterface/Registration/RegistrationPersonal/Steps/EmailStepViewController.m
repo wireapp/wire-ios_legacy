@@ -42,11 +42,6 @@
 
 @implementation EmailStepViewController
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
     self = [super initWithNibName:nil bundle:nil];

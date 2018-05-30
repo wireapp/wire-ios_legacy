@@ -76,11 +76,6 @@
     self.spinner.layer.frame = frame;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)createSpinner
 {
     self.spinner = [[UIImageView alloc] init];

@@ -94,7 +94,6 @@
 - (void)dealloc
 {
     [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init

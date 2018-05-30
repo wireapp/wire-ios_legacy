@@ -18,7 +18,6 @@
 
 
 #import "UIImagePickerController+GetImage.h"
-#import "NSError+Zeta.h"
 
 @import Photos;
 @import MobileCoreServices;

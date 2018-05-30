@@ -94,7 +94,6 @@ NSString * const CameraSettingExposureTargetBias = @"exposureTargetBias";
 - (void)dealloc
 {
     [self unobserveSettings];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)initializeSession
