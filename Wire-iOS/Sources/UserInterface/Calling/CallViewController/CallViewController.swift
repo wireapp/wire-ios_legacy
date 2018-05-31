@@ -29,7 +29,7 @@ final class CallViewController: UIViewController {
     fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
-    fileprivate var hapticsController = CallHapticsController()
+    fileprivate let hapticsController = CallHapticsController()
 
     private var observerTokens: [Any] = []
     private var videoConfiguration: VideoConfiguration
@@ -168,7 +168,7 @@ final class CallViewController: UIViewController {
     private func updateIdleTimer() {
         let disabled = callInfoConfiguration.disableIdleTimer
         UIApplication.shared.isIdleTimerDisabled = disabled
-        Calling.log.debug("Updated idle timer: \(disabled ? "disabled" : "enabled")")
+        Log.calling.debug("Updated idle timer: \(disabled ? "disabled" : "enabled")")
     }
 
     private func updateAppearance() {
@@ -178,10 +178,10 @@ final class CallViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard canHideOverlay else { return }
-        
+
         if let touch = touches.first,
             let overlay = videoGridViewController.previewOverlay,
-            overlay.point(inside: touch.location(in: overlay), with: event) {
+            overlay.point(inside: touch.location(in: overlay), with: event), !isOverlayVisible {
             return
         }
 
@@ -220,7 +220,7 @@ final class CallViewController: UIViewController {
             try voiceChannel.setVideoCaptureDevice(newType)
             cameraType = newType
         } catch {
-            Calling.log.error("error toggling capture device: \(error)")
+            Log.calling.error("error toggling capture device: \(error)")
         }
     }
 
@@ -307,7 +307,7 @@ extension CallViewController: ConstantBitRateAudioObserver {
 extension CallViewController: CallInfoRootViewControllerDelegate {
     
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction) {
-        Calling.log.debug("request to perform call action: \(action)")
+        Log.calling.debug("request to perform call action: \(action)")
         guard let userSession = ZMUserSession.shared() else { return }
         
         switch action {

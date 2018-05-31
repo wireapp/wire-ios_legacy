@@ -28,7 +28,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 #import "NSURL+WireLocale.h"
-#import "NSURL+WireURLs.h"
 #import "Button.h"
 
 
@@ -126,7 +125,7 @@
 
 - (void)openTOS:(id)sender
 {
-    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:self.termsOfServiceURL];
+    BrowserViewController *webViewController = [[BrowserViewController alloc] initWithURL:self.termsOfServiceURL];
     [self presentViewController:webViewController animated:YES completion:nil];
 }
 

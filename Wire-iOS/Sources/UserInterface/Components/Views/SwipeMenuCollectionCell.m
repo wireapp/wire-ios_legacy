@@ -19,7 +19,6 @@
 
 #import "SwipeMenuCollectionCell.h"
 @import PureLayout;
-#import "UIView+Borders.h"
 #import "UIView+RemoveAnimations.h"
 #import "Wire-Swift.h"
 
@@ -129,11 +128,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 {
     _separatorLineViewDisabled = separatorLineViewDisabled;
     self.separatorLine.hidden = separatorLineViewDisabled;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)updateConstraints

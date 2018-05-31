@@ -23,7 +23,6 @@
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+WR_ColorScheme.h"
 
-#import "UIView+Borders.h"
 #import <Classy/Classy.h>
 
 @import PureLayout;

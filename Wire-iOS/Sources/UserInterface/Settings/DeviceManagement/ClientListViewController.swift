@@ -24,9 +24,36 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
+protocol ClientListViewControllerDelegate: class {
+    func finishedDeleting(_ clientListViewController: ClientListViewController)
+}
+
 @objc class ClientListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ZMClientUpdateObserver {
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()
+    weak var delegate: ClientListViewControllerDelegate?
+
+    override open var showLoadingView: Bool {
+        set {
+            if let navigationController = self.navigationController {
+                navigationController.showLoadingView = newValue
+
+                // dismiss the loading view that toggled before navigationController is created
+                if !newValue && super.showLoadingView {
+                    super.showLoadingView = newValue
+                }
+            } else {
+                super.showLoadingView = newValue
+            }
+        }
+        get{
+            if let navigationController = self.navigationController {
+                return navigationController.showLoadingView
+            } else {
+                return super.showLoadingView
+            }
+        }
+    }
 
     var editingList: Bool = false {
         didSet {
@@ -143,7 +170,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.showLoadingView = false
+        showLoadingView = false
     }
 
     func openDetailsOfClient(_ client: UserClient) {
@@ -203,10 +230,14 @@ private let zmLog = ZMSLog(tag: "UI")
     func backPressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    
+
+
+
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
-        self.showLoadingView = true
+        showLoadingView = true
         ZMUserSession.shared()?.delete([userClient], with: credentials);
+
+        delegate?.finishedDeleting(self)
     }
 
     func displayError(_ message: String) {
@@ -235,7 +266,10 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]!) {
+        self.showLoadingView = false
+
         self.clients = remainingClients
+
         Analytics.shared().tagDeleteDevice()
     }
     

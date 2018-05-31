@@ -25,7 +25,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .darkGray
+        snapshotBackgroundColor = .white
     }
     
     override func tearDown() {
@@ -43,7 +43,7 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
         return rows
     }
     
-    func testCallParticipants_overflowing() {
+    func testCallParticipants_Overflowing_Light() {
         // When
         sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true)
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
@@ -51,16 +51,40 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
         sut.view.layoutIfNeeded()
         
         // Then
-        verifyInAllColorSchemes(view: sut.view)
+        verify(view: sut.view)
     }
     
-    func testCallParticipants_truncated() {
+    func testCallParticipants_Overflowing_Dark() {
+        // When
+        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: true)
+        sut.variant = .dark
+        snapshotBackgroundColor = .black
+        sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
+        sut.view.setNeedsLayout()
+        sut.view.layoutIfNeeded()
+        
+        // Then
+        verify(view: sut.view)
+    }
+    
+    func testCallParticipants_Truncated_Light() {
         // When
         sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false)
         sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
         
         // Then
-        verifyInAllColorSchemes(view: sut.view)
+        verify(view: sut.view)
+    }
+    
+    func testCallParticipants_Truncated_Dark() {
+        // When
+        sut = CallParticipantsViewController(participants: type(of: self).participants(count: 10), allowsScrolling: false)
+        sut.variant = .dark
+        snapshotBackgroundColor = .black
+        sut.view.frame = CGRect(x: 0, y: 0, width: 325, height: 336)
+        
+        // Then
+        verify(view: sut.view)
     }
     
 }

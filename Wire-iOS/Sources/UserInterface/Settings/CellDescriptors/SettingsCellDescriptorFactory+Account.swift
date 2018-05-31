@@ -250,10 +250,10 @@ extension SettingsCellDescriptorFactory {
 
     func ressetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
-        return SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { _ in
-            UIApplication.shared.openURL(NSURL.wr_passwordReset().wr_URLByAppendingLocaleParameter() as URL)
+        return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
             Analytics.shared().tagResetPassword(true, from: ResetFromProfile)
-        }
+            return BrowserViewController(url: URL.wr_passwordReset.appendingLocaleParameter)
+        }, previewGenerator: .none)
     }
 
     func deleteAccountButtonElement() -> SettingsCellDescriptorType {

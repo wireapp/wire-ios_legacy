@@ -181,10 +181,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         [[UnauthenticatedSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
                                                        verificationCode:phoneVerificationStepViewController.verificationCode];
-
-        [UIAlertController showNewsletterSubscriptionDialogIfNeededWithCompletionHandler: ^(BOOL marketingConsent) {
-            self.marketingConsent = marketingConsent;
-        }];
     }
     else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]]) {
         [self.analyticsTracker tagAcceptedTermsOfUse];
@@ -351,7 +347,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self.analyticsTracker tagVerifiedPhone];
     self.navigationController.showLoadingView = NO;
-    [self presentTermsOfUseStepController];
+
+    [UIAlertController showNewsletterSubscriptionDialogIfNeededWithCompletionHandler: ^(BOOL marketingConsent) {
+        self.marketingConsent = marketingConsent;
+
+        [self presentTermsOfUseStepController];
+    }];
 }
 
 - (void)phoneVerificationDidFail:(NSError *)error

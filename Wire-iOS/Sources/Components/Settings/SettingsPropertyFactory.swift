@@ -73,7 +73,6 @@ class SettingsPropertyFactory {
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
         SettingsPropertyName.disableMarkdown            : UserDefaultDisableMarkdown,
         SettingsPropertyName.chatHeadsDisabled          : UserDefaultChatHeadsDisabled,
-        SettingsPropertyName.preferredFlashMode         : UserDefaultPreferredCameraFlashMode,
         SettingsPropertyName.messageSoundName           : UserDefaultMessageSoundName,
         SettingsPropertyName.callSoundName              : UserDefaultCallSoundName,
         SettingsPropertyName.pingSoundName              : UserDefaultPingSoundName,

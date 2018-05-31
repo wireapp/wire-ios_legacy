@@ -89,6 +89,12 @@ class CallParticipantsView: UICollectionView, Themeable {
         }
     }
     
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        return subviews.any {
+            !$0.isHidden && $0.point(inside: convert(point, to: $0), with: event) && $0 is ShowAllParticipantsCell
+        }
+    }
+    
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         reloadData()
     }
@@ -97,6 +103,7 @@ class CallParticipantsView: UICollectionView, Themeable {
         super.init(frame: frame, collectionViewLayout: collectionViewLayout)
         self.dataSource = self
         backgroundColor = .clear
+        isOpaque = false
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-struct Calling {
-    static let log = ZMSLog(tag: "calling")
+struct Log {
+    static let calling = ZMSLog(tag: "calling")
+    static let haptics = ZMSLog(tag: "haptics")
 }

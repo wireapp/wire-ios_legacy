@@ -178,11 +178,6 @@ static id<ZMBareUser> mockSelfUser = nil;
     return @"imagesmallidentifier";
 }
 
-- (UIColor *)accentColor
-{
-    return [UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:1.0];
-}
-
 - (UIColor *)nameAccentColor
 {
     return [UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:0.7];
@@ -240,6 +235,11 @@ static id<ZMBareUser> mockSelfUser = nil;
 - (NSString *)displayNameInConversation:(MockConversation *)conversation
 {
     return self.displayName;
+}
+
+- (void)fetchUserClients
+{
+    
 }
 
 #pragma mark - ZMBareUserConnection

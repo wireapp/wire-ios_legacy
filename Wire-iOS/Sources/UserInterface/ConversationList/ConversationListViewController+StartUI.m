@@ -21,7 +21,6 @@
 #import "Analytics.h"
 #import "StartUIViewController.h"
 #import "WireSyncEngine+iOS.h"
-#import "CameraViewController.h"
 #import "ZClientViewController.h"
 
 #import "Wire-Swift.h"

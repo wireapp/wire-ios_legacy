@@ -17,16 +17,20 @@
 //
 
 final class CallHapticsController {
-    
-    private lazy var hapticGenerator: CallHapticsGeneratorType? = {
-        guard #available(iOS 10, *) else { return nil }
-        return CallHapticsGenerator()
-    }()
 
     private var lastCallState: CallState?
     private var participants = Set<UUID>()
     private var videoStates = [UUID: Bool]()
+    private var hapticGenerator: CallHapticsGeneratorType?
     
+    init(hapticGenerator: CallHapticsGeneratorType? = nil) {
+        if let generator = hapticGenerator {
+            self.hapticGenerator = generator
+        } else if #available(iOS 10, *) {
+            self.hapticGenerator =  CallHapticsGenerator()
+        }
+    }
+
     func updateParticipants(_ newParticipants: [(UUID, CallParticipantState)]) {
         let newParticipantIdentifiers = newParticipants.map { $0.0 }
         updateParticipantsList(newParticipantIdentifiers)
@@ -35,12 +39,14 @@ final class CallHapticsController {
     
     func updateCallState(_ newCallState: CallState) {
         defer { lastCallState = newCallState }
-        guard let oldCallState = lastCallState, oldCallState != newCallState else { return }
+        guard lastCallState != newCallState else { return }
         
-        if !oldCallState.isEnding && newCallState.isEnding {
+        if (false == lastCallState?.isEnding || nil == lastCallState) && newCallState.isEnding {
+            Log.haptics.debug("triggering end event")
             hapticGenerator?.trigger(event: .end)
         }
-        if !oldCallState.isEstablished && newCallState.isEstablished {
+        if (false == lastCallState?.isEstablished || nil == lastCallState) && newCallState.isEstablished {
+            Log.haptics.debug("triggering start event")
             hapticGenerator?.trigger(event: .start)
         }
     }
@@ -51,11 +57,14 @@ final class CallHapticsController {
         let updated = Set(newParticipants)
         let removed = !participants.subtracting(updated).isEmpty
         let added = !updated.subtracting(participants).isEmpty
+        Log.haptics.debug("updating participants list: \(newParticipants), old: \(participants)")
         
         if removed {
+            Log.haptics.debug("triggering leave event")
             hapticGenerator?.trigger(event: .leave)
         }
         if added {
+            Log.haptics.debug("triggering join event")
             hapticGenerator?.trigger(event: .join)
         }
         
@@ -64,8 +73,10 @@ final class CallHapticsController {
     
     private func updateParticipantsVideoStateList(_ newParticipants: [(UUID, CallParticipantState)]) {
         let newVideoStates = createVideoStateMap(using: newParticipants)
+        Log.haptics.debug("updating video state map: \(newVideoStates), old: \(videoStates)")
         for (uuid, wasSending) in videoStates {
             if let isSending = newVideoStates[uuid], isSending != wasSending {
+                Log.haptics.debug("triggering toggle video event")
                 hapticGenerator?.trigger(event: .toggleVideo)
             }
         }
