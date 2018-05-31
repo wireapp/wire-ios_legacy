@@ -98,20 +98,20 @@ public class ContinuousMaskLayer: CALayer {
             return
         }
 
-        let radii: CGSize
+        let roundedPath: UIBezierPath
 
         switch shape {
         case .rectangle:
-            radii = CGSize(width: 0, height: 0)
+            roundedPath = UIBezierPath(rect: bounds)
 
         case .circle:
-            radii = CGSize(width: bounds.size.width / 2, height: bounds.size.height / 2)
+            roundedPath = UIBezierPath(ovalIn: bounds)
 
         case .rounded(let radius):
-            radii = CGSize(width: radius, height: radius)
+            let radii = CGSize(width: radius, height: radius)
+            roundedPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: roundedCorners, cornerRadii: radii)
         }
 
-        let roundedPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: roundedCorners, cornerRadii: radii)
         mask.path = roundedPath.cgPath
 
     }
