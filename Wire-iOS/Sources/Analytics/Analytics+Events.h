@@ -24,7 +24,6 @@
 #import "Analytics+SessionEvents.h"
 #import "Analytics+SearchEvents.h"
 #import "Analytics+ProfileEvents.h"
-#import "Analytics+CallEvents.h"
 #import "Analytics+ConversationEvents.h"
 #import "Analytics+OTREvents.h"
 #import "Analytics+Navigation.h"

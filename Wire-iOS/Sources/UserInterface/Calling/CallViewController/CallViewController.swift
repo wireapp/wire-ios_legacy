@@ -204,13 +204,11 @@ final class CallViewController: UIViewController {
             return
         }
 
-        if let conversationId = voiceChannel.conversation?.remoteIdentifier {
-            NotificationCenter.default.post(name: .UserToggledVideoInCall, object: nil, userInfo: ["conversationId": conversationId])
-        }
         let newState = voiceChannel.videoState.toggledState
         preferedVideoPlaceholderState = newState == .stopped ? .statusTextHidden : .hidden
         voiceChannel.videoState = newState
         updateConfiguration()
+        AnalyticsVoiceChannelTracker.userToggledVideo(in: voiceChannel)
     }
     
     fileprivate func toggleCameraAnimated() {

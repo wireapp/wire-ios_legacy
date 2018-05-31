@@ -322,7 +322,6 @@
 		871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFB91D34F56300DF0793 /* Application+runDuration.m */; };
 		871BC0091D34F56300DF0793 /* DefaultIntegerClusterizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC01D34F56300DF0793 /* DefaultIntegerClusterizer.m */; };
 		871BC00A1D34F56300DF0793 /* TimeIntervalClusterizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC21D34F56300DF0793 /* TimeIntervalClusterizer.m */; };
-		871BC00B1D34F56300DF0793 /* Analytics+CallEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC51D34F56300DF0793 /* Analytics+CallEvents.m */; };
 		871BC00C1D34F56300DF0793 /* Analytics+ConversationEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC71D34F56300DF0793 /* Analytics+ConversationEvents.m */; };
 		871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */; };
 		871BC00E1D34F56300DF0793 /* Analytics+Navigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFCA1D34F56300DF0793 /* Analytics+Navigation.m */; };
@@ -1637,8 +1636,6 @@
 		871BBFC01D34F56300DF0793 /* DefaultIntegerClusterizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultIntegerClusterizer.m; sourceTree = "<group>"; };
 		871BBFC11D34F56300DF0793 /* TimeIntervalClusterizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeIntervalClusterizer.h; sourceTree = "<group>"; };
 		871BBFC21D34F56300DF0793 /* TimeIntervalClusterizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeIntervalClusterizer.m; sourceTree = "<group>"; };
-		871BBFC41D34F56300DF0793 /* Analytics+CallEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+CallEvents.h"; sourceTree = "<group>"; };
-		871BBFC51D34F56300DF0793 /* Analytics+CallEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+CallEvents.m"; sourceTree = "<group>"; };
 		871BBFC61D34F56300DF0793 /* Analytics+ConversationEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+ConversationEvents.h"; sourceTree = "<group>"; };
 		871BBFC71D34F56300DF0793 /* Analytics+ConversationEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+ConversationEvents.m"; sourceTree = "<group>"; };
 		871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+MediaActionEvents.swift"; sourceTree = "<group>"; };
@@ -3560,8 +3557,6 @@
 				F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */,
 				F93D58461D7DA876003AE972 /* ZMMessage+Analytics.swift */,
 				16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */,
-				871BBFC41D34F56300DF0793 /* Analytics+CallEvents.h */,
-				871BBFC51D34F56300DF0793 /* Analytics+CallEvents.m */,
 				871BBFC61D34F56300DF0793 /* Analytics+ConversationEvents.h */,
 				871BBFC71D34F56300DF0793 /* Analytics+ConversationEvents.m */,
 				F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */,
@@ -7248,7 +7243,6 @@
 				163495871F010F91004E80DB /* UnauthenticatedSession+Shared.swift in Sources */,
 				F1199D401FC849450070FAC3 /* ButtonDescription.swift in Sources */,
 				87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */,
-				871BC00B1D34F56300DF0793 /* Analytics+CallEvents.m in Sources */,
 				EF21271D1FB9DFE300625A9B /* AddEmailPasswordViewController.m in Sources */,
 				871BC3591D34F94200DF0793 /* AudioTrackView.m in Sources */,
 				7C232CD91FE029BD00792E9B /* Analytics+Availability.swift in Sources */,
