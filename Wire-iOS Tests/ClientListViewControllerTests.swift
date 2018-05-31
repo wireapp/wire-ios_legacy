@@ -38,6 +38,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         client.user = ZMUser.insertNewObject(in: uiMOC)
         client.deviceClass = "tablet"
 
+        recordMode = true
     }
     
     override func tearDown() {
@@ -56,6 +57,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         sut = ClientListViewController(clientsList: Array(mockUser.clients) as? [UserClient],
                                        selfClient: client,
                                        credentials: nil, detailedView: true, showTemporary: true)
+
+        sut.showLoadingView = false
 
         self.verify(view: sut.view)
     }
