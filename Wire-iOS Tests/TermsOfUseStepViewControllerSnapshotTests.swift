@@ -29,6 +29,8 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         mockDevice = MockDevice()
         sut = TermsOfUseStepViewController(unregisteredUser: nil)
+
+        recordMode = true
     }
 
     override func tearDown() {
@@ -58,6 +60,24 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.traitCollectionDidChange(nil)
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 768, height: 1024))
+
+        // THEN
+        self.verify(view: sut.view)
+    }
+
+    func testForIPadRegularLandscape() {
+        // GIVEN
+        mockDevice.userInterfaceIdiom = .pad
+        sut.device = mockDevice
+
+        // WHEN
+        let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+        mockParentViewControler = UINavigationController(rootViewController: sut)
+
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        sut.traitCollectionDidChange(nil)
+
+        sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 1024, height: 768))
 
         // THEN
         self.verify(view: sut.view)
