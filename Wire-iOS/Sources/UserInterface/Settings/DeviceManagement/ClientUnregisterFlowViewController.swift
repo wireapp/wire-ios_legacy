@@ -119,7 +119,6 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     func didCompleteFormStep(_ viewController: UIViewController!) {
         let clientsListController = ClientListViewController(clientsList: self.clients,
-                                                             selfClient: ZMUserSession.shared()!.selfUserClient(),
                                                              credentials: self.credentials,
                                                              showTemporary: false)
         clientsListController.delegate = self

@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 
 - (void)loadIncomingContactRequestsAndFocusOnView:(BOOL)focus animated:(BOOL)animated;
-
+- (void)dismissClientListController:(id)sender;
 @end
 
 @interface ZClientViewController ()

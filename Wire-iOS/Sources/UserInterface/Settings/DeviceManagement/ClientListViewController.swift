@@ -106,7 +106,7 @@ protocol ClientListViewControllerDelegate: class {
     }
         
     required init(clientsList: [UserClient]?,
-                  selfClient: UserClient,
+                  selfClient: UserClient = ZMUserSession.shared()!.selfUserClient(),
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true) {
