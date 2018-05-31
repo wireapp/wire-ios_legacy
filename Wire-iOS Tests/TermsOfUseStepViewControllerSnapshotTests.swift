@@ -29,8 +29,6 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         mockDevice = MockDevice()
         sut = TermsOfUseStepViewController(unregisteredUser: nil)
-
-        recordMode = true
     }
 
     override func tearDown() {

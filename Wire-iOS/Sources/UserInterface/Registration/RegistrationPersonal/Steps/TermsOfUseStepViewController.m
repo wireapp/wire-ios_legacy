@@ -44,6 +44,8 @@
     self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
+        self.device = UIDevice.currentDevice;
+
         self.unregisteredUser = unregisteredUser;
 
         [self createContainerView];
@@ -52,15 +54,11 @@
         [self createAgreeButton];
 
         [self updateViewConstraints];
+
+        [self updateConstraintsForSizeClass];
     }
 
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self updateConstraintsForSizeClass];
 }
 
 - (void)createContainerView {
