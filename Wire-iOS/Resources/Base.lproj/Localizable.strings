@@ -687,7 +687,7 @@
 "self.voiceover.hint" = "Open profile and settings";
 "self.new-device.voiceover.label" = "Profile, new devices added";
 
-"self.profile.change_user_image.accessibility" = "Tap to change user image";
+"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
 
 "self.add_phone_number" = "Add phone number";
 "self.add_email_password" = "Add email address and password";
