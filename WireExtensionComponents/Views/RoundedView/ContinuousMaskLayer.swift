@@ -33,12 +33,21 @@ private class AnimatingShapeLayer: CAShapeLayer {
 }
 
 /**
+ * The dimension to use when calculating relative radii.
+ */
+
+@objc public enum MaskDimension: Int {
+    case width, height
+}
+
+/**
  * The shape of a layer mask.
  */
 
 public enum MaskShape {
     case circle
     case rectangle
+    case relative(multiplier: CGFloat, dimension: MaskDimension)
     case rounded(radius: CGFloat)
 }
 
@@ -108,12 +117,27 @@ public class ContinuousMaskLayer: CALayer {
             roundedPath = UIBezierPath(ovalIn: bounds)
 
         case .rounded(let radius):
-            let radii = CGSize(width: radius, height: radius)
-            roundedPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: roundedCorners, cornerRadii: radii)
+            roundedPath = roundedPathForBounds(radius: radius)
+
+        case .relative(let multiplier, let dimension):
+
+            let base: CGFloat
+
+            switch dimension {
+            case .width: base = bounds.width
+            case .height: base = bounds.height
+            }
+
+            roundedPath = roundedPathForBounds(radius: base * multiplier)
         }
 
         mask.path = roundedPath.cgPath
 
+    }
+
+    private func roundedPathForBounds(radius: CGFloat) -> UIBezierPath {
+        let radii = CGSize(width: radius, height: radius)
+        return UIBezierPath(roundedRect: bounds, byRoundingCorners: roundedCorners, cornerRadii: radii)
     }
 
 }

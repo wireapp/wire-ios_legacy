@@ -32,6 +32,10 @@ import UIKit
         shape = .rectangle
     }
 
+    @objc public func setRelativeCornerRadius(multiplier: CGFloat, dimension: MaskDimension) {
+        shape = .relative(multiplier: multiplier, dimension: dimension)
+    }
+
     @objc public func setCornerRadius(_ cornerRadius: CGFloat) {
         shape = .rounded(radius: cornerRadius)
     }

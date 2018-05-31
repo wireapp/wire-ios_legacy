@@ -90,8 +90,7 @@
             return;
         }
         case AvatarImageViewShapeRoundedRelative: {
-            CGFloat radius = ceil(CGRectGetHeight(self.containerView.bounds) / 6);
-            [self.containerView setCornerRadius:radius];
+            [self.containerView setRelativeCornerRadiusWithMultiplier:(CGFloat)1/6 dimension:MaskDimensionHeight];
             return;
         }
     }
