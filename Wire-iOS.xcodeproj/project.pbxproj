@@ -139,6 +139,7 @@
 		16F6BB101EDDA0BA009EA803 /* AddParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */; };
 		16F9EB341BCBB0270021EF39 /* CheckBoxButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 16F9EB321BCBB0270021EF39 /* CheckBoxButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		16F9EB351BCBB0270021EF39 /* CheckBoxButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F9EB331BCBB0270021EF39 /* CheckBoxButton.m */; };
+		16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */; };
 		1E05C2431B6F7E0600616A66 /* Button.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E05C2411B6F7E0600616A66 /* Button.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1E05C2441B6F7E0600616A66 /* Button.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E05C2421B6F7E0600616A66 /* Button.m */; };
 		1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E18C2BA1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m */; };
@@ -1397,6 +1398,7 @@
 		16F6BB0F1EDDA0BA009EA803 /* AddParticipantsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewController.swift; sourceTree = "<group>"; };
 		16F9EB321BCBB0270021EF39 /* CheckBoxButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBoxButton.h; sourceTree = "<group>"; };
 		16F9EB331BCBB0270021EF39 /* CheckBoxButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckBoxButton.m; sourceTree = "<group>"; };
+		16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Merge.swift"; sourceTree = "<group>"; };
 		1E05C2411B6F7E0600616A66 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		1E05C2421B6F7E0600616A66 /* Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.m; sourceTree = "<group>"; };
 		1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+Private.h"; sourceTree = "<group>"; };
@@ -4520,6 +4522,7 @@
 				8FC8512F199245760008B66B /* syncengine */,
 				DBBC190A1B5E36C400E84607 /* performance */,
 				F95E08B31D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift */,
+				16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */,
 				16E6C0FE1A837C0300AA2F32 /* NSIndexSet+IndexPaths.h */,
 				16E6C0FF1A837C0300AA2F32 /* NSIndexSet+IndexPaths.m */,
 				D5189472204D543C00C095C1 /* InitialSyncObserver.swift */,
@@ -6951,6 +6954,7 @@
 				8759E2C11FC828ED008E17C9 /* CAAnimation+Cursor.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
+				16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */,
 				87A15FE11E08339500AED79B /* CollectionLinkCell.swift in Sources */,
 				D52F2C20205BE0A600E067C0 /* UIAlertController+ConversationDegraded.swift in Sources */,
 				16E311C91A5FEAE200FF2C9E /* TextMessageCell.m in Sources */,

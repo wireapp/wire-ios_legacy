@@ -45,17 +45,17 @@ extension Analytics {
     
     private func attributes(for event: CallEvent, callInfo: CallInfo, conversation: ZMConversation) -> [String : Any] {
         var attributes = attributesForConversation(conversation)
-        attributes.merge(attributesForAccount(in: conversation)) { (_, new) in new }
-        attributes.merge(attributesForParticipants(in: conversation)) { (_, new) in new }
-        attributes.merge(attributesForCallParticipants(with: callInfo)) { (_, new) in new }
-        attributes.merge(attributesForVideo(with: callInfo)) { (_, new) in new }
-        attributes.merge(attributesForDirection(with: callInfo)) { (_, new) in new }
+        attributes.merge(attributesForAccount(in: conversation), strategy: .preferNew)
+        attributes.merge(attributesForParticipants(in: conversation), strategy: .preferNew)
+        attributes.merge(attributesForCallParticipants(with: callInfo), strategy: .preferNew)
+        attributes.merge(attributesForVideo(with: callInfo), strategy: .preferNew)
+        attributes.merge(attributesForDirection(with: callInfo), strategy: .preferNew)
         
         switch event {
         case .ended(reason: let reason):
-            attributes.merge(attributesForCallDuration(with: callInfo)) { (_, new) in new }
-            attributes.merge(attributesForVideoToogle(with: callInfo)) { (_, new) in new }
-            attributes.merge(["reason" : reason]) { (_, new) in new }
+            attributes.merge(attributesForCallDuration(with: callInfo), strategy: .preferNew)
+            attributes.merge(attributesForVideoToogle(with: callInfo), strategy: .preferNew)
+            attributes.merge(["reason" : reason], strategy: .preferNew)
         default: break
         }
         
@@ -77,7 +77,7 @@ extension Analytics {
         var attributes: [String : Any] = ["user_type": userType]
         
         if let teamSize = ZMUser.selfUser().team?.members.count {
-            attributes.merge(["team_size": teamSize]) { (_, new) in new }
+            attributes.merge(["team_size": teamSize], strategy: .preferNew)
         }
         
         return attributes
