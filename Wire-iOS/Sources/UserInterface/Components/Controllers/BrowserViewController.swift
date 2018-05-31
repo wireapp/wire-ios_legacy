@@ -21,15 +21,7 @@ import SafariServices
 
 @objc class BrowserViewController: SFSafariViewController {
 
-    @objc var completion: (() -> Void)? {
-        didSet {
-            guard let _ = completion else {
-                delegate = nil
-                return
-            }
-            delegate = self
-        }
-    }
+    @objc var completion: (() -> Void)?
 
     // MARK: - Tint Color
 
@@ -43,6 +35,8 @@ import SafariServices
         } else {
             view.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
         }
+
+        delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
