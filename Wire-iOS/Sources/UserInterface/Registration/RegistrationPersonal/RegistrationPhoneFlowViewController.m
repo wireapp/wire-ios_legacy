@@ -348,7 +348,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.analyticsTracker tagVerifiedPhone];
     self.navigationController.showLoadingView = NO;
 
-    [UIAlertController showNewsletterSubscriptionDialogIfNeededWithCompletionHandler: ^(BOOL marketingConsent) {
+    [UIAlertController showNewsletterSubscriptionDialogWithPresentViewController: self
+                                                               completionHandler: ^(BOOL marketingConsent) {
         self.marketingConsent = marketingConsent;
 
         [self presentTermsOfUseStepController];

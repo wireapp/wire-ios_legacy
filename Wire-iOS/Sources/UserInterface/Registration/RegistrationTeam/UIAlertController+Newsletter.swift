@@ -25,7 +25,7 @@ extension UIAlertController {
     /// email regisration work flow: newsletter subscription dialog appears after conversation list is displayed.)
     static var newsletterSubscriptionDialogWasDisplayed = false
 
-    static func showNewsletterSubscriptionDialog(completionHandler: @escaping (Bool) -> Void) {
+    static func showNewsletterSubscriptionDialog(presentViewController:UIViewController, completionHandler: @escaping (Bool) -> Void) {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
 
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
@@ -34,11 +34,12 @@ extension UIAlertController {
 
         let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { _ in
             let browserViewController = BrowserViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
+            
             browserViewController.completion = { _ in
-                UIAlertController.showNewsletterSubscriptionDialog(completionHandler: completionHandler)
+                UIAlertController.showNewsletterSubscriptionDialog(presentViewController: presentViewController, completionHandler: completionHandler)
             }
 
-            AppDelegate.shared().notificationsWindow?.rootViewController?.present(browserViewController, animated: true)
+            presentViewController.present(browserViewController, animated: true)
         }
 
         alertController.addAction(UIAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized,
@@ -58,14 +59,14 @@ extension UIAlertController {
         }))
 
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
-        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alertController, animated: true) {
+        presentViewController.present(alertController, animated: true) {
             UIApplication.shared.keyWindow?.endEditing(true)
         }
     }
 
-    static func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping (Bool) -> Void) {
+    static func showNewsletterSubscriptionDialogIfNeeded(presentViewController:UIViewController, completionHandler: @escaping (Bool) -> Void) {
         guard !UIAlertController.newsletterSubscriptionDialogWasDisplayed else { return }
 
-        showNewsletterSubscriptionDialog(completionHandler: completionHandler)
+        showNewsletterSubscriptionDialog(presentViewController: presentViewController, completionHandler: completionHandler)
     }
 }
