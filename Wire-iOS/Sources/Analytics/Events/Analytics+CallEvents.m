@@ -31,7 +31,7 @@
     [attributes addEntriesFromDictionary:[self attributesForConversation:conversation]];
     [attributes addEntriesFromDictionary:[self attributesForCallingProtocol]];
     
-    [self tagEvent:video ? @"calling.initiated_video_call" : @"calling.initiated_call" attributes:attributes];
+    [self tagEvent:@"calling.initiated_call" attributes:attributes];
 }
 
 - (void)tagReceivedCallInConversation:(ZMConversation *)conversation video:(BOOL)video
@@ -42,7 +42,7 @@
     [attributes addEntriesFromDictionary:[self attributesForCallingProtocol]];
     [attributes addEntriesFromDictionary:[self attributesForAppIsActive]];
     
-    [self tagEvent:video ? @"calling.received_video_call" : @"calling.received_call" attributes:attributes];
+    [self tagEvent:@"calling.received_call" attributes:attributes];
 }
 
 - (void)tagJoinedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall
@@ -55,7 +55,7 @@
     [attributes addEntriesFromDictionary:[self attributesForAppIsActive]];
     [attributes addEntriesFromDictionary:[self attributesForInitiatedCall:initiatedCall]];
     
-    [self tagEvent:video ? @"calling.joined_video_call" : @"calling.joined_call" attributes:attributes];
+    [self tagEvent:@"calling.joined_call" attributes:attributes];
 }
 
 - (void)tagEstablishedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall setupDuration:(NSTimeInterval)setupDuration
@@ -69,7 +69,7 @@
     [attributes addEntriesFromDictionary:[self attributesForInitiatedCall:initiatedCall]];
     [attributes addEntriesFromDictionary:[self attributesForCallSetupDuration:setupDuration]];
     
-    [self tagEvent:video ? @"calling.established_video_call" : @"calling.established_call" attributes:attributes];
+    [self tagEvent:@"calling.established_call" attributes:attributes];
 }
 
 - (void)tagEndedCallInConversation:(ZMConversation *)conversation video:(BOOL)video initiatedCall:(BOOL)initiatedCall duration:(NSTimeInterval)duration callEndReason:(NSString *)callEndReason
@@ -83,7 +83,7 @@
     [attributes addEntriesFromDictionary:[self attributesForCallEndReason:callEndReason]];
     [attributes addEntriesFromDictionary:[self attributesForCallDuration:duration]];
     
-    [self tagEvent:video ? @"calling.ended_video_call" : @"calling.ended_call" attributes:attributes];
+    [self tagEvent:@"calling.ended_call" attributes:attributes];
 }
 
 #pragma mark - Attributes

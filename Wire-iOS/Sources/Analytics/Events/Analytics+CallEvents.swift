@@ -1,0 +1,121 @@
+//
+// Wire
+// Copyright (C) 2018 Wire Swiss GmbH
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
+//
+
+import Foundation
+import UIKit
+
+enum CallEvent {
+    case initiated, received, answered, established, ended(reason: String)
+}
+
+extension CallEvent {
+    
+    var eventName: String {
+        switch self {
+        case .initiated: return "calling.initiated_call"
+        case .received: return "calling.received_call"
+        case .answered: return "calling.joined_call"
+        case .established: return "calling.established_call"
+        case .ended: return "calling.ended_call"
+        }
+    }
+    
+}
+
+extension Analytics {
+    
+    func tag(callEvent: CallEvent, in conversation: ZMConversation, callInfo: CallInfo) {        
+        tagEvent(callEvent.eventName, attributes: attributes(for: callEvent, callInfo: callInfo, conversation: conversation))
+    }
+    
+    private func attributes(for event: CallEvent, callInfo: CallInfo, conversation: ZMConversation) -> [String : Any] {
+        var attributes = attributesForConversation(conversation)
+        attributes.merge(attributesForAccount(in: conversation)) { (_, new) in new }
+        attributes.merge(attributesForParticipants(in: conversation)) { (_, new) in new }
+        attributes.merge(attributesForCallParticipants(with: callInfo)) { (_, new) in new }
+        attributes.merge(attributesForVideo(with: callInfo)) { (_, new) in new }
+        attributes.merge(attributesForDirection(with: callInfo)) { (_, new) in new }
+        
+        switch event {
+        case .ended(reason: let reason):
+            attributes.merge(attributesForCallDuration(with: callInfo)) { (_, new) in new }
+            attributes.merge(attributesForVideoToogle(with: callInfo)) { (_, new) in new }
+            attributes.merge(["reason" : reason]) { (_, new) in new }
+        default: break
+        }
+        
+        
+        return attributes
+    }
+    
+    private func attributesForAccount(in conversation: ZMConversation) -> [String : Any] {
+        var userType: String
+        
+        if ZMUser.selfUser().isWirelessUser {
+            userType = "temporary_guest"
+        } else if ZMUser.selfUser().isGuest(in: conversation) {
+            userType = "guest"
+        } else {
+            userType = "user"
+        }
+        
+        var attributes: [String : Any] = ["user_type": userType]
+        
+        if let teamSize = ZMUser.selfUser().team?.members.count {
+            attributes.merge(["team_size": teamSize]) { (_, new) in new }
+        }
+        
+        return attributes
+    }
+    
+    private func attributesForVideoToogle(with callInfo: CallInfo) -> [String : Any] {
+        return ["AV_switch_toggled": callInfo.toggledVideo ? true : false]
+    }
+    
+    private func attributesForVideo(with callInfo: CallInfo) -> [String : Any] {
+        return ["is_video": callInfo.video ? true : false]
+    }
+    
+    private func attributesForDirection(with callInfo: CallInfo) -> [String : Any] {
+        return ["direction": callInfo.outgoing ? "outgoing" : "incoming"]
+    }
+    
+    private func attributesForParticipants(in conversation: ZMConversation) -> [String : Any] {
+        return ["conversation_participants": conversation.activeParticipants.count]
+    }
+    
+    private func attributesForCallParticipants(with callInfo: CallInfo) -> [String : Any] {
+        return ["conversation_participants_in_call_max": callInfo.maximumCallParticipants]
+    }
+    
+    private func attributesForCallDuration(with callInfo: CallInfo) -> [String : Any] {
+        return ["duration": Int(-(callInfo.establishedDate?.timeIntervalSinceNow ?? -0))]
+    }
+    
+    private func attributesForConversation(_ conversation: ZMConversation) -> [String : Any] {
+        
+        let attributes: [String : Any] = [
+            "conversation_type": conversation.analyticsTypeString() ?? "invalid",
+            "with_service": conversation.includesServiceUser ? true : false,
+            "is_allow_guests": conversation.accessMode == ConversationAccessMode.allowGuests ? true : false
+        ]
+        
+        return attributes.updated(other: guestAttributes(in: conversation))
+    }
+    
+}

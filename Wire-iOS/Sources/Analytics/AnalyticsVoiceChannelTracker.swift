@@ -17,13 +17,18 @@
 //
 
 import Foundation
+import WireUtilities
 
-fileprivate let zmLog = ZMSLog(tag: "calling")
+extension Notification.Name {
+    static let UserToggledVideoInCall = Notification.Name("UserDidToggleVideoInCall")
+}
 
 struct CallInfo {
-    var answeredDate : Date?
-    var establishedDate : Date?
-    let outgoing : Bool
+    var establishedDate: Date?
+    var maximumCallParticipants: Int
+    var toggledVideo: Bool
+    let outgoing: Bool
+    let video: Bool
 }
 
 class AnalyticsVoiceChannelTracker : NSObject {
@@ -38,15 +43,22 @@ class AnalyticsVoiceChannelTracker : NSObject {
         super.init()
         
         guard let userSession = ZMUserSession.shared() else {
-            zmLog.error("UserSession not available when initializing \(type(of: self))")
+            Log.calling.error("UserSession not available when initializing \(type(of: self))")
             return
+        }
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UserToggledVideoInCall, object: nil, queue: nil) { [weak self] (note) in
+            if let conversationId = note.userInfo?["conversationId"] as? UUID,  var callInfo = self?.callInfos[conversationId] {
+                callInfo.toggledVideo = true
+                self?.callInfos[conversationId] = callInfo
+            }
         }
         
         self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
     }
 }
 
-extension AnalyticsVoiceChannelTracker : WireCallCenterCallStateObserver {
+extension AnalyticsVoiceChannelTracker: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         
@@ -54,29 +66,33 @@ extension AnalyticsVoiceChannelTracker : WireCallCenterCallStateObserver {
         
         switch callState {
         case .outgoing:
-            analytics.tagInitiatedCall(in: conversation, video: conversation.voiceChannel?.isVideoCall ?? false)
-            callInfos[conversationId] = CallInfo(answeredDate: nil, establishedDate: nil, outgoing: true)
-        case .incoming(video: let video, shouldRing: _, degraded: _):
-            analytics.tagReceivedCall(in: conversation, video: video)
-            callInfos[conversationId] = CallInfo(answeredDate: nil, establishedDate: nil, outgoing: false)
+            let video = conversation.voiceChannel?.isVideoCall ?? false
+            let callInfo = CallInfo(establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: true, video: video)
+            callInfos[conversationId] = callInfo
+            analytics.tag(callEvent: .initiated, in: conversation, callInfo: callInfo)
+        case .incoming(video: let video, shouldRing: true, degraded: _):
+            let callInfo = CallInfo(establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: false, video: video)
+            callInfos[conversationId] = callInfo
+            analytics.tag(callEvent: .received, in: conversation, callInfo: callInfo)
         case .answered:
-            if let callInfo = callInfos[conversationId] {
-                analytics.tagJoinedCall(in: conversation, video: conversation.voiceChannel?.isVideoCall ?? false, initiatedCall: callInfo.outgoing)
-                callInfos[conversationId] = CallInfo(answeredDate: Date(), establishedDate: nil, outgoing: callInfo.outgoing)
+            if var callInfo = callInfos[conversationId] {
+                analytics.tag(callEvent: .answered, in: conversation, callInfo: callInfo)
+                callInfos[conversationId] = callInfo
             }
         case .established:
-            if let callInfo = callInfos[conversationId] {
-                let video = conversation.voiceChannel?.isVideoCall ?? false
-                let setupDuration = -(callInfo.answeredDate?.timeIntervalSinceNow ?? -999)
-                analytics.tagEstablishedCall(in: conversation, video: video, initiatedCall: callInfo.outgoing, setupDuration: setupDuration)
-                callInfos[conversationId] = CallInfo(answeredDate: callInfo.answeredDate, establishedDate: Date(), outgoing: callInfo.outgoing)
+            if var callInfo = callInfos[conversationId] {
+                defer { callInfos[conversationId] = callInfo }
+                callInfo.maximumCallParticipants = max(callInfo.maximumCallParticipants, (conversation.voiceChannel?.participants.count ?? 0) + 1)
+                
+                // .established is called every time a participant joins the call
+                guard callInfo.establishedDate == nil else { return }
+                
+                callInfo.establishedDate = Date()
+                analytics.tag(callEvent: .established, in: conversation, callInfo: callInfo)
             }
-            
         case .terminating(reason: let reason):
             if let callInfo = callInfos[conversationId] {
-                let video = conversation.voiceChannel?.isVideoCall ?? false
-                let duration = -(callInfo.establishedDate?.timeIntervalSinceNow ?? -0)
-                analytics.tagEndedCall(in: conversation, video: video, initiatedCall: callInfo.outgoing, duration: duration, callEndReason: reason.analyticsValue)
+                analytics.tag(callEvent: .ended(reason: reason.analyticsValue), in: conversation, callInfo: callInfo)
             }
             callInfos[conversationId] = nil
             
