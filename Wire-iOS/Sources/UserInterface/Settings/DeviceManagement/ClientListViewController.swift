@@ -127,7 +127,9 @@ protocol ClientListViewControllerDelegate: class {
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
 
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
-        self.userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        if let user = ZMUser.selfUser(), let session = ZMUserSession.shared() {
+            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)
+        }
         
         if clientsList == nil {
             if clients.isEmpty {
