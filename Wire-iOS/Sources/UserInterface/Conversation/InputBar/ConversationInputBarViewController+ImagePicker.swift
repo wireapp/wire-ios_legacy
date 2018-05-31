@@ -49,14 +49,14 @@ extension ConversationInputBarViewController {
             let context = ImagePickerPopoverPresentationContext(sourceRect:self.popoverSourceRectFromPhotoButton,
                                                     sourceView: sourceView,
                                                     presentViewController: self,
-                                                    sourceType: .photoLibrary)
+                                                    sourceType: sourceType)
 
             let pickerController = UIImagePickerController.popoverForIPadRegular(with: context)
             pickerController.delegate = self
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes
             pickerController.videoMaximumDuration = TimeInterval(ConversationUploadMaxVideoDuration)
-
+            
             if sourceType == .camera {
                 switch Settings.shared().preferredCamera {
                 case .back:
