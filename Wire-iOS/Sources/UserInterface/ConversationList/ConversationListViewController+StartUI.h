@@ -18,7 +18,6 @@
 
 
 #import "ConversationListViewController.h"
-#import "CameraViewController.h"
 
 @interface ConversationListViewController ()
 @end

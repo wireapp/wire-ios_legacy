@@ -39,4 +39,9 @@
     // No-op
 }
 
+- (NSString *) deviceClass
+{
+    return @"phone";
+}
+
 @end

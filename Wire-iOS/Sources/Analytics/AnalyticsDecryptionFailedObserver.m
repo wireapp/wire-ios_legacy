@@ -44,11 +44,6 @@
     return self;
 }
 
-- (void)dealloc;
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)messageCannotBeDecrypted:(NSNotification *)note;
 {
     NSMutableDictionary* trackingInfo = [[NSMutableDictionary alloc] init];

@@ -47,7 +47,6 @@
 #import "MediaBar.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"
-#import "UIView+Borders.h"
 #import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
@@ -134,8 +133,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self dismissCollectionIfNecessary];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-
     [self hideAndDestroyParticipantsPopoverController];
     self.contentViewController.delegate = nil;
 }

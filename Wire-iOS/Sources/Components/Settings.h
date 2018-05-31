@@ -43,7 +43,6 @@ extern NSString * const SettingsColorSchemeChangedNotification;
 extern NSString * const UserDefaultDisableMarkdown;
 extern NSString * const UserDefaultChatHeadsDisabled;
 extern NSString * const UserDefaultLastPushAlertDate;
-extern NSString * const UserDefaultContactTipWasDisplayed;
 
 extern NSString * const UserDefaultLastViewedConversation;
 extern NSString * const UserDefaultColorScheme;
@@ -53,7 +52,6 @@ extern NSString * const UserDefaultPreferredCameraFlashMode;
 extern NSString * const AVSMediaManagerPersistentIntensity;
 extern NSString * const UserDefaultLastUserLocation;
 
-extern NSString * const UserDefaultSkipFirstTimeUseChecks;
 extern NSString * const BlackListDownloadIntervalKey;
 
 extern NSString * const UserDefaultMessageSoundName;
@@ -80,7 +78,6 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 @interface Settings : NSObject
 
 @property (nonatomic) BOOL chatHeadsDisabled;
-@property (nonatomic) BOOL contactTipWasDisplayed;
 @property (nonatomic) BOOL disableMarkdown;
 @property (nonatomic) BOOL shouldRegisterForVoIPNotificationsOnly;
 @property (nonatomic) BOOL disableSendButton;
@@ -91,11 +88,9 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 
 @property (nonatomic) BOOL enableBatchCollections; // develop option
 
-@property (nonatomic, readonly) BOOL skipFirstTimeUseChecks;
 @property (nonatomic) NSDate *lastPushAlertDate;
 
 @property (nonatomic) SettingsLastScreen lastViewedScreen;
-@property (nonatomic) AVCaptureFlashMode preferredFlashMode;
 @property (nonatomic) CameraControllerCamera preferredCamera;
 @property (nonatomic) SettingsColorScheme colorScheme;
 @property (nonatomic, readonly) NSTimeInterval blacklistDownloadInterval;

@@ -31,7 +31,6 @@ NSString * const UserDefaultChatHeadsDisabled = @"ZDevOptionChatHeadsDisabled";
 NSString * const UserDefaultLastPushAlertDate = @"LastPushAlertDate";
 NSString * const UserDefaultVoIPNotificationsOnly = @"VoIPNotificationsOnly";
 
-NSString * const UserDefaultContactTipWasDisplayed =  @"ContactTipWasDisplayed";
 NSString * const UserDefaultLastViewedConversation = @"LastViewedConversation";
 NSString * const UserDefaultColorScheme = @"ColorScheme";
 NSString * const UserDefaultLastViewedScreen = @"LastViewedScreen";
@@ -40,7 +39,6 @@ NSString * const UserDefaultPreferredCamera = @"PreferredCamera";
 NSString * const AVSMediaManagerPersistentIntensity = @"AVSMediaManagerPersistentIntensity";
 NSString * const UserDefaultLastUserLocation = @"LastUserLocation";
 
-NSString * const UserDefaultSkipFirstTimeUseChecks = @"SkipFirstTimeUseChecks";
 NSString * const BlackListDownloadIntervalKey = @"ZMBlacklistDownloadInterval";
 
 NSString * const UserDefaultMessageSoundName = @"ZMMessageSoundName";
@@ -91,11 +89,9 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
              UserDefaultLastViewedConversation,
              UserDefaultLastViewedScreen,
              AVSMediaManagerPersistentIntensity,
-             UserDefaultSkipFirstTimeUseChecks,
              UserDefaultPreferredCameraFlashMode,
              UserDefaultLastPushAlertDate,
              BlackListDownloadIntervalKey,
-             UserDefaultContactTipWasDisplayed,
              UserDefaultMessageSoundName,
              UserDefaultCallSoundName,
              UserDefaultPingSoundName,
@@ -146,11 +142,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
     return self;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (NSUserDefaults *)defaults
 {
     return [NSUserDefaults standardUserDefaults];
@@ -162,17 +153,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
         ExtensionSettings.shared.disableLinkPreviews = self.disableLinkPreviews;
         [self.defaults setBool:YES forKey:UserDefaultDidMigrateHockeySettingInitially];
     }
-}
-
-- (BOOL)contactTipWasDisplayed
-{
-    return [self.defaults boolForKey:UserDefaultContactTipWasDisplayed];
-}
-
-- (void)setContactTipWasDisplayed:(BOOL)contactTipWasDisplayed
-{
-    [self.defaults setBool:contactTipWasDisplayed forKey:UserDefaultContactTipWasDisplayed];
-    [self.defaults synchronize];
 }
 
 - (BOOL)disableMarkdown
@@ -195,11 +175,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 {
     [self.defaults setBool:chatHeadsDisabled forKey:UserDefaultChatHeadsDisabled];
     [self.defaults synchronize];
-}
-
-- (BOOL)skipFirstTimeUseChecks
-{
-    return [self.defaults boolForKey:UserDefaultSkipFirstTimeUseChecks];
 }
 
 - (NSDate *)lastPushAlertDate
@@ -235,18 +210,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 {
     NSDictionary *locationDict = lastUserLocation.toDictionary;
     [self.defaults setObject:locationDict forKey:UserDefaultLastUserLocation];
-}
-
-- (AVCaptureFlashMode)preferredFlashMode
-{
-    AVCaptureFlashMode preferedCameraFlashMode = [self.defaults integerForKey:UserDefaultPreferredCameraFlashMode];
-    return preferedCameraFlashMode;
-}
-
-- (void)setPreferredFlashMode:(AVCaptureFlashMode)preferredFlashMode
-{
-    [self.defaults setInteger:preferredFlashMode forKey:UserDefaultPreferredCameraFlashMode];
-    [self.defaults synchronize];
 }
 
 - (CameraControllerCamera)preferredCamera

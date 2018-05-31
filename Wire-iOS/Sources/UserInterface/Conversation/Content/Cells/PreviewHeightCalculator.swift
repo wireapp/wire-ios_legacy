@@ -44,7 +44,7 @@ import Foundation
     }
     
     private static func calculateFinalHeight(for height: CGFloat) -> CGFloat {
-        return min((UIScreen.isCompact() ? compressedCellHeight : standardCellHeight), height)
+        return min((UIScreen.main.isCompact ? compressedCellHeight : standardCellHeight), height)
     }
 
 }

@@ -21,8 +21,6 @@
 
 @interface UIView (PopoverBorder)
 
-- (BOOL)hasPopoverBorder;
-
 - (void)setPopoverBorderEnabled:(BOOL)setEnabled;
 
 @end

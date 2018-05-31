@@ -59,8 +59,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
     [self.avPlayer removeObserver:self forKeyPath:@"currentItem"];
     
     [self.avPlayer.currentItem removeObserver:self forKeyPath:@"status"];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init
