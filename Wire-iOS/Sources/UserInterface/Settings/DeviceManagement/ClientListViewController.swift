@@ -105,8 +105,11 @@ protocol ClientListViewControllerDelegate: class {
         return nil
     }
         
-    required init(clientsList: [UserClient]?, credentials: ZMEmailCredentials? = .none, detailedView: Bool = false, showTemporary: Bool = true) {
-        let selfClient = ZMUserSession.shared()!.selfUserClient()
+    required init(clientsList: [UserClient]?,
+                  selfClient: UserClient,
+                  credentials: ZMEmailCredentials? = .none,
+                  detailedView: Bool = false,
+                  showTemporary: Bool = true) {
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
