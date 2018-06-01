@@ -62,4 +62,22 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         // THEN
         self.verify(view: sut.view)
     }
+
+    func testForIPadRegularLandscape() {
+        // GIVEN
+        mockDevice.userInterfaceIdiom = .pad
+        sut.device = mockDevice
+
+        // WHEN
+        let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
+        mockParentViewControler = UINavigationController(rootViewController: sut)
+
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        sut.traitCollectionDidChange(nil)
+
+        sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 1024, height: 768))
+
+        // THEN
+        self.verify(view: sut.view)
+    }
 }
