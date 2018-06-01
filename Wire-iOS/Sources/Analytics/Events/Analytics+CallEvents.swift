@@ -45,7 +45,7 @@ extension Analytics {
     
     private func attributes(for event: CallEvent, callInfo: CallInfo, conversation: ZMConversation) -> [String : Any] {
         var attributes = attributesForConversation(conversation)
-        attributes.merge(attributesForAccount(in: conversation), strategy: .preferNew)
+        attributes.merge(attributesForUser(in: conversation), strategy: .preferNew)
         attributes.merge(attributesForParticipants(in: conversation), strategy: .preferNew)
         attributes.merge(attributesForCallParticipants(with: callInfo), strategy: .preferNew)
         attributes.merge(attributesForVideo(with: callInfo), strategy: .preferNew)
@@ -64,7 +64,7 @@ extension Analytics {
         return attributes
     }
     
-    private func attributesForAccount(in conversation: ZMConversation) -> [String : Any] {
+    private func attributesForUser(in conversation: ZMConversation) -> [String : Any] {
         var userType: String
         
         if ZMUser.selfUser().isWirelessUser {
@@ -75,13 +75,7 @@ extension Analytics {
             userType = "user"
         }
         
-        var attributes: [String : Any] = ["user_type": userType]
-        
-        if let teamSize = ZMUser.selfUser().team?.members.count {
-            attributes.merge(["team_size": teamSize], strategy: .preferNew)
-        }
-        
-        return attributes
+        return ["user_type": userType]
     }
     
     private func attributesForVideoToogle(with callInfo: CallInfo) -> [String : Any] {
