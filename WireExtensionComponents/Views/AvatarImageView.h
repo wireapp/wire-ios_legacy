@@ -19,6 +19,8 @@
 
 @import UIKit;
 
+@class RoundedView;
+
 typedef NS_ENUM(NSUInteger, AvatarImageViewShape) {
     AvatarImageViewShapeCircle,
     AvatarImageViewShapeRectangle,
@@ -27,7 +29,7 @@ typedef NS_ENUM(NSUInteger, AvatarImageViewShape) {
 
 @interface AvatarImageView : UIView
 
-@property (nonatomic, readonly) UIView *containerView;
+@property (nonatomic, readonly) RoundedView *containerView;
 @property (nonatomic, readonly) UIImageView *imageView;
 @property (nonatomic, readonly) UILabel *initials;
 @property (nonatomic, assign) AvatarImageViewShape shape;

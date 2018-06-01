@@ -20,7 +20,7 @@ import UIKit
 
 @objc class PinnableThumbnailViewController: UIViewController {
 
-    private let thumbnailView = ContinuousCornersView(cornerRadius: 12)
+    private let thumbnailView = RoundedView()
     private let thumbnailContainerView = UIView()
     private(set) var contentView: UIView?
 
@@ -89,6 +89,8 @@ import UIKit
         thumbnailContainerView.addSubview(thumbnailView)
         thumbnailView.autoresizingMask = []
         thumbnailView.clipsToBounds = true
+        thumbnailView.shape = .rounded(radius: 12)
+        
         thumbnailContainerView.layer.shadowRadius = 30
         thumbnailContainerView.layer.shadowOpacity = 0.32
         thumbnailContainerView.layer.shadowColor = UIColor.black.cgColor
