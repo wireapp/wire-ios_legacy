@@ -129,7 +129,9 @@ import SafariServices
             identifier: type(of: self).settingsDevicesCellIdentifier,
             presentationAction: { () -> (UIViewController?) in
                 Analytics.shared().tagSelfDeviceList()
-                return ClientListViewController(clientsList: .none, credentials: .none, detailedView: true)
+                return ClientListViewController(clientsList: .none,
+                                                credentials: .none,
+                                                detailedView: true) ///TODO: init with dark variant
             },
             previewGenerator: { _ -> SettingsCellPreview in
                 return SettingsCellPreview.badge(ZMUser.selfUser().clients.count)

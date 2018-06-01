@@ -63,7 +63,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: sut.view)
     }
 
-    func testForDarkTheme(){
+    func DIAABLE_testForDarkTheme(){
         ColorScheme.default().variant = .dark
 
         sut = ClientListViewController()
@@ -71,7 +71,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: sut.view)
     }
 
-    func testForWrapInNavigationController(){
+    func DIAABLE_testForWrapInNavigationController(){
         sut = ClientListViewController()
         let navWrapperController = sut.wrapInNavigationController()
 

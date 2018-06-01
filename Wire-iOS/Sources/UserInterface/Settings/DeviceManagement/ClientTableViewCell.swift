@@ -164,7 +164,7 @@ class ClientTableViewCell: UITableViewCell {
             else {
                 self.verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "");
             }
-            self.verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
+            self.verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4) ///TODO: color varient?
         }
         else {
             self.verifiedLabel.text = ""
