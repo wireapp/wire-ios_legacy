@@ -51,33 +51,32 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForLightTheme(){
-        ColorScheme.default().variant = .light
-        
+    func prepareSut() {
         sut = ClientListViewController(clientsList: Array(mockUser.clients) as? [UserClient],
                                        selfClient: client,
                                        credentials: nil, detailedView: true, showTemporary: true)
 
         sut.showLoadingView = false
+    }
+
+    func testForLightTheme(){
+        prepareSut()
 
         self.verify(view: sut.view)
     }
 
-    func DIAABLE_testForDarkTheme(){
+    func testForDarkTheme(){
         ColorScheme.default().variant = .dark
 
-        sut = ClientListViewController()
+        prepareSut()
 
         self.verify(view: sut.view)
     }
 
-    func DIAABLE_testForWrapInNavigationController(){
-        sut = ClientListViewController()
+    func testForWrapInNavigationController(){
+        prepareSut()
         let navWrapperController = sut.wrapInNavigationController()
 
         self.verify(view: navWrapperController.view)
     }
 }
-
-//ClientListViewController *clientListViewController = [[ClientListViewController alloc] initWithClientsList:user.clients.allObjects credentials:nil detailedView:YES showTemporary:YES];
-
