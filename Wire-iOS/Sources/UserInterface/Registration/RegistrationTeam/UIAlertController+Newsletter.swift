@@ -64,7 +64,8 @@ extension UIAlertController {
         }
     }
 
-    static func showNewsletterSubscriptionDialogIfNeeded(presentViewController:UIViewController, completionHandler: @escaping (Bool) -> Void) {
+    static func showNewsletterSubscriptionDialogIfNeeded(presentViewController: UIViewController,
+                                                         completionHandler: @escaping (Bool) -> Void) {
         guard !UIAlertController.newsletterSubscriptionDialogWasDisplayed else { return }
 
         showNewsletterSubscriptionDialog(over: presentViewController, completionHandler: completionHandler)

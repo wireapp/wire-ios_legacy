@@ -159,18 +159,20 @@ extension TeamCreationFlowController {
         if let description = stepDescription {
             let controller = createViewController(for: description)
 
-            if needsToShowMarketingConsentDialog {
-                showMarketingConsentDialog(presentViewController: controller)
+            let completion = {
+                if needsToShowMarketingConsentDialog {
+                    self.showMarketingConsentDialog(presentViewController: self.navigationController)
+                }
             }
 
             if let current = currentController, current.stepDescription.shouldSkipFromNavigation() {
                 currentController = controller
                 let withoutLast = navigationController.viewControllers.dropLast()
                 let controllers = withoutLast + [controller]
-                navigationController.setViewControllers(Array(controllers), animated: true)
+                navigationController.setViewControllers(Array(controllers), animated: true, completion: completion)
             } else {
                 currentController = controller
-                navigationController.pushViewController(controller, animated: true)
+                navigationController.pushViewController(controller, animated: true, completion: completion)
             }
         }
     }
