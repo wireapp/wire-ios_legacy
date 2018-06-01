@@ -40,7 +40,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let activationDate = formatter.date(from: "2018/06/01 14:31")
+        let activationDate = formatter.date(from: "2018/05/01 14:31")
 
         selfClient.activationDate = activationDate
 
