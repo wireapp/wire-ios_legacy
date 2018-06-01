@@ -130,7 +130,7 @@ private extension CallClosedReason {
         case .canceled:
             return "canceled"
         case .normal, .stillOngoing:
-            return "other" // Current API doesn't expose if we or the remote ended the call
+            return "normal"
         case .inputOutputError:
             return "io_error"
         case .internalError:
@@ -144,24 +144,7 @@ private extension CallClosedReason {
         case .unknown:
             return "unknown"
         case .lostMedia:
-            return networkQualityString()
-        }
-    }
-    
-    func networkQualityString() -> String {
-        let qualityType = NetworkConditionHelper.sharedInstance().qualityType()
-        
-        switch qualityType {
-        case .typeWifi:
-            return  "drop_wifi"
-        case .type2G:
-            return "drop_2G"
-        case .type3G:
-            return "drop_3G"
-        case .type4G:
-            return "drop_4G"
-        case .typeUnkown:
-            return "drop_unknown"
+            return "drop"
         }
     }
     
