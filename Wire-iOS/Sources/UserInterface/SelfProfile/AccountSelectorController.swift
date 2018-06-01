@@ -58,6 +58,7 @@ final class AccountSelectorController: UIViewController {
     private func setShowAccounts(to showAccounts: Bool) {
         self.showAccounts = showAccounts
         accountsView.isHidden = !showAccounts
+        self.view.frame.size = accountsView.frame.size
     }
 }
 

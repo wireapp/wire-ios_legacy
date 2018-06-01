@@ -19,10 +19,27 @@
 
 import Photos
 
+protocol PhotoLibraryProtocol {
+    func performChanges(_ changeBlock: @escaping () -> Swift.Void, completionHandler: ((Bool, Error?) -> Swift.Void)?)
+}
+
+extension PHPhotoLibrary: PhotoLibraryProtocol {}
+
+protocol AssetChangeRequestProtocol: class {
+    @discardableResult static func creationRequestForAsset(from image: UIImage) -> Self
+}
+
+extension PHAssetChangeRequest: AssetChangeRequestProtocol {}
+
 @objc final public class SavableImage: NSObject {
 
+    /// protocols for inject mocking photo services
+    var photoLibrary: PhotoLibraryProtocol = PHPhotoLibrary.shared()
+    var assetChangeRequestType: AssetChangeRequestProtocol.Type = PHAssetChangeRequest.self
+    var applicationType: ApplicationProtocol.Type = UIApplication.self
+
     public typealias ImageSaveCompletion = (Bool) -> Void
-    
+
     fileprivate let imageData: Data
     fileprivate let imageOrientation: UIImageOrientation
     fileprivate var writeInProgess = false
@@ -37,23 +54,20 @@ import Photos
         guard !writeInProgess else { return }
         writeInProgess = true
 
-        UIApplication.wr_requestOrWarnAboutPhotoLibraryAccess { granted in
+        applicationType.wr_requestOrWarnAboutPhotoLibraryAccess { granted in
             guard granted else {
                 completion?(false)
                 return
             }
 
-            PHPhotoLibrary.shared().performChanges({ [weak self] in
-                guard let `self` = self, let image = UIImage(data: self.imageData) else {
-                    return
-                }
-
-                PHAssetChangeRequest.creationRequestForAsset(from: image)
-            }) { [weak self] success, error in
+            self.photoLibrary.performChanges({
+                guard let image = UIImage(data: self.imageData) else { return }
+                self.assetChangeRequestType.creationRequestForAsset(from: image)
+            }) { success, error in
                 DispatchQueue.main.async {
-                    self?.writeInProgess = false
+                    self.writeInProgess = false
                     if let error = error {
-                        self?.warnAboutError(error)
+                        self.warnAboutError(error)
                     }
                     completion?(success)
                 }

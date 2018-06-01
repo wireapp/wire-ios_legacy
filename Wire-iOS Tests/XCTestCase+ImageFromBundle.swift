@@ -18,14 +18,22 @@
 
 import Foundation
 
-@testable import Wire
-
-final class MockApplication: ApplicationProtocol {
-    static func wr_requestOrWarnAboutPhotoLibraryAccess(_ grantedHandler: ((Bool) -> Void)!) {
-        grantedHandler(true)
+extension XCTestCase {
+    func image(inTestBundleNamed name: String) -> UIImage {
+        return UIImage(contentsOfFile: urlForResource(inTestBundleNamed: name).path)!
     }
 
-    var applicationState: UIApplicationState = .active
+    func urlForResource(inTestBundleNamed name: String) -> URL {
+        let bundle = Bundle(for: type(of: self))
 
-    var statusBarOrientation: UIInterfaceOrientation = .unknown
+        let url = bundle.url(forResource: name, withExtension: "")
+
+        if let isFileURL = url?.isFileURL {
+            XCTAssert(isFileURL)
+        } else {
+            XCTFail("\(name) does not exist")
+        }
+
+        return url!
+    }
 }

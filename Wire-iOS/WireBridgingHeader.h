@@ -168,7 +168,6 @@
 #import "UIAlertController+Wire.h"
 #import "NetworkConditionHelper.h"
 #import "SoundEventRulesWatchDog.h"
-#import "Analytics+CallEvents.h"
 #import "NSString+EmoticonSubstitution.h"
 #import "UILabel+TextTransform.h"
 #import "NSString+TextTransform.h"

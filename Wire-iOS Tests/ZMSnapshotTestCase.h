@@ -105,11 +105,6 @@ NS_ASSUME_NONNULL_BEGIN
                               line:(NSUInteger)line
                 configurationBlock:(nullable void (^)(UIView *view, BOOL isPad))configuration;
 
-#pragma mark - Helper
-
-- (UIImage *)imageInTestBundleNamed:(NSString *)name;
-- (NSURL *)URLForResourceInTestBundleNamed:(NSString *)name;
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -143,10 +143,10 @@ final internal class SelfProfileViewController: UIViewController {
     private func createConstraints() {
         var selfViewTopMargin: CGFloat = 12
 
-        if #available(iOS 10, *) {
+        if #available(iOS 11, *) {
         } else {
-            if let naviBarHeight = self.navigationController?.navigationBar.frame.size.height {
-                selfViewTopMargin = 12 + naviBarHeight
+            if let navBarFrame = self.navigationController?.navigationBar.frame {
+                selfViewTopMargin = 32 + navBarFrame.size.height
             }
         }
 
