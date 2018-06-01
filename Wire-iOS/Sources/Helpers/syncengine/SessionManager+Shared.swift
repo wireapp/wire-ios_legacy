@@ -31,7 +31,7 @@ extension SessionManager {
         
         var isCallKitSupported = false
         if #available(iOS 10, *) {
-            isCallKitSupported = TARGET_OS_SIMULATOR == 0
+            isCallKitSupported = !UIDevice.isSimulator
         }
         
         if isCallKitEnabled && isCallKitSupported && hasAudioPermissions {

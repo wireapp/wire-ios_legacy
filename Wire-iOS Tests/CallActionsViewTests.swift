@@ -24,6 +24,7 @@ fileprivate struct CallActionsViewInput: CallActionsViewInputType {
     let canToggleMediaType, isVideoCall, isMuted, canAccept, isTerminating: Bool
     let mediaState: MediaState
     let variant: ColorSchemeVariant
+    var cameraType: CaptureDevice
 }
 
 class CallActionsViewTests: ZMSnapshotTestCase {
@@ -57,7 +58,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: true),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -77,7 +79,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: false),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -97,7 +100,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: false),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -117,7 +121,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: true,
             isTerminating: false,
             mediaState: .sendingVideo,
-            variant: .dark
+            variant: .dark,
+            cameraType: .front
         )
         
         // When
@@ -137,7 +142,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: false,
             mediaState: .sendingVideo,
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -158,7 +164,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: true),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -179,7 +186,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: false),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -200,7 +208,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: false),
-            variant: .dark
+            variant: .dark,
+            cameraType: .front
         )
         
         // When
@@ -221,7 +230,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: true,
             mediaState: .notSendingVideo(speakerEnabled: true),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -242,7 +252,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: false),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -263,7 +274,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: true),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -285,7 +297,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: true,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: false),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
         
         // When
@@ -309,7 +322,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: false),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
 
         // When
@@ -329,7 +343,8 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             canAccept: false,
             isTerminating: false,
             mediaState: .notSendingVideo(speakerEnabled: false),
-            variant: .light
+            variant: .light,
+            cameraType: .front
         )
 
         // When

@@ -44,6 +44,7 @@ final class UserImageViewContainer: UIView {
     }
     
     private func setupViews() {
+        userImageView.isAccessibilityElement = false
         userImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(userImageView)
         

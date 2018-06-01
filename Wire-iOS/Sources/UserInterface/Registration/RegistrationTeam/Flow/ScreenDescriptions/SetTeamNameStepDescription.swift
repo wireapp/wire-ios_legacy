@@ -27,7 +27,7 @@ class SetTeamNameStepSecondaryView: SecondaryViewDescription {
         self.controller = controller
         let whatIsWire = ButtonDescription(title: "team.name.whatiswireforteams".localized, accessibilityIdentifier: "wire_for_teams_button")
         whatIsWire.buttonTapped = { [weak controller] in
-            let webview = SFSafariViewController(url: NSURL.wr_createTeamFeatures().wr_URLByAppendingLocaleParameter() as URL)
+            let webview = BrowserViewController(url: URL.wr_createTeamFeatures.appendingLocaleParameter)
             controller?.present(webview, animated: true, completion: nil)
         }
         views = [whatIsWire]

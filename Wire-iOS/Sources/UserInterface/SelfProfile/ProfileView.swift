@@ -35,6 +35,10 @@ import Cartography
         imageView.accessibilityIdentifier = "user image"
         imageView.userSession = session
         imageView.user = user
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityLabel = "self.profile.change_user_image.accessibility".localized
+        imageView.accessibilityTraits = UIAccessibilityTraitButton
+        imageView.accessibilityElementsHidden = false
         
         availabilityView.tapHandler = { [weak self] button in
             guard let `self` = self else { return }

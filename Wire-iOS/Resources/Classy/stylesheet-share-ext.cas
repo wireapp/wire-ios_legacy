@@ -80,13 +80,6 @@ UILabel.URL {
     textColor: $color-accent-current;
 }
 
-FlexibleNavigationBar {
-    backgroundImage[barMetrics:default] : "sharing-nav-bar";
-    backgroundImage[barMetrics:compact] : "sharing-nav-bar";
-    shadowImage: "separator";
-    tintColor: $color-text-foreground;
-}
-
 ^UINavigationBar IconButton, TokenField IconButton {
     layer: @{
         borderColor: $color-separator;
@@ -133,11 +126,6 @@ UITableView.embed {
 
 UITableView.pushed {
     contentInset: 8, 0, 0, 0;
-}
-
-PageControl {
-    dotDiameter: 5.0;
-    dotDistance: 4.0;
 }
 
 ^UITableViewCell.unarchived {    

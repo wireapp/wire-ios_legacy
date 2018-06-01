@@ -28,7 +28,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 #import "NSURL+WireLocale.h"
-#import "NSURL+WireURLs.h"
 #import "Button.h"
 
 
@@ -45,6 +44,8 @@
     self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
+        self.device = UIDevice.currentDevice;
+
         self.unregisteredUser = unregisteredUser;
 
         [self createContainerView];
@@ -53,15 +54,11 @@
         [self createAgreeButton];
 
         [self updateViewConstraints];
+
+        [self updateConstraintsForSizeClass];
     }
 
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self updateConstraintsForSizeClass];
 }
 
 - (void)createContainerView {
@@ -126,7 +123,7 @@
 
 - (void)openTOS:(id)sender
 {
-    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:self.termsOfServiceURL];
+    BrowserViewController *webViewController = [[BrowserViewController alloc] initWithURL:self.termsOfServiceURL];
     [self presentViewController:webViewController animated:YES completion:nil];
 }
 

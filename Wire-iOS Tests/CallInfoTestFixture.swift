@@ -52,7 +52,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -72,7 +73,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -92,7 +94,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -112,7 +115,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -132,7 +136,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -152,7 +157,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
         
@@ -172,7 +178,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -194,7 +201,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -214,7 +222,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
 
@@ -234,7 +243,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
 
@@ -254,7 +264,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
 
@@ -274,7 +285,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -294,7 +306,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -314,7 +327,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -336,7 +350,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -356,7 +371,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -376,7 +392,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -396,7 +413,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -416,7 +434,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -436,7 +455,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -456,7 +476,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: false,
             variant: .light,
-            disableIdleTimer: false
+            disableIdleTimer: false,
+            cameraType: .front
         )
     }
     
@@ -478,7 +499,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -498,7 +520,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -518,7 +541,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -538,7 +562,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     
@@ -558,7 +583,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
 
@@ -579,7 +605,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
 
@@ -600,7 +627,8 @@ struct CallInfoTestFixture {
             title: otherUser.displayName,
             isVideoCall: true,
             variant: .light,
-            disableIdleTimer: true
+            disableIdleTimer: true,
+            cameraType: .front
         )
     }
     

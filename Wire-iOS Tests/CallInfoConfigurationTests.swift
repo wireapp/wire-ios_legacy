@@ -67,7 +67,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = otherUser
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneIncomingAudioRinging, configuration)
@@ -83,7 +83,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = selfUser
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneOutgoingAudioRinging, configuration)
@@ -100,7 +100,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = otherUser
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneIncomingAudioDegraded, configuration)
@@ -117,7 +117,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = selfUser
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneOutgoingAudioDegraded, configuration)
@@ -134,7 +134,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = otherUser
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneAudioConnecting, configuration)
@@ -152,7 +152,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.videoState = .started
 
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
 
         // then
         assertEquals(fixture.oneToOneVideoEstablished, configuration)
@@ -169,7 +169,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallDuration = 10
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
 
         // then
         assertEquals(fixture.oneToOneAudioEstablished, configuration)
@@ -187,7 +187,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockIsConstantBitRateAudioActive = true
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneAudioEstablishedCBR, configuration)
@@ -207,7 +207,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockVideoState = .started
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneIncomingVideoRinging, configuration)
@@ -225,7 +225,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockVideoState = .stopped
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions(), cameraType: .front)
 
         // then
         assertEquals(fixture.oneToOneIncomingVideoRingingVideoTurnedOff, configuration)
@@ -243,7 +243,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockVideoState = .started
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneOutgoingVideoRinging, configuration)
@@ -261,7 +261,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockVideoState = .started
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneVideoConnecting, configuration)
@@ -284,7 +284,7 @@ class CallInfoConfigurationTests: XCTestCase {
         permissions.isPendingVideoPermissionRequest = false
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
 
         // then
         assertEquals(fixture.oneToOneVideoEstablished, configuration)
@@ -303,7 +303,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallDuration = 10
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.oneToOneAudioEstablished, configuration)
@@ -321,7 +321,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = otherUser
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.groupIncomingAudioRinging, configuration)
@@ -337,7 +337,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = selfUser
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.groupOutgoingAudioRinging, configuration)
@@ -354,7 +354,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockInitiator = otherUser
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.groupAudioConnecting, configuration)
@@ -375,7 +375,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .stopped)
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.groupAudioEstablished, configuration)
@@ -395,7 +395,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .stopped)
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.groupAudioEstablishedVideoUnavailable, configuration)
@@ -415,7 +415,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.groupAudioEstablishedRemoteTurnedVideoOn, configuration)
@@ -441,7 +441,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .stopped)
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: CallPermissions(), cameraType: .front)
         
         // then
         assertEquals(fixture.groupAudioEstablishedVideoUnavailable, configuration)
@@ -459,7 +459,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockVideoState = .started
 
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoDeniedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoDeniedForever, cameraType: .front)
 
         // then
         assertEquals(fixture.oneToOneIncomingVideoRingingWithPermissionsDeniedForever, configuration)
@@ -478,7 +478,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockVideoState = .started
 
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoPendingApproval)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoPendingApproval, cameraType: .front)
 
         // then
         assertEquals(fixture.oneToOneIncomingVideoRingingWithUndeterminedVideoPermissions, configuration)
@@ -498,7 +498,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.videoState = .started
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
         
         // then
         assertEquals(fixture.groupIncomingVideoRinging, configuration)
@@ -516,7 +516,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.videoState = .started
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
         
         // then
         assertEquals(fixture.groupOutgoingVideoRinging, configuration)
@@ -534,7 +534,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.videoState = .started
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
         
         // then
         assertEquals(fixture.groupVideoConnecting, configuration)
@@ -556,7 +556,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
         
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever)
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front)
         
         // then
         assertEquals(fixture.groupVideoEstablished, configuration)
@@ -578,7 +578,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions(), cameraType: .front)
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .statusTextHidden)
@@ -598,7 +598,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions(), cameraType: .front)
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .hidden)
@@ -619,7 +619,7 @@ class CallInfoConfigurationTests: XCTestCase {
         mockVoiceChannel.mockCallParticipantState = .connected(videoState: .started)
 
         // when
-        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions())
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .statusTextHidden, permissions: CallPermissions(), cameraType: .front)
 
         // then
         XCTAssertEqual(configuration.videoPlaceholderState, .hidden)

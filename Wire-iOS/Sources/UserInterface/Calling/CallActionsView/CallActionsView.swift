@@ -64,6 +64,7 @@ protocol CallActionsViewInputType: CallTypeProvider, ColorVariantProvider {
     var canAccept: Bool { get }
     var mediaState: MediaState { get }
     var permissions: CallPermissionsConfiguration { get }
+    var cameraType: CaptureDevice { get }
 }
 
 extension CallActionsViewInputType {
@@ -116,6 +117,7 @@ final class CallActionsView: UIView {
         super.init(frame: .zero)
         videoButtonDisabledTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(performButtonAction))
         setupViews()
+        setupAccessibility()
         createConstraints()
     }
     
@@ -135,6 +137,14 @@ final class CallActionsView: UIView {
         [topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
         addSubview(videoButtonDisabled)
+    }
+
+    private func setupAccessibility() {
+        muteCallButton.accessibilityLabel = "voice.mute_button.title".localized
+        videoButton.accessibilityLabel = "voice.video_button.title".localized
+        speakerButton.accessibilityLabel = "voice.speaker_button.title".localized
+        flipCameraButton.accessibilityLabel = "voice.flip_video_button.title".localized
+        acceptCallButton.accessibilityLabel = "voice.accept_button.title".localized
     }
     
     private func createConstraints() {
@@ -177,10 +187,11 @@ final class CallActionsView: UIView {
         alpha = input.isTerminating ? 0.4 : 1
         isUserInteractionEnabled = !input.isTerminating
         lastInput = input
+        updateAccessibilityElements(with: input)
         setNeedsLayout()
         layoutIfNeeded()
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         verticalStackView.spacing = {
@@ -210,5 +221,20 @@ final class CallActionsView: UIView {
         default: fatalError("Unexpected Button: \(button)")
         }
     }
-    
+
+    // MARK: - Accessibility
+
+    private func updateAccessibilityElements(with input: CallActionsViewInputType) {
+        muteCallButton.accessibilityLabel = "call.actions.label.toggle_mute_\(input.isMuted ? "off" : "on")".localized
+        flipCameraButton.accessibilityLabel = "call.actions.label.flip_camera".localized
+        speakerButton.accessibilityLabel = "call.actions.label.toggle_speaker_\(input.mediaState.isSpeakerEnabled ? "off" : "on")".localized
+        acceptCallButton.accessibilityLabel = "call.actions.label.accept_call".localized
+        endCallButton.accessibilityLabel = "call.actions.label.\(input.canAccept ? "reject" : "terminate")_call".localized
+        videoButtonDisabled.accessibilityLabel = "call.actions.label.toggle_video_on".localized;
+        videoButton.accessibilityLabel = "call.actions.label.toggle_video_\(input.mediaState.isSendingVideo ? "off" : "on")".localized
+
+        let targetCamera = input.cameraType == .front ? "back" : "front"
+        flipCameraButton.accessibilityLabel = "call.actions.label.switch_to_\(targetCamera)_camera".localized
+    }
+
 }

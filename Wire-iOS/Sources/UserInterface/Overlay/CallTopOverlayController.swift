@@ -110,7 +110,7 @@ final class CallTopOverlayController: UIViewController {
             interactiveView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.safeArea.top),
             durationLabel.centerXAnchor.constraint(equalTo: interactiveView.centerXAnchor),
             durationLabel.centerYAnchor.constraint(equalTo: interactiveView.centerYAnchor),
-            interactiveView.heightAnchor.constraint(equalToConstant: 24)
+            interactiveView.heightAnchor.constraint(equalToConstant: 32)
             ])
         
         interactiveView.addGestureRecognizer(tapGestureRecognizer)

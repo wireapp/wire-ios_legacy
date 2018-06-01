@@ -186,6 +186,7 @@ public class SearchResultsViewController : UIViewController {
         conversationsSection.delegate = self
         servicesSection.delegate = self
         createGroupSection.delegate = self
+        inviteTeamMemberSection.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -392,3 +393,10 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
     
 }
 
+extension SearchResultsViewController : InviteTeamMemberSectionDelegate {
+
+    func inviteSectionDidRequestTeamManagement() {
+        URL.manageTeam(source: .onboarding).openInApp(above: self)
+    }
+
+}

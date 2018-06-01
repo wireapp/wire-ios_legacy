@@ -27,14 +27,20 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     weak var delegate: CallAccessoryViewControllerDelegate?
     private let participantsViewController: CallParticipantsViewController
     private let avatarView = UserImageViewContainer(size: .big, maxSize: 240, yOffset: -8)
-    private let videoPlaceholderStatusLabel = UILabel()
+    private let videoPlaceholderStatusLabel = UILabel(
+        key: "video_call.camera_access.denied",
+        size: .normal,
+        weight: .semibold,
+        color: ColorSchemeColorTextForeground,
+        variant: .dark
+    )
 
     var configuration: CallInfoViewControllerInput {
         didSet {
             updateState()
         }
     }
-    
+
     init(configuration: CallInfoViewControllerInput) {
         self.configuration = configuration
         participantsViewController = CallParticipantsViewController(participants: configuration.accessoryType.participants, allowsScrolling: false)
@@ -46,28 +52,27 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    override func loadView() {
+        view = PassthroughTouchesView()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         createConstraints()
         updateState()
     }
-    
+
     private func setupViews() {
         addToSelf(participantsViewController)
-        view.addSubview(avatarView)
-
-        view.addSubview(videoPlaceholderStatusLabel)
-        videoPlaceholderStatusLabel.textColor = .white
-        videoPlaceholderStatusLabel.font = FontSpec(.normal, .semibold).font
+        avatarView.isAccessibilityElement = false
+        [avatarView, videoPlaceholderStatusLabel].forEach(view.addSubview)
         videoPlaceholderStatusLabel.alpha = 0.64
         videoPlaceholderStatusLabel.textAlignment = .center
-        videoPlaceholderStatusLabel.text = "video_call.camera_access.denied".localized
     }
-    
-    private func createConstraints() {
 
+    private func createConstraints() {
         participantsViewController.view.translatesAutoresizingMaskIntoConstraints = false
         avatarView.translatesAutoresizingMaskIntoConstraints = false
         videoPlaceholderStatusLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -75,15 +80,13 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         avatarView.fitInSuperview()
 
         NSLayoutConstraint.activate([
-            self.videoPlaceholderStatusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            self.videoPlaceholderStatusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            self.videoPlaceholderStatusLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            videoPlaceholderStatusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            videoPlaceholderStatusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            videoPlaceholderStatusLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
-
     }
-    
-    private func updateState() {
 
+    private func updateState() {
         switch configuration.accessoryType {
         case .avatar(let user):
             avatarView.user = user
@@ -96,7 +99,6 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         avatarView.isHidden = !configuration.accessoryType.showAvatar
         participantsViewController.view.isHidden = !configuration.accessoryType.showParticipantList
         videoPlaceholderStatusLabel.isHidden = configuration.videoPlaceholderState != .statusTextDisplayed
-
     }
     
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController) {

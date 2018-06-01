@@ -103,8 +103,7 @@ final class CallStatusView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         bitrateLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 12
-        titleLabel.accessibilityIdentifier = "CallStatusLabel"
-        subtitleLabel.accessibilityIdentifier = "CallStatusSubtitleLabel"
+        accessibilityIdentifier = "CallStatusLabel"
         [titleLabel, subtitleLabel].forEach(stackView.addArrangedSubview)
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textAlignment = .center
@@ -139,6 +138,8 @@ final class CallStatusView: UIView {
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: configuration.effectiveColorVariant)
         }
+
+        accessibilityLabel = stackView.arrangedSubviews.flatMap { $0.accessibilityLabel }.joined(separator: "\n")
     }
     
 }

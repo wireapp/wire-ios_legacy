@@ -111,7 +111,7 @@ class VideoGridViewController: UIViewController {
     }
     
     func updateState() {
-        Calling.log.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
+        Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
         
         let selfStreamId = ZMUser.selfUser().remoteIdentifier!
         let selfInGrid = configuration.videoStreams.contains { $0.stream == selfStreamId }
@@ -141,24 +141,24 @@ class VideoGridViewController: UIViewController {
         // Update mute status
         selfPreviewView?.isMuted = configuration.isMuted
         
-        Calling.log.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
+        Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
     
     private func updateFloatingVideo(with state: ParticipantVideoState?) {
         // No stream, remove floating video if there is any
         guard let state = state else {
-            Calling.log.debug("Removing self video from floating preview")
+            Log.calling.debug("Removing self video from floating preview")
             return thumbnailViewController.removeCurrentThumbnailContentView()
         }
         
         // We only support the self preview in the floating overlay
         guard state.stream == ZMUser.selfUser().remoteIdentifier else {
-            return Calling.log.error("Invalid operation: Non self preview in overlay")
+            return Log.calling.error("Invalid operation: Non self preview in overlay")
         }
         
         // We have a stream but don't have a preview view yet
         if nil == thumbnailViewController.contentView, let previewView = selfPreviewView {
-            Calling.log.debug("Adding self video to floating preview")
+            Log.calling.debug("Adding self video to floating preview")
             thumbnailViewController.setThumbnailContentView(previewView, contentSize: .previewSize(for: traitCollection))
         }
     }
@@ -194,7 +194,7 @@ class VideoGridViewController: UIViewController {
     }
     
     private func addStream(_ streamId: UUID) {
-        Calling.log.debug("Adding video stream: \(streamId)")
+        Log.calling.debug("Adding video stream: \(streamId)")
 
         let view: UIView = {
             if streamId == ZMUser.selfUser().remoteIdentifier, let previewView = selfPreviewView {
@@ -210,9 +210,9 @@ class VideoGridViewController: UIViewController {
     }
 
     private func removeStream(_ streamId: UUID) {
-        Calling.log.debug("Removing video stream: \(streamId)")
+        Log.calling.debug("Removing video stream: \(streamId)")
         guard let videoView = streamView(for: streamId) else {
-            return Calling.log.debug("Failed to remove video stream \(streamId) since view was not found")
+            return Log.calling.debug("Failed to remove video stream \(streamId) since view was not found")
         }
         gridView.remove(view: videoView)
         gridVideoStreams.index(of: streamId).apply { gridVideoStreams.remove(at: $0) }

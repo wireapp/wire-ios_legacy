@@ -116,7 +116,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     self.navigationController.delegate = self.navigationControllerDelegate;
     self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBarBackground];
     
-    if (nil != self.fullUser) {
+    if (nil != self.fullUser && nil != [ZMUserSession sharedSession]) {
         self.observerToken = [UserChangeInfo addObserver:self forUser:self.fullUser userSession:[ZMUserSession sharedSession]];
     }
     

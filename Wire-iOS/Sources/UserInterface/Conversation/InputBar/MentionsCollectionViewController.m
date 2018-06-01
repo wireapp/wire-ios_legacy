@@ -22,7 +22,6 @@
 #import "UserImageView.h"
 #import "MentionsBubbleView.h"
 #import "MentionsCollectionViewCell.h"
-#import "UIView+Borders.h"
 #import "MentionsCollectionView.h"
 #import "Wire-Swift.h"
 

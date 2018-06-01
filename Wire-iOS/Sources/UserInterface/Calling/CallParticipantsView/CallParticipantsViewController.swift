@@ -60,7 +60,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     }
     
     override func loadView() {
-        self.view = ThemableContainerView()
+        view = PassthroughTouchesView()
     }
     
     override func viewDidLoad() {
@@ -87,7 +87,6 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         collectionView.bounces = allowsScrolling
         collectionView.delegate = self
         self.collectionView = collectionView
-        
         view.addSubview(collectionView)
         CallParticipantsCellConfiguration.prepare(collectionView)
     }
@@ -135,6 +134,11 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard case .showAll = self.collectionView.rows[indexPath.item] else { return false }
+        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         guard case .showAll = self.collectionView.rows[indexPath.item] else { return false }
         return true
     }

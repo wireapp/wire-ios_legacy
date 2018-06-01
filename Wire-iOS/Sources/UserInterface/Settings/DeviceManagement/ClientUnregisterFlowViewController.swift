@@ -119,8 +119,10 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     func didCompleteFormStep(_ viewController: UIViewController!) {
         let clientsListController = ClientListViewController(clientsList: self.clients, credentials: self.credentials, showTemporary: false)
+        clientsListController.delegate = self
         clientsListController.view.backgroundColor = UIColor.black
-        if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
+
+        if isIPadRegular() {
             let navigationController = UINavigationController(rootViewController: clientsListController)
             navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
             self.present(navigationController, animated: true, completion: nil)
@@ -159,5 +161,20 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
 extension ClientUnregisterFlowViewController: PostLoginAuthenticationObserver {
     func clientRegistrationDidSucceed(accountId : UUID) {
         self.delegate?.clientDeletionSucceeded()
+    }
+}
+
+extension ClientUnregisterFlowViewController: ClientListViewControllerDelegate {
+    func finishedDeleting(_ clientListViewController: ClientListViewController) {
+
+        let completion: (() -> Swift.Void)? = { [weak self] in
+            self?.showLoadingView = true
+        }
+
+        if isIPadRegular() {
+            clientListViewController.dismiss(animated: true, completion: completion)
+        } else {
+            rootNavigationController?.popViewController(animated: true, completion: completion)
+        }
     }
 }

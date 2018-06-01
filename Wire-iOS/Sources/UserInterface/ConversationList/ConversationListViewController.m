@@ -42,7 +42,6 @@
 // helpers
 
 #import "Analytics.h"
-#import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
 
 // Transitions
@@ -129,7 +128,6 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
 }
 

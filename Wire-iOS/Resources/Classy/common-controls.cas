@@ -146,43 +146,6 @@ IconButton.ephemeral {
     iconColor[state:highlighted]: $color-icon-normal;
 }
 
-CheckBoxButton {
-    titleLabel: @{
-        font: $font-small-light;
-    }
-
-    imageView: @{
-        layer: @{
-            borderWidth: 1;
-            cornerRadius: 3;
-        }
-    }
-
-    contentHorizontalAlignment: left;
-    imageEdgeInsets: -8;
-    contentEdgeInsets: 0, 8, 0, 0;
-}
-
-CheckBoxButton.dark {
-    titleColor: $color-text-foreground-dark;
-
-    imageView: @{
-        layer: @{
-            borderColor: $color-icon-background-selected-dark;
-        }
-    }
-}
-
-CheckBoxButton.light {
-    titleColor: $color-text-foreground-light;
-
-    imageView: @{
-        layer: @{
-            borderColor: $color-icon-background-selected-light;
-        }
-    }
-}
-
 Button.tab, Button.tab-light, Button.tab-dark, Button.tab-monochrome {
     titleLabel: @{
         font: $font-small-semibold;

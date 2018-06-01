@@ -27,7 +27,6 @@
 #import "RegistrationTextField.h"
 
 #import "GuidanceLabel.h"
-#import "Guidance.h"
 #import "WebLinkTextView.h"
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import "UIImage+ImageUtilities.h"
@@ -35,7 +34,6 @@
 #import "UIViewController+Errors.h"
 #import "Constants.h"
 #import "NSURL+WireLocale.h"
-#import "NSURL+WireURLS.h"
 #import "Wire-Swift.h"
 
 #import "AnalyticsTracker+Registration.h"

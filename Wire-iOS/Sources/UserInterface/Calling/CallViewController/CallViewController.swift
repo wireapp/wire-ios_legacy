@@ -29,7 +29,7 @@ final class CallViewController: UIViewController {
     fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
     fileprivate let callInfoRootViewController: CallInfoRootViewController
     fileprivate weak var overlayTimer: Timer?
-    fileprivate var hapticsController = CallHapticsController()
+    fileprivate let hapticsController = CallHapticsController()
 
     private var observerTokens: [Any] = []
     private var videoConfiguration: VideoConfiguration
@@ -52,7 +52,7 @@ final class CallViewController: UIViewController {
         self.voiceChannel = voiceChannel
         self.mediaManager = mediaManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager,  isOverlayVisible: true)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
         super.init(nibName: nil, bundle: nil)
@@ -101,8 +101,18 @@ final class CallViewController: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
     }
 
+    override func accessibilityPerformEscape() -> Bool {
+        guard let dismisser = self.dismisser else { return false }
+        dismisser.dismiss(viewController: self, completion: nil)
+        return true
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return callInfoConfiguration.effectiveColorVariant == .light ? .default : .lightContent
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return !isOverlayVisible
     }
 
     @objc private func resumeVideoIfNeeded() {
@@ -145,7 +155,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType)
         callInfoRootViewController.configuration = callInfoConfiguration
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager, isOverlayVisible: isOverlayVisible)
         videoGridViewController.configuration = videoConfiguration
@@ -158,7 +168,7 @@ final class CallViewController: UIViewController {
     private func updateIdleTimer() {
         let disabled = callInfoConfiguration.disableIdleTimer
         UIApplication.shared.isIdleTimerDisabled = disabled
-        Calling.log.debug("Updated idle timer: \(disabled ? "disabled" : "enabled")")
+        Log.calling.debug("Updated idle timer: \(disabled ? "disabled" : "enabled")")
     }
 
     private func updateAppearance() {
@@ -168,10 +178,10 @@ final class CallViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard canHideOverlay else { return }
-        
+
         if let touch = touches.first,
             let overlay = videoGridViewController.previewOverlay,
-            overlay.point(inside: touch.location(in: overlay), with: event) {
+            overlay.point(inside: touch.location(in: overlay), with: event), !isOverlayVisible {
             return
         }
 
@@ -210,7 +220,7 @@ final class CallViewController: UIViewController {
             try voiceChannel.setVideoCaptureDevice(newType)
             cameraType = newType
         } catch {
-            Calling.log.error("error toggling capture device: \(error)")
+            Log.calling.error("error toggling capture device: \(error)")
         }
     }
 
@@ -297,7 +307,7 @@ extension CallViewController: ConstantBitRateAudioObserver {
 extension CallViewController: CallInfoRootViewControllerDelegate {
     
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction) {
-        Calling.log.debug("request to perform call action: \(action)")
+        Log.calling.debug("request to perform call action: \(action)")
         guard let userSession = ZMUserSession.shared() else { return }
         
         switch action {

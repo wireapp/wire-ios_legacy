@@ -31,7 +31,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
 
     @objc weak var delegate: CallQualityViewControllerDelegate?
 
-    let contentView = ContinuousCornersView(cornerRadius: 32)
+    let contentView = RoundedView()
     let dimmingView = UIView()
     let closeButton = IconButton()
     let titleLabel = UILabel()
@@ -146,6 +146,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         dismissTapGestureRecognizer.delegate = self
         view.addGestureRecognizer(dismissTapGestureRecognizer)
 
+        contentView.shape = .rounded(radius: 32)
         contentView.backgroundColor = UIColor.CallQuality.contentBackground
         contentView.translatesAutoresizingMaskIntoConstraints = false
 

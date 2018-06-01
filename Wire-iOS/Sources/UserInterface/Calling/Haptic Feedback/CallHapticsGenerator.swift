@@ -48,7 +48,7 @@ final class CallHapticsGenerator: CallHapticsGeneratorType {
     private let notificationGenerator = UINotificationFeedbackGenerator()
     
     func trigger(event: CallHapticsEvent) {
-        Calling.log.debug("Triggering haptic feedback event: \(event.rawValue)")
+        Log.calling.debug("Triggering haptic feedback event: \(event.rawValue)")
         prepareFeedback(for: event)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: papply(executeFeedback, event))
     }

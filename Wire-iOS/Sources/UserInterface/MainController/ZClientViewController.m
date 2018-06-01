@@ -94,7 +94,6 @@
 - (void)dealloc
 {
     [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init
@@ -156,7 +155,7 @@
     
     [self createTopViewConstraints];
     [self.splitViewController didMoveToParentViewController:self];
-    [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    [self updateSplitViewTopConstraint];
 
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
     
@@ -255,7 +254,7 @@
         }
     }
 
-    [self refreshSplitViewPositionForRegularContainer: self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    [self updateSplitViewTopConstraint];
     [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES onlyFullScreen:NO];
     [self.view setNeedsLayout];
 }
@@ -452,12 +451,11 @@
             profileViewController.delegate = (id <ProfileViewControllerDelegate>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
             profileViewController.viewControllerDismisser = (id <ViewControllerDismisser>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
         }
-        UINavigationController *navWrapperController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
+
+        UINavigationController *navWrapperController = [profileViewController wrapInNavigationController];
         navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        navWrapperController.navigationBarHidden = YES;
         [self presentViewController:navWrapperController animated:YES completion:nil];
     }
-
 }
 
 - (void)dismissClientListController:(id)sender
