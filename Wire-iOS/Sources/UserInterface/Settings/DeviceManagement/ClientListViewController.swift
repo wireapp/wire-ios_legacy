@@ -104,9 +104,10 @@ protocol ClientListViewControllerDelegate: class {
 
         return nil
     }
-        
+
+    ///TODO: always dark theme when rm device during login?
     required init(clientsList: [UserClient]?,
-                  selfClient: UserClient = ZMUserSession.shared()!.selfUserClient(),
+                  selfClient: UserClient? = ZMUserSession.shared()?.selfUserClient(),
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true) {
