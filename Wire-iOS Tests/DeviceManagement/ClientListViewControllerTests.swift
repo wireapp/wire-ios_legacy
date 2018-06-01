@@ -24,19 +24,39 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     var sut: ClientListViewController!
     var mockUser: MockUser!
     var client: UserClient!
+    var selfClient: UserClient!
 
     override func setUp() {
         super.setUp()
 
         let user = MockUser.mockUsers()[0]
         mockUser = MockUser(for: user)
-        mockUser.feature(withUserClients: 6)
+
+        selfClient = UserClient.insertNewObject(in: uiMOC)
+        selfClient.remoteIdentifier = "102030405060708090"
+
+        selfClient.user = ZMUser.insertNewObject(in: uiMOC)
+        selfClient.deviceClass = "tablet"
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let activationDate = formatter.date(from: "2018/06/01 14:31")
+
+        selfClient.activationDate = activationDate
+
+        ////
 
         client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "102030405060708090"
 
         client.user = ZMUser.insertNewObject(in: uiMOC)
         client.deviceClass = "tablet"
+
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+//        let activationDate = formatter.date(from: "2018/06/01 14:31")
+
+        client.activationDate = activationDate
 
         recordMode = true
     }
@@ -45,6 +65,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         sut = nil
         mockUser = nil
         client = nil
+        selfClient = nil
 
         ColorScheme.default().variant = .light
 
@@ -52,8 +73,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     }
 
     func prepareSut() {
-        sut = ClientListViewController(clientsList: Array(mockUser.clients) as? [UserClient],
-                                       selfClient: client,
+        sut = ClientListViewController(clientsList: [client, client, client, client, client, client],
+                                       selfClient: selfClient,
                                        credentials: nil, detailedView: true, showTemporary: true)
 
         sut.showLoadingView = false
