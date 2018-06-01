@@ -18,12 +18,13 @@
 
 
 #import "AvatarImageView.h"
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 @import PureLayout;
 
 @interface AvatarImageView ()
 
-@property (nonatomic) UIView *containerView;
+@property (nonatomic) RoundedView *containerView;
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) UILabel *initials;
 
@@ -80,21 +81,24 @@
 - (void)updateCornerRadius
 {
     switch (self.shape) {
-        case AvatarImageViewShapeRectangle:
-            self.containerView.layer.cornerRadius = 0;
-            break;
-        case AvatarImageViewShapeCircle:
-            self.containerView.layer.cornerRadius = MIN(self.bounds.size.width, self.bounds.size.height) / 2;
-            break;
-        case AvatarImageViewShapeRoundedRelative:
-            self.containerView.layer.cornerRadius = ceil(CGRectGetHeight(self.containerView.bounds) / 6);
-            break;
+        case AvatarImageViewShapeRectangle: {
+            [self.containerView toggleRectangle];
+            return;
+        }
+        case AvatarImageViewShapeCircle: {
+            [self.containerView toggleCircle];
+            return;
+        }
+        case AvatarImageViewShapeRoundedRelative: {
+            [self.containerView setRelativeCornerRadiusWithMultiplier:(CGFloat)1/6 dimension:MaskDimensionHeight];
+            return;
+        }
     }
 }
 
 - (void)createContainerView
 {
-    self.containerView = [[UIView alloc] initForAutoLayout];
+    self.containerView = [[RoundedView alloc] initForAutoLayout];
     self.containerView.clipsToBounds = YES;
     [self addSubview:self.containerView];
 }
@@ -112,12 +116,6 @@
     self.initials = [[UILabel alloc] initForAutoLayout];
     self.initials.opaque = NO;
     [self.containerView addSubview:self.initials];
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    [self updateCornerRadius];
 }
 
 - (void)setShowInitials:(BOOL)showInitials

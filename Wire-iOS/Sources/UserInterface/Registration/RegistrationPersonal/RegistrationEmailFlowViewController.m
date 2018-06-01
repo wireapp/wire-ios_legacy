@@ -157,7 +157,8 @@
         
         [self.navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
 
-        [UIAlertController showNewsletterSubscriptionDialogIfNeededWithCompletionHandler: ^(BOOL marketingConsent) {
+        [UIAlertController showNewsletterSubscriptionDialogWithOver: self
+                                                  completionHandler: ^(BOOL marketingConsent) {
             self.marketingConsent = marketingConsent;
         }];
     }
