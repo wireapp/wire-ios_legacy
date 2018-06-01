@@ -49,7 +49,7 @@ BOOL UseAnalytics = USE_ANALYTICS;
 
 @property (nonatomic, strong, nullable) id<AnalyticsProvider> provider;
 @property (nonatomic, strong) AnalyticsSessionSummaryEvent *sessionSummary;
-@property (nonatomic, strong) AnalyticsVoiceChannelTracker *voiceChannelTracker;
+@property (nonatomic, strong) AnalyticsCallingTracker *callingTracker;
 @property (nonatomic, strong, readwrite) AnalyticsRegistration *analyticsRegistration;
 @property (nonatomic, strong) AnalyticsConversationListObserver *conversationListObserver;
 @property (nonatomic, strong) AnalyticsConversationVerifiedObserver *conversationVerifiedObserver;
@@ -138,7 +138,7 @@ static Analytics *sharedAnalytics = nil;
 
 - (void)userSessionDidBecomeAvailable:(NSNotification *)note
 {
-    self.voiceChannelTracker            = [[AnalyticsVoiceChannelTracker alloc] initWithAnalytics:self];
+    self.callingTracker                 = [[AnalyticsCallingTracker alloc] initWithAnalytics:self];
     self.conversationListObserver       = [[AnalyticsConversationListObserver alloc] initWithAnalytics:self];
     self.decryptionFailedObserver       = [[AnalyticsDecryptionFailedObserver alloc] initWithAnalytics:self];
     self.fileTransferObserver           = [[AnalyticsFileTransferObserver alloc] init];

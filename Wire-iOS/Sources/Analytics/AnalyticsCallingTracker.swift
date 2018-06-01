@@ -32,7 +32,7 @@ struct CallInfo {
     let video: Bool
 }
 
-class AnalyticsVoiceChannelTracker : NSObject {
+class AnalyticsCallingTracker : NSObject {
     
     private static let conversationIdKey = "conversationId"
     
@@ -51,7 +51,7 @@ class AnalyticsVoiceChannelTracker : NSObject {
         }
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UserToggledVideoInCall, object: nil, queue: nil) { [weak self] (note) in
-            if let conversationId = note.userInfo?[AnalyticsVoiceChannelTracker.conversationIdKey] as? UUID,  var callInfo = self?.callInfos[conversationId] {
+            if let conversationId = note.userInfo?[AnalyticsCallingTracker.conversationIdKey] as? UUID,  var callInfo = self?.callInfos[conversationId] {
                 callInfo.toggledVideo = true
                 self?.callInfos[conversationId] = callInfo
             }
@@ -67,7 +67,7 @@ class AnalyticsVoiceChannelTracker : NSObject {
     }
 }
 
-extension AnalyticsVoiceChannelTracker: WireCallCenterCallStateObserver {
+extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         
