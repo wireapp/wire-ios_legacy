@@ -53,6 +53,7 @@ extension Analytics {
         
         switch event {
         case .ended(reason: let reason):
+            attributes.merge(attributesForSetupTime(with: callInfo), strategy: .preferNew)
             attributes.merge(attributesForCallDuration(with: callInfo), strategy: .preferNew)
             attributes.merge(attributesForVideoToogle(with: callInfo), strategy: .preferNew)
             attributes.merge(["reason" : reason], strategy: .preferNew)
@@ -88,7 +89,7 @@ extension Analytics {
     }
     
     private func attributesForVideo(with callInfo: CallInfo) -> [String : Any] {
-        return ["is_video": callInfo.video ? true : false]
+        return ["started_as_video": callInfo.video ? true : false]
     }
     
     private func attributesForDirection(with callInfo: CallInfo) -> [String : Any] {
@@ -103,8 +104,18 @@ extension Analytics {
         return ["conversation_participants_in_call_max": callInfo.maximumCallParticipants]
     }
     
+    private func attributesForSetupTime(with callInfo: CallInfo) -> [String : Any] {
+        guard let establishedDate = callInfo.establishedDate, let connectingDate = callInfo.connectingDate else {
+            return [:]
+        }
+        return ["setup_time": Int(establishedDate.timeIntervalSince(connectingDate))]
+    }
+    
     private func attributesForCallDuration(with callInfo: CallInfo) -> [String : Any] {
-        return ["duration": Int(-(callInfo.establishedDate?.timeIntervalSinceNow ?? -0))]
+        guard let establishedDate = callInfo.establishedDate else {
+            return [:]
+        }
+        return ["duration": Int(-establishedDate.timeIntervalSinceNow)]
     }
     
     private func attributesForConversation(_ conversation: ZMConversation) -> [String : Any] {

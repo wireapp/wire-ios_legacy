@@ -20,10 +20,11 @@ import Foundation
 import WireUtilities
 
 extension Notification.Name {
-    static let UserToggledVideoInCall = Notification.Name("UserDidToggleVideoInCall")
+    static let UserToggledVideoInCall = Notification.Name("UserToggledVideoInCall")
 }
 
 struct CallInfo {
+    var connectingDate: Date?
     var establishedDate: Date?
     var maximumCallParticipants: Int
     var toggledVideo: Bool
@@ -75,15 +76,16 @@ extension AnalyticsVoiceChannelTracker: WireCallCenterCallStateObserver {
         switch callState {
         case .outgoing:
             let video = conversation.voiceChannel?.isVideoCall ?? false
-            let callInfo = CallInfo(establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: true, video: video)
+            let callInfo = CallInfo(connectingDate: Date(), establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: true, video: video)
             callInfos[conversationId] = callInfo
             analytics.tag(callEvent: .initiated, in: conversation, callInfo: callInfo)
         case .incoming(video: let video, shouldRing: true, degraded: _):
-            let callInfo = CallInfo(establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: false, video: video)
+            let callInfo = CallInfo(connectingDate: nil, establishedDate: nil, maximumCallParticipants: 1, toggledVideo: false, outgoing: false, video: video)
             callInfos[conversationId] = callInfo
             analytics.tag(callEvent: .received, in: conversation, callInfo: callInfo)
         case .answered:
             if var callInfo = callInfos[conversationId] {
+                callInfo.connectingDate = Date()
                 analytics.tag(callEvent: .answered, in: conversation, callInfo: callInfo)
                 callInfos[conversationId] = callInfo
             }
