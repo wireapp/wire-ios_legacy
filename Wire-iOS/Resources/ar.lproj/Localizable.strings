@@ -59,7 +59,7 @@
 "peoplepicker.header.services" = "الخدمات";
 "peoplepicker.services.create_conversation.item" = "إنشاء محادثة جديدة";
 "peoplepicker.services.add_service.button" = "إضافة خدمة";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "هذه الخدمة غير متاحة بهذه اللحظة";
 "peoplepicker.services.add_service.error.full" = "المحادثة مكتملة العدد";
 
@@ -93,7 +93,7 @@
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 "peoplepicker.quick-action.create-guest-room" = "إنشاء غرفة للزوار";
 
-"add_participants.all_contacts_added" = "الكل حاضر.";
+"add_participants.all_contacts_added" = "Everyone’s here.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "البحث بحسب الاسم";
@@ -262,8 +262,9 @@
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "المكالمة الجارية";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
-"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
 
@@ -284,7 +285,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "يريد Wire الوصول للكاميرا والصور."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire يريد الوصول لصورك.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire يريد الوصول للكاميرا.";
-"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can't access the camera while you are on a video call.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF قفل";
@@ -483,6 +484,7 @@
 "voice.speaker_button.title" = "مكبّر الصوت";
 "voice.cancel_button.title" = "إلغاء";
 "voice.call_button.title" = "اتصال";
+"voice.end_call_button.title" = "End Call";
 
 "voice.alert.call_in_progress.title" = "يتم إجراء المكالمة";
 "voice.alert.call_in_progress.message" = "تستطيع إجراء مكالمة واحدة فقط في نفس الوقت";
@@ -515,11 +517,33 @@
 "call.video.too_many.alert.title" = "Too many people for Video";
 "call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
 
-"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.title" = "جهاز جديد";
 "call.degraded.alert.message.self" = "بدأت باستخدام جهاز جديد.";
 "call.degraded.alert.message.user" = "%@ بدأ باستخدام جهاز جديد.";
 "call.degraded.alert.message.unknown" = "Someone started using a new device.";
 "call.degraded.alert.action.continue" = "الاتصال على أي حال";
+
+"call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.start.button" = "Call Anyway";
+"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.join.button" = "Join Anyway";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "كتم الصوت";
+"call.actions.label.toggle_mute_off" = "إلغاء كتم الصوت";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.terminate_call" = "End call";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.minimize_call" = "Minimize call";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -663,6 +687,8 @@
 "self.voiceover.hint" = "فتح الملف والإعدادات";
 "self.new-device.voiceover.label" = "الملف، أجهزة مضافة جديدة";
 
+"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
+
 "self.add_phone_number" = "أضف رقم الهاتف";
 "self.add_email_password" = "إضافة عنوان البريد الإلكتروني وكلمة المرور";
 
@@ -689,6 +715,9 @@
 "self.settings.add_account.error.title" = "ثلاث حساب نشطة";
 "self.settings.add_account.error.message" = "بإمكانك تسجيل الدخول بثلاث حسابات في المرة الواحدة. اخرج من أحدهم لتضيف آخر.";
 
+"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch account";
+
 // Settings - Account details
 "self.settings.account_section" = "الحساب";
 
@@ -714,7 +743,7 @@
 "self.settings.account_picture_group.picture" = "الصورة";
 "self.settings.account_picture_group.color" = "اللون";
 
-"self.settings.account_personal_information_group.title" = "Personal Information";
+"self.settings.account_personal_information_group.title" = "معلومات شخصية";
 
 "self.settings.account_picture_group.theme" = "ثيم غامق";
 
@@ -736,10 +765,10 @@
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "تقارير الإستخدام والأعطال";
 "self.settings.privacy_analytics.title" = "أرسل بيانات كمجهول";
-"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
+"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending anonymous usage and crash reports.";
 
-"self.settings.receiveNews_and_offers.title" = "Receive News";
-"self.settings.receiveNews_and_offers.description.title" = "Receive news and product update from Wire via email.";
+"self.settings.receiveNews_and_offers.title" = "Receive Newsletter";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product updates from Wire via email.";
 
 
 
@@ -833,6 +862,8 @@
 "open_link.browser.option.safari" = "سفاري";
 "open_link.browser.option.chrome" = "جوجل كروم";
 "open_link.browser.option.firefox" = "فيرفكس";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "التنبيهات الصوتية";
@@ -963,7 +994,7 @@
 "team.email.textfield.accessibility" = "ايميل الشركه";
 "team.email.button.learn_more" = "معرفة المزيد";
 
-"team.activation_code.headline" = "لديك رسالة";
+"team.activation_code.headline" = "You’ve got mail";
 "team.activation_code.subheadline" = "أدخل رمز التحقق الذي أرسلناه إلى: %@.";
 "team.activation_code.button.resend" = "إعادة إرسال الرمز";
 "team.activation_code.button.change_email" = "تغيير البريد الإلكتروني";
@@ -1009,7 +1040,7 @@
 "guest_room.error.generic.message" = "Check your connection and try again";
 
 "guest_room.link.header.title" = "دعوة آخرين برابط";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
 
 "guest_room.link.button.title" = "إنشاء رابط";
 
@@ -1206,7 +1237,7 @@
 "error.user.device_deleted_remotely" = "قمت بتسجيل خروج من جهاز آخر.";
 "error.user.last_identity_cant_be_deleted" = "مطلوب إمّا عنوان بريد إلكتروني أو رقم هاتف.";
 "error.user.account_suspended" = "لم يعد مصرّحًا لهذا الحساب بتسجيل الدخول.";
-"error.user.account_limit_reached" = "لا يمكنك إضافة أكثر من ثلاث حسابات.";
+"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
