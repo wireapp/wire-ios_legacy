@@ -131,7 +131,7 @@ import SafariServices
                 Analytics.shared().tagSelfDeviceList()
                 return ClientListViewController(clientsList: .none,
                                                 credentials: .none,
-                                                detailedView: true) ///TODO: init with dark variant
+                                                detailedView: true)
             },
             previewGenerator: { _ -> SettingsCellPreview in
                 return SettingsCellPreview.badge(ZMUser.selfUser().clients.count)

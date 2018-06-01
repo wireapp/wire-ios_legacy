@@ -90,6 +90,17 @@ protocol ClientListViewControllerDelegate: class {
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: Any?
     var userObserverToken : NSObjectProtocol?
+    var variant: ColorSchemeVariant {
+        didSet {
+            switch variant {
+            case .dark:
+                view.backgroundColor = .black
+            case .light:
+                view.backgroundColor = .white
+            }
+
+        }
+    }
 
 
     var leftBarButtonItem: UIBarButtonItem? {
@@ -110,10 +121,12 @@ protocol ClientListViewControllerDelegate: class {
                   selfClient: UserClient? = ZMUserSession.shared()?.selfUserClient(),
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
-                  showTemporary: Bool = true) {
+                  showTemporary: Bool = true,
+                  variant: ColorSchemeVariant = .dark) {
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
+        self.variant = variant
 
         clientFilter = { $0 != selfClient && (showTemporary || !$0.isTemporary) }
         clientSorter = {
@@ -357,6 +370,9 @@ protocol ClientListViewControllerDelegate: class {
             cell.selectionStyle = .none
             cell.accessoryType = self.detailedView ? .disclosureIndicator : .none
             cell.showVerified = self.detailedView
+
+            ///TODO:         self.artistLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark]; for labels
+
             
             switch self.convertSection((indexPath as NSIndexPath).section) {
             case 0:

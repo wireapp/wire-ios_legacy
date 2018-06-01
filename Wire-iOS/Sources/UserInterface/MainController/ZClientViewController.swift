@@ -132,16 +132,12 @@ extension ZClientViewController {
     }
 
     func openClientListScreen(for user: ZMUser) {
+        var viewController: UIViewController?
+
         if user.isSelfUser {
-            let clientListViewController = ClientListViewController(clientsList: Array(user.clients), credentials: nil, detailedView: true, showTemporary: true)
-            //        clientListViewController.view.backgroundColor = [UIColor blackColor];
+            let clientListViewController = ClientListViewController(clientsList: Array(user.clients), credentials: nil, detailedView: true, showTemporary: true, variant: ColorScheme.default().variant)
             clientListViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissClientListController(_:)))
-            //        UINavigationController *navWrapperController = [[SettingsStyleNavigationController alloc] initWithRootViewController:clientListViewController];
-            let navWrapperController: UINavigationController? = clientListViewController.wrapInNavigationController()
-            navWrapperController?.modalPresentationStyle = .formSheet
-            if let aController = navWrapperController {
-                present(aController, animated: true)
-            }
+            viewController = clientListViewController
         } else {
             let profileViewController = ProfileViewController(user: user, context: .deviceList)
 
@@ -150,11 +146,13 @@ extension ZClientViewController {
 
                 profileViewController.viewControllerDismisser = conversationViewController as? ViewControllerDismisser
             }
-            let navWrapperController: UINavigationController? = profileViewController.wrapInNavigationController()
-            navWrapperController?.modalPresentationStyle = .formSheet
-            if let aController = navWrapperController {
-                present(aController, animated: true)
-            }
+            viewController = profileViewController
+        }
+
+        let navWrapperController: UINavigationController? = viewController?.wrapInNavigationController()
+        navWrapperController?.modalPresentationStyle = .formSheet
+        if let aController = navWrapperController {
+            present(aController, animated: true)
         }
     }
 }
