@@ -68,7 +68,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     }
 
     func prepareSut(variant: ColorSchemeVariant?) {
-        sut = ClientListViewController(clientsList: [client, client, client, client, client, client],
+        // display 3 cells, show footer in same screen
+        sut = ClientListViewController(clientsList: [client, client, client],
                                        selfClient: selfClient,
                                        credentials: nil,
                                        detailedView: true,

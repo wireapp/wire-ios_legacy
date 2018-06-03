@@ -103,6 +103,28 @@ class ClientListViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
 
+    var headerFooterViewTextColor: UIColor {
+        get {
+            switch variant {
+            case .none, .dark?:
+                return UIColor(white: 1, alpha: 0.4)
+            case .light?:
+                return UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            }
+        }
+    }
+
+    var separatorColor: UIColor {
+        get {
+            switch variant {
+            case .none, .dark?:
+                return UIColor(white: 1, alpha: 0.1)
+            case .light?:
+                return UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: .light)
+            }
+        }
+    }
+
     var leftBarButtonItem: UIBarButtonItem? {
         if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
             return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
@@ -208,7 +230,7 @@ class ClientListViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.isEditing = self.editingList
         tableView.backgroundColor = UIColor.clear
-        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
+        tableView.separatorColor = separatorColor
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
     }
@@ -353,13 +375,13 @@ class ClientListViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)// TODO:
+            headerFooterView.textLabel?.textColor = headerFooterViewTextColor
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)// TODO:
+            headerFooterView.textLabel?.textColor = headerFooterViewTextColor
         }
     }
     
