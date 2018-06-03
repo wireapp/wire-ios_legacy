@@ -19,6 +19,24 @@
 import XCTest
 @testable import Wire
 
+extension ZMSnapshotTestCase {
+    func mockUserClient() -> UserClient {
+        let client = UserClient.insertNewObject(in: uiMOC)
+        client.remoteIdentifier = "102030405060708090"
+
+        client.user = ZMUser.insertNewObject(in: uiMOC)
+        client.deviceClass = "tablet"
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        let activationDate = formatter.date(from: "2018/05/01 14:31")
+
+        client.activationDate = activationDate
+
+        return client
+    }
+}
+
 final class ClientListViewControllerTests: ZMSnapshotTestCase {
     
     var sut: ClientListViewController!
@@ -32,31 +50,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         mockUser = MockUser(for: user)
 
-        selfClient = UserClient.insertNewObject(in: uiMOC)
-        selfClient.remoteIdentifier = "102030405060708090"
-
-        selfClient.user = ZMUser.insertNewObject(in: uiMOC)
-        selfClient.deviceClass = "tablet"
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let activationDate = formatter.date(from: "2018/05/01 14:31")
-
-        selfClient.activationDate = activationDate
-
-        ////
-
-        client = UserClient.insertNewObject(in: uiMOC)
-        client.remoteIdentifier = "102030405060708090"
-
-        client.user = ZMUser.insertNewObject(in: uiMOC)
-        client.deviceClass = "tablet"
-
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-//        let activationDate = formatter.date(from: "2018/06/01 14:31")
-
-        client.activationDate = activationDate
+        selfClient = self.mockUserClient()
+        client = self.mockUserClient()
 
         recordMode = true
     }
