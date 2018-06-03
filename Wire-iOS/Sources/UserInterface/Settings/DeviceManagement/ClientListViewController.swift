@@ -28,7 +28,7 @@ protocol ClientListViewControllerDelegate: class {
     func finishedDeleting(_ clientListViewController: ClientListViewController)
 }
 
-@objc class ClientListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ZMClientUpdateObserver {
+class ClientListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ZMClientUpdateObserver {
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()
     weak var delegate: ClientListViewControllerDelegate?
@@ -103,7 +103,6 @@ protocol ClientListViewControllerDelegate: class {
         }
     }
 
-
     var leftBarButtonItem: UIBarButtonItem? {
         if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
             return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
@@ -126,6 +125,9 @@ protocol ClientListViewControllerDelegate: class {
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
+        defer {
+            self.variant = variant
+        }
 
         clientFilter = { $0 != selfClient && (showTemporary || !$0.isTemporary) }
         clientSorter = {
@@ -138,9 +140,6 @@ protocol ClientListViewControllerDelegate: class {
         self.edgesForExtendedLayout = []
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
-
-        self.variant = variant
-
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
         if let user = ZMUser.selfUser(), let session = ZMUserSession.shared() {
             self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)

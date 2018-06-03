@@ -70,7 +70,10 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     func prepareSut(variant: ColorSchemeVariant?) {
         sut = ClientListViewController(clientsList: [client, client, client, client, client, client],
                                        selfClient: selfClient,
-                                       credentials: nil, detailedView: true, showTemporary: true, variant: variant)
+                                       credentials: nil,
+                                       detailedView: true,
+                                       showTemporary: true,
+                                       variant: variant)
 
         sut.showLoadingView = false
     }
