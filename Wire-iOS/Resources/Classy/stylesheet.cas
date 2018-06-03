@@ -844,22 +844,18 @@ FingerprintTableViewCell{
 ClientTableViewCell {
     nameLabel: @{
         font: $font-normal-semibold;
-        textColor: white;
     }
     labelLabel: @{
         font: $font-small-semibold;
-        textColor: white;
     }
     activationLabel: @{
         font: $font-small-light;
-        textColor: white;
     }
     verifiedLabel: @{
         font: $font-small;
     }
     fingerprintLabelFont: $font-small-light;
     fingerprintLabelBoldFont: $font-small-semibold;
-    fingerprintTextColor: white
 }
 
 /* Registration */

@@ -90,15 +90,16 @@ protocol ClientListViewControllerDelegate: class {
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: Any?
     var userObserverToken : NSObjectProtocol?
-    var variant: ColorSchemeVariant {
+    var variant: ColorSchemeVariant? {
         didSet {
             switch variant {
-            case .dark:
+            case .none:
+                view.backgroundColor = .clear
+            case .dark?:
                 view.backgroundColor = .black
-            case .light:
+            case .light?:
                 view.backgroundColor = .white
             }
-
         }
     }
 
@@ -116,17 +117,15 @@ protocol ClientListViewControllerDelegate: class {
         return nil
     }
 
-    ///TODO: always dark theme when rm device during login?
     required init(clientsList: [UserClient]?,
                   selfClient: UserClient? = ZMUserSession.shared()?.selfUserClient(),
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true,
-                  variant: ColorSchemeVariant = .dark) {
+                  variant: ColorSchemeVariant? = .none) {
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
-        self.variant = variant
 
         clientFilter = { $0 != selfClient && (showTemporary || !$0.isTemporary) }
         clientSorter = {
@@ -139,6 +138,8 @@ protocol ClientListViewControllerDelegate: class {
         self.edgesForExtendedLayout = []
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
+
+        self.variant = variant
 
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
         if let user = ZMUser.selfUser(), let session = ZMUserSession.shared() {
@@ -173,8 +174,6 @@ protocol ClientListViewControllerDelegate: class {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.clear
-        
         self.createTableView()
         self.view.addSubview(self.topSeparator)
         self.createConstraints()
@@ -355,13 +354,13 @@ protocol ClientListViewControllerDelegate: class {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)// TODO:
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)// TODO:
         }
     }
     
@@ -370,8 +369,8 @@ protocol ClientListViewControllerDelegate: class {
             cell.selectionStyle = .none
             cell.accessoryType = self.detailedView ? .disclosureIndicator : .none
             cell.showVerified = self.detailedView
-
-            ///TODO:         self.artistLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark]; for labels
+            cell.variant = variant
+            // self.fingerprintTextColor = $color-text-foreground
 
             
             switch self.convertSection((indexPath as NSIndexPath).section) {

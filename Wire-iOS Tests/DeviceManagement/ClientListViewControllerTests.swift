@@ -67,30 +67,34 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func prepareSut() {
+    func prepareSut(variant: ColorSchemeVariant?) {
         sut = ClientListViewController(clientsList: [client, client, client, client, client, client],
                                        selfClient: selfClient,
-                                       credentials: nil, detailedView: true, showTemporary: true)
+                                       credentials: nil, detailedView: true, showTemporary: true, variant: variant)
 
         sut.showLoadingView = false
     }
 
+    func testForTransparentBackground(){
+        prepareSut(variant: nil)
+
+        self.verify(view: sut.view)
+    }
+
     func testForLightTheme(){
-        prepareSut()
+        prepareSut(variant: .light)
 
         self.verify(view: sut.view)
     }
 
     func testForDarkTheme(){
-        ColorScheme.default().variant = .dark
-
-        prepareSut()
+        prepareSut(variant: .dark)
 
         self.verify(view: sut.view)
     }
 
-    func testForWrapInNavigationController(){
-        prepareSut()
+    func testForLightThemeWrappedInNavigationController(){
+        prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
 
         self.verify(view: navWrapperController.view)
