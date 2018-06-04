@@ -482,6 +482,7 @@
 "voice.video_button.title" = "Video";
 "voice.flip_video_button.title" = "Flip";
 "voice.speaker_button.title" = "Speaker";
+"voice.airplay_button.title" = "Airplay";
 "voice.cancel_button.title" = "Cancel";
 "voice.call_button.title" = "Call";
 "voice.end_call_button.title" = "End Call";

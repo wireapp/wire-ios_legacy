@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import AVKit
 
 protocol CallActionsViewDelegate: class {
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction)
@@ -101,6 +102,7 @@ final class CallActionsView: UIView {
     private let videoButton = IconLabelButton.video()
     private let videoButtonDisabled = UIView()
     private let speakerButton = IconLabelButton.speaker()
+    private let routePickerView: (UIView & CallActionThemable)?
     private let flipCameraButton = IconLabelButton.flipCamera()
     private let firstBottomRowSpacer = UIView()
     private let endCallButton = IconButton.endCall()
@@ -108,12 +110,17 @@ final class CallActionsView: UIView {
     private let acceptCallButton = IconButton.acceptCall()
     
     private var allButtons: [UIButton] {
-        return [muteCallButton, videoButton, speakerButton, flipCameraButton, endCallButton, acceptCallButton]
+        return [muteCallButton, videoButton, flipCameraButton, endCallButton, acceptCallButton]
     }
     
     // MARK: - Setup
     
     init() {
+        if #available(iOS 11, *) {
+            routePickerView = RoutePickerButton()
+        } else {
+            routePickerView = nil
+        }
         super.init(frame: .zero)
         videoButtonDisabledTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(performButtonAction))
         setupViews()
@@ -133,6 +140,7 @@ final class CallActionsView: UIView {
         bottomStackView.alignment = .top
         addSubview(verticalStackView)
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach(topStackView.addArrangedSubview)
+        routePickerView.apply(topStackView.addArrangedSubview)
         [firstBottomRowSpacer, endCallButton, secondBottomRowSpacer, acceptCallButton].forEach(bottomStackView.addArrangedSubview)
         [topStackView, bottomStackView].forEach(verticalStackView.addArrangedSubview)
         allButtons.forEach { $0.addTarget(self, action: #selector(performButtonAction), for: .touchUpInside) }
@@ -170,26 +178,34 @@ final class CallActionsView: UIView {
     // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
+        let showRoutes = showRoutePicker(with: input)
         muteCallButton.isSelected = input.isMuted
         videoButtonDisabled.isUserInteractionEnabled = !input.canToggleMediaType
         videoButtonDisabledTapRecognizer?.isEnabled = !input.canToggleMediaType
         videoButton.isEnabled = input.canToggleMediaType
         videoButton.isSelected = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
         flipCameraButton.isEnabled = input.mediaState.isSendingVideo && input.permissions.canAcceptVideoCalls
-        flipCameraButton.isHidden = input.mediaState.showSpeaker
-        speakerButton.isHidden = !input.mediaState.showSpeaker
+        flipCameraButton.isHidden = input.mediaState.showSpeaker || showRoutes
+        speakerButton.isHidden = !input.mediaState.showSpeaker || showRoutes
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
+        routePickerView?.isHidden = !showRoutes
         acceptCallButton.isHidden = !input.canAccept
         firstBottomRowSpacer.isHidden = input.canAccept || isCompact
         secondBottomRowSpacer.isHidden = isCompact
         verticalStackView.axis = isCompact ? .horizontal : .vertical
         [muteCallButton, videoButton, flipCameraButton, speakerButton].forEach { $0.appearance = input.appearance }
+        routePickerView?.appearance = input.appearance
+
         alpha = input.isTerminating ? 0.4 : 1
         isUserInteractionEnabled = !input.isTerminating
         lastInput = input
         updateAccessibilityElements(with: input)
         setNeedsLayout()
         layoutIfNeeded()
+    }
+    
+    func showRoutePicker(with input: CallActionsViewInputType) -> Bool {
+        return nil != routePickerView && !input.isVideoCall
     }
 
     override func layoutSubviews() {

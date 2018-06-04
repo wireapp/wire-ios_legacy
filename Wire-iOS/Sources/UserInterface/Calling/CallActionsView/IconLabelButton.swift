@@ -18,7 +18,7 @@
 
 import UIKit
 
-class IconLabelButton: ButtonWithLargerHitArea {
+class IconLabelButton: ButtonWithLargerHitArea, CallActionThemable {
     private static let width: CGFloat = 64
     private static let height: CGFloat = 88
     
