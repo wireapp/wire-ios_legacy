@@ -264,6 +264,7 @@ extension CallViewController {
 
             self.checkVideoPermissions { videoGranted in
                 self.conversation?.joinVoiceChannel(video: videoGranted)
+                self.disableVideoIfNeeded()
             }
         }
     }
