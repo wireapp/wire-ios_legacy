@@ -22,7 +22,6 @@ class SettingsStyleNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        ///TODO: variant
         self.navigationBar.setBackgroundImage(UIImage(color: .black, andSize: CGSize(width: 1,height: 1)), for:.default)
         self.navigationBar.isTranslucent = false
         self.navigationBar.shadowImage = UIImage()

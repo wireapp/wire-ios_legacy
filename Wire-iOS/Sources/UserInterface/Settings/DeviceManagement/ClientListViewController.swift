@@ -391,8 +391,6 @@ class ClientListViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.accessoryType = self.detailedView ? .disclosureIndicator : .none
             cell.showVerified = self.detailedView
             cell.variant = variant
-            // self.fingerprintTextColor = $color-text-foreground
-
             
             switch self.convertSection((indexPath as NSIndexPath).section) {
             case 0:
