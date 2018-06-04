@@ -38,7 +38,6 @@
 @property (nonatomic, weak) SignInViewController *signInViewController;
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) IconButton *backButton;
-@property (nonatomic, readonly) Account *firstAuthenticatedAccount;
 
 @property (nonatomic) NSLayoutConstraint *contentWidthConstraint;
 @property (nonatomic) NSLayoutConstraint *contentHeightConstraint;
@@ -117,7 +116,7 @@
     [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.cancelButton.accessibilityIdentifier = @"cancelAddAccount";
     [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
-    self.cancelButton.hidden = self.shouldHideCancelButton || self.firstAuthenticatedAccount == nil;
+    self.cancelButton.hidden = self.shouldHideCancelButton || [[SessionManager shared] firstAuthenticatedAccount] == nil;
     self.cancelButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
 
     [self addChildViewController:self.registrationTabBarController];
@@ -158,22 +157,6 @@
 - (void)setShowLogin: (BOOL)newValue{
     _showLogin = newValue;
     [self.registrationTabBarController selectIndex:_showLogin ? 1 : 0 animated:YES];
-}
-
-- (Account *)firstAuthenticatedAccount {
-    Account *selectedAccount = SessionManager.shared.accountManager.selectedAccount;
-    
-    if (selectedAccount.isAuthenticated && !self.hasSignInError) {
-        return selectedAccount;
-    }
-    
-    for (Account *account in SessionManager.shared.accountManager.accounts) {
-        if (account.isAuthenticated && account != selectedAccount) {
-            return account;
-        }
-    }
-    
-    return nil;
 }
 
 - (void)createConstraints
@@ -237,7 +220,9 @@
 
 - (void)cancelAddAccount
 {
-    [SessionManager.shared select:self.firstAuthenticatedAccount completion:nil tearDownCompletion:nil];
+    [SessionManager.shared select: [[SessionManager shared] firstAuthenticatedAccount]
+                       completion:nil
+               tearDownCompletion:nil];
 }
 
 #pragma mark - FormStepDelegate
