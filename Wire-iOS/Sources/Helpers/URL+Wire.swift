@@ -41,8 +41,100 @@ extension URL {
     }
 }
 
-extension NSURL {
-    @objc(manageTeamWithSource:) class func manageTeam(source: TeamSource) -> URL {
-        return URL.manageTeam(source: source)
+// MARK: - Standard URLS
+
+extension URL {
+
+    static var wr_usernameLearnMore: URL {
+        return URL(string: "https://wire.com/support/username/")!
     }
+
+    static var wr_fingerprintLearnMore: URL {
+        return URL(string: "https://wire.com/privacy/why")!
+    }
+
+    static var wr_fingerprintHowToVerify: URL {
+        return URL(string: "https://wire.com/privacy/how")!
+    }
+
+    static var wr_privacyPolicy: URL {
+        return URL(string: "https://wire.com/legal/privacy/embed/")!
+    }
+
+    static var wr_licenseInformation: URL {
+        return URL(string: "https://wire.com/legal/licenses/embed/")!
+    }
+
+    static var wr_website: URL {
+        return URL(string: "https://wire.com")!
+    }
+
+    static var wr_passwordReset: URL {
+        return URL(string: "https://account.wire.com/forgot/")!
+    }
+
+    static var wr_support: URL {
+        return URL(string: "https://support.wire.com")!
+    }
+
+    static var wr_askSupport: URL {
+        return URL(string: "https://support.wire.com/hc/requests/new")!
+    }
+
+    static var wr_reportAbuse: URL {
+        return URL(string: "https://wire.com/support/misuse/")!
+    }
+
+    static var wr_cannotDecryptHelp: URL {
+        return URL(string: "https://wire.com/privacy/error-1")!
+    }
+
+    static var wr_cannotDecryptNewRemoteIDHelp: URL {
+        return URL(string: "https://wire.com/privacy/error-2")!
+    }
+
+    static var wr_createTeam: URL {
+        return URL(string: "https://wire.com/create-team?pk_campaign=client&pk_kwd=ios")!
+    }
+
+    static var wr_createTeamFeatures: URL {
+        return URL(string: "https://wire.com/teams/learnmore/")!
+    }
+
+    static var wr_manageTeam: URL {
+        return URL(string: "https://teams.wire.com/login?pk_campaign=client&pk_kwd=ios")!
+    }
+
+    static var wr_emailInUseLearnMore: URL {
+        return URL(string: "https://wire.com/support/email-in-use")!
+    }
+
+    static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
+        if isTeamAccount {
+            return URL(string: "https://wire.com/legal/terms/teams")!
+        } else {
+            return URL(string: "https://wire.com/legal/terms/personal")!
+        }
+    }
+
+}
+
+extension NSURL {
+
+    @objc class var wr_fingerprintLearnMoreURL: NSURL {
+        return URL.wr_fingerprintLearnMore as NSURL
+    }
+
+    @objc class var wr_passwordResetURL: NSURL {
+        return URL.wr_passwordReset as NSURL
+    }
+
+    @objc class var wr_websiteURL: NSURL {
+        return URL.wr_website as NSURL
+    }
+
+    @objc class func wr_termsOfServicesURLForTeamAccount(_ isTeamAccount: Bool) -> NSURL {
+        return URL.wr_termsOfServicesURL(forTeamAccount: isTeamAccount) as NSURL
+    }
+
 }

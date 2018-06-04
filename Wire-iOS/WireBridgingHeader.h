@@ -97,7 +97,6 @@
 #import "AddPhoneNumberViewController.h"
 #import "VersionInfoViewController.h"
 #import "SketchColorPickerController.h"
-#import "BrowserViewController.h"
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "FullscreenImageViewController.h"
@@ -119,8 +118,6 @@
 #import "NoHistoryViewController.h"
 #import "TermsOfUseStepViewController.h"
 #import "TermsOfUseStepViewController+Private.h"
-#import "CameraBottomToolsViewController.h"
-#import "CameraBottomToolsViewController+Private.h"
 
 // Helper objects
 #import "PushTransition.h"
@@ -138,7 +135,6 @@
 #import "AnalyticsEvent.h"
 #import "Analytics+Events.h"
 #import "Application+runDuration.h"
-#import "NSURL+WireURLs.h"
 #import "NSURL+WireLocale.h"
 #import "Analytics+ProfileEvents.h"
 #import "DeveloperMenuState.h"
@@ -172,8 +168,6 @@
 #import "UIAlertController+Wire.h"
 #import "NetworkConditionHelper.h"
 #import "SoundEventRulesWatchDog.h"
-#import "Analytics+CallEvents.h"
-#import "UIScreen+Compact.h"
 #import "NSString+EmoticonSubstitution.h"
 #import "UILabel+TextTransform.h"
 #import "NSString+TextTransform.h"

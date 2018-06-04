@@ -325,20 +325,4 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     }
 }
 
-#pragma mark - Helper
-
-- (UIImage *)imageInTestBundleNamed:(NSString *)name
-{
-    return [UIImage imageWithContentsOfFile:[self URLForResourceInTestBundleNamed:name].path];
-}
-
-- (NSURL *)URLForResourceInTestBundleNamed:(NSString *)name
-{
-    NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSURL *url = [bundle URLForResource:name.stringByDeletingPathExtension withExtension:name.pathExtension];
-    XCTAssertTrue(url.fileURL);
-    
-    return url;
-}
-
 @end

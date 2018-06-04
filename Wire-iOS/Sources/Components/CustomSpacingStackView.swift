@@ -105,6 +105,8 @@ fileprivate class SpacingView : UIView {
         
         super.init(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: size, height: size)))
         
+        isAccessibilityElement = false
+        accessibilityElementsHidden = true
         setContentCompressionResistancePriority(999, for: .vertical)
         setContentCompressionResistancePriority(999, for: .horizontal)
     }

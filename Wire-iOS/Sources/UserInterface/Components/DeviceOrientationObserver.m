@@ -34,7 +34,8 @@ static DeviceOrientationObserver *sharedInstance = nil;
 
 @property (nonatomic) CMMotionManager *motionManager;
 @property (nonatomic) NSOperationQueue *operationQueue;
-@property (nonatomic) UIDeviceOrientation currentDeviceOrientation;
+@property (nonatomic) UIDeviceOrientation backgroundThreadDeviceOrientation;
+@property (nonatomic) UIDeviceOrientation deviceOrientation;
 
 @end
 
@@ -70,12 +71,12 @@ static DeviceOrientationObserver *sharedInstance = nil;
         [self.motionManager startDeviceMotionUpdatesToQueue:self.operationQueue withHandler:^(CMDeviceMotion *motion, NSError *error) {
             UIDeviceOrientation newDeviceOrientation = [self deviceOrientationFromMotion:motion];
             
-            if (newDeviceOrientation != self.currentDeviceOrientation) {
-                self.currentDeviceOrientation = newDeviceOrientation;
+            if (newDeviceOrientation != self.backgroundThreadDeviceOrientation) {
+                self.backgroundThreadDeviceOrientation = newDeviceOrientation;
                 ZM_WEAK(self);
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     ZM_STRONG(self);
-                    self.currentDeviceOrientation = newDeviceOrientation;
+                    self.deviceOrientation = newDeviceOrientation;
                     [self notifyAboutRotationToDeviceOrientation:newDeviceOrientation];
                 }];
             }
@@ -105,7 +106,7 @@ static DeviceOrientationObserver *sharedInstance = nil;
     CGFloat planeAngle = acos(dotProduct);
     const CGFloat deadSector = M_PI / 8;
     
-    UIDeviceOrientation deviceOrientation = self.currentDeviceOrientation;
+    UIDeviceOrientation deviceOrientation = self.backgroundThreadDeviceOrientation;
     
     if (planeAngle >= M_PI - M_PI / 8)
     {

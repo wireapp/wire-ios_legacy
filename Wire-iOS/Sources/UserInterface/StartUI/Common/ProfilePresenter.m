@@ -63,11 +63,6 @@
 
 @implementation ProfilePresenter
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (instancetype)init
 {
     self = [super init];

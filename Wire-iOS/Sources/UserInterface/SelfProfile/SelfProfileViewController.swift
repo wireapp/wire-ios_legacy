@@ -19,17 +19,6 @@
 import UIKit
 import Cartography
 
-extension IconButton {
-    public static func closeButton() -> IconButton {
-        let closeButton = IconButton.iconButtonDefaultLight()
-        closeButton.setIcon(.X, with: .tiny, for: .normal)
-        closeButton.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
-        closeButton.accessibilityIdentifier = "close"
-        closeButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -16)
-        return closeButton
-    }
-}
-
 extension Notification.Name {
     static let DismissSettings = Notification.Name("DismissSettings")
 }
@@ -101,6 +90,8 @@ final internal class SelfProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        profileContainerView.shouldGroupAccessibilityChildren = false
+        profileContainerView.isAccessibilityElement = false
         profileContainerView.addSubview(profileView)
         view.addSubview(profileContainerView)
         
@@ -124,8 +115,17 @@ final internal class SelfProfileViewController: UIViewController {
         presentNewLoginAlertControllerIfNeeded()
     }
     
-    func dismissNotification(_ notification: NSNotification) {
+    override func accessibilityPerformEscape() -> Bool {
+        dismiss()
+        return true
+    }
+    
+    private func dismiss() {
         dismiss(animated: true)
+    }
+    
+    func dismissNotification(_ notification: NSNotification) {
+        dismiss()
     }
     
     private func createCloseButton() {
@@ -143,10 +143,10 @@ final internal class SelfProfileViewController: UIViewController {
     private func createConstraints() {
         var selfViewTopMargin: CGFloat = 12
 
-        if #available(iOS 10, *) {
+        if #available(iOS 11, *) {
         } else {
-            if let naviBarHeight = self.navigationController?.navigationBar.frame.size.height {
-                selfViewTopMargin = 12 + naviBarHeight
+            if let navBarFrame = self.navigationController?.navigationBar.frame {
+                selfViewTopMargin = 32 + navBarFrame.size.height
             }
         }
 

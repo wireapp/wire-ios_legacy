@@ -204,11 +204,6 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
     case .disableMarkdown:
         return "Disable Markdown support"
         
-    case .skipFirstTimeUseChecks:
-        return "Skip first time use checks"
-        
-    case .preferredFlashMode:
-        return "Flash Mode"
     case .darkMode:
         return "self.settings.account_picture_group.theme".localized
         // Profile

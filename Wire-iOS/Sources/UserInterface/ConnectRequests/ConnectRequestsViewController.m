@@ -55,11 +55,6 @@ static NSString *ConnectionRequestCellIdentifier = @"ConnectionRequestCell";
 
 @implementation ConnectRequestsViewController
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)loadView
 {
     self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];

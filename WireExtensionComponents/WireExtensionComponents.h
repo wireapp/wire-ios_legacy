@@ -30,13 +30,10 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 // Views
 #import <WireExtensionComponents/AvatarImageView.h>
 #import <WireExtensionComponents/UserImageView.h>
-#import <WireExtensionComponents/PageControl.h>
 #import <WireExtensionComponents/TextView.h>
-#import <WireExtensionComponents/CheckBoxButton.h>
 #import <WireExtensionComponents/IconButton.h>
 #import <WireExtensionComponents/Button.h>
 #import <WireExtensionComponents/ButtonWithLargerHitArea.h>
-#import <WireExtensionComponents/FlexibleNavigationBar.h>
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import <WireExtensionComponents/DeveloperMenuState.h>

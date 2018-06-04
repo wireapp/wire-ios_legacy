@@ -264,6 +264,7 @@
 "conversation.input_bar.ongoing_call_alert.title" = "通話中";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "在通話時不能錄製語音訊息。";
 "conversation.input_bar.ongoing_call_alert.video.message" = "在通話時不能錄製視像訊息。";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "在通話時不能拍攝相片。";
 
 "conversation.guests_present" = "訪客在對話中";
 
@@ -483,6 +484,7 @@
 "voice.speaker_button.title" = "擴音";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通話";
+"voice.end_call_button.title" = "End Call";
 
 "voice.alert.call_in_progress.title" = "通話中";
 "voice.alert.call_in_progress.message" = "您只可同時接撥一則通話";
@@ -520,6 +522,28 @@
 "call.degraded.alert.message.user" = "%@開始使用新設備。";
 "call.degraded.alert.message.unknown" = "某人開始使用了新設備。";
 "call.degraded.alert.action.continue" = "仍然要通話";
+
+"call.alert.ongoing.start.title" = "另一通話在其他對話進行中。 \n現在打電話會掛斷該通話。";
+"call.alert.ongoing.start.button" = "仍要通話";
+"call.alert.ongoing.join.title" = "另一通話在其他對話進行中。\n加入這個通話會掛斷該通話。";
+"call.alert.ongoing.join.button" = "仍要加入";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "靜音";
+"call.actions.label.toggle_mute_off" = "開啟訊息通知";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.terminate_call" = "End call";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.minimize_call" = "Minimize call";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -663,6 +687,8 @@
 "self.voiceover.hint" = "打開用戶檔案和設定";
 "self.new-device.voiceover.label" = "已添加設定檔及新設備";
 
+"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
+
 "self.add_phone_number" = "加入手機號碼";
 "self.add_email_password" = "新增電子郵件信箱和密碼";
 
@@ -688,6 +714,9 @@
 
 "self.settings.add_account.error.title" = "已啓動三個賬號";
 "self.settings.add_account.error.message" = "您只能同時登錄三個帳號。請先登出任何一個賬號，然後加入新賬號。";
+
+"self.settings.switch_account.title" = "切換帳戶將掛斷當前通話。";
+"self.settings.switch_account.action" = "切換帳號";
 
 // Settings - Account details
 "self.settings.account_section" = "帳號";
@@ -736,9 +765,9 @@
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用資料和崩潰報告";
 "self.settings.privacy_analytics.title" = "寄送匿名資料";
-"self.settings.privacy_analytics_menu.description.title" = "發送使用和崩潰報告以改善Wire。";
+"self.settings.privacy_analytics_menu.description.title" = "發送匿名使用紀錄和崩潰報告以改善Wire。";
 
-"self.settings.receiveNews_and_offers.title" = "接收最新消息";
+"self.settings.receiveNews_and_offers.title" = "接收新聞";
 "self.settings.receiveNews_and_offers.description.title" = "接收Wire的新聞和產品更新電子郵件。";
 
 
@@ -833,6 +862,8 @@
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
 "open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "音效通知";
@@ -963,7 +994,7 @@
 "team.email.textfield.accessibility" = "您的公司電子郵件地址";
 "team.email.button.learn_more" = "瞭解更多";
 
-"team.activation_code.headline" = "您收到新郵件";
+"team.activation_code.headline" = "您收到了郵件";
 "team.activation_code.subheadline" = "輸入我們發送到%@的驗證碼。";
 "team.activation_code.button.resend" = "重新發送驗證碼";
 "team.activation_code.button.change_email" = "更改電子郵件地址";
@@ -1197,7 +1228,7 @@
 "error.user.needs_credentials" = "請檢查您提供的資料後重試。";
 "error.user.invalid_credentials" = "請檢查您的資訊後再重試。";
 "error.user.account_pending_activation" = "您的帳號未被啟用，請完成啟動程序。";
-"error.user.network_error" = "您的網路連線好像有問題，請稍候再試。";
+"error.user.network_error" = "您的網路連線似乎有問題，請稍候再試。";
 "error.user.email_is_taken" = "您提供的電子郵件信箱已經註冊過了，請嘗試其他的電子郵件信箱。";
 "error.user.phone_is_taken" = "該手機號碼已被註冊，請返回登入或更正重試。";
 "error.user.phone_code_invalid" = "請輸入一個有效的代碼";

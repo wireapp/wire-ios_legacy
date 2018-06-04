@@ -28,7 +28,6 @@
 #import "ConversationListViewModel.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "UIView+Borders.h"
 
 #import "StopWatch.h"
 #import "ProgressSpinner.h"
@@ -77,7 +76,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
     // Observer must be deallocated before `mediaPlaybackManager`
     self.activeMediaPlayerObserver = nil;
     self.mediaPlaybackManager = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init

@@ -18,6 +18,7 @@
 
 
 import Foundation
+import SafariServices
 
 @objc class SettingsCellDescriptorFactory: NSObject {
     static let settingsDevicesCellIdentifier: String = "devices"
@@ -71,8 +72,7 @@ import Foundation
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
                                                         Analytics.shared().tagOpenManageTeamURL()
-                                                        URL.manageTeam(source: .settings).open()
-                                                        return nil
+                                                        return BrowserViewController(url: URL.manageTeam(source: .settings))
                                                     },
                                                     previewGenerator: nil,
                                                     icon: .team,
@@ -129,7 +129,9 @@ import Foundation
             identifier: type(of: self).settingsDevicesCellIdentifier,
             presentationAction: { () -> (UIViewController?) in
                 Analytics.shared().tagSelfDeviceList()
-                return ClientListViewController(clientsList: .none, credentials: .none, detailedView: true)
+                return ClientListViewController(clientsList: .none,
+                                                credentials: .none,
+                                                detailedView: true)
             },
             previewGenerator: { _ -> SettingsCellPreview in
                 return SettingsCellPreview.badge(ZMUser.selfUser().clients.count)
@@ -261,18 +263,17 @@ import Foundation
         
         let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
             Analytics.shared().tagHelp()
-            return BrowserViewController(url: NSURL.wr_support().wr_URLByAppendingLocaleParameter() as URL)
+            return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            NSURL.wr_askSupport().wr_URLByAppendingLocaleParameter().open()
-            return .none
+            return BrowserViewController(url: URL.wr_askSupport.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let helpSection = SettingsSectionDescriptor(cellDescriptors: [supportButton, contactButton])
         
         let reportButton = SettingsExternalScreenCellDescriptor(title: "self.report_abuse".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return BrowserViewController(url: NSURL.wr_reportAbuse().wr_URLByAppendingLocaleParameter() as URL)
+            return BrowserViewController(url: URL.wr_reportAbuse.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let reportSection = SettingsSectionDescriptor(cellDescriptors: [reportButton])
@@ -283,14 +284,14 @@ import Foundation
     func aboutSection() -> SettingsCellDescriptorType {
         
         let privacyPolicyButton = SettingsExternalScreenCellDescriptor(title: "about.privacy.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return BrowserViewController(url: (NSURL.wr_privacyPolicy() as NSURL).wr_URLByAppendingLocaleParameter() as URL)
+            return BrowserViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
         }, previewGenerator: .none)
         let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            let url = NSURL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).wr_URLByAppendingLocaleParameter() as URL
+            let url = URL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).appendingLocaleParameter
             return BrowserViewController(url: url)
         }, previewGenerator: .none)
         let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            return BrowserViewController(url: (NSURL.wr_licenseInformation() as NSURL).wr_URLByAppendingLocaleParameter() as URL)
+            return BrowserViewController(url: URL.wr_licenseInformation.appendingLocaleParameter)
         }, previewGenerator: .none)
 
         let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
@@ -310,9 +311,9 @@ import Foundation
             footer: "\n" + version + "\n" + copyrightInfo
         )
         
-        let websiteButton = SettingsButtonCellDescriptor(title: "about.website.title".localized, isDestructive: false) { _ in
-            UIApplication.shared.openURL((NSURL.wr_website() as NSURL).wr_URLByAppendingLocaleParameter() as URL)
-        }
+        let websiteButton = SettingsExternalScreenCellDescriptor(title: "about.website.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
+            return BrowserViewController(url: URL.wr_website.appendingLocaleParameter)
+        }, previewGenerator: .none)
 
         let websiteSection = SettingsSectionDescriptor(cellDescriptors: [websiteButton])
         

@@ -98,6 +98,27 @@ class ClientTableViewCell: UITableViewCell {
     }
     
     var wr_editable: Bool
+
+    var variant: ColorSchemeVariant? {
+        didSet {
+            switch variant {
+            case .dark?, .none:
+                self.verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
+                fingerprintTextColor = .white
+                nameLabel.textColor = .white
+                labelLabel.textColor = .white
+                activationLabel.textColor = .white
+            case .light?:
+                let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+                self.verifiedLabel.textColor = textColor
+                fingerprintTextColor = textColor
+                nameLabel.textColor = textColor
+                labelLabel.textColor = textColor
+                activationLabel.textColor = textColor
+            }
+        }
+    }
+
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.wr_editable = true
@@ -164,7 +185,6 @@ class ClientTableViewCell: UITableViewCell {
             else {
                 self.verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "");
             }
-            self.verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
         }
         else {
             self.verifiedLabel.text = ""

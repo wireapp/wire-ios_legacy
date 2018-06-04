@@ -19,7 +19,6 @@
 
 import Foundation
 
-
 extension ZClientViewController {
     
     func setTopOverlay(to viewController: UIViewController?, animated: Bool = true) {
@@ -37,7 +36,7 @@ extension ZClientViewController {
                             viewController.didMove(toParentViewController: self)
                             previousViewController.removeFromParentViewController()
                             self.topOverlayViewController = viewController
-                            
+                            self.updateSplitViewTopConstraint()
                             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 })
             }
@@ -54,44 +53,45 @@ extension ZClientViewController {
                     
                     self.topOverlayViewController?.removeFromParentViewController()
                     previousViewController.view.removeFromSuperview()
-                    self.topOverlayViewController = viewController
+                    self.topOverlayViewController = nil
+                    self.updateSplitViewTopConstraint()
                 })
             }
         }
-        else {
-            topOverlayViewController?.removeFromParentViewController()
-            if let viewController = viewController {
-                addChildViewController(viewController)
-                viewController.view.frame = topOverlayContainer.bounds
+        else if let viewController = viewController {
+            addChildViewController(viewController)
+            viewController.view.frame = topOverlayContainer.bounds
+            viewController.view.translatesAutoresizingMaskIntoConstraints = false
+            topOverlayContainer.addSubview(viewController.view)
+            viewController.view.fitInSuperview()
+            
+            viewController.didMove(toParentViewController: self)
+            
+            let isRegularContainer = traitCollection.horizontalSizeClass == .regular
+            
+            if animated && !isRegularContainer {
+                let heightConstraint = viewController.view.heightAnchor.constraint(equalToConstant: 0)
+                heightConstraint.isActive = true
                 
-                viewController.view.translatesAutoresizingMaskIntoConstraints = false
-                topOverlayContainer.addSubview(viewController.view)
-                NSLayoutConstraint.activate([
-                    viewController.view.topAnchor.constraint(equalTo: topOverlayContainer.topAnchor),
-                    viewController.view.leadingAnchor.constraint(equalTo: topOverlayContainer.leadingAnchor),
-                    viewController.view.bottomAnchor.constraint(equalTo: topOverlayContainer.bottomAnchor),
-                    viewController.view.trailingAnchor.constraint(equalTo: topOverlayContainer.trailingAnchor),
-                    ])
+                self.topOverlayViewController = viewController
+                self.updateSplitViewTopConstraint()
                 
-                topOverlayContainer.addSubview(viewController.view)
-                viewController.didMove(toParentViewController: self)
+                self.view.setNeedsLayout()
+                self.view.layoutIfNeeded()
                 
-                if animated {
-                    let heightConstraint = viewController.view.heightAnchor.constraint(equalToConstant: 0)
-                    heightConstraint.isActive = true
+                UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, delay: 0.5, animations: {
+                    heightConstraint.autoRemove()
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
-                    
-                    UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, delay: 0.5, animations: {
-                        heightConstraint.autoRemove()
-                        self.view.setNeedsLayout()
-                        self.view.layoutIfNeeded()
-                    }, options: .beginFromCurrentState, completion: { _ in })
-                }
-                
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+                }, options: .beginFromCurrentState, completion: { _ in
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+                })
             }
-            topOverlayViewController = viewController
+            else {
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+                topOverlayViewController = viewController
+                updateSplitViewTopConstraint()
+            }
         }
     }
     
@@ -110,17 +110,18 @@ extension ZClientViewController {
             splitViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             splitViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             splitViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        ])
+            ])
 
         let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
         heightConstraint.priority = UILayoutPriorityDefaultLow
         heightConstraint.isActive = true
     }
 
-    @objc(refreshSplitViewPositionForRegularContainer:)
-    func refreshSplitViewPosition(isRegularContainer: Bool) {
+    func updateSplitViewTopConstraint() {
 
-        if isRegularContainer {
+        let isRegularContainer = traitCollection.horizontalSizeClass == .regular
+        
+        if isRegularContainer && nil == topOverlayViewController {
             contentTopCompactConstraint.isActive = false
             contentTopRegularConstraint.isActive = true
         } else {
@@ -130,4 +131,28 @@ extension ZClientViewController {
 
     }
 
+    func openClientListScreen(for user: ZMUser) {
+        var viewController: UIViewController?
+
+        if user.isSelfUser {
+            let clientListViewController = ClientListViewController(clientsList: Array(user.clients), credentials: nil, detailedView: true, showTemporary: true, variant: ColorScheme.default().variant)
+            clientListViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissClientListController(_:)))
+            viewController = clientListViewController
+        } else {
+            let profileViewController = ProfileViewController(user: user, context: .deviceList)
+
+            if let conversationViewController = (conversationRootViewController as? ConversationRootViewController)?.conversationViewController {
+                profileViewController.delegate = conversationViewController as? ProfileViewControllerDelegate
+
+                profileViewController.viewControllerDismisser = conversationViewController as? ViewControllerDismisser
+            }
+            viewController = profileViewController
+        }
+
+        let navWrapperController: UINavigationController? = viewController?.wrapInNavigationController()
+        navWrapperController?.modalPresentationStyle = .formSheet
+        if let aController = navWrapperController {
+            present(aController, animated: true)
+        }
+    }
 }

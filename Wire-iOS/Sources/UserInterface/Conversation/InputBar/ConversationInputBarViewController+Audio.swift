@@ -199,25 +199,23 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
     
 }
 
-
-extension ConversationInputBarViewController : WireCallCenterCallStateObserver {
+extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
     
     public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+        let isRecording = audioRecordKeyboardViewController?.isRecording
         
-        let isRecording = self.audioRecordKeyboardViewController?.isRecording
         
-        switch (callState, isRecording, self.wasRecordingBeforeCall) {
-            
-        case (.incoming(_, true, _), true, false),      // receiving incoming call while recording an audio
-             (.outgoing, true, false):                  // making an outgoing call while recording an audio
-            self.wasRecordingBeforeCall = true          // -> remember that we were recording an audio
-        case (.incoming(_, false, _), _, true),         // refusing an incoming call
-             (.terminating, _, true):                   // terminating/closing the current call
-            displayRecordKeyboard()                     // -> show again the audio record keyboard
+        switch (callState, isRecording, wasRecordingBeforeCall, ZMUserSession.shared()?.isCallOngoing) {
+        case (.incoming(_, true, _), true, false, _),         // receiving incoming call while audio keyboard is visible
+             (.outgoing, true, false, _):                     // making an outgoing call while audio keyboard is visible
+            wasRecordingBeforeCall = true                     // -> remember that the audio keyboard was visible
+        case (.incoming(_, false, _), _, true, false),        // refusing an incoming call
+             (.terminating, _, true, false):                  // terminating/closing the current call
+            displayRecordKeyboard()                           // -> show the audio record keyboard again
         default: break
         }
     }
-    
+
     private func displayRecordKeyboard() {
         self.wasRecordingBeforeCall = false
         self.mode = .audioRecord

@@ -24,7 +24,6 @@
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 
-#import "UIView+Borders.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
@@ -52,11 +51,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 
 
 @implementation ConversationListItemView
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 - (instancetype)init
 {

@@ -167,7 +167,7 @@ final class CallActionsView: UIView {
     
     // MARK: - State Input
     
-    // Entry single point for all state changes.
+    // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
         muteCallButton.isSelected = input.isMuted

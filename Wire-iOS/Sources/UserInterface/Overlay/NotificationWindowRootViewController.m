@@ -16,15 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "UIView+Borders.h"
-
 @import PureLayout;
 
 #import "NotificationWindowRootViewController.h"
 #import "PassthroughTouchesView.h"
 #import "AppDelegate.h"
-#import "UIView+Borders.h"
-#import "UIView+Borders.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"

@@ -20,11 +20,6 @@
 #import <UIKit/UIKit.h>
 
 
-
-@class  Guidance;
-
-
-
 @interface GuidanceLabel : UILabel
 
 @end

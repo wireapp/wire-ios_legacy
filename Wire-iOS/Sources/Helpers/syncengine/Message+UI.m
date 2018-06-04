@@ -119,24 +119,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return longVersionTimeFormatter;
 }
 
-+ (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message
-{
-    BOOL isChatHeadsDisabled = [[Settings sharedSettings] chatHeadsDisabled];
-    BOOL isConversationSilenced = message.conversation.isSilenced;
-    BOOL isSenderSelfUser = [message.sender isSelfUser];
-    BOOL isMessageUnread = (NSUInteger) message.serverTimestamp.timeIntervalSinceReferenceDate > message.conversation.lastReadMessage.serverTimestamp.timeIntervalSinceReferenceDate;
-    // only show a notification chathead if the message is new (recently sent)
-    BOOL isTimelyMessage = [[NSDate date] timeIntervalSinceDate:message.serverTimestamp] <= (0.5f);
-    BOOL isSystemMessage = [self isSystemMessage:message];
-
-    return ! isChatHeadsDisabled &&
-            ! isConversationSilenced &&
-            ! isSenderSelfUser &&
-            isMessageUnread &&
-            isTimelyMessage &&
-            ! isSystemMessage;
-}
-
 + (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message
 {
     NSString *identifier = message.imageMessageData.imageDataIdentifier;
