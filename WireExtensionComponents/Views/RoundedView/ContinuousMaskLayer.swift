@@ -18,20 +18,6 @@
 
 import UIKit
 
-private class AnimatingShapeLayer: CAShapeLayer {
-
-    override class func defaultAction(forKey event: String) -> CAAction? {
-
-        if event == "path" {
-            return CABasicAnimation(keyPath: event)
-        } else {
-            return super.defaultAction(forKey: event)
-        }
-
-    }
-
-}
-
 /**
  * The dimension to use when calculating relative radii.
  */
@@ -82,12 +68,12 @@ public class ContinuousMaskLayer: CALayer {
 
     public override init(layer: Any) {
         super.init(layer: layer)
-        self.mask = AnimatingShapeLayer()
+        self.mask = CAShapeLayer()
     }
 
     public override init() {
         super.init()
-        self.mask = AnimatingShapeLayer()
+        self.mask = CAShapeLayer()
     }
 
     public required init?(coder aDecoder: NSCoder) {
