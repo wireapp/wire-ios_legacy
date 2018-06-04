@@ -120,7 +120,8 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     func didCompleteFormStep(_ viewController: UIViewController!) {
         let clientsListController = ClientListViewController(clientsList: self.clients,
                                                              credentials: self.credentials,
-                                                             showTemporary: false)
+                                                             showTemporary: false,
+                                                             variant: .dark)
         clientsListController.delegate = self
 
         if isIPadRegular() {
