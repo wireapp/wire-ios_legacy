@@ -27,6 +27,10 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
+        let otherYearFormatter =  WRDateFormatter.otherYearFormatter
+
+        XCTAssertEqual(otherYearFormatter.locale.identifier, "en_US", "otherYearFormatter.locale.identifier is \(otherYearFormatter.locale.identifier)")
+
         client = mockUserClient()
     }
     
