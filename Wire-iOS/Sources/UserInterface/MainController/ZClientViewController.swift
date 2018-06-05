@@ -166,7 +166,9 @@ extension ZClientViewController {
             viewController = ProfileClientViewController(client: client)
         }
 
-        viewController.modalPresentationStyle = .formSheet
-        present(viewController, animated: true)
+        if let viewController = viewController {
+            viewController.modalPresentationStyle = .formSheet
+            present(viewController, animated: true)
+        }
     }
 }
