@@ -48,7 +48,7 @@ protocol SettingsCellType: class {
     let topSeparatorLine = UIView()
     var cellNameLabelToIconInset: NSLayoutConstraint!
 
-    var variant: ColorSchemeVariant? {
+    var variant: ColorSchemeVariant? = .none {
         didSet {
             switch variant {
             case .dark?, .none:
@@ -265,6 +265,8 @@ protocol SettingsCellType: class {
             topSeparatorLine.top == selfView.top
             topSeparatorLine.height == .hairline
         }
+
+        self.variant = .none
     }
     
     func setupAccessibiltyElements() {
