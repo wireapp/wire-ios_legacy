@@ -25,7 +25,23 @@ class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    
+
+    var variant: ColorSchemeVariant? {
+        didSet {
+            var color = UIColor.white
+
+            switch variant {
+            case .dark?, .none:
+                color = .white
+            case .light?:
+                color = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            }
+
+            fingerprintLabel.textColor = color
+            titleLabel.textColor = color
+        }
+    }
+
     var fingerprintLabelFont: UIFont? {
         didSet {
             self.updateFingerprint()

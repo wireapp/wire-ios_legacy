@@ -47,7 +47,18 @@ protocol SettingsCellType: class {
     let separatorLine = UIView()
     let topSeparatorLine = UIView()
     var cellNameLabelToIconInset: NSLayoutConstraint!
-    
+
+    var variant: ColorSchemeVariant? = .none {
+        didSet {
+            switch variant {
+            case .dark?, .none:
+                self.titleColor = .white
+            case .light?:
+                self.titleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            }
+        }
+    }
+
     var titleText: String = "" {
         didSet {
             self.cellNameLabel.text = self.titleText
@@ -254,6 +265,8 @@ protocol SettingsCellType: class {
             topSeparatorLine.top == selfView.top
             topSeparatorLine.height == .hairline
         }
+
+        self.variant = .none
     }
     
     func setupAccessibiltyElements() {
@@ -292,7 +305,7 @@ protocol SettingsCellType: class {
     }
 }
 
-@objc class SettingsToggleCell: SettingsTableCell {
+class SettingsToggleCell: SettingsTableCell {
     var switchView: UISwitch!
     
     override func setup() {
