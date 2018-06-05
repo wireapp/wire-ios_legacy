@@ -48,6 +48,12 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         }
     }
 
+    override func tearDown() {
+        resetDayFormatter()
+        
+        super.tearDown()
+    }
+
     func testThatItRendersATextMessage_Sent() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
@@ -237,12 +243,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     var otherUsers: [ZMUser] {
         return MockUser.mockUsers().map { $0 }
-    }
-
-    func resetDayFormatter() {
-        let locale = Locale(identifier: "en_US")
-        WRDateFormatter.thisYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
-        WRDateFormatter.otherYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
     }
 
     /// change the locale of the DateFormatter for snapshot

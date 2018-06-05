@@ -27,8 +27,6 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        XCTAssertEqual(Locale.current.identifier, "en_US", "Locale.current must be EN_US for snapshots! Locale.current.identifier = \(Locale.current.identifier)")
-
         client = mockUserClient()
     }
     
