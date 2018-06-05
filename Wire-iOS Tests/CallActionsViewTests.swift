@@ -57,7 +57,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: true,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: true),
+            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -78,7 +78,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: true,
             canAccept: true,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -99,7 +99,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -163,7 +163,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: true),
+            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -185,7 +185,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -207,8 +207,30 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: true,
             canAccept: false,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .dark,
+            cameraType: .front
+        )
+        
+        // When
+        sut.update(with: input)
+        
+        // Then
+        verify(view: sut)
+    }
+    
+    func testCallActionsView_NotMuted_Audio_CanNotAccept_CanToggle_VideoNotSending_SpearkerEnabled_SpeakerUnvailable() {
+        // Given
+        snapshotBackgroundColor = .white
+        let input = CallActionsViewInput(
+            permissions: CallPermissions(),
+            canToggleMediaType: true,
+            isVideoCall: false,
+            isMuted: false,
+            canAccept: false,
+            isTerminating: false,
+            mediaState: .notSendingVideo(speakerState: .selectedCanNotBeToggled),
+            variant: .light,
             cameraType: .front
         )
         
@@ -229,7 +251,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: true,
-            mediaState: .notSendingVideo(speakerEnabled: true),
+            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -251,7 +273,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: true,
             canAccept: true,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -273,7 +295,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: true),
+            mediaState: .notSendingVideo(speakerState: .selectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -296,7 +318,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: true,
             canAccept: true,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -321,7 +343,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
@@ -342,7 +364,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
             isMuted: false,
             canAccept: false,
             isTerminating: false,
-            mediaState: .notSendingVideo(speakerEnabled: false),
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
             variant: .light,
             cameraType: .front
         )
