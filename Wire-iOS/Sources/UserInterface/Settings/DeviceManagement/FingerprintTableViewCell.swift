@@ -27,8 +27,7 @@ class FingerprintTableViewCell: UITableViewCell {
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     var variant: ColorSchemeVariant? {
-        didSet { //TODO: protocol?
-
+        didSet {
             var color = UIColor.white
 
             switch variant {

@@ -19,12 +19,18 @@
 import Foundation
 
 extension ZMSnapshotTestCase {
-    func mockUserClient() -> UserClient {
+    func mockUserClient() -> UserClient! {
         let client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "102030405060708090"
 
         client.user = ZMUser.insertNewObject(in: uiMOC)
         client.deviceClass = "tablet"
+        client.model = "Simulator"
+        client.label = "Bill's MacBook Pro"
+
+        let fingerprint: Data? = "102030405060708090102030405060708090102030405060708090".data(using: .utf8)
+
+        client.fingerprint = fingerprint
 
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy/MM/dd HH:mm"
