@@ -63,6 +63,11 @@ class ClientListViewController: UIViewController,
 
     var editingList: Bool = false {
         didSet {
+            guard clients.count > 0 else {
+                self.navigationItem.rightBarButtonItem = nil
+                return
+            }
+
             if (self.editingList) {
                 self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
 
@@ -83,6 +88,14 @@ class ClientListViewController: UIViewController,
         didSet {
             self.sortedClients = self.clients.filter(clientFilter).sorted(by: clientSorter)
             self.clientsTableView?.reloadData();
+
+            if clients.count > 0 {
+                // recreate the edit button
+                let editingList = self.editingList
+                self.editingList = editingList
+            } else {
+                self.navigationItem.rightBarButtonItem = nil
+            }
         }
     }
 
@@ -156,8 +169,8 @@ class ClientListViewController: UIViewController,
     }
     
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {
-        self.clients = clientsList
         self.editingList = false
+        self.clients = clientsList
     }
     
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {

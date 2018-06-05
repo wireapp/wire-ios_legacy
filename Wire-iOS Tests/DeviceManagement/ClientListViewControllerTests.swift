@@ -57,7 +57,10 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     func prepareSut(variant: ColorSchemeVariant?, numberOfClients: Int = 3) {
         var clientsList: [UserClient]? = nil
 
-        for _ in 1...numberOfClients {
+        for _ in 0 ..< numberOfClients {
+            if clientsList == nil {
+                clientsList = []
+            }
             clientsList?.append(client)
         }
 
