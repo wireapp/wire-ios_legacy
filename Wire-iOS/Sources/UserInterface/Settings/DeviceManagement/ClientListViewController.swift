@@ -24,53 +24,6 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-protocol ClientListViewControllerDelegate: class {
-    func finishedDeleting(_ clientListViewController: ClientListViewController)
-}
-
-protocol ClientColorVariantProtocol {
-    var variant: ColorSchemeVariant? {get set}
-    var headerFooterViewTextColor: UIColor {get}
-    var separatorColor: UIColor {get}
-    func setColor(for variant: ColorSchemeVariant?)
-}
-
-extension ClientColorVariantProtocol where Self: UIViewController {
-
-    var headerFooterViewTextColor: UIColor {
-        get {
-            switch variant {
-            case .none, .dark?:
-                return UIColor(white: 1, alpha: 0.4)
-            case .light?:
-                return UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
-            }
-        }
-    }
-
-    var separatorColor: UIColor {
-        get {
-            switch variant {
-            case .none, .dark?:
-                return UIColor(white: 1, alpha: 0.1)
-            case .light?:
-                return UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: .light)
-            }
-        }
-    }
-
-    func setColor(for variant: ColorSchemeVariant?) {
-        switch variant {
-        case .none:
-            view.backgroundColor = .clear
-        case .dark?:
-            view.backgroundColor = .black
-        case .light?:
-            view.backgroundColor = .white
-        }
-    }
-}
-
 class ClientListViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,

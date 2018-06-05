@@ -123,7 +123,7 @@ protocol SettingsCellType: class {
                 self.cellNameLabelToIconInset.isActive = false
             }
             else {
-                self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white) ///TODO
+                self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white)
                 self.cellNameLabelToIconInset.isActive = true
             }
         }
@@ -361,7 +361,7 @@ class SettingsToggleCell: SettingsTableCell {
         self.textInput = TailEditingTextField(frame: CGRect.zero)
         self.textInput.delegate = self
         self.textInput.textAlignment = .right
-        self.textInput.textColor = UIColor.lightGray ///TODO:
+        self.textInput.textColor = UIColor.lightGray
         self.contentView.addSubview(self.textInput)
 
         let trailingBoundaryView = accessoryView ?? contentView

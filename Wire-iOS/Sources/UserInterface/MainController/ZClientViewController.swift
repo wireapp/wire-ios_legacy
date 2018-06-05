@@ -157,15 +157,16 @@ extension ZClientViewController {
     }
 
     func openDetailScreen(for client: UserClient) {
+        var viewController: UIViewController?
+
         if let user = client.user, user.isSelfUser {
             let userClientViewController = SettingsClientViewController(userClient: client, credentials: nil)
-            let navWrapperController = SettingsStyleNavigationController(rootViewController: userClientViewController)
-            navWrapperController.modalPresentationStyle = .formSheet
-                present(navWrapperController, animated: true)
+            viewController = SettingsStyleNavigationController(rootViewController: userClientViewController)
         } else {
-                let userClientViewController = ProfileClientViewController(client: client)
-            userClientViewController.modalPresentationStyle = .formSheet
-                present(userClientViewController, animated: true)
+            viewController = ProfileClientViewController(client: client)
         }
+
+        viewController.modalPresentationStyle = .formSheet
+        present(viewController, animated: true)
     }
 }

@@ -778,14 +778,7 @@ SettingsClientViewController.conversation {
     }
 }
 
-SettingsButtonCell, SettingsGroupCell, SettingsTextCell, SettingsValueCell {
-    cellNameLabel: @{
-        font: $font-normal-light;
-        textColor: $color-text-foreground-dark;
-    }
-}
-
-SettingsTableCell, SettingsToggleCell {
+SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
     cellNameLabel: @{
         font: $font-normal-light;
     }

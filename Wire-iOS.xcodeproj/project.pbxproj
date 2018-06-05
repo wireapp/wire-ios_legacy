@@ -1125,6 +1125,7 @@
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
 		EF98987220C5A47A005680C5 /* SettingsClientViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */; };
 		EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */; };
+		EF98987620C6AAD2005680C5 /* ClientColorVariantProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */; };
 		EF9B950420BEBD89000D4CA1 /* MockUser+AccentColorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
@@ -2765,6 +2766,7 @@
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
 		EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClientViewControllerTests.swift; sourceTree = "<group>"; };
 		EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+MockUserClient.swift"; sourceTree = "<group>"; };
+		EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientColorVariantProtocol.swift; sourceTree = "<group>"; };
 		EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+AccentColorProvider.swift"; sourceTree = "<group>"; };
 		EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SizeClass.swift"; sourceTree = "<group>"; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
@@ -3946,6 +3948,7 @@
 		873C5FE21C10426A00D5132A /* DeviceManagement */ = {
 			isa = PBXGroup;
 			children = (
+				EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */,
 				873C5FE31C10426A00D5132A /* ClientListViewController.swift */,
 				8744D5BD1C41D6C2000F8F93 /* SettingsClientViewController.swift */,
 				87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */,
@@ -6977,6 +6980,7 @@
 				87B8C3411DF9788B0015EC89 /* MapOpening.swift in Sources */,
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
 				875060731E5B3D9E005B21C7 /* FileBackupExcluder.swift in Sources */,
+				EF98987620C6AAD2005680C5 /* ClientColorVariantProtocol.swift in Sources */,
 				5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */,
 				871BC2571D34F8F800DF0793 /* PushTransition.m in Sources */,
 				8744489F1C22FCE500E7B947 /* Message+Formatting.m in Sources */,
