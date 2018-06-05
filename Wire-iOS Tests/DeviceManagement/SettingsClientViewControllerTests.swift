@@ -26,6 +26,8 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        
+        resetDayFormatter()
 
         client = mockUserClient()
     }
