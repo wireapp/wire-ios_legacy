@@ -17,8 +17,25 @@
 //
 
 import Foundation
+@testable import Wire
 
 extension XCTestCase {
+    /// change the locale of the DateFormatter for snapshot
+    /// Notice: this method changes WRDateFormatter's static formatters, call resetDayFormatter in tearDown() to reset the changes
+    ///
+    /// - Parameters:
+    ///   - identifier: locale identifier
+    ///   - date: date to determine in with or without yera component
+    func setDayFormatterLocale(identifier: String, date: Date) {
+        let dayFormatter = Message.dayFormatter(date: date)
+
+        /// overwrite dayFormatter's locale and update the date format string
+        let locale = Locale(identifier: identifier)
+        let formatString = DateFormatter.dateFormat(fromTemplate: dayFormatter.dateFormat, options: 0, locale: locale)
+
+        dayFormatter.dateFormat = formatString
+    }
+
     func resetDayFormatter() {
         let locale = Locale(identifier: "en_US")
         WRDateFormatter.thisYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)

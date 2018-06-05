@@ -244,22 +244,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     var otherUsers: [ZMUser] {
         return MockUser.mockUsers().map { $0 }
     }
-
-    /// change the locale of the DateFormatter for snapshot
-    ///
-    /// - Parameters:
-    ///   - identifier: locale identifier
-    ///   - date: date to determine in with or without yera component
-    func setDayFormatterLocale(identifier: String, date: Date) {
-        let dayFormatter = Message.dayFormatter(date: date)
-
-        /// overwrite dayFormatter's locale and update the date format string
-        let locale = Locale(identifier: identifier)
-        let formatString = DateFormatter.dateFormat(fromTemplate: dayFormatter.dateFormat, options: 0, locale: locale)
-
-        dayFormatter.dateFormat = formatString
-    }
-
 }
 
 // MARK: - iPad Pro snapshot test

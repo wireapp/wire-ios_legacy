@@ -65,7 +65,7 @@ public class WRDateFormatter {
         return timeFormatter
     }()
 
-    public static var thisYearFormatter: DateFormatter = {
+    static var thisYearFormatter: DateFormatter = {
         let locale = Locale.current
         let formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
 
@@ -74,7 +74,7 @@ public class WRDateFormatter {
         return dateFormatter
     }()
 
-    public static var otherYearFormatter: DateFormatter = {
+    static var otherYearFormatter: DateFormatter = {
         let locale = Locale.current
         let formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
 
