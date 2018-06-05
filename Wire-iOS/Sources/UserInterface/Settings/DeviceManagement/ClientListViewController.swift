@@ -233,7 +233,7 @@ class ClientListViewController: UIViewController,
 
     func openDetailsOfClient(_ client: UserClient) {
         if let navigationController = self.navigationController {
-            let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
+            let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials, variant: variant)
             clientViewController.view.backgroundColor = self.view.backgroundColor
             navigationController.pushViewController(clientViewController, animated: true)
         }
