@@ -217,18 +217,27 @@ fileprivate extension VoiceChannel {
     }
     
     var isAnyParticipantSendingVideo: Bool {
-        return videoState.isSending || connectedParticipants.any({ $0.1.isSendingVideo })
+        return videoState.isSending                              // Current user is sending video and can toggle off
+            || connectedParticipants.any { $0.1.isSendingVideo } // Other participants are sending video
+            || isIncomingVideoCall                               // This is an incoming video call
     }
-    
+
     var connectedParticipants: [UserWithParticipantState] {
         return participants
             .compactMap { $0 as? ZMUser }
             .map { ($0, state(forParticipant: $0)) }
             .filter { $0.1.isConnected }
     }
-    
+
     var firstDegradedUser: ZMUser? {
         return conversation?.activeParticipants.compactMap({ $0 as? ZMUser }).first(where: { $0.untrusted() })
+    }
+
+    private var isIncomingVideoCall: Bool {
+        switch state {
+        case .incoming(video: true, shouldRing: true, degraded: _): return true
+        default: return false
+        }
     }
     
 }
