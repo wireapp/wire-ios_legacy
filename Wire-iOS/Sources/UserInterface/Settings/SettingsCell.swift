@@ -47,7 +47,18 @@ protocol SettingsCellType: class {
     let separatorLine = UIView()
     let topSeparatorLine = UIView()
     var cellNameLabelToIconInset: NSLayoutConstraint!
-    
+
+    var variant: ColorSchemeVariant? {
+        didSet {
+            switch variant {
+            case .dark?, .none:
+                self.titleColor = .white
+            case .light?:
+                self.titleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            }
+        }
+    }
+
     var titleText: String = "" {
         didSet {
             self.cellNameLabel.text = self.titleText
@@ -112,7 +123,7 @@ protocol SettingsCellType: class {
                 self.cellNameLabelToIconInset.isActive = false
             }
             else {
-                self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white)
+                self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: UIColor.white) ///TODO
                 self.cellNameLabelToIconInset.isActive = true
             }
         }
@@ -292,7 +303,7 @@ protocol SettingsCellType: class {
     }
 }
 
-@objc class SettingsToggleCell: SettingsTableCell {
+class SettingsToggleCell: SettingsTableCell {
     var switchView: UISwitch!
     
     override func setup() {
@@ -348,7 +359,7 @@ protocol SettingsCellType: class {
         self.textInput = TailEditingTextField(frame: CGRect.zero)
         self.textInput.delegate = self
         self.textInput.textAlignment = .right
-        self.textInput.textColor = UIColor.lightGray
+        self.textInput.textColor = UIColor.lightGray ///TODO:
         self.contentView.addSubview(self.textInput)
 
         let trailingBoundaryView = accessoryView ?? contentView

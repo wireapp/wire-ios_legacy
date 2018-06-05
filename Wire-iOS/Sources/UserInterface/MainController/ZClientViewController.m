@@ -411,22 +411,6 @@
 
 }
 
-- (void)openDetailScreenForUserClient:(UserClient *)client
-{
-    if (client.user.isSelfUser) {
-        SettingsClientViewController *userClientViewController = [[SettingsClientViewController alloc] initWithUserClient:client credentials:nil];
-        UINavigationController *navWrapperController = [[SettingsStyleNavigationController alloc] initWithRootViewController:userClientViewController];
-
-        navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:navWrapperController animated:YES completion:nil];
-    }
-    else {
-        ProfileClientViewController* userClientViewController = [[ProfileClientViewController alloc] initWithClient:client];
-        userClientViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:userClientViewController animated:YES completion:nil];
-    }
-}
-
 - (void)openDetailScreenForConversation:(ZMConversation *)conversation
 {
     GroupDetailsViewController *controller = [[GroupDetailsViewController alloc] initWithConversation:conversation];

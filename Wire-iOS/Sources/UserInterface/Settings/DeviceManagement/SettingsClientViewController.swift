@@ -31,7 +31,11 @@ enum ClientSection: Int {
     case removeDevice = 3
 }
 
-class SettingsClientViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UserClientObserver {
+class SettingsClientViewController: UIViewController,
+                                    UITableViewDelegate,
+                                    UITableViewDataSource,
+                                    UserClientObserver,
+                                    ClientColorVariantProtocol {
     
     fileprivate static let deleteCellReuseIdentifier: String = "DeleteCellReuseIdentifier"
     fileprivate static let resetCellReuseIdentifier: String = "ResetCellReuseIdentifier"
@@ -48,15 +52,28 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     var fromConversation : Bool = false
 
-    convenience init(userClient: UserClient, fromConversation: Bool, credentials: ZMEmailCredentials? = .none)
-    {
-        self.init(userClient: userClient, credentials: credentials)
+    var variant: ColorSchemeVariant? {
+        didSet {
+            setColor(for: variant)
+        }
+    }
+
+    convenience init(userClient: UserClient,
+                     fromConversation: Bool,
+                     credentials: ZMEmailCredentials? = .none,
+                     variant: ColorSchemeVariant? = .none) {
+        self.init(userClient: userClient, credentials: credentials, variant: variant)
         self.fromConversation = fromConversation
     }
     
-    required init(userClient: UserClient, credentials: ZMEmailCredentials? = .none) {
+    required init(userClient: UserClient,
+                  credentials: ZMEmailCredentials? = .none,
+                  variant: ColorSchemeVariant? = .none) {
         self.userClient = userClient
-        
+        defer {
+            self.variant = variant
+        }
+
         super.init(nibName: nil, bundle: nil)
         self.edgesForExtendedLayout = []
 
@@ -155,10 +172,10 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if self.userClient == ZMUserSession.shared()!.selfUserClient() {
+        if let userClient = ZMUserSession.shared()?.selfUserClient(),
+            self.userClient == userClient {
             return 2
-        }
-        else {
+        } else {
             return 4
         }
     }
@@ -202,6 +219,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                 cell.showVerified = false
                 cell.showLabel = true
                 styler(cell)
+                cell.variant = self.variant
                 return cell
             }
 
@@ -214,6 +232,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                     cell.selectionStyle = .none
                     cell.fingerprint = self.userClient.fingerprint
                     styler(cell)
+                    cell.variant = self.variant
                     return cell
                 }
             }
@@ -224,7 +243,8 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                     cell.switchView.addTarget(self, action: #selector(SettingsClientViewController.onVerifiedChanged(_:)), for: .touchUpInside)
                     cell.switchView.accessibilityIdentifier = "device verified"
                     cell.switchView.isOn = self.userClient.verified
-                   styler(cell)
+                    styler(cell)
+                    cell.variant = self.variant
                     return cell
                 }
             }
@@ -234,6 +254,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
                 cell.accessibilityIdentifier = "reset session"
                 styler(cell)
+                cell.variant = self.variant
                 return cell
             }
             
@@ -243,6 +264,7 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
                 cell.accessibilityIdentifier = "remove device"
                 styler(cell)
+                cell.variant = self.variant
                 return cell
             }
             
@@ -312,16 +334,16 @@ class SettingsClientViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = headerFooterViewTextColor
         }
     }
-    
+
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = headerFooterViewTextColor
         }
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
     }

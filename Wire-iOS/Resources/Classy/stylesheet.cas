@@ -774,24 +774,20 @@ SettingsClientViewController.conversation {
         
         titleLabel: @{
             font: $font-small-semibold;
-            textColor: $color-text-foreground;
-        }
-        fingerprintLabel: @{
-            textColor: $color-text-foreground;
         }
     }
 }
 
-SettingsClientViewController {
-    tableView: @{
-        separatorColor: rgb(255,255,255,0.1)
-    }
-}
-
-SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
+SettingsButtonCell, SettingsGroupCell, SettingsTextCell, SettingsValueCell {
     cellNameLabel: @{
         font: $font-normal-light;
         textColor: $color-text-foreground-dark;
+    }
+}
+
+SettingsTableCell, SettingsToggleCell {
+    cellNameLabel: @{
+        font: $font-normal-light;
     }
 }
 
@@ -833,10 +829,6 @@ FingerprintTableViewCell{
     
     titleLabel: @{
         font: $font-small-semibold;
-        textColor: white;
-    }
-    fingerprintLabel: @{
-        textColor: white;
     }
 }
 

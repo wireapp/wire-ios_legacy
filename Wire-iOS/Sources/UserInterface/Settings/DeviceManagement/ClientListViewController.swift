@@ -28,10 +28,63 @@ protocol ClientListViewControllerDelegate: class {
     func finishedDeleting(_ clientListViewController: ClientListViewController)
 }
 
-class ClientListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ZMClientUpdateObserver {
+protocol ClientColorVariantProtocol {
+    var variant: ColorSchemeVariant? {get set}
+    var headerFooterViewTextColor: UIColor {get}
+    var separatorColor: UIColor {get}
+    func setColor(for variant: ColorSchemeVariant?)
+}
+
+extension ClientColorVariantProtocol where Self: UIViewController {
+
+    var headerFooterViewTextColor: UIColor {
+        get {
+            switch variant {
+            case .none, .dark?:
+                return UIColor(white: 1, alpha: 0.4)
+            case .light?:
+                return UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            }
+        }
+    }
+
+    var separatorColor: UIColor {
+        get {
+            switch variant {
+            case .none, .dark?:
+                return UIColor(white: 1, alpha: 0.1)
+            case .light?:
+                return UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: .light)
+            }
+        }
+    }
+
+    func setColor(for variant: ColorSchemeVariant?) {
+        switch variant {
+        case .none:
+            view.backgroundColor = .clear
+        case .dark?:
+            view.backgroundColor = .black
+        case .light?:
+            view.backgroundColor = .white
+        }
+    }
+}
+
+class ClientListViewController: UIViewController,
+                                UITableViewDelegate,
+                                UITableViewDataSource,
+                                ZMClientUpdateObserver,
+                                ClientColorVariantProtocol {
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()
     weak var delegate: ClientListViewControllerDelegate?
+
+    var variant: ColorSchemeVariant? {
+        didSet {
+            setColor(for: variant)
+        }
+    }
 
     override open var showLoadingView: Bool {
         set {
@@ -90,40 +143,6 @@ class ClientListViewController: UIViewController, UITableViewDelegate, UITableVi
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: Any?
     var userObserverToken : NSObjectProtocol?
-    var variant: ColorSchemeVariant? {
-        didSet {
-            switch variant {
-            case .none:
-                view.backgroundColor = .clear
-            case .dark?:
-                view.backgroundColor = .black
-            case .light?:
-                view.backgroundColor = .white
-            }
-        }
-    }
-
-    var headerFooterViewTextColor: UIColor {
-        get {
-            switch variant {
-            case .none, .dark?:
-                return UIColor(white: 1, alpha: 0.4)
-            case .light?:
-                return UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
-            }
-        }
-    }
-
-    var separatorColor: UIColor {
-        get {
-            switch variant {
-            case .none, .dark?:
-                return UIColor(white: 1, alpha: 0.1)
-            case .light?:
-                return UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: .light)
-            }
-        }
-    }
 
     var leftBarButtonItem: UIBarButtonItem? {
         if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
