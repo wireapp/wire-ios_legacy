@@ -55,6 +55,13 @@ enum CallActionAppearance: Equatable {
         case .dark: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
         }
     }
+    
+    var backgroundColorSelectedAndHighlighted: UIColor {
+        switch self {
+        case .light: return UIColor.black.withAlphaComponent(0.16)
+        case .dark: return UIColor.white.withAlphaComponent(0.4)
+        }
+    }
 }
 
 func ==(lhs: CallActionAppearance, rhs: CallActionAppearance) -> Bool {
