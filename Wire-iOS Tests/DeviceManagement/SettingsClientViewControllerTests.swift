@@ -27,8 +27,6 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         client = mockUserClient()
-
-        recordMode = true
     }
     
     override func tearDown() {
