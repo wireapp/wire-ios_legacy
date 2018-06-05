@@ -34,6 +34,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
         selfClient = mockUserClient()
         client = mockUserClient()
+
+        recordMode = true
     }
     
     override func tearDown() {
@@ -47,9 +49,19 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func prepareSut(variant: ColorSchemeVariant?) {
-        // display 3 cells, show footer in same screen
-        sut = ClientListViewController(clientsList: [client, client, client],
+    /// Prepare SUT for snapshot tests
+    ///
+    /// - Parameters:
+    ///   - variant: the color cariant
+    ///   - numberOfClients: number of clients other than self device. Default: display 3 cells, to show footer in same screen
+    func prepareSut(variant: ColorSchemeVariant?, numberOfClients: Int = 3) {
+        var clientsList: [UserClient]? = nil
+
+        for _ in 1...numberOfClients {
+            clientsList?.append(client)
+        }
+
+        sut = ClientListViewController(clientsList: clientsList,
                                        selfClient: selfClient,
                                        credentials: nil,
                                        detailedView: true,
@@ -79,6 +91,13 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
     func testForLightThemeWrappedInNavigationController(){
         prepareSut(variant: .light)
+        let navWrapperController = sut.wrapInNavigationController()
+
+        self.verify(view: navWrapperController.view)
+    }
+
+    func testForOneDeviceWithNoEditButton(){
+        prepareSut(variant: .light, numberOfClients: 0)
         let navWrapperController = sut.wrapInNavigationController()
 
         self.verify(view: navWrapperController.view)
