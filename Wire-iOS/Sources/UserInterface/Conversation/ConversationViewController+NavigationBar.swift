@@ -49,6 +49,7 @@ public extension ConversationViewController {
     var audioCallButton: UIBarButtonItem {
         let button = UIBarButtonItem(icon: .callAudio, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
         button.accessibilityIdentifier = "audioCallBarButton"
+        button.accessibilityTraits = UIAccessibilityTraitStartsMediaSession
         button.accessibilityLabel = "call.actions.label.make_audio_call".localized
         return button
     }
@@ -56,6 +57,7 @@ public extension ConversationViewController {
     var videoCallButton: UIBarButtonItem {
         let button = UIBarButtonItem(icon: .callVideo, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
         button.accessibilityIdentifier = "videoCallBarButton"
+        button.accessibilityTraits = UIAccessibilityTraitStartsMediaSession
         button.accessibilityLabel = "call.actions.label.make_video_call".localized
         return button
     }
@@ -66,6 +68,7 @@ public extension ConversationViewController {
         button.adjustBackgroundImageWhenHighlighted = true
         button.setTitle("conversation_list.right_accessory.join_button.title".localized.uppercased(), for: .normal)
         button.accessibilityLabel = "conversation.join_call.voiceover".localized
+        button.accessibilityTraits = UIAccessibilityTraitStartsMediaSession
         button.titleLabel?.font = FontSpec(.small, .semibold).font
         button.backgroundColor = UIColor(for: .strongLimeGreen)
         button.addTarget(self, action: #selector(joinCallButtonTapped), for: .touchUpInside)
