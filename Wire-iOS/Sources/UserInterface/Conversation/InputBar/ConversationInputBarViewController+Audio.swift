@@ -199,8 +199,7 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
     
 }
 
-// Counter keeping track of calls being made when the audio keyboard ewas visible before.
-private var callsInProgress = 0
+
 
 extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
     
@@ -208,17 +207,17 @@ extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
         let isRecording = audioRecordKeyboardViewController?.isRecording
 
         switch (callState, isRecording, wasRecordingBeforeCall) {
-        case (.incoming(_, true, _), true, _),     // receiving incoming call while audio keyboard is visible
-             (.outgoing, true, _):                 // making an outgoing call while audio keyboard is visible
-            wasRecordingBeforeCall = true          // -> remember that the audio keyboard was visible
-            callsInProgress += 1                   // -> increment calls in progress counter
-        case (.incoming(_, false, _), _, true),    // refusing an incoming call
-             (.terminating, _, true):              // terminating/closing the current call
-            callsInProgress -= 1                   // -> decrement calls in progress counter
+        case (.incoming(_, true, _), true, _),              // receiving incoming call while audio keyboard is visible
+             (.outgoing, true, _):                          // making an outgoing call while audio keyboard is visible
+            wasRecordingBeforeCall = true                   // -> remember that the audio keyboard was visible
+            callCountWhileCameraKeyboardWasVisible += 1     // -> increment calls in progress counter
+        case (.incoming(_, false, _), _, true),             // refusing an incoming call
+             (.terminating, _, true):                       // terminating/closing the current call
+            callCountWhileCameraKeyboardWasVisible -= 1     // -> decrement calls in progress counter
         default: break
         }
         
-        if 0 == callsInProgress, wasRecordingBeforeCall {
+        if 0 == callCountWhileCameraKeyboardWasVisible, wasRecordingBeforeCall {
             displayRecordKeyboard() // -> show the audio record keyboard again
         }
     }
