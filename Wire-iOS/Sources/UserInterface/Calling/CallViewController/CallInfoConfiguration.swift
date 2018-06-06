@@ -181,12 +181,15 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
 }
 
 fileprivate struct VoiceChannelSnapshot {
-    let callerName: String
+    let callerName: String?
     let state: CallState
     let callStartDate: Date
 
     init(_ voiceChannel: VoiceChannel) {
-        callerName = voiceChannel.initiator?.displayName ?? ""
+        callerName = {
+            guard voiceChannel.conversation?.conversationType != .oneOnOne else { return nil }
+            return voiceChannel.initiator?.displayName ?? ""
+        }()
         state = voiceChannel.state
         callStartDate = voiceChannel.callStartDate ?? .init()
     }

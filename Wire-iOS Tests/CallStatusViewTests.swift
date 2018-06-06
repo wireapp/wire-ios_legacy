@@ -71,6 +71,14 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
         verify(view: sut)
     }
     
+    func testIncomingAudioLightOneOnOne() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(state: .ringingIncoming(name: nil), isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Miguel")
+        
+        // Then
+        verify(view: sut)
+    }
+    
     func testIncomingAudioDark() {
         // When
         snapshotBackgroundColor = .black

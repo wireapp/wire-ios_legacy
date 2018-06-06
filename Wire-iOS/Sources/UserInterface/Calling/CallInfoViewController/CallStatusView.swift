@@ -46,7 +46,7 @@ extension CallStatusViewInputType {
 enum CallStatusViewState {
     case none
     case connecting
-    case ringingIncoming(name: String) // Caller name + call type "XYZ is (video) calling..."
+    case ringingIncoming(name: String?) // Caller name + call type "XYZ is calling..."
     case ringingOutgoing // "Ringing..."
     case established(duration: TimeInterval) // Call duration in seconds "04:18"
     case reconnecting // "Reconnecting..."
@@ -159,7 +159,8 @@ extension CallStatusViewInputType {
         switch state {
         case .none: return ""
         case .connecting: return "call.status.connecting".localized
-        case .ringingIncoming(name: let name): return "call.status.incoming.user".localized(args: name)
+        case .ringingIncoming(name: let name?): return "call.status.incoming.user".localized(args: name)
+        case .ringingIncoming(name: nil): return "call.status.incoming".localized
         case .ringingOutgoing: return "call.status.outgoing".localized
         case .established(duration: let duration): return callDurationFormatter.string(from: duration) ?? ""
         case .reconnecting: return "call.status.reconnecting".localized
