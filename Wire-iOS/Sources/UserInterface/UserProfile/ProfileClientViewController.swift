@@ -321,8 +321,12 @@ class ProfileClientViewController: UIViewController {
     }
 
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
-        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(), fromConversation:self.fromConversation)
-        let navigationControllerWrapper = UINavigationController(rootViewController: selfClientController)
+        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(),
+                                                                fromConversation:self.fromConversation,
+                                                                variant: ColorScheme.default().variant)
+
+        let navigationControllerWrapper = selfClientController.wrapInNavigationController()
+
         navigationControllerWrapper.modalPresentationStyle = .currentContext
         self.present(navigationControllerWrapper, animated: true, completion: .none)
     }

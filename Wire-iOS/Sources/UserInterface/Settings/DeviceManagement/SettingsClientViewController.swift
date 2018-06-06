@@ -98,20 +98,29 @@ class SettingsClientViewController: UIViewController,
         self.createTableView()
         self.createConstraints()
         
-        // presented modally from conversation
-        if let navController = self.navigationController, navController.viewControllers.count > 0 && navController.viewControllers[0] == self {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsClientViewController.onDonePressed(_:)));
-            if fromConversation {
-                let barColor = Settings.shared().colorScheme == .light ? UIColor.white : UIColor.clear
-                navController.navigationBar.barTintColor = barColor
-            }
-        }
-        
+
         if fromConversation {
             self.cas_styleClass = "conversation"
         }
         CASStyler.default().styleItem(self)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // presented modally from conversation
+        if let navController = self.navigationController,
+            navController.viewControllers.count > 0 &&
+            navController.viewControllers[0] == self,
+            self.navigationItem.rightBarButtonItem == nil {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsClientViewController.onDonePressed(_:)));
+            if fromConversation {
+                let barColor = Settings.shared().colorScheme == .light ? UIColor.white : UIColor.clear
+                navController.navigationBar.barTintColor = barColor
+            }
+        }
+    }
+
     
     fileprivate func createTableView() {
         let tableView = UITableView(frame: CGRect.zero, style: .grouped)
