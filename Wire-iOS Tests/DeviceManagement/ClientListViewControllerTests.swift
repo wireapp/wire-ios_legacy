@@ -103,4 +103,13 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
         self.verify(view: navWrapperController.view)
     }
+
+    func testForEditMode(){
+        prepareSut(variant: .light)
+        let navWrapperController = sut.wrapInNavigationController()
+        let editButton = sut.navigationItem.rightBarButtonItem!
+        UIApplication.shared.sendAction(editButton.action!, to: editButton.target, from: nil, for: nil)
+
+        self.verify(view: navWrapperController.view)
+    }
 }

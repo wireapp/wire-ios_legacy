@@ -68,17 +68,8 @@ class ClientListViewController: UIViewController,
                 return
             }
 
-            if (self.editingList) {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+            createRightBarButtonItem()
 
-                self.navigationItem.setLeftBarButton(nil, animated: true)
-            } else {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
-
-                self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
-            }
-            
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
             self.navigationItem.setHidesBackButton(self.editingList, animated: true)
 
             self.clientsTableView?.setEditing(self.editingList, animated: true)
@@ -91,9 +82,7 @@ class ClientListViewController: UIViewController,
             self.clientsTableView?.reloadData();
 
             if clients.count > 0 {
-                // recreate the edit button
-                let editingList = self.editingList
-                self.editingList = editingList
+                createRightBarButtonItem()
             } else {
                 self.navigationItem.rightBarButtonItem = nil
             }
@@ -469,6 +458,20 @@ class ClientListViewController: UIViewController,
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
+    }
+
+    func createRightBarButtonItem() {
+        if (self.editingList) {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+
+            self.navigationItem.setLeftBarButton(nil, animated: true)
+        } else {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+
+            self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
+        }
+
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
     }
 }
 
