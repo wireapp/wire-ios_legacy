@@ -68,7 +68,7 @@ class SearchResultsView : UIView {
             collectionView.top == container.top
             collectionView.left == container.left
             collectionView.right == container.right
-            collectionView.bottom == container.bottom
+            collectionView.bottom == accessoryContainer.top
 
             accessoryContainer.left == container.left
             accessoryContainer.right == container.right
