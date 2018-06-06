@@ -131,6 +131,9 @@ extension ZClientViewController {
 
     }
 
+    /// Open the user client list screen
+    ///
+    /// - Parameter user: the ZMUser with client list to show
     func openClientListScreen(for user: ZMUser) {
         var viewController: UIViewController?
 
@@ -156,6 +159,9 @@ extension ZClientViewController {
         }
     }
 
+    /// Open the user clients detail screen
+    ///
+    /// - Parameter client: the UserClient to show
     func openDetailScreen(for client: UserClient) {
         var viewController: UIViewController?
 
