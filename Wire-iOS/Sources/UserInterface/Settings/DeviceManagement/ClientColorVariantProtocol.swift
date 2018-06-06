@@ -23,9 +23,9 @@ protocol ClientListViewControllerDelegate: class {
 }
 
 protocol ClientColorVariantProtocol {
-    var variant: ColorSchemeVariant? {get set}
-    var headerFooterViewTextColor: UIColor {get}
-    var separatorColor: UIColor {get}
+    var variant: ColorSchemeVariant? { get set }
+    var headerFooterViewTextColor: UIColor { get }
+    var separatorColor: UIColor { get }
     func setColor(for variant: ColorSchemeVariant?)
 }
 
