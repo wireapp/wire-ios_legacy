@@ -101,7 +101,7 @@ class ClientListViewController: UIViewController,
     var userObserverToken : NSObjectProtocol?
 
     var leftBarButtonItem: UIBarButtonItem? {
-        if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
+        if self.isIPadRegular() {
             return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
         }
 
