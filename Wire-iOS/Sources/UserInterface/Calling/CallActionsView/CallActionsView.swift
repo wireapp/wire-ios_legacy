@@ -23,7 +23,11 @@ protocol CallActionsViewDelegate: class {
 }
 
 enum MediaState {
-    case sendingVideo, notSendingVideo(speakerEnabled: Bool)
+    struct SpeakerState {
+        let isEnabled: Bool
+        let canBeToggled: Bool
+    }
+    case sendingVideo, notSendingVideo(speakerState: SpeakerState)
     
     var isSendingVideo: Bool {
         guard case .sendingVideo = self else { return false }
@@ -36,8 +40,13 @@ enum MediaState {
     }
     
     var isSpeakerEnabled: Bool {
-        guard case .notSendingVideo(true) = self else { return false }
-        return true
+        guard case .notSendingVideo(let state) = self else { return false }
+        return state.isEnabled
+    }
+    
+    var canSpeakerBeToggled: Bool {
+        guard case .notSendingVideo(let state) = self else { return false }
+        return state.canBeToggled
     }
 }
 
@@ -47,8 +56,8 @@ extension MediaState: Equatable {
         switch (lhs, rhs) {
         case (.sendingVideo, .sendingVideo):
             return true
-        case (.notSendingVideo(let lhsSpeakerEnabled), .notSendingVideo(let rhsSpeakerEnabled)):
-            return lhsSpeakerEnabled == rhsSpeakerEnabled
+        case (.notSendingVideo(let lhsState), .notSendingVideo(let rhsState)):
+            return (lhsState.isEnabled, lhsState.canBeToggled) == (rhsState.isEnabled, rhsState.canBeToggled)
         default:
             return false
         }
@@ -179,6 +188,7 @@ final class CallActionsView: UIView {
         flipCameraButton.isHidden = input.mediaState.showSpeaker
         speakerButton.isHidden = !input.mediaState.showSpeaker
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
+        speakerButton.isEnabled = input.mediaState.canSpeakerBeToggled
         acceptCallButton.isHidden = !input.canAccept
         firstBottomRowSpacer.isHidden = input.canAccept || isCompact
         secondBottomRowSpacer.isHidden = isCompact

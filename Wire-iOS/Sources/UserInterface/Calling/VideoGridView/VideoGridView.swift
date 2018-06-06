@@ -138,8 +138,9 @@ class VideoGridViewController: UIViewController {
             selfPreviewView = nil
         }
         
-        // Update mute status
+        // Update mute status and grid view axis
         selfPreviewView?.isMuted = configuration.isMuted
+        updateGridViewAxis()
         
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
@@ -167,6 +168,26 @@ class VideoGridViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
         thumbnailViewController.updateThumbnailContentSize(.previewSize(for: traitCollection), animated: false)
+        updateGridViewAxis()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { [updateGridViewAxis] _ in updateGridViewAxis() })
+    }
+    
+    private func updateGridViewAxis() {
+        let newAxis = gridAxis(for: traitCollection)
+        guard newAxis != gridView.layoutDirection else { return }
+        gridView.layoutDirection = newAxis
+    }
+
+    private func gridAxis(for traitCollection: UITraitCollection) -> UILayoutConstraintAxis {
+        let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
+        switch (traitCollection.userInterfaceIdiom, traitCollection.horizontalSizeClass, isLandscape) {
+        case (.pad, .regular, true): return .horizontal
+        default: return .vertical
+        }
     }
     
     private func videoConfigurationDescription() -> String {

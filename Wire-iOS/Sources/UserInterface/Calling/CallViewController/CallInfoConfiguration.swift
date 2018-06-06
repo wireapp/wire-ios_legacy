@@ -98,10 +98,13 @@ fileprivate extension VoiceChannel {
     }
     
     func mediaState(with permissions: CallPermissionsConfiguration) -> MediaState {
-        let isSpeakerEnabled = AVSMediaManager.sharedInstance().isSpeakerEnabled
-        guard permissions.canAcceptVideoCalls else { return .notSendingVideo(speakerEnabled: isSpeakerEnabled) }
+        let isPad = UIDevice.current.userInterfaceIdiom == .pad
+        let speakerEnabled = AVSMediaManager.sharedInstance().isSpeakerEnabled
+        let speakerState = MediaState.SpeakerState(isEnabled: speakerEnabled || isPad, canBeToggled: !isPad)
+
+        guard permissions.canAcceptVideoCalls else { return .notSendingVideo(speakerState: speakerState) }
         guard !videoState.isSending else { return .sendingVideo }
-        return .notSendingVideo(speakerEnabled: isSpeakerEnabled)
+        return .notSendingVideo(speakerState: speakerState)
     }
 
     var videoPlaceholderState: CallVideoPlaceholderState? {

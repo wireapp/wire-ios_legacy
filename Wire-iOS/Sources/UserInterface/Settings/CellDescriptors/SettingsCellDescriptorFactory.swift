@@ -68,7 +68,7 @@ import SafariServices
     func manageTeamCell() -> SettingsCellDescriptorType {
         return SettingsExternalScreenCellDescriptor(title: "self.settings.manage_team.title".localized,
                                                     isDestructive: false,
-                                                    presentationStyle: PresentationStyle.navigation,
+                                                    presentationStyle: PresentationStyle.modal,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
                                                         Analytics.shared().tagOpenManageTeamURL()

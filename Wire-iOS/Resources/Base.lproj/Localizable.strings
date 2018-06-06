@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "archive";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
+"conversation.action.search" = "Search";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -544,6 +546,9 @@
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
 "call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Join call";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants

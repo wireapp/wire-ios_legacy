@@ -19,6 +19,13 @@
 import Foundation
 @testable import Wire
 
+extension MediaState.SpeakerState {
+    static let deselectedCanBeToggled = MediaState.SpeakerState(isEnabled: false, canBeToggled: true)
+    static let selectedCanBeToggled = MediaState.SpeakerState(isEnabled: true, canBeToggled: true)
+    static let deselectedCanNotBeToggled = MediaState.SpeakerState(isEnabled: false, canBeToggled: false)
+    static let selectedCanNotBeToggled = MediaState.SpeakerState(isEnabled: true, canBeToggled: false)
+}
+
 class MockCallPermissions: CallPermissionsConfiguration {
 
     var isPendingAudioPermissionRequest: Bool = true
@@ -76,7 +83,7 @@ extension CallPermissionsConfiguration {
 
         if case .sendingVideo = preferredState {
             guard canAcceptVideoCalls else {
-                return .notSendingVideo(speakerEnabled: false)
+                return .notSendingVideo(speakerState: .deselectedCanBeToggled)
             }
         }
 

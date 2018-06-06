@@ -315,7 +315,6 @@ class SettingsClientViewController: UIViewController,
         default:
             break
         }
-
     }
 
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {

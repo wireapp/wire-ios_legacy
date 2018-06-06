@@ -84,6 +84,7 @@ class AppRootViewController: UIViewController {
         overlayWindow.windowLevel = UIWindowLevelStatusBar - 1
         overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
         overlayWindow.rootViewController = NotificationWindowRootViewController()
+        overlayWindow.accessibilityViewIsModal = true
 
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
