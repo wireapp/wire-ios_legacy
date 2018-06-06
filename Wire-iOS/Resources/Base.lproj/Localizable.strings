@@ -548,6 +548,7 @@
 "call.actions.label.minimize_call" = "Minimize call";
 "call.actions.label.make_audio_call" = "Start audio call";
 "call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Join call";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants

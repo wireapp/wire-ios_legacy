@@ -65,6 +65,7 @@ public extension ConversationViewController {
         button.adjustsTitleWhenHighlighted = true
         button.adjustBackgroundImageWhenHighlighted = true
         button.setTitle("conversation_list.right_accessory.join_button.title".localized.uppercased(), for: .normal)
+        button.accessibilityLabel = "conversation.join_call.voiceover".localized
         button.titleLabel?.font = FontSpec(.small, .semibold).font
         button.backgroundColor = UIColor(for: .strongLimeGreen)
         button.addTarget(self, action: #selector(joinCallButtonTapped), for: .touchUpInside)
