@@ -84,6 +84,7 @@ class ClientListViewController: UIViewController,
             self.clientsTableView?.setEditing(self.editingList, animated: true)
         }
     }
+
     var clients: [UserClient] = [] {
         didSet {
             self.sortedClients = self.clients.filter(clientFilter).sorted(by: clientSorter)
@@ -169,8 +170,8 @@ class ClientListViewController: UIViewController,
     }
     
     fileprivate func initalizeProperties(_ clientsList: [UserClient]) {
-        self.editingList = false
         self.clients = clientsList
+        self.editingList = false
     }
     
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
