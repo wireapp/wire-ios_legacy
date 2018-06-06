@@ -199,20 +199,27 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
     
 }
 
+// Counter keeping track of calls being made when the audio keyboard ewas visible before.
+private var callsInProgress = 0
+
 extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
     
     public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         let isRecording = audioRecordKeyboardViewController?.isRecording
-        
-        
-        switch (callState, isRecording, wasRecordingBeforeCall, ZMUserSession.shared()?.isCallOngoing) {
-        case (.incoming(_, true, _), true, false, _),         // receiving incoming call while audio keyboard is visible
-             (.outgoing, true, false, _):                     // making an outgoing call while audio keyboard is visible
-            wasRecordingBeforeCall = true                     // -> remember that the audio keyboard was visible
-        case (.incoming(_, false, _), _, true, false),        // refusing an incoming call
-             (.terminating, _, true, false):                  // terminating/closing the current call
-            displayRecordKeyboard()                           // -> show the audio record keyboard again
+
+        switch (callState, isRecording, wasRecordingBeforeCall) {
+        case (.incoming(_, true, _), true, _),     // receiving incoming call while audio keyboard is visible
+             (.outgoing, true, _):                 // making an outgoing call while audio keyboard is visible
+            wasRecordingBeforeCall = true          // -> remember that the audio keyboard was visible
+            callsInProgress += 1                   // -> increment calls in progress counter
+        case (.incoming(_, false, _), _, true),    // refusing an incoming call
+             (.terminating, _, true):              // terminating/closing the current call
+            callsInProgress -= 1                   // -> decrement calls in progress counter
         default: break
+        }
+        
+        if 0 == callsInProgress, wasRecordingBeforeCall {
+            displayRecordKeyboard() // -> show the audio record keyboard again
         }
     }
 
