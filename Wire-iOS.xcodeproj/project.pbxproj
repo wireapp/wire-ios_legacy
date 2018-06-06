@@ -5622,7 +5622,6 @@
 				EF27CD9C20C161500077FE55 /* ProfileClientViewControllerTests.swift */,
 				EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */,
 				EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */,
-				EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */,
 			);
 			path = DeviceManagement;
 			sourceTree = "<group>";
