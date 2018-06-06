@@ -20,6 +20,13 @@ import XCTest
 @testable import Wire
 
 final class DateFormatterTests: XCTestCase {
+
+    override func tearDown() {
+        resetDayFormatter()
+
+        super.tearDown()
+    }
+
     func testThatDateStringDoesNotContainYearIfDateIsToday() {
         // GIVEN
         let date = Date()
