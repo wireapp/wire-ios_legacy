@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "Nachrichten verfassen und für später speichern";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "Kamera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "Fotografieren und schnell senden";
+"conversation_list.voiceover.unread_messages.hint" = "Du hast ungelesene Nachrichten.";
 
 // Archived List
 "archived_list.title" = "Archiv";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Bilder können während eines Anrufs nicht aufgenommen werden.";
 
 "conversation.guests_present" = "Gäste anwesend";
+"conversation.action.search" = "Suche";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -544,6 +546,9 @@
 "call.actions.label.switch_to_back_camera" = "Kamera auf der Rückseite verwenden";
 "call.actions.label.switch_to_front_camera" = "Frontkamera verwenden";
 "call.actions.label.minimize_call" = "Anruf minimieren";
+"call.actions.label.make_audio_call" = "Telefonat beginnen";
+"call.actions.label.make_video_call" = "Videoanruf beginnen";
+"call.actions.label.join_call" = "Anruf annehmen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants

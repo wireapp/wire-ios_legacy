@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "メッセージを作成し、後で保存する";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "カメラ";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "写真を撮影してすぐ送信";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "アーカイブ";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "ゲストが存在します";
+"conversation.action.search" = "検索";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -341,7 +343,7 @@
 "content.system.conversation.guest.joined" = "%@ 参加済";
 
 "content.system.conversation.invite.title" = "外部ユーザは、あなたのチームの会話に参加できます。";
-"content.system.conversation.invite.button" = "友達を招待する";
+"content.system.conversation.invite.button" = "招待する";
 
 "content.system.other_renamed_conv_to_nothing" = "%@が会話の名前を削除しました";
 "content.system.you_renamed_conv_to_nothing" = "あなたは会話の名前を削除しました";
@@ -501,10 +503,10 @@
 
 // Voice New
 
-"call.status.connecting" = "Connecting…";
+"call.status.connecting" = "接続中...";
 "call.status.incoming.user" = "%@ is calling…";
-"call.status.incoming" = "Calling…";
-"call.status.outgoing" = "Ringing…";
+"call.status.incoming" = "発信中...";
+"call.status.outgoing" = "呼び出し中...";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "固定ビットレート";
@@ -520,7 +522,7 @@
 "call.degraded.alert.title" = "New Device";
 "call.degraded.alert.message.self" = "新しいデバイスを使い始めました";
 "call.degraded.alert.message.user" = "%@が新しいデバイスを使い始めました。";
-"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.message.unknown" = "新しいデバイスを使い始めた人がいます";
 "call.degraded.alert.action.continue" = "とにかく電話をする";
 
 "call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
@@ -536,14 +538,17 @@
 "call.actions.label.flip_camera" = "Flip camera";
 "call.actions.label.toggle_speaker_on" = "Enable speaker";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
-"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.accept_call" = "通話をうけいれる";
 "call.actions.label.reject_call" = "Decline call";
-"call.actions.label.terminate_call" = "End call";
+"call.actions.label.terminate_call" = "通話を終了";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
 "call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "通話に参加";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -629,7 +634,7 @@
 "profile.cancel_connection_request_dialog.button_yes" = "はい";
 
 // Unblock button
-"profile.block_button_title" = "ブロック中...";
+"profile.block_button_title" = "ブロック...";
 "profile.unblock_button_title" = "ブロック解除中...";
 
 "profile.cancel_connection_button_title" = "リクエストをキャンセルします";
@@ -700,7 +705,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "あなたのWireアカウントは次のデバイスで利用されています。";
+"self.new_device_alert.title" = "あなたのアカウントの使用:";
 "self.new_device_alert.message" = "\n%@\n\nもし上のデバイスを知らない場合は、それを削除して、パスワードをリセットしてください。";
 "self.new_device_alert.message_plural" = "\n%@\n\nもしこれらのデバイスを知らない場合は、それを削除して、パスワードをリセットしてください。";
 "self.new_device_alert.manage_devices" = "デバイスを管理";
@@ -994,7 +999,7 @@
 "team.email.textfield.accessibility" = "あなたの会社のメール アドレス";
 "team.email.button.learn_more" = "もっと知る";
 
-"team.activation_code.headline" = "You’ve got mail";
+"team.activation_code.headline" = "メール受信しました。";
 "team.activation_code.subheadline" = "%@ に送信した認証コードを入力してください";
 "team.activation_code.button.resend" = "コードを再送する";
 "team.activation_code.button.change_email" = "メールアドレス変更";
@@ -1040,7 +1045,7 @@
 "guest_room.error.generic.message" = "接続を確認して、もう一度やり直してください。";
 
 "guest_room.link.header.title" = "リンクから他のユーザーを招待します";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.header.subtitle" = "Wire を持っていない場合でも、誰でもリンクから会話に参加できます。";
 
 "guest_room.link.button.title" = "リンクを作成";
 

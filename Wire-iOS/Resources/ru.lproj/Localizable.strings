@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "напишите сообщение и сохраните его для последующей отправки";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "сделать снимок и быстро отправить";
+"conversation_list.voiceover.unread_messages.hint" = "У вас есть непрочитанные сообщения.";
 
 // Archived List
 "archived_list.title" = "архив";
@@ -254,7 +255,7 @@
 "conversation.input_bar.message_too_long.title" = "Сообщение слишком длинное";
 "conversation.input_bar.message_too_long.message" = "Вы можете отправлять сообщения длиной до %d символов.";
 
-"conversation.create.group_name.title" = "Создать группу";
+"conversation.create.group_name.title" = "Создание группы";
 "conversation.create.group_name.placeholder" = "Имя группы";
 "conversation.create.guidance.empty" = "Не менее 1 символа";
 "conversation.create.guidance.toolong" = "Слишком много символов";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Во время разговора вы не можете сделать снимок.";
 
 "conversation.guests_present" = "Присутствуют гости";
+"conversation.action.search" = "Поиск";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -521,7 +523,7 @@
 "call.degraded.alert.message.self" = "Вы начали использовать новое устройство.";
 "call.degraded.alert.message.user" = "%@ начал(а) использовать новое устройство.";
 "call.degraded.alert.message.unknown" = "Используется новое устройство.";
-"call.degraded.alert.action.continue" = "Все равно позвонить";
+"call.degraded.alert.action.continue" = "Всё равно позвонить";
 
 "call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.start.button" = "Все равно позвонить";
@@ -531,7 +533,7 @@
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Входящий вызов от %@";
-"call.actions.label.toggle_mute_on" = "Выкл.звук";
+"call.actions.label.toggle_mute_on" = "Выкл. звук";
 "call.actions.label.toggle_mute_off" = "Вкл.звук";
 "call.actions.label.flip_camera" = "Flip camera";
 "call.actions.label.toggle_speaker_on" = "Включить динамик";
@@ -544,6 +546,9 @@
 "call.actions.label.switch_to_back_camera" = "Переключиться на основную камеру";
 "call.actions.label.switch_to_front_camera" = "Переключиться на фронтальную камеру";
 "call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Начать звонок";
+"call.actions.label.make_video_call" = "Начать видеовызов";
+"call.actions.label.join_call" = "Присоединиться к звонку";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -943,7 +948,7 @@
 // History backup password
 
 "self.settings.history_backup.password.title" = "Установить пароль";
-"self.settings.history_backup.password.cancel" = "Отменить";
+"self.settings.history_backup.password.cancel" = "Отмена";
 "self.settings.history_backup.password.next" = "Вперед";
 "self.settings.history_backup.password.placeholder" = "Необходимо минимум 8 символов";
 "self.settings.history_backup.password.description" = "Резервная копия будет сжата и защищена с помощью пароля.";
@@ -974,7 +979,7 @@
 "landing.app_name" = "Wire";
 "landing.title" = "Безопасный обмен сообщениями для всех.";
 "landing.create_account.title" = "Для личного пользования";
-"landing.create_account.subtitle" = "создать аккаунт";
+"landing.create_account.subtitle" = "создать учетную запись";
 "landing.create_team.title" = "Для организаций";
 "landing.create_team.subtitle" = "создать команду";
 "landing.login.hints" = "Уже зарегистрированы?";

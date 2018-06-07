@@ -22,7 +22,7 @@
 "general.next" = "İleri";
 "general.cancel" = "İptal";
 "general.close" = "Kapat";
-"general.back" = "Back";
+"general.back" = "Geri";
 "general.open_settings" = "Wire Ayarlarını Aç";
 "general.edit" = "Düzenle";
 "general.done" = "Yapıldı";
@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "mesaj yaz ve sonrası için kaydet";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "kamera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "fotoğraf çek ve hemen gönder";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "arşiv";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
+"conversation.action.search" = "Arama";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
@@ -428,7 +430,7 @@
 "content.message.go_to_conversation" = "Göster";
 "content.message.forward.to" = "Ara…";
 "content.message.open" = "Aç";
-"content.message.copy" = "Copy";
+"content.message.copy" = "Kopyala";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
@@ -501,10 +503,10 @@
 
 // Voice New
 
-"call.status.connecting" = "Connecting…";
+"call.status.connecting" = "Bağlanıyor…";
 "call.status.incoming.user" = "%@ is calling…";
-"call.status.incoming" = "Calling…";
-"call.status.outgoing" = "Ringing…";
+"call.status.incoming" = "Arıyor…";
+"call.status.outgoing" = "Çalıyor…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Sabit Bit Hızı";
@@ -520,7 +522,7 @@
 "call.degraded.alert.title" = "New Device";
 "call.degraded.alert.message.self" = "Yeni bir cihaz kullanmaya başladın.";
 "call.degraded.alert.message.user" = "%@ yeni bir cihaz kullanmaya başladı.";
-"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.message.unknown" = "Birisi yeni bir cihaz kullanmaya başladı.";
 "call.degraded.alert.action.continue" = "Yine de ara";
 
 "call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
@@ -536,14 +538,17 @@
 "call.actions.label.flip_camera" = "Flip camera";
 "call.actions.label.toggle_speaker_on" = "Enable speaker";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
-"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.accept_call" = "Aramayı kabul et";
 "call.actions.label.reject_call" = "Decline call";
-"call.actions.label.terminate_call" = "End call";
+"call.actions.label.terminate_call" = "Çağrıyı sonlandır";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
 "call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Çağrıya katıl";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -700,7 +705,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.title" = "Hesabınızın kullanıldığı cihazlar:";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
 "self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Cihazları yönet";
@@ -935,7 +940,7 @@
 "self.settings.history_backup.title" = "Back Up Conversations";
 "self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
 "self.settings.history_backup.action" = "Back Up Now";
-"self.settings.history_backup.error.title" = "Error";
+"self.settings.history_backup.error.title" = "Hata";
 
 "self.settings.history_backup.set_email.title" = "Set an email and password.";
 "self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
@@ -994,7 +999,7 @@
 "team.email.textfield.accessibility" = "İşletmenizin e-postası";
 "team.email.button.learn_more" = "Daha Fazla";
 
-"team.activation_code.headline" = "You’ve got mail";
+"team.activation_code.headline" = "Posta geldi";
 "team.activation_code.subheadline" = "%@'a gönderdiğimiz doğrulama kodunu girin.";
 "team.activation_code.button.resend" = "Kodu yeniden gönder";
 "team.activation_code.button.change_email" = "E-postayı değiştir";
@@ -1056,7 +1061,7 @@
 
 // Registration
 
-"registration.launch_back_button.label" = "Back";
+"registration.launch_back_button.label" = "Geri";
 
 "registration.title" = "Kayıt";
 "registration.close_email_invitation_button.email_title" = "Başka bir e-posta kullanın";
@@ -1093,7 +1098,7 @@
 "registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
 
 /// Restore History Failure Alerts
-"registration.no_history.restore_backup_failed.try_again" = "Try again";
+"registration.no_history.restore_backup_failed.try_again" = "Tekrar deneyin";
 
 // Generic
 "registration.no_history.restore_backup_failed.title" = "Bir şeyler yanlış gitti";
@@ -1182,10 +1187,10 @@
 "signin.confirm" = "Oturum Aç";
 
 "registration.phone_country" = "Ülke";
-"registration.phone_code" = "Country Code";
+"registration.phone_code" = "Ülke Kodu";
 "registration.phone_country.hint" = "Double tap to select another country.";
 "registration.phone_code.hint" = "Double tap to select another country code.";
-"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify.label" = "Telefon numarasını doğrula";
 "registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Telefon numarası ekleyin";
@@ -1258,7 +1263,7 @@
 "error.invite.no_email_provider" = "Lütfen e-posta ile davet göndermek için e-posta istemcinizi yapılandırın";
 "error.invite.no_messaging_provider" = "Lütfen SMS göndermek için SMS'inizi yapılandırın";
 
-"error.conversation.title" = "Error";
+"error.conversation.title" = "Hata";
 "error.conversation.cannot_add" = "Adding the participant failed";
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "The conversation is full";
@@ -1350,7 +1355,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action
 
-"url_action.confirm" = "Confirm";
+"url_action.confirm" = "Onay";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
 

@@ -19,13 +19,13 @@
 
 
 "general.ok" = "OK";
-"general.next" = "Next";
+"general.next" = "Næste";
 "general.cancel" = "Annuller";
 "general.close" = "Luk";
-"general.back" = "Back";
+"general.back" = "Tilbage";
 "general.open_settings" = "Åbn Wire Indstillinger";
 "general.edit" = "Rediger";
-"general.done" = "Done";
+"general.done" = "Færdig";
 "general.confirm" = "OK";
 "general.skip" = "Ikke nu";
 "general.accept" = "Besvar";
@@ -33,7 +33,7 @@
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
-"general.guest-room-name" = "Guest room";
+"general.guest-room-name" = "Gæsterum";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -51,14 +51,14 @@
 
 "peoplepicker.group.title.singular" = "Tilføj personer";
 "peoplepicker.group.title.plural" = "Add People (%d)";
-"peoplepicker.group.skip" = "Skip";
-"peoplepicker.group.done" = "Done";
+"peoplepicker.group.skip" = "Spring over";
+"peoplepicker.group.done" = "Færdig";
 "peoplepicker.group.create" = "Opret";
 
 "peoplepicker.header.people" = "Personer";
 "peoplepicker.header.services" = "Tjenester";
-"peoplepicker.services.create_conversation.item" = "Create a new conversation";
-"peoplepicker.services.add_service.button" = "Add service";
+"peoplepicker.services.create_conversation.item" = "Opret en ny samtale";
+"peoplepicker.services.add_service.button" = "Tilføj tjeneste";
 "peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
 "peoplepicker.services.add_service.error.full" = "The conversation is full";
@@ -88,10 +88,10 @@
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
 "peoplepicker.invite_more_people" = "Invitér flere personer";
-"peoplepicker.invite_team_members" = "Invite people to join the team";
+"peoplepicker.invite_team_members" = "Inviter personer til holdet";
 "peoplepicker.quick-action.open-conversation" = "Åbn";
 "peoplepicker.quick-action.create-conversation" = "Opret gruppe";
-"peoplepicker.quick-action.create-guest-room" = "Create guest room";
+"peoplepicker.quick-action.create-guest-room" = "Opret gæsterum";
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 
@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "compose messages and save for later";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "take picture and send quickly";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "arkiv";
@@ -205,7 +206,7 @@
 "conversation.status.added_users" = "%@ har tilføjet %@";
 "conversation.status.joined" = "%@ joined";
 "conversation.status.removed_multiple" = "People removed";
-"conversation.status.you_were_removed" = "You were removed";
+"conversation.status.you_were_removed" = "Du blev fjernet";
 "conversation.status.you_left" = "Du forlod";
 "conversation.status.started_conversation" = "%@ started a conversation";
 "conversation.status.removed_users" = "%@ har fjernet %@";
@@ -256,17 +257,18 @@
 
 "conversation.create.group_name.title" = "Opret gruppe";
 "conversation.create.group_name.placeholder" = "Gruppenavn";
-"conversation.create.guidance.empty" = "At least 1 character";
+"conversation.create.guidance.empty" = "Mindst 1 tegn";
 "conversation.create.guidance.toolong" = "For mange tegn";
-"conversation.create.toggle.title" = "Allow guests";
-"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+"conversation.create.toggle.title" = "Tillad gæster";
+"conversation.create.toggle.subtitle" = "Åbn denne samtale for personer uden for dit team. Du kan altid ændre det senere.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Ongoing call";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
-"conversation.guests_present" = "Guests are present";
+"conversation.guests_present" = "Gæster er til stede";
+"conversation.action.search" = "Søg";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -340,7 +342,7 @@
 "content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Folk uden for dit team kan deltage i denne samtale.";
 "content.system.conversation.invite.button" = "Invitér personer";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ fjernede samtalens navn";
@@ -428,7 +430,7 @@
 "content.message.go_to_conversation" = "Vis";
 "content.message.forward.to" = "Send til…";
 "content.message.open" = "Åbn";
-"content.message.copy" = "Copy";
+"content.message.copy" = "Kopiér";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
@@ -501,10 +503,10 @@
 
 // Voice New
 
-"call.status.connecting" = "Connecting…";
+"call.status.connecting" = "Forbinder…";
 "call.status.incoming.user" = "%@ is calling…";
-"call.status.incoming" = "Calling…";
-"call.status.outgoing" = "Ringing…";
+"call.status.incoming" = "Ringer op…";
+"call.status.outgoing" = "Ringer op…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Constant Bit Rate";
@@ -520,7 +522,7 @@
 "call.degraded.alert.title" = "New Device";
 "call.degraded.alert.message.self" = "Du begyndte at bruge en ny enhed.";
 "call.degraded.alert.message.user" = "%@ begyndte at bruge en ny enhed.";
-"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.message.unknown" = "Nogen er begyndt at bruge en ny enhed.";
 "call.degraded.alert.action.continue" = "Ring alligevel";
 
 "call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
@@ -536,14 +538,17 @@
 "call.actions.label.flip_camera" = "Flip camera";
 "call.actions.label.toggle_speaker_on" = "Enable speaker";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
-"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.accept_call" = "Besvar opkald";
 "call.actions.label.reject_call" = "Decline call";
-"call.actions.label.terminate_call" = "End call";
+"call.actions.label.terminate_call" = "Afslut opkald";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
 "call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Deltag i opkald";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -573,7 +578,7 @@
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Slet indhold?";
-"meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
+"meta.menu.delete_content.dialog_message" = "Dette vil fjerne samtaleoversigten på alle dine enheder.";
 "meta.menu.delete_content.leave_as_well_message" = "Forlad også samtalen";
 "meta.menu.delete_content.button_cancel" = "Annuller";
 "meta.menu.delete_content.button_delete" = "Slet";
@@ -667,7 +672,7 @@
 
 // Group details
 "group_details.guest_options_cell.title" = "Guest Options";
-"group_details.guest_options_cell.enabled" = "On";
+"group_details.guest_options_cell.enabled" = "Aktiv";
 "group_details.guest_options_cell.disabled" = "Slået fra";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -700,7 +705,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.title" = "Din konto blev anvendt:";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
 "self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Administrer enheder";
@@ -708,7 +713,7 @@
 
 // Settings - top level
 "self.settings.create_team.title" = "Opret team";
-"self.settings.manage_team.title" = "Manage Team";
+"self.settings.manage_team.title" = "Administrer Team";
 "self.settings.add_team_or_account.title" = "New Team or Account";
 "self.settings.add_account.title" = "Tilføj en konto";
 
@@ -894,7 +899,7 @@
 "self.settings.privacy_security.lock_cancelled.action" = "Åben";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
-"self.settings.privacy_security.disable_link_previews.footer" = "Previews may still be shown for links from other people.";
+"self.settings.privacy_security.disable_link_previews.footer" = "Previews kan stadig blive vist for link fra andre.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Enheder";
 
@@ -931,11 +936,11 @@
 
 // History backup
 
-"self.settings.conversations.title" = "History";
+"self.settings.conversations.title" = "Historik";
 "self.settings.history_backup.title" = "Back Up Conversations";
 "self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
 "self.settings.history_backup.action" = "Back Up Now";
-"self.settings.history_backup.error.title" = "Error";
+"self.settings.history_backup.error.title" = "Fejl";
 
 "self.settings.history_backup.set_email.title" = "Set an email and password.";
 "self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
@@ -944,7 +949,7 @@
 
 "self.settings.history_backup.password.title" = "Set Password";
 "self.settings.history_backup.password.cancel" = "Annuller";
-"self.settings.history_backup.password.next" = "Next";
+"self.settings.history_backup.password.next" = "Næste";
 "self.settings.history_backup.password.placeholder" = "Mindst 8 tegn";
 "self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
@@ -1017,8 +1022,8 @@
 "team.invite.textfield.placeholder" = "colleague@yourcompany.com";
 "team.invite.textfield.accesibility" = "Enter e-mail address for colleague to invite.";
 "team.invite.learn_more.title" = "Lær mere";
-"team.invite.top_bar.skip" = "Skip";
-"team.invite.top_bar.done" = "Done";
+"team.invite.top_bar.skip" = "Spring over";
+"team.invite.top_bar.done" = "Færdig";
 
 // Team Invite Errors
 "team.invite.error.generic" = "Noget gik galt, prøv venligst igen";
@@ -1029,18 +1034,18 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
+"guest_room.allow_guests.title" = "Tillad gæster";
+"guest_room.allow_guests.subtitle" = "Åbn denne samtale for personer uden for dit team.";
 "guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
 "guest_room.remove_guests.action" = "Remove Guests";
-"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.message" = "Nye gæster vil ikke kunne tilslutte med dette link. Aktuelle gæster vil stadig have adgang.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
 "guest_room.error.generic.title" = "Noget gik galt";
 "guest_room.error.generic.message" = "Check your connection and try again";
 
-"guest_room.link.header.title" = "Invite others with a link";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.header.title" = "Inviter andre med et link";
+"guest_room.link.header.subtitle" = "Alle med linket kan tilføje sig til samtalen, også selvom de ikke har Wire.";
 
 "guest_room.link.button.title" = "Create Link";
 
@@ -1056,7 +1061,7 @@
 
 // Registration
 
-"registration.launch_back_button.label" = "Back";
+"registration.launch_back_button.label" = "Tilbage";
 
 "registration.title" = "Registrering";
 "registration.close_email_invitation_button.email_title" = "Brug en anden e-mail";
@@ -1085,7 +1090,7 @@
 "registration.no_history.hero" = "Det er første gang du bruger Wire på denne enhed.";
 "registration.no_history.subtitle" = "Af hensyn til fortrolighed, vil din samtalehistorik ikke vises her.";
 "registration.no_history.got_it" = "OK";
-"registration.no_history.restore_backup" = "Restore from backup";
+"registration.no_history.restore_backup" = "Gendan fra sikkerhedskopi";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Restore history";
@@ -1093,19 +1098,19 @@
 "registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
 
 /// Restore History Failure Alerts
-"registration.no_history.restore_backup_failed.try_again" = "Try again";
+"registration.no_history.restore_backup_failed.try_again" = "Prøv igen";
 
 // Generic
 "registration.no_history.restore_backup_failed.title" = "Noget gik galt";
-"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+"registration.no_history.restore_backup_failed.message" = "Din historik kunne ikke gendannes.";
 
 // Wrong Account
-"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Ukompatibel sikkerhedskopi";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Du kan ikke gendanne historik fra en anden konto.";
 
 // Incompatible Version
-"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Ukompatibel sikkerhedskopi";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Denne sikkerhedskopi er lavet på en nyere eller uddateret version af Wire og kan ikke blive gendannet her.";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
@@ -1182,10 +1187,10 @@
 "signin.confirm" = "Log ind";
 
 "registration.phone_country" = "Land";
-"registration.phone_code" = "Country Code";
+"registration.phone_code" = "Landekode";
 "registration.phone_country.hint" = "Double tap to select another country.";
 "registration.phone_code.hint" = "Double tap to select another country code.";
-"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify.label" = "Verificer telefonnummer";
 "registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Tilføj telefonnummer";
@@ -1236,7 +1241,7 @@
 "error.user.registration_unknown_error" = "Noget gik galt. Venligst prøv igen.";
 "error.user.device_deleted_remotely" = "Du er blevet logget af fra en anden enhed.";
 "error.user.last_identity_cant_be_deleted" = "Der kræves enten en e-mailadresse eller et telefonnummer.";
-"error.user.account_suspended" = "This account is no longer authorized to log in.";
+"error.user.account_suspended" = "Denne konto har ikke længere tilladelse til at logge ind.";
 "error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1258,7 +1263,7 @@
 "error.invite.no_email_provider" = "Konfigurer din e-mail klient for at kunne sende invitationer via e-mail";
 "error.invite.no_messaging_provider" = "Konfigurer din SMS for at kunne sende invitationer vis SMS";
 
-"error.conversation.title" = "Error";
+"error.conversation.title" = "Fejl";
 "error.conversation.cannot_add" = "Adding the participant failed";
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "The conversation is full";
@@ -1326,12 +1331,12 @@
 "compose.drafts.compose.dismiss.delete.action.title" = "Slet";
 
 "availability.message.cancel" = "Annuller";
-"availability.message.set_status" = "Set a status";
+"availability.message.set_status" = "Sæt en status";
 
 "availability.none" = "Ingen";
 "availability.available" = "Ledig";
-"availability.away" = "Away";
-"availability.busy" = "Busy";
+"availability.away" = "Ikke til stede";
+"availability.busy" = "Optaget";
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
@@ -1350,7 +1355,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action
 
-"url_action.confirm" = "Confirm";
+"url_action.confirm" = "Bekræft";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
 

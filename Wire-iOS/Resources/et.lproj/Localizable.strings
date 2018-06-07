@@ -119,8 +119,8 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "On uusi sõnumeid.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Aita Wire paremaks muuta";
-"conversation_list.date_usage_permission_alert.message" = "Anonüümse kasutusinfo jagamine aitab meil Wire teenust paremaks muuta. Me ei kasuta neid andmeid millekski muuks.";
+"conversation_list.date_usage_permission_alert.title" = "Aita meil muuta Wire'i paremaks";
+"conversation_list.date_usage_permission_alert.message" = "Anonüümsete kasutus- ja krahhiaruannete saatmine aitab meil oma tooteid ja teenuseid parandada. Me ei kasuta seda infot mitte millegi muu jaoks.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "koosta sõnum ja salvesta hilisemaks";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "kaamera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "tee pilt ja saada kiirelt";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "arhiiv";
@@ -254,7 +255,7 @@
 "conversation.input_bar.message_too_long.title" = "Liiga pikk sõnum";
 "conversation.input_bar.message_too_long.message" = "Sõnum võib olla kuni %d tähemärki.";
 
-"conversation.create.group_name.title" = "Loo grupp";
+"conversation.create.group_name.title" = "Loo grupivestlus";
 "conversation.create.group_name.placeholder" = "Grupi nimi";
 "conversation.create.guidance.empty" = "Vähemalt 1 tähemärk";
 "conversation.create.guidance.toolong" = "Liiga pikk nimi";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Kohal on külalisi";
+"conversation.action.search" = "Otsing";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -341,7 +343,7 @@
 "content.system.conversation.guest.joined" = "%@ liitus";
 
 "content.system.conversation.invite.title" = "Inimesed väljaspool sinu meeskonda saavad liituda selle vestlusega.";
-"content.system.conversation.invite.button" = "Kutsu inimesi";
+"content.system.conversation.invite.button" = "Jaga teistega";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
 "content.system.you_renamed_conv_to_nothing" = "Eemaldasid vestluse nime";
@@ -519,7 +521,7 @@
 
 "call.degraded.alert.title" = "Uus seade";
 "call.degraded.alert.message.self" = "Sa hakkasid uut seadet kasutama.";
-"call.degraded.alert.message.user" = "%@ hakkas kasutama uut seadet.";
+"call.degraded.alert.message.user" = "%@ hakkas uut seadet kasutama.";
 "call.degraded.alert.message.unknown" = "Keegi hakkas uut seadet kasutama.";
 "call.degraded.alert.action.continue" = "Helista ikkagi";
 
@@ -536,14 +538,17 @@
 "call.actions.label.flip_camera" = "Flip camera";
 "call.actions.label.toggle_speaker_on" = "Enable speaker";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
-"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.accept_call" = "Võta kõne vastu";
 "call.actions.label.reject_call" = "Decline call";
-"call.actions.label.terminate_call" = "End call";
+"call.actions.label.terminate_call" = "Lõpeta kõne";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
 "call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Liitu kõnega";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -716,7 +721,7 @@
 "self.settings.add_account.error.message" = "Korraga saad kasutada kolme kontot. Lisakonto kasutamiseks pead ühega olemasolevatest välja logima.";
 
 "self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch account";
+"self.settings.switch_account.action" = "Vaheta kontot";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
@@ -743,7 +748,7 @@
 "self.settings.account_picture_group.picture" = "Profiilipilt";
 "self.settings.account_picture_group.color" = "Värv";
 
-"self.settings.account_personal_information_group.title" = "Isiklik info";
+"self.settings.account_personal_information_group.title" = "Isikuandmed";
 
 "self.settings.account_picture_group.theme" = "Tume kujundus";
 
@@ -765,10 +770,10 @@
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Kasutus- ja krahhiaruanded";
 "self.settings.privacy_analytics.title" = "Saada anonüümseid andmeid";
-"self.settings.privacy_analytics_menu.description.title" = "Aita Wire'i paremaks muuta, saates anonüümseid kasutus- ja vearaporteid.";
+"self.settings.privacy_analytics_menu.description.title" = "Aita Wire'i paremaks muuta, saates anonüümseid kasutus- ja krahhiaruandeid.";
 
 "self.settings.receiveNews_and_offers.title" = "Uudiskirja tellimine";
-"self.settings.receiveNews_and_offers.description.title" = "Aeg-ajalt saadab Wire sulle infot tooteuuenduste kohta.";
+"self.settings.receiveNews_and_offers.description.title" = "Saa Wire'ilt uudiseid ja tooteuuendusi e-posti teel.";
 
 
 
@@ -976,7 +981,7 @@
 "landing.create_account.title" = "Isiklikuks kasutuseks";
 "landing.create_account.subtitle" = "loo konto";
 "landing.create_team.title" = "Organisatsioonidele";
-"landing.create_team.subtitle" = "loo tiimikonto";
+"landing.create_team.subtitle" = "loo meeskond";
 "landing.login.hints" = "Konto juba olemas?";
 "landing.login.button.title" = "Logi sisse";
 
@@ -994,7 +999,7 @@
 "team.email.textfield.accessibility" = "Sinu töö meiliaadress";
 "team.email.button.learn_more" = "Loe lähemalt";
 
-"team.activation_code.headline" = "You’ve got mail";
+"team.activation_code.headline" = "Sulle tuli kiri";
 "team.activation_code.subheadline" = "Sisesta kinnituskood, mille saatsime aadressile %@";
 "team.activation_code.button.resend" = "Saada kood uuesti";
 "team.activation_code.button.change_email" = "Muuda e-posti aadress";
@@ -1032,7 +1037,7 @@
 "guest_room.allow_guests.title" = "Luba külalisi";
 "guest_room.allow_guests.subtitle" = "Ava see vestlus meeskonnast väljas olevatele inimestele.";
 "guest_room.remove_guests.message" = "Praegused külalised eemaldatakse vestlusest. Uusi külalisi ei lubata.";
-"guest_room.remove_guests.action" = "Eemalda Külalised";
+"guest_room.remove_guests.action" = "Eemalda külalised";
 "guest_room.revoke_link.message" = "Uued külalised ei saa selle lingi abil liituda. Praegustel külalistel on jätkuvalt ligipääs.";
 "guest_room.revoke_link.action" = "Tühista link";
 
@@ -1085,7 +1090,7 @@
 "registration.no_history.hero" = "Kasutad sellel seadmel Wire’t esimest korda.";
 "registration.no_history.subtitle" = "Privaatuse tagamiseks ei ilmu siia sinu varasemad vestlused.";
 "registration.no_history.got_it" = "OK";
-"registration.no_history.restore_backup" = "Taasta varukoopiast";
+"registration.no_history.restore_backup" = "Taasta varundusest";
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Taasta ajalugu";
@@ -1097,15 +1102,15 @@
 
 // Generic
 "registration.no_history.restore_backup_failed.title" = "Midagi läks valesti";
-"registration.no_history.restore_backup_failed.message" = "Sinu ajaloo taastamine ebaõnnestus.";
+"registration.no_history.restore_backup_failed.message" = "Sinu ajalugu ei saanud taastada.";
 
 // Wrong Account
-"registration.no_history.restore_backup_failed.wrong_account.title" = "Ühildumatu varukoopia";
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Ühildumatu varundus";
 "registration.no_history.restore_backup_failed.wrong_account.message" = "Sa ei saa taastada teise konto ajalugu.";
 
 // Incompatible Version
-"registration.no_history.restore_backup_failed.wrong_version.title" = "Ühildumatu varukoopia";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Ühildumatu varundus";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "See varundus loodi uuema või aegunud Wire'i versiooni kaudu ja seda ei saa siin taastada.";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Taastan…";

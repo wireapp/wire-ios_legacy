@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "створити повідомлення та зберегти для подальшого використання";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "зробити фотографію та швидко надіслати";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "архів";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Ви не можете фотографувати під час дзвінка.";
 
 "conversation.guests_present" = "Присутні гості";
+"conversation.action.search" = "Пошук";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -544,6 +546,9 @@
 "call.actions.label.switch_to_back_camera" = "Преключитись на основну камеру";
 "call.actions.label.switch_to_front_camera" = "Преключитись на фронтальну камеру";
 "call.actions.label.minimize_call" = "Згорнути дзвінок";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Приєднатися до дзвінка";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -1056,7 +1061,7 @@
 
 // Registration
 
-"registration.launch_back_button.label" = "Повернутись";
+"registration.launch_back_button.label" = "Назад";
 
 "registration.title" = "Реєстрація";
 "registration.close_email_invitation_button.email_title" = "Використати інший email";

@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "componi i messaggi e salva per dopo";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "fotocamera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "scattare una foto e invia rapidamente";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "archivio";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Sono presenti ospiti";
+"conversation.action.search" = "Cerca";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -501,10 +503,10 @@
 
 // Voice New
 
-"call.status.connecting" = "Connecting…";
+"call.status.connecting" = "Connessione in corso…";
 "call.status.incoming.user" = "%@ is calling…";
-"call.status.incoming" = "Calling…";
-"call.status.outgoing" = "Ringing…";
+"call.status.incoming" = "Chiamata in corso…";
+"call.status.outgoing" = "Sta squillando…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Bit Rate costante";
@@ -520,7 +522,7 @@
 "call.degraded.alert.title" = "New Device";
 "call.degraded.alert.message.self" = "Hai iniziato a usare un nuovo dispositivo.";
 "call.degraded.alert.message.user" = "%@ ha iniziato a usare un nuovo dispositivo.";
-"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.message.unknown" = "Qualcuno ha iniziato ad usare un nuovo dispositivo.";
 "call.degraded.alert.action.continue" = "Chiama comunque";
 
 "call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
@@ -536,14 +538,17 @@
 "call.actions.label.flip_camera" = "Flip camera";
 "call.actions.label.toggle_speaker_on" = "Enable speaker";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
-"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.accept_call" = "Accetta la chiamata";
 "call.actions.label.reject_call" = "Decline call";
-"call.actions.label.terminate_call" = "End call";
+"call.actions.label.terminate_call" = "Termina chiamata";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
 "call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Entra nella chiamata";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -1182,7 +1187,7 @@
 "signin.confirm" = "Log in";
 
 "registration.phone_country" = "Paese";
-"registration.phone_code" = "Prefisso internazionale";
+"registration.phone_code" = "Codice del paese";
 "registration.phone_country.hint" = "Tocca due volte per selezionare un altro paese.";
 "registration.phone_code.hint" = "Tocca due volte per selezionare un altro prefisso internazionale.";
 "registration.phone.verify.label" = "Verifica numero di telefono";

@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "新建消息并保存";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "相机";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "拍照并立即发送";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "档案";
@@ -254,7 +255,7 @@
 "conversation.input_bar.message_too_long.title" = "消息过长。";
 "conversation.input_bar.message_too_long.message" = "您可以发送最长 %d 字符的信息。";
 
-"conversation.create.group_name.title" = "创建群聊\n";
+"conversation.create.group_name.title" = "创建群聊";
 "conversation.create.group_name.placeholder" = "群组名称";
 "conversation.create.guidance.empty" = "至少1个字符";
 "conversation.create.guidance.toolong" = "超出字符限制";
@@ -267,6 +268,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "访客在对话中";
+"conversation.action.search" = "搜索";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "好";
@@ -501,10 +503,10 @@
 
 // Voice New
 
-"call.status.connecting" = "Connecting…";
+"call.status.connecting" = "正在连接...";
 "call.status.incoming.user" = "%@ is calling…";
-"call.status.incoming" = "Calling…";
-"call.status.outgoing" = "Ringing…";
+"call.status.incoming" = "正在呼叫...";
+"call.status.outgoing" = "响铃中...";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "固定码率";
@@ -520,7 +522,7 @@
 "call.degraded.alert.title" = "New Device";
 "call.degraded.alert.message.self" = "您开始使用新的设备。";
 "call.degraded.alert.message.user" = "%@ 开始使用新的设备。";
-"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.message.unknown" = "有人开始使用新的设备。";
 "call.degraded.alert.action.continue" = "仍然要通话";
 
 "call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
@@ -536,14 +538,17 @@
 "call.actions.label.flip_camera" = "Flip camera";
 "call.actions.label.toggle_speaker_on" = "Enable speaker";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
-"call.actions.label.accept_call" = "Accept call";
+"call.actions.label.accept_call" = "接受呼叫";
 "call.actions.label.reject_call" = "Decline call";
-"call.actions.label.terminate_call" = "End call";
+"call.actions.label.terminate_call" = "结束通话";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
 "call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "加入通话";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -700,7 +705,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.title" = "您的账号被使用在：";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
 "self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "设备管理";
@@ -935,7 +940,7 @@
 "self.settings.history_backup.title" = "备份对话";
 "self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
 "self.settings.history_backup.action" = "Back Up Now";
-"self.settings.history_backup.error.title" = "Error";
+"self.settings.history_backup.error.title" = "错误";
 
 "self.settings.history_backup.set_email.title" = "Set an email and password.";
 "self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
@@ -973,10 +978,10 @@
 
 "landing.app_name" = "Wire";
 "landing.title" = "保密每个人之通讯。";
-"landing.create_account.title" = "For personal use";
-"landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
-"landing.create_team.subtitle" = "create a team";
+"landing.create_account.title" = "供个人使用";
+"landing.create_account.subtitle" = "新增帐户";
+"landing.create_team.title" = "给单位";
+"landing.create_team.subtitle" = "创建团队";
 "landing.login.hints" = "已有帐户？";
 "landing.login.button.title" = "登录";
 
@@ -994,7 +999,7 @@
 "team.email.textfield.accessibility" = "您公司的电子邮箱";
 "team.email.button.learn_more" = "了解更多信息";
 
-"team.activation_code.headline" = "You’ve got mail";
+"team.activation_code.headline" = "您有新邮件";
 "team.activation_code.subheadline" = "输入我们发送到 %@ 的验证码";
 "team.activation_code.button.resend" = "重新发送验证码";
 "team.activation_code.button.change_email" = "更改电邮地址";
@@ -1040,7 +1045,7 @@
 "guest_room.error.generic.message" = "检查您的连接，然后再试一次";
 
 "guest_room.link.header.title" = "透过连结邀请其他人";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.header.subtitle" = "任何有连结的人都可以加入对话，即使他们没有安装Wire。";
 
 "guest_room.link.button.title" = "创建链接";
 
@@ -1093,7 +1098,7 @@
 "registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
 
 /// Restore History Failure Alerts
-"registration.no_history.restore_backup_failed.try_again" = "Try again";
+"registration.no_history.restore_backup_failed.try_again" = "再试一次";
 
 // Generic
 "registration.no_history.restore_backup_failed.title" = "好像出了点问题。";
@@ -1182,10 +1187,10 @@
 "signin.confirm" = "登录";
 
 "registration.phone_country" = "国家";
-"registration.phone_code" = "Country Code";
+"registration.phone_code" = "国家代码";
 "registration.phone_country.hint" = "Double tap to select another country.";
 "registration.phone_code.hint" = "Double tap to select another country code.";
-"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify.label" = "驗證電話號碼";
 "registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "新增手机号码";
@@ -1258,7 +1263,7 @@
 "error.invite.no_email_provider" = "请设置您的电子邮箱从而通过邮件的形式发送邀请。";
 "error.invite.no_messaging_provider" = "请设定您的短信服务从而通过短信的方式发送邀请";
 
-"error.conversation.title" = "Error";
+"error.conversation.title" = "错误";
 "error.conversation.cannot_add" = "Adding the participant failed";
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "对话人数已达上限";
@@ -1350,7 +1355,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action
 
-"url_action.confirm" = "Confirm";
+"url_action.confirm" = "确认";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
 
