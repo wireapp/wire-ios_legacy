@@ -51,7 +51,7 @@ extension ZMConversation {
     }
     
     func joinCall() {
-        joinVoiceChannel(video: voiceChannel?.isVideoCall ?? false)
+        joinVoiceChannel(video: false)
     }
     
     func joinVoiceChannel(video: Bool) {
