@@ -19,12 +19,6 @@
 import XCTest
 @testable import Wire
 
-extension MockUser: ZMSearchableUser {
-    public func requestMediumProfileImage(in userSession: ZMUserSession!) {}
-
-    public func requestSmallProfileImage(in userSession: ZMUserSession!) {}
-}
-
 final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ProfileViewController!

@@ -222,16 +222,6 @@ static id<ZMBareUser> mockSelfUser = nil;
     }
 }
 
-- (void)requestSmallProfileImageInUserSession:(ZMUserSession *)userSession
-{
-    // no-op
-}
-
-- (void)requestMediumProfileImageInUserSession:(ZMUserSession *)userSession
-{
-    // no-op
-}
-
 - (NSString *)displayNameInConversation:(MockConversation *)conversation
 {
     return self.displayName;
