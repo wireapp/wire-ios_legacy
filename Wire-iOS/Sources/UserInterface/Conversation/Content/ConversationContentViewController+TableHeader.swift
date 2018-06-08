@@ -19,16 +19,16 @@
 import UIKit
 
 extension ConversationContentViewController {
-    @objc func headerRequiredSize(headerView: UIView) -> CGSize {
+    @objc func headerViewFrame(view: UIView) -> CGRect {
         let fittingSize = CGSize(width: tableView.bounds.size.width, height: headerHeight())
-        let requiredSize = headerView.systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityDefaultLow)
+        let requiredSize = view.systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityDefaultLow)
 
-        return requiredSize
+        return CGRect(origin: .zero, size: requiredSize)
     }
 
     func updateHeaderHeight() {
         if let headerView = tableView.tableFooterView {
-            headerView.frame = CGRect(origin: .zero, size: headerRequiredSize(headerView: headerView))
+            headerView.frame = headerViewFrame(view: headerView)
             tableView.tableHeaderView = headerView
         }
     }

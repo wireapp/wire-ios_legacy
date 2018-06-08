@@ -275,9 +275,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)setConversationHeaderView:(UIView *)headerView
 {
-    CGSize requiredSize = [self headerRequiredSizeWithHeaderView:headerView];
-
-    headerView.frame = CGRectMake(0, 0, requiredSize.width, requiredSize.height);
+    headerView.frame = [self headerViewFrameWithView:headerView];
     self.tableView.tableHeaderView = headerView;
 }
 
