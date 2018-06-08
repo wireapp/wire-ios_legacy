@@ -116,13 +116,13 @@ final class CallViewController: UIViewController {
     }
 
     @objc private func resumeVideoIfNeeded() {
-        guard voiceChannel.isVideoCall, voiceChannel.videoState.isPaused else { return }
+        guard voiceChannel.videoState.isPaused else { return }
         voiceChannel.videoState = .started
         updateConfiguration()
     }
 
     @objc private func pauseVideoIfNeeded() {
-        guard voiceChannel.isVideoCall, voiceChannel.videoState.isSending else { return }
+        guard voiceChannel.videoState.isSending else { return }
         voiceChannel.videoState = .paused
         updateConfiguration()
     }
