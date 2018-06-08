@@ -30,7 +30,7 @@ fileprivate extension VoiceChannel {
         }
     }
     
-    var accessoryType: CallInfoViewControllerAccessoryType {
+    func accessoryType(using timestamps: CallParticipantTimestamps) -> CallInfoViewControllerAccessoryType {
         if internalIsVideoCall, conversation?.conversationType == .oneOnOne {
             return .none
         }
@@ -48,7 +48,7 @@ fileprivate extension VoiceChannel {
             }
         case .unknown, .none, .terminating, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
-                return .participantsList(connectedParticipants.map {
+                return .participantsList(sortedConnectedParticipants(using: timestamps).map {
                     .callParticipant(user: $0.0, sendsVideo: $0.1.isSendingVideo)
                 })
             } else if let remoteParticipant = conversation?.connectedUser {
@@ -149,13 +149,14 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         voiceChannel: VoiceChannel,
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
         permissions: CallPermissionsConfiguration,
-        cameraType: CaptureDevice
+        cameraType: CaptureDevice,
+        sortTimestamps: CallParticipantTimestamps
         ) {
         self.permissions = permissions
         self.cameraType = cameraType
         voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
         degradationState = voiceChannel.degradationState
-        accessoryType = voiceChannel.accessoryType
+        accessoryType = voiceChannel.accessoryType(using: sortTimestamps)
         isMuted = AVSMediaManager.sharedInstance().isMicrophoneMuted
         canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
         canAccept = voiceChannel.canAccept
@@ -221,7 +222,6 @@ fileprivate extension VoiceChannel {
     var canUpgradeToVideo: Bool {
         guard let conversation = conversation, conversation.conversationType != .oneOnOne else { return true }
         guard conversation.activeParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
-        
         return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
     }
     
@@ -230,12 +230,19 @@ fileprivate extension VoiceChannel {
             || connectedParticipants.any { $0.1.isSendingVideo } // Other participants are sending video
             || isIncomingVideoCall                               // This is an incoming video call
     }
-
+    
     var connectedParticipants: [UserWithParticipantState] {
         return participants
+            .lazy
             .compactMap { $0 as? ZMUser }
-            .map { ($0, state(forParticipant: $0)) }
+            .map { ($0, self.state(forParticipant: $0)) }
             .filter { $0.1.isConnected }
+    }
+
+    func sortedConnectedParticipants(using timestamps: CallParticipantTimestamps) -> [UserWithParticipantState] {
+        return connectedParticipants.sorted { lhs, rhs in
+            timestamps[lhs.0] > timestamps[rhs.0]
+        }
     }
 
     var firstDegradedUser: ZMUser? {

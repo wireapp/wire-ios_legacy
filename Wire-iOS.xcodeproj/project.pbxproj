@@ -829,6 +829,7 @@
 		BFA25DC71D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DC61D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift */; };
 		BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DC81D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift */; };
 		BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA25DCA1D9AB88A0086DEBD /* Emojis.swift */; };
+		BFA2F03B20CAACF900EBE97C /* CallParticipantTimestamps.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA2F03A20CAACF900EBE97C /* CallParticipantTimestamps.swift */; };
 		BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */; };
 		BFAAB23F1DED95B100CBC096 /* UserNameDetailViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB23E1DED95B100CBC096 /* UserNameDetailViewTests.swift */; };
 		BFAAB2431DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */; };
@@ -2421,6 +2422,7 @@
 		BFA25DC61D9A8C7B0086DEBD /* ConversationInputBarViewController+Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ConversationInputBarViewController+Emoji.swift"; path = "Emoji/ConversationInputBarViewController+Emoji.swift"; sourceTree = "<group>"; };
 		BFA25DC81D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmojiKeyboardViewController.swift; path = Emoji/EmojiKeyboardViewController.swift; sourceTree = "<group>"; };
 		BFA25DCA1D9AB88A0086DEBD /* Emojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Emojis.swift; path = Emoji/Emojis.swift; sourceTree = "<group>"; };
+		BFA2F03A20CAACF900EBE97C /* CallParticipantTimestamps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantTimestamps.swift; sourceTree = "<group>"; };
 		BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Handles.swift"; sourceTree = "<group>"; };
 		BFAAB23E1DED95B100CBC096 /* UserNameDetailViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNameDetailViewTests.swift; sourceTree = "<group>"; };
 		BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Transitions.swift"; sourceTree = "<group>"; };
@@ -5336,6 +5338,7 @@
 			children = (
 				BFF8076320BC072A0063E5D4 /* CallHapticsGenerator.swift */,
 				BFF8076520BC275D0063E5D4 /* CallHapticsController.swift */,
+				BFA2F03A20CAACF900EBE97C /* CallParticipantTimestamps.swift */,
 			);
 			path = "Haptic Feedback";
 			sourceTree = "<group>";
@@ -6840,6 +6843,7 @@
 				EF2127191FB9DFE300625A9B /* EmailVerificationStepViewController.m in Sources */,
 				D550F57920445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift in Sources */,
 				871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */,
+				BFA2F03B20CAACF900EBE97C /* CallParticipantTimestamps.swift in Sources */,
 				1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */,
 				879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */,
 				877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */,
