@@ -626,6 +626,7 @@
 		87D679E61EBC8002005BEB4C /* String+Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E51EBC8002005BEB4C /* String+Compatibility.swift */; };
 		87D679E81EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E71EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift */; };
 		87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D7AF661DF5A158001A1CD7 /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */; };
 		87DCF4791D34E95B00BB420F /* PermissionDeniedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4761D34E95B00BB420F /* PermissionDeniedViewController.m */; };
 		87DCF47A1D34E95B00BB420F /* ShareContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4781D34E95B00BB420F /* ShareContactsViewController.m */; };
 		87DCF48D1D34E9BA00BB420F /* ContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF47D1D34E9BA00BB420F /* ContactsCell.m */; };
@@ -2063,6 +2064,7 @@
 		87D679E51EBC8002005BEB4C /* String+Compatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Compatibility.swift"; sourceTree = "<group>"; };
 		87D679E71EBC8D1E005BEB4C /* ConversationListViewController+CameraPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+CameraPicker.swift"; sourceTree = "<group>"; };
 		87D7AF661DF5A158001A1CD7 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewControllerTests.swift; sourceTree = "<group>"; };
 		87D815191D6B40EC004FD258 /* SoundcloudService+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundcloudService+Testing.h"; sourceTree = "<group>"; };
 		87DCBE061F87C41300E0DEC7 /* AnalyticsProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnalyticsProvider.h; sourceTree = "<group>"; };
 		87DCF4751D34E95B00BB420F /* PermissionDeniedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionDeniedViewController.h; sourceTree = "<group>"; };
@@ -5161,6 +5163,7 @@
 				EF24037020A1E971002813BE /* TermsOfUseStepViewControllerSnapshotTests.swift */,
 				EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */,
 				EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */,
+				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7214,6 +7217,7 @@
 				D50892FD2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift in Sources */,
 				D524BE5F207B99B800542A4E /* UIViewController+LoadingTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
+				87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
 				EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */,
 				EF63528D209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift in Sources */,

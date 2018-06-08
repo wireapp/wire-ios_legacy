@@ -40,17 +40,20 @@ final class CallViewController: UIViewController {
         return voiceChannel.conversation
     }
     
-    private var proximityMonitorManager: ProximityMonitorManager? {
-        return ZClientViewController.shared()?.proximityMonitorManager
-    }
+    private var proximityMonitorManager: ProximityMonitorManager?
 
     fileprivate var permissions: CallPermissionsConfiguration {
         return callInfoConfiguration.permissions
     }
     
-    init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManager = .sharedInstance(), permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
+    init(voiceChannel: VoiceChannel,
+         proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared()?.proximityMonitorManager,
+         mediaManager: AVSMediaManager = .sharedInstance(),
+         permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
+        
         self.voiceChannel = voiceChannel
         self.mediaManager = mediaManager
+        self.proximityMonitorManager = proximityMonitorManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager,  isOverlayVisible: true)
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType)
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
@@ -59,13 +62,16 @@ final class CallViewController: UIViewController {
         callInfoRootViewController.delegate = self
         AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
-        proximityMonitorManager?.stateChanged = proximityStateDidChange
+        proximityMonitorManager?.stateChanged = { [weak self] raisedToEar in
+            self?.proximityStateDidChange(raisedToEar)
+        }
         disableVideoIfNeeded()
     }
     
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
         NotificationCenter.default.removeObserver(self)
+        stopOverlayTimer()
     }
     
     private func setupApplicationStateObservers() {
@@ -386,10 +392,10 @@ extension CallViewController {
         animateOverlay(show: false)
     }
     
-    fileprivate func startOverlayTimer() {
+    func startOverlayTimer() {
         stopOverlayTimer()
-        overlayTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 4, repeats: false) { [animateOverlay] _ in
-            animateOverlay(false)
+        overlayTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 4, repeats: false) { [weak self] _ in
+            self?.animateOverlay(show: false)
         }
     }
     
