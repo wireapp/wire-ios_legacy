@@ -232,7 +232,9 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 - (IBAction)showGalleryController:(id)sender
 {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    // TODO: imagePicker.imageExportPreset = .compatible
+    if (@available(iOS 11.0, *)) {
+        picker.imageExportPreset = UIImagePickerControllerImageURLExportPresetCompatible;
+    }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.delegate = self;
     
