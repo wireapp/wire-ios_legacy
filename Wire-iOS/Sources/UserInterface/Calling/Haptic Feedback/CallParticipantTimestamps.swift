@@ -27,7 +27,6 @@ final class CallParticipantTimestamps {
         let updated = Set(newParticipants)
         let removed = participants.subtracting(updated)
         let added = updated.subtracting(participants)
-        Log.haptics.debug("updating participants list: \(newParticipants), old: \(participants)")
         
         removed.forEach {
             Log.callTimestamps.debug("Removing timestamp for \($0)")
@@ -46,7 +45,8 @@ final class CallParticipantTimestamps {
     }
     
     subscript(_ user: ZMUser) -> Date? {
-        return participantTimestamps[user.remoteIdentifier]
+        guard let uuid = user.remoteIdentifier else { return nil }
+        return self[uuid]
     }
     
 }
