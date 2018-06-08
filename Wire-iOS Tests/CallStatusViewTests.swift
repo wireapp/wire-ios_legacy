@@ -46,6 +46,20 @@ final class CallStatusViewTests: ZMSnapshotTestCase {
         super.tearDown()
     }
     
+    func testLongTitleMargins() {
+        // When
+        sut.configuration = MockStatusViewConfiguration(
+            state: .connecting,
+            isVideoCall: false,
+            variant: .light,
+            isConstantBitRate: false,
+            title: "Amazing Way Too Long Group Conversation Name"
+        )
+        
+        // Then
+        verify(view: sut)
+    }
+    
     func testConnectingAudioCallLight() {
         // When
         sut.configuration = MockStatusViewConfiguration(state: .connecting, isVideoCall: false, variant: .light, isConstantBitRate: false, title: "Italy Trip")

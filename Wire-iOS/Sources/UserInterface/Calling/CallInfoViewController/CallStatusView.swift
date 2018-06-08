@@ -109,6 +109,7 @@ final class CallStatusView: UIView {
             $0.textAlignment = .center
         }
 
+        titleLabel.lineBreakMode = .byTruncatingTail
         titleLabel.font = .systemFont(ofSize: 20, weight: UIFontWeightSemibold)
         subtitleLabel.font = FontSpec(.normal, .semibold).font
         subtitleLabel.alpha = 0.64
@@ -120,8 +121,8 @@ final class CallStatusView: UIView {
     
     private func createConstraints() {
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             stackView.topAnchor.constraint(equalTo: topAnchor),
             bitrateLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
             bitrateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
