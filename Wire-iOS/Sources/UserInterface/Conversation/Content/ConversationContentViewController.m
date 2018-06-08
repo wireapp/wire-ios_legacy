@@ -213,7 +213,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
     [self scrollToLastUnreadMessageIfNeeded];
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
-    [self updateHeaderHeight];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
