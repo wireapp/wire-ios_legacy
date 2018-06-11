@@ -24,11 +24,10 @@ import Cartography
 extension ZMConversation: ShareDestination {
     
     public var showsGuestIcon: Bool {
-        return self.conversationType == .oneOnOne &&
+        return ZMUser.selfUser().hasTeam &&
+            self.conversationType == .oneOnOne &&
             self.activeParticipants.first {
-                guard let user = $0 as? ZMUser else { return false }
-                return user.hasTeam && user.isGuest(in: self)
-            } != nil
+                $0 is ZMUser && ($0 as! ZMUser).isGuest(in: self) } != nil
     }
     
     public var avatarView: UIView? {
