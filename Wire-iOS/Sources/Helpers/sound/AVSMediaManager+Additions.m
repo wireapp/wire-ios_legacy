@@ -90,4 +90,17 @@ static NSDictionary *MediaManagerSoundConfig = nil;
     [self configureCustomSounds];
 }
 
+- (void)enableCallingAudioSessionForVideoCall:(BOOL)isVideoCall
+{
+    NSString *mode = isVideoCall ? AVAudioSessionModeVideoChat : AVAudioSessionModeVoiceChat;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+    [[AVAudioSession sharedInstance] setMode:mode error:nil];
+}
+
+- (void)disableCallingAudioSession
+{
+    [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeDefault error:nil];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
+}
+
 @end

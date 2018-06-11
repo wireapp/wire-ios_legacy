@@ -271,6 +271,7 @@ extension CallViewController {
             }
 
             self.checkVideoPermissions { videoGranted in
+                self.mediaManager.enableCallingAudioSession(forVideoCall: videoGranted)
                 self.conversation?.joinVoiceChannel(video: videoGranted)
                 self.disableVideoIfNeeded()
             }
@@ -324,7 +325,9 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
         case .acceptCall: acceptCallIfPossible()
         case .acceptDegradedCall: acceptDegradedCall()
-        case .terminateCall: voiceChannel.leave(userSession: userSession)
+        case .terminateCall:
+            voiceChannel.leave(userSession: userSession)
+            mediaManager.disableCallingAudioSession()
         case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndKeepDegradedConversationSecurity(userSession: userSession) }
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()

@@ -50,4 +50,7 @@ FOUNDATION_EXPORT void MediaManagerPlayAlert(void);
 - (void)configureSounds;
 - (void)configureDefaultSounds;
 
+- (void)enableCallingAudioSessionForVideoCall:(BOOL)isVideoCall;
+- (void)disableCallingAudioSession;
+
 @end
