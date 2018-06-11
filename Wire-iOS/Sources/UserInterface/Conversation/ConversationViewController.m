@@ -88,15 +88,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
 
-@interface ConversationViewController (VerticalTransitionDataSource) <VerticalTransitionDataSource>
-@end
-
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
 @end
 
 @interface ConversationViewController ()
 
-@property (nonatomic) ConversationDetailsTransitioningDelegate *conversationDetailsTransitioningDelegate;
 @property (nonatomic) BarController *conversationBarController;
 @property (nonatomic) MediaBarViewController *mediaBarViewController;
 
@@ -155,8 +151,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }];
 
     self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextConversation];
-    self.conversationDetailsTransitioningDelegate = [[ConversationDetailsTransitioningDelegate alloc] init];
-    self.conversationDetailsTransitioningDelegate.dataSource = self;
     
     [self createInputBarController];
     [self createContentViewController];
@@ -465,8 +459,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [ConversationInputBarViewController endEditingMessage];
     [self.inputBarController.inputBar.textView resignFirstResponder];
-    
-    viewController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
+
     [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
                                                        fromView:sourceView
                                           contentViewController:viewController];
@@ -903,7 +896,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                     }
                 } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
                     UIViewController *participantsController = [self participantsController];
-                    participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
                     [self presentViewController:participantsController animated:YES completion:nil];
                 }
                 break;
@@ -920,23 +912,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@implementation ConversationViewController (VerticalTransitionDataSource)
-
-- (NSArray<UIView *> *)viewsToHideDuringVerticalTransition:(VerticalTransition *)transition
-{
-    NSMutableArray<UIView *> *viewsToHide = [[NSMutableArray alloc] init];
-    
-    if ([self.parentViewController isKindOfClass:[ConversationRootViewController class]]) {
-        ConversationRootViewController *convRootViewController = (ConversationRootViewController *)self.parentViewController;
-        [viewsToHide addObject:convRootViewController.navBarContainer.view];
-    }
-    
-    [viewsToHide addObject:self.inputBarController.view];
-    
-    return viewsToHide;
-}
-
-@end
 
 @implementation ConversationViewController (ConversationListObserver)
 
