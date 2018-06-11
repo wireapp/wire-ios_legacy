@@ -43,19 +43,19 @@ extension ZClientViewController {
             else {
                 let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
 
-                UIView.wr_animate(easing: RBBEasingFunctionEaseInExpo, duration: 0.35, delay: 0, animations: {
+                UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
                     heightConstraint.isActive = true
                     
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
-                }, options: .beginFromCurrentState, completion: { completed in
+                }) { _ in
                     heightConstraint.autoRemove()
                     
                     self.topOverlayViewController?.removeFromParentViewController()
                     previousViewController.view.removeFromSuperview()
                     self.topOverlayViewController = nil
                     self.updateSplitViewTopConstraint()
-                })
+                }
             }
         }
         else if let viewController = viewController {
@@ -79,13 +79,13 @@ extension ZClientViewController {
                 self.view.setNeedsLayout()
                 self.view.layoutIfNeeded()
                 
-                UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, delay: 0.5, animations: {
+                UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
                     heightConstraint.autoRemove()
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
-                }, options: .beginFromCurrentState, completion: { _ in
+                }) { _ in
                     UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                })
+                }
             }
             else {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)

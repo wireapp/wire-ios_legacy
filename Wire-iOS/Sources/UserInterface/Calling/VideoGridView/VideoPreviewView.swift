@@ -90,8 +90,6 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
     }
 
     private func updateState(animated: Bool = false) {
-        let duration: TimeInterval = animated ? 0.2 : 0
-        
         if isPaused {
             createSnapshotView()
             blurView.effect = nil
@@ -99,25 +97,45 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
             blurView.isHidden = false
             pausedLabel.isHidden = false
 
-            UIView.animate(withDuration: duration, animations: { [weak self] in
+            let animationBlock = { [weak self] in
                 self?.blurView.effect = UIBlurEffect(style: .dark)
                 self?.pausedLabel.alpha = 1
-            }, completion: { [weak self] _ in
+            }
+            
+            let completionBlock = { [weak self] (_: Bool) -> () in
                 self?.previewView?.removeFromSuperview()
                 self?.previewView = nil
-            })
+            }
+            
+            if animated {
+                UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
+            }
+            else {
+                animationBlock()
+                completionBlock(true)
+            }
         } else {
             createPreviewView()
-            UIView.animate(withDuration: duration, animations: { [weak self] in
+            let animationBlock = { [weak self] in
                 self?.blurView.effect = nil
                 self?.snapshotView?.alpha = 0
                 self?.pausedLabel.alpha = 0
-            }, completion: { [weak self] _ in
+            }
+            
+            let completionBlock =  { [weak self] (_: Bool) -> () in
                 self?.snapshotView?.removeFromSuperview()
                 self?.snapshotView = nil
                 self?.blurView.isHidden = true
                 self?.pausedLabel.isHidden = true
-            })
+            }
+            
+            if animated {
+                UIView.animate(withDuration: 0.2, animations: animationBlock, completion: completionBlock)
+            }
+            else {
+                animationBlock()
+                completionBlock(true)
+            }
         }
     }
 
