@@ -28,11 +28,12 @@ extension ProfilePictureStepViewController {
 
         picker.sourceType = .photoLibrary
         picker.delegate = self
-        showController(picker, inPopoverFromView: sender)
+        show(picker, inPopoverFrom: sender as! UIView)
     }
 }
 
 extension ProfilePictureStepViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [String : Any]) {
 
