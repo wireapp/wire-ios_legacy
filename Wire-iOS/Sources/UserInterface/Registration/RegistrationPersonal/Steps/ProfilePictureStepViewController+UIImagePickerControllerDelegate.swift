@@ -18,7 +18,21 @@
 
 import Foundation
 
-extension ProfilePictureStepViewController: UIImagePickerControllerDelegate {
+extension ProfilePictureStepViewController {
+
+    func showGalleryController(_ sender: Any) {
+        let picker = UIImagePickerController()
+        if #available(iOS 11.0, *) {
+            picker.imageExportPreset = .compatible
+        }
+
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        showController(picker, inPopoverFromView: sender)
+    }
+}
+
+extension ProfilePictureStepViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [String : Any]) {
 

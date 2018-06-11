@@ -45,7 +45,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 #endif
 
 
-@interface ProfilePictureStepViewController () <UINavigationControllerDelegate>
+@interface ProfilePictureStepViewController ()
 
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) Button *selectOwnPictureButton;
@@ -229,18 +229,6 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     [self presentViewController:picker animated:YES completion:nil];
 }
 
-- (IBAction)showGalleryController:(id)sender
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    if (@available(iOS 11.0, *)) {
-        picker.imageExportPreset = UIImagePickerControllerImageURLExportPresetCompatible;
-    }
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.delegate = self;
-    
-    [self showController:picker inPopoverFromView:sender];
-}
-
 - (IBAction)keepPicture:(id)sender
 {
     self.showLoadingView = YES;
@@ -305,8 +293,6 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
-
-#pragma mark - UINavigationControllerDelegate
 
 @end
 
