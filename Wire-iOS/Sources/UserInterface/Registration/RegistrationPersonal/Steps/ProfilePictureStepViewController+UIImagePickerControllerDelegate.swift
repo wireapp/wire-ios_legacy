@@ -19,18 +19,32 @@
 import Foundation
 
 extension ProfilePictureStepViewController: UIImagePickerControllerDelegate {
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage else {
+    public func imagePickerController(_ picker: UIImagePickerController,
+                                      didFinishPickingMediaWithInfo info: [String : Any]) {
+
+        // For iOS 11, simply get single image form dictionary instead of PHImageManager, to get rid of photo access permission dialog
+        if #available(iOS 11.0, *) {
+            guard let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage else {
+
+                self.dismiss(animated: true)
+                return
+            }
+
+            self.profilePictureImageView.image = image
+            self.photoSource = .cameraRoll
+            self.setPictureImageData(UIImageJPEGRepresentation(image, 1.0))
 
             self.dismiss(animated: true)
-            return
+        } else {
+            UIImagePickerController.image(fromMediaInfo: info, resultBlock: { image in
+                self.profilePictureImageView.image = image
+            })
+            UIImagePickerController.imageData(fromMediaInfo: info, resultBlock: { imageData in
+                self.dismiss(animated: true)
+                self.photoSource = .cameraRoll
+                self.setPictureImageData(imageData)
+            })
         }
-
-        self.profilePictureImageView.image = image
-        self.photoSource = .cameraRoll
-        self.setPictureImageData(UIImageJPEGRepresentation(image, 1.0))
-
-        self.dismiss(animated: true)
     }
 
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
