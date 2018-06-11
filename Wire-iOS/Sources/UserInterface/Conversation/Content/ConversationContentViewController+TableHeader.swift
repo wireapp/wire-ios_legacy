@@ -16,8 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-struct Log {
-    static let calling = ZMSLog(tag: "calling")
-    static let haptics = ZMSLog(tag: "haptics")
-    static let callTimestamps = ZMSLog(tag: "call-participant-timestamps")
+import UIKit
+
+extension ConversationContentViewController {
+    @objc func headerViewFrame(view: UIView) -> CGRect {
+        let fittingSize = CGSize(width: tableView.bounds.size.width, height: headerHeight())
+        let requiredSize = view.systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityDefaultLow)
+
+        return CGRect(origin: .zero, size: requiredSize)
+    }
+
+    func updateHeaderHeight() {
+        if let headerView = tableView.tableHeaderView {
+            headerView.frame = headerViewFrame(view: headerView)
+            tableView.tableHeaderView = headerView
+        }
+    }
 }

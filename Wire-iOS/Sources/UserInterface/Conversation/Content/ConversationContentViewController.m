@@ -198,6 +198,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
     
     self.messagePresenter.modalTargetController = self.parentViewController;
+
+    [self updateHeaderHeight];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -272,9 +274,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)setConversationHeaderView:(UIView *)headerView
 {
-    CGSize fittingSize = CGSizeMake(self.tableView.bounds.size.width, self.headerHeight);
-    CGSize requiredSize = [headerView systemLayoutSizeFittingSize:fittingSize withHorizontalFittingPriority:UILayoutPriorityRequired verticalFittingPriority:UILayoutPriorityDefaultLow];
-    headerView.frame = CGRectMake(0, 0, requiredSize.width, requiredSize.height);
+    headerView.frame = [self headerViewFrameWithView:headerView];
     self.tableView.tableHeaderView = headerView;
 }
 
@@ -285,7 +285,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         UITableViewCell *cell = [self cellForMessage:self.messageWindow.messages.firstObject];
         height += CGRectGetHeight(cell.bounds);
     }
-    
+
+    if (self.tableView.bounds.size.height <= 0) {
+        [self.tableView setNeedsLayout];
+        [self.tableView layoutIfNeeded];
+    }
+
     return self.tableView.bounds.size.height - height;
 }
 

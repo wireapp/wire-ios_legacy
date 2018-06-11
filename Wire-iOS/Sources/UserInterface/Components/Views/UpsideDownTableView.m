@@ -63,11 +63,21 @@
     [super setTableFooterView:tableHeaderView];
 }
 
+- (UIView *)tableHeaderView
+{
+    return super.tableFooterView;
+}
+
 - (void)setTableFooterView:(UIView *)tableFooterView
 {
     tableFooterView.transform = CGAffineTransformMakeScale(1, -1);
     
     [super setTableHeaderView:tableFooterView];
+}
+
+- (UIView *)tableFooterView
+{
+    return super.tableHeaderView;
 }
 
 - (id)dequeueReusableCellWithIdentifier:(NSString *)identifier
