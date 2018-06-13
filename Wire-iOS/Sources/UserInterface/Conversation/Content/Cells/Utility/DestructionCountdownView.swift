@@ -25,7 +25,6 @@ import Cartography
     private let remainingTimeLayer = CAShapeLayer()
     private let elapsedTimeLayer = CAShapeLayer()
     private let elapsedTimeAnimationKey = "elapsedTime"
-    private let imminentExpirationAnimationKey = "imminentExpiration"
 
     // MARK: - Initialization
 
@@ -72,10 +71,6 @@ import Cartography
         return elapsedTimeLayer.animation(forKey: elapsedTimeAnimationKey) != nil
     }
 
-    @objc public var isAnimatingImminentExpiration: Bool {
-        return layer.animation(forKey: imminentExpirationAnimationKey) != nil
-    }
-
     @objc public var remainingTimeColor: UIColor? {
         get {
             return remainingTimeLayer.fillColor.flatMap(UIColor.init)
@@ -108,21 +103,7 @@ import Cartography
 
     }
 
-    @objc public func toggleImminentExpiration() {
-
-        let opacityAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
-        opacityAnimation.fromValue = 1
-        opacityAnimation.toValue = 0.5
-        opacityAnimation.duration = 0.25
-        opacityAnimation.fillMode = kCAFillModeForwards
-        opacityAnimation.isRemovedOnCompletion = false
-
-        layer.add(opacityAnimation, forKey: imminentExpirationAnimationKey)
-
-    }
-
     @objc public func stopAnimating() {
-        layer.removeAllAnimations()
         elapsedTimeLayer.removeAllAnimations()
     }
 

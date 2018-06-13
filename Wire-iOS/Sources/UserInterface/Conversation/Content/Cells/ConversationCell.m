@@ -36,6 +36,8 @@ const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 static const CGFloat BurstContainerExpandedHeight = 40;
 
+static NSString * const kConversationCellImminentExpirationAnimationKey = @"ImminentExpiration";
+
 @implementation MenuConfigurationProperties
 
 @end
@@ -680,6 +682,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.destructionLink invalidate];
     self.destructionLink = nil;
     self.countdownView.hidden = YES;
+    self.messageContentView.alpha = 1;
     [self.countdownView stopAnimating];
 }
 
@@ -717,8 +720,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         self.countdownView.hidden = NO;
     }
 
-    if (duration <= 10 && !self.countdownView.isAnimatingImminentExpiration) {
-        [self.countdownView toggleImminentExpiration];
+    if (duration <= 10 && self.messageContentView.alpha > 0.5) {
+        self.messageContentView.alpha = 0.5;
     }
 
     [self.toolboxView updateTimestamp:self.message];
