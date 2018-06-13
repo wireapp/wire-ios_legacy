@@ -62,7 +62,7 @@ private final class MockAssetLibrary: AssetLibrary {
 }
 
 fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
-    override var shouldBlockCallingRelatedActions: Bool {
+    @objc override var shouldBlockCallingRelatedActions: Bool {
         return true
     }
 }

@@ -64,7 +64,7 @@ class SettingsPropertyTests: XCTestCase {
                 recordFailure(
                     withDescription: "Wrong property value, read \(readValue) but expected \(value)",
                     inFile: file,
-                    atLine: line,
+                    atLine: Int(line),
                     expected: true
                 )
             }
@@ -73,7 +73,7 @@ class SettingsPropertyTests: XCTestCase {
             recordFailure(
                 withDescription: "Unable to read property value",
                 inFile: file,
-                atLine: line,
+                atLine: Int(line),
                 expected: true
             )
         }

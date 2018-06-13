@@ -58,7 +58,7 @@ class CombinationTest<SUT: Copyable, Variant: Hashable> {
                 }
             }
             
-            current = new.compactMap { $0 }
+            current = new.flatMap { $0 }
         }
         
         return current

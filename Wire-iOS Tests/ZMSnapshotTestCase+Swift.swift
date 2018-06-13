@@ -24,7 +24,7 @@ import Classy
 
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
-    public func wrapInTableView() -> UITableView {
+    @objc public func wrapInTableView() -> UITableView {
         let tableView = UITableView(frame: self.bounds, style: .plain)
         
         tableView.delegate = self
@@ -34,7 +34,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.layoutMargins = self.layoutMargins
         
-        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: .required, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         self.layoutSubviews()
         
         self.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
@@ -86,7 +86,7 @@ extension ZMSnapshotTestCase {
         verifyView(view, extraLayoutPass: false, tolerance: tolerance, file: file.utf8SignedStart(), line: line, identifier: identifier)
     }
     
-    func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _ in }) {
+    func verifyInAllDeviceSizes(view: UIView, file: StaticString = #file, line: UInt = #line, configuration: @escaping (UIView, Bool) -> () = { _, _ in }) {
         verifyView(inAllDeviceSizes: view, extraLayoutPass: false, file: file.utf8SignedStart(), line: line, configurationBlock: configuration)
     }
     

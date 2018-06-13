@@ -5963,7 +5963,7 @@
 					BACB88501AF7C48900DDCDB0 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = W5KEQBF9B5;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0930;
 						TestTargetID = 8F42C537199244A700288E4D;
 					};
 					BFAD53FA1E6972CC0015C677 = {
@@ -7838,7 +7838,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
 			};
 			name = Debug;
@@ -7863,7 +7864,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
 			};
 			name = Release;

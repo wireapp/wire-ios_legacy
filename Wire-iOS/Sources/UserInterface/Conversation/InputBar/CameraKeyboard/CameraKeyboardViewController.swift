@@ -383,7 +383,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
-    var shouldBlockCallingRelatedActions: Bool {
+    @objc var shouldBlockCallingRelatedActions: Bool {
         return ZMUserSession.shared()?.isCallOngoing ?? false
     }
     
