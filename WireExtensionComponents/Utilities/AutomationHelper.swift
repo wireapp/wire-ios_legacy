@@ -26,7 +26,7 @@ import WireSyncEngine
 /// These values typically do not need to be stored in `Settings`.
 @objc public final class AutomationHelper: NSObject {
     
-    static @objc public let sharedHelper = AutomationHelper()
+    @objc static public let sharedHelper = AutomationHelper()
     
     /// Whether Hockeyapp should be used
     @objc public var useHockey: Bool {
@@ -153,7 +153,7 @@ extension ArgumentsType {
         for argument in self.arguments {
             let searchString = "--" + commandLineArgument + "="
             if argument.hasPrefix(searchString) {
-                return argument.substring(from: searchString.index(searchString.startIndex, offsetBy: searchString.count))
+                return String(argument[searchString.index(searchString.startIndex, offsetBy: searchString.count)...])
             }
         }
         return nil

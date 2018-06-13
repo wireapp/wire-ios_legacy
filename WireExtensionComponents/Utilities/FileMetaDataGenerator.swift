@@ -26,7 +26,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 @objc public final class FileMetaDataGenerator: NSObject {
 
-    static @objc public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
+    @objc static public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in
             let thumbnail = preview != nil ? UIImageJPEGRepresentation(preview!, 0.9) : nil
             
@@ -51,7 +51,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 extension AVURLAsset {
     @objc static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
-        return audiovisualTypes().reduce(false) { (conformsBefore: Bool, compatibleUTI: String) -> Bool in
+        return audiovisualTypes().reduce(false) { (conformsBefore, compatibleUTI) -> Bool in
             conformsBefore || UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
         }
     }

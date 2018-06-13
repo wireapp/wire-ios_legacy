@@ -52,8 +52,8 @@ extension FontWeight {
         .medium:     UIFont.Weight.medium.rawValue,
         .semibold:   UIFont.Weight.semibold.rawValue,
         .bold:       UIFont.Weight.bold.rawValue,
-        .heavy:      UIFont.Weight.heavy,
-        .black:      UIFont.Weight.black
+        .heavy:      UIFont.Weight.heavy.rawValue,
+        .black:      UIFont.Weight.black.rawValue
     ]
     
     /// Weight mapping used when the bold text accessibility setting is
@@ -67,8 +67,8 @@ extension FontWeight {
         .medium:     UIFont.Weight.medium.rawValue,
         .semibold:   UIFont.Weight.semibold.rawValue,
         .bold:       UIFont.Weight.bold.rawValue,
-        .heavy:      UIFont.Weight.heavy,
-        .black:      UIFont.Weight.black
+        .heavy:      UIFont.Weight.heavy.rawValue,
+        .black:      UIFont.Weight.black.rawValue
     ]
     
     public func fontWeight(accessibilityBoldText: Bool? = nil) -> CGFloat {
