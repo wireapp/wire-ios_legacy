@@ -499,7 +499,7 @@ fileprivate extension UIPreviewAction {
         self.init(
             title: titleKey.localized,
             style: .default,
-            handler: { _ in handler() }
+            handler: { _,_  in handler() }
         )
     }
 }

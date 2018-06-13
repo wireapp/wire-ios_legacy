@@ -45,10 +45,10 @@ class DefaultNavigationBar : UINavigationBar {
         backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
     }
     
-    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [String : Any] {
-        return [NSFontAttributeName: UIFont.systemFont(ofSize: 11, weight: UIFontWeightSemibold),
-                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant),
-                NSBaselineOffsetAttributeName: 1.0]
+    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedStringKey : Any] {
+        return [.font: UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold),
+                .foregroundColor: ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant),
+                .baselineOffset: 1.0]
     }
     
 }

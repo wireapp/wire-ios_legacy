@@ -112,7 +112,7 @@ import Cartography
         return layoutAttributes
     }
     
-    public func didSelect(_ button: UIButton!) {
+    @objc public func didSelect(_ button: UIButton!) {
         self.selectionAction?(self.section)
     }
 }

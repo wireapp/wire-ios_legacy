@@ -50,15 +50,15 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         verifiedIconView.image = WireStyleKit.imageOfShieldverified()
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
         verifiedIconView.contentMode = .scaleAspectFit
-        verifiedIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        verifiedIconView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        verifiedIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        verifiedIconView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         verifiedIconView.accessibilityIdentifier = "img.shield"
         
         accessoryIconView.image = UIImage(for: .pencil, iconSize: .like, color: .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .scaleAspectFit
-        accessoryIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        accessoryIconView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        accessoryIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        accessoryIconView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.font = FontSpec.init(.normal, .light).font!

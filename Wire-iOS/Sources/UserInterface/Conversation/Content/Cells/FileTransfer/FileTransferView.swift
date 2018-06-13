@@ -248,7 +248,7 @@ final public class FileTransferView: UIView, TransferView {
     
     // MARK: - Actions
     
-    open func onActionButtonPressed(_ sender: UIButton) {
+    @objc open func onActionButtonPressed(_ sender: UIButton) {
         guard let message = self.fileMessage, let fileMessageData = message.fileMessageData else {
             return
         }

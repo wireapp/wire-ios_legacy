@@ -115,11 +115,11 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         }
     }
 
-    func backspaceTapped(_ sender: IconButton) {
+    @objc func backspaceTapped(_ sender: IconButton) {
         delete()
     }
 
-    func backspaceLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc func backspaceLongPressed(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began:
             deleting = true

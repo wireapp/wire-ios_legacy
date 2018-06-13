@@ -110,7 +110,7 @@ final class MessageComposeViewController: UIViewController {
         markdownBarView.delegate = messageTextView
     }
 
-    private dynamic func backButtonPressed() {
+    @objc private dynamic func backButtonPressed() {
         navigationController?.navigationController?.popViewController(animated: true)
     }
 
@@ -181,7 +181,7 @@ final class MessageComposeViewController: UIViewController {
         }
     }
 
-    fileprivate dynamic func dismissTapped() {
+    @objc fileprivate dynamic func dismissTapped() {
         
         // if nothing to save/delete, just dismiss
         if !hasDraftContent {
@@ -211,12 +211,12 @@ final class MessageComposeViewController: UIViewController {
         self.present(controller, animated: true, completion: nil)
     }
 
-    fileprivate dynamic func updateDraftThrottled() {
+    @objc fileprivate dynamic func updateDraftThrottled() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateDraft), object: nil)
         perform(#selector(updateDraft), with: nil, afterDelay: 0.2)
     }
 
-    fileprivate dynamic func updateDraft() {
+    @objc fileprivate dynamic func updateDraft() {
         if let draft = draft {
             persistence.enqueue(block: {
                 if self.hasDraftContent {
@@ -275,7 +275,7 @@ final class MessageComposeViewController: UIViewController {
         updateButtonStates()
     }
 
-    func keyboardFrameWillChange(_ notification: Notification) {
+    @objc func keyboardFrameWillChange(_ notification: Notification) {
         guard let endSize = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
             return
         }

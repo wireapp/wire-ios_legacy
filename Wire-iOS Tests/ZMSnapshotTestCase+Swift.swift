@@ -34,7 +34,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.layoutMargins = self.layoutMargins
         
-        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: .required, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
         self.layoutSubviews()
         
         self.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)

@@ -70,8 +70,8 @@ import Cartography
             separator.height == .hairline
         }
         
-        dismissButton.setContentCompressionResistancePriority(1000, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(750, for: .horizontal)
+        dismissButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
     }
     
     @objc fileprivate func dismissButtonTapped(_ sender: IconButton) {

@@ -378,7 +378,7 @@ class AppRootViewController: UIViewController {
         CASStyler.default().apply(fontScheme: fontScheme)
     }
 
-    func onContentSizeCategoryChange() {
+    @objc func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
@@ -513,7 +513,7 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
 
 extension AppRootViewController {
 
-    func onUserGrantedAudioPermissions() {
+    @objc func onUserGrantedAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }

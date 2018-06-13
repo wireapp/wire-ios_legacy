@@ -158,7 +158,7 @@ class SettingsClientViewController: UIViewController,
         fatalError("init(coder:) has not been implemented")
     }
     
-    func onVerifiedChanged(_ sender: UISwitch!) {
+    @objc func onVerifiedChanged(_ sender: UISwitch!) {
         let selfClient = ZMUserSession.shared()!.selfUserClient()
         
         ZMUserSession.shared()?.enqueueChanges({
@@ -175,7 +175,7 @@ class SettingsClientViewController: UIViewController,
         })
     }
     
-    func onDonePressed(_ sender: AnyObject!) {
+    @objc func onDonePressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: .none)
     }
     

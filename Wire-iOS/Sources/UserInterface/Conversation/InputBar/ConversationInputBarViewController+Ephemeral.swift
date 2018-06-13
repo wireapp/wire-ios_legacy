@@ -31,7 +31,7 @@ extension ConversationInputBarViewController {
         button.addTarget(self, action: #selector(ephemeralKeyboardButtonTapped), for: .touchUpInside)
     }
 
-    public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
+    @objc public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
         updateEphemeralKeyboardVisibility()
     }
 

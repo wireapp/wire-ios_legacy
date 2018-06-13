@@ -194,19 +194,19 @@ import Cartography
 
     // MARK: - Target Action
 
-    private dynamic func archivedButtonTapped(_ sender: IconButton) {
+    @objc private dynamic func archivedButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
 
-    private dynamic func startUIButtonTapped(_ sender: IconButton) {
+    @objc private dynamic func startUIButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 
-    private dynamic func cameraButtonTapped(_ sender: IconButton) {
+    @objc private dynamic func cameraButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .camera)
     }
 
-    private dynamic func composeButtonTapped(_ sender: IconButton) {
+    @objc private dynamic func composeButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .compose)
     }
 }

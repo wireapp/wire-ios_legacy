@@ -55,7 +55,7 @@ import Classy
         addSubview(titleButton)
     }
     
-    func titleButtonTapped(_ sender: UIButton) {
+    @objc func titleButtonTapped(_ sender: UIButton) {
         tapHandler?(sender)
     }
     
@@ -75,7 +75,7 @@ import Classy
         titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
         titleButton.sizeToFit()
         titleButton.isEnabled = interactive
-        titleButton.setContentCompressionResistancePriority(1000, for: .vertical)
+        titleButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         updateAccessibilityLabel()
         frame = CGRect(origin: frame.origin, size: titleButton.bounds.size)
         createConstraints()

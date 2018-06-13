@@ -26,7 +26,7 @@ public extension ZMConversationList {
     }
 
     func conversations() -> [ZMConversation] {
-        return self.flatMap { $0 as? ZMConversation }
+        return self.compactMap { $0 as? ZMConversation }
     }
 }
 
@@ -175,19 +175,19 @@ public extension ConversationViewController {
         }
     }
 
-    func voiceCallItemTapped(_ sender: UIBarButtonItem) {
+    @objc func voiceCallItemTapped(_ sender: UIBarButtonItem) {
         startCallController.startAudioCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
-    func videoCallItemTapped(_ sender: UIBarButtonItem) {
+    @objc func videoCallItemTapped(_ sender: UIBarButtonItem) {
         startCallController.startVideoCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
-    private dynamic func joinCallButtonTapped(_sender: AnyObject!) {
+    @objc private dynamic func joinCallButtonTapped(_sender: AnyObject!) {
         startCallController.joinCall()
     }
 
-    func onCollectionButtonPressed(_ sender: AnyObject!) {
+    @objc func onCollectionButtonPressed(_ sender: AnyObject!) {
         if self.collectionController == .none {
             let collections = CollectionsViewController(conversation: conversation)
             collections.delegate = self

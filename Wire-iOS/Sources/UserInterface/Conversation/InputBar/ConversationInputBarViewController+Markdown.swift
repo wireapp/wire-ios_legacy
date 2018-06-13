@@ -42,7 +42,7 @@ extension ConversationInputBarViewController {
         markdownButton.isEnabled = !inputBar.isEditing
     }
     
-    func markdownButtonTapped(_ sender: IconButton) {
+    @objc func markdownButtonTapped(_ sender: IconButton) {
     
         if !inputBar.isMarkingDown {
             inputBar.textView.becomeFirstResponder()

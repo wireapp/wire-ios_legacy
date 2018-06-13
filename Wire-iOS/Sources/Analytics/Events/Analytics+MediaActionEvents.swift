@@ -300,7 +300,7 @@ public extension Analytics {
         let filterName = filter.description.lowercased()
         var  attributes: [String: Any] = [
             "duration": videoDurationClusterizer.clusterizeTimeInterval(duration),
-            "duration_actual": type(of: self).stringFromTimeInterval(duration),
+            "duration_actual": Swift.type(of: self).stringFromTimeInterval(duration),
             AudioMessageContext.keyName: context.attributeString,
             "filter": filterName,
             "state": type.description

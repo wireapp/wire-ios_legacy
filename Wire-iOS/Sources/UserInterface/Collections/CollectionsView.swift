@@ -116,7 +116,7 @@ import Cartography
 
             noResultsView.top >= searchBar.bottom + 12
             noResultsView.centerX == selfView.centerX
-            noResultsView.centerY == selfView.centerY ~ UILayoutPriorityDefaultLow
+            noResultsView.centerY == selfView.centerY ~ UILayoutPriority.defaultLow
             noResultsView.bottom <= selfView.bottom - 12
             noResultsView.leading >= selfView.leading + 24
             noResultsView.trailing <= selfView.trailing - 24

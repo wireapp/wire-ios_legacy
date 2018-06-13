@@ -79,7 +79,7 @@ extension MediaPlayerController: MediaPlayer {
 
 extension MediaPlayerController {
 
-    func playerRateChanged() {
+    @objc func playerRateChanged() {
         if player?.rate > 0 {
             delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
         } else {

@@ -120,7 +120,7 @@ public class SearchHeaderViewController : UIViewController {
         }
     }
     
-    fileprivate dynamic func onClearButtonPressed() {
+    @objc fileprivate dynamic func onClearButtonPressed() {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
         resetQuery()

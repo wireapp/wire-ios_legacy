@@ -129,7 +129,7 @@ class SearchResultsView : UIView {
         }
     }
     
-    func keyboardFrameDidChange(notification: Notification) {
+    @objc func keyboardFrameDidChange(notification: Notification) {
         guard !isContainedInPopover else {
             return
         }

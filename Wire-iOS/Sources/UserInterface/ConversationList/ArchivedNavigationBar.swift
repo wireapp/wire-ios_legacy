@@ -74,7 +74,7 @@ import Cartography
         }
     }
     
-    func dismissButtonTapped(_ sender: IconButton) {
+    @objc func dismissButtonTapped(_ sender: IconButton) {
         dismissButtonHandler?()
     }
     

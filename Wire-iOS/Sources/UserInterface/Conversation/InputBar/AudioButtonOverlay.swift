@@ -132,7 +132,7 @@ import Cartography
         playButton.accessibilityValue = state.description
     }
     
-    func buttonPressed(_ sender: IconButton) {
+    @objc func buttonPressed(_ sender: IconButton) {
         let type: AudioButtonOverlayButtonType
         
         if sender == sendButton {

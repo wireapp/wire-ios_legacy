@@ -156,7 +156,7 @@ public final class LocationMessageCell: ConversationCell {
         updateMapLocation(withLocationData: locationData)
     }
     
-    func openInMaps() {
+    @objc func openInMaps() {
         message?.locationMessageData?.openInMaps(with: mapView.region.span)
         guard let conversation = message.conversation else { return }
         let sentBySelf = message.sender?.isSelfUser ?? false

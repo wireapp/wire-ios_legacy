@@ -99,7 +99,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         let format = "self.settings.account_section.phone_number.change.verify.description".localized
         let text = String(format: format, newNumber)
         if let font = FontSpec(.normal, .medium).font {
-            let attributedString = NSAttributedString(string: text).addAttributes([NSFontAttributeName : font], toSubstring: newNumber)
+            let attributedString = NSAttributedString(string: text).addAttributes([.font : font], toSubstring: newNumber)
             description.descriptionLabel.font = FontSpec(.normal, .semibold).font!
             description.descriptionLabel.attributedText = attributedString
         }

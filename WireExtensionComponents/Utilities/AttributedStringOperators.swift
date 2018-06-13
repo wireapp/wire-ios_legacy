@@ -84,25 +84,25 @@ public func &&(left: String, right: [NSAttributedStringKey: Any]) -> NSAttribute
 }
 
 public func &&(left: String, right: UIFont) -> NSAttributedString {
-    let result = NSAttributedString(string: left, attributes: [NSAttributedStringKey.font: right])
+    let result = NSAttributedString(string: left, attributes: [.font: right])
     return result
 }
 
 public func &&(left: NSAttributedString, right: UIFont?) -> NSAttributedString {
     guard let font = right else { return left }
     let result = NSMutableAttributedString(attributedString: left)
-    result.addAttributes([NSAttributedStringKey.font: font], range: NSMakeRange(0, result.length))
+    result.addAttributes([.font: font], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
 public func &&(left: String, right: UIColor) -> NSAttributedString {
-    let result = NSAttributedString(string: left, attributes: [NSAttributedStringKey.foregroundColor: right])
+    let result = NSAttributedString(string: left, attributes: [.foregroundColor: right])
     return result
 }
 
 public func &&(left: NSAttributedString, right: UIColor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
-    result.addAttributes([NSAttributedStringKey.foregroundColor: right], range: NSMakeRange(0, result.length))
+    result.addAttributes([.foregroundColor: right], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
@@ -139,7 +139,7 @@ public enum ParagraphStyleDescriptor {
 
 public func &&(left: NSAttributedString, right: ParagraphStyleDescriptor) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
-    result.addAttributes([NSAttributedStringKey.paragraphStyle: right.style], range: NSMakeRange(0, result.length))
+    result.addAttributes([.paragraphStyle: right.style], range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
 }
 
@@ -228,12 +228,12 @@ public extension NSAttributedString {
 
     @objc(addingColor:toSubstring:)
     func adding(color: UIColor, to substring: String) -> NSAttributedString {
-        return addAttributes([NSAttributedStringKey.foregroundColor: color], toSubstring: substring)
+        return addAttributes([.foregroundColor: color], toSubstring: substring)
     }
     
     @objc(addingFont:toSubstring:)
     func adding(font: UIFont, to substring: String) -> NSAttributedString {
-        return addAttributes([NSAttributedStringKey.font: font], toSubstring: substring)
+        return addAttributes([.font: font], toSubstring: substring)
     }
 }
 

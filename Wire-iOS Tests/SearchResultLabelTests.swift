@@ -65,8 +65,8 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
                 label.width <= 320
             }
             $0.result.numberOfLines = 1
-            $0.result.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-            $0.result.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+            $0.result.setContentCompressionResistancePriority(.required, for: .vertical)
+            $0.result.setContentHuggingPriority(.required, for: .vertical)
             
             $0.result.layoutForTest()
             self.verify(view: $0.result, identifier: identifier, file: #file, line: #line)

@@ -169,7 +169,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         }
     }
     
-    func saveButtonTapped() {
+    @objc func saveButtonTapped() {
         if let newNumber = state.newNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
             updateSaveButtonState(enabled: false)
@@ -238,7 +238,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         tableView.deselectRow(at: indexPath, animated: false)
     }
     
-    func selectCountry() {
+    @objc func selectCountry() {
         let countryCodeController = CountryCodeTableViewController()
         countryCodeController.delegate = self
         

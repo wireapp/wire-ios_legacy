@@ -193,11 +193,11 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionView.scrollRectToVisible(CGRect(x: endOfListX, y: 0, width: 10, height: 10), animated: animated)
     }
     
-    func goBackPressed(_ sender: AnyObject) {
+    @objc func goBackPressed(_ sender: AnyObject) {
         scrollToCamera(animated: true)
     }
     
-    func openCameraRollPressed(_ sender: AnyObject) {
+    @objc func openCameraRollPressed(_ sender: AnyObject) {
         self.delegate?.cameraKeyboardViewControllerWantsToOpenCameraRoll(self)
     }
     
@@ -288,9 +288,9 @@ open class CameraKeyboardViewController: UIViewController {
                 }
                 
                 exportSession.outputURL = exportURL
-                exportSession.outputFileType = AVFileTypeQuickTimeMovie
+                exportSession.outputFileType = AVFileType.mov
                 exportSession.shouldOptimizeForNetworkUse = true
-                exportSession.outputFileType = AVFileTypeMPEG4
+                exportSession.outputFileType = AVFileType.mp4
 
                 exportSession.exportAsynchronously {
                     DispatchQueue.main.async(execute: {

@@ -37,8 +37,8 @@ public final class UnknownMessageCell : ConversationCell {
         messageLabel.numberOfLines = 0
         messageLabel.isAccessibilityElement = true
         messageLabel.accessibilityLabel = "Text"
-        messageLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
-                                       NSForegroundColorAttributeName: ZMUser.selfUser().accentColor]
+        messageLabel.linkAttributes = [.underlineStyle: NSUnderlineStyle.styleNone.rawValue,
+                                       .foregroundColor: ZMUser.selfUser().accentColor]
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

@@ -71,8 +71,8 @@ import Classy
             separator.height == .hairline
         }
         
-        sendButton.setContentCompressionResistancePriority(1000, for: .horizontal)
-        addressLabel.setContentCompressionResistancePriority(750, for: .horizontal)
+        sendButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+        addressLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
     }
     
     @objc fileprivate func sendButtonTapped(_ sender: Button) {

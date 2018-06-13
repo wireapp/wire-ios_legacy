@@ -173,7 +173,7 @@ public final class VideoMessageCell: ConversationCell {
         return super.canPerformAction(action, withSender: sender)
     }
     
-    open func wr_saveVideo() {
+    @objc open func wr_saveVideo() {
         if let fileMessageData = self.message.fileMessageData,
             let fileURL = fileMessageData.fileURL,
             self.message.videoCanBeSavedToCameraRoll() {

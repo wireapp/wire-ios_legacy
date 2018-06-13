@@ -259,7 +259,7 @@ fileprivate extension UITableViewCell {
     func prepareForSnapshots() -> UITableView {
         bounds.size = systemLayoutSizeFitting(
             CGSize(width: 375, height: 0),
-            withHorizontalFittingPriority: UILayoutPriorityRequired,
+            withHorizontalFittingPriority: .required,
             verticalFittingPriority: UILayoutPriorityFittingSizeLevel
         )
         return wrapInTableView()

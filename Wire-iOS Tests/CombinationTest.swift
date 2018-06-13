@@ -58,14 +58,14 @@ class CombinationTest<SUT: Copyable, Variant: Hashable> {
                 }
             }
             
-            current = new.flatMap { $0 }
+            current = new.compactMap { $0 }
         }
         
         return current
     }
     
     @discardableResult func testAll(_ test: (CombinationChainPair)->(Bool?)) -> [CombinationChainPair] {
-        return self.allCombinations().flatMap {
+        return self.allCombinations().compactMap {
             !(test($0) ?? true) ? $0 : .none
         }
     }

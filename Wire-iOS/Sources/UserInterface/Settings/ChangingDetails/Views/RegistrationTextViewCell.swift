@@ -53,7 +53,7 @@ final class RegistrationTextFieldCell: UITableViewCell {
         }
     }
     
-    func editingChanged(textField: UITextField) {
+    @objc func editingChanged(textField: UITextField) {
         let lowercase = textField.text?.lowercased() ?? ""
         let noSpaces = lowercase.components(separatedBy: .whitespacesAndNewlines).joined()
         textField.text = noSpaces

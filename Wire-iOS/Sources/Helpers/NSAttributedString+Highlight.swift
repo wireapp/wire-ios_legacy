@@ -31,7 +31,7 @@ extension String {
     }
     
     func range(of strings: [String], options: CompareOptions = [], range: Range<String.Index>? = .none) -> Range<String.Index>? {
-        return strings.flatMap {
+        return strings.compactMap {
                 self.range(of: $0,
                            options: options,
                            range: range,
@@ -46,7 +46,7 @@ extension NSString {
     func range(of strings: [String], options: NSString.CompareOptions = [], range: NSRange? = .none) -> NSRange {
         let queryRange = range ?? NSRange(location: 0, length: self.length)
 
-        return strings.flatMap {
+        return strings.compactMap {
             self.range(of: $0,
                        options: options,
                        range: queryRange,
@@ -155,7 +155,7 @@ extension NSAttributedString {
         }
         
         var attributes = self.attributes(at: 0, effectiveRange: .none)
-        attributes[NSBackgroundColorAttributeName] = .none
+        attributes[.backgroundColor] = .none
         
         let ellipsisString = NSAttributedString(string: String.ellipsis, attributes: attributes)
         return ellipsisString + self

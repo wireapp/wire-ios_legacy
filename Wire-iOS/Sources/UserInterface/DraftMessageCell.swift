@@ -77,7 +77,7 @@ final class DraftMessageCell: UITableViewCell {
     }
 
     func configure(with draft: MessageDraft) {
-        dateLabel.text = draft.lastModifiedDate.flatMap(DraftMessageCell.dateFormatter.string)
+        dateLabel.text = draft.lastModifiedDate.compactMap(DraftMessageCell.dateFormatter.string)
         if let subject = draft.subject, !subject.isEmpty {
             titleLabel.text = subject
         } else {

@@ -220,7 +220,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK - actions
     
-    func toggleDrawTool() {
+    @objc func toggleDrawTool() {
         if canvas.mode == .edit {
             canvas.mode = .draw
         } else {
@@ -230,17 +230,17 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         updateButtonSelection()
     }
     
-    func openEmojiKeyboard() {
+    @objc func openEmojiKeyboard() {
         select(editMode: .emoji, animated: true)
     }
     
-    func exportImage() {
+    @objc func exportImage() {
         if let image = canvas.trimmedImage {
             delegate?.canvasViewController(self, didExportImage: image)
         }
     }
     
-    func close() {
+    @objc func close() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -347,7 +347,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
         
-        let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 82)]
+        let attributes = [.font: UIFont.systemFont(ofSize: 82)]
         
         if let image = emoji.image(renderedWithAttributes: attributes)?.imageWithAlphaTrimmed {
             canvas.insert(image: image, at: CGPoint(x: canvas.center.x - image.size.width / 2, y: canvas.center.y - image.size.height / 2))
@@ -359,7 +359,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
 
 extension CanvasViewController : UIImagePickerControllerDelegate {
     
-    func pickImage() {
+    @objc func pickImage() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         present(imagePickerController, animated: true, completion: nil)

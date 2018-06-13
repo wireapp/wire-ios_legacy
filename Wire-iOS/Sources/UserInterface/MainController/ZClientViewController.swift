@@ -113,7 +113,7 @@ extension ZClientViewController {
             ])
 
         let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
-        heightConstraint.priority = UILayoutPriorityDefaultLow
+        heightConstraint.priority = UILayoutPriority.defaultLow
         heightConstraint.isActive = true
     }
 

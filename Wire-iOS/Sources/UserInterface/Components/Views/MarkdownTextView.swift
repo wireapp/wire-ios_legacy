@@ -203,7 +203,7 @@ class MarkdownTextView: NextResponderTextView {
     /// Returns the markdown at the given location.
     private func markdown(at location: Int) -> Markdown {
         guard location >= 0 && markdownTextStorage.length > location else { return .none }
-        let markdown = markdownTextStorage.attribute(MarkdownIDAttributeName, at: location, effectiveRange: nil) as? Markdown
+        let markdown = markdownTextStorage.attribute(NSAttributedStringKey(rawValue: MarkdownIDAttributeName), at: location, effectiveRange: nil) as? Markdown
         return markdown ?? .none
     }
     
@@ -211,7 +211,7 @@ class MarkdownTextView: NextResponderTextView {
     /// range.
     fileprivate func markdown(in range: NSRange) -> Set<Markdown> {
         var result = Set<Markdown>()
-        markdownTextStorage.enumerateAttribute(MarkdownIDAttributeName, in: range, options: []) { md, _, _ in
+        markdownTextStorage.enumerateAttribute(NSAttributedStringKey(rawValue: MarkdownIDAttributeName), in: range, options: []) { md, _, _ in
             result.insert(md as? Markdown ?? .none)
         }
         return result
@@ -262,9 +262,9 @@ class MarkdownTextView: NextResponderTextView {
         
         return [
             MarkdownIDAttributeName: markdown,
-            NSFontAttributeName: font,
-            NSForegroundColorAttributeName: color,
-            NSParagraphStyleAttributeName: paragraphyStyle
+            .font: font,
+            .foregroundColor: color,
+            .paragraphStyle: paragraphyStyle
         ]
     }
     
@@ -285,7 +285,7 @@ class MarkdownTextView: NextResponderTextView {
     /// the transformed values and setting the new attributes.
     private func updateAttributes(in range: NSRange, using transform: (Markdown) -> Markdown) {
         var exisitngMarkdownRanges = [(Markdown, NSRange)]()
-        markdownTextStorage.enumerateAttribute(MarkdownIDAttributeName, in: range, options: []) { md, mdRange, _ in
+        markdownTextStorage.enumerateAttribute(NSAttributedStringKey(rawValue: MarkdownIDAttributeName), in: range, options: []) { md, mdRange, _ in
             if let md = md as? Markdown { exisitngMarkdownRanges.append((md, mdRange)) }
         }
         
@@ -350,14 +350,14 @@ class MarkdownTextView: NextResponderTextView {
     /// Returns the range of the list prefix in the given range, if it exists.
     private func rangeOfListPrefix(at range: NSRange) -> NSRange? {
         if let match = orderedListItemRegex.firstMatch(in: text, options: [], range: range) {
-            if match.rangeAt(1).location != NSNotFound {
-                return match.rangeAt(1)
+            if match.range(at: 1).location != NSNotFound {
+                return match.range(at: 1)
             }
         }
         
         if let match = unorderedListItemRegex.firstMatch(in: text, options: [], range: range) {
-            if match.rangeAt(1).location != NSNotFound {
-                return match.rangeAt(1)
+            if match.range(at: 1).location != NSNotFound {
+                return match.range(at: 1)
             }
         }
         
@@ -367,7 +367,7 @@ class MarkdownTextView: NextResponderTextView {
     /// Returns the number prefix in the given range, if it exists.
     private func numberPrefix(at range: NSRange) -> Int? {
         if let match = orderedListItemRegex.firstMatch(in: text, options: [], range: range) {
-            let num = markdownTextStorage.attributedSubstring(from: match.rangeAt(2)).string
+            let num = markdownTextStorage.attributedSubstring(from: match.range(at: 2)).string
             return Int(num)
         }
         return nil
@@ -376,7 +376,7 @@ class MarkdownTextView: NextResponderTextView {
     /// Returns the bullet prefix in the given range, if it exists.
     private func bulletPrefix(at range: NSRange) -> String? {
         if let match = unorderedListItemRegex.firstMatch(in: text, options: [], range: range) {
-            let bullet = markdownTextStorage.attributedSubstring(from: match.rangeAt(2)).string
+            let bullet = markdownTextStorage.attributedSubstring(from: match.range(at: 2)).string
             return bullet
         }
         return nil

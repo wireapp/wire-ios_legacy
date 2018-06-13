@@ -50,7 +50,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell {
         descriptionLabel.textAlignment = .center
         
         settingsButton.setTitleColor(.white, for: .normal)
-        settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: UIFontWeightSemibold)
+        settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: UIFont.Weight.semibold)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
         settingsButton.contentEdgeInsets = UIEdgeInsetsMake(10, 30, 10, 30)
         settingsButton.layer.cornerRadius = 4.0
@@ -85,7 +85,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell {
         }
         
         descriptionLabel.font = UIFont.systemFont(ofSize: (deniedAuthorization == .ongoingCall ? 14.0 : 16.0),
-                                                  weight: UIFontWeightLight)
+                                                  weight: UIFont.Weight.light)
         descriptionLabel.text = title.localized
         
         createConstraints(deniedAuthorization: deniedAuthorization)

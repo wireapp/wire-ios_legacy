@@ -179,7 +179,7 @@ private let zmLog = ZMSLog(tag: "UI")
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
         
-        attributedTipText.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
+        attributedTipText.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
         self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
         self.tipLabel.numberOfLines = 2
         self.tipLabel.font = FontSpec(.small, .light).font!
@@ -324,7 +324,7 @@ private let zmLog = ZMSLog(tag: "UI")
     
     fileprivate func updateRecordingState(_ state: State) {
         let visibleViews = self.visibleViews(forState: state)
-        let allViews = Set(view.subviews.flatMap { $0.subviews })
+        let allViews = Set(view.subviews.compactMap { $0.subviews })
         let hiddenViews = allViews.subtracting(visibleViews)
         
         visibleViews.forEach { $0.isHidden = false }
@@ -400,17 +400,17 @@ private let zmLog = ZMSLog(tag: "UI")
     
     // MARK: - Button actions
     
-    internal func recordButtonPressed(_ sender: AnyObject!) {
+    @objc internal func recordButtonPressed(_ sender: AnyObject!) {
         self.state = .recording
         self.recorder.startRecording()
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
     }
     
-    func stopRecordButtonPressed(_ button: UIButton?) {
+    @objc func stopRecordButtonPressed(_ button: UIButton?) {
         self.recorder.stopRecording()
     }
     
-    func confirmButtonPressed(_ button: UIButton?) {
+    @objc func confirmButtonPressed(_ button: UIButton?) {
         
         guard let audioPath = self.currentEffectFilePath else {
             zmLog.error("No file to send")
@@ -440,11 +440,11 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func redoButtonPressed(_ button: UIButton?) {
+    @objc func redoButtonPressed(_ button: UIButton?) {
         self.state = .ready
     }
     
-    func cancelButtonPressed(_ button: UIButton?) {
+    @objc func cancelButtonPressed(_ button: UIButton?) {
         self.delegate?.audioRecordViewControllerDidCancel(self)
     }
 }

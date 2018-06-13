@@ -103,8 +103,8 @@ final class MarkdownTextViewTests: XCTestCase {
         case .none, .oList, .uList:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont,
-                NSForegroundColorAttributeName: style.baseFontColor,
+                .font: style.baseFont,
+                .foregroundColor: style.baseFontColor,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         case .h1, .h2, .h3,
@@ -113,8 +113,8 @@ final class MarkdownTextViewTests: XCTestCase {
              [.h3, .bold]:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold,
-                NSForegroundColorAttributeName: style.baseFontColor,
+                .font: style.baseFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold,
+                .foregroundColor: style.baseFontColor,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         case [.h1, .italic], [.h1, .bold, .italic],
@@ -122,8 +122,8 @@ final class MarkdownTextViewTests: XCTestCase {
              [.h3, .italic], [.h3, .bold, .italic]:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold.italic,
-                NSForegroundColorAttributeName: style.baseFontColor,
+                .font: style.baseFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold.italic,
+                .foregroundColor: style.baseFontColor,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         case [.h1, .code],
@@ -131,36 +131,36 @@ final class MarkdownTextViewTests: XCTestCase {
              [.h3, .code]:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.codeFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold,
-                NSForegroundColorAttributeName: style.codeColor!,
+                .font: style.codeFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold,
+                .foregroundColor: style.codeColor!,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         case .bold:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont.bold,
-                NSForegroundColorAttributeName: style.baseFontColor,
+                .font: style.baseFont.bold,
+                .foregroundColor: style.baseFontColor,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         case .italic:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont.italic,
-                NSForegroundColorAttributeName: style.baseFontColor,
+                .font: style.baseFont.italic,
+                .foregroundColor: style.baseFontColor,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         case .code:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.codeFont,
-                NSForegroundColorAttributeName: style.codeColor!,
+                .font: style.codeFont,
+                .foregroundColor: style.codeColor!,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         case [.bold, .italic]:
             return [
                 MarkdownIDAttributeName: markdown,
-                NSFontAttributeName: style.baseFont.bold.italic,
-                NSForegroundColorAttributeName: style.baseFontColor,
+                .font: style.baseFont.bold.italic,
+                .foregroundColor: style.baseFontColor,
                 NSParagraphStyleAttributeName: style.baseParagraphStyle
             ]
         default:
@@ -174,10 +174,10 @@ final class MarkdownTextViewTests: XCTestCase {
         if lhs[MarkdownIDAttributeName] as? Markdown != rhs[MarkdownIDAttributeName] as? Markdown {
             return false
         }
-        if lhs[NSFontAttributeName] as? UIFont != rhs[NSFontAttributeName] as? UIFont {
+        if lhs[.font] as? UIFont != rhs[.font] as? UIFont {
             return false
         }
-        if lhs[NSForegroundColorAttributeName] as? UIColor != rhs[NSForegroundColorAttributeName] as? UIColor {
+        if lhs[.foregroundColor] as? UIColor != rhs[.foregroundColor] as? UIColor {
             return false
         }
         if lhs[NSParagraphStyleAttributeName] as? NSParagraphStyle != rhs[NSParagraphStyleAttributeName] as? NSParagraphStyle {
@@ -217,7 +217,7 @@ final class MarkdownTextViewTests: XCTestCase {
 
         // THEN: the color of the text changes in the attributes
         var attributedRange: NSRange = NSMakeRange(0, 0)
-        let attributedColor = sut.attributedText.attribute(NSForegroundColorAttributeName, at: 0, effectiveRange: &attributedRange) as? UIColor
+        let attributedColor = sut.attributedText.attribute(.foregroundColor, at: 0, effectiveRange: &attributedRange) as? UIColor
         XCTAssertEqual(attributedColor, .red)
         XCTAssertEqual(attributedRange, NSMakeRange(0, 6))
 

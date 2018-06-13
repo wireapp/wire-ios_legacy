@@ -105,8 +105,8 @@ final class UserNameTakeOverViewController: UIViewController {
 
         let subtitle = "registration.select_handle.takeover.subtitle".localized
         let linkAttributes: [String: Any] = [
-            NSFontAttributeName: linkFont,
-            NSLinkAttributeName: learnMoreURL
+            .font: linkFont,
+            .link: learnMoreURL
         ]
 
         let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)

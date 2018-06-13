@@ -29,11 +29,11 @@ class MarkdownTextStorage: NSTextStorage {
     var currentMarkdown: Markdown = .none
     private var needsCheck: Bool = false
     
-    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [String : Any] {
+    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedStringKey : Any] {
         return storage.attributes(at: location, effectiveRange: range)
     }
     
-    override func setAttributes(_ attrs: [String : Any]?, range: NSRange) {
+    override func setAttributes(_ attrs: [NSAttributedStringKey : Any]?, range: NSRange) {
         beginEditing()
         storage.setAttributes(attrs, range: range)
         
@@ -43,7 +43,7 @@ class MarkdownTextStorage: NSTextStorage {
         // attrs is missing the markdown id, then we need to included it.
         if  needsCheck, let attrs = attrs, attrs[MarkdownIDAttributeName] == nil {
             needsCheck = false
-            storage.addAttribute(MarkdownIDAttributeName, value: currentMarkdown, range: range)
+            storage.addAttribute(NSAttributedStringKey(rawValue: MarkdownIDAttributeName), value: currentMarkdown, range: range)
         }
         
         edited(.editedAttributes, range: range, changeInLength: 0)

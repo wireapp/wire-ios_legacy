@@ -104,9 +104,9 @@ extension ZMSystemMessageData {
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
         statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                      NSForegroundColorAttributeName: UIColor(for: .vividRed)]
+                                      .foregroundColor: UIColor(for: .vividRed)]
         statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                            NSForegroundColorAttributeName: UIColor(for: .vividRed).withAlphaComponent(0.5)]
+                                            .foregroundColor: UIColor(for: .vividRed).withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)
         
@@ -220,7 +220,7 @@ extension ZMSystemMessageData {
             return user.displayName
         }.joined(separator: ", ")
         
-        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : AnyObject]
+        let attributes = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor] as [String : AnyObject]
         let likersNamesAttributedString = likersNames && attributes
 
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
@@ -288,11 +288,11 @@ extension ZMSystemMessageData {
         if let childMessages = message.systemMessageData?.childMessages,
             !childMessages.isEmpty,
             let timestamp = timestampString(message) {
-            let childrenTimestamps = childMessages.flatMap {
+            let childrenTimestamps = childMessages.compactMap {
                 $0 as? ZMConversationMessage
             }.sorted {
                 $0.0.serverTimestamp < $0.1.serverTimestamp
-            }.flatMap(timestampString)
+            }.compactMap(timestampString)
 
             finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
                 return "\(text)\n\(current)"
@@ -309,19 +309,19 @@ extension ZMSystemMessageData {
             finalText = (deliveryStateString ?? "")
         }
         
-        let attributedText = NSMutableAttributedString(attributedString: finalText && [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor])
+        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: statusLabel.font, .foregroundColor: statusLabel.textColor])
         
         if message.deliveryState == .failedToSend {
             let linkRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_resend".localized)
-            attributedText.addAttributes([NSLinkAttributeName: type(of: self).resendLink], range: linkRange)
+            attributedText.addAttributes([.link: type(of: self).resendLink], range: linkRange)
             
             let deleteRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_delete".localized)
-            attributedText.addAttributes([NSLinkAttributeName: type(of: self).deleteLink], range: deleteRange)
+            attributedText.addAttributes([.link: type(of: self).deleteLink], range: deleteRange)
         }
 
         if showDestructionTimer, let stateString = deliveryStateString {
             let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
-            attributedText.addAttributes([NSForegroundColorAttributeName: ephemeralColor], to: stateString)
+            attributedText.addAttributes([.foregroundColor: ephemeralColor], to: stateString)
         }
         
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
@@ -344,7 +344,7 @@ extension ZMSystemMessageData {
     
     fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
         let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : AnyObject]
+        let attributes = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor] as [String : AnyObject]
         let attributedText = likeTooltipText && attributes
 
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {

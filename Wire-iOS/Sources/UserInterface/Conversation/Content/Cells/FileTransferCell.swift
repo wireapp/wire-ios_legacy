@@ -157,12 +157,12 @@ public final class FileTransferCell: ConversationCell {
         return super.canPerformAction(action, withSender: sender)
     }
 
-    func open(_ sender: Any) {
+    @objc func open(_ sender: Any) {
         showsMenu = false
         delegate?.conversationCell?(self, didSelect: .present)
     }
 
-    func save(_ sender: Any) {
+    @objc func save(_ sender: Any) {
         delegate?.conversationCell?(self, didSelect: .save)
     }
     

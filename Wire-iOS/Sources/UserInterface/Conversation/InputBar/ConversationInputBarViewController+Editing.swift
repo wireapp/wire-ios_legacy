@@ -48,7 +48,7 @@ extension ConversationInputBarViewController {
         )
     }
     
-    func endEditingMessageIfNeeded() {
+    @objc func endEditingMessageIfNeeded() {
         guard nil != editingMessage else { return }
         delegate.conversationInputBarViewControllerDidCancelEditing?(editingMessage)
         editingMessage = nil

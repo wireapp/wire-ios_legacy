@@ -89,8 +89,8 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
             label.extendsLinkTouchArea = true
 
             label.linkAttributes = [
-                NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
-                NSForegroundColorAttributeName: ZMUser.selfUser().accentColor
+                .underlineStyle: NSUnderlineStyle.styleNone.rawValue,
+                .foregroundColor: ZMUser.selfUser().accentColor
             ]
 
             label.delegate = self

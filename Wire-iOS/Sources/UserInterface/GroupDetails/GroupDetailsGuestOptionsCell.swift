@@ -63,7 +63,7 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         accessibilityIdentifier = "cell.groupdetails.guestoptions"
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .scaleAspectFit
-        guestIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        guestIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
@@ -74,7 +74,7 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.font = FontSpec.init(.normal, .light).font!
-        statusLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        statusLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         
         let avatarSpacer = UIView()
         avatarSpacer.addSubview(guestIconView)

@@ -49,7 +49,7 @@ class CannotDecryptCell: IconSystemCell {
         let remoteIDChanged = systemMessageData.systemMessageType == .decryptionFailed_RemoteIdentityChanged
         let link = remoteIDChanged ? type(of: self).remoteIDErrorURL : type(of: self).generalErrorURL
 
-        let linkAttributes = [NSFontAttributeName: labelFont, NSLinkAttributeName: link as AnyObject] as [String : AnyObject]
+        let linkAttributes = [.font: labelFont, .link: link as AnyObject] as [String : AnyObject]
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
         let why = localizedWhyPart(remoteIDChanged) && labelFont && labelTextColor && linkAttributes
         let device : NSAttributedString?
@@ -61,7 +61,7 @@ class CannotDecryptCell: IconSystemCell {
         let messageString = localizedWhatPart(remoteIDChanged, name: name) && labelFont && labelTextColor
         let fullString = messageString + " " + why + (device ?? NSAttributedString())
         
-        attributedText = fullString.addAttributes([ NSFontAttributeName: labelBoldFont], toSubstring:name)
+        attributedText = fullString.addAttributes([ .font: labelBoldFont], toSubstring:name)
     }
     
     func localizedWhoPart(_ sender: ZMUser, remoteIDChanged: Bool) -> String {

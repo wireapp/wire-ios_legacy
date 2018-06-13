@@ -148,14 +148,14 @@ private let zmLog = ZMSLog(tag: "UI")
 // MARK: - Application state observators
 
 extension AppLockViewController {
-    func applicationWillResignActive() {
+    @objc func applicationWillResignActive() {
         if AppLock.isActive {
             self.resignKeyboard()
             self.dimContents = true
         }
     }
     
-    func applicationDidEnterBackground() {
+    @objc func applicationDidEnterBackground() {
         if !self.localAuthenticationNeeded {
             AppLock.lastUnlockedDate = Date()
         }
@@ -168,7 +168,7 @@ extension AppLockViewController {
         }
     }
     
-    func applicationDidBecomeActive() {
+    @objc func applicationDidBecomeActive() {
         self.showUnlockIfNeeded()
         self.resignKeyboardIfNeeded()
     }

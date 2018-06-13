@@ -190,7 +190,7 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: true)
     }
     
-    func keyboardFrameWillChange(notification: Notification) {
+    @objc func keyboardFrameWillChange(notification: Notification) {
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         

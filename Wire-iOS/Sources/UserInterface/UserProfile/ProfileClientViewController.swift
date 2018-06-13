@@ -152,7 +152,7 @@ class ProfileClientViewController: UIViewController {
                 UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)) +
                 "\n" +
                 ("profile.devices.detail.verify_message.link".localized &&
-                    [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: URL.wr_fingerprintHowToVerify])
+                    [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
         }
         self.contentView.addSubview(descriptionTextView)
     }
@@ -182,8 +182,8 @@ class ProfileClientViewController: UIViewController {
         let fingerprintSmallBoldMonospaceFont = self.fingerprintSmallBoldFont.monospaced()
         
         IDLabel.attributedText = self.userClient.attributedRemoteIdentifier(
-            [NSFontAttributeName: fingerprintSmallMonospaceFont],
-            boldAttributes: [NSFontAttributeName: fingerprintSmallBoldMonospaceFont],
+            [.font: fingerprintSmallMonospaceFont],
+            boldAttributes: [.font: fingerprintSmallBoldMonospaceFont],
             uppercase: true
         )
     }
@@ -204,8 +204,8 @@ class ProfileClientViewController: UIViewController {
         let fingerprintBoldMonospaceFont = self.fingerprintBoldFont.monospaced()
         
         if let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
-            attributes: [NSFontAttributeName: fingerprintMonospaceFont],
-            boldAttributes: [NSFontAttributeName: fingerprintBoldMonospaceFont],
+            attributes: [.font: fingerprintMonospaceFont],
+            boldAttributes: [.font: fingerprintBoldMonospaceFont],
             uppercase: false)
         {
             fullIDLabel.attributedText = attributedFingerprint

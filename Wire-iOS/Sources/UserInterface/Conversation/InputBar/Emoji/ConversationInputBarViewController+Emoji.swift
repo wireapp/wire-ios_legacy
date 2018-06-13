@@ -26,7 +26,7 @@ extension ConversationInputBarViewController {
         button.addTarget(self, action: #selector(emojiButtonTapped), for: .touchUpInside)
     }
     
-    func emojiButtonTapped(_ sender: IconButton) {
+    @objc func emojiButtonTapped(_ sender: IconButton) {
         if mode != .emojiInput {
             mode = .emojiInput
             inputBar.textView.becomeFirstResponder()

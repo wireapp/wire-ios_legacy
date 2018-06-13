@@ -107,8 +107,8 @@ fileprivate class SpacingView : UIView {
         
         isAccessibilityElement = false
         accessibilityElementsHidden = true
-        setContentCompressionResistancePriority(999, for: .vertical)
-        setContentCompressionResistancePriority(999, for: .horizontal)
+        setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .vertical)
+        setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -73,7 +73,7 @@ extension AVSMediaManager {
     }
     
     // MARK: - Notifications
-    func didUpdateSound(_ notification: NSNotification?) {
+    @objc func didUpdateSound(_ notification: NSNotification?) {
         self.configureSounds()
     }
 }

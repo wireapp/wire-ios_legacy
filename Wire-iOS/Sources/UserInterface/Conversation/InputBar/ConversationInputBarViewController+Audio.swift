@@ -41,7 +41,7 @@ extension ConversationInputBarViewController {
         button.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func audioButtonPressed(_ sender: UITapGestureRecognizer) {
+    @objc func audioButtonPressed(_ sender: UITapGestureRecognizer) {
         guard sender.state == .ended else {
             return
         }
@@ -69,7 +69,7 @@ extension ConversationInputBarViewController {
         return true
     }
     
-    func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard self.mode != .audioRecord else {
             return
         }

@@ -187,7 +187,7 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
     func send(completion: @escaping (Sendable?) -> Void) {
         sharingSession.enqueue { [weak self] in
             guard let `self` = self else { return }
-            completion(self.imageData.flatMap(self.conversation.appendImage))
+            completion(self.imageData.compactMap(self.conversation.appendImage))
         }
     }
 
@@ -237,7 +237,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     func send(completion: @escaping (Sendable?) -> Void) {
         sharingSession.enqueue { [weak self] in
             guard let `self` = self else { return }
-            completion(self.metadata.flatMap(self.conversation.appendFile))
+            completion(self.metadata.compactMap(self.conversation.appendFile))
         }
     }
     
