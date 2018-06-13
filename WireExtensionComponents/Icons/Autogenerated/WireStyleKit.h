@@ -286,6 +286,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfMinuteWithColor: (UIColor*)color;
 + (UIImage*)imageOfHourWithColor: (UIColor*)color;
 + (UIImage*)imageOfDayWithColor: (UIColor*)color;
++ (UIImage*)imageOfWeekWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x737_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x654_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x643_32ptWithColor: (UIColor*)color;

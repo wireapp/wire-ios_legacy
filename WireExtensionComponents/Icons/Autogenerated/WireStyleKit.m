@@ -8635,11 +8635,22 @@ static UIImage* _imageOfShieldnotverified = nil;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
     [WireStyleKit drawDayWithColor: color];
-    
+
     UIImage* imageOfDay = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     return imageOfDay;
+}
+
++ (UIImage*)imageOfWeekWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
+    [WireStyleKit drawDayWithColor: color]; ///FIXME: drawWeekWithColor
+
+    UIImage* imageOfWeek = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfWeek;
 }
 
 + (UIImage*)imageOfIcon_0x737_32ptWithColor: (UIColor*)color
