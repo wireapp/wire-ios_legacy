@@ -414,16 +414,6 @@ static NSString * const kConversationCellImminentExpirationAnimationKey = @"Immi
             self.countdownView = [[DestructionCountdownView alloc] init];
             self.countdownView.accessibilityIdentifier = @"EphemeralMessageCountdownView";
             self.countdownView.isAccessibilityElement = false;
-
-            UIColor *remainingColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorLightGraphite];
-
-            UIColor *elapsedColor = [[[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorGraphite]
-                                                              colorWithAlphaComponent:0.16]
-                                                       removeAlphaByBlendingWithColor:UIColor.whiteColor];
-
-            self.countdownView.remainingTimeColor = remainingColor;
-            self.countdownView.elapsedTimeColor = elapsedColor;
-
             [self.countdownContainerView addSubview:self.countdownView];
             [self.countdownView autoPinEdgesToSuperviewEdges];
         }

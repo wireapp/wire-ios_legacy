@@ -44,6 +44,7 @@ import Cartography
         elapsedTimeLayer.strokeEnd = 0
         elapsedTimeLayer.isOpaque = false
         remainingTimeLayer.isOpaque = false
+        setDefaultColors()
     }
 
     // MARK: - Layout
@@ -63,6 +64,17 @@ import Cartography
         let path = CGMutablePath()
         path.addArc(center: CGPoint(x: bounds.midX, y: bounds.midY), radius: min(bounds.height, bounds.width) / 4, startAngle: -.pi / 2, endAngle: 3 * .pi / 2, clockwise: false)
         return path
+    }
+
+    @objc public func setDefaultColors() {
+
+        remainingTimeColor = ColorScheme.default().color(withName: ColorSchemeColorLightGraphite)
+
+        elapsedTimeColor = ColorScheme.default()
+            .color(withName: ColorSchemeColorGraphite)
+            .withAlphaComponent(0.16)
+            .removeAlphaByBlending(with: .white)
+
     }
 
     // MARK: - Animation

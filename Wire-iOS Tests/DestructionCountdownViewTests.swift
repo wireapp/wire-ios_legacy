@@ -79,18 +79,12 @@ class DestructionCountdownViewTests: ZMSnapshotTestCase {
         verify(view: sut)
     }
 
-    func testThatItAnimatesProgressAndImminentExpiration() {
+    func testThatItAnimatesProgress() {
         sut.startAnimating(duration: 5, currentProgress: 0.2)
         XCTAssertTrue(sut.isAnimatingProgress)
-        XCTAssertFalse(sut.isAnimatingImminentExpiration)
-
-        sut.toggleImminentExpiration()
-        XCTAssertTrue(sut.isAnimatingProgress)
-        XCTAssertTrue(sut.isAnimatingImminentExpiration)
 
         sut.stopAnimating()
         XCTAssertFalse(sut.isAnimatingProgress)
-        XCTAssertFalse(sut.isAnimatingImminentExpiration)
     }
 
 }
