@@ -47,6 +47,6 @@ extension SLComposeServiceViewController {
                 }
             }
         }
-        group.notify(queue: .main) { _ in callback(urls) }
+        group.notify(queue: .main) { callback(urls) }
     }
 }
