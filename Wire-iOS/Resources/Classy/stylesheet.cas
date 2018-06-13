@@ -209,9 +209,6 @@ MessageToolboxView {
 }
 
 ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, UnknownMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell {
-    countdownContainerView: @{
-        backgroundColor: $color-background;
-    }
 
     burstTimestampView: @{
         label: @{
@@ -319,6 +316,11 @@ UnknownMessageCell {
     messageLabel: @{
         textTransform: upper;
     }
+}
+
+DestructionCountdownView {
+    remainingTimeColor: $color-countdown-remaining-time;
+    elapsedTimeColor: $color-countdown-elapsed-time;
 }
 
 ArticleView {

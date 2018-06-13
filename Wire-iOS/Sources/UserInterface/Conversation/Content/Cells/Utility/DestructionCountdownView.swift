@@ -20,88 +20,110 @@
 import Foundation
 import Cartography
 
+@objc public final class DestructionCountdownView: UIView {
 
-public final class DestructionCountdownView: UIView {
+    private let remainingTimeLayer = CAShapeLayer()
+    private let elapsedTimeLayer = CAShapeLayer()
+    private let elapsedTimeAnimationKey = "elapsedTime"
+    private let imminentExpirationAnimationKey = "imminentExpiration"
 
-    public let numberOfDots = 5
-    private let padding: CGFloat = 1
-    private let dotSize: CGFloat = 3
-    private var dots = [UIView]()
-    private let fullColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed).withAlphaComponent(0.5)
-    private let emptyColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmed)
+    // MARK: - Initialization
 
-    private var fullDots: Int? {
-        didSet(oldValue) {
-            guard let new = fullDots, oldValue != new else { return }
-            updateColors(new)
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureSublayers()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        configureSublayers()
+    }
+
+    private func configureSublayers() {
+        layer.addSublayer(remainingTimeLayer)
+        layer.addSublayer(elapsedTimeLayer)
+        elapsedTimeLayer.strokeEnd = 0
+    }
+
+    // MARK: - Layout
+
+    public override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        elapsedTimeLayer.frame = bounds
+        elapsedTimeLayer.path = makePath(for: bounds)
+        elapsedTimeLayer.fillColor = nil
+        elapsedTimeLayer.lineWidth = min(bounds.width, bounds.height) / 2
+
+        remainingTimeLayer.frame = bounds
+        remainingTimeLayer.path = CGPath(ellipseIn: bounds, transform: nil)
+    }
+
+    private func makePath(for bounds: CGRect) -> CGPath {
+        let path = CGMutablePath()
+        path.addArc(center: CGPoint(x: bounds.midX, y: bounds.midY), radius: min(bounds.height, bounds.width) / 4, startAngle: -.pi / 2, endAngle: 3 * .pi / 2, clockwise: false)
+        return path
+    }
+
+    // MARK: - Animation
+
+    @objc public var isAnimatingProgress: Bool {
+        return elapsedTimeLayer.animation(forKey: elapsedTimeAnimationKey) != nil
+    }
+
+    @objc public var isAnimatingImminentExpiration: Bool {
+        return layer.animation(forKey: imminentExpirationAnimationKey) != nil
+    }
+
+    @objc public var remainingTimeColor: UIColor? {
+        get {
+            return remainingTimeLayer.fillColor.flatMap(UIColor.init)
+        }
+        set {
+            remainingTimeLayer.fillColor = newValue?.cgColor
         }
     }
 
-    public init() {
-        super.init(frame: .zero)
-        setupViews()
-        createConstraints()
-        updateColors(numberOfDots)
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    /// Updates the filled dots with the given fraction
-    /// - parameter fraction: the floating point fraction between 0 and 1
-    /// - returns: `true` if a change was necessary and `false` otherwise
-    @discardableResult public func update(fraction: CGFloat) -> Bool {
-        let previous = fullDots
-        fullDots = Int(floor(CGFloat(numberOfDots) * fraction.clamp(0, upper: 1)))
-        return previous != fullDots
-    }
-
-    private func updateColors(_ filled: Int) {
-        dots.reversed().enumerated().forEach { idx, dot in
-            dot.backgroundColor = idx <= filled ? fullColor : emptyColor
+    @objc public var elapsedTimeColor: UIColor? {
+        get {
+            return elapsedTimeLayer.strokeColor.flatMap(UIColor.init)
+        }
+        set {
+            elapsedTimeLayer.strokeColor = newValue?.cgColor
         }
     }
 
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        createConstraints()
-        roundDots()
+    @objc public func startAnimating(duration: TimeInterval, currentProgress: CGFloat) {
+
+        let elapsedTimeAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
+        elapsedTimeAnimation.duration = duration
+        elapsedTimeAnimation.fromValue = currentProgress
+        elapsedTimeAnimation.toValue = 1
+        elapsedTimeAnimation.fillMode = kCAFillModeForwards
+        elapsedTimeAnimation.isRemovedOnCompletion = false
+
+        elapsedTimeLayer.add(elapsedTimeAnimation, forKey: elapsedTimeAnimationKey)
+
     }
 
-    private func roundDots() {
-        dots.forEach {
-            $0.layer.cornerRadius = bounds.width / 2
-        }
+    @objc public func toggleImminentExpiration() {
+
+        let opacityAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
+        opacityAnimation.fromValue = 1
+        opacityAnimation.toValue = 0.5
+        opacityAnimation.duration = 0.5
+        opacityAnimation.autoreverses = true
+        opacityAnimation.repeatCount = .greatestFiniteMagnitude
+
+        layer.add(opacityAnimation, forKey: imminentExpirationAnimationKey)
+
     }
 
-    private func setupViews() {
-        dots = (0..<numberOfDots).map { _ in UIView() }
-        dots.forEach {
-            addSubview($0)
-            $0.backgroundColor = fullColor
-        }
-        roundDots()
+    @objc public func stopAnimating() {
+        elapsedTimeLayer.removeAllAnimations()
     }
 
-    private func createConstraints() {
-        dots.forEach { dot in
-            constrain(dot, self) { dot, view in
-                dot.left == view.left
-                dot.right == view.right
-                dot.height == dotSize
-            }
-        }
-        constrain(self, dots.first!, dots.last!) { view, first, last in
-            first.top == view.top
-            last.bottom == view.bottom
-            view.width == dotSize
-        }
-        zip(dots.dropLast(), dots.dropFirst()).forEach { top, bottom in
-            constrain(top, bottom) { top, bottom in
-                bottom.top == top.bottom + padding
-            }
-        }
+    @objc public func setProgress(_ newValue: CGFloat) {
+        elapsedTimeLayer.strokeEnd = newValue
     }
 
 }
