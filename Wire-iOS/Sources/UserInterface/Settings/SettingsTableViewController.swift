@@ -154,7 +154,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
         super.init(style: group.style == .plain ? .plain : .grouped)
         self.title = group.title.localizedUppercase
 
-        self.group.items.compactMap { return $0.cellDescriptors }.forEach {
+        self.group.items.flatMap { return $0.cellDescriptors }.forEach {
             if let groupDescriptor = $0 as? SettingsGroupCellDescriptorType {
                 groupDescriptor.viewController = self
             }

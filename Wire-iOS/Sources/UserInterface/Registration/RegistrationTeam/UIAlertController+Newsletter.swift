@@ -35,7 +35,7 @@ extension UIAlertController {
         let privacyPolicyActionHandler: ((UIAlertAction) -> Swift.Void) = { _ in
             let browserViewController = BrowserViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
             
-            browserViewController.completion = { _ in
+            browserViewController.completion = { 
                 UIAlertController.showNewsletterSubscriptionDialog(over: viewController, completionHandler: completionHandler)
             }
 

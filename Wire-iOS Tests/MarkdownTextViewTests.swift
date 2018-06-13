@@ -102,66 +102,66 @@ final class MarkdownTextViewTests: XCTestCase {
         switch markdown {
         case .none, .oList, .uList:
             return [
-                MarkdownIDAttributeName: markdown,
+                .markdownID: markdown,
                 .font: style.baseFont,
                 .foregroundColor: style.baseFontColor,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
+                .paragraphStyle: style.baseParagraphStyle
             ]
         case .h1, .h2, .h3,
              [.h1, .bold],
              [.h2, .bold],
              [.h3, .bold]:
             return [
-                MarkdownIDAttributeName: markdown,
+                .markdownID: markdown,
                 .font: style.baseFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold,
                 .foregroundColor: style.baseFontColor,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
+                .paragraphStyle: style.baseParagraphStyle
             ]
         case [.h1, .italic], [.h1, .bold, .italic],
              [.h2, .italic], [.h2, .bold, .italic],
              [.h3, .italic], [.h3, .bold, .italic]:
             return [
-                MarkdownIDAttributeName: markdown,
+                .markdownID: markdown,
                 .font: style.baseFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold.italic,
                 .foregroundColor: style.baseFontColor,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
+                .paragraphStyle: style.baseParagraphStyle
             ]
         case [.h1, .code],
              [.h2, .code],
              [.h3, .code]:
             return [
-                MarkdownIDAttributeName: markdown,
+                .markdownID: markdown,
                 .font: style.codeFont.withSize(style.headerSize(for: markdown.headerValue!)!).bold,
                 .foregroundColor: style.codeColor!,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
+                .paragraphStyle: style.baseParagraphStyle
             ]
         case .bold:
             return [
-                MarkdownIDAttributeName: markdown,
+                .markdownID: markdown,
                 .font: style.baseFont.bold,
                 .foregroundColor: style.baseFontColor,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
+                .paragraphStyle: style.baseParagraphStyle
             ]
         case .italic:
             return [
-                MarkdownIDAttributeName: markdown,
+                .markdownID: markdown,
                 .font: style.baseFont.italic,
                 .foregroundColor: style.baseFontColor,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
+                .paragraphStyle: style.baseParagraphStyle
             ]
         case .code:
             return [
-                MarkdownIDAttributeName: markdown,
+                .markdownID: markdown,
                 .font: style.codeFont,
                 .foregroundColor: style.codeColor!,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
+                .paragraphStyle: style.baseParagraphStyle
             ]
         case [.bold, .italic]:
             return [
-                MarkdownIDAttributeName: markdown,
+                .markdownID: markdown,
                 .font: style.baseFont.bold.italic,
                 .foregroundColor: style.baseFontColor,
-                NSParagraphStyleAttributeName: style.baseParagraphStyle
+                .paragraphStyle: style.baseParagraphStyle
             ]
         default:
             break
@@ -171,7 +171,7 @@ final class MarkdownTextViewTests: XCTestCase {
     
     // A way to check that two attribute dictionaries are equal
     func equal(_ lhs: [String: Any], _ rhs: [String: Any]) -> Bool {
-        if lhs[MarkdownIDAttributeName] as? Markdown != rhs[MarkdownIDAttributeName] as? Markdown {
+        if lhs[.markdownID] as? Markdown != rhs[.markdownID] as? Markdown {
             return false
         }
         if lhs[.font] as? UIFont != rhs[.font] as? UIFont {
@@ -180,7 +180,7 @@ final class MarkdownTextViewTests: XCTestCase {
         if lhs[.foregroundColor] as? UIColor != rhs[.foregroundColor] as? UIColor {
             return false
         }
-        if lhs[NSParagraphStyleAttributeName] as? NSParagraphStyle != rhs[NSParagraphStyleAttributeName] as? NSParagraphStyle {
+        if lhs[.paragraphStyle] as? NSParagraphStyle != rhs[.paragraphStyle] as? NSParagraphStyle {
             return false
         }
         return true

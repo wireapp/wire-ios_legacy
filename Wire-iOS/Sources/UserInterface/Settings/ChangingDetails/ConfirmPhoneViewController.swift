@@ -119,7 +119,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         tableView.reloadRows(at: [resend], with: .none)
     }
     
-    func saveButtonTapped() {
+    @objc func saveButtonTapped() {
         if let verificationCode = verificationCode {
             let credentials = ZMPhoneCredentials(phoneNumber: newNumber, verificationCode: verificationCode)
             userProfile?.requestPhoneNumberChange(credentials: credentials)

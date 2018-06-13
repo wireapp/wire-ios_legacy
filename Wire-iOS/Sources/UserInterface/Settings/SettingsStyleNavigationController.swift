@@ -29,7 +29,7 @@ class SettingsStyleNavigationController: UINavigationController {
         
         let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
         
-        let attributes = [.font : UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold)]
+        let attributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold)]
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.normal)
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.highlighted)
         

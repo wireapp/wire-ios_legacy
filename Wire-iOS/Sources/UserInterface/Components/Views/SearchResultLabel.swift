@@ -84,7 +84,7 @@ import Foundation
         if let range = currentRange {
             let nsRange = text.nsRange(from: range)
             
-            let highlightedAttributes = [.font: font,
+            let highlightedAttributes = [NSAttributedStringKey.font: font,
                                          .backgroundColor: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {

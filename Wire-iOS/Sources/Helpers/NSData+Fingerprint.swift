@@ -50,7 +50,7 @@ extension NSData {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
-        return attributedRemoteIdentifier! && [NSParagraphStyleAttributeName: paragraphStyle]
+        return attributedRemoteIdentifier! && [.paragraphStyle: paragraphStyle]
     }
     
     public func mapBytes<T: Any, E: Any>(callback: (E) -> (T)) -> [T] {

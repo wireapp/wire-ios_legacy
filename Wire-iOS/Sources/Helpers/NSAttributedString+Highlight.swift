@@ -162,7 +162,7 @@ extension NSAttributedString {
     }
     
     @objc func highlightingAppearances(of query: [String],
-                                       with attributes: [String: Any],
+                                       with attributes: [NSAttributedStringKey: Any],
                                        upToWidth: CGFloat,
                                        totalMatches: UnsafeMutablePointer<Int>?) -> NSAttributedString {
         

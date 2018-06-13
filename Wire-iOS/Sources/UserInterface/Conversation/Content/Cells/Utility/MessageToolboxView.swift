@@ -103,10 +103,10 @@ extension ZMSystemMessageData {
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
-        statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                      .foregroundColor: UIColor(for: .vividRed)]
-        statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                            .foregroundColor: UIColor(for: .vividRed).withAlphaComponent(0.5)]
+        statusLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle,
+                                      NSAttributedStringKey.foregroundColor.rawValue: UIColor(for: .vividRed)]
+        statusLabel.activeLinkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle,
+                                            NSAttributedStringKey.foregroundColor.rawValue: UIColor(for: .vividRed).withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)
         
@@ -220,7 +220,7 @@ extension ZMSystemMessageData {
             return user.displayName
         }.joined(separator: ", ")
         
-        let attributes = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor] as [String : AnyObject]
+        let attributes: [NSAttributedStringKey : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
         let likersNamesAttributedString = likersNames && attributes
 
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
@@ -290,8 +290,8 @@ extension ZMSystemMessageData {
             let timestamp = timestampString(message) {
             let childrenTimestamps = childMessages.compactMap {
                 $0 as? ZMConversationMessage
-            }.sorted {
-                $0.0.serverTimestamp < $0.1.serverTimestamp
+            }.sorted { left, right in
+                left.serverTimestamp < right.serverTimestamp
             }.compactMap(timestampString)
 
             finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
@@ -344,7 +344,7 @@ extension ZMSystemMessageData {
     
     fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
         let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor] as [String : AnyObject]
+        let attributes: [NSAttributedStringKey : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
         let attributedText = likeTooltipText && attributes
 
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {

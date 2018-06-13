@@ -228,7 +228,7 @@ extension SettingsCellDescriptorFactory {
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
         let preview: PreviewGeneratorType = { descriptor in
             let value = property.value().value() as? Int
-            guard let option = value.compactMap ({ TweetOpeningOption(rawValue: $0) }) else { return .text(TweetOpeningOption.none.displayString) }
+            guard let option = value.flatMap ({ TweetOpeningOption(rawValue: $0) }) else { return .text(TweetOpeningOption.none.displayString) }
             return .text(option.displayString)
         }
         return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
@@ -247,7 +247,7 @@ extension SettingsCellDescriptorFactory {
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
         let preview: PreviewGeneratorType = { descriptor in
             let value = property.value().value() as? Int
-            guard let option = value.compactMap ({ MapsOpeningOption(rawValue: $0) }) else { return .text(MapsOpeningOption.apple.displayString) }
+            guard let option = value.flatMap ({ MapsOpeningOption(rawValue: $0) }) else { return .text(MapsOpeningOption.apple.displayString) }
             return .text(option.displayString)
         }
         return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)
@@ -266,7 +266,7 @@ extension SettingsCellDescriptorFactory {
         let section = SettingsSectionDescriptor(cellDescriptors: cells.map { $0 as SettingsCellDescriptorType })
         let preview: PreviewGeneratorType = { descriptor in
             let value = property.value().value() as? Int
-            guard let option = value.compactMap ({ BrowserOpeningOption(rawValue: $0) }) else { return .text(BrowserOpeningOption.safari.displayString) }
+            guard let option = value.flatMap ({ BrowserOpeningOption(rawValue: $0) }) else { return .text(BrowserOpeningOption.safari.displayString) }
             return .text(option.displayString)
         }
         return SettingsGroupCellDescriptor(items: [section], title: SettingsPropertyLabelText(property.propertyName), identifier: nil, previewGenerator: preview)

@@ -20,6 +20,10 @@ import Foundation
 import UIKit
 import Down
 
+extension NSAttributedStringKey {
+    public static let markdownID = NSAttributedStringKey(rawValue: "MarkdownIDAttributeName")
+}
+
 class MarkdownTextStorage: NSTextStorage {
     
     private let storage = NSTextStorage()
@@ -41,9 +45,9 @@ class MarkdownTextStorage: NSTextStorage {
         // after automatically inserts corrections or fullstops after a space.
         // If the needsCheck flag is set (after characters are replaced) & the
         // attrs is missing the markdown id, then we need to included it.
-        if  needsCheck, let attrs = attrs, attrs[MarkdownIDAttributeName] == nil {
+        if  needsCheck, let attrs = attrs, attrs[NSAttributedStringKey.markdownID] == nil {
             needsCheck = false
-            storage.addAttribute(NSAttributedStringKey(rawValue: MarkdownIDAttributeName), value: currentMarkdown, range: range)
+            storage.addAttribute(NSAttributedStringKey.markdownID, value: currentMarkdown, range: range)
         }
         
         edited(.editedAttributes, range: range, changeInLength: 0)

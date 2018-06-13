@@ -108,11 +108,11 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     
     // MARK: - Actions
     
-    public func onCloseButtonPressed(sender: AnyObject?) {
+    @objc public func onCloseButtonPressed(sender: AnyObject?) {
         self.onDismiss?(self, false)
     }
     
-    public func onSendButtonPressed(sender: AnyObject?) {
+    @objc public func onSendButtonPressed(sender: AnyObject?) {
         if self.selectedDestinations.count > 0 {
             self.shareable.share(to: Array(self.selectedDestinations))
             self.onDismiss?(self, true)

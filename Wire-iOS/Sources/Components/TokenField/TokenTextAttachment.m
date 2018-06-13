@@ -201,7 +201,7 @@
 {
     return  @{
               NSFontAttributeName : self.tokenField.tokenTitleFont,
-              .foregroundColor : self.titleColor,
+              NSForegroundColorAttributeName : self.titleColor,
               };
 }
 

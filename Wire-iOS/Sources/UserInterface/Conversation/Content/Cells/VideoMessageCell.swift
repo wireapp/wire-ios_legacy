@@ -23,7 +23,7 @@ import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
-/// Displays the video message with different states
+/// Displays the video message@objc  with different states
 public final class VideoMessageCell: ConversationCell {
 
     private let videoMessageView = VideoMessageView()
@@ -189,7 +189,7 @@ public final class VideoMessageCell: ConversationCell {
         }
     }
     
-    override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
+    @objc override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         super.prepareLayoutForPreview(message: message)
         return PreviewHeightCalculator.heightForVideo()
     }

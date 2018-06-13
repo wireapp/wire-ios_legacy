@@ -51,7 +51,7 @@ class MarkdownTextView: NextResponderTextView {
     private var newlineFlag = false
     
     /// The current attributes to be applied when typing.
-    fileprivate var currentAttributes: [String : Any] = [:]
+    fileprivate var currentAttributes: [NSAttributedStringKey : Any] = [:]
 
     /// The currently active markdown. This determines which attributes
     /// are applied when typing.
@@ -60,7 +60,7 @@ class MarkdownTextView: NextResponderTextView {
             if oldValue != activeMarkdown {
                 currentAttributes = attributes(for: activeMarkdown)
                 markdownTextStorage.currentMarkdown = activeMarkdown
-                updateTypingAttributes()
+                updateTypingAttributes(with: currentAttributes)
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
         }
@@ -107,7 +107,7 @@ class MarkdownTextView: NextResponderTextView {
         super.init(frame: .zero, textContainer: textContainer)
         
         currentAttributes = attributes(for: activeMarkdown)
-        updateTypingAttributes()
+        updateTypingAttributes(with: currentAttributes)
 
         NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: .UITextViewTextDidChange, object: nil)
     }
@@ -138,7 +138,7 @@ class MarkdownTextView: NextResponderTextView {
             }
         }
         
-        updateTypingAttributes()
+        updateTypingAttributes(with: currentAttributes)
     }
     
     // MARK: - Private Interface
@@ -147,7 +147,13 @@ class MarkdownTextView: NextResponderTextView {
     /// to newly typed text. Since iOS11, typing attributes are automatically
     /// cleared when selection & text changes, so we have to keep setting it
     /// to provide continuity.
-    private func updateTypingAttributes() { typingAttributes = currentAttributes }
+    private func updateTypingAttributes(with newAttributes: [NSAttributedStringKey: Any]) {
+        var attributes = [String: Any]()
+        for (key, value) in newAttributes {
+            attributes[key.rawValue] = value
+        }
+        typingAttributes = attributes
+    }
     
     /// Called after each text change has been committed. We use this opportunity
     /// to insert new list items in the case a newline was entered, as well as
@@ -203,7 +209,7 @@ class MarkdownTextView: NextResponderTextView {
     /// Returns the markdown at the given location.
     private func markdown(at location: Int) -> Markdown {
         guard location >= 0 && markdownTextStorage.length > location else { return .none }
-        let markdown = markdownTextStorage.attribute(NSAttributedStringKey(rawValue: MarkdownIDAttributeName), at: location, effectiveRange: nil) as? Markdown
+        let markdown = markdownTextStorage.attribute(.markdownID, at: location, effectiveRange: nil) as? Markdown
         return markdown ?? .none
     }
     
@@ -211,7 +217,7 @@ class MarkdownTextView: NextResponderTextView {
     /// range.
     fileprivate func markdown(in range: NSRange) -> Set<Markdown> {
         var result = Set<Markdown>()
-        markdownTextStorage.enumerateAttribute(NSAttributedStringKey(rawValue: MarkdownIDAttributeName), in: range, options: []) { md, _, _ in
+        markdownTextStorage.enumerateAttribute(.markdownID, in: range, options: []) { md, _, _ in
             result.insert(md as? Markdown ?? .none)
         }
         return result
@@ -220,7 +226,7 @@ class MarkdownTextView: NextResponderTextView {
     // MARK: - Attribute Manipulation
     
     /// Returns the attributes for the given markdown.
-    private func attributes(for markdown: Markdown) -> [String : Any] {
+    private func attributes(for markdown: Markdown) -> [NSAttributedStringKey : Any] {
         
         // the idea is to query for specific markdown & adjust the attributes
         // incrementally
@@ -261,7 +267,7 @@ class MarkdownTextView: NextResponderTextView {
         }
         
         return [
-            MarkdownIDAttributeName: markdown,
+            .markdownID: markdown,
             .font: font,
             .foregroundColor: color,
             .paragraphStyle: paragraphyStyle
@@ -285,7 +291,7 @@ class MarkdownTextView: NextResponderTextView {
     /// the transformed values and setting the new attributes.
     private func updateAttributes(in range: NSRange, using transform: (Markdown) -> Markdown) {
         var exisitngMarkdownRanges = [(Markdown, NSRange)]()
-        markdownTextStorage.enumerateAttribute(NSAttributedStringKey(rawValue: MarkdownIDAttributeName), in: range, options: []) { md, mdRange, _ in
+        markdownTextStorage.enumerateAttribute(.markdownID, in: range, options: []) { md, mdRange, _ in
             if let md = md as? Markdown { exisitngMarkdownRanges.append((md, mdRange)) }
         }
         
@@ -407,9 +413,9 @@ class MarkdownTextView: NextResponderTextView {
         let prefix = nextListPrefix(type: type)
         
         // insert prefix with no md
-        typingAttributes = attributes(for: .none)
+        updateTypingAttributes(with: attributes(for: .none))
         replaceText(in: lineStart, with: prefix, restoringSelection: selection)
-        updateTypingAttributes()
+        updateTypingAttributes(with: currentAttributes)
         
         // add list md to whole line
         guard let newLineRange = currentLineRange else { return }

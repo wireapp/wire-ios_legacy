@@ -171,8 +171,8 @@ final class ContentSizeCategoryUpdater {
 }
 
 final class ConversationStatusStyle {
-    private(set) var regularStyle: [String: AnyObject] = [:]
-    private(set) var emphasisStyle: [String: AnyObject] = [:]
+    private(set) var regularStyle: [NSAttributedStringKey: AnyObject] = [:]
+    private(set) var emphasisStyle: [NSAttributedStringKey: AnyObject] = [:]
     private var contentSizeStyleUpdater: ContentSizeCategoryUpdater!
     
     init() {
@@ -192,22 +192,22 @@ final class ConversationStatusStyle {
 fileprivate let statusStyle = ConversationStatusStyle()
 
 extension ConversationStatusMatcher {
-    static var regularStyle: [String: AnyObject] {
+    static var regularStyle: [NSAttributedStringKey: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    static var emphasisStyle: [String: AnyObject] {
+    static var emphasisStyle: [NSAttributedStringKey: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }
 
 // Accessors for ObjC
 extension ZMConversation {
-    static func statusRegularStyle() -> [String: AnyObject] {
+    static func statusRegularStyle() -> [NSAttributedStringKey: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    static func statusEmphasisStyle() -> [String: AnyObject] {
+    static func statusEmphasisStyle() -> [NSAttributedStringKey: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }
@@ -357,7 +357,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                     let sender = message.sender,
                     let type = StatusMessageType(message: message),
                     let localizationKey = matchedTypesDescriptions[type] else {
-                return "" && type(of: self).regularStyle
+                return "" && Swift.type(of: self).regularStyle
             }
             
             let messageDescription: String
@@ -369,11 +369,11 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             }
             
             if status.isGroup {
-                return ((sender.displayName(in: conversation) + ": ") && type(of: self).emphasisStyle) +
-                        (messageDescription && type(of: self).regularStyle)
+                return ((sender.displayName(in: conversation) + ": ") && Swift.type(of: self).emphasisStyle) +
+                        (messageDescription && Swift.type(of: self).regularStyle)
             }
             else {
-                return messageDescription && type(of: self).regularStyle
+                return messageDescription && Swift.type(of: self).regularStyle
             }
         }
     }

@@ -324,7 +324,7 @@ private let zmLog = ZMSLog(tag: "UI")
     
     fileprivate func updateRecordingState(_ state: State) {
         let visibleViews = self.visibleViews(forState: state)
-        let allViews = Set(view.subviews.compactMap { $0.subviews })
+        let allViews = Set(view.subviews.flatMap { $0.subviews })
         let hiddenViews = allViews.subtracting(visibleViews)
         
         visibleViews.forEach { $0.isHidden = false }

@@ -194,7 +194,7 @@ extension SettingsCellDescriptorFactory {
 
     func pictureElement() -> SettingsCellDescriptorType {
         let previewGenerator: PreviewGeneratorType = { _ in
-            guard let image = ZMUser.selfUser().imageSmallProfileData.compactMap(UIImage.init) else { return .none }
+            guard let image = ZMUser.selfUser().imageSmallProfileData.flatMap(UIImage.init) else { return .none }
             return .image(image)
         }
 

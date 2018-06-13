@@ -106,8 +106,8 @@ class ArticleView: UIView {
     }
 
     private func updateLabels(obfuscated: Bool = false) {
-        messageLabel.linkAttributes = obfuscated ? nil :  [.foregroundColor : UIColor.accent()]
-        messageLabel.activeLinkAttributes = obfuscated ? nil : [.foregroundColor : UIColor.accent().withAlphaComponent(0.5)]
+        messageLabel.linkAttributes = obfuscated ? nil :  [NSAttributedStringKey.foregroundColor.rawValue : UIColor.accent()]
+        messageLabel.activeLinkAttributes = obfuscated ? nil : [NSAttributedStringKey.foregroundColor.rawValue : UIColor.accent().withAlphaComponent(0.5)]
 
         authorLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 16) : authorFont
         messageLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 20) : titleFont

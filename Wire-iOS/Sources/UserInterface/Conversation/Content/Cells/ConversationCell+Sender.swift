@@ -66,6 +66,6 @@ public extension ConversationCell {
     }
 
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
-        return string.attributedString.addAttributes([NSForegroundColorAttributeName : kind.color, .font : kind.font], toSubstring: string)
+        return string.attributedString.addAttributes([.foregroundColor : kind.color, .font : kind.font], toSubstring: string)
     }
 }
