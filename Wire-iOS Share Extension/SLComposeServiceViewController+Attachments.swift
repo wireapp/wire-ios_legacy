@@ -28,7 +28,7 @@ extension SLComposeServiceViewController {
     var allAttachments : [NSItemProvider] {
         guard let items = extensionContext?.inputItems as? [NSExtensionItem] else { return [] }
         return items.compactMap { $0.attachments as? [NSItemProvider] } // remove optional
-            .compactMap { $0 } // flattens array
+            .flatMap { $0 } // flattens array
     }
 
     /// Gets all the URLs in this post, and invoke the callback (on main queue) when done

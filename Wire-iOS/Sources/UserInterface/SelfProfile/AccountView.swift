@@ -372,7 +372,7 @@ public final class TeamImageView: UIImageView {
         }
         else if let name = self.account.teamName {
             self.image = nil
-            self.initialLabel.text = name.substring(to: name.index(after: name.startIndex))
+            self.initialLabel.text = String(name[..<name.index(after: name.startIndex)])
         }
     }
 }

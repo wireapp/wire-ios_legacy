@@ -221,7 +221,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         context.interpolationQuality = CGInterpolationQuality.high
         context.draw(cgImage, in: renderRect)
         
-        result = context.makeImage().compactMap { UIImage(cgImage: $0) }
+        result = context.makeImage().flatMap { UIImage(cgImage: $0) }
     }
     
 }

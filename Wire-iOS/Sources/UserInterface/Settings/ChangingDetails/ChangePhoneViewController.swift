@@ -63,7 +63,7 @@ fileprivate struct PhoneNumber {
         guard let country = Country.detect(forPhoneNumber: fullNumber) else { return nil }
         countryCode = country.e164.uintValue
         let prefix = country.e164PrefixString
-        numberWithoutCode = fullNumber.substring(from: prefix.endIndex)
+        numberWithoutCode = String(fullNumber[prefix.endIndex...])
         self.fullNumber = fullNumber
         
     }

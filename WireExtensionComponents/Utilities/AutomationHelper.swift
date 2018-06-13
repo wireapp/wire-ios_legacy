@@ -63,7 +63,7 @@ import WireSyncEngine
 
     override init() {
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
-        let arguments: ArgumentsType = url.compactMap(FileArguments.init) ?? CommandLineArguments()
+        let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
 
         self.disableAutocorrection = arguments.hasFlag(AutomationKey.DisableAutocorrection.rawValue)
         self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.EnableAddressBookOnSimulator.rawValue)
