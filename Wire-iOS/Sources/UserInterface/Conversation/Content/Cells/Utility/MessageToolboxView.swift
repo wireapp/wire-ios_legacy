@@ -318,11 +318,6 @@ extension ZMSystemMessageData {
             let deleteRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_delete".localized)
             attributedText.addAttributes([NSLinkAttributeName: type(of: self).deleteLink], range: deleteRange)
         }
-
-        if showDestructionTimer, let stateString = deliveryStateString {
-            let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
-            attributedText.addAttributes([NSForegroundColorAttributeName: ephemeralColor], to: stateString)
-        }
         
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
             return
