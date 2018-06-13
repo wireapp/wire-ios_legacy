@@ -45,30 +45,30 @@ public enum FontWeight: String {
 @available(iOSApplicationExtension 8.2, *)
 extension FontWeight {
     static let weightMapping: [FontWeight: CGFloat] = [
-        .ultraLight: UIFontWeightUltraLight,
-        .thin:       UIFontWeightThin,
-        .light:      UIFontWeightLight,
-        .regular:    UIFontWeightRegular,
-        .medium:     UIFontWeightMedium,
-        .semibold:   UIFontWeightSemibold,
-        .bold:       UIFontWeightBold,
-        .heavy:      UIFontWeightHeavy,
-        .black:      UIFontWeightBlack
+        .ultraLight: UIFont.Weight.ultraLight.rawValue,
+        .thin:       UIFont.Weight.thin.rawValue,
+        .light:      UIFont.Weight.light.rawValue,
+        .regular:    UIFont.Weight.regular.rawValue,
+        .medium:     UIFont.Weight.medium.rawValue,
+        .semibold:   UIFont.Weight.semibold.rawValue,
+        .bold:       UIFont.Weight.bold.rawValue,
+        .heavy:      UIFont.Weight.heavy,
+        .black:      UIFont.Weight.black
     ]
     
     /// Weight mapping used when the bold text accessibility setting is
     /// enabled. Light weight fonts won't render bold, so we use regular
     /// weights instead.
     static let accessibilityWeightMapping: [FontWeight: CGFloat] = [
-        .ultraLight: UIFontWeightRegular,
-        .thin:       UIFontWeightRegular,
-        .light:      UIFontWeightRegular,
-        .regular:    UIFontWeightRegular,
-        .medium:     UIFontWeightMedium,
-        .semibold:   UIFontWeightSemibold,
-        .bold:       UIFontWeightBold,
-        .heavy:      UIFontWeightHeavy,
-        .black:      UIFontWeightBlack
+        .ultraLight: UIFont.Weight.regular.rawValue,
+        .thin:       UIFont.Weight.regular.rawValue,
+        .light:      UIFont.Weight.regular.rawValue,
+        .regular:    UIFont.Weight.regular.rawValue,
+        .medium:     UIFont.Weight.medium.rawValue,
+        .semibold:   UIFont.Weight.semibold.rawValue,
+        .bold:       UIFont.Weight.bold.rawValue,
+        .heavy:      UIFont.Weight.heavy,
+        .black:      UIFont.Weight.black
     ]
     
     public func fontWeight(accessibilityBoldText: Bool? = nil) -> CGFloat {
@@ -87,18 +87,18 @@ extension FontWeight {
 extension UIFont {
     static func systemFont(ofSize size: CGFloat, contentSizeCategory: UIContentSizeCategory, weight: FontWeight) -> UIFont {
         if #available(iOSApplicationExtension 8.2, *) {
-            return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: weight.fontWeight())
+            return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: UIFont.Weight(rawValue: weight.fontWeight()))
         } else {
             return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)))
         }
     }
     
-    public var classySystemFontName: String {
+    @objc public var classySystemFontName: String {
         get {
             let weightSpecifier = { () -> String in 
                 guard #available(iOSApplicationExtension 8.2, *),
-                    let traits = self.fontDescriptor.object(forKey: UIFontDescriptorTraitsAttribute) as? NSDictionary,
-                    let floatWeight = traits[UIFontWeightTrait] as? NSNumber else {
+                    let traits = self.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.traits) as? NSDictionary,
+                    let floatWeight = traits[UIFontDescriptor.TraitKey.weight] as? NSNumber else {
                         return ""
                 }
                 
@@ -111,11 +111,11 @@ extension UIFont {
 }
 
 extension UIFont {
-    public var isItalic: Bool {
+    @objc public var isItalic: Bool {
         return fontDescriptor.symbolicTraits.contains(.traitItalic)
     }
     
-    public func italicFont() -> UIFont {
+    @objc public func italicFont() -> UIFont {
         
         if isItalic {
             return self
@@ -251,7 +251,7 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
         return mapping
     }
     
-    public convenience init(contentSizeCategory: UIContentSizeCategory) {
+    @objc public convenience init(contentSizeCategory: UIContentSizeCategory) {
         self.init(fontMapping: type(of: self).defaultFontMapping(with: contentSizeCategory))
     }
     

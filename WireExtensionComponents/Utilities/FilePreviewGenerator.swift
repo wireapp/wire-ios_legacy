@@ -33,7 +33,7 @@ extension URL {
 }
 
 extension NSURL {
-    public func UTI() -> String {
+    @objc public func UTI() -> String {
         return (self as URL).UTI()
     }
 }
@@ -69,7 +69,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 }
 
 @objc open class SharedPreviewGenerator: NSObject {
-    static var generator: AggregateFilePreviewGenerator = {
+    @objc static var generator: AggregateFilePreviewGenerator = {
         let resultQueue = OperationQueue.main
         let thumbnailSizeDefault = CGSize(width: 120, height: 120)
         let thumbnailSizeVideo = CGSize(width: 640, height: 480)
@@ -85,11 +85,11 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 }
 
 @objc open class AggregateFilePreviewGenerator: NSObject, FilePreviewGenerator {
-    let subGenerators: [FilePreviewGenerator]
+    @objc let subGenerators: [FilePreviewGenerator]
     open let thumbnailSize: CGSize
     open let callbackQueue: OperationQueue
     
-    init(subGenerators: [FilePreviewGenerator], callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    @objc init(subGenerators: [FilePreviewGenerator], callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.callbackQueue = callbackQueue
         self.thumbnailSize = thumbnailSize
         self.subGenerators = subGenerators
@@ -120,7 +120,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     open let thumbnailSize: CGSize
     open let callbackQueue: OperationQueue
     
-    init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    @objc init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
@@ -163,7 +163,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     open let thumbnailSize: CGSize
     open let callbackQueue: OperationQueue
     
-    init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    @objc init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
@@ -232,7 +232,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     open let thumbnailSize: CGSize
     open let callbackQueue: OperationQueue
     
-    public init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    @objc public init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()

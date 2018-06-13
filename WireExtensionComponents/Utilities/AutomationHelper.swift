@@ -26,37 +26,37 @@ import WireSyncEngine
 /// These values typically do not need to be stored in `Settings`.
 @objc public final class AutomationHelper: NSObject {
     
-    static public let sharedHelper = AutomationHelper()
+    static @objc public let sharedHelper = AutomationHelper()
     
     /// Whether Hockeyapp should be used
-    public var useHockey: Bool {
+    @objc public var useHockey: Bool {
         return UserDefaults.standard.bool(forKey: "UseHockey")
     }
     
     /// Whether analytics should be used
-    public var useAnalytics: Bool {
+    @objc public var useAnalytics: Bool {
         return UserDefaults.standard.bool(forKey: "UseAnalytics")
     }
     
     /// Whether to skip the first login alert
-    public var skipFirstLoginAlerts : Bool {
+    @objc public var skipFirstLoginAlerts : Bool {
         return self.automationEmailCredentials != nil
     }
     
     /// The login credentials provides by command line
-    public let automationEmailCredentials: ZMEmailCredentials?
+    @objc public let automationEmailCredentials: ZMEmailCredentials?
     
     /// Whether autocorrection is disabled
-    public let disableAutocorrection : Bool
+    @objc public let disableAutocorrection : Bool
     
     /// Whether address book upload is enabled on simulator
-    public let uploadAddressbookOnSimulator : Bool
+    @objc public let uploadAddressbookOnSimulator : Bool
     
     /// Delay in address book remote search override
     public let delayInAddressBookRemoteSearch : TimeInterval?
     
     /// Debug data to install in the share container
-    public let debugDataToInstall: URL?
+    @objc public let debugDataToInstall: URL?
 
     /// The name of the arguments file in the /tmp directory
     private let fileArgumentsName = "wire_arguments.txt"
@@ -187,7 +187,7 @@ extension AutomationHelper {
     
     /// Takes all files in the folder pointed at by `debugDataToInstall` and installs them
     /// in the shared folder, erasing any other file in that folder.
-    public func installDebugDataIfNeeded() {
+    @objc public func installDebugDataIfNeeded() {
         
         guard let packageURL = self.debugDataToInstall,
             let appGroupIdentifier = Bundle.main.appGroupIdentifier else { return }

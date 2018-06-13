@@ -53,7 +53,7 @@ import FLAnimatedImage
         }
     }
     
-    public var message: ZMConversationMessage? {
+    @objc public var message: ZMConversationMessage? {
         didSet {
             if let message = self.message {
                 self.user = message.sender
@@ -63,7 +63,7 @@ import FLAnimatedImage
         }
     }
     
-    public func updateForImage() {
+    @objc public func updateForImage() {
         if let message = self.message,
             let imageMessageData = message.imageMessageData,
             let imageData = imageMessageData.imageData,

@@ -26,14 +26,14 @@ private let zmLog = ZMSLog(tag: "UI")
 
 @objc public final class FileMetaDataGenerator: NSObject {
 
-    static public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
+    static @objc public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in
             let thumbnail = preview != nil ? UIImageJPEGRepresentation(preview!, 0.9) : nil
             
             if AVURLAsset.wr_isAudioVisualUTI(uti) {
                 let asset = AVURLAsset(url: url)
                 
-                if let videoTrack = asset.tracks(withMediaType: AVMediaTypeVideo).first {
+                if let videoTrack = asset.tracks(withMediaType: AVMediaType.video).first {
                     completion(ZMVideoMetadata(fileURL: url, duration: asset.duration.seconds, dimensions: videoTrack.naturalSize, thumbnail: thumbnail))
                 } else {
                     let loudness = audioSamplesFromAsset(asset, maxSamples: 100)
@@ -50,7 +50,7 @@ private let zmLog = ZMSLog(tag: "UI")
 }
 
 extension AVURLAsset {
-    static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
+    @objc static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
         return audiovisualTypes().reduce(false) { (conformsBefore: Bool, compatibleUTI: String) -> Bool in
             conformsBefore || UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
         }
@@ -58,7 +58,7 @@ extension AVURLAsset {
 }
 
 func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
-    let assetTrack = asset.tracks(withMediaType: AVMediaTypeAudio).first
+    let assetTrack = asset.tracks(withMediaType: AVMediaType.audio).first
     let reader: AVAssetReader
     do {
         reader = try AVAssetReader(asset: asset)
