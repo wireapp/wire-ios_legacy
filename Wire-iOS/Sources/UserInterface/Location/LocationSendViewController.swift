@@ -24,7 +24,7 @@ import Classy
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
 }
 
-@objc public final class LocationSendViewController: UIViewController {
+@objcMembers public final class LocationSendViewController: UIViewController {
     
     public let sendButton = Button(style: .full)
     public let addressLabel = UILabel()

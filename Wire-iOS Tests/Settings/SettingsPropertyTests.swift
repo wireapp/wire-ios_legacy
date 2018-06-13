@@ -20,7 +20,7 @@
 import XCTest
 @testable import Wire
 
-@objc class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
+@objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
     var originalProfileImageData: Data!
     
     func deleteProfileImage() {

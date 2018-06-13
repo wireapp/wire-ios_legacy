@@ -25,7 +25,7 @@ extension SessionManager {
         return AppDelegate.shared().sessionManager
     }
     
-    public func updateCallNotificationStyleFromSettings() {
+    @objc public func updateCallNotificationStyleFromSettings() {
         let isCallKitEnabled = !Settings.shared().disableCallKit
         let hasAudioPermissions = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == AVAuthorizationStatus.authorized
         

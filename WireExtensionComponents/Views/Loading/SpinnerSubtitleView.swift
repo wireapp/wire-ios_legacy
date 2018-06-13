@@ -18,7 +18,7 @@
 
 import UIKit
 
-@objc public class SpinnerSubtitleView: UIStackView {
+@objcMembers public class SpinnerSubtitleView: UIStackView {
 
     @objc public var subtitle: String? {
         didSet {

@@ -22,7 +22,7 @@ import MapKit
 import Contacts
 
 public extension Message {
-    public class func openInMaps(_ messageData: ZMLocationMessageData) {
+    @objc public class func openInMaps(_ messageData: ZMLocationMessageData) {
         messageData.openInMaps(with: MKCoordinateSpan(zoomLevel: Int(messageData.zoomLevel), viewSize: Float(UIScreen.main.bounds.height)))
     }
 }

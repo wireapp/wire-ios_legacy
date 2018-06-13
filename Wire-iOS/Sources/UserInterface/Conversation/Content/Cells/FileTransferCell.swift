@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 // Cell that disaplys the file transfer and it's states
-public final class FileTransferCell: ConversationCell {
+@objcMembers public final class FileTransferCell: ConversationCell {
     private let fileTransferView = FileTransferView(frame: .zero)
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .paperclip)

@@ -20,7 +20,7 @@ import UIKit
 
 public extension ConversationCell {
 
-    public func createLikeButton() {
+    @objc public func createLikeButton() {
         self.likeButton = LikeButton()
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
         self.likeButton.accessibilityIdentifier = "likeButton"
@@ -55,7 +55,7 @@ public extension ConversationCell {
         delegate.conversationCell!(self, didSelect: .like)
     }
 
-    func trackReaction(_ sender: AnyObject, reaction: ReactionType) {
+    @objc func trackReaction(_ sender: AnyObject, reaction: ReactionType) {
         var interactionMethod = InteractionMethod.undefined
         if sender is LikeButton {
             interactionMethod = .button

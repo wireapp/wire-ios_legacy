@@ -21,7 +21,7 @@
 import Foundation
 import Cartography
 
-@objc public final class AudioButtonOverlay: UIView {
+@objcMembers public final class AudioButtonOverlay: UIView {
     
     enum AudioButtonOverlayButtonType {
         case play, send, stop

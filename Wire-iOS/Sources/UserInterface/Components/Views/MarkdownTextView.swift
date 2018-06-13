@@ -23,7 +23,7 @@ extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
 }
 
-class MarkdownTextView: NextResponderTextView {
+@objcMembers class MarkdownTextView: NextResponderTextView {
     
     enum ListType {
         case number, bullet
@@ -547,7 +547,7 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
 
 extension DownStyle {
     /// The style used within the conversation message cells.
-    static var normal: DownStyle = {
+    @objc static var normal: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
@@ -558,7 +558,7 @@ extension DownStyle {
     }()
     
     /// The style used within the input bar.
-    static var compact: DownStyle = {
+    @objc static var compact: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
         style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)

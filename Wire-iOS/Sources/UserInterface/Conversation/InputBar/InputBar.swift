@@ -76,7 +76,7 @@ private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
 
-@objc public final class InputBar: UIView {
+@objcMembers public final class InputBar: UIView {
 
     private let inputBarVerticalInset : CGFloat = 34
 

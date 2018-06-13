@@ -20,8 +20,7 @@ import Foundation
 import UIKit
 import Classy
 
-@objc
-class AppRootViewController: UIViewController {
+@objcMembers class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
     public let overlayWindow: UIWindow
@@ -569,7 +568,7 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 
 public extension SessionManager {
     
-    var firstAuthenticatedAccount: Account? {
+    @objc var firstAuthenticatedAccount: Account? {
         
         if let selectedAccount = accountManager.selectedAccount {
             if selectedAccount.isAuthenticated {

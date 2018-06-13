@@ -108,7 +108,7 @@ class AnimatedPenView : UIView {
 
 }
 
-class TypingIndicatorView: UIView {
+@objcMembers class TypingIndicatorView: UIView {
     
     public let nameLabel = UILabel()
     public let animatedPen = AnimatedPenView()

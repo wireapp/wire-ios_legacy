@@ -27,7 +27,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
 }
 
 
-@objc class EmojiKeyboardViewController: UIViewController {
+@objcMembers class EmojiKeyboardViewController: UIViewController {
     
     weak var delegate: EmojiKeyboardViewControllerDelegate?
     fileprivate var emojiDataSource: EmojiDataSource!

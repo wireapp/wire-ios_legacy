@@ -20,7 +20,7 @@ import Foundation
 
 extension UIColor {
     
-    static var soundcloudOrange: UIColor  {
+    @objc static var soundcloudOrange: UIColor  {
         return UIColor(red: 0.988, green: 0.235, blue: 0.941, alpha: 1)
     }
     

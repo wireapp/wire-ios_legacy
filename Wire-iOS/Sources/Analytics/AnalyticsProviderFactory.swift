@@ -22,7 +22,7 @@ private let zmLog = ZMSLog(tag: "Analytics")
 
 fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
 
-@objc class AnalyticsProviderFactory: NSObject {
+@objcMembers class AnalyticsProviderFactory: NSObject {
     @objc public static let shared = AnalyticsProviderFactory()
     @objc public static let ZMConsoleAnalyticsArgumentKey = "-ConsoleAnalytics"
 

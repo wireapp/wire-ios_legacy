@@ -61,7 +61,7 @@ extension ZMSystemMessageData {
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
 }
 
-@objc open class MessageToolboxView: UIView {
+@objcMembers open class MessageToolboxView: UIView {
     fileprivate static let resendLink = URL(string: "settings://resend-message")!
     fileprivate static let deleteLink = URL(string: "settings://delete-message")!
 

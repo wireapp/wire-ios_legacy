@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 
-@objc public class OverflowSeparatorView: UIView {
+@objcMembers public class OverflowSeparatorView: UIView {
 
     @objc public var inverse: Bool = false
 

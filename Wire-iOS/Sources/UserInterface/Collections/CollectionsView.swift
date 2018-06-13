@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-@objc public final class CollectionsView: UIView {
+@objcMembers public final class CollectionsView: UIView {
     var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!
     var collectionView: UICollectionView!
     let noResultsView = NoResultsView()

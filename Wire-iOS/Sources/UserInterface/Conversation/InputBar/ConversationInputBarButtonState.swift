@@ -23,7 +23,7 @@ private let disableEphemeralSending = false
 private let disableEphemeralSendingInGroups = false
 
 
-public final class ConversationInputBarButtonState: NSObject {
+@objcMembers final public class ConversationInputBarButtonState: NSObject {
 
     public var sendButtonHidden: Bool {
         return !hasText || editing || (Settings.shared().disableSendButton && mode != .emojiInput && !markingDown)

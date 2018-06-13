@@ -18,7 +18,7 @@
 
 import UIKit
 
-class DefaultNavigationBar : UINavigationBar {
+@objcMembers class DefaultNavigationBar : UINavigationBar {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,11 +55,11 @@ class DefaultNavigationBar : UINavigationBar {
 
 extension UIViewController {
     
-    func wrapInNavigationController() -> UINavigationController {
+    @objc func wrapInNavigationController() -> UINavigationController {
         return self.wrapInNavigationController(RotationAwareNavigationController.self)
     }
     
-    func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
+    @objc func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
         let navigationController = navigationControllerClass.init(navigationBarClass: DefaultNavigationBar.self, toolbarClass: nil)
         navigationController.setViewControllers([self], animated: false)
         return navigationController

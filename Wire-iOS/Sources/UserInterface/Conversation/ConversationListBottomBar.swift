@@ -30,7 +30,7 @@ import Cartography
 }
 
 
-@objc final class ConversationListBottomBarController: UIViewController {
+@objcMembers final class ConversationListBottomBarController: UIViewController {
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
 

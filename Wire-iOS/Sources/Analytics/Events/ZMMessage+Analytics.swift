@@ -38,12 +38,12 @@ extension MessageType {
 
 extension ZMMessage {
     
-    public class func analyticsTypeString(_ message: ZMConversationMessage) -> String {
+    @objc public class func analyticsTypeString(_ message: ZMConversationMessage) -> String {
         let messageType = Message.messageType(message)
         return analyticsTypeString(withMessageType: messageType)
     }
     
-    public class func analyticsTypeString(withMessageType messageType: MessageType) -> String {
+    @objc public class func analyticsTypeString(withMessageType messageType: MessageType) -> String {
         return messageType.analyticsTypeString
     }
 }

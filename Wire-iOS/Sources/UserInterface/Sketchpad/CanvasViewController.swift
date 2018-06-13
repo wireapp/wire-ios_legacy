@@ -36,7 +36,7 @@ import Cartography
     case emoji
 }
 
-class CanvasViewController: UIViewController, UINavigationControllerDelegate {
+@objcMembers class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     weak var delegate : CanvasViewControllerDelegate?
     var canvas = Canvas()

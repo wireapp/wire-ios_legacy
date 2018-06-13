@@ -22,7 +22,7 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objc final class AppLockViewController: UIViewController {
+@objcMembers final class AppLockViewController: UIViewController {
     fileprivate var lockView: AppLockView!
     fileprivate static let authenticationPersistancePeriod: TimeInterval = 10
     fileprivate var localAuthenticationCancelled: Bool = false

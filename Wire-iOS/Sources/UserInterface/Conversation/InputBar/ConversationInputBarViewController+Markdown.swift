@@ -21,14 +21,14 @@ import Foundation
 
 extension ConversationInputBarViewController {
     
-    func configureMarkdownButton() {
+    @objc func configureMarkdownButton() {
         
         markdownButton.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
         markdownButton.setIcon(.markdownToggle, with: .tiny, for: .normal)
         markdownButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
     }
     
-    public func updateMarkdownButton() {
+    @objc public func updateMarkdownButton() {
     
         let color: UIColor
         

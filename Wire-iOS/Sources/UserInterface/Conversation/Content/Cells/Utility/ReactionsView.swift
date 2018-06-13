@@ -20,7 +20,7 @@ import Foundation
 import WireSyncEngine
 import Cartography
 
-@objc open class ReactionsView: UIView {
+@objcMembers open class ReactionsView: UIView {
     let avatarStack = StackView()
     static let maxAvatarsDisplayed = 2
     

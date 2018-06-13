@@ -22,7 +22,7 @@ import WireSyncEngine
 import WireRequestStrategy
 
 
-@objc class AnalyticsFileTransferObserver: NSObject {
+@objcMembers class AnalyticsFileTransferObserver: NSObject {
     let analyticsTracker: AnalyticsTracker = AnalyticsTracker(context: "")
     
     override init() {

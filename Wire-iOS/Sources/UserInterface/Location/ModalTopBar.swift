@@ -23,7 +23,7 @@ import Cartography
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar)
 }
 
-@objc final public class ModalTopBar: UIView {
+@objcMembers final public class ModalTopBar: UIView {
     
     public let titleLabel = UILabel()
     public let dismissButton = IconButton()

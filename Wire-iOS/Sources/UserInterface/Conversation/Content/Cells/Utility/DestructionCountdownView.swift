@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 
-public final class DestructionCountdownView: UIView {
+@objcMembers public final class DestructionCountdownView: UIView {
 
     public let numberOfDots = 5
     private let padding: CGFloat = 1

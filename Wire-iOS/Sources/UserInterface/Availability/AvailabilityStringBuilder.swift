@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc public class AvailabilityStringBuilder: NSObject {
+@objcMembers public class AvailabilityStringBuilder: NSObject {
 
     static func string(for user: ZMUser, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString {
         

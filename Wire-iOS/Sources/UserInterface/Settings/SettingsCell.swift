@@ -37,7 +37,7 @@ protocol SettingsCellType: class {
     var icon: ZetaIconType {get set}
 }
 
-@objc class SettingsTableCell: UITableViewCell, SettingsCellType {
+@objcMembers class SettingsTableCell: UITableViewCell, SettingsCellType {
     let iconImageView = UIImageView()
     public let cellNameLabel = UILabel()
     let valueLabel = UILabel()
@@ -291,14 +291,14 @@ protocol SettingsCellType: class {
     }
 }
 
-@objc class SettingsGroupCell: SettingsTableCell {
+@objcMembers class SettingsGroupCell: SettingsTableCell {
     override func setup() {
         super.setup()
         self.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
     }
 }
 
-@objc class SettingsButtonCell: SettingsTableCell {
+@objcMembers class SettingsButtonCell: SettingsTableCell {
     override func setup() {
         super.setup()
         self.cellNameLabel.textColor = UIColor.accent()
@@ -326,7 +326,7 @@ class SettingsToggleCell: SettingsTableCell {
     }
 }
 
-@objc class SettingsValueCell: SettingsTableCell {
+@objcMembers class SettingsValueCell: SettingsTableCell {
     override var descriptor: SettingsCellDescriptorType?{
         willSet {
             if let propertyDescriptor = self.descriptor as? SettingsPropertyCellDescriptorType {
@@ -351,7 +351,7 @@ class SettingsToggleCell: SettingsTableCell {
     }
 }
 
-@objc class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
+@objcMembers class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
     var textInput: UITextField!
 
     override func setup() {

@@ -242,7 +242,7 @@ extension ChatHeadsViewController {
 
 extension Account {
     
-    var isActive: Bool {
+    @objc var isActive: Bool {
         return SessionManager.shared?.accountManager.selectedAccount == self 
     }
 }

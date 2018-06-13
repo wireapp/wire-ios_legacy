@@ -127,7 +127,7 @@ public extension ConversationMediaSketchSource {
     }
 }
 
-@objc open class ImageMetadata: NSObject { // could be struct in swift-only environment
+@objcMembers open class ImageMetadata: NSObject { // could be struct in swift-only environment
     var source: ConversationMediaPictureSource = .gallery
     var method: ConversationMediaPictureTakeMethod = .none
     var sketchSource: ConversationMediaSketchSource = .none

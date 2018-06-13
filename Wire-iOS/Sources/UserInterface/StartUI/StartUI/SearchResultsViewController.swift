@@ -112,7 +112,7 @@ extension UIViewController {
     }
 }
 
-public class SearchResultsViewController : UIViewController {
+@objcMembers public class SearchResultsViewController : UIViewController {
     
     var searchResultsView: SearchResultsView?
     let searchDirectory: SearchDirectory

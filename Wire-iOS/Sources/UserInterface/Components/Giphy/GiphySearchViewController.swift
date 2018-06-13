@@ -74,7 +74,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
 }
 
-class GiphySearchViewController: UICollectionViewController {
+@objcMembers class GiphySearchViewController: UICollectionViewController {
 
     public weak var delegate: GiphySearchViewControllerDelegate?
 

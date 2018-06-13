@@ -25,13 +25,13 @@ import Cartography
 extension ConversationInputBarViewController {
     
     
-    func setupCallStateObserver() {
+    @objc func setupCallStateObserver() {
         if let userSession = ZMUserSession.shared() {
             callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession:userSession)
         }
     }
     
-    func configureAudioButton(_ button: IconButton) {
+    @objc func configureAudioButton(_ button: IconButton) {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
         longPressRecognizer.minimumPressDuration = 0.3
         button.addGestureRecognizer(longPressRecognizer)
@@ -173,11 +173,11 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: AudioRecordViewControllerDelegate {
     
-    public func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
+    @objc public func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
         self.hideAudioRecordViewController()
     }
     
-    public func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {
+    @objc public func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {
         guard let conversation = self.conversation else { return }
         let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
 
@@ -188,7 +188,7 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
         Analytics.shared().tagStartedAudioMessageRecording(inConversation: conversation, type: type)
     }
     
-    public func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
+    @objc public func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
         let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
         
         Analytics.shared().tagSentAudioMessage(in: conversation, duration: duration, context: context, filter: filter, type: type)

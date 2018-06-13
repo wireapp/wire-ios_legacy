@@ -18,7 +18,7 @@
 
 import UIKit
 
-@objc public class WireApplication: UIApplication {
+@objcMembers public class WireApplication: UIApplication {
     
     public override func registerUserNotificationSettings(_ notificationSettings: UIUserNotificationSettings) {
         if AutomationHelper.sharedHelper.skipFirstLoginAlerts { return }

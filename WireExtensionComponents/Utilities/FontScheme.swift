@@ -187,7 +187,7 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
     return left.size == right.size && left.weight == right.weight && left.fontTextStyle == right.fontTextStyle
 }
 
-@objc public final class FontScheme: NSObject {
+@objcMembers public final class FontScheme: NSObject {
     public typealias FontMapping = [FontSpec: UIFont]
     
     public var fontMapping: FontMapping = [:]

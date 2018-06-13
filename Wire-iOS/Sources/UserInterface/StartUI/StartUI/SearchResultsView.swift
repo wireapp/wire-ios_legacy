@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import Classy
 
-class SearchResultsView : UIView {
+@objcMembers class SearchResultsView : UIView {
     
     let accessoryViewMargin : CGFloat = 16.0
     let emptyResultContainer = UIView()

@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 
-@objc public final class TextSearchResultFooter: UIView {
+@objcMembers public final class TextSearchResultFooter: UIView {
     public var message: ZMConversationMessage? {
         didSet {
             guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.sender else {

@@ -45,7 +45,7 @@ private let zmLog = ZMSLog(tag: "UI")
     case afterSlideUp, afterPreview, afterEffect
 }
 
-@objc public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
+@objcMembers public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
     
     let buttonOverlay = AudioButtonOverlay()
     let topSeparator = UIView()

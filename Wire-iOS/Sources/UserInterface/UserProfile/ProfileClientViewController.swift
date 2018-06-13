@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 
-class ProfileClientViewController: UIViewController {
+@objcMembers class ProfileClientViewController: UIViewController {
 
     let userClient: UserClient
     let contentView = UIView()

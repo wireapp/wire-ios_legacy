@@ -42,7 +42,7 @@ extension ConversationViewController {
 }
 
 public extension ConversationViewController {
-    func addCallStateObserver() -> Any? {
+    @objc func addCallStateObserver() -> Any? {
         return conversation.voiceChannel?.addCallStateObserver(self)
     }
     
@@ -95,7 +95,7 @@ public extension ConversationViewController {
         return button
     }
 
-    var collectionsBarButtonItem: UIBarButtonItem {
+    @objc var collectionsBarButtonItem: UIBarButtonItem {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
         let button = UIBarButtonItem(icon: showingSearchResults ? .searchOngoing : .search, target: self, action: action)
@@ -109,14 +109,14 @@ public extension ConversationViewController {
         return button
     }
 
-    var hasUnreadMessagesInOtherConversations: Bool {
+    @objc var hasUnreadMessagesInOtherConversations: Bool {
         guard let userSession = ZMUserSession.shared() else {
             return false
         }
         return ZMConversationList.conversations(inUserSession: userSession).hasUnreadMessages(excluding: self.conversation)
     }
 
-    public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.lastServerSyncedActiveParticipants.count != 0 else { return [] }
 
         if conversation.canJoinCall {
@@ -130,7 +130,7 @@ public extension ConversationViewController {
         }
     }
 
-    public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    @objc public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
 
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
@@ -144,7 +144,7 @@ public extension ConversationViewController {
         return items
     }
 
-    public func updateRightNavigationItemsButtons() {
+    @objc public func updateRightNavigationItemsButtons() {
         if UIApplication.isLeftToRightLayout {
             navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
         } else {
@@ -153,7 +153,7 @@ public extension ConversationViewController {
     }
 
     /// Update left navigation bar items
-    func updateLeftNavigationBarItems() {
+    @objc func updateLeftNavigationBarItems() {
         if UIApplication.isLeftToRightLayout {
             navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
         } else {
@@ -216,7 +216,7 @@ public extension ConversationViewController {
         })
     }
 
-    internal func dismissCollectionIfNecessary() {
+    @objc internal func dismissCollectionIfNecessary() {
         if let collectionController = self.collectionController {
             collectionController.dismiss(animated: false)
         }
@@ -263,7 +263,7 @@ extension ConversationViewController: WireCallCenterCallStateObserver {
 extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
-    var canJoinCall: Bool {
+    @objc var canJoinCall: Bool {
         switch voiceChannel?.state {
         case .incoming?: return true
         default: return false

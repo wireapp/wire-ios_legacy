@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 
-@objc public class TitleView: UIView {
+@objcMembers public class TitleView: UIView {
     
     internal var titleColor, titleColorSelected: UIColor?
     internal var titleFont: UIFont?
@@ -55,7 +55,7 @@ import Classy
         addSubview(titleButton)
     }
     
-    @objc func titleButtonTapped(_ sender: UIButton) {
+    func titleButtonTapped(_ sender: UIButton) {
         tapHandler?(sender)
     }
     

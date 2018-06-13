@@ -25,7 +25,7 @@ import UIKit
 }
 
 
-@objc public class LinkInteractionTextView: UITextView {
+@objcMembers public class LinkInteractionTextView: UITextView {
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
     

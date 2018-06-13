@@ -29,7 +29,7 @@ import Classy
     func articleViewDidLongPressView(_ articleView: ArticleView)
 }
 
-class ArticleView: UIView {
+@objcMembers class ArticleView: UIView {
 
     /// MARK - Styling
     var containerColor: UIColor?

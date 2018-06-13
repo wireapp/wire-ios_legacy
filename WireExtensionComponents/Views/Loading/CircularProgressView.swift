@@ -19,7 +19,7 @@
 
 import Foundation
 
-@objc open class CircularProgressView: UIView {
+@objcMembers open class CircularProgressView: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self)

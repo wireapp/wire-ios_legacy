@@ -26,7 +26,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController)
 }
 
-public class SearchHeaderViewController : UIViewController {
+@objcMembers public class SearchHeaderViewController : UIViewController {
     
     let tokenFieldContainer = UIView()
     let tokenField = TokenField()

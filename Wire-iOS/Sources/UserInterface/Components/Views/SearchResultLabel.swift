@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc final public class SearchResultLabel: UILabel, Copyable {
+@objcMembers final public class SearchResultLabel: UILabel, Copyable {
     public convenience init(instance: SearchResultLabel) {
         self.init()
         self.font = instance.font

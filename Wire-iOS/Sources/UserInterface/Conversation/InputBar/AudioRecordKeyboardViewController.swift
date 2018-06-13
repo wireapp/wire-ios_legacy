@@ -22,7 +22,7 @@ import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objc final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
+@objcMembers final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
     enum State {
         case ready, recording, effects
     }

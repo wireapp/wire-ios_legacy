@@ -26,7 +26,7 @@ import Cartography
 }
 
 
-@objc final class OutgoingConnectionViewController: UIViewController {
+@objcMembers final class OutgoingConnectionViewController: UIViewController {
 
     private let cancelButton = IconButton.iconButtonDefault()
     private let archiveButton = IconButton.iconButtonDefault()

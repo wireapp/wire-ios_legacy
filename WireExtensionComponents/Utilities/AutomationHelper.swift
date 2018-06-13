@@ -24,7 +24,7 @@ import WireSyncEngine
 /// This class is used to retrieve specific arguments passed on the 
 /// command line when running automation tests. 
 /// These values typically do not need to be stored in `Settings`.
-@objc public final class AutomationHelper: NSObject {
+@objcMembers public final class AutomationHelper: NSObject {
     
     @objc static public let sharedHelper = AutomationHelper()
     

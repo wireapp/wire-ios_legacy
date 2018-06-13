@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final internal class ConversationListAccessoryView: UIView {
+@objcMembers final internal class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
         didSet {
             self.updateForIcon()
@@ -34,7 +34,7 @@ final internal class ConversationListAccessoryView: UIView {
     let iconView = UIImageView()
     var collapseWidthConstraint: NSLayoutConstraint!
     
-    init(mediaPlaybackManager: MediaPlaybackManager) {
+    @objc init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
         

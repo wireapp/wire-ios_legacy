@@ -25,7 +25,7 @@ fileprivate let smallLightFont = FontSpec(.small, .light).font!
 fileprivate let smallBoldFont = FontSpec(.small, .medium).font!
 fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 
-@objc public class AddressBookCorrelationFormatter: NSObject {
+@objcMembers public class AddressBookCorrelationFormatter: NSObject {
 
     let lightFont, boldFont: UIFont
     let color: UIColor
@@ -58,7 +58,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 }
 
 
-@objc final class UserNameDetailViewModel: NSObject {
+@objcMembers final class UserNameDetailViewModel: NSObject {
 
     let title: NSAttributedString
 
@@ -115,7 +115,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 }
 
 
-final class UserNameDetailView: UIView {
+@objcMembers final class UserNameDetailView: UIView {
 
     let subtitleLabel = UILabel()
     let correlationLabel = UILabel()

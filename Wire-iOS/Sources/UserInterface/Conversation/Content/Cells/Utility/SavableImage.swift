@@ -31,7 +31,7 @@ protocol AssetChangeRequestProtocol: class {
 
 extension PHAssetChangeRequest: AssetChangeRequestProtocol {}
 
-@objc final public class SavableImage: NSObject {
+@objcMembers final public class SavableImage: NSObject {
 
     /// protocols for inject mocking photo services
     var photoLibrary: PhotoLibraryProtocol = PHPhotoLibrary.shared()

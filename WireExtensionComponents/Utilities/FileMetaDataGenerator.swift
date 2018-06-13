@@ -24,7 +24,7 @@ import AVFoundation
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objc public final class FileMetaDataGenerator: NSObject {
+@objcMembers public final class FileMetaDataGenerator: NSObject {
 
     @objc static public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in

@@ -21,7 +21,7 @@ import WireSyncEngine
 import Cartography
 import Classy
 
-@objc public class ReactionCell: UICollectionViewCell {
+@objcMembers public class ReactionCell: UICollectionViewCell {
     public let userImageView = UserImageView()
     public let userDisplayNameLabel = UILabel()
     public let usernameLabel = UILabel()

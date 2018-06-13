@@ -26,7 +26,7 @@ extension ConversationContentViewController {
         return CGRect(origin: .zero, size: requiredSize)
     }
 
-    func updateHeaderHeight() {
+    @objc func updateHeaderHeight() {
         if let headerView = tableView.tableHeaderView {
             headerView.frame = headerViewFrame(view: headerView)
             tableView.tableHeaderView = headerView

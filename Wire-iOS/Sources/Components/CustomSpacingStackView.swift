@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-class CustomSpacingStackView: UIView {
+@objcMembers class CustomSpacingStackView: UIView {
 
     private var stackView: UIStackView
     
