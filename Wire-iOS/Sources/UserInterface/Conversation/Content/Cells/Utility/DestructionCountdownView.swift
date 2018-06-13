@@ -43,6 +43,8 @@ import Cartography
         layer.addSublayer(remainingTimeLayer)
         layer.addSublayer(elapsedTimeLayer)
         elapsedTimeLayer.strokeEnd = 0
+        elapsedTimeLayer.isOpaque = false
+        remainingTimeLayer.isOpaque = false
     }
 
     // MARK: - Layout
@@ -88,7 +90,8 @@ import Cartography
             return elapsedTimeLayer.strokeColor.flatMap(UIColor.init)
         }
         set {
-            elapsedTimeLayer.strokeColor = newValue?.cgColor
+            elapsedTimeLayer.strokeColor = newValue?.withAlphaComponent(1).cgColor
+            elapsedTimeLayer.opacity = Float(newValue?.alpha ?? CGFloat(0))
         }
     }
 
@@ -110,9 +113,9 @@ import Cartography
         let opacityAnimation = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
         opacityAnimation.fromValue = 1
         opacityAnimation.toValue = 0.5
-        opacityAnimation.duration = 0.5
-        opacityAnimation.autoreverses = true
-        opacityAnimation.repeatCount = .greatestFiniteMagnitude
+        opacityAnimation.duration = 0.25
+        opacityAnimation.fillMode = kCAFillModeForwards
+        opacityAnimation.isRemovedOnCompletion = false
 
         layer.add(opacityAnimation, forKey: imminentExpirationAnimationKey)
 

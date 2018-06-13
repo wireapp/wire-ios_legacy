@@ -412,6 +412,16 @@ static const CGFloat BurstContainerExpandedHeight = 40;
             self.countdownView = [[DestructionCountdownView alloc] init];
             self.countdownView.accessibilityIdentifier = @"EphemeralMessageCountdownView";
             self.countdownView.isAccessibilityElement = false;
+
+            UIColor *remainingColor = [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorLightGraphite];
+
+            UIColor *elapsedColor = [[[[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorGraphite]
+                                                              colorWithAlphaComponent:0.16]
+                                                       removeAlphaByBlendingWithColor:UIColor.whiteColor];
+
+            self.countdownView.remainingTimeColor = remainingColor;
+            self.countdownView.elapsedTimeColor = elapsedColor;
+
             [self.countdownContainerView addSubview:self.countdownView];
             [self.countdownView autoPinEdgesToSuperviewEdges];
         }
@@ -702,10 +712,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     NSTimeInterval duration = self.message.destructionDate.timeIntervalSinceNow;
 
     if (!self.countdownView.isAnimatingProgress && duration >= 1) {
-        NSTimeInterval start = self.message.serverTimestamp.timeIntervalSinceReferenceDate;
-        NSTimeInterval current = [NSDate date].timeIntervalSinceReferenceDate;
-        NSTimeInterval end = self.message.destructionDate.timeIntervalSinceReferenceDate;
-        NSTimeInterval progress = (current - start) / (end - start);
+        NSTimeInterval progress = [self calculateCurrentCountdownProgress];
         [self.countdownView startAnimatingWithDuration:duration currentProgress:progress];
         self.countdownView.hidden = NO;
     }
@@ -714,9 +721,15 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         [self.countdownView toggleImminentExpiration];
     }
 
-    if (!self.countdownContainerViewHidden && nil != self.message.destructionDate) {
-        [self.toolboxView updateTimestamp:self.message];
-    }
+    [self.toolboxView updateTimestamp:self.message];
+}
+
+- (NSTimeInterval)calculateCurrentCountdownProgress
+{
+    NSTimeInterval start = self.message.serverTimestamp.timeIntervalSinceReferenceDate;
+    NSTimeInterval current = [NSDate date].timeIntervalSinceReferenceDate;
+    NSTimeInterval end = self.message.destructionDate.timeIntervalSinceReferenceDate;
+    return (current - start) / (end - start);
 }
 
 @end

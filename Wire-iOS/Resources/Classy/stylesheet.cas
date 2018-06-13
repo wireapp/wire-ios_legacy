@@ -318,11 +318,6 @@ UnknownMessageCell {
     }
 }
 
-DestructionCountdownView {
-    remainingTimeColor: $color-countdown-remaining-time;
-    elapsedTimeColor: $color-countdown-elapsed-time;
-}
-
 ArticleView {
     containerColor: $color-placeholder-background;
     titleTextColor: $color-text-foreground;

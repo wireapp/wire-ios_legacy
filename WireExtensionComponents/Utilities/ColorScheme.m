@@ -93,9 +93,6 @@ NSString * const ColorSchemeColorSectionText = @"section-text";
 NSString * const ColorSchemeColorTokenFieldBackground = @"token-field-background";
 NSString * const ColorSchemeColorTokenFieldTextPlaceHolder = @"token-field-text-placeholder";
 
-NSString * const ColorSchemeCountdownElapsedTime = @"countdown-elapsed-time";
-NSString * const ColorSchemeCountdownRemainingTime = @"countdown-remaining-time";
-
 /// Generates the key name for the accent color that can be used to display the username.
 static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color);
 
@@ -249,7 +246,7 @@ static NSString* light(NSString *colorString) {
     UIColor *lightGraphiteAlpha24 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.24)"];
     UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
     UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
-    
+
     NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
                                 @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
@@ -302,8 +299,6 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorCellSeparator: graphiteAlpha8,
                                    ColorSchemeColorSearchBarBackground: white,
                                    ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
-                                   ColorSchemeCountdownElapsedTime: white,
-                                   ColorSchemeCountdownRemainingTime: lightGraphiteAlpha64
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -363,8 +358,6 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorCellSeparator: whiteAlpha8,
                                   ColorSchemeColorSearchBarBackground: whiteAlpha8,
                                   ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64],
-                                  ColorSchemeCountdownElapsedTime: white,
-                                  ColorSchemeCountdownRemainingTime: lightGraphiteAlpha64
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
