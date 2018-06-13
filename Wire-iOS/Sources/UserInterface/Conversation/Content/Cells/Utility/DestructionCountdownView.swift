@@ -119,6 +119,7 @@ import Cartography
     }
 
     @objc public func stopAnimating() {
+        layer.removeAllAnimations()
         elapsedTimeLayer.removeAllAnimations()
     }
 
