@@ -27,7 +27,7 @@ class AccountViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItShowsBasicAccount_Personal() {
-        // GIVENO
+        // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
         let sut = PersonalAccountView(account: account)
         // WHEN && THEN
