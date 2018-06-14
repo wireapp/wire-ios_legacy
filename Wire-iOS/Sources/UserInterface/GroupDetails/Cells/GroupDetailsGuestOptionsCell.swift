@@ -34,6 +34,10 @@ class GroupDetailsGuestOptionsCell: GroupDetailsOptionsCell {
         titleLabel.text = "group_details.guest_options_cell.title".localized
     }
 
+    override func configure(with conversation: ZMConversation) {
+        self.isOn = conversation.allowGuests
+    }
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         leftIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))

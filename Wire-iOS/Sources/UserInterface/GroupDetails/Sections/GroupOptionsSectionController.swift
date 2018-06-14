@@ -25,12 +25,27 @@ protocol GroupOptionsSectionControllerDelegate: class {
 
 class GroupOptionsSectionController: GroupDetailsSectionController {
 
+    private enum Option: Int {
+
+        case guests = 0
+        case timeout = 1
+
+        var cellReuseIdentifier: String {
+            switch self {
+            case .guests: return GroupDetailsGuestOptionsCell.zm_reuseIdentifier
+            case .timeout: return GroupDetailsTimeoutOptionsCell.zm_reuseIdentifier
+            }
+        }
+
+        fileprivate static let count = Option.allValues.count
+
+    }
+
+    // MARK: - Properties
+
     private weak var delegate: GroupOptionsSectionControllerDelegate?
     private let conversation: ZMConversation
     private let syncCompleted: Bool
-
-    private let guestsOptionsIndex = 0
-    private let timeoutOptionsIndex = 1
 
     init(conversation: ZMConversation, delegate: GroupOptionsSectionControllerDelegate, syncCompleted: Bool) {
         self.delegate = delegate
@@ -47,7 +62,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return Option.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -60,38 +75,31 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        switch indexPath.row {
-        case guestsOptionsIndex:
-            let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsGuestOptionsCell.self, for: indexPath)
-            cell.showSeparator = true
-            cell.isOn = conversation.allowGuests
-            cell.isUserInteractionEnabled = syncCompleted
-            cell.alpha = syncCompleted ? 1 : 0.48
-            return cell
-
-        case timeoutOptionsIndex:
-            let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsTimeoutOptionsCell.self, for: indexPath)
-            cell.showSeparator = false
-            cell.configure(with: conversation)
-            cell.isUserInteractionEnabled = syncCompleted
-            cell.alpha = syncCompleted ? 1 : 0.48
-            return cell
-
-        default:
+        guard let option = Option(rawValue: indexPath.row) else {
             fatal("Invalid options cell index \(indexPath.row)")
         }
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: option.cellReuseIdentifier, for: indexPath) as! GroupDetailsOptionsCell
+        
+        cell.configure(with: conversation)
+        cell.showSeparator = option.rawValue < (Option.count - 1)
+        cell.isUserInteractionEnabled = syncCompleted
+        cell.alpha = syncCompleted ? 1 : 0.48
+        return cell
 
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        switch indexPath.row {
-        case guestsOptionsIndex:
+        guard let option = Option(rawValue: indexPath.row) else {
+            return
+        }
+
+        switch option {
+        case .guests:
             delegate?.presentGuestOptions(animated: true)
-        case timeoutOptionsIndex:
+        case .timeout:
             delegate?.presentTimeoutOptions(animated: true)
-        default:
-            break
         }
 
     }

@@ -26,7 +26,7 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
         titleLabel.text = "group_details.timeout_options_cell.title".localized
     }
 
-    func configure(with conversation: ZMConversation) {
+    override func configure(with conversation: ZMConversation) {
         statusLabel.text = conversation.destructionTimeout.displayString
     }
 

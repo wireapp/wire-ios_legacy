@@ -78,4 +78,8 @@ class GroupDetailsOptionsCell: SeparatorCollectionViewCell {
         statusLabel.textColor = sectionTextColor
     }
 
+    func configure(with conversation: ZMConversation) {
+        fatal("Your subclasses must implement `configure(with conversation)`.")
+    }
+
 }
