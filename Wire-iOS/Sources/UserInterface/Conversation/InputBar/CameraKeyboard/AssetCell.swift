@@ -21,7 +21,7 @@ import Foundation
 import Photos
 import Cartography
 
-open class AssetCell: UICollectionViewCell, Reusable {
+open class AssetCell: UICollectionViewCell {
     
     let imageView = UIImageView()
     let durationView = UILabel()

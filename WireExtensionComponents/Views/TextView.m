@@ -96,11 +96,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)setPlaceholder:(NSString *)placeholder
 {
     _placeholder = placeholder;

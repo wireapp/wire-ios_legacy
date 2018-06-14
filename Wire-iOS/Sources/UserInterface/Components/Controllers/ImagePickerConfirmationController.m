@@ -50,9 +50,25 @@
 {
     self.presentingPickerController = picker;
     
+    void (^setImageBlock)(void) = ^{
+        [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
+            if (imageData != nil) {
+                ImageMetadata *metadata = [[ImageMetadata alloc] init];
+                metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
+                if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+                    metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
+                }
+                metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
+                
+                self.imagePickedBlock(imageData, metadata);
+            }
+        }];
+    };
+    
     [self assetPreviewFromMediaInfo:info resultBlock:^(id image) {
         @weakify(self);
-        
+    
+        // Other source type (camera) is alread showing the confirmation dialogue.
         if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
             ConfirmAssetViewController *confirmImageViewController = [[ConfirmAssetViewController alloc] init];
             confirmImageViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -78,23 +94,16 @@
                     
                     self.imagePickedBlock(UIImagePNGRepresentation(editedImage), metadata);
                 } else {
-                    [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
-                        if (imageData != nil) {
-                            ImageMetadata *metadata = [[ImageMetadata alloc] init];
-                            metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
-                            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                                metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
-                            }
-                            metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
-                            
-                            self.imagePickedBlock(imageData, metadata);
-                        }
-                    }];
+                    setImageBlock();
                 }
             };
             
             [picker presentViewController:confirmImageViewController animated:YES completion:nil];
             [picker setNeedsStatusBarAppearanceUpdate];
+        }
+        else if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            [picker dismissViewControllerAnimated:YES completion:nil];
+            setImageBlock();
         }
     }];
 }

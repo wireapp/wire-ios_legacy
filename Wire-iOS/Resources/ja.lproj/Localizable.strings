@@ -59,7 +59,7 @@
 "peoplepicker.header.services" = "サービス";
 "peoplepicker.services.create_conversation.item" = "会話を作成";
 "peoplepicker.services.add_service.button" = "サービスを追加";
-"peoplepicker.services.add_service.error.title" = "サービスを追加できません。";
+"peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "現在、サービスはご利用いただけません。";
 "peoplepicker.services.add_service.error.full" = "会話数が上限に達しました。";
 
@@ -93,7 +93,7 @@
 "peoplepicker.quick-action.create-conversation" = "グループを作成します";
 "peoplepicker.quick-action.create-guest-room" = "ゲストルームを作成する";
 
-"add_participants.all_contacts_added" = "全員います";
+"add_participants.all_contacts_added" = "Everyone’s here.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "名前で検索します";
@@ -143,6 +143,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "メッセージを作成し、後で保存する";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "カメラ";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "写真を撮影してすぐ送信";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "アーカイブ";
@@ -262,10 +263,12 @@
 "conversation.create.toggle.subtitle" = "チーム外の人々 にこの会話を公開します。公開設定はいつでも変更することができます。";
 
 "conversation.input_bar.ongoing_call_alert.title" = "通話中";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
-"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "ゲストが存在します";
+"conversation.action.search" = "検索";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -284,7 +287,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "\"Wire\"が カメラおよび写真へのアクセスを求めています。"; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "\"Wire\"が 写真へのアクセスを求めています。";
 "keyboard_photos_access.denied.keyboard.camera" = "\"Wire\"が カメラへのアクセスを求めています。";
-"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can't access the camera while you are on a video call.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF ロック";
@@ -340,7 +343,7 @@
 "content.system.conversation.guest.joined" = "%@ 参加済";
 
 "content.system.conversation.invite.title" = "外部ユーザは、あなたのチームの会話に参加できます。";
-"content.system.conversation.invite.button" = "友達を招待する";
+"content.system.conversation.invite.button" = "招待する";
 
 "content.system.other_renamed_conv_to_nothing" = "%@が会話の名前を削除しました";
 "content.system.you_renamed_conv_to_nothing" = "あなたは会話の名前を削除しました";
@@ -483,6 +486,7 @@
 "voice.speaker_button.title" = "スピーカー";
 "voice.cancel_button.title" = "キャンセル";
 "voice.call_button.title" = "通話";
+"voice.end_call_button.title" = "End Call";
 
 "voice.alert.call_in_progress.title" = "通話中です";
 "voice.alert.call_in_progress.message" = "同時にできる通話は一つのみです";
@@ -499,10 +503,10 @@
 
 // Voice New
 
-"call.status.connecting" = "Connecting…";
+"call.status.connecting" = "接続中...";
 "call.status.incoming.user" = "%@ is calling…";
-"call.status.incoming" = "Calling…";
-"call.status.outgoing" = "Ringing…";
+"call.status.incoming" = "発信中...";
+"call.status.outgoing" = "呼び出し中...";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "固定ビットレート";
@@ -518,8 +522,33 @@
 "call.degraded.alert.title" = "New Device";
 "call.degraded.alert.message.self" = "新しいデバイスを使い始めました";
 "call.degraded.alert.message.user" = "%@が新しいデバイスを使い始めました。";
-"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.message.unknown" = "新しいデバイスを使い始めた人がいます";
 "call.degraded.alert.action.continue" = "とにかく電話をする";
+
+"call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.start.button" = "Call Anyway";
+"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.join.button" = "Join Anyway";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "ミュート";
+"call.actions.label.toggle_mute_off" = "ミュート解除します。";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "通話をうけいれる";
+"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.terminate_call" = "通話を終了";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "通話に参加";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -605,7 +634,7 @@
 "profile.cancel_connection_request_dialog.button_yes" = "はい";
 
 // Unblock button
-"profile.block_button_title" = "ブロック中...";
+"profile.block_button_title" = "ブロック...";
 "profile.unblock_button_title" = "ブロック解除中...";
 
 "profile.cancel_connection_button_title" = "リクエストをキャンセルします";
@@ -663,6 +692,8 @@
 "self.voiceover.hint" = "プロファイルと設定を開く";
 "self.new-device.voiceover.label" = "プロファイル, 新規デバイスの追加";
 
+"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
+
 "self.add_phone_number" = "電話番号を追加する";
 "self.add_email_password" = "メールアドレスとパスワードを追加";
 
@@ -674,7 +705,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "あなたのWireアカウントは次のデバイスで利用されています。";
+"self.new_device_alert.title" = "あなたのアカウントの使用:";
 "self.new_device_alert.message" = "\n%@\n\nもし上のデバイスを知らない場合は、それを削除して、パスワードをリセットしてください。";
 "self.new_device_alert.message_plural" = "\n%@\n\nもしこれらのデバイスを知らない場合は、それを削除して、パスワードをリセットしてください。";
 "self.new_device_alert.manage_devices" = "デバイスを管理";
@@ -688,6 +719,9 @@
 
 "self.settings.add_account.error.title" = "3 つのアカウントがアクティブです";
 "self.settings.add_account.error.message" = "１度に３つのアカウントまでログインできます。新規にログインする為に、１つログアウトしてください。";
+
+"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch account";
 
 // Settings - Account details
 "self.settings.account_section" = "アカウント";
@@ -736,10 +770,10 @@
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用状況データと障害報告";
 "self.settings.privacy_analytics.title" = "匿名データを共有";
-"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
+"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending anonymous usage and crash reports.";
 
-"self.settings.receiveNews_and_offers.title" = "Receive News";
-"self.settings.receiveNews_and_offers.description.title" = "Receive news and product update from Wire via email.";
+"self.settings.receiveNews_and_offers.title" = "Receive Newsletter";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product updates from Wire via email.";
 
 
 
@@ -833,6 +867,8 @@
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
 "open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "アラートのサウンド";
@@ -1206,7 +1242,7 @@
 "error.user.device_deleted_remotely" = "別のデバイスからログアウトしました。";
 "error.user.last_identity_cant_be_deleted" = "メールまたは電話番号のいずれかを削除するためには、それらが登録されている必要があります。";
 "error.user.account_suspended" = "このアカウントは、もはやログイン権限はありません";
-"error.user.account_limit_reached" = "３アカウント以上は追加できません。";
+"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "RegistrationTextField.h"
-#import "UIView+Borders.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "Constants.h"
@@ -55,7 +54,6 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.timer cancel];
 }
 

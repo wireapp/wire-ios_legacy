@@ -105,7 +105,8 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
                 popoverPresentation.sourceView = sourceView
                 popoverPresentation.sourceRect = sourceView.bounds
             }
-            
+
+            controllerToShow.modalPresentationCapturesStatusBarAppearance = true
             self.viewController?.present(controllerToShow, animated: true, completion: .none)
             
         case .navigation:

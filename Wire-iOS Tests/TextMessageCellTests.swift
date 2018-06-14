@@ -48,6 +48,12 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         }
     }
 
+    override func tearDown() {
+        resetDayFormatter()
+        
+        super.tearDown()
+    }
+
     func testThatItRendersATextMessage_Sent() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
@@ -238,28 +244,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     var otherUsers: [ZMUser] {
         return MockUser.mockUsers().map { $0 }
     }
-
-    func resetDayFormatter() {
-        let locale = Locale(identifier: "en_US")
-        WRDateFormatter.thisYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
-        WRDateFormatter.otherYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
-    }
-
-    /// change the locale of the DateFormatter for snapshot
-    ///
-    /// - Parameters:
-    ///   - identifier: locale identifier
-    ///   - date: date to determine in with or without yera component
-    func setDayFormatterLocale(identifier: String, date: Date) {
-        let dayFormatter = Message.dayFormatter(date: date)
-
-        /// overwrite dayFormatter's locale and update the date format string
-        let locale = Locale(identifier: identifier)
-        let formatString = DateFormatter.dateFormat(fromTemplate: dayFormatter.dateFormat, options: 0, locale: locale)
-
-        dayFormatter.dateFormat = formatString
-    }
-
 }
 
 // MARK: - iPad Pro snapshot test

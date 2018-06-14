@@ -28,8 +28,6 @@
 @import WireExtensionComponents;
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
-#import "CameraViewController.h"
-#import "UIView+Borders.h"
 #import "UIViewController+Errors.h"
 
 #import "ZClientViewController.h"
@@ -46,7 +44,6 @@
 @import FLAnimatedImage;
 #import "MediaAsset.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "UIView+Borders.h"
 #import "ImageMessageCell.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -186,7 +183,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
@@ -937,6 +933,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)videoButtonPressed:(IconButton *)sender
 {
+    if([[ZMUserSession sharedSession] isCallOngoing]) {
+        [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureRecordVideo from:self];
+        return;
+    }
+    
     [Analytics.shared tagMediaAction:ConversationMediaActionVideoMessage inConversation:self.conversation];
     self.videoSendContext = ConversationMediaVideoContextCursorButton;
     [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];

@@ -22,7 +22,6 @@
 @import PureLayout;
 
 #import "RegistrationTextField.h"
-#import "UIView+Borders.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Constants.h"
 #import "GuidanceLabel.h"

@@ -36,7 +36,7 @@ class CrashReporter {
         UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup")
 
         let manager = BITHockeyManager.shared()
-        manager.isCrashManagerDisabled = ExtensionSettings.shared.disableCrashAndAnalyticsSharing // Whether the user opted out of sharing analytics and crash data
+        manager.setTrackingEnabled(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
         manager.configure(withIdentifier: hockeyIdentifier)
         manager.crashManager.crashManagerStatus = .autoSend
         manager.start()

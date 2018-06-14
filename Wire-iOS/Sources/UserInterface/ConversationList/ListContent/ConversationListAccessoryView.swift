@@ -89,16 +89,16 @@ final internal class ConversationListAccessoryView: UIView {
             iconView.image = UIImage(for: .clock, fontSize: iconSize, color: .white)
             self.accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
-        case .activeCall(true):
+        case .activeCall(false):
             iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
             self.accessibilityValue = "conversation_list.voiceover.status.active_call".localized
             return iconView
-        case .activeCall(false):
+        case .activeCall(true):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized.uppercased()
             self.accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
+            iconView.image = UIImage(for: .missedCall, fontSize: iconSize, color: .black)
             self.accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:

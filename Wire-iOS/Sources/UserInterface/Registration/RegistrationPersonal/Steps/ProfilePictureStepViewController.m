@@ -20,10 +20,10 @@
 #import "ProfilePictureStepViewController.h"
 
 @import PureLayout;
+@import MobileCoreServices;
 
 #import "UIColor+WAZExtensions.h"
 #import "WireSyncEngine+iOS.h"
-#import "CameraViewController.h"
 #import "UIViewController+Errors.h"
 #import "Button.h"
 
@@ -44,7 +44,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 #endif
 
 
-@interface ProfilePictureStepViewController () <CameraViewControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface ProfilePictureStepViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) Button *selectOwnPictureButton;
@@ -213,16 +213,21 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 - (IBAction)showCameraController:(id)sender
 {
-    CameraViewController *cameraViewController = [[CameraViewController alloc] init];
-    cameraViewController.savePhotosToCameraRoll = YES;
-    cameraViewController.delegate = self;
-    cameraViewController.defaultCamera = CameraViewControllerCameraFront;
-    cameraViewController.preferedPreviewSize = CameraViewControllerPreviewSizeFullscreen;
-    cameraViewController.analyticsTracker = self.analyticsTracker;
-    cameraViewController.disableSketch = YES;
-    cameraViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] ||
+        ![UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
+        return;
+    }
     
-    [self presentViewController:cameraViewController animated:YES completion:nil];
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
+    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (IBAction)showGalleryController:(id)sender
@@ -298,20 +303,6 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
         [[UnauthenticatedSession sharedSession] setProfileImage:jpegData];
         [self.formStepDelegate didCompleteFormStep:self];
     }
-}
-
-#pragma mark - CameraViewControllerDelegate
-
-- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-    self.photoSource = metadata.source == ConversationMediaPictureSourceCamera ? AnalyticsPhotoSourceCamera : AnalyticsPhotoSourceCameraRoll;
-    [self setPictureImageData:imageData];
-}
-
-- (void)cameraViewControllerDidCancel:(CameraViewController *)cameraViewController
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UINavigationControllerDelegate

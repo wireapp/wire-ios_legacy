@@ -22,8 +22,6 @@
 #import "BadgeUserImageView.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIView+Borders.h"
-#import <WireDataModel/ZMBareUser.h>
 #import "Wire-Swift.h"
 
 @interface TopPeopleCell ()

@@ -51,7 +51,7 @@ extension ZMConversation {
     }
     
     func joinCall() {
-        joinVoiceChannel(video: voiceChannel?.isVideoCall ?? false)
+        joinVoiceChannel(video: false)
     }
     
     func joinVoiceChannel(video: Bool) {
@@ -69,9 +69,12 @@ extension ZMConversation {
             }
         }
         
-        UIApplication.wr_requestOrWarnAboutMicrophoneAccess { (granted) in
+        UIApplication.wr_requestOrWarnAboutMicrophoneAccess { granted in
             if video {
-                UIApplication.wr_requestOrWarnAboutVideoAccess(onGranted)
+                UIApplication.wr_requestOrWarnAboutVideoAccess { _ in
+                    // We still allow starting the call, even if the video permissions where not granted.
+                    onGranted(granted)
+                }
             } else {
                 onGranted(granted)
             }

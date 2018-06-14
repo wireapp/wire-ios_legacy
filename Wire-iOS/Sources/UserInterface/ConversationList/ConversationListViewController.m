@@ -42,7 +42,6 @@
 // helpers
 
 #import "Analytics.h"
-#import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
 
 // Transitions
@@ -129,7 +128,6 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
 }
 
@@ -403,13 +401,17 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    [self.networkStatusViewController createConstraintsInContainerWithBottomView: self.topBar containerView:self.contentContainer topMargin:0];
+    [self.networkStatusViewController createConstraintsInParentControllerWithBottomView:self.topBar controller:self];
     
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
+    
+    [[self.contentContainer.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor] setActive:YES];
+    [[self.contentContainer.topAnchor constraintEqualToAnchor:self.safeTopAnchor] setActive:YES];
+    [[self.contentContainer.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor] setActive:YES];
+    [[self.contentContainer.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor] setActive:YES];
     
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
@@ -594,7 +596,6 @@
     KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
     
     if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
-        keyboardAvoidingWrapperController.topInset = UIScreen.safeArea.top;
         keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
         keyboardAvoidingWrapperController.transitioningDelegate = self;
         [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];

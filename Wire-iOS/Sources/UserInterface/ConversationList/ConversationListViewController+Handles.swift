@@ -98,7 +98,7 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
         switch action {
         case .chooseOwn(let suggested): openChangeHandleViewController(with: suggested)
         case .keepSuggestion(let suggested): setSuggested(handle: suggested)
-        case .learnMore: URL(string: "https://wire.com/support/username/")?.open()
+        case .learnMore: URL.wr_usernameLearnMore.openInApp(above: self)
         }
     }
 
@@ -134,8 +134,8 @@ extension ConversationListViewController: UserProfileUpdateObserver {
     public func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
         if let userSession = ZMUserSession.shared() {
-            UIAlertController.showNewsletterSubscriptionDialogIfNeeded() { marketingconsent in
-                ZMUser.selfUser().setMarketingConsent(to: marketingconsent, in: userSession, completion: { _ in })
+            UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self) { marketingConsent in
+                ZMUser.selfUser().setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
             }
         }
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = false

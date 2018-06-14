@@ -163,9 +163,9 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     
 }
 
-extension GroupDetailsViewController: ViewControllerDismissable, ProfileViewControllerDelegate {
+extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewControllerDelegate {
     
-    func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
+    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
         navigationController?.popViewController(animated: true, completion: completion)
     }
     
@@ -183,7 +183,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gue
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
                                                                                             conversation: conversation,
                                                                                             profileViewControllerDelegate: self,
-                                                                                            viewControllerDismissable: self)
+                                                                                            viewControllerDismisser: self)
         
         navigationController?.pushViewController(viewController, animated: true)
     }

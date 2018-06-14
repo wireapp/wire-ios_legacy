@@ -112,6 +112,10 @@ class SettingsBaseTableViewController: UIViewController {
             footer.edges == container.edges
         }
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
 extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataSource {
@@ -139,7 +143,6 @@ extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
 
 }
-
 
 class SettingsTableViewController: SettingsBaseTableViewController {
 

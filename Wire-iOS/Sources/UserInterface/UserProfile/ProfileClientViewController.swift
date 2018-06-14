@@ -75,6 +75,8 @@ class ProfileClientViewController: UIViewController {
         self.updateFingerprintLabel()
         self.modalPresentationStyle = .overCurrentContext
         self.title = NSLocalizedString("registration.devices.title", comment:"")
+
+        setupViews()
     }
     
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -89,9 +91,7 @@ class ProfileClientViewController: UIViewController {
         return [.portrait]
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func setupViews() {
         view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
 
         self.setupContentView()
@@ -110,7 +110,7 @@ class ProfileClientViewController: UIViewController {
         self.createConstraints()
         self.updateFingerprintLabel()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = ""
@@ -145,10 +145,14 @@ class ProfileClientViewController: UIViewController {
         descriptionTextView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
-        
+
         if let user = self.userClient.user {
-            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && descriptionTextFont) + "\n" +
-                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
+            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
+                descriptionTextFont &&
+                UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)) +
+                "\n" +
+                ("profile.devices.detail.verify_message.link".localized &&
+                    [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: URL.wr_fingerprintHowToVerify])
         }
         self.contentView.addSubview(descriptionTextView)
     }
@@ -317,8 +321,12 @@ class ProfileClientViewController: UIViewController {
     }
 
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
-        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(), fromConversation:self.fromConversation)
-        let navigationControllerWrapper = UINavigationController(rootViewController: selfClientController)
+        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(),
+                                                                fromConversation:self.fromConversation,
+                                                                variant: ColorScheme.default().variant)
+
+        let navigationControllerWrapper = selfClientController.wrapInNavigationController()
+
         navigationControllerWrapper.modalPresentationStyle = .currentContext
         self.present(navigationControllerWrapper, animated: true, completion: .none)
     }
@@ -386,14 +394,12 @@ extension ProfileClientViewController: UserClientObserver {
 
 extension ProfileClientViewController: UITextViewDelegate {
 
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        if URL == NSURL.wr_fingerprintHowToVerify() as URL {
-            UIApplication.shared.openURL(URL)
-            return true
-        }
-        else {
+    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange) -> Bool {
+        guard url == .wr_fingerprintHowToVerify else {
             return false
         }
+        url.openInApp(above: self)
+        return false
     }
 
 }

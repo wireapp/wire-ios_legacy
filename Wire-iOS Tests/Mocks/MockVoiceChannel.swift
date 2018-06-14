@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,108 +18,98 @@
 
 import Foundation
 
-@objc
-class MockVoiceChannel : NSObject, CallProperties, VoiceChannel {
-
-    var isConstantBitRateAudioActive: Bool = false
-    var initiator: ZMUser?
-
-    public func continueByDecreasingConversationSecurity(userSession: ZMUserSession) {}
-    func leaveAndKeepDegradedConversationSecurity(userSession: ZMUserSession) {}
-
-
+class MockVoiceChannel: NSObject, VoiceChannel {
+    
+    var conversation: ZMConversation?
+    var mockCallState: CallState = .incoming(video: false, shouldRing: true, degraded: false)
+    var mockCallDuration: TimeInterval?
+    var mockParticipants: NSOrderedSet = NSOrderedSet()
+    var mockIsConstantBitRateAudioActive: Bool = false
+    var mockInitiator: ZMUser? = nil
+    var mockIsVideoCall: Bool = false
+    var mockCallParticipantState: CallParticipantState = .unconnected
+    var mockVideoState: VideoState = .stopped
+    
     required init(conversation: ZMConversation) {
         self.conversation = conversation
     }
     
-    // MARK - Call Properties
+    func addCallStateObserver(_ observer: WireCallCenterCallStateObserver) -> Any {
+        return "token"
+    }
     
-    var mockIsVideoCall: Bool = false
+    func addParticipantObserver(_ observer: WireCallCenterCallParticipantObserver) -> Any {
+        return "token"
+    }
+    
+    func addVoiceGainObserver(_ observer: VoiceGainObserver) -> Any {
+        return "token"
+    }
+    
+    func addConstantBitRateObserver(_ observer: ConstantBitRateAudioObserver) -> Any {
+        return "token"
+    }
+    
+    static func addCallStateObserver(_ observer: WireCallCenterCallStateObserver, userSession: ZMUserSession) -> Any {
+        return "token"
+    }
+    
+    var state: CallState {
+        return mockCallState
+    }
+    
+    var callStartDate: Date? {
+        if let mockCallDuration = mockCallDuration {
+            return Date(timeIntervalSinceNow: -mockCallDuration)
+        } else {
+            return nil
+        }
+    }
+    
+    var participants: NSOrderedSet {
+        return mockParticipants
+    }
+    
+    var isConstantBitRateAudioActive: Bool {
+        return mockIsConstantBitRateAudioActive
+    }
     
     var isVideoCall: Bool {
         return mockIsVideoCall
     }
     
-    var state: CallState {
-        return .incoming(video: false, shouldRing: true, degraded: false)
+    var initiator: ZMUser? {
+        return mockInitiator
     }
-    
-    var conversation: ZMConversation?
-    
-    var callStartDate: Date? = nil
-    
-    var participants: NSOrderedSet = NSOrderedSet()
     
     func state(forParticipant: ZMUser) -> CallParticipantState {
-        return .connected(muted: false, sendingVideo: false)
+        return mockCallParticipantState
     }
     
-    var selfUserConnectionState: CallParticipantState = CallParticipantState.connected(muted: false, sendingVideo: false)
-    
-    func setVideoCaptureDevice(device: CaptureDevice) throws {
+    var videoState: VideoState {
+        get {
+            return mockVideoState
+        }
+        set {
+            mockVideoState = newValue
+        }
         
     }
     
-    func toggleVideo(active: Bool) throws {
-        
-    }
+    func setVideoCaptureDevice(_ device: CaptureDevice) throws {}
     
-    // MARK - Call Actions
+    func mute(_ muted: Bool, userSession: ZMUserSession) {}
     
-    func mute(_ muted: Bool, userSession: ZMUserSession) {
-        
-    }
+    func join(video: Bool, userSession: ZMUserSession) -> Bool { return true }
     
-    func join(video: Bool, userSession: ZMUserSession) -> Bool {
-        return true
-    }
+    func leave(userSession: ZMUserSession) {}
     
-    func leave(userSession: ZMUserSession) {
-        
-    }
+    func continueByDecreasingConversationSecurity(userSession: ZMUserSession) {}
     
-    func ignore(userSession: ZMUserSession) {
-        
-    }
+    func leaveAndKeepDegradedConversationSecurity(userSession: ZMUserSession) {}
     
-    // MARK - Call Actions Internal
+    func join(video: Bool) -> Bool { return true }
     
-    func join(video: Bool) -> Bool {
-        return true
-    }
-    
-    func leave() {
-        
-    }
-    
-    func ignore() {
-        
-    }
-    
-    // MARK - Observers
-    
-    func addVoiceGainObserver(_ observer: VoiceGainObserver) -> Any {
-        return NSObject()
-    }
-    
-    func addCallStateObserver(_ observer: WireCallCenterCallStateObserver) -> Any {
-        return NSObject()
-    }
-    
-    func addReceivedVideoObserver(_ observer: ReceivedVideoObserver) -> Any {
-        return NSObject()
-    }
-    
-    func addParticipantObserver(_ observer: VoiceChannelParticipantObserver) -> Any {
-        return NSObject()
-    }
-    
-    func addConstantBitRateObserver(_ observer: ConstantBitRateAudioObserver) -> Any {
-        return NSObject()
-    }
-    
-    static func addCallStateObserver(_ observer: WireCallCenterCallStateObserver, userSession: ZMUserSession) -> Any {
-        return NSObject()
-    }
+    func leave() {}
     
 }

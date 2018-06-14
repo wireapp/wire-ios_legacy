@@ -47,7 +47,6 @@
 #import "MediaBar.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"
-#import "UIView+Borders.h"
 #import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
@@ -83,13 +82,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
-@interface ConversationViewController (ViewControllerDismissable) <ViewControllerDismissable>
+@interface ConversationViewController (ViewControllerDismisser) <ViewControllerDismisser>
 @end
 
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
-@end
-
-@interface ConversationViewController (VerticalTransitionDataSource) <VerticalTransitionDataSource>
 @end
 
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
@@ -97,7 +93,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationViewController ()
 
-@property (nonatomic) ConversationDetailsTransitioningDelegate *conversationDetailsTransitioningDelegate;
 @property (nonatomic) BarController *conversationBarController;
 @property (nonatomic) MediaBarViewController *mediaBarViewController;
 
@@ -122,6 +117,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) ConversationTitleView *titleView;
 @property (nonatomic) CollectionsViewController *collectionController;
 @property (nonatomic) id conversationListObserverToken;
+@property (nonatomic, readwrite) ConversationCallController *startCallController;
+    
 @end
 
 
@@ -132,8 +129,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self dismissCollectionIfNecessary];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-
     [self hideAndDestroyParticipantsPopoverController];
     self.contentViewController.delegate = nil;
 }
@@ -156,8 +151,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }];
 
     self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextConversation];
-    self.conversationDetailsTransitioningDelegate = [[ConversationDetailsTransitioningDelegate alloc] init];
-    self.conversationDetailsTransitioningDelegate.dataSource = self;
     
     [self createInputBarController];
     [self createContentViewController];
@@ -441,6 +434,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (self.conversation != nil) {
         self.voiceChannelStateObserverToken = [self addCallStateObserver];
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+        self.startCallController = [[ConversationCallController alloc] initWithConversation:self.conversation target: self];
     }
 }
 
@@ -465,8 +459,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [ConversationInputBarViewController endEditingMessage];
     [self.inputBarController.inputBar.textView resignFirstResponder];
-    
-    viewController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
+
     [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
                                                        fromView:sourceView
                                           contentViewController:viewController];
@@ -495,7 +488,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             viewController = [UserDetailViewControllerFactory createUserDetailViewControllerWithUser:self.conversation.firstActiveParticipantOtherThanSelf
                                           conversation:self.conversation
                          profileViewControllerDelegate:self
-                             viewControllerDismissable:self];
+                               viewControllerDismisser:self];
 
             break;
         }
@@ -805,9 +798,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@implementation ConversationViewController (ViewControllerDismissable)
+@implementation ConversationViewController (ViewControllerDismisser)
 
-- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)dismissViewController:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [self dismissViewControllerAnimated:YES completion:completion];
 }
@@ -896,14 +889,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                     } else {
                         ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
                         profileViewController.delegate = self;
-                        profileViewController.viewControllerDismissable = self;
+                        profileViewController.viewControllerDismisser = self;
                         UINavigationController *navigationController = profileViewController.wrapInNavigationController;
                         navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
                         [self presentViewController:navigationController animated:YES completion:nil];
                     }
                 } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
                     UIViewController *participantsController = [self participantsController];
-                    participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
                     [self presentViewController:participantsController animated:YES completion:nil];
                 }
                 break;
@@ -920,23 +912,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@implementation ConversationViewController (VerticalTransitionDataSource)
-
-- (NSArray<UIView *> *)viewsToHideDuringVerticalTransition:(VerticalTransition *)transition
-{
-    NSMutableArray<UIView *> *viewsToHide = [[NSMutableArray alloc] init];
-    
-    if ([self.parentViewController isKindOfClass:[ConversationRootViewController class]]) {
-        ConversationRootViewController *convRootViewController = (ConversationRootViewController *)self.parentViewController;
-        [viewsToHide addObject:convRootViewController.navBarContainer.view];
-    }
-    
-    [viewsToHide addObject:self.inputBarController.view];
-    
-    return viewsToHide;
-}
-
-@end
 
 @implementation ConversationViewController (ConversationListObserver)
 

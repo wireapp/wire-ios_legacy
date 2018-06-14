@@ -94,7 +94,6 @@
 - (void)dealloc
 {
     [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init
@@ -154,9 +153,10 @@
     self.splitViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.splitViewController.view];
     
-    [self.splitViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    [self createTopViewConstraints];
     [self.splitViewController didMoveToParentViewController:self];
-    
+    [self updateSplitViewTopConstraint];
+
     self.splitViewController.view.backgroundColor = [UIColor clearColor];
     
     [self createBackgroundViewController];
@@ -206,7 +206,10 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    if (nil != self.topOverlayViewController) {
+        return self.topOverlayViewController.preferredStatusBarStyle;
+    }
+    else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.preferredStatusBarStyle;
         }
@@ -215,12 +218,15 @@
         }
     }
     else {
-        return UIStatusBarStyleDefault;
+        return UIStatusBarStyleLightContent;
     }
 }
 
 - (BOOL)prefersStatusBarHidden {
-    if (self.splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
+    if (nil != self.topOverlayViewController) {
+        return self.topOverlayViewController.prefersStatusBarHidden;
+    }
+    else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         if (self.presentedViewController) {
             return self.presentedViewController.prefersStatusBarHidden;
         }
@@ -247,7 +253,9 @@
             [self attemptToLoadLastViewedConversationWithFocus:NO animated:NO];
         }
     }
-    
+
+    [self updateSplitViewTopConstraint];
+    [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES onlyFullScreen:NO];
     [self.view setNeedsLayout];
 }
 
@@ -403,52 +411,12 @@
 
 }
 
-- (void)openDetailScreenForUserClient:(UserClient *)client
-{
-    if (client.user.isSelfUser) {
-        SettingsClientViewController *userClientViewController = [[SettingsClientViewController alloc] initWithUserClient:client credentials:nil];
-        UINavigationController *navWrapperController = [[SettingsStyleNavigationController alloc] initWithRootViewController:userClientViewController];
-
-        navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:navWrapperController animated:YES completion:nil];
-    }
-    else {
-        ProfileClientViewController* userClientViewController = [[ProfileClientViewController alloc] initWithClient:client];
-        userClientViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:userClientViewController animated:YES completion:nil];
-    }
-}
-
 - (void)openDetailScreenForConversation:(ZMConversation *)conversation
 {
     GroupDetailsViewController *controller = [[GroupDetailsViewController alloc] initWithConversation:conversation];
     UINavigationController *navController =  controller.wrapInNavigationController;
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navController animated:YES completion:nil];
-}
-
-- (void)openClientListScreenForUser:(ZMUser *)user
-{
-    if (user.isSelfUser) {
-        ClientListViewController *clientListViewController = [[ClientListViewController alloc] initWithClientsList:user.clients.allObjects credentials:nil detailedView:YES showTemporary:YES];
-        clientListViewController.view.backgroundColor = [UIColor blackColor];
-        clientListViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissClientListController:)];
-        UINavigationController *navWrapperController = [[SettingsStyleNavigationController alloc] initWithRootViewController:clientListViewController];
-        navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:navWrapperController animated:YES completion:nil];
-        
-    } else {
-        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
-        if ([self.conversationRootViewController isKindOfClass:ConversationRootViewController.class]) {
-            profileViewController.delegate = (id <ProfileViewControllerDelegate>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
-            profileViewController.viewControllerDismissable = (id <ViewControllerDismissable>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
-        }
-        UINavigationController *navWrapperController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
-        navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        navWrapperController.navigationBarHidden = YES;
-        [self presentViewController:navWrapperController animated:YES completion:nil];
-    }
-
 }
 
 - (void)dismissClientListController:(id)sender

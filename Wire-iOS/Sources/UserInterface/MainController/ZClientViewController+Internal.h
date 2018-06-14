@@ -20,6 +20,8 @@
 #import <Foundation/Foundation.h>
 #import "ZClientViewController.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class ZMConversation;
 
 /**
@@ -38,11 +40,23 @@
  * @return YES if it actually switched views, NO if nothing changed (ie: we were already looking at the conversation)
  */
 - (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
+- (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 
 - (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated;
-- (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated completion:(dispatch_block_t)completion;
+- (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 
 - (void)loadIncomingContactRequestsAndFocusOnView:(BOOL)focus animated:(BOOL)animated;
+- (void)dismissClientListController:(id)sender;
+@end
+
+@interface ZClientViewController ()
+
+@property (nonatomic, nonnull) UIView *topOverlayContainer;
+@property (nonatomic, nullable) UIViewController *topOverlayViewController;
+@property (nonatomic) NSLayoutConstraint *contentTopRegularConstraint;
+@property (nonatomic) NSLayoutConstraint *contentTopCompactConstraint;
+
 
 @end
+
+NS_ASSUME_NONNULL_END

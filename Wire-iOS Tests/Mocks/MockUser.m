@@ -39,6 +39,15 @@ static id<ZMBareUser> mockSelfUser = nil;
     return self;
 }
 
+- (BOOL)isEqual:(id)otherObject
+{
+    if (![otherObject isKindOfClass:ZMUser.class]) {
+        return NO;
+    }
+    
+    return [self.name isEqual:[(ZMUser *)otherObject name]];
+}
+
 + (NSArray *)mockUsers
 {
     return [MockLoader mockObjectsOfClass:[self class] fromFile:@"people-01.json"];
@@ -46,14 +55,13 @@ static id<ZMBareUser> mockSelfUser = nil;
 
 + (MockUser *)mockSelfUser
 {
-    static MockUser *selfUser = nil;
-
-    if (selfUser == nil) {
-        selfUser = (MockUser *)self.mockUsers.lastObject;
-        selfUser.isSelfUser = YES;
+    if (mockSelfUser == nil) {
+        MockUser *mockUser = (MockUser *)self.mockUsers.lastObject;
+        mockUser.isSelfUser = YES;
+        mockSelfUser = (MockUser *)mockUser;
     }
     
-    return selfUser;
+    return (MockUser *)mockSelfUser;
 }
 
 + (void)setMockSelfUser:(id<ZMBareUser>)newMockUser
@@ -170,11 +178,6 @@ static id<ZMBareUser> mockSelfUser = nil;
     return @"imagesmallidentifier";
 }
 
-- (UIColor *)accentColor
-{
-    return [UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:1.0];
-}
-
 - (UIColor *)nameAccentColor
 {
     return [UIColor colorWithRed:0.141 green:0.552 blue:0.827 alpha:0.7];
@@ -219,19 +222,14 @@ static id<ZMBareUser> mockSelfUser = nil;
     }
 }
 
-- (void)requestSmallProfileImageInUserSession:(ZMUserSession *)userSession
-{
-    // no-op
-}
-
-- (void)requestMediumProfileImageInUserSession:(ZMUserSession *)userSession
-{
-    // no-op
-}
-
 - (NSString *)displayNameInConversation:(MockConversation *)conversation
 {
     return self.displayName;
+}
+
+- (void)fetchUserClients
+{
+    
 }
 
 #pragma mark - ZMBareUserConnection

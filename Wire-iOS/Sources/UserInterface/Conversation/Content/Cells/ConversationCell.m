@@ -25,14 +25,12 @@
 #import "UIColor+WAZExtensions.h"
 #import "Message+UI.h"
 #import "UIColor+WR_ColorScheme.h"
-#import "UIView+Borders.h"
 #import "Wire-Swift.h"
 #import "UserImageView.h"
 #import "AccentColorChangeHandler.h"
 #import "Analytics.h"
 #import "Analytics+ConversationEvents.h"
 #import "UIResponder+FirstResponder.h"
-#import "UIScreen+Compact.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -483,7 +481,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     self.showsMenu = NO;
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (self.menuConfigurationProperties.selectedMenuBlock != nil && !self.beingEdited) {
         self.menuConfigurationProperties.selectedMenuBlock(NO, YES);
     }

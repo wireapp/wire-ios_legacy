@@ -45,6 +45,10 @@ extension ConversationInputBarViewController {
         guard sender.state == .ended else {
             return
         }
+        
+        if displayAudioMessageAlertIfNeeded() {
+            return
+        }
 
         if self.mode != .audioRecord {
             UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ accepted in
@@ -59,8 +63,18 @@ extension ConversationInputBarViewController {
         }
     }
     
+    private func displayAudioMessageAlertIfNeeded() -> Bool {
+        guard ZMUserSession.shared()?.isCallOngoing ?? false else { return false }
+        CameraAccess.displayCameraAlertForOngoingCall(at: .recordAudioMessage, from: self)
+        return true
+    }
+    
     func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard self.mode != .audioRecord else {
+            return
+        }
+        
+        if displayAudioMessageAlertIfNeeded() {
             return
         }
         
@@ -186,24 +200,28 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
 }
 
 
-extension ConversationInputBarViewController : WireCallCenterCallStateObserver {
+
+extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
     
     public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
-        
-        let isRecording = self.audioRecordKeyboardViewController?.isRecording
-        
-        switch (callState, isRecording, self.wasRecordingBeforeCall) {
-            
-        case (.incoming(_, true, _), true, false),      // receiving incoming call while recording an audio
-             (.outgoing, true, false):                  // making an outgoing call while recording an audio
-            self.wasRecordingBeforeCall = true          // -> remember that we were recording an audio
-        case (.incoming(_, false, _), _, true),         // refusing an incoming call
-             (.terminating, _, true):                   // terminating/closing the current call
-            displayRecordKeyboard()                     // -> show again the audio record keyboard
+        let isRecording = audioRecordKeyboardViewController?.isRecording
+
+        switch (callState, isRecording, wasRecordingBeforeCall) {
+        case (.incoming(_, true, _), true, _),              // receiving incoming call while audio keyboard is visible
+             (.outgoing, true, _):                          // making an outgoing call while audio keyboard is visible
+            wasRecordingBeforeCall = true                   // -> remember that the audio keyboard was visible
+            callCountWhileCameraKeyboardWasVisible += 1     // -> increment calls in progress counter
+        case (.incoming(_, false, _), _, true),             // refusing an incoming call
+             (.terminating, _, true):                       // terminating/closing the current call
+            callCountWhileCameraKeyboardWasVisible -= 1     // -> decrement calls in progress counter
         default: break
         }
+        
+        if 0 == callCountWhileCameraKeyboardWasVisible, wasRecordingBeforeCall {
+            displayRecordKeyboard() // -> show the audio record keyboard again
+        }
     }
-    
+
     private func displayRecordKeyboard() {
         self.wasRecordingBeforeCall = false
         self.mode = .audioRecord

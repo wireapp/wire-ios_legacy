@@ -27,9 +27,9 @@
 
 @interface StartUIInviteActionBar ()
 
+@property (nonatomic) UIVisualEffectView *backgroundView;
 @property (nonatomic, readwrite) Button *inviteButton;
 @property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
-@property (nonatomic) UIView *lineView;
 
 @end
 
@@ -42,10 +42,8 @@ static const CGFloat padding = 12;
 {
     self = [super init];
     if (self) {
-        [self setOpaque:NO];
-        self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.24];
+        self.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
 
-        [self createLineView];
         [self createInviteButton];
         [self createConstraints];
         
@@ -57,11 +55,6 @@ static const CGFloat padding = 12;
     return self;
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)createInviteButton
 {
     self.inviteButton = [Button buttonWithStyle:ButtonStyleEmpty variant:ColorSchemeVariantDark];
@@ -69,13 +62,6 @@ static const CGFloat padding = 12;
     self.inviteButton.titleEdgeInsets = UIEdgeInsetsMake(2, 8, 3, 8);
     [self addSubview:self.inviteButton];
     [self.inviteButton setTitle:NSLocalizedString(@"peoplepicker.invite_more_people", @"") forState:UIControlStateNormal];
-}
-
-- (void)createLineView
-{
-    self.lineView = [[UIView alloc] initForAutoLayout];
-    self.lineView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSeparator variant:ColorSchemeVariantDark];
-    [self addSubview:self.lineView];
 }
 
 - (void)setHidden:(BOOL)hidden
@@ -96,11 +82,6 @@ static const CGFloat padding = 12;
     [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset: padding*2];
     [self.inviteButton autoSetDimension:ALDimensionHeight toSize:28];
     self.bottomEdgeConstraint = [self.inviteButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: padding + UIScreen.safeArea.bottom];
-    
-    [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.lineView autoSetDimension:ALDimensionHeight toSize:0.5];
 }
 
 #pragma mark - UIKeyboard notifications

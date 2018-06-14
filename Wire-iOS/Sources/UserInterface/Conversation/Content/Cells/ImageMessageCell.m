@@ -33,7 +33,6 @@
 #import "Wire-Swift.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "ConversationCell+Private.h"
-#import "UIView+Borders.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 

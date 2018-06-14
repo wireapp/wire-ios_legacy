@@ -26,6 +26,7 @@
 
 #import "weakify.h"
 
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 CGFloat PixelSizeForUserImageSize(UserImageViewSize size);
 CGFloat PointSizeForUserImageSize(UserImageViewSize size);
@@ -74,7 +75,7 @@ static CIContext *ciContext(void)
 @interface UserImageView ()
 
 @property (nonatomic) id userObserverToken;
-@property (nonatomic) UIView *indicator;
+@property (nonatomic) RoundedView *indicator;
 
 @end
 
@@ -111,26 +112,15 @@ static CIContext *ciContext(void)
     return self;
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    [self updateIndicatorCornerRadius];
-}
-
 - (void)setupBasicProperties
 {
     _shouldDesaturate = YES;
     _size = UserImageViewSizeNormal;
+
+    self.accessibilityElementsHidden = YES;
     
     [self createIndicator];
     [self createConstraints];
-    [self updateIndicatorCornerRadius];
-}
-
-- (void)updateIndicatorCornerRadius
-{
-    self.indicator.layer.cornerRadius = self.indicator.bounds.size.width / 2;
 }
 
 - (CGSize)intrinsicContentSize
@@ -188,9 +178,10 @@ static CIContext *ciContext(void)
 
 - (void)createIndicator
 {
-    self.indicator = [[UIView alloc ] initForAutoLayout];
+    self.indicator = [[RoundedView alloc ] initForAutoLayout];
     self.indicator.backgroundColor = UIColor.redColor;
     self.indicator.hidden = YES;
+    [self.indicator toggleCircle];
     
     [self addSubview:self.indicator];
 }

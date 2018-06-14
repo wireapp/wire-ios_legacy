@@ -501,18 +501,6 @@ LocationSendViewController {
     }
 }
 
-/* Camera */
-
-CameraViewController {
-    titleLabel: @{
-        font: $font-small-light;
-        textColor: white;
-    }
-    editButton: @{
-        iconColor: white;
-    }
-}
-
 /* Giphy */
 
 GiphyConfirmationViewController {
@@ -786,24 +774,13 @@ SettingsClientViewController.conversation {
         
         titleLabel: @{
             font: $font-small-semibold;
-            textColor: $color-text-foreground;
         }
-        fingerprintLabel: @{
-            textColor: $color-text-foreground;
-        }
-    }
-}
-
-SettingsClientViewController {
-    tableView: @{
-        separatorColor: rgb(255,255,255,0.1)
     }
 }
 
 SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
     cellNameLabel: @{
         font: $font-normal-light;
-        textColor: $color-text-foreground-dark;
     }
 }
 
@@ -845,10 +822,6 @@ FingerprintTableViewCell{
     
     titleLabel: @{
         font: $font-small-semibold;
-        textColor: white;
-    }
-    fingerprintLabel: @{
-        textColor: white;
     }
 }
 
@@ -856,22 +829,18 @@ FingerprintTableViewCell{
 ClientTableViewCell {
     nameLabel: @{
         font: $font-normal-semibold;
-        textColor: white;
     }
     labelLabel: @{
         font: $font-small-semibold;
-        textColor: white;
     }
     activationLabel: @{
         font: $font-small-light;
-        textColor: white;
     }
     verifiedLabel: @{
         font: $font-small;
     }
     fingerprintLabelFont: $font-small-light;
     fingerprintLabelBoldFont: $font-small-semibold;
-    fingerprintTextColor: white
 }
 
 /* Registration */

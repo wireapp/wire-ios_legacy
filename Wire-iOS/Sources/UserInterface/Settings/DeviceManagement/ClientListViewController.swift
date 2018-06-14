@@ -24,27 +24,68 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objc class ClientListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ZMClientUpdateObserver {
+class ClientListViewController: UIViewController,
+                                UITableViewDelegate,
+                                UITableViewDataSource,
+                                ZMClientUpdateObserver,
+                                ClientColorVariantProtocol {
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()
+    weak var delegate: ClientListViewControllerDelegate?
+
+    var variant: ColorSchemeVariant? {
+        didSet {
+            setColor(for: variant)
+        }
+    }
+
+    override open var showLoadingView: Bool {
+        set {
+            if let navigationController = self.navigationController {
+                navigationController.showLoadingView = newValue
+
+                // dismiss the loading view that toggled before navigationController is created
+                if !newValue && super.showLoadingView {
+                    super.showLoadingView = newValue
+                }
+            } else {
+                super.showLoadingView = newValue
+            }
+        }
+        get{
+            if let navigationController = self.navigationController {
+                return navigationController.showLoadingView
+            } else {
+                return super.showLoadingView
+            }
+        }
+    }
 
     var editingList: Bool = false {
         didSet {
-            if (self.editingList) {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
-            } else {
-                self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+            guard clients.count > 0 else {
+                self.navigationItem.rightBarButtonItem = nil
+                return
             }
-            
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
+
+            createRightBarButtonItem()
+
             self.navigationItem.setHidesBackButton(self.editingList, animated: true)
+
             self.clientsTableView?.setEditing(self.editingList, animated: true)
         }
     }
+
     var clients: [UserClient] = [] {
         didSet {
             self.sortedClients = self.clients.filter(clientFilter).sorted(by: clientSorter)
             self.clientsTableView?.reloadData();
+
+            if clients.count > 0 {
+                createRightBarButtonItem()
+            } else {
+                self.navigationItem.rightBarButtonItem = nil
+            }
         }
     }
 
@@ -58,12 +99,32 @@ private let zmLog = ZMSLog(tag: "UI")
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: Any?
     var userObserverToken : NSObjectProtocol?
-        
-    required init(clientsList: [UserClient]?, credentials: ZMEmailCredentials? = .none, detailedView: Bool = false, showTemporary: Bool = true) {
-        let selfClient = ZMUserSession.shared()!.selfUserClient()
+
+    var leftBarButtonItem: UIBarButtonItem? {
+        if self.isIPadRegular() {
+            return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
+        }
+
+        if let rootViewController = self.navigationController?.viewControllers.first,
+            self.isEqual(rootViewController) {
+            return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
+        }
+
+        return nil
+    }
+
+    required init(clientsList: [UserClient]?,
+                  selfClient: UserClient? = ZMUserSession.shared()?.selfUserClient(),
+                  credentials: ZMEmailCredentials? = .none,
+                  detailedView: Bool = false,
+                  showTemporary: Bool = true,
+                  variant: ColorSchemeVariant? = .none) {
         self.selfClient = selfClient
         self.detailedView = detailedView
         self.credentials = credentials
+        defer {
+            self.variant = variant
+        }
 
         clientFilter = { $0 != selfClient && (showTemporary || !$0.isTemporary) }
         clientSorter = {
@@ -76,9 +137,10 @@ private let zmLog = ZMSLog(tag: "UI")
         self.edgesForExtendedLayout = []
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
-
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
-        self.userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        if let user = ZMUser.selfUser(), let session = ZMUserSession.shared() {
+            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)
+        }
         
         if clientsList == nil {
             if clients.isEmpty {
@@ -104,34 +166,30 @@ private let zmLog = ZMSLog(tag: "UI")
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return [.portrait]
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor.clear
-        
         self.createTableView()
         self.view.addSubview(self.topSeparator)
         self.createConstraints()
 
-        if self.traitCollection.userInterfaceIdiom == .pad && UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass == .regular {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(ClientListViewController.backPressed(_:)))
-        }
-        
-        if let rootViewController = self.navigationController?.viewControllers.first,
-            self.isEqual(rootViewController) {
-                self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(ClientListViewController.backPressed(_:)))
-        }
+        self.navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.clientsTableView?.reloadData()
     }
-    
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        showLoadingView = false
+    }
+
     func openDetailsOfClient(_ client: UserClient) {
         if let navigationController = self.navigationController {
-            let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials)
+            let clientViewController = SettingsClientViewController(userClient: client, credentials: self.credentials, variant: variant)
             clientViewController.view.backgroundColor = self.view.backgroundColor
             navigationController.pushViewController(clientViewController, animated: true)
         }
@@ -147,7 +205,7 @@ private let zmLog = ZMSLog(tag: "UI")
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.isEditing = self.editingList
         tableView.backgroundColor = UIColor.clear
-        tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
+        tableView.separatorColor = separatorColor
         self.view.addSubview(tableView)
         self.clientsTableView = tableView
     }
@@ -186,10 +244,14 @@ private let zmLog = ZMSLog(tag: "UI")
     func backPressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
-    
+
+
+
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
-        self.showLoadingView = true
+        showLoadingView = true
         ZMUserSession.shared()?.delete([userClient], with: credentials);
+
+        delegate?.finishedDeleting(self)
     }
 
     func displayError(_ message: String) {
@@ -219,7 +281,9 @@ private let zmLog = ZMSLog(tag: "UI")
     
     func finishedDeleting(_ remainingClients: [UserClient]!) {
         self.showLoadingView = false
+
         self.clients = remainingClients
+
         Analytics.shared().tagDeleteDevice()
     }
     
@@ -286,13 +350,13 @@ private let zmLog = ZMSLog(tag: "UI")
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = headerFooterViewTextColor
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         if let headerFooterView = view as? UITableViewHeaderFooterView {
-            headerFooterView.textLabel?.textColor = UIColor(white: 1, alpha: 0.4)
+            headerFooterView.textLabel?.textColor = headerFooterViewTextColor
         }
     }
     
@@ -301,6 +365,7 @@ private let zmLog = ZMSLog(tag: "UI")
             cell.selectionStyle = .none
             cell.accessoryType = self.detailedView ? .disclosureIndicator : .none
             cell.showVerified = self.detailedView
+            cell.variant = variant
             
             switch self.convertSection((indexPath as NSIndexPath).section) {
             case 0:
@@ -393,6 +458,20 @@ private let zmLog = ZMSLog(tag: "UI")
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
+    }
+
+    func createRightBarButtonItem() {
+        if (self.editingList) {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.done".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.endEditing(_:)))
+
+            self.navigationItem.setLeftBarButton(nil, animated: true)
+        } else {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "general.edit".localized.localizedUppercase, style: .plain, target: self, action: #selector(ClientListViewController.startEditing(_:)))
+
+            self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
+        }
+
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
     }
 }
 

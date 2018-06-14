@@ -42,8 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
 @property (nonatomic)           BOOL inputBarOverlapsContent;
 @property (nonatomic)           NSUInteger videoSendContext;
-@property (nonatomic) id callStateObserverToken;
-@property (nonatomic) BOOL wasRecordingBeforeCall;
+
+// Counter keeping track of calls being made when the audio keyboard ewas visible before.
+@property (nonatomic)           NSInteger callCountWhileCameraKeyboardWasVisible;
+@property (nonatomic)           id callStateObserverToken;
+@property (nonatomic)           BOOL wasRecordingBeforeCall;
 
 @property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
 

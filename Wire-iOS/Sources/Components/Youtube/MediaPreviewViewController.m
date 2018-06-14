@@ -23,7 +23,6 @@
 #import "MediaPreviewViewController.h"
 #import "MediaPreviewView.h"
 @import WireExtensionComponents;
-#import "BrowserViewController.h"
 #import "MediaPreviewData.h"
 #import "MediaThumbnail.h"
 #import "WireStyleKit.h"
@@ -31,7 +30,7 @@
 #import "LinkAttachmentCache.h"
 #import "YoutubeService.h"
 #import <Classy/Classy.h>
-
+#import "Wire-Swift.h"
 
 
 @interface MediaPreviewViewController ()
