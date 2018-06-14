@@ -76,11 +76,7 @@ import Classy
 
         constrain(audioMessageView, obfuscationView) { audioMessageView, obfuscationView in
             obfuscationView.edges == audioMessageView.edges
-        }
-        
-        constrain(audioMessageView, countdownContainerView) { container, countDownContainer in
-            countDownContainer.top == container.top
-        }
+        }        
     }
     
     override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {

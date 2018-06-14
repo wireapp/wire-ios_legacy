@@ -18,6 +18,7 @@
 
 
 #import "ProfilePictureStepViewController.h"
+#import "ProfilePictureStepViewController+Private.h"
 
 @import PureLayout;
 @import MobileCoreServices;
@@ -44,17 +45,15 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 #endif
 
 
-@interface ProfilePictureStepViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface ProfilePictureStepViewController ()
 
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) Button *selectOwnPictureButton;
 @property (nonatomic) Button *keepDefaultPictureButton;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
-@property (nonatomic) UIImageView *profilePictureImageView;
 @property (nonatomic) UIImage *defaultProfilePictureImage;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) UIView *overlayView;
-@property (nonatomic) AnalyticsPhotoSource photoSource;
 
 @end
 
@@ -230,16 +229,6 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     [self presentViewController:picker animated:YES completion:nil];
 }
 
-- (IBAction)showGalleryController:(id)sender
-{
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.delegate = self;
-    
-    [self showController:picker inPopoverFromView:sender];
-}
-
 - (IBAction)keepPicture:(id)sender
 {
     self.showLoadingView = YES;
@@ -304,31 +293,6 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
-
-#pragma mark - UINavigationControllerDelegate
-
-// Required by UIImagePickerController.delegate
-
-#pragma mark - UIImagePickerControllerDelegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
-    [UIImagePickerController imageFromMediaInfo:info resultBlock:^(UIImage *image) {
-        self.profilePictureImageView.image = image;
-    }];
-    
-    [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-        self.photoSource = AnalyticsPhotoSourceCameraRoll;
-        [self setPictureImageData:imageData];
-    }];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 
 @end
 

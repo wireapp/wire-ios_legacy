@@ -68,7 +68,6 @@ import Classy
         }
         
         constrain(fileTransferView, countdownContainerView, obfuscationView) { fileTransferView, countDownContainer, obfuscationView in
-            countDownContainer.top == fileTransferView.top
             obfuscationView.edges == fileTransferView.edges
         }
     }

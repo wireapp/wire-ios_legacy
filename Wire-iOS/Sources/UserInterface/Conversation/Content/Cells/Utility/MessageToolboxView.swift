@@ -319,11 +319,6 @@ extension ZMSystemMessageData {
             attributedText.addAttributes([.link: type(of: self).deleteLink], range: deleteRange)
         }
 
-        if showDestructionTimer, let stateString = deliveryStateString {
-            let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
-            attributedText.addAttributes([.foregroundColor: ephemeralColor], to: stateString)
-        }
-        
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
             return
         }

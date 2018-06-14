@@ -92,10 +92,6 @@ import Classy
             addressLabel.edges == inset(addressContainer.edges, 12, 0)
             addressContainer.height == 42
         }
-
-        constrain(containerView, countdownContainerView) { container, countDownContainer in
-            countDownContainer.top == container.top
-        }
     }
 
     public override func prepareForReuse() {
