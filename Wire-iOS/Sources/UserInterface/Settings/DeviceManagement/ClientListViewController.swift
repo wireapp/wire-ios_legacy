@@ -65,6 +65,7 @@ class ClientListViewController: UIViewController,
         didSet {
             guard clients.count > 0 else {
                 self.navigationItem.rightBarButtonItem = nil
+                self.navigationItem.setHidesBackButton(false, animated: true)
                 return
             }
 
@@ -285,6 +286,8 @@ class ClientListViewController: UIViewController,
         self.clients = remainingClients
 
         Analytics.shared().tagDeleteDevice()
+
+        self.editingList = false
     }
     
     func failedToDeleteClientsWithError(_ error: Error!) {
