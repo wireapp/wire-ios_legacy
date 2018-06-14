@@ -39,7 +39,7 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
         let formattedString = sut.string(from: 2419200)
 
         // THEN
-        XCTAssertEqual(formattedString, "28days left")
+        XCTAssertEqual(formattedString, "28 days left")
     }
 
     func testFor27days23HoursLeft(){
@@ -47,7 +47,7 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
         let formattedString = sut.string(from: 2419199)
 
         // THEN
-        XCTAssertEqual(formattedString, "27days 23hr left")
+        XCTAssertEqual(formattedString, "27 days, 23 hours left")
     }
 
     func testFor1dayLeft(){
@@ -55,7 +55,7 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
         let formattedString = sut.string(from: 86400)
 
         // THEN
-        XCTAssertEqual(formattedString, "1day left")
+        XCTAssertEqual(formattedString, "1 day left")
     }
 
     func testFor23hours59minutesLeft(){

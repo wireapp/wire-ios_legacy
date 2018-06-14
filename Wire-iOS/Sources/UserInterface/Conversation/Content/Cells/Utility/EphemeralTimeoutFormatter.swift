@@ -45,11 +45,7 @@ class EphemeralTimeoutFormatter {
         let formatter = DateComponentsFormatter()
 
         // no comma in time string
-        if #available(iOS 10.0, *) {
-            formatter.unitsStyle = .brief
-        } else {
-            formatter.unitsStyle = .abbreviated
-        }
+        formatter.unitsStyle = .full
         formatter.allowedUnits = [.day, .hour]
         formatter.zeroFormattingBehavior = .dropAll
         return formatter
