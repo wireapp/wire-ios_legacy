@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-open class LikeButton: IconButton {
+@objcMembers open class LikeButton: IconButton {
     open func setSelected(_ selected: Bool, animated: Bool) {
         if animated {
             guard let imageView = self.imageView else {

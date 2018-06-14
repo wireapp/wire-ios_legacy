@@ -19,7 +19,7 @@
 
 import Foundation
 
-class ConversationVerifiedCell: IconSystemCell {
+@objcMembers class ConversationVerifiedCell: IconSystemCell {
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         

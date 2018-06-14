@@ -50,7 +50,7 @@ struct ChangeEmailState {
 
 }
 
-final class ChangeEmailViewController: SettingsBaseTableViewController {
+@objcMembers final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     var state = ChangeEmailState()

@@ -31,7 +31,7 @@ enum ClientSection: Int {
     case removeDevice = 3
 }
 
-class SettingsClientViewController: UIViewController,
+@objcMembers class SettingsClientViewController: UIViewController,
                                     UITableViewDelegate,
                                     UITableViewDataSource,
                                     UserClientObserver,

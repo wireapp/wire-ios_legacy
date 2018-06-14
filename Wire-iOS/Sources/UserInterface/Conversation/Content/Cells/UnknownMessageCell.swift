@@ -21,7 +21,7 @@ import Cartography
 import TTTAttributedLabel
 import Classy
 
-public final class UnknownMessageCell : ConversationCell {
+@objcMembers public final class UnknownMessageCell : ConversationCell {
     
     public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
     public var messageLabelFont : UIFont?

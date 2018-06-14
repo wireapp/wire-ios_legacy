@@ -23,7 +23,7 @@ import TTTAttributedLabel
 private let BaseLocalizationString = "content.system.cannot_decrypt"
 private let IdentityString = ".identity"
 
-class CannotDecryptCell: IconSystemCell {
+@objcMembers class CannotDecryptCell: IconSystemCell {
     static fileprivate let generalErrorURL : URL = URL(string:"action://general-error")!
     static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
 

@@ -20,7 +20,7 @@
 import Foundation
 import TTTAttributedLabel
 
-class ConversationIgnoredDeviceCell : IconSystemCell {
+@objcMembers class ConversationIgnoredDeviceCell : IconSystemCell {
     fileprivate static let deviceListLink = URL(string:"setting://device-list")!
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {

@@ -23,7 +23,7 @@ import AddressBook
 import Classy
 
 /// Displays the location message
-public final class LocationMessageCell: ConversationCell {
+@objcMembers public final class LocationMessageCell: ConversationCell {
     
     private let mapView = MKMapView()
     private let containerView = UIView()

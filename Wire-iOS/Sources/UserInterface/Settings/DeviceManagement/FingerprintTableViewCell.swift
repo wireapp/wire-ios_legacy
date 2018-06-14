@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 import Classy
 
-class FingerprintTableViewCell: UITableViewCell {
+@objcMembers class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)

@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc internal class ProfileView: UIView {
+@objcMembers internal class ProfileView: UIView {
     public let imageView =  UserImageView(size: .big)
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()

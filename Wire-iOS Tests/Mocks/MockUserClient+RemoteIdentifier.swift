@@ -20,7 +20,7 @@ import Foundation
 
 extension MockUserClient {
 
-    public func attributedRemoteIdentifier(_ attributes: [NSAttributedStringKey : AnyObject], boldAttributes: [NSAttributedStringKey : AnyObject], uppercase: Bool = false) -> NSAttributedString {
+    @objc public func attributedRemoteIdentifier(_ attributes: [NSAttributedStringKey : AnyObject], boldAttributes: [NSAttributedStringKey : AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let displayIdentifier = "0011223344556677"
 
         let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "

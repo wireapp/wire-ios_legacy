@@ -22,7 +22,7 @@ import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
-final class AudioMessageView: UIView, TransferView {
+@objcMembers final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     private var _audioTrackPlayer: AudioTrackPlayer?

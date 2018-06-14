@@ -24,7 +24,7 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-class ClientListViewController: UIViewController,
+@objcMembers class ClientListViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,
                                 ZMClientUpdateObserver,

@@ -21,7 +21,7 @@ import Classy
 import Cartography
 
 
-final class ConversationRenamedCell: IconSystemCell {
+@objcMembers final class ConversationRenamedCell: IconSystemCell {
 
     var nameLabelFont: UIFont?
     private let nameLabel = UILabel()

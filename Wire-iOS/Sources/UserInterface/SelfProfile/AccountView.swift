@@ -231,7 +231,7 @@ extension BaseAccountView: ZMUserObserver {
     }
 }
 
-public final class PersonalAccountView: BaseAccountView {
+@objcMembers public final class PersonalAccountView: BaseAccountView {
     internal let userImageView = AvatarImageView(frame: .zero)
 
     private var conversationListObserver: NSObjectProtocol!
@@ -294,7 +294,7 @@ extension PersonalAccountView {
     }
 }
 
-public final class TeamImageView: UIImageView {
+@objcMembers public final class TeamImageView: UIImageView {
     public enum TeamImageViewStyle {
         case small
         case big
@@ -377,7 +377,7 @@ public final class TeamImageView: UIImageView {
     }
 }
 
-@objc internal class TeamAccountView: BaseAccountView {
+@objcMembers internal class TeamAccountView: BaseAccountView {
     
     public override var collapsed: Bool {
         didSet {

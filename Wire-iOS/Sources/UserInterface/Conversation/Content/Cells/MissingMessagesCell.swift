@@ -21,7 +21,7 @@ import Foundation
 import TTTAttributedLabel
 
 
-class MissingMessagesCell: IconSystemCell {
+@objcMembers class MissingMessagesCell: IconSystemCell {
     static fileprivate let userClientLink: URL = URL(string: "settings://user-client")!
 
     fileprivate let exclamationColor = UIColor(for: .vividRed)

@@ -23,7 +23,7 @@ import CoreLocation
 import Contacts
 import Classy
 
-class ClientTableViewCell: UITableViewCell {
+@objcMembers class ClientTableViewCell: UITableViewCell {
     
     let nameLabel = UILabel(frame: CGRect.zero)
     let labelLabel = UILabel(frame: CGRect.zero)

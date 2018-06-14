@@ -103,9 +103,9 @@ extension ZMSystemMessageData {
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
-        statusLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle,
+        statusLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle.rawValue,
                                       NSAttributedStringKey.foregroundColor.rawValue: UIColor(for: .vividRed)]
-        statusLabel.activeLinkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle,
+        statusLabel.activeLinkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle.rawValue,
                                             NSAttributedStringKey.foregroundColor.rawValue: UIColor(for: .vividRed).withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)

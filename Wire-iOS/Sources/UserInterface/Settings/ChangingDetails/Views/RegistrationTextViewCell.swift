@@ -23,7 +23,7 @@ protocol RegistrationTextFieldCellDelegate: class {
     func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String)
 }
 
-final class RegistrationTextFieldCell: UITableViewCell {
+@objcMembers final class RegistrationTextFieldCell: UITableViewCell {
     
     let textField = RegistrationTextField()
     weak var delegate: RegistrationTextFieldCellDelegate?

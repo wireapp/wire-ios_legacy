@@ -42,7 +42,7 @@ protocol ChangeHandleTableViewCellDelegate: class {
 }
 
 
-final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
+@objcMembers final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     weak var delegate: ChangeHandleTableViewCellDelegate?
     let prefixLabel = UILabel()
@@ -167,7 +167,7 @@ struct HandleChangeState {
 }
 
 
-final class ChangeHandleViewController: SettingsBaseTableViewController {
+@objcMembers final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     public var footerFont: UIFont?
     var state: HandleChangeState

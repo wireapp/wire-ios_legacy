@@ -305,7 +305,7 @@ protocol SettingsCellType: class {
     }
 }
 
-class SettingsToggleCell: SettingsTableCell {
+@objcMembers class SettingsToggleCell: SettingsTableCell {
     var switchView: UISwitch!
     
     override func setup() {
