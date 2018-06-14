@@ -91,12 +91,12 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
         updateEphemeralKeyboardVisibility()
     }
 
-    func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout) {
+    func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: TimeInterval) {
         inputBar.setInputBarState(.writing(ephemeral: timeout != .none), animated: true)
         updateMarkdownButton()
 
         ZMUserSession.shared()?.enqueueChanges {
-            self.conversation.updateMessageDestructionTimeout(timeout: timeout)
+            self.conversation.messageDestructionTimeout = timeout
             self.updateRightAccessoryView()
             self.updateButtonIconsForEphemeral()
         }
