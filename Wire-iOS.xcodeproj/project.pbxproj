@@ -223,6 +223,7 @@
 		5E9AA40620D2666500F5E40E /* GroupDetailsTimeoutOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9AA40520D2666500F5E40E /* GroupDetailsTimeoutOptionsCell.swift */; };
 		5E9AA40A20D2919100F5E40E /* GroupOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9AA40920D2919100F5E40E /* GroupOptionsSectionController.swift */; };
 		5E9AA40E20D2AF9E00F5E40E /* GroupDetailsTimeoutOptionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9AA40C20D2AF3E00F5E40E /* GroupDetailsTimeoutOptionsCellTests.swift */; };
+		5E9AA41220D2C29600F5E40E /* ConversationTimeoutOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9AA41120D2C29600F5E40E /* ConversationTimeoutOptionsViewController.swift */; };
 		5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */; };
 		5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */; };
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
@@ -1510,6 +1511,7 @@
 		5E9AA40520D2666500F5E40E /* GroupDetailsTimeoutOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsTimeoutOptionsCell.swift; sourceTree = "<group>"; };
 		5E9AA40920D2919100F5E40E /* GroupOptionsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupOptionsSectionController.swift; sourceTree = "<group>"; };
 		5E9AA40C20D2AF3E00F5E40E /* GroupDetailsTimeoutOptionsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsTimeoutOptionsCellTests.swift; sourceTree = "<group>"; };
+		5E9AA41120D2C29600F5E40E /* ConversationTimeoutOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTimeoutOptionsViewController.swift; sourceTree = "<group>"; };
 		5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnableThumbnailViewController.swift; sourceTree = "<group>"; };
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
@@ -5457,6 +5459,7 @@
 				D54224C320513A9800526A57 /* TextCell.swift */,
 				D51894782050490E00C095C1 /* ActionCell.swift */,
 				D54224C720513EC100526A57 /* IconActionCell.swift */,
+				5E9AA41120D2C29600F5E40E /* ConversationTimeoutOptionsViewController.swift */,
 			);
 			path = "Conversation Options";
 			sourceTree = "<group>";
@@ -6582,6 +6585,7 @@
 				163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */,
 				167B3B491BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m in Sources */,
 				D54224C820513EC100526A57 /* IconActionCell.swift in Sources */,
+				5E9AA41220D2C29600F5E40E /* ConversationTimeoutOptionsViewController.swift in Sources */,
 				871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */,
 				8FC85459199245770008B66B /* InvisibleInputAccessoryView.m in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
