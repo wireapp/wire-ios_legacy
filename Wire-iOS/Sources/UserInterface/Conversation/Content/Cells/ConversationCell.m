@@ -36,8 +36,6 @@ const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 static const CGFloat BurstContainerExpandedHeight = 40;
 
-static NSString * const kConversationCellImminentExpirationAnimationKey = @"ImminentExpiration";
-
 @implementation MenuConfigurationProperties
 
 @end
