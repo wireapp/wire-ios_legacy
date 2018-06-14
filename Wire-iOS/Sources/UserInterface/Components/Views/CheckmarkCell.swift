@@ -18,16 +18,33 @@
 
 import UIKit
 
-class GroupDetailsOptionsCell: DetailsCollectionViewCell {
+class CheckmarkCell: DetailsCollectionViewCell {
 
-    func configure(with conversation: ZMConversation) {
-        fatal("Your subclasses must implement `configure(with conversation)`.")
+    var showCheckmark: Bool = false {
+        didSet {
+            updateCheckmark(forColor: ColorScheme.default().variant)
+        }
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
-        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
+        updateCheckmark(forColor: colorSchemeVariant)
     }
+
+    private func updateCheckmark(forColor colorSchemeVariant: ColorSchemeVariant) {
+
+        guard showCheckmark else {
+            accessoryIconView.image = nil
+            return
+        }
+
+        let color = colorSchemeVariant == .light
+            ? UIColor.wr_color(fromColorScheme: ColorSchemeColorGraphite, variant: colorSchemeVariant)
+            : .white
+
+        accessoryIconView.image = UIImage(for: .checkmark, iconSize: .like, color: color)
+
+    }
+
 
 }
