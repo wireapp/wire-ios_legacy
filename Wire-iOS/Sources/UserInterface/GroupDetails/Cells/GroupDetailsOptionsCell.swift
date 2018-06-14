@@ -17,99 +17,65 @@
 //
 
 import UIKit
-import WireExtensionComponents
 
-class GroupDetailsGuestOptionsCell: UICollectionViewCell {
-    
-    let guestIconView = UIImageView()
+class GroupDetailsOptionsCell: SeparatorCollectionViewCell {
+
+    let leftIconView = UIImageView()
     let accessoryIconView = UIImageView()
     let titleLabel = UILabel()
     let statusLabel = UILabel()
     var contentStackView : UIStackView!
-    
-    var isOn = false {
-        didSet {
-            let key = "group_details.guest_options_cell.\(isOn ? "enabled" : "disabled")"
-            statusLabel.text = key.localized
-        }
-    }
-    
-    override var isHighlighted: Bool {
-        didSet {
-            backgroundColor = isHighlighted
-                ? .init(white: 0, alpha: 0.08)
-                : .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        }
-    }
-    
-    var variant : ColorSchemeVariant = ColorScheme.default().variant {
-        didSet {
-            guard oldValue != variant else { return }
-            configureColors()
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    fileprivate func setup() {
-        accessibilityIdentifier = "cell.groupdetails.guestoptions"
-        guestIconView.translatesAutoresizingMaskIntoConstraints = false
-        guestIconView.contentMode = .scaleAspectFit
-        guestIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        
+
+    override func setUp() {
+        super.setUp()
+
+        leftIconView.translatesAutoresizingMaskIntoConstraints = false
+        leftIconView.contentMode = .scaleAspectFit
+        leftIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
-        
+
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = FontSpec.init(.normal, .light).font!
-        titleLabel.text = "group_details.guest_options_cell.title".localized
-        
+
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.font = FontSpec.init(.normal, .light).font!
         statusLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        
+
         let avatarSpacer = UIView()
-        avatarSpacer.addSubview(guestIconView)
+        avatarSpacer.addSubview(leftIconView)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
         avatarSpacer.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        avatarSpacer.heightAnchor.constraint(equalTo: guestIconView.heightAnchor).isActive = true
-        avatarSpacer.centerXAnchor.constraint(equalTo: guestIconView.centerXAnchor).isActive = true
-        avatarSpacer.centerYAnchor.constraint(equalTo: guestIconView.centerYAnchor).isActive = true
+        avatarSpacer.heightAnchor.constraint(equalTo: leftIconView.heightAnchor).isActive = true
+        avatarSpacer.centerXAnchor.constraint(equalTo: leftIconView.centerXAnchor).isActive = true
+        avatarSpacer.centerYAnchor.constraint(equalTo: leftIconView.centerYAnchor).isActive = true
 
         let iconViewSpacer = UIView()
         iconViewSpacer.translatesAutoresizingMaskIntoConstraints = false
         iconViewSpacer.widthAnchor.constraint(equalToConstant: 8).isActive = true
-        
+
         contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleLabel, statusLabel, iconViewSpacer, accessoryIconView])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.addSubview(contentStackView)
         contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        
-        configureColors()
+
     }
-    
-    private func configureColors() {
-        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
-        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
+
+    override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        super.applyColorScheme(colorSchemeVariant)
+        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
-        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
+        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
         statusLabel.textColor = sectionTextColor
     }
-    
+
 }

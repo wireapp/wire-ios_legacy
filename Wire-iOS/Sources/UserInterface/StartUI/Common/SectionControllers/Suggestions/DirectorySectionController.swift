@@ -52,7 +52,7 @@ class DirectorySectionController: SearchSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
         cell.configure(with: user)
-        cell.separator.isHidden = (suggestions.count - 1) == indexPath.row
+        cell.showSeparator = (suggestions.count - 1) != indexPath.row
         cell.guestIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
         cell.connectButton.isHidden = false

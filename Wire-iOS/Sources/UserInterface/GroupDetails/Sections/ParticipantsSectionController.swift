@@ -59,10 +59,10 @@ class ParticipantsSectionController: GroupDetailsSectionController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = participants[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
+        let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
         
         cell.configure(with: user, conversation: conversation)
-        cell.separator.isHidden = (participants.count - 1) == indexPath.row
+        cell.showSeparator = (participants.count - 1) != indexPath.row
         cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.participants.cell"
         return cell
