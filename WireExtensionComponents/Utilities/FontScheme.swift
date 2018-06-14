@@ -44,40 +44,40 @@ public enum FontWeight: String {
 
 @available(iOSApplicationExtension 8.2, *)
 extension FontWeight {
-    static let weightMapping: [FontWeight: CGFloat] = [
-        .ultraLight: UIFont.Weight.ultraLight.rawValue,
-        .thin:       UIFont.Weight.thin.rawValue,
-        .light:      UIFont.Weight.light.rawValue,
-        .regular:    UIFont.Weight.regular.rawValue,
-        .medium:     UIFont.Weight.medium.rawValue,
-        .semibold:   UIFont.Weight.semibold.rawValue,
-        .bold:       UIFont.Weight.bold.rawValue,
-        .heavy:      UIFont.Weight.heavy.rawValue,
-        .black:      UIFont.Weight.black.rawValue
+    static let weightMapping: [FontWeight: UIFont.Weight] = [
+        .ultraLight: UIFont.Weight.ultraLight,
+        .thin:       UIFont.Weight.thin,
+        .light:      UIFont.Weight.light,
+        .regular:    UIFont.Weight.regular,
+        .medium:     UIFont.Weight.medium,
+        .semibold:   UIFont.Weight.semibold,
+        .bold:       UIFont.Weight.bold,
+        .heavy:      UIFont.Weight.heavy,
+        .black:      UIFont.Weight.black
     ]
     
     /// Weight mapping used when the bold text accessibility setting is
     /// enabled. Light weight fonts won't render bold, so we use regular
     /// weights instead.
-    static let accessibilityWeightMapping: [FontWeight: CGFloat] = [
-        .ultraLight: UIFont.Weight.regular.rawValue,
-        .thin:       UIFont.Weight.regular.rawValue,
-        .light:      UIFont.Weight.regular.rawValue,
-        .regular:    UIFont.Weight.regular.rawValue,
-        .medium:     UIFont.Weight.medium.rawValue,
-        .semibold:   UIFont.Weight.semibold.rawValue,
-        .bold:       UIFont.Weight.bold.rawValue,
-        .heavy:      UIFont.Weight.heavy.rawValue,
-        .black:      UIFont.Weight.black.rawValue
+    static let accessibilityWeightMapping: [FontWeight: UIFont.Weight] = [
+        .ultraLight: UIFont.Weight.regular,
+        .thin:       UIFont.Weight.regular,
+        .light:      UIFont.Weight.regular,
+        .regular:    UIFont.Weight.regular,
+        .medium:     UIFont.Weight.medium,
+        .semibold:   UIFont.Weight.semibold,
+        .bold:       UIFont.Weight.bold,
+        .heavy:      UIFont.Weight.heavy,
+        .black:      UIFont.Weight.black
     ]
     
-    public func fontWeight(accessibilityBoldText: Bool? = nil) -> CGFloat {
+    public func fontWeight(accessibilityBoldText: Bool? = nil) -> UIFont.Weight {
         let boldTextEnabled = accessibilityBoldText ?? UIAccessibilityIsBoldTextEnabled()
         let mapping = boldTextEnabled ? type(of: self).accessibilityWeightMapping : type(of: self).weightMapping
         return mapping[self]!
     }
     
-    public init(weight: CGFloat) {
+    public init(weight: UIFont.Weight) {
         self = (type(of: self).weightMapping.filter {
             $0.value == weight
             }.first?.key) ?? FontWeight.regular
@@ -87,7 +87,7 @@ extension FontWeight {
 extension UIFont {
     static func systemFont(ofSize size: CGFloat, contentSizeCategory: UIContentSizeCategory, weight: FontWeight) -> UIFont {
         if #available(iOSApplicationExtension 8.2, *) {
-            return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: UIFont.Weight(rawValue: weight.fontWeight()))
+            return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: weight.fontWeight())
         } else {
             return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)))
         }
@@ -102,7 +102,7 @@ extension UIFont {
                         return ""
                 }
                 
-                return "-\(FontWeight(weight: CGFloat(floatWeight.floatValue)).rawValue.capitalized)"
+                return "-\(FontWeight(weight: UIFont.Weight(rawValue: CGFloat(floatWeight.floatValue))).rawValue.capitalized)"
             }()
             
             return "System\(weightSpecifier) \(self.pointSize)"
