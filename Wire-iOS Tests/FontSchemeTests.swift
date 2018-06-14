@@ -206,13 +206,13 @@ class FontSchemeTests: XCTestCase {
     
     func testThatItReturnsRegularWeightForLightFontsWhenAccessibilityBoldTextEnabled() {
         // GIVEN
-        XCTAssertEqual(UIFont.Weight.ultraLight.rawValue, FontWeight.ultraLight.fontWeight(accessibilityBoldText: false))
-        XCTAssertEqual(UIFont.Weight.thin.rawValue, FontWeight.thin.fontWeight(accessibilityBoldText: false))
-        XCTAssertEqual(UIFont.Weight.light.rawValue, FontWeight.light.fontWeight(accessibilityBoldText: false))
+        XCTAssertEqual(UIFont.Weight.ultraLight, FontWeight.ultraLight.fontWeight(accessibilityBoldText: false))
+        XCTAssertEqual(UIFont.Weight.thin, FontWeight.thin.fontWeight(accessibilityBoldText: false))
+        XCTAssertEqual(UIFont.Weight.light, FontWeight.light.fontWeight(accessibilityBoldText: false))
         
         // THEN
-        XCTAssertEqual(UIFont.Weight.regular.rawValue, FontWeight.ultraLight.fontWeight(accessibilityBoldText: true))
-        XCTAssertEqual(UIFont.Weight.regular.rawValue, FontWeight.thin.fontWeight(accessibilityBoldText: true))
-        XCTAssertEqual(UIFont.Weight.regular.rawValue, FontWeight.light.fontWeight(accessibilityBoldText: true))
+        XCTAssertEqual(UIFont.Weight.regular, FontWeight.ultraLight.fontWeight(accessibilityBoldText: true))
+        XCTAssertEqual(UIFont.Weight.regular, FontWeight.thin.fontWeight(accessibilityBoldText: true))
+        XCTAssertEqual(UIFont.Weight.regular, FontWeight.light.fontWeight(accessibilityBoldText: true))
     }
 }
