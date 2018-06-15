@@ -227,6 +227,7 @@
 		5E9AA41620D2CE7E00F5E40E /* CheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9AA41520D2CE7E00F5E40E /* CheckmarkCell.swift */; };
 		5E9AA41820D2CED500F5E40E /* GroupDetailsOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9AA41720D2CED500F5E40E /* GroupDetailsOptionsCell.swift */; };
 		5E9AA41A20D30CF200F5E40E /* ImageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9AA41920D30CF200F5E40E /* ImageContainer.swift */; };
+		5E9AA41E20D3BB4500F5E40E /* CheckmarkCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9AA41B20D3B9C900F5E40E /* CheckmarkCellTests.swift */; };
 		5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */; };
 		5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */; };
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
@@ -1518,6 +1519,7 @@
 		5E9AA41520D2CE7E00F5E40E /* CheckmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkCell.swift; sourceTree = "<group>"; };
 		5E9AA41720D2CED500F5E40E /* GroupDetailsOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsOptionsCell.swift; sourceTree = "<group>"; };
 		5E9AA41920D30CF200F5E40E /* ImageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageContainer.swift; sourceTree = "<group>"; };
+		5E9AA41B20D3B9C900F5E40E /* CheckmarkCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkCellTests.swift; sourceTree = "<group>"; };
 		5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnableThumbnailViewController.swift; sourceTree = "<group>"; };
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
@@ -5203,6 +5205,7 @@
 				EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */,
 				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
 				5E9AA40C20D2AF3E00F5E40E /* GroupDetailsTimeoutOptionsCellTests.swift */,
+				5E9AA41B20D3B9C900F5E40E /* CheckmarkCellTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7249,6 +7252,7 @@
 				EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */,
 				87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */,
 				BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */,
+				5E9AA41E20D3BB4500F5E40E /* CheckmarkCellTests.swift in Sources */,
 				1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */,
 				162E8C631CF5D68A004B4F45 /* AudioProcessingTests.swift in Sources */,
 				BF58ABEF1D23F3CD00D5FF14 /* ModalTopBarTests.swift in Sources */,
