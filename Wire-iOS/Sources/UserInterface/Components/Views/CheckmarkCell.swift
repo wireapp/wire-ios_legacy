@@ -26,6 +26,12 @@ class CheckmarkCell: DetailsCollectionViewCell {
         }
     }
 
+    override func setUp() {
+        super.setUp()
+        icon = nil
+        status = nil
+    }
+
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         updateCheckmark(forColor: colorSchemeVariant)
@@ -34,7 +40,7 @@ class CheckmarkCell: DetailsCollectionViewCell {
     private func updateCheckmark(forColor colorSchemeVariant: ColorSchemeVariant) {
 
         guard showCheckmark else {
-            accessoryIconView.image = nil
+            accessory = nil
             return
         }
 
@@ -42,9 +48,8 @@ class CheckmarkCell: DetailsCollectionViewCell {
             ? UIColor.wr_color(fromColorScheme: ColorSchemeColorGraphite, variant: colorSchemeVariant)
             : .white
 
-        accessoryIconView.image = UIImage(for: .checkmark, iconSize: .like, color: color)
+        accessory = UIImage(for: .checkmark, iconSize: .like, color: color)
 
     }
-
 
 }

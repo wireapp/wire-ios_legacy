@@ -23,12 +23,9 @@ class SeparatorCollectionViewCell: UICollectionViewCell, Themeable {
     private let separator = UIView()
     private var separatorInsetConstraint: NSLayoutConstraint!
 
-    var separatorLeadingInset: CGFloat {
-        get {
-            return separatorInsetConstraint.constant
-        }
-        set {
-            separatorInsetConstraint.constant = newValue
+    var separatorLeadingInset: CGFloat = 64 {
+        didSet {
+            separatorInsetConstraint?.constant = separatorLeadingInset
         }
     }
 
@@ -56,7 +53,8 @@ class SeparatorCollectionViewCell: UICollectionViewCell, Themeable {
         separator.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(separator)
 
-        separatorInsetConstraint = separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64)
+        separatorInsetConstraint = separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                                      constant: separatorLeadingInset)
 
         NSLayoutConstraint.activate([
             separatorInsetConstraint,

@@ -107,7 +107,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         let item = items[indexPath.row]
         let cell = collectionView.dequeueReusableCell(ofType: CheckmarkCell.self, for: indexPath)
 
-        cell.titleLabel.text = item.displayString
+        cell.title = item.displayString
         cell.showCheckmark = item == conversation.destructionTimeout
         return cell
 

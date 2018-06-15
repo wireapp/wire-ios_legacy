@@ -24,14 +24,14 @@ class GroupDetailsGuestOptionsCell: GroupDetailsOptionsCell {
     var isOn = false {
         didSet {
             let key = "group_details.guest_options_cell.\(isOn ? "enabled" : "disabled")"
-            statusLabel.text = key.localized
+            status = key.localized
         }
     }
 
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.guestoptions"
-        titleLabel.text = "group_details.guest_options_cell.title".localized
+        title = "group_details.guest_options_cell.title".localized
     }
 
     override func configure(with conversation: ZMConversation) {
@@ -40,7 +40,7 @@ class GroupDetailsGuestOptionsCell: GroupDetailsOptionsCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        leftIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
+        icon = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
     }
 
 }

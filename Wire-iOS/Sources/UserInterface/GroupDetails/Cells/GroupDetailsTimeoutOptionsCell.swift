@@ -23,16 +23,16 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.timeoutoptions"
-        titleLabel.text = "group_details.timeout_options_cell.title".localized
+        title = "group_details.timeout_options_cell.title".localized
     }
 
     override func configure(with conversation: ZMConversation) {
-        statusLabel.text = conversation.destructionTimeout.displayString
+        status = conversation.destructionTimeout.displayString
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        leftIconView.image = UIImage(for: .hourglass, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
+        icon = UIImage(for: .hourglass, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
     }
 
 }

@@ -27,7 +27,7 @@ class GroupDetailsOptionsCell: DetailsCollectionViewCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
-        accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
+        accessory = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
     }
 
 }
