@@ -10,7 +10,7 @@ import Foundation
 
 extension UIView {
     
-    class var conversationLayoutMargins: UIEdgeInsets {
+    @objc class var conversationLayoutMargins: UIEdgeInsets {
         var left: CGFloat = CGFloat.nan
         var right: CGFloat = CGFloat.nan
         
@@ -30,7 +30,7 @@ extension UIView {
         return UIEdgeInsets(top: 0, left: left, bottom: 0, right: right)
     }
     
-    class var directionAwareConversationLayoutMargins: UIEdgeInsets {
+    @objc class var directionAwareConversationLayoutMargins: UIEdgeInsets {
         let margins = conversationLayoutMargins
         
         if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {

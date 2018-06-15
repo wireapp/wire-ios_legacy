@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 
-@objc public class TitleView: UIView {
+@objcMembers public class TitleView: UIView {
     
     internal var titleColor, titleColorSelected: UIColor?
     internal var titleFont: UIFont?
@@ -75,7 +75,7 @@ import Classy
         titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
         titleButton.sizeToFit()
         titleButton.isEnabled = interactive
-        titleButton.setContentCompressionResistancePriority(1000, for: .vertical)
+        titleButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         updateAccessibilityLabel()
         frame = CGRect(origin: frame.origin, size: titleButton.bounds.size)
         createConstraints()

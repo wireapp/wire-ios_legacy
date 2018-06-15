@@ -18,7 +18,7 @@
 
 import UIKit
 
-@objc class PinnableThumbnailViewController: UIViewController {
+@objcMembers class PinnableThumbnailViewController: UIViewController {
 
     private let thumbnailView = RoundedView()
     private let thumbnailContainerView = UIView()

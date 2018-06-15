@@ -35,7 +35,7 @@ extension Dictionary
     }
 }
 
-@objc class ClassyCache: NSObject, CASCacheProtocol {
+@objcMembers class ClassyCache: NSObject, CASCacheProtocol {
     
     override init() {
         super.init()

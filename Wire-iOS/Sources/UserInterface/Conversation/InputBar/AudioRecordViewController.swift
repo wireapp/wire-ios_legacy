@@ -45,7 +45,7 @@ private let zmLog = ZMSLog(tag: "UI")
     case afterSlideUp, afterPreview, afterEffect
 }
 
-@objc public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
+@objcMembers public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
     
     let buttonOverlay = AudioButtonOverlay()
     let topSeparator = UIView()
@@ -289,7 +289,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func topContainerTapped(_ sender: UITapGestureRecognizer) {
+    @objc func topContainerTapped(_ sender: UITapGestureRecognizer) {
         delegate?.audioRecordViewControllerDidCancel(self)
     }
     
@@ -370,7 +370,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func cancelButtonPressed(_ sender: IconButton) {
+    @objc func cancelButtonPressed(_ sender: IconButton) {
         Analytics.shared().tagCancelledAudioMessageRecording()
         
         recorder.stopPlaying()

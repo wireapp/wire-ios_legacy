@@ -21,7 +21,7 @@ import WireSyncEngine
 import Cartography
 import Classy
 
-@objc open class ReactionsListViewController: UIViewController {
+@objcMembers open class ReactionsListViewController: UIViewController {
     open let message: ZMConversationMessage
     open let reactionsUsers: [ZMUser]
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()

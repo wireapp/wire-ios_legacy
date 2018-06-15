@@ -47,7 +47,7 @@ extension UIPasteboard {
         return nil
     }
 
-    func setMediaAsset(_ image: MediaAsset?) {
+    @objc func setMediaAsset(_ image: MediaAsset?) {
         guard let image = image else { return }
 
         UIPasteboard.general.setData(image.data(), forPasteboardType: pasteboardType(forMediaAsset: image))

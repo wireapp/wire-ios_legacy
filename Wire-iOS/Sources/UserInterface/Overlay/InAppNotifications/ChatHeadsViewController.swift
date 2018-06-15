@@ -55,7 +55,7 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Public Interface
     
-    public func tryToDisplayNotification(_ note: ZMLocalNotification) {
+    @objc public func tryToDisplayNotification(_ note: ZMLocalNotification) {
 
         // hide visible chat head and try again
         if chatHeadState != .hidden {
@@ -242,7 +242,7 @@ extension ChatHeadsViewController {
 
 extension Account {
     
-    var isActive: Bool {
+    @objc var isActive: Bool {
         return SessionManager.shared?.accountManager.selectedAccount == self 
     }
 }

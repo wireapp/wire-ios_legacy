@@ -25,7 +25,7 @@ import UIKit
 }
 
 
-@objc public class LinkInteractionTextView: UITextView {
+@objcMembers public class LinkInteractionTextView: UITextView {
     
     public weak var interactionDelegate: TextViewInteractionDelegate?
     
@@ -51,7 +51,7 @@ import UIKit
     private func urlAttribute(at index: Int) -> Bool {
         guard attributedText.length > 0 else { return false }
         let attributes = attributedText.attributes(at: index, effectiveRange: nil)
-        return attributes[NSLinkAttributeName] != nil
+        return attributes[.link] != nil
     }
     
     /// Returns an alert controller configured to open the given URL.
@@ -85,7 +85,7 @@ import UIKit
 extension LinkInteractionTextView: UITextViewDelegate {
     
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        let beganLongPressRecognizers: [UILongPressGestureRecognizer] = gestureRecognizers?.flatMap { (recognizer: AnyObject) -> (UILongPressGestureRecognizer?) in
+        let beganLongPressRecognizers: [UILongPressGestureRecognizer] = gestureRecognizers?.compactMap { (recognizer: AnyObject) -> (UILongPressGestureRecognizer?) in
             
             if let recognizer = recognizer as? UILongPressGestureRecognizer, recognizer.state == .began {
                 return recognizer

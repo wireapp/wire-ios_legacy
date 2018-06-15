@@ -95,7 +95,7 @@ public final class MarkdownBarView: UIView {
         headerButton.setupView()
     }
     
-    func textViewDidChangeActiveMarkdown(note: Notification) {
+    @objc func textViewDidChangeActiveMarkdown(note: Notification) {
         guard let textView = note.object as? MarkdownTextView else { return }
         updateIcons(for: textView.activeMarkdown)
     }

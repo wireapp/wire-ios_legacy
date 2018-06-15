@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import WireExtensionComponents
 
-@objc internal final class AppLockView: UIView {
+@objcMembers internal final class AppLockView: UIView {
     public var onReauthRequested: (()->())?
     
     public let shieldViewContainer = UIView()

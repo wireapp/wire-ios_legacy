@@ -24,7 +24,7 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-class ClientListViewController: UIViewController,
+@objcMembers class ClientListViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,
                                 ZMClientUpdateObserver,
@@ -234,15 +234,15 @@ class ClientListViewController: UIViewController,
     
     // MARK: - Actions
     
-    func startEditing(_ sender: AnyObject!) {
+    @objc func startEditing(_ sender: AnyObject!) {
         self.editingList = true
     }
     
-    func endEditing(_ sender: AnyObject!) {
+    @objc func endEditing(_ sender: AnyObject!) {
         self.editingList = false
     }
     
-    func backPressed(_ sender: AnyObject!) {
+    @objc func backPressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 

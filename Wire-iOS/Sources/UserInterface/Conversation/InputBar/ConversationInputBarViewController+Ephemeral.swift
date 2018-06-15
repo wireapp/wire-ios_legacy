@@ -22,16 +22,16 @@ import Foundation
 
 extension ConversationInputBarViewController {
 
-    public func createEphemeralKeyboardViewController() {
+    @objc public func createEphemeralKeyboardViewController() {
         ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
         ephemeralKeyboardViewController?.delegate = self
     }
 
-    public func configureEphemeralKeyboardButton(_ button: IconButton) {
+    @objc public func configureEphemeralKeyboardButton(_ button: IconButton) {
         button.addTarget(self, action: #selector(ephemeralKeyboardButtonTapped), for: .touchUpInside)
     }
 
-    public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
+    @objc public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
         updateEphemeralKeyboardVisibility()
     }
 
@@ -74,7 +74,7 @@ extension ConversationInputBarViewController {
         present(controller, animated: true, completion: nil)
     }
 
-    public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
+    @objc public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
         guard let conversation = self.conversation else {
             return
         }
@@ -87,7 +87,7 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
 
-    func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
+    @objc func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
         updateEphemeralKeyboardVisibility()
     }
 

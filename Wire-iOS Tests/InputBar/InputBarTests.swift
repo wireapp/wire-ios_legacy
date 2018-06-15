@@ -96,7 +96,7 @@ class InputBarTests: ZMSnapshotTestCase {
         
         for button in buttonsWithText {
             button.setTitle("NEW", for: UIControlState())
-            button.titleLabel!.font = UIFont.systemFont(ofSize: 8, weight: UIFontWeightSemibold)
+            button.titleLabel!.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
             button.setTitleColor(UIColor.red, for: UIControlState())
         }
         

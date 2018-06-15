@@ -140,7 +140,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     // MARK: Audio Session Interruption handling
     
-    func handleInterruption(_ notification: Notification) {
+    @objc func handleInterruption(_ notification: Notification) {
         guard let info = notification.userInfo,
             let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
             let type = AVAudioSessionInterruptionType(rawValue: typeValue) else {

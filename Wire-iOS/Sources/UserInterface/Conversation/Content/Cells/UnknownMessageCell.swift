@@ -21,7 +21,7 @@ import Cartography
 import TTTAttributedLabel
 import Classy
 
-public final class UnknownMessageCell : ConversationCell {
+@objcMembers public final class UnknownMessageCell : ConversationCell {
     
     public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
     public var messageLabelFont : UIFont?
@@ -37,8 +37,8 @@ public final class UnknownMessageCell : ConversationCell {
         messageLabel.numberOfLines = 0
         messageLabel.isAccessibilityElement = true
         messageLabel.accessibilityLabel = "Text"
-        messageLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue,
-                                       NSForegroundColorAttributeName: ZMUser.selfUser().accentColor]
+        messageLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue,
+                                       NSAttributedStringKey.foregroundColor.rawValue: ZMUser.selfUser().accentColor]
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

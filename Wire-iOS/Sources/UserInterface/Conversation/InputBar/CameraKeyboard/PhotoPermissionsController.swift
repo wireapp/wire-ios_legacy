@@ -38,7 +38,7 @@ final class PhotoPermissionsControllerStrategy: PhotoPermissionsController {
     // so we don't need to check it for our purposes.
     
     var isCameraAuthorized: Bool {
-        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
         case .authorized: return true
         default: return false
         }

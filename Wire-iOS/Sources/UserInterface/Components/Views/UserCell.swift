@@ -21,7 +21,7 @@ import WireExtensionComponents
 
 class UserCell: UICollectionViewCell, Themeable {
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -29,7 +29,7 @@ class UserCell: UICollectionViewCell, Themeable {
     }
     
     // if nil the background color is the default content background color for the theme
-    dynamic var contentBackgroundColor: UIColor? = nil {
+    @objc dynamic var contentBackgroundColor: UIColor? = nil {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)
@@ -147,7 +147,7 @@ class UserCell: UICollectionViewCell, Themeable {
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
         avatar.userSession = ZMUserSession.shared()
-        avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
+        avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
         avatar.size = .tiny
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
@@ -160,7 +160,7 @@ class UserCell: UICollectionViewCell, Themeable {
         iconStackView.distribution = .fill
         iconStackView.alignment = .center
         iconStackView.translatesAutoresizingMaskIntoConstraints = false
-        iconStackView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        iconStackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         
         titleStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         titleStackView.axis = .vertical
@@ -271,7 +271,7 @@ extension UserCell {
             components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
         }
         
-        return components.flatMap({ $0 }).joined(separator: " · " && UserCell.lightFont)
+        return components.compactMap({ $0 }).joined(separator: " · " && UserCell.lightFont)
     }
     
     private func subtitle(forServiceUser service: SearchServiceUser) -> NSAttributedString? {

@@ -57,7 +57,7 @@ private let defaults = UserDefaults.shared()!
 
 public class ExtensionSettings: NSObject {
 
-    public static let shared = ExtensionSettings()
+    @objc public static let shared = ExtensionSettings()
 
     private override init() {
         super.init()
@@ -68,7 +68,7 @@ public class ExtensionSettings: NSObject {
         defaults.register(defaults: ExtensionSettingsKey.defaultValueDictionary)
     }
 
-    public func reset() {
+    @objc public func reset() {
         ExtensionSettingsKey.all.forEach {
             defaults.removeObject(forKey: $0.rawValue)
         }
@@ -77,7 +77,7 @@ public class ExtensionSettings: NSObject {
         defaults.synchronize()
     }
 
-    public var disableCrashAndAnalyticsSharing: Bool {
+    @objc public var disableCrashAndAnalyticsSharing: Bool {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
         }
@@ -87,7 +87,7 @@ public class ExtensionSettings: NSObject {
         }
     }
     
-    public var disableLinkPreviews: Bool {
+    @objc public var disableLinkPreviews: Bool {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }

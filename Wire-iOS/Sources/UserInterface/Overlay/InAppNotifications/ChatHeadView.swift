@@ -38,13 +38,13 @@ class ChatHeadView: UIView {
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
     
-    private let titleRegularAttributes: [String: AnyObject] = [
-        NSFontAttributeName: FontSpec(.medium, .none).font!.withSize(14),
-        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+    private let titleRegularAttributes: [NSAttributedStringKey: AnyObject] = [
+        .font: FontSpec(.medium, .none).font!.withSize(14),
+        .foregroundColor: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
     ]
-    private let titleMediumAttributes: [String: AnyObject] = [
-        NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14),
-        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+    private let titleMediumAttributes: [NSAttributedStringKey: AnyObject] = [
+        .font: FontSpec(.medium, .medium).font!.withSize(14),
+        .foregroundColor: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
     ]
     
     private lazy var bodyFont: UIFont = {
@@ -121,8 +121,8 @@ class ChatHeadView: UIView {
         subtitleLabel.isUserInteractionEnabled = false
         
         let bodyAttributes = (!isEphemeral && titleLabel == nil) ? titleMediumAttributes : [
-            NSFontAttributeName: bodyFont,
-            NSForegroundColorAttributeName: color(withName: ColorSchemeColorChatHeadSubtitleText)
+            .font: bodyFont,
+            .foregroundColor: color(withName: ColorSchemeColorChatHeadSubtitleText)
         ]
         
         subtitleLabel.attributedText = NSAttributedString(string: body, attributes: bodyAttributes)
@@ -133,7 +133,7 @@ class ChatHeadView: UIView {
     private func createImageView() {
         if let sender = sender {
             let imageView = ContrastUserImageView()
-            imageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
+            imageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
             imageView.userSession = SessionManager.shared?.backgroundUserSessions[userID]
             imageView.isUserInteractionEnabled = false
             imageView.translatesAutoresizingMaskIntoConstraints = false

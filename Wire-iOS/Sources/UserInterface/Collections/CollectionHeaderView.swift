@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc final public class CollectionHeaderView: UICollectionReusableView {
+@objcMembers final public class CollectionHeaderView: UICollectionReusableView {
     
     public var section: CollectionsSectionSet = .none {
         didSet {
@@ -112,7 +112,7 @@ import Cartography
         return layoutAttributes
     }
     
-    public func didSelect(_ button: UIButton!) {
+    @objc public func didSelect(_ button: UIButton!) {
         self.selectionAction?(self.section)
     }
 }

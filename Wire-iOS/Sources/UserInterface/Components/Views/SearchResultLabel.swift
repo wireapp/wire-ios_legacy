@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc final public class SearchResultLabel: UILabel, Copyable {
+@objcMembers final public class SearchResultLabel: UILabel, Copyable {
     public convenience init(instance: SearchResultLabel) {
         self.init()
         self.font = instance.font
@@ -76,7 +76,7 @@ import Foundation
         self.resultText = text
         self.queries = queries
         
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color])
+        let attributedText = NSMutableAttributedString(string: text, attributes: [.font: font, .foregroundColor: color])
         
         let currentRange = text.range(of: queries,
                                       options: [.diacriticInsensitive, .caseInsensitive])
@@ -84,8 +84,8 @@ import Foundation
         if let range = currentRange {
             let nsRange = text.nsRange(from: range)
             
-            let highlightedAttributes = [NSFontAttributeName: font,
-                                         NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)]
+            let highlightedAttributes = [NSAttributedStringKey.font: font,
+                                         .backgroundColor: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
                 self.attributedText = attributedText.highlightingAppearances(of: queries,

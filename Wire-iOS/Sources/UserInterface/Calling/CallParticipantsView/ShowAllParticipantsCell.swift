@@ -54,7 +54,7 @@ class ShowAllParticipantsCell: UICollectionViewCell {
         accessibilityIdentifier = "cell.call.show_all_participants"
         participantIconView.translatesAutoresizingMaskIntoConstraints = false
         participantIconView.contentMode = .scaleAspectFit
-        participantIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        participantIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center

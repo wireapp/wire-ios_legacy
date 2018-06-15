@@ -20,7 +20,7 @@
 import XCTest
 @testable import Wire
 
-@objc class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
+@objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
     var originalProfileImageData: Data!
     
     func deleteProfileImage() {
@@ -64,7 +64,7 @@ class SettingsPropertyTests: XCTestCase {
                 recordFailure(
                     withDescription: "Wrong property value, read \(readValue) but expected \(value)",
                     inFile: file,
-                    atLine: line,
+                    atLine: Int(line),
                     expected: true
                 )
             }
@@ -73,7 +73,7 @@ class SettingsPropertyTests: XCTestCase {
             recordFailure(
                 withDescription: "Unable to read property value",
                 inFile: file,
-                atLine: line,
+                atLine: Int(line),
                 expected: true
             )
         }

@@ -23,7 +23,7 @@ import CoreLocation
 import Contacts
 import Classy
 
-class ClientTableViewCell: UITableViewCell {
+@objcMembers class ClientTableViewCell: UITableViewCell {
     
     let nameLabel = UILabel(frame: CGRect.zero)
     let labelLabel = UILabel(frame: CGRect.zero)
@@ -198,8 +198,8 @@ class ClientTableViewCell: UITableViewCell {
             let userClient = self.userClient, userClient.remoteIdentifier != nil {
                 
                 self.fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
-                    [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: fingerprintLabelTextColor],
-                    boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: fingerprintLabelTextColor],
+                    [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabelTextColor],
+                    boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabelTextColor],
                     uppercase: true
                 )
         }

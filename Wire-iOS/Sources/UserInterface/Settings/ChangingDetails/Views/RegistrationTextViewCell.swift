@@ -23,7 +23,7 @@ protocol RegistrationTextFieldCellDelegate: class {
     func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String)
 }
 
-final class RegistrationTextFieldCell: UITableViewCell {
+@objcMembers final class RegistrationTextFieldCell: UITableViewCell {
     
     let textField = RegistrationTextField()
     weak var delegate: RegistrationTextFieldCellDelegate?
@@ -53,7 +53,7 @@ final class RegistrationTextFieldCell: UITableViewCell {
         }
     }
     
-    func editingChanged(textField: UITextField) {
+    @objc func editingChanged(textField: UITextField) {
         let lowercase = textField.text?.lowercased() ?? ""
         let noSpaces = lowercase.components(separatedBy: .whitespacesAndNewlines).joined()
         textField.text = noSpaces

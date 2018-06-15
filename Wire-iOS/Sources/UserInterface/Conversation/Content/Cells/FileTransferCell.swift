@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 // Cell that disaplys the file transfer and it's states
-public final class FileTransferCell: ConversationCell {
+@objcMembers public final class FileTransferCell: ConversationCell {
     private let fileTransferView = FileTransferView(frame: .zero)
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .paperclip)
@@ -156,12 +156,12 @@ public final class FileTransferCell: ConversationCell {
         return super.canPerformAction(action, withSender: sender)
     }
 
-    func open(_ sender: Any) {
+    @objc func open(_ sender: Any) {
         showsMenu = false
         delegate?.conversationCell?(self, didSelect: .present)
     }
 
-    func save(_ sender: Any) {
+    @objc func save(_ sender: Any) {
         delegate?.conversationCell?(self, didSelect: .save)
     }
     

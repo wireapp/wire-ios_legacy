@@ -65,7 +65,7 @@ class RequestPasswordViewController: UIAlertController {
         return controller
     }
     
-    func passwordTextFieldChanged(_ textField: UITextField) {
+    @objc func passwordTextFieldChanged(_ textField: UITextField) {
         if let passwordField = self.textFields?[0] {
             self.okAction?.isEnabled = (passwordField.text ?? "").count > 6;
         }

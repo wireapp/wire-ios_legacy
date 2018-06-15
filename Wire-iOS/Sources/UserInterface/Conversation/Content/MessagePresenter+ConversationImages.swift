@@ -21,7 +21,7 @@ import Classy
 
 extension MessagePresenter {
 
-    func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
+    @objc func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
         
         guard let conversation = message.conversation else {
             fatal("Message has no conversation.")

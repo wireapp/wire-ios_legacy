@@ -76,7 +76,7 @@ private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
 
-@objc public final class InputBar: UIView {
+@objcMembers public final class InputBar: UIView {
 
     private let inputBarVerticalInset : CGFloat = 34
 
@@ -444,17 +444,17 @@ private struct InputBarConstants {
 
 extension InputBar {
 
-    func textViewTextDidChange(_ notification: Notification) {
+    @objc func textViewTextDidChange(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
     }
     
-    func textViewDidBeginEditing(_ notification: Notification) {
+    @objc func textViewDidBeginEditing(_ notification: Notification) {
         updateFakeCursorVisibility(notification.object as? UIResponder)
         updateEditViewState()
     }
     
-    func textViewDidEndEditing(_ notification: Notification) {
+    @objc func textViewDidEndEditing(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
     }
@@ -462,7 +462,7 @@ extension InputBar {
 }
 
 extension InputBar {
-    func applicationDidBecomeActive(_ notification: Notification) {
+    @objc func applicationDidBecomeActive(_ notification: Notification) {
         startCursorBlinkAnimation()
     }
 }

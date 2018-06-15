@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final internal class ConversationListAccessoryView: UIView {
+@objcMembers final internal class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
         didSet {
             self.updateForIcon()
@@ -34,30 +34,30 @@ final internal class ConversationListAccessoryView: UIView {
     let iconView = UIImageView()
     var collapseWidthConstraint: NSLayoutConstraint!
     
-    init(mediaPlaybackManager: MediaPlaybackManager) {
+    @objc init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
         
         self.isAccessibilityElement = true
         
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
+        textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.textAlignment = .center
         textLabel.font = FontSpec(.medium, .semibold).font!
         
         typingView.contentMode = .center
-        typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        typingView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        typingView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        typingView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        typingView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        typingView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        typingView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         iconView.contentMode = .center
-        iconView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        iconView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        iconView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        iconView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        iconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        iconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         [badgeView, typingView].forEach(addSubview)
         

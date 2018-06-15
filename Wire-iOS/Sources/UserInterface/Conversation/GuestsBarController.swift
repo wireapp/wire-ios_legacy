@@ -40,7 +40,7 @@ class GuestsBarController: UIViewController {
         }
     }
     
-    public func setCollapsed(_ collapsed: Bool, animated: Bool) {
+    @objc public func setCollapsed(_ collapsed: Bool, animated: Bool) {
         
         guard self.isViewLoaded else {
             return

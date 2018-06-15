@@ -25,7 +25,7 @@ import Cartography
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
-@objc public final class AudioEffectsPickerViewController: UIViewController {
+@objcMembers public final class AudioEffectsPickerViewController: UIViewController {
     
     public let recordingPath: String
     fileprivate let duration: TimeInterval

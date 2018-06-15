@@ -26,7 +26,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController)
 }
 
-public class SearchHeaderViewController : UIViewController {
+@objcMembers public class SearchHeaderViewController : UIViewController {
     
     let tokenFieldContainer = UIView()
     let tokenField = TokenField()
@@ -120,7 +120,7 @@ public class SearchHeaderViewController : UIViewController {
         }
     }
     
-    fileprivate dynamic func onClearButtonPressed() {
+    @objc fileprivate dynamic func onClearButtonPressed() {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
         resetQuery()

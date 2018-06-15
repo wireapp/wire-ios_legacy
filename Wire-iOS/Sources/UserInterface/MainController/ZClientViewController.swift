@@ -95,7 +95,7 @@ extension ZClientViewController {
         }
     }
     
-    func createTopViewConstraints() {
+    @objc func createTopViewConstraints() {
         topOverlayContainer = UIView()
         topOverlayContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topOverlayContainer)
@@ -113,11 +113,11 @@ extension ZClientViewController {
             ])
 
         let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
-        heightConstraint.priority = UILayoutPriorityDefaultLow
+        heightConstraint.priority = UILayoutPriority.defaultLow
         heightConstraint.isActive = true
     }
 
-    func updateSplitViewTopConstraint() {
+    @objc func updateSplitViewTopConstraint() {
 
         let isRegularContainer = traitCollection.horizontalSizeClass == .regular
         

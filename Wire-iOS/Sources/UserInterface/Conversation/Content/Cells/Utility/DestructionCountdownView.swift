@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-@objc public final class DestructionCountdownView: UIView {
+@objcMembers public final class DestructionCountdownView: UIView {
 
     private let remainingTimeLayer = CAShapeLayer()
     private let elapsedTimeLayer = CAShapeLayer()

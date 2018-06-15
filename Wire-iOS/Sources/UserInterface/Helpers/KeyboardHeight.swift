@@ -17,7 +17,7 @@
 //
 
 
-@objc public class KeyboardHeight: NSObject {
+@objcMembers public class KeyboardHeight: NSObject {
 
     /// The height of the system keyboard with the prediction row
     public static var current: CGFloat {

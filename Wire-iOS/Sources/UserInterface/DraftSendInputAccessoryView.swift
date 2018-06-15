@@ -61,7 +61,7 @@ final class DraftSendInputAccessoryView: UIView {
         CASStyler.default().styleItem(sendButton)
     }
 
-    private dynamic  func sendTapped() {
+    @objc private dynamic  func sendTapped() {
         onSend?()
     }
 

@@ -38,7 +38,7 @@ extension ButtonDescription: ViewDescriptor {
         button.setTitleColor(color.withAlphaComponent(0.6), for: .highlighted)
 
         button.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12)
-        button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        button.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title.uppercased(), for: .normal)
         button.accessibilityIdentifier = self.accessibilityIdentifier
@@ -46,7 +46,7 @@ extension ButtonDescription: ViewDescriptor {
         return button
     }
 
-    dynamic func buttonTapped(_ sender: UIButton) {
+    @objc dynamic func buttonTapped(_ sender: UIButton) {
         buttonTapped?()
     }
 }

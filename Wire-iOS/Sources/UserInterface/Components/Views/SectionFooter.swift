@@ -22,7 +22,7 @@ final class SectionFooter: UICollectionReusableView, Themeable {
     
     let titleLabel = UILabel()
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)

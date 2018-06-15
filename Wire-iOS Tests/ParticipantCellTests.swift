@@ -177,8 +177,8 @@ private extension UITableViewCell {
 
         bounds.size = systemLayoutSizeFitting(
             CGSize(width: 375, height: 0),
-            withHorizontalFittingPriority: UILayoutPriorityRequired,
-            verticalFittingPriority: UILayoutPriorityFittingSizeLevel
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
         )
 
         return wrapInTableView()

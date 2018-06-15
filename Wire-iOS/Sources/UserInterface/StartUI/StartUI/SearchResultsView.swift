@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import Classy
 
-class SearchResultsView : UIView {
+@objcMembers class SearchResultsView : UIView {
     
     let accessoryViewMargin : CGFloat = 16.0
     let emptyResultContainer = UIView()
@@ -129,7 +129,7 @@ class SearchResultsView : UIView {
         }
     }
     
-    func keyboardFrameDidChange(notification: Notification) {
+    @objc func keyboardFrameDidChange(notification: Notification) {
         guard !isContainedInPopover else {
             return
         }

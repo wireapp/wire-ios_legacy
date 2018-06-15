@@ -21,7 +21,7 @@
 import Foundation
 import Cartography
 
-@objc public final class AudioButtonOverlay: UIView {
+@objcMembers public final class AudioButtonOverlay: UIView {
     
     enum AudioButtonOverlayButtonType {
         case play, send, stop
@@ -132,7 +132,7 @@ import Cartography
         playButton.accessibilityValue = state.description
     }
     
-    func buttonPressed(_ sender: IconButton) {
+    @objc func buttonPressed(_ sender: IconButton) {
         let type: AudioButtonOverlayButtonType
         
         if sender == sendButton {

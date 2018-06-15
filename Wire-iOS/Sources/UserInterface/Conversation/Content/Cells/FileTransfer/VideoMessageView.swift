@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import Classy
 
-final class VideoMessageView: UIView, TransferView {
+@objcMembers final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     
@@ -182,7 +182,7 @@ final class VideoMessageView: UIView, TransferView {
     
     // MARK: - Actions
     
-    open func onActionButtonPressed(_ sender: UIButton) {
+    @objc open func onActionButtonPressed(_ sender: UIButton) {
         guard let fileMessageData = self.fileMessage?.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {

@@ -21,7 +21,7 @@ import Foundation
 /**
  Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager
  */
-@objc
+@objcMembers
 class MediaPlayerController: NSObject {
 
     let message: ZMConversationMessage
@@ -79,7 +79,7 @@ extension MediaPlayerController: MediaPlayer {
 
 extension MediaPlayerController {
 
-    func playerRateChanged() {
+    @objc func playerRateChanged() {
         if player?.rate > 0 {
             delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
         } else {

@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc final class ConversationActionController: NSObject {
+@objcMembers final class ConversationActionController: NSObject {
     
     struct PresentationContext {
         let view: UIView

@@ -20,8 +20,7 @@ import Foundation
 import UIKit
 import Classy
 
-@objc
-class AppRootViewController: UIViewController {
+@objcMembers class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
     public let overlayWindow: UIWindow
@@ -378,7 +377,7 @@ class AppRootViewController: UIViewController {
         CASStyler.default().apply(fontScheme: fontScheme)
     }
 
-    func onContentSizeCategoryChange() {
+    @objc func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
@@ -513,7 +512,7 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
 
 extension AppRootViewController {
 
-    func onUserGrantedAudioPermissions() {
+    @objc func onUserGrantedAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }
@@ -569,7 +568,7 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 
 public extension SessionManager {
     
-    var firstAuthenticatedAccount: Account? {
+    @objc var firstAuthenticatedAccount: Account? {
         
         if let selectedAccount = accountManager.selectedAccount {
             if selectedAccount.isAuthenticated {

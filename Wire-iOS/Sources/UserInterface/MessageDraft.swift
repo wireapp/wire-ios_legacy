@@ -22,7 +22,7 @@ import Down
 
 
 /// Class describing unsent message drafts for later sending or further editing.
-@objc public class MessageDraft: NSManagedObject {
+@objcMembers public class MessageDraft: NSManagedObject {
 
     private static let entityName = "MessageDraft"
 

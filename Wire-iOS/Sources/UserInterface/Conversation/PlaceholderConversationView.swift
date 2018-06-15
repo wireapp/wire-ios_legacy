@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-@objc class PlaceholderConversationView : UIView {
+@objcMembers class PlaceholderConversationView : UIView {
     
     var shieldImageView: UIImageView!
     

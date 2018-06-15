@@ -42,7 +42,7 @@ open class CollectionForwardableSaveableFileCell: CollectionCell {
         }
     }
 
-    func save(_ sender: AnyObject) {
+    @objc func save(_ sender: AnyObject) {
         guard message?.isFileDownloaded() == true else { return }
         delegate?.collectionCell(self, performAction: .save)
     }

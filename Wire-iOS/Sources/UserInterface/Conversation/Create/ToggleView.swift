@@ -21,7 +21,7 @@ import Cartography
 
 final class ToggleView: UIView, Themeable {
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default().variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
