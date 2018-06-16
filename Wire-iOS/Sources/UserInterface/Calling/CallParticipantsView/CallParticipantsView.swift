@@ -82,7 +82,7 @@ class CallParticipantsView: UICollectionView, Themeable {
         }
     }
     
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)

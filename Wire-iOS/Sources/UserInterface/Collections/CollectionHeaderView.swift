@@ -41,7 +41,7 @@ import Cartography
             default: fatal("Unknown section")
             }
             
-            let iconColor = ColorScheme.default().color(withName: ColorSchemeColorLightGraphite)
+            let iconColor = UIColor(scheme: .lightGraphite)
             self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: iconColor)
         }
     }

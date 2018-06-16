@@ -51,7 +51,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
         let heroLabel = UILabel()
         heroLabel.translatesAutoresizingMaskIntoConstraints = false
         heroLabel.font = FontSpec(.large, .semibold).font!
-        heroLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        heroLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         heroLabel.numberOfLines = 0
         heroLabel.text = String(format:NSLocalizedString("registration.signin.too_many_devices.title", comment:""), ZMUser.selfUser().displayName)
         
@@ -63,7 +63,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
         let subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = FontSpec(.large, .light).font!
-        subtitleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        subtitleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.text = NSLocalizedString("registration.signin.too_many_devices.subtitle", comment:"")
         

@@ -62,7 +62,7 @@ final class DraftsRootViewController: UISplitViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default().statusBarStyle
+        return ColorScheme.default.statusBarStyle
     }
 
 }

@@ -34,7 +34,7 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         key: "call.video.paused",
         size: .normal,
         weight: .semibold,
-        color: ColorSchemeColorTextForeground,
+        color: .textForeground,
         variant: .dark
     )
 

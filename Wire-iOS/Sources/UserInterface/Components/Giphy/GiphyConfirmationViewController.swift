@@ -69,7 +69,7 @@ class GiphyConfirmationViewController: UIViewController {
 
         let titleLabel = UILabel()
         titleLabel.font = FontSpec(.small, .semibold).font!
-        titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        titleLabel.textColor = UIColor(scheme: .textForeground)
         titleLabel.text = title?.uppercased()
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel

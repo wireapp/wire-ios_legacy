@@ -26,7 +26,7 @@ public final class IncomingConnectionView: UIView {
         return AddressBookCorrelationFormatter(
             lightFont: FontSpec(.small, .light).font!,
             boldFont: FontSpec(.small, .medium).font!,
-            color: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+            color: UIColor(scheme: .textDimmed)
         )
     }()
 

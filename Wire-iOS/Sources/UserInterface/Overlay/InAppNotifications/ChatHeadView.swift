@@ -40,11 +40,11 @@ class ChatHeadView: UIView {
     
     private let titleRegularAttributes: [NSAttributedStringKey: AnyObject] = [
         .font: FontSpec(.medium, .none).font!.withSize(14),
-        .foregroundColor: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+        .foregroundColor: UIColor(scheme: .chatHeadTitleText)
     ]
     private let titleMediumAttributes: [NSAttributedStringKey: AnyObject] = [
         .font: FontSpec(.medium, .medium).font!.withSize(14),
-        .foregroundColor: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+        .foregroundColor: UIColor(scheme: .chatHeadTitleText)
     ]
     
     private lazy var bodyFont: UIFont = {
@@ -59,11 +59,7 @@ class ChatHeadView: UIView {
         let height = imageDiameter + 2 * padding
         return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
-    
-    private func color(withName name: String) -> UIColor {
-        return ColorScheme.default().color(withName: name)
-    }
-    
+
     init(title: String?, body: String, userID: UUID, sender: ZMUser?, userInfo: [AnyHashable : Any]? = nil, isEphemeral: Bool = false) {
         self.title = title
         self.body = body
@@ -82,10 +78,10 @@ class ChatHeadView: UIView {
     // MARK: - Setup
     
     private func setup() {
-        backgroundColor = color(withName: ColorSchemeColorChatHeadBackground)
+        backgroundColor = UIColor(scheme: .chatHeadBackground)
         layer.cornerRadius = 6
         layer.borderWidth = 0.5
-        layer.borderColor = color(withName: ColorSchemeColorChatHeadBorder).cgColor
+        layer.borderColor = UIColor(scheme: .chatHeadBorder).cgColor
         
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.12
@@ -110,7 +106,7 @@ class ChatHeadView: UIView {
             label.backgroundColor = .clear
             label.isUserInteractionEnabled = false
             label.attributedText = attributedTitleText(title)
-            label.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
+            label.textColor = UIColor(scheme: .chatHeadTitleText)
             label.lineBreakMode = .byTruncatingTail
             titleLabel = label
             labelContainer.addSubview(label)
@@ -122,7 +118,7 @@ class ChatHeadView: UIView {
         
         let bodyAttributes = (!isEphemeral && titleLabel == nil) ? titleMediumAttributes : [
             .font: bodyFont,
-            .foregroundColor: color(withName: ColorSchemeColorChatHeadSubtitleText)
+            .foregroundColor: UIColor(scheme: .chatHeadSubtitleText)
         ]
         
         subtitleLabel.attributedText = NSAttributedString(string: body, attributes: bodyAttributes)

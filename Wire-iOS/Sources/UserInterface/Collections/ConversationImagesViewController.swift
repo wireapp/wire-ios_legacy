@@ -128,7 +128,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             let navigationBar = UINavigationBar()
             navigationBar.items = [navigationItem]
             navigationBar.isTranslucent = false
-            navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+            navigationBar.barTintColor = UIColor(scheme: .barBackground)
 
             navBarContainer = UINavigationBarContainer(navigationBar)
         }
@@ -272,8 +272,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         
         self.buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
-        self.buttonsBar.expandRowButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
-        self.buttonsBar.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        self.buttonsBar.expandRowButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
+        self.buttonsBar.backgroundColor = UIColor(scheme: .barBackground)
         self.view.addSubview(self.buttonsBar)
         
         self.updateButtonsForMessage()

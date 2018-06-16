@@ -54,7 +54,7 @@ protocol SettingsCellType: class {
             case .dark?, .none:
                 self.titleColor = .white
             case .light?:
-                self.titleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+                self.titleColor = UIColor(scheme: .textForeground, variant: .light)
             }
         }
     }

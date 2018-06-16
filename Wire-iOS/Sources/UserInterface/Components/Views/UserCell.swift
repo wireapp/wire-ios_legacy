@@ -21,7 +21,7 @@ import WireExtensionComponents
 
 class UserCell: UICollectionViewCell, Themeable {
     
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -61,7 +61,7 @@ class UserCell: UICollectionViewCell, Themeable {
     fileprivate static let lightFont: UIFont! = FontSpec.init(.small, .light).font!
     
     private func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
     }
     
     override var isHighlighted: Bool {
@@ -74,8 +74,8 @@ class UserCell: UICollectionViewCell, Themeable {
     
     override var isSelected: Bool {
         didSet {
-            let foregroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground, variant: colorSchemeVariant)
-            let backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant)
+            let foregroundColor = UIColor(scheme: .background, variant: colorSchemeVariant)
+            let backgroundColor = UIColor(scheme: .iconNormal, variant: colorSchemeVariant)
             let borderColor = isSelected ? backgroundColor : backgroundColor.withAlphaComponent(0.64)
             checkmarkIconView.image = isSelected ? UIImage(for: .checkmark, iconSize: .like, color: foregroundColor) : nil
             checkmarkIconView.backgroundColor = isSelected ? backgroundColor : .clear
@@ -103,7 +103,7 @@ class UserCell: UICollectionViewCell, Themeable {
             connectButton.isHidden = true
             accessoryIconView.isHidden = false
             checkmarkIconView.image = nil
-            checkmarkIconView.layer.borderColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant).cgColor
+            checkmarkIconView.layer.borderColor = UIColor(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
             checkmarkIconView.isHidden = true
         }
     }
@@ -205,21 +205,21 @@ class UserCell: UICollectionViewCell, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: colorSchemeVariant)
-        videoIconView.image = UIImage(for: .videoCall, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconGuest, variant: colorSchemeVariant))
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconGuest, variant: colorSchemeVariant))
+        separator.backgroundColor = UIColor(scheme: .cellSeparator, variant: colorSchemeVariant)
+        videoIconView.image = UIImage(for: .videoCall, iconSize: .tiny, color: UIColor(scheme: .iconGuest, variant: colorSchemeVariant))
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor(scheme: .iconGuest, variant: colorSchemeVariant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
-        checkmarkIconView.layer.borderColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: colorSchemeVariant).cgColor
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        checkmarkIconView.layer.borderColor = UIColor(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
     }
     
     public func configure(with user: ZMBareUser, conversation: ZMConversation? = nil) {
         avatar.user = user
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
+        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
         
         if let conversation = conversation {
             guestIconView.isHidden = !user.isGuest(in: conversation)
@@ -286,7 +286,7 @@ extension UserCell {
             return formatter
         }
         
-        let color = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        let color = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
         let formatter = AddressBookCorrelationFormatter(lightFont: lightFont, boldFont: boldFont, color: color)
         
         correlationFormatters[colorSchemeVariant] = formatter

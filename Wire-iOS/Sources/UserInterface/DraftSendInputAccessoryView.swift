@@ -48,7 +48,7 @@ final class DraftSendInputAccessoryView: UIView {
     func setupViews() {
         backgroundColor = UIColor.clear
         [sendButton, separator].forEach(addSubview)
-        separator.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorSeparator)
+        separator.backgroundColor = UIColor(scheme: .separator)
         sendButton.cas_styleClass = "send-button"
         sendButton.adjustsImageWhenHighlighted = false
         sendButton.adjustBackgroundImageWhenHighlighted = true

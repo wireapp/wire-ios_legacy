@@ -164,7 +164,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         isTerminating = voiceChannel.isTerminating
         isConstantBitRate = voiceChannel.isConstantBitRateAudioActive
         title = voiceChannel.conversation?.displayName ?? ""
-        variant = ColorScheme.default().variant
+        variant = ColorScheme.default.variant
         mediaState = voiceChannel.mediaState(with: permissions)
         videoPlaceholderState = voiceChannel.videoPlaceholderState ?? preferedVideoPlaceholderState
         disableIdleTimer = voiceChannel.disableIdleTimer

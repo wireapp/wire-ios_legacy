@@ -48,24 +48,24 @@ extension ConversationInputBarViewController {
             if self.sendButtonState.ephemeral {
                 type = ZetaIconType.textEphemeral
                 style = "ephemeral"
-                color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+                color = UIColor(scheme: .accent)
             }
             else {
                 type = ZetaIconType.text
                 style = .none
-                color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+                color = UIColor(scheme: .iconNormal)
             }
         }
         else {
             if self.sendButtonState.ephemeral {
                 type = ZetaIconType.emojiEphemeral
                 style = "ephemeral"
-                color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+                color = UIColor(scheme: .accent)
             }
             else {
                 type = ZetaIconType.emoji
                 style = .none
-                color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+                color = UIColor(scheme:.iconNormal)
             }
         }
 

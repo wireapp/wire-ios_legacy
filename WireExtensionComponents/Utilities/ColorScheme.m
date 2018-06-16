@@ -14,13 +14,11 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
-
+//
 
 #import "ColorScheme.h"
 #import "UIColor+Mixing.h"
 #import "UIColor+WAZExtensions.h"
-
 
 NSString * const ColorSchemeColorAccent = @"accent-current";
 NSString * const ColorSchemeColorAccentDimmed = @"accent-current-dimmed";
@@ -198,12 +196,12 @@ static NSString* light(NSString *colorString) {
     return defaultColorScheme;
 }
 
-- (UIColor *)colorWithName:(NSString *)colorName
+- (UIColor *)colorWithName:(ColorSchemeColor)colorName
 {
     return [self.colors objectForKey:colorName];
 }
 
-- (UIColor *)colorWithName:(NSString *)colorName variant:(ColorSchemeVariant)variant
+- (UIColor *)colorWithName:(ColorSchemeColor)colorName variant:(ColorSchemeVariant)variant
 {
     return [self.colors objectForKey:variant == ColorSchemeVariantLight ? light(colorName) : dark(colorName)];
 }
@@ -417,4 +415,3 @@ static NSString* light(NSString *colorString) {
 }
 
 @end
-

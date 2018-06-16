@@ -16,78 +16,77 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+@import UIKit;
 @import WireSyncEngine;
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString * const ColorSchemeColorTextForeground;
-extern NSString * const ColorSchemeColorTextBackground;
-extern NSString * const ColorSchemeColorTextDimmed;
-extern NSString * const ColorSchemeColorTextPlaceholder;
+typedef NSString *const ColorSchemeColor NS_STRING_ENUM;
 
-extern NSString * const ColorSchemeColorAccent;
-extern NSString * const ColorSchemeColorAccentDimmed;
-extern NSString * const ColorSchemeColorAccentDimmedFlat;
-extern NSString * const ColorSchemeColorAccentDarken;
+extern ColorSchemeColor ColorSchemeColorTextForeground;
+extern ColorSchemeColor ColorSchemeColorTextBackground;
+extern ColorSchemeColor ColorSchemeColorTextDimmed;
+extern ColorSchemeColor ColorSchemeColorTextPlaceholder;
 
-extern NSString * const ColorSchemeColorIconNormal;
-extern NSString * const ColorSchemeColorIconSelected;
-extern NSString * const ColorSchemeColorIconHighlighted;
-extern NSString * const ColorSchemeColorIconBackgroundSelected;
-extern NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent;
-extern NSString * const ColorSchemeColorIconShadow;
-extern NSString * const ColorSchemeColorIconHighlight;
-extern NSString * const ColorSchemeColorIconGuest;
+extern ColorSchemeColor ColorSchemeColorAccent;
+extern ColorSchemeColor ColorSchemeColorAccentDimmed;
+extern ColorSchemeColor ColorSchemeColorAccentDimmedFlat;
+extern ColorSchemeColor ColorSchemeColorAccentDarken;
 
-extern NSString * const ColorSchemeColorPopUpButtonOverlayShadow;
+extern ColorSchemeColor ColorSchemeColorIconNormal;
+extern ColorSchemeColor ColorSchemeColorIconSelected;
+extern ColorSchemeColor ColorSchemeColorIconHighlighted;
+extern ColorSchemeColor ColorSchemeColorIconBackgroundSelected;
+extern ColorSchemeColor ColorSchemeColorIconBackgroundSelectedNoAccent;
+extern ColorSchemeColor ColorSchemeColorIconShadow;
+extern ColorSchemeColor ColorSchemeColorIconHighlight;
+extern ColorSchemeColor ColorSchemeColorIconGuest;
 
-extern NSString * const ColorSchemeColorChatHeadBackground;
-extern NSString * const ColorSchemeColorChatHeadBorder;
-extern NSString * const ColorSchemeColorChatHeadTitleText;
-extern NSString * const ColorSchemeColorChatHeadSubtitleText;
+extern ColorSchemeColor ColorSchemeColorPopUpButtonOverlayShadow;
 
-extern NSString * const ColorSchemeColorButtonFaded;
+extern ColorSchemeColor ColorSchemeColorChatHeadBackground;
+extern ColorSchemeColor ColorSchemeColorChatHeadBorder;
+extern ColorSchemeColor ColorSchemeColorChatHeadTitleText;
+extern ColorSchemeColor ColorSchemeColorChatHeadSubtitleText;
 
-extern NSString * const ColorSchemeColorTabNormal;
-extern NSString * const ColorSchemeColorTabSelected;
-extern NSString * const ColorSchemeColorTabHighlighted;
+extern ColorSchemeColor ColorSchemeColorButtonFaded;
 
-extern NSString * const ColorSchemeColorBackground;
-extern NSString * const ColorSchemeColorContentBackground;
-extern NSString * const ColorSchemeColorBarBackground;
-extern NSString * const ColorSchemeColorSearchBarBackground;
-extern NSString * const ColorSchemeColorSeparator;
-extern NSString * const ColorSchemeColorCellSeparator;
-extern NSString * const ColorSchemeColorBackgroundOverlay;
-extern NSString * const ColorSchemeColorBackgroundOverlayWithoutPicture;
-extern NSString * const ColorSchemeColorPlaceholderBackground;
-extern NSString * const ColorSchemeColorAvatarBorder;
-extern NSString * const ColorSchemeColorLoadingDotActive;
-extern NSString * const ColorSchemeColorLoadingDotInactive;
+extern ColorSchemeColor ColorSchemeColorTabNormal;
+extern ColorSchemeColor ColorSchemeColorTabSelected;
+extern ColorSchemeColor ColorSchemeColorTabHighlighted;
 
-extern NSString * const ColorSchemeColorPaleSeparator;
-extern NSString * const ColorSchemeColorListAvatarInitials;
-extern NSString * const ColorSchemeColorAudioButtonOverlay;
+extern ColorSchemeColor ColorSchemeColorBackground;
+extern ColorSchemeColor ColorSchemeColorContentBackground;
+extern ColorSchemeColor ColorSchemeColorBarBackground;
+extern ColorSchemeColor ColorSchemeColorSearchBarBackground;
+extern ColorSchemeColor ColorSchemeColorSeparator;
+extern ColorSchemeColor ColorSchemeColorCellSeparator;
+extern ColorSchemeColor ColorSchemeColorBackgroundOverlay;
+extern ColorSchemeColor ColorSchemeColorBackgroundOverlayWithoutPicture;
+extern ColorSchemeColor ColorSchemeColorPlaceholderBackground;
+extern ColorSchemeColor ColorSchemeColorAvatarBorder;
+extern ColorSchemeColor ColorSchemeColorLoadingDotActive;
+extern ColorSchemeColor ColorSchemeColorLoadingDotInactive;
 
-extern NSString * const ColorSchemeColorNameAccentPrefix;
+extern ColorSchemeColor ColorSchemeColorPaleSeparator;
+extern ColorSchemeColor ColorSchemeColorListAvatarInitials;
+extern ColorSchemeColor ColorSchemeColorAudioButtonOverlay;
 
-extern NSString * const ColorSchemeColorGraphite;
-extern NSString * const ColorSchemeColorLightGraphite;
+extern ColorSchemeColor ColorSchemeColorNameAccentPrefix;
 
-extern NSString * const ColorSchemeColorSectionBackground;
-extern NSString * const ColorSchemeColorSectionText;
+extern ColorSchemeColor ColorSchemeColorGraphite;
+extern ColorSchemeColor ColorSchemeColorLightGraphite;
 
-extern NSString * const ColorSchemeColorTokenFieldBackground;
-extern NSString * const ColorSchemeColorTokenFieldTextPlaceHolder;
+extern ColorSchemeColor ColorSchemeColorSectionBackground;
+extern ColorSchemeColor ColorSchemeColorSectionText;
+
+extern ColorSchemeColor ColorSchemeColorTokenFieldBackground;
+extern ColorSchemeColor ColorSchemeColorTokenFieldTextPlaceHolder;
 
 typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
     ColorSchemeVariantLight,
     ColorSchemeVariantDark
 };
-
 
 @interface ColorScheme : NSObject
 
@@ -98,15 +97,16 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 @property (nonatomic) UIColor *accentColor;
 @property (nonatomic) ColorSchemeVariant variant;
 
-+ (instancetype)defaultColorScheme;
+@property (class, readonly, strong) ColorScheme *defaultColorScheme;
 
 + (UIKeyboardAppearance)keyboardAppearanceForVariant:(ColorSchemeVariant)variant;
 + (UIBlurEffectStyle)blurEffectStyleForVariant:(ColorSchemeVariant)variant;
 
-- (UIColor *)colorWithName:(NSString *)colorName;
-- (UIColor *)colorWithName:(NSString *)colorName variant:(ColorSchemeVariant)variant;
+- (UIColor *)colorWithName:(ColorSchemeColor)colorName NS_SWIFT_NAME(color(named:));
+- (UIColor *)colorWithName:(ColorSchemeColor)colorName variant:(ColorSchemeVariant)variant NS_SWIFT_NAME(color(named:variant:));
 
 - (UIColor *)nameAccentForColor:(ZMAccentColor)color variant:(ColorSchemeVariant)variant;
+
 @end
 
 @interface UIColor (ColorScheme)

@@ -85,7 +85,7 @@ import Foundation
             let nsRange = text.nsRange(from: range)
             
             let highlightedAttributes = [NSAttributedStringKey.font: font,
-                                         .backgroundColor: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)]
+                                         .backgroundColor: UIColor(scheme: .accentDarken)]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
                 self.attributedText = attributedText.highlightingAppearances(of: queries,

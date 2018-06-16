@@ -179,7 +179,7 @@ final class CallViewController: UIViewController {
     }
 
     private func updateAppearance() {
-        view.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: callInfoConfiguration.variant)
+        view.backgroundColor = UIColor(scheme: .background, variant: callInfoConfiguration.variant)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

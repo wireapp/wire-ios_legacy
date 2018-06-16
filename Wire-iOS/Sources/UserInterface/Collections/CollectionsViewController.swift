@@ -260,7 +260,7 @@ public protocol CollectionsViewControllerDelegate: class {
     }
     
     open override var preferredStatusBarStyle : UIStatusBarStyle {
-        return ColorScheme.default().variant == .dark ? .lightContent : .default
+        return ColorScheme.default.variant == .dark ? .lightContent : .default
     }
     
     fileprivate func updateNoElementsState() {

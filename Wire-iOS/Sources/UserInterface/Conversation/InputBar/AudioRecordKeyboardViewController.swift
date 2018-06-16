@@ -89,7 +89,7 @@ private let zmLog = ZMSLog(tag: "UI")
         let colorScheme = ColorScheme()
         colorScheme.variant = .light
         
-        self.view.backgroundColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        self.view.backgroundColor = colorScheme.color(named: .textForeground)
         
         self.recordTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recordButtonPressed(_:)))
         self.view.addGestureRecognizer(self.recordTapGestureRecognizer)
@@ -101,14 +101,14 @@ private let zmLog = ZMSLog(tag: "UI")
         [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         self.audioPreviewView.gradientWidth = 20
-        self.audioPreviewView.gradientColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        self.audioPreviewView.gradientColor = colorScheme.color(named: .textForeground)
         
-        self.topSeparator.backgroundColor = colorScheme.color(withName: ColorSchemeColorSeparator)
+        self.topSeparator.backgroundColor = colorScheme.color(named: .separator)
         
         self.createTipLabel()
         
         self.timeLabel.font = FontSpec(.small, .light).font!
-        self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        self.timeLabel.textColor = colorScheme.color(named: .textForeground, variant: .dark)
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
         
@@ -167,7 +167,7 @@ private let zmLog = ZMSLog(tag: "UI")
             
             let maxEffect : UInt32 = UInt32(suitableEffects.count)
             let randomEffect = suitableEffects[Int(arc4random_uniform(maxEffect))]
-            let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(withName: ColorSchemeColorTextDimmed))
+            let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(named: .textDimmed))
             
             let tipEffectImageAttachment = NSTextAttachment()
             tipEffectImageAttachment.image = randomEffectImage
@@ -183,7 +183,7 @@ private let zmLog = ZMSLog(tag: "UI")
         self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
         self.tipLabel.numberOfLines = 2
         self.tipLabel.font = FontSpec(.small, .light).font!
-        self.tipLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextDimmed)
+        self.tipLabel.textColor = colorScheme.color(named: .textDimmed)
         self.tipLabel.textAlignment = .center
         
     }

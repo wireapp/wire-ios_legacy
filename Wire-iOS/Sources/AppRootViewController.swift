@@ -366,7 +366,7 @@ import Classy
 
     func setupClassy(with windows: [UIWindow]) {
 
-        let colorScheme = ColorScheme.default()
+        let colorScheme = ColorScheme.default
         colorScheme.accentColor = UIColor.accent()
         colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
 

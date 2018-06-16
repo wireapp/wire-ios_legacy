@@ -52,7 +52,7 @@ import Classy
     var loadingView: ThreeDotsLoadingView?
     var linkPreview: LinkPreview?
     private let obfuscationView = ObfuscationView(icon: .link)
-    private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
+    private let ephemeralColor = UIColor(scheme: .accent)
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
     
@@ -189,7 +189,7 @@ import Classy
 
             if obfuscated {
                 ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
-                imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
+                imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
                 setContentMode(isObfuscated: true)
             } else {
                 imageView.image = nil

@@ -32,7 +32,6 @@ class PopUpIconButtonView: UIView {
     private let upperRect: CGRect
     private let itemWidth: CGFloat
     
-    private let color = ColorScheme.default().color(withName:)
     private let expandDirection: PopUpIconButtonExpandDirection
     
     init(withButton button: PopUpIconButton) {
@@ -87,13 +86,13 @@ class PopUpIconButtonView: UIView {
         context.saveGState()
         
         // overlay shadow
-        let shadowColor = color(ColorSchemeColorPopUpButtonOverlayShadow).cgColor
+        let shadowColor = UIColor(scheme: .popUpButtonOverlayShadow).cgColor
         let offset = CGSize(width: 0.0, height: 2.0)
         let blurRadius: CGFloat = 4.0
         context.setShadow(offset: offset, blur: blurRadius, color: shadowColor)
         
         // overlay fill
-        color(ColorSchemeColorBarBackground).set()
+        UIColor(scheme: .barBackground).set()
         path.fill()
         
         context.restoreGState()
@@ -102,7 +101,7 @@ class PopUpIconButtonView: UIView {
         if let imageView = button.imageView {
             // rect in window coordinates
             let imageRect = imageView.convert(button.imageView!.bounds, to: nil)
-            let image = UIImage(for: button.iconType(for: .normal), iconSize: .tiny, color: color(ColorSchemeColorIconNormal))!
+            let image = UIImage(for: button.iconType(for: .normal), iconSize: .tiny, color: UIColor(scheme: .iconNormal))!
             image.draw(in: imageRect)
         }
         
@@ -110,7 +109,7 @@ class PopUpIconButtonView: UIView {
         if let buttonImageView = button.imageView {
             for (index, icon) in button.itemIcons.enumerated() {
                 let itemRect = rectForItem(icon)!
-                let iconColor = index == selectedIndex ? color(ColorSchemeColorAccent) : color(ColorSchemeColorIconNormal)
+                let iconColor = index == selectedIndex ? UIColor(scheme: .accent) : UIColor(scheme: .iconNormal)
                 let image = UIImage(for: icon, iconSize: .medium, color: iconColor)!
                 // rect in window coordinates
                 var imageRect = buttonImageView.convert(buttonImageView.bounds, to: nil)

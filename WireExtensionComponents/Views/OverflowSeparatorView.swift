@@ -37,7 +37,7 @@ import Classy
     }
     
     private func applyStyle() {
-        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorSeparator)
+        self.backgroundColor = UIColor(scheme: .separator)
         self.alpha = 0
     }
     

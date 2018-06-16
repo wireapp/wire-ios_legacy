@@ -166,7 +166,7 @@ final public class BackgroundViewController: UIViewController {
     }
     
     private func updateForColorScheme() {
-        self.darkMode = (ColorScheme.default().variant == .dark)
+        self.darkMode = (ColorScheme.default.variant == .dark)
     }
     
     internal func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {

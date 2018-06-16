@@ -25,7 +25,7 @@ extension ConversationInputBarViewController {
         
         markdownButton.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
         markdownButton.setIcon(.markdownToggle, with: .tiny, for: .normal)
-        markdownButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
+        markdownButton.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
     }
     
     @objc public func updateMarkdownButton() {
@@ -33,9 +33,9 @@ extension ConversationInputBarViewController {
         let color: UIColor
         
         if inputBar.isMarkingDown {
-            color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+            color = UIColor(scheme: .accent)
         } else {
-            color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+            color = UIColor(scheme: .iconNormal)
         }
         
         markdownButton.setIconColor(color, for: .normal)

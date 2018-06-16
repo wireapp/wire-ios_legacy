@@ -34,8 +34,8 @@ class SketchToolbar : UIView {
         
         buttons.forEach { button in
             let iconButton = button as? IconButton
-            iconButton?.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal), for: .normal)
-            iconButton?.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted), for: .highlighted)
+            iconButton?.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
+            iconButton?.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
             iconButton?.setIconColor(UIColor.accent(), for: .selected)
         }
         
@@ -44,7 +44,7 @@ class SketchToolbar : UIView {
         leftButton = unassignedButtons.removeFirst()
         rightButton = unassignedButtons.removeLast()
         centerButtons = unassignedButtons
-        separatorLine.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        separatorLine.backgroundColor = UIColor(scheme: .separator)
         
         super.init(frame: CGRect.zero)
         
@@ -58,7 +58,7 @@ class SketchToolbar : UIView {
     }
     
     func setupSubviews() {
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        backgroundColor = UIColor(scheme: .background)
         addSubview(containerView)
         centerButtons.forEach(centerButtonContainer.addSubview)
         [leftButton, centerButtonContainer, rightButton, separatorLine].forEach(containerView.addSubview)

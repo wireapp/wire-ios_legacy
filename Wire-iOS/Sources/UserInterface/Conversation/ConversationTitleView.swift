@@ -36,8 +36,8 @@ class ConversationTitleView: TitleView {
     }
     
     @objc func configure() {
-        titleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-        titleColorSelected = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        titleColor = UIColor(scheme: .textForeground)
+        titleColorSelected = UIColor(scheme: .textDimmed)
         titleFont = FontSpec(.medium, .semibold).font!
         
         var attachment : NSTextAttachment?

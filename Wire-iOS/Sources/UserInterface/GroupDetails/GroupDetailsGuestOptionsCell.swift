@@ -38,11 +38,11 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
         didSet {
             backgroundColor = isHighlighted
                 ? .init(white: 0, alpha: 0.08)
-                : .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
+                : UIColor(scheme: .barBackground, variant: variant)
         }
     }
     
-    var variant : ColorSchemeVariant = ColorScheme.default().variant {
+    var variant : ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != variant else { return }
             configureColors()
@@ -104,11 +104,11 @@ class GroupDetailsGuestOptionsCell: UICollectionViewCell {
     }
     
     private func configureColors() {
-        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
-        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
+        let sectionTextColor = UIColor(scheme: .sectionText, variant: variant)
+        backgroundColor = UIColor(scheme: .barBackground, variant: variant)
+        guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: variant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
-        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: variant)
         statusLabel.textColor = sectionTextColor
     }
     
