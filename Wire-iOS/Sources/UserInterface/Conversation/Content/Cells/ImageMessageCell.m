@@ -409,8 +409,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         return;
     }
 
-    UIImageOrientation orientation = self.fullImageView.image.imageOrientation;
-    self.savableImage = [[SavableImage alloc] initWithData:data orientation:orientation];
+    self.savableImage = [[SavableImage alloc] initWithData:data isGIF:self.message.imageMessageData.isAnimatedGIF];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

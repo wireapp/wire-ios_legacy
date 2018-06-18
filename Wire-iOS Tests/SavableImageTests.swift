@@ -27,11 +27,17 @@ final class MockPhotoLibrary: PhotoLibraryProtocol {
 }
 
 final class MockAssetChangeRequest: AssetChangeRequestProtocol {
+    static var url: URL?
     static var image: UIImage?
+    
+    static func creationRequestForAssetFromImage(atFileURL fileURL: URL) -> Self? {
+        MockAssetChangeRequest.url = fileURL
+        return .init()
+    }
 
     static func creationRequestForAsset(from image: UIImage) -> Self {
         MockAssetChangeRequest.image = image
-        return self.init()
+        return .init()
     }
 }
 
@@ -64,7 +70,7 @@ final class SavableImageTests: XCTestCase {
     func testThatSavableImageIsNotRetainedAfterSaveToLibrary() {
         autoreleasepool {
             // GIVEN
-            var savableImage: SavableImage! = SavableImage(data: imageData!, orientation: .up)
+            var savableImage: SavableImage! = SavableImage(data: imageData!, isGIF: false)
             savableImage.assetChangeRequestType = MockAssetChangeRequest.self
             savableImage.photoLibrary = MockPhotoLibrary()
             savableImage.applicationType = MockApplication.self
@@ -93,7 +99,7 @@ final class SavableImageTests: XCTestCase {
             // GIVEN
             var mockOwner: MockOwner! = MockOwner()
             weakMockOwner = mockOwner
-            let savableImage = SavableImage(data: imageData!, orientation: .up)
+            let savableImage = SavableImage(data: imageData!, isGIF: false)
 
             savableImage.assetChangeRequestType = MockAssetChangeRequest.self
             savableImage.photoLibrary = MockPhotoLibrary()
