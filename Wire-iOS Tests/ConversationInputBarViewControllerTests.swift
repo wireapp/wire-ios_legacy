@@ -102,4 +102,5 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view)
     }
+
 }
