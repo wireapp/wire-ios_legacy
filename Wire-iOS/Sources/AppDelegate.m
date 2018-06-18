@@ -292,26 +292,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
     [analyticsTracker tagPushNotificationsPermissions:userGavePermissions];
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
-{
-    ZMLogInfo(@"Received APNS token: %@", newDeviceToken);
-    
-    [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
-}
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-{
-    ZMLogInfo(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
-    if (error != nil) {
-        [[Analytics shared] tagApplicationError:error.localizedDescription
-                                  timeInSession:[[UIApplication sharedApplication] lastApplicationRunDuration]];
-    }
-    ZMLogWarn(@"Error registering for push with APNS: %@", error);
-    
-    AnalyticsTracker *analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:nil];
-    [analyticsTracker tagPushNotificationsPermissions:NO];
-}
-
 @end
 
 @implementation AppDelegate (BackgroundUpdates)
@@ -323,8 +303,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
         [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchPush];
         self.trackedResumeEvent = YES;
     }
-    
-    [[SessionManager shared] didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
     
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
 }
