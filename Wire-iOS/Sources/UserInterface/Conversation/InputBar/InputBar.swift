@@ -32,7 +32,7 @@ extension Settings {
 public enum InputBarState: Equatable {
     case writing(ephemeral: Bool)
     case editing(originalText: String)
-    case markingDown
+    case markingDown(ephemeral: Bool)
 
     var isWriting: Bool {
         switch self {
@@ -56,9 +56,14 @@ public enum InputBarState: Equatable {
     }
     
     var isEphemeral: Bool {
-        if case .writing(let ephemeral) = self {
+        switch self {
+        case .markingDown(let ephemeral):
             return ephemeral
-        } else {
+
+        case .writing(let ephemeral):
+            return ephemeral
+
+        default:
             return false
         }
     }
