@@ -46,7 +46,7 @@ extension UIAlertController {
                                                 style: .default,
                                                 handler: privacyPolicyActionHandler))
 
-        alertController.addAction(UIAlertAction(title: "general.skip".localized,
+        alertController.addAction(UIAlertAction(title: "general.deline".localized,
                                                 style: .default,
                                                 handler: { (_) in
                                                     completionHandler(false)
