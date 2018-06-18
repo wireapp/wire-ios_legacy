@@ -77,4 +77,19 @@
     return 15;
 }
 
+- (BOOL)hasDraftMessageText;
+{
+    return NO;
+}
+
+- (BOOL)isReadOnly;
+{
+    return YES;
+}
+
+//- (UIImage *)timeoutImage;
+//{
+//    return [UIImage new];
+//}
+
 @end

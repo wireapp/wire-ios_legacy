@@ -19,6 +19,13 @@
 import Foundation
 
 extension MockConversation {
+
+    // TODO: new file
+    @objc var timeoutImage: UIImage? {
+        return WireStyleKit.imageOfWeek(with: UIColor.accent())
+    }
+
+
     static func oneOnOneConversation() -> MockConversation {
         let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
         let otherUser = MockUser.mockUsers().first!

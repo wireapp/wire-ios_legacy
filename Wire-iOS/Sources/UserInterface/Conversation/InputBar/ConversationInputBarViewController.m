@@ -132,7 +132,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic) InputBar *inputBar;
-@property (nonatomic) ZMConversation *conversation;
 
 @property (nonatomic) NSSet *typingUsers;
 @property (nonatomic) id conversationObserverToken;
@@ -164,9 +163,16 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         if (conversation != nil) {
             self.conversation = conversation;
             self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
-            self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
-            self.typingObserverToken = [conversation addTypingObserver:self];
-            self.typingUsers = conversation.typingUsers;
+
+            if ([self.conversation respondsToSelector: @selector(managedObjectContext)]) {
+                self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+            }
+            if ([self.conversation respondsToSelector: @selector(addTypingObserver:)]) {
+                self.typingObserverToken = [conversation addTypingObserver:self];
+            }
+            if ([self.conversation respondsToSelector: @selector(typingUsers)]) {
+                self.typingUsers = conversation.typingUsers;
+            }
         }
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
 
@@ -231,10 +237,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.locationButton addTarget:self action:@selector(locationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     if (self.conversationObserverToken == nil && self.conversation != nil) {
-        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+        if ([self.conversation respondsToSelector: @selector(managedObjectContext)]) {
+            self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+        }
     }
     
-    if (self.userObserverToken == nil && self.conversation.connectedUser != nil) {
+    if (self.userObserverToken == nil && self.conversation.connectedUser != nil && ZMUserSession.sharedSession != nil) {
         self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.conversation.connectedUser userSession:ZMUserSession.sharedSession];
     }
     
@@ -514,7 +522,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.sendButton.hidden = self.sendButtonState.sendButtonHidden;
     self.hourglassButton.hidden = self.sendButtonState.hourglassButtonHidden;
     self.ephemeralIndicatorButton.hidden = self.sendButtonState.ephemeralIndicatorButtonHidden;
-
+    ///TODO: mock timeoutImage
     [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.timeoutImage forState:UIControlStateNormal];
 }
 

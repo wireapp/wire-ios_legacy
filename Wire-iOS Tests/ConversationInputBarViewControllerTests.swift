@@ -50,6 +50,8 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
         sut.view.layoutIfNeeded()
 
         sut.view.layer.speed = 0
+
+        recordMode = true
     }
 
     func testNormalState(){
@@ -114,6 +116,27 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
+
+        sut.view.layoutIfNeeded()
+
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
+    func testEphemeralTime4Weeks(){
+        // GIVEN
+        let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
+        sut = ConversationInputBarViewController(conversation: mockConversation)
+
+        sut.viewDidLoad()
+        sut.createEphemeralIndicatorButton()
+
+//        sut.conversation = mockConversation
+        sut.view.layoutIfNeeded()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+//        sut.ephemeralIndicatorButton.setBackgroundImage(WireStyleKit.imageOfWeek(with: UIColor.accent()), for: .normal)
 
         sut.view.layoutIfNeeded()
 
