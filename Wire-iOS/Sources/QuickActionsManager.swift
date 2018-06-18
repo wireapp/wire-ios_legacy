@@ -57,7 +57,7 @@ public final class QuickActionsManager: NSObject {
         application.shortcutItems = allItems
     }
     
-    func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: ((Bool)->())?) {
+    @objc func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: ((Bool)->())?) {
         switch shortcutItem.type {
         case UIApplicationShortcutItem.markAllAsReadType:
             sessionManager.markAllConversationsAsRead {

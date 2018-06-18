@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc internal class TextSearchResultCell: UITableViewCell {
+@objcMembers internal class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
@@ -31,7 +31,7 @@ import Cartography
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.userImageView.userSession = ZMUserSession.shared()
-        self.userImageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
+        self.userImageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
         
         self.accessibilityIdentifier = "search result cell"
         
@@ -39,8 +39,8 @@ import Cartography
         self.selectionStyle = .none
         self.messageTextLabel.accessibilityIdentifier = "text search result"
         self.messageTextLabel.numberOfLines = 1
-        self.messageTextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        self.messageTextLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        self.messageTextLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        self.messageTextLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         
         self.contentView.addSubview(self.messageTextLabel)
         

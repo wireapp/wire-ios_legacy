@@ -104,6 +104,15 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         self.verify(view: navWrapperController.view)
     }
 
+    func testForOneDeviceWithBackButtonAndNoEditButton(){
+        prepareSut(variant: .light, numberOfClients: 0)
+        let mockRootViewController = UIViewController()
+        let navWrapperController = mockRootViewController.wrapInNavigationController()
+        navWrapperController.pushViewController(sut, animated: false)
+
+        self.verify(view: navWrapperController.view)
+    }
+
     func testForEditMode(){
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()

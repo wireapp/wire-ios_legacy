@@ -19,11 +19,11 @@
 
 extension ColorScheme {
 
-    var statusBarStyle: UIStatusBarStyle {
+    @objc var statusBarStyle: UIStatusBarStyle {
         return variant == .light ? .default : .lightContent
     }
 
-    var indicatorStyle: UIScrollViewIndicatorStyle {
+    @objc var indicatorStyle: UIScrollViewIndicatorStyle {
         return variant == .light ? .default : .white
     }
 

@@ -20,7 +20,7 @@ import Foundation
 
 extension ZMUserSession {
     
-    var isCallOngoing: Bool {
+    @objc var isCallOngoing: Bool {
         guard let callCenter = callCenter else { return false }
         
         return !callCenter.activeCallConversations(in: self).isEmpty

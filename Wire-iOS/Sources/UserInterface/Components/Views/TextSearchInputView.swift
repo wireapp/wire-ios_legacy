@@ -26,7 +26,7 @@ public protocol TextSearchInputViewDelegate: class {
     func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool
 }
 
-public final class TextSearchInputView: UIView {
+@objcMembers public final class TextSearchInputView: UIView {
     public let iconView = UIImageView()
     public let searchInput = UITextView()
     public let placeholderLabel = UILabel()

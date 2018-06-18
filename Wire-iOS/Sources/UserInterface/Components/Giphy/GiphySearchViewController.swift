@@ -74,7 +74,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
 }
 
-class GiphySearchViewController: UICollectionViewController {
+@objcMembers class GiphySearchViewController: UICollectionViewController {
 
     public weak var delegate: GiphySearchViewControllerDelegate?
 
@@ -219,7 +219,7 @@ class GiphySearchViewController: UICollectionViewController {
         masonrylayout.itemMargins = CGSize(width: 1, height: 1)
     }
 
-    func onDismiss() {
+    @objc func onDismiss() {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
 

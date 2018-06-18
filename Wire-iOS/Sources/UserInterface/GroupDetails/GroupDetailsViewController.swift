@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
+@objcMembers class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation

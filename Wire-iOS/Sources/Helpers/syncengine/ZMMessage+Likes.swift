@@ -81,7 +81,7 @@ public extension Message {
         return !message.likers().isEmpty
     }
 
-    class func messageCanBeLiked(_ message: ZMConversationMessage) -> Bool {
+    @objc class func messageCanBeLiked(_ message: ZMConversationMessage) -> Bool {
         return message.canBeLiked
     }
     

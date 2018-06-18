@@ -39,7 +39,7 @@ class EmojiDataSource: NSObject, UICollectionViewDataSource {
     init(provider: @escaping CellProvider) {
         cellProvider = provider
         self.recentlyUsed = RecentlyUsedEmojiPeristenceCoordinator.loadOrCreate()
-        sections = EmojiSectionType.all.flatMap(FileEmojiSection.init)
+        sections = EmojiSectionType.all.compactMap(FileEmojiSection.init)
         super.init()
         insertRecentlyUsedSectionIfNeeded()
     }

@@ -44,7 +44,7 @@ final public class ConversationCreationValues {
     
 }
 
-final class ConversationCreationController: UIViewController {
+@objcMembers final class ConversationCreationController: UIViewController {
 
     static let errorFont = FontSpec(.small, .semibold).font!
     static let mainViewHeight: CGFloat = 56

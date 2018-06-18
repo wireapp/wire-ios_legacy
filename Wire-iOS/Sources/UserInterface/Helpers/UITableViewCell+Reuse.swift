@@ -20,17 +20,17 @@
 import UIKit
 
 extension UITableViewCell {
-    static var zm_reuseIdentifier: String {
+    @objc static var zm_reuseIdentifier: String {
     	return NSStringFromClass(self) + "_ReuseIdentifier"
     }
     
-    static func register(in tableView: UITableView) {
+    @objc static func register(in tableView: UITableView) {
         tableView.register(self, forCellReuseIdentifier: zm_reuseIdentifier)
     }
 }
 
 extension UICollectionViewCell {
-    static var zm_reuseIdentifier: String {
+    @objc static var zm_reuseIdentifier: String {
         return NSStringFromClass(self) + "_ReuseIdentifier"
     }
     

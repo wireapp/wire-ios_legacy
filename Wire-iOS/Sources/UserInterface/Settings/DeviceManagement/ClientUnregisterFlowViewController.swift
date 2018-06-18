@@ -25,7 +25,7 @@ import Cartography
 }
 
 
-class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate {
+@objcMembers class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?

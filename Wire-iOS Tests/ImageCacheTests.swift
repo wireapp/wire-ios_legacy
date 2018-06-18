@@ -32,7 +32,7 @@ class ImageCacheTests: XCTestCase {
         
         self.sut.image(for: imageData, cacheKey: "key", creationBlock: {
             return UIImage(data: $0)! as Any
-        }) { _ in
+        }) { _, _ in
             imagesProcessed = imagesProcessed + 1
         }
         
@@ -57,7 +57,7 @@ class ImageCacheTests: XCTestCase {
         for index in 1...imagesToProcess {
             self.sut.image(for: imageData, cacheKey: "key\(index)", creationBlock: {
                 return UIImage(data: $0)! as Any
-            }) { _ in
+            }) { _, _ in
                 imagesProcessed = imagesProcessed + 1
             }
         }
@@ -81,7 +81,7 @@ class ImageCacheTests: XCTestCase {
         
         self.sut.image(for: imageData, cacheKey: "key1", creationBlock: {
             return UIImage(data: $0)! as Any
-        }) { _ in
+        }) { _, _ in
             imagesProcessed = imagesProcessed + 1
         }
         
@@ -99,7 +99,7 @@ class ImageCacheTests: XCTestCase {
         // AND WHEN
         self.sut.image(for: imageData, cacheKey: "key2", creationBlock: {
             return UIImage(data: $0)! as Any
-        }) { _ in
+        }) { _, _ in
             imagesProcessed = imagesProcessed + 1
         }
         
@@ -123,13 +123,13 @@ class ImageCacheTests: XCTestCase {
         
         self.sut.image(for: imageData, cacheKey: "key", creationBlock: {
             return UIImage(data: $0)! as Any
-        }) { _ in
+        }) { _, _ in
             imagesProcessedCallbacks = imagesProcessedCallbacks + 1
         }
         
         self.sut.image(for: imageData, cacheKey: "key", creationBlock: {
             return UIImage(data: $0)! as Any
-        }) { _ in
+        }) { _, _ in
             imagesProcessedCallbacks = imagesProcessedCallbacks + 1
         }
         

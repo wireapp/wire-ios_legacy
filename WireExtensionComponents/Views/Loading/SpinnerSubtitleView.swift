@@ -18,15 +18,15 @@
 
 import UIKit
 
-@objc public class SpinnerSubtitleView: UIStackView {
+@objcMembers public class SpinnerSubtitleView: UIStackView {
 
-    public var subtitle: String? {
+    @objc public var subtitle: String? {
         didSet {
             updateSubtitle(subtitle)
         }
     }
 
-    public let spinner = ProgressSpinner()
+    @objc public let spinner = ProgressSpinner()
     private let label = UILabel()
 
     public init() {

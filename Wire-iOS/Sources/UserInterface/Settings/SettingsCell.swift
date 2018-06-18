@@ -37,7 +37,7 @@ protocol SettingsCellType: class {
     var icon: ZetaIconType {get set}
 }
 
-@objc class SettingsTableCell: UITableViewCell, SettingsCellType {
+@objcMembers class SettingsTableCell: UITableViewCell, SettingsCellType {
     let iconImageView = UIImageView()
     public let cellNameLabel = UILabel()
     let valueLabel = UILabel()
@@ -186,7 +186,7 @@ protocol SettingsCellType: class {
             iconImageView.centerY == contentView.centerY
         }
         
-        self.cellNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        self.cellNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         self.contentView.addSubview(self.cellNameLabel)
         
         constrain(self.contentView, self.cellNameLabel, self.iconImageView) { contentView, cellNameLabel, iconImageView in
@@ -291,21 +291,21 @@ protocol SettingsCellType: class {
     }
 }
 
-@objc class SettingsGroupCell: SettingsTableCell {
+@objcMembers class SettingsGroupCell: SettingsTableCell {
     override func setup() {
         super.setup()
         self.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
     }
 }
 
-@objc class SettingsButtonCell: SettingsTableCell {
+@objcMembers class SettingsButtonCell: SettingsTableCell {
     override func setup() {
         super.setup()
         self.cellNameLabel.textColor = UIColor.accent()
     }
 }
 
-class SettingsToggleCell: SettingsTableCell {
+@objcMembers class SettingsToggleCell: SettingsTableCell {
     var switchView: UISwitch!
     
     override func setup() {
@@ -321,12 +321,12 @@ class SettingsToggleCell: SettingsTableCell {
         self.accessibilityElements = [self.cellNameLabel, self.switchView]
     }
     
-    func onSwitchChanged(_ sender: UIResponder) {
+    @objc func onSwitchChanged(_ sender: UIResponder) {
         self.descriptor?.select(SettingsPropertyValue(self.switchView.isOn))
     }
 }
 
-@objc class SettingsValueCell: SettingsTableCell {
+@objcMembers class SettingsValueCell: SettingsTableCell {
     override var descriptor: SettingsCellDescriptorType?{
         willSet {
             if let propertyDescriptor = self.descriptor as? SettingsPropertyCellDescriptorType {
@@ -346,12 +346,12 @@ class SettingsToggleCell: SettingsTableCell {
     
     // MARK: - Properties observing
     
-    func onPropertyChanged(_ notification: Notification) {
+    @objc func onPropertyChanged(_ notification: Notification) {
         self.descriptor?.featureCell(self)
     }
 }
 
-@objc class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
+@objcMembers class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
     var textInput: UITextField!
 
     override func setup() {

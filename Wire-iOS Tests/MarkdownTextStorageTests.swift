@@ -44,7 +44,7 @@ final class MarkdownTextStorageTests: XCTestCase {
         sut.setAttributes([:], range: wholeRange)
         // THEN
         var effectiveRange = NSMakeRange(NSNotFound, 0)
-        let result = sut.attribute(MarkdownIDAttributeName, at: 0, effectiveRange: &effectiveRange) as? Markdown
+        let result = sut.attribute(.markdownID, at: 0, effectiveRange: &effectiveRange) as? Markdown
         XCTAssertEqual(.bold, result)
         XCTAssertEqual(wholeRange, effectiveRange)
     }

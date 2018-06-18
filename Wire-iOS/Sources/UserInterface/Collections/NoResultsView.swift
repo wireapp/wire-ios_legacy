@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc final public class NoResultsView: UIView {
+@objcMembers final public class NoResultsView: UIView {
     public let label = UILabel()
     private let iconView = UIImageView()
     

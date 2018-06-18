@@ -35,8 +35,8 @@ final class DraftNavigationController: UINavigationController {
 
         navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
         navigationBar.titleTextAttributes = [
-            NSFontAttributeName: FontSpec(.medium, .semibold).font!,
-            NSForegroundColorAttributeName: textColor
+            .font: FontSpec(.medium, .semibold).font!,
+            .foregroundColor: textColor
         ]
     }
 

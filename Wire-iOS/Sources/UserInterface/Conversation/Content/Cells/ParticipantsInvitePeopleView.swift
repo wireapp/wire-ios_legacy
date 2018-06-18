@@ -22,7 +22,7 @@ protocol ParticipantsInvitePeopleViewDelegate: class {
     func invitePeopleViewInviteButtonTapped(_ invitePeopleView: ParticipantsInvitePeopleView)
 }
 
-class ParticipantsInvitePeopleView: UIView {
+@objcMembers class ParticipantsInvitePeopleView: UIView {
     
     weak var delegate: ParticipantsInvitePeopleViewDelegate?
     

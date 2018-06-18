@@ -20,7 +20,7 @@
 import Cartography
 
 
-final class ParticipantsUserCell: UICollectionViewCell {
+@objcMembers final class ParticipantsUserCell: UICollectionViewCell {
 
     private let imageView = UserImageView(size: .small)
     private let dimmedAlpha: CGFloat = 0.5
@@ -35,7 +35,7 @@ final class ParticipantsUserCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         imageView.userSession = ZMUserSession.shared()
-        imageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
+        imageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
         backgroundColor = .clear
         addSubview(imageView)
         constrain(self, imageView) { view, image in
@@ -84,7 +84,7 @@ final fileprivate class IntrinsicCollectionView: UICollectionView {
 }
 
 
-final class ParticipantsCollectionViewController<Cell: UICollectionViewCell>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+@objcMembers final class ParticipantsCollectionViewController<Cell: UICollectionViewCell>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     typealias SelectAction = (ZMUser, Cell) -> Void
     typealias ConfigureCell = (ZMUser, Cell) -> Void

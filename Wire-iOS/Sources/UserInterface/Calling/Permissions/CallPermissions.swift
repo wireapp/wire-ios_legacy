@@ -26,11 +26,11 @@ class CallPermissions: CallPermissionsConfiguration {
             // on iOS simulator microphone permissions are always granted by default
             return false
         }
-        return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio) == .notDetermined
+        return AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == .notDetermined
     }
 
     var isPendingVideoPermissionRequest: Bool {
-        return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .notDetermined
+        return AVCaptureDevice.authorizationStatus(for: AVMediaType.video) == .notDetermined
     }
 
     var canAcceptAudioCalls: Bool {
@@ -39,11 +39,11 @@ class CallPermissions: CallPermissionsConfiguration {
             // return the correct status
             return true
         }
-        return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeAudio) == .authorized
+        return AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == .authorized
     }
 
     var canAcceptVideoCalls: Bool {
-        return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .authorized
+        return AVCaptureDevice.authorizationStatus(for: AVMediaType.video) == .authorized
     }
 
     func requestVideoPermissionWithoutWarning(resultHandler: @escaping (Bool) -> Void) {

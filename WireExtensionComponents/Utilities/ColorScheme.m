@@ -246,7 +246,7 @@ static NSString* light(NSString *colorString) {
     UIColor *lightGraphiteAlpha24 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.24)"];
     UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
     UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
-    
+
     NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
                                 @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],

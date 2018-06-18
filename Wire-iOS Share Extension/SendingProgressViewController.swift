@@ -115,11 +115,11 @@ class SendingProgressViewController : UIViewController {
         setReachability(from: reachability)
     }
     
-    func onCancelTapped() {
+    @objc func onCancelTapped() {
         cancelHandler?()
     }
     
-    func networkStatusDidChange(_ notification: Notification) {
+    @objc func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus {
             setReachability(from: status.reachability())
         }

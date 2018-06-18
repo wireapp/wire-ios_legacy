@@ -19,7 +19,7 @@
 import Foundation
 import SafariServices
 
-@objc class BrowserViewController: SFSafariViewController {
+@objcMembers class BrowserViewController: SFSafariViewController {
 
     @objc var completion: (() -> Void)?
 

@@ -1126,7 +1126,6 @@
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */; };
 		EF80462020CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461F20CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift */; };
-		EF80466520D17130001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80466320D1712B001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift */; };
 		EF80C0022097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80C0012097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift */; };
 		EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80C0032097151C00E0040B /* ZMConversationMessageWindowTests.swift */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
@@ -1134,6 +1133,7 @@
 		EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */; };
 		EF98987620C6AAD2005680C5 /* ClientColorVariantProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */; };
 		EF9B950420BEBD89000D4CA1 /* MockUser+AccentColorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */; };
+		EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
 		EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */; };
@@ -2775,7 +2775,6 @@
 		EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+TableHeader.swift"; sourceTree = "<group>"; };
 		EF80461F20CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePictureStepViewController+ImagePicker.swift"; sourceTree = "<group>"; };
 		EF80462120CAC4FE001A1C53 /* ProfilePictureStepViewController+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Private.h"; sourceTree = "<group>"; };
-		EF80466320D1712B001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZMConversationMessageDestructionTimeoutTests.swift; sourceTree = "<group>"; };
 		EF80C0012097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessageWindow+Formatting.swift"; sourceTree = "<group>"; };
 		EF80C0032097151C00E0040B /* ZMConversationMessageWindowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMConversationMessageWindowTests.swift; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2783,6 +2782,7 @@
 		EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+MockUserClient.swift"; sourceTree = "<group>"; };
 		EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientColorVariantProtocol.swift; sourceTree = "<group>"; };
 		EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+AccentColorProvider.swift"; sourceTree = "<group>"; };
+		EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralTimeoutFormatterTests.swift; sourceTree = "<group>"; };
 		EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SizeClass.swift"; sourceTree = "<group>"; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -5174,7 +5174,7 @@
 				EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */,
 				EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */,
 				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
-				EF80466320D1712B001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift */,
+				EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -5938,7 +5938,7 @@
 					1EE85C4F1B5F96FB008E084B = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = W5KEQBF9B5;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Manual;
 					};
 					87B7DAA01E696E4E005F5140 = {
@@ -5957,7 +5957,7 @@
 					8F42C537199244A700288E4D = {
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = W5KEQBF9B5;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.SafariKeychain = {
@@ -5971,7 +5971,7 @@
 					BACB88501AF7C48900DDCDB0 = {
 						CreatedOnToolsVersion = 6.3;
 						DevelopmentTeam = W5KEQBF9B5;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0930;
 						TestTargetID = 8F42C537199244A700288E4D;
 					};
 					BFAD53FA1E6972CC0015C677 = {
@@ -7234,6 +7234,7 @@
 				D50892FD2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift in Sources */,
 				D524BE5F207B99B800542A4E /* UIViewController+LoadingTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
+				EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */,
 				87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
 				EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */,
@@ -7340,7 +7341,6 @@
 				BF2A74751CEB595E002608BF /* AudioButtonOverlayTests.swift in Sources */,
 				BF52C15E1CAEC1430037331F /* ArchivedNavigationBarTests.m in Sources */,
 				EF01AF8520BED3F500E5E5B4 /* MockUserClient+RemoteIdentifier.swift in Sources */,
-				EF80466520D17130001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift in Sources */,
 				EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */,
 				8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */,
 				876041551F5451EA003CB161 /* AccountViewTests.swift in Sources */,
@@ -7537,7 +7537,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -7563,7 +7563,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -7594,7 +7594,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -7623,7 +7623,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -7647,7 +7647,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/ImageNotificationExtensionBridgingHeader.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -7668,7 +7668,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_IMGNOTIFICATION_EXT)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/ImageNotificationExtensionBridgingHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -7790,7 +7790,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_APP)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/WireBridgingHeader.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -7817,7 +7817,7 @@
 				PRODUCT_NAME = Wire;
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROVISIONING_PROFILE_SPECIFIER_APP)";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/WireBridgingHeader.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -7846,7 +7846,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
 			};
 			name = Debug;
@@ -7871,7 +7871,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Wire-iOS Tests/Wire-iOS-Tests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wire.app/Wire";
 			};
 			name = Release;
@@ -7902,7 +7902,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -7933,7 +7933,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.wire.NotificationFetchComponents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

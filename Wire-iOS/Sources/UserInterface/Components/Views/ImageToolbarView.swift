@@ -26,7 +26,7 @@ import Classy
     case preview
 }
 
-class ImageToolbarView: UIView {
+@objcMembers class ImageToolbarView: UIView {
     
     let buttonContainer = UIView()
     let sketchButton = IconButton()

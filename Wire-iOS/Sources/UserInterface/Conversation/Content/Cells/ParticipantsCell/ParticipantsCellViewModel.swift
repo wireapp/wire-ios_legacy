@@ -76,7 +76,7 @@ struct ParticipantsCellViewModel {
             return [sender]
         default:
             guard let systemMessage = message.systemMessageData else { return [] }
-            return systemMessage.users.subtracting([sender]).sorted { name(for: $0.0) < name(for: $0.1) }
+            return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
         }
     }
 

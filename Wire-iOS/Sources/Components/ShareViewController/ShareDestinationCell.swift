@@ -90,7 +90,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         self.titleLabel.cas_styleClass = "normal-light"
         self.titleLabel.backgroundColor = .clear
         self.titleLabel.textColor = .white
-        self.titleLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        self.titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         
         self.stackView.addArrangedSubview(self.titleLabel)
         

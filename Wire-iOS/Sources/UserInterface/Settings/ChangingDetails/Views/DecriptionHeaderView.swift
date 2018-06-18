@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final class DescriptionHeaderView: UIView {
+@objcMembers final class DescriptionHeaderView: UIView {
     let descriptionLabel = UILabel()
     
     override init(frame: CGRect) {

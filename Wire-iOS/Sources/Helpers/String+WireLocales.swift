@@ -28,11 +28,11 @@ extension String {
 
 extension NSString {
     
-    var uppercasedWithCurrentLocale: String {
+    @objc var uppercasedWithCurrentLocale: String {
         return uppercased(with: NSLocale.current)
     }
     
-    var lowercasedWithCurrentLocale: String {
+    @objc var lowercasedWithCurrentLocale: String {
         return lowercased(with: NSLocale.current)
     }
     
@@ -43,12 +43,12 @@ extension NSString {
         return Singleton.sharedInstance
     }
     
-    var matchesSlashCommand: Bool {
+    @objc var matchesSlashCommand: Bool {
         let range = NSMakeRange(0, length)
         return slashCommandMatcher?.matches(in: self as String, options: [], range: range).count > 0
     }
     
-    var args: [String]? {
+    @objc var args: [String]? {
         guard self.matchesSlashCommand else {
             return []
         }

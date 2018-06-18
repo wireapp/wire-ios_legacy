@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-final class SearchGroupSelector: UIView, TabBarDelegate {
+@objcMembers final class SearchGroupSelector: UIView, TabBarDelegate {
 
     @objc static var shouldShowBotResults: Bool {
         return DeveloperMenuState.developerMenuEnabled() && ZMUser.selfUser().team != nil

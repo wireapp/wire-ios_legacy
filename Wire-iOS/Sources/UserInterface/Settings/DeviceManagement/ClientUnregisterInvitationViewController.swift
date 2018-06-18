@@ -130,13 +130,13 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     
     // MARK: - Actions
     
-    func openManageDevices(_ sender : UIButton!) {
+    @objc func openManageDevices(_ sender : UIButton!) {
         if let formStepDelegate = self.formStepDelegate {
             formStepDelegate.didCompleteFormStep(self)
         }
     }
     
-    func signOut(_ sender : UIButton!) {
+    @objc func signOut(_ sender : UIButton!) {
         // for the moment not supported
     }
 }

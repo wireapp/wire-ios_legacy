@@ -19,7 +19,7 @@
 import Foundation
 
 extension MockUser {
-    var pov: PointOfView {
+    @objc var pov: PointOfView {
         return .none
     }
 }

@@ -22,7 +22,7 @@ import WireSyncEngine
 import WireRequestStrategy
 
 
-@objc class AnalyticsFileTransferObserver: NSObject {
+@objcMembers class AnalyticsFileTransferObserver: NSObject {
     let analyticsTracker: AnalyticsTracker = AnalyticsTracker(context: "")
     
     override init() {
@@ -39,7 +39,7 @@ import WireRequestStrategy
         NotificationCenter.default.removeObserver(self)
     }
     
-    func uploadFinishedNotification(_ notification: Notification?) {
+    @objc func uploadFinishedNotification(_ notification: Notification?) {
         guard let message = notification?.object as? ZMConversationMessage,
               let startTime = notification?.userInfo?[FileUploadRequestStrategyNotification.requestStartTimestampKey] as? NSDate,
               let fileMessageData = message.fileMessageData else {
@@ -55,7 +55,7 @@ import WireRequestStrategy
         )
     }
     
-    func uploadFailedNotification(_ notification: Notification?) {
+    @objc func uploadFailedNotification(_ notification: Notification?) {
         guard let message = notification?.object as? ZMConversationMessage,
               let fileMessageData = message.fileMessageData else {
                 assert(true)
@@ -65,7 +65,7 @@ import WireRequestStrategy
         self.analyticsTracker.tagFailedFileUpload(withSize: fileMessageData.size, fileExtension: ((fileMessageData.filename ?? "") as NSString).pathExtension)
     }
     
-    func downloadFinishedNotification(_ notification: Notification?) {
+    @objc func downloadFinishedNotification(_ notification: Notification?) {
         guard let message = notification?.object as? ZMConversationMessage,
             let startTime = notification?.userInfo?[AssetDownloadRequestStrategyNotification.downloadStartTimestampKey] as? NSDate,
             let fileMessageData = message.fileMessageData else {
@@ -80,7 +80,7 @@ import WireRequestStrategy
         )
     }
     
-    func downloadFailedNotification(_ notification: Notification?) {
+    @objc func downloadFailedNotification(_ notification: Notification?) {
         guard let message = notification?.object as? ZMConversationMessage,
             let fileMessageData = message.fileMessageData else {
                 assert(true)

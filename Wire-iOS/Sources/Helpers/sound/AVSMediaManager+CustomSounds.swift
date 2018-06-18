@@ -28,7 +28,7 @@ extension AVSMediaManager {
         NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.pingSoundName.changeNotificationName), object: .none)
     }
     
-    func configureCustomSounds() {
+    @objc func configureCustomSounds() {
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
         
         let messageSoundProperty = settingsPropertyFactory.property(.messageSoundName)
@@ -73,7 +73,7 @@ extension AVSMediaManager {
     }
     
     // MARK: - Notifications
-    func didUpdateSound(_ notification: NSNotification?) {
+    @objc func didUpdateSound(_ notification: NSNotification?) {
         self.configureSounds()
     }
 }

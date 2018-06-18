@@ -156,7 +156,7 @@ final public class CollectionImageCell: CollectionCell {
     
     var saveableImage : SavableImage?
     
-    func save(_ sender: AnyObject!) {
+    @objc func save(_ sender: AnyObject!) {
         guard let imageData = self.message?.imageMessageData?.imageData, let orientation = self.imageView.image?.imageOrientation else {
             return
         }

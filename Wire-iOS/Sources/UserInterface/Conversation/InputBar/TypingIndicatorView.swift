@@ -102,13 +102,13 @@ class AnimatedPenView : UIView {
         pen.layer.removeAnimation(forKey: WritingAnimationKey)
     }
     
-    func applicationDidBecomeActive(_ notification : Notification) {
+    @objc func applicationDidBecomeActive(_ notification : Notification) {
         startWritingAnimation()
     }
 
 }
 
-class TypingIndicatorView: UIView {
+@objcMembers class TypingIndicatorView: UIView {
     
     public let nameLabel = UILabel()
     public let animatedPen = AnimatedPenView()

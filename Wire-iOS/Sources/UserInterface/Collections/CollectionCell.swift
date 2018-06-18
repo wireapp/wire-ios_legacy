@@ -123,7 +123,7 @@ open class CollectionCell: UICollectionViewCell {
         self.message = .none
     }
     
-    func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {
+    @objc func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {
         if gestureRecognizer.state == .began {
             self.showMenu()
         }
@@ -190,17 +190,17 @@ open class CollectionCell: UICollectionViewCell {
         // no-op
     }
 
-    func deleteMessage(_ sender: AnyObject!) {
+    @objc func deleteMessage(_ sender: AnyObject!) {
         guard message?.canBeDeleted == true else { return }
         delegate?.collectionCell(self, performAction: .delete)
     }
 
-    func like(_ sender: AnyObject!) {
+    @objc func like(_ sender: AnyObject!) {
         guard let message = message else { return }
         Message.setLikedMessage(message, liked: !message.liked)
     }
 
-    func forward(_ sender: AnyObject!) {
+    @objc func forward(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .forward)
         guard let message = self.message else {
             return
@@ -208,7 +208,7 @@ open class CollectionCell: UICollectionViewCell {
         Analytics.shared().tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .forward)
     }
     
-    func showInConversation(_ sender: AnyObject!) {
+    @objc func showInConversation(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .showInConversation)
         guard let message = self.message else {
             return

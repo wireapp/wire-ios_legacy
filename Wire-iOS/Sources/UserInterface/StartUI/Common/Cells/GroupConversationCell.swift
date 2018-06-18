@@ -28,7 +28,7 @@ class GroupConversationCell: UICollectionViewCell, Themeable {
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -36,7 +36,7 @@ class GroupConversationCell: UICollectionViewCell, Themeable {
     }
     
     // if nil the background color is the default content background color for the theme
-    dynamic var contentBackgroundColor: UIColor? = nil {
+    @objc dynamic var contentBackgroundColor: UIColor? = nil {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)

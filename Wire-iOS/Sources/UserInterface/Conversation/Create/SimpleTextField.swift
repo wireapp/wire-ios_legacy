@@ -37,7 +37,7 @@ extension Optional where Wrapped == String {
 
 class SimpleTextField: UITextField, Themeable {
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default().variant {
+    @objc var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default().variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
@@ -117,8 +117,8 @@ class SimpleTextField: UITextField, Themeable {
     // MARK: - Placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
-        let attribute: [String: Any] = [NSForegroundColorAttributeName: UIColor.Team.placeholderColor,
-                                        NSFontAttributeName: AccessoryTextField.placeholderFont]
+        let attribute: [NSAttributedStringKey: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
+                                        .font: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }
 
