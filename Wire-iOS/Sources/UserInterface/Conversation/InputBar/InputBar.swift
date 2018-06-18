@@ -59,10 +59,8 @@ public enum InputBarState: Equatable {
         switch self {
         case .markingDown(let ephemeral):
             return ephemeral
-
         case .writing(let ephemeral):
             return ephemeral
-
         default:
             return false
         }
