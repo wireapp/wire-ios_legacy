@@ -20,7 +20,7 @@ import Foundation
 
 extension ProfilePictureStepViewController {
 
-    func showGalleryController(_ sender: Any) {
+    @objc func showGalleryController(_ sender: Any) {
         let picker = UIImagePickerController()
         if #available(iOS 11.0, *) {
             picker.imageExportPreset = .compatible
@@ -34,7 +34,7 @@ extension ProfilePictureStepViewController {
 
 extension ProfilePictureStepViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    public func imagePickerController(_ picker: UIImagePickerController,
+    @objc public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [String : Any]) {
 
         // For iOS 11, simply get single image form dictionary instead of PHImageManager, to get rid of photo access permission dialog
@@ -62,7 +62,7 @@ extension ProfilePictureStepViewController: UIImagePickerControllerDelegate & UI
         }
     }
 
-    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    @objc public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true)
     }
 }

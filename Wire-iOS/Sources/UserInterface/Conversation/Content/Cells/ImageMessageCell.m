@@ -224,7 +224,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [self.imageToolbarView autoSetDimension:ALDimensionHeight toSize:48];
     
     [self.obfuscationView autoPinEdgesToSuperviewEdges];
-    [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.fullImageView withOffset:8];
 }
 
  - (void)updateImageMessageConstraintConstants

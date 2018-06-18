@@ -123,7 +123,7 @@ class TabBar: UIView {
 
     // MARK: - Actions
     
-    func itemSelected(_ sender: AnyObject) {
+    @objc func itemSelected(_ sender: AnyObject) {
         guard
             let tab = sender as? Tab,
             let selectedIndex =  self.tabs.index(of: tab)

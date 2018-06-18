@@ -42,7 +42,7 @@ extension FullscreenImageViewController {
         let isImageZoomed = fabs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
         updateScrollViewMinimumZoomScale(viewSize: size, imageSize: imageSize)
 
-        let animationBlock: () -> Void = { _ in
+        let animationBlock: () -> Void = { 
             if isImageZoomed == false {
                 self.scrollView.zoomScale = self.scrollView.minimumZoomScale
             }
@@ -89,7 +89,7 @@ extension FullscreenImageViewController {
         self.scrollView.minimumZoomScale = viewSize.minZoom(imageSize: imageSize)
     }
 
-    func updateZoom() {
+    @objc func updateZoom() {
         guard let size = parent?.view?.frame.size else { return }
         updateZoom(withSize: size)
     }
@@ -97,7 +97,7 @@ extension FullscreenImageViewController {
     /// Zoom to show as much image as possible unless image is smaller than screen
     ///
     /// - Parameter size: size of the view which contains imageView
-    func updateZoom(withSize size: CGSize) {
+    @objc func updateZoom(withSize size: CGSize) {
         guard let image = imageView?.image else { return }
         guard !(size.width == 0 && size.height == 0) else { return }
 
@@ -113,7 +113,7 @@ extension FullscreenImageViewController {
 
     // MARK: - Image view
 
-    func setupImageView(image: MediaAsset, parentSize: CGSize) {
+    @objc func setupImageView(image: MediaAsset, parentSize: CGSize) {
         guard let imageView = UIImageView(mediaAsset: image) else { return }
 
         imageView.clipsToBounds = true

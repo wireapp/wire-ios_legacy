@@ -63,7 +63,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.alignment = .center
         paragraphStyle.paragraphSpacing = 4
-        let paragraphAttributes = [NSParagraphStyleAttributeName: paragraphStyle]
+        let paragraphAttributes = [NSAttributedStringKey.paragraphStyle: paragraphStyle]
         let color = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
         let title = "compose.drafts.empty.title".localized.uppercased() && FontSpec(.small, .semibold).font!
         let subtitle = "compose.drafts.empty.subtitle".localized.uppercased() && FontSpec(.small, .light).font!
@@ -98,11 +98,11 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         tableView.separatorStyle = .none
     }
 
-    private dynamic func closeTapped(_ sender: Any) {
+    @objc  func closeTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
 
-    private dynamic func newDraftTapped(_ sender: Any) {
+    @objc func newDraftTapped(_ sender: Any) {
         showDraft(nil)
     }
 

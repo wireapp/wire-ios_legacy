@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
-@objc open class ConversationRootViewController: UIViewController {
+@objcMembers open class ConversationRootViewController: UIViewController {
 
     let navBarContainer: UINavigationBarContainer
     fileprivate var contentView = UIView()
@@ -32,7 +32,7 @@ import Cartography
 
     fileprivate let networkStatusViewController: NetworkStatusViewController
 
-    open fileprivate(set) weak var conversationViewController: ConversationViewController?
+    @objc open fileprivate(set) weak var conversationViewController: ConversationViewController?
 
     public init(conversation: ZMConversation, clientViewController: ZClientViewController) {
         let conversationController = ConversationViewController()

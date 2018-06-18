@@ -290,7 +290,7 @@ public class AddParticipantsViewController: UIViewController {
         }
     }
     
-    func keyboardFrameWillChange(notification: Notification) {
+    @objc func keyboardFrameWillChange(notification: Notification) {
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin

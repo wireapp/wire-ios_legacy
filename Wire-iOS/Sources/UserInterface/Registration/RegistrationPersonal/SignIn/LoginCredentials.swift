@@ -19,7 +19,7 @@
 import Foundation
 
 
-@objc
+@objcMembers
 public class LoginCredentials : NSObject {
     
     let emailAddress : String?

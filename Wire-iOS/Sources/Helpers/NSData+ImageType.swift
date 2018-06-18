@@ -20,7 +20,7 @@
 import Foundation
 
 extension NSData {
-    var isJPEG: Bool {
+    @objc var isJPEG: Bool {
         return (self as Data).isJPEG
     }
 }

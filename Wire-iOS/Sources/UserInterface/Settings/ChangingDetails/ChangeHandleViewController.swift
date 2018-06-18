@@ -42,7 +42,7 @@ protocol ChangeHandleTableViewCellDelegate: class {
 }
 
 
-final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
+@objcMembers final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     weak var delegate: ChangeHandleTableViewCellDelegate?
     let prefixLabel = UILabel()
@@ -90,7 +90,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     // MARK: - UITextField
 
-    func editingChanged(textField: UITextField) {
+    @objc func editingChanged(textField: UITextField) {
         let lowercase = textField.text?.lowercased() ?? ""
         textField.text = lowercase
         delegate?.tableViewCellDidChangeText(cell: self, text: lowercase)
@@ -167,7 +167,7 @@ struct HandleChangeState {
 }
 
 
-final class ChangeHandleViewController: SettingsBaseTableViewController {
+@objcMembers final class ChangeHandleViewController: SettingsBaseTableViewController {
 
     public var footerFont: UIFont?
     var state: HandleChangeState
@@ -229,7 +229,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
     }
 
-    func saveButtonTapped(sender: UIBarButtonItem) {
+    @objc func saveButtonTapped(sender: UIBarButtonItem) {
         guard let handleToSet = state.newHandle else { return }
         userProfile?.requestSettingHandle(handle: handleToSet)
         showLoadingView = true

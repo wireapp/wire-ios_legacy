@@ -48,7 +48,7 @@ class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDele
 }
 
 
-@objc class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
+@objcMembers class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
     @objc var layoutSize: SplitViewControllerLayoutSize = .compact
     @objc var leftViewControllerWidth: CGFloat = 0
 }
@@ -62,7 +62,7 @@ private final class MockAssetLibrary: AssetLibrary {
 }
 
 fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
-    override var shouldBlockCallingRelatedActions: Bool {
+    @objc override var shouldBlockCallingRelatedActions: Bool {
         return true
     }
 }

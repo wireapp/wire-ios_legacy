@@ -196,7 +196,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 }
 
 extension ConversationContentViewController {
-    func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
+    @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
         guard messageToShow.conversation == self.conversation else {
             fatal("Message from the wrong conversation")
         }
@@ -226,7 +226,7 @@ extension ConversationContentViewController {
         }
     }
     
-    func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
+    @objc func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
         let cellIndexPath = IndexPath(row: indexToShow, section: 0)
 
         self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)

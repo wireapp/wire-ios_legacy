@@ -23,7 +23,7 @@ import Classy
 import WireExtensionComponents
 import WireDataModel
 
-@objc public class AvailabilityTitleView: TitleView {
+@objcMembers public class AvailabilityTitleView: TitleView {
     
     fileprivate var user: ZMUser?
     fileprivate var style: AvailabilityTitleViewStyle

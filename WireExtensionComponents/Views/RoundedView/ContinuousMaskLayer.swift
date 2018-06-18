@@ -58,7 +58,7 @@ public class ContinuousMaskLayer: CALayer {
         }
     }
 
-    public var roundedCorners: UIRectCorner = .allCorners {
+    @objc public var roundedCorners: UIRectCorner = .allCorners {
         didSet {
             refreshMask()
         }

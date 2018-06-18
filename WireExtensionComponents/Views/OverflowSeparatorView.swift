@@ -22,9 +22,9 @@ import Cartography
 import Classy
 
 
-@objc public class OverflowSeparatorView: UIView {
+@objcMembers public class OverflowSeparatorView: UIView {
 
-    public var inverse: Bool = false
+    @objc public var inverse: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)

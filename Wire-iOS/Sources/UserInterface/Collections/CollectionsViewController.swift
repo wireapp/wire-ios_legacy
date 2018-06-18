@@ -26,7 +26,7 @@ public protocol CollectionsViewControllerDelegate: class {
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
 
-final public class CollectionsViewController: UIViewController {
+@objcMembers final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
     public weak var delegate: CollectionsViewControllerDelegate?

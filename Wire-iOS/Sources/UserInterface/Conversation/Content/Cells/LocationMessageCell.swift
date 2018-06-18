@@ -23,7 +23,7 @@ import AddressBook
 import Classy
 
 /// Displays the location message
-public final class LocationMessageCell: ConversationCell {
+@objcMembers public final class LocationMessageCell: ConversationCell {
     
     private let mapView = MKMapView()
     private let containerView = UIView()
@@ -92,10 +92,6 @@ public final class LocationMessageCell: ConversationCell {
             addressLabel.edges == inset(addressContainer.edges, 12, 0)
             addressContainer.height == 42
         }
-
-        constrain(containerView, countdownContainerView) { container, countDownContainer in
-            countDownContainer.top == container.top
-        }
     }
 
     public override func prepareForReuse() {
@@ -156,7 +152,7 @@ public final class LocationMessageCell: ConversationCell {
         updateMapLocation(withLocationData: locationData)
     }
     
-    func openInMaps() {
+    @objc func openInMaps() {
         message?.locationMessageData?.openInMaps(with: mapView.region.span)
         guard let conversation = message.conversation else { return }
         let sentBySelf = message.sender?.isSelfUser ?? false
@@ -211,7 +207,7 @@ public final class LocationMessageCell: ConversationCell {
         }
     }
     
-    public override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
+    @objc public override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         let height = super.prepareLayoutForPreview(message: message)
         self.containerHeightConstraint.constant = 160
         return height

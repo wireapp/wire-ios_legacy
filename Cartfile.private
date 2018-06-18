@@ -1,4 +1,4 @@
 github "wireapp/ocmock" "v3.4"
 github "wireapp/ios-snapshot-test-case" ~> 3.0.0
-github "wireapp/wire-ios-testing" ~> 14.0
+github "wireapp/wire-ios-testing" ~> 15.0
 

@@ -21,7 +21,7 @@ import WireSyncEngine
 import WireDataModel
 import Cartography
 
-final public class TextSearchViewController: NSObject {
+@objcMembers final public class TextSearchViewController: NSObject {
     public var resultsView: TextSearchResultsView!
     public var searchBar: TextSearchInputView!
     

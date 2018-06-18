@@ -108,11 +108,11 @@ class GiphyConfirmationViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func onCancel() {
+    @objc func onCancel() {
         _ = navigationController?.popViewController(animated: true)
     }
     
-    func onAccept() {
+    @objc func onAccept() {
         if let imageData = imageData {
             delegate?.giphyConfirmationViewController(self, didConfirmImageData: imageData)
         }

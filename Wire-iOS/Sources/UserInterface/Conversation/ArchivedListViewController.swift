@@ -29,7 +29,7 @@ import Cartography
 
 // MARK: - ArchivedListViewController
 
-@objc final class ArchivedListViewController: UIViewController {
+@objcMembers final class ArchivedListViewController: UIViewController {
     
     fileprivate var collectionView: UICollectionView!
     fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())

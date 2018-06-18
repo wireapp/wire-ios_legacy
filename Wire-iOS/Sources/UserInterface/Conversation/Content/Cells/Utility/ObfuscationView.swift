@@ -18,8 +18,8 @@
 
 import Foundation
 
-final class ObfuscationView: UIImageView {
-    init(icon: ZetaIconType) {
+@objcMembers final class ObfuscationView: UIImageView {
+    @objc init(icon: ZetaIconType) {
         super.init(frame: .zero)
         self.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmedFlat)
         self.isOpaque = true

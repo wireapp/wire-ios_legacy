@@ -23,7 +23,7 @@ import Cartography
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar)
 }
 
-@objc final public class ModalTopBar: UIView {
+@objcMembers final public class ModalTopBar: UIView {
     
     public let titleLabel = UILabel()
     public let dismissButton = IconButton()
@@ -70,8 +70,8 @@ import Cartography
             separator.height == .hairline
         }
         
-        dismissButton.setContentCompressionResistancePriority(1000, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(750, for: .horizontal)
+        dismissButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
     }
     
     @objc fileprivate func dismissButtonTapped(_ sender: IconButton) {

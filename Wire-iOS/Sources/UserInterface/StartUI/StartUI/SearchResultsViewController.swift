@@ -112,7 +112,7 @@ extension UIViewController {
     }
 }
 
-public class SearchResultsViewController : UIViewController {
+@objcMembers public class SearchResultsViewController : UIViewController {
     
     var searchResultsView: SearchResultsView?
     let searchDirectory: SearchDirectory
@@ -314,7 +314,7 @@ public class SearchResultsViewController : UIViewController {
     func updateSections(withSearchResult searchResult: SearchResult) {
         
         var contacts = searchResult.contacts
-        var teamContacts = searchResult.teamMembers.flatMap({ $0.user })
+        var teamContacts = searchResult.teamMembers.compactMap({ $0.user })
         
         if let filteredParticpants = filterConversation?.activeParticipants {
             contacts = contacts.filter({ !filteredParticpants.contains($0) })

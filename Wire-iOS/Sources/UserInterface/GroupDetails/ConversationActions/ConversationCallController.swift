@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc final public class ConversationCallController: NSObject {
+@objcMembers final public class ConversationCallController: NSObject {
     
     private unowned let target: UIViewController
     private let conversation: ZMConversation

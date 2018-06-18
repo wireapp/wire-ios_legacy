@@ -20,7 +20,7 @@
 import Foundation
 
 extension NSData {
-    public func attributedFingerprint(attributes: [String : AnyObject], boldAttributes: [String : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
+    public func attributedFingerprint(attributes: [NSAttributedStringKey : AnyObject], boldAttributes: [NSAttributedStringKey : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
         
         let strings: [String] = self.mapBytes { (char: UInt8) -> (String) in
             return String(UnicodeScalar(char))
@@ -50,7 +50,7 @@ extension NSData {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
-        return attributedRemoteIdentifier! && [NSParagraphStyleAttributeName: paragraphStyle]
+        return attributedRemoteIdentifier! && [.paragraphStyle: paragraphStyle]
     }
     
     public func mapBytes<T: Any, E: Any>(callback: (E) -> (T)) -> [T] {
@@ -69,7 +69,7 @@ extension NSData {
 }
 
 extension Data {
-    public func attributedFingerprint(attributes: [String : AnyObject], boldAttributes: [String : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
+    public func attributedFingerprint(attributes: [NSAttributedStringKey : AnyObject], boldAttributes: [NSAttributedStringKey : AnyObject], uppercase: Bool = false) -> NSAttributedString? {
         return (self as NSData).attributedFingerprint(attributes: attributes, boldAttributes: boldAttributes, uppercase: uppercase);
     }
     

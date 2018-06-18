@@ -65,7 +65,7 @@ struct CallCellViewModel {
 }
 
 
-class MissedCallCell: IconSystemCell {
+@objcMembers class MissedCallCell: IconSystemCell {
 
     override class var userRegularLabel: Bool {
         return true

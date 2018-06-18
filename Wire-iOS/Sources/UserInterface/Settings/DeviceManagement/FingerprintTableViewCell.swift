@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 import Classy
 
-class FingerprintTableViewCell: UITableViewCell {
+@objcMembers class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -102,8 +102,8 @@ class FingerprintTableViewCell: UITableViewCell {
         if let fingerprintLabelBoldMonoFont = self.fingerprintLabelBoldFont?.monospaced(),
             let fingerprintLabelMonoFont = self.fingerprintLabelFont?.monospaced(),
             let attributedFingerprint = self.fingerprint?.attributedFingerprint(
-                attributes: [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: fingerprintLabel.textColor],
-                boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: fingerprintLabel.textColor],
+                attributes: [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabel.textColor],
+                boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabel.textColor],
                 uppercase: false) {
                 
                     self.fingerprintLabel.attributedText = attributedFingerprint

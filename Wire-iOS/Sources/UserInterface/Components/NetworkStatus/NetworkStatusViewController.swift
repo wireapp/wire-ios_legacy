@@ -138,7 +138,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    internal func tappedOnNetworkStatusBar() {
+    @objc internal func tappedOnNetworkStatusBar() {
         switch networkStatusView.state {
         case .offlineExpanded:
             showOfflineAlert()
@@ -154,7 +154,7 @@ class NetworkStatusViewController : UIViewController {
         perform(#selector(applyPendingState), with: nil, afterDelay: 1)
     }
 
-    internal func applyPendingState() {
+    @objc internal func applyPendingState() {
         guard let state = pendingState else { return }
         update(state: state)
         pendingState = nil
@@ -188,7 +188,7 @@ extension NetworkStatusViewController {
         return delegate.showInIPad(networkStatusViewController: self, with: newOrientation)
     }
 
-    func updateStateForIPad() {
+    @objc func updateStateForIPad() {
         guard device.userInterfaceIdiom == .pad else { return }
         guard let state = self.state else { return }
 

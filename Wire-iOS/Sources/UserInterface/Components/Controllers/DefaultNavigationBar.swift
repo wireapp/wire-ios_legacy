@@ -18,7 +18,7 @@
 
 import UIKit
 
-class DefaultNavigationBar : UINavigationBar {
+@objcMembers class DefaultNavigationBar : UINavigationBar {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,21 +45,21 @@ class DefaultNavigationBar : UINavigationBar {
         backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
     }
     
-    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [String : Any] {
-        return [NSFontAttributeName: UIFont.systemFont(ofSize: 11, weight: UIFontWeightSemibold),
-                NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant),
-                NSBaselineOffsetAttributeName: 1.0]
+    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedStringKey : Any] {
+        return [.font: UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold),
+                .foregroundColor: ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant),
+                .baselineOffset: 1.0]
     }
     
 }
 
 extension UIViewController {
     
-    func wrapInNavigationController() -> UINavigationController {
+    @objc func wrapInNavigationController() -> UINavigationController {
         return self.wrapInNavigationController(RotationAwareNavigationController.self)
     }
     
-    func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
+    @objc func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
         let navigationController = navigationControllerClass.init(navigationBarClass: DefaultNavigationBar.self, toolbarClass: nil)
         navigationController.setViewControllers([self], animated: false)
         return navigationController

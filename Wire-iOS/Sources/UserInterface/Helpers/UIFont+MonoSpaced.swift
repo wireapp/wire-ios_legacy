@@ -20,40 +20,40 @@
 import UIKit
 
 private let monospacedFeatureSettingsAttribute = [
-    UIFontFeatureTypeIdentifierKey: kNumberSpacingType,
-    UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector
+    UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
+    UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector
 ]
 
 private let monospaceAttribute = [
-    UIFontDescriptorFeatureSettingsAttribute: [monospacedFeatureSettingsAttribute]
+    UIFontDescriptor.AttributeName.featureSettings: [monospacedFeatureSettingsAttribute]
 ]
 
 private let smallCapsFeatureSettingsAttributeLowerCase = [
-    UIFontFeatureTypeIdentifierKey: kLowerCaseType,
-    UIFontFeatureSelectorIdentifierKey: kLowerCaseSmallCapsSelector,
+    UIFontDescriptor.FeatureKey.featureIdentifier: kLowerCaseType,
+    UIFontDescriptor.FeatureKey.typeIdentifier: kLowerCaseSmallCapsSelector,
 ]
 
 private let smallCapsFeatureSettingsAttributeUpperCase = [
-    UIFontFeatureTypeIdentifierKey: kUpperCaseType,
-    UIFontFeatureSelectorIdentifierKey: kUpperCaseSmallCapsSelector,
+    UIFontDescriptor.FeatureKey.featureIdentifier: kUpperCaseType,
+    UIFontDescriptor.FeatureKey.typeIdentifier: kUpperCaseSmallCapsSelector,
 ]
 
 private let proportionalNumberSpacingFeatureSettingAttribute = [
-    UIFontFeatureTypeIdentifierKey: kNumberSpacingType,
-    UIFontFeatureSelectorIdentifierKey: kProportionalNumbersSelector
+    UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
+    UIFontDescriptor.FeatureKey.typeIdentifier: kProportionalNumbersSelector
 ]
 
 private let smallCapsAttribute = [
-    UIFontDescriptorFeatureSettingsAttribute: [smallCapsFeatureSettingsAttributeLowerCase, smallCapsFeatureSettingsAttributeUpperCase]
+    UIFontDescriptor.AttributeName.featureSettings: [smallCapsFeatureSettingsAttributeLowerCase, smallCapsFeatureSettingsAttributeUpperCase]
 ]
 
 private let proportionalNumberSpacingAttribute = [
-    UIFontDescriptorFeatureSettingsAttribute: [proportionalNumberSpacingFeatureSettingAttribute]
+    UIFontDescriptor.AttributeName.featureSettings: [proportionalNumberSpacingFeatureSettingAttribute]
 ]
 
 extension UIFont {
     
-    func monospaced() -> UIFont {
+    @objc func monospaced() -> UIFont {
         let descriptor = fontDescriptor
         let monospaceFontDescriptor = descriptor.addingAttributes(monospaceAttribute)
         return UIFont(descriptor: monospaceFontDescriptor, size: 0.0)
