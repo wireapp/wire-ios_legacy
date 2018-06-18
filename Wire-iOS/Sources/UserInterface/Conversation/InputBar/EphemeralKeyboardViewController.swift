@@ -88,6 +88,14 @@ public extension ZMConversation {
         return nil
     }
 
+    @objc var disabledTimeoutImage: UIImage? {
+        if destructionTimeout.isDays { return WireStyleKit.imageOfDay(with: UIColor(scheme: .lightGraphite)) }
+        if destructionTimeout.isHours { return WireStyleKit.imageOfHour(with: UIColor(scheme: .lightGraphite)) }
+        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor(scheme: .lightGraphite)) }
+        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor(scheme: .lightGraphite)) }
+        return nil
+    }
+
 }
 
 

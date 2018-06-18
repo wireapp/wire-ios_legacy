@@ -397,6 +397,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.ephemeralIndicatorButton.adjustsTitleWhenHighlighted = YES;
     self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
 
+    [self.ephemeralIndicatorButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorLightGraphite]
+                                        forState:UIControlStateDisabled];
+
     [self.inputBar.rightAccessoryView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
     [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(28, 28)];
 
@@ -500,8 +503,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.sendButton.hidden = self.sendButtonState.sendButtonHidden;
     self.hourglassButton.hidden = self.sendButtonState.hourglassButtonHidden;
     self.ephemeralIndicatorButton.hidden = self.sendButtonState.ephemeralIndicatorButtonHidden;
+    self.ephemeralIndicatorButton.enabled = self.sendButtonState.ephemeralIndicatorButtonEnabled;
 
     [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.timeoutImage forState:UIControlStateNormal];
+    [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.disabledTimeoutImage
+                                             forState:UIControlStateDisabled];
 }
 
 - (void)updateButtonIcons
