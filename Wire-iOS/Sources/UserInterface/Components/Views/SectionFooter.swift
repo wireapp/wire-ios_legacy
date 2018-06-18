@@ -22,7 +22,7 @@ final class SectionFooter: UICollectionReusableView, Themeable {
     
     let titleLabel = UILabel()
     
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -57,7 +57,7 @@ final class SectionFooter: UICollectionReusableView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor(scheme: .textDimmed, variant: colorSchemeVariant)
     }
     
 }

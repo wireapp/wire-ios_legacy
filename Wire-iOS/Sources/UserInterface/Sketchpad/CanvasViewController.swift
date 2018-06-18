@@ -88,14 +88,14 @@ import Cartography
         emojiKeyboardViewController.backspaceHidden = true
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
-        separatorLine.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
-        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: .wr_color(fromColorScheme: ColorSchemeColorPlaceholderBackground, variant: .light))
+        separatorLine.backgroundColor = UIColor(scheme: .separator)
+        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: UIColor(scheme: .placeholderBackground, variant: .light))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
         hintLabel.font = FontSpec(.small, .regular).font!
         hintLabel.textAlignment = .center
-        hintLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextPlaceholder)
-        self.view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        hintLabel.textColor = UIColor(scheme: .textPlaceholder)
+        self.view.backgroundColor = UIColor(scheme: .background)
         
         [canvas, hintLabel, hintImageView, toolbar].forEach(view.addSubview)
         

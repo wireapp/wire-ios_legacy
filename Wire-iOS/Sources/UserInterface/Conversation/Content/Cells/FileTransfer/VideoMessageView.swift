@@ -46,7 +46,7 @@ import Classy
 
         self.previewImageView.contentMode = .scaleAspectFill
         self.previewImageView.clipsToBounds = true
-        self.previewImageView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorPlaceholderBackground)
+        self.previewImageView.backgroundColor = UIColor(scheme: .placeholderBackground)
 
         self.playButton.addTarget(self, action: #selector(VideoMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityIdentifier = "VideoActionButton"
@@ -126,11 +126,11 @@ import Classy
             if let previewData = fileMessageData.previewData {
                 visibleViews.append(contentsOf: [previewImageView, bottomGradientView, playButton])
                 self.previewImageView.image = UIImage(data: previewData)
-                self.timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+                self.timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
             } else {
                 visibleViews.append(contentsOf: [previewImageView, playButton])
                 self.previewImageView.image = nil
-                self.timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+                self.timeLabel.textColor = UIColor(scheme: .textForeground)
             }
             
             if !self.timeLabelHidden {

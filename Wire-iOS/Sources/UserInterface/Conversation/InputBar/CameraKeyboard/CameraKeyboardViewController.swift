@@ -308,7 +308,7 @@ open class CameraKeyboardViewController: UIViewController {
             self.view.backgroundColor = .white
             self.collectionView.delaysContentTouches = true
         } else {
-            self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
+            self.view.backgroundColor = UIColor(scheme: .graphite)
             self.collectionView.delaysContentTouches = false
         }
         

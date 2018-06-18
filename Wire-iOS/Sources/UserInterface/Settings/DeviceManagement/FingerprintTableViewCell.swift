@@ -34,7 +34,7 @@ import Classy
             case .dark?, .none:
                 color = .white
             case .light?:
-                color = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+                color = UIColor(scheme: .textForeground, variant: .light)
             }
 
             fingerprintLabel.textColor = color

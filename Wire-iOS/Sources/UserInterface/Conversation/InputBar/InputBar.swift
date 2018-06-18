@@ -194,7 +194,7 @@ private struct InputBarConstants {
         textView.textContainerInset = UIEdgeInsetsMake(inputBarVerticalInset / 2, 0, inputBarVerticalInset / 2, 4)
         textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
         textView.keyboardType = .default
-        textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
+        textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
         
@@ -403,11 +403,11 @@ private struct InputBarConstants {
             
             if self.inputBarState.isEphemeral {
                 button.setIconColor(UIColor.accent(), for: .normal)
-                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .highlighted)
+                button.setIconColor(UIColor(scheme: .iconNormal), for: .highlighted)
             }
             else {
-                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
-                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconHighlighted), for: .highlighted)
+                button.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
+                button.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
             }
         }
     }

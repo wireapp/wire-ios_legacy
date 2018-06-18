@@ -228,8 +228,8 @@ final class ServiceDetailViewController: UIViewController {
         }
 
         if self.variant.opaque {
-            view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground,
-                                                               variant: self.variant.colorScheme)
+            view.backgroundColor = UIColor(scheme: .background,
+                                                             variant: self.variant.colorScheme)
         }
         else {
             view.backgroundColor = .clear

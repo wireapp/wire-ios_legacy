@@ -109,7 +109,7 @@ import Classy
                 labelLabel.textColor = .white
                 activationLabel.textColor = .white
             case .light?:
-                let textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+                let textColor = UIColor(scheme: .textForeground, variant: .light)
                 self.verifiedLabel.textColor = textColor
                 fingerprintTextColor = textColor
                 nameLabel.textColor = textColor

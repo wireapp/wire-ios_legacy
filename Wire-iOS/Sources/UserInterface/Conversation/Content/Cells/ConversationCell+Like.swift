@@ -27,7 +27,7 @@ public extension ConversationCell {
         self.likeButton.accessibilityLabel = "likeButton"
         self.likeButton.addTarget(self, action: #selector(ConversationCell.likeMessage(_:)), for: .touchUpInside)
         self.likeButton.setIcon(.liked, with: .like, for: .normal)
-        self.likeButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextDimmed), for: .normal)
+        self.likeButton.setIconColor(UIColor(scheme: .textDimmed), for: .normal)
         self.likeButton.setIcon(.liked, with: .like, for: .selected)
         self.likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         self.likeButton.hitAreaPadding = CGSize(width: 20, height: 20)

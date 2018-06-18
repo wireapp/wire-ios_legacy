@@ -138,7 +138,7 @@ import Cartography
         self.badgeView.isHidden = false
         self.typingView.isHidden = true
         
-        self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         
         self.collapseWidthConstraint.isActive = false
         
@@ -159,14 +159,14 @@ import Cartography
             
         case .unreadMessages(_):
             self.badgeView.backgroundColor = UIColor(white: 0, alpha: 0.16)
-            self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
             
         case .unreadPing:
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
 
         case .missedCall:
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
 
         default:
             self.typingView.image = .none

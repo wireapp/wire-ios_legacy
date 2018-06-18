@@ -49,7 +49,7 @@ class TabBarController: UIViewController {
     fileprivate(set) var viewControllers: [UIViewController]
     fileprivate(set) var selectedIndex: Int
 
-    var style: ColorSchemeVariant = ColorScheme.default().variant {
+    var style: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             tabBar?.style = style
         }

@@ -143,6 +143,6 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         self.checkImageView.image = selected ? UIImage(for: .checkmark, iconSize: .like, color: .white) : nil
-        self.checkImageView.backgroundColor = selected ? ColorScheme.default().color(withName: ColorSchemeColorAccent) : UIColor.clear
+        self.checkImageView.backgroundColor = selected ? UIColor(scheme: .accent) : UIColor.clear
     }
 }

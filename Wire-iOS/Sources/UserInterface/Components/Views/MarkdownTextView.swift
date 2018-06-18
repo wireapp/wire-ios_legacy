@@ -120,7 +120,7 @@ extension Notification.Name {
 
     /// Updates the color of the text.
     func updateTextColor(base: UIColor?) {
-        let baseColor = base ?? ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        let baseColor = base ?? UIColor(scheme: .textForeground)
         self.textColor = baseColor
         self.style.baseFontColor = baseColor
     }
@@ -550,7 +550,7 @@ extension DownStyle {
     @objc static var normal: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
-        style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        style.baseFontColor = UIColor(scheme: .textForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8
@@ -561,7 +561,7 @@ extension DownStyle {
     @objc static var compact: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
-        style.baseFontColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        style.baseFontColor = UIColor(scheme: .textForeground)
         style.codeFont = UIFont(name: "Menlo", size: style.baseFont.pointSize) ?? style.baseFont
         style.baseParagraphStyle = NSParagraphStyle.default
         style.listItemPrefixSpacing = 8

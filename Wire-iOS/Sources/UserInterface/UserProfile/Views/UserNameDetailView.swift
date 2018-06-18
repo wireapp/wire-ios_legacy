@@ -90,7 +90,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
     }
 
     static var formatter: AddressBookCorrelationFormatter = {
-        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed))
+        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor(scheme: .textDimmed))
     }()
 
     init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?) {
@@ -100,12 +100,12 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
     }
 
     static func attributedTitle(for user: ZMBareUser?, fallback: String) -> NSAttributedString {
-        return (user?.name ?? fallback) && normalBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        return (user?.name ?? fallback) && normalBoldFont && UIColor(scheme: .textForeground)
     }
 
     static func attributedSubtitle(for user: ZMBareUser?) -> NSAttributedString? {
         guard let handle = user?.handle, handle.count > 0 else { return nil }
-        return ("@" + handle) && smallBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        return ("@" + handle) && smallBoldFont && UIColor(scheme: .textDimmed)
     }
 
     static func attributedCorrelationText(for user: ZMBareUser?, addressBookName: String?) -> NSAttributedString? {

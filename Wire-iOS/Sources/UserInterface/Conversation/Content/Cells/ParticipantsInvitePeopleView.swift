@@ -48,10 +48,10 @@ protocol ParticipantsInvitePeopleViewDelegate: class {
         [titleLabel, inviteButton].forEach(stackView.addArrangedSubview)
         titleLabel.numberOfLines = 0
         titleLabel.text = "content.system.conversation.invite.title".localized
-        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        titleLabel.textColor = UIColor(scheme: .textForeground)
         titleLabel.font = FontSpec(.medium, .none).font
         inviteButton.setTitle("content.system.conversation.invite.button".localized, for: .normal)
-        inviteButton.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)
+        inviteButton.setTitleColor(UIColor(scheme: .textForeground), for: .normal)
         inviteButton.adjustsTitleWhenHighlighted = true
         inviteButton.setBackgroundImageColor(.init(red: 0.612, green: 0.655, blue: 0.686, alpha: 0.2), for: .normal)
         inviteButton.clipsToBounds = true

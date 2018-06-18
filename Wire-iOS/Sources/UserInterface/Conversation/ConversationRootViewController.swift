@@ -46,8 +46,8 @@ import Cartography
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
-        navbar.barTintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
-        navbar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        navbar.barTintColor = UIColor(scheme: .barBackground)
+        navbar.tintColor = UIColor(scheme: .textForeground)
 
         navBarContainer = UINavigationBarContainer(navbar)
 
@@ -73,7 +73,7 @@ import Cartography
             return
         }
 
-        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        self.view.backgroundColor = UIColor(scheme: .barBackground)
 
         self.addToSelf(navBarContainer)
         self.view.addSubview(self.contentView)
@@ -113,7 +113,7 @@ import Cartography
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        switch ColorScheme.default().variant {
+        switch ColorScheme.default.variant {
         case .light:
             return .default
         case .dark:

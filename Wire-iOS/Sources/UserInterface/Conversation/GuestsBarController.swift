@@ -88,7 +88,7 @@ class GuestsBarController: UIViewController {
         
         view.backgroundColor = .clear
         
-        container.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLightGraphite, variant: .dark)
+        container.backgroundColor = UIColor(scheme: .lightGraphite, variant: .dark)
         container.clipsToBounds = true
         
         label.font = FontSpec(.small, .semibold).font!

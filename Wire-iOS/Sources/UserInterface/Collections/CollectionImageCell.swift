@@ -157,14 +157,12 @@ final public class CollectionImageCell: CollectionCell {
     var saveableImage : SavableImage?
     
     @objc func save(_ sender: AnyObject!) {
-        guard let imageData = self.message?.imageMessageData?.imageData, let orientation = self.imageView.image?.imageOrientation else {
-            return
-        }
+        guard let imageMessageData = self.message?.imageMessageData else { return }
         
-        saveableImage = SavableImage(data: imageData, orientation: orientation)
-        saveableImage?.saveToLibrary(withCompletion: { [weak self] _ in
+        saveableImage = SavableImage(data: imageMessageData.imageData, isGIF: imageMessageData.isAnimatedGIF)
+        saveableImage?.saveToLibrary { [weak self] _ in
             self?.saveableImage = nil
-        })
+        }
     }
     
     fileprivate func loadImage() {

@@ -14,21 +14,18 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
-
+//
 
 #import "UIColor+WR_ColorScheme.h"
 
-
-
 @implementation UIColor (WR_ColorScheme)
 
-+ (UIColor *)wr_colorFromColorScheme:(NSString *)colorSchemeColor
++ (UIColor *)wr_colorFromColorScheme:(ColorSchemeColor)colorSchemeColor
 {
     return [[ColorScheme defaultColorScheme] colorWithName:colorSchemeColor];
 }
 
-+ (UIColor *)wr_colorFromColorScheme:(NSString *)colorSchemeColor variant:(ColorSchemeVariant)variant
++ (UIColor *)wr_colorFromColorScheme:(ColorSchemeColor)colorSchemeColor variant:(ColorSchemeVariant)variant
 {
     return [[ColorScheme defaultColorScheme] colorWithName:colorSchemeColor variant:variant];
 }

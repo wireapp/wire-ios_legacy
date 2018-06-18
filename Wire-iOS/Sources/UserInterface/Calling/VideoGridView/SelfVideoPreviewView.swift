@@ -62,7 +62,7 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     private func setupViews() {
         mutedIconImageView.contentMode = .center
         mutedOverlayView.backgroundColor = UIColor.black.withAlphaComponent(0.16)
-        let iconColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        let iconColor = UIColor(scheme: .textForeground, variant: .dark)
         mutedIconImageView.image = UIImage(for: .microphoneWithStrikethrough, iconSize: .tiny, color: iconColor)
         [previewView, mutedOverlayView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false

@@ -27,76 +27,102 @@ extension PHPhotoLibrary: PhotoLibraryProtocol {}
 
 protocol AssetChangeRequestProtocol: class {
     @discardableResult static func creationRequestForAsset(from image: UIImage) -> Self
+    @discardableResult static func creationRequestForAssetFromImage(atFileURL fileURL: URL) -> Self?
 }
 
 extension PHAssetChangeRequest: AssetChangeRequestProtocol {}
 
-@objcMembers final public class SavableImage: NSObject {
+private let log = ZMSLog(tag: "SavableImage")
 
-    /// protocols for inject mocking photo services
+@objcMembers final public class SavableImage: NSObject {
+    
+    enum Source {
+        case gif(URL)
+        case image(Data)
+    }
+    
+    /// Protocols used to inject mock photo services in tests
     var photoLibrary: PhotoLibraryProtocol = PHPhotoLibrary.shared()
     var assetChangeRequestType: AssetChangeRequestProtocol.Type = PHAssetChangeRequest.self
     var applicationType: ApplicationProtocol.Type = UIApplication.self
 
     public typealias ImageSaveCompletion = (Bool) -> Void
 
-    fileprivate let imageData: Data
-    fileprivate let imageOrientation: UIImageOrientation
-    fileprivate var writeInProgess = false
+    private var writeInProgess = false
+    private let imageData: Data
+    private let isGIF: Bool
 
-    init(data: Data, orientation: UIImageOrientation) {
+    init(data: Data, isGIF: Bool) {
+        self.isGIF = isGIF
         imageData = data
-        imageOrientation = orientation
         super.init()
+    }
+    
+    private static  func storeGIF(_ data: Data) -> URL {
+        let url = URL(fileURLWithPath: NSTemporaryDirectory() + "\(UUID().uuidString).gif")
+        
+        do {
+            try data.write(to: url, options: .atomic)
+        } catch {
+            log.error("error writing image data to \(url): \(error)")
+        }
+        
+        return url
+    }
+    
+    // SavableImage instances get created when image cells etc are being created and
+    // we don't want to write data to disk when we didn't start a save operation, yet.
+    private func createSource() -> Source {
+        return isGIF ? .gif(SavableImage.storeGIF(imageData)) : .image(imageData)
     }
     
     public func saveToLibrary(withCompletion completion: ImageSaveCompletion? = .none) {
         guard !writeInProgess else { return }
         writeInProgess = true
-
-        applicationType.wr_requestOrWarnAboutPhotoLibraryAccess { granted in
-            guard granted else {
-                completion?(false)
-                return
+        let source = createSource()
+        
+        let cleanup: (Bool) -> Void = { [source] success in
+            if case .gif(let url) = source {
+                try? FileManager.default.removeItem(at: url)
             }
 
-            self.photoLibrary.performChanges({
-                guard let image = UIImage(data: self.imageData) else { return }
-                self.assetChangeRequestType.creationRequestForAsset(from: image)
-            }) { success, error in
+            completion?(success)
+        }
+
+        applicationType.wr_requestOrWarnAboutPhotoLibraryAccess { granted in
+            guard granted else { return cleanup(false) }
+            
+            self.photoLibrary.performChanges(papply(self.saveImage, source)) { success, error in
                 DispatchQueue.main.async {
                     self.writeInProgess = false
-                    if let error = error {
-                        self.warnAboutError(error)
-                    }
-                    completion?(success)
+                    error.apply(self.warnAboutError)
+                    cleanup(success)
                 }
             }
         }
+    }
 
+    // Has to be called from inside a `photoLibrary.performChanges` block
+    private func saveImage(using source: Source) {
+        switch source {
+        case .gif(let url):
+            _ = assetChangeRequestType.creationRequestForAssetFromImage(atFileURL: url)
+        case .image(let data):
+            guard let image = UIImage(data: data) else { return log.error("failed to create image from data") }
+            assetChangeRequestType.creationRequestForAsset(from: image)
+        }
     }
 
     private func warnAboutError(_ error: Error) {
-        let alert = UIAlertController(title: "library.alert.permission_warning.title".localized,
-                                      message: (error as NSError).localizedDescription,
-                                      cancelButtonTitle: "general.ok".localized)
+        log.error("error saving image: \(error)")
 
-        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+        let alert = UIAlertController(
+            title: "library.alert.permission_warning.title".localized,
+            message: (error as NSError).localizedDescription,
+            cancelButtonTitle: "general.ok".localized
+        )
+
+        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alert, animated: true)
     }
 
-}
-
-extension UIImageOrientation {
-    var exifOrientiation: UInt {
-        switch self {
-        case .up: return 1
-        case .down: return 3
-        case .left: return 8
-        case .right: return 6
-        case .upMirrored: return 2
-        case .downMirrored: return 4
-        case .leftMirrored: return 5
-        case .rightMirrored: return 7
-        }
-    }
 }

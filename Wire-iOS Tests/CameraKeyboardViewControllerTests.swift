@@ -86,7 +86,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         
         let container = UIView()
         container.addSubview(self.sut.view)
-        container.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+        container.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
         
         constrain(self.sut.view, container) { view, container in
             container.height == size.height

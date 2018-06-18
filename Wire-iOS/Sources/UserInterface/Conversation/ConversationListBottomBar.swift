@@ -75,7 +75,7 @@ import Cartography
 
 
     private func createViews() {
-        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: .light)
+        separator.backgroundColor = UIColor(scheme: .separator, variant: .light)
         
         archivedButton.setIcon(.archive, with: .tiny, for: UIControlState())
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
@@ -102,7 +102,7 @@ import Cartography
         cameraButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.camera_button.hint".localized
 
         [archivedButton, startUIButton, composeButton, cameraButton].forEach { button in
-            button.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark), for: .normal)
+            button.setIconColor(UIColor(scheme: .textForeground, variant: .dark), for: .normal)
         }
 
         addSubviews()

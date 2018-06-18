@@ -25,8 +25,8 @@ import Cartography
     
     @objc let loadingAnimationKey = "loading"
     @objc let dotRadius = 2
-    @objc let activeColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLoadingDotActive)
-    @objc let inactiveColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLoadingDotInactive)
+    @objc let activeColor = UIColor(scheme: .loadingDotActive)
+    @objc let inactiveColor = UIColor(scheme: .loadingDotInactive)
     
     @objc let dot1 = UIView()
     @objc let dot2 = UIView()

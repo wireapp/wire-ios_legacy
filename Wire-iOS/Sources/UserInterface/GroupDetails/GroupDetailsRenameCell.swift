@@ -26,7 +26,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
     let titleTextField = SimpleTextField()
     var contentStackView: UIStackView!
     
-    var variant : ColorSchemeVariant = ColorScheme.default().variant {
+    var variant : ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != variant else { return }
             configureColors()
@@ -54,7 +54,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         verifiedIconView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         verifiedIconView.accessibilityIdentifier = "img.shield"
         
-        accessoryIconView.image = UIImage(for: .pencil, iconSize: .like, color: .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
+        accessoryIconView.image = UIImage(for: .pencil, iconSize: .like, color: UIColor(scheme: .textForeground, variant: variant))
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .scaleAspectFit
         accessoryIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -65,7 +65,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
         titleTextField.returnKeyType = .done
         titleTextField.backgroundColor = .clear
         titleTextField.textInsets = UIEdgeInsets.zero
-        titleTextField.keyboardAppearance = ColorScheme.default().keyboardAppearance
+        titleTextField.keyboardAppearance = ColorScheme.default.keyboardAppearance
 
         contentStackView = UIStackView(arrangedSubviews: [verifiedIconView, titleTextField, accessoryIconView])
         contentStackView.axis = .horizontal
@@ -89,9 +89,9 @@ class GroupDetailsRenameCell : UICollectionViewCell {
     }
     
     private func configureColors() {
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
-        accessoryIconView.image = UIImage(for: .pencil, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
-        titleTextField.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
+        backgroundColor = UIColor(scheme: .barBackground, variant: variant)
+        accessoryIconView.image = UIImage(for: .pencil, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: variant))
+        titleTextField.textColor = UIColor(scheme: .textForeground, variant: variant)
     }
     
 }

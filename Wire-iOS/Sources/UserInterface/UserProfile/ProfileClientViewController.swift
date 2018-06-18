@@ -92,7 +92,7 @@ import Classy
     }
 
     func setupViews() {
-        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        view.backgroundColor = UIColor(scheme: .background)
 
         self.setupContentView()
         self.setupBackButton()
@@ -141,15 +141,15 @@ import Classy
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
-        descriptionTextView.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-        descriptionTextView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
+        descriptionTextView.textColor = UIColor(scheme: .textForeground)
+        descriptionTextView.backgroundColor = UIColor(scheme: .textBackground)
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = self.userClient.user {
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
                 descriptionTextFont &&
-                UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)) +
+                UIColor(scheme: .textForeground)) +
                 "\n" +
                 ("profile.devices.detail.verify_message.link".localized &&
                     [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
@@ -158,7 +158,7 @@ import Classy
     }
     
     private func setupSeparatorLineView() {
-        separatorLineView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        separatorLineView.backgroundColor = UIColor(scheme: .separator)
         self.contentView.addSubview(separatorLineView)
     }
     
@@ -166,13 +166,13 @@ import Classy
         typeLabel.text = self.userClient.deviceClass?.uppercased()
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
-        typeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        typeLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(typeLabel)
     }
     
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
-        IDLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        IDLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(IDLabel)
         self.updateIDLabel()
     }
@@ -190,7 +190,7 @@ import Classy
 
     private func setupFullIDLabel() {
         fullIDLabel.numberOfLines = 0
-        fullIDLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        fullIDLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(fullIDLabel)
     }
     
@@ -227,7 +227,7 @@ import Classy
     
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
-        verifiedToggleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        verifiedToggleLabel.textColor = UIColor(scheme: .textForeground)
         verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
@@ -323,7 +323,7 @@ import Classy
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
         let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(),
                                                                 fromConversation:self.fromConversation,
-                                                                variant: ColorScheme.default().variant)
+                                                                variant: ColorScheme.default.variant)
 
         let navigationControllerWrapper = selfClientController.wrapInNavigationController()
 

@@ -41,7 +41,7 @@ import Cartography
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default().statusBarStyle
+        return ColorScheme.default.statusBarStyle
     }
     
     public init(conversation: ZMConversation) {
@@ -61,7 +61,7 @@ import Cartography
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "participants.title".localized.uppercased()
-        view.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorContentBackground)
+        view.backgroundColor = UIColor(scheme: .contentBackground)
         
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
@@ -82,7 +82,7 @@ import Cartography
         }
         
         [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
-        bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground)
+        bottomSpacer.backgroundColor = UIColor(scheme: .barBackground)
         
         constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
             collectionView.top == container.top

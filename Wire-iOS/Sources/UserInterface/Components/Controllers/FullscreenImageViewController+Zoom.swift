@@ -59,7 +59,7 @@ extension FullscreenImageViewController {
 
     // MARK: - Gesture Handling
 
-    func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
+    @objc func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
         setSelectedByMenu(false, animated: false)
 
         guard let image = imageView?.image else { return }

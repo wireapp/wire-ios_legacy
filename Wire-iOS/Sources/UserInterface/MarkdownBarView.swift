@@ -31,8 +31,8 @@ public final class MarkdownBarView: UIView {
     weak var delegate: MarkdownBarViewDelegate?
     
     private let stackView =  UIStackView()
-    private let accentColor = ColorScheme.default().accentColor
-    private let normalColor = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+    private let accentColor = ColorScheme.default.accentColor
+    private let normalColor = UIColor(scheme: .iconNormal)
     
     public let headerButton         = PopUpIconButton()
     public let boldButton           = IconButton()

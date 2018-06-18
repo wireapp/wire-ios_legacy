@@ -30,7 +30,7 @@ public final class UserConnectionView: UIView, Copyable {
         return AddressBookCorrelationFormatter(
             lightFont: FontSpec(.small, .light).font!,
             boldFont: FontSpec(.small, .medium).font!,
-            color: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+            color: UIColor(scheme: .textDimmed)
         )
     }()
 
@@ -98,7 +98,7 @@ public final class UserConnectionView: UIView, Copyable {
     private var handleLabelText: NSAttributedString? {
         guard let handle = user.handle, handle.count > 0 else { return nil }
         return ("@" + handle) && [
-            .foregroundColor: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
+            .foregroundColor: UIColor(scheme: .textDimmed),
             .font: FontSpec(.small, .semibold).font!
         ]
     }

@@ -34,7 +34,6 @@ final class DraftMessageCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let dateLabel = UILabel()
     private let separator = UIView()
-    private let color = ColorScheme.default().color(withName:)
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,14 +43,14 @@ final class DraftMessageCell: UITableViewCell {
 
     private func setupViews() {
         titleLabel.font = FontSpec(.normal, .light).font!
-        titleLabel.textColor = color(ColorSchemeColorTextForeground)
+        titleLabel.textColor = UIColor(scheme: .textForeground)
         dateLabel.font = FontSpec(.medium, .regular).font!
-        dateLabel.textColor = color(ColorSchemeColorTextDimmed)
-        backgroundColor = color(ColorSchemeColorBackground)
+        dateLabel.textColor = UIColor(scheme: .textDimmed)
+        backgroundColor = UIColor(scheme: .background)
         let selectedView = UIView()
-        selectedView.backgroundColor = color(ColorSchemeColorTokenFieldBackground)
+        selectedView.backgroundColor = UIColor(scheme: .tokenFieldBackground)
         selectedBackgroundView = selectedView
-        separator.backgroundColor = color(ColorSchemeColorSeparator)
+        separator.backgroundColor = UIColor(scheme: .separator)
         [titleLabel, dateLabel, separator].forEach(addSubview)
     }
 
