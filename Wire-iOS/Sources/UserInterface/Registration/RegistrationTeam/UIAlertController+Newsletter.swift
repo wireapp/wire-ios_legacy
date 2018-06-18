@@ -46,7 +46,7 @@ extension UIAlertController {
                                                 style: .default,
                                                 handler: privacyPolicyActionHandler))
 
-        alertController.addAction(UIAlertAction(title: "general.deline".localized,
+        alertController.addAction(UIAlertAction(title: "general.decline".localized,
                                                 style: .default,
                                                 handler: { (_) in
                                                     completionHandler(false)
