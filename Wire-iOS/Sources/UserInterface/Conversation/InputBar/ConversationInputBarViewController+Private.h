@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;
-- (void)updateButtonIconsForEphemeral;
+- (void)updateButtonIcons;
 - (void)updateAccessoryViews;
 - (void)updateNewButtonTitleLabel;
 @end

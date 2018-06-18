@@ -414,14 +414,8 @@ private struct InputBarConstants {
                 return
             }
             
-            if self.inputBarState.isEphemeral {
-                button.setIconColor(UIColor.accent(), for: .normal)
-                button.setIconColor(UIColor(scheme: .iconNormal), for: .highlighted)
-            }
-            else {
-                button.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
-                button.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
-            }
+            button.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
+            button.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
         }
     }
 
