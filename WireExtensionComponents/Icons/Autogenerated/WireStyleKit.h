@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, WireStyleKitResizingBehavior)
     WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
     WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
     WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
-    
+
 };
 
 extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);
@@ -185,6 +185,9 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x755_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x756_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x757_32ptWithColor: (UIColor*)color;
++ (void)drawWeekWithColor: (UIColor*)color;
++ (void)drawMonthWithColor: (UIColor*)color;
++ (void)drawYearWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -286,7 +289,6 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfMinuteWithColor: (UIColor*)color;
 + (UIImage*)imageOfHourWithColor: (UIColor*)color;
 + (UIImage*)imageOfDayWithColor: (UIColor*)color;
-+ (UIImage*)imageOfWeekWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x737_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x654_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x643_32ptWithColor: (UIColor*)color;
@@ -328,6 +330,9 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x755_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x756_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x757_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfWeekWithColor: (UIColor*)color;
++ (UIImage*)imageOfMonthWithColor: (UIColor*)color;
++ (UIImage*)imageOfYearWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;
