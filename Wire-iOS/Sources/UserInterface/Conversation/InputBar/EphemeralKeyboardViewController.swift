@@ -110,11 +110,11 @@ public extension ZMConversation {
     public var pickerColor: UIColor?
     public var separatorColor: UIColor?
 
-    private let conversation: ZMConversation
+    private let conversation: ZMConversation!
     private let picker = PickerView()
 
 
-    public init(conversation: ZMConversation) {
+    public init(conversation: ZMConversation!) {
         self.conversation = conversation
         if DeveloperMenuState.developerMenuEnabled() {
             timeouts = ZMConversationMessageDestructionTimeout.all + [nil]

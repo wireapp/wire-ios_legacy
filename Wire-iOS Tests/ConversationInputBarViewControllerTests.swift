@@ -103,3 +103,21 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 }
+
+// Ephemeral bndicator button
+extension ConversationInputBarViewControllerTests {
+    func testEphemeralIndicatorButton(){
+        // GIVEN
+        sut.viewDidLoad()
+        sut.createEphemeralIndicatorButton()
+        sut.view.layoutIfNeeded()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+
+        sut.view.layoutIfNeeded()
+
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+}
