@@ -43,22 +43,23 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
     
     var sut: ConversationInputBarViewController!
     
-    override func setUp() {
-        super.setUp()
-
+    func prepareSut() {
         sut = ConversationInputBarViewController(conversation: nil)
-        sut.view.layoutIfNeeded()
 
+        sut.view.layoutIfNeeded()
         sut.view.layer.speed = 0
+
+        sut.viewDidLoad()
     }
 
     func testNormalState(){
+        prepareSut()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testAudioRecorderTouchBegan(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -73,7 +74,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
     func testAudioRecorderTouchChanged(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -89,7 +90,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
     func testAudioRecorderTouchEnded(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -108,15 +109,13 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
 
         // WHEN
         sut.mode = .timeoutConfguration
 
-        sut.view.layoutIfNeeded()
-
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
     }
 
     func testEphemeralTime4Weeks(){
@@ -129,9 +128,16 @@ extension ConversationInputBarViewControllerTests {
         // WHEN
         sut.mode = .timeoutConfguration
 
-        sut.view.layoutIfNeeded()
-
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
+}
+
+fileprivate extension UIView {
+    var snapshotView: UIView {
+        self.layer.speed = 0
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        return self
     }
 }
