@@ -33,7 +33,5 @@
 @property (nonatomic) ZMConnectionStatus relatedConnectionState;
 @property (nonatomic) BOOL canStartVideoCall;
 @property (nonatomic) BOOL isConversationEligibleForVideoCalls;
-@property (nonatomic, readonly) BOOL hasDraftMessageText;
-@property (nonatomic, readonly) BOOL isReadOnly;
 
 @end

@@ -72,14 +72,9 @@
     return NO;
 }
 
-- (BOOL)hasDraftMessageText;
+- (NSTimeInterval)messageDestructionTimeout
 {
-    return NO;
-}
-
-- (BOOL)isReadOnly;
-{
-    return NO;
+    return 15;
 }
 
 @end

@@ -19,7 +19,6 @@
 import Foundation
 
 extension MockConversation {
-
     static func oneOnOneConversation() -> MockConversation {
         let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
         let otherUser = MockUser.mockUsers().first!
