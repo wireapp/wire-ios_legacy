@@ -118,7 +118,7 @@ extension ConversationInputBarViewControllerTests {
         sut.view.layoutIfNeeded()
 
         // THEN
-        self.verify(view: sut.view)
+        self.verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testEphemeralTime4Weeks(){
@@ -134,6 +134,6 @@ extension ConversationInputBarViewControllerTests {
         sut.view.layoutIfNeeded()
 
         // THEN
-        self.verify(view: sut.view)
+        self.verifyInAllPhoneWidths(view: sut.view)
     }
 }
