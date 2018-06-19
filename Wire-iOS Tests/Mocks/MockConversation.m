@@ -72,11 +72,6 @@
     return NO;
 }
 
-- (NSTimeInterval)messageDestructionTimeout
-{
-    return 4;
-}
-
 - (BOOL)hasDraftMessageText;
 {
     return NO;

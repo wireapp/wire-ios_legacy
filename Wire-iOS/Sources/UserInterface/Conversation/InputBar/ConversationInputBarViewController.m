@@ -164,16 +164,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         if (conversation != nil) {
             self.conversation = conversation;
             self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
-
-            if ([self.conversation respondsToSelector: @selector(managedObjectContext)]) {
-                self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
-            }
-            if ([self.conversation respondsToSelector: @selector(addTypingObserver:)]) {
-                self.typingObserverToken = [conversation addTypingObserver:self];
-            }
-            if ([self.conversation respondsToSelector: @selector(typingUsers)]) {
-                self.typingUsers = conversation.typingUsers;
-            }
+            self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
+            self.typingObserverToken = [conversation addTypingObserver:self];
+            self.typingUsers = conversation.typingUsers;
         }
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
 
@@ -238,12 +231,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.locationButton addTarget:self action:@selector(locationButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     if (self.conversationObserverToken == nil && self.conversation != nil) {
-        if ([self.conversation respondsToSelector: @selector(managedObjectContext)]) {
-            self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
-        }
+        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
-    
-    if (self.userObserverToken == nil && self.conversation.connectedUser != nil && ZMUserSession.sharedSession != nil) {
+
+    if (self.userObserverToken == nil &&
+        self.conversation.connectedUser != nil
+        && ZMUserSession.sharedSession != nil) {
         self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.conversation.connectedUser userSession:ZMUserSession.sharedSession];
     }
     

@@ -39,10 +39,16 @@ final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
     }
 }
 
-final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
+final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationInputBarViewController!
-    
+
+    override func setUp() {
+        super.setUp()
+
+        recordMode = true
+    }
+
     func prepareSut() {
         sut = ConversationInputBarViewController(conversation: nil)
 
@@ -120,13 +126,13 @@ extension ConversationInputBarViewControllerTests {
 
     func testEphemeralTime4Weeks(){
         // GIVEN
-        let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
-        sut = ConversationInputBarViewController(conversation: mockConversation)
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
 
         sut.viewDidLoad()
 
         // WHEN
         sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = 2419200 // 4 weeks
 
         sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
 
