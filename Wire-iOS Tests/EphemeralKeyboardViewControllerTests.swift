@@ -30,7 +30,7 @@ class EphemeralKeyboardViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         conversation = MockConversationFactory.mockConversation()
-        conversation.messageDestructionTimeout = 15
+        conversation.messageDestructionTimeout = ZMConversationMessageDestructionTimeout.fiveMinutes.rawValue
         sut = EphemeralKeyboardViewController(conversation: conversation as Any as! ZMConversation)
     }
 
