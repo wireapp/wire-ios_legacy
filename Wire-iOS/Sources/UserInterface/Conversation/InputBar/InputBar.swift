@@ -387,7 +387,7 @@ private struct InputBarConstants {
 
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
         buttonRowSeparator.backgroundColor = writingSeparatorColor
-        textView.placeholderTextColor = self.inputBarState.isEphemeral && self.availabilityPlaceholder == nil ? ephemeralColor : placeholderColor
+        textView.placeholderTextColor = self.inputBarState.isEphemeral && self.availabilityPlaceholder == nil ? ephemeralColor : placeholderColor ///TODO: call this after viewdid appear?
         fakeCursor.backgroundColor = .accent()
         textView.tintColor = .accent()
         textView.updateTextColor(base: textColor)
