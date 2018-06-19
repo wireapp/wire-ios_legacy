@@ -128,6 +128,8 @@ extension ConversationInputBarViewControllerTests {
         // WHEN
         sut.mode = .timeoutConfguration
 
+        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
     }
