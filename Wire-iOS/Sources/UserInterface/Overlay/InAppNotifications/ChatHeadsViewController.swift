@@ -127,10 +127,13 @@ class ChatHeadsViewController: UIViewController {
             return false
         }
         
-        let isCallOverlayVisible = AppDelegate.shared().callWindowRootViewController?.voiceChannelController?.voiceChannelIsActive ?? false
+        // Always show the notification when the call overlay is shown
+        if true == AppDelegate.shared().callWindowRootViewController?.voiceChannelController?.voiceChannelIsActive {
+            return true
+        }
         
-        // If current conversation contains message, is visible and no call overlay is shown
-        if clientVC.currentConversation.remoteIdentifier == conversationID && clientVC.isConversationViewVisible && !isCallOverlayVisible {
+        // If current conversation contains the notification message and is visible
+        if clientVC.currentConversation.remoteIdentifier == conversationID && clientVC.isConversationViewVisible {
             return false
         }
 
