@@ -51,7 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
 
 - (void)createAudioRecordViewController;
-- (void)createEphemeralIndicatorButton;
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;
 - (void)updateButtonIconsForEphemeral;

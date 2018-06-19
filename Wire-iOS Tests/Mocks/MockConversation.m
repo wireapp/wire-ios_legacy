@@ -72,9 +72,4 @@
     return NO;
 }
 
-- (NSTimeInterval)messageDestructionTimeout
-{
-    return 15;
-}
-
 @end
