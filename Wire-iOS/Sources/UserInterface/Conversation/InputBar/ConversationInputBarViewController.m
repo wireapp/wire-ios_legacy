@@ -132,6 +132,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) TypingIndicatorView *typingIndicatorView;
 
 @property (nonatomic) InputBar *inputBar;
+@property (nonatomic) ZMConversation *conversation;
 
 @property (nonatomic) NSSet *typingUsers;
 @property (nonatomic) id conversationObserverToken;

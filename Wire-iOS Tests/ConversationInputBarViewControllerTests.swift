@@ -111,8 +111,6 @@ extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){
         // GIVEN
         sut.viewDidLoad()
-        sut.createEphemeralIndicatorButton()
-        sut.view.layoutIfNeeded()
 
         // WHEN
         sut.mode = .timeoutConfguration
@@ -120,7 +118,7 @@ extension ConversationInputBarViewControllerTests {
         sut.view.layoutIfNeeded()
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verify(view: sut.view)
     }
 
     func testEphemeralTime4Weeks(){
@@ -129,18 +127,13 @@ extension ConversationInputBarViewControllerTests {
         sut = ConversationInputBarViewController(conversation: mockConversation)
 
         sut.viewDidLoad()
-        sut.createEphemeralIndicatorButton()
-
-//        sut.conversation = mockConversation
-        sut.view.layoutIfNeeded()
 
         // WHEN
         sut.mode = .timeoutConfguration
-//        sut.ephemeralIndicatorButton.setBackgroundImage(WireStyleKit.imageOfWeek(with: UIColor.accent()), for: .normal)
 
         sut.view.layoutIfNeeded()
 
         // THEN
-        self.verifyInAllPhoneWidths(view: sut.view)
+        self.verify(view: sut.view)
     }
 }

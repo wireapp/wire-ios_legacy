@@ -74,7 +74,7 @@
 
 - (NSTimeInterval)messageDestructionTimeout
 {
-    return 15;
+    return 4;
 }
 
 - (BOOL)hasDraftMessageText;
@@ -84,12 +84,7 @@
 
 - (BOOL)isReadOnly;
 {
-    return YES;
+    return NO;
 }
-
-//- (UIImage *)timeoutImage;
-//{
-//    return [UIImage new];
-//}
 
 @end
