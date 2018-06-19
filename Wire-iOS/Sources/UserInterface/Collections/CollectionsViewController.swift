@@ -309,7 +309,8 @@ public protocol CollectionsViewControllerDelegate: class {
             }
         case .present:
             self.selectedMessage = message
-            Analytics.shared().tagCollectionOpenItem(for: self.collection.conversation, itemType: CollectionItemType(message: message))
+            
+            Analytics.shared().tagCollectionOpenItem(for: self.collection.conversation, message: message)
             
             if message.isImage {
                 let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
