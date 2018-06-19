@@ -87,7 +87,7 @@ extension ZMConversationMessageDestructionTimeout {
 
 public extension ZMConversation {
 
-    @objc var timeoutImage: UIImage? { ///TODO: ZMConversationMessageDestructionTimeout's extension to image
+    @objc var timeoutImage: UIImage? {
         if destructionTimeout.isWeeks { return WireStyleKit.imageOfWeek(with: UIColor.accent()) }
         if destructionTimeout.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
         if destructionTimeout.isHours { return WireStyleKit.imageOfHour(with: UIColor.accent()) }
@@ -114,9 +114,9 @@ public extension ZMConversation {
     private let picker = PickerView()
 
 
-    /// Allow conversation argument is nil for tests
+    /// Allow conversation argument is nil for testing
     ///
-    /// - Parameter conversation: nil only for testing
+    /// - Parameter conversation: nil for testing only
     public init(conversation: ZMConversation!) {
         self.conversation = conversation
         if DeveloperMenuState.developerMenuEnabled() {
