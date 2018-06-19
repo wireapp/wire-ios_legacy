@@ -29,7 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Not now";
 "general.accept" = "Accept";
-"general.decline" = "Decline";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
