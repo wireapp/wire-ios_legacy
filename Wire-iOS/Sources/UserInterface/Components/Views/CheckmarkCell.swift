@@ -45,7 +45,7 @@ class CheckmarkCell: DetailsCollectionViewCell {
         }
 
         let color = colorSchemeVariant == .light
-            ? UIColor(scheme: .graphite, variant: colorSchemeVariant)
+            ? UIColor(scheme: .textForeground, variant: colorSchemeVariant)
             : .white
 
         accessory = UIImage(for: .checkmark, iconSize: .like, color: color)

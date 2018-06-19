@@ -109,6 +109,8 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
 
         cell.title = item.displayString
         cell.showCheckmark = item == conversation.destructionTimeout
+        cell.showSeparator = indexPath.row < (items.count - 1)
+
         return cell
 
     }
@@ -122,9 +124,8 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
 
         userSession.enqueueChanges {
             self.conversation.updateMessageDestructionTimeout(timeout: newTimeout)
+            self.collectionView.reloadData()
         }
-
-        collectionView.reloadData()
 
     }
 
