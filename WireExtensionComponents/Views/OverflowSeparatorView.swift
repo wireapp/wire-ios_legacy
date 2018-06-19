@@ -22,9 +22,9 @@ import Cartography
 import Classy
 
 
-@objc public class OverflowSeparatorView: UIView {
+@objcMembers public class OverflowSeparatorView: UIView {
 
-    public var inverse: Bool = false
+    @objc public var inverse: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,7 +37,7 @@ import Classy
     }
     
     private func applyStyle() {
-        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorSeparator)
+        self.backgroundColor = UIColor(scheme: .separator)
         self.alpha = 0
     }
     

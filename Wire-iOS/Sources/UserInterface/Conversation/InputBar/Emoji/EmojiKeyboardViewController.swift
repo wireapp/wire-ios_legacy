@@ -27,7 +27,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
 }
 
 
-@objc class EmojiKeyboardViewController: UIViewController {
+@objcMembers class EmojiKeyboardViewController: UIViewController {
     
     weak var delegate: EmojiKeyboardViewControllerDelegate?
     fileprivate var emojiDataSource: EmojiDataSource!
@@ -71,7 +71,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     func setupViews() {
         let colorScheme = ColorScheme()
         colorScheme.variant = .light
-        view.backgroundColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        view.backgroundColor = colorScheme.color(named: .textForeground)
         view.addSubview(collectionView)
 
         addChildViewController(sectionViewController)
@@ -115,11 +115,11 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         }
     }
 
-    func backspaceTapped(_ sender: IconButton) {
+    @objc func backspaceTapped(_ sender: IconButton) {
         delete()
     }
 
-    func backspaceLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc func backspaceLongPressed(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
         case .began:
             deleting = true

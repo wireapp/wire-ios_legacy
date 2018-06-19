@@ -19,7 +19,7 @@
 import Foundation
 
 extension UIViewController {
-    var wr_supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    @objc var wr_supportedInterfaceOrientations: UIInterfaceOrientationMask {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
 

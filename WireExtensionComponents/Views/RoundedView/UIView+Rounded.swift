@@ -18,7 +18,7 @@
 
 import UIKit
 
-@objc public class RoundedView: UIView, RoundedViewProtocol {
+@objcMembers public class RoundedView: UIView, RoundedViewProtocol {
 
     public override class var layerClass: AnyClass {
         return ContinuousMaskLayer.self

@@ -20,7 +20,7 @@ import Foundation
 import WireSyncEngine
 import Cartography
 
-@objc open class ReactionsView: UIView {
+@objcMembers open class ReactionsView: UIView {
     let avatarStack = StackView()
     static let maxAvatarsDisplayed = 2
     
@@ -43,7 +43,7 @@ import Cartography
             for user in likersToDisplay {
                 let userImage = UserImageView(size: .tiny)
                 userImage.userSession = ZMUserSession.shared()
-                userImage.initials.font = UIFont.systemFont(ofSize: 8, weight: UIFontWeightLight)
+                userImage.initials.font = UIFont.systemFont(ofSize: 8, weight: UIFont.Weight.light)
                 userImage.user = user
                 constrain(userImage) { userImage in
                     userImage.width == userImage.height
@@ -53,7 +53,7 @@ import Cartography
             }
             
             if shouldDisplayEllipsis {
-                let iconColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+                let iconColor = UIColor(scheme: .textForeground)
                 let imageView = UIImageView(image: UIImage(for: .ellipsis, iconSize: .like, color:iconColor))
                 imageView.contentMode = .center
                 constrain(imageView) { imageView in

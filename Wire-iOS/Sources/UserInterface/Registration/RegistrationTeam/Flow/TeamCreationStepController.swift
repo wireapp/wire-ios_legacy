@@ -22,9 +22,9 @@ import Cartography
 final class TeamCreationStepController: UIViewController {
 
     /// headline font size is fixed and not affected by dynamic type setting,
-    static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
+    static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
     /// For 320 pt width screen
-    static let headlineSmallFont    = UIFont.systemFont(ofSize: 32, weight: UIFontWeightLight)
+    static let headlineSmallFont    = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.light)
     static let subtextFont          = FontSpec(.normal, .regular).font!
     static let errorFont            = FontSpec(.small, .semibold).font!
     static let textButtonFont       = FontSpec(.small, .semibold).font!
@@ -124,7 +124,7 @@ final class TeamCreationStepController: UIViewController {
         }
     }
 
-    dynamic func keyboardWillShow(_ notification: Notification) {
+    @objc dynamic func keyboardWillShow(_ notification: Notification) {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             break
@@ -137,7 +137,7 @@ final class TeamCreationStepController: UIViewController {
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
-    dynamic func keyboardWillHide(_ notification: Notification) {
+    @objc dynamic func keyboardWillHide(_ notification: Notification) {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             break
@@ -150,7 +150,7 @@ final class TeamCreationStepController: UIViewController {
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
-    dynamic func keyboardWillChangeFrame(_ notification: Notification) {
+    @objc dynamic func keyboardWillChangeFrame(_ notification: Notification) {
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
@@ -225,7 +225,7 @@ final class TeamCreationStepController: UIViewController {
          subtextLabel,
          mainViewContainer,
          errorViewContainer,
-         secondaryViewsStackView].flatMap {$0}.forEach {
+         secondaryViewsStackView].compactMap {$0}.forEach {
             self.view.addSubview($0)
         }
     }
@@ -352,9 +352,9 @@ final class TeamCreationStepController: UIViewController {
             errorLabel.height >= 19
         }
 
-        headlineLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        subtextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        errorLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        headlineLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        subtextLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        errorLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
 
         updateMainViewWidthConstraint()
     }

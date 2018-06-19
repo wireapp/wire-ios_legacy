@@ -36,7 +36,7 @@ import Cartography
     case emoji
 }
 
-class CanvasViewController: UIViewController, UINavigationControllerDelegate {
+@objcMembers class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     weak var delegate : CanvasViewControllerDelegate?
     var canvas = Canvas()
@@ -88,14 +88,14 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         emojiKeyboardViewController.backspaceHidden = true
     
         toolbar = SketchToolbar(buttons: [photoButton, drawButton, emojiButton, sendButton])
-        separatorLine.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
-        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: .wr_color(fromColorScheme: ColorSchemeColorPlaceholderBackground, variant: .light))
+        separatorLine.backgroundColor = UIColor(scheme: .separator)
+        hintImageView.image = UIImage(for: .brush, fontSize: 172, color: UIColor(scheme: .placeholderBackground, variant: .light))
         hintLabel.text = "sketchpad.initial_hint".localized.uppercased(with: Locale.current)
         hintLabel.numberOfLines = 0
         hintLabel.font = FontSpec(.small, .regular).font!
         hintLabel.textAlignment = .center
-        hintLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextPlaceholder)
-        self.view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        hintLabel.textColor = UIColor(scheme: .textPlaceholder)
+        self.view.backgroundColor = UIColor(scheme: .background)
         
         [canvas, hintLabel, hintImageView, toolbar].forEach(view.addSubview)
         
@@ -220,7 +220,7 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK - actions
     
-    func toggleDrawTool() {
+    @objc func toggleDrawTool() {
         if canvas.mode == .edit {
             canvas.mode = .draw
         } else {
@@ -230,17 +230,17 @@ class CanvasViewController: UIViewController, UINavigationControllerDelegate {
         updateButtonSelection()
     }
     
-    func openEmojiKeyboard() {
+    @objc func openEmojiKeyboard() {
         select(editMode: .emoji, animated: true)
     }
     
-    func exportImage() {
+    @objc func exportImage() {
         if let image = canvas.trimmedImage {
             delegate?.canvasViewController(self, didExportImage: image)
         }
     }
     
-    func close() {
+    @objc func close() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -347,7 +347,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
         
-        let attributes = [NSFontAttributeName: UIFont.systemFont(ofSize: 82)]
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 82)]
         
         if let image = emoji.image(renderedWithAttributes: attributes)?.imageWithAlphaTrimmed {
             canvas.insert(image: image, at: CGPoint(x: canvas.center.x - image.size.width / 2, y: canvas.center.y - image.size.height / 2))
@@ -359,7 +359,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
 
 extension CanvasViewController : UIImagePickerControllerDelegate {
     
-    func pickImage() {
+    @objc func pickImage() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         present(imagePickerController, animated: true, completion: nil)

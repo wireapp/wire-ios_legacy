@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import <UIKit/UIKit.h>
 #import "ColorScheme.h"
 
@@ -24,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIColor (WR_ColorScheme)
 
-+ (UIColor *)wr_colorFromColorScheme:(NSString *)colorSchemeColor;
-+ (UIColor *)wr_colorFromColorScheme:(NSString *)colorSchemeColor variant:(enum ColorSchemeVariant)variant;
++ (UIColor *)wr_colorFromColorScheme:(ColorSchemeColor)colorSchemeColor NS_SWIFT_NAME(init(scheme:));
++ (UIColor *)wr_colorFromColorScheme:(ColorSchemeColor)colorSchemeColor variant:(enum ColorSchemeVariant)variant NS_SWIFT_NAME(init(scheme:variant:));
 
 @end
 

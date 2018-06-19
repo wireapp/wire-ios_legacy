@@ -51,8 +51,8 @@ final class TextCell: UITableViewCell, CellConfigurationConfigurable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
         guard case let .text(text) = configuration else { preconditionFailure() }
         label.attributedText = text && .lineSpacing(8)
-        label.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
-        container.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: variant)
+        label.textColor = UIColor(scheme: .textForeground, variant: variant)
+        container.backgroundColor = UIColor(scheme: .barBackground, variant: variant)
     }
     
 }

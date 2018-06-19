@@ -20,11 +20,11 @@ import WireDataModel
 import WireExtensionComponents
 
 extension ZMUser {
-    var pov: PointOfView {
+    @objc var pov: PointOfView {
         return self.isSelfUser ? .secondPerson : .thirdPerson
     }
     
-    var canManageTeam: Bool {
+    @objc var canManageTeam: Bool {
         return self.membership?.permissions.contains(.owner) ?? false || self.membership?.permissions.contains(.admin) ?? false
     }
 }

@@ -29,7 +29,7 @@ public extension ConversationCell {
         }
     }
 
-    func willDisplayInTableView() {
+    @objc func willDisplayInTableView() {
         scheduledTimerForUpdateBurstTimestamp()
 
         contentView.bringSubview(toFront: likeButton)

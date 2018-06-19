@@ -19,7 +19,7 @@
 
 import UIKit
 
-@objc final class RecordingDotView: UIView {
+@objcMembers final class RecordingDotView: UIView {
     
     public init() {
         super.init(frame: CGRect.zero)

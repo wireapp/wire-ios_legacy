@@ -27,7 +27,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         snapshotBackgroundColor = UIColor.white
-        sut = ImageMessageCell(style: .default, reuseIdentifier: name!)
+        sut = ImageMessageCell(style: .default, reuseIdentifier: name)
         sut.variant = .light
     }
 

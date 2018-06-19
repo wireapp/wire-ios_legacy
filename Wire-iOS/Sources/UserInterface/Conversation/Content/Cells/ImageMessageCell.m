@@ -224,7 +224,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [self.imageToolbarView autoSetDimension:ALDimensionHeight toSize:48];
     
     [self.obfuscationView autoPinEdgesToSuperviewEdges];
-    [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.fullImageView withOffset:8];
 }
 
  - (void)updateImageMessageConstraintConstants
@@ -410,8 +409,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         return;
     }
 
-    UIImageOrientation orientation = self.fullImageView.image.imageOrientation;
-    self.savableImage = [[SavableImage alloc] initWithData:data orientation:orientation];
+    self.savableImage = [[SavableImage alloc] initWithData:data isGIF:self.message.imageMessageData.isAnimatedGIF];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

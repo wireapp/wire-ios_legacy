@@ -19,7 +19,7 @@
 import Foundation
 import SafariServices
 
-@objc class BrowserViewController: SFSafariViewController {
+@objcMembers class BrowserViewController: SFSafariViewController {
 
     @objc var completion: (() -> Void)?
 
@@ -31,9 +31,9 @@ import SafariServices
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 10, *) {
-            preferredControlTintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            preferredControlTintColor = UIColor(scheme: .textForeground, variant: .light)
         } else {
-            view.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            view.tintColor = UIColor(scheme: .textForeground, variant: .light)
         }
 
         delegate = self

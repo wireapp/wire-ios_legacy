@@ -32,7 +32,7 @@ class GiphyNavigationController: UINavigationController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default().variant == .dark ? .lightContent : .default
+        return ColorScheme.default.variant == .dark ? .lightContent : .default
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -74,7 +74,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
 }
 
-class GiphySearchViewController: UICollectionViewController {
+@objcMembers class GiphySearchViewController: UICollectionViewController {
 
     public weak var delegate: GiphySearchViewControllerDelegate?
 
@@ -178,7 +178,7 @@ class GiphySearchViewController: UICollectionViewController {
         searchBar.delegate = self
         searchBar.tintColor = .accent()
         searchBar.placeholder = "giphy.search_placeholder".localized
-        searchBar.barStyle = ColorScheme.default().variant == .dark ? .black : .default
+        searchBar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
         searchBar.searchBarStyle = .minimal
 
         let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
@@ -204,9 +204,9 @@ class GiphySearchViewController: UICollectionViewController {
         navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
 
         navigationController.navigationBar.backItem?.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
-        navigationController.navigationBar.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default().variant)
-        navigationController.navigationBar.barTintColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        navigationController.navigationBar.tintColor = UIColor(scheme: .textForeground)
+        navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorScheme.default.variant)
+        navigationController.navigationBar.barTintColor = UIColor(scheme: .background)
         navigationController.navigationBar.isTranslucent = false
 
         return navigationController
@@ -219,7 +219,7 @@ class GiphySearchViewController: UICollectionViewController {
         masonrylayout.itemMargins = CGSize(width: 1, height: 1)
     }
 
-    func onDismiss() {
+    @objc func onDismiss() {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
 

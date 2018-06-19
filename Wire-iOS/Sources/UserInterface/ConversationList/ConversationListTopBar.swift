@@ -42,12 +42,12 @@ final class ConversationListTopBar: TopBar {
             let titleLabel = UILabel()
             
             titleLabel.font = FontSpec(.normal, .semibold).font
-            titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+            titleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
             titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
-            titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-            titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-            titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-            titleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+            titleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+            titleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
             self.middleView = titleLabel
             
             if let sharedSession = ZMUserSession.shared() {

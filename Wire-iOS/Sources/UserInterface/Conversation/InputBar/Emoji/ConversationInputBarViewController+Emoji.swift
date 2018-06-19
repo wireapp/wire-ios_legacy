@@ -22,11 +22,11 @@ import Classy
 
 extension ConversationInputBarViewController {
     
-    func configureEmojiButton(_ button: IconButton) {
+    @objc func configureEmojiButton(_ button: IconButton) {
         button.addTarget(self, action: #selector(emojiButtonTapped), for: .touchUpInside)
     }
     
-    func emojiButtonTapped(_ sender: IconButton) {
+    @objc func emojiButtonTapped(_ sender: IconButton) {
         if mode != .emojiInput {
             mode = .emojiInput
             inputBar.textView.becomeFirstResponder()
@@ -40,7 +40,7 @@ extension ConversationInputBarViewController {
         updateEmojiButton(sender)
     }
     
-    public func updateEmojiButton(_ button: IconButton) {
+    @objc public func updateEmojiButton(_ button: IconButton) {
         let type: ZetaIconType
         let style: String?
         let color: UIColor
@@ -48,24 +48,24 @@ extension ConversationInputBarViewController {
             if self.sendButtonState.ephemeral {
                 type = ZetaIconType.textEphemeral
                 style = "ephemeral"
-                color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+                color = UIColor(scheme: .accent)
             }
             else {
                 type = ZetaIconType.text
                 style = .none
-                color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+                color = UIColor(scheme: .iconNormal)
             }
         }
         else {
             if self.sendButtonState.ephemeral {
                 type = ZetaIconType.emojiEphemeral
                 style = "ephemeral"
-                color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+                color = UIColor(scheme: .accent)
             }
             else {
                 type = ZetaIconType.emoji
                 style = .none
-                color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+                color = UIColor(scheme:.iconNormal)
             }
         }
 
@@ -75,7 +75,7 @@ extension ConversationInputBarViewController {
         CASStyler.default().styleItem(self)
     }
 
-    public func createEmojiKeyboardViewController() {
+    @objc public func createEmojiKeyboardViewController() {
         emojiKeyboardViewController = EmojiKeyboardViewController()
         emojiKeyboardViewController?.delegate = self
         updateBackspaceButton()
@@ -85,12 +85,12 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: EmojiKeyboardViewControllerDelegate {
 
-    func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController) {
+    @objc func emojiKeyboardViewControllerDeleteTapped(_ viewController: EmojiKeyboardViewController) {
         inputBar.textView.deleteBackward()
         updateBackspaceButton()
     }
     
-    func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
+    @objc func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
         guard mode == .emojiInput else { return }
         let text = inputBar.textView.text ?? ""
         inputBar.textView.text = text + emoji
@@ -98,7 +98,7 @@ extension ConversationInputBarViewController: EmojiKeyboardViewControllerDelegat
         updateBackspaceButton()
     }
 
-    func updateBackspaceButton() {
+    @objc func updateBackspaceButton() {
         emojiKeyboardViewController?.backspaceEnabled = !inputBar.textView.text.isEmpty
     }
     

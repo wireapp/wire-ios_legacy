@@ -185,7 +185,7 @@ extension AppStateController : SessionManagerDelegate {
 
 extension AppStateController {
     
-    func applicationDidBecomeActive() {
+    @objc func applicationDidBecomeActive() {
         hasEnteredForeground = true
         updateAppState()
     }

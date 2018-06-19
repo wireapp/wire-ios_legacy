@@ -148,13 +148,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self setupScrollView];
     [self setupTopOverlay];
-    if ([[self.message imageMessageData] imageData] == nil) {
-        [self.message requestImageDownload];
-        [self setupSpinner];
-    }
-    else {
-        [self loadImageAndSetupImageView];
-    }
+    [self updateForMessage];
     
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
@@ -227,6 +221,19 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.scrollView];
 }
 
+- (void)updateForMessage
+{
+    if (self.message.isObfuscated || [[self.message imageMessageData] imageData] == nil) {
+        [self removeImage];
+        [self.message requestImageDownload];
+        [self setupSpinner];
+    }
+    else {
+        [self removeSpinner];
+        [self loadImageAndSetupImageView];
+    }
+}
+
 - (void)setupSpinner
 {
     self.loadingSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:[[ColorScheme defaultColorScheme] variant] == ColorSchemeVariantDark ? UIActivityIndicatorViewStyleWhite : UIActivityIndicatorViewStyleGray];
@@ -235,6 +242,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.loadingSpinner startAnimating];
     
     [self.loadingSpinner autoCenterInSuperview];
+}
+
+- (void)removeSpinner
+{
+    [self.loadingSpinner removeFromSuperview];
+    self.loadingSpinner = nil;
 }
 
 - (void)loadImageAndSetupImageView
@@ -266,6 +279,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [self setupImageViewWithImage:image parentSize:parentSize];
         });
     });
+}
+
+- (void)removeImage
+{
+    [self.imageView removeFromSuperview];
+    self.imageView = nil;
 }
 
 - (void)setupTopOverlay
@@ -584,11 +603,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)messageDidChange:(MessageChangeInfo *)changeInfo
 {
-    if ((changeInfo.transferStateChanged || changeInfo.imageChanged) && [[self.message imageMessageData] imageData] != nil) {
-        [self.loadingSpinner removeFromSuperview];
-        self.loadingSpinner = nil;
+    if (((changeInfo.transferStateChanged || changeInfo.imageChanged) && ([[self.message imageMessageData] imageData] != nil)) ||
+        changeInfo.isObfuscatedChanged) {
         
-        [self loadImageAndSetupImageView];
+        [self updateForMessage];
     }
 }
 

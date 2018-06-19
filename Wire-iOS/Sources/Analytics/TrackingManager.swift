@@ -22,7 +22,7 @@ import HockeySDK
 import WireExtensionComponents
 
 
-@objc public class TrackingManager: NSObject {
+@objcMembers public class TrackingManager: NSObject {
     private let flowManagerObserver: NSObjectProtocol
     
     private override init() {

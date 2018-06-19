@@ -50,7 +50,7 @@ struct ChangeEmailState {
 
 }
 
-final class ChangeEmailViewController: SettingsBaseTableViewController {
+@objcMembers final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     var state = ChangeEmailState()
@@ -100,7 +100,7 @@ final class ChangeEmailViewController: SettingsBaseTableViewController {
         }
     }
     
-    func saveButtonTapped(sender: UIBarButtonItem) {
+    @objc func saveButtonTapped(sender: UIBarButtonItem) {
         guard let email = state.newEmail else { return }
         do {
             try userProfile?.requestEmailChange(email: email)

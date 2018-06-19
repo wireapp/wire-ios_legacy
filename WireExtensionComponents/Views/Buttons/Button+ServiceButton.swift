@@ -20,12 +20,12 @@ import Foundation
 
 /// Creates Buttons for ServiceDetailViewController
 extension Button {
-    public static func createAddServiceButton() -> Button {
+    @objc public static func createAddServiceButton() -> Button {
         return Button.createButton(styleClass: "dialogue-button-full",
                                    title: "peoplepicker.services.add_service.button".localized)
     }
 
-    public static func createDestructiveServiceButton() -> Button {
+    @objc public static func createDestructiveServiceButton() -> Button {
         return Button.createButton(styleClass: "dialogue-button-full-destructive",
                                    title: "participants.services.remove_integration.button".localized)
     }

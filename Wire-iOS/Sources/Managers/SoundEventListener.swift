@@ -213,7 +213,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
 
 extension SoundEventListener {
     
-    func applicationWillEnterForeground() {
+    @objc func applicationWillEnterForeground() {
         soundEventWatchDog.startIgnoreDate = Date()
         soundEventWatchDog.isMuted = userSession?.networkState == .onlineSynchronizing
         
@@ -224,7 +224,7 @@ extension SoundEventListener {
         }
     }
     
-    func applicationDidEnterBackground() {
+    @objc func applicationDidEnterBackground() {
         soundEventWatchDog.isMuted = true
     }
 }

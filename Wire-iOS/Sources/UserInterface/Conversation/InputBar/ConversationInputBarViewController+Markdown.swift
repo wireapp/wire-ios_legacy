@@ -21,28 +21,28 @@ import Foundation
 
 extension ConversationInputBarViewController {
     
-    func configureMarkdownButton() {
+    @objc func configureMarkdownButton() {
         
         markdownButton.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
         markdownButton.setIcon(.markdownToggle, with: .tiny, for: .normal)
-        markdownButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
+        markdownButton.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
     }
     
-    public func updateMarkdownButton() {
+    @objc public func updateMarkdownButton() {
     
         let color: UIColor
         
         if inputBar.isMarkingDown {
-            color = ColorScheme.default().color(withName: ColorSchemeColorAccent)
+            color = UIColor(scheme: .accent)
         } else {
-            color = ColorScheme.default().color(withName: ColorSchemeColorIconNormal)
+            color = UIColor(scheme: .iconNormal)
         }
         
         markdownButton.setIconColor(color, for: .normal)
         markdownButton.isEnabled = !inputBar.isEditing
     }
     
-    func markdownButtonTapped(_ sender: IconButton) {
+    @objc func markdownButtonTapped(_ sender: IconButton) {
     
         if !inputBar.isMarkingDown {
             inputBar.textView.becomeFirstResponder()

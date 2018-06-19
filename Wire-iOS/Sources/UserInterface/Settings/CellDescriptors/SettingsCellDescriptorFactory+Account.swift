@@ -250,7 +250,7 @@ extension SettingsCellDescriptorFactory {
 
     func ressetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
-        return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
+        return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             Analytics.shared().tagResetPassword(true, from: ResetFromProfile)
             return BrowserViewController(url: URL.wr_passwordReset.appendingLocaleParameter)
         }, previewGenerator: .none)
@@ -295,7 +295,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsExternalScreenCellDescriptor(title: "self.sign_out".localized,
                                                     isDestructive: true,
                                                     presentationStyle: .modal,
-                                                    presentationAction: { _ in
+                                                    presentationAction: { 
             let alert = UIAlertController(
                 title: "self.settings.account_details.log_out.alert.title".localized,
                 message: "self.settings.account_details.log_out.alert.message".localized,

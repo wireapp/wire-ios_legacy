@@ -20,7 +20,7 @@ import Foundation
 
 extension String {
     
-    func image(renderedWithAttributes attributes: [String : Any]) -> UIImage? {
+    func image(renderedWithAttributes attributes: [NSAttributedStringKey : Any]) -> UIImage? {
         let attributedString = NSAttributedString(string: self, attributes: attributes)
         let size = attributedString.size()
         let rect = CGRect(origin: CGPoint.zero, size: size)

@@ -33,7 +33,7 @@ class ShowAllParticipantsCell: UICollectionViewCell {
         }
     }
     
-    var variant : ColorSchemeVariant = ColorScheme.default().variant {
+    var variant : ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != variant else { return }
             configureColors()
@@ -54,7 +54,7 @@ class ShowAllParticipantsCell: UICollectionViewCell {
         accessibilityIdentifier = "cell.call.show_all_participants"
         participantIconView.translatesAutoresizingMaskIntoConstraints = false
         participantIconView.contentMode = .scaleAspectFit
-        participantIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        participantIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
@@ -90,11 +90,11 @@ class ShowAllParticipantsCell: UICollectionViewCell {
     }
     
     private func configureColors() {
-        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: variant)
+        let sectionTextColor = UIColor(scheme: .sectionText, variant: variant)
         backgroundColor = .clear
-        participantIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant))
+        participantIconView.image = UIImage(for: .person, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: variant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)
-        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: variant)
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: variant)
     }
     
 }

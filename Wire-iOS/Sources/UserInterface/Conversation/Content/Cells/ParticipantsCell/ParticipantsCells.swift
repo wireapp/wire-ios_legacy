@@ -20,7 +20,7 @@
 import Classy
 import Cartography
 
-public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate {
+@objcMembers public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate {
 
     private let collectionViewController = ParticipantsCollectionViewController<ParticipantsUserCell>()
     private let stackView = UIStackView()

@@ -26,7 +26,7 @@ public protocol TextSearchInputViewDelegate: class {
     func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool
 }
 
-public final class TextSearchInputView: UIView {
+@objcMembers public final class TextSearchInputView: UIView {
     public let iconView = UIImageView()
     public let searchInput = UITextView()
     public let placeholderLabel = UILabel()
@@ -57,17 +57,16 @@ public final class TextSearchInputView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let colorScheme = ColorScheme.default()
-        iconView.image = UIImage(for: .search, iconSize: .tiny, color: colorScheme.color(withName: ColorSchemeColorTextForeground))
+        iconView.image = UIImage(for: .search, iconSize: .tiny, color: UIColor(scheme: .textForeground))
         iconView.contentMode = .center
         
         searchInput.delegate = self
         searchInput.autocorrectionType = .no
         searchInput.accessibilityLabel = "Search"
         searchInput.accessibilityIdentifier = "search input"
-        searchInput.keyboardAppearance = ColorScheme.default().keyboardAppearance
+        searchInput.keyboardAppearance = ColorScheme.default.keyboardAppearance
         searchInput.layer.cornerRadius = 4
-        searchInput.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground)
+        searchInput.backgroundColor = UIColor(scheme: .tokenFieldBackground)
         searchInput.textContainerInset = UIEdgeInsetsMake(10, 40, 10, 8)
         
         placeholderLabel.textAlignment = .natural
@@ -78,7 +77,7 @@ public final class TextSearchInputView: UIView {
         cancelButton.isHidden = true
         cancelButton.accessibilityIdentifier = "cancel search"
 
-        spinner.color = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed, variant: .light)
+        spinner.color = UIColor(scheme: .textDimmed, variant: .light)
         spinner.iconSize = .tiny
         [iconView, searchInput, cancelButton, placeholderLabel, spinner].forEach(self.addSubview)
 

@@ -39,21 +39,21 @@ final class LandingViewController: UIViewController {
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
-    static let buttonTitleAttribute: [String: Any] = {
+    static let buttonTitleAttribute: [NSAttributedStringKey: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: semiboldFont]
+        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: semiboldFont]
     }()
 
-    static let buttonSubtitleAttribute: [String: Any] = {
+    static let buttonSubtitleAttribute: [NSAttributedStringKey: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
         alignCenterStyle.paragraphSpacingBefore = 4
 
         let lightFont = FontSpec(.normal, .light).font!
 
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: lightFont]
+        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
     }()
 
     // MARK: - constraints for iPad
@@ -78,7 +78,7 @@ final class LandingViewController: UIViewController {
         label.text = "landing.title".localized
         label.font = LandingViewController.regularFont
         label.textColor = UIColor.Team.subtitleColor
-        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
 
@@ -257,8 +257,8 @@ final class LandingViewController: UIViewController {
         }
 
         [createAccountButton, createTeamButton].forEach() { button in
-            button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-            button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+            button.setContentCompressionResistancePriority(.required, for: .vertical)
+            button.setContentCompressionResistancePriority(.required, for: .horizontal)
         }
     }
 

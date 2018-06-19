@@ -21,7 +21,7 @@ import Foundation
 import Contacts
 
 /// Allows access to address book for search
-@objc open class AddressBookHelper : NSObject {
+@objcMembers open class AddressBookHelper : NSObject {
     
     /// Time to wait between searches
     let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h

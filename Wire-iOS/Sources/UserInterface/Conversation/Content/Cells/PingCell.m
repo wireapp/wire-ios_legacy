@@ -83,7 +83,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
     [self.pingLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.authorLabel];
     [self.pingLabel autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.authorLabel];
     [self.pingLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
-    [self.countdownContainerView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.pingImageView];
 }
 
 - (void)prepareForReuse

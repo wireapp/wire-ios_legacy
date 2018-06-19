@@ -28,7 +28,7 @@ public protocol UserSelectionObserver {
     
 }
 
-@objc
+@objcMembers
 public class UserSelection : NSObject {
     
     public fileprivate(set) var users : Set<ZMUser> = Set()

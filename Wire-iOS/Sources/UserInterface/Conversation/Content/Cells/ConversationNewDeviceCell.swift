@@ -20,7 +20,7 @@
 import Foundation
 import TTTAttributedLabel
 
-class ConversationNewDeviceCell: IconSystemCell {
+@objcMembers class ConversationNewDeviceCell: IconSystemCell {
     static fileprivate let userClientLink: URL = URL(string: "settings://user-client")!
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
@@ -32,20 +32,20 @@ class ConversationNewDeviceCell: IconSystemCell {
     }
     
     struct TextAttributes {
-        let senderAttributes : [String: AnyObject]
-        let startedUsingAttributes : [String: AnyObject]
-        let linkAttributes : [String: AnyObject]
+        let senderAttributes : [NSAttributedStringKey: AnyObject]
+        let startedUsingAttributes : [NSAttributedStringKey: AnyObject]
+        let linkAttributes : [NSAttributedStringKey: AnyObject]
         
         init(boldFont: UIFont, normalFont: UIFont, textColor: UIColor, link: URL) {
-            senderAttributes = [NSFontAttributeName: boldFont, NSForegroundColorAttributeName: textColor]
-            startedUsingAttributes = [NSFontAttributeName: normalFont, NSForegroundColorAttributeName: textColor]
-            linkAttributes = [NSFontAttributeName: normalFont, NSLinkAttributeName: link as AnyObject]
+            senderAttributes = [.font: boldFont, .foregroundColor: textColor]
+            startedUsingAttributes = [.font: normalFont, .foregroundColor: textColor]
+            linkAttributes = [.font: normalFont, .link: link as AnyObject]
         }
     }
     
     func updateLabel() {
         guard let systemMessageData = message.systemMessageData,
-            let clients = message.systemMessageData?.clients.flatMap ({ $0 as? UserClientType }),
+            let clients = message.systemMessageData?.clients.compactMap ({ $0 as? UserClientType }),
             let labelFont = self.labelFont,
             let labelBoldFont = self.labelBoldFont,
             let labelTextColor = self.labelTextColor,
@@ -92,7 +92,7 @@ class ConversationNewDeviceCell: IconSystemCell {
     }
     
     func configureForOtherUsers(_ users: [ZMUser], clients: [UserClientType], attributes: TextAttributes) {
-        let displayNamesOfOthers = users.filter {!$0.isSelfUser }.flatMap {$0.displayName as String}
+        let displayNamesOfOthers = users.filter {!$0.isSelfUser }.compactMap {$0.displayName as String}
         guard displayNamesOfOthers.count > 0 else { return }
         
         let firstTwoNames = displayNamesOfOthers.prefix(2)

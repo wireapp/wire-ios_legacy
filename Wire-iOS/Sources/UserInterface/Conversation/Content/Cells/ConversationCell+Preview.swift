@@ -25,7 +25,7 @@ import Classy
 
 extension ConversationCell {
     
-    @discardableResult func prepareLayoutForPreview(message: ZMConversationMessage? = nil) -> CGFloat {
+    @objc @discardableResult func prepareLayoutForPreview(message: ZMConversationMessage? = nil) -> CGFloat {
         // Prevent trait collection changes adjusting content insets
         showsPreview = true
         self.configure(for: message, layoutProperties: .preview)

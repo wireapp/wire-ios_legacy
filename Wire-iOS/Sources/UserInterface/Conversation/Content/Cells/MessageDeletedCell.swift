@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 import Classy
 
-class MessageDeletedCell: ConversationCell {
+@objcMembers class MessageDeletedCell: ConversationCell {
     
     let trashImageView = UIImageView()
     

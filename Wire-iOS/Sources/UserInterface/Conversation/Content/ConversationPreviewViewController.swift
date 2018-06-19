@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 
-@objc class ConversationPreviewViewController: TintColorCorrectedViewController {
+@objcMembers class ConversationPreviewViewController: TintColorCorrectedViewController {
 
     let conversation: ZMConversation
     fileprivate let actionController: ConversationActionController

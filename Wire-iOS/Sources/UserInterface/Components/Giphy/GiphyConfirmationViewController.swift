@@ -69,7 +69,7 @@ class GiphyConfirmationViewController: UIViewController {
 
         let titleLabel = UILabel()
         titleLabel.font = FontSpec(.small, .semibold).font!
-        titleLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        titleLabel.textColor = UIColor(scheme: .textForeground)
         titleLabel.text = title?.uppercased()
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
@@ -108,11 +108,11 @@ class GiphyConfirmationViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func onCancel() {
+    @objc func onCancel() {
         _ = navigationController?.popViewController(animated: true)
     }
     
-    func onAccept() {
+    @objc func onAccept() {
         if let imageData = imageData {
             delegate?.giphyConfirmationViewController(self, didConfirmImageData: imageData)
         }

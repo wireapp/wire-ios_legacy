@@ -23,7 +23,7 @@ import Foundation
     case ignore, accept
 }
 
-final public class IncomingConnectionViewController: UIViewController {
+@objcMembers final public class IncomingConnectionViewController: UIViewController {
 
     fileprivate var connectionView: IncomingConnectionView!
 
@@ -67,7 +67,7 @@ final public class IncomingConnectionViewController: UIViewController {
     
 }
 
-final public class UserConnectionViewController: UIViewController {
+@objcMembers final public class UserConnectionViewController: UIViewController {
 
     fileprivate var userConnectionView: UserConnectionView!
 

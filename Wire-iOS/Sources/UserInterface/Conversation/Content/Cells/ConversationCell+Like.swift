@@ -20,14 +20,14 @@ import UIKit
 
 public extension ConversationCell {
 
-    public func createLikeButton() {
+    @objc public func createLikeButton() {
         self.likeButton = LikeButton()
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
         self.likeButton.accessibilityIdentifier = "likeButton"
         self.likeButton.accessibilityLabel = "likeButton"
         self.likeButton.addTarget(self, action: #selector(ConversationCell.likeMessage(_:)), for: .touchUpInside)
         self.likeButton.setIcon(.liked, with: .like, for: .normal)
-        self.likeButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextDimmed), for: .normal)
+        self.likeButton.setIconColor(UIColor(scheme: .textDimmed), for: .normal)
         self.likeButton.setIcon(.liked, with: .like, for: .selected)
         self.likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         self.likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
@@ -55,7 +55,7 @@ public extension ConversationCell {
         delegate.conversationCell!(self, didSelect: .like)
     }
 
-    func trackReaction(_ sender: AnyObject, reaction: ReactionType) {
+    @objc func trackReaction(_ sender: AnyObject, reaction: ReactionType) {
         var interactionMethod = InteractionMethod.undefined
         if sender is LikeButton {
             interactionMethod = .button

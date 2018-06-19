@@ -22,16 +22,16 @@ import Foundation
 
 extension ConversationInputBarViewController {
 
-    public func createEphemeralKeyboardViewController() {
+    @objc public func createEphemeralKeyboardViewController() {
         ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
         ephemeralKeyboardViewController?.delegate = self
     }
 
-    public func configureEphemeralKeyboardButton(_ button: IconButton) {
+    @objc public func configureEphemeralKeyboardButton(_ button: IconButton) {
         button.addTarget(self, action: #selector(ephemeralKeyboardButtonTapped), for: .touchUpInside)
     }
 
-    public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
+    @objc public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
         updateEphemeralKeyboardVisibility()
     }
 
@@ -74,7 +74,7 @@ extension ConversationInputBarViewController {
         present(controller, animated: true, completion: nil)
     }
 
-    public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
+    @objc public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
         guard let conversation = self.conversation else {
             return
         }
@@ -87,16 +87,16 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
 
-    func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
+    @objc func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
         updateEphemeralKeyboardVisibility()
     }
 
-    func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout) {
+    func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: TimeInterval) {
         inputBar.setInputBarState(.writing(ephemeral: timeout != .none), animated: true)
         updateMarkdownButton()
 
         ZMUserSession.shared()?.enqueueChanges {
-            self.conversation.updateMessageDestructionTimeout(timeout: timeout)
+            self.conversation.messageDestructionTimeout = timeout
             self.updateRightAccessoryView()
             self.updateButtonIconsForEphemeral()
         }

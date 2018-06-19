@@ -23,7 +23,7 @@ import Photos
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objc class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+@objcMembers class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     static let sharedDelegate = FastTransitioningDelegate()
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

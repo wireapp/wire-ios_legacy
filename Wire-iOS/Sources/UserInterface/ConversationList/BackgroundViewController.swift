@@ -43,7 +43,7 @@ final public class BackgroundViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    public init(user: ZMBareUser, userSession: ZMUserSession?) {
+    @objc public init(user: ZMBareUser, userSession: ZMUserSession?) {
         self.user = user
         self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
@@ -166,7 +166,7 @@ final public class BackgroundViewController: UIViewController {
     }
     
     private func updateForColorScheme() {
-        self.darkMode = (ColorScheme.default().variant == .dark)
+        self.darkMode = (ColorScheme.default.variant == .dark)
     }
     
     internal func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {

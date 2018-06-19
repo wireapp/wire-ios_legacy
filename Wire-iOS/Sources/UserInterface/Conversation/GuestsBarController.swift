@@ -40,7 +40,7 @@ class GuestsBarController: UIViewController {
         }
     }
     
-    public func setCollapsed(_ collapsed: Bool, animated: Bool) {
+    @objc public func setCollapsed(_ collapsed: Bool, animated: Bool) {
         
         guard self.isViewLoaded else {
             return
@@ -88,7 +88,7 @@ class GuestsBarController: UIViewController {
         
         view.backgroundColor = .clear
         
-        container.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLightGraphite, variant: .dark)
+        container.backgroundColor = UIColor(scheme: .lightGraphite, variant: .dark)
         container.clipsToBounds = true
         
         label.font = FontSpec(.small, .semibold).font!

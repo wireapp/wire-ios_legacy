@@ -37,7 +37,7 @@ extension ClientColorVariantProtocol where Self: UIViewController {
             case .none, .dark?:
                 return UIColor(white: 1, alpha: 0.4)
             case .light?:
-                return UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+                return UIColor(scheme: .textForeground, variant: .light)
             }
         }
     }
@@ -48,7 +48,7 @@ extension ClientColorVariantProtocol where Self: UIViewController {
             case .none, .dark?:
                 return UIColor(white: 1, alpha: 0.1)
             case .light?:
-                return UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: .light)
+                return UIColor(scheme: .separator, variant: .light)
             }
         }
     }

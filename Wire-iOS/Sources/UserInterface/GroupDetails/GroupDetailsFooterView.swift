@@ -33,7 +33,7 @@ final class GroupDetailsFooterView: UIView {
     public let moreButton = IconButton()
     public let addButton = IconButton()
     
-    init(variant: ColorSchemeVariant = ColorScheme.default().variant) {
+    init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant
         super.init(frame: .zero)
         setupViews()
@@ -45,14 +45,13 @@ final class GroupDetailsFooterView: UIView {
     }
     
     private func setupViews() {
-        func color(_ name: String) -> UIColor { return .wr_color(fromColorScheme: name, variant: variant) }
         [addButton, moreButton].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.setIconColor(color(ColorSchemeColorIconNormal), for: .normal)
-            $0.setIconColor(color(ColorSchemeColorIconHighlighted), for: .highlighted)
-            $0.setTitleColor(color(ColorSchemeColorIconNormal), for: .normal)
-            $0.setTitleColor(color(ColorSchemeColorTextDimmed), for: .highlighted)
+            $0.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
+            $0.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
+            $0.setTitleColor(UIColor(scheme: .iconNormal), for: .normal)
+            $0.setTitleColor(UIColor(scheme: .textDimmed), for: .highlighted)
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         
@@ -61,7 +60,7 @@ final class GroupDetailsFooterView: UIView {
         addButton.setTitle("participants.footer.add_title".localized.uppercased(), for: .normal)
         addButton.titleImageSpacing = 16
         addButton.titleLabel?.font = FontSpec(.small, .regular).font
-        backgroundColor = color(ColorSchemeColorBarBackground)
+        backgroundColor = UIColor(scheme: .barBackground)
         addButton.accessibilityIdentifier = "OtherUserMetaControllerLeftButton"
         moreButton.accessibilityIdentifier = "OtherUserMetaControllerRightButton"
     }

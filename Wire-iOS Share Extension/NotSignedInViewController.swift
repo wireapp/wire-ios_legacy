@@ -55,7 +55,7 @@ class NotSignedInViewController : UIViewController {
         }
     }
     
-    func onCloseTapped() {
+    @objc func onCloseTapped() {
         closeHandler?()
     }
 }

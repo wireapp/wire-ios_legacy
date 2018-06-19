@@ -152,7 +152,7 @@ extension DeveloperOptionsController {
 extension DeveloperOptionsController {
     
     /// Invoked when one of the switches changes
-    func switchDidChange(sender: AnyObject) {
+    @objc func switchDidChange(sender: AnyObject) {
         if let toggle = sender as? UISwitch {
             guard let action = self.uiSwitchToAction[toggle] else {
                 fatalError("Unknown switch?")
@@ -162,7 +162,7 @@ extension DeveloperOptionsController {
     }
     
     /// Invoked when one of the buttons is pressed
-    func didPressButton(sender: AnyObject) {
+    @objc func didPressButton(sender: AnyObject) {
         if let button = sender as? UIButton {
             guard let action = self.uiButtonToAction[button] else {
                 fatalError("Unknown button?")

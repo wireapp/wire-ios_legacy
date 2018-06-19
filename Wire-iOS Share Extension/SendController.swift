@@ -62,7 +62,7 @@ class SendController {
         
         var linkAttachment : NSItemProvider?
         
-        var sendables: [UnsentSendable] = attachments.flatMap {
+        var sendables: [UnsentSendable] = attachments.compactMap {
             if $0.hasImage {
                 return UnsentImageSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
             } else if $0.hasURL {

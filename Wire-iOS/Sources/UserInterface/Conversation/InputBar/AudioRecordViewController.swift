@@ -45,7 +45,7 @@ private let zmLog = ZMSLog(tag: "UI")
     case afterSlideUp, afterPreview, afterEffect
 }
 
-@objc public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
+@objcMembers public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
     
     let buttonOverlay = AudioButtonOverlay()
     let topSeparator = UIView()
@@ -131,11 +131,11 @@ private let zmLog = ZMSLog(tag: "UI")
             self.audioPreviewView.color = color
         }
         
-        topContainerView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
-        bottomContainerView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        topContainerView.backgroundColor = UIColor(scheme: .background)
+        bottomContainerView.backgroundColor = UIColor(scheme: .background)
         
-        topSeparator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
-        rightSeparator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        topSeparator.backgroundColor = UIColor(scheme: .separator)
+        rightSeparator.backgroundColor = UIColor(scheme: .separator)
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(topContainerTapped))
         topContainerView.addGestureRecognizer(tapRecognizer)
@@ -146,15 +146,15 @@ private let zmLog = ZMSLog(tag: "UI")
         
         timeLabel.accessibilityLabel = "audioRecorderTimeLabel"
         timeLabel.font = FontSpec(.small, .none).font!
-        timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        timeLabel.textColor = UIColor(scheme: .textForeground)
         
         topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized.uppercased()
         topTooltipLabel.accessibilityLabel = "audioRecorderTopTooltipLabel"
         topTooltipLabel.font = FontSpec(.small, .none).font!
-        topTooltipLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        topTooltipLabel.textColor = UIColor(scheme: .textDimmed)
         
         cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
-        cancelButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)
+        cancelButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
         updateRecordingState(recordingState)
@@ -289,7 +289,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func topContainerTapped(_ sender: UITapGestureRecognizer) {
+    @objc func topContainerTapped(_ sender: UITapGestureRecognizer) {
         delegate?.audioRecordViewControllerDidCancel(self)
     }
     
@@ -370,7 +370,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func cancelButtonPressed(_ sender: IconButton) {
+    @objc func cancelButtonPressed(_ sender: IconButton) {
         Analytics.shared().tagCancelledAudioMessageRecording()
         
         recorder.stopPlaying()

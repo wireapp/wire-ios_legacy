@@ -76,7 +76,7 @@ private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
 
-@objc public final class InputBar: UIView {
+@objcMembers public final class InputBar: UIView {
 
     private let inputBarVerticalInset : CGFloat = 34
 
@@ -194,7 +194,7 @@ private struct InputBarConstants {
         textView.textContainerInset = UIEdgeInsetsMake(inputBarVerticalInset / 2, 0, inputBarVerticalInset / 2, 4)
         textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
         textView.keyboardType = .default
-        textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
+        textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
         
@@ -403,11 +403,11 @@ private struct InputBarConstants {
             
             if self.inputBarState.isEphemeral {
                 button.setIconColor(UIColor.accent(), for: .normal)
-                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .highlighted)
+                button.setIconColor(UIColor(scheme: .iconNormal), for: .highlighted)
             }
             else {
-                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconNormal), for: .normal)
-                button.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorIconHighlighted), for: .highlighted)
+                button.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
+                button.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
             }
         }
     }
@@ -444,17 +444,17 @@ private struct InputBarConstants {
 
 extension InputBar {
 
-    func textViewTextDidChange(_ notification: Notification) {
+    @objc func textViewTextDidChange(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
     }
     
-    func textViewDidBeginEditing(_ notification: Notification) {
+    @objc func textViewDidBeginEditing(_ notification: Notification) {
         updateFakeCursorVisibility(notification.object as? UIResponder)
         updateEditViewState()
     }
     
-    func textViewDidEndEditing(_ notification: Notification) {
+    @objc func textViewDidEndEditing(_ notification: Notification) {
         updateFakeCursorVisibility()
         updateEditViewState()
     }
@@ -462,7 +462,7 @@ extension InputBar {
 }
 
 extension InputBar {
-    func applicationDidBecomeActive(_ notification: Notification) {
+    @objc func applicationDidBecomeActive(_ notification: Notification) {
         startCursorBlinkAnimation()
     }
 }

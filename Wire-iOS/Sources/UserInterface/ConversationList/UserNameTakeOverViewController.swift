@@ -74,12 +74,12 @@ final class UserNameTakeOverViewController: UIViewController {
         [topContainer, subtitleLabel, chooseOwnButton, keepSuggestedButton].forEach(contentView.addSubview)
         
         displayNameLabel.font = FontSpec(.large, .thin).font!
-        displayNameLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed, variant: .light)
+        displayNameLabel.textColor = UIColor(scheme: .textDimmed, variant: .light)
         displayNameLabel.text = name
         displayNameLabel.textAlignment = .center
         
         suggestedHandleLabel.font = FontSpec(.large, .none).font!
-        suggestedHandleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        suggestedHandleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         suggestedHandleLabel.text = "@" + suggestedHandle
         suggestedHandleLabel.textAlignment = .center
 
@@ -96,17 +96,17 @@ final class UserNameTakeOverViewController: UIViewController {
     func setupSubtitleLabel() {
         subtitleLabel.textAlignment = .natural
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleNone.rawValue]
+        subtitleLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue]
         subtitleLabel.extendsLinkTouchArea = true
         
         let font = FontSpec(.large, .thin).font!
         let linkFont = FontSpec(.large, .none).font!
-        let color = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        let color = UIColor(scheme: .textForeground, variant: .dark)
 
         let subtitle = "registration.select_handle.takeover.subtitle".localized
-        let linkAttributes: [String: Any] = [
-            NSFontAttributeName: linkFont,
-            NSLinkAttributeName: learnMoreURL
+        let linkAttributes: [NSAttributedStringKey: Any] = [
+            .font: linkFont,
+            .link: learnMoreURL
         ]
 
         let text = (subtitle && font && color) + " " + (learnMore && linkAttributes && color)
@@ -149,7 +149,7 @@ final class UserNameTakeOverViewController: UIViewController {
         }
     }
 
-    func buttonTapped(sender: Button) {
+    @objc func buttonTapped(sender: Button) {
         guard let action = action(for: sender) else { return }
         delegate?.takeOverViewController(self, didPerformAction: action)
     }

@@ -24,7 +24,7 @@ class ConversationTitleView: TitleView {
     var conversation: ZMConversation
     var interactive: Bool = true
     
-    init(conversation: ZMConversation, interactive: Bool = true) {
+    @objc init(conversation: ZMConversation, interactive: Bool = true) {
         self.conversation = conversation
         self.interactive = interactive
         super.init()
@@ -35,9 +35,9 @@ class ConversationTitleView: TitleView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
-        titleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-        titleColorSelected = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+    @objc func configure() {
+        titleColor = UIColor(scheme: .textForeground)
+        titleColorSelected = UIColor(scheme: .textDimmed)
         titleFont = FontSpec(.medium, .semibold).font!
         
         var attachment : NSTextAttachment?

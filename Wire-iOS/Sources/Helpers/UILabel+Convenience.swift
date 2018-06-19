@@ -23,12 +23,12 @@ extension UILabel {
         key: String? = nil,
         size: FontSize = .normal,
         weight: FontWeight = .regular,
-        color: String,
-        variant: ColorSchemeVariant = ColorScheme.default().variant
+        color: ColorSchemeColor,
+        variant: ColorSchemeVariant = ColorScheme.default.variant
         ) {
         self.init(frame: .zero)
         text = key.map { $0.localized }
         font = FontSpec(size, weight).font
-        textColor = ColorScheme.default().color(withName: color, variant: variant)
+        textColor = UIColor(scheme: color, variant: variant)
     }
 }

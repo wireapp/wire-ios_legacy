@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc class PreviewHeightCalculator: NSObject {
+@objcMembers class PreviewHeightCalculator: NSObject {
     
     static let standardCellHeight : CGFloat = 200.0
     static let compressedCellHeight : CGFloat = 160.0

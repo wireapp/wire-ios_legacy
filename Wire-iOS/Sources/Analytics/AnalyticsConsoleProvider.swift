@@ -20,7 +20,7 @@ import Foundation
 import WireSystem
 
 fileprivate let tag = "<ANALYTICS>:"
-@objc class AnalyticsConsoleProvider : NSObject {
+@objcMembers class AnalyticsConsoleProvider : NSObject {
     
     let zmLog = ZMSLog(tag: tag)
     var optedOut = false

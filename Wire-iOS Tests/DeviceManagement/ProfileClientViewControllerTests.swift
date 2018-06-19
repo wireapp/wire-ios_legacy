@@ -40,13 +40,13 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         user = nil
         client = nil
 
-        ColorScheme.default().variant = .light
+        ColorScheme.default.variant = .light
 
         super.tearDown()
     }
 
     func testTestForLightTheme(){
-        ColorScheme.default().variant = .light
+        ColorScheme.default.variant = .light
         
         sut = ProfileClientViewController(client: client)
         sut.spinner.stopAnimating()
@@ -57,7 +57,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testTestForDarkTheme(){
-        ColorScheme.default().variant = .dark
+        ColorScheme.default.variant = .dark
 
         sut = ProfileClientViewController(client: client)
         sut.spinner.stopAnimating()

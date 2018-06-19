@@ -24,7 +24,7 @@ import Cartography
 }
 
 extension UIViewController {
-    var wr_tabBarController: TabBarController? {
+    @objc var wr_tabBarController: TabBarController? {
         if (parent == nil) {
             return nil
         } else if (parent?.isKind(of: TabBarController.self) != nil) {
@@ -41,7 +41,7 @@ extension UIViewController {
     }
 }
 
-@objc
+@objcMembers
 class TabBarController: UIViewController {
 
     weak var delegate: TabBarControllerDelegate?
@@ -49,7 +49,7 @@ class TabBarController: UIViewController {
     fileprivate(set) var viewControllers: [UIViewController]
     fileprivate(set) var selectedIndex: Int
 
-    var style: ColorSchemeVariant = ColorScheme.default().variant {
+    var style: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             tabBar?.style = style
         }

@@ -26,7 +26,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController)
 }
 
-public class SearchHeaderViewController : UIViewController {
+@objcMembers public class SearchHeaderViewController : UIViewController {
     
     let tokenFieldContainer = UIView()
     let tokenField = TokenField()
@@ -60,9 +60,9 @@ public class SearchHeaderViewController : UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+        view.backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
 
-        searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
+        searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
         
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, with: .tiny, for: .normal)
@@ -71,12 +71,12 @@ public class SearchHeaderViewController : UIViewController {
         clearButton.isHidden = true
         
         tokenField.layer.cornerRadius = 4
-        tokenField.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
-        tokenField.tokenTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
-        tokenField.tokenSelectedTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        tokenField.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        tokenField.tokenTitleColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        tokenField.tokenSelectedTitleColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         tokenField.clipsToBounds = true
-        tokenField.textView.placeholderTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldTextPlaceHolder, variant: colorSchemeVariant)
-        tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: colorSchemeVariant)
+        tokenField.textView.placeholderTextColor = UIColor(scheme: .tokenFieldTextPlaceHolder, variant: colorSchemeVariant)
+        tokenField.textView.backgroundColor = UIColor(scheme: .tokenFieldBackground, variant: colorSchemeVariant)
         tokenField.textView.accessibilityIdentifier = "textViewSearch"
         tokenField.textView.placeholder = "peoplepicker.search_placeholder".localized.uppercased()
         tokenField.textView.keyboardAppearance = ColorScheme.keyboardAppearance(for: colorSchemeVariant)
@@ -120,7 +120,7 @@ public class SearchHeaderViewController : UIViewController {
         }
     }
     
-    fileprivate dynamic func onClearButtonPressed() {
+    @objc fileprivate dynamic func onClearButtonPressed() {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
         resetQuery()
