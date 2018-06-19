@@ -244,9 +244,9 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
     return [[SessionManager shared] unauthenticatedSession];
 }
 
-- (NotificationWindowRootViewController *)notificationWindowController
+- (CallWindowRootViewController *)callWindowRootViewController
 {
-    return (NotificationWindowRootViewController *)self.rootViewController.overlayWindow.rootViewController;
+    return (CallWindowRootViewController *)self.rootViewController.callWindow.rootViewController;
 }
 
 - (SessionManager *)sessionManager
