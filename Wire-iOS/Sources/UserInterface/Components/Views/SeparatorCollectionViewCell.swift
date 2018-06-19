@@ -63,7 +63,7 @@ class SeparatorCollectionViewCell: UICollectionViewCell, Themeable {
             separator.heightAnchor.constraint(equalToConstant: .hairline),
         ])
 
-        applyColorScheme(ColorScheme.default().variant)
+        applyColorScheme(ColorScheme.default.variant)
 
     }
 
@@ -81,7 +81,7 @@ class SeparatorCollectionViewCell: UICollectionViewCell, Themeable {
         }
     }
 
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -89,7 +89,7 @@ class SeparatorCollectionViewCell: UICollectionViewCell, Themeable {
     }
 
     // if nil the background color is the default content background color for the theme
-    dynamic var contentBackgroundColor: UIColor? = nil {
+    @objc dynamic var contentBackgroundColor: UIColor? = nil {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)
@@ -97,11 +97,11 @@ class SeparatorCollectionViewCell: UICollectionViewCell, Themeable {
     }
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: colorSchemeVariant)
+        separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
     }
 
     final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
     }
 
 }

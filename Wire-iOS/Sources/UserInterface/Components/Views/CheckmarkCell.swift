@@ -22,7 +22,7 @@ class CheckmarkCell: DetailsCollectionViewCell {
 
     var showCheckmark: Bool = false {
         didSet {
-            updateCheckmark(forColor: ColorScheme.default().variant)
+            updateCheckmark(forColor: ColorScheme.default.variant)
         }
     }
 
@@ -45,7 +45,7 @@ class CheckmarkCell: DetailsCollectionViewCell {
         }
 
         let color = colorSchemeVariant == .light
-            ? UIColor.wr_color(fromColorScheme: ColorSchemeColorGraphite, variant: colorSchemeVariant)
+            ? UIColor(scheme: .graphite, variant: colorSchemeVariant)
             : .white
 
         accessory = UIImage(for: .checkmark, iconSize: .like, color: color)

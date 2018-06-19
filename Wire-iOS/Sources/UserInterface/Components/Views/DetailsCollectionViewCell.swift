@@ -58,7 +58,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
         leftIconView.translatesAutoresizingMaskIntoConstraints = false
         leftIconView.contentMode = .scaleAspectFit
-        leftIconView.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        leftIconView.setContentHuggingPriority(.required, for: .horizontal)
 
         accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
         accessoryIconView.contentMode = .center
@@ -68,7 +68,7 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.font = FontSpec.init(.normal, .light).font!
-        statusLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        statusLabel.setContentHuggingPriority(.required, for: .horizontal)
 
         leftIconContainer = UIView()
         leftIconContainer.addSubview(leftIconView)
@@ -99,9 +99,9 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
-        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
-        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
+        backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         statusLabel.textColor = sectionTextColor
     }
 

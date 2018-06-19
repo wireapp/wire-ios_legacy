@@ -59,7 +59,7 @@ class ConversationTimeoutOptionsViewController: UIViewController {
 
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground)
+        collectionView.backgroundColor = UIColor(scheme: .contentBackground)
         collectionView.alwaysBounceVertical = true
 
         collectionViewLayout.minimumLineSpacing = 0
