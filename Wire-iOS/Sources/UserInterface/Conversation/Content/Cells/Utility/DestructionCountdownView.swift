@@ -48,11 +48,11 @@ import Cartography
 
         let background = UIColor(scheme: .contentBackground)
 
-        elapsedTimeColor = UIColor(scheme: .graphite)
-            .withAlphaComponent(0.16)
+        elapsedTimeColor = UIColor(scheme: .lightGraphite)
+            .withAlphaComponent(0.24)
             .removeAlphaByBlending(with: background)
 
-        remainingTimeColor = UIColor(scheme: .textPlaceholder)
+        remainingTimeColor = UIColor(scheme: .lightGraphite).withAlphaComponent(0.64).removeAlphaByBlending(with: .white)
     }
 
     // MARK: - Layout
