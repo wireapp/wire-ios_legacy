@@ -46,6 +46,9 @@ import WireSyncEngine
     /// The login credentials provides by command line
     @objc public let automationEmailCredentials: ZMEmailCredentials?
     
+    /// Whether we push notification permissions alert is disabled
+    @objc public let disablePushNotificationAlert : Bool
+    
     /// Whether autocorrection is disabled
     @objc public let disableAutocorrection : Bool
     
@@ -65,17 +68,18 @@ import WireSyncEngine
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
 
-        self.disableAutocorrection = arguments.hasFlag(AutomationKey.DisableAutocorrection.rawValue)
-        self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.EnableAddressBookOnSimulator.rawValue)
+        self.disablePushNotificationAlert = arguments.hasFlag(AutomationKey.disablePushNotificationAlert.rawValue)
+        self.disableAutocorrection = arguments.hasFlag(AutomationKey.disableAutocorrection.rawValue)
+        self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator.rawValue)
         self.automationEmailCredentials = AutomationHelper.credentials(arguments)
-        if arguments.hasFlag(AutomationKey.LogNetwork.rawValue) {
+        if arguments.hasFlag(AutomationKey.logNetwork.rawValue) {
             ZMSLog.set(level: .debug, tag: "Network")
         }
-        if arguments.hasFlag(AutomationKey.LogCalling.rawValue) {
+        if arguments.hasFlag(AutomationKey.logCalling.rawValue) {
             ZMSLog.set(level: .debug, tag: "calling")
         }
         AutomationHelper.enableLogTags(arguments)
-        if let debugDataPath = arguments.flagValueIfPresent(AutomationKey.DebugDataToInstall.rawValue),
+        if let debugDataPath = arguments.flagValueIfPresent(AutomationKey.debugDataToInstall.rawValue),
             FileManager.default.fileExists(atPath: debugDataPath)
         {
             self.debugDataToInstall = URL(fileURLWithPath: debugDataPath)
@@ -88,21 +92,22 @@ import WireSyncEngine
     }
     
     fileprivate enum AutomationKey: String {
-        case Email = "loginemail"
-        case Password = "loginpassword"
-        case LogNetwork = "debug-log-network"
-        case LogCalling = "debug-log-calling"
-        case LogTags = "debug-log"
-        case DisableAutocorrection = "disable-autocorrection"
-        case EnableAddressBookOnSimulator = "addressbook-on-simulator"
-        case AddressBookRemoteSearchDelay = "addressbook-search-delay"
-        case DebugDataToInstall = "debug-data-to-install"
+        case email = "loginemail"
+        case password = "loginpassword"
+        case logNetwork = "debug-log-network"
+        case logCalling = "debug-log-calling"
+        case logTags = "debug-log"
+        case disablePushNotificationAlert = "disable-push-alert"
+        case disableAutocorrection = "disable-autocorrection"
+        case enableAddressBookOnSimulator = "addressbook-on-simulator"
+        case addressBookRemoteSearchDelay = "addressbook-search-delay"
+        case debugDataToInstall = "debug-data-to-install"
     }
     
     /// Returns the login email and password credentials if set in the given arguments
     fileprivate static func credentials(_ arguments: ArgumentsType) -> ZMEmailCredentials? {
-        guard let email = arguments.flagValueIfPresent(AutomationKey.Email.rawValue),
-            let password = arguments.flagValueIfPresent(AutomationKey.Password.rawValue) else {
+        guard let email = arguments.flagValueIfPresent(AutomationKey.email.rawValue),
+            let password = arguments.flagValueIfPresent(AutomationKey.password.rawValue) else {
             return nil
         }
         return ZMEmailCredentials(email: email, password: password)
@@ -110,14 +115,14 @@ import WireSyncEngine
     
     // Switches on all flags that you would like to log listed after `--debug-log=` tags should be separated by comma
     fileprivate static func enableLogTags(_ arguments: ArgumentsType) {
-        guard let tagsString = arguments.flagValueIfPresent(AutomationKey.LogTags.rawValue) else { return }
+        guard let tagsString = arguments.flagValueIfPresent(AutomationKey.logTags.rawValue) else { return }
         let tags = tagsString.components(separatedBy: ",")
         tags.forEach{ ZMSLog.set(level: .debug, tag: $0) }
     }
     
     /// Returns the custom time interval for address book search delay if it set in the given arguments
     fileprivate static func addressBookSearchDelay(_ arguments: ArgumentsType) -> TimeInterval? {
-        guard let delayString = arguments.flagValueIfPresent(AutomationKey.AddressBookRemoteSearchDelay.rawValue),
+        guard let delayString = arguments.flagValueIfPresent(AutomationKey.addressBookRemoteSearchDelay.rawValue),
             let delay = Int(delayString) else {
                 return nil
         }
