@@ -232,7 +232,7 @@ private struct InputBarConstants {
         
         constrain(textInputContainer, buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView) { textInputContainer, buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
             textInputContainer.leading == textInputContainer.superview!.leading
-            textInputContainer.trailing == textInputContainer.superview!.trailing - UIView.conversationLayoutMargins.right
+            textInputContainer.trailing == textInputContainer.superview!.trailing - UIView.conversationLayoutMargins.right + 2
             textInputContainer.top == textInputContainer.superview!.top + 2
             textInputContainer.bottom == buttonContainer.top - 2
 
