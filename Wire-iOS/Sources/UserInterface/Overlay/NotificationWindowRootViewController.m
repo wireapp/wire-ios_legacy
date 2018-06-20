@@ -83,21 +83,9 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return self.voiceChannelController.prefersStatusBarHidden;
+    return YES;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.voiceChannelController.preferredStatusBarStyle;
-}
-
-- (void)transitionToLoggedInSession
-{
-    _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];
-    self.voiceChannelController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.voiceChannelController toView:self.view];
-
-    [self.voiceChannelController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-}
 
 #pragma mark - In app custom notifications
 

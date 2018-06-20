@@ -189,7 +189,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     else if ([viewController isKindOfClass:[NameStepViewController class]]) {
         [self.analyticsTracker tagEnteredName];
         [self presentPictureStepController];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [[SessionManager shared] configureUserNotifications];
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
         ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;

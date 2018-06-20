@@ -30,6 +30,7 @@ class EphemeralKeyboardViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         conversation = MockConversationFactory.mockConversation()
+        conversation.messageDestructionTimeout = ZMConversationMessageDestructionTimeout.fiveMinutes.rawValue
         sut = EphemeralKeyboardViewController(conversation: conversation as Any as! ZMConversation)
     }
 
@@ -50,6 +51,7 @@ fileprivate extension UIViewController {
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
 
+        view.layer.speed = 0
         view.setNeedsLayout()
         view.layoutIfNeeded()
         return view

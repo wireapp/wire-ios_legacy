@@ -23,7 +23,9 @@ import Classy
 @objcMembers class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
-    public let overlayWindow: UIWindow
+    public let callWindow: CallWindow
+    public let overlayWindow: NotificationWindow
+
     public fileprivate(set) var sessionManager: SessionManager?
     public fileprivate(set) var quickActionsManager: QuickActionsManager?
     
@@ -77,13 +79,9 @@ import Classy
 
         mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
-
-        overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
-        overlayWindow.backgroundColor = .clear
-        overlayWindow.windowLevel = UIWindowLevelStatusBar - 1
-        overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
-        overlayWindow.rootViewController = NotificationWindowRootViewController()
-        overlayWindow.accessibilityViewIsModal = true
+        
+        callWindow = CallWindow(frame: UIScreen.main.bounds)
+        overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
 
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
@@ -95,6 +93,7 @@ import Classy
         // not possible because it has to be below the status bar.
         mainWindow.rootViewController = self
         mainWindow.makeKeyAndVisible()
+        callWindow.makeKeyAndVisible()
         overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
 
@@ -333,7 +332,7 @@ import Classy
     func prepare(for appState: AppState, completionHandler: @escaping () -> Void) {
 
         if appState == .authenticated(completedRegistration: false) {
-            (overlayWindow.rootViewController as? NotificationWindowRootViewController)?.transitionToLoggedInSession()
+            callWindow.callController.transitionToLoggedInSession()
         } else {
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
@@ -341,7 +340,7 @@ import Classy
         if !isClassyInitialized && isClassyRequired(for: appState) {
             isClassyInitialized = true
 
-            let windows = [mainWindow, overlayWindow]
+            let windows = [mainWindow, callWindow, overlayWindow]
             DispatchQueue.main.async {
                 self.setupClassy(with: windows)
                 completionHandler()

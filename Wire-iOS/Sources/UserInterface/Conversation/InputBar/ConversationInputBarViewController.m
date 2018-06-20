@@ -233,8 +233,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (self.conversationObserverToken == nil && self.conversation != nil) {
         self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
-    
-    if (self.userObserverToken == nil && self.conversation.connectedUser != nil) {
+
+    if (self.userObserverToken == nil &&
+        self.conversation.connectedUser != nil
+        && ZMUserSession.sharedSession != nil) {
         self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.conversation.connectedUser userSession:ZMUserSession.sharedSession];
     }
     
