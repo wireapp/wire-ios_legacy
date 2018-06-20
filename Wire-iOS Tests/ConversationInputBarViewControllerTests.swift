@@ -39,26 +39,27 @@ final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
     }
 }
 
-final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
+final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationInputBarViewController!
-    
-    override func setUp() {
-        super.setUp()
 
+    func prepareSut() {
         sut = ConversationInputBarViewController(conversation: nil)
-        sut.view.layoutIfNeeded()
 
+        sut.view.layoutIfNeeded()
         sut.view.layer.speed = 0
+
+        sut.viewDidLoad()
     }
 
     func testNormalState(){
+        prepareSut()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testAudioRecorderTouchBegan(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -73,7 +74,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
     func testAudioRecorderTouchChanged(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -89,7 +90,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
     func testAudioRecorderTouchEnded(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -101,5 +102,44 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view)
+    }
+}
+
+// Ephemeral bndicator button
+extension ConversationInputBarViewControllerTests {
+    func testEphemeralIndicatorButton(){
+        // GIVEN
+        prepareSut()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
+
+    func testEphemeralTime4Weeks(){
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+
+        sut.viewDidLoad()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = 2419200 // 4 weeks
+
+        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
+}
+
+fileprivate extension UIView {
+    var snapshotView: UIView {
+        self.layer.speed = 0
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        return self
     }
 }

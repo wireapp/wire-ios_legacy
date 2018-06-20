@@ -122,10 +122,11 @@ import Cartography
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        if conversation.canManageAccess {
-            let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
-            sections.append(guestOptionsSectionController)
-        }
+        //if conversation.canManageAccess {
+            let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
+            sections.append(optionsSectionController)
+        //}
+
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
             let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, delegate: self)
@@ -177,7 +178,7 @@ extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewContro
     
 }
 
-extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GuestOptionsSectionControllerDelegate {
+extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {
     
     func presentDetails(for user: ZMUser) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
@@ -191,6 +192,11 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gue
     @objc(presentGuestOptionsAnimated:)
     func presentGuestOptions(animated: Bool) {
         let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
+        navigationController?.pushViewController(menu, animated: animated)
+    }
+
+    func presentTimeoutOptions(animated: Bool) {
+        let menu = ConversationTimeoutOptionsViewController(conversation: conversation, items: ZMConversationMessageDestructionTimeout.all, userSession: ZMUserSession.shared()!)
         navigationController?.pushViewController(menu, animated: animated)
     }
     

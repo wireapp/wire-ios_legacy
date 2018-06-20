@@ -19,30 +19,14 @@
 import UIKit
 import WireExtensionComponents
 
-class UserCell: UICollectionViewCell, Themeable {
-    
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-    
-    // if nil the background color is the default content background color for the theme
-    @objc dynamic var contentBackgroundColor: UIColor? = nil {
-        didSet {
-            guard oldValue != contentBackgroundColor else { return }
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-    
+class UserCell: SeparatorCollectionViewCell {
+
     enum AccessoryIcon {
         case none, disclosure, connect
     }
     
     var hidesSubtitle: Bool = false
     
-    let separator = UIView()
     let avatarSpacer = UIView()
     let avatar = BadgeUserImageView()
     let titleLabel = UILabel()
@@ -59,19 +43,7 @@ class UserCell: UICollectionViewCell, Themeable {
     
     fileprivate static let boldFont: UIFont! = FontSpec.init(.small, .regular).font!
     fileprivate static let lightFont: UIFont! = FontSpec.init(.small, .light).font!
-    
-    private func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
-    }
-    
-    override var isHighlighted: Bool {
-        didSet {
-            backgroundColor = isHighlighted
-                ? .init(white: 0, alpha: 0.08)
-                : contentBackgroundColor(for: colorSchemeVariant)
-        }
-    }
-    
+
     override var isSelected: Bool {
         didSet {
             let foregroundColor = UIColor(scheme: .background, variant: colorSchemeVariant)
@@ -82,17 +54,7 @@ class UserCell: UICollectionViewCell, Themeable {
             checkmarkIconView.layer.borderColor = borderColor.cgColor
         }
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
+        
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -108,7 +70,9 @@ class UserCell: UICollectionViewCell, Themeable {
         }
     }
     
-    fileprivate func setup() {
+    override func setUp() {
+        super.setUp()
+
         guestIconView.translatesAutoresizingMaskIntoConstraints = false
         guestIconView.contentMode = .center
         guestIconView.accessibilityIdentifier = "img.guest"
@@ -147,7 +111,7 @@ class UserCell: UICollectionViewCell, Themeable {
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
         avatar.userSession = ZMUserSession.shared()
-        avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
+        avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: .light)
         avatar.size = .tiny
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
@@ -160,7 +124,7 @@ class UserCell: UICollectionViewCell, Themeable {
         iconStackView.distribution = .fill
         iconStackView.alignment = .center
         iconStackView.translatesAutoresizingMaskIntoConstraints = false
-        iconStackView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        iconStackView.setContentHuggingPriority(.required, for: .horizontal)
         
         titleStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         titleStackView.axis = .vertical
@@ -173,14 +137,9 @@ class UserCell: UICollectionViewCell, Themeable {
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        separator.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.addSubview(contentStackView)
-        contentView.addSubview(separator)
-        
         createConstraints()
-        applyColorScheme(colorSchemeVariant)
     }
     
     func createConstraints() {
@@ -197,17 +156,13 @@ class UserCell: UICollectionViewCell, Themeable {
             contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 64),
-            separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            separator.heightAnchor.constraint(equalToConstant: .hairline),
         ])
     }
     
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+    override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        separator.backgroundColor = UIColor(scheme: .cellSeparator, variant: colorSchemeVariant)
         videoIconView.image = UIImage(for: .videoCall, iconSize: .tiny, color: UIColor(scheme: .iconGuest, variant: colorSchemeVariant))
         guestIconView.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor(scheme: .iconGuest, variant: colorSchemeVariant))
         accessoryIconView.image = UIImage(for: .disclosureIndicator, iconSize: .like, color: sectionTextColor)

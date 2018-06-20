@@ -33,8 +33,10 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
 
 fileprivate let longStyleFormatter: DateComponentsFormatter = {
     let formatter = DateComponentsFormatter()
+    formatter.includesApproximationPhrase = false
+    formatter.maximumUnitCount = 1
     formatter.unitsStyle = .full
-    formatter.allowedUnits = [.day, .hour, .minute, .second]
+    formatter.allowedUnits = [.weekOfMonth, .day, .hour, .minute, .second]
     formatter.zeroFormattingBehavior = .dropAll
     return formatter
 }()
@@ -52,6 +54,7 @@ extension ZMConversationMessageDestructionTimeout {
         if isMinutes { return String(Int(rawValue / 60)) }
         if isHours { return String(Int(rawValue / 3600)) }
         if isDays { return String(Int(rawValue / 86400)) }
+        if isWeeks { return String(Int(rawValue / 604800)) }
         return nil
     }
 
@@ -73,7 +76,11 @@ extension ZMConversationMessageDestructionTimeout {
     }
 
     var isDays: Bool {
-        return rawValue >= 86400
+        return 86400..<604800 ~= rawValue
+    }
+
+    var isWeeks: Bool {
+        return rawValue >= 604800
     }
 
 }
@@ -81,6 +88,7 @@ extension ZMConversationMessageDestructionTimeout {
 public extension ZMConversation {
 
     @objc var timeoutImage: UIImage? {
+        if destructionTimeout.isWeeks { return WireStyleKit.imageOfWeek(with: UIColor.accent()) }
         if destructionTimeout.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
         if destructionTimeout.isHours { return WireStyleKit.imageOfHour(with: UIColor.accent()) }
         if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor.accent()) }
@@ -102,11 +110,14 @@ public extension ZMConversation {
     public var pickerColor: UIColor?
     public var separatorColor: UIColor?
 
-    private let conversation: ZMConversation
+    private let conversation: ZMConversation!
     private let picker = PickerView()
 
 
-    public init(conversation: ZMConversation) {
+    /// Allow conversation argument is nil for testing
+    ///
+    /// - Parameter conversation: nil for testing only
+    public init(conversation: ZMConversation!) {
         self.conversation = conversation
         if DeveloperMenuState.developerMenuEnabled() {
             timeouts = ZMConversationMessageDestructionTimeout.all + [nil]
