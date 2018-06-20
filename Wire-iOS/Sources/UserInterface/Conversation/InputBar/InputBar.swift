@@ -230,14 +230,15 @@ private struct InputBarConstants {
     
     fileprivate func createConstraints() {
         
+
         constrain(textInputContainer, buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView) { textInputContainer, buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
             textInputContainer.leading == textInputContainer.superview!.leading
-            textInputContainer.trailing == textInputContainer.superview!.trailing - UIView.conversationLayoutMargins.right + 2
+            textInputContainer.trailing == textInputContainer.superview!.trailing - UIView.directionAwareConversationLayoutMargins.right + 2
             textInputContainer.top == textInputContainer.superview!.top + 2
             textInputContainer.bottom == buttonContainer.top - 2
 
-            leftAccessoryView.width >= UIView.conversationLayoutMargins.left
-            rightAccessoryView.width >= UIView.conversationLayoutMargins.right
+            leftAccessoryView.width >= UIView.directionAwareConversationLayoutMargins.left
+            rightAccessoryView.width >= UIView.directionAwareConversationLayoutMargins.right
 
             buttonContainer.top == textView.bottom
             textView.height >= 56
