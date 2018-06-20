@@ -34,7 +34,7 @@ class MessageTimerUpdateCell: IconSystemCell {
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
-        leftIconView.image = UIImage(for: .hourglass, fontSize: 16, color: .black)
+        leftIconView.image = UIImage(for: .hourglass, fontSize: 16, color: labelTextColor)
         updateLabel()
     }
     
@@ -43,11 +43,11 @@ class MessageTimerUpdateCell: IconSystemCell {
         systemMessageData.systemMessageType == .messageTimerUpdate,
         let labelFont = labelFont,
         //let labelBoldFont = labelBoldFont,
-        let labelTextColor = labelTextColor
+        let labelTextColor = labelTextColor,
+        let user = systemMessageData.users.first
             else { return }
         
-        attributedText = "SYSTEM MESSAGE" && labelFont && labelTextColor
-        
+        attributedText = "\(user.name) set the timed messages to \(systemMessageData.messageTimer)" && labelFont && labelTextColor
         
         /*
         let attributedLocalizedUppercaseString: (String, _ users: Set<ZMUser>) -> NSAttributedString? = { localizationKey, users in
