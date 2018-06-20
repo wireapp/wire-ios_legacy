@@ -51,6 +51,7 @@ fileprivate extension UIViewController {
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
 
+        view.layer.speed = 0
         view.setNeedsLayout()
         view.layoutIfNeeded()
         return view
