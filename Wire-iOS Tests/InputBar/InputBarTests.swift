@@ -155,8 +155,7 @@ class InputBarTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: inputBar)
     }
 
-    // Disabled until we figure out the `[MockUser conversationType]` crash after resetting the simulator / on CI
-    func disabled_testThatItRendersCorrectlyInEditState() {
+    func testThatItRendersCorrectlyInEditState() {
         inputBar.layer.speed = 0
         inputBar.setInputBarState(.editing(originalText: "This text is being edited"), animated: false)
         inputBar.updateFakeCursorVisibility()
@@ -164,7 +163,7 @@ class InputBarTests: ZMSnapshotTestCase {
         verifyInAllPhoneWidths(view: inputBar)
     }
     
-    func disabled_testThatItRendersCorrectlyInEditState_LongText() {
+    func testThatItRendersCorrectlyInEditState_LongText() {
         inputBar.layer.speed = 0
         inputBar.setInputBarState(.editing(originalText: longText), animated: false)
 
