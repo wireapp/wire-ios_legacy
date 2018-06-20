@@ -230,10 +230,9 @@ private struct InputBarConstants {
     
     fileprivate func createConstraints() {
         let trailingSpace: CGFloat = 2
-        let leadingSpace: CGFloat = UIView.directionAwareConversationLayoutMargins.left
 
         constrain(textInputContainer, buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView) { textInputContainer, buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
-            textInputContainer.leading == textInputContainer.superview!.leading + leadingSpace
+            textInputContainer.leading == textInputContainer.superview!.leading
             textInputContainer.trailing == textInputContainer.superview!.trailing - UIView.directionAwareConversationLayoutMargins.right + trailingSpace
             textInputContainer.top == textInputContainer.superview!.top + 2
             textInputContainer.bottom == buttonContainer.top - 2
