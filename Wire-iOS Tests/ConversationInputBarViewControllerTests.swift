@@ -105,7 +105,7 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     }
 }
 
-// Ephemeral bndicator button
+// Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){
         // GIVEN
@@ -129,6 +129,24 @@ extension ConversationInputBarViewControllerTests {
         otherUserConversation.messageDestructionTimeout = 2419200 // 4 weeks
 
         sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
+
+    func testEphemeralModeWhenTyping() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+
+        sut.viewDidLoad()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = 2419200 // 4 weeks
+
+        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        let shortText = "Lorem ipsum dolor"
+        sut.inputBar.textView.text = shortText
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
