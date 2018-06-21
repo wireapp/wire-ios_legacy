@@ -34,7 +34,7 @@ private let disableEphemeralSendingInGroups = false
     }
 
     public var ephemeralIndicatorButtonHidden: Bool {
-        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || !ephemeral || disableEphemeralSending
+        return hasText || (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || !ephemeral || disableEphemeralSending
     }
 
     public var ephemeralIndicatorButtonEnabled: Bool {
