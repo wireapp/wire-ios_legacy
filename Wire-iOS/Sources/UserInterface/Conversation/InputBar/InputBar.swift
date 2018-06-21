@@ -82,7 +82,7 @@ private struct InputBarConstants {
 @objcMembers public final class InputBar: UIView {
 
     private let inputBarVerticalInset: CGFloat = 34
-    public static let rightIconSIze: CGFloat = 28
+    public static let rightIconSIze: CGFloat = 32
 
 
     let textView = MarkdownTextView(with: DownStyle.compact)

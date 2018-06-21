@@ -388,14 +388,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.sendButton];
     
     [self createSendButtonConstraints];
-
-//    [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
-
-//    [self.inputBar.rightAccessoryView addSubview:self.sendButton];
-//    [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
-//    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
-//    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-//    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)createEphemeralIndicatorButton
@@ -408,13 +400,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
 
     [self.inputBar.rightAccessoryStackView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
-    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(28, 28)];
-
-    //    [self.inputBar.rightAccessoryView addSubview:self.ephemeralIndicatorButton];
-//
-//    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(32, 32)]; /// TODO: pin it on the left of sendButton
-//    [self.ephemeralIndicatorButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
-//    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton];
+    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];
 
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
 }
@@ -457,13 +443,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.hourglassButton.cas_styleClass = @"hourglass";
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
 
-    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(28, 28)];
-
-    //    [self.inputBar.rightAccessoryView addSubview:self.hourglassButton];
-//
-//    [self.hourglassButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton]; // TODO: align it to eph button
-//    [self.hourglassButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.sendButton withOffset:0];
-//    [self.hourglassButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton withOffset:0];
+    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];
 }
 
 - (void)createTypingIndicatorView

@@ -50,7 +50,7 @@ class InputBarTests: ZMSnapshotTestCase {
         super.setUp()
         sut = InputBar(buttons: buttons())
         sut.leftAccessoryView.isHidden = true
-        sut.rightAccessoryView.isHidden = true
+        sut.rightAccessoryStackView.isHidden = true
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.layer.speed = 0
     }
@@ -65,7 +65,7 @@ class InputBarTests: ZMSnapshotTestCase {
         sut.textView.text = ""
         sut.updateFakeCursorVisibility()
         sut.leftAccessoryView.isHidden = true
-        sut.rightAccessoryView.isHidden = true
+        sut.rightAccessoryStackView.isHidden = true
         CASStyler.default().styleItem(sut)
         
         verifyInAllPhoneWidths(view: sut)
@@ -109,7 +109,7 @@ class InputBarTests: ZMSnapshotTestCase {
         
         let inputBar = InputBar(buttons: buttonsWithText)
         inputBar.leftAccessoryView.isHidden = true
-        inputBar.rightAccessoryView.isHidden = true
+        inputBar.rightAccessoryStackView.isHidden = true
 
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.layer.speed = 0
@@ -123,7 +123,7 @@ class InputBarTests: ZMSnapshotTestCase {
         let inputBar = InputBar(buttons: buttons() + buttons())
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.leftAccessoryView.isHidden = true
-        inputBar.rightAccessoryView.isHidden = true
+        inputBar.rightAccessoryStackView.isHidden = true
         inputBar.textView.text = ""
         inputBar.layer.speed = 0
         inputBar.updateFakeCursorVisibility()
