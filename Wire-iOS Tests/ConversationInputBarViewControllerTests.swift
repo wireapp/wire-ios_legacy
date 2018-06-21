@@ -103,7 +103,6 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view)
     }
-
 }
 
 // Ephemeral bndicator button
