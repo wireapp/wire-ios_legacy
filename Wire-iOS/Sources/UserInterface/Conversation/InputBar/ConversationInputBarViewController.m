@@ -509,7 +509,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.sendButtonState updateWithTextLength:trimmed.length
                                        editing:nil != self.editingMessage
                                    markingDown:self.inputBar.isMarkingDown
-                            destructionTimeout:self.conversation.messageDestructionTimeout
+                            destructionTimeout:self.conversation.messageDestructionTimeoutValue
                               conversationType:self.conversation.conversationType
                                           mode:self.mode];
 

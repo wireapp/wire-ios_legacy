@@ -19,14 +19,14 @@
 import XCTest
 @testable import Wire
 
-final class ZMConversationMessageDestructionTimeoutTests: XCTestCase {
+final class MessageDestructionTimeoutValueTests: XCTestCase {
     
     func testThatItReturnsTheCorrectFormattedString(){
-        XCTAssertEqual(ZMConversationMessageDestructionTimeout.none.displayString, "Off")
-        XCTAssertEqual(ZMConversationMessageDestructionTimeout.tenSeconds.displayString, "10 seconds")
-        XCTAssertEqual(ZMConversationMessageDestructionTimeout.fiveMinutes.displayString, "5 minutes")
-        XCTAssertEqual(ZMConversationMessageDestructionTimeout.oneDay.displayString, "1 day")
-        XCTAssertEqual(ZMConversationMessageDestructionTimeout.oneWeek.displayString, "1 week")
-        XCTAssertEqual(ZMConversationMessageDestructionTimeout.fourWeeks.displayString, "4 weeks")
+        XCTAssertEqual(MessageDestructionTimeoutValue.none.displayString, "Off")
+        XCTAssertEqual(MessageDestructionTimeoutValue.tenSeconds.displayString, "10 seconds")
+        XCTAssertEqual(MessageDestructionTimeoutValue.fiveMinutes.displayString, "5 minutes")
+        XCTAssertEqual(MessageDestructionTimeoutValue.oneDay.displayString, "1 day")
+        XCTAssertEqual(MessageDestructionTimeoutValue.oneWeek.displayString, "1 week")
+        XCTAssertEqual(MessageDestructionTimeoutValue.fourWeeks.displayString, "4 weeks")
     }
 }
