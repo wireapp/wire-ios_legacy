@@ -53,8 +53,6 @@ class InputBarTests: ZMSnapshotTestCase {
         sut.rightAccessoryView.isHidden = true
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.layer.speed = 0
-        
-        recordMode = true
     }
 
     override func tearDown() {
