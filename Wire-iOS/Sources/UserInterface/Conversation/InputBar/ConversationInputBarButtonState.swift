@@ -22,6 +22,16 @@ import Foundation
 private let disableEphemeralSending = false
 private let disableEphemeralSendingInGroups = false
 
+extension ZMConversation {
+    @objc var hasSyncedMessageDestructionTimeout: Bool {
+        switch messageDestructionTimeout {
+        case .synced(_)?:
+            return true
+        default:
+            return false
+        }
+    }
+}
 
 @objcMembers final public class ConversationInputBarButtonState: NSObject {
 
@@ -38,9 +48,7 @@ private let disableEphemeralSendingInGroups = false
     }
 
     public var ephemeralIndicatorButtonEnabled: Bool {
-        // TODO: return false if the conversation has global timed messages
-        let conversationHasGlobalTimedMessages = false
-        return !ephemeralIndicatorButtonHidden && !conversationHasGlobalTimedMessages
+        return !ephemeralIndicatorButtonHidden && !syncedMessageDestructionTimeout
     }
 
     private var hasText: Bool {
@@ -57,14 +65,16 @@ private let disableEphemeralSendingInGroups = false
     private var destructionTimeout: TimeInterval = 0
     private var conversationType: ZMConversationType = .oneOnOne
     private var mode: ConversationInputBarViewControllerMode = .textInput
+    private var syncedMessageDestructionTimeout: Bool = false
 
-    public func update(textLength: Int, editing: Bool, markingDown: Bool, destructionTimeout: TimeInterval, conversationType: ZMConversationType, mode: ConversationInputBarViewControllerMode) {
+    public func update(textLength: Int, editing: Bool, markingDown: Bool, destructionTimeout: TimeInterval, conversationType: ZMConversationType, mode: ConversationInputBarViewControllerMode, syncedMessageDestructionTimeout: Bool) {
         self.textLength = textLength
         self.editing = editing
         self.markingDown = markingDown
         self.destructionTimeout = destructionTimeout
         self.conversationType = conversationType
         self.mode = mode
+        self.syncedMessageDestructionTimeout = syncedMessageDestructionTimeout
     }
 
 }

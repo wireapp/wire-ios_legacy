@@ -115,7 +115,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         case .synced(let value)?:
             cell.showCheckmark = item == value
         default:
-            cell.showCheckmark = false
+            cell.showCheckmark = item == 0
         }
         
         cell.showSeparator = indexPath.row < (items.count - 1)

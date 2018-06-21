@@ -87,7 +87,7 @@ extension MessageDestructionTimeoutValue {
 
 public extension ZMConversation {
 
-    private var destructionTimeout: MessageDestructionTimeoutValue? {
+    var destructionTimeout: MessageDestructionTimeoutValue? {
         switch messageDestructionTimeout {
         case .local(let value)?:
             return value
@@ -112,10 +112,14 @@ public extension ZMConversation {
     }
 
     @objc var disabledTimeoutImage: UIImage? {
-        if destructionTimeout.isDays { return WireStyleKit.imageOfDay(with: UIColor(scheme: .lightGraphite)) }
-        if destructionTimeout.isHours { return WireStyleKit.imageOfHour(with: UIColor(scheme: .lightGraphite)) }
-        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor(scheme: .lightGraphite)) }
-        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor(scheme: .lightGraphite)) }
+        guard let value = self.destructionTimeout else {
+            return nil
+        }
+        
+        if value.isDays { return WireStyleKit.imageOfDay(with: UIColor(scheme: .lightGraphite)) }
+        if value.isHours { return WireStyleKit.imageOfHour(with: UIColor(scheme: .lightGraphite)) }
+        if value.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor(scheme: .lightGraphite)) }
+        if value.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor(scheme: .lightGraphite)) }
         return nil
     }
 

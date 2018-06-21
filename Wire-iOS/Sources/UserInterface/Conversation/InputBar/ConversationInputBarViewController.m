@@ -410,6 +410,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.ephemeralIndicatorButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
     [self.ephemeralIndicatorButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton];
 
+    [self.ephemeralIndicatorButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorGraphite]
+                                        forState:UIControlStateDisabled];
+    
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
 }
 
@@ -510,7 +513,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                    markingDown:self.inputBar.isMarkingDown
                             destructionTimeout:self.conversation.messageDestructionTimeoutValue
                               conversationType:self.conversation.conversationType
-                                          mode:self.mode];
+                                          mode:self.mode
+               syncedMessageDestructionTimeout:self.conversation.hasSyncedMessageDestructionTimeout];
 
     self.sendButton.hidden = self.sendButtonState.sendButtonHidden;
     self.hourglassButton.hidden = self.sendButtonState.hourglassButtonHidden;
