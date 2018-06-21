@@ -98,7 +98,7 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
         updateMarkdownButton()
 
         ZMUserSession.shared()?.enqueueChanges {
-            self.conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeout))
+            self.conversation.messageDestructionTimeout = .local(timeout)
             self.updateRightAccessoryView()
         }
     }
