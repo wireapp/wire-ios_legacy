@@ -24,22 +24,22 @@ import XCTest
 class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
+        //self.recordMode = true
         super.setUp()
-        self.recordMode = true
     }
     
     
     func testThatItRendersMessageTimerSystemMessage() {
-        let timerCell = cell(fromSelf: false, expanded: false)
+        let timerCell = cell(fromSelf: false, messageTimer: 50.0, expanded: false)
         verify(view: timerCell.prepareForSnapshots())
-        
-        
     }
     
     // MARK: - Helper
     
-    private func cell(fromSelf: Bool, expanded: Bool = false) -> IconSystemCell {
-        let message = systemMessage(missed: false, in: .insertNewObject(in: uiMOC), from: fromSelf ? selfUser : otherUser)
+    private func cell(fromSelf: Bool, messageTimer: Double, expanded: Bool = false) -> IconSystemCell {
+        let conversation = ZMConversation.insertNewObject(in: uiMOC)
+        let message = conversation.appendMessageTimerUpdateMessage(fromUser: fromSelf ? selfUser : otherUser, timer: messageTimer)
+        
         let cell = MessageTimerUpdateCell(style: .default, reuseIdentifier: name)
         cell.layer.speed = 0
         if expanded {
@@ -49,11 +49,6 @@ class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
         
         cell.configure(for: message, layoutProperties: props)
         return cell
-    }
-    
-    private func systemMessage(missed: Bool, in conversation: ZMConversation, from user: ZMUser) -> ZMSystemMessage {
-        let date = Date(timeIntervalSince1970: 123456879)
-        return conversation.appendMissedCallMessage(fromUser: user, at: date)
     }
 }
 

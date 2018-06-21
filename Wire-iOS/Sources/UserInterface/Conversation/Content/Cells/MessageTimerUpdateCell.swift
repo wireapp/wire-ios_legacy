@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
+import Foundation
 import UIKit
 
 class MessageTimerUpdateCell: IconSystemCell {
@@ -41,13 +41,19 @@ class MessageTimerUpdateCell: IconSystemCell {
     func updateLabel() {
         guard let systemMessageData = message.systemMessageData,
         systemMessageData.systemMessageType == .messageTimerUpdate,
+        //let name = message.sender?.name,
+        let timer = systemMessageData.messageTimer,
         let labelFont = labelFont,
-        //let labelBoldFont = labelBoldFont,
+        let labelBoldFont = labelBoldFont,
         let labelTextColor = labelTextColor,
-        let user = systemMessageData.users.first
+        let name = systemMessageData.users.first?.name
             else { return }
         
-        attributedText = "\(user.name) set the timed messages to \(systemMessageData.messageTimer)" && labelFont && labelTextColor
+        var string = "\(name) set the timed messages to \(timer)" && labelFont && labelTextColor
+        string = string.addAttributes([.font: labelBoldFont], toSubstring: name)
+        string = string.addAttributes([.font: labelBoldFont], toSubstring: "\(timer)")
+        
+        attributedText = string
         
         /*
         let attributedLocalizedUppercaseString: (String, _ users: Set<ZMUser>) -> NSAttributedString? = { localizationKey, users in

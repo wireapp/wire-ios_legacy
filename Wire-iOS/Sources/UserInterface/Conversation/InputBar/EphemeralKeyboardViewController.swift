@@ -30,54 +30,6 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
     )
 }
 
-
-fileprivate let longStyleFormatter: DateComponentsFormatter = {
-    let formatter = DateComponentsFormatter()
-    formatter.unitsStyle = .full
-    formatter.allowedUnits = [.day, .hour, .minute, .second]
-    formatter.zeroFormattingBehavior = .dropAll
-    return formatter
-}()
-
-
-extension ZMConversationMessageDestructionTimeout {
-
-    var displayString: String? {
-        guard .none != self else { return "input.ephemeral.timeout.none".localized }
-        return longStyleFormatter.string(from: TimeInterval(rawValue))
-    }
-
-    var shortDisplayString: String? {
-        if isSeconds { return String(Int(rawValue)) }
-        if isMinutes { return String(Int(rawValue / 60)) }
-        if isHours { return String(Int(rawValue / 3600)) }
-        if isDays { return String(Int(rawValue / 86400)) }
-        return nil
-    }
-
-}
-
-
-extension ZMConversationMessageDestructionTimeout {
-
-    var isSeconds: Bool {
-        return rawValue < 60
-    }
-
-    var isMinutes: Bool {
-        return 60..<3600 ~= rawValue
-     }
-
-    var isHours: Bool {
-        return 3600..<86400 ~= rawValue
-    }
-
-    var isDays: Bool {
-        return rawValue >= 86400
-    }
-
-}
-
 public extension ZMConversation {
 
     @objc var timeoutImage: UIImage? {
@@ -95,7 +47,7 @@ public extension ZMConversation {
 
     weak var delegate: EphemeralKeyboardViewControllerDelegate?
 
-    fileprivate let timeouts: [ZMConversationMessageDestructionTimeout?]
+    fileprivate let timeouts: [MessageDestructionTimeout?]
 
     public let titleLabel = UILabel()
     public var pickerFont: UIFont?
