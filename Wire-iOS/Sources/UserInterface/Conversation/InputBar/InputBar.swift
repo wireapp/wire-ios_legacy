@@ -94,7 +94,7 @@ private struct InputBarConstants {
 
         stackView.spacing = 16
         stackView.axis = .horizontal
-        stackView.alignment = .fill
+        stackView.alignment = .center
         stackView.distribution = .fill
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
         stackView.isLayoutMarginsRelativeArrangement = true
