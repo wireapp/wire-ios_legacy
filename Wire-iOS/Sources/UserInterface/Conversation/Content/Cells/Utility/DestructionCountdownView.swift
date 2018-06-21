@@ -46,12 +46,13 @@ import Cartography
         elapsedTimeLayer.isOpaque = false
         remainingTimeLayer.isOpaque = false
 
-        elapsedTimeColor = ColorScheme.default
-            .color(named: .graphite)
-            .withAlphaComponent(0.16)
-            .removeAlphaByBlending(with: .white)
+        let background = UIColor(scheme: .contentBackground)
 
-        remainingTimeColor = UIColor(scheme: .lightGraphite)
+        elapsedTimeColor = UIColor(scheme: .lightGraphite)
+            .withAlphaComponent(0.24)
+            .removeAlphaByBlending(with: background)
+
+        remainingTimeColor = UIColor(scheme: .lightGraphite).withAlphaComponent(0.64).removeAlphaByBlending(with: .white)
     }
 
     // MARK: - Layout
@@ -61,7 +62,7 @@ import Cartography
         elapsedTimeLayer.frame = bounds
         elapsedTimeLayer.path = makePath(for: bounds)
         elapsedTimeLayer.fillColor = nil
-        elapsedTimeLayer.lineWidth = min(bounds.width, bounds.height) / 2
+        elapsedTimeLayer.lineWidth = min(bounds.width, bounds.height) / 2 + 0.25
 
         remainingTimeLayer.frame = bounds
         remainingTimeLayer.path = CGPath(ellipseIn: bounds, transform: nil)

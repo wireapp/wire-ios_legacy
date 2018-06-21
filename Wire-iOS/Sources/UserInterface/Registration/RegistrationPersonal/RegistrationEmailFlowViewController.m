@@ -146,7 +146,7 @@
              ([viewController isKindOfClass:[EmailStepViewController class]] && [self hasUserAcceptedTOS]))
     {
         [self.analyticsTracker tagAcceptedTermsOfUse];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [[SessionManager shared] configureUserNotifications];
         
         self.hasUserAcceptedTOS = YES;
         

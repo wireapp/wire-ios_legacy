@@ -22,14 +22,15 @@ import Cartography
 @testable import Wire
 
 
-class EphemeralKeyboardViewControllerTests: ZMSnapshotTestCase {
+class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
 
     var sut: EphemeralKeyboardViewController!
-    var conversation: MockConversation!
+    var conversation: ZMConversation!
 
     override func setUp() {
         super.setUp()
-        conversation = MockConversationFactory.mockConversation()
+        conversation = self.createGroupConversation()
+        conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue.fiveMinutes)
         sut = EphemeralKeyboardViewController(conversation: conversation as Any as! ZMConversation)
     }
 
@@ -50,6 +51,7 @@ fileprivate extension UIViewController {
         beginAppearanceTransition(true, animated: false)
         endAppearanceTransition()
 
+        view.layer.speed = 0
         view.setNeedsLayout()
         view.layoutIfNeeded()
         return view

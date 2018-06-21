@@ -27,11 +27,9 @@
 
 @interface NotificationWindowRootViewController : UIViewController
 
-@property (nonatomic, readonly, nullable) ActiveVoiceChannelViewController *voiceChannelController;
 @property (nonatomic, readonly, nullable) AppLockViewController *appLockViewController;
 @property (nonatomic, readonly, nullable) ChatHeadsViewController *chatHeadsViewController;
 
-- (void)transitionToLoggedInSession;
 - (void)show:(nonnull ZMLocalNotification *)notification;
 
 @end

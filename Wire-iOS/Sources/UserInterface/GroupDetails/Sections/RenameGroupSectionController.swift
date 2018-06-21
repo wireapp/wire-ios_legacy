@@ -42,7 +42,7 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {
-        collectionView?.register(GroupDetailsRenameCell.self, forCellWithReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier)
+        collectionView.flatMap(GroupDetailsRenameCell.register)
         collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SectionFooter")
     }
     
@@ -51,7 +51,7 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsRenameCell
+        let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
         cell.configure(for: conversation)
         cell.titleTextField.textFieldDelegate = self
         renameCell?.titleTextField.isUserInteractionEnabled = conversation.isSelfAnActiveMember

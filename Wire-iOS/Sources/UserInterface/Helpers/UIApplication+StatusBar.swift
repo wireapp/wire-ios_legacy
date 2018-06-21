@@ -70,9 +70,9 @@ public extension UIApplication {
             guard let controller = $0.rootViewController else {
                 return false
             }
-            
-            if let notificationWindowRootController = controller as? NotificationWindowRootViewController {
-                return notificationWindowRootController.voiceChannelController?.voiceChannelIsActive ?? false
+
+            if let callWindowRootController = controller as? CallWindowRootViewController {
+                return callWindowRootController.voiceChannelController?.voiceChannelIsActive ?? false
             } else if controller is AppRootViewController  {
                 return true
             } else {
