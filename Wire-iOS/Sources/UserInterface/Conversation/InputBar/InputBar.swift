@@ -83,11 +83,11 @@ private struct InputBarConstants {
 
     private let inputBarVerticalInset : CGFloat = 34
 
-    let textView = MarkdownTextView(with: DownStyle.compact)
-    public let leftAccessoryView  = UIStackView()
-    public let rightAccessoryView = UIStackView()
-    private let textInputContainer = UIStackView()
 
+    let textView = MarkdownTextView(with: DownStyle.compact)
+    public let leftAccessoryView  = UIView()
+    public let rightAccessoryView = UIView()
+    
     // Contains and clips the buttonInnerContainer
     public let buttonContainer = UIView()
     
@@ -168,8 +168,8 @@ private struct InputBarConstants {
         addGestureRecognizer(tapGestureRecognizer)
         buttonsView.clipsToBounds = true
         buttonContainer.clipsToBounds = true
-
-        [textInputContainer, buttonContainer, buttonRowSeparator].forEach(addSubview)
+        
+        [leftAccessoryView, textView, rightAccessoryView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
         textView.addSubview(fakeCursor)
@@ -197,29 +197,10 @@ private struct InputBarConstants {
         textView.textContainerInset = UIEdgeInsetsMake(inputBarVerticalInset / 2, 0, inputBarVerticalInset / 2, 4)
         textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
         textView.keyboardType = .default
-        textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
+        textView.keyboardAppearance = ColorScheme.default().keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
-
-        [leftAccessoryView, rightAccessoryView].forEach {
-            $0.spacing = 16
-            $0.axis = .horizontal
-            $0.alignment = .fill
-            $0.distribution = .fill
-        }
-
-        textInputContainer.spacing = 0
-        textInputContainer.alignment = .center
-        textInputContainer.distribution = .fill
-
-        leftAccessoryView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        leftAccessoryView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        rightAccessoryView.setContentCompressionResistancePriority(.required, for: .horizontal)
-        rightAccessoryView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        textView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-
-        [leftAccessoryView, textView, rightAccessoryView].forEach(textInputContainer.addArrangedSubview)
-
+        
         markdownView.delegate = textView
 
         updateReturnKey()
@@ -229,18 +210,23 @@ private struct InputBarConstants {
     }
     
     fileprivate func createConstraints() {
-        let trailingSpace: CGFloat = 2
+        
+        constrain(buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView) { buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
+            leftAccessoryView.leading == leftAccessoryView.superview!.leading
+            leftAccessoryView.top == leftAccessoryView.superview!.top
+            leftAccessoryView.bottom == buttonContainer.top
+            leftAccessoryView.width == UIView.conversationLayoutMargins.left
 
-        constrain(textInputContainer, buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView) { textInputContainer, buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
-            textInputContainer.leading == textInputContainer.superview!.leading
-            textInputContainer.trailing == textInputContainer.superview!.trailing - UIView.directionAwareConversationLayoutMargins.right + trailingSpace
-            textInputContainer.top == textInputContainer.superview!.top + 2
-            textInputContainer.bottom == buttonContainer.top - 2
-
-            leftAccessoryView.width >= UIView.directionAwareConversationLayoutMargins.left
-            rightAccessoryView.width >= UIView.directionAwareConversationLayoutMargins.right
-
+            rightAccessoryView.trailing == rightAccessoryView.superview!.trailing
+            rightAccessoryView.top == rightAccessoryView.superview!.top
+            rightAccessoryView.width == 0 ~ 750.0
+            rightAccessoryView.bottom == buttonContainer.top
+            
             buttonContainer.top == textView.bottom
+            textView.top == textView.superview!.top
+            textView.leading == leftAccessoryView.trailing
+            textView.trailing <= textView.superview!.trailing - 16
+            textView.trailing == rightAccessoryView.leading ~ 750.0
             textView.height >= 56
             textView.height <= 120 ~ 1000.0
 
