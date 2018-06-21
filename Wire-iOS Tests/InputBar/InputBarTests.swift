@@ -44,59 +44,60 @@ class InputBarTests: ZMSnapshotTestCase {
         return [b1, b2, b3, b4]
     }
 
-    var inputBar: InputBar!
+    var sut: InputBar!
 
     override func setUp() {
         super.setUp()
-        inputBar = InputBar(buttons: buttons())
-        inputBar.leftAccessoryView.isHidden = true
-        inputBar.rightAccessoryView.isHidden = true
-        inputBar.translatesAutoresizingMaskIntoConstraints = false
+        sut = InputBar(buttons: buttons())
+        sut.leftAccessoryView.isHidden = true
+        sut.rightAccessoryView.isHidden = true
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.layer.speed = 0
+        
+        recordMode = true
     }
 
     override func tearDown() {
-        inputBar = nil
+        sut = nil
+
+        super.tearDown()
     }
     
     func testNoText() {
-        inputBar.textView.text = ""
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        inputBar.leftAccessoryView.isHidden = true
-        inputBar.rightAccessoryView.isHidden = true
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = ""
+        sut.updateFakeCursorVisibility()
+        sut.leftAccessoryView.isHidden = true
+        sut.rightAccessoryView.isHidden = true
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
     }
     
     func testShortText() {
-        inputBar.textView.text = shortText
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = shortText
+        sut.updateFakeCursorVisibility()
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
     }
     
     func testLongText() {
-        inputBar.textView.text = longText
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = longText
+        sut.updateFakeCursorVisibility()
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
-        verifyInAllTabletWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
+        verifyInAllTabletWidths(view: sut)
     }
     
     func testRTLText() {
-        inputBar.textView.text = LTRText
-        inputBar.textView.textAlignment = .right
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = LTRText
+        sut.textView.textAlignment = .right
+        sut.updateFakeCursorVisibility()
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
-        verifyInAllTabletWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
+        verifyInAllTabletWidths(view: sut)
     }
     
     func testButtonsWithTitle() {
@@ -134,42 +135,38 @@ class InputBarTests: ZMSnapshotTestCase {
     }
     
     func testEphemeralMode() {
-        inputBar.textView.text = ""
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
-        inputBar.updateEphemeralState()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = ""
+        sut.updateFakeCursorVisibility()
+        sut.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.updateEphemeralState()
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
     }
 
     func testEphemeralModeWithMarkdown() {
-        inputBar.textView.text = ""
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        inputBar.setInputBarState(.markingDown(ephemeral: true), animated: false)
-        inputBar.updateEphemeralState()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = ""
+        sut.updateFakeCursorVisibility()
+        sut.setInputBarState(.markingDown(ephemeral: true), animated: false)
+        sut.updateEphemeralState()
+        CASStyler.default().styleItem(sut)
 
-        verifyInAllPhoneWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersCorrectlyInEditState() {
-        inputBar.layer.speed = 0
-        inputBar.setInputBarState(.editing(originalText: "This text is being edited"), animated: false)
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
-        verifyInAllPhoneWidths(view: inputBar)
+        sut.setInputBarState(.editing(originalText: "This text is being edited"), animated: false)
+        sut.updateFakeCursorVisibility()
+        CASStyler.default().styleItem(sut)
+        verifyInAllPhoneWidths(view: sut)
     }
     
     func testThatItRendersCorrectlyInEditState_LongText() {
-        inputBar.layer.speed = 0
-        inputBar.setInputBarState(.editing(originalText: longText), animated: false)
+        sut.setInputBarState(.editing(originalText: longText), animated: false)
 
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
-        verifyInAllPhoneWidths(view: inputBar)
+        sut.updateFakeCursorVisibility()
+        CASStyler.default().styleItem(sut)
+        verifyInAllPhoneWidths(view: sut)
     }
 
 }
