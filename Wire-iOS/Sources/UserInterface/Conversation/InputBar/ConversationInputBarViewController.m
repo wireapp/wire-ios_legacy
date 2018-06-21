@@ -386,8 +386,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.sendButton.cas_styleClass = @"send-button";
     self.sendButton.hitAreaPadding = CGSizeMake(30, 30);
 
-    [self.inputBar.rightAccessoryView addArrangedSubview:self.sendButton];
-    [self.sendButton autoSetDimensionsToSize:CGSizeMake(28, 28)];
+    [self.inputBar.rightAccessoryView addSubview:self.sendButton];
+    CGFloat edgeLength = 28;
+    [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
+    CGFloat rightInset = (UIView.conversationLayoutMargins.left - edgeLength) / 2;
+    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 - (void)createEphemeralIndicatorButton
@@ -399,11 +404,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.ephemeralIndicatorButton.adjustsTitleWhenHighlighted = YES;
     self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
 
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorLightGraphite]
-                                        forState:UIControlStateDisabled];
+    [self.inputBar.rightAccessoryView addSubview:self.ephemeralIndicatorButton];
 
-    [self.inputBar.rightAccessoryView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
-    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(28, 28)];
+    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(32, 32)];
+    [self.ephemeralIndicatorButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
+    [self.ephemeralIndicatorButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton];
 
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
 }
@@ -411,12 +416,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createEmojiButton
 {
     const CGFloat senderDiameter = 28;
-    
+
     self.emojiButton = IconButton.iconButtonCircular;
     self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.emojiButton.accessibilityIdentifier = @"emojiButton";
 
-    [self.inputBar.leftAccessoryView addArrangedSubview:self.emojiButton];
+    [self.inputBar.leftAccessoryView addSubview:self.emojiButton];
     [self.emojiButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.emojiButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
     [self.emojiButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
@@ -424,12 +429,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)createMarkdownButton
 {
+    const CGFloat senderDiameter = 28;
+
     self.markdownButton = IconButton.iconButtonCircular;
     self.markdownButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.markdownButton.accessibilityIdentifier = @"markdownButton";
-    [self.inputBar.leftAccessoryView addArrangedSubview:self.markdownButton];
-    [self.markdownButton.widthAnchor constraintEqualToConstant:UIView.conversationLayoutMargins.left];
-    [self.markdownButton setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+    [self.inputBar.leftAccessoryView addSubview:self.markdownButton];
+    [self.markdownButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.markdownButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
+    [self.markdownButton autoSetDimensionsToSize:CGSizeMake(senderDiameter, senderDiameter)];
 }
 
 - (void)createHourglassButton
@@ -441,9 +449,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
     self.hourglassButton.cas_styleClass = @"hourglass";
-    [self.inputBar.rightAccessoryView addArrangedSubview:self.hourglassButton];
+    [self.inputBar.rightAccessoryView addSubview:self.hourglassButton];
 
-    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(28, 28)];
+    [self.hourglassButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.sendButton];
+    [self.hourglassButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.sendButton withOffset:0];
+    [self.hourglassButton autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self.sendButton withOffset:0];
 }
 
 - (void)createTypingIndicatorView
