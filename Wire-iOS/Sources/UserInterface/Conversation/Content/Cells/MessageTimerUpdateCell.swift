@@ -41,7 +41,6 @@ class MessageTimerUpdateCell: IconSystemCell {
     func updateLabel() {
         guard let systemMessageData = message.systemMessageData,
         systemMessageData.systemMessageType == .messageTimerUpdate,
-        //let name = message.sender?.name,
         let timer = systemMessageData.messageTimer,
         let labelFont = labelFont,
         let labelBoldFont = labelBoldFont,
@@ -49,33 +48,16 @@ class MessageTimerUpdateCell: IconSystemCell {
         let name = systemMessageData.users.first?.name
             else { return }
         
-        var string = "\(name) set the timed messages to \(timer)" && labelFont && labelTextColor
-        string = string.addAttributes([.font: labelBoldFont], toSubstring: name)
-        string = string.addAttributes([.font: labelBoldFont], toSubstring: "\(timer)")
+        let timeoutValue = MessageDestructionTimeoutValue.custom(timer.doubleValue)
         
-        attributedText = string
-        
-        /*
-        let attributedLocalizedUppercaseString: (String, _ users: Set<ZMUser>) -> NSAttributedString? = { localizationKey, users in
-            guard users.count > 0 else { return nil }
-            let userNames = users.map { $0.displayName }.joined(separator: ", ")
-            let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
-                && labelFont && labelTextColor
-            return string.addAttributes([NSFontAttributeName: labelBoldFont], toSubstring: userNames)
+        if let displayString = timeoutValue.displayString {
+            let timerString = "\(displayString)"
+            let string = ("\(name) set the timed messages to \(timerString)" && labelFont && labelTextColor)
+                .addAttributes([.font: labelBoldFont], toSubstring: name)
+                .addAttributes([.font: labelBoldFont], toSubstring: "\(timerString)")
+            
+            attributedText = string
         }
-        
-        var title = "content.system.missing_messages.title".localized && labelFont && labelTextColor
-        
-        // We only want to display the subtitle if we have the final added and removed users and either one is not empty
-        let addedOrRemovedUsers = !systemMessageData.addedUsers.isEmpty || !systemMessageData.removedUsers.isEmpty
-        if !systemMessageData.needsUpdatingUsers && addedOrRemovedUsers {
-            title += "\n\n" + "content.system.missing_messages.subtitle_start".localized + " " && labelFont && labelTextColor
-            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", systemMessageData.addedUsers)
-            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", systemMessageData.removedUsers)
-        }
-        
-        attributedText = title*/
-        
         
     }
 

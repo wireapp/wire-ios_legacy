@@ -30,60 +30,6 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
     )
 }
 
-fileprivate let longStyleFormatter: DateComponentsFormatter = {
-    let formatter = DateComponentsFormatter()
-    formatter.includesApproximationPhrase = false
-    formatter.maximumUnitCount = 1
-    formatter.unitsStyle = .full
-    formatter.allowedUnits = [.weekOfMonth, .day, .hour, .minute, .second]
-    formatter.zeroFormattingBehavior = .dropAll
-    return formatter
-}()
-
-
-extension MessageDestructionTimeoutValue {
-
-    var displayString: String? {
-        guard .none != self else { return "input.ephemeral.timeout.none".localized }
-        return longStyleFormatter.string(from: TimeInterval(rawValue))
-    }
-
-    var shortDisplayString: String? {
-        if isSeconds { return String(Int(rawValue)) }
-        if isMinutes { return String(Int(rawValue / 60)) }
-        if isHours { return String(Int(rawValue / 3600)) }
-        if isDays { return String(Int(rawValue / 86400)) }
-        if isWeeks { return String(Int(rawValue / 604800)) }
-        return nil
-    }
-
-}
-
-
-extension MessageDestructionTimeoutValue {
-
-    var isSeconds: Bool {
-        return rawValue < 60
-    }
-
-    var isMinutes: Bool {
-        return 60..<3600 ~= rawValue
-     }
-
-    var isHours: Bool {
-        return 3600..<86400 ~= rawValue
-    }
-
-    var isDays: Bool {
-        return 86400..<604800 ~= rawValue
-    }
-
-    var isWeeks: Bool {
-        return rawValue >= 604800
-    }
-
-}
-
 public extension ZMConversation {
 
     var destructionTimeout: MessageDestructionTimeoutValue? {
@@ -101,6 +47,7 @@ public extension ZMConversation {
         guard let value = self.destructionTimeout else {
             return nil
         }
+        
         
         if value.isWeeks { return WireStyleKit.imageOfWeek(with: UIColor.accent()) }
         if value.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
