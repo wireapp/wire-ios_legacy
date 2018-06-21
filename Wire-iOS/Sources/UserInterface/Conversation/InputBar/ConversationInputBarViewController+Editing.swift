@@ -73,7 +73,6 @@ extension ConversationInputBarViewController {
         guard nil == editingMessage, let conversation = conversation else { return }
         inputBar.setInputBarState(.writing(ephemeral: conversation.messageDestructionTimeout != nil), animated: animated)
         updateRightAccessoryView()
-        updateButtonIconsForEphemeral()
         updateMarkdownButton()
     }
 

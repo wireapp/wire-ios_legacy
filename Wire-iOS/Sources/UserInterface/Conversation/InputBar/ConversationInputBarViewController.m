@@ -244,7 +244,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateInputBarVisibility];
     [self updateTypingIndicatorVisibility];
     [self updateWritingStateAnimated:NO];
-    [self updateButtonIconsForEphemeral];
+    [self updateButtonIcons];
     [self updateAvailabilityPlaceholder];
 }
 
@@ -252,7 +252,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewWillAppear:animated];
     [self updateRightAccessoryView];
-    [self updateButtonIconsForEphemeral];
     [self.inputBar updateReturnKey];
     [self.inputBar updateEphemeralState];
 }
@@ -417,7 +416,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createEmojiButton
 {
     const CGFloat senderDiameter = 28;
-    
+
     self.emojiButton = IconButton.iconButtonCircular;
     self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.emojiButton.accessibilityIdentifier = @"emojiButton";
@@ -431,7 +430,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createMarkdownButton
 {
     const CGFloat senderDiameter = 28;
-    
+
     self.markdownButton = IconButton.iconButtonCircular;
     self.markdownButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.markdownButton.accessibilityIdentifier = @"markdownButton";
@@ -516,45 +515,48 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.sendButton.hidden = self.sendButtonState.sendButtonHidden;
     self.hourglassButton.hidden = self.sendButtonState.hourglassButtonHidden;
     self.ephemeralIndicatorButton.hidden = self.sendButtonState.ephemeralIndicatorButtonHidden;
+    self.ephemeralIndicatorButton.enabled = self.sendButtonState.ephemeralIndicatorButtonEnabled;
 
     [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.timeoutImage forState:UIControlStateNormal];
+    [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.disabledTimeoutImage
+                                             forState:UIControlStateDisabled];
 }
 
-- (void)updateButtonIconsForEphemeral
+- (void)updateButtonIcons
 {
-    [self.audioButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeMicrophoneEphemeral : ZetaIconTypeMicrophone
+    [self.audioButton setIcon:ZetaIconTypeMicrophone
                      withSize:ZetaIconSizeTiny
                      forState:UIControlStateNormal];
     
-    [self.videoButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeVideoMessageEphemeral : ZetaIconTypeVideoMessage
+    [self.videoButton setIcon:ZetaIconTypeVideoMessage
                      withSize:ZetaIconSizeTiny
                      forState:UIControlStateNormal];
     
-    [self.photoButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeCameraLensEphemeral : ZetaIconTypeCameraLens
+    [self.photoButton setIcon:ZetaIconTypeCameraLens
                      withSize:ZetaIconSizeTiny
                      forState:UIControlStateNormal];
     
-    [self.uploadFileButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypePaperclipEphemeral : ZetaIconTypePaperclip
+    [self.uploadFileButton setIcon:ZetaIconTypePaperclip
                           withSize:ZetaIconSizeTiny
                           forState:UIControlStateNormal];
     
-    [self.sketchButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeBrushEphemeral : ZetaIconTypeBrush
+    [self.sketchButton setIcon:ZetaIconTypeBrush
                       withSize:ZetaIconSizeTiny
                       forState:UIControlStateNormal];
     
-    [self.pingButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypePingEphemeral : ZetaIconTypePing
+    [self.pingButton setIcon:ZetaIconTypePing
                     withSize:ZetaIconSizeTiny
                     forState:UIControlStateNormal];
     
-    [self.locationButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeLocationPinEphemeral : ZetaIconTypeLocationPin
+    [self.locationButton setIcon:ZetaIconTypeLocationPin
                         withSize:ZetaIconSizeTiny
                         forState:UIControlStateNormal];
     
-    [self.gifButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeGifEphemeral : ZetaIconTypeGif
+    [self.gifButton setIcon:ZetaIconTypeGif
                    withSize:ZetaIconSizeTiny
                    forState:UIControlStateNormal];
  
-    [self.sendButton setIcon:self.sendButtonState.ephemeral ? ZetaIconTypeSendEphemeral : ZetaIconTypeSend
+    [self.sendButton setIcon:ZetaIconTypeSend
                     withSize:ZetaIconSizeTiny
                     forState:UIControlStateNormal];
     
@@ -743,7 +745,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     
     [self updateRightAccessoryView];
-    [self updateButtonIconsForEphemeral];
 }
 
 - (void)selectInputControllerButton:(IconButton *)button

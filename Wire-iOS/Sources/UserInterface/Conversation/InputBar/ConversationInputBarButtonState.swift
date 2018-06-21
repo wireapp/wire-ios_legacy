@@ -34,7 +34,13 @@ private let disableEphemeralSendingInGroups = false
     }
 
     public var ephemeralIndicatorButtonHidden: Bool {
-        return hasText || (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || !ephemeral || disableEphemeralSending
+        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || !ephemeral || disableEphemeralSending
+    }
+
+    public var ephemeralIndicatorButtonEnabled: Bool {
+        // TODO: return false if the conversation has global timed messages
+        let conversationHasGlobalTimedMessages = false
+        return !ephemeralIndicatorButtonHidden && !conversationHasGlobalTimedMessages
     }
 
     private var hasText: Bool {

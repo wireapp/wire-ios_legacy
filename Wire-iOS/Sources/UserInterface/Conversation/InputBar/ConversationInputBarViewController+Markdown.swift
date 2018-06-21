@@ -46,7 +46,7 @@ extension ConversationInputBarViewController {
     
         if !inputBar.isMarkingDown {
             inputBar.textView.becomeFirstResponder()
-            inputBar.setInputBarState(.markingDown, animated: true)
+            inputBar.setInputBarState(.markingDown(ephemeral: sendButtonState.ephemeral), animated: true)
         } else {
             inputBar.setInputBarState(.writing(ephemeral: sendButtonState.ephemeral), animated: true)
         }

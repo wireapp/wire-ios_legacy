@@ -71,6 +71,7 @@ extension AccountSelectorController: AccountSelectorViewDelegate {
             AppDelegate.shared().rootViewController.confirmSwitchingAccount { (confirmed) in
                 if confirmed {
                     ZClientViewController.shared()?.conversationListViewController.dismiss(animated: true, completion: {
+                        AppDelegate.shared().mediaPlaybackManager?.stop()
                         SessionManager.shared?.select(account)
                     })
                 }
