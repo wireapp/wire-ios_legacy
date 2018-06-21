@@ -19,15 +19,15 @@
 import XCTest
 @testable import Wire
 
-class GroupDetailsTimeoutOptionsCellTests: ZMSnapshotTestCase {
+class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
 
     var cell: GroupDetailsTimeoutOptionsCell!
-    var conversation: MockConversation!
+    var conversation: ZMConversation!
 
     override func setUp() {
         super.setUp()
         cell = GroupDetailsTimeoutOptionsCell(frame: CGRect(x: 0, y: 0, width: 350, height: 56))
-        conversation = MockConversation.groupConversation()
+        conversation = self.createGroupConversation()
     }
 
     func testThatItDisplaysCell_WithoutTimeout_Light() {
@@ -55,7 +55,7 @@ class GroupDetailsTimeoutOptionsCellTests: ZMSnapshotTestCase {
     }
 
     private func updateTimeout(_ newValue: TimeInterval) {
-        conversation.messageDestructionTimeout = newValue
+        conversation.messageDestructionTimeout = .synced(MessageDestructionTimeoutValue(rawValue: newValue))
         cell.configure(with: (conversation as Any) as! ZMConversation)
     }
 

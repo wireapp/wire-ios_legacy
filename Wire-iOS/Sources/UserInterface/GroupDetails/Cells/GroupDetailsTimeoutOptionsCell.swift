@@ -31,7 +31,7 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
         case .synced(let value)?:
             status = value.displayString
         default:
-            status = ""
+            status = MessageDestructionTimeoutValue.none.displayString
         }
     }
 
