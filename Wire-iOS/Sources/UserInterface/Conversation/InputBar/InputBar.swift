@@ -81,7 +81,8 @@ private struct InputBarConstants {
 
 @objcMembers public final class InputBar: UIView {
 
-    private let inputBarVerticalInset : CGFloat = 34
+    private let inputBarVerticalInset: CGFloat = 34
+    public static let rightIconSIze: CGFloat = 28
 
 
     let textView = MarkdownTextView(with: DownStyle.compact)
@@ -89,10 +90,14 @@ private struct InputBarConstants {
     public let rightAccessoryStackView: UIStackView = {
         let stackView = UIStackView()
 
+        let rightInset = (UIView.conversationLayoutMargins.left - rightIconSIze) / 2
+
         stackView.spacing = 16
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fill
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
+        stackView.isLayoutMarginsRelativeArrangement = true
 
         return stackView
     }()

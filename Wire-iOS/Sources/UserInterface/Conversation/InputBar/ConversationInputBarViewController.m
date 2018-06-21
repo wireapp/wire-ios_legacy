@@ -119,7 +119,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) IconButton *sketchButton;
 @property (nonatomic) IconButton *pingButton;
 @property (nonatomic) IconButton *locationButton;
-@property (nonatomic) IconButton *sendButton;
 @property (nonatomic) IconButton *ephemeralIndicatorButton;
 @property (nonatomic) IconButton *emojiButton;
 @property (nonatomic) IconButton *markdownButton;
@@ -386,15 +385,16 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.sendButton.cas_styleClass = @"send-button";
     self.sendButton.hitAreaPadding = CGSizeMake(30, 30);
 
-    CGFloat edgeLength = 28;
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.sendButton];
-    [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
+    
+    [self createSendButtonConstraints];
+
+//    [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
 
 //    [self.inputBar.rightAccessoryView addSubview:self.sendButton];
 //    [self.sendButton autoSetDimensionsToSize:CGSizeMake(edgeLength, edgeLength)];
 //    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeLeading];
 //    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:14];
-//    CGFloat rightInset = (UIView.conversationLayoutMargins.left - edgeLength) / 2;
 //    [self.sendButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
