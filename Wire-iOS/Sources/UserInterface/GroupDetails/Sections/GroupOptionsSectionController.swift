@@ -52,11 +52,15 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
         self.delegate = delegate
         self.conversation = conversation
         self.syncCompleted = syncCompleted
+
         if conversation.canManageAccess {
             options = [Option.guests, Option.timeout]
         }
-        else {
+        else if !ZMUser.selfUser().isGuest(in: conversation) {
             options = [Option.timeout]
+        }
+        else {
+            options = []
         }
     }
 
