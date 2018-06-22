@@ -34,20 +34,21 @@ class MessageTimerUpdateCell: IconSystemCell {
         let labelFont = labelFont,
         let labelBoldFont = labelBoldFont,
         let labelTextColor = labelTextColor,
-        let name = systemMessageData.users.first?.name
+        let user = systemMessageData.users.first
             else { return }
         
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
         
-        if let displayString = timeoutValue.displayString {
-            let timerString = "\(displayString)"
-            let string = ("content.system.message_timer_changes".localized(args: name, timerString) && labelFont && labelTextColor)
+        guard let displayString = timeoutValue.displayString,
+            let name = (user.isSelfUser ? "content.system.you_started".localized : user.name)
+            else { return }
+        
+        let timerString = "\(displayString)"
+        let string = ("content.system.message_timer_changes".localized(args: name, timerString) && labelFont && labelTextColor)
                 .addAttributes([.font: labelBoldFont], toSubstring: name)
                 .addAttributes([.font: labelBoldFont], toSubstring: "\(timerString)")
             
-            attributedText = string
-        }
-        
+        attributedText = string
     }
 
 }

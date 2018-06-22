@@ -25,55 +25,86 @@ class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        self.recordMode = true
     }
     
-    func testThatItRendersMessageTimerSystemMessage_None() {
-        let timerCell = cell(fromSelf: false, messageTimer: .none, expanded: false)
+    func testThatItRendersMessageTimerSystemMessage_None_Other() {
+        let timerCell = cell(fromSelf: false, messageTimer: .none)
         verify(view: timerCell.prepareForSnapshots())
     }
     
-    func testThatItRendersMessageTimerSystemMessage_TenSeconds() {
-        let timerCell = cell(fromSelf: false, messageTimer: .tenSeconds, expanded: false)
+    func testThatItRendersMessageTimerSystemMessage_TenSeconds_Other() {
+        let timerCell = cell(fromSelf: false, messageTimer: .tenSeconds)
         verify(view: timerCell.prepareForSnapshots())
     }
     
-    func testThatItRendersMessageTimerSystemMessage_FiveMinutes() {
-        let timerCell = cell(fromSelf: false, messageTimer: .fiveMinutes, expanded: false)
+    func testThatItRendersMessageTimerSystemMessage_FiveMinutes_Other() {
+        let timerCell = cell(fromSelf: false, messageTimer: .fiveMinutes)
         verify(view: timerCell.prepareForSnapshots())
     }
     
-    func testThatItRendersMessageTimerSystemMessage_OneHour() {
-        let timerCell = cell(fromSelf: false, messageTimer: .oneHour, expanded: false)
+    func testThatItRendersMessageTimerSystemMessage_OneHour_Other() {
+        let timerCell = cell(fromSelf: false, messageTimer: .oneHour)
         verify(view: timerCell.prepareForSnapshots())
     }
     
-    func testThatItRendersMessageTimerSystemMessage_OneDay() {
-        let timerCell = cell(fromSelf: false, messageTimer: .oneDay, expanded: false)
+    func testThatItRendersMessageTimerSystemMessage_OneDay_Other() {
+        let timerCell = cell(fromSelf: false, messageTimer: .oneDay)
         verify(view: timerCell.prepareForSnapshots())
     }
     
-    func testThatItRendersMessageTimerSystemMessage_OneWeek() {
-        let timerCell = cell(fromSelf: false, messageTimer: .oneWeek, expanded: false)
+    func testThatItRendersMessageTimerSystemMessage_OneWeek_Other() {
+        let timerCell = cell(fromSelf: false, messageTimer: .oneWeek)
         verify(view: timerCell.prepareForSnapshots())
     }
     
-    func testThatItRendersMessageTimerSystemMessage_FourWeeks() {
-        let timerCell = cell(fromSelf: false, messageTimer: .fourWeeks, expanded: false)
+    func testThatItRendersMessageTimerSystemMessage_FourWeeks_Other() {
+        let timerCell = cell(fromSelf: false, messageTimer: .fourWeeks)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_None_Self() {
+        let timerCell = cell(fromSelf: true, messageTimer: .none)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_TenSeconds_Self() {
+        let timerCell = cell(fromSelf: true, messageTimer: .tenSeconds)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_FiveMinutes_Self() {
+        let timerCell = cell(fromSelf: true, messageTimer: .fiveMinutes)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_OneHour_Self() {
+        let timerCell = cell(fromSelf: true, messageTimer: .oneHour)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_OneDay_Self() {
+        let timerCell = cell(fromSelf: true, messageTimer: .oneDay)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_OneWeek_Self() {
+        let timerCell = cell(fromSelf: true, messageTimer: .oneWeek)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_FourWeeks_Self() {
+        let timerCell = cell(fromSelf: true, messageTimer: .fourWeeks)
         verify(view: timerCell.prepareForSnapshots())
     }
     
     // MARK: - Helper
     
-    private func cell(fromSelf: Bool, messageTimer: MessageDestructionTimeoutValue, expanded: Bool = false) -> IconSystemCell {
+    private func cell(fromSelf: Bool, messageTimer: MessageDestructionTimeoutValue) -> IconSystemCell {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
         let message = conversation.appendMessageTimerUpdateMessage(fromUser: fromSelf ? selfUser : otherUser, timer: messageTimer.rawValue)
         
         let cell = MessageTimerUpdateCell(style: .default, reuseIdentifier: name)
         cell.layer.speed = 0
-        if expanded {
-            cell.setSelected(true, animated: false)
-        }
         let props = ConversationCellLayoutProperties()
         
         cell.configure(for: message, layoutProperties: props)
