@@ -25,7 +25,6 @@
 
 static UIColor* _fillColor10 = nil;
 
-static UIImage* _imageOfIcon_0x748_32pt = nil;
 static UIImage* _imageOfOngoingcall = nil;
 static UIImage* _imageOfShieldverified = nil;
 static UIImage* _imageOfShieldnotverified = nil;
@@ -5119,30 +5118,28 @@ static UIImage* _imageOfShieldnotverified = nil;
     }
 }
 
-+ (void)drawIcon_0x748_32pt
++ (void)drawIcon_0x748_32ptWithColor: (UIColor*)color
 {
-    //// Color Declarations
-    UIColor* fillColor9 = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
 
-    //// Bezier 2 Drawing
-    UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
-    [bezier2Path moveToPoint: CGPointMake(32, 64)];
-    [bezier2Path addCurveToPoint: CGPointMake(0, 32) controlPoint1: CGPointMake(14.33, 64) controlPoint2: CGPointMake(0, 49.67)];
-    [bezier2Path addCurveToPoint: CGPointMake(32, 0) controlPoint1: CGPointMake(0, 14.33) controlPoint2: CGPointMake(14.33, 0)];
-    [bezier2Path addCurveToPoint: CGPointMake(64, 32) controlPoint1: CGPointMake(49.67, 0) controlPoint2: CGPointMake(64, 14.33)];
-    [bezier2Path addCurveToPoint: CGPointMake(32, 64) controlPoint1: CGPointMake(64, 49.67) controlPoint2: CGPointMake(49.67, 64)];
-    [bezier2Path closePath];
-    [bezier2Path moveToPoint: CGPointMake(19.2, 25.6)];
-    [bezier2Path addCurveToPoint: CGPointMake(12.8, 32) controlPoint1: CGPointMake(15.67, 25.6) controlPoint2: CGPointMake(12.8, 28.47)];
-    [bezier2Path addCurveToPoint: CGPointMake(19.2, 38.4) controlPoint1: CGPointMake(12.8, 35.53) controlPoint2: CGPointMake(15.67, 38.4)];
-    [bezier2Path addLineToPoint: CGPointMake(44.8, 38.4)];
-    [bezier2Path addCurveToPoint: CGPointMake(51.2, 32) controlPoint1: CGPointMake(48.33, 38.4) controlPoint2: CGPointMake(51.2, 35.53)];
-    [bezier2Path addCurveToPoint: CGPointMake(44.8, 25.6) controlPoint1: CGPointMake(51.2, 28.47) controlPoint2: CGPointMake(48.33, 25.6)];
-    [bezier2Path addLineToPoint: CGPointMake(19.2, 25.6)];
-    [bezier2Path closePath];
-    bezier2Path.usesEvenOddFillRule = YES;
-    [fillColor9 setFill];
-    [bezier2Path fill];
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint: CGPointMake(32, 64)];
+    [bezierPath addCurveToPoint: CGPointMake(0, 32) controlPoint1: CGPointMake(14.33, 64) controlPoint2: CGPointMake(0, 49.67)];
+    [bezierPath addCurveToPoint: CGPointMake(32, 0) controlPoint1: CGPointMake(0, 14.33) controlPoint2: CGPointMake(14.33, 0)];
+    [bezierPath addCurveToPoint: CGPointMake(64, 32) controlPoint1: CGPointMake(49.67, 0) controlPoint2: CGPointMake(64, 14.33)];
+    [bezierPath addCurveToPoint: CGPointMake(32, 64) controlPoint1: CGPointMake(64, 49.67) controlPoint2: CGPointMake(49.67, 64)];
+    [bezierPath closePath];
+    [bezierPath moveToPoint: CGPointMake(19.2, 25.6)];
+    [bezierPath addCurveToPoint: CGPointMake(12.8, 32) controlPoint1: CGPointMake(15.67, 25.6) controlPoint2: CGPointMake(12.8, 28.47)];
+    [bezierPath addCurveToPoint: CGPointMake(19.2, 38.4) controlPoint1: CGPointMake(12.8, 35.53) controlPoint2: CGPointMake(15.67, 38.4)];
+    [bezierPath addLineToPoint: CGPointMake(44.8, 38.4)];
+    [bezierPath addCurveToPoint: CGPointMake(51.2, 32) controlPoint1: CGPointMake(48.33, 38.4) controlPoint2: CGPointMake(51.2, 35.53)];
+    [bezierPath addCurveToPoint: CGPointMake(44.8, 25.6) controlPoint1: CGPointMake(51.2, 28.47) controlPoint2: CGPointMake(48.33, 25.6)];
+    [bezierPath addLineToPoint: CGPointMake(19.2, 25.6)];
+    [bezierPath closePath];
+    bezierPath.usesEvenOddFillRule = YES;
+    [color setFill];
+    [bezierPath fill];
 }
 
 + (void)drawIcon_0x749_32ptWithColor: (UIColor*)color
@@ -9119,18 +9116,15 @@ static UIImage* _imageOfShieldnotverified = nil;
     return imageOfIcon_0x269_32pt;
 }
 
-+ (UIImage*)imageOfIcon_0x748_32pt
++ (UIImage*)imageOfIcon_0x748_32ptWithColor: (UIColor*)color
 {
-    if (_imageOfIcon_0x748_32pt)
-        return _imageOfIcon_0x748_32pt;
-
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
-    [WireStyleKit drawIcon_0x748_32pt];
+    [WireStyleKit drawIcon_0x748_32ptWithColor: color];
 
-    _imageOfIcon_0x748_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage* imageOfIcon_0x748_32pt = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return _imageOfIcon_0x748_32pt;
+    return imageOfIcon_0x748_32pt;
 }
 
 + (UIImage*)imageOfIcon_0x749_32ptWithColor: (UIColor*)color
@@ -9429,14 +9423,6 @@ static UIImage* _imageOfShieldnotverified = nil;
 }
 
 #pragma mark Customization Infrastructure
-
-- (void)setIcon_0x748_32ptTargets: (NSArray*)icon_0x748_32ptTargets
-{
-    _icon_0x748_32ptTargets = icon_0x748_32ptTargets;
-
-    for (id target in icon_0x748_32ptTargets)
-        [target performSelector: @selector(setImage:) withObject: WireStyleKit.imageOfIcon_0x748_32pt];
-}
 
 - (void)setOngoingcallTargets: (NSArray*)ongoingcallTargets
 {
