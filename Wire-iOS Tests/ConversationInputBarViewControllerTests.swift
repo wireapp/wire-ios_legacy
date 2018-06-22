@@ -126,7 +126,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: 2419200))
+        otherUserConversation.messageDestructionTimeout = .local(2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
 
