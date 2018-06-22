@@ -21,27 +21,7 @@ import XCTest
 
 final class MessageDestructionTimeoutValueTests: XCTestCase {
     
-    func testThatItReturnsTheCorrectFormattedString(){
+    func testThatItReturnsTheCorrectFormattedStringForNoneTimeout(){
         XCTAssertEqual(MessageDestructionTimeoutValue.none.displayString, "Off")
-        XCTAssertEqual(MessageDestructionTimeoutValue.tenSeconds.displayString, "10 seconds")
-        XCTAssertEqual(MessageDestructionTimeoutValue.fiveMinutes.displayString, "5 minutes")
-        XCTAssertEqual(MessageDestructionTimeoutValue.oneDay.displayString, "1 day")
-        XCTAssertEqual(MessageDestructionTimeoutValue.oneWeek.displayString, "1 week")
-        XCTAssertEqual(MessageDestructionTimeoutValue.fourWeeks.displayString, "4 weeks")
-    }
-
-    func testThatItReturnsTheCorrectFormattedStringForCustomTimeOut(){
-        XCTAssertEqual(MessageDestructionTimeoutValue.custom(1 + 0.1).displayString, "1 second")
-
-        XCTAssertEqual(MessageDestructionTimeoutValue.custom(60 + 31).displayString, "2 minutes")
-
-        XCTAssertEqual(MessageDestructionTimeoutValue.custom(3601).displayString, "1 hour")
-        XCTAssertEqual(MessageDestructionTimeoutValue.custom(3600 + 1799).displayString, "1 hour")
-        XCTAssertEqual(MessageDestructionTimeoutValue.custom(3600 + 1800).displayString, "2 hours")
-        XCTAssertEqual(MessageDestructionTimeoutValue.custom(3600 + 1801).displayString, "2 hours")
-
-        XCTAssertEqual(MessageDestructionTimeoutValue.custom(86400 + 86400 - 1).displayString, "2 days")
-
-        XCTAssertEqual(MessageDestructionTimeoutValue.custom(MessageDestructionTimeoutValue.oneWeek.rawValue * 1.5 + 1).displayString, "2 weeks")
     }
 }
