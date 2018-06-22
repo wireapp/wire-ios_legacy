@@ -142,7 +142,7 @@ extension ConversationInputBarViewControllerTests {
 
         // WHEN
         sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = 2419200 // 4 weeks
+        otherUserConversation.messageDestructionTimeout = .local(2419200)
 
         sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
         let shortText = "Lorem ipsum dolor"
