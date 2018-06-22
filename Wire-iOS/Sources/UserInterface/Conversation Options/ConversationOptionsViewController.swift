@@ -91,7 +91,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {
-        present(UIAlertController.checkYouConnection(), animated: false)
+        present(UIAlertController.checkYourConnection(), animated: false)
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) {

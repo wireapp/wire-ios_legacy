@@ -266,6 +266,8 @@
 		7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */; };
 		7CC085461F7AA30F0010F96B /* DotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC085451F7AA30F0010F96B /* DotView.swift */; };
 		7CCBE24D1FC72FE500CBD55D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */; };
+		7CD0746120D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0746020D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift */; };
+		7CD0747620D94BC500BC0A26 /* MessageTimerSystemMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0747120D94A6A00BC0A26 /* MessageTimerSystemMessageTests.swift */; };
 		7CE71D8D1FC453E300C43E19 /* SettingsPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */; };
 		7CE71D8E1FC454AA00C43E19 /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8778AAEC1F6BC6AD0022F53F /* AppLock.swift */; };
 		7CEB45281F8FAAC400D772D5 /* UINavigationBarContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */; };
@@ -1569,6 +1571,8 @@
 		7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionNetworkObserver.swift; sourceTree = "<group>"; };
 		7CC085451F7AA30F0010F96B /* DotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
 		7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
+		7CD0746020D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTimerUpdateCell.swift; sourceTree = "<group>"; };
+		7CD0747120D94A6A00BC0A26 /* MessageTimerSystemMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTimerSystemMessageTests.swift; sourceTree = "<group>"; };
 		7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarContainer.swift; sourceTree = "<group>"; };
 		7CED30711FD97748009F0DAC /* IconStringsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconStringsBuilder.swift; sourceTree = "<group>"; };
 		7CED307B1FD97895009F0DAC /* AvailabilityStringBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityStringBuilder.swift; sourceTree = "<group>"; };
@@ -4857,6 +4861,7 @@
 				874448871C22FCE500E7B947 /* Utility */,
 				7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */,
 				7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */,
+				7CD0746020D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -5159,6 +5164,7 @@
 				D59EA0C62024756B00B17CE7 /* MessagePreviewViewTests.swift */,
 				874B5DB11CEDF7B80010474C /* AudioMessageCellTests.swift */,
 				BF735D001E716816003BC61F /* CallSystemMessageTests.swift */,
+				7CD0747120D94A6A00BC0A26 /* MessageTimerSystemMessageTests.swift */,
 				BF4D99CF1E79AF8100A7B08F /* ParticipantCellTests.swift */,
 				BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */,
 				160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */,
@@ -6211,7 +6217,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = $SRCROOT/Scripts/copyExtraAudioNotifications;
+			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications";
 		};
 		193B0B9A94C0482E9B6C33B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6585,6 +6591,7 @@
 				EF80C0022097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift in Sources */,
 				BF5C379B1C0E0E8700EA11E3 /* ParticipantDeviceCell.m in Sources */,
 				BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */,
+				7CD0746120D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift in Sources */,
 				871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */,
 				D5490A1D20050AAA0057EAA8 /* TeamMemberInviteViewController.swift in Sources */,
 				F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */,
@@ -7283,6 +7290,7 @@
 				D525426820934629001C04C1 /* IconLabelButtonTests.swift in Sources */,
 				BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */,
 				16D4932C203DD480008DDFFA /* UserCellTests.swift in Sources */,
+				7CD0747620D94BC500BC0A26 /* MessageTimerSystemMessageTests.swift in Sources */,
 				EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */,
 				87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */,
 				BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */,

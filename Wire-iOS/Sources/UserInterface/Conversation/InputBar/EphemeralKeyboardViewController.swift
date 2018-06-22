@@ -30,30 +30,6 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
     )
 }
 
-extension MessageDestructionTimeoutValue {
-
-    var isSeconds: Bool {
-        return rawValue < 60
-    }
-
-    var isMinutes: Bool {
-        return 60..<3600 ~= rawValue
-     }
-
-    var isHours: Bool {
-        return 3600..<86400 ~= rawValue
-    }
-
-    var isDays: Bool {
-        return 86400..<604800 ~= rawValue
-    }
-
-    var isWeeks: Bool {
-        return rawValue >= 604800
-    }
-
-}
-
 public extension ZMConversation {
 
     var destructionTimeout: MessageDestructionTimeoutValue? {
@@ -71,6 +47,7 @@ public extension ZMConversation {
         guard let value = self.destructionTimeout else {
             return nil
         }
+        
         
         if value.isWeeks { return WireStyleKit.imageOfWeek(with: UIColor.accent()) }
         if value.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
