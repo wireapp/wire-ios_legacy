@@ -50,6 +50,7 @@ static NSString *const ConversationAudioMessageCellId       = @"conversationAudi
 static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
 static NSString *const ConversationMessageDeletedCellId     = @"conversationMessageDeletedCellId";
 static NSString *const ConversationUnknownMessageCellId     = @"conversationUnknownMessageCellId";
+static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMessageTimerUpdateCellId";
 
 
 @interface ConversationMessageWindowTableViewAdapter () <ZMConversationMessageWindowObserver>
@@ -294,6 +295,9 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
             case ZMSystemMessageTypePerformedCall:
                 cellIdentifier = ConversationPerformedCallCellId;
                 break;
+                
+            case ZMSystemMessageTypeMessageTimerUpdate:
+                cellIdentifier = ConversationMessageTimerUpdateCellId;
 
             default:
                 break;
@@ -358,6 +362,7 @@ static NSString *const ConversationUnknownMessageCellId     = @"conversationUnkn
     [self.tableView registerClass:[LocationMessageCell class] forCellReuseIdentifier:ConversationLocationMessageCellId];
     [self.tableView registerClass:[MessageDeletedCell class] forCellReuseIdentifier:ConversationMessageDeletedCellId];
     [self.tableView registerClass:[UnknownMessageCell class] forCellReuseIdentifier:ConversationUnknownMessageCellId];
+    [self.tableView registerClass:[MessageTimerUpdateCell class] forCellReuseIdentifier:ConversationMessageTimerUpdateCellId];
 }
 
 - (void)expandMessageWindow

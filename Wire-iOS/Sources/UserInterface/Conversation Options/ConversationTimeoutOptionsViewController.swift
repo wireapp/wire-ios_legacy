@@ -121,22 +121,31 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         cell.showSeparator = indexPath.row < (items.count - 1)
 
         return cell
-
+    }
+    
+    private func updateTimeout(_ timeout: MessageDestructionTimeoutValue) {
+        self.showLoadingView = true
+        
+        self.conversation.setMessageDestructionTimeout(timeout, in: userSession) { [weak self] result in
+            self?.showLoadingView = false
+            switch result {
+            case .success: self?.collectionView.reloadData()
+            case .failure(let error): self?.handle(error: error)
+            }
+        }
+    }
+    
+    private func handle(error: Error) {
+        let controller = UIAlertController.checkYourConnection()
+        present(controller, animated: true)
     }
 
     // MARK: Saving Changes
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         collectionView.deselectItem(at: indexPath, animated: true)
         let newTimeout = items[indexPath.row]
-    
-        self.showLoadingView = true
-        
-        self.conversation.setMessageDestructionTimeout(newTimeout, in: userSession) { result in
-            self.showLoadingView = false
-            self.collectionView.reloadData()
-        }
+        updateTimeout(newTimeout)
     }
 
     // MARK: Layout

@@ -48,6 +48,7 @@ public extension ZMConversation {
             return nil
         }
         
+        
         if value.isWeeks { return WireStyleKit.imageOfWeek(with: UIColor.accent()) }
         if value.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
         if value.isHours { return WireStyleKit.imageOfHour(with: UIColor.accent()) }

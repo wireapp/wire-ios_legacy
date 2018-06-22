@@ -29,8 +29,8 @@ import WireLinkPreview
 }
 
 @objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {
-    var messageTimer: NSNumber!
 
+    var messageTimer: NSNumber!
     var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser>! = Set()
     var clients: Set<AnyHashable>! = Set()
