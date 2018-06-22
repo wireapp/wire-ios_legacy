@@ -20,17 +20,6 @@ import Foundation
 import UIKit
 
 class MessageTimerUpdateCell: IconSystemCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
@@ -48,11 +37,11 @@ class MessageTimerUpdateCell: IconSystemCell {
         let name = systemMessageData.users.first?.name
             else { return }
         
-        let timeoutValue = MessageDestructionTimeoutValue.custom(timer.doubleValue)
+        let timeoutValue = MessageDestructionTimeoutValue.init(floatLiteral: timer.doubleValue) // timer.doubleValue)
         
         if let displayString = timeoutValue.displayString {
             let timerString = "\(displayString)"
-            let string = ("\(name) set the timed messages to \(timerString)" && labelFont && labelTextColor)
+            let string = ("content.system.conversation.with_name.title".localized(args: name, timerString) && labelFont && labelTextColor)
                 .addAttributes([.font: labelBoldFont], toSubstring: name)
                 .addAttributes([.font: labelBoldFont], toSubstring: "\(timerString)")
             
@@ -62,52 +51,3 @@ class MessageTimerUpdateCell: IconSystemCell {
     }
 
 }
-
-
-
-/*
-class MissingMessagesCell: IconSystemCell {
-    
-    func configureForMissingMessages(_ systemMessageData: ZMSystemMessageData, font: UIFont, boldFont: UIFont, color: UIColor) {
-        let attributedLocalizedUppercaseString: (String, _ users: Set<ZMUser>) -> NSAttributedString? = { localizationKey, users in
-            guard users.count > 0 else { return nil }
-            let userNames = users.map { $0.displayName }.joined(separator: ", ")
-            let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
-                && font && color
-            return string.addAttributes([NSFontAttributeName: boldFont], toSubstring: userNames)
-        }
-        
-        var title = "content.system.missing_messages.title".localized && font && color
-        
-        // We only want to display the subtitle if we have the final added and removed users and either one is not empty
-        let addedOrRemovedUsers = !systemMessageData.addedUsers.isEmpty || !systemMessageData.removedUsers.isEmpty
-        if !systemMessageData.needsUpdatingUsers && addedOrRemovedUsers {
-            title += "\n\n" + "content.system.missing_messages.subtitle_start".localized + " " && font && color
-            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_added", systemMessageData.addedUsers)
-            title += attributedLocalizedUppercaseString("content.system.missing_messages.subtitle_removed", systemMessageData.removedUsers)
-        }
-        
-        attributedText = title
-    }
-    
-    func configureForReactivatedClientOfSelfUser(_ font: UIFont, color: UIColor){
-        let deviceString = NSLocalizedString("content.system.this_device", comment: "")
-        let fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && font && color
-        
-        attributedText = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink as AnyObject, NSFontAttributeName: font], toSubstring: deviceString)
-    }
-    
-    // MARK: - TTTAttributedLabelDelegate
-    
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
-        if URL == type(of: self).userClientLink {
-            if let systemMessageData = message.systemMessageData,
-                let user = systemMessageData.users.first , systemMessageData.users.count == 1 {
-                ZClientViewController.shared()?.openClientListScreen(for: user)
-            } else if let conversation = message.conversation {
-                ZClientViewController.shared()?.openDetailScreen(for: conversation)
-            }
-        }
-    }
-}
-*/
