@@ -35,6 +35,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 @interface WireStyleKit : NSObject
 
 // iOS Controls Customization Outlets
+@property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* icon_0x748_32ptTargets;
 @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* ongoingcallTargets;
 @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldverifiedTargets;
 @property (strong, nonatomic) IBOutletCollection(NSObject) NSArray* shieldnotverifiedTargets;
@@ -175,7 +176,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x746_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x747_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x269_32ptWithColor: (UIColor*)color;
-+ (void)drawIcon_0x748_32ptWithColor: (UIColor*)color;
++ (void)drawIcon_0x748_32pt;
 + (void)drawIcon_0x749_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x750_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x751_32ptWithColor: (UIColor*)color;
@@ -320,7 +321,7 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x746_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x747_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x269_32ptWithColor: (UIColor*)color;
-+ (UIImage*)imageOfIcon_0x748_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x748_32pt;
 + (UIImage*)imageOfIcon_0x749_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x750_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x751_32ptWithColor: (UIColor*)color;
