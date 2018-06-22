@@ -122,10 +122,8 @@ import Cartography
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        //if conversation.canManageAccess {
-            let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
-            sections.append(optionsSectionController)
-        //}
+        let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
+        sections.append(optionsSectionController)
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {

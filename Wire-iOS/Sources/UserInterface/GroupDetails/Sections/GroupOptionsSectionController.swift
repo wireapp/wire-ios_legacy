@@ -46,11 +46,18 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
     private weak var delegate: GroupOptionsSectionControllerDelegate?
     private let conversation: ZMConversation
     private let syncCompleted: Bool
-
+    private let options: [Option]
+    
     init(conversation: ZMConversation, delegate: GroupOptionsSectionControllerDelegate, syncCompleted: Bool) {
         self.delegate = delegate
         self.conversation = conversation
         self.syncCompleted = syncCompleted
+        if conversation.canManageAccess {
+            options = [Option.guests, Option.timeout]
+        }
+        else {
+            options = [Option.timeout]
+        }
     }
 
     // MARK: - Collection View
@@ -62,7 +69,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Option.count
+        return options.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -74,11 +81,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        guard let option = Option(rawValue: indexPath.row) else {
-            fatal("Invalid options cell index \(indexPath.row)")
-        }
-
+        let option = options[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: option.cellReuseIdentifier, for: indexPath) as! GroupDetailsOptionsCell
 
         cell.configure(with: conversation)
@@ -91,11 +94,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        guard let option = Option(rawValue: indexPath.row) else {
-            return
-        }
-
-        switch option {
+        switch options[indexPath.row] {
         case .guests:
             delegate?.presentGuestOptions(animated: true)
         case .timeout:
