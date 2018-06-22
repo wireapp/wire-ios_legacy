@@ -37,11 +37,11 @@ class MessageTimerUpdateCell: IconSystemCell {
         let name = systemMessageData.users.first?.name
             else { return }
         
-        let timeoutValue = MessageDestructionTimeoutValue.init(floatLiteral: timer.doubleValue) // timer.doubleValue)
+        let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
         
         if let displayString = timeoutValue.displayString {
             let timerString = "\(displayString)"
-            let string = ("content.system.conversation.with_name.title".localized(args: name, timerString) && labelFont && labelTextColor)
+            let string = ("content.system.message_timer_changes".localized(args: name, timerString) && labelFont && labelTextColor)
                 .addAttributes([.font: labelBoldFont], toSubstring: name)
                 .addAttributes([.font: labelBoldFont], toSubstring: "\(timerString)")
             

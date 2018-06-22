@@ -24,21 +24,50 @@ import XCTest
 class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
-        //self.recordMode = true
         super.setUp()
+        self.recordMode = true
     }
     
+    func testThatItRendersMessageTimerSystemMessage_None() {
+        let timerCell = cell(fromSelf: false, messageTimer: .none, expanded: false)
+        verify(view: timerCell.prepareForSnapshots())
+    }
     
-    func testThatItRendersMessageTimerSystemMessage() {
-        let timerCell = cell(fromSelf: false, messageTimer: 50.0, expanded: false)
+    func testThatItRendersMessageTimerSystemMessage_TenSeconds() {
+        let timerCell = cell(fromSelf: false, messageTimer: .tenSeconds, expanded: false)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_FiveMinutes() {
+        let timerCell = cell(fromSelf: false, messageTimer: .fiveMinutes, expanded: false)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_OneHour() {
+        let timerCell = cell(fromSelf: false, messageTimer: .oneHour, expanded: false)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_OneDay() {
+        let timerCell = cell(fromSelf: false, messageTimer: .oneDay, expanded: false)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_OneWeek() {
+        let timerCell = cell(fromSelf: false, messageTimer: .oneWeek, expanded: false)
+        verify(view: timerCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMessageTimerSystemMessage_FourWeeks() {
+        let timerCell = cell(fromSelf: false, messageTimer: .fourWeeks, expanded: false)
         verify(view: timerCell.prepareForSnapshots())
     }
     
     // MARK: - Helper
     
-    private func cell(fromSelf: Bool, messageTimer: Double, expanded: Bool = false) -> IconSystemCell {
+    private func cell(fromSelf: Bool, messageTimer: MessageDestructionTimeoutValue, expanded: Bool = false) -> IconSystemCell {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
-        let message = conversation.appendMessageTimerUpdateMessage(fromUser: fromSelf ? selfUser : otherUser, timer: messageTimer)
+        let message = conversation.appendMessageTimerUpdateMessage(fromUser: fromSelf ? selfUser : otherUser, timer: messageTimer.rawValue)
         
         let cell = MessageTimerUpdateCell(style: .default, reuseIdentifier: name)
         cell.layer.speed = 0
