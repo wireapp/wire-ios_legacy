@@ -18,10 +18,34 @@
 
 import UIKit
 
+fileprivate enum Item {
+    case supportedValue(MessageDestructionTimeoutValue)
+    case unsupportedValue(MessageDestructionTimeoutValue)
+    case customValue
+}
+
+extension ZMConversation {
+    fileprivate var timeoutItems: [Item] {
+        var newItems = MessageDestructionTimeoutValue.all.map(Item.supportedValue)
+        
+        if let timeout = self.messageDestructionTimeout,
+            case .synced(let value) = timeout,
+            case .custom(_) = value {
+            newItems.append(.unsupportedValue(value))
+        }
+        
+        if DeveloperMenuState.developerMenuEnabled() {
+            newItems.append(.customValue)
+        }
+        
+        return newItems
+    }
+}
+
 class ConversationTimeoutOptionsViewController: UIViewController {
 
     fileprivate let conversation: ZMConversation
-    fileprivate let items: [MessageDestructionTimeoutValue]
+    fileprivate var items: [Item] = []
     fileprivate let userSession: ZMUserSession
     fileprivate var observerToken: Any! = nil
 
@@ -33,11 +57,11 @@ class ConversationTimeoutOptionsViewController: UIViewController {
 
     // MARK: - Initialization
 
-    public init(conversation: ZMConversation, items: [MessageDestructionTimeoutValue], userSession: ZMUserSession) {
+    public init(conversation: ZMConversation, userSession: ZMUserSession) {
         self.conversation = conversation
-        self.items = items
         self.userSession = userSession
         super.init(nibName: nil, bundle: nil)
+        self.updateItems()
         observerToken = ConversationChangeInfo.add(observer: self, for: conversation)
     }
 
@@ -76,13 +100,7 @@ class ConversationTimeoutOptionsViewController: UIViewController {
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 
-        NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
-
+        collectionView.fitInSuperview()
     }
 
 }
@@ -109,18 +127,34 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         let item = items[indexPath.row]
         let cell = collectionView.dequeueReusableCell(ofType: CheckmarkCell.self, for: indexPath)
 
-        cell.title = item.displayString
+        func configure(_ cell: CheckmarkCell, for value: MessageDestructionTimeoutValue) {
+            cell.title = value.displayString
+            
+            switch conversation.messageDestructionTimeout {
+            case .synced(let currentValue)?:
+                cell.showCheckmark = value == currentValue
+            default:
+                cell.showCheckmark = value == 0
+            }
+        }
         
-        switch conversation.messageDestructionTimeout {
-        case .synced(let value)?:
-            cell.showCheckmark = item == value
-        default:
-            cell.showCheckmark = item == 0
+        switch item {
+        case .supportedValue(let value):
+            configure(cell, for: value)
+        case .unsupportedValue(let value):
+            configure(cell, for: value)
+        case .customValue:
+            cell.title = "Custom"
+            cell.showCheckmark = false
         }
         
         cell.showSeparator = indexPath.row < (items.count - 1)
 
         return cell
+    }
+    
+    private func updateItems() {
+        self.items = conversation.timeoutItems
     }
     
     private func updateTimeout(_ timeout: MessageDestructionTimeoutValue) {
@@ -129,7 +163,9 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         self.conversation.setMessageDestructionTimeout(timeout, in: userSession) { [weak self] result in
             self?.showLoadingView = false
             switch result {
-            case .success: self?.collectionView.reloadData()
+            case .success:
+                self?.updateItems()
+                self?.collectionView.reloadData()
             case .failure(let error): self?.handle(error: error)
             }
         }
@@ -140,12 +176,37 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         present(controller, animated: true)
     }
 
+    private func requestCustomValue() {
+        UIAlertController.requestCustomTimeInterval(over: self) { [weak self] result in
+            
+            guard let `self` = self else {
+                return
+            }
+            
+            switch result {
+            case .success(let value):
+                self.updateTimeout(MessageDestructionTimeoutValue(rawValue: value))
+            default:
+                break
+            }
+            
+        }
+    }
+    
     // MARK: Saving Changes
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let newTimeout = items[indexPath.row]
-        updateTimeout(newTimeout)
+        let selectedItem = items[indexPath.row]
+        
+        switch selectedItem {
+        case .supportedValue(let value):
+            updateTimeout(value)
+        case .customValue:
+            requestCustomValue()
+        default:
+            break
+        }
     }
 
     // MARK: Layout
@@ -165,6 +226,7 @@ extension ConversationTimeoutOptionsViewController: ZMConversationObserver {
         guard changeInfo.destructionTimeoutChanged else {
             return
         }
+        updateItems()
         collectionView.reloadData()
     }
 }

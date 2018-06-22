@@ -71,6 +71,44 @@ public extension ZMConversation {
 
 }
 
+extension UIAlertController {
+    enum AlertError: Error {
+        case userRejected
+    }
+    
+    static func requestCustomTimeInterval(over controller: UIViewController,
+                                          with completion: @escaping (Result<TimeInterval>)->()) {
+        let alertController = UIAlertController(title: "Custom timer", message: nil, preferredStyle: .alert)
+        alertController.addTextField { (textField: UITextField) in
+            textField.keyboardType = .decimalPad
+            textField.placeholder = "Time interval in seconds"
+        }
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] action in
+            guard let input = alertController?.textFields?.first,
+                let inputText = input.text,
+                let selectedTimeInterval = TimeInterval(inputText) else {
+                    return
+            }
+            
+            completion(.success(selectedTimeInterval))
+        }
+        
+        alertController.addAction(confirmAction)
+        
+        let cancelAction = UIAlertAction.cancel {
+            completion(.failure(AlertError.userRejected))
+        }
+        
+        alertController.addAction(cancelAction)
+        controller.present(alertController, animated: true) { [weak alertController] in
+            guard let input = alertController?.textFields?.first else {
+                return
+            }
+            
+            input.becomeFirstResponder()
+        }
+    }
+}
 
 @objcMembers public final class EphemeralKeyboardViewController: UIViewController {
 
@@ -152,32 +190,19 @@ public extension ZMConversation {
     fileprivate func displayCustomPicker() {
         delegate?.ephemeralKeyboardWantsToBeDismissed(self)
         
-        let alertController = UIAlertController(title: "Custom timer", message: nil, preferredStyle: .alert)
-        alertController.addTextField { (textField: UITextField) in
-            textField.keyboardType = .decimalPad
-            textField.placeholder = "Time interval in seconds"
-        }
-        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController, weak self] action in
-            guard let input = alertController?.textFields?.first,
-                  let inputText = input.text,
-                  let selectedTimeInterval = TimeInterval(inputText),
-                  let `self` = self else {
+        UIAlertController.requestCustomTimeInterval(over: UIApplication.shared.wr_topmostController(onlyFullScreen: true)!) { [weak self] result in
+            
+            guard let `self` = self else {
                 return
             }
             
-            self.delegate?.ephemeralKeyboard(self, didSelectMessageTimeout: selectedTimeInterval)
-        }
-        
-        alertController.addAction(confirmAction)
-        
-        let cancelAction = UIAlertAction.cancel()
-        alertController.addAction(cancelAction)
-        UIApplication.shared.wr_topmostController(onlyFullScreen: true)!.present(alertController, animated: true) { [weak alertController] in
-            guard let input = alertController?.textFields?.first else {
-                return
+            switch result {
+            case .success(let value):
+                self.delegate?.ephemeralKeyboard(self, didSelectMessageTimeout: value)
+            default:
+                break
             }
             
-            input.becomeFirstResponder()
         }
     }
 }
