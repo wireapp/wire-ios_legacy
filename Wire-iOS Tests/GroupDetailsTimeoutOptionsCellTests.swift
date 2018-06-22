@@ -55,7 +55,7 @@ class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
     }
 
     private func updateTimeout(_ newValue: TimeInterval) {
-        conversation.messageDestructionTimeout = .synced(newValue)
+        conversation.messageDestructionTimeout = .synced(MessageDestructionTimeoutValue(rawValue: newValue))
         cell.configure(with: (conversation as Any) as! ZMConversation)
     }
 
