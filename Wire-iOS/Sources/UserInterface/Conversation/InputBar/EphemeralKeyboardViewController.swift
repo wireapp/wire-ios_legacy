@@ -42,7 +42,7 @@ fileprivate let longStyleFormatter: DateComponentsFormatter = {
 }()
 
 
-extension ZMConversationMessageDestructionTimeout {
+extension MessageDestructionTimeoutValue {
 
     var displayString: String? {
         guard .none != self else { return "input.ephemeral.timeout.none".localized }
@@ -61,7 +61,7 @@ extension ZMConversationMessageDestructionTimeout {
 }
 
 
-extension ZMConversationMessageDestructionTimeout {
+extension MessageDestructionTimeoutValue {
 
     var isSeconds: Bool {
         return rawValue < 60
@@ -87,20 +87,39 @@ extension ZMConversationMessageDestructionTimeout {
 
 public extension ZMConversation {
 
+    var destructionTimeout: MessageDestructionTimeoutValue? {
+        switch messageDestructionTimeout {
+        case .local(let value)?:
+            return value
+        case .synced(let value)?:
+            return value
+        default:
+            return nil
+        }
+    }
+    
     @objc var timeoutImage: UIImage? {
-        if destructionTimeout.isWeeks { return WireStyleKit.imageOfWeek(with: UIColor.accent()) }
-        if destructionTimeout.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
-        if destructionTimeout.isHours { return WireStyleKit.imageOfHour(with: UIColor.accent()) }
-        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor.accent()) }
-        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor.accent()) }
+        guard let value = self.destructionTimeout else {
+            return nil
+        }
+        
+        if value.isWeeks { return WireStyleKit.imageOfWeek(with: UIColor.accent()) }
+        if value.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
+        if value.isHours { return WireStyleKit.imageOfHour(with: UIColor.accent()) }
+        if value.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor.accent()) }
+        if value.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor.accent()) }
         return nil
     }
 
     @objc var disabledTimeoutImage: UIImage? {
-        if destructionTimeout.isDays { return WireStyleKit.imageOfDay(with: UIColor(scheme: .lightGraphite)) }
-        if destructionTimeout.isHours { return WireStyleKit.imageOfHour(with: UIColor(scheme: .lightGraphite)) }
-        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor(scheme: .lightGraphite)) }
-        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor(scheme: .lightGraphite)) }
+        guard let value = self.destructionTimeout else {
+            return nil
+        }
+        
+        if value.isDays { return WireStyleKit.imageOfDay(with: UIColor(scheme: .lightGraphite)) }
+        if value.isHours { return WireStyleKit.imageOfHour(with: UIColor(scheme: .lightGraphite)) }
+        if value.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor(scheme: .lightGraphite)) }
+        if value.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor(scheme: .lightGraphite)) }
         return nil
     }
 
@@ -111,7 +130,7 @@ public extension ZMConversation {
 
     weak var delegate: EphemeralKeyboardViewControllerDelegate?
 
-    fileprivate let timeouts: [ZMConversationMessageDestructionTimeout?]
+    fileprivate let timeouts: [MessageDestructionTimeoutValue?]
 
     public let titleLabel = UILabel()
     public var pickerFont: UIFont?
@@ -128,10 +147,10 @@ public extension ZMConversation {
     public init(conversation: ZMConversation!) {
         self.conversation = conversation
         if DeveloperMenuState.developerMenuEnabled() {
-            timeouts = ZMConversationMessageDestructionTimeout.all + [nil]
+            timeouts = MessageDestructionTimeoutValue.all + [nil]
         }
         else {
-            timeouts = ZMConversationMessageDestructionTimeout.all
+            timeouts = MessageDestructionTimeoutValue.all
         }
         super.init(nibName: nil, bundle: nil)
     }
@@ -149,7 +168,7 @@ public extension ZMConversation {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        guard let index = timeouts.index(of: conversation.destructionTimeout) else { return }
+        guard let index = timeouts.index(of: MessageDestructionTimeoutValue(rawValue: conversation.messageDestructionTimeoutValue)) else { return }
         picker.selectRow(index, inComponent: 0, animated: false)
     }
 

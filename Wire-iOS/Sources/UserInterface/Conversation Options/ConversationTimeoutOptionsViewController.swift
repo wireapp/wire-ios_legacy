@@ -21,8 +21,9 @@ import UIKit
 class ConversationTimeoutOptionsViewController: UIViewController {
 
     fileprivate let conversation: ZMConversation
-    fileprivate let items: [ZMConversationMessageDestructionTimeout]
+    fileprivate let items: [MessageDestructionTimeoutValue]
     fileprivate let userSession: ZMUserSession
+    fileprivate var observerToken: Any! = nil
 
     private let collectionViewLayout = UICollectionViewFlowLayout()
 
@@ -32,11 +33,12 @@ class ConversationTimeoutOptionsViewController: UIViewController {
 
     // MARK: - Initialization
 
-    public init(conversation: ZMConversation, items: [ZMConversationMessageDestructionTimeout], userSession: ZMUserSession) {
+    public init(conversation: ZMConversation, items: [MessageDestructionTimeoutValue], userSession: ZMUserSession) {
         self.conversation = conversation
         self.items = items
         self.userSession = userSession
         super.init(nibName: nil, bundle: nil)
+        observerToken = ConversationChangeInfo.add(observer: self, for: conversation)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -108,7 +110,14 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         let cell = collectionView.dequeueReusableCell(ofType: CheckmarkCell.self, for: indexPath)
 
         cell.title = item.displayString
-        cell.showCheckmark = item == conversation.destructionTimeout
+        
+        switch conversation.messageDestructionTimeout {
+        case .synced(let value)?:
+            cell.showCheckmark = item == value
+        default:
+            cell.showCheckmark = item == 0
+        }
+        
         cell.showSeparator = indexPath.row < (items.count - 1)
 
         return cell
@@ -121,12 +130,13 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
 
         collectionView.deselectItem(at: indexPath, animated: true)
         let newTimeout = items[indexPath.row]
-
-        userSession.enqueueChanges {
-            self.conversation.updateMessageDestructionTimeout(timeout: newTimeout)
+    
+        self.showLoadingView = true
+        
+        self.conversation.setMessageDestructionTimeout(newTimeout, in: userSession) { result in
+            self.showLoadingView = false
             self.collectionView.reloadData()
         }
-
     }
 
     // MARK: Layout
@@ -139,4 +149,13 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         return CGSize(width: collectionView.bounds.size.width, height: 32)
     }
 
+}
+
+extension ConversationTimeoutOptionsViewController: ZMConversationObserver {
+    func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+        guard changeInfo.destructionTimeoutChanged else {
+            return
+        }
+        collectionView.reloadData()
+    }
 }

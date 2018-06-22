@@ -22,15 +22,15 @@ import Cartography
 @testable import Wire
 
 
-class EphemeralKeyboardViewControllerTests: ZMSnapshotTestCase {
+class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
 
     var sut: EphemeralKeyboardViewController!
-    var conversation: MockConversation!
+    var conversation: ZMConversation!
 
     override func setUp() {
         super.setUp()
-        conversation = MockConversationFactory.mockConversation()
-        conversation.messageDestructionTimeout = ZMConversationMessageDestructionTimeout.fiveMinutes.rawValue
+        conversation = self.createGroupConversation()
+        conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue.fiveMinutes)
         sut = EphemeralKeyboardViewController(conversation: conversation as Any as! ZMConversation)
     }
 

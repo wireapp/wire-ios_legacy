@@ -1139,7 +1139,7 @@
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */; };
 		EF80462020CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461F20CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift */; };
-		EF80466520D17130001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80466320D1712B001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift */; };
+		EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */; };
 		EF80C0022097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80C0012097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift */; };
 		EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80C0032097151C00E0040B /* ZMConversationMessageWindowTests.swift */; };
 		EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */; };
@@ -2803,7 +2803,7 @@
 		EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+TableHeader.swift"; sourceTree = "<group>"; };
 		EF80461F20CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePictureStepViewController+ImagePicker.swift"; sourceTree = "<group>"; };
 		EF80462120CAC4FE001A1C53 /* ProfilePictureStepViewController+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Private.h"; sourceTree = "<group>"; };
-		EF80466320D1712B001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZMConversationMessageDestructionTimeoutTests.swift; sourceTree = "<group>"; };
+		EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDestructionTimeoutValueTests.swift; sourceTree = "<group>"; };
 		EF80C0012097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessageWindow+Formatting.swift"; sourceTree = "<group>"; };
 		EF80C0032097151C00E0040B /* ZMConversationMessageWindowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMConversationMessageWindowTests.swift; sourceTree = "<group>"; };
 		EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockConversation+TimedMessage.swift"; sourceTree = "<group>"; };
@@ -5223,7 +5223,7 @@
 				EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */,
 				EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */,
 				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
-				EF80466320D1712B001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift */,
+				EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */,
 				EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */,
 			);
 			path = "Wire-iOS Tests";
@@ -7416,7 +7416,7 @@
 				BF2A74751CEB595E002608BF /* AudioButtonOverlayTests.swift in Sources */,
 				BF52C15E1CAEC1430037331F /* ArchivedNavigationBarTests.m in Sources */,
 				EF01AF8520BED3F500E5E5B4 /* MockUserClient+RemoteIdentifier.swift in Sources */,
-				EF80466520D17130001A1C53 /* ZMConversationMessageDestructionTimeoutTests.swift in Sources */,
+				EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */,
 				EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */,
 				8732670E1D2D0C5C005A62C1 /* AudioRecordKeyboardViewControllerTests.swift in Sources */,
 				876041551F5451EA003CB161 /* AccountViewTests.swift in Sources */,

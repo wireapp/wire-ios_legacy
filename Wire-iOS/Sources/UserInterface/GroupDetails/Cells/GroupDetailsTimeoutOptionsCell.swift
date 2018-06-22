@@ -27,7 +27,12 @@ class GroupDetailsTimeoutOptionsCell: GroupDetailsOptionsCell {
     }
 
     override func configure(with conversation: ZMConversation) {
-        status = conversation.destructionTimeout.displayString
+        switch conversation.messageDestructionTimeout {
+        case .synced(let value)?:
+            status = value.displayString
+        default:
+            status = MessageDestructionTimeoutValue.none.displayString
+        }
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {

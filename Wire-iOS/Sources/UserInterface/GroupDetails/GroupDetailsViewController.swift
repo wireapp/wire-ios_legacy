@@ -194,7 +194,9 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
     }
 
     func presentTimeoutOptions(animated: Bool) {
-        let menu = ConversationTimeoutOptionsViewController(conversation: conversation, items: ZMConversationMessageDestructionTimeout.all, userSession: ZMUserSession.shared()!)
+        let menu = ConversationTimeoutOptionsViewController(conversation: conversation,
+                                                            items: MessageDestructionTimeoutValue.all,
+                                                            userSession: ZMUserSession.shared()!)
         navigationController?.pushViewController(menu, animated: animated)
     }
     

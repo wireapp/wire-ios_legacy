@@ -75,11 +75,13 @@ extension ConversationInputBarViewController {
     }
 
     @objc public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
-        guard let conversation = self.conversation else {
+        guard let conversation = self.conversation,
+              let timerValue = conversation.destructionTimeout else {
+            button.setTitle("", for: .normal)
             return
         }
         
-        let title = conversation.destructionTimeout.shortDisplayString
+        let title = timerValue.shortDisplayString
         button.setTitle(title, for: .normal)
     }
 
@@ -96,7 +98,7 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
         updateMarkdownButton()
 
         ZMUserSession.shared()?.enqueueChanges {
-            self.conversation.messageDestructionTimeout = timeout
+            self.conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeout))
             self.updateRightAccessoryView()
         }
     }
