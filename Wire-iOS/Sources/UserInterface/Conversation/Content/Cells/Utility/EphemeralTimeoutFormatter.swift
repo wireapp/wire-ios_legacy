@@ -51,6 +51,16 @@ class EphemeralTimeoutFormatter {
         return formatter
     }()
 
+    private let yearFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+
+        // no comma in time string
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.year, .month, .day]
+        formatter.zeroFormattingBehavior = .dropAll
+        return formatter
+    }()
+
     func string(from interval: TimeInterval) -> String? {
         return timeString(from: interval).map {
             "content.system.ephemeral_time_remaining".localized(args: $0)
@@ -62,7 +72,8 @@ class EphemeralTimeoutFormatter {
         case 0..<60: return secondsFormatter.string(from: interval)
         case 60..<3600: return minuteFormatter.string(from: interval)
         case 3600..<86400: return hourFormatter.string(from: interval)
-        default: return dayFormatter.string(from: interval)
+        case 86400..<31536000: return dayFormatter.string(from: interval)
+        default: return yearFormatter.string(from: interval)
         }
     }
     
