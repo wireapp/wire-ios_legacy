@@ -19,6 +19,49 @@
 
 class EphemeralTimeoutFormatter {
 
+
+    /// A formatter to produce a string with day in full style and hour/minute in positional style
+    class DayFormatter {
+
+        /// hour formatter with no second unit
+        private let hourFormatter: DateComponentsFormatter = {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.hour, .minute]
+            formatter.zeroFormattingBehavior = .dropAll
+            return formatter
+        }()
+
+        private let dayFormatter: DateComponentsFormatter = {
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .full
+            formatter.allowedUnits = [.day]
+            formatter.zeroFormattingBehavior = .pad
+            return formatter
+        }()
+
+
+        /// return a string with day in full style and hour/minute in positional style e.g. 27 days 23:43 left
+        ///
+        /// - Parameter timeInterval: timeInterval to convert
+        /// - Returns: formatted string
+        open func string(from timeInterval: TimeInterval) -> String? {
+            let day = floor(timeInterval / 86400)
+            let timeWithoutDay = timeInterval - day * 86400
+
+            if let dayString = dayFormatter.string(from: timeInterval), let hourString = hourFormatter.string(from: timeWithoutDay) {
+
+                if hourString != "0" {
+                    return dayString + " " + hourString
+                } else {
+                    return dayString
+                }
+            } else {
+                return nil
+            }
+        }
+
+    }
+
     private let secondsFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
@@ -41,15 +84,7 @@ class EphemeralTimeoutFormatter {
         return formatter
     }()
 
-    private let dayFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-
-        // no comma in time string
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.day, .hour]
-        formatter.zeroFormattingBehavior = .dropAll
-        return formatter
-    }()
+    private let dayFormatter = DayFormatter()
 
     func string(from interval: TimeInterval) -> String? {
         return timeString(from: interval).map {
