@@ -101,7 +101,7 @@ class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
     
     private func cell(fromSelf: Bool, messageTimer: MessageDestructionTimeoutValue) -> IconSystemCell {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
-        let message = conversation.appendMessageTimerUpdateMessage(fromUser: fromSelf ? selfUser : otherUser, timer: messageTimer.rawValue)
+        let message = conversation.appendMessageTimerUpdateMessage(fromUser: fromSelf ? selfUser : otherUser, timer: messageTimer.rawValue, timestamp: Date())
         
         let cell = MessageTimerUpdateCell(style: .default, reuseIdentifier: name)
         cell.layer.speed = 0

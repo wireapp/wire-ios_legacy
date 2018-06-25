@@ -1100,6 +1100,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (change.participantsChanged || change.connectionStateChanged) {
         [self updateInputBarVisibility];
     }
+    
+    if (change.destructionTimeoutChanged) {
+        [self updateAccessoryViews];
+    }
 }
 
 @end
