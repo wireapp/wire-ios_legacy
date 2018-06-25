@@ -127,8 +127,9 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         let item = items[indexPath.row]
         let cell = collectionView.dequeueReusableCell(ofType: CheckmarkCell.self, for: indexPath)
 
-        func configure(_ cell: CheckmarkCell, for value: MessageDestructionTimeoutValue) {
+        func configure(_ cell: CheckmarkCell, for value: MessageDestructionTimeoutValue, disabled: Bool) {
             cell.title = value.displayString
+            cell.disabled = disabled
             
             switch conversation.messageDestructionTimeout {
             case .synced(let currentValue)?:
@@ -140,9 +141,9 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         
         switch item {
         case .supportedValue(let value):
-            configure(cell, for: value)
+            configure(cell, for: value, disabled: false)
         case .unsupportedValue(let value):
-            configure(cell, for: value)
+            configure(cell, for: value, disabled: true)
         case .customValue:
             cell.title = "Custom"
             cell.showCheckmark = false

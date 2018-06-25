@@ -50,6 +50,12 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         get { return statusLabel.text }
         set { updateStatus(newValue) }
     }
+    
+    var disabled: Bool = false {
+        didSet {
+            updateDisabledState()
+        }
+    }
 
     // MARK: - Configuration
 
@@ -101,8 +107,8 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         statusLabel.textColor = sectionTextColor
+        updateDisabledState()
     }
 
     // MARK: - Layout
@@ -149,6 +155,10 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
         } else {
             accessoryIconView.isHidden = true
         }
+    }
+    
+    private func updateDisabledState() {
+        titleLabel.textColor = UIColor(scheme: disabled ? .textPlaceholder : .textForeground, variant: colorSchemeVariant)
     }
 
 }
