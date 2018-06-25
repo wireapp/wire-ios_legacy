@@ -26,8 +26,8 @@ class EphemeralTimeoutFormatter {
         /// hour formatter with no second unit
         private let hourFormatter: DateComponentsFormatter = {
             let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.hour, .minute]
-            formatter.zeroFormattingBehavior = .dropAll
+            formatter.allowedUnits = [.day, .hour, .minute]
+            formatter.zeroFormattingBehavior = .pad
             return formatter
         }()
 
@@ -44,16 +44,26 @@ class EphemeralTimeoutFormatter {
         ///
         /// - Parameter timeInterval: timeInterval to convert
         /// - Returns: formatted string
-        open func string(from timeInterval: TimeInterval) -> String? {
-            let day = floor(timeInterval / 86400)
-            let timeWithoutDay = timeInterval - day * 86400
+        open func string(from interval: TimeInterval) -> String? {
 
-            if let dayString = dayFormatter.string(from: timeInterval), let hourString = hourFormatter.string(from: timeWithoutDay) {
+            if let dayString = dayFormatter.string(from: interval), let hourString = hourFormatter.string(from: interval) {
 
-                if hourString != "0" {
-                    return dayString + " " + hourString
-                } else {
+                var hourStringWithoutDay = ""
+                if hourString.hasSuffix("0:00") {
                     return dayString
+                } else {
+                    // remove the day of hourString
+                    do {
+                        let regex = try NSRegularExpression(pattern: "[0-9]+d ")
+                        let results = regex.matches(in: hourString, options: [], range: NSRange(location: 0, length: hourString.count))
+                        let startIndex = hourString.index(hourString.startIndex, offsetBy: results[0].range.length)
+
+                        hourStringWithoutDay = String(hourString[startIndex...])
+                    } catch let error {
+                        print("invalid regex: \(error.localizedDescription)")
+                    }
+
+                    return dayString + " " + hourStringWithoutDay
                 }
             } else {
                 return nil
@@ -93,11 +103,17 @@ class EphemeralTimeoutFormatter {
     }
 
     private func timeString(from interval: TimeInterval) -> String? {
-        switch interval {
-        case 0..<60: return secondsFormatter.string(from: interval)
-        case 60..<3600: return minuteFormatter.string(from: interval)
-        case 3600..<86400: return hourFormatter.string(from: interval)
-        default: return dayFormatter.string(from: interval)
+        let now = Date()
+        let date = Date(timeIntervalSinceNow: interval)
+
+        if date < Calendar.current.date(byAdding: .minute, value: 1, to: now) {
+            return secondsFormatter.string(from: interval)
+        } else if date < Calendar.current.date(byAdding: .hour, value: 1, to: now) {
+            return minuteFormatter.string(from: interval)
+        } else if date < Calendar.current.date(byAdding: .day, value: 1, to: now) {
+            return hourFormatter.string(from: interval)
+        } else {
+            return dayFormatter.string(from: interval)
         }
     }
     
