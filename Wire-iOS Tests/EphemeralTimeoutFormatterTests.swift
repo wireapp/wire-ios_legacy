@@ -35,21 +35,10 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
 
     func testFor1Year11Months30DaysLeft(){
         // GIVEN & WHEN
-        // minus one day to make sure it is less than 1 year 6 months
         let formattedString = sut.string(from: 31536000 * 2 - 86400)
 
         // THEN
         XCTAssertEqual(formattedString, "1 year, 11 months, 30 days left")
-    }
-
-
-    func testForOneAndAHalfYearLeft(){
-        // GIVEN & WHEN
-        // minus one day to make sure it is less than 1 year 6 months
-        let formattedString = sut.string(from: 31536000 * 1.5 - 86400)
-
-        // THEN
-        XCTAssertEqual(formattedString, "1 year, 6 months left")
     }
 
     func testFor1YearLeft(){
@@ -65,7 +54,7 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
         let formattedString = sut.string(from: 31535999)
 
         // THEN
-        XCTAssertEqual(formattedString, "364 days, 23:59 left")
+        XCTAssertEqual(formattedString, "11 months, 30 days 23:59 left")
     }
 
     func testFor4WeeksLeft(){

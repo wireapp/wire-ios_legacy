@@ -34,8 +34,8 @@ class EphemeralTimeoutFormatter {
         private let dayFormatter: DateComponentsFormatter = {
             let formatter = DateComponentsFormatter()
             formatter.unitsStyle = .full
-            formatter.allowedUnits = [.day]
-            formatter.zeroFormattingBehavior = .pad
+            formatter.allowedUnits = [.year, .month, .day]
+            formatter.zeroFormattingBehavior = .dropAll
             return formatter
         }()
 
