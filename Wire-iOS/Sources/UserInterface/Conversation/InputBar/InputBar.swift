@@ -240,7 +240,7 @@ private struct InputBarConstants {
             textView.top == textView.superview!.top
             textView.leading == leftAccessoryView.trailing
             textView.trailing <= textView.superview!.trailing - 16
-            textView.trailing == rightAccessoryView.leading ~ 750.0
+            textView.trailing == rightAccessoryView.leading
             textView.height >= 56
             textView.height <= 120 ~ 1000.0
 

@@ -204,7 +204,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createInputBar]; // Creates all input bar buttons
     [self createSendButton];
     [self createEphemeralIndicatorButton];
-//    [self createEmojiButton];
     [self createMarkdownButton];
 
     [self createHourglassButton];
