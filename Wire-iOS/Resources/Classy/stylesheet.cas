@@ -380,7 +380,6 @@ ConversationInputBarViewController {
 
     ephemeralIndicatorButton: @{
         borderWidth: 0.0;
-        titleColor: $color-accent-current;
         titleLabel: @{
             font: $font-small-semibold;
         }
