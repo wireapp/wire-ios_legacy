@@ -19,6 +19,58 @@
 
 class EphemeralTimeoutFormatter {
 
+
+    /// A formatter to produce a string with day in full style and hour/minute in positional style
+    class DayFormatter {
+
+        /// hour formatter with no second unit
+        private let hourFormatter: DateComponentsFormatter = {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.day, .hour, .minute]
+            formatter.zeroFormattingBehavior = .pad
+            return formatter
+        }()
+
+        private let dayFormatter: DateComponentsFormatter = {
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .full
+            formatter.allowedUnits = [.year, .month, .day]
+            formatter.zeroFormattingBehavior = .dropAll
+            return formatter
+        }()
+
+
+        /// return a string with day in full style and hour/minute in positional style e.g. 27 days 23:43 left
+        ///
+        /// - Parameter timeInterval: timeInterval to convert
+        /// - Returns: formatted string
+        open func string(from interval: TimeInterval) -> String? {
+
+            if let dayString = dayFormatter.string(from: interval), let hourString = hourFormatter.string(from: interval) {
+
+                var hourStringWithoutDay = ""
+                if hourString.hasSuffix("0:00") {
+                    return dayString
+                } else {
+                    // remove the day of hourString
+                    do {
+                        let regex = try NSRegularExpression(pattern: "[0-9]+d ")
+                        let results = regex.matches(in: hourString, options: [], range: NSRange(location: 0, length: hourString.count))
+                        let startIndex = hourString.index(hourString.startIndex, offsetBy: results[0].range.length)
+
+                        hourStringWithoutDay = String(hourString[startIndex...])
+                    } catch {                        
+                    }
+
+                    return dayString + " " + hourStringWithoutDay
+                }
+            } else {
+                return nil
+            }
+        }
+
+    }
+
     private let secondsFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
@@ -41,25 +93,7 @@ class EphemeralTimeoutFormatter {
         return formatter
     }()
 
-    private let dayFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-
-        // no comma in time string
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.day, .hour]
-        formatter.zeroFormattingBehavior = .dropAll
-        return formatter
-    }()
-
-    private let yearFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-
-        // no comma in time string
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.year, .month, .day]
-        formatter.zeroFormattingBehavior = .dropAll
-        return formatter
-    }()
+    private let dayFormatter = DayFormatter()
 
     func string(from interval: TimeInterval) -> String? {
         return timeString(from: interval).map {
@@ -68,12 +102,17 @@ class EphemeralTimeoutFormatter {
     }
 
     private func timeString(from interval: TimeInterval) -> String? {
-        switch interval {
-        case 0..<60: return secondsFormatter.string(from: interval)
-        case 60..<3600: return minuteFormatter.string(from: interval)
-        case 3600..<86400: return hourFormatter.string(from: interval)
-        case 86400..<31536000: return dayFormatter.string(from: interval)
-        default: return yearFormatter.string(from: interval)
+        let now = Date()
+        let date = Date(timeIntervalSinceNow: interval)
+
+        if date < Calendar.current.date(byAdding: .minute, value: 1, to: now) {
+            return secondsFormatter.string(from: interval)
+        } else if date < Calendar.current.date(byAdding: .hour, value: 1, to: now) {
+            return minuteFormatter.string(from: interval)
+        } else if date < Calendar.current.date(byAdding: .day, value: 1, to: now) {
+            return hourFormatter.string(from: interval)
+        } else {
+            return dayFormatter.string(from: interval)
         }
     }
     
