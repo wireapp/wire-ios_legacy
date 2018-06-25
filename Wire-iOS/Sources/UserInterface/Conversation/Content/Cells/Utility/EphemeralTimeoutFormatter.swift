@@ -59,8 +59,7 @@ class EphemeralTimeoutFormatter {
                         let startIndex = hourString.index(hourString.startIndex, offsetBy: results[0].range.length)
 
                         hourStringWithoutDay = String(hourString[startIndex...])
-                    } catch let error {
-                        print("invalid regex: \(error.localizedDescription)")
+                    } catch {                        
                     }
 
                     return dayString + " " + hourStringWithoutDay
