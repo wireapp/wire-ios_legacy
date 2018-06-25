@@ -118,23 +118,6 @@ extension ConversationInputBarViewControllerTests {
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
     }
 
-    func testEphemeralTimeDisabled(){
-        // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-
-        sut.viewDidLoad()
-
-        // WHEN
-        sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(86400)
-
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
-
-        // THEN
-        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
-    }
-
-
     func testEphemeralTime4Weeks(){
         // GIVEN
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
@@ -164,24 +147,6 @@ extension ConversationInputBarViewControllerTests {
         sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
         let shortText = "Lorem ipsum dolor"
         sut.inputBar.textView.text = shortText
-
-        // THEN
-        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
-    }
-
-    func testEphemeralModeWhenTypingALongText() {
-        // GIVEN
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-
-        sut.viewDidLoad()
-
-        // WHEN
-        sut.mode = .timeoutConfguration
-        otherUserConversation.messageDestructionTimeout = .local(2419200)
-
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
-        let longText = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est"
-        sut.inputBar.textView.text = longText
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
