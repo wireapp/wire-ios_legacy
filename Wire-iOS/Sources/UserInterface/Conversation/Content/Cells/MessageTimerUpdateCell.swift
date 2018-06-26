@@ -43,7 +43,8 @@ class MessageTimerUpdateCell: IconSystemCell {
             let name = (user.isSelfUser ? "content.system.you_started".localized : user.name)
             else { return }
         
-        let timerString = "\(displayString)".replacingOccurrences(of: " ", with: " ")
+        let timerString = "\(displayString)".replacingOccurrences(of: String.breakingSpace,
+                                                                  with: String.nonBreakingSpace)
         let string = ("content.system.message_timer_changes".localized(args: name, timerString) && labelFont && labelTextColor)
                 .addAttributes([.font: labelBoldFont], toSubstring: name)
                 .addAttributes([.font: labelBoldFont], toSubstring: "\(timerString)")
@@ -52,4 +53,9 @@ class MessageTimerUpdateCell: IconSystemCell {
         lineView.isHidden = true
     }
 
+}
+
+public extension String {
+    static let breakingSpace = " "      // classic whitespace
+    static let nonBreakingSpace = " "   // &#160;
 }
