@@ -63,7 +63,7 @@ class UserCell: SeparatorCollectionViewCell {
             verifiedIconView.isHidden = true
             videoIconView.isHidden = true
             connectButton.isHidden = true
-            accessoryIconView.isHidden = false
+            accessoryIconView.isHidden = true
             checkmarkIconView.image = nil
             checkmarkIconView.layer.borderColor = UIColor(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
             checkmarkIconView.isHidden = true
