@@ -198,12 +198,6 @@ PersonalAccountView {
 /* Conversation */
 
 MessageToolboxView {
-    statusLabel: @{
-        font: $font-small-semibold;
-        backgroundColor: clear;
-        textColor: $color-text-dimmed;
-        textContainerInset: 0, 0, 0, 0;
-    }
     backgroundColor: clear;
     clipsToBounds: true;
 }
