@@ -43,12 +43,13 @@ class MessageTimerUpdateCell: IconSystemCell {
             let name = (user.isSelfUser ? "content.system.you_started".localized : user.name)
             else { return }
         
-        let timerString = "\(displayString)"
+        let timerString = "\(displayString)".replacingOccurrences(of: " ", with: " ")
         let string = ("content.system.message_timer_changes".localized(args: name, timerString) && labelFont && labelTextColor)
                 .addAttributes([.font: labelBoldFont], toSubstring: name)
                 .addAttributes([.font: labelBoldFont], toSubstring: "\(timerString)")
             
         attributedText = string
+        lineView.isHidden = true
     }
 
 }
