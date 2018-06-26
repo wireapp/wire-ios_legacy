@@ -56,13 +56,20 @@ class EphemeralTimeoutFormatter {
                     do {
                         let regex = try NSRegularExpression(pattern: "[0-9]+d ")
                         let results = regex.matches(in: hourString, options: [], range: NSRange(location: 0, length: hourString.count))
-                        let startIndex = hourString.index(hourString.startIndex, offsetBy: results[0].range.length)
 
-                        hourStringWithoutDay = String(hourString[startIndex...])
+                        if results.count > 0 {
+                            let startIndex = hourString.index(hourString.startIndex, offsetBy: results[0].range.length)
+
+                            hourStringWithoutDay = String(hourString[startIndex...])
+                        }
                     } catch {                        
                     }
 
-                    return dayString + " " + hourStringWithoutDay
+                    if hourStringWithoutDay.count > 0 {
+                        return dayString + " " + hourStringWithoutDay
+                    } else {
+                        return dayString
+                    }
                 }
             } else {
                 return nil
