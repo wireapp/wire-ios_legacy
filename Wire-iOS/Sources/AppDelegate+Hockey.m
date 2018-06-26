@@ -58,12 +58,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 
     hockeyManager.crashManager.crashManagerStatus = BITCrashManagerStatusAutoSend;
+    [hockeyManager setTrackingEnabled: hockeyTrackingEnabled]; // We need to disable tracking before starting the manager!
     [hockeyManager startManager];   // we will start this even if tracking is disabled,
                                     // we use it to receive test versions updates
                                     // and plus the user might enable tracking later
     [hockeyManager.authenticator authenticateInstallation]; // needed to receive test versions update
-    [hockeyManager setTrackingEnabled: hockeyTrackingEnabled];
-    
+
     if (hockeyTrackingEnabled && // no need to wait for crash upload if uploads are disabled
         hockeyManager.crashManager.didCrashInLastSession &&
         hockeyManager.crashManager.timeIntervalCrashInLastSessionOccurred < 5)
