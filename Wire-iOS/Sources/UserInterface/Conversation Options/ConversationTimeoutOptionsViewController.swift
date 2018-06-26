@@ -49,6 +49,8 @@ class ConversationTimeoutOptionsViewController: UIViewController {
     fileprivate let userSession: ZMUserSession
     fileprivate var observerToken: Any! = nil
 
+    public weak var dismisser: ViewControllerDismisser?
+    
     private let collectionViewLayout = UICollectionViewFlowLayout()
 
     private lazy var collectionView: UICollectionView = {
@@ -162,12 +164,16 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
         self.showLoadingView = true
         
         self.conversation.setMessageDestructionTimeout(timeout, in: userSession) { [weak self] result in
-            self?.showLoadingView = false
+            
+            guard let `self` = self else {
+                return
+            }
+            
+            self.showLoadingView = false
             switch result {
             case .success:
-                self?.updateItems()
-                self?.collectionView.reloadData()
-            case .failure(let error): self?.handle(error: error)
+                self.dismisser?.dismiss(viewController: self, completion: nil)
+            case .failure(let error): self.handle(error: error)
             }
         }
     }
