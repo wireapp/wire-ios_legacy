@@ -240,7 +240,8 @@ fileprivate extension VoiceChannel {
     }
 
     func sortedConnectedParticipants(using timestamps: CallParticipantTimestamps) -> [UserWithParticipantState] {
-        return connectedParticipants.sorted { lhs, rhs in
+        let participantsIncludingSelf = connectedParticipants + [(.selfUser(), .connected(videoState: .started))]
+        return participantsIncludingSelf.sorted { lhs, rhs in
             timestamps[lhs.0] > timestamps[rhs.0]
         }
     }

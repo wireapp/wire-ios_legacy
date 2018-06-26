@@ -125,7 +125,7 @@ import Cartography
         let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
         sections.append(optionsSectionController)
 
-        let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+        let (participants, serviceUsers) = (conversation.sortedParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
             let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, delegate: self)
             sections.append(participantsSectionController)

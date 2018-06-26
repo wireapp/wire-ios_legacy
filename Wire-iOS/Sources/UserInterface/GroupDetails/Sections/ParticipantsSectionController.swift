@@ -61,9 +61,10 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         let user = participants[indexPath.row]
         let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
         
+        cell.accessoryIconView.isHidden = false
         cell.configure(with: user, conversation: conversation)
         cell.showSeparator = (participants.count - 1) != indexPath.row
-        cell.accessoryIconView.isHidden = false
+
         cell.accessibilityIdentifier = "participants.section.participants.cell"
         return cell
     }

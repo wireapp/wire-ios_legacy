@@ -183,16 +183,20 @@ class UserCell: SeparatorCollectionViewCell {
         }
         
         if let user = user as? ZMUser {
-            verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty
+            verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty || user.isSelfUser
         } else {
             verifiedIconView.isHidden  = true
         }
         
-        if let subtitle = subtitle(for: user), subtitle.length > 0, !hidesSubtitle {
+        if let subtitle = subtitle(for: user), subtitle.length > 0, !hidesSubtitle, !user.isSelfUser {
             subtitleLabel.isHidden = false
             subtitleLabel.attributedText = subtitle
         } else {
             subtitleLabel.isHidden = true
+        }
+        
+        if user.isSelfUser {
+            accessoryIconView.isHidden = true
         }
     }
     

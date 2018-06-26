@@ -40,7 +40,7 @@ import Classy
             self.userImageView.user = user
             self.userDisplayNameLabel.text = user.name
 
-            if let handle = user.handle {
+            if let handle = user.handle, !user.isSelfUser {
                 displayNameTopConstraint?.isActive = true
                 displayNameVerticalConstraint?.isActive = false
                 usernameLabel.text = "@" + handle
