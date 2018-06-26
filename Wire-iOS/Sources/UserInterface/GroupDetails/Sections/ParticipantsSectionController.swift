@@ -69,6 +69,16 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard let user = participants[indexPath.row] as? ZMUser else { return true }
+        return !user.isSelfUser
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard let user = participants[indexPath.row] as? ZMUser else { return true }
+        return !user.isSelfUser
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let user = participants[indexPath.row] as? ZMUser else { return }
         delegate?.presentDetails(for: user)
