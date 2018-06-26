@@ -69,7 +69,7 @@ extension ZMSystemMessageData {
 
     open let statusLabel: TTTAttributedLabel = {
         let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
-        attributedLabel.font = FontSpec(.small, .semibold).font
+        attributedLabel.font = UIFont.smallSemiboldFont
         attributedLabel.backgroundColor = .clear
         attributedLabel.textColor = UIColor(scheme: .textDimmed)
         attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
