@@ -55,7 +55,7 @@ class EphemeralTimeoutFormatter {
                 } else {
                     // remove the day of hourString
                     do {
-                        let regex = try NSRegularExpression(pattern: "[0-9]+d ")
+                        let regex = try NSRegularExpression(pattern: "[0-9]+.+ ")
                         let results = regex.matches(in: hourString, options: [], range: NSRange(location: 0, length: hourString.count))
 
                         if results.count > 0 {
@@ -69,7 +69,7 @@ class EphemeralTimeoutFormatter {
                     }
 
                     if hourStringWithoutDay.count > 0 {
-                        return dayString + " " + hourStringWithoutDay
+                        return dayString + " ".localized + hourStringWithoutDay
                     } else {
                         return dayString
                     }
