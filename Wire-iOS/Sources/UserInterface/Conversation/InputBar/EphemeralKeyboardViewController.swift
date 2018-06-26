@@ -48,12 +48,12 @@ public extension ZMConversation {
             return nil
         }
         
-        
-        if value.isWeeks { return WireStyleKit.imageOfWeek(with: UIColor.accent()) }
-        if value.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
-        if value.isHours { return WireStyleKit.imageOfHour(with: UIColor.accent()) }
-        if value.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor.accent()) }
-        if value.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor.accent()) }
+        let color = UIColor.accent()
+        if value.isWeeks    { return WireStyleKit.imageOfWeek(with: color) }
+        if value.isDays     { return WireStyleKit.imageOfDay(with: color) }
+        if value.isHours    { return WireStyleKit.imageOfHour(with: color) }
+        if value.isMinutes  { return WireStyleKit.imageOfMinute(with: color) }
+        if value.isSeconds  { return WireStyleKit.imageOfSecond(with: color) }
         return nil
     }
 
@@ -62,10 +62,12 @@ public extension ZMConversation {
             return nil
         }
         
-        if value.isDays { return WireStyleKit.imageOfDay(with: UIColor(scheme: .lightGraphite)) }
-        if value.isHours { return WireStyleKit.imageOfHour(with: UIColor(scheme: .lightGraphite)) }
-        if value.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor(scheme: .lightGraphite)) }
-        if value.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor(scheme: .lightGraphite)) }
+        let color = UIColor(scheme: .lightGraphite)
+        if value.isWeeks    { return WireStyleKit.imageOfWeek(with: color) }
+        if value.isDays     { return WireStyleKit.imageOfDay(with: color) }
+        if value.isHours    { return WireStyleKit.imageOfHour(with: color) }
+        if value.isMinutes  { return WireStyleKit.imageOfMinute(with: color) }
+        if value.isSeconds  { return WireStyleKit.imageOfSecond(with: color) }
         return nil
     }
 
