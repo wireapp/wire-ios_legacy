@@ -117,6 +117,70 @@ extension ConversationInputBarViewControllerTests {
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
     }
+    
+    func testEphemeralTime10Second() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(10)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
+    
+    func testEphemeralTime5Minutes() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(300)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
+    
+    func testEphemeralTime2Hours() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(7200)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
+    
+    func testEphemeralTime3Days() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(259200)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
 
     func testEphemeralTime4Weeks(){
         // GIVEN
@@ -130,6 +194,22 @@ extension ConversationInputBarViewControllerTests {
 
         sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
 
+        // THEN
+        self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
+    }
+    
+    func testEphemeralTime1Year() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(31540000)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
     }
