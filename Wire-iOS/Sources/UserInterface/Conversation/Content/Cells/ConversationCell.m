@@ -153,7 +153,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.messageContentView = [[UIView alloc] init];
     self.messageContentView.translatesAutoresizingMaskIntoConstraints = NO;
     self.messageContentView.accessibilityElementsHidden = NO;
-    self.messageContentView.shouldGroupAccessibilityChildren = YES;
     [self.contentView addSubview:self.messageContentView];
 
     self.authorLabel = [[UILabel alloc] init];
@@ -285,10 +284,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
     NSArray *countdownContainerConstraints =
     @[
-      [self.countdownContainerView.topAnchor constraintEqualToAnchor:self.authorImageView.bottomAnchor constant:6],
+      [self.countdownContainerView.topAnchor constraintEqualToAnchor:self.authorImageView.bottomAnchor constant:12],
       [self.countdownContainerView.centerXAnchor constraintEqualToAnchor:self.authorImageView.centerXAnchor],
-      [self.countdownContainerView.widthAnchor constraintEqualToConstant:12],
-      [self.countdownContainerView.heightAnchor constraintEqualToConstant:12]
+      [self.countdownContainerView.widthAnchor constraintEqualToConstant:8],
+      [self.countdownContainerView.heightAnchor constraintEqualToConstant:8]
       ];
 
     [NSLayoutConstraint activateConstraints:countdownContainerConstraints];

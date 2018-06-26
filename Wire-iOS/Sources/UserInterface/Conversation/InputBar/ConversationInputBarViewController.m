@@ -401,9 +401,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.inputBar.rightAccessoryStackView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
     [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];
 
-    [self.ephemeralIndicatorButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorGraphite]
+    [self.ephemeralIndicatorButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorLightGraphite]
                                         forState:UIControlStateDisabled];
-    
+    [self.ephemeralIndicatorButton setTitleColor:[UIColor accentColor]
+                                        forState:UIControlStateNormal];
+
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
 }
 

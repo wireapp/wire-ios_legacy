@@ -26,6 +26,12 @@ class CheckmarkCell: DetailsCollectionViewCell {
         }
     }
 
+    override var disabled: Bool {
+        didSet {
+            updateCheckmark(forColor: ColorScheme.default.variant)
+        }
+    }
+    
     override func setUp() {
         super.setUp()
         icon = nil
@@ -44,12 +50,20 @@ class CheckmarkCell: DetailsCollectionViewCell {
             return
         }
 
-        let color = colorSchemeVariant == .light
-            ? UIColor(scheme: .textForeground, variant: colorSchemeVariant)
-            : .white
-
-        accessory = UIImage(for: .checkmark, iconSize: .like, color: color)
-
+        let color: UIColor
+        
+        switch (colorSchemeVariant, disabled) {
+        case (.light, false):
+            color = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        case (.light, true):
+            color = UIColor(scheme: .textPlaceholder, variant: colorSchemeVariant)
+        case (.dark, false):
+            color = .white
+        case (.dark, true):
+            color = UIColor(scheme: .textPlaceholder, variant: colorSchemeVariant)
+        }
+    
+        accessory = UIImage(for: .checkmark, iconSize: .tiny, color: color)
     }
 
 }
