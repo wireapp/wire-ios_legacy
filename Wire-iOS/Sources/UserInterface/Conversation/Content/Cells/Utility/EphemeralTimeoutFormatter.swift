@@ -46,36 +46,34 @@ class EphemeralTimeoutFormatter {
         /// - Returns: formatted string
         open func string(from interval: TimeInterval) -> String? {
 
-            if let dayString = dayFormatter.string(from: interval),
-               let hourString = hourFormatter.string(from: interval) {
+            guard let dayString = dayFormatter.string(from: interval),
+                let hourString = hourFormatter.string(from: interval) else {
+                    return nil
+            }
 
-                var hourStringWithoutDay = ""
-                if hourString.hasSuffix("0:00") {
-                    return dayString
+            guard !hourString.hasSuffix("0:00") else { return dayString }
+
+            var hourStringWithoutDay = ""
+
+            // remove the day of hourString
+            do {
+                let regex = try NSRegularExpression(pattern: "[0-9]+.+ ")
+                let results = regex.matches(in: hourString, options: [], range: NSRange(location: 0, length: hourString.count))
+
+                if results.count > 0 {
+                    let startIndex = hourString.index(hourString.startIndex, offsetBy: results[0].range.length)
+
+                    hourStringWithoutDay = String(hourString[startIndex...])
                 } else {
-                    // remove the day of hourString
-                    do {
-                        let regex = try NSRegularExpression(pattern: "[0-9]+.+ ")
-                        let results = regex.matches(in: hourString, options: [], range: NSRange(location: 0, length: hourString.count))
-
-                        if results.count > 0 {
-                            let startIndex = hourString.index(hourString.startIndex, offsetBy: results[0].range.length)
-
-                            hourStringWithoutDay = String(hourString[startIndex...])
-                        } else {
-                            hourStringWithoutDay = hourString
-                        }
-                    } catch {                        
-                    }
-
-                    if hourStringWithoutDay.count > 0 {
-                        return dayString + " ".localized + hourStringWithoutDay
-                    } else {
-                        return dayString
-                    }
+                    hourStringWithoutDay = hourString
                 }
+            } catch {
+            }
+
+            if hourStringWithoutDay.count > 0 {
+                return dayString + " ".localized + hourStringWithoutDay
             } else {
-                return nil
+                return dayString
             }
         }
     }
