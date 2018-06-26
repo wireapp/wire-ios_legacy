@@ -56,6 +56,6 @@ class MessageTimerUpdateCell: IconSystemCell {
 }
 
 public extension String {
-    static let breakingSpace = " "      // classic whitespace
-    static let nonBreakingSpace = " "   // &#160;
+    static let breakingSpace = " "          // classic whitespace
+    static let nonBreakingSpace = "\u{00A0}" // &#160;
 }
