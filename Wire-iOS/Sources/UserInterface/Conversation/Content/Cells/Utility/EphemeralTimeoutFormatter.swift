@@ -46,7 +46,8 @@ class EphemeralTimeoutFormatter {
         /// - Returns: formatted string
         open func string(from interval: TimeInterval) -> String? {
 
-            if let dayString = dayFormatter.string(from: interval), let hourString = hourFormatter.string(from: interval) {
+            if let dayString = dayFormatter.string(from: interval),
+               let hourString = hourFormatter.string(from: interval) {
 
                 var hourStringWithoutDay = ""
                 if hourString.hasSuffix("0:00") {
@@ -61,6 +62,8 @@ class EphemeralTimeoutFormatter {
                             let startIndex = hourString.index(hourString.startIndex, offsetBy: results[0].range.length)
 
                             hourStringWithoutDay = String(hourString[startIndex...])
+                        } else {
+                            hourStringWithoutDay = hourString
                         }
                     } catch {                        
                     }
@@ -75,7 +78,6 @@ class EphemeralTimeoutFormatter {
                 return nil
             }
         }
-
     }
 
     private let secondsFormatter: DateComponentsFormatter = {
