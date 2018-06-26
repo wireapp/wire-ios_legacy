@@ -45,15 +45,15 @@ public extension ZMConversation {
     
     @objc var timeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
-        return image(for: value)
+        return timeoutImage(for: value)
     }
 
     @objc var disabledTimeoutImage: UIImage? {
         guard let value = self.destructionTimeout else { return nil }
-        return image(for: value, withColor: UIColor(scheme: .lightGraphite))
+        return timeoutImage(for: value, withColor: UIColor(scheme: .lightGraphite))
     }
     
-    private func image(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
+    private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
         if timeout.isYears    { return WireStyleKit.imageOfYear(with: color) }
         if timeout.isWeeks    { return WireStyleKit.imageOfWeek(with: color) }
         if timeout.isDays     { return WireStyleKit.imageOfDay(with: color) }
