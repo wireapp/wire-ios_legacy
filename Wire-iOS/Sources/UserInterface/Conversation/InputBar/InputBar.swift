@@ -29,13 +29,13 @@ extension Settings {
     }
 }
 
-public enum EphemeralState: Equatable {
+@objc public enum EphemeralState: Int, Equatable {
     case conversation
     case message
     case none
 
     var isEphemeral: Bool {
-        return [.message,  .conversation].contains(self)
+        return [.message, .conversation].contains(self)
     }
 }
 
@@ -73,6 +73,17 @@ public enum InputBarState: Equatable {
             return ephemeral.isEphemeral
         default:
             return false
+        }
+    }
+
+    mutating func changeEphemeralState(to newState: EphemeralState) {
+        switch self {
+        case .markingDown(_):
+            self = .markingDown(ephemeral: newState)
+        case .writing(_):
+            self = .writing(ephemeral: newState)
+        default:
+            return
         }
     }
 }
@@ -148,7 +159,11 @@ private struct InputBarConstants {
     }
     
     private var inputBarState: InputBarState = .writing(ephemeral: .none)
-    
+
+    @objc public func changeEphemeralState(to newState: EphemeralState) {
+        inputBarState.changeEphemeralState(to: newState)
+    }
+
     public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView

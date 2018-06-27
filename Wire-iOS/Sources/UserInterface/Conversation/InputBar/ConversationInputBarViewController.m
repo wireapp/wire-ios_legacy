@@ -515,6 +515,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.timeoutImage forState:UIControlStateNormal];
     [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.disabledTimeoutImage
                                              forState:UIControlStateDisabled];
+
+    [self.inputBar changeEphemeralStateTo: self.ephemeralState];
 }
 
 - (void)updateButtonIcons
