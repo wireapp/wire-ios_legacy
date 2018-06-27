@@ -29,10 +29,20 @@ extension Settings {
     }
 }
 
+public enum EphemeralState: Equatable {
+    case conversation
+    case message
+    case none
+
+    var isEphemeral: Bool {
+        return [.message,  .conversation].contains(self)
+    }
+}
+
 public enum InputBarState: Equatable {
-    case writing(ephemeral: Bool)
+    case writing(ephemeral: EphemeralState)
     case editing(originalText: String)
-    case markingDown(ephemeral: Bool)
+    case markingDown(ephemeral: EphemeralState)
 
     var isWriting: Bool {
         switch self {
@@ -58,9 +68,9 @@ public enum InputBarState: Equatable {
     var isEphemeral: Bool {
         switch self {
         case .markingDown(let ephemeral):
-            return ephemeral
+            return ephemeral.isEphemeral
         case .writing(let ephemeral):
-            return ephemeral
+            return ephemeral.isEphemeral
         default:
             return false
         }
@@ -137,7 +147,7 @@ private struct InputBarConstants {
         return inputBarState.isMarkingDown
     }
     
-    private var inputBarState: InputBarState = .writing(ephemeral: false)
+    private var inputBarState: InputBarState = .writing(ephemeral: .none)
     
     public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {

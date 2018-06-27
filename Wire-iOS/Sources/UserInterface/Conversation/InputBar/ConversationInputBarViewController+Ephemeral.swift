@@ -51,7 +51,7 @@ extension ConversationInputBarViewController {
                 mode = .timeoutConfguration
                 inputBar.textView.becomeFirstResponder()
             }
-        // dismissing
+            // dismissing
         } else {
             if noPopoverPresented {
                 mode = .textInput
@@ -73,34 +73,49 @@ extension ConversationInputBarViewController {
         guard let controller = ephemeralKeyboardViewController else { return }
         present(controller, animated: true, completion: nil)
     }
-
+    
     @objc public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
         guard let conversation = self.conversation,
-              let timerValue = conversation.destructionTimeout else {
-            button.setTitle("", for: .normal)
-            return
+            let timerValue = conversation.destructionTimeout else {
+                button.setTitle("", for: .normal)
+                return
         }
         
         let title = timerValue.shortDisplayString
         button.setTitle(title, for: .normal)
     }
-
+    
 }
 
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
-
+    
     @objc func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
         updateEphemeralKeyboardVisibility()
     }
-
+    
     func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: TimeInterval) {
-        inputBar.setInputBarState(.writing(ephemeral: timeout != 0), animated: true)
+        inputBar.setInputBarState(.writing(ephemeral: timeout != 0 ? .message : .none), animated: true)
         updateMarkdownButton()
-
+        
         ZMUserSession.shared()?.enqueueChanges {
             self.conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeout))
             self.updateRightAccessoryView()
         }
     }
+    
+}
 
+extension ConversationInputBarViewController {
+    var ephemeralState: EphemeralState {
+        var state = EphemeralState.none
+        if !sendButtonState.ephemeral {
+            state = .none
+        } else if let conversation = conversation, conversation.messageDestructionTimeout != nil {
+            state = .conversation
+        } else {
+            state = .message
+        }
+        
+        return state
+    }
 }
