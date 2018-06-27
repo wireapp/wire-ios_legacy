@@ -106,7 +106,7 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
 }
 
 extension ConversationInputBarViewController {
-    @objc var ephemeralState: EphemeralState {
+    var ephemeralState: EphemeralState {
         var state = EphemeralState.none
         if !sendButtonState.ephemeral {
             state = .none
@@ -117,5 +117,9 @@ extension ConversationInputBarViewController {
         }
         
         return state
+    }
+
+    @objc func updateInputBar() {
+        inputBar.changeEphemeralState(to: self.ephemeralState)
     }
 }

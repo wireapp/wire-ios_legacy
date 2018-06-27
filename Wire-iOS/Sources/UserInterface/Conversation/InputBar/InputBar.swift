@@ -76,6 +76,17 @@ public enum InputBarState: Equatable {
         }
     }
 
+    var isEphemeralEnabled: Bool {
+        switch self {
+        case .markingDown(let ephemeral):
+            return ephemeral == .message
+        case .writing(let ephemeral):
+            return ephemeral == .message
+        default:
+            return false
+        }
+    }
+
     mutating func changeEphemeralState(to newState: EphemeralState) {
         switch self {
         case .markingDown(_):
@@ -158,9 +169,14 @@ private struct InputBarConstants {
         return inputBarState.isMarkingDown
     }
     
-    private var inputBarState: InputBarState = .writing(ephemeral: .none)
+    private var inputBarState: InputBarState = .writing(ephemeral: .none) {
+        didSet {
+            updatePlaceholder()
+            updatePlaceholderColors()
+        }
+    }
 
-    @objc public func changeEphemeralState(to newState: EphemeralState) {
+    public func changeEphemeralState(to newState: EphemeralState) {
         inputBarState.changeEphemeralState(to: newState)
     }
 
@@ -424,12 +440,24 @@ private struct InputBarConstants {
         guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
         return state.isWriting || state.isMarkingDown ? writingColor : writingColor.mix(editingColor, amount: 0.16)
     }
-    
+
+    fileprivate func updatePlaceholderColors() {
+        if inputBarState.isEphemeral &&
+            inputBarState.isEphemeralEnabled &&
+            availabilityPlaceholder == nil {
+            textView.placeholderTextColor = ephemeralColor
+        } else {
+            textView.placeholderTextColor = placeholderColor
+        }
+    }
+
     fileprivate func updateColors() {
 
         backgroundColor = backgroundColor(forInputBarState: inputBarState)
         buttonRowSeparator.backgroundColor = writingSeparatorColor
-        textView.placeholderTextColor = self.inputBarState.isEphemeral && self.availabilityPlaceholder == nil ? ephemeralColor : placeholderColor
+
+        updatePlaceholderColors()
+
         fakeCursor.backgroundColor = .accent()
         textView.tintColor = .accent()
         textView.updateTextColor(base: textColor)
