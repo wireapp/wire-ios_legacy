@@ -284,7 +284,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
     NSArray *countdownContainerConstraints =
     @[
-      [self.countdownContainerView.topAnchor constraintEqualToAnchor:self.authorImageView.bottomAnchor constant:9],
+      [self.countdownContainerView.topAnchor constraintEqualToAnchor:self.authorImageView.bottomAnchor constant:10],
       [self.countdownContainerView.centerXAnchor constraintEqualToAnchor:self.authorImageView.centerXAnchor],
       [self.countdownContainerView.widthAnchor constraintEqualToConstant:8],
       [self.countdownContainerView.heightAnchor constraintEqualToConstant:8]
