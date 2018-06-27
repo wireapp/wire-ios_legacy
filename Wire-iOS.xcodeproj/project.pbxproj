@@ -5088,6 +5088,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EF2BEF2D20E3B5A200D056B0 /* ConversationCell */,
 				EF27CD9A20C161500077FE55 /* DeviceManagement */,
 				EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */,
 				7C9E29192074F3F000827819 /* EmailVerificationStepViewControllerTests.swift */,
@@ -5152,8 +5153,6 @@
 				874E85951BEA0D3C006A7EBF /* Wire-iOS-Tests-Bridging-Header.h */,
 				87D5E43F1C3E797A00EB8289 /* UserClientFingerprintTests.swift */,
 				87071CC31CB6A3790039388A /* FileTransferCellTests.swift */,
-				BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */,
-				BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */,
 				AF65A25B1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift */,
 				CE3FBF1D1CE22B4900ED087A /* DeleteMessageTests.m */,
 				BF2A74741CEB595E002608BF /* AudioButtonOverlayTests.swift */,
@@ -5711,6 +5710,15 @@
 				EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */,
 			);
 			path = DeviceManagement;
+			sourceTree = "<group>";
+		};
+		EF2BEF2D20E3B5A200D056B0 /* ConversationCell */ = {
+			isa = PBXGroup;
+			children = (
+				BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */,
+				BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */,
+			);
+			path = ConversationCell;
 			sourceTree = "<group>";
 		};
 		EF61B33E1FC8461200D8E631 /* AccessoryTextField */ = {
