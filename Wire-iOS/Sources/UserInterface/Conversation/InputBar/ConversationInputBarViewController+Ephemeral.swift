@@ -110,7 +110,7 @@ extension ConversationInputBarViewController {
         var state = EphemeralState.none
         if !sendButtonState.ephemeral {
             state = .none
-        } else if let conversation = conversation, conversation.messageDestructionTimeout != nil {
+        } else if self.conversation.hasSyncedMessageDestructionTimeout {
             state = .conversation
         } else {
             state = .message
@@ -120,6 +120,6 @@ extension ConversationInputBarViewController {
     }
 
     @objc func updateInputBar() {
-        inputBar.changeEphemeralState(to: self.ephemeralState)
+        inputBar.changeEphemeralState(to: ephemeralState)
     }
 }
