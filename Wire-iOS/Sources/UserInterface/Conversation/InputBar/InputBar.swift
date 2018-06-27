@@ -29,7 +29,7 @@ extension Settings {
     }
 }
 
-public enum EphemeralState: Int, Equatable {
+public enum EphemeralState: Equatable {
     case conversation
     case message
     case none
