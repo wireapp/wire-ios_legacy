@@ -152,7 +152,7 @@ extension UIViewController {
     }
     
     @objc
-    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
+    public init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
         self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
@@ -321,7 +321,9 @@ extension UIViewController {
             teamContacts = teamContacts.filter({ !filteredParticpants.contains($0) })
         }
         
-        contactsSection.contacts = contacts
+        contactsSection.contacts = contacts.filter {
+            $0.displayName.starts(with: "B")
+        }
 
         // Access mode is not set, or the guests are allowed.
         if shouldIncludeGuests {
@@ -330,10 +332,14 @@ extension UIViewController {
                 let name1 = $1.name ?? ""
 
                 return name0.compare(name1) == .orderedAscending
-             }
+                }.filter {
+                    $0.displayName.starts(with: "B")
+            }
         }
         else {
-            teamMemberAndContactsSection.contacts = teamContacts
+            teamMemberAndContactsSection.contacts = teamContacts.filter {
+                $0.displayName.starts(with: "B")
+            }
         }
         
         directorySection.suggestions = searchResult.directory

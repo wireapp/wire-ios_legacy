@@ -132,7 +132,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
 
     self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection
-                                                                                          variant:ColorSchemeVariantDark
                                                                              isAddingParticipants:NO
                                                                               shouldIncludeGuests:YES];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
