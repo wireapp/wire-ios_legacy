@@ -135,7 +135,7 @@ class InputBarTests: ZMSnapshotTestCase {
     func testEphemeralMode() {
         sut.textView.text = ""
         sut.updateFakeCursorVisibility()
-        sut.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.setInputBarState(.writing(ephemeral: .message), animated: false)
         sut.updateEphemeralState()
         CASStyler.default().styleItem(sut)
         
@@ -145,7 +145,7 @@ class InputBarTests: ZMSnapshotTestCase {
     func testEphemeralModeWithMarkdown() {
         sut.textView.text = ""
         sut.updateFakeCursorVisibility()
-        sut.setInputBarState(.markingDown(ephemeral: true), animated: false)
+        sut.setInputBarState(.markingDown(ephemeral: .message), animated: false)
         sut.updateEphemeralState()
         CASStyler.default().styleItem(sut)
 

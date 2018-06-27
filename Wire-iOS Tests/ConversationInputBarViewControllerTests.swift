@@ -128,7 +128,7 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(10)
         
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
@@ -144,7 +144,7 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(300)
         
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
@@ -160,7 +160,7 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(7200)
         
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
@@ -176,7 +176,7 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(259200)
         
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
@@ -192,7 +192,7 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(2419200)
 
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
@@ -208,7 +208,7 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(31540000)
         
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view.snapshotView)
@@ -224,7 +224,7 @@ extension ConversationInputBarViewControllerTests {
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(2419200)
 
-        sut.inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
         let shortText = "Lorem ipsum dolor"
         sut.inputBar.textView.text = shortText
 
