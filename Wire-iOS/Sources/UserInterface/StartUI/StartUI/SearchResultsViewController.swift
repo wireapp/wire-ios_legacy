@@ -321,10 +321,8 @@ extension UIViewController {
             teamContacts = teamContacts.filter({ !filteredParticpants.contains($0) })
         }
         
-        contactsSection.contacts = contacts.filter {
-            $0.displayName.starts(with: "B")
-        }
-
+        contactsSection.contacts = contacts
+        
         // Access mode is not set, or the guests are allowed.
         if shouldIncludeGuests {
             teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
@@ -332,14 +330,10 @@ extension UIViewController {
                 let name1 = $1.name ?? ""
 
                 return name0.compare(name1) == .orderedAscending
-                }.filter {
-                    $0.displayName.starts(with: "B")
-            }
+                }
         }
         else {
-            teamMemberAndContactsSection.contacts = teamContacts.filter {
-                $0.displayName.starts(with: "B")
-            }
+            teamMemberAndContactsSection.contacts = teamContacts
         }
         
         directorySection.suggestions = searchResult.directory
