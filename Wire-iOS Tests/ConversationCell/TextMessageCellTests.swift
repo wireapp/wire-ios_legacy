@@ -46,8 +46,6 @@ class TextMessageCellTests: ZMSnapshotTestCase {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
-
-        recordMode = true
     }
 
     override func tearDown() {
