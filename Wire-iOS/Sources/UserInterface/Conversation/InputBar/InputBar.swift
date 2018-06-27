@@ -29,7 +29,7 @@ extension Settings {
     }
 }
 
-@objc public enum EphemeralState: Int, Equatable {
+public enum EphemeralState: Int, Equatable {
     case conversation
     case message
     case none
