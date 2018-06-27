@@ -71,14 +71,6 @@ extension SectionCollectionViewController: UICollectionViewDelegate {
         visibleSections[indexPath.section].collectionView?(collectionView, didDeselectItemAt: indexPath)
     }
     
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return visibleSections[indexPath.section].collectionView?(collectionView, shouldSelectItemAt: indexPath) ?? true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return visibleSections[indexPath.section].collectionView?(collectionView, shouldHighlightItemAt: indexPath) ?? true
-    }
-
 }
 
 extension SectionCollectionViewController: UICollectionViewDataSource {

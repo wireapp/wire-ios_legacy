@@ -71,11 +71,8 @@ extension ZMConversation {
         return participants.filter { $0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
     
-    @objc public var sortedParticipants: [ZMBareUser] {
-        guard var participants = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return [] }
-        if isSelfAnActiveMember {
-            participants.append(ZMUser.selfUser())
-        }
+    @objc public var sortedOtherParticipants: [ZMBareUser] {
+        guard let participants = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return [] }
         return participants.filter { !$0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
 

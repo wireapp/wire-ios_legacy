@@ -40,8 +40,6 @@ class CallParticipantsViewTests: ZMSnapshotTestCase {
             rows.append(.callParticipant(user: MockUser.mockUsers()[index], sendsVideo: sendsVideo))
         }
         
-        rows.append(.callParticipant(user: .selfUser(), sendsVideo: true))
-        
         return rows
     }
     

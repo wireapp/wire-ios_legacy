@@ -144,7 +144,7 @@ extension UserCell: CallParticipantsCellConfigurationConfigurable {
         hidesSubtitle = true
         configure(with: user)
         accessoryIconView.isHidden = true
-        videoIconView.isHidden = !sendsVideo || user.isSelfUser
+        videoIconView.isHidden = !sendsVideo
     }
-
+    
 }

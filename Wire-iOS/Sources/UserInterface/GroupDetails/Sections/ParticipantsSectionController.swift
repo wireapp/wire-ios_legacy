@@ -61,22 +61,11 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         let user = participants[indexPath.row]
         let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
         
-        cell.accessoryIconView.isHidden = false
         cell.configure(with: user, conversation: conversation)
         cell.showSeparator = (participants.count - 1) != indexPath.row
-
+        cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.participants.cell"
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        guard let user = participants[indexPath.row] as? ZMUser else { return true }
-        return !user.isSelfUser
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        guard let user = participants[indexPath.row] as? ZMUser else { return true }
-        return !user.isSelfUser
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
