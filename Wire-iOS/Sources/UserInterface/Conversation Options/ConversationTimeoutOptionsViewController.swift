@@ -202,12 +202,29 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
     
     // MARK: Saving Changes
 
+    private func canSelectItem(with value: MessageDestructionTimeoutValue) -> Bool {
+
+        guard let currentTimeout = conversation.messageDestructionTimeout else {
+            return value != .none
+        }
+
+        guard case .synced(let currentValue) = currentTimeout else {
+            return value != .none
+        }
+
+        return value != currentValue
+
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let selectedItem = items[indexPath.row]
         
         switch selectedItem {
         case .supportedValue(let value):
+            guard canSelectItem(with: value) else {
+                break
+            }
             updateTimeout(value)
         case .customValue:
             requestCustomValue()
