@@ -47,7 +47,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     fileprivate var navBarContainer: UINavigationBarContainer?
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
-    var buttonsBar: InputBarButtonsView! ///TODO refresh
+    var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton.iconButtonDefault()
     let overlay = FeedbackOverlayView()
     let separator = UIView()
