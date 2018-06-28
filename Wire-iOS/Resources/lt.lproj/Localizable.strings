@@ -29,6 +29,7 @@
 "general.confirm" = "GERAI";
 "general.skip" = "Vėliau";
 "general.accept" = "Priimti";
+"general.decline" = "Ne, dėkui";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -143,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "sukurti žinutę ir išsaugoti vėlesniam laikui";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "fotoaparatas";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "nufotografuokite ir greitai siųskite";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "Gavote žinutę.";
 
 // Archived List
 "archived_list.title" = "archyvas";
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "su %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
 "content.system.new_device" = "naujas įrenginys";
@@ -503,7 +506,7 @@
 
 // Voice New
 
-"call.status.connecting" = "Sujungiama…";
+"call.status.connecting" = "Jungiamasi…";
 "call.status.incoming.user" = "%@ skambina…";
 "call.status.incoming" = "Skambinama…";
 "call.status.outgoing" = "Kviečiama…";
@@ -533,12 +536,12 @@
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Jums skambina %@";
-"call.actions.label.toggle_mute_on" = "Išjungti pranešimus";
-"call.actions.label.toggle_mute_off" = "Įjungti pranešimus";
+"call.actions.label.toggle_mute_on" = "Išjungti mikrofoną";
+"call.actions.label.toggle_mute_off" = "Įjungti mikrofoną";
 "call.actions.label.flip_camera" = "Perjungti kamerą";
 "call.actions.label.toggle_speaker_on" = "Įjungti garsiakalbį";
 "call.actions.label.toggle_speaker_off" = "Išjungti garsiakalbį";
-"call.actions.label.accept_call" = "Priimti skambutį";
+"call.actions.label.accept_call" = "Atsiliepti";
 "call.actions.label.reject_call" = "Atmesti skambutį";
 "call.actions.label.terminate_call" = "Baigti pokalbį";
 "call.actions.label.toggle_video_on" = "Įjungti vaizdą";
@@ -546,8 +549,8 @@
 "call.actions.label.switch_to_back_camera" = "Rodyti galinę kamerą";
 "call.actions.label.switch_to_front_camera" = "Rodyti priekinę kamerą";
 "call.actions.label.minimize_call" = "Minimizuoti skambutį";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.make_audio_call" = "Pradėti garso skambutį";
+"call.actions.label.make_video_call" = "Pradėti vaizdo skambutį";
 "call.actions.label.join_call" = "Jungtis prie pokalbio";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,12 +563,12 @@
 "participants.section.participants" = "Žmonės (%d)";
 "participants.section.services" = "Paslaugos (%d)";
 "participants.footer.add_title" = "Pridėti dalyvių";
-"participants.section.name.footer" = "Prie pokalbio gali prisijungti iki 128 pašnekovų. Vaizdo skambučiai veikai grupėse iki 4 pašnekovų.";
+"participants.section.name.footer" = "Prie pokalbio gali prisijungti iki 128 pašnekovų. Vaizdo skambučiai veikia grupėse iki 3 pašnekovų ir jumis.";
 
 // Meta Menu
 "meta.menu.rename" = "Pervadinti";
 "meta.menu.leave" = "Išeiti iš grupės…";
-"meta.menu.archive" = "Archyvas";
+"meta.menu.archive" = "Archyvuoti";
 "meta.menu.unarchive" = "Išarchyvuoti";
 "meta.menu.delete" = "Trinti turinį…";
 "meta.menu.silence.mute" = "Išjungti pranešimus";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "pašalinti integraciją";
 
 // Group details
-"group_details.guest_options_cell.title" = "Svečių nustatymai";
+"group_details.guest_options_cell.title" = "Svečių";
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
+"group_details.timeout_options_cell.title" = "Laikinos žinutės";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "Žemėlapiai";
 "open_link.maps.option.google" = "„Google Maps“";
+"open_link.maps.footer" = "Kai kurios vietos nuorodos visada bus atvertos per „Apple Maps“.";
 
 "open_link.browser.option.safari" = "„Safari“";
 "open_link.browser.option.chrome" = "„Chrome“";

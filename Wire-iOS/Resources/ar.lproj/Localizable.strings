@@ -29,6 +29,7 @@
 "general.confirm" = "موافق";
 "general.skip" = "ليس الآن";
 "general.accept" = "قبول";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "مع %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
 
 "content.system.new_device" = "جهاز جديد";
@@ -560,7 +563,7 @@
 "participants.section.participants" = "أشخاص (%d)";
 "participants.section.services" = "خدمات (%d)";
 "participants.footer.add_title" = "إضافة مشاركين";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "إعادة التّسمية";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "إلغاء التكامل";
 
 // Group details
-"group_details.guest_options_cell.title" = "خيارات الزوار";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "مفعل";
 "group_details.guest_options_cell.disabled" = "غير مفعل";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "خرائط";
 "open_link.maps.option.google" = "خرائط جوجل";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "سفاري";
 "open_link.browser.option.chrome" = "جوجل كروم";

@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Agora não";
 "general.accept" = "Aceitar";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -143,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "escrever mensagens e salvar para mais tarde";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "câmera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "tire uma foto e envie rapidamente";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "Você tem mensagens não lidas.";
 
 // Archived List
 "archived_list.title" = "arquivado";
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "com %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
 
 "content.system.new_device" = "um novo dispositivo";
@@ -486,7 +489,7 @@
 "voice.speaker_button.title" = "Alto-falante";
 "voice.cancel_button.title" = "Cancelar";
 "voice.call_button.title" = "Chamada";
-"voice.end_call_button.title" = "End Call";
+"voice.end_call_button.title" = "Terminar Chamada";
 
 "voice.alert.call_in_progress.title" = "Chamada em andamento";
 "voice.alert.call_in_progress.message" = "Você pode ter apenas uma chamada ativa de cada vez";
@@ -532,22 +535,22 @@
 
 // Call Actions (accessibility)
 
-"call.announcement.incoming" = "Incoming call from %@";
+"call.announcement.incoming" = "Chamada de %@";
 "call.actions.label.toggle_mute_on" = "Silenciar";
 "call.actions.label.toggle_mute_off" = "Notificar";
-"call.actions.label.flip_camera" = "Flip camera";
-"call.actions.label.toggle_speaker_on" = "Enable speaker";
-"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.flip_camera" = "Mudar câmera";
+"call.actions.label.toggle_speaker_on" = "Ativar Alto-falante";
+"call.actions.label.toggle_speaker_off" = "Desativar Alto-falante";
 "call.actions.label.accept_call" = "Aceitar ligação";
-"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.reject_call" = "Rejeitar chamada";
 "call.actions.label.terminate_call" = "Finalizar chamada";
-"call.actions.label.toggle_video_on" = "Turn on camera";
-"call.actions.label.toggle_video_off" = "Turn off camera";
-"call.actions.label.switch_to_back_camera" = "Switch to back camera";
-"call.actions.label.switch_to_front_camera" = "Switch to front camera";
-"call.actions.label.minimize_call" = "Minimize call";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.toggle_video_on" = "Ligar câmera";
+"call.actions.label.toggle_video_off" = "Desligar câmera";
+"call.actions.label.switch_to_back_camera" = "Alternar para a câmera traseira";
+"call.actions.label.switch_to_front_camera" = "Alternar para a câmera frontal";
+"call.actions.label.minimize_call" = "Minimizar chamada";
+"call.actions.label.make_audio_call" = "Iniciar chamada de áudio";
+"call.actions.label.make_video_call" = "Iniciar chamada de vídeo";
 "call.actions.label.join_call" = "Junte-se a chamada";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,7 +563,7 @@
 "participants.section.participants" = "Pessoas (%d)";
 "participants.section.services" = "Serviços (%d)";
 "participants.footer.add_title" = "Adicionar Participantes";
-"participants.section.name.footer" = "Até 128 pessoas podem participar de uma conversa de grupo. Chamadas de vídeo trabalham em grupos de 4 ou menos.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Renomear";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "remover integração";
 
 // Group details
-"group_details.guest_options_cell.title" = "Opções de Convidados";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Ligado";
 "group_details.guest_options_cell.disabled" = "Desligar";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -692,7 +696,7 @@
 "self.voiceover.hint" = "Abrir perfil e configurações";
 "self.new-device.voiceover.label" = "Perfil, novos dispositivos adicionados";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
+"self.profile.change_user_image.accessibility" = "Toque para mudar foto do perfil";
 
 "self.add_phone_number" = "Adicionar número de telefone";
 "self.add_email_password" = "Adicionar o endereço de e-mail e senha";
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "Mapas";
 "open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Alguns links de localização sempre abrirão no Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";

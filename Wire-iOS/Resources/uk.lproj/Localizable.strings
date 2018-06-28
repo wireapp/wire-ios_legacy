@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Не зараз";
 "general.accept" = "Прийняти";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -143,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "створити повідомлення та зберегти для подальшого використання";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "камера";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "зробити фотографію та швидко надіслати";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "У вас є непрочитані повідомлення.";
 
 // Archived List
 "archived_list.title" = "архів";
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "з %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
 "content.system.new_device" = "новий пристрій";
@@ -523,7 +526,7 @@
 "call.degraded.alert.message.self" = "Ви почали використовувати новий пристрій.";
 "call.degraded.alert.message.user" = "%@ почав(-ла) використовувати новий пристрій.";
 "call.degraded.alert.message.unknown" = "Хтось почав використовувати новий пристрій.";
-"call.degraded.alert.action.continue" = "Подзвонити все одно";
+"call.degraded.alert.action.continue" = "Подзвонити все-одно";
 
 "call.alert.ongoing.start.title" = "Інша розмова має активний дзвінок.\nДзвінок у цій розмові припинить його.";
 "call.alert.ongoing.start.button" = "Подзвонити все-одно";
@@ -546,8 +549,8 @@
 "call.actions.label.switch_to_back_camera" = "Преключитись на основну камеру";
 "call.actions.label.switch_to_front_camera" = "Преключитись на фронтальну камеру";
 "call.actions.label.minimize_call" = "Згорнути дзвінок";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.make_audio_call" = "Розпочати аудіодзвінок";
+"call.actions.label.make_video_call" = "Розпочати відеодзвінок";
 "call.actions.label.join_call" = "Приєднатися до дзвінка";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,7 +563,7 @@
 "participants.section.participants" = "Учасники (%d)";
 "participants.section.services" = "Сервіси (%d)";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "Групова розмова може містити до 128 учасників. Відеодзвінки працюють тільки в групах з 4-ма або менше учасниками.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "видалити інтеграцію";
 
 // Group details
-"group_details.guest_options_cell.title" = "Гостьові налаштування";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "Карти";
 "open_link.maps.option.google" = "Карти Google";
+"open_link.maps.footer" = "Деякі лінки на місця розташування будуть завжди відкриватись в додатку Apple Карти.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";

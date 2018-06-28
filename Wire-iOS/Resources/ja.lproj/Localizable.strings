@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "いまは行わない";
 "general.accept" = "承諾";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "with %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
 
 "content.system.new_device" = "新しいデバイス";
@@ -560,7 +563,7 @@
 "participants.section.participants" = "人 (%d)";
 "participants.section.services" = "サービス (%d)";
 "participants.footer.add_title" = "参加者を追加";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "名前の変更";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "連携を削除する";
 
 // Group details
-"group_details.guest_options_cell.title" = "ゲスト オプション";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "オン";
 "group_details.guest_options_cell.disabled" = "オフ";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "マップ";
 "open_link.maps.option.google" = "Google マップ";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";

@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Не сейчас";
 "general.accept" = "Принять";
+"general.decline" = "Нет, спасибо";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -38,7 +39,7 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // People picker/start UI
-"peoplepicker.search_placeholder" = "Поиск по имени или имени пользователя";
+"peoplepicker.search_placeholder" = "Поиск по имени или нику";
 "peoplepicker.header.top_people" = "Топ-контакты";
 "peoplepicker.button.create_conversation" = "Создать группу";
 "peoplepicker.button.add_to_conversation" = "Добавить пользователей в группу";
@@ -47,9 +48,9 @@
 "peoplepicker.header.send_invitation" = "Пригласить";
 "peoplepicker.header.contacts" = "Контакты";
 "peoplepicker.header.contacts_personal" = "Личные контакты";
-"peoplepicker.header.directory" = "Добавить в контакты";
+"peoplepicker.header.directory" = "Связаться";
 
-"peoplepicker.group.title.singular" = "Добавить людей";
+"peoplepicker.group.title.singular" = "Добавить участников";
 "peoplepicker.group.title.plural" = "Добавить участников (%d)";
 "peoplepicker.group.skip" = "Пропустить";
 "peoplepicker.group.done" = "Готово";
@@ -59,12 +60,12 @@
 "peoplepicker.header.services" = "Службы";
 "peoplepicker.services.create_conversation.item" = "Создать новый разговор";
 "peoplepicker.services.add_service.button" = "Добавить службу";
-"peoplepicker.services.add_service.error.title" = "Эта служба не может быть добавлена";
+"peoplepicker.services.add_service.error.title" = "Не удается добавить службу";
 "peoplepicker.services.add_service.error.default" = "В данный момент служба недоступна";
 "peoplepicker.services.add_service.error.full" = "Разговор переполнен";
 
 "peoplepicker.title.create_conversation" = "Создать группу";
-"peoplepicker.title.add_to_conversation" = "Добавить людей";
+"peoplepicker.title.add_to_conversation" = "Добавить участников";
 
 "peoplepicker.no_contacts_title" = "Нет контактов.";
 
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "с %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
 "content.system.new_device" = "новое устройство";
@@ -523,19 +526,19 @@
 "call.degraded.alert.message.self" = "Вы начали использовать новое устройство.";
 "call.degraded.alert.message.user" = "%@ начал(а) использовать новое устройство.";
 "call.degraded.alert.message.unknown" = "Используется новое устройство.";
-"call.degraded.alert.action.continue" = "Всё равно позвонить";
+"call.degraded.alert.action.continue" = "Все равно позвонить";
 
-"call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.start.title" = "Уже есть активный вызов в другой беседе.\nВызов в этой беседе прервет его.";
 "call.alert.ongoing.start.button" = "Все равно позвонить";
-"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
-"call.alert.ongoing.join.button" = "Join Anyway";
+"call.alert.ongoing.join.title" = "Уже есть активный вызов в другой беседе.\nОн будет прерван в случае начала нового вызова.";
+"call.alert.ongoing.join.button" = "Начать в любом случае";
 
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Входящий вызов от %@";
 "call.actions.label.toggle_mute_on" = "Выкл. звук";
 "call.actions.label.toggle_mute_off" = "Вкл.звук";
-"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.flip_camera" = "Смена камеры";
 "call.actions.label.toggle_speaker_on" = "Включить динамик";
 "call.actions.label.toggle_speaker_off" = "Выключить динамик";
 "call.actions.label.accept_call" = "Принять вызов";
@@ -545,7 +548,7 @@
 "call.actions.label.toggle_video_off" = "Выключить камеру";
 "call.actions.label.switch_to_back_camera" = "Переключиться на основную камеру";
 "call.actions.label.switch_to_front_camera" = "Переключиться на фронтальную камеру";
-"call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.minimize_call" = "Свернуть вызов";
 "call.actions.label.make_audio_call" = "Начать звонок";
 "call.actions.label.make_video_call" = "Начать видеовызов";
 "call.actions.label.join_call" = "Присоединиться к звонку";
@@ -560,7 +563,7 @@
 "participants.section.participants" = "Участники (%d)";
 "participants.section.services" = "Сервисов (%d)";
 "participants.footer.add_title" = "Добавить участников";
-"participants.section.name.footer" = "К групповому разговору может присоединиться до 128 человек. Видеозвонки работают в группах из 4 участников и меньше.";
+"participants.section.name.footer" = "К групповому разговору может присоединиться до 128 человек. Видеозвонки возможны между вами и еще тремя участниками.";
 
 // Meta Menu
 "meta.menu.rename" = "Переименовать";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "удалить интеграцию";
 
 // Group details
-"group_details.guest_options_cell.title" = "Опции гостей";
+"group_details.guest_options_cell.title" = "Гости";
 "group_details.guest_options_cell.enabled" = "Вкл.";
 "group_details.guest_options_cell.disabled" = "Выключен";
+"group_details.timeout_options_cell.title" = "Временные сообщения";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -720,7 +724,7 @@
 "self.settings.add_account.error.title" = "Три активных аккаунта";
 "self.settings.add_account.error.message" = "Можно авторизоваться не более чем в трех аккаунтах одновременно. Выйдите из одного для добавления другого.";
 
-"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
+"self.settings.switch_account.title" = "Переключение аккаунтов приведет к завершению текущего вызова.";
 "self.settings.switch_account.action" = "Сменить аккаунт";
 
 // Settings - Account details
@@ -847,8 +851,8 @@
 
 // By popular demand
 "self.settings.popular_demand.title" = "По многочисленным просьбам";
-"self.settings.popular_demand.send_button.title" = "Кнопка \"отправить\"";
-"self.settings.popular_demand.send_button.footer" = "Отключить отправку по нажатию клавиши Enter.";
+"self.settings.popular_demand.send_button.title" = "Кнопка 'Отправить'";
+"self.settings.popular_demand.send_button.footer" = "Отключает отправку с помощью Enter.";
 
 // Open in
 "self.settings.external_apps.header" = "Открыть с помощью";
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "Карты";
 "open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Некоторые ссылки на местоположение всегда будут открываться в Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
@@ -888,7 +893,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет вам связаться с другими людьми. Мы анонимизируем всю информацию и не передаем ее третьим лицам. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
 "self.settings.privacy_security.lock_app" = "Заблокировать с помощью пароля";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Блокировать Wire через 10 секунд после перехода в фоновый режим.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Разблокируйте при помощи Touch ID или введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Разблокируйте при помощи Face ID или введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Для разблокировки введите свой код доступа.";
@@ -899,7 +904,7 @@
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерировать предпросмотр для ссылок";
-"self.settings.privacy_security.disable_link_previews.footer" = "Эта опция не влияет на предварительный просмотр ссылок от других людей.";
+"self.settings.privacy_security.disable_link_previews.footer" = "Эта опция не влияет на предварительный просмотр ссылок от других пользователей.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
 

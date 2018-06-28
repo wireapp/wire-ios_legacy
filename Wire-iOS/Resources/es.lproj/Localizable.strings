@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Ahora no";
 "general.accept" = "Aceptar";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -119,7 +120,7 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tiene mensajes nuevos.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.date_usage_permission_alert.title" = "¡Ayúdanos a mejorar!";
 "conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
 
 // Profile Header View
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "with %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "Has activado %@ de nuevo. Los mensajes enviados durante el intervalo de inactividad no aparecerán aquí.";
 
 "content.system.new_device" = "un nuevo dispositivo";
@@ -506,7 +509,7 @@
 "call.status.connecting" = "Conectando…";
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Llamando…";
-"call.status.outgoing" = "Sonando…";
+"call.status.outgoing" = "Llamando…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Tasa de bits constante";
@@ -560,7 +563,7 @@
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Renombrar";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Opciones de invitados";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Desactivar";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "Mapas";
 "open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
@@ -1047,12 +1052,12 @@
 "guest_room.link.header.title" = "Invite others with a link";
 "guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
 
-"guest_room.link.button.title" = "Create Link";
+"guest_room.link.button.title" = "Crear Enlace";
 
-"guest_room.actions.copy_link" = "Copy Link";
+"guest_room.actions.copy_link" = "Copiar enlace";
 "guest_room.actions.copied_link" = "Link Copied!";
-"guest_room.actions.share_link" = "Share Link";
-"guest_room.actions.revoke_link" = "Revoke Link…";
+"guest_room.actions.share_link" = "Compartir enlace";
+"guest_room.actions.revoke_link" = "Revocar enlace";
 
 "guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
 

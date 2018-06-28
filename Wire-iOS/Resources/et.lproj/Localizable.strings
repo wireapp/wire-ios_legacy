@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Mitte praegu";
 "general.accept" = "Vasta";
+"general.decline" = "Tänan, ei";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -59,7 +60,7 @@
 "peoplepicker.header.services" = "Teenused";
 "peoplepicker.services.create_conversation.item" = "Alusta vestlust";
 "peoplepicker.services.add_service.button" = "Lisa teenus";
-"peoplepicker.services.add_service.error.title" = "The service can’t be added";
+"peoplepicker.services.add_service.error.title" = "Teenust ei saa lisada";
 "peoplepicker.services.add_service.error.default" = "Teenus pole hetkel saadaval";
 "peoplepicker.services.add_service.error.full" = "Vestlus on täis";
 
@@ -93,7 +94,7 @@
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
 "peoplepicker.quick-action.create-guest-room" = "Loo külalistetuba";
 
-"add_participants.all_contacts_added" = "Everyone’s here.";
+"add_participants.all_contacts_added" = "Kõik on siin.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Otsi nime järgi";
@@ -143,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "koosta sõnum ja salvesta hilisemaks";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "kaamera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "tee pilt ja saada kiirelt";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "Sul on lugemata sõnumeid.";
 
 // Archived List
 "archived_list.title" = "arhiiv";
@@ -263,9 +264,9 @@
 "conversation.create.toggle.subtitle" = "Ava see vestlus meeskonnast väljas olevatele inimestele. Sa saad seda alati hiljem muuta.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Aktiivne kõne";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
-"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
-"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Sa ei saa salvestada audiosõnumit kõne ajal.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Sa ei saa salvestada videot kõne ajal.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "Sa ei saa pildistada kõne ajal.";
 
 "conversation.guests_present" = "Kohal on külalisi";
 "conversation.action.search" = "Otsing";
@@ -287,7 +288,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire vajab juurdepääsuõigust kaamerale ja fotodele."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire vajab juurdepääsuõigust fotodele.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire vajab juurdepääsuõigust kaamerale.";
-"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "Sa ei saa kaamerat kasutada videokõne ajal.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF lukustus";
@@ -376,7 +377,9 @@
 "content.system.conversation.with_name.title" = "%@ alustas vestlust";
 "content.system.conversation.with_name.title-you" = "%@ alustas vestlust";
 
-"content.system.conversation.with_name.participants" = "with %@";
+"content.system.conversation.with_name.participants" = "ja lisas kasutaja(d) %@";
+
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 
@@ -459,7 +462,7 @@
 
 // Save image errors
 "library.alert.permission_warning.title" = "Wire vajab juurdepääsuõigust fotodele";
-"library.alert.permission_warning.restrictions.explaination" = "Wire cannot access your library because restrictions are enabled.";
+"library.alert.permission_warning.restrictions.explaination" = "Wire’l puudub ligipääs sinu asjadele, kuna oled seadistanud piirangud.";
 "library.alert.permission_warning.not_allowed.explaination" = "Ava Seaded ja luba Wire’le ligipääs fotodele.";
 
 // Voice
@@ -486,7 +489,7 @@
 "voice.speaker_button.title" = "Kõlar";
 "voice.cancel_button.title" = "Tühista";
 "voice.call_button.title" = "Kõne";
-"voice.end_call_button.title" = "End Call";
+"voice.end_call_button.title" = "Lõpeta kõne";
 
 "voice.alert.call_in_progress.title" = "Kõne käimas";
 "voice.alert.call_in_progress.message" = "Sul saab olla vaid üks aktiivne kõne korraga";
@@ -514,40 +517,40 @@
 "call.participants.show_all" = "Näita kõik (%@)";
 "call.participants.list.title" = "Osalejad";
 
-"call.video.paused" = "Videokõne peatatud";
+"call.video.paused" = "Video pausil";
 
 "call.video.too_many.alert.title" = "Vestluses on videokõne alustamiseks liiga palju osalejaid";
 "call.video.too_many.alert.message" = "Videokõned töötavad kuni 4 osalejaga vestluses.";
 
 "call.degraded.alert.title" = "Uus seade";
-"call.degraded.alert.message.self" = "Sa hakkasid uut seadet kasutama.";
+"call.degraded.alert.message.self" = "Hakkasid uut seadet kasutama.";
 "call.degraded.alert.message.user" = "%@ hakkas uut seadet kasutama.";
 "call.degraded.alert.message.unknown" = "Keegi hakkas uut seadet kasutama.";
 "call.degraded.alert.action.continue" = "Helista ikkagi";
 
 "call.alert.ongoing.start.title" = "Teises vestluses on hetkel aktiivne kõne.\nSiin helistades lõpetad käimasoleva kõne.";
 "call.alert.ongoing.start.button" = "Helista ikkagi";
-"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.join.title" = "Teises vestluses on aktiivne kõne.\nSelle kõnega liitumine lõpetab teise.";
 "call.alert.ongoing.join.button" = "Liitu ikkagi";
 
 // Call Actions (accessibility)
 
-"call.announcement.incoming" = "Incoming call from %@";
+"call.announcement.incoming" = "%@ helistab";
 "call.actions.label.toggle_mute_on" = "Hääletu";
 "call.actions.label.toggle_mute_off" = "Heli sisse";
-"call.actions.label.flip_camera" = "Flip camera";
-"call.actions.label.toggle_speaker_on" = "Enable speaker";
-"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.flip_camera" = "Pööra kaamera ümber";
+"call.actions.label.toggle_speaker_on" = "Luba kõlarid";
+"call.actions.label.toggle_speaker_off" = "Keela kõlarid";
 "call.actions.label.accept_call" = "Võta kõne vastu";
-"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.reject_call" = "Keeldu kõnest";
 "call.actions.label.terminate_call" = "Lõpeta kõne";
-"call.actions.label.toggle_video_on" = "Turn on camera";
-"call.actions.label.toggle_video_off" = "Turn off camera";
-"call.actions.label.switch_to_back_camera" = "Switch to back camera";
-"call.actions.label.switch_to_front_camera" = "Switch to front camera";
-"call.actions.label.minimize_call" = "Minimize call";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.toggle_video_on" = "Lülita kaamera sisse";
+"call.actions.label.toggle_video_off" = "Lülita kaamera välja";
+"call.actions.label.switch_to_back_camera" = "Vali tagumine kaamera";
+"call.actions.label.switch_to_front_camera" = "Vali eesmine kaamera";
+"call.actions.label.minimize_call" = "Minimeeri kõne";
+"call.actions.label.make_audio_call" = "Alusta audiokõne";
+"call.actions.label.make_video_call" = "Alusta videokõne";
 "call.actions.label.join_call" = "Liitu kõnega";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,7 +563,7 @@
 "participants.section.participants" = "Inimesed (%d)";
 "participants.section.services" = "Teenused (%d)";
 "participants.footer.add_title" = "Lisa osalejaid";
-"participants.section.name.footer" = "Grupivestlusega saab liituda kuni 128 inimest. Videkõne töötab kuni 4 osalejaga vestluses.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeta ümber";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "eemalda integratsioon";
 
 // Group details
-"group_details.guest_options_cell.title" = "Külaliste valikud";
+"group_details.guest_options_cell.title" = "Külalised";
 "group_details.guest_options_cell.enabled" = "Sees";
 "group_details.guest_options_cell.disabled" = "Väljas";
+"group_details.timeout_options_cell.title" = "Kustuvad sõnumid";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -692,7 +696,7 @@
 "self.voiceover.hint" = "Ava profiil ja seaded";
 "self.new-device.voiceover.label" = "Profiil, lisatud uus seade";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
+"self.profile.change_user_image.accessibility" = "Koputa, et muuta profiili pilti";
 
 "self.add_phone_number" = "Lisa mobiilinumber";
 "self.add_email_password" = "Lisa meiliaadress ja parool";
@@ -720,7 +724,7 @@
 "self.settings.add_account.error.title" = "Kolm aktiivset kontot";
 "self.settings.add_account.error.message" = "Korraga saad kasutada kolme kontot. Lisakonto kasutamiseks pead ühega olemasolevatest välja logima.";
 
-"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
+"self.settings.switch_account.title" = "Kontode vahetamine lõpetab käimasoleva kõne.";
 "self.settings.switch_account.action" = "Vaheta kontot";
 
 // Settings - Account details
@@ -773,7 +777,7 @@
 "self.settings.privacy_analytics_menu.description.title" = "Aita Wire'i paremaks muuta, saates anonüümseid kasutus- ja krahhiaruandeid.";
 
 "self.settings.receiveNews_and_offers.title" = "Uudiskirja tellimine";
-"self.settings.receiveNews_and_offers.description.title" = "Saa Wire'ilt uudiseid ja tooteuuendusi e-posti teel.";
+"self.settings.receiveNews_and_offers.description.title" = "Soovin Wire'ilt uudiseid ja tooteuuendusi e-posti teel.";
 
 
 
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "Maps";
 "open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Osad asukohalingid avatakse alati Apple Maps’is.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
@@ -938,7 +943,7 @@
 
 "self.settings.conversations.title" = "Ajalugu";
 "self.settings.history_backup.title" = "Varunda vestlused";
-"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
+"self.settings.history_backup.description" = "Loo varukoopia, et säilitada oma vestluste ajalugu. Saad seda kasutada ajaloo taastamiseks, juhul kui kaotad või vahetad oma seadme.";
 "self.settings.history_backup.action" = "Varunda kohe";
 "self.settings.history_backup.error.title" = "Viga";
 
@@ -951,7 +956,7 @@
 "self.settings.history_backup.password.cancel" = "Tühista";
 "self.settings.history_backup.password.next" = "Järgmine";
 "self.settings.history_backup.password.placeholder" = "Vähemalt 8 tähte";
-"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+"self.settings.history_backup.password.description" = "Varukoopia pakitakse ja krüpteeritakse sinu seatud parooliga.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -1036,7 +1041,7 @@
 
 "guest_room.allow_guests.title" = "Luba külalisi";
 "guest_room.allow_guests.subtitle" = "Ava see vestlus meeskonnast väljas olevatele inimestele.";
-"guest_room.remove_guests.message" = "Praegused külalised eemaldatakse vestlusest. Uusi külalisi ei lubata.";
+"guest_room.remove_guests.message" = "Praegused külalised eemaldatakse vestlusest. Uutel külalistel ei lubata siseneda.";
 "guest_room.remove_guests.action" = "Eemalda külalised";
 "guest_room.revoke_link.message" = "Uued külalised ei saa selle lingi abil liituda. Praegustel külalistel on jätkuvalt ligipääs.";
 "guest_room.revoke_link.action" = "Tühista link";
@@ -1045,7 +1050,7 @@
 "guest_room.error.generic.message" = "Kontrolli võrguühendust ja proovi uuesti";
 
 "guest_room.link.header.title" = "Kutsu teisi lingi abil";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
+"guest_room.link.header.subtitle" = "Selle lingiga saab igaüks vestlusega liituda, isegi kui neil pole Wire'it.";
 
 "guest_room.link.button.title" = "Loo link";
 
@@ -1094,7 +1099,7 @@
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Taasta ajalugu";
-"registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
+"registration.no_history.restore_backup_warning.message" = "Varukoopia sisu asendab selles seadmes vestlusajaloo.\nSa saad taastada ajalugu ainult sama platvormi varukoopiast.";
 "registration.no_history.restore_backup_warning.proceed" = "Vali varundusfail";
 
 /// Restore History Failure Alerts
@@ -1242,7 +1247,7 @@
 "error.user.device_deleted_remotely" = "Sind on teisest seadmest välja logitud.";
 "error.user.last_identity_cant_be_deleted" = "Kas meiliaadress või telefoninumber peab olema täidetud.";
 "error.user.account_suspended" = "See konto ei ole enam sisse logimiseks autoriseeritud.";
-"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
+"error.user.account_limit_reached" = "Sa ei saa lisada rohkem kui 3 kontot.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
