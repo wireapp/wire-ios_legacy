@@ -626,37 +626,6 @@ extension ConversationStatus {
 }
 
 extension ZMConversation {
-    internal var unreadMessages: [ZMConversationMessage] {
-        let lastReadIndex: Int
-        
-        if let lastMessage = self.lastReadMessage {
-            lastReadIndex = self.messages.index(of: lastMessage)
-            guard lastReadIndex != NSNotFound else {
-                return []
-            }
-        }
-        else {
-            lastReadIndex = -1
-        }
-        
-        let unreadIndexSet = IndexSet((lastReadIndex + 1)..<self.messages.count)
-        return self.messages.objects(at: unreadIndexSet).compactMap {
-                $0 as? ZMConversationMessage
-            }.filter {
-                if let systemMessageData = $0.systemMessageData {
-                    switch systemMessageData.systemMessageType {
-                    case .participantsRemoved:
-                        fallthrough
-                    case .participantsAdded:
-                        return true
-                    default:
-                        break
-                    }
-                }
-                
-                return !($0.sender?.isSelfUser ?? true)
-            }
-    }
     
     internal var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
