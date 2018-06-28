@@ -30,6 +30,14 @@ import Foundation
     public var resultText: String? = .none
     public var queries: [String] = []
 
+    private let redactedFont = UIFont(name: "RedactedScript-Regular", size: 16)!
+
+    public var isObsured: Bool = false {
+        didSet {
+            self.updateText()
+        }
+    }
+
     public override var font: UIFont! {
         didSet {
             self.updateText()
@@ -76,8 +84,9 @@ import Foundation
         self.resultText = text
         self.queries = queries
 
-        let attributedText = NSMutableAttributedString(string: text, attributes: [.font: font, .foregroundColor: color])
-        
+        let currentFont = isObsured ? redactedFont.withSize(font.pointSize) : font
+        let attributedText = NSMutableAttributedString(string: text, attributes: [.font: currentFont, .foregroundColor: color])
+
         let currentRange = text.range(of: queries,
                                       options: [.diacriticInsensitive, .caseInsensitive])
         

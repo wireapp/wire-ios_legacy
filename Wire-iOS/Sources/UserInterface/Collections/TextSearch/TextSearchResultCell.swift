@@ -108,7 +108,7 @@ import Cartography
         if message.isObfuscated {
             let obfuscatedText = messageTextLabel.text?.obfuscated() ?? ""
             messageTextLabel.configure(with: obfuscatedText, queries: [])
-            messageTextLabel.font = UIFont(name: "RedactedScript-Regular", size: 16)!
+            messageTextLabel.isObsured = true
             return
         }
 
@@ -153,7 +153,6 @@ import Cartography
 
 extension TextSearchResultCell: ZMMessageObserver {
     func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        
         updateTextView()
     }
 }
