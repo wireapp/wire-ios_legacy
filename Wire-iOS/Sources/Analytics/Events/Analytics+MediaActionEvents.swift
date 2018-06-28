@@ -191,6 +191,10 @@ public extension Analytics {
             attributes["conversation_type"] = typeAttribute
         }
 
+        if case .synced(_)? = conversation.messageDestructionTimeout {
+            attributes["is_global_ephemeral"] = true
+        }
+        
         for (key, value) in guestAttributes(in: conversation) {
             attributes[key] = value
         }
