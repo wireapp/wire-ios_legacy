@@ -28,6 +28,7 @@ protocol CollectionCellMessageChangeDelegate: class {
 }
 
 open class CollectionCell: UICollectionViewCell {
+
     var messageObserverToken: NSObjectProtocol? = .none
     weak var delegate: CollectionCellDelegate?
     // Cell forwards the message changes to the delegate
@@ -55,7 +56,7 @@ open class CollectionCell: UICollectionViewCell {
     
     public var desiredWidth: CGFloat? = .none
     public var desiredHeight: CGFloat? = .none
-    
+
     override open var intrinsicContentSize: CGSize {
         get {
             let width = self.desiredWidth ?? UIViewNoIntrinsicMetric
@@ -66,7 +67,7 @@ open class CollectionCell: UICollectionViewCell {
     }
     
     private var cachedSize: CGSize? = .none
-    
+
     public func flushCachedSize() {
         cachedSize = .none
     }
@@ -115,12 +116,19 @@ open class CollectionCell: UICollectionViewCell {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(CollectionCell.onLongPress(_:)))
         
         self.contentView.addGestureRecognizer(longPressGestureRecognizer)
+
+        self.contentView.addSubview(secureContentsView)
+        self.contentView.addSubview(obfuscationView)
+
+        secureContentsView.autoPinEdgesToSuperviewEdges()
+        obfuscationView.autoPinEdgesToSuperviewEdges()
     }
 
     override open func prepareForReuse() {
         super.prepareForReuse()
         self.cachedSize = .none
         self.message = .none
+        self.showContents()
     }
     
     @objc func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {
@@ -128,6 +136,30 @@ open class CollectionCell: UICollectionViewCell {
             self.showMenu()
         }
     }
+
+    // MARK: - Obfuscation
+
+    let secureContentsView = UIView()
+
+    var obfuscationIcon: ZetaIconType {
+        return .exclamationMarkCircle
+    }
+
+    fileprivate lazy var obfuscationView = {
+        return ObfuscationView(icon: self.obfuscationIcon)
+    }()
+
+    fileprivate func obfuscateContents() {
+        secureContentsView.isHidden = true
+        obfuscationView.isHidden = false
+    }
+
+    fileprivate func showContents() {
+        self.secureContentsView.isHidden = false
+        self.obfuscationView.isHidden = true
+    }
+
+    // MARK: - Menu
     
     func menuConfigurationProperties() -> MenuConfigurationProperties? {
         let properties = MenuConfigurationProperties()
@@ -219,6 +251,11 @@ open class CollectionCell: UICollectionViewCell {
 
 extension CollectionCell: ZMMessageObserver {
     public func messageDidChange(_ changeInfo: MessageChangeInfo) {
+        if message?.isObfuscated == true {
+            self.obfuscateContents()
+        } else {
+            self.showContents()
+        }
         self.updateForMessage(changeInfo: changeInfo)
         self.messageChangeDelegate?.messageDidChange(self, changeInfo: changeInfo)
     }

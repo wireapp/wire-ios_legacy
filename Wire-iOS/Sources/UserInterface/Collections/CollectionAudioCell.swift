@@ -51,8 +51,8 @@ final public class CollectionAudioCell: CollectionForwardableSaveableFileCell {
         
         self.contentView.cas_styleClass = "container-view"
         self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
-        self.contentView.addSubview(self.headerView)
-        self.contentView.addSubview(self.audioMessageView)
+        self.secureContentsView.addSubview(self.headerView)
+        self.secureContentsView.addSubview(self.audioMessageView)
         
         constrain(self.contentView, self.audioMessageView, self.headerView) { contentView, audioMessageView, headerView in
             headerView.top == contentView.topMargin
@@ -65,6 +65,10 @@ final public class CollectionAudioCell: CollectionForwardableSaveableFileCell {
             audioMessageView.right == contentView.rightMargin
             audioMessageView.bottom == contentView.bottomMargin
         }
+    }
+
+    override var obfuscationIcon: ZetaIconType {
+        return .audio
     }
 
 }

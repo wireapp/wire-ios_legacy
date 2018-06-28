@@ -101,13 +101,21 @@ import Cartography
     }
     
     private func updateTextView() {
-        guard let message = message,
-              let text = message.textMessageData?.messageText,
-              !message.isObfuscated else {
-            messageTextLabel.configure(with: "", queries: [])
+        guard let message = message else {
             return
         }
-        
+
+        if message.isObfuscated {
+            let obfuscatedText = messageTextLabel.text?.obfuscated() ?? ""
+            messageTextLabel.configure(with: obfuscatedText, queries: [])
+            messageTextLabel.font = UIFont(name: "RedactedScript-Regular", size: 16)!
+            return
+        }
+
+        guard let text = message.textMessageData?.messageText else {
+            return
+        }
+
         messageTextLabel.configure(with: text, queries: queries)
         
         let totalMatches = messageTextLabel.estimatedMatchesCount

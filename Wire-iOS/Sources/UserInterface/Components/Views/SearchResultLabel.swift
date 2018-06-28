@@ -29,7 +29,7 @@ import Foundation
 
     public var resultText: String? = .none
     public var queries: [String] = []
-    
+
     public override var font: UIFont! {
         didSet {
             self.updateText()
@@ -75,7 +75,7 @@ import Foundation
         
         self.resultText = text
         self.queries = queries
-        
+
         let attributedText = NSMutableAttributedString(string: text, attributes: [.font: font, .foregroundColor: color])
         
         let currentRange = text.range(of: queries,
