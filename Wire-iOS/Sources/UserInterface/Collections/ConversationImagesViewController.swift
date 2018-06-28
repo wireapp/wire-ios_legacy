@@ -218,7 +218,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         return nextIndex
     }
 
-    private var controlsBarButtons: [IconButton] {
+    private func createControlsBarButtons() -> [IconButton] {
         var buttons = [IconButton]()
 
         // ephemermal images should not contain these buttons.
@@ -273,7 +273,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
     
     private func createControlsBar() {
-        let buttons = controlsBarButtons
+        let buttons = createControlsBarButtons()
 
         self.buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
@@ -462,7 +462,7 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
             completed {
             
             self.currentMessage = currentController.message
-            self.buttonsBar.buttons = self.controlsBarButtons
+            self.buttonsBar.buttons = createControlsBarButtons()
             updateLikeButton()
         }
     }
