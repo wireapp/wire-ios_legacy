@@ -214,6 +214,7 @@ open class CollectionCell: UICollectionViewCell {
     
     /// To be implemented in the subclass
     func updateForMessage(changeInfo: MessageChangeInfo?) {
+        self.updateMessageVisibility()
         // no-op
     }
 
@@ -246,7 +247,6 @@ open class CollectionCell: UICollectionViewCell {
 
 extension CollectionCell: ZMMessageObserver {
     public func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        self.updateMessageVisibility()
         self.updateForMessage(changeInfo: changeInfo)
         self.messageChangeDelegate?.messageDidChange(self, changeInfo: changeInfo)
     }
