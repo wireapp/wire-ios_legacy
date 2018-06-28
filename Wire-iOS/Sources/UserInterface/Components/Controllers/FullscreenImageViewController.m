@@ -223,12 +223,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateForMessage
 {
-    if (self.message.isObfuscated || [[self.message imageMessageData] imageData] == nil) {
+    if (self.message.isObfuscated) {
         [self removeImage];
-        [self.message requestImageDownload];
-        [self setupSpinner];
-    }
-    else {
+        [self dismissWithCompletion:nil];
+    } else {
         [self removeSpinner];
         [self loadImageAndSetupImageView];
     }
