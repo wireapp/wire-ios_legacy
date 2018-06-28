@@ -32,7 +32,7 @@ import Foundation
 
     private let redactedFont = UIFont(name: "RedactedScript-Regular", size: 16)!
 
-    public var isObsured: Bool = false {
+    public var isObfuscated: Bool = false {
         didSet {
             self.updateText()
         }
@@ -84,7 +84,7 @@ import Foundation
         self.resultText = text
         self.queries = queries
 
-        let currentFont = isObsured ? redactedFont.withSize(font.pointSize) : font
+        let currentFont = isObfuscated ? redactedFont.withSize(font.pointSize) : font
         let attributedText = NSMutableAttributedString(string: text, attributes: [.font: currentFont, .foregroundColor: color])
 
         let currentRange = text.range(of: queries,

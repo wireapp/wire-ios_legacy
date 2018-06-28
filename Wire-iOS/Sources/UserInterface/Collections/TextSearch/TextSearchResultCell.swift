@@ -108,7 +108,7 @@ import Cartography
         if message.isObfuscated {
             let obfuscatedText = messageTextLabel.text?.obfuscated() ?? ""
             messageTextLabel.configure(with: obfuscatedText, queries: [])
-            messageTextLabel.isObsured = true
+            messageTextLabel.isObfuscated = true
             return
         }
 
