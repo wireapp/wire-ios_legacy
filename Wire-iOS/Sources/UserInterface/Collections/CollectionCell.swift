@@ -128,7 +128,6 @@ open class CollectionCell: UICollectionViewCell {
         super.prepareForReuse()
         self.cachedSize = .none
         self.message = .none
-        self.showContents()
     }
     
     @objc func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {
@@ -149,14 +148,10 @@ open class CollectionCell: UICollectionViewCell {
         return ObfuscationView(icon: self.obfuscationIcon)
     }()
 
-    fileprivate func obfuscateContents() {
-        secureContentsView.isHidden = true
-        obfuscationView.isHidden = false
-    }
-
-    fileprivate func showContents() {
-        self.secureContentsView.isHidden = false
-        self.obfuscationView.isHidden = true
+    fileprivate func updateMessageVisibility() {
+        let isObfuscated = message?.isObfuscated == true
+        secureContentsView.isHidden = isObfuscated
+        obfuscationView.isHidden = !isObfuscated
     }
 
     // MARK: - Menu
@@ -251,11 +246,7 @@ open class CollectionCell: UICollectionViewCell {
 
 extension CollectionCell: ZMMessageObserver {
     public func messageDidChange(_ changeInfo: MessageChangeInfo) {
-        if message?.isObfuscated == true {
-            self.obfuscateContents()
-        } else {
-            self.showContents()
-        }
+        self.updateMessageVisibility()
         self.updateForMessage(changeInfo: changeInfo)
         self.messageChangeDelegate?.messageDidChange(self, changeInfo: changeInfo)
     }
