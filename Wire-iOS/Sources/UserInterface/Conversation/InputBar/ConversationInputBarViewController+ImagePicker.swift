@@ -19,11 +19,10 @@
 import Foundation
 
 extension ConversationInputBarViewController {
-    var popoverSourceRectFromPhotoButton: CGRect {
+    ///TODO: mv to new file
+    func popoverSourceRect(from button: IconButton) -> CGRect {
         let sourceView: UIView = self.parent?.view ?? self.view
-        let buttonCenter = self.photoButton.convert(self.photoButton.center, to: sourceView)
-        let sourceRect = CGRect(origin: buttonCenter, size: .zero)
-
+        let sourceRect = sourceView.convert(button.frame, from: button.superview)
         return sourceRect
     }
 
@@ -46,7 +45,7 @@ extension ConversationInputBarViewController {
 
             let sourceView: UIView = self.parent?.view ?? self.view
 
-            let context = ImagePickerPopoverPresentationContext(sourceRect:self.popoverSourceRectFromPhotoButton,
+            let context = ImagePickerPopoverPresentationContext(sourceRect: self.popoverSourceRect(from: self.photoButton),
                                                     sourceView: sourceView,
                                                     presentViewController: self,
                                                     sourceType: sourceType)
