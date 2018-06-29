@@ -29,33 +29,43 @@ class MessageTimerUpdateCell: IconSystemCell {
     
     func updateLabel() {
         guard let systemMessageData = message.systemMessageData,
-        systemMessageData.systemMessageType == .messageTimerUpdate,
-        let timer = systemMessageData.messageTimer,
-        let labelFont = labelFont,
-        let labelBoldFont = labelBoldFont,
-        let labelTextColor = labelTextColor,
-        let user = systemMessageData.users.first
-            else { return }
-        
-        let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
-        
-        guard let displayString = timeoutValue.displayString,
-            let name = (user.isSelfUser ? "content.system.you_started".localized : user.name)
-            else { return }
-        
-        let timerString = "\(displayString)".replacingOccurrences(of: String.breakingSpace,
-                                                                  with: String.nonBreakingSpace)
-        let string = ("content.system.message_timer_changes".localized(args: name, timerString) && labelFont && labelTextColor)
-                .addAttributes([.font: labelBoldFont], toSubstring: name)
-                .addAttributes([.font: labelBoldFont], toSubstring: "\(timerString)")
-            
-        attributedText = string
-        lineView.isHidden = true
-    }
+            systemMessageData.systemMessageType == .messageTimerUpdate,
+            let timer = systemMessageData.messageTimer,
+            let labelFont = labelFont,
+            let labelBoldFont = labelBoldFont,
+            let labelTextColor = labelTextColor,
+            let sender = systemMessageData.users.first else { return }
 
+        lineView.isHidden = true
+        let name = sender.displayName ?? ""
+        let youString = "content.system.message_timer.you_part".localized
+        let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
+        let boldAttributes: [NSAttributedStringKey: AnyObject] = [.font: labelBoldFont]
+        
+        if timeoutValue == .none {
+            if sender.isSelfUser {
+                attributedText = ("content.system.message_timer_off.you".localized && labelFont && labelTextColor)
+                    .addAttributes(boldAttributes, toSubstring: youString)
+            } else {
+                attributedText = ("content.system.message_timer_off".localized(args: name) && labelFont && labelTextColor)
+                    .addAttributes(boldAttributes, toSubstring: name)
+            }
+        } else if let displayString = timeoutValue.displayString {
+            let timerString = displayString.replacingOccurrences(of: String.breakingSpace, with: String.nonBreakingSpace)
+            if sender.isSelfUser {
+                attributedText = ("content.system.message_timer_changes.you".localized(args: timerString) && labelFont && labelTextColor)
+                    .addAttributes(boldAttributes, toSubstring: youString)
+                    .addAttributes(boldAttributes, toSubstring: timerString)
+            } else {
+                attributedText = ("content.system.message_timer_changes".localized(args: name, timerString) && labelFont && labelTextColor)
+                    .addAttributes(boldAttributes, toSubstring: name)
+                    .addAttributes(boldAttributes, toSubstring: timerString)
+            }
+        }
+    }
 }
 
 public extension String {
-    static let breakingSpace = " "          // classic whitespace
+    static let breakingSpace = " "           // classic whitespace
     static let nonBreakingSpace = "\u{00A0}" // &#160;
 }

@@ -379,7 +379,13 @@
 
 "content.system.conversation.with_name.participants" = "with %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "You";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
