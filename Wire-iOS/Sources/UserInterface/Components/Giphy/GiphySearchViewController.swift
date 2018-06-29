@@ -74,11 +74,10 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
 }
 
-@objcMembers class GiphySearchViewController: UICollectionViewController {
+@objcMembers class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     public weak var delegate: GiphySearchViewControllerDelegate?
 
-    let layout: VerticalColumnCollectionViewLayout
     let searchResultsController: ZiphySearchResultsController
     let searchBar: UISearchBar = UISearchBar()
     let noResultsLabel = UILabel()
@@ -102,13 +101,9 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         searchResultsController.ziphyClient = ZiphyClient.wr_ziphyWithDefaultConfiguration()
         ziphs = []
 
-        layout = VerticalColumnCollectionViewLayout()
-        layout.interItemSpacing = 1
-        layout.interColumnSpacing = 1
+        let columnLayout = AdaptiveColumnLayout(compact: 2, regular: 3, large: 4)
+        super.init(interItemSpacing: 1, interColumnSpacing: 1, columnLayout: columnLayout)
 
-        super.init(collectionViewLayout: layout)
-
-        layout.delegate = self
         title = ""
 
         performSearch()
@@ -145,20 +140,8 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
         collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
 
-        updateLayout()
         setupNavigationItem()
         createConstraints()
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
-            self.updateLayout(for: size)
-        })
-    }
-
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.updateLayout()
     }
 
     private func createConstraints() {
@@ -179,19 +162,6 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(GiphySearchViewController.onDismiss))
 
         self.navigationItem.titleView = searchBar
-    }
-
-    private func updateLayout(for size: CGSize? = nil) {
-        layout.numberOfColumns = numberOfColumns(inContainer: size?.width ?? view.bounds.width)
-        collectionView?.collectionViewLayout.invalidateLayout()
-        navigationItem.titleView?.setNeedsLayout()
-    }
-
-    private func numberOfColumns(inContainer width: CGFloat) -> Int {
-        if view.traitCollection.horizontalSizeClass == .regular {
-            return width < 1024 ? 3 : 4
-        }
-        return 2
     }
 
     public func wrapInsideNavigationController() -> UINavigationController {
@@ -278,6 +248,18 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
     }
 
+    override func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
+
+        let ziph = self.ziphs[indexPath.row]
+
+        guard let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] else {
+            return .zero
+        }
+
+        return CGSize(width: representation.width, height: representation.height)
+
+    }
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let ziph = self.ziphs[indexPath.row]
         var previewImage: FLAnimatedImage?
@@ -323,20 +305,4 @@ extension GiphySearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-}
-
-extension GiphySearchViewController: VerticalColumnCollectionViewLayoutDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
-
-        let ziph = self.ziphs[indexPath.row]
-
-        guard let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] else {
-            return .zero
-        }
-
-        return CGSize(width: representation.width, height: representation.height)
-
-    }
-
 }
