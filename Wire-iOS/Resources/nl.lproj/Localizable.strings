@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Niet nu";
 "general.accept" = "Neem op";
+"general.decline" = "Nee, bedankt";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -59,7 +60,7 @@
 "peoplepicker.header.services" = "Services";
 "peoplepicker.services.create_conversation.item" = "Een nieuw gesprek beginnen";
 "peoplepicker.services.add_service.button" = "Service toevoegen";
-"peoplepicker.services.add_service.error.title" = "The service can’t be added";
+"peoplepicker.services.add_service.error.title" = "De service kan niet toegevoegd worden";
 "peoplepicker.services.add_service.error.default" = "De service is onbeschikbaar op het moment";
 "peoplepicker.services.add_service.error.full" = "Het gesprek is vol";
 
@@ -93,7 +94,7 @@
 "peoplepicker.quick-action.create-conversation" = "Groep creëren";
 "peoplepicker.quick-action.create-guest-room" = "Maak een nieuwe gast chat aan";
 
-"add_participants.all_contacts_added" = "Everyone’s here.";
+"add_participants.all_contacts_added" = "Iedereen is hier.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Zoeken op naam";
@@ -143,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "stel een bericht samen en sla het op voor later";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "maak een foto en verstuur hem snel";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "Je hebt ongelezen berichten.";
 
 // Archived List
 "archived_list.title" = "archief";
@@ -263,9 +264,9 @@
 "conversation.create.toggle.subtitle" = "Laat mensen van buiten je team toe aan dit gesprek. Je kan dit later nog aanpassen.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Uitgaand gesprek";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
-"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
-"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Je kan geen bericht opnemen tijdens een telefoongesprek.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Je kan geen video maken tijdens een telefoongesprek.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "Je kan geen foto maken tijdens een telefoongesprek.";
 
 "conversation.guests_present" = "Er zijn gasten in dit geprek";
 "conversation.action.search" = "Zoeken";
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "met %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
 
 "content.system.new_device" = "een nieuw apparaat";
@@ -464,8 +467,8 @@
 
 // Voice
 "voice.status.one_to_one.incoming" = "%@ bellen";
-"voice.status.group_call.incoming" = "%@\nringing";
-"voice.status.one_to_one.outgoing" = "%@\nringing";
+"voice.status.group_call.incoming" = "%@ belt";
+"voice.status.one_to_one.outgoing" = "%@ belt";
 "voice.status.joining" = "%@ Verbinden";
 "voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video is uitgeschakeld";
@@ -486,7 +489,7 @@
 "voice.speaker_button.title" = "Luidspreker";
 "voice.cancel_button.title" = "Annuleer";
 "voice.call_button.title" = "Oproep";
-"voice.end_call_button.title" = "End Call";
+"voice.end_call_button.title" = "Gesprek beëindigen";
 
 "voice.alert.call_in_progress.title" = "Bezig met bellen";
 "voice.alert.call_in_progress.message" = "Je kunt maximaal een gesprek tegelijk voeren";
@@ -504,7 +507,7 @@
 // Voice New
 
 "call.status.connecting" = "Verbinden…";
-"call.status.incoming.user" = "%@ is calling…";
+"call.status.incoming.user" = "%@ belt…";
 "call.status.incoming" = "Bellen…";
 "call.status.outgoing" = "Bellen…";
 "call.status.reconnecting" = "Opnieuw verbinden…";
@@ -535,19 +538,19 @@
 "call.announcement.incoming" = "Incoming call from %@";
 "call.actions.label.toggle_mute_on" = "Dempen";
 "call.actions.label.toggle_mute_off" = "Dempen opheffen";
-"call.actions.label.flip_camera" = "Flip camera";
-"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.flip_camera" = "Schakelen tussen camera's";
+"call.actions.label.toggle_speaker_on" = "Luidspreker inschakelen";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
 "call.actions.label.accept_call" = "Gesprek aannemen";
-"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.reject_call" = "Weiger oproep";
 "call.actions.label.terminate_call" = "Gesprek beëindigen";
-"call.actions.label.toggle_video_on" = "Turn on camera";
-"call.actions.label.toggle_video_off" = "Turn off camera";
-"call.actions.label.switch_to_back_camera" = "Switch to back camera";
-"call.actions.label.switch_to_front_camera" = "Switch to front camera";
-"call.actions.label.minimize_call" = "Minimize call";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.toggle_video_on" = "Zet camera aan";
+"call.actions.label.toggle_video_off" = "Zet camera uit";
+"call.actions.label.switch_to_back_camera" = "Switch naar camera achterkant";
+"call.actions.label.switch_to_front_camera" = "Switch naar camera voorkant";
+"call.actions.label.minimize_call" = "Minimaliser gesprek";
+"call.actions.label.make_audio_call" = "Start audio gesprek";
+"call.actions.label.make_video_call" = "Start video gesprek";
 "call.actions.label.join_call" = "Doe mee met gesprek";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,7 +563,7 @@
 "participants.section.participants" = "Personen (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Deelnemers toevoegen";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Wijzig naam";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "verwijder integratie";
 
 // Group details
-"group_details.guest_options_cell.title" = "Gast opties";
+"group_details.guest_options_cell.title" = "Gasten";
 "group_details.guest_options_cell.enabled" = "Aan";
 "group_details.guest_options_cell.disabled" = "Uit";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "Kaarten";
 "open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
@@ -1183,13 +1188,13 @@
 "signin.use_phone.label" = "Aanmelden met telefoon nummer";
 "signin.forgot_password" = "Wachtwoord vergeten?";
 "signin.use_one_password.label" = "Log in met 1Password";
-"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.use_one_password.hint" = "Klik twee keer om je wachtwoord in te laten vullen door 1Password";
 "signin.confirm" = "Inloggen";
 
 "registration.phone_country" = "Land";
 "registration.phone_code" = "Landcode";
 "registration.phone_country.hint" = "Dubbel tap om een ander land te selecteren.";
-"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone_code.hint" = "Dubbel tap om een ander land nummer te selecteren.";
 "registration.phone.verify.label" = "Verifieer telefoonnummer";
 "registration.phone.verify_field.label" = "Verificatie code";
 
@@ -1242,7 +1247,7 @@
 "error.user.device_deleted_remotely" = "Je bent uitgelogd door een ander apparaat.";
 "error.user.last_identity_cant_be_deleted" = "Een email adres of een telefoon nummer is verplicht.";
 "error.user.account_suspended" = "Dit account is niet langer geautoriseerd om in te loggen.";
-"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
+"error.user.account_limit_reached" = "Je kan niet meer dan 3 accounts toevoegen.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces

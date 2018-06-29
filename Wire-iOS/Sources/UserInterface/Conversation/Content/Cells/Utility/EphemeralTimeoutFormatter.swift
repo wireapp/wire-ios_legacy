@@ -21,7 +21,7 @@ class EphemeralTimeoutFormatter {
 
 
     /// A formatter to produce a string with day in full style and hour/minute in positional style
-    class DayFormatter {
+    fileprivate class DayFormatter {
 
         /// hour formatter with no second unit
         private let hourFormatter: DateComponentsFormatter = {
@@ -34,7 +34,7 @@ class EphemeralTimeoutFormatter {
         private let dayFormatter: DateComponentsFormatter = {
             let formatter = DateComponentsFormatter()
             formatter.unitsStyle = .full
-            formatter.allowedUnits = [.year, .month, .day]
+            formatter.allowedUnits = [.year, .weekOfMonth, .day]
             formatter.zeroFormattingBehavior = .dropAll
             return formatter
         }()
@@ -119,7 +119,13 @@ class EphemeralTimeoutFormatter {
         } else if date < Calendar.current.date(byAdding: .day, value: 1, to: now) {
             return hourFormatter.string(from: interval)
         } else {
-            return dayFormatter.string(from: interval)
+            // clamp time interval longer than 1 year
+            let oneYearFormNow = Calendar.current.date(byAdding: .year, value: 1, to: now)
+            if date > oneYearFormNow {
+                return dayFormatter.string(from: (oneYearFormNow?.timeIntervalSince(now))!)
+            } else {
+                return dayFormatter.string(from: interval)
+            }
         }
     }
     

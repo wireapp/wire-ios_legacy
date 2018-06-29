@@ -55,7 +55,6 @@
 #import "SwizzleTransition.h"
 #import "ARCollectionViewMasonryLayout.h"
 #import "ZiphyClient+Convenience.h"
-#import "ConversationDetailsTransitioningDelegate.h"
 #import "Country.h"
 #import "ContrastUserImageView.h"
 #import "PassthroughTouchesView.h"

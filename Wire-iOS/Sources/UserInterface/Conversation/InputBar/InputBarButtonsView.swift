@@ -47,7 +47,12 @@ public final class InputBarButtonsView: UIView {
     fileprivate var lastLayoutWidth: CGFloat = 0
     
     public let expandRowButton = IconButton()
-    public let buttons: [UIButton]
+    public var buttons: [UIButton] {
+        didSet {
+            buttonInnerContainer.subviews.forEach({ $0.removeFromSuperview() })
+            layoutAndConstrainButtonRows()
+        }
+    }
     fileprivate let buttonInnerContainer = UIView()
     fileprivate let buttonOuterContainer = UIView()
     fileprivate let constants = InputBarRowConstants()

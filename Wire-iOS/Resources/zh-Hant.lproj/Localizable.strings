@@ -29,6 +29,7 @@
 "general.confirm" = "確認";
 "general.skip" = "現在略過";
 "general.accept" = "接聽";
+"general.decline" = "不了，謝謝";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -143,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "撰寫訊息並儲存待用";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "相機";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "拍照並立刻發送";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "您有未讀訊息。";
 
 // Archived List
 "archived_list.title" = "封存";
@@ -209,7 +210,7 @@
 "conversation.status.you_were_removed" = "您被移除了";
 "conversation.status.you_left" = "您已離開";
 "conversation.status.started_conversation" = "%@開啓了聊天室";
-"conversation.status.removed_users" = "%@ 移除了 %@";
+"conversation.status.removed_users" = "%@移除了%@";
 "conversation.status.everyone_left" = "所有人都離開了";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -284,9 +285,9 @@
 
 // Camera and photos access, keyboard
 "keyboard_photos_access.denied.keyboard.settings" = "設定";
-"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire需要使用你的\n相機和照片。"; // split text on two lines for a better text balance
-"keyboard_photos_access.denied.keyboard.photos" = "Wire需要使用你的相機。";
-"keyboard_photos_access.denied.keyboard.camera" = "Wire需要你授權相機權限。";
+"keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire需要讀取你的\n相機和照片。"; // split text on two lines for a better text balance
+"keyboard_photos_access.denied.keyboard.photos" = "Wire需要讀取你的照片庫。";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire需要使用你的相機。";
 "keyboard_photos_access.denied.keyboard.ongoing_call" = "在視頻通話中, 您無法使用相機。";
 
 // Camera Controls
@@ -324,20 +325,20 @@
 "content.system.participants_1_other" = "%@ 和 %@";
 "content.system.other_left" = "%@離開了";
 "content.system.you_left" = "您已離開";
-"content.system.other_removed_other" = "%@ 移除了 %@";
-"content.system.other_removed_you" = "%@ 移除了您";
+"content.system.other_removed_other" = "%@移除了%@";
+"content.system.other_removed_you" = "%@移除了您";
 "content.system.you_removed_other" = "您移除了%@";
 
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@和%@開始對話";
 "content.system.conversation.other.added" = "%@加了%@到對話";
-"content.system.conversation.other.removed" = "%@ 移除了 %@";
+"content.system.conversation.other.removed" = "%@移除了%@";
 "content.system.conversation.other.left" = "%@離開了";
 
 "content.system.conversation.you.started" = "%@開始與%@對話";
 "content.system.conversation.you.added" = "%@加了%@到對話";
-"content.system.conversation.you.removed" = "%@ 移除了 %@";
+"content.system.conversation.you.removed" = "%@移除了%@";
 "content.system.conversation.you.left" = "%@離開了";
 "content.system.conversation.team.member-leave" = "%@從團隊中被移除了";
 "content.system.conversation.guest.joined" = "%@已加入";
@@ -377,6 +378,8 @@
 "content.system.conversation.with_name.title-you" = "%@開啓了聊天室";
 
 "content.system.conversation.with_name.participants" = "與%@";
+
+"content.system.message_timer_changes" = "%@將訊息時限設置為%@";
 
 "content.system.reactivated_device" = "您重新使用%@，在停用期間的訊息不會顯示出來。";
 
@@ -458,7 +461,7 @@
 "inbox.connection_request.ignore_button_title" = "忽略";
 
 // Save image errors
-"library.alert.permission_warning.title" = "Wire需要存取你的照片庫";
+"library.alert.permission_warning.title" = "Wire需要讀取你的照片庫";
 "library.alert.permission_warning.restrictions.explaination" = "由於啟用了限制，Wire無法訪問您的資料庫。";
 "library.alert.permission_warning.not_allowed.explaination" = "請前往手機「設定」並允許Wire使用照片庫權限。";
 
@@ -482,7 +485,7 @@
 "voice.hang_up_button.title" = "結束通話";
 "voice.mute_button.title" = "靜音";
 "voice.video_button.title" = "影片";
-"voice.flip_video_button.title" = "翻轉";
+"voice.flip_video_button.title" = "切換鏡頭";
 "voice.speaker_button.title" = "擴音";
 "voice.cancel_button.title" = "取消";
 "voice.call_button.title" = "通話";
@@ -521,7 +524,7 @@
 
 "call.degraded.alert.title" = "新裝置";
 "call.degraded.alert.message.self" = "您開始使用新的設備。";
-"call.degraded.alert.message.user" = "%@ 開始使用新的設備。";
+"call.degraded.alert.message.user" = "%@開始使用新的設備。";
 "call.degraded.alert.message.unknown" = "某人開始使用了新設備。";
 "call.degraded.alert.action.continue" = "仍然要通話";
 
@@ -546,8 +549,8 @@
 "call.actions.label.switch_to_back_camera" = "切換至後方相機";
 "call.actions.label.switch_to_front_camera" = "切換至前方相機";
 "call.actions.label.minimize_call" = "最小化通話畫面";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.make_audio_call" = "開始語音通話";
+"call.actions.label.make_video_call" = "開始視訊通話";
 "call.actions.label.join_call" = "參與通話";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,7 +563,7 @@
 "participants.section.participants" = "參與者(%d)";
 "participants.section.services" = "服務 (%d)";
 "participants.footer.add_title" = "加入參與者";
-"participants.section.name.footer" = "最多128人可以加入群組對話。視像通話僅能在4個人以下的群組中使用。";
+"participants.section.name.footer" = "最多128人可以加入群組對話。視像通話可用以你與另外三人。";
 
 // Meta Menu
 "meta.menu.rename" = "重新命名";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "移除服務";
 
 // Group details
-"group_details.guest_options_cell.title" = "訪客選項";
+"group_details.guest_options_cell.title" = "訪客";
 "group_details.guest_options_cell.enabled" = "開啟";
 "group_details.guest_options_cell.disabled" = "關閉";
+"group_details.timeout_options_cell.title" = "限時訊息";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "地圖";
 "open_link.maps.option.google" = "Google地圖";
+"open_link.maps.footer" = "有些地理位置鏈結預設使用Apple地圖開啟。";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
