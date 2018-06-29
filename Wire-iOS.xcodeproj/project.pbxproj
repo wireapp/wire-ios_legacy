@@ -1156,6 +1156,7 @@
 		EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */; };
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
+		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
 		EFCDA974209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */; };
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
@@ -2818,6 +2819,7 @@
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
 		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
+		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
 		EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+ImageBorder.swift"; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
@@ -5225,6 +5227,7 @@
 				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
 				EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */,
 				EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */,
+				EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7451,6 +7454,7 @@
 				EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */,
 				8742C2F11E533AC400329FB6 /* NSAttributedStringHighlightTests.swift in Sources */,
 				EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */,
+				EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */,
 				EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */,
 				EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */,
 				874941CD1DE458DF006CF32B /* CombinationTest.swift in Sources */,
