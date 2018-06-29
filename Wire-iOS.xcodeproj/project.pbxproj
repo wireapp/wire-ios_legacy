@@ -863,6 +863,7 @@
 		BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CB61CEDB9FC00780537 /* AudioButtonOverlayState.swift */; };
 		BFAF4CB91CEDE82400780537 /* NumberHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAF4CB81CEDE82400780537 /* NumberHelper.swift */; };
 		BFB332681E3A2D95003B0CD2 /* ExtensionSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB332671E3A2D95003B0CD2 /* ExtensionSettings.swift */; };
+		BFB5972320E62EB6008720ED /* CancelableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB5972220E62EB6008720ED /* CancelableItem.swift */; };
 		BFBAE9E31E041FB7003FCE49 /* ReactionsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBAE9E21E041FB7003FCE49 /* ReactionsCellTests.swift */; };
 		BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB03051D5DF4CB0065AF4F /* InputBarButtonsView.swift */; };
 		BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB03071D61AF8D0065AF4F /* InputBarEditView.swift */; };
@@ -2478,6 +2479,7 @@
 		BFAF4CB61CEDB9FC00780537 /* AudioButtonOverlayState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioButtonOverlayState.swift; sourceTree = "<group>"; };
 		BFAF4CB81CEDE82400780537 /* NumberHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberHelper.swift; sourceTree = "<group>"; };
 		BFB332671E3A2D95003B0CD2 /* ExtensionSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionSettings.swift; sourceTree = "<group>"; };
+		BFB5972220E62EB6008720ED /* CancelableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelableItem.swift; sourceTree = "<group>"; };
 		BFBAE9E21E041FB7003FCE49 /* ReactionsCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsCellTests.swift; sourceTree = "<group>"; };
 		BFBB03051D5DF4CB0065AF4F /* InputBarButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarButtonsView.swift; sourceTree = "<group>"; };
 		BFBB03071D61AF8D0065AF4F /* InputBarEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarEditView.swift; sourceTree = "<group>"; };
@@ -4637,6 +4639,7 @@
 				7C4789842021F40E00A38442 /* AddBotError+UIHandler.swift */,
 				1682AEC420484B9B003A052A /* Themeable.swift */,
 				163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */,
+				BFB5972220E62EB6008720ED /* CancelableItem.swift */,
 				7C69ECF920582A6700203F33 /* UIPasteboard+Compatibility.h */,
 				7C69ECFA20582A6700203F33 /* UIPasteboard+Compatibility.m */,
 				5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */,
@@ -7250,6 +7253,7 @@
 				164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */,
 				D5168F522010F20700F8222A /* ShareDestinationCell.swift in Sources */,
 				873C5FE91C10426A00D5132A /* ClientUnregisterFlowViewController.swift in Sources */,
+				BFB5972320E62EB6008720ED /* CancelableItem.swift in Sources */,
 				D59EA0C520234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift in Sources */,
 				EF7E53C7209765E900EA8357 /* TextView.m in Sources */,
 				16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */,
