@@ -379,7 +379,13 @@
 
 "content.system.conversation.with_name.participants" = "mit %@";
 
-"content.system.message_timer_changes" = "%@ hat die temporären Nachrichten auf %@ eingestellt";
+"content.system.message_timer_changes" = "%@ hat die temporären Nachrichten auf %@ gestellt";
+"content.system.message_timer_changes.you" = "Du hast die temporären Nachrichten auf %@ gestellt";
+
+"content.system.message_timer.you_part" = "Du";
+
+"content.system.message_timer_off" = "%@ hat temporäre Nachrichten ausgeschaltet";
+"content.system.message_timer_off.you" = "Du hast temporäre Nachrichten ausgeschaltet";
 
 "content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
