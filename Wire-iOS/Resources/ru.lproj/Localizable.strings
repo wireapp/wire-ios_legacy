@@ -563,7 +563,7 @@
 "participants.section.participants" = "Участники (%d)";
 "participants.section.services" = "Сервисов (%d)";
 "participants.footer.add_title" = "Добавить участников";
-"participants.section.name.footer" = "К групповому разговору может присоединиться до 128 человек. Видеозвонки возможны между вами и еще тремя участниками.";
+"participants.section.name.footer" = "К групповому разговору может присоединиться до 256 человек. Видеозвонки возможны между вами и еще тремя участниками.";
 
 // Meta Menu
 "meta.menu.rename" = "Переименовать";

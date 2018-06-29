@@ -563,7 +563,7 @@
 "participants.section.participants" = "參與者(%d)";
 "participants.section.services" = "服務 (%d)";
 "participants.footer.add_title" = "加入參與者";
-"participants.section.name.footer" = "最多128人可以加入群組對話。視像通話可用以你與另外三人。";
+"participants.section.name.footer" = "最多256人可以加入群組對話。視像通話可用以你與另外三人。";
 
 // Meta Menu
 "meta.menu.rename" = "重新命名";

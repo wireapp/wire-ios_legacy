@@ -563,7 +563,7 @@
 "participants.section.participants" = "Žmonės (%d)";
 "participants.section.services" = "Paslaugos (%d)";
 "participants.footer.add_title" = "Pridėti dalyvių";
-"participants.section.name.footer" = "Prie pokalbio gali prisijungti iki 128 pašnekovų. Vaizdo skambučiai veikia grupėse iki 3 pašnekovų ir jumis.";
+"participants.section.name.footer" = "Prie pokalbio gali prisijungti iki 256 pašnekovų. Vaizdo skambučiai veikia grupėse iki 3 pašnekovų ir jumis.";
 
 // Meta Menu
 "meta.menu.rename" = "Pervadinti";

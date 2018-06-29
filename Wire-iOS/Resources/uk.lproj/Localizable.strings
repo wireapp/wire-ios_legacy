@@ -563,7 +563,7 @@
 "participants.section.participants" = "Учасники (%d)";
 "participants.section.services" = "Сервіси (%d)";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";
