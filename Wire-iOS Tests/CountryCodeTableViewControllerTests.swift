@@ -27,8 +27,6 @@ final class CountryCodeTableViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
         sut = CountryCodeTableViewController()
         sut.viewDidLoad()
-
-        recordMode = true
     }
     
     override func tearDown() {
