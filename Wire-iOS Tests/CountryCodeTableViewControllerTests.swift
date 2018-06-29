@@ -36,31 +36,7 @@ final class CountryCodeTableViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-
-    func testForRowKosovo(){
-        // GIVEN
-
-        // WHEN
-        var kosovoIndexPath: IndexPath!
-
-        for section in 0..<sut.tableView.numberOfSections {
-            let numberOfRows = sut.tableView.numberOfRows(inSection: section)
-            for row in 0..<numberOfRows {
-                let indexPath = IndexPath(row: row, section: section)
-                if let cell = sut.tableView.cellForRow(at: indexPath), cell.textLabel?.text == "Kosovo" {
-                    kosovoIndexPath = indexPath
-                    break
-                }
-            }
-
-            if kosovoIndexPath != nil {
-                break
-            }
-        }
-
-        sut.tableView.scrollToRow(at: kosovoIndexPath, at: .middle, animated: false)
-
-        // THEN
+    func testForWirestanAppearInFirstRow(){
         verify(view: sut.view)
     }
 }
