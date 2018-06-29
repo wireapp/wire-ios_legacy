@@ -31,7 +31,7 @@ final public class CollectionLinkCell: CollectionCell {
         articleView.authorLabel.numberOfLines = 1
         articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
         self.secureContentsView.addSubview(articleView)
-        self.contentView.cas_styleClass = "container-view"
+        self.secureContentsView.cas_styleClass = "container-view"
         // Reconstraint the header
         self.headerView.removeFromSuperview()
         self.headerView.message = self.message!

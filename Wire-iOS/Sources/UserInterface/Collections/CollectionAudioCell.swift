@@ -49,12 +49,12 @@ final public class CollectionAudioCell: CollectionForwardableSaveableFileCell {
         self.audioMessageView.layer.cornerRadius = 4
         self.audioMessageView.clipsToBounds = true
         
-        self.contentView.cas_styleClass = "container-view"
-        self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
+        self.secureContentsView.cas_styleClass = "container-view"
+        self.secureContentsView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
         self.secureContentsView.addSubview(self.headerView)
         self.secureContentsView.addSubview(self.audioMessageView)
         
-        constrain(self.contentView, self.audioMessageView, self.headerView) { contentView, audioMessageView, headerView in
+        constrain(self.secureContentsView, self.audioMessageView, self.headerView) { contentView, audioMessageView, headerView in
             headerView.top == contentView.topMargin
             headerView.leading == contentView.leadingMargin + 12
             headerView.trailing == contentView.trailingMargin - 12
@@ -68,7 +68,7 @@ final public class CollectionAudioCell: CollectionForwardableSaveableFileCell {
     }
 
     override var obfuscationIcon: ZetaIconType {
-        return .audio
+        return .microphone
     }
 
 }

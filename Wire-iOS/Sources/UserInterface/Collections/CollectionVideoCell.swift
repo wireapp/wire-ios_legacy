@@ -55,7 +55,7 @@ final public class CollectionVideoCell: CollectionForwardableSaveableFileCell {
     }
 
     override var obfuscationIcon: ZetaIconType {
-        return .videoMessage
+        return .movie
     }
 
 }
