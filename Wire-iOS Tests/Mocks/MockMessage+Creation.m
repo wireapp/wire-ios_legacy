@@ -116,6 +116,20 @@
     return message;
 }
 
++ (MockMessage *)videoMessage
+{
+    MockMessage *message = [self fileTransferMessage];
+    message.backingFileMessageData.mimeType = @"video/mp4";
+    return message;
+}
+
++ (MockMessage *)audioMessage
+{
+    MockMessage *message = [self fileTransferMessage];
+    message.backingFileMessageData.mimeType = @"audio/x-m4a";
+    return message;
+}
+
 + (MockMessage *)systemMessageWithType:(ZMSystemMessageType)systemMessageType users:(NSUInteger)numUsers clients:(NSUInteger)numClients
 {
     MockMessage *message = [[MockMessage alloc] init];
@@ -171,6 +185,38 @@
 
     message.backingLocationMessageData = [[MockLocationMessageData alloc] init];
     return message;
+}
+
++ (MockMessage *)expiredMessageFromMessage:(MockMessage *)message
+{
+    message.isEphemeral = YES;
+    message.isObfuscated = YES;
+    return message;
+}
+
++ (MockMessage *)expiredImageMessage
+{
+    return [self expiredMessageFromMessage:[self imageMessage]];
+}
+
++ (MockMessage *)expiredVideoMessage
+{
+    return [self expiredMessageFromMessage:[self videoMessage]];
+}
+
++ (MockMessage *)expiredAudioMessage
+{
+    return [self expiredMessageFromMessage:[self audioMessage]];
+}
+
++ (MockMessage *)expiredFileMessage
+{
+    return [self expiredMessageFromMessage:[self fileTransferMessage]];
+}
+
++ (MockMessage *)expiredLinkMessage
+{
+    return [self expiredMessageFromMessage:[self linkMessage]];
 }
 
 @end

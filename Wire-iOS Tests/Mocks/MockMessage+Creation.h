@@ -25,6 +25,8 @@
 + (MockMessage *)pingMessage;
 + (MockMessage *)linkMessage;
 + (MockMessage *)imageMessage;
++ (MockMessage *)videoMessage;
++ (MockMessage *)audioMessage;
 + (MockMessage *)pendingImageMessage;
 + (MockMessage *)imageMessageWithImage:(UIImage *)image;
 + (MockMessage *)systemMessageWithType:(ZMSystemMessageType)systemMessageType
@@ -32,4 +34,10 @@
                                clients:(NSUInteger)numClients;
 + (MockMessage *)fileTransferMessage;
 + (MockMessage *)locationMessage;
+
++ (MockMessage *)expiredImageMessage;
++ (MockMessage *)expiredVideoMessage;
++ (MockMessage *)expiredAudioMessage;
++ (MockMessage *)expiredFileMessage;
++ (MockMessage *)expiredLinkMessage;
 @end
