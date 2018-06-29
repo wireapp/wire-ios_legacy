@@ -104,25 +104,25 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
             MockCollection.onlyImagesCategory: [expiredImageMessage],
             MockCollection.onlyVideosCategory: [videoMessage, expiredVideoMessage]])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyInAllIPhoneSizes(view: controller.view)
     }
 
     func testFilesSectionWhenExpired() {
         let assetCollection = MockCollection(fileMessages: [fileMessage, expiredFileMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyInAllIPhoneSizes(view: controller.view)
     }
 
     func testAudioSectionWhenExpired() {
         let assetCollection = MockCollection(fileMessages: [audioMessage, expiredAudioMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyInAllIPhoneSizes(view: controller.view)
     }
 
     func testLinksSectionWhenExpired() {
         let assetCollection = MockCollection(linkMessages: [expiredLinkMessage, linkMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyInAllIPhoneSizes(view: controller.view)
     }
 
 }
