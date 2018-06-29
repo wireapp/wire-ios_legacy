@@ -23,10 +23,6 @@ import XCTest
 
 class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     func testThatItRendersMessageTimerSystemMessage_None_Other() {
         let timerCell = cell(fromSelf: false, messageTimer: .none)
         verify(view: timerCell.prepareForSnapshots())
