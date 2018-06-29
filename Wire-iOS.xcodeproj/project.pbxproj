@@ -202,6 +202,7 @@
 		55A42A701FC872600056752F /* CallQualityScoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */; };
 		55DD5C341FA236F60082170C /* CallQualityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityController.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
+		5E2B13E420E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */; };
 		5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */; };
 		5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */; };
 		5E33F0D320AD63A100414EA6 /* CallPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0D220AD63A100414EA6 /* CallPermissions.swift */; };
@@ -1506,6 +1507,7 @@
 		55DD5C331FA236F60082170C /* CallQualityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityController.swift; sourceTree = "<group>"; };
 		597184FEC66FBCEC21973EDC /* Pods-WireExtensionComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireExtensionComponents.release.xcconfig"; path = "Pods/Target Support Files/Pods-WireExtensionComponents/Pods-WireExtensionComponents.release.xcconfig"; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
+		5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewLayout.swift; sourceTree = "<group>"; };
 		5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallVideoPlaceholderState.swift; sourceTree = "<group>"; };
 		5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissionsConfiguration.swift; sourceTree = "<group>"; };
 		5E33F0D220AD63A100414EA6 /* CallPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissions.swift; sourceTree = "<group>"; };
@@ -3368,6 +3370,14 @@
 			path = CallQualityController;
 			sourceTree = "<group>";
 		};
+		5E2B13E520E67206002F27E2 /* CollectionLayouts */ = {
+			isa = PBXGroup;
+			children = (
+				5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */,
+			);
+			path = CollectionLayouts;
+			sourceTree = "<group>";
+		};
 		5E33F0D120AD637400414EA6 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
@@ -3664,6 +3674,7 @@
 				16AACE701C0CAC6300E62C43 /* TabBar */,
 				7CEB45271F8FAAC400D772D5 /* UINavigationBarContainer.swift */,
 				87E4D2C91FC6E39800F3C664 /* CharacterInputField.swift */,
+				5E2B13E520E67206002F27E2 /* CollectionLayouts */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -7078,6 +7089,7 @@
 				871BC2241D34F8F800DF0793 /* BottomOverlayViewController.m in Sources */,
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
 				EF2127151FB9DFE300625A9B /* NameStepViewController.m in Sources */,
+				5E2B13E420E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift in Sources */,
 				EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */,
 				BFE65AB320A047EB00689063 /* CallAccessoryViewController.swift in Sources */,
 				8759E2C31FC82BDF008E17C9 /* AnalyticsTracker+Registration.swift in Sources */,
