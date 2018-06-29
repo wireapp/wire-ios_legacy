@@ -35,8 +35,9 @@ class ColorViewController: VerticalColumnCollectionViewController {
     let dataSource: [Item]
     var testEnvironment: TestEnvironment
 
-    init(dataSource: [Item]) {
+    init(dataSource: [Item], testEnvironment: TestEnvironment) {
         self.dataSource = dataSource
+        self.testEnvironment = testEnvironment
 
         let columnLayout = AdaptiveColumnLayout(compact: 2, regular: 3, large: 4)
         super.init(interItemSpacing: 2, interColumnSpacing: 4, columnLayout: columnLayout)
@@ -66,7 +67,7 @@ class ColorViewController: VerticalColumnCollectionViewController {
         return dataSource[indexPath.row].size
     }
 
-    var isRegularLayout: Bool {
+    override var isRegularLayout: Bool {
         return testEnvironment == .tablet
     }
 
@@ -102,14 +103,12 @@ class VerticalColumnCollectionViewLayoutTests: ZMSnapshotTestCase {
     }
 
     func testColumns_iPhone() {
-        let sut = ColorViewController(dataSource: items)
-        sut.testEnvironment = .phone
+        let sut = ColorViewController(dataSource: items, testEnvironment: .phone)
         verifyInAllIPhoneSizes(view: sut.view)
     }
 
     func testColumns_iPad() {
-        let sut = ColorViewController(dataSource: items)
-        sut.testEnvironment = .tablet
+        let sut = ColorViewController(dataSource: items, testEnvironment: .tablet)
         verifyInAllTabletWidths(view: sut.view)
     }
 
