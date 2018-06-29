@@ -562,6 +562,7 @@
 "participants.title" = "Details";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Settings";
 "participants.footer.add_title" = "Add Participants";
 "participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
