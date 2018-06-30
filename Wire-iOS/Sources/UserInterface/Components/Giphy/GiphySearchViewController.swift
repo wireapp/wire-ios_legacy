@@ -101,8 +101,8 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         searchResultsController.ziphyClient = ZiphyClient.wr_ziphyWithDefaultConfiguration()
         ziphs = []
 
-        let columnLayout = AdaptiveColumnLayout(compact: 2, regular: 3, large: 4)
-        super.init(interItemSpacing: 1, interColumnSpacing: 1, columnLayout: columnLayout)
+        let columnCount = AdaptiveColumnCount(compact: 2, regular: 3, large: 4)
+        super.init(interItemSpacing: 1, interColumnSpacing: 1, columnCount: columnCount)
 
         title = ""
 
