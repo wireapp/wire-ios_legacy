@@ -50,6 +50,13 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
 
     private(set) var viewControllers: [UIViewController]
     private(set) var selectedIndex: Int
+    
+    @objc(swipingEnabled) var isSwipingEnabled = true {
+        didSet {
+            pageViewController.dataSource = isSwipingEnabled ? self : nil
+            pageViewController.delegate = isSwipingEnabled ? self : nil
+        }
+    }
 
     var style: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
@@ -65,11 +72,9 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     }
 
     // MARK: - Views
-
-    fileprivate var presentedTabBarViewController: UIViewController?
-    fileprivate var tabBar: TabBar?
-    fileprivate var contentView = UIView()
-    fileprivate var isTransitioning = false
+    private var tabBar: TabBar?
+    private var contentView = UIView()
+    private var isTransitioning = false
 
     // MARK: - Initialization
 
@@ -96,8 +101,11 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         self.view.addSubview(self.contentView)
         
         add(pageViewController, to: contentView)
-        pageViewController.dataSource = self
-        pageViewController.delegate = self
+
+        if isSwipingEnabled {
+            pageViewController.dataSource = self
+            pageViewController.delegate = self
+        }
         
         let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
@@ -133,14 +141,13 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     func selectIndex(_ index: Int, animated: Bool) {
         selectedIndex = index
 
-        let toViewController = self.viewControllers[index]
-        let fromViewController = self.presentedTabBarViewController
+        let toViewController = viewControllers[index]
+        let fromViewController = pageViewController.viewControllers?.first
 
         guard toViewController != fromViewController, !isTransitioning else { return }
 
         delegate?.tabBarController(self, tabBarDidSelectIndex: index)
-        self.presentedTabBarViewController = toViewController
-        self.tabBar?.setSelectedIndex(index, animated: animated)
+        tabBar?.setSelectedIndex(index, animated: animated)
         
         let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
         let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
@@ -170,7 +177,6 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         guard let index = viewControllers.index(of: selected) else { return }
         
         delegate?.tabBarController(self, tabBarDidSelectIndex: index)
-        presentedTabBarViewController = selected
         tabBar?.setSelectedIndex(index, animated: true)
     }
 
