@@ -70,7 +70,7 @@
 		1671D6D1200CDC380022D289 /* InviteTeamMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1671D6D0200CDC380022D289 /* InviteTeamMemberCell.swift */; };
 		1677FD331BBC19A400491481 /* ColorScheme.h in Headers */ = {isa = PBXBuildFile; fileRef = 1677FD311BBC19A400491481 /* ColorScheme.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1677FD341BBC19A400491481 /* ColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677FD321BBC19A400491481 /* ColorScheme.m */; };
-		167961A7203DED9100B72ACC /* WireTesting.framework in (null) */ = {isa = PBXBuildFile; fileRef = 167961A6203DED9100B72ACC /* WireTesting.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		167961A7203DED9100B72ACC /* WireTesting.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 167961A6203DED9100B72ACC /* WireTesting.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		167961A9203F26E600B72ACC /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167961A8203F26E600B72ACC /* SectionHeader.swift */; };
 		167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167961AE20445FB400B72ACC /* ProfileTitleView.swift */; };
 		167B3B491BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 167B3B481BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m */; };
@@ -214,10 +214,10 @@
 		5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3C0C65206B9EE900B0499C /* Tab.swift */; };
 		5E4B1385204FE58D00ED5DF1 /* TimeInterval+Days.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */; };
 		5E4B1387204FE7DA00ED5DF1 /* SystemAnimationCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */; };
-		5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376820E7F12B00649241 /* EasingAnimation.swift */; };
-		5E52376B20E7F99500649241 /* EasingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376A20E7F99500649241 /* EasingFunction.swift */; };
 		5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */; };
 		5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376020E7E46600649241 /* ColorTilesViewController.swift */; };
+		5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376820E7F12B00649241 /* EasingAnimation.swift */; };
+		5E52376B20E7F99500649241 /* EasingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376A20E7F99500649241 /* EasingFunction.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5EA73D7920D900830001D106 /* GroupOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */; };
@@ -429,8 +429,8 @@
 		871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC36C1D34F96000DF0793 /* DeviceOrientationObserver.m */; };
 		871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */; };
 		871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BE9561CD0C2DD002267E8 /* OCMock.framework */; };
-		871BE95E1CD0C459002267E8 /* OCMock.framework in (null) */ = {isa = PBXBuildFile; fileRef = 871BE9561CD0C2DD002267E8 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in (null) */ = {isa = PBXBuildFile; fileRef = 871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		871BE95E1CD0C459002267E8 /* OCMock.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 871BE9561CD0C2DD002267E8 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = 871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		871DD79D2080C4F6006B1C56 /* Conversation+Participants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871DD79C2080C4F6006B1C56 /* Conversation+Participants.swift */; };
 		8723342A1CD0D8F100CF8B11 /* VideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */; };
 		872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872786CA1D38EE2000CC3C15 /* OnePasswordExtension.framework */; };
@@ -1271,16 +1271,17 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		871BE95D1CD0C44A002267E8 /* (null) */ = {
+		871BE95D1CD0C44A002267E8 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				167961A7203DED9100B72ACC /* WireTesting.framework in (null) */,
-				871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in (null) */,
-				871BE95E1CD0C459002267E8 /* OCMock.framework in (null) */,
+				167961A7203DED9100B72ACC /* WireTesting.framework in Copy Files */,
+				871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in Copy Files */,
+				871BE95E1CD0C459002267E8 /* OCMock.framework in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1518,8 +1519,6 @@
 		5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewLayoutTests.swift; sourceTree = "<group>"; };
 		5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewController.swift; sourceTree = "<group>"; };
 		5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallVideoPlaceholderState.swift; sourceTree = "<group>"; };
-		5E52376820E7F12B00649241 /* EasingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingAnimation.swift; sourceTree = "<group>"; };
-		5E52376A20E7F99500649241 /* EasingFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingFunction.swift; sourceTree = "<group>"; };
 		5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissionsConfiguration.swift; sourceTree = "<group>"; };
 		5E33F0D220AD63A100414EA6 /* CallPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissions.swift; sourceTree = "<group>"; };
 		5E33F0D420ADA94B00414EA6 /* MockCallPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallPermissions.swift; sourceTree = "<group>"; };
@@ -1530,6 +1529,8 @@
 		5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAnimationCurves.swift; sourceTree = "<group>"; };
 		5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CallQuality.swift"; sourceTree = "<group>"; };
 		5E52376020E7E46600649241 /* ColorTilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTilesViewController.swift; sourceTree = "<group>"; };
+		5E52376820E7F12B00649241 /* EasingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingAnimation.swift; sourceTree = "<group>"; };
+		5E52376A20E7F99500649241 /* EasingFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingFunction.swift; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOptionsSectionController.swift; sourceTree = "<group>"; };
@@ -3217,15 +3218,6 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
-		5E52376320E7ECDF00649241 /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-				5E52376820E7F12B00649241 /* EasingAnimation.swift */,
-				5E52376A20E7F99500649241 /* EasingFunction.swift */,
-			);
-			path = Animations;
-			sourceTree = "<group>";
-		};
 		1E5E0CE81B6B8EDB003B0CAC /* Autogenerated */ = {
 			isa = PBXGroup;
 			children = (
@@ -3430,6 +3422,15 @@
 				5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */,
 			);
 			path = VerticalColumns;
+			sourceTree = "<group>";
+		};
+		5E52376320E7ECDF00649241 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				5E52376820E7F12B00649241 /* EasingAnimation.swift */,
+				5E52376A20E7F99500649241 /* EasingFunction.swift */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		5EA73D7A20D900A10001D106 /* Cells */ = {
@@ -6007,7 +6008,7 @@
 				BACB884D1AF7C48900DDCDB0 /* Sources */,
 				BACB884E1AF7C48900DDCDB0 /* Frameworks */,
 				BACB884F1AF7C48900DDCDB0 /* Resources */,
-				871BE95D1CD0C44A002267E8 /* (null) */,
+				871BE95D1CD0C44A002267E8 /* Copy Files */,
 				BFE731DE20A2F2270088BA22 /* Remove Old Snapshot Results */,
 			);
 			buildRules = (
