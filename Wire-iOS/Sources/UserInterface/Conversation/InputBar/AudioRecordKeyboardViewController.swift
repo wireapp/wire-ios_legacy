@@ -64,7 +64,7 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     @objc convenience init() {
-        self.init(audioRecorder: AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0)!)
+        self.init(audioRecorder: AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0, maxFileSize: ZMUserSession.shared()?.maxUploadFileSize() )!)
     }
     
     init(audioRecorder: AudioRecorderType) {
@@ -273,26 +273,15 @@ private let zmLog = ZMSLog(tag: "UI")
             AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
-        recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in
+        recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration, reachedMaxRecordingSize in
             guard let `self` = self else { return }
             self.state = .effects
-            if reachedMaxRecordingDuration {
-                
-                let duration = Int(ceil(self.recorder.maxRecordingDuration ?? 0))
-                let (seconds, minutes) = (duration % 60, duration / 60)
-                let durationLimit = String(format: "%d:%02d", minutes, seconds)
-                
-                let alertController = UIAlertController(
-                    title: "conversation.input_bar.audio_message.too_long.title".localized,
-                    message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit),
-                    preferredStyle: .alert
-                )
-                
-                let actionOk = UIAlertAction(title: "general.ok".localized, style: .default, handler: nil)
-                alertController.addAction(actionOk)
-                
-                self.present(alertController, animated: true, completion: .none)
-            }
+            
+            guard let alert = self.recorder.alertForRecording(
+                reachedMaxRecordingDuration: reachedMaxRecordingDuration,
+                reachedMaxRecordingSize: reachedMaxRecordingSize) else { return }
+            
+            self.present(alert, animated: true, completion: .none)
         }
         
         recorder.recordLevelCallBack = { [weak self] level in
