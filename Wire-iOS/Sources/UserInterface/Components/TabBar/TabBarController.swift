@@ -42,12 +42,21 @@ extension UIViewController {
 }
 
 @objcMembers
-class TabBarController: UIViewController {
+class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
     weak var delegate: TabBarControllerDelegate?
+    
+    private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
-    fileprivate(set) var viewControllers: [UIViewController]
-    fileprivate(set) var selectedIndex: Int
+    private(set) var viewControllers: [UIViewController]
+    private(set) var selectedIndex: Int
+    
+    @objc(swipingEnabled) var isSwipingEnabled = true {
+        didSet {
+            pageViewController.dataSource = isSwipingEnabled ? self : nil
+            pageViewController.delegate = isSwipingEnabled ? self : nil
+        }
+    }
 
     var style: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
@@ -63,11 +72,9 @@ class TabBarController: UIViewController {
     }
 
     // MARK: - Views
-
-    fileprivate var presentedTabBarViewController: UIViewController?
-    fileprivate var tabBar: TabBar?
-    fileprivate var contentView: UIView!
-    fileprivate var isTransitioning: Bool = false
+    private var tabBar: TabBar?
+    private var contentView = UIView()
+    private var isTransitioning = false
 
     // MARK: - Initialization
 
@@ -90,10 +97,16 @@ class TabBarController: UIViewController {
     }
 
     fileprivate func createViews() {
-        self.contentView = UIView(frame: self.view.bounds)
-        self.contentView!.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.contentView)
+        
+        add(pageViewController, to: contentView)
 
+        if isSwipingEnabled {
+            pageViewController.dataSource = self
+            pageViewController.delegate = self
+        }
+        
         let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
         self.tabBar?.delegate = self
@@ -102,21 +115,24 @@ class TabBarController: UIViewController {
     }
 
     fileprivate func createConstraints() {
-
+        pageViewController.view.fitInSuperview()
+        
         if let tabBar = self.tabBar {
-            constrain(tabBar, self.contentView) { tabBar, contentView in
+            constrain(tabBar, contentView, view) { tabBar, contentView, view in
                 tabBar.top == tabBar.superview!.top
                 tabBar.left == tabBar.superview!.left
                 tabBar.right == tabBar.superview!.right
                 contentView.top == tabBar.bottom
+                contentView.bottom == view.bottom
             }
         }
 
-        constrain(self.contentView) { contentView in
+        constrain(contentView, view, pageViewController.view) { contentView, view, pageViewController in
             if (self.tabBar == nil) { contentView.top == contentView.superview!.top }
             contentView.left == contentView.superview!.left
             contentView.right == contentView.superview!.right
-            contentView.bottom == contentView.superview!.bottom
+            pageViewController.width == contentView.width
+            pageViewController.height == contentView.height
         }
     }
 
@@ -125,48 +141,43 @@ class TabBarController: UIViewController {
     func selectIndex(_ index: Int, animated: Bool) {
         selectedIndex = index
 
-        let toViewController = self.viewControllers[index]
-        let fromViewController = self.presentedTabBarViewController
+        let toViewController = viewControllers[index]
+        let fromViewController = pageViewController.viewControllers?.first
 
-        guard toViewController != fromViewController &&
-            self.contentView != nil &&
-            !isTransitioning
-            else {
-            return
-        }
+        guard toViewController != fromViewController, !isTransitioning else { return }
 
         delegate?.tabBarController(self, tabBarDidSelectIndex: index)
-        self.presentedTabBarViewController = toViewController
-        self.tabBar?.setSelectedIndex(index, animated: animated)
-
-        if (fromViewController != nil) {
-            fromViewController?.willMove(toParentViewController: nil)
-        }
-
-        toViewController.view.translatesAutoresizingMaskIntoConstraints = true
-        toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        toViewController.view.frame = self.contentView.bounds
-
-        addChildViewController(toViewController)
-        self.contentView.addSubview(toViewController.view)
-
-        guard fromViewController != nil else {
-            toViewController.didMove(toParentViewController: self)
-            return
-        }
-
-        self.transition(from: fromViewController!, to: toViewController, duration: animated ? 0.25 : 0, options: .transitionCrossDissolve, animations: {
-            self.isTransitioning = true
-            if toViewController.responds(to: #selector(UIViewController.takeFirstResponder)) {
-                toViewController.perform(#selector(UIViewController.takeFirstResponder))
-            }
-        }, completion: { (finished) in
+        tabBar?.setSelectedIndex(index, animated: animated)
+        
+        let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
+        let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
+        pageViewController.setViewControllers([toViewController], direction: direction, animated: true) { _ in
             self.isTransitioning = false
-            fromViewController?.view.removeFromSuperview()
-            fromViewController?.removeFromParentViewController()
-            toViewController.didMove(toParentViewController: self)
-        })
-
+        }
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        return viewControllers.index(of: viewController).flatMap {
+            let index = $0 + 1
+            guard index >= 0 && index < viewControllers.count else { return nil }
+            return viewControllers[index]
+        }
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        return viewControllers.index(of: viewController).flatMap {
+            let index = $0 - 1
+            guard index >= 0 && index < viewControllers.count else { return nil }
+            return viewControllers[index]
+        }
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        guard let selected = pageViewController.viewControllers?.first else { return }
+        guard let index = viewControllers.index(of: selected) else { return }
+        
+        delegate?.tabBarController(self, tabBarDidSelectIndex: index)
+        tabBar?.setSelectedIndex(index, animated: true)
     }
 
 }
