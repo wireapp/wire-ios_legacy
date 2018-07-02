@@ -708,10 +708,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         self.countdownView.hidden = NO;
     }
 
-    if (duration <= 10 && self.messageContentView.alpha > 0.5) {
-        self.messageContentView.alpha = 0.5;
-    }
-
     [self.toolboxView updateTimestamp:self.message];
 }
 
