@@ -19,8 +19,6 @@
 
 @import ObjectiveC;
 
-#import <RBBAnimation/RBBTweenAnimation.h>
-
 #import "UIView+WR_ExtendedBlockAnimations.h"
 
 

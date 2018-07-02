@@ -9,12 +9,10 @@ PODS:
   - GTMSessionFetcher/Core (1.1.12)
   - GTMSessionFetcher/Full (1.1.12):
     - GTMSessionFetcher/Core (= 1.1.12)
-  - RBBAnimation (0.4.0)
   - SCSiriWaveformView (1.0.3)
 
 DEPENDENCIES:
   - GoogleAPIClient/YouTube (= 1.0.4)
-  - RBBAnimation (from `https://github.com/wireapp/RBBAnimation`, commit `7dd8d9a3cf610be5f7c1e4459692d555d70704c7`)
   - SCSiriWaveformView (from `https://github.com/wireapp/SCSiriWaveformView`, tag `v1.0.3`)
 
 SPEC REPOS:
@@ -23,17 +21,11 @@ SPEC REPOS:
     - GTMSessionFetcher
 
 EXTERNAL SOURCES:
-  RBBAnimation:
-    :commit: 7dd8d9a3cf610be5f7c1e4459692d555d70704c7
-    :git: https://github.com/wireapp/RBBAnimation
   SCSiriWaveformView:
     :git: https://github.com/wireapp/SCSiriWaveformView
     :tag: v1.0.3
 
 CHECKOUT OPTIONS:
-  RBBAnimation:
-    :commit: 7dd8d9a3cf610be5f7c1e4459692d555d70704c7
-    :git: https://github.com/wireapp/RBBAnimation
   SCSiriWaveformView:
     :git: https://github.com/wireapp/SCSiriWaveformView
     :tag: v1.0.3
@@ -41,9 +33,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   GoogleAPIClient: bde49b31072d3c296d051f58c37b27a66ca45936
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
-  RBBAnimation: 74263069442b91350aa4264089c1c05c0395503e
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
-PODFILE CHECKSUM: 05617d668a44ac5845e81e58aa04178c57d06b2d
+PODFILE CHECKSUM: 9117f801ae68306021595248536680b4529858dc
 
 COCOAPODS: 1.5.3
