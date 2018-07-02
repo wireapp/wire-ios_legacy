@@ -18,13 +18,16 @@
 
 import Foundation
 
-extension ConversationInputBarViewController {
-    ///TODO: mv to new file
-    func popoverSourceRect(from button: IconButton) -> CGRect {
-        let sourceView: UIView = self.parent?.view ?? self.view
-        let sourceRect = sourceView.convert(button.frame, from: button.superview)
+///TODO: mv to new file
+extension UIView {
+    func popoverSourceRect(from viewController: UIViewController) -> CGRect {
+        let sourceView: UIView = viewController.parent?.view ?? viewController.view
+        let sourceRect = sourceView.convert(frame, from: superview)
         return sourceRect
     }
+}
+
+extension ConversationInputBarViewController {
 
     @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:)
     func presentImagePicker(with sourceType: UIImagePickerControllerSourceType,
@@ -45,7 +48,7 @@ extension ConversationInputBarViewController {
 
             let sourceView: UIView = self.parent?.view ?? self.view
 
-            let context = ImagePickerPopoverPresentationContext(sourceRect: self.popoverSourceRect(from: self.photoButton),
+            let context = ImagePickerPopoverPresentationContext(sourceRect: self.photoButton.popoverSourceRect(from: self),
                                                     sourceView: sourceView,
                                                     presentViewController: self,
                                                     sourceType: sourceType)

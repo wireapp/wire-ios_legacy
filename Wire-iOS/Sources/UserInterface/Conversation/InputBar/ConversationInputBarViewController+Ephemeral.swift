@@ -19,6 +19,14 @@
 
 import Foundation
 
+extension UIPopoverPresentationController {
+    func configIPadPopOver(from viewController: UIViewController, sourceView: UIView, presetInView: UIView, backgroundColor: UIColor) {
+        self.sourceRect = sourceView.popoverSourceRect(from: viewController)
+        self.sourceView = presetInView //viewController.parent?.view
+        self.backgroundColor = backgroundColor//ephemeralKeyboardViewController?.view.backgroundColor
+//        permittedArrowDirections = .down
+    }
+}
 
 extension ConversationInputBarViewController {
 
@@ -67,11 +75,14 @@ extension ConversationInputBarViewController {
         ephemeralKeyboardViewController?.modalPresentationStyle = .popover
         ephemeralKeyboardViewController?.preferredContentSize = CGSize(width: 320, height: 275) ///TODO: standard size?
 
-        if let popover = ephemeralKeyboardViewController?.popoverPresentationController {
-            popover.sourceRect = popoverSourceRect(from: ephemeralIndicatorButton)
-            popover.sourceView = self.parent?.view
-            popover.backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor
-            popover.permittedArrowDirections = .down
+        if let popover = ephemeralKeyboardViewController?.popoverPresentationController,
+            let view = self.parent?.view,
+        let backgroundColor = {
+            popover.configIPadPopOver(from: self, sourceView: ephemeralIndicatorButton, presetInView: self.parent?.view, backgroundColor: )
+//            popover.sourceRect = self.ephemeralIndicatorButton.popoverSourceRect(from: self)
+//            popover.sourceView = self.parent?.view
+//            popover.backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor
+//            popover.permittedArrowDirections = .down
         }
 
         guard let controller = ephemeralKeyboardViewController else { return }
