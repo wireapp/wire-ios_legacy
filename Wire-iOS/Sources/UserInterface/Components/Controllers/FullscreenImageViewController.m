@@ -79,6 +79,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) UIView *topOverlay;
 @property (nonatomic) CALayer *highlightLayer;
+@property (nonatomic, strong) ObfuscationView *obfuscationView;
 
 @property (nonatomic) IconButton *closeButton;
 
@@ -223,12 +224,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)updateForMessage
 {
-    if (self.message.isObfuscated || [[self.message imageMessageData] imageData] == nil) {
+    if (self.message.isObfuscated) {
         [self removeImage];
-        [self.message requestImageDownload];
-        [self setupSpinner];
-    }
-    else {
+        self.obfuscationView.hidden = NO;
+    } else {
+        self.obfuscationView.hidden = YES;
         [self removeSpinner];
         [self loadImageAndSetupImageView];
     }
@@ -294,6 +294,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.topOverlay.hidden = !self.showCloseButton;
     [self.view addSubview:self.topOverlay];
 
+    self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
+    self.obfuscationView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.obfuscationView];
+
     // Close button
     self.closeButton = [IconButton iconButtonCircular];
     self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -308,6 +312,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.topOverlay addConstraintForLeftMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForTopMargin:0 relativeToView:self.view];
     [self.topOverlay addConstraintForHeight:topOverlayHeight];
+
+    [self.obfuscationView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [self.obfuscationView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [self.obfuscationView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = YES;
+    [self.obfuscationView.heightAnchor constraintEqualToAnchor:self.obfuscationView.widthAnchor].active = YES;
 
     [self.closeButton addConstraintForAligningVerticallyWithView:self.topOverlay offset:10];
     [self.closeButton addConstraintForRightMargin:8 relativeToView:self.topOverlay];
@@ -416,7 +425,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     CGFloat verticalInset = (viewHeight - self.scrollView.zoomScale * imageHeight) / 2;
     verticalInset = MAX(0, verticalInset);
-    
+
     self.scrollView.contentInset = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset);
 }
 
@@ -588,7 +597,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     ghostImageView.frame = initialFrame;
     CGPoint targetCenter = [self.view convertPoint:saveView.center fromView:saveView.superview];
     
-    [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:0.55f animations:^{
+    [UIView wr_animateWithEasing:WREasingFunctionEaseInExpo duration:0.55f animations:^{
         ghostImageView.center = targetCenter;
         ghostImageView.alpha = 0;
         ghostImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);

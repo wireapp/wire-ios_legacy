@@ -161,15 +161,18 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
     }
     
     private func updateTimeout(_ timeout: MessageDestructionTimeoutValue) {
-        self.showLoadingView = true
-        
+        let item = CancelableItem(delay: 0.4) { [weak self] in
+            self?.showLoadingView = true
+        }
+
         self.conversation.setMessageDestructionTimeout(timeout, in: userSession) { [weak self] result in
-            
             guard let `self` = self else {
                 return
             }
             
+            item.cancel()
             self.showLoadingView = false
+
             switch result {
             case .success:
                 self.dismisser?.dismiss(viewController: self, completion: nil)

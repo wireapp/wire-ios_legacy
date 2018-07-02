@@ -74,12 +74,11 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
 }
 
-@objcMembers class GiphySearchViewController: UICollectionViewController {
+@objcMembers class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     public weak var delegate: GiphySearchViewControllerDelegate?
 
     let searchResultsController: ZiphySearchResultsController
-    let masonrylayout: ARCollectionViewMasonryLayout
     let searchBar: UISearchBar = UISearchBar()
     let noResultsLabel = UILabel()
     let conversation: ZMConversation
@@ -100,10 +99,10 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         self.searchTerm = searchTerm
         searchResultsController = ZiphySearchResultsController(pageSize: 50, callbackQueue: DispatchQueue.main)
         searchResultsController.ziphyClient = ZiphyClient.wr_ziphyWithDefaultConfiguration()
-        masonrylayout = ARCollectionViewMasonryLayout(direction: .vertical)
         ziphs = []
 
-        super.init(collectionViewLayout: masonrylayout)
+        let columnCount = AdaptiveColumnCount(compact: 2, regular: 3, large: 4)
+        super.init(interItemSpacing: 1, interColumnSpacing: 1, columnCount: columnCount)
 
         title = ""
 
@@ -138,33 +137,11 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
 
-        configureMasonryLayout(withSize: view.bounds.size)
-
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
         collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
 
         setupNavigationItem()
         createConstraints()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        if self.lastLayoutSize != self.view.bounds.size {
-            self.lastLayoutSize = self.view.bounds.size
-            flushLayout()
-        }
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
-            self.flushLayout()
-        })
-    }
-
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.flushLayout()
     }
 
     private func createConstraints() {
@@ -187,13 +164,6 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         self.navigationItem.titleView = searchBar
     }
 
-    private func flushLayout() {
-        self.configureMasonryLayout(withSize: view.bounds.size)
-        self.collectionView?.collectionViewLayout.invalidateLayout()
-
-        self.navigationItem.titleView?.setNeedsLayout()
-    }
-
     public func wrapInsideNavigationController() -> UINavigationController {
         let navigationController = GiphyNavigationController(rootViewController: self)
 
@@ -210,13 +180,6 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         navigationController.navigationBar.isTranslucent = false
 
         return navigationController
-    }
-
-    func configureMasonryLayout(withSize size: CGSize) {
-        masonrylayout.rank = UInt(ceilf(Float(size.width) / 256.0))
-        masonrylayout.dimensionLength = view.bounds.width / CGFloat(masonrylayout.rank)
-        masonrylayout.minimumLineSpacing = 1
-        masonrylayout.itemMargins = CGSize(width: 1, height: 1)
     }
 
     @objc func onDismiss() {
@@ -285,6 +248,18 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
     }
 
+    override func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
+
+        let ziph = self.ziphs[indexPath.row]
+
+        guard let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] else {
+            return .zero
+        }
+
+        return CGSize(width: representation.width, height: representation.height)
+
+    }
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let ziph = self.ziphs[indexPath.row]
         var previewImage: FLAnimatedImage?
@@ -330,18 +305,4 @@ extension GiphySearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-}
-
-extension GiphySearchViewController: ARCollectionViewMasonryLayoutDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: ARCollectionViewMasonryLayout, variableDimensionForItemAt indexPath: IndexPath) -> CGFloat {
-        let ziph = self.ziphs[indexPath.row]
-
-        guard let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] else {
-            return 0
-        }
-
-        return CGFloat(representation.height)
-    }
-
 }

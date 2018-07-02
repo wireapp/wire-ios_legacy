@@ -246,8 +246,6 @@ private let zmLog = ZMSLog(tag: "UI")
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
-
-
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
         showLoadingView = true
         ZMUserSession.shared()?.delete([userClient], with: credentials);
