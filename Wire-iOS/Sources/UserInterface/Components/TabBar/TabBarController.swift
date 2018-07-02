@@ -99,7 +99,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     fileprivate func createViews() {
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.contentView)
-        
+        contentView.backgroundColor = viewControllers.first?.view?.backgroundColor
         add(pageViewController, to: contentView)
 
         if isSwipingEnabled {
