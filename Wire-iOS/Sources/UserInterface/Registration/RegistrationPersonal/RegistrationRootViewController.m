@@ -102,7 +102,6 @@
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
 
-    self.registrationTabBarController.swipingEnabled = NO;
     self.signInViewController = signInViewController;
     
     if (self.showLogin) {
