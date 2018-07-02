@@ -19,19 +19,20 @@
 import UIKit
 
 /**
- * A number of columns that changes that changes depending on
- * the width of the container.
+ * A number of columns that changes depending on the width of the container.
  */
 
 public struct AdaptiveColumnCount {
 
-    /// The number of columns in a compact-width container.
+    /// The number of columns when the container has a compact horizontal size class.
     let compact: Int
 
-    /// The number of columns in a regular-width container smaller than 1024pt.
+    /// The number of columns when the container has a regular horizontal size class,
+    /// and a width smaller than 1024pt.
     let regular: Int
 
-    /// The number of columns in a regular-width container larger than 1024pt.
+    /// The number of columns when the container has a regular horizontal size class,
+    /// and a width larger than 1024pt.
     let large: Int
 
     public init(compact: Int, regular: Int, large: Int) {
