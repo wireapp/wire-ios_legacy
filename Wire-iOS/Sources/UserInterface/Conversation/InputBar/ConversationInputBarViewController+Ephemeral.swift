@@ -76,13 +76,9 @@ extension ConversationInputBarViewController {
         ephemeralKeyboardViewController?.preferredContentSize = CGSize(width: 320, height: 275) ///TODO: standard size?
 
         if let popover = ephemeralKeyboardViewController?.popoverPresentationController,
-            let view = self.parent?.view,
-        let backgroundColor = {
-            popover.configIPadPopOver(from: self, sourceView: ephemeralIndicatorButton, presetInView: self.parent?.view, backgroundColor: )
-//            popover.sourceRect = self.ephemeralIndicatorButton.popoverSourceRect(from: self)
-//            popover.sourceView = self.parent?.view
-//            popover.backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor
-//            popover.permittedArrowDirections = .down
+            let presetInView = self.parent?.view,
+            let backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor {
+            popover.configIPadPopOver(from: self, sourceView: ephemeralIndicatorButton, presetInView: presetInView, backgroundColor: backgroundColor)
         }
 
         guard let controller = ephemeralKeyboardViewController else { return }
