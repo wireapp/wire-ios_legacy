@@ -202,6 +202,7 @@
 		55A42A701FC872600056752F /* CallQualityScoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */; };
 		55DD5C341FA236F60082170C /* CallQualityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityController.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
+		5E2B13E820E67EA7002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */; };
 		5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */; };
 		5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */; };
 		5E33F0D320AD63A100414EA6 /* CallPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0D220AD63A100414EA6 /* CallPermissions.swift */; };
@@ -214,6 +215,7 @@
 		5E4B1385204FE58D00ED5DF1 /* TimeInterval+Days.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */; };
 		5E4B1387204FE7DA00ED5DF1 /* SystemAnimationCurves.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */; };
 		5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */; };
+		5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376020E7E46600649241 /* ColorTilesViewController.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5EA73D7920D900830001D106 /* GroupOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */; };
@@ -230,6 +232,10 @@
 		5EA73D9220D903BC0001D106 /* CheckmarkCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */; };
 		5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */; };
 		5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */; };
+		5ED26CD320E7D08E00EB9ED4 /* VerticalColumnPositioningContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */; };
+		5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */; };
+		5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */; };
+		5ED26CD620E7D08E00EB9ED4 /* VerticalColumnCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */; };
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
 		5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */; };
 		5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */; };
@@ -1506,6 +1512,9 @@
 		55DD5C331FA236F60082170C /* CallQualityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityController.swift; sourceTree = "<group>"; };
 		597184FEC66FBCEC21973EDC /* Pods-WireExtensionComponents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireExtensionComponents.release.xcconfig"; path = "Pods/Target Support Files/Pods-WireExtensionComponents/Pods-WireExtensionComponents.release.xcconfig"; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
+		5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewLayout.swift; sourceTree = "<group>"; };
+		5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewLayoutTests.swift; sourceTree = "<group>"; };
+		5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewController.swift; sourceTree = "<group>"; };
 		5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallVideoPlaceholderState.swift; sourceTree = "<group>"; };
 		5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissionsConfiguration.swift; sourceTree = "<group>"; };
 		5E33F0D220AD63A100414EA6 /* CallPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissions.swift; sourceTree = "<group>"; };
@@ -1516,6 +1525,7 @@
 		5E4B1384204FE58D00ED5DF1 /* TimeInterval+Days.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Days.swift"; sourceTree = "<group>"; };
 		5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemAnimationCurves.swift; sourceTree = "<group>"; };
 		5E4B1388204FEFCD00ED5DF1 /* UIColor+CallQuality.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+CallQuality.swift"; sourceTree = "<group>"; };
+		5E52376020E7E46600649241 /* ColorTilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTilesViewController.swift; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOptionsSectionController.swift; sourceTree = "<group>"; };
@@ -1532,6 +1542,8 @@
 		5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsTimeoutOptionsCellTests.swift; sourceTree = "<group>"; };
 		5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnableThumbnailViewController.swift; sourceTree = "<group>"; };
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
+		5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioning.swift; sourceTree = "<group>"; };
+		5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioningContext.swift; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
 		5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCornerPinningBehavior.swift; sourceTree = "<group>"; };
 		5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
@@ -3294,6 +3306,7 @@
 			isa = PBXGroup;
 			children = (
 				1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */,
+				5E2B13E520E67206002F27E2 /* CollectionLayouts */,
 				1EE9DCA51B5F9A6D00E347DF /* Views */,
 				1E5E0CE71B6B8EDB003B0CAC /* Icons */,
 				1E5E0CEE1B6B8EDB003B0CAC /* Utilities */,
@@ -3368,6 +3381,17 @@
 			path = CallQualityController;
 			sourceTree = "<group>";
 		};
+		5E2B13E520E67206002F27E2 /* CollectionLayouts */ = {
+			isa = PBXGroup;
+			children = (
+				5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */,
+				5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */,
+				5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */,
+				5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */,
+			);
+			path = CollectionLayouts;
+			sourceTree = "<group>";
+		};
 		5E33F0D120AD637400414EA6 /* Permissions */ = {
 			isa = PBXGroup;
 			children = (
@@ -3383,6 +3407,15 @@
 				5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */,
 			);
 			path = Previews;
+			sourceTree = "<group>";
+		};
+		5E52375F20E7E41800649241 /* VerticalColumns */ = {
+			isa = PBXGroup;
+			children = (
+				5E52376020E7E46600649241 /* ColorTilesViewController.swift */,
+				5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */,
+			);
+			path = VerticalColumns;
 			sourceTree = "<group>";
 		};
 		5EA73D7A20D900A10001D106 /* Cells */ = {
@@ -5231,6 +5264,7 @@
 				EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */,
 				EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */,
 				EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */,
+				5E52375F20E7E41800649241 /* VerticalColumns */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6463,10 +6497,12 @@
 				CE06C9411DF5C3D900497685 /* AVAsset+VideoConvert.swift in Sources */,
 				87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */,
 				EFF6EA3E2020CF4100A7023B /* Button+ServiceButton.swift in Sources */,
+				5ED26CD620E7D08E00EB9ED4 /* VerticalColumnCollectionViewController.swift in Sources */,
 				CE8E4FC61DF17CFE0009F437 /* NSString+TextTransform.m in Sources */,
 				BF6EC9061EB1FC3D009D9A69 /* URL+Backup.swift in Sources */,
 				8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */,
 				7CCBE24D1FC72FE500CBD55D /* SharedConstants.swift in Sources */,
+				5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */,
 				BFB332681E3A2D95003B0CD2 /* ExtensionSettings.swift in Sources */,
 				870533FF1DD6162400A7F822 /* OverflowSeparatorView.swift in Sources */,
 				870534011DD6265100A7F822 /* AttributedStringOperators.swift in Sources */,
@@ -6485,11 +6521,13 @@
 				879D6AFC1E69E20900DC07A1 /* ImageMessageView.swift in Sources */,
 				1E5E0D051B6B8EDB003B0CAC /* UIControl+Wire.m in Sources */,
 				D5168F44200F6F2300F8222A /* CABasicAnimation+Rotation.m in Sources */,
+				5ED26CD320E7D08E00EB9ED4 /* VerticalColumnPositioningContext.swift in Sources */,
 				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
 				CE06C9401DF5C3D900497685 /* AVAsset+VideoConvert.m in Sources */,
 				EF1F99F71FBB06C000969DD1 /* UILabel+TextTransform.m in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
 				1E05C2441B6F7E0600616A66 /* Button.m in Sources */,
+				5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */,
 				EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7367,6 +7405,7 @@
 				EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */,
 				EF63528D209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift in Sources */,
 				877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */,
+				5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */,
 				EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */,
 				F127BD571E262E9F0093B2F1 /* CollectionsViewControllerTests.swift in Sources */,
 				1651F9C01D36789C00A9FAE8 /* Message+FormattingTests.swift in Sources */,
@@ -7468,6 +7507,7 @@
 				1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */,
 				BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */,
 				EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */,
+				5E2B13E820E67EA7002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift in Sources */,
 				BF2A74751CEB595E002608BF /* AudioButtonOverlayTests.swift in Sources */,
 				BF52C15E1CAEC1430037331F /* ArchivedNavigationBarTests.m in Sources */,
 				EF01AF8520BED3F500E5E5B4 /* MockUserClient+RemoteIdentifier.swift in Sources */,

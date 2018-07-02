@@ -47,7 +47,7 @@ extension Settings {
     @objc public func loadEnabledLogs() {
         let avsTag = "AVS"
         if isInternal {
-            var tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Set<String> ?? ["Network", "SessionManager", "Conversations", avsTag, "calling", "link previews"]
+            var tagsToEnable = UserDefaults.shared().value(forKey: enabledLogsKey) as? Set<String> ?? ["Network", "SessionManager", "Conversations", avsTag, "calling", "link previews", "ephemeral"]
             tagsToEnable.insert(avsTag)
             enableLogs(tagsToEnable)
         } else {

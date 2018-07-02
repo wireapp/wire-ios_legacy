@@ -177,8 +177,9 @@ import Classy
     }
     
     func updateVerifiedLabel() {
-        if let userClient = self.userClient
-            , self.showVerified {
+        if let userClient = self.userClient,
+            self.showVerified {
+            
             if userClient.verified {
                 self.verifiedLabel.text = NSLocalizedString("device.verified", comment: "");
             }
