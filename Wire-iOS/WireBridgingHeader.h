@@ -128,6 +128,7 @@
 #import "PassthroughWindow.h"
 #import "PassthroughTouchesView.h"
 #import "StopWatch.h"
+#import "ZMUserSession+RequestProxy.h"
 
 // Utils
 #import "Analytics.h"

@@ -118,7 +118,7 @@
         };
         
         if (self.linkAttachment.type == LinkAttachmentTypeYoutubeVideo) {
-            YouTubeService *service = [[YouTubeService alloc] initWithUserSession:[ZMUserSession sharedSession]];
+            YouTubeService *service = [[YouTubeService alloc] initWithRequester:[ZMUserSession sharedSession]];
             [service fetchMediaPreviewDataForVideoAt:self.linkAttachment.URL completion:mediaPreviewResponseHandler];
         }
     }

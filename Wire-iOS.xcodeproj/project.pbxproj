@@ -238,6 +238,12 @@
 		5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */; };
 		5EC16B9120EB8C6F00955156 /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8E20EB8C6F00955156 /* YouTubeService.swift */; };
 		5EC16B9220EB8C6F00955156 /* MediaPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8F20EB8C6F00955156 /* MediaPreviewViewController.m */; };
+		5EC16B9820EB9D3900955156 /* YouTubeServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B9420EB9D2E00955156 /* YouTubeServiceTests.swift */; };
+		5EC16BA120EBB93A00955156 /* MockProxyRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B9F20EBB86900955156 /* MockProxyRequester.swift */; };
+		5EC16BA820EBBF8500955156 /* yt_response_no_snippet.json in Resources */ = {isa = PBXBuildFile; fileRef = 5EC16BA420EBBF8400955156 /* yt_response_no_snippet.json */; };
+		5EC16BA920EBBF8500955156 /* yt_response_multiple_videos.json in Resources */ = {isa = PBXBuildFile; fileRef = 5EC16BA520EBBF8400955156 /* yt_response_multiple_videos.json */; };
+		5EC16BAA20EBBF8500955156 /* yt_response_no_items.json in Resources */ = {isa = PBXBuildFile; fileRef = 5EC16BA620EBBF8400955156 /* yt_response_no_items.json */; };
+		5EC16BAB20EBBF8500955156 /* yt_response_valid_video.json in Resources */ = {isa = PBXBuildFile; fileRef = 5EC16BA720EBBF8500955156 /* yt_response_valid_video.json */; };
 		5ED26CD320E7D08E00EB9ED4 /* VerticalColumnPositioningContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */; };
 		5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */; };
 		5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */; };
@@ -1233,41 +1239,6 @@
 			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
 			remoteInfo = ZetaFramework;
 		};
-		5EC16B6C20EB7DF500955156 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5EC16B6620EB7DF500955156 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 549815931A43232400A7CE2E;
-			remoteInfo = "WireSyncEngine-ios";
-		};
-		5EC16B6E20EB7DF500955156 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5EC16B6620EB7DF500955156 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E1860C3191A649D000FE027;
-			remoteInfo = "WireSyncEngine-iOS-Tests";
-		};
-		5EC16B7020EB7DF500955156 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5EC16B6620EB7DF500955156 /* WireSyncEngine.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3E186088191A56F6000FE027;
-			remoteInfo = "WireSyncEngine Test Host";
-		};
-		5EC16B7720EB7EC900955156 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5EC16B6620EB7DF500955156 /* WireSyncEngine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 549815921A43232400A7CE2E;
-			remoteInfo = "WireSyncEngine-ios";
-		};
-		5EC16B8020EB8A1B00955156 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5EC16B6620EB7DF500955156 /* WireSyncEngine.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 549815921A43232400A7CE2E;
-			remoteInfo = "WireSyncEngine-ios";
-		};
 		87B7DAB31E696F5D005F5140 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -1584,11 +1555,16 @@
 		5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsTimeoutOptionsCellTests.swift; sourceTree = "<group>"; };
 		5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnableThumbnailViewController.swift; sourceTree = "<group>"; };
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
-		5EC16B6620EB7DF500955156 /* WireSyncEngine.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WireSyncEngine.xcodeproj; path = "../wire-ios-sync-engine/WireSyncEngine.xcodeproj"; sourceTree = "<group>"; };
 		5EC16B8C20EB8C6F00955156 /* MediaPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPreviewViewController.h; sourceTree = "<group>"; };
 		5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YouTubeService+DataTypes.swift"; sourceTree = "<group>"; };
 		5EC16B8E20EB8C6F00955156 /* YouTubeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouTubeService.swift; sourceTree = "<group>"; };
 		5EC16B8F20EB8C6F00955156 /* MediaPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPreviewViewController.m; sourceTree = "<group>"; };
+		5EC16B9420EB9D2E00955156 /* YouTubeServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeServiceTests.swift; sourceTree = "<group>"; };
+		5EC16B9F20EBB86900955156 /* MockProxyRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProxyRequester.swift; sourceTree = "<group>"; };
+		5EC16BA420EBBF8400955156 /* yt_response_no_snippet.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yt_response_no_snippet.json; sourceTree = "<group>"; };
+		5EC16BA520EBBF8400955156 /* yt_response_multiple_videos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yt_response_multiple_videos.json; sourceTree = "<group>"; };
+		5EC16BA620EBBF8400955156 /* yt_response_no_items.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yt_response_no_items.json; sourceTree = "<group>"; };
+		5EC16BA720EBBF8500955156 /* yt_response_valid_video.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yt_response_valid_video.json; sourceTree = "<group>"; };
 		5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioning.swift; sourceTree = "<group>"; };
 		5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioningContext.swift; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
@@ -3480,14 +3456,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		5EC16B6720EB7DF500955156 /* Products */ = {
+		5EC16B6520EB782900955156 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				5EC16B6D20EB7DF500955156 /* WireSyncEngine.framework */,
-				5EC16B6F20EB7DF500955156 /* WireSyncEngine-iOS-Tests.xctest */,
-				5EC16B7120EB7DF500955156 /* WireSyncEngine Test Host.app */,
+				5E52378920EB5B4C00649241 /* SCSiriWaveformView.h */,
+				5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */,
 			);
-			name = Products;
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 		5EC16B8B20EB8C6F00955156 /* YouTube */ = {
@@ -3499,13 +3474,24 @@
 			path = YouTube;
 			sourceTree = "<group>";
 		};
-		5EC16B6520EB782900955156 /* Vendor */ = {
+		5EC16BA220EBBEE000955156 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5E52378920EB5B4C00649241 /* SCSiriWaveformView.h */,
-				5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */,
+				5EC16BA520EBBF8400955156 /* yt_response_multiple_videos.json */,
+				5EC16BA620EBBF8400955156 /* yt_response_no_items.json */,
+				5EC16BA420EBBF8400955156 /* yt_response_no_snippet.json */,
+				5EC16BA720EBBF8500955156 /* yt_response_valid_video.json */,
 			);
-			path = Vendor;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5EC16BA320EBBEF600955156 /* YouTube */ = {
+			isa = PBXGroup;
+			children = (
+				5EC16BA220EBBEE000955156 /* Resources */,
+				5EC16B9420EB9D2E00955156 /* YouTubeServiceTests.swift */,
+			);
+			path = YouTube;
 			sourceTree = "<group>";
 		};
 		5EE51CBB2099B8E0008BA4B1 /* Thumbnail */ = {
@@ -4317,6 +4303,7 @@
 				1658C19520A1E2FA00148F6D /* MockVoiceChannel.swift */,
 				1658C19B20A1F07800148F6D /* MockCallInfoViewControllerInput.swift */,
 				5E33F0D420ADA94B00414EA6 /* MockCallPermissions.swift */,
+				5EC16B9F20EBB86900955156 /* MockProxyRequester.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -4533,7 +4520,6 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
-				5EC16B6620EB7DF500955156 /* WireSyncEngine.xcodeproj */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				8FC85543199246EF0008B66B /* ConfigurationSets */,
@@ -5335,6 +5321,7 @@
 				EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */,
 				EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */,
 				5E52375F20E7E41800649241 /* VerticalColumns */,
+				5EC16BA320EBBEF600955156 /* YouTube */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6005,7 +5992,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				5EC16B8120EB8A1B00955156 /* PBXTargetDependency */,
 			);
 			name = WireExtensionComponents;
 			productName = ZetaFramework;
@@ -6048,7 +6034,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				5EC16B7820EB7EC900955156 /* PBXTargetDependency */,
 				1EE85C661B5F96FC008E084B /* PBXTargetDependency */,
 				168A16B21D9597C2005CFA6C /* PBXTargetDependency */,
 			);
@@ -6194,12 +6179,6 @@
 			mainGroup = 8F42C52F199244A700288E4D;
 			productRefGroup = 8F42C539199244A700288E4D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 5EC16B6720EB7DF500955156 /* Products */;
-					ProjectRef = 5EC16B6620EB7DF500955156 /* WireSyncEngine.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
@@ -6211,30 +6190,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		5EC16B6D20EB7DF500955156 /* WireSyncEngine.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = WireSyncEngine.framework;
-			remoteRef = 5EC16B6C20EB7DF500955156 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		5EC16B6F20EB7DF500955156 /* WireSyncEngine-iOS-Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "WireSyncEngine-iOS-Tests.xctest";
-			remoteRef = 5EC16B6E20EB7DF500955156 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		5EC16B7120EB7DF500955156 /* WireSyncEngine Test Host.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "WireSyncEngine Test Host.app";
-			remoteRef = 5EC16B7020EB7DF500955156 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		168A16A71D9597C2005CFA6C /* Resources */ = {
@@ -6309,6 +6264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EC16BA820EBBF8500955156 /* yt_response_no_snippet.json in Resources */,
 				7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */,
 				BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */,
 				7C374E4E1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg in Resources */,
@@ -6317,6 +6273,7 @@
 				16A202751B6772DB0095BBD1 /* soundcloud-track3.json in Resources */,
 				BFEA26591D410F9F000D0ED5 /* audio_sample.m4a in Resources */,
 				16A202681B66A0040095BBD1 /* soundcloud-track1.json in Resources */,
+				5EC16BAB20EBBF8500955156 /* yt_response_valid_video.json in Resources */,
 				EF6E3C7A2089F232003F6752 /* animated.gif in Resources */,
 				BFA13E1C1D4B77C600F0A91B /* unsplash_small.jpg in Resources */,
 				87656FCF1FB5FEDC00D5286C /* 0x0.pdf in Resources */,
@@ -6325,10 +6282,12 @@
 				1E8772281B0C8CAB005BDDC6 /* emo-test-03.json in Resources */,
 				DBF7235F1B5566B80036F4C5 /* a_lot_of_people.json in Resources */,
 				8735AE722036CBF900DCE66E /* huge.pdf in Resources */,
+				5EC16BAA20EBBF8500955156 /* yt_response_no_items.json in Resources */,
 				16A202781B6774760095BBD1 /* soundcloud-playlist2.json in Resources */,
 				1E2268041B395722003980E3 /* people-01.json in Resources */,
 				16A202691B66A0040095BBD1 /* soundcloud-track2.json in Resources */,
 				7C374E4D1FDE7B8C00A43B9C /* unsplash_matterhorn_small_size.jpg in Resources */,
+				5EC16BA920EBBF8500955156 /* yt_response_multiple_videos.json in Resources */,
 				7C374E4C1FDE7B8C00A43B9C /* unsplash_matterhorn_exact_size.jpg in Resources */,
 				EF30524B2088927D00613C45 /* transparent.png in Resources */,
 				16A2027A1B67777C0095BBD1 /* soundcloud-playlist3.json in Resources */,
@@ -6470,7 +6429,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
@@ -7465,6 +7424,7 @@
 				BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */,
 				87AE8BDC207B99540058715E /* BackupPasswordViewControllerTests.swift in Sources */,
 				BF27AE4E1E9E513400809A2B /* MessageDraftTests.swift in Sources */,
+				5EC16BA120EBB93A00955156 /* MockProxyRequester.swift in Sources */,
 				FE996D9C2032039100BDE573 /* LandingViewControllerTests.swift in Sources */,
 				876376881E840E9C00B2CCF0 /* ConversationStatusTests.swift in Sources */,
 				87AAE4211E42441B00E1D13A /* FontSchemeTests.swift in Sources */,
@@ -7534,6 +7494,7 @@
 				EEAC654C206BD64700365C0C /* LinkInteractionTextViewTests.swift in Sources */,
 				5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */,
 				1658C19820A1E55200148F6D /* CallInfoRootViewControllerTests.swift in Sources */,
+				5EC16B9820EB9D3900955156 /* YouTubeServiceTests.swift in Sources */,
 				EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */,
 				87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */,
 				EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */,
@@ -7656,16 +7617,6 @@
 			isa = PBXTargetDependency;
 			target = 1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */;
 			targetProxy = 1EE85C651B5F96FC008E084B /* PBXContainerItemProxy */;
-		};
-		5EC16B7820EB7EC900955156 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "WireSyncEngine-ios";
-			targetProxy = 5EC16B7720EB7EC900955156 /* PBXContainerItemProxy */;
-		};
-		5EC16B8120EB8A1B00955156 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "WireSyncEngine-ios";
-			targetProxy = 5EC16B8020EB8A1B00955156 /* PBXContainerItemProxy */;
 		};
 		87B7DAB41E696F5D005F5140 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

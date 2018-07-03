@@ -23,7 +23,7 @@ import Foundation
  */
 
 enum YouTubeServiceError: Error {
-    case invalidVideoID, invalidResponse
+    case invalidVideoID, invalidResponse, noData
 }
 
 /**
@@ -32,10 +32,10 @@ enum YouTubeServiceError: Error {
 
 @objc class YouTubeService: NSObject {
 
-    let userSession: ZMUserSession
+    let requester: ProxiedURLRequester
 
-    @objc init(userSession: ZMUserSession) {
-        self.userSession = userSession
+    @objc init(requester: ProxiedURLRequester) {
+        self.requester = requester
     }
 
     // MARK: - Video Lookup
@@ -49,7 +49,7 @@ enum YouTubeServiceError: Error {
 
         let path = "/v3/videos?id=\(videoID)&part=snippet"
 
-        userSession.doRequest(withPath: path, method: .methodGET, type: .youTube) {
+        requester.doRequest(withPath: path, method: .methodGET, type: .youTube) {
             self.handleVideoLookupResponse($0, $1, $2, completion: completion)
         }
 
@@ -112,7 +112,7 @@ enum YouTubeServiceError: Error {
         }
 
         guard let data = data else {
-            throw YouTubeServiceError.invalidResponse
+            throw YouTubeServiceError.noData
         }
 
         return data

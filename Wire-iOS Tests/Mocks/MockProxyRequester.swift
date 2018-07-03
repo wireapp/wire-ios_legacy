@@ -1,45 +1,31 @@
-// 
+//
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
-// 
+// Copyright (C) 2018 Wire Swiss GmbH
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
+import Foundation
 
-#import "MediaThumbnail.h"
+class MockProxiedURLRequester: NSObject, ProxiedURLRequester {
 
-@implementation MediaThumbnail
-
-- (instancetype)initWithURL:(NSURL *)URL size:(CGSize)size;
-{
-    self = [super init];
-    if (self) {
-        self.URL = URL;
-        self.size = size;
+    func doRequest(withPath path: String, method: ZMTransportRequestMethod, type: ProxiedRequestType, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> ProxyRequest {
+        return ProxyRequest(type: type, path: path, method: method, callback: completionHandler)
     }
-    return self;
-}
 
-- (BOOL)isEqual:(id)object
-{
-    MediaThumbnail *otherThumbnail = (MediaThumbnail *)object;
-    return [self.URL isEqual:otherThumbnail.URL] && CGSizeEqualToSize(self.size, otherThumbnail.size);
-}
+    func respond(to request: ProxyRequest, data: Data?, response: HTTPURLResponse?, error: Error?) {
+        request.callback?(data, response, error as NSError?)
+    }
 
-- (NSUInteger)hash
-{
-    return ((NSUInteger)self.size.width << 10 ^ (NSUInteger)self.size.height) + self.URL.hash;
 }
-
-@end
