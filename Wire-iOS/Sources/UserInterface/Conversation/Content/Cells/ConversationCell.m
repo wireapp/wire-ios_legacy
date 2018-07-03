@@ -282,9 +282,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.toolboxView];
     [self.likeButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
 
+    const CGFloat inset = UIFont.normalRegularFont.lineHeight / 2;
+    
     NSArray *countdownContainerConstraints =
     @[
-      [self.countdownContainerView.topAnchor constraintEqualToAnchor:self.authorImageView.bottomAnchor constant:10],
+      [self.countdownContainerView.topAnchor constraintEqualToAnchor:self.authorImageView.bottomAnchor constant:inset],
       [self.countdownContainerView.centerXAnchor constraintEqualToAnchor:self.authorImageView.centerXAnchor],
       [self.countdownContainerView.widthAnchor constraintEqualToConstant:8],
       [self.countdownContainerView.heightAnchor constraintEqualToConstant:8]

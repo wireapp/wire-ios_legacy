@@ -47,7 +47,7 @@
 #import "NextResponderTextView.h"
 #import "RegistrationTextField.h"
 #import "InvisibleInputAccessoryView.h"
-#import <SCSiriWaveformView/SCSiriWaveformView.h>
+#import "SCSiriWaveformView.h"
 #import "ConversationInputBarSendController.h"
 #import "ConversationContentViewController+Private.h"
 #import "StackView.h"

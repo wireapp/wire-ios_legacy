@@ -57,7 +57,7 @@ extension SplitViewController {
             }
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
 
-            UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.55, animations: {() -> Void in
+            UIView.wr_animate(easing: .easeOutExpo, duration: 0.55, animations: {() -> Void in
                 self.view.layoutIfNeeded()
             }, completion: {(_ finished: Bool) -> Void in
                 if self.layoutSize != .regularLandscape {

@@ -211,7 +211,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         [self registerForPreviewingWithDelegate:self sourceView:self.view];
     }
 
-    [self scrollToLastUnreadMessageIfNeeded];
+    [self scrollToFirstUnreadMessageIfNeeded];
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
 }
 
@@ -221,13 +221,13 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [super viewWillDisappear:animated];
 }
 
-- (void)scrollToLastUnreadMessageIfNeeded
+- (void)scrollToFirstUnreadMessageIfNeeded
 {
     if (! self.hasDoneInitialLayout) {
         self.hasDoneInitialLayout = YES;
         [self updateTableViewHeaderView];
-        if (self.conversationMessageWindowTableViewAdapter.lastUnreadMessage != nil) {
-            [self scrollToMessage:self.conversationMessageWindowTableViewAdapter.lastUnreadMessage animated:NO];
+        if (self.conversationMessageWindowTableViewAdapter.firstUnreadMessage != nil) {
+            [self scrollToMessage:self.conversationMessageWindowTableViewAdapter.firstUnreadMessage animated:NO];
         }
     }
 }
@@ -503,16 +503,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 //  As described in http://stackoverflow.com/questions/4099188/uitableviews-indexpathsforvisiblerows-incorrect
     [self.tableView visibleCells];
     NSArray *indexPathsForVisibleRows = [self.tableView indexPathsForVisibleRows];
-
-    NSIndexPath *topVisibleIndexPath = indexPathsForVisibleRows.firstObject;
-    NSIndexPath *bottomVisibleIndexPath = indexPathsForVisibleRows.lastObject;
+    NSIndexPath *firstIndexPath = indexPathsForVisibleRows.firstObject;
     
-    if (topVisibleIndexPath && bottomVisibleIndexPath) {
-        id<ZMConversationMessage>topVisibleMessage = [self.messageWindow.messages objectAtIndex:topVisibleIndexPath.row];
-        id<ZMConversationMessage>bottomVisibleMessage = [self.messageWindow.messages objectAtIndex:bottomVisibleIndexPath.row];
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.conversation setVisibleWindowFromMessage:(ZMMessage *)topVisibleMessage toMessage:(ZMMessage *)bottomVisibleMessage];
-        }];
+    if (firstIndexPath) {
+        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.row];
+        [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
 }
 
@@ -677,12 +672,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     // Unfortunate that this can't be inside the cell itself
     BOOL isMessageOfCellLastMessageInConversation = [self.messageWindow.messages.firstObject isEqual:pingCell.message];
     
-    NSComparisonResult comparisonResult = [pingCell.message.serverTimestamp compare:self.conversation.lastReadMessage.serverTimestamp];
-    BOOL isMessageOlderThanLastReadMessage =  (comparisonResult != NSOrderedAscending);
+    NSComparisonResult comparisonResult = [pingCell.message.serverTimestamp compare:self.conversation.firstUnreadMessage.serverTimestamp];
+    BOOL isMessageOlderThanFirstUnreadMessage =  (comparisonResult != NSOrderedAscending);
     
     if (isMessageOfCellLastMessageInConversation
         && [Message isKnockMessage:pingCell.message]
-        && isMessageOlderThanLastReadMessage ) {
+        && isMessageOlderThanFirstUnreadMessage ) {
         [pingCell startPingAnimation];
     }
 }

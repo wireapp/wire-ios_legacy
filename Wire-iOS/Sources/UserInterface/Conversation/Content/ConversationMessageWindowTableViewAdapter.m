@@ -74,25 +74,12 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
         self.tableView = tableView;
         self.messageWindow = messageWindow;
         self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
+        self.firstUnreadMessage = self.messageWindow.conversation.firstUnreadMessage;
         
-        [self updateLastUnreadMessage];
         [self registerTableCellClasses];
     }
     
     return self;
-}
-
-- (void)updateLastUnreadMessage
-{
-    ZMMessage *lastReadMessage = self.messageWindow.conversation.lastReadMessage;
-    NSUInteger lastReadIndex = [self.messageWindow.messages indexOfObject:lastReadMessage];
-    
-    if (lastReadIndex != NSNotFound && lastReadIndex > 0) {
-        self.lastUnreadMessage = [self.messageWindow.messages objectAtIndex:lastReadIndex - 1];
-    } else {
-        self.lastUnreadMessage = nil;
-    }
-    
 }
 
 - (void)stopAudioPlayerForDeletedMessages:(NSSet *)deletedMessages
@@ -334,7 +321,7 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
     // If a message has been deleted or nil, we don't try to configure it
     if (message == nil || message.hasBeenDeleted) { return; }
     
-    ConversationCellLayoutProperties *layoutProperties = [self.messageWindow layoutPropertiesForMessage:message lastUnreadMessage:self.lastUnreadMessage];
+    ConversationCellLayoutProperties *layoutProperties = [self.messageWindow layoutPropertiesForMessage:message firstUnreadMessage:self.firstUnreadMessage];
     
     conversationCell.selected = [message isEqual:self.selectedMessage];
     conversationCell.beingEdited = [message isEqual:self.editingMessage];
