@@ -32,6 +32,7 @@ class TabBar: UIView {
     weak var delegate : TabBarDelegate?
     let animatesTransition = true
     fileprivate(set) var items : [UITabBarItem] = []
+    private let tabInset: CGFloat = 16
 
     private let selectionLineView = UIView()
     private(set) var tabs: [Tab] = []
@@ -89,24 +90,24 @@ class TabBar: UIView {
         
         addSubview(selectionLineView)
         selectionLineView.backgroundColor = style == .dark ? .white : .black
-
+        
         constrain(self, selectionLineView) { selfView, selectionLineView in
-            lineLeadingConstraint = selectionLineView.leading == selfView.leading
+            lineLeadingConstraint = selectionLineView.leading == selfView.leading + tabInset
             selectionLineView.height == 1
             selectionLineView.bottom == selfView.bottom
-            selectionLineView.width == selfView.width / CGFloat(items.count)
+            let widthInset = tabInset * 2 / CGFloat(items.count)
+            selectionLineView.width == selfView.width / CGFloat(items.count) - widthInset
         }
     }
     
     private func updateLinePosition(animated: Bool) {
-        let tabWidth = bounds.width / CGFloat(items.count)
-        let offset = CGFloat(selectedIndex) * tabWidth
+        let offset = CGFloat(selectedIndex) * selectionLineView.bounds.width
         guard offset != lineLeadingConstraint?.constant else { return }
         updateLinePosition(offset: offset, animated: animated)
     }
     
     private func updateLinePosition(offset: CGFloat, animated: Bool) {
-        lineLeadingConstraint?.constant = offset
+        lineLeadingConstraint?.constant = offset + tabInset
         
         if animated {
             UIView.animate(
@@ -121,14 +122,14 @@ class TabBar: UIView {
     }
     
     func setOffsetPercentage(_ percentage: CGFloat) {
-        let offset = percentage * bounds.width
+        let offset = percentage * (bounds.width - tabInset * 2)
         updateLinePosition(offset: offset, animated: false)
     }
 
     fileprivate func createConstraints() {
         constrain(self, stackView) { selfView, stackView in
-            stackView.left == selfView.left + 16
-            stackView.right == selfView.right - 16
+            stackView.left == selfView.left + tabInset
+            stackView.right == selfView.right - tabInset
             stackView.top == selfView.top
             stackView.height == 48
 
