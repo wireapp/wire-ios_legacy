@@ -59,6 +59,10 @@ public enum AudioRecorderState {
     case recording, playback
 }
 
+public enum RecordingError: Error {
+    case toMaxDuration, toMaxSize
+}
+
 public protocol AudioRecorderType: class {
     var format: AudioRecorderFormat { get }
     var state: AudioRecorderState { get set }
@@ -70,7 +74,7 @@ public protocol AudioRecorderType: class {
     var recordLevelCallBack: ((RecordingLevel) -> Void)? { get set }
     var playingStateCallback: ((PlayingState) -> Void)? { get set }
     var recordStartedCallback: (() -> Void)? { get set }
-    var recordEndedCallback: ((Bool, Bool) -> Void)? { get set } // recordedToMaxDuration: Bool, recordedToMaxSize: Bool
+    var recordEndedCallback: ((VoidResult) -> Void)? { get set }
     
     func startRecording()
     @discardableResult func stopRecording() -> Bool
@@ -79,8 +83,7 @@ public protocol AudioRecorderType: class {
     func stopPlaying()
     func levelForCurrentState() -> RecordingLevel
     func durationForCurrentState() -> TimeInterval?
-    func alertForRecording(reachedMaxRecordingDuration: Bool,
-                           reachedMaxRecordingSize: Bool) -> UIAlertController?
+    func alertForRecording(error: RecordingError) -> UIAlertController?
 }
 
 public final class AudioRecorder: NSObject, AudioRecorderType {
@@ -122,11 +125,9 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public var recordLevelCallBack: ((RecordingLevel) -> Void)?
     public var playingStateCallback: ((PlayingState) -> Void)?
     public var recordStartedCallback: (() -> Void)?
-    public var recordEndedCallback: ((Bool, Bool) -> Void)? // recordedToMaxDuration: Bool, recordedToMaxSize: Bool
+    public var recordEndedCallback: ((VoidResult) -> Void)?
     public var fileURL: URL?
     public var maxFileSize: UInt64?
-    private var fileDescriptor: Int32?
-    private var fileSizeMonitor: DispatchSourceFileSystemObject?
     
     fileprivate var recordingStartTime: TimeInterval?
     
@@ -300,12 +301,11 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         }
     }
     
-    public func alertForRecording(reachedMaxRecordingDuration: Bool,
-                                  reachedMaxRecordingSize: Bool) -> UIAlertController? {
+    public func alertForRecording(error: RecordingError) -> UIAlertController? {
         
         var alertMessage: String?
         
-        if reachedMaxRecordingDuration {
+        if error == .toMaxDuration {
             
             let duration = Int(ceil(self.maxRecordingDuration ?? 0))
             let (seconds, minutes) = (duration % 60, duration / 60)
@@ -314,8 +314,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             alertMessage = "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit)
         }
         
-        if reachedMaxRecordingSize,
-            let maxSize = maxRecordingDuration {
+        if error == .toMaxSize, let maxSize = maxRecordingDuration {
             let size = ByteCountFormatter.string(fromByteCount: Int64(maxSize), countStyle: .binary)
             
             alertMessage = "conversation.input_bar.audio_message.too_long_size.message".localized(args: size)
@@ -353,7 +352,15 @@ extension AudioRecorder: AVAudioRecorderDelegate {
         // in the case that the recording finished due to the maxRecordingDuration
         // reached, we should still clean up afterwards
         if recordedToMaxDuration { _ = postRecordingProcessing() }
-        self.recordEndedCallback?(recordedToMaxDuration, recordedToMaxSize)
+        
+        if recordedToMaxSize {
+            self.recordEndedCallback?(.failure(RecordingError.toMaxSize))
+        } else if recordedToMaxDuration {
+            self.recordEndedCallback?(.failure(RecordingError.toMaxDuration))
+        } else {
+            self.recordEndedCallback?(.success)
+        }
+        
         AVSMediaManager.sharedInstance().stopRecording()
     }
         

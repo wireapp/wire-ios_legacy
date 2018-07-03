@@ -258,13 +258,12 @@ private let zmLog = ZMSLog(tag: "UI")
             AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
-        recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration, reachedMaxRecordingSize in
+        recorder.recordEndedCallback = { [weak self] result in
             guard let `self` = self else { return }
             self.recordingState = .finishedRecording
             
-            guard let alert = self.recorder.alertForRecording(
-                reachedMaxRecordingDuration: reachedMaxRecordingDuration,
-                reachedMaxRecordingSize: reachedMaxRecordingSize) else { return }
+            guard let error = result.error as? RecordingError,
+                let alert = self.recorder.alertForRecording(error: error) else { return }
             
             self.present(alert, animated: true, completion: .none)
         }
