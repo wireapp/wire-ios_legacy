@@ -20,27 +20,6 @@
 import Foundation
 
 extension UIPopoverPresentationController {
-    /// TODO: sandclock icon: <IconButton: 0x7f9d8e4c0940; baseClass = UIButton; frame = (0 12; 32 32); hidden = YES; opaque = NO; layer = <CALayer: 0x600000429040>>
-
-//    (672.0, 860.0, 32.0, 32.0)
-//    ▿ origin : (672.0, 860.0)
-//    - x : 672.0
-//    - y : 860.0
-//    ▿ size : (32.0, 32.0)
-//    - width : 32.0
-//    - height : 32.0
-
-    // timed icon:
-
-//    <IconButton: 0x7f9d8e4c0940; baseClass = UIButton; frame = (32 12; 32 32); opaque = NO; layer = <CALayer: 0x600000429040>>
-
-//    ▿ (704.0, 860.0, 32.0, 32.0)
-//    ▿ origin : (704.0, 860.0)
-//    - x : 704.0
-//    - y : 860.0
-//    ▿ size : (32.0, 32.0)
-//    - width : 32.0
-//    - height : 32.0
     func configIPadPopOver(from viewController: UIViewController, sourceView: UIView, presetInView: UIView, backgroundColor: UIColor) {
         self.sourceRect = sourceView.popoverSourceRect(from: viewController)
         self.sourceView = presetInView
@@ -99,7 +78,10 @@ extension ConversationInputBarViewController {
         if let popover = ephemeralKeyboardViewController?.popoverPresentationController,
             let presetInView = self.parent?.view,
             let backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor {
-            popover.configIPadPopOver(from: self, sourceView: ephemeralIndicatorButton, presetInView: presetInView, backgroundColor: backgroundColor)
+            popover.configIPadPopOver(from: self,
+                                      sourceView: ephemeralIndicatorButton.isHidden ? hourglassButton : ephemeralIndicatorButton,
+                                      presetInView: presetInView,
+                                      backgroundColor: backgroundColor)
         }
 
         guard let controller = ephemeralKeyboardViewController else { return }

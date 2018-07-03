@@ -123,7 +123,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) IconButton *emojiButton;
 @property (nonatomic) IconButton *markdownButton;
 @property (nonatomic) IconButton *gifButton;
-@property (nonatomic) IconButton *hourglassButton;
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
