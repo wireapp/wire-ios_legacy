@@ -30,10 +30,12 @@ class TabBar: UIView {
     // MARK: - Properties
 
     weak var delegate : TabBarDelegate?
-    var animatesTransition: Bool = false
-
+    let animatesTransition = true
     fileprivate(set) var items : [UITabBarItem] = []
+
+    private let selectionLineView = UIView()
     private(set) var tabs: [Tab] = []
+    private var lineLeadingConstraint: NSLayoutConstraint?
 
     var style: ColorSchemeVariant {
         didSet {
@@ -69,6 +71,7 @@ class TabBar: UIView {
         setupViews()
         createConstraints()
         updateButtonSelection()
+        updateLinePosition(animated: false)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -83,8 +86,45 @@ class TabBar: UIView {
         stackView.axis = .horizontal
         stackView.alignment = .fill
         addSubview(stackView)
+        
+        addSubview(selectionLineView)
+        selectionLineView.backgroundColor = style == .dark ? .white : .black
+
+        constrain(self, selectionLineView) { selfView, selectionLineView in
+            lineLeadingConstraint = selectionLineView.leading == selfView.leading
+            selectionLineView.height == 1
+            selectionLineView.bottom == selfView.bottom
+            selectionLineView.width == selfView.width / CGFloat(items.count)
+        }
     }
     
+    private func updateLinePosition(animated: Bool) {
+        let tabWidth = bounds.width / CGFloat(items.count)
+        let offset = CGFloat(selectedIndex) * tabWidth
+        guard offset != lineLeadingConstraint?.constant else { return }
+        updateLinePosition(offset: offset, animated: animated)
+    }
+    
+    private func updateLinePosition(offset: CGFloat, animated: Bool) {
+        lineLeadingConstraint?.constant = offset
+        
+        if animated {
+            UIView.animate(
+                withDuration: 0.35,
+                delay: 0,
+                options: .curveEaseInOut,
+                animations: layoutIfNeeded
+            )
+        } else {
+            layoutIfNeeded()
+        }
+    }
+    
+    func setOffsetPercentage(_ percentage: CGFloat) {
+        let offset = percentage * bounds.width
+        updateLinePosition(offset: offset, animated: false)
+    }
+
     fileprivate func createConstraints() {
         constrain(self, stackView) { selfView, stackView in
             stackView.left == selfView.left + 16
@@ -145,6 +185,8 @@ class TabBar: UIView {
             self.selectedIndex = index
             self.layoutIfNeeded()
         }
+        
+        updateLinePosition(animated: animated)
     }
 
     fileprivate func updateButtonSelection() {
