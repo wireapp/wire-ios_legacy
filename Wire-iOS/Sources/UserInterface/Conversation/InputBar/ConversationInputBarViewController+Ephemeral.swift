@@ -77,7 +77,7 @@ extension ConversationInputBarViewController {
     private func presentEphemeralControllerAsPopover() {
         createEphemeralKeyboardViewController()
         ephemeralKeyboardViewController?.modalPresentationStyle = .popover
-        ephemeralKeyboardViewController?.preferredContentSize = CGSize(width: 320, height: 275) ///TODO: standard size?
+        ephemeralKeyboardViewController?.preferredContentSize = CGSize.IPadPopover.pickerSize
 
         if let popover = ephemeralKeyboardViewController?.popoverPresentationController,
             let presentInView = self.parent?.view,

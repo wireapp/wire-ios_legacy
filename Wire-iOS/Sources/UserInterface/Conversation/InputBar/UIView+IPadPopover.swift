@@ -18,9 +18,10 @@
 
 import Foundation
 
-extension CGSize {
-    enum IPadPopover {
-        static let preferredContentSize: CGSize = CGSize(width: 320, height: 568)
-        static let pickerSize: CGSize = CGSize(width: 320, height: 275)
+extension UIView {
+    func popoverSourceRect(from viewController: UIViewController) -> CGRect {
+        let sourceView: UIView = viewController.parent?.view ?? viewController.view
+        let sourceRect = sourceView.convert(frame, from: superview)
+        return sourceRect
     }
 }
