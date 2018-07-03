@@ -20,7 +20,10 @@
 import Foundation
 
 extension UIPopoverPresentationController {
-    func config(from viewController: UIViewController, pointToView: UIView, sourceView: UIView, backgroundColor: UIColor) {
+    func config(from viewController: UIViewController,
+                pointToView: UIView,
+                sourceView: UIView,
+                backgroundColor: UIColor? = nil) {
         sourceRect = pointToView.popoverSourceRect(from: viewController)
         self.sourceView = sourceView
 

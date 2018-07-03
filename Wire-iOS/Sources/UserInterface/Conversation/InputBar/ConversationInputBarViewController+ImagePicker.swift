@@ -62,9 +62,9 @@ extension ConversationInputBarViewController {
 
             if let popover = pickerController.popoverPresentationController, let imageView = self.photoButton.imageView {
                 popover.config(from: self,
-                                      pointToView: imageView,
-                                      sourceView: parentViewConvtoller.view,
-                                      backgroundColor: .white)
+                               pointToView: imageView,
+                               sourceView: parentViewConvtoller.view,
+                               backgroundColor: .white)
             }
 
             if sourceType == .camera {

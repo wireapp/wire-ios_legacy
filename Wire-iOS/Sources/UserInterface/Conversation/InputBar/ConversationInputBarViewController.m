@@ -69,8 +69,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationInputBarViewController (Location) <LocationSelectionViewControllerDelegate>
 
-- (void)locationButtonPressed:(IconButton *)sender;
-
 @end
 
 @interface ConversationInputBarViewController (ZMConversationObserver) <ZMConversationObserver>
@@ -975,20 +973,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 @implementation ConversationInputBarViewController (Location)
-
-- (void)locationButtonPressed:(IconButton *)sender
-{
-    [[Analytics shared] tagMediaAction:ConversationMediaActionLocation inConversation:self.conversation];
-    
-    LocationSelectionViewController *locationSelectionViewController = [[LocationSelectionViewController alloc] initForPopoverPresentation:IS_IPAD_FULLSCREEN];
-    locationSelectionViewController.modalPresentationStyle = UIModalPresentationPopover;
-    UIPopoverPresentationController* popoverPresentationController = locationSelectionViewController.popoverPresentationController;
-    popoverPresentationController.sourceView = sender.superview;
-    popoverPresentationController.sourceRect = sender.frame;
-    locationSelectionViewController.title = self.conversation.displayName;
-    locationSelectionViewController.delegate = self;
-    [self.parentViewController presentViewController:locationSelectionViewController animated:YES completion:nil];
-}
 
 - (void)locationSelectionViewController:(LocationSelectionViewController *)viewController didSelectLocationWithData:(ZMLocationData *)locationData
 {
