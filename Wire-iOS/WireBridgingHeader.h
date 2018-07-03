@@ -180,3 +180,6 @@
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
 
+// Media
+#import "MediaPreviewData.h"
+#import "MediaThumbnail.h"

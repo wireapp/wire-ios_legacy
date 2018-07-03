@@ -28,7 +28,6 @@
 #import "WireStyleKit.h"
 #import "LinkAttachment.h"
 #import "LinkAttachmentCache.h"
-#import "YoutubeService.h"
 #import <Classy/Classy.h>
 #import "Wire-Swift.h"
 
@@ -119,7 +118,8 @@
         };
         
         if (self.linkAttachment.type == LinkAttachmentTypeYoutubeVideo) {
-            [[YoutubeService sharedInstance] mediaPreviewDataForYoutubeVideoURL:self.linkAttachment.URL completion:mediaPreviewResponseHandler];
+            YouTubeService *service = [[YouTubeService alloc] initWithUserSession:[ZMUserSession sharedSession]];
+            [service fetchMediaPreviewDataForVideoAt:self.linkAttachment.URL completion:mediaPreviewResponseHandler];
         }
     }
 }

@@ -30,16 +30,18 @@ typedef NS_ENUM(NSInteger, MediaPreviewDataProvider) {
 
 @class MediaThumbnail;
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MediaPreviewData : NSObject
 
 @property (nonatomic, readonly) NSString *title;
-@property (nonatomic, readonly) NSArray *thumbnails;
+@property (nonatomic, readonly) NSArray<MediaThumbnail *> *thumbnails;
 @property (nonatomic, readonly) MediaPreviewDataProvider provider;
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithTitle:(NSString *)title thumbnails:(NSArray *)thumbnails provider:(MediaPreviewDataProvider)provider NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTitle:(NSString *)title thumbnails:(NSArray<MediaThumbnail *> *)thumbnails provider:(MediaPreviewDataProvider)provider NS_DESIGNATED_INITIALIZER;
 - (MediaThumbnail *)bestThumbnailForSize:(CGSize)size;
 
 @end
+
+NS_ASSUME_NONNULL_END
