@@ -3474,7 +3474,7 @@
 			path = YouTube;
 			sourceTree = "<group>";
 		};
-		5EC16BA220EBBEE000955156 /* Resources */ = {
+		5EC16BA220EBBEE000955156 /* MockResponses */ = {
 			isa = PBXGroup;
 			children = (
 				5EC16BA520EBBF8400955156 /* yt_response_multiple_videos.json */,
@@ -3482,13 +3482,13 @@
 				5EC16BA420EBBF8400955156 /* yt_response_no_snippet.json */,
 				5EC16BA720EBBF8500955156 /* yt_response_valid_video.json */,
 			);
-			path = Resources;
+			path = MockResponses;
 			sourceTree = "<group>";
 		};
 		5EC16BA320EBBEF600955156 /* YouTube */ = {
 			isa = PBXGroup;
 			children = (
-				5EC16BA220EBBEE000955156 /* Resources */,
+				5EC16BA220EBBEE000955156 /* MockResponses */,
 				5EC16B9420EB9D2E00955156 /* YouTubeServiceTests.swift */,
 			);
 			path = YouTube;
