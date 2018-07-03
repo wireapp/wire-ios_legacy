@@ -20,9 +20,9 @@
 import Foundation
 
 extension UIPopoverPresentationController {
-    func configIPadPopOver(from viewController: UIViewController, sourceView: UIView, presetInView: UIView, backgroundColor: UIColor) {
+    func configIPadPopOver(from viewController: UIViewController, sourceView: UIView, presentInView: UIView, backgroundColor: UIColor) {
         self.sourceRect = sourceView.popoverSourceRect(from: viewController)
-        self.sourceView = presetInView
+        self.sourceView = presentInView
         self.backgroundColor = backgroundColor
         permittedArrowDirections = .down
     }
@@ -76,11 +76,11 @@ extension ConversationInputBarViewController {
         ephemeralKeyboardViewController?.preferredContentSize = CGSize(width: 320, height: 275) ///TODO: standard size?
 
         if let popover = ephemeralKeyboardViewController?.popoverPresentationController,
-            let presetInView = self.parent?.view,
+            let presentInView = self.parent?.view,
             let backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor {
             popover.configIPadPopOver(from: self,
                                       sourceView: ephemeralIndicatorButton.isHidden ? hourglassButton : ephemeralIndicatorButton,
-                                      presetInView: presetInView,
+                                      presentInView: presentInView,
                                       backgroundColor: backgroundColor)
         }
 

@@ -48,9 +48,10 @@ extension ConversationInputBarViewController {
 
             let sourceView: UIView = self.parent?.view ?? self.view
 
+            if let parentViewConvtoller = self.parent {
             let context = ImagePickerPopoverPresentationContext(sourceRect: self.photoButton.popoverSourceRect(from: self),
                                                     sourceView: sourceView,
-                                                    presentViewController: self,
+                                                    presentViewController: parentViewConvtoller,
                                                     sourceType: sourceType)
 
             let pickerController = UIImagePickerController.popoverForIPadRegular(with: context)
@@ -58,7 +59,14 @@ extension ConversationInputBarViewController {
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes
             pickerController.videoMaximumDuration = TimeInterval(ConversationUploadMaxVideoDuration)
-            
+
+            if let popover = pickerController.popoverPresentationController {
+                popover.configIPadPopOver(from: self,
+                                          sourceView: self.photoButton,
+                                          presentInView: parentViewConvtoller.view,
+                                          backgroundColor: .white)
+            }
+
             if sourceType == .camera {
                 switch Settings.shared().preferredCamera {
                 case .back:
@@ -68,7 +76,8 @@ extension ConversationInputBarViewController {
                 }
             }
 
-            self.parent?.present(pickerController, animated: true)
+            parentViewConvtoller.present(pickerController, animated: true)
+            }
         }
 
         if sourceType == .camera {

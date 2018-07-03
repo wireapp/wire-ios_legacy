@@ -36,10 +36,10 @@ extension UIImagePickerController {
             picker.modalPresentationStyle = .popover
             if let popover = picker.popoverPresentationController {
 
-                popover.sourceRect = context.sourceRect
-                popover.sourceView = context.sourceView
-
-                popover.backgroundColor = .white
+                popover.configIPadPopOver(from: context.presentViewController,
+                                          sourceView: context.sourceView,
+                                          presetInView: context.sourceView,
+                                          backgroundColor: .white)
             }
         }
 
