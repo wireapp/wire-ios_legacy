@@ -35,7 +35,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
 
 @implementation ConversationInputBarViewController (Files)
 
-- (void)docUploadPressed:(UIButton *)sender
+- (void)docUploadPressed:(IconButton *)sender
 {
     [Analytics.shared tagMediaAction:ConversationMediaActionFileTransfer inConversation:self.conversation];
     
@@ -137,8 +137,8 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
     
     UIPopoverPresentationController* popover = docController.popoverPresentationController;
     popover.delegate = self;
-    popover.sourceView = sender.superview;
-    popover.sourceRect = sender.frame;
+    [popover configFrom:self pointToView:sender.imageView sourceView:self.parentViewController.view backgroundColor:nil permittedArrowDirections:UIPopoverArrowDirectionDown];
+
     [self.parentViewController presentViewController:docController animated:YES completion:^() {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
     }];

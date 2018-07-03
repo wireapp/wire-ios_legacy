@@ -19,19 +19,6 @@
 
 import Foundation
 
-extension UIPopoverPresentationController {
-    func config(from viewController: UIViewController,
-                pointToView: UIView,
-                sourceView: UIView,
-                backgroundColor: UIColor? = nil) {
-        sourceRect = pointToView.popoverSourceRect(from: viewController)
-        self.sourceView = sourceView
-
-        self.backgroundColor = backgroundColor
-        permittedArrowDirections = .down
-    }
-}
-
 extension ConversationInputBarViewController {
 
     @objc public func createEphemeralKeyboardViewController() {
