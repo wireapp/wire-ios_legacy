@@ -9,32 +9,19 @@ PODS:
   - GTMSessionFetcher/Core (1.1.12)
   - GTMSessionFetcher/Full (1.1.12):
     - GTMSessionFetcher/Core (= 1.1.12)
-  - SCSiriWaveformView (1.0.3)
 
 DEPENDENCIES:
   - GoogleAPIClient/YouTube (= 1.0.4)
-  - SCSiriWaveformView (from `https://github.com/wireapp/SCSiriWaveformView`, tag `v1.0.3`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - GoogleAPIClient
     - GTMSessionFetcher
 
-EXTERNAL SOURCES:
-  SCSiriWaveformView:
-    :git: https://github.com/wireapp/SCSiriWaveformView
-    :tag: v1.0.3
-
-CHECKOUT OPTIONS:
-  SCSiriWaveformView:
-    :git: https://github.com/wireapp/SCSiriWaveformView
-    :tag: v1.0.3
-
 SPEC CHECKSUMS:
   GoogleAPIClient: bde49b31072d3c296d051f58c37b27a66ca45936
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
-  SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
-PODFILE CHECKSUM: 9117f801ae68306021595248536680b4529858dc
+PODFILE CHECKSUM: b7be0b100a2db9c8e90e3c3080c07d1a4daff5f0
 
 COCOAPODS: 1.5.3

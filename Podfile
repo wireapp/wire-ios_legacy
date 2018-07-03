@@ -2,7 +2,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 def ios_pods
     pod 'GoogleAPIClient/YouTube', '1.0.4', :inhibit_warnings => true
-    pod 'SCSiriWaveformView', :git => 'https://github.com/wireapp/SCSiriWaveformView', :tag => 'v1.0.3'
 end
     
     
