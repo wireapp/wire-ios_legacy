@@ -3435,16 +3435,6 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
-		5E52378720EB5AED00649241 /* WaveForm */ = {
-			isa = PBXGroup;
-			children = (
-				BFAF4CB41CECEF3C00780537 /* WaveFormView.swift */,
-				5E52378920EB5B4C00649241 /* SCSiriWaveformView.h */,
-				5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */,
-			);
-			path = WaveForm;
-			sourceTree = "<group>";
-		};
 		5EA73D7A20D900A10001D106 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -3454,6 +3444,15 @@
 				5EA73D7E20D900A10001D106 /* GroupDetailsRenameCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		5EC16B6520EB782900955156 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				5E52378920EB5B4C00649241 /* SCSiriWaveformView.h */,
+				5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */,
+			);
+			path = Vendor;
 			sourceTree = "<group>";
 		};
 		5EE51CBB2099B8E0008BA4B1 /* Thumbnail */ = {
@@ -4608,6 +4607,7 @@
 		8FC850D8199245760008B66B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				5EC16B6520EB782900955156 /* Vendor */,
 				871BC3181D34F94200DF0793 /* Components */,
 				8FC85126199245760008B66B /* Helpers */,
 				871BBFA11D34F56300DF0793 /* Analytics */,
@@ -4941,7 +4941,7 @@
 				879718971D1C767600163C07 /* AudioEffectsPickerViewController.swift */,
 				874A02551D1D329B00D0D74A /* AudioEffectCell.swift */,
 				874A02531D1D325C00D0D74A /* AudioEffect.swift */,
-				5E52378720EB5AED00649241 /* WaveForm */,
+				BFAF4CB41CECEF3C00780537 /* WaveFormView.swift */,
 				BFAF4CB21CECA68200780537 /* AudioRecorder.swift */,
 				16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */,
 				DB7FEC901B8729AD00BA72DE /* ConversationInputBarSendController.h */,
