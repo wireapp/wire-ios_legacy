@@ -60,11 +60,11 @@ extension ConversationInputBarViewController {
             pickerController.mediaTypes = mediaTypes
             pickerController.videoMaximumDuration = TimeInterval(ConversationUploadMaxVideoDuration)
 
-            if let popover = pickerController.popoverPresentationController {
-                popover.configIPadPopOver(from: self,
-                                          sourceView: self.photoButton,
-                                          presentInView: parentViewConvtoller.view,
-                                          backgroundColor: .white)
+            if let popover = pickerController.popoverPresentationController, let imageView = self.photoButton.imageView {
+                popover.config(from: self,
+                                      pointToView: imageView,
+                                      sourceView: parentViewConvtoller.view,
+                                      backgroundColor: .white)
             }
 
             if sourceType == .camera {
