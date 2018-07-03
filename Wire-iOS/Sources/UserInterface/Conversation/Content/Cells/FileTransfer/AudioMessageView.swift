@@ -315,6 +315,7 @@ private let zmLog = ZMSLog(tag: "UI")
         
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
         
+        // first play
         if let track = fileMessage.audioTrack(), !audioTrackPlayingSame {
             audioTrackPlayer.load(track, sourceMessage: fileMessage) { [weak self] success, error in
                 if success {
@@ -322,6 +323,9 @@ private let zmLog = ZMSLog(tag: "UI")
                     audioTrackPlayer.play()
                     
                     let duration = TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
+                    let earliestEndDate = Date(timeIntervalSinceNow: duration)
+                    self?.extendEphemeralTimerIfNeeded(to: earliestEndDate)
+                    
                     Analytics.shared().tagPlayedAudioMessage(duration, extensionString: ((fileMessageData.filename ?? "") as NSString).pathExtension)
                 }
                 else {
@@ -329,6 +333,7 @@ private let zmLog = ZMSLog(tag: "UI")
                 }
             }
         } else {
+            // pausing and restarting
             if audioTrackPlayer.isPlaying {
                 audioTrackPlayer.pause()
             } else {
@@ -337,6 +342,16 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
+    /// Extend the ephemeral timer to the given date iff the audio message
+    /// is ephemeral and it would exceed its destruction date.
+    private func extendEphemeralTimerIfNeeded(to endDate: Date) {
+        guard let destructionDate = fileMessage?.destructionDate,
+            endDate > destructionDate,
+            let assetMsg = fileMessage as? ZMAssetClientMessage
+            else { return }
+        
+        assetMsg.extendDestructionTimer(to: endDate)
+    }
     
     /// Check if the audioTrackPlayer is playing my track
     ///
