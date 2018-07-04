@@ -19,7 +19,7 @@
  #
 
  xcodebuild clean test \
- -workspace Wire-iOS.xcworkspace \
+ -project Wire-iOS.xcodeproj \
  -scheme Wire-iOS \
  -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest' \
  -destination 'platform=iOS Simulator,name=iPad Retina,OS=latest' \

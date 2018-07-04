@@ -2,7 +2,7 @@ machine:
   xcode:
     version: "9.0"
   environment:
-    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
+    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/architecture/remove-cocoapods"
 
 checkout:
   post:

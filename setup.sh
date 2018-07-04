@@ -54,10 +54,6 @@ echo "ℹ️  Check that bundler is installed... (requires SUDO)"
 hash bundle 2>/dev/null || sudo gem install bundler
 echo ""
 
-echo "ℹ️  Pod install. This might take a while..."
-bundle install --path ~/.gem && bundle exec pod install
-echo ""
-
 echo "ℹ️  Downloading additional assets..."
 ./Scripts/download-assets.sh
 echo ""
