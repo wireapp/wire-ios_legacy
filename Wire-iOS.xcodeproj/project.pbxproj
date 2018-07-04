@@ -7730,6 +7730,7 @@
 		};
 		1EE85C6A1B5F96FC008E084B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -7762,6 +7763,7 @@
 		};
 		1EE85C6B1B5F96FC008E084B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -7790,6 +7792,7 @@
 		};
 		87B7DAB01E696E4E005F5140 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -7812,6 +7815,7 @@
 		};
 		87B7DAB11E696E4E005F5140 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -7833,7 +7837,6 @@
 		};
 		8F42C556199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -7884,7 +7887,6 @@
 		};
 		8F42C557199244A700288E4D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -7929,6 +7931,7 @@
 		};
 		8F42C559199244A700288E4D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -7955,6 +7958,7 @@
 		};
 		8F42C55A199244A700288E4D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -7981,6 +7985,7 @@
 		};
 		BACB885A1AF7C48900DDCDB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -8009,6 +8014,7 @@
 		};
 		BACB885B1AF7C48900DDCDB0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -8033,6 +8039,7 @@
 		};
 		BFAD54121E6972CD0015C677 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FC85546199246EF0008B66B /* Development.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -8065,6 +8072,7 @@
 		};
 		BFAD54131E6972CD0015C677 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F48C85A1A026E120048E6EB /* Release.xcconfig */;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ANALYZER_NONNULL = YES;

@@ -18,7 +18,7 @@
 
 
 #include "Base.xcconfig"
-#include "../wire-ios-build-assets/Release_private.xcconfig"
+#include? "../wire-ios-build-assets/Release_private.xcconfig"
 
 
 //Code Signature
