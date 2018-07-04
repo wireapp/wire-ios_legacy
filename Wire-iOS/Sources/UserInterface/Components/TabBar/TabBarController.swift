@@ -163,8 +163,14 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
         let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
 
-        DispatchQueue.main.async { [toViewController, pageViewController] in
+        let update = { [toViewController, pageViewController] in
             pageViewController.setViewControllers([toViewController], direction: direction, animated: true)
+        }
+        
+        if ProcessInfo.processInfo.isRunningTests {
+            update()
+        } else {
+            DispatchQueue.main.async(execute: update)
         }
     }
     
