@@ -47,7 +47,6 @@ In order to build Wire for iOS locally, it is necessary to install the following
 - Xcode 9.3.0 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
 - Bundler (http://bundler.io)
 - Carthage 0.30.0 or newer (https://github.com/Carthage/Carthage)
-- Ruby 2.3
 - Python 2.7
 
 The setup script will automatically check for you that you satisfy these requirements
@@ -55,7 +54,7 @@ The setup script will automatically check for you that you satisfy these require
 ### How to build locally
 1. Check out the wire-ios repository.
 2. From the checkout folder, run `./setup.sh`. This will pull in all the necessary dependencies with Carthage and verify that you have the right version of the tools installed.
-3. Open the workspace `Wire-iOS.xcworkspace` in Xcode
+3. Open the project `Wire-iOS.xcodeproj` in Xcode
 4. Click the "Run" button in Xcode
 
 These steps allow you to build only the Wire umbrella project, pulling in all other Wire frameworks with Carthage. If you want to modify the source/debug other Wire frameworks, you can open the `Carthage/Checkouts` subfolder and open the individual projects for each dependency there.
