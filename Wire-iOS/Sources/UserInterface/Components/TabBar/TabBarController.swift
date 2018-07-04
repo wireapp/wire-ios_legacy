@@ -83,7 +83,6 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     // MARK: - Views
     private var tabBar: TabBar?
     private var contentView = UIView()
-    private var isTransitioning = false
     private var isSwiping = false
     private var startOffset: CGFloat = 0
 
@@ -156,15 +155,16 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         let toViewController = viewControllers[index]
         let fromViewController = pageViewController.viewControllers?.first
 
-        guard toViewController != fromViewController, !isTransitioning else { return }
+        guard toViewController != fromViewController else { return }
 
         delegate?.tabBarController(self, tabBarDidSelectIndex: index)
         tabBar?.setSelectedIndex(index, animated: animated)
         
         let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
         let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
-        pageViewController.setViewControllers([toViewController], direction: direction, animated: true) { _ in
-            self.isTransitioning = false
+
+        DispatchQueue.main.async { [toViewController, pageViewController] in
+            pageViewController.setViewControllers([toViewController], direction: direction, animated: true)
         }
     }
     
@@ -191,10 +191,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         isSwiping = false
         delegate?.tabBarController(self, tabBarDidSelectIndex: index)
         selectedIndex = index
-
-        DispatchQueue.main.async { [tabBar, selectedIndex] in
-            tabBar?.setSelectedIndex(selectedIndex, animated: true)
-        }
+        tabBar?.setSelectedIndex(selectedIndex, animated: true)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
