@@ -33,7 +33,7 @@ extension ConversationInputBarViewController {
         let color: UIColor
         
         if inputBar.isMarkingDown {
-            color = UIColor(scheme: .accent)
+            color = .accent()
         } else {
             color = UIColor(scheme: .iconNormal)
         }
