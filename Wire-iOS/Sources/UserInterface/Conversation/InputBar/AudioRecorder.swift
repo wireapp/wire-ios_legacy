@@ -236,7 +236,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     }
     
     private var maxAllowedSize: UInt32 {
-        guard let maxSize = maxRecordingDuration else { return 0 }
+        guard let maxSize = maxFileSize else { return 0 }
         return UInt32(Double(maxSize) * (1.00 - 0.01)) // 1% of tolerance
     }
 
