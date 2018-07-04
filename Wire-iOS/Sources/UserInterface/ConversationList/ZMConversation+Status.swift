@@ -654,28 +654,19 @@ extension ZMConversation {
         else {
             hasMessages = true
         }
-        
-        
-        var isOngoingCall = false
-        if let state = voiceChannel?.state {
-            switch state {
-            case .none, .terminating:
-                break
-            default:
-                isOngoingCall = true
-            }
-        }
-        
-        return ConversationStatus(isGroup: self.conversationType == .group,
-                                  hasMessages: hasMessages,
-                                  hasUnsentMessages: self.hasUnreadUnsentMessage,
-                                  messagesRequiringAttention: messagesRequiringAttention,
-                                  messagesRequiringAttentionByType: messagesRequiringAttentionByType,
-                                  isTyping: self.typingUsers().count > 0,
-                                  isSilenced: self.isSilenced,
-                                  isOngoingCall: isOngoingCall,
-                                  isBlocked: isBlocked,
-                                  isSelfAnActiveMember: self.isSelfAnActiveMember)
+
+        return ConversationStatus(
+            isGroup: conversationType == .group,
+            hasMessages: hasMessages,
+            hasUnsentMessages: hasUnreadUnsentMessage,
+            messagesRequiringAttention: messagesRequiringAttention,
+            messagesRequiringAttentionByType: messagesRequiringAttentionByType,
+            isTyping: typingUsers().count > 0,
+            isSilenced: isSilenced,
+            isOngoingCall: canJoinCall,
+            isBlocked: isBlocked,
+            isSelfAnActiveMember: isSelfAnActiveMember
+        )
     }
 }
 

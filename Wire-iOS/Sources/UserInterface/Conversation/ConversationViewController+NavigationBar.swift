@@ -264,8 +264,8 @@ extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
     @objc var canJoinCall: Bool {
-        switch voiceChannel?.state {
-        case .incoming?: return true
+        switch (voiceChannel?.state, conversationType) {
+        case (.incoming?, .group): return true
         default: return false
         }
     }
@@ -294,7 +294,7 @@ extension ZMConversation {
 
     var isCallOngoing: Bool {
         switch voiceChannel?.state {
-        case .none?: return false
+        case .none?, .incoming?: return false
         default: return true
         }
     }
