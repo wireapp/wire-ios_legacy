@@ -118,8 +118,8 @@
         };
         
         if (self.linkAttachment.type == LinkAttachmentTypeYoutubeVideo) {
-            YouTubeService *service = [[YouTubeService alloc] initWithRequester:[ZMUserSession sharedSession]];
-            [service fetchMediaPreviewDataForVideoAt:self.linkAttachment.URL completion:mediaPreviewResponseHandler];
+            [[YouTubeService sharedInstance] fetchMediaPreviewDataForVideoAt:self.linkAttachment.URL
+                                                                  completion:mediaPreviewResponseHandler];
         }
     }
 }

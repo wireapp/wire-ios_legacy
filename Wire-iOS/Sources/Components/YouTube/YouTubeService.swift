@@ -32,9 +32,16 @@ enum YouTubeServiceError: Error {
 
 @objc class YouTubeService: NSObject {
 
-    let requester: ProxiedURLRequester
+    let requester: ProxiedURLRequester?
 
-    @objc init(requester: ProxiedURLRequester) {
+    var currentRequester: ProxiedURLRequester {
+        return requester ?? ZMUserSession.shared()!
+    }
+
+    /// The shared YouTube service, that always uses the current user session.
+    @objc(sharedInstance) static let shared = YouTubeService(requester: nil)
+
+    @objc init(requester: ProxiedURLRequester?) {
         self.requester = requester
     }
 
@@ -49,7 +56,7 @@ enum YouTubeServiceError: Error {
 
         let path = "/v3/videos?id=\(videoID)&part=snippet"
 
-        requester.doRequest(withPath: path, method: .methodGET, type: .youTube) {
+        currentRequester.doRequest(withPath: path, method: .methodGET, type: .youTube) {
             self.handleVideoLookupResponse($0, $1, $2, completion: completion)
         }
 

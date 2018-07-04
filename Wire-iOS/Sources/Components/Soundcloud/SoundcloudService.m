@@ -48,9 +48,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self = [super init];
     if (self != nil) {
-        self.userSession = userSession ?: [ZMUserSession sharedSession];
+        self.userSession = userSession;
     }
     return self;
+}
+
+- (ZMUserSession *)userSession
+{
+    return _userSession ?: [ZMUserSession sharedSession];
 }
 
 - (void)loadAudioResourceFromURL:(NSURL *)URL completion:(void (^)(id audioResource, NSError *error))completion
