@@ -380,6 +380,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.sendButton.adjustBackgroundImageWhenHighlighted = YES;
     self.sendButton.cas_styleClass = @"send-button";
     self.sendButton.hitAreaPadding = CGSizeMake(30, 30);
+    [self.sendButton setBackgroundImageColor:[UIColor accentColor] forState: UIControlStateNormal];
+    [self.sendButton setBackgroundImageColor:[UIColor accentDarken] forState: UIControlStateHighlighted];
 
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.sendButton];
     

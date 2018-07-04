@@ -336,7 +336,6 @@ InputBar: {
     barBackgroundColor: $color-bar-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
-    ephemeralColor: $color-accent-current;
     placeholderColor: $color-text-placeholder;
     textColor: $color-text-foreground;
 
@@ -359,13 +358,10 @@ IconButton.send-button {
     borderWidth: 0.0;
     iconColor[state: highlighted]: $color-background-light;
     iconColor[state: normal]: $color-background-light;
-    backgroundImageColor[state:highlighted]: $color-accent-current-darken;
-    backgroundImageColor[state:normal]: $color-accent-current;
 }
 
 IconButton.hourglass {
     iconColor: $color-icon-normal;
-    iconColor[state:selected]: $color-accent-current;
     iconColor[state:highlighted]: $color-icon-highlighted;
     backgroundImageColor[state:selected]: clear;
 }

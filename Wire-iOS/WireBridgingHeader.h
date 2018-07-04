@@ -171,6 +171,7 @@
 #import "UILabel+TextTransform.h"
 #import "NSString+TextTransform.h"
 #import "KeyboardFrameObserver+iOS.h"
+#import "UIColor+Mixing.h"
 
 // Camera
 #import "CameraController.h"
