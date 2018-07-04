@@ -513,32 +513,36 @@ fileprivate extension UIPreviewAction {
 extension ConversationImagesViewController {
 
     override var previewActionItems: [UIPreviewActionItem] {
-        let copyAction = UIPreviewAction(
-            titleKey: "content.message.copy",
-            handler: { self.copyCurrent(nil) }
-        )
-        
-        let likeAction = UIPreviewAction(
-            titleKey: "content.message.\(currentMessage.liked ? "unlike" : "like")",
-            handler: likeCurrent
-        )
-
-        let saveAction = UIPreviewAction(
-            titleKey: "content.message.save",
-            handler: { self.saveCurrent(nil) }
-        )
-
-        let shareAction = UIPreviewAction(
-            titleKey: "content.message.forward",
-            handler: { self.shareCurrent(nil) }
-        )
-
         let deleteAction = UIPreviewAction(
             titleKey: "content.message.delete_ellipsis",
             handler: { self.deleteCurrent(nil) }
         )
 
-        return [copyAction, likeAction, saveAction, shareAction, deleteAction]
+        if !currentMessage.isEphemeral {
+            let copyAction = UIPreviewAction(
+                titleKey: "content.message.copy",
+                handler: { self.copyCurrent(nil) }
+            )
+
+            let likeAction = UIPreviewAction(
+                titleKey: "content.message.\(currentMessage.liked ? "unlike" : "like")",
+                handler: likeCurrent
+            )
+
+            let saveAction = UIPreviewAction(
+                titleKey: "content.message.save",
+                handler: { self.saveCurrent(nil) }
+            )
+
+            let shareAction = UIPreviewAction(
+                titleKey: "content.message.forward",
+                handler: { self.shareCurrent(nil) }
+            )
+
+            return [copyAction, likeAction, saveAction, shareAction, deleteAction]
+        } else {
+            return [deleteAction]
+        }
     }
 
 }
