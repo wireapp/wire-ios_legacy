@@ -148,7 +148,9 @@ private struct InputBarConstants {
     public var editingBackgroundColor: UIColor?
     public var barBackgroundColor: UIColor?
     public var writingSeparatorColor: UIColor?
-    public var ephemeralColor: UIColor?
+    public var ephemeralColor: UIColor {
+        return .accent()
+    }
     public var placeholderColor: UIColor?
     public var textColor: UIColor?
 
@@ -351,7 +353,7 @@ private struct InputBarConstants {
         if let availabilityPlaceholder = availabilityPlaceholder {
             placeholder = availabilityPlaceholder
         } else if inputBarState.isEphemeral {
-            placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized)
+            placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized) && .accent()
         }
         
         if case .editing = state {
@@ -413,6 +415,8 @@ private struct InputBarConstants {
         
         let completion: (Bool) -> Void = { _ in
             self.updateColors()
+            self.updatePlaceholderColors()
+
             if case .editing(_) = state {
                 self.textView.becomeFirstResponder()
             }
