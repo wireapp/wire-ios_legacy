@@ -226,14 +226,28 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
 
+
+    func testThatItRendersMessageWithEphemeralTimer() {
+        sut.setSelected(true, animated: false)
+        sut.configure(for: mockMessage("This is a message with three lines of text content which might need a better placeholder", state: .sent, isEphemeral: true), layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+
     // MARK: - Helper
 
-    func mockMessage(_ text: String? = "Hello World", edited: Bool = false, state: ZMDeliveryState = .delivered, obfuscated: Bool = false, date: Date = TextMessageCellTests.dummyServerTimestamp) -> MockMessage {
+    func mockMessage(_ text: String? = "Hello World",
+                     edited: Bool = false,
+                     state: ZMDeliveryState = .delivered,
+                     obfuscated: Bool = false,
+                     date: Date = TextMessageCellTests.dummyServerTimestamp,
+                     isEphemeral: Bool = false) -> MockMessage {
         let message = MockMessageFactory.textMessage(withText: text)
         message?.deliveryState = state
         message?.isObfuscated = obfuscated
         message?.serverTimestamp = date
         message?.updatedAt = edited ? Date(timeIntervalSince1970: 0) : nil
+        message?.isEphemeral = isEphemeral
+
         return message!
     }
 

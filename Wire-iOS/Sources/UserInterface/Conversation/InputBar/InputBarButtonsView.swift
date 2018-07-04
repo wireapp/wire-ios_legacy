@@ -47,7 +47,12 @@ public final class InputBarButtonsView: UIView {
     fileprivate var lastLayoutWidth: CGFloat = 0
     
     public let expandRowButton = IconButton()
-    public let buttons: [UIButton]
+    public var buttons: [UIButton] {
+        didSet {
+            buttonInnerContainer.subviews.forEach({ $0.removeFromSuperview() })
+            layoutAndConstrainButtonRows()
+        }
+    }
     fileprivate let buttonInnerContainer = UIView()
     fileprivate let buttonOuterContainer = UIView()
     fileprivate let constants = InputBarRowConstants()
@@ -113,7 +118,7 @@ public final class InputBarButtonsView: UIView {
         guard rowIndex != currentRow else { return }
         currentRow = rowIndex
         buttonRowTopInset.constant = CGFloat(rowIndex) * constants.buttonsBarHeight
-        UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
+        UIView.wr_animate(easing: .easeInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
     }
     
     // MARK: - Button Layout

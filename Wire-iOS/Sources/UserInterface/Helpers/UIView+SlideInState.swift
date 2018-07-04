@@ -37,7 +37,7 @@ public extension UIView {
         
         newState()
         
-        UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: 0.20, animations: {
+        UIView.wr_animate(easing: .easeInOutExpo, duration: 0.20, animations: {
             self.frame = screenshot.frame
             screenshot.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y - offset, width: self.frame.size.width, height: self.frame.size.height)
             }) { _ in

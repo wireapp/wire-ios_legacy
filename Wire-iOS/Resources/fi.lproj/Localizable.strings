@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Ei nyt";
 "general.accept" = "Hyväksy";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -378,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "with %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "Aloitit käyttämään %@ uudestaan. Viestit jotka lähetettiin sillä välin eivät näy täällä.";
 
 "content.system.new_device" = "uusi laite";
@@ -560,7 +563,7 @@
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.footer.add_title" = "Add Participants";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeä uudelleen";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Pois päältä";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "Kartat";
 "open_link.maps.option.google" = "Google Kartat";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";

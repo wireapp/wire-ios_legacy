@@ -20,6 +20,8 @@ import XCTest
 @testable import Wire
 
 final class EphemeralTimeoutFormatterTests: XCTestCase {
+
+    let secondsInYear: TimeInterval = 31536000
     
     var sut: EphemeralTimeoutFormatter!
 
@@ -33,17 +35,17 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
         super.tearDown()
     }
 
-    func testFor1Year11Months30DaysLeft(){
+    func testForClampingLongerThan1YearTimeInterval(){
         // GIVEN & WHEN
-        let formattedString = sut.string(from: 31536000 * 2 - 86400)
+        let formattedString = sut.string(from: secondsInYear * 2)
 
         // THEN
-        XCTAssertEqual(formattedString, "1 year, 11 months, 30 days left")
+        XCTAssertEqual(formattedString, "1 year left")
     }
 
     func testFor1YearLeft(){
         // GIVEN & WHEN
-        let formattedString = sut.string(from: 31536000)
+        let formattedString = sut.string(from: secondsInYear)
 
         // THEN
         XCTAssertEqual(formattedString, "1 year left")
@@ -51,10 +53,18 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
 
     func testFor1SecondLessThanAYearLeft(){
         // GIVEN & WHEN
-        let formattedString = sut.string(from: 31535999)
+        let formattedString = sut.string(from: secondsInYear - 1)
 
         // THEN
-        XCTAssertEqual(formattedString, "11 months, 30 days 23:59 left")
+        XCTAssertEqual(formattedString, "52 weeks 23:59 left")
+    }
+
+    func testFor1WeekLeft(){
+        // GIVEN & WHEN
+        let formattedString = sut.string(from: 604800)
+
+        // THEN
+        XCTAssertEqual(formattedString, "1 week left")
     }
 
     func testFor4WeeksLeft(){
@@ -62,7 +72,7 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
         let formattedString = sut.string(from: 2419200)
 
         // THEN
-        XCTAssertEqual(formattedString, "28 days left")
+        XCTAssertEqual(formattedString, "4 weeks left")
     }
 
     func testFor27days23HoursLeft(){
@@ -70,7 +80,7 @@ final class EphemeralTimeoutFormatterTests: XCTestCase {
         let formattedString = sut.string(from: 2419199)
 
         // THEN
-        XCTAssertEqual(formattedString, "27 days 23:59 left")
+        XCTAssertEqual(formattedString, "3 weeks, 6 days 23:59 left")
     }
 
     func testFor1dayLeft(){

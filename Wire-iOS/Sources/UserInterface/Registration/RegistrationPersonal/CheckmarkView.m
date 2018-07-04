@@ -63,7 +63,7 @@
     self.hidden = NO;
     self.alpha = 0.0f;
     
-    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutBounce duration:0.35f animations:^{
+    [UIView wr_animateWithEasing:WREasingFunctionEaseInOutBack duration:0.35f animations:^{
         if (animations != nil) {
             animations();
         }

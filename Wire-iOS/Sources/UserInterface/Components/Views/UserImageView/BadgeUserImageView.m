@@ -133,7 +133,7 @@
         if (animated) {
             hideBadge();
             [UIView animateWithDuration:0.65 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:15.0 options:0 animations:showBadge completion:nil];
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.15 animations:showShadow];
+            [UIView wr_animateWithEasing:WREasingFunctionEaseOutQuart duration:0.15 animations:showShadow];
         } else {
             showBadge();
             showShadow();

@@ -161,15 +161,18 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
     }
     
     private func updateTimeout(_ timeout: MessageDestructionTimeoutValue) {
-        self.showLoadingView = true
-        
+        let item = CancelableItem(delay: 0.4) { [weak self] in
+            self?.showLoadingView = true
+        }
+
         self.conversation.setMessageDestructionTimeout(timeout, in: userSession) { [weak self] result in
-            
             guard let `self` = self else {
                 return
             }
             
+            item.cancel()
             self.showLoadingView = false
+
             switch result {
             case .success:
                 self.dismisser?.dismiss(viewController: self, completion: nil)
@@ -202,12 +205,29 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
     
     // MARK: Saving Changes
 
+    private func canSelectItem(with value: MessageDestructionTimeoutValue) -> Bool {
+
+        guard let currentTimeout = conversation.messageDestructionTimeout else {
+            return value != .none
+        }
+
+        guard case .synced(let currentValue) = currentTimeout else {
+            return value != .none
+        }
+
+        return value != currentValue
+
+    }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let selectedItem = items[indexPath.row]
         
         switch selectedItem {
         case .supportedValue(let value):
+            guard canSelectItem(with: value) else {
+                break
+            }
             updateTimeout(value)
         case .customValue:
             requestCustomValue()

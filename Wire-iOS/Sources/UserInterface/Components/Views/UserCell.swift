@@ -41,6 +41,8 @@ class UserCell: SeparatorCollectionViewCell {
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
     
+    weak var user: ZMBareUser? = nil
+    
     fileprivate static let boldFont: UIFont! = FontSpec.init(.small, .regular).font!
     fileprivate static let lightFont: UIFont! = FontSpec.init(.small, .light).font!
 
@@ -170,11 +172,21 @@ class UserCell: SeparatorCollectionViewCell {
         checkmarkIconView.layer.borderColor = UIColor(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
         titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
+        updateTitleLabel()
+    }
+    
+    private func updateTitleLabel() {
+        guard let user = self.user else {
+            return
+        }
+        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
     }
     
     public func configure(with user: ZMBareUser, conversation: ZMConversation? = nil) {
+        self.user = user
+        
         avatar.user = user
-        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
+        updateTitleLabel()
         
         if let conversation = conversation {
             guestIconView.isHidden = !user.isGuest(in: conversation)

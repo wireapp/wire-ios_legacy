@@ -29,6 +29,7 @@
 "general.confirm" = "好";
 "general.skip" = "先跳过";
 "general.accept" = "接听";
+"general.decline" = "不用了，谢谢";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -59,7 +60,7 @@
 "peoplepicker.header.services" = "服务";
 "peoplepicker.services.create_conversation.item" = "开始新对话";
 "peoplepicker.services.add_service.button" = "添加服务";
-"peoplepicker.services.add_service.error.title" = "The service can’t be added";
+"peoplepicker.services.add_service.error.title" = "无法加入服务";
 "peoplepicker.services.add_service.error.default" = "服务暂时无法使用";
 "peoplepicker.services.add_service.error.full" = "对话人数已达上限";
 
@@ -93,7 +94,7 @@
 "peoplepicker.quick-action.create-conversation" = "创建群聊";
 "peoplepicker.quick-action.create-guest-room" = "创建访客聊天室";
 
-"add_participants.all_contacts_added" = "Everyone’s here.";
+"add_participants.all_contacts_added" = "所有用户已加入群聊";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名称搜索";
@@ -143,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "新建消息并保存";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "相机";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "拍照并立即发送";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "您有未读消息";
 
 // Archived List
 "archived_list.title" = "档案";
@@ -295,7 +296,7 @@
 // Location
 "location.send_button.title" = "发送";
 "location.unauthorized_alert.title" = "启用定位服务";
-"location.unauthorized_alert.message" = "若要发送您所在的位置，启用定位服务并允许线访问您所在的位置。";
+"location.unauthorized_alert.message" = "若要发送您的位置，启用定位服务并允许Wire访问您的位置。";
 "location.unauthorized_alert.cancel" = "取消";
 "location.unauthorized_alert.settings" = "设置";
 
@@ -377,6 +378,8 @@
 "content.system.conversation.with_name.title-you" = "%@开始了对话";
 
 "content.system.conversation.with_name.participants" = "与%@";
+
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
 
 "content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
 
@@ -460,7 +463,7 @@
 // Save image errors
 "library.alert.permission_warning.title" = "Wire需要存取你的照片库";
 "library.alert.permission_warning.restrictions.explaination" = "由于启用了限制，Wire无法访问您的资料库。";
-"library.alert.permission_warning.not_allowed.explaination" = "Go to Settings and allow Wire to access your photos.";
+"library.alert.permission_warning.not_allowed.explaination" = "请前往手机「设定」并允许Wire使用相片库权限。";
 
 // Voice
 "voice.status.one_to_one.incoming" = "%@\n来电";
@@ -528,7 +531,7 @@
 "call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.start.button" = "Call Anyway";
 "call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
-"call.alert.ongoing.join.button" = "Join Anyway";
+"call.alert.ongoing.join.button" = "仍要加入";
 
 // Call Actions (accessibility)
 
@@ -545,7 +548,7 @@
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
-"call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.minimize_call" = "最小化通话画面";
 "call.actions.label.make_audio_call" = "Start audio call";
 "call.actions.label.make_video_call" = "Start video call";
 "call.actions.label.join_call" = "加入通话";
@@ -560,7 +563,7 @@
 "participants.section.participants" = "参与者(%d)";
 "participants.section.services" = "服务 (%d)";
 "participants.footer.add_title" = "添加参与者";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "重新命名";
@@ -671,9 +674,10 @@
 "participants.services.remove_integration.button" = "移除服务";
 
 // Group details
-"group_details.guest_options_cell.title" = "访客选项";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "开启";
 "group_details.guest_options_cell.disabled" = "关闭";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +867,7 @@
 
 "open_link.maps.option.apple" = "地图";
 "open_link.maps.option.google" = "Google地图";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
@@ -980,7 +985,7 @@
 "landing.title" = "保密每个人之通讯。";
 "landing.create_account.title" = "供个人使用";
 "landing.create_account.subtitle" = "新增帐户";
-"landing.create_team.title" = "给单位";
+"landing.create_team.title" = "供单位使用";
 "landing.create_team.subtitle" = "创建团队";
 "landing.login.hints" = "已有帐户？";
 "landing.login.button.title" = "登录";

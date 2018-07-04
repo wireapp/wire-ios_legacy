@@ -253,6 +253,7 @@ enum ClientSection: Int {
                     cell.cellNameLabel.accessibilityIdentifier = "device verified label"
                     cell.switchView.addTarget(self, action: #selector(SettingsClientViewController.onVerifiedChanged(_:)), for: .touchUpInside)
                     cell.switchView.accessibilityIdentifier = "device verified"
+                    cell.accessibilityIdentifier = "device verified"
                     cell.switchView.isOn = self.userClient.verified
                     styler(cell)
                     cell.variant = self.variant

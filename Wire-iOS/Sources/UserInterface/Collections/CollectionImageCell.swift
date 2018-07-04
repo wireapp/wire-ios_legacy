@@ -73,8 +73,7 @@ final public class CollectionImageCell: CollectionCell {
         
     private let imageView = FLAnimatedImageView()
     private let loadingView = ThreeDotsLoadingView()
-    
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.loadView()
@@ -92,8 +91,8 @@ final public class CollectionImageCell: CollectionCell {
         self.imageView.clipsToBounds = true
         self.imageView.accessibilityIdentifier = "image"
         self.loadingView.accessibilityIdentifier = "loading"
-        self.contentView.addSubview(self.imageView)
-        self.contentView.addSubview(self.loadingView)
+        self.secureContentsView.addSubview(self.imageView)
+        self.secureContentsView.addSubview(self.loadingView)
         constrain(self, self.imageView, self.loadingView) { selfView, imageView, loadingView in
             imageView.left == selfView.left
             imageView.right == selfView.right
@@ -108,6 +107,10 @@ final public class CollectionImageCell: CollectionCell {
         self.message = .none
         self.isHeightCalculated = false
     }
+
+    override var obfuscationIcon: ZetaIconType {
+        return .photo
+    }
     
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
@@ -116,10 +119,11 @@ final public class CollectionImageCell: CollectionCell {
             self.loadImage()
             return
         }
-        
-        if changeInfo.imageChanged {
+
+        if changeInfo.imageChanged && message?.imageMessageData != nil {
             self.loadImage()
         }
+
     }
     
     override func menuConfigurationProperties() -> MenuConfigurationProperties? {
@@ -164,7 +168,7 @@ final public class CollectionImageCell: CollectionCell {
             self?.saveableImage = nil
         }
     }
-    
+
     fileprivate func loadImage() {
         guard let message = self.message, message.imageMessageData != nil else {
             self.imageView.image = .none
@@ -173,7 +177,7 @@ final public class CollectionImageCell: CollectionCell {
         
         self.imageView.isHidden = true
         self.loadingView.isHidden = false
-        
+
         type(of: self).loadImageThumbnail(for: message) { (image, cacheKey) in
             // Double check that our cell's current image is still the same one
             if let _ = self.message, cacheKey == Message.nonNilImageDataIdentifier(self.message) {

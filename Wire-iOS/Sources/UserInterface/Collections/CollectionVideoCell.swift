@@ -47,11 +47,15 @@ final public class CollectionVideoCell: CollectionForwardableSaveableFileCell {
         self.videoMessageView.delegate = self
         self.videoMessageView.clipsToBounds = true
         self.videoMessageView.timeLabelHidden = true
-        self.contentView.addSubview(self.videoMessageView)
+        self.secureContentsView.addSubview(self.videoMessageView)
         
         constrain(self.contentView, self.videoMessageView) { contentView, videoMessageView in
             videoMessageView.edges == contentView.edges
         }
+    }
+
+    override var obfuscationIcon: ZetaIconType {
+        return .movie
     }
 
 }

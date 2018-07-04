@@ -21,7 +21,6 @@
 #import "ImageMessageCell.h"
 #import "MediaAsset.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import <RBBEasingFunction.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -114,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
         case UIGestureRecognizerStateFailed:
         case UIGestureRecognizerStateCancelled:
         {
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.2 animations:^{
+            [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.2 animations:^{
                 self.pinchImageView.transform = CGAffineTransformIdentity;
                 self.dimView.alpha = 0.0f;
             } completion:^(BOOL finished) {

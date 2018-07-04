@@ -28,6 +28,7 @@ protocol CollectionCellMessageChangeDelegate: class {
 }
 
 open class CollectionCell: UICollectionViewCell {
+
     var messageObserverToken: NSObjectProtocol? = .none
     weak var delegate: CollectionCellDelegate?
     // Cell forwards the message changes to the delegate
@@ -55,7 +56,7 @@ open class CollectionCell: UICollectionViewCell {
     
     public var desiredWidth: CGFloat? = .none
     public var desiredHeight: CGFloat? = .none
-    
+
     override open var intrinsicContentSize: CGSize {
         get {
             let width = self.desiredWidth ?? UIViewNoIntrinsicMetric
@@ -66,7 +67,7 @@ open class CollectionCell: UICollectionViewCell {
     }
     
     private var cachedSize: CGSize? = .none
-    
+
     public func flushCachedSize() {
         cachedSize = .none
     }
@@ -115,6 +116,12 @@ open class CollectionCell: UICollectionViewCell {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(CollectionCell.onLongPress(_:)))
         
         self.contentView.addGestureRecognizer(longPressGestureRecognizer)
+
+        self.contentView.addSubview(secureContentsView)
+        self.contentView.addSubview(obfuscationView)
+
+        secureContentsView.autoPinEdgesToSuperviewEdges()
+        obfuscationView.autoPinEdgesToSuperviewEdges()
     }
 
     override open func prepareForReuse() {
@@ -128,6 +135,27 @@ open class CollectionCell: UICollectionViewCell {
             self.showMenu()
         }
     }
+
+    // MARK: - Obfuscation
+
+    let secureContentsView = UIView()
+
+    var obfuscationIcon: ZetaIconType {
+        return .exclamationMarkCircle
+    }
+
+    fileprivate lazy var obfuscationView = {
+        return ObfuscationView(icon: self.obfuscationIcon)
+    }()
+
+    fileprivate func updateMessageVisibility() {
+        let isObfuscated = message?.isObfuscated == true
+        secureContentsView.isHidden = isObfuscated
+        obfuscationView.isHidden = !isObfuscated
+        obfuscationView.backgroundColor = UIColor(scheme: .accentDimmedFlat)
+    }
+
+    // MARK: - Menu
     
     func menuConfigurationProperties() -> MenuConfigurationProperties? {
         let properties = MenuConfigurationProperties()
@@ -187,6 +215,7 @@ open class CollectionCell: UICollectionViewCell {
     
     /// To be implemented in the subclass
     func updateForMessage(changeInfo: MessageChangeInfo?) {
+        self.updateMessageVisibility()
         // no-op
     }
 

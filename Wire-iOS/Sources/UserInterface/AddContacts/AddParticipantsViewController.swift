@@ -140,7 +140,6 @@ public class AddParticipantsViewController: UIViewController {
         searchGroupSelector = SearchGroupSelector(style: self.variant)
 
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
-                                                                  variant: self.variant,
                                                                   isAddingParticipants: true,
                                                                   shouldIncludeGuests: viewModel.context.includeGuests)
 

@@ -132,7 +132,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
 
     self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection
-                                                                                          variant:ColorSchemeVariantDark
                                                                              isAddingParticipants:NO
                                                                               shouldIncludeGuests:YES];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
@@ -152,18 +151,18 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self updateActionBar];
     [self handleUploadAddressBookLogicIfNeeded];
     [self.searchResultsViewController searchContactList];
-}
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(onDismissPressed)];
     self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
     self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationController.navigationBar.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];

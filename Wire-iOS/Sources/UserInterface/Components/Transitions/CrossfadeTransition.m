@@ -65,7 +65,7 @@
     
     toView.alpha = 0;
     
-    [UIView wr_animateWithEasing:RBBEasingFunctionEaseInOutQuad duration:self.duration delay:0 animations:^{
+    [UIView wr_animateWithEasing:WREasingFunctionEaseInOutQuad duration:self.duration delay:0 animations:^{
         fromView.alpha = 0;
         toView.alpha = 1;
     } completion:^(BOOL finished) {
