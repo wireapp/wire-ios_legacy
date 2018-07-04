@@ -379,6 +379,8 @@
 
 "content.system.conversation.with_name.participants" = "with %@";
 
+"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+
 "content.system.reactivated_device" = "You started using %@ again. Messages sent in the meantime will not appear here.";
 
 "content.system.new_device" = "a new device";
@@ -560,8 +562,9 @@
 "participants.title" = "Details";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Settings";
 "participants.footer.add_title" = "Add Participants";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
@@ -672,9 +675,10 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Off";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

@@ -70,10 +70,9 @@ extension ConversationInputBarViewController {
 
     @objc(updateWritingStateAnimated:)
     public func updateWritingState(animated: Bool) {
-        guard nil == editingMessage, let conversation = conversation else { return }
-        inputBar.setInputBarState(.writing(ephemeral: conversation.destructionEnabled), animated: animated)
+        guard nil == editingMessage else { return }
+        inputBar.setInputBarState(.writing(ephemeral: ephemeralState), animated: animated)
         updateRightAccessoryView()
-        updateButtonIconsForEphemeral()
         updateMarkdownButton()
     }
 

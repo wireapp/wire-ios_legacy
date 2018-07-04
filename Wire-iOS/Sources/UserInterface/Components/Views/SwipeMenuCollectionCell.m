@@ -272,7 +272,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
             self.revealAnimationPerforming = YES;
             CGPoint animStartInteractionPosition = [self.revealDrawerGestureRecognizer locationInView:self];
             
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
+            [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35f animations:^{
                 self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width;
                 [self layoutIfNeeded];
             } completion:^(BOOL finished) {
@@ -297,7 +297,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     else {
         if (_userInteractionHorizontalOffset + self.initialDrawerOffset > self.bounds.size.width * self.overscrollFraction) { // overscrolled
             
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
+            [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35f animations:^{
                 self.scrollingFraction = 1.0f;
                 self.visualDrawerOffset = self.bounds.size.width + self.separatorLine.bounds.size.width;
                 [self layoutIfNeeded];
@@ -373,7 +373,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     };
 
     if (animated) {
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35f animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35f animations:^{
             action();
         }];
     }

@@ -56,6 +56,10 @@ import Cartography
             conversationView.edges == view.edges
         }
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     // MARK: Preview Actions
 

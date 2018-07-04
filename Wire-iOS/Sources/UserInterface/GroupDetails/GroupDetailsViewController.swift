@@ -122,10 +122,9 @@ import Cartography
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        if conversation.canManageAccess {
-            let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
-            sections.append(guestOptionsSectionController)
-        }
+        let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
+        sections.append(optionsSectionController)
+
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
             let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, delegate: self)
@@ -140,7 +139,7 @@ import Cartography
     }
     
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-        guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged else { return }
+        guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged || changeInfo.destructionTimeoutChanged else { return }
         collectionViewController.sections = computeVisibleSections()
     }
     
@@ -177,7 +176,7 @@ extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewContro
     
 }
 
-extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GuestOptionsSectionControllerDelegate {
+extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {
     
     func presentDetails(for user: ZMUser) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
@@ -191,6 +190,13 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gue
     @objc(presentGuestOptionsAnimated:)
     func presentGuestOptions(animated: Bool) {
         let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
+        navigationController?.pushViewController(menu, animated: animated)
+    }
+
+    func presentTimeoutOptions(animated: Bool) {
+        let menu = ConversationTimeoutOptionsViewController(conversation: conversation,
+                                                            userSession: ZMUserSession.shared()!)
+        menu.dismisser = self
         navigationController?.pushViewController(menu, animated: animated)
     }
     

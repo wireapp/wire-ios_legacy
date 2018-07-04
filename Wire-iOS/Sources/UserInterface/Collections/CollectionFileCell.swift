@@ -79,12 +79,12 @@ final public class CollectionFileCell: CollectionForwardableSaveableFileCell {
         self.fileTransferView.layer.cornerRadius = 4
         self.fileTransferView.clipsToBounds = true
 
-        self.contentView.cas_styleClass = "container-view"
-        self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
-        self.contentView.addSubview(self.headerView)
-        self.contentView.addSubview(self.fileTransferView)
+        self.secureContentsView.cas_styleClass = "container-view"
+        self.secureContentsView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
+        self.secureContentsView.addSubview(self.headerView)
+        self.secureContentsView.addSubview(self.fileTransferView)
 
-        constrain(self.contentView, self.fileTransferView, self.headerView) { contentView, fileTransferView, headerView in
+        constrain(self.secureContentsView, self.fileTransferView, self.headerView) { contentView, fileTransferView, headerView in
             headerView.top == contentView.topMargin
             headerView.leading == contentView.leadingMargin + 12
             headerView.trailing == contentView.trailingMargin - 12
@@ -95,6 +95,10 @@ final public class CollectionFileCell: CollectionForwardableSaveableFileCell {
             fileTransferView.right == contentView.rightMargin
             fileTransferView.bottom == contentView.bottomMargin
         }
+    }
+
+    override var obfuscationIcon: ZetaIconType {
+        return .document
     }
 
 }

@@ -198,17 +198,11 @@ PersonalAccountView {
 /* Conversation */
 
 MessageToolboxView {
-    statusLabel: @{
-        font: $font-small-semibold;
-        backgroundColor: clear;
-        textColor: $color-text-dimmed;
-        textContainerInset: 0, 0, 0, 0;
-    }
     backgroundColor: clear;
     clipsToBounds: true;
 }
 
-ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, UnknownMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell {
+ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, UnknownMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell, MessageTimerUpdateCell {
 
     burstTimestampView: @{
         label: @{
@@ -227,7 +221,7 @@ ConversationCellBurstTimestampView {
 }
 
 
-IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell {
+IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, MessageTimerUpdateCell {
     lineView: @{
         backgroundColor: $color-separator;
     }
@@ -380,7 +374,6 @@ ConversationInputBarViewController {
 
     ephemeralIndicatorButton: @{
         borderWidth: 0.0;
-        titleColor: $color-accent-current;
         titleLabel: @{
             font: $font-small-semibold;
         }

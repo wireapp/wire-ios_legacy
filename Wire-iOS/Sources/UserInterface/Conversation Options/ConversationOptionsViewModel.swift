@@ -126,7 +126,11 @@ class ConversationOptionsViewModel {
             guard let `self` = self else { return }
             guard revoke else { return self.updateRows() }
             GuestLinkEvent.revoked.track()
-            self.state.isLoading = true
+
+            let item = CancelableItem(delay: 0.4) { [weak self] in
+                self?.state.isLoading = true
+            }
+
             self.configuration.deleteLink { result in
                 switch result {
                 case .success:
@@ -135,6 +139,8 @@ class ConversationOptionsViewModel {
                 case .failure(let error):
                     self.delegate?.viewModel(self, didReceiveError: error)
                 }
+                
+                item.cancel()
                 self.state.isLoading = false
             }
         })
@@ -157,37 +163,52 @@ class ConversationOptionsViewModel {
     }
     
     private func fetchLink() {
-        showLoadingCell = true
+        let item = CancelableItem(delay: 0.4) { [weak self] in
+            self?.showLoadingCell = true
+        }
+
         configuration.fetchConversationLink { [weak self] result in
             guard let `self` = self else { return }
             switch result {
                 case .success(let link): self.link = link
                 case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
             }
+
+            item.cancel()
             self.showLoadingCell = false
         }
     }
     
     private func createLink() {
         GuestLinkEvent.created.track()
-        showLoadingCell = true
+        
+        let item = CancelableItem(delay: 0.4) { [weak self] in
+            self?.showLoadingCell = true
+        }
+        
         configuration.createConversationLink { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .success(let link): self.link = link
             case .failure(let error): self.delegate?.viewModel(self, didReceiveError: error)
             }
+            
+            item.cancel()
             self.showLoadingCell = false
         }
     }
     
     func setAllowGuests(_ allowGuests: Bool) {
         func _setAllowGuests() {
-            state.isLoading = true
+            let item = CancelableItem(delay: 0.4) { [weak self] in
+                self?.state.isLoading = true
+            }
             
             configuration.setAllowGuests(allowGuests) { [weak self] result in
                 guard let `self` = self else { return }
+                item.cancel()
                 self.state.isLoading = false
+
                 switch result {
                 case .success:
                     self.updateRows()

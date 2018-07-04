@@ -125,7 +125,7 @@ extension CallParticipantsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellConfiguration = rows[indexPath.row]
         let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellConfiguration.cellType.reuseIdentifier, for: indexPath)
-        
+
         if let configurableCell = cell as? CallParticipantsCellConfigurationConfigurable {
             configurableCell.configure(with: cellConfiguration, variant: colorSchemeVariant)
         }

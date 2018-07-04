@@ -56,4 +56,27 @@ class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         sut.setBoundsSizeAsIPhone4_7Inch()
         verify(view: sut.view)
     }
+
+    // MARK: - Update toolbar buttons for switching between ephemeral/normal messages
+    func testThatToolBarIsUpdateAfterScollToAnEphemeralImage() {
+        // GIVEN
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let message = MockMessageFactory.imageMessage(with: image)!
+        message.isEphemeral = false
+        sut.currentMessage = message
+
+        // WHEN
+        sut.viewDidLoad()
+
+        // THEN
+        XCTAssertEqual(sut.buttonsBar.buttons.count, 8)
+
+        // WHEN
+        message.isEphemeral = true
+        sut.pageViewController(UIPageViewController(), didFinishAnimating: true, previousViewControllers: [], transitionCompleted: true)
+
+        // THEN
+        XCTAssertEqual(sut.buttonsBar.buttons.count, 1)
+
+    }
 }

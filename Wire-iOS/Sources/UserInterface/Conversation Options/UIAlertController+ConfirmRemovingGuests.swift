@@ -20,7 +20,7 @@ import UIKit
 
 extension UIAlertController {
     
-    static func checkYouConnection() -> UIAlertController {
+    static func checkYourConnection() -> UIAlertController {
         let controller = UIAlertController(
             title: "guest_room.error.generic.title".localized,
             message: "guest_room.error.generic.message".localized,

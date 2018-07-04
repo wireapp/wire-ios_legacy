@@ -67,7 +67,16 @@ extension ZMSystemMessageData {
 
     private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 
-    open let statusLabel = TTTAttributedLabel(frame: CGRect.zero)
+    open let statusLabel: TTTAttributedLabel = {
+        let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
+        attributedLabel.font = UIFont.smallSemiboldFont
+        attributedLabel.backgroundColor = .clear
+        attributedLabel.textColor = UIColor(scheme: .textDimmed)
+        attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
+        return attributedLabel
+    }()
+
     open let reactionsView = ReactionsView()
     fileprivate let labelClipView = UIView()
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
@@ -280,6 +289,7 @@ extension ZMSystemMessageData {
         let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
         if let destructionDate = message.destructionDate, showDestructionTimer {
             let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
+            requireInternal(remaining > 0, "invalid negative timeout value")
             deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
         }
 

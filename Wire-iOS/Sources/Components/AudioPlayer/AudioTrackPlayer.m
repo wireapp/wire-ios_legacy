@@ -57,8 +57,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
     [self.avPlayer removeObserver:self forKeyPath:@"status"];
     [self.avPlayer removeObserver:self forKeyPath:@"rate"];
     [self.avPlayer removeObserver:self forKeyPath:@"currentItem"];
-    
-    [self.avPlayer.currentItem removeObserver:self forKeyPath:@"status"];
 }
 
 - (instancetype)init

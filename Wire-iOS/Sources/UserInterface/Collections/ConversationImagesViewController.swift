@@ -217,44 +217,43 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         
         return nextIndex
     }
-    
-    private func createControlsBar() {
-        
+
+    private func createControlsBarButtons() -> [IconButton] {
         var buttons = [IconButton]()
-        
+
         // ephemermal images should not contain these buttons.
         // if the current message is ephemeral, then it will be the only
         // message b/c ephemeral messages are excluded in the collection.
         if !currentMessage.isEphemeral {
-            
+
             let copyButton = IconButton.iconButtonDefault()
             copyButton.setIcon(.copy, with: .tiny, for: .normal)
             copyButton.accessibilityLabel = "copy"
             copyButton.addTarget(self, action: #selector(ConversationImagesViewController.copyCurrent(_:)), for: .touchUpInside)
-            
+
             likeButton.addTarget(self, action: #selector(likeCurrent), for: .touchUpInside)
             updateLikeButton()
-            
+
             let saveButton = IconButton.iconButtonDefault()
             saveButton.setIcon(.save, with: .tiny, for: .normal)
             saveButton.accessibilityLabel = "save"
             saveButton.addTarget(self, action: #selector(ConversationImagesViewController.saveCurrent(_:)), for: .touchUpInside)
-            
+
             let shareButton = IconButton.iconButtonDefault()
             shareButton.setIcon(.export, with: .tiny, for: .normal)
             shareButton.accessibilityLabel = "share"
             shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
-            
+
             let sketchButton = IconButton.iconButtonDefault()
             sketchButton.setIcon(.brush, with: .tiny, for: .normal)
             sketchButton.accessibilityLabel = "sketch over image"
             sketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrent(_:)), for: .touchUpInside)
-            
+
             let emojiSketchButton = IconButton.iconButtonDefault()
             emojiSketchButton.setIcon(.emoji, with: .tiny, for: .normal)
             emojiSketchButton.accessibilityLabel = "sketch emoji over image"
             emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
-            
+
             let revealButton = IconButton.iconButtonDefault()
             revealButton.setIcon(.eye, with: .tiny, for: .normal)
             revealButton.accessibilityLabel = "reveal in conversation"
@@ -262,14 +261,20 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
 
             buttons = [likeButton, shareButton, sketchButton, emojiSketchButton, copyButton, saveButton, revealButton]
         }
-        
+
         deleteButton.setIcon(.trash, with: .tiny, for: .normal)
         deleteButton.accessibilityLabel = "delete"
         deleteButton.addTarget(self, action: #selector(deleteCurrent), for: .touchUpInside)
-        
+
         buttons.append(deleteButton)
         buttons.forEach { $0.hitAreaPadding = .zero }
-        
+
+        return buttons
+    }
+    
+    private func createControlsBar() {
+        let buttons = createControlsBarButtons()
+
         self.buttonsBar = InputBarButtonsView(buttons: buttons)
         self.buttonsBar.clipsToBounds = true
         self.buttonsBar.expandRowButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
@@ -457,6 +462,7 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
             completed {
             
             self.currentMessage = currentController.message
+            self.buttonsBar.buttons = createControlsBarButtons()
             updateLikeButton()
         }
     }

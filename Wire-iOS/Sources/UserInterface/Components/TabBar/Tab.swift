@@ -20,7 +20,6 @@ import UIKit
 import Cartography
 
 class Tab: Button {
-    private let selectionLineView = UIView()
 
     var title: String = "" {
         didSet {
@@ -37,14 +36,6 @@ class Tab: Button {
     init(variant: ColorSchemeVariant) {
         colorSchemeVariant = variant
         super.init(frame: .zero)
-
-        addSubview(selectionLineView)
-        constrain(self, selectionLineView) { selfView, selectionLineView in
-            selectionLineView.leading == selfView.leading
-            selectionLineView.trailing == selfView.trailing
-            selectionLineView.height == 1
-            selectionLineView.bottom == selfView.bottom
-        }
 
         titleLabel?.font = FontSpec(.small, .semibold).font
         isSelected = false
@@ -73,8 +64,7 @@ class Tab: Button {
         case .light:
             selectionColor = .black
         }
-
-        selectionLineView.backgroundColor = isSelected ? selectionColor : .clear
+        
         setTitleColor(isSelected ? selectionColor : selectionColor.withAlphaComponent(0.5), for: .normal)
     }
 }

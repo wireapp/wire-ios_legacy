@@ -19,8 +19,6 @@
 
 @import ObjectiveC;
 
-#import <RBBAnimation/RBBTweenAnimation.h>
-
 #import "UIView+WR_ExtendedBlockAnimations.h"
 
 
@@ -236,36 +234,36 @@ static NSMutableArray *WR_savedAnimationStates = nil;
     }
 }
 
-+ (void)wr_animateWithEasing:(RBBEasingFunction)easing duration:(NSTimeInterval)duration animations:(void (^)(void))animations
++ (void)wr_animateWithEasing:(WREasingFunction)easing duration:(NSTimeInterval)duration animations:(void (^)(void))animations
 {
     [self wr_animateWithEasing:easing duration:duration delay:0 animations:animations options:WRExtendedBlockAnimationsOptionsNone completion:nil];
 }
 
-+ (void)wr_animateWithEasing:(RBBEasingFunction)easing duration:(NSTimeInterval)duration animations:(void (^)(void))animations completion:(void (^)(BOOL))completion
++ (void)wr_animateWithEasing:(WREasingFunction)easing duration:(NSTimeInterval)duration animations:(void (^)(void))animations completion:(void (^)(BOOL))completion
 {
     [self wr_animateWithEasing:easing duration:duration delay:0 animations:animations options:WRExtendedBlockAnimationsOptionsNone completion:completion];
 }
 
-+ (void)wr_animateWithEasing:(RBBEasingFunction)easing duration:(NSTimeInterval)duration delay:(NSTimeInterval)delay animations:(void (^)(void))animations completion:(void (^)(BOOL))completion
++ (void)wr_animateWithEasing:(WREasingFunction)easing duration:(NSTimeInterval)duration delay:(NSTimeInterval)delay animations:(void (^)(void))animations completion:(void (^)(BOOL))completion
 {
     [self wr_animateWithEasing:easing duration:duration delay:delay animations:animations options:WRExtendedBlockAnimationsOptionsNone completion:completion];
 }
 
-+ (void)wr_animateWithEasing:(RBBEasingFunction)easing
++ (void)wr_animateWithEasing:(WREasingFunction)easing
                     duration:(NSTimeInterval)duration
                        delay:(NSTimeInterval)delay
                   animations:(void (^)(void))animations
                      options:(WRExtendedBlockAnimationsOptions)options
                   completion:(void (^)(BOOL finished))completion
 {
-    RBBTweenAnimation *animation = [[RBBTweenAnimation alloc] init];
-    
+    WREasingAnimation *animation = [WREasingAnimation new];
+
     animation.easing = easing;
     animation.beginTime = CACurrentMediaTime() + delay;
     animation.fillMode = kCAFillModeBoth;
     animation.additive = YES;
     
-    // RBBTweenAnimation has the same interface as CABasicAnimation so this should be safe
+    // WREasingAnimation has the same interface as CABasicAnimation so this should be safe
     [self wr_animateWithBasicAnimation:(CABasicAnimation *)animation duration:duration animations:animations options:options completion:completion];
 }
 

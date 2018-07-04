@@ -203,13 +203,13 @@ typedef void (^AnimationBlock)(id, NSInteger);
             
             self.isPingAnimationRunning = YES;
             
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.7f animations:^{
+            [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.7f animations:^{
                 self.pingImageView.transform = CGAffineTransformMakeScale(1.8, 1.8);
             } completion:^(BOOL finished) {
                 self.pingImageView.transform = CGAffineTransformIdentity;
             }];
             
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.7f animations:^{
+            [UIView wr_animateWithEasing:WREasingFunctionEaseOutQuart duration:0.7f animations:^{
                 self.pingImageView.alpha = 0;
             } completion:^(BOOL finished) {
                 if (reps > 0) {
@@ -224,7 +224,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
                         
                         self.isPingAnimationRunning = YES;
                         
-                        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.55f animations:^{
+                        [UIView wr_animateWithEasing:WREasingFunctionEaseOutQuart duration:0.55f animations:^{
                             self.pingImageView.alpha = 1;
                         } completion:^(BOOL finished) {
                             [self stopPingAnimation];
