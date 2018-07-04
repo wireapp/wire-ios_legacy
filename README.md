@@ -46,7 +46,7 @@ In order to build Wire for iOS locally, it is necessary to install the following
 - OS X 10.13.2 or newer
 - Xcode 9.3.0 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
 - Bundler (http://bundler.io)
-- Carthage 0.30.0 or newer (https://github.com/Carthage/Carthage)
+- Carthage 0.29.0 or newer (https://github.com/Carthage/Carthage)
 - Python 2.7
 
 The setup script will automatically check for you that you satisfy these requirements
