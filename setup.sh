@@ -54,6 +54,10 @@ echo "ℹ️  Check that bundler is installed... (requires SUDO)"
 hash bundle 2>/dev/null || sudo gem install bundler
 echo ""
 
+echo "ℹ️  Installing build dependencies... (this might take a while)"
+bundle install --path ~/.gem
+echo ""
+
 echo "ℹ️  Downloading additional assets..."
 ./Scripts/download-assets.sh
 echo ""
