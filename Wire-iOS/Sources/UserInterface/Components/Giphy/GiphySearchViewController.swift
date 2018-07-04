@@ -232,6 +232,8 @@ class GiphyCollectionViewCell: UICollectionViewCell {
             cell.ziph = ziph
             cell.representation = representation
             cell.backgroundColor = UIColor(for: ZMUser.pickRandomAccentColor())
+            cell.isAccessibilityElement = true
+            cell.accessibilityTraits |= UIAccessibilityTraitImage
 
             searchResultsController.fetchImageData(forZiph: ziph, imageType: representation.imageType) { (imageData, imageRepresentation, error) in
                 if cell.representation == imageRepresentation {
