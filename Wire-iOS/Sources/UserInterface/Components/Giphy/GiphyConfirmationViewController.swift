@@ -104,7 +104,7 @@ class GiphyConfirmationViewController: UIViewController {
         }
     }
     
-    func onDismiss() {
+    @objc func onDismiss() {
         dismiss(animated: true, completion: nil)
     }
     
