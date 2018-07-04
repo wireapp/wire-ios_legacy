@@ -30,13 +30,14 @@ class TabBar: UIView {
     // MARK: - Properties
 
     weak var delegate : TabBarDelegate?
-    let animatesTransition = true
+    var animatesTransition = true
     fileprivate(set) var items : [UITabBarItem] = []
     private let tabInset: CGFloat = 16
 
     private let selectionLineView = UIView()
     private(set) var tabs: [Tab] = []
     private var lineLeadingConstraint: NSLayoutConstraint?
+    private var didUpdateInitialBarPosition = false
 
     var style: ColorSchemeVariant {
         didSet {
@@ -72,7 +73,6 @@ class TabBar: UIView {
         setupViews()
         createConstraints()
         updateButtonSelection()
-        updateLinePosition(animated: false)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -97,6 +97,14 @@ class TabBar: UIView {
             selectionLineView.bottom == selfView.bottom
             let widthInset = tabInset * 2 / CGFloat(items.count)
             selectionLineView.width == selfView.width / CGFloat(items.count) - widthInset
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if !didUpdateInitialBarPosition, bounds != .zero {
+            didUpdateInitialBarPosition = true
+            updateLinePosition(animated: false)
         }
     }
     

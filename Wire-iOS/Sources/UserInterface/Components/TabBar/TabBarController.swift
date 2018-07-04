@@ -60,10 +60,11 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     private(set) var viewControllers: [UIViewController]
     private(set) var selectedIndex: Int
     
-    @objc(swipingEnabled) var isSwipingEnabled = true {
+    @objc(interactive) var isInteractive = true {
         didSet {
-            pageViewController.dataSource = isSwipingEnabled ? self : nil
-            pageViewController.delegate = isSwipingEnabled ? self : nil
+            pageViewController.dataSource = isInteractive ? self : nil
+            pageViewController.delegate = isInteractive ? self : nil
+            tabBar?.animatesTransition = isInteractive
         }
     }
 
@@ -113,13 +114,14 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         add(pageViewController, to: contentView)
         pageViewController.scrollView?.delegate = self
 
-        if isSwipingEnabled {
+        if isInteractive {
             pageViewController.dataSource = self
             pageViewController.delegate = self
         }
         
         let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
+        tabBar?.animatesTransition = isInteractive
         self.tabBar?.delegate = self
         self.tabBar?.isUserInteractionEnabled = self.isEnabled && items.count > 1
         self.view.addSubview(self.tabBar!)
@@ -159,19 +161,10 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
 
         delegate?.tabBarController(self, tabBarDidSelectIndex: index)
         tabBar?.setSelectedIndex(index, animated: animated)
-        
+
         let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
         let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
-
-        let update = { [toViewController, pageViewController] in
-            pageViewController.setViewControllers([toViewController], direction: direction, animated: true)
-        }
-        
-        if ProcessInfo.processInfo.isRunningTests {
-            update()
-        } else {
-            DispatchQueue.main.async(execute: update)
-        }
+        pageViewController.setViewControllers([toViewController], direction: direction, animated: isInteractive)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
@@ -197,7 +190,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         isSwiping = false
         delegate?.tabBarController(self, tabBarDidSelectIndex: index)
         selectedIndex = index
-        tabBar?.setSelectedIndex(selectedIndex, animated: true)
+        tabBar?.setSelectedIndex(selectedIndex, animated: isInteractive)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
