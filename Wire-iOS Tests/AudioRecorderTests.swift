@@ -37,7 +37,7 @@ class AudioRecorderTests: XCTestCase {
             XCTAssertEqual(error as! RecordingError, RecordingError.toMaxSize)
         }
         
-        self.waitForExpectations(timeout: 5.0, handler: nil)
+        self.waitForExpectations(timeout: 10.0, handler: nil)
     }
     
     func testThatItFiresAudioMessageMaximumDurationError() {
@@ -54,6 +54,6 @@ class AudioRecorderTests: XCTestCase {
             XCTAssertEqual(error as! RecordingError, RecordingError.toMaxDuration)
         }
         
-        self.waitForExpectations(timeout: 5.0, handler: nil)
+        self.waitForExpectations(timeout: 10.0, handler: nil)
     }
 }
