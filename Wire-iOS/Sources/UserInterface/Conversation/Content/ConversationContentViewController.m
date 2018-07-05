@@ -898,6 +898,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)conversationWindowDidChange:(MessageWindowChangeInfo *)note
 {
+    [self updateHeaderHeight];
+
     // Clear selectedMessage if it is going to be deleted.
     if ([note.deletedObjects containsObject:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
         self.conversationMessageWindowTableViewAdapter.selectedMessage = nil;
