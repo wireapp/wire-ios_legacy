@@ -29,7 +29,6 @@
 #import "Button.h"
 
 #import "AnalyticsTracker+Registration.h"
-#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "UIImagePickerController+GetImage.h"
 #import "RegistrationFormController.h"
 @import WireExtensionComponents;
@@ -269,18 +268,17 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
         
         self.showLoadingView = YES;
         @weakify(self);
-        [self.profilePictureImageView setImageWithURLRequest:request
-                                            placeholderImage:nil
-                                                     success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+        [self.profilePictureImageView displayImageAtURL:imageURL
+                                              onSuccess:^(UIImage * _Nonnull image) {
                                                          @strongify(self);
                                                          self.profilePictureImageView.image = image;
                                                          self.defaultProfilePictureImage = image;
                                                          self.showLoadingView = NO;
-                                                     }
-                                                     failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
+                                                       }
+                                                onError:^() {
                                                          @strongify(self);
                                                          self.showLoadingView = NO;
-                                                     }];
+                                                       }];
     }
 }
 

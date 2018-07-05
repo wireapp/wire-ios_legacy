@@ -234,6 +234,10 @@
 		5EA73D9220D903BC0001D106 /* CheckmarkCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */; };
 		5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */; };
 		5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */; };
+		5EBC343720EE434700AFB6DF /* ImageDownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343620EE434700AFB6DF /* ImageDownloadCache.swift */; };
+		5EBC343A20EE449900AFB6DF /* ResourceDownloadHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343920EE449900AFB6DF /* ResourceDownloadHandler.swift */; };
+		5EBC343C20EE49D700AFB6DF /* DecodeImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */; };
+		5EBC343E20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */; };
 		5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */; };
 		5EC16B9120EB8C6F00955156 /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8E20EB8C6F00955156 /* YouTubeService.swift */; };
 		5EC16B9220EB8C6F00955156 /* MediaPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8F20EB8C6F00955156 /* MediaPreviewViewController.m */; };
@@ -1554,6 +1558,10 @@
 		5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsTimeoutOptionsCellTests.swift; sourceTree = "<group>"; };
 		5EAE50322099B424003DAAC6 /* PinnableThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnableThumbnailViewController.swift; sourceTree = "<group>"; };
 		5EB45760204EA75300BA217A /* CallQualityDismissalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityDismissalTransition.swift; sourceTree = "<group>"; };
+		5EBC343620EE434700AFB6DF /* ImageDownloadCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadCache.swift; sourceTree = "<group>"; };
+		5EBC343920EE449900AFB6DF /* ResourceDownloadHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDownloadHandler.swift; sourceTree = "<group>"; };
+		5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageOperation.swift; sourceTree = "<group>"; };
+		5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ImageDownloadCache.swift"; sourceTree = "<group>"; };
 		5EC16B8C20EB8C6F00955156 /* MediaPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPreviewViewController.h; sourceTree = "<group>"; };
 		5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YouTubeService+DataTypes.swift"; sourceTree = "<group>"; };
 		5EC16B8E20EB8C6F00955156 /* YouTubeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouTubeService.swift; sourceTree = "<group>"; };
@@ -2267,7 +2275,6 @@
 		8FC8554B199246EF0008B66B /* Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		8FC8554C199246EF0008B66B /* Warnings.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		8FC8563F19924CBA0008B66B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8FC856501992523C0008B66B /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WireSyncEngine+iOS.h"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* Hockey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hockey.swift; sourceTree = "<group>"; };
 		AF1D126A1C7CF02A00959DF5 /* ParticipantDeviceCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantDeviceCellTests.m; sourceTree = "<group>"; };
@@ -3449,6 +3456,17 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		5EBC343820EE448B00AFB6DF /* ImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				5EBC343620EE434700AFB6DF /* ImageDownloadCache.swift */,
+				5EBC343920EE449900AFB6DF /* ResourceDownloadHandler.swift */,
+				5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */,
+				5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */,
+			);
+			path = ImageCache;
+			sourceTree = "<group>";
+		};
 		5EC16B6520EB782900955156 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -4014,6 +4032,7 @@
 				876113E51DD1DE70007F5969 /* ShareViewController */,
 				7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */,
 				7C3A82CA20B6E6B800313B4F /* CameraAccess.swift */,
+				5EBC343820EE448B00AFB6DF /* ImageCache */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -4524,7 +4543,6 @@
 				BFAD53FC1E6972CD0015C677 /* NotificationFetchComponents */,
 				8F42C539199244A700288E4D /* Products */,
 				8286E48D7CC440448CBD8F48 /* Frameworks */,
-				8FC856501992523C0008B66B /* Podfile */,
 				87775AB21D95138D000CAD4F /* avs-versions */,
 				872AC9C21B397E6A00575CF3 /* Cartfile */,
 				87A418BD1C0CAB1A006FA803 /* Cartfile.private */,
@@ -6668,6 +6686,7 @@
 				F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */,
 				87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */,
 				873C5FE71C10426A00D5132A /* ClientListViewController.swift in Sources */,
+				5EBC343C20EE49D700AFB6DF /* DecodeImageOperation.swift in Sources */,
 				BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */,
 				871BC2701D34F8F800DF0793 /* StackView.m in Sources */,
 				871BC25F1D34F8F800DF0793 /* ColorPickerView.m in Sources */,
@@ -7073,6 +7092,7 @@
 				EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */,
 				87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */,
 				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
+				5EBC343720EE434700AFB6DF /* ImageDownloadCache.swift in Sources */,
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
 				55A42A701FC872600056752F /* CallQualityScoreProvider.swift in Sources */,
 				87E56EDA1E4E10CA0097D489 /* TextSearchViewController.swift in Sources */,
@@ -7246,6 +7266,7 @@
 				7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */,
 				7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */,
 				16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */,
+				5EBC343A20EE449900AFB6DF /* ResourceDownloadHandler.swift in Sources */,
 				BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */,
 				87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */,
 				EF2F6DA320ED11D2007B6D70 /* UIColor+Accent.swift in Sources */,
@@ -7314,6 +7335,7 @@
 				8FC853FF199245770008B66B /* AppDelegate.m in Sources */,
 				EE265E821F6FF4910087676B /* ChatHeadView.swift in Sources */,
 				BF0555BD1E6D785C00D3E9D4 /* CallCells.swift in Sources */,
+				5EBC343E20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift in Sources */,
 				EF21271B1FB9DFE300625A9B /* TermsOfUseStepViewController.m in Sources */,
 				D525426B2093637D001C04C1 /* IconButton+CallActions.swift in Sources */,
 				EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */,

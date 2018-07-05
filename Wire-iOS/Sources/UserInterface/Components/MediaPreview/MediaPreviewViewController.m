@@ -18,7 +18,6 @@
 
 
 @import PureLayout;
-#import <AFNetworking/UIImageView+AFNetworking.h>
 
 #import "MediaPreviewViewController.h"
 #import "MediaPreviewView.h"
@@ -96,7 +95,7 @@
     MediaThumbnail *bestThumbnail = [self.mediaPreviewData bestThumbnailForSize:[UIScreen mainScreen].bounds.size];
     
     if (bestThumbnail.URL) {
-        [self.mediaPreviewView.previewImageView setImageWithURL:bestThumbnail.URL];
+        [self.mediaPreviewView.previewImageView displayImageAtURL:bestThumbnail.URL];
     }
 }
 

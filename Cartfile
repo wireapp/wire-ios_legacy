@@ -6,7 +6,6 @@ github "wireapp/wire-ios-share-engine" ~> 82.0
 github "wireapp/wire-ios-sync-engine" ~> 177.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2-wire-swift3.0.2"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
-github "wireapp/AFNetworking" "2.6.3-iOS8"
 github "wireapp/wire-ios-canvas" ~> 7.0
 github "wireapp/HockeySDK-iOS" ~> 5.0
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
