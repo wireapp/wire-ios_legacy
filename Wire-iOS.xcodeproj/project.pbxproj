@@ -238,6 +238,8 @@
 		5EBC343A20EE449900AFB6DF /* ResourceDownloadHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343920EE449900AFB6DF /* ResourceDownloadHandler.swift */; };
 		5EBC343C20EE49D700AFB6DF /* DecodeImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */; };
 		5EBC343E20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */; };
+		5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */; };
+		5EBC344420EE5FEF00AFB6DF /* identicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EBC344320EE5FEF00AFB6DF /* identicon.png */; };
 		5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */; };
 		5EC16B9120EB8C6F00955156 /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8E20EB8C6F00955156 /* YouTubeService.swift */; };
 		5EC16B9220EB8C6F00955156 /* MediaPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8F20EB8C6F00955156 /* MediaPreviewViewController.m */; };
@@ -1562,6 +1564,8 @@
 		5EBC343920EE449900AFB6DF /* ResourceDownloadHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDownloadHandler.swift; sourceTree = "<group>"; };
 		5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageOperation.swift; sourceTree = "<group>"; };
 		5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ImageDownloadCache.swift"; sourceTree = "<group>"; };
+		5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageOperationTests.swift; sourceTree = "<group>"; };
+		5EBC344320EE5FEF00AFB6DF /* identicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = identicon.png; sourceTree = "<group>"; };
 		5EC16B8C20EB8C6F00955156 /* MediaPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPreviewViewController.h; sourceTree = "<group>"; };
 		5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YouTubeService+DataTypes.swift"; sourceTree = "<group>"; };
 		5EC16B8E20EB8C6F00955156 /* YouTubeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouTubeService.swift; sourceTree = "<group>"; };
@@ -3467,6 +3471,15 @@
 			path = ImageCache;
 			sourceTree = "<group>";
 		};
+		5EBC343F20EE5E9900AFB6DF /* ImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				5EBC344320EE5FEF00AFB6DF /* identicon.png */,
+				5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */,
+			);
+			path = ImageCache;
+			sourceTree = "<group>";
+		};
 		5EC16B6520EB782900955156 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -5175,6 +5188,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				5EBC343F20EE5E9900AFB6DF /* ImageCache */,
 				EF2BEF2D20E3B5A200D056B0 /* ConversationCell */,
 				EF27CD9A20C161500077FE55 /* DeviceManagement */,
 				EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */,
@@ -6261,6 +6275,7 @@
 			files = (
 				5EC16BA820EBBF8500955156 /* yt_response_no_snippet.json in Resources */,
 				7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */,
+				5EBC344420EE5FEF00AFB6DF /* identicon.png in Resources */,
 				BFA13E181D4B509A00F0A91B /* unsplash_burger.jpg in Resources */,
 				7C374E4E1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg in Resources */,
 				16A2027C1B677A5D0095BBD1 /* soundcloud-track4.json in Resources */,
@@ -7435,6 +7450,7 @@
 				87C39A8E206BE83C008DA100 /* NoHistoryViewControllerTests.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
+				5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */,
 				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,
 				BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */,
 				CE3FBF1E1CE22B4900ED087A /* DeleteMessageTests.m in Sources */,
