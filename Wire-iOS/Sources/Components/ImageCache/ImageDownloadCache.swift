@@ -87,26 +87,33 @@ class ImageDownloadCache {
      * image was available at this URL.
      */
 
-    func fetchImage(at url: URL, completionHandler: @escaping (_ image: UIImage?) -> Void) {
+    func fetchImage(at url: URL, completionHandler: @escaping (_ image: UIImage?, _ error: Error?) -> Void) {
 
         let downloadTask = session.dataTask(with: url)
 
-        let resultHandler: (UIImage?) -> Void = { image in
+        let resultHandler: (UIImage?, Error?) -> Void = { image, error in
             OperationQueue.main.addOperation {
-                completionHandler(image)
+                completionHandler(image, error)
             }
         }
 
         // Attempts decoding an image as local,
 
-        downloadHandler.schedule(downloadTask) { data, _, _ in
+        downloadHandler.schedule(downloadTask) { data, _, error in
 
-            guard let responseData = data else {
-                resultHandler(nil)
+            if let error = error {
+                resultHandler(nil, error)
                 return
             }
 
-            self.decodeImage(with: responseData, resultHandler: resultHandler)
+            guard let responseData = data else {
+                resultHandler(nil, error)
+                return
+            }
+
+            self.decodeImage(with: responseData) {
+                resultHandler($0, nil)
+            }
 
         }
 

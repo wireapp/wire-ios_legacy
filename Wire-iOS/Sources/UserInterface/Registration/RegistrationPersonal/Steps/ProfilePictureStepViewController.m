@@ -264,8 +264,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
             urlString = UnsplashRandomImageLowQualityURL;
         }
         NSURL *imageURL = [NSURL URLWithString:urlString];
-        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:imageURL];
-        
+
         self.showLoadingView = YES;
         @weakify(self);
         [self.profilePictureImageView displayImageAtURL:imageURL
@@ -275,7 +274,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
                                                          self.defaultProfilePictureImage = image;
                                                          self.showLoadingView = NO;
                                                        }
-                                                onError:^() {
+                                                onError:^(NSError * _Nullable error) {
                                                          @strongify(self);
                                                          self.showLoadingView = NO;
                                                        }];

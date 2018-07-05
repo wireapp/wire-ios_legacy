@@ -29,14 +29,14 @@ extension UIImageView {
      */
 
     @objc(displayImageAtURL:onSuccess:onError:)
-    func displayImage(at url: URL, onSuccess: ((UIImage) -> Void)?, onError: (() -> Void)?) {
+    func displayImage(at url: URL, onSuccess: ((UIImage) -> Void)?, onError: ((Error?) -> Void)?) {
 
-        ImageDownloadCache.shared.fetchImage(at: url) { [weak self] downloadedImage in
+        ImageDownloadCache.shared.fetchImage(at: url) { [weak self] downloadedImage, error in
             self?.image = downloadedImage
             if let downloadedImage = downloadedImage {
                 onSuccess?(downloadedImage)
             } else {
-                onError?()
+                onError?(error)
             }
         }
 
