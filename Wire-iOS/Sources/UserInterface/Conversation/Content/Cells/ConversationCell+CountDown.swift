@@ -31,18 +31,11 @@ extension ConversationCell {
 
         let duration = destructionDate.timeIntervalSinceNow
 
-        if !countdownView.isAnimatingProgress && duration >= 1 {
-            let progress = message.calculateCurrentCountdownProgress
+        if !countdownView.isAnimatingProgress && duration >= 1,
+            let progress = message.countdownProgress {
             countdownView.startAnimating(duration: duration, currentProgress: CGFloat(progress))
             countdownView.isHidden = false
         }
         toolboxView.updateTimestamp(message)
-    }
-
-}
-
-extension ZMConversationMessage {
-    var calculateCurrentCountdownProgress: Double {
-        return 1 - destructionDate!.timeIntervalSinceNow / deletionTimeout
     }
 }
