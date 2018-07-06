@@ -197,6 +197,7 @@ import Classy
             self.delegate?.transferView(self, didSelect: .resend)
         case .uploaded, .downloaded, .failedDownload:
             self.delegate?.transferView(self, didSelect: .present)
+        case .unavailable: break
         }
     }
     

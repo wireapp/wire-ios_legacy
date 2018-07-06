@@ -393,12 +393,9 @@ private let zmLog = ZMSLog(tag: "UI")
             }
         case .uploaded, .failedDownload:
             self.expectingDownload = true
-            ZMUserSession.shared()?.enqueueChanges({
-                fileMessage.requestFileDownload()
-            })
-            
-        case .downloaded:
-            self.playTrack()
+            ZMUserSession.shared()?.enqueueChanges(fileMessage.requestFileDownload)
+        case .downloaded: playTrack()
+        case .unavailable: return
         }
     }
     
