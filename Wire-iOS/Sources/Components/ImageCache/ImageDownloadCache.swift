@@ -32,9 +32,6 @@ class ImageDownloadCache {
     /// The session that performs network requests.
     private let session: DataTaskSession
 
-    /// The object that handles image downloads.
-    private let downloadHandler: ResourceDownloadHandler
-
     /// The operation queue used for decoding images.
     private let imageDecodingQueue = OperationQueue()
 
@@ -43,16 +40,10 @@ class ImageDownloadCache {
     /**
      * Creates the cache for downloading images.
      *
-     * - parameter memoryCapacity: The size to allocate for the cache in memeory, in megabytes.
-     * - parameter diskCapacity: The size to allocate for the cache in memory, in megabytes.
-     * - parameter defaultCachingDuration: The duration for which images should be cached, if
-     * the server did not mark them as cachable. You can pass `nil` if you only want to cache
-     * explicitly cachable images.
-     * - parameter sessionType: The type of session to use.
+     * - parameter session: The network session to use to download the images.
      */
 
-    init(downloadHandler: ResourceDownloadHandler, session: DataTaskSession) {
-        self.downloadHandler = downloadHandler
+    init(session: DataTaskSession) {
         self.session = session
     }
 
@@ -65,18 +56,14 @@ class ImageDownloadCache {
 
     static let shared: ImageDownloadCache = {
 
-        let downloadHandler = ResourceDownloadHandler(defaultCachingDuration: 7200)
-
         let cache = URLCache(memoryCapacity: 100 * 1024 * 1024,
                              diskCapacity: 200 * 1024 * 1024, diskPath: nil)
 
         let sessionConfiguration = URLSessionConfiguration.default
         sessionConfiguration.urlCache = cache
 
-        let networkQueue = OperationQueue()
-        let session = URLSession(configuration: sessionConfiguration, delegate: downloadHandler, delegateQueue: networkQueue)
-
-        return ImageDownloadCache(downloadHandler: downloadHandler, session: session)
+        let session = URLSession(configuration: sessionConfiguration)
+        return ImageDownloadCache(session: session)
 
     }()
 
@@ -97,24 +84,20 @@ class ImageDownloadCache {
 
     func fetchImage(at url: URL, completionHandler: @escaping (_ image: UIImage?, _ error: Error?) -> Void) {
 
-        let downloadTask = session.makeDataTask(with: url)
-
         let resultHandler: (UIImage?, Error?) -> Void = { image, error in
             OperationQueue.main.addOperation {
                 completionHandler(image, error)
             }
         }
 
-        // Attempts decoding an image as local,
-
-        downloadHandler.schedule(downloadTask) { data, response, error in
+        let downloadTask = session.makeDataTask(with: url) { data, response, error in
 
             if let error = error {
                 resultHandler(nil, error)
                 return
             }
 
-            guard let responseCode = response?.statusCode else {
+            guard let responseCode = (response as? HTTPURLResponse)?.statusCode else {
                 resultHandler(nil, ImageDownloadCacheError.invalidResponse)
                 return
             }
@@ -134,6 +117,8 @@ class ImageDownloadCache {
             }
 
         }
+
+        downloadTask.resume()
 
     }
 

@@ -43,22 +43,19 @@ class MockURLSession: DataTaskSession {
     // MARK: - State
 
     private var cache: URLCache?
-    private var delegateQueue: OperationQueue
-    private weak var delegate: DataTaskSessionDelegate?
+    private var delegateQueue = OperationQueue()
 
     private var tasks: [MockDataTask] = []
     private var scheduledResponses: [URL: MockURLResponse] = [:]
 
     // MARK: - Initialization
 
-    init(delegate: DataTaskSessionDelegate, cache: URLCache?, delegateQueue: OperationQueue) {
-        self.delegate = delegate
+    init(cache: URLCache?) {
         self.cache = cache
-        self.delegateQueue = delegateQueue
     }
 
-    func makeDataTask(with url: URL) -> DataTask {
-        let task = MockDataTask(session: self, taskIdentifier: tasks.count)
+    func makeDataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> DataTask {
+        let task = MockDataTask(session: self, taskIdentifier: tasks.count, completionHandler: completionHandler)
         task.currentRequest = URLRequest(url: url)
         tasks.append(task)
         return task
@@ -110,19 +107,9 @@ class MockURLSession: DataTaskSession {
 
         delegateQueue.addOperation {
 
-            if data.count >= 2 {
-                let packetStep = data.count / 2
-                let packet1 = data.prefix(upTo: packetStep)
-                let packet2 = data.suffix(from: packetStep)
-                self.delegate?.dataTaskSession(self, dataTask: task, didReceive: packet1)
-                self.delegate?.dataTaskSession(self, dataTask: task, didReceive: packet2)
-            } else {
-                self.delegate?.dataTaskSession(self, dataTask: task, didReceive: data)
-            }
-
             let cachingCompletionHandler = {
                 task.response = response
-                self.delegate?.dataTaskSession(self, dataTask: task, didCompleteWithError: nil)
+                task.completionHandler(data, response, nil)
             }
 
             if let cache = self.cache {
@@ -138,25 +125,27 @@ class MockURLSession: DataTaskSession {
 
     private func startCaching(data: Data, for response: URLResponse, task: DataTask, in cache: URLCache, completionHandler: @escaping () -> Void) {
 
-        let proposedCacheResponse = CachedURLResponse(response: response, data: data)
-
-        self.delegate?.dataTaskSession(self, dataTask: task, willCacheResponse: proposedCacheResponse) { updatedCacheResponse in
-
-            guard let cachedResponse = updatedCacheResponse else {
+        guard let httpResponse = response as? HTTPURLResponse,
+            (200 ..< 300).contains(httpResponse.statusCode) else {
                 completionHandler()
                 return
-            }
-
-            cache.storeCachedResponse(cachedResponse, for: task.currentRequest!)
-            completionHandler()
-
         }
+
+        guard httpResponse.allHeaderFields.keys.contains("Cache-Control") else {
+            completionHandler()
+            return
+        }
+
+        let cachedResponse = CachedURLResponse(response: httpResponse, data: data)
+
+        cache.storeCachedResponse(cachedResponse, for: task.currentRequest!)
+        completionHandler()
 
     }
 
     private func failTask(_ task: MockDataTask, with error: Error) {
         delegateQueue.addOperation {
-            self.delegate?.dataTaskSession(self, dataTask: task, didCompleteWithError: error)
+            task.completionHandler(nil, nil, error)
         }
     }
 

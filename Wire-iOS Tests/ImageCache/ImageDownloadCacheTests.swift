@@ -27,19 +27,17 @@ class ImageDownloadCacheTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-
-        let resourceDownloadHandler = ResourceDownloadHandler(defaultCachingDuration: 60)
-        let delegateQueue = OperationQueue()
-
         cache = URLCache(memoryCapacity: 100 * 1024 * 1024, diskCapacity: 0, diskPath: nil)
-        session = MockURLSession(delegate: resourceDownloadHandler, cache: cache, delegateQueue: delegateQueue)
-        imageDownloadCache = ImageDownloadCache(downloadHandler: resourceDownloadHandler, session: session)
-
+        session = MockURLSession(cache: cache)
+        imageDownloadCache = ImageDownloadCache(session: session)
     }
 
     override func tearDown() {
-        super.tearDown()
         cache.removeAllCachedResponses()
+        cache = nil
+        session = nil
+        imageDownloadCache = nil
+        super.tearDown()
     }
 
     func testThatItFetchesImageWithCacheHeader() {
@@ -97,7 +95,7 @@ class ImageDownloadCacheTests: XCTestCase {
         XCTAssertNil(error)
 
         let cachedResponse = cache.cachedResponse(for: URLRequest(url: imageURL))
-        XCTAssertEqual(cachedResponse?.data, imageData)
+        XCTAssertNil(cachedResponse)
     }
 
     func testThatItReturns404ErrorIfImageIsNotFound() {

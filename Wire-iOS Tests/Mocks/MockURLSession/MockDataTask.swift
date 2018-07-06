@@ -19,17 +19,21 @@
 import Foundation
 @testable import Wire
 
+typealias MockDataTaskCompletionHandler = (Data?, URLResponse?, Error?) -> Void
+
 class MockDataTask: DataTask {
 
+    weak var session: MockURLSession?
     let taskIdentifier: Int
+    let completionHandler: MockDataTaskCompletionHandler
+
     var currentRequest: URLRequest?
     var response: URLResponse?
 
-    weak var session: MockURLSession?
-
-    init(session: MockURLSession, taskIdentifier: Int) {
+    init(session: MockURLSession, taskIdentifier: Int, completionHandler: @escaping MockDataTaskCompletionHandler) {
         self.session = session
         self.taskIdentifier = taskIdentifier
+        self.completionHandler = completionHandler
     }
 
     func resume() {

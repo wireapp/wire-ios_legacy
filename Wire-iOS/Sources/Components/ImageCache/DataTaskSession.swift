@@ -47,37 +47,18 @@ protocol DataTask: class {
 protocol DataTaskSession: class {
 
     /// Creates a data request task for the given URL.
-    func makeDataTask(with url: URL) -> DataTask
-
-}
-
-/**
- * The delegate of a data task session.
- */
-
-protocol DataTaskSessionDelegate: class {
-
-    /// The task finished with the given result.
-    func dataTaskSession(_ session: DataTaskSession, dataTask: DataTask, didCompleteWithError error: Error?)
-
-    /// The session received data for the given task.
-    func dataTaskSession(_ session: DataTaskSession, dataTask: DataTask, didReceive data: Data)
-
-    /// The session is about to cache the result of the given data task and asks for confirmation/modification.
-    func dataTaskSession(_ session: DataTaskSession, dataTask: DataTask,
-                         willCacheResponse proposedResponse: CachedURLResponse,
-                         completionHandler: @escaping (CachedURLResponse?) -> Void)
+    func makeDataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> DataTask
 
 }
 
 // MARK: - Conformance
 
-extension URLSessionTask: DataTask {}
+extension URLSessionDataTask: DataTask {}
 
 extension URLSession: DataTaskSession {
 
-    func makeDataTask(with url: URL) -> DataTask {
-        return dataTask(with: url)
+    func makeDataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> DataTask {
+        return dataTask(with: url, completionHandler: completionHandler)
     }
 
 }
