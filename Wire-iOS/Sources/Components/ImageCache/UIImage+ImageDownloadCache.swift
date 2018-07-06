@@ -53,6 +53,5 @@ extension UIImageView {
         displayImage(at: url, onSuccess: nil, onError: nil)
     }
 
-
 }
 

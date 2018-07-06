@@ -26,7 +26,6 @@ class DecodeImageOperationTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = true
         sut = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
         sut.contentMode = .scaleAspectFit
     }
