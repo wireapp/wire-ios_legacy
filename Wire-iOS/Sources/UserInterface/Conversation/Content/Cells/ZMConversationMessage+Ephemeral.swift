@@ -20,53 +20,29 @@ import Foundation
 
 extension ConversationCell {
     @objc func updateCountdownView() {
-
         countdownContainerViewHidden = !showDestructionCountdown()
-        if !showDestructionCountdown() && nil != destructionLink {
+
+        guard !(countdownContainerViewHidden && nil != destructionLink) else {
             tearDownCountdown()
             return
         }
 
         guard showDestructionCountdown(), let destructionDate = message.destructionDate else { return }
+
         let duration = destructionDate.timeIntervalSinceNow
 
         if !countdownView.isAnimatingProgress && duration >= 1 {
-            let progress = calculateCurrentCountdownProgress()
-            countdownView.startAnimating(duration: duration, currentProgress: progress)
+            let progress = message.calculateCurrentCountdownProgress
+            countdownView.startAnimating(duration: duration, currentProgress: CGFloat(progress))
             countdownView.isHidden = false
         }
         toolboxView.updateTimestamp(message)
     }
 
-    func calculateCurrentCountdownProgress() -> CGFloat {
-        let progress = CGFloat(1 - message.destructionDate!.timeIntervalSinceNow / message.deletionTimeout)
-        return progress
+}
+
+extension ZMConversationMessage {
+    var calculateCurrentCountdownProgress: Double {
+        return 1 - destructionDate!.timeIntervalSinceNow / deletionTimeout
     }
 }
-
-/*
-- (void)updateCountdownView
-    {
-        self.countdownContainerViewHidden = !self.showDestructionCountdown;
-
-        if (!self.showDestructionCountdown && nil != self.destructionLink) {
-            [self tearDownCountdown];
-            return;
-        }
-
-        if (!self.showDestructionCountdown || !self.message.destructionDate) {
-            return;
-        }
-
-        NSTimeInterval duration = self.message.destructionDate.timeIntervalSinceNow;
-
-        if (!self.countdownView.isAnimatingProgress && duration >= 1) {
-            NSTimeInterval progress = self.calculateCurrentCountdownProgress;
-
-            [self.countdownView startAnimatingWithDuration:duration currentProgress:progress];
-            self.countdownView.hidden = NO;
-        }
-
-        [self.toolboxView updateTimestamp:self.message];
-}
-*/
