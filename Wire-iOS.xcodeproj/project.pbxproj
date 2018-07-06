@@ -240,6 +240,8 @@
 		5EBC343E20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */; };
 		5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */; };
 		5EBC344420EE5FEF00AFB6DF /* identicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EBC344320EE5FEF00AFB6DF /* identicon.png */; };
+		5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870C20EF530D000366B7 /* MockURLSession.swift */; };
+		5EC0871020EF5C89000366B7 /* ImageDownloadCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */; };
 		5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */; };
 		5EC16B9120EB8C6F00955156 /* YouTubeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8E20EB8C6F00955156 /* YouTubeService.swift */; };
 		5EC16B9220EB8C6F00955156 /* MediaPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EC16B8F20EB8C6F00955156 /* MediaPreviewViewController.m */; };
@@ -260,6 +262,8 @@
 		5EEFC1A720C01C85007E8A79 /* RoundedViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */; };
 		5EEFC1A920C01CA9007E8A79 /* UIView+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A820C01CA9007E8A79 /* UIView+Rounded.swift */; };
 		5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */; };
+		5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5CDA420EF739200CC98B0 /* DataTaskSession.swift */; };
+		5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */; };
 		7C0BB6E61FE682A200386A19 /* AccountSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */; };
 		7C17ECA51F74F4540056600C /* ConversationCell+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */; };
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
@@ -1565,6 +1569,8 @@
 		5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ImageDownloadCache.swift"; sourceTree = "<group>"; };
 		5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageOperationTests.swift; sourceTree = "<group>"; };
 		5EBC344320EE5FEF00AFB6DF /* identicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = identicon.png; sourceTree = "<group>"; };
+		5EC0870C20EF530D000366B7 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
+		5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadCacheTests.swift; sourceTree = "<group>"; };
 		5EC16B8C20EB8C6F00955156 /* MediaPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPreviewViewController.h; sourceTree = "<group>"; };
 		5EC16B8D20EB8C6F00955156 /* YouTubeService+DataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "YouTubeService+DataTypes.swift"; sourceTree = "<group>"; };
 		5EC16B8E20EB8C6F00955156 /* YouTubeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YouTubeService.swift; sourceTree = "<group>"; };
@@ -1584,6 +1590,8 @@
 		5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViewProtocol.swift; sourceTree = "<group>"; };
 		5EEFC1A820C01CA9007E8A79 /* UIView+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Rounded.swift"; sourceTree = "<group>"; };
 		5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+AspectRatio.swift"; sourceTree = "<group>"; };
+		5EF5CDA420EF739200CC98B0 /* DataTaskSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskSession.swift; sourceTree = "<group>"; };
+		5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
 		7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectionViewController.swift; sourceTree = "<group>"; };
 		7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Preview.swift"; sourceTree = "<group>"; };
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
@@ -3465,6 +3473,7 @@
 				5EBC343920EE449900AFB6DF /* ResourceDownloadHandler.swift */,
 				5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */,
 				5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */,
+				5EF5CDA420EF739200CC98B0 /* DataTaskSession.swift */,
 			);
 			path = ImageCache;
 			sourceTree = "<group>";
@@ -3474,8 +3483,18 @@
 			children = (
 				5EBC344320EE5FEF00AFB6DF /* identicon.png */,
 				5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */,
+				5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */,
 			);
 			path = ImageCache;
+			sourceTree = "<group>";
+		};
+		5EC0870E20EF5908000366B7 /* MockURLSession */ = {
+			isa = PBXGroup;
+			children = (
+				5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */,
+				5EC0870C20EF530D000366B7 /* MockURLSession.swift */,
+			);
+			path = MockURLSession;
 			sourceTree = "<group>";
 		};
 		5EC16B6520EB782900955156 /* Vendor */ = {
@@ -4325,6 +4344,7 @@
 				1658C19B20A1F07800148F6D /* MockCallInfoViewControllerInput.swift */,
 				5E33F0D420ADA94B00414EA6 /* MockCallPermissions.swift */,
 				5EC16B9F20EBB86900955156 /* MockProxyRequester.swift */,
+				5EC0870E20EF5908000366B7 /* MockURLSession */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -6849,6 +6869,7 @@
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				871BC0181D34F56300DF0793 /* AnalyticsOptEvent.m in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
+				5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */,
 				873C5FEA1C10426A00D5132A /* ClientUnregisterInvitationViewController.swift in Sources */,
 				5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */,
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
@@ -7382,6 +7403,7 @@
 				7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */,
 				EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */,
 				BFFE943C1E7839D10025AD75 /* ConversationRenamedCellTests.swift in Sources */,
+				5EC0871020EF5C89000366B7 /* ImageDownloadCacheTests.swift in Sources */,
 				BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */,
 				87AE8BDC207B99540058715E /* BackupPasswordViewControllerTests.swift in Sources */,
 				BF27AE4E1E9E513400809A2B /* MessageDraftTests.swift in Sources */,
@@ -7507,6 +7529,7 @@
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,
 				16A94AED20934AA8008A5718 /* CallParticipantsViewTests.swift in Sources */,
 				7CF651861FDA837D00D6B9F4 /* AvailabilityTitleViewTests.swift in Sources */,
+				5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */,
 				87D5E4401C3E797A00EB8289 /* UserClientFingerprintTests.swift in Sources */,
 				EF32A4CD204EFD8E003632FB /* CameraCellTests.swift in Sources */,
 				7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */,
@@ -7521,6 +7544,7 @@
 				870916DC1E2CFFC500D10FA3 /* ImageCacheTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,
 				EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */,
+				5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */,
 				EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */,
 				EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */,
 				8742C2F11E533AC400329FB6 /* NSAttributedStringHighlightTests.swift in Sources */,

@@ -18,26 +18,25 @@
 
 import Foundation
 
+enum ImageDownloadCacheError: Error, Equatable {
+    case invalidResponse
+    case invalidResponseCode(Int)
+}
+
 /**
  * An object that fetches and caches remote images.
  */
 
 class ImageDownloadCache {
 
-    /// The object that controls the data cache.
-    private let urlCache: URLCache
-
     /// The session that performs network requests.
-    private var session: URLSession!
+    private let session: DataTaskSession
 
     /// The object that handles image downloads.
     private let downloadHandler: ResourceDownloadHandler
 
     /// The operation queue used for decoding images.
     private let imageDecodingQueue = OperationQueue()
-
-    /// The operation queue used for network operations
-    private let networkQueue = OperationQueue()
 
     // MARK: - Initialization
 
@@ -49,18 +48,12 @@ class ImageDownloadCache {
      * - parameter defaultCachingDuration: The duration for which images should be cached, if
      * the server did not mark them as cachable. You can pass `nil` if you only want to cache
      * explicitly cachable images.
+     * - parameter sessionType: The type of session to use.
      */
 
-    init(memoryCapacity: Int, diskCapacity: Int, defaultCachingDuration: Int?) {
-
-        urlCache = URLCache(memoryCapacity: memoryCapacity * 1024 * 1024, diskCapacity: diskCapacity * 1024 * 1024, diskPath: nil)
-        downloadHandler = ResourceDownloadHandler(defaultCachingDuration: defaultCachingDuration)
-
-        let sessionConfiguration = URLSessionConfiguration.default
-        sessionConfiguration.urlCache = urlCache
-
-        session = URLSession(configuration: sessionConfiguration, delegate: downloadHandler, delegateQueue: networkQueue)
-
+    init(downloadHandler: ResourceDownloadHandler, session: DataTaskSession) {
+        self.downloadHandler = downloadHandler
+        self.session = session
     }
 
     /**
@@ -70,7 +63,22 @@ class ImageDownloadCache {
      * 2 hours, unless the URL specifies a different value.
      */
 
-    static let shared = ImageDownloadCache(memoryCapacity: 100, diskCapacity: 200, defaultCachingDuration: 7200)
+    static let shared: ImageDownloadCache = {
+
+        let downloadHandler = ResourceDownloadHandler(defaultCachingDuration: 7200)
+
+        let cache = URLCache(memoryCapacity: 100 * 1024 * 1024,
+                             diskCapacity: 200 * 1024 * 1024, diskPath: nil)
+
+        let sessionConfiguration = URLSessionConfiguration.default
+        sessionConfiguration.urlCache = cache
+
+        let networkQueue = OperationQueue()
+        let session = URLSession(configuration: sessionConfiguration, delegate: downloadHandler, delegateQueue: networkQueue)
+
+        return ImageDownloadCache(downloadHandler: downloadHandler, session: session)
+
+    }()
 
     // MARK: - Image Fetching
 
@@ -89,7 +97,7 @@ class ImageDownloadCache {
 
     func fetchImage(at url: URL, completionHandler: @escaping (_ image: UIImage?, _ error: Error?) -> Void) {
 
-        let downloadTask = session.dataTask(with: url)
+        let downloadTask = session.makeDataTask(with: url)
 
         let resultHandler: (UIImage?, Error?) -> Void = { image, error in
             OperationQueue.main.addOperation {
@@ -99,15 +107,25 @@ class ImageDownloadCache {
 
         // Attempts decoding an image as local,
 
-        downloadHandler.schedule(downloadTask) { data, _, error in
+        downloadHandler.schedule(downloadTask) { data, response, error in
 
             if let error = error {
                 resultHandler(nil, error)
                 return
             }
 
+            guard let responseCode = response?.statusCode else {
+                resultHandler(nil, ImageDownloadCacheError.invalidResponse)
+                return
+            }
+
             guard let responseData = data else {
-                resultHandler(nil, error)
+                resultHandler(nil, ImageDownloadCacheError.invalidResponse)
+                return
+            }
+
+            guard (200 ..< 300).contains(responseCode) else {
+                resultHandler(nil, ImageDownloadCacheError.invalidResponseCode(responseCode))
                 return
             }
 

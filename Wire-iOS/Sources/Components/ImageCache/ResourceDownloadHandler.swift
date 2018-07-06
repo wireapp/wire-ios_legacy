@@ -32,7 +32,7 @@ class ResourceDownloadHandler: NSObject {
      * - parameter error: The error that prevented the system from starting the request.
      */
 
-    typealias TaskCompletionHandler = (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void
+    typealias TaskCompletionHandler = (_ data: Data?, _ response: HTTPURLResponse?, _ error: Error?) -> Void
 
     // MARK: - Initialization
 
@@ -57,8 +57,8 @@ class ResourceDownloadHandler: NSObject {
 
     // MARK: - Scheduling Tasks
 
-    private var completionHandlers: [URLSessionTask: TaskCompletionHandler] = [:]
-    private var downloadBuffer: [URLSessionTask: NSMutableData] = [:]
+    private var completionHandlers: [Int: TaskCompletionHandler] = [:]
+    private var downloadBuffer: [Int: NSMutableData] = [:]
 
     /**
      * Schedules the task on its parent session, with the given completion handler to
@@ -68,8 +68,8 @@ class ResourceDownloadHandler: NSObject {
      * - completionHandler: The block of code to execute when the task has completed.
      */
 
-    func schedule(_ task: URLSessionTask, completionHandler: @escaping TaskCompletionHandler) {
-        completionHandlers[task] = completionHandler
+    func schedule(_ task: DataTask, completionHandler: @escaping TaskCompletionHandler) {
+        completionHandlers[task.taskIdentifier] = completionHandler
         task.resume()
     }
 
@@ -77,23 +77,23 @@ class ResourceDownloadHandler: NSObject {
 
 // MARK: - Session Delegate
 
-extension ResourceDownloadHandler: URLSessionDataDelegate, URLSessionTaskDelegate {
+extension ResourceDownloadHandler: DataTaskSessionDelegate, URLSessionDataDelegate {
 
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        let data = downloadBuffer[task] as Data?
-        let completionHandler: TaskCompletionHandler? = completionHandlers[task]
-        completionHandler?(data, task.response, error)
+    func dataTaskSession(_ session: DataTaskSession, dataTask: DataTask, didCompleteWithError error: Error?) {
+        let data = downloadBuffer[dataTask.taskIdentifier] as Data?
+        let completionHandler: TaskCompletionHandler? = completionHandlers[dataTask.taskIdentifier]
+        completionHandler?(data, dataTask.response as? HTTPURLResponse, error)
     }
 
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        guard let taskBuffer = downloadBuffer[dataTask] else {
-            downloadBuffer[dataTask] = NSMutableData(data: data)
+    func dataTaskSession(_ session: DataTaskSession, dataTask: DataTask, didReceive data: Data) {
+        guard let taskBuffer = downloadBuffer[dataTask.taskIdentifier] else {
+            downloadBuffer[dataTask.taskIdentifier] = NSMutableData(data: data)
             return
         }
         taskBuffer.append(data)
     }
 
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
+    func dataTaskSession(_ session: DataTaskSession, dataTask: DataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
 
         guard let maxAge = defaultCachingDuration else {
             completionHandler(proposedResponse)
@@ -103,8 +103,12 @@ extension ResourceDownloadHandler: URLSessionDataDelegate, URLSessionTaskDelegat
         // Validate the request to see if it's eligible for rewrite
 
         guard let httpResponse = proposedResponse.response as? HTTPURLResponse,
-            !httpResponse.allHeaderFields.keys.contains("Cache-Control"),
-            (200 ... 226).contains(httpResponse.statusCode) else {
+            (200 ..< 300).contains(httpResponse.statusCode) else {
+            completionHandler(nil)
+            return
+        }
+
+        if httpResponse.allHeaderFields.keys.contains("Cache-Control") {
             completionHandler(proposedResponse)
             return
         }
@@ -126,6 +130,18 @@ extension ResourceDownloadHandler: URLSessionDataDelegate, URLSessionTaskDelegat
 
         completionHandler(cachedResponse)
 
+    }
+
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        dataTaskSession(session, dataTask: task, didCompleteWithError: error)
+    }
+
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        dataTaskSession(session, dataTask: dataTask, didReceive: data)
+    }
+
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
+        dataTaskSession(session, dataTask: dataTask, willCacheResponse: proposedResponse, completionHandler: completionHandler)
     }
 
 }
