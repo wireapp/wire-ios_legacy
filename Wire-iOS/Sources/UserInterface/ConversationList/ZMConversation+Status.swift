@@ -655,9 +655,10 @@ extension ZMConversation {
         }
         
         let isOngoingCall: Bool = {
-            switch voiceChannel?.state {
-            case .none?, .terminating?: return false
-            case .incoming?: return conversationType == .group
+            guard let state = voiceChannel?.state else { return false }
+            switch state {
+            case .none, .terminating: return false
+            case .incoming: return conversationType == .group
             default: return true
             }
         }()
