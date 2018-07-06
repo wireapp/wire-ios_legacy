@@ -78,10 +78,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 @property (nonatomic) NSLayoutConstraint *toolboxCollapseConstraint;
 
-@property (nonatomic) BOOL countdownContainerViewHidden;
 @property (nonatomic) UIView *countdownContainerView;
-@property (nonatomic) DestructionCountdownView *countdownView;
-@property (nonatomic) CADisplayLink *destructionLink;
 
 @end
 
@@ -687,38 +684,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (BOOL)showDestructionCountdown
 {
     return !self.message.hasBeenDeleted && self.message.isEphemeral && !self.message.isObfuscated && ![Message isKnockMessage:self.message];
-}
-
-- (void)updateCountdownView
-{
-    self.countdownContainerViewHidden = !self.showDestructionCountdown;
-
-    if (!self.showDestructionCountdown && nil != self.destructionLink) {
-        [self tearDownCountdown];
-        return;
-    }
-
-    if (!self.showDestructionCountdown || !self.message.destructionDate) {
-        return;
-    }
-
-    NSTimeInterval duration = self.message.destructionDate.timeIntervalSinceNow;
-
-    if (!self.countdownView.isAnimatingProgress && duration >= 1) {
-        NSTimeInterval progress = [self calculateCurrentCountdownProgress];
-        [self.countdownView startAnimatingWithDuration:duration currentProgress:progress];
-        self.countdownView.hidden = NO;
-    }
-
-    [self.toolboxView updateTimestamp:self.message];
-}
-
-- (NSTimeInterval)calculateCurrentCountdownProgress
-{
-    NSTimeInterval start = self.message.serverTimestamp.timeIntervalSinceReferenceDate;
-    NSTimeInterval current = [NSDate date].timeIntervalSinceReferenceDate;
-    NSTimeInterval end = self.message.destructionDate.timeIntervalSinceReferenceDate;
-    return (current - start) / (end - start);
 }
 
 @end

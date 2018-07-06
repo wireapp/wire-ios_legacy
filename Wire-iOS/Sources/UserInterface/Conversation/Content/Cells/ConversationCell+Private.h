@@ -18,12 +18,19 @@
 
 #import "ConversationCell.h"
 
+@class DestructionCountdownView;
+
 @interface ConversationCell ()
 
 @property (nonatomic) BOOL showsPreview;
 
-- (void)updateCountdownView;
 - (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message;
+- (BOOL)showDestructionCountdown;
+- (void)tearDownCountdown;
+
+@property (nonatomic) BOOL countdownContainerViewHidden;
+@property (nonatomic) CADisplayLink *destructionLink;
+@property (nonatomic) DestructionCountdownView *countdownView;
 
 @end
 
