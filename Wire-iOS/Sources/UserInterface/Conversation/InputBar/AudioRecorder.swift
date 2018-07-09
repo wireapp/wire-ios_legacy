@@ -162,13 +162,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     // MARK: Recording
     
     public func startRecording() {
-        startRecording(true)
-    }
-    
-    public func startRecording(_ useAvs: Bool = true) {
         guard let audioRecorder = self.audioRecorder else { return }
 
-        func startRecordingBlock() {
+        AVSMediaManager.sharedInstance().startRecording {
+                
             self.state = .recording
             self.recordTimerCallback?(0)
             self.setupDisplayLink()
@@ -186,14 +183,6 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             }
             
             self.recordingStartTime = successfullyStarted ? audioRecorder.deviceCurrentTime : nil
-        }
-        
-        if useAvs {
-            AVSMediaManager.sharedInstance().startRecording {
-                startRecordingBlock()
-            }
-        } else {
-            startRecordingBlock()
         }
     }
     
@@ -326,7 +315,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             alertMessage = "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit)
         }
         
-        if error == .toMaxSize, let maxSize = maxRecordingDuration {
+        if error == .toMaxSize, let maxSize = maxFileSize {
             let size = ByteCountFormatter.string(fromByteCount: Int64(maxSize), countStyle: .binary)
             
             alertMessage = "conversation.input_bar.audio_message.too_long_size.message".localized(args: size)
