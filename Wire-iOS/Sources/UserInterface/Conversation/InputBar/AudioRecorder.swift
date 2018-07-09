@@ -162,9 +162,13 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     // MARK: Recording
     
     public func startRecording() {
+        startRecording(true)
+    }
+    
+    public func startRecording(_ useAvs: Bool = true) {
         guard let audioRecorder = self.audioRecorder else { return }
 
-        AVSMediaManager.sharedInstance().startRecording {
+        func startRecordingBlock() {
             self.state = .recording
             self.recordTimerCallback?(0)
             self.setupDisplayLink()
@@ -182,6 +186,14 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
             }
             
             self.recordingStartTime = successfullyStarted ? audioRecorder.deviceCurrentTime : nil
+        }
+        
+        if useAvs {
+            AVSMediaManager.sharedInstance().startRecording {
+                startRecordingBlock()
+            }
+        } else {
+            startRecordingBlock()
         }
     }
     

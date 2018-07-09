@@ -26,10 +26,10 @@ class AudioRecorderTests: XCTestCase {
     func testThatItFiresAudioMessageMaximumSizeError() {
         
         recorder = AudioRecorder(maxRecordingDuration: 100, maxFileSize: 0)
-        recorder?.startRecording()
+        recorder?.startRecording(false)
         
         let expectation = self.expectation(description: "Wait for recorder to stop")
-        
+
         recorder?.recordEndedCallback = { result in
             expectation.fulfill()
             let error = result.error
@@ -37,13 +37,13 @@ class AudioRecorderTests: XCTestCase {
             XCTAssertEqual(error as! RecordingError, RecordingError.toMaxSize)
         }
         
-        self.waitForExpectations(timeout: 10.0, handler: nil)
+        self.waitForExpectations(timeout: 5.0, handler: nil)
     }
     
     func testThatItFiresAudioMessageMaximumDurationError() {
         
         recorder = AudioRecorder(maxRecordingDuration: 1, maxFileSize: 1000000)
-        recorder?.startRecording()
+        recorder?.startRecording(false)
         
         let expectation = self.expectation(description: "Wait for recorder to stop")
         
@@ -54,6 +54,7 @@ class AudioRecorderTests: XCTestCase {
             XCTAssertEqual(error as! RecordingError, RecordingError.toMaxDuration)
         }
         
-        self.waitForExpectations(timeout: 10.0, handler: nil)
+        self.waitForExpectations(timeout: 5.0, handler: nil)
     }
 }
+
