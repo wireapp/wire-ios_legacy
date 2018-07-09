@@ -20,6 +20,7 @@ import Foundation
 
 protocol GroupDetailsSectionControllerDelegate: class {
     func presentDetails(for user: ZMUser)
+    func presentFullParticipantsList()
 }
 
 class GroupDetailsSectionController: NSObject, CollectionViewSectionController {

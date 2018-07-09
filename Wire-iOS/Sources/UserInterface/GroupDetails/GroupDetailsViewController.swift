@@ -27,7 +27,7 @@ import Cartography
     fileprivate let bottomSpacer = UIView()
     fileprivate var token: NSObjectProtocol?
     fileprivate var actionController: ConversationActionController?
-    fileprivate var renameGroupSectionController : RenameGroupSectionController?
+    fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
 
     var didCompleteInitialSync = false {
@@ -179,12 +179,18 @@ extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewContro
 extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {
     
     func presentDetails(for user: ZMUser) {
-        let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
-                                                                                            conversation: conversation,
-                                                                                            profileViewControllerDelegate: self,
-                                                                                            viewControllerDismisser: self)
-        
+        let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
+            user: user,
+            conversation: conversation,
+            profileViewControllerDelegate: self,
+            viewControllerDismisser: self
+        )
+
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func presentFullParticipantsList() {
+        preconditionFailure("unimplemented")
     }
     
     @objc(presentGuestOptionsAnimated:)

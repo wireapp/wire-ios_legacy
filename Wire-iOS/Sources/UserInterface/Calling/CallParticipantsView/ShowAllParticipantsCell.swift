@@ -106,5 +106,12 @@ extension ShowAllParticipantsCell: CallParticipantsCellConfigurationConfigurable
         self.variant = variant
         titleLabel.text = "call.participants.show_all".localized(args: String(totalCount))
     }
-    
+}
+
+extension ShowAllParticipantsCell: ParticipantsCellConfigurable {
+    func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool) {
+        guard case let .showAll(count) = rowType else { preconditionFailure() }
+        titleLabel.text = "call.participants.show_all".localized(args: String(count))
+        backgroundColor = .init(scheme: .background)
+    }
 }
