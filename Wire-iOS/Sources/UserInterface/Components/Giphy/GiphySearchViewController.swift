@@ -17,62 +17,11 @@
 //
 
 import UIKit
-import Ziphy
 import Cartography
+import Ziphy
 
 @objc protocol GiphySearchViewControllerDelegate: NSObjectProtocol {
-
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
-
-}
-
-class GiphyNavigationController: UINavigationController {
-
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.variant == .dark ? .lightContent : .default
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-
-}
-
-class GiphyCollectionViewCell: UICollectionViewCell {
-
-    static let CellIdentifier = "GiphyCollectionViewCell"
-
-    let imageView = FLAnimatedImageView()
-    var ziph: Ziph?
-    var representation: ZiphyAnimatedImage?
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        contentView.addSubview(imageView)
-
-        constrain(self.contentView, self.imageView) { contentView, imageView in
-            imageView.edges == contentView.edges
-        }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func prepareForReuse() {
-        self.imageView.animatedImage = nil
-        self.ziph = nil
-        self.representation = nil
-        self.backgroundColor = nil
-    }
-
 }
 
 @objcMembers class GiphySearchViewController: VerticalColumnCollectionViewController {
@@ -88,12 +37,13 @@ class GiphyCollectionViewCell: UICollectionViewCell {
     var pendingSearchtask: CancelableTask?
     var pendingFetchTask: CancelableTask?
     fileprivate var lastLayoutSize: CGSize = .zero
-    fileprivate var ziphs: [Ziph] {
+
+    fileprivate var ziphs: [Ziph] /*{
         didSet {
             self.collectionView?.reloadData()
             self.noResultsLabel.isHidden = self.ziphs.count > 0
         }
-    }
+    }*/
 
     public init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
         self.conversation = conversation
@@ -137,6 +87,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         noResultsLabel.isHidden = true
         view.addSubview(noResultsLabel)
 
+        collectionView?.showsVerticalScrollIndicator = false
         collectionView?.accessibilityIdentifier = "giphyCollectionView"
         collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
 
@@ -186,39 +137,27 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
 
+    // MARK: - Search
+
     func performSearch() {
         cleanUpPendingTimer()
 
         if searchTerm.isEmpty {
             pendingSearchtask = searchResultsController.trending() { [weak self] result in
                 if case let .success(ziphs) = result {
-                    self?.ziphs = ziphs
+                    self?.setInitialSearchResults(ziphs)
                 } else {
-                    self?.ziphs = []
+                    self?.setInitialSearchResults([])
                 }
             }
         } else {
             pendingSearchtask = searchResultsController.search(withTerm: searchTerm) { [weak self] result in
                 if case let .success(ziphs) = result {
-                    self?.ziphs = ziphs
+                    self?.setInitialSearchResults(ziphs)
                 } else {
-                    self?.ziphs = []
+                    self?.setInitialSearchResults([])
                 }
             }
-        }
-    }
-
-    func fetchMoreResults() {
-        if pendingFetchTask != nil {
-            return
-        }
-
-        pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] result in
-            if case let .success(ziphs) = result {
-                self?.ziphs = ziphs
-            }
-
-            self?.pendingFetchTask = nil
         }
     }
 
@@ -231,7 +170,41 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    public override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func setInitialSearchResults(_ results: [Ziph]) {
+        self.ziphs = results
+        self.collectionView?.reloadData()
+        self.noResultsLabel.isHidden = self.ziphs.count > 0
+    }
+
+    // MARK: - Pagination
+
+    func fetchMoreResults() {
+        if pendingFetchTask != nil {
+            return
+        }
+
+        pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] result in
+            if case let .success(ziphs) = result {
+                self?.insertSearchResults(ziphs)
+            }
+
+            self?.pendingFetchTask = nil
+        }
+    }
+
+    func insertSearchResults(_ results: [Ziph]) {
+        ziphs.append(contentsOf: results)
+
+        let updatedIndices = ziphs.indices.suffix(results.count).map {
+            IndexPath(item: $0, section: 0)
+        }
+
+        collectionView?.insertItems(at: updatedIndices)
+    }
+
+    // MARK: - Collection View
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.ziphs.count
     }
 
@@ -239,30 +212,29 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier, for: indexPath) as! GiphyCollectionViewCell
         let ziph = ziphs[indexPath.row]
 
-        if let representation = ziph.images[.preview] {
-            cell.ziph = ziph
-            cell.representation = representation
-            cell.backgroundColor = UIColor(for: ZMUser.pickRandomAccentColor())
-            cell.isAccessibilityElement = true
-            cell.accessibilityTraits |= UIAccessibilityTraitImage
-            cell.accessibilityLabel = ziph.title
+        guard let representation = ziph.images[.preview] else {
+            return cell
+        }
 
-            cell.imageView.animatedImage = nil
+        cell.ziph = ziph
+        cell.representation = representation
+        cell.backgroundColor = UIColor(for: ZMUser.pickRandomAccentColor())
+        cell.isAccessibilityElement = true
+        cell.accessibilityTraits |= UIAccessibilityTraitImage
+        cell.accessibilityLabel = ziph.title
 
-            searchResultsController.fetchImageData(for: ziph, imageType: .preview) { result in
-                guard case let .success(imageData) = result else {
-                    return
-                }
-
-                cell.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
+        searchResultsController.fetchImageData(for: ziph, imageType: .preview) { result in
+            guard case let .success(imageData) = result else {
+                return
             }
+
+            cell.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
         }
 
         return cell
     }
 
     override func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
-
         let ziph = self.ziphs[indexPath.row]
 
         guard let representation = ziph.images[.preview] else {
@@ -270,7 +242,6 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         }
 
         return CGSize(width: representation.width.rawValue, height: representation.height.rawValue)
-
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
