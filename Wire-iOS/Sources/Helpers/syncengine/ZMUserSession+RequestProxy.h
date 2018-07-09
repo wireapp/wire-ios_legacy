@@ -19,7 +19,7 @@
 
 #import <Foundation/Foundation.h>
 
-@import ziphy;
+@import Ziphy;
 @import WireSyncEngine;
 
 @protocol ProxiedURLRequester <NSObject>

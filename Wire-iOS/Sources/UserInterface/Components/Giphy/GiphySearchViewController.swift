@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import Ziphy
 import Cartography
 
 @objc protocol GiphySearchViewControllerDelegate: NSObjectProtocol {
@@ -47,7 +48,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
 
     let imageView = FLAnimatedImageView()
     var ziph: Ziph?
-    var representation: ZiphyImageRep?
+    var representation: ZiphyAnimatedImage?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -97,8 +98,7 @@ class GiphyCollectionViewCell: UICollectionViewCell {
     public init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
         self.conversation = conversation
         self.searchTerm = searchTerm
-        searchResultsController = ZiphySearchResultsController(pageSize: 50, callbackQueue: DispatchQueue.main)
-        searchResultsController.ziphyClient = ZiphyClient.wr_ziphyWithDefaultConfiguration()
+        searchResultsController = ZiphySearchResultsController(client: .default, pageSize: 50, maxImageSize: 3)
         ziphs = []
 
         let columnCount = AdaptiveColumnCount(compact: 2, regular: 3, large: 4)
@@ -190,12 +190,20 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         cleanUpPendingTimer()
 
         if searchTerm.isEmpty {
-            pendingSearchtask = searchResultsController.trending() { [weak self] (success, ziphs, error) in
-                self?.ziphs = ziphs
+            pendingSearchtask = searchResultsController.trending() { [weak self] result in
+                if case let .success(ziphs) = result {
+                    self?.ziphs = ziphs
+                } else {
+                    self?.ziphs = []
+                }
             }
         } else {
-            pendingSearchtask = searchResultsController.search(withSearchTerm: searchTerm) { [weak self] (success, ziphs, error) in
-                self?.ziphs = ziphs
+            pendingSearchtask = searchResultsController.search(withTerm: searchTerm) { [weak self] result in
+                if case let .success(ziphs) = result {
+                    self?.ziphs = ziphs
+                } else {
+                    self?.ziphs = []
+                }
             }
         }
     }
@@ -205,8 +213,11 @@ class GiphyCollectionViewCell: UICollectionViewCell {
             return
         }
 
-        pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] (success, ziphs, error) in
-            self?.ziphs = ziphs
+        pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] result in
+            if case let .success(ziphs) = result {
+                self?.ziphs = ziphs
+            }
+
             self?.pendingFetchTask = nil
         }
     }
@@ -228,37 +239,37 @@ class GiphyCollectionViewCell: UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier, for: indexPath) as! GiphyCollectionViewCell
         let ziph = ziphs[indexPath.row]
 
-        if let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] {
+        if let representation = ziph.images[.preview] {
             cell.ziph = ziph
             cell.representation = representation
             cell.backgroundColor = UIColor(for: ZMUser.pickRandomAccentColor())
             cell.isAccessibilityElement = true
             cell.accessibilityTraits |= UIAccessibilityTraitImage
+            cell.accessibilityLabel = ziph.title
 
-            searchResultsController.fetchImageData(forZiph: ziph, imageType: representation.imageType) { (imageData, imageRepresentation, error) in
-                if cell.representation == imageRepresentation {
-                    cell.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
+            cell.imageView.animatedImage = nil
+
+            searchResultsController.fetchImageData(for: ziph, imageType: .preview) { result in
+                guard case let .success(imageData) = result else {
+                    return
                 }
+
+                cell.imageView.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
             }
         }
 
-        if indexPath.row == self.ziphs.count / 2 {
-            fetchMoreResults()
-        }
-
         return cell
-
     }
 
     override func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
 
         let ziph = self.ziphs[indexPath.row]
 
-        guard let representation = ziph.ziphyImages[ZiphyClient.fromZiphyImageTypeToString(.fixedWidthDownsampled)] else {
+        guard let representation = ziph.images[.preview] else {
             return .zero
         }
 
-        return CGSize(width: representation.width, height: representation.height)
+        return CGSize(width: representation.width.rawValue, height: representation.height.rawValue)
 
     }
 
@@ -284,6 +295,10 @@ class GiphyCollectionViewCell: UICollectionViewCell {
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= scrollView.contentSize.height / 2 {
+            fetchMoreResults()
+        }
+
         searchBar.resignFirstResponder()
     }
 
