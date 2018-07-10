@@ -32,46 +32,45 @@ public final class UnknownMessageCell: CustomMessageCell {
 }
 
 public class CustomMessageCell : ConversationCell {
-    
+
     public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    init(style: UITableViewCellStyle, reuseIdentifier: String?, message: String) {
 
+    init(style: UITableViewCellStyle, reuseIdentifier: String?, message: String) {
         messageLabel.extendsLinkTouchArea = true
         messageLabel.numberOfLines = 0
         messageLabel.isAccessibilityElement = true
         messageLabel.accessibilityLabel = "Text"
         messageLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue,
                                        NSAttributedStringKey.foregroundColor.rawValue: ZMUser.selfUser().accentColor]
-        
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         authorImageView.alpha = 0.5
         authorLabel.alpha = 0.5
         messageContentView.addSubview(messageLabel)
-        
+
         constrain(messageLabel, messageContentView) { (messageLabel, container) in
             messageLabel.edges == container.edgesWithinMargins
         }
-        
+
         CASStyler.default().styleItem(self)
-        
+
         messageLabel.delegate = self
 
-        messageLabel.font = FontSpec(.small, .ultraLight).font
+        messageLabel.font = FontSpec(.small, .light).font
         messageLabel.textColor = UIColor(scheme: .textForeground)
         messageLabel.text = message
         messageLabel.textTransform = .upper
     }
-        
+
 }
 
 extension CustomMessageCell : TTTAttributedLabelDelegate {
-    
+
     public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         UIApplication.shared.openURL(url)
     }
