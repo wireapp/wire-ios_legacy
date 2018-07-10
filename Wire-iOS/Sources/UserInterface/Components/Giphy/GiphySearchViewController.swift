@@ -24,28 +24,24 @@ import Ziphy
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 
-@objcMembers class GiphySearchViewController: VerticalColumnCollectionViewController {
+@objc class GiphySearchViewController: VerticalColumnCollectionViewController {
 
-    public weak var delegate: GiphySearchViewControllerDelegate?
+    @objc public weak var delegate: GiphySearchViewControllerDelegate?
 
     let searchResultsController: ZiphySearchResultsController
     let searchBar: UISearchBar = UISearchBar()
     let noResultsLabel = UILabel()
     let conversation: ZMConversation
+
+    var ziphs: [Ziph] = []
     var searchTerm: String
     var pendingTimer: Timer?
     var pendingSearchtask: CancelableTask?
     var pendingFetchTask: CancelableTask?
-    fileprivate var lastLayoutSize: CGSize = .zero
 
-    fileprivate var ziphs: [Ziph] /*{
-        didSet {
-            self.collectionView?.reloadData()
-            self.noResultsLabel.isHidden = self.ziphs.count > 0
-        }
-    }*/
+    // MARK: - Initialization
 
-    public init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
+    @objc init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
         self.conversation = conversation
         self.searchTerm = searchTerm
         searchResultsController = ZiphySearchResultsController(client: .default, pageSize: 50, maxImageSize: 3)
@@ -55,7 +51,6 @@ import Ziphy
         super.init(interItemSpacing: 1, interColumnSpacing: 1, columnCount: columnCount)
 
         title = ""
-
         performSearch()
     }
 
@@ -68,15 +63,17 @@ import Ziphy
         cleanUpPendingTimer()
     }
 
-    func cleanUpPendingTask() {
+    fileprivate func cleanUpPendingTask() {
         pendingSearchtask?.cancel()
         pendingSearchtask = nil
     }
 
-    func cleanUpPendingTimer() {
+    fileprivate func cleanUpPendingTimer() {
         pendingTimer?.invalidate()
         pendingTimer = nil
     }
+
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,12 +90,19 @@ import Ziphy
 
         setupNavigationItem()
         createConstraints()
+        applyStyle()
     }
 
     private func createConstraints() {
         constrain(view, noResultsLabel) { container, noResultsLabel in
             noResultsLabel.center == container.center
         }
+    }
+
+    private func applyStyle() {
+        collectionView?.backgroundColor = UIColor(scheme: .background)
+        noResultsLabel.textColor = UIColor(scheme: .textPlaceholder)
+        noResultsLabel.font = UIFont.smallLightFont
     }
 
     private func setupNavigationItem() {
@@ -110,12 +114,17 @@ import Ziphy
         searchBar.searchBarStyle = .minimal
 
         let closeImage = UIImage(for: .X, iconSize: .tiny, color: .black)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(GiphySearchViewController.onDismiss))
 
+        let closeItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(onDismiss))
+        closeItem.accessibilityLabel = "general.close".localized
+
+        navigationItem.rightBarButtonItem = closeItem
         self.navigationItem.titleView = searchBar
     }
 
-    public func wrapInsideNavigationController() -> UINavigationController {
+    // MARK: - Presentation
+
+    @objc func wrapInsideNavigationController() -> UINavigationController {
         let navigationController = GiphyNavigationController(rootViewController: self)
 
         var backButtonImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black)
@@ -135,71 +144,6 @@ import Ziphy
 
     @objc func onDismiss() {
         self.navigationController?.dismiss(animated: true, completion: nil)
-    }
-
-    // MARK: - Search
-
-    func performSearch() {
-        cleanUpPendingTimer()
-
-        if searchTerm.isEmpty {
-            pendingSearchtask = searchResultsController.trending() { [weak self] result in
-                if case let .success(ziphs) = result {
-                    self?.setInitialSearchResults(ziphs)
-                } else {
-                    self?.setInitialSearchResults([])
-                }
-            }
-        } else {
-            pendingSearchtask = searchResultsController.search(withTerm: searchTerm) { [weak self] result in
-                if case let .success(ziphs) = result {
-                    self?.setInitialSearchResults(ziphs)
-                } else {
-                    self?.setInitialSearchResults([])
-                }
-            }
-        }
-    }
-
-    func performSearchAfter(delay: TimeInterval) {
-        cleanUpPendingTask()
-        cleanUpPendingTimer()
-
-        pendingTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
-            self?.performSearch()
-        }
-    }
-
-    func setInitialSearchResults(_ results: [Ziph]) {
-        self.ziphs = results
-        self.collectionView?.reloadData()
-        self.noResultsLabel.isHidden = self.ziphs.count > 0
-    }
-
-    // MARK: - Pagination
-
-    func fetchMoreResults() {
-        if pendingFetchTask != nil {
-            return
-        }
-
-        pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] result in
-            if case let .success(ziphs) = result {
-                self?.insertSearchResults(ziphs)
-            }
-
-            self?.pendingFetchTask = nil
-        }
-    }
-
-    func insertSearchResults(_ results: [Ziph]) {
-        ziphs.append(contentsOf: results)
-
-        let updatedIndices = ziphs.indices.suffix(results.count).map {
-            IndexPath(item: $0, section: 0)
-        }
-
-        collectionView?.insertItems(at: updatedIndices)
     }
 
     // MARK: - Collection View
@@ -225,6 +169,10 @@ import Ziphy
 
         searchResultsController.fetchImageData(for: ziph, imageType: .preview) { result in
             guard case let .success(imageData) = result else {
+                return
+            }
+
+            guard cell.ziph?.identifier == ziph.identifier else {
                 return
             }
 
@@ -255,16 +203,6 @@ import Ziphy
         pushConfirmationViewController(ziph: ziph, previewImage: previewImage)
     }
 
-    @discardableResult
-    func pushConfirmationViewController(ziph: Ziph?, previewImage: FLAnimatedImage?, animated: Bool = true) -> GiphyConfirmationViewController {
-        let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
-        confirmationController.title = conversation.displayName.uppercased()
-        confirmationController.delegate = self
-        navigationController?.pushViewController(confirmationController, animated: animated)
-
-        return confirmationController
-    }
-
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= scrollView.contentSize.height / 2 {
             fetchMoreResults()
@@ -275,6 +213,87 @@ import Ziphy
 
 }
 
+// MARK: - Search
+
+extension GiphySearchViewController {
+
+    private func performSearch() {
+        cleanUpPendingTimer()
+
+        let callback: ZiphyListRequestCallback = { [weak self] result in
+            if case let .success(ziphs) = result {
+                self?.setInitialSearchResults(ziphs)
+            } else {
+                self?.setInitialSearchResults([])
+            }
+        }
+
+        if searchTerm.isEmpty {
+            pendingSearchtask = searchResultsController.trending(callback)
+        } else {
+            pendingSearchtask = searchResultsController.search(withTerm: searchTerm, callback)
+        }
+    }
+
+    private func performSearchAfter(delay: TimeInterval) {
+        cleanUpPendingTask()
+        cleanUpPendingTimer()
+
+        pendingTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
+            self?.performSearch()
+        }
+    }
+
+    private func setInitialSearchResults(_ results: [Ziph]) {
+        self.ziphs = results
+        self.collectionView?.reloadData()
+        self.noResultsLabel.isHidden = self.ziphs.count > 0
+    }
+
+}
+
+// MARK: - Pagination
+
+extension GiphySearchViewController {
+
+    private func fetchMoreResults() {
+        if pendingFetchTask != nil {
+            return
+        }
+
+        pendingFetchTask = searchResultsController.fetchMoreResults { [weak self] result in
+            if case let .success(ziphs) = result {
+                self?.insertSearchResults(ziphs)
+            }
+
+            self?.pendingFetchTask = nil
+        }
+    }
+
+    private func insertSearchResults(_ results: [Ziph]) {
+        ziphs.append(contentsOf: results)
+
+        let updatedIndices = ziphs.indices.suffix(results.count).map {
+            IndexPath(item: $0, section: 0)
+        }
+
+        collectionView?.insertItems(at: updatedIndices)
+    }
+
+    @discardableResult
+    func pushConfirmationViewController(ziph: Ziph?, previewImage: FLAnimatedImage?, animated: Bool = true) -> GiphyConfirmationViewController {
+        let confirmationController = GiphyConfirmationViewController(withZiph: ziph, previewImage: previewImage, searchResultController: searchResultsController)
+        confirmationController.title = conversation.displayName.uppercased()
+        confirmationController.delegate = self
+        navigationController?.pushViewController(confirmationController, animated: animated)
+
+        return confirmationController
+    }
+
+}
+
+// MARK: - GiphyConfirmationViewControllerDelegate
+
 extension GiphySearchViewController: GiphyConfirmationViewControllerDelegate {
 
     func giphyConfirmationViewController(_ giphyConfirmationViewController: GiphyConfirmationViewController, didConfirmImageData imageData: Data) {
@@ -282,6 +301,8 @@ extension GiphySearchViewController: GiphyConfirmationViewControllerDelegate {
     }
 
 }
+
+// MARK: - UISearchBarDelegate
 
 extension GiphySearchViewController: UISearchBarDelegate {
 

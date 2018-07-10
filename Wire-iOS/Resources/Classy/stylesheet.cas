@@ -495,17 +495,6 @@ GiphyConfirmationViewController {
     }
 }
 
-GiphySearchViewController {
-    collectionView: @{
-        backgroundColor: $color-background;
-    }
-    
-    noResultsLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-placeholder;
-    }
-}
-
 /* Common label styling */
 
 UILabel.small-light {
