@@ -44,12 +44,6 @@ extension ZMSnapshotTestCase {
 
 class UnknownMessageCellTests: ZMSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-
-        recordMode = true
-    }
-
     func testCell() {
         verify(view: wrappedCell(cell: UnknownMessageCell(style: .default, reuseIdentifier: "test")))
     }

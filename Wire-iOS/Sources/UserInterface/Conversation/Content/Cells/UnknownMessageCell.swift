@@ -34,9 +34,7 @@ public final class UnknownMessageCell: CustomMessageCell {
 public class CustomMessageCell : ConversationCell {
     
     public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
-    public var messageLabelFont : UIFont?
-    public var messageLabelTextColor : UIColor?
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

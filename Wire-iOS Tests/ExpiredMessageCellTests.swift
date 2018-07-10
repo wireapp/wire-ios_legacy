@@ -21,12 +21,6 @@ import XCTest
 @testable import Wire
 
 class ExpiredMessageCellTests: ZMSnapshotTestCase {
-    override func setUp() {
-        super.setUp()
-
-        recordMode = true
-    }
-
     func testCell() {
         verify(view: wrappedCell(cell: ExpiredMessageCell(style: .default, reuseIdentifier: "test")))
    }
