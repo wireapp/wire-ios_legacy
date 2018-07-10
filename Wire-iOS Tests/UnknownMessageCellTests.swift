@@ -36,9 +36,9 @@ extension CustomMessageCell {
         contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
         layoutMargins = UIView.directionAwareConversationLayoutMargins
 
-        self.configure(for: systemMessage, layoutProperties: layoutProperties)
+        configure(for: systemMessage, layoutProperties: layoutProperties)
 
-        return self.wrapInTableView()
+        return wrapInTableView()
     }
 
 }
