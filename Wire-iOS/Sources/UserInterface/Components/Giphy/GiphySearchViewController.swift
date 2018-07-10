@@ -41,10 +41,16 @@ import Ziphy
 
     // MARK: - Initialization
 
-    @objc init(withSearchTerm searchTerm: String, conversation: ZMConversation) {
+    @objc(initWithSearchTerm:conversation:)
+    convenience init(searchTerm: String, conversation: ZMConversation) {
+        let searchResultsController = ZiphySearchResultsController(client: .default, pageSize: 50, maxImageSize: 3)
+        self.init(searchTerm: searchTerm, conversation: conversation, searchResultsController: searchResultsController)
+    }
+
+    init(searchTerm: String, conversation: ZMConversation, searchResultsController: ZiphySearchResultsController) {
         self.conversation = conversation
         self.searchTerm = searchTerm
-        searchResultsController = ZiphySearchResultsController(client: .default, pageSize: 50, maxImageSize: 3)
+        self.searchResultsController = searchResultsController
 
         let columnCount = AdaptiveColumnCount(compact: 2, regular: 3, large: 4)
         super.init(interItemSpacing: 1, interColumnSpacing: 1, columnCount: columnCount)
@@ -234,7 +240,7 @@ extension GiphySearchViewController {
         }
     }
 
-    private func performSearchAfter(delay: TimeInterval) {
+    func performSearchAfter(delay: TimeInterval) {
         cleanUpPendingTask()
         cleanUpPendingTimer()
 
