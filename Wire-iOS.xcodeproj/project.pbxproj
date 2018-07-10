@@ -1145,6 +1145,7 @@
 		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */; };
 		EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
+		EF5C298220F4D22200A1EBEA /* ExpiredMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5C298120F4D22200A1EBEA /* ExpiredMessageCellTests.swift */; };
 		EF5EF40220B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */; };
 		EF60FC412064FD400017D083 /* SplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */; };
 		EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */; };
@@ -1178,6 +1179,8 @@
 		EF98987620C6AAD2005680C5 /* ClientColorVariantProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */; };
 		EF9B950420BEBD89000D4CA1 /* MockUser+AccentColorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */; };
 		EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */; };
+		EFA10F0020F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+CellID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+CellID.swift */; };
+		EFA10F0320F4BFD700863B72 /* ExpiredMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA10F0220F4BFD700863B72 /* ExpiredMessageCell.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
 		EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */; };
@@ -2828,6 +2831,7 @@
 		EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewControllerTests.swift; sourceTree = "<group>"; };
 		EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		EF538FE02028AB6600EA4048 /* ProfileViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileViewController+internal.h"; sourceTree = "<group>"; };
+		EF5C298120F4D22200A1EBEA /* ExpiredMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpiredMessageCellTests.swift; sourceTree = "<group>"; };
 		EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+MarketingConsent.swift"; sourceTree = "<group>"; };
 		EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerTests.swift; sourceTree = "<group>"; };
 		EF60FC4220652F9F0017D083 /* SplitViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SplitViewController+internal.h"; sourceTree = "<group>"; };
@@ -2864,6 +2868,9 @@
 		EF98987520C6AAD2005680C5 /* ClientColorVariantProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientColorVariantProtocol.swift; sourceTree = "<group>"; };
 		EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+AccentColorProvider.swift"; sourceTree = "<group>"; };
 		EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralTimeoutFormatterTests.swift; sourceTree = "<group>"; };
+		EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+CellID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationMessageWindowTableViewAdapter+CellID.swift"; sourceTree = "<group>"; };
+		EFA10F0120F4AE2800863B72 /* ConversationMessageWindowTableViewAdapter+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationMessageWindowTableViewAdapter+Private.h"; sourceTree = "<group>"; };
+		EFA10F0220F4BFD700863B72 /* ExpiredMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpiredMessageCell.swift; sourceTree = "<group>"; };
 		EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SizeClass.swift"; sourceTree = "<group>"; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
@@ -4940,7 +4947,9 @@
 				EF80C0012097106D00E0040B /* ZMConversationMessageWindow+Formatting.swift */,
 				BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */,
 				167B3B471BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.h */,
+				EFA10F0120F4AE2800863B72 /* ConversationMessageWindowTableViewAdapter+Private.h */,
 				167B3B481BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m */,
+				EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+CellID.swift */,
 				87F18BCE1E02F63700C69D9B /* MessagePresenter.h */,
 				87F18BCF1E02F63700C69D9B /* MessagePresenter.m */,
 				87AAE4221E43234A00E1D13A /* MessagePresenter+ConversationImages.swift */,
@@ -4989,6 +4998,7 @@
 				BF4D99C81E79AAD400A7B08F /* ParticipantsCell */,
 				BF0555BC1E6D785C00D3E9D4 /* CallCells.swift */,
 				160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */,
+				EFA10F0220F4BFD700863B72 /* ExpiredMessageCell.swift */,
 				BFC914911D1814AF001F068B /* LocationMessageCell.swift */,
 				87F18BB41E0154C000C69D9B /* FileTransfer */,
 				874448871C22FCE500E7B947 /* Utility */,
@@ -5292,6 +5302,7 @@
 				BF4D99CF1E79AF8100A7B08F /* ParticipantCellTests.swift */,
 				BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */,
 				160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */,
+				EF5C298120F4D22200A1EBEA /* ExpiredMessageCellTests.swift */,
 				BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */,
 				162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */,
 				BFE08C1D1D5B6F34002367F6 /* MessageDeletedCellTests.swift */,
@@ -6954,6 +6965,7 @@
 				876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */,
 				871BC2941D34F8F800DF0793 /* UIView+Zeta.m in Sources */,
 				8FC85458199245770008B66B /* ConversationInputBarViewController.m in Sources */,
+				EFA10F0320F4BFD700863B72 /* ExpiredMessageCell.swift in Sources */,
 				16A94AF4209A1A67008A5718 /* GridView.swift in Sources */,
 				D550F56E204444EE009E09DD /* ConversationActionController+Leave.swift in Sources */,
 				87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */,
@@ -7176,6 +7188,7 @@
 				874A02541D1D325C00D0D74A /* AudioEffect.swift in Sources */,
 				8710673C1C0DC5570035603B /* SettingsButtonCellDescriptor.swift in Sources */,
 				8FC854CC199245770008B66B /* ProfileViewController.m in Sources */,
+				EFA10F0020F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+CellID.swift in Sources */,
 				EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */,
 				87F18BC01E017B7F00C69D9B /* UIView+VisibleViews.swift in Sources */,
 				878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */,
@@ -7435,6 +7448,7 @@
 				BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */,
 				1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */,
 				162E8C631CF5D68A004B4F45 /* AudioProcessingTests.swift in Sources */,
+				EF5C298220F4D22200A1EBEA /* ExpiredMessageCellTests.swift in Sources */,
 				BF58ABEF1D23F3CD00D5FF14 /* ModalTopBarTests.swift in Sources */,
 				16B2DE301CCFB845000D7C30 /* InputBarTests.swift in Sources */,
 				F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */,

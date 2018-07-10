@@ -21,7 +21,17 @@ import Cartography
 import TTTAttributedLabel
 import Classy
 
-@objcMembers public final class UnknownMessageCell : ConversationCell {
+@objcMembers public final class UnknownMessageCell: CustomMessageCell {
+    init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier, message: "content.system.unknown_message.body".localized)
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+public class CustomMessageCell : ConversationCell {
     
     public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
     public var messageLabelFont : UIFont?
@@ -31,8 +41,9 @@ import Classy
         fatalError("init(coder:) has not been implemented")
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
+//    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    init(style: UITableViewCellStyle, reuseIdentifier: String?, message: String) {
+
         messageLabel.extendsLinkTouchArea = true
         messageLabel.numberOfLines = 0
         messageLabel.isAccessibilityElement = true
@@ -56,12 +67,12 @@ import Classy
         messageLabel.font = messageLabelFont
         messageLabel.textColor = messageLabelTextColor
         
-        messageLabel.text = "content.system.unknown_message.body".localized
+        messageLabel.text = message
     }
         
 }
 
-extension UnknownMessageCell : TTTAttributedLabelDelegate {
+extension CustomMessageCell : TTTAttributedLabelDelegate {
     
     public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         UIApplication.shared.openURL(url)
