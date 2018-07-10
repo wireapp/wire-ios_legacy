@@ -63,20 +63,8 @@ import Cartography
         title = "participants.title".localized.uppercased()
         view.backgroundColor = UIColor(scheme: .contentBackground)
         
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.scrollDirection = .vertical
-        collectionViewLayout.minimumInteritemSpacing = 12
-        collectionViewLayout.minimumLineSpacing = 0
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        collectionView.backgroundColor = .clear
-        collectionView.allowsMultipleSelection = false
-        collectionView.keyboardDismissMode = .onDrag
-        collectionView.bounces = true
-        collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 32, right: 0)
-        collectionView.accessibilityIdentifier = "group_details.list"
-        
+        let collectionView = UICollectionView(forUserList: ())
+
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
         }
@@ -189,8 +177,10 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentFullParticipantsList() {
-        preconditionFailure("unimplemented")
+    func presentFullParticipantsList(for users: [ZMBareUser], in conversation: ZMConversation) {
+        let detailsViewController = GroupParticipantsDetailViewController(participants: users, conversation: conversation)
+        detailsViewController.delegate = self
+        navigationController?.pushViewController(detailsViewController, animated: true)
     }
     
     @objc(presentGuestOptionsAnimated:)

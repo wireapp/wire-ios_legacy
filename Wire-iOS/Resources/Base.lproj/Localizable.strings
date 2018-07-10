@@ -569,6 +569,7 @@
 "participants.avatar.guest.title" = "Guest";
 
 "participants.title" = "Details";
+"participants.all.title" = "People";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Settings";

@@ -119,7 +119,7 @@ class ParticipantsSectionController: GroupDetailsSectionController {
             guard let user = bareUser as? ZMUser else { return }
             delegate?.presentDetails(for: user)
         case .showAll:
-            delegate?.presentFullParticipantsList()
+            delegate?.presentFullParticipantsList(for: viewModel.participants, in: conversation)
         }
     }
     
