@@ -35,4 +35,19 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         verify(view: wrapped.view)
     }
     
+    func testThatItRendersALotOfUsers_Dark() {
+        // given
+        ColorScheme.default.variant = .dark
+        let users = (0..<20).map { createUser(name: "User #\($0)") }
+        let conversation = createGroupConversation()
+        conversation.internalAddParticipants(Set(users))
+        
+        // when
+        let sut = GroupParticipantsDetailViewController(participants: users, conversation: conversation)
+        
+        // then
+        let wrapped = sut.wrapInNavigationController()
+        verify(view: wrapped.view)
+    }
+    
 }
