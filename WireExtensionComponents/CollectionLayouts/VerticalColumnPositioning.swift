@@ -68,11 +68,16 @@ struct VerticalColumnPositioning {
         // Compute the position of the item to add
 
         let itemVerticalSpacing = rows.count < context.numberOfColumns ? 0 : context.interItemSpacing
-        let adjustedHeight = ((itemSize.height * context.columnWidth) / itemSize.width)
+        var adjustedHeight = ((itemSize.height * context.columnWidth) / itemSize.width)
+
+        if adjustedHeight.isSignalingNaN || adjustedHeight.isNaN {
+            adjustedHeight = 0
+        }
 
         let frame = CGRect(x: context.columns[currentColumn],
                            y: columnHeights[currentColumn] + itemVerticalSpacing,
                            width: context.columnWidth, height: adjustedHeight)
+
 
         // Create the attributes
 

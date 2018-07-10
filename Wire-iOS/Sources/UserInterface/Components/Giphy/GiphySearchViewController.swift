@@ -45,7 +45,6 @@ import Ziphy
         self.conversation = conversation
         self.searchTerm = searchTerm
         searchResultsController = ZiphySearchResultsController(client: .default, pageSize: 50, maxImageSize: 3)
-        ziphs = []
 
         let columnCount = AdaptiveColumnCount(compact: 2, regular: 3, large: 4)
         super.init(interItemSpacing: 1, interColumnSpacing: 1, columnCount: columnCount)
@@ -154,7 +153,7 @@ import Ziphy
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GiphyCollectionViewCell.CellIdentifier, for: indexPath) as! GiphyCollectionViewCell
-        let ziph = ziphs[indexPath.row]
+        let ziph = ziphs[indexPath.item]
 
         guard let representation = ziph.images[.preview] else {
             return cell
@@ -183,7 +182,7 @@ import Ziphy
     }
 
     override func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
-        let ziph = self.ziphs[indexPath.row]
+        let ziph = self.ziphs[indexPath.item]
 
         guard let representation = ziph.images[.preview] else {
             return .zero
@@ -193,7 +192,7 @@ import Ziphy
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let ziph = self.ziphs[indexPath.row]
+        let ziph = self.ziphs[indexPath.item]
         var previewImage: FLAnimatedImage?
 
         if let cell = collectionView.cellForItem(at: indexPath) as? GiphyCollectionViewCell {

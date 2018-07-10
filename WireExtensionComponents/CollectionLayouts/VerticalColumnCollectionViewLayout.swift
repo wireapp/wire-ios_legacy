@@ -89,7 +89,6 @@ class VerticalColumnCollectionViewLayout: UICollectionViewLayout {
     }
 
     override func prepare() {
-
         guard self.positioning == nil, let collectionView = collectionView, let delegate = self.delegate else {
             return
         }
@@ -103,15 +102,22 @@ class VerticalColumnCollectionViewLayout: UICollectionViewLayout {
         }
 
         self.positioning = positioning
-
     }
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return positioning?.rows.filter { $0.frame.intersects(rect) }
+        return positioning?.rows.filter { $0.frame.height > 0 && $0.frame.intersects(rect) }
     }
 
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return positioning?.rows[indexPath.item]
+        guard let position = positioning?.rows[indexPath.item] else {
+            return nil
+        }
+
+        guard position.frame.height > 0 else {
+            return nil
+        }
+
+        return position
     }
 
     // MARK: - Invalidation
