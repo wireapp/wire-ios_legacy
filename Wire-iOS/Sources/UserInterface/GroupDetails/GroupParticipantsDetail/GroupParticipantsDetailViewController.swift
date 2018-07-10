@@ -67,6 +67,7 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = .init(width: view.bounds.size.width, height: 56)
         title = "participants.all.title".localized.uppercased()
         view.backgroundColor = UIColor(scheme: .contentBackground)
+        navigationItem.rightBarButtonItem = navigationController?.closeItem()
     }
     
     private func createConstraints() {

@@ -31,7 +31,8 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         let sut = GroupParticipantsDetailViewController(participants: users, conversation: conversation)
         
         // then
-        verify(view: sut.view)
+        let wrapped = sut.wrapInNavigationController()
+        verify(view: wrapped.view)
     }
     
 }
