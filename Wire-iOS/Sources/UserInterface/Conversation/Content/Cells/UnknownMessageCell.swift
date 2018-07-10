@@ -22,8 +22,9 @@ import TTTAttributedLabel
 import Classy
 
 public final class UnknownMessageCell: CustomMessageCell {
-    init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier, message: "content.system.unknown_message.body".localized)
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.messageText = "content.system.unknown_message.body".localized
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -34,12 +35,18 @@ public final class UnknownMessageCell: CustomMessageCell {
 public class CustomMessageCell : ConversationCell {
 
     public var messageLabel : TTTAttributedLabel = TTTAttributedLabel(frame: CGRect.zero)
+    var messageText: String? {
+        didSet {
+            messageLabel.text = messageText
+            messageLabel.textTransform = .upper
+        }
+    }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(style: UITableViewCellStyle, reuseIdentifier: String?, message: String) {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         messageLabel.extendsLinkTouchArea = true
         messageLabel.numberOfLines = 0
         messageLabel.isAccessibilityElement = true
@@ -63,8 +70,6 @@ public class CustomMessageCell : ConversationCell {
 
         messageLabel.font = FontSpec(.small, .light).font
         messageLabel.textColor = UIColor(scheme: .textForeground)
-        messageLabel.text = message
-        messageLabel.textTransform = .upper
     }
 
 }
