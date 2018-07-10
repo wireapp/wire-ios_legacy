@@ -167,31 +167,6 @@
     [conversationCell configureForMessage:message layoutProperties:layoutProperties];
 }
 
-- (void)registerTableCellClasses
-{
-    [self.tableView registerClass:[TextMessageCell class] forCellReuseIdentifier:ConversationTextCellId];
-    [self.tableView registerClass:[ImageMessageCell class] forCellReuseIdentifier:ConversationImageCellId];
-    [self.tableView registerClass:[ConversationRenamedCell class] forCellReuseIdentifier:ConversationNameChangedCellId];
-    [self.tableView registerClass:[PingCell class] forCellReuseIdentifier:ConversationPingCellId];
-    [self.tableView registerClass:[PerformedCallCell class] forCellReuseIdentifier:ConversationPerformedCallCellId];
-    [self.tableView registerClass:[MissedCallCell class] forCellReuseIdentifier:ConversationMissedCallCellId];
-    [self.tableView registerClass:[ConnectionRequestCell class] forCellReuseIdentifier:ConversationConnectionRequestCellId];
-    [self.tableView registerClass:[ConversationNewDeviceCell class] forCellReuseIdentifier:ConversationNewDeviceCellId];
-    [self.tableView registerClass:[ConversationVerifiedCell class] forCellReuseIdentifier:ConversationVerifiedCellId];
-    [self.tableView registerClass:[MissingMessagesCell class] forCellReuseIdentifier:ConversationMissingMessagesCellId];
-    [self.tableView registerClass:[ConversationIgnoredDeviceCell class] forCellReuseIdentifier:ConversationIgnoredDeviceCellId];
-    [self.tableView registerClass:[CannotDecryptCell class] forCellReuseIdentifier:ConversationCannotDecryptCellId];
-    [self.tableView registerClass:[FileTransferCell class] forCellReuseIdentifier:ConversationFileTransferCellId];
-    [self.tableView registerClass:[VideoMessageCell class] forCellReuseIdentifier:ConversationVideoMessageCellId];
-    [self.tableView registerClass:[AudioMessageCell class] forCellReuseIdentifier:ConversationAudioMessageCellId];
-    [self.tableView registerClass:[ParticipantsCell class] forCellReuseIdentifier:ParticipantsCell.zm_reuseIdentifier];
-    [self.tableView registerClass:[LocationMessageCell class] forCellReuseIdentifier:ConversationLocationMessageCellId];
-    [self.tableView registerClass:[MessageDeletedCell class] forCellReuseIdentifier:ConversationMessageDeletedCellId];
-    [self.tableView registerClass:[UnknownMessageCell class] forCellReuseIdentifier:ConversationUnknownMessageCellId];
-    [self.tableView registerClass:[ExpiredMessageCell class] forCellReuseIdentifier:ConversationExpiredMessageCellId];
-    [self.tableView registerClass:[MessageTimerUpdateCell class] forCellReuseIdentifier:ConversationMessageTimerUpdateCellId];
-}
-
 - (void)expandMessageWindow
 {
     if (! self.expandingWindow) {

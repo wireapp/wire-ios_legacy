@@ -72,6 +72,7 @@
 #import "PingCell.h"
 #import "ConversationMessageWindowTableViewAdapter.h"
 #import "ConversationMessageWindowTableViewAdapter+Private.h"
+#import "ConnectionRequestCell.h"
 
 // View Controllers
 #import "ZClientViewController.h"

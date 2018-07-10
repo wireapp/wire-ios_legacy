@@ -20,8 +20,8 @@
 import XCTest
 @testable import Wire
 
-extension CustomMessageCell {
-    func wrappedCell() -> UITableView {
+extension ZMSnapshotTestCase {
+    func wrappedCell(cell: CustomMessageCell) -> UITableView {
 
         let systemMessage = MockMessageFactory.systemMessage(with: .usingNewDevice, users: 1, clients: 1)
 
@@ -30,23 +30,28 @@ extension CustomMessageCell {
         layoutProperties.showBurstTimestamp = false
         layoutProperties.showUnreadMarker = false
 
-        prepareForReuse()
-        layer.speed = 0 // freeze animations for deterministic tests
-        bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
-        contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
-        layoutMargins = UIView.directionAwareConversationLayoutMargins
+        cell.prepareForReuse()
+        cell.layer.speed = 0 // freeze animations for deterministic tests
+        cell.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
+        cell.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
+        cell.layoutMargins = UIView.directionAwareConversationLayoutMargins
 
-        configure(for: systemMessage, layoutProperties: layoutProperties)
+        cell.configure(for: systemMessage, layoutProperties: layoutProperties)
 
-        return wrapInTableView()
+        return cell.wrapInTableView()
     }
-
 }
 
 class UnknownMessageCellTests: ZMSnapshotTestCase {
 
-    func testCell() {
-        verify(view: UnknownMessageCell(style: .default, reuseIdentifier: "test").wrappedCell())
+    override func setUp() {
+        super.setUp()
+
+        recordMode = true
     }
-    
+
+    func testCell() {
+        verify(view: wrappedCell(cell: UnknownMessageCell(style: .default, reuseIdentifier: "test")))
+    }
+
 }

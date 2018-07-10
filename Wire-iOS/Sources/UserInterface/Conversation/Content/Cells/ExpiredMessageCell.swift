@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objcMembers public final class ExpiredMessageCell: CustomMessageCell {
+public final class ExpiredMessageCell: CustomMessageCell {
     init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier, message: "content.system.expired_message.body".localized)
     }

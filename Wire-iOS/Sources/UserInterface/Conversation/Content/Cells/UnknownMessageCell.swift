@@ -21,7 +21,7 @@ import Cartography
 import TTTAttributedLabel
 import Classy
 
-@objcMembers public final class UnknownMessageCell: CustomMessageCell {
+public final class UnknownMessageCell: CustomMessageCell {
     init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier, message: "content.system.unknown_message.body".localized)
     }
@@ -41,7 +41,6 @@ public class CustomMessageCell : ConversationCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     init(style: UITableViewCellStyle, reuseIdentifier: String?, message: String) {
 
         messageLabel.extendsLinkTouchArea = true
@@ -64,10 +63,11 @@ public class CustomMessageCell : ConversationCell {
         CASStyler.default().styleItem(self)
         
         messageLabel.delegate = self
-        messageLabel.font = messageLabelFont
-        messageLabel.textColor = messageLabelTextColor
-        
+
+        messageLabel.font = FontSpec(.small, .ultraLight).font
+        messageLabel.textColor = UIColor(scheme: .textForeground)
         messageLabel.text = message
+        messageLabel.textTransform = .upper
     }
         
 }
