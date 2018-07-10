@@ -289,8 +289,15 @@ extension ZMSystemMessageData {
         let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
         if let destructionDate = message.destructionDate, showDestructionTimer {
             let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
-            requireInternal(remaining > 0, "invalid negative timeout value")
-            deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
+            
+            if remaining > 0 {
+                deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
+            } else if message.isAudio {
+                // do nothing, audio messages are allowed to extend the timer
+                // past the destruction date.
+            } else {
+                requireInternal(remaining > 0, "invalid negative timeout value")
+            }
         }
 
         let finalText: String
