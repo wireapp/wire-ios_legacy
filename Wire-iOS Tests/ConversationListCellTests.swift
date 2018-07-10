@@ -137,7 +137,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersGroupConversation() {
         // when
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants([createUser(name: "Ana"), createUser(name: "Hannah")])
+        conversation.internalAddParticipants([createUser(name: "Ana")])
 
         // then
         verify(conversation)
