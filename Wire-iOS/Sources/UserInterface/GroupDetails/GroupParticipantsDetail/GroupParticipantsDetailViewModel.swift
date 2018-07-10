@@ -26,7 +26,7 @@ fileprivate extension String {
 
 class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate {
 
-    private let __participants: [ZMBareUser]
+    private let internalParticipants: [ZMBareUser]
     private var filterQuery: String?
     
     let conversation: ZMConversation
@@ -37,15 +37,15 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
     }
     
     init(participants: [ZMBareUser], conversation: ZMConversation) {
-        __participants = participants
+        internalParticipants = participants
         self.conversation = conversation
         super.init()
         computeVisibleParticipants()
     }
     
     private func computeVisibleParticipants() {
-        guard let query = filterQuery, query.isValidQuery else { return participants = __participants }
-        participants = (__participants as NSArray).filtered(using: filterPredicate(for: query)) as! [ZMBareUser]
+        guard let query = filterQuery, query.isValidQuery else { return participants = internalParticipants }
+        participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [ZMBareUser]
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {
