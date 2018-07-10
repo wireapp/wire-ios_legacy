@@ -22,7 +22,6 @@ import Cartography
 
 @objcMembers public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate {
 
-    private let collectionViewController = ParticipantsCollectionViewController<ParticipantsUserCell>()
     private let stackView = UIStackView()
     private let topContainer = UIView()
     private let bottomContainer = UIView()
@@ -55,25 +54,8 @@ import Cartography
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        setupCollectionView()
         createConstraints()
         CASStyler.default().styleItem(self)
-    }
-
-    private func setupCollectionView() {
-        // Cells should not be selectable (for now)
-        collectionViewController.collectionView.isUserInteractionEnabled = false
-        bottomContainer.addSubview(collectionViewController.view)
-
-        collectionViewController.configureCell = { [weak self] user, cell in
-            cell.user = user
-            cell.dimmed = self?.message.systemMessageData?.systemMessageType == .participantsRemoved
-        }
-
-        collectionViewController.selectAction = { [weak self] user, cell in
-            guard let `self` = self else { return }
-            self.delegate.conversationCell?(self, userTapped: user, in: cell)
-        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -134,7 +116,7 @@ import Cartography
             labelView.top == bottomContainer.top
             nameLabel.leading == leftIconContainer.trailing
             nameLabel.trailing <= messageContentView.trailing - 72
-            labelView.bottom <= bottomContainer.bottom
+            labelView.bottom == bottomContainer.bottom
             messageContentView.height >= 32
         }
         
@@ -146,13 +128,6 @@ import Cartography
         createLineViewConstraints()
         updateLineBaseLineConstraint()
         createBaselineConstraint()
-        
-        constrain(messageContentView, labelView, collectionViewController.view, bottomContainer) { container, label, participants, bottomContainer in
-            participants.leading == label.leading
-            participants.trailing == container.trailing - 72
-            participants.top == label.bottom + 8
-            participants.bottom == bottomContainer.bottom
-        }
     }
     
     private func createLineViewConstraints() {
@@ -192,11 +167,6 @@ import Cartography
         topContainer.isHidden = nameLabel.attributedText == nil
         bottomContainer.isHidden = model.sortedUsers().count == 0
         inviteView.isHidden = !model.showInviteButton
-
-        // We need a layout pass here in order for the collectionView to pick up the correct size
-        setNeedsLayout()
-        layoutIfNeeded()
-        collectionViewController.users = model.sortedUsers()
     }
 
     open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
