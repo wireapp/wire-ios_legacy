@@ -48,6 +48,7 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         // then
         let wrapped = sut.wrapInNavigationController()
         verify(view: wrapped.view)
+        ColorScheme.default.variant = .light
     }
     
 }
