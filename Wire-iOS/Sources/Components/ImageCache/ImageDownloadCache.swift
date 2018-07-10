@@ -55,16 +55,7 @@ class ImageDownloadCache {
      */
 
     static let shared: ImageDownloadCache = {
-
-        let cache = URLCache(memoryCapacity: 100 * 1024 * 1024,
-                             diskCapacity: 200 * 1024 * 1024, diskPath: nil)
-
-        let sessionConfiguration = URLSessionConfiguration.default
-        sessionConfiguration.urlCache = cache
-
-        let session = URLSession(configuration: sessionConfiguration)
-        return ImageDownloadCache(session: session)
-
+        return ImageDownloadCache(session: URLSession.shared)
     }()
 
     // MARK: - Image Fetching

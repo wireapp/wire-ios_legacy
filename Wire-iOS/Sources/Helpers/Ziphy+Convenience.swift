@@ -21,16 +21,8 @@ import Ziphy
 
 extension ZiphyClient {
 
-    private static let ziphyCache: URLCache = {
-        return URLCache(memoryCapacity: 100, diskCapacity: 200, diskPath: nil)
-    }()
-
     static var `default`: ZiphyClient {
-        let sessionConfiguration = URLSessionConfiguration.default
-        sessionConfiguration.urlCache = ziphyCache
-
-        let downloadSession = URLSession(configuration: sessionConfiguration)
-        return ZiphyClient(host: "api.giphy.com", requester: ZMUserSession.shared()!, downloadSession: downloadSession)
+        return ZiphyClient(host: "api.giphy.com", requester: ZMUserSession.shared()!, downloadSession: URLSession.shared)
     }
 
 }
