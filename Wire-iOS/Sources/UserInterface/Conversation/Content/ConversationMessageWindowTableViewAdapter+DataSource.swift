@@ -19,6 +19,7 @@
 import Foundation
 
 extension ConversationMessageWindowTableViewAdapter {
+    
     @objc func registerTableCellClasses() {
         tableView.register(TextMessageCell.self, forCellReuseIdentifier: ConversationTextCellId)
         tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
@@ -41,7 +42,6 @@ extension ConversationMessageWindowTableViewAdapter {
         tableView.register(UnknownMessageCell.self, forCellReuseIdentifier: ConversationUnknownMessageCellId)
         tableView.register(ExpiredMessageCell.self, forCellReuseIdentifier: ConversationExpiredMessageCellId)
         tableView.register(MessageTimerUpdateCell.self, forCellReuseIdentifier: ConversationMessageTimerUpdateCellId)
-
     }
 }
 
