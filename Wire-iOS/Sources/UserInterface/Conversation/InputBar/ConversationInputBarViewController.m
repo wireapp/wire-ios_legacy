@@ -370,24 +370,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.audioRecordViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.inputBar withOffset:0.5];
 }
 
-- (void)createSendButton
-{
-    self.sendButton = [IconButton iconButtonDefault];
-    self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
-
-    self.sendButton.accessibilityIdentifier = @"sendButton";
-    self.sendButton.adjustsImageWhenHighlighted = NO;
-    self.sendButton.adjustBackgroundImageWhenHighlighted = YES;
-    self.sendButton.cas_styleClass = @"send-button";
-    self.sendButton.hitAreaPadding = CGSizeMake(30, 30);
-    [self.sendButton setBackgroundImageColor:[UIColor accentColor] forState: UIControlStateNormal];
-    [self.sendButton setBackgroundImageColor:[UIColor accentDarken] forState: UIControlStateHighlighted];
-
-    [self.inputBar.rightAccessoryStackView addArrangedSubview:self.sendButton];
-    
-    [self createSendButtonConstraints];
-}
-
 - (void)createEphemeralIndicatorButton
 {
     self.ephemeralIndicatorButton = [[IconButton alloc] initForAutoLayout];

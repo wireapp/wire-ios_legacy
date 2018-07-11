@@ -43,7 +43,7 @@ import Cartography
     var toolbar : SketchToolbar!
     let drawButton = IconButton()
     let emojiButton = IconButton()
-    let sendButton = IconButton()
+    let sendButton = IconButton.sendButton
     let photoButton = IconButton()
     let separatorLine = UIView()
     let hintLabel = UILabel()
@@ -128,13 +128,10 @@ import Cartography
     func configureButtons() {
         let hitAreaPadding = CGSize(width: 16, height: 16)
         
-        sendButton.setIcon(.send, with: .tiny, for: .normal)
         sendButton.addTarget(self, action: #selector(exportImage), for: .touchUpInside)
         sendButton.isEnabled = false
-        sendButton.cas_styleClass = "send-button"
         sendButton.hitAreaPadding = hitAreaPadding
-        sendButton.accessibilityIdentifier = "sendButton"
-        
+
         drawButton.setIcon(.brush, with: .tiny, for: .normal)
         drawButton.addTarget(self, action: #selector(toggleDrawTool), for: .touchUpInside)
         drawButton.hitAreaPadding = hitAreaPadding
