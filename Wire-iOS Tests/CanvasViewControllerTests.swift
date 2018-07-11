@@ -35,6 +35,7 @@ final class CanvasViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
+        sut.view.prepareForSnapshot()
         verify(view: sut.view)
     }
 }
