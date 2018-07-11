@@ -153,7 +153,12 @@ final public class BackgroundViewController: UIViewController {
         guard self.isViewLoaded else {
             return
         }
-    
+        
+        updateForUserImage()
+        updateForAccentColor()
+    }
+
+    private func updateForUserImage() {
         user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { (imageData) in
             var image: UIImage? = nil
             if let imageData = imageData {
@@ -164,22 +169,30 @@ final public class BackgroundViewController: UIViewController {
                 self.imageView.image = image
             }
         }
-        
-//        if let imageData = user.imageMediumData {
-//            self.setBackground(imageData: imageData)
-//        } else {
-//            if let searchUser = user as? ZMSearchUser, let userSession = self.userSession {
-//                searchUser.requestMediumProfileImage(in: userSession)
-//            }
-//
-//            self.setBackground(color: user.accentColorValue.color)
-//        }
+    }
+    
+    private func updateForAccentColor() {
+        setBackground(color: user.accentColorValue.color)
     }
     
     private func updateForColorScheme() {
         self.darkMode = (ColorScheme.default.variant == .dark)
     }
+    
+    internal func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
+        guard imageMediumDataChanged || accentColorValueChanged else {
+            return
+        }
         
+        if imageMediumDataChanged {
+            updateForUserImage()
+        }
+        
+        if accentColorValueChanged {
+            updateForAccentColor()
+        }
+    }
+    
     static let ciContext: CIContext = {
         return CIContext()
     }()
@@ -195,7 +208,6 @@ final public class BackgroundViewController: UIViewController {
     }
     
     fileprivate func setBackground(color: UIColor) {
-        self.imageView.image = .none
         self.imageView.backgroundColor = color
     }
     
@@ -210,11 +222,8 @@ final public class BackgroundViewController: UIViewController {
 
 extension BackgroundViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.imageMediumDataChanged || changeInfo.accentColorValueChanged else {
-            return
-        }
-        
-        updateForUser()
+        self.updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
+                       accentColorValueChanged: changeInfo.accentColorValueChanged)
     }
 }
 

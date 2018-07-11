@@ -21,11 +21,16 @@ import Foundation
 import WireLinkPreview
 
 @objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
+    
     var messageText: String = ""
     var linkPreview: LinkPreview? = nil
     var imageData: Data? = nil
-    var hasImageData: Bool = false
-    var imageDataIdentifier: String? = nil
+    var linkPreviewHasImage: Bool = false
+    var linkPreviewImageCacheKey: String? = nil
+    
+    func fetchLinkPreviewImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
+        
+    }
 }
 
 @objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {
@@ -51,13 +56,15 @@ import WireLinkPreview
 
 
 @objcMembers class MockFileMessageData: NSObject, ZMFileMessageData {
+
+    
     var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
     var transferState: ZMFileTransferState = .uploaded
     var filename: String? = "TestFile.pdf"
     var progress: Float = 0
     var fileURL: URL? = .none
-    var previewData: Data? = nil
+    var imagePreviewData: Data? = nil
     var thumbnailAssetID : String? = ""
     var imagePreviewDataIdentifier: String? = "preview-identifier-123"
     var durationMilliseconds: UInt64 = 233000
@@ -83,6 +90,10 @@ import WireLinkPreview
     func cancelTransfer() {
         // no-op
     }
+    
+    func fetchImagePreviewData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        completionHandler(imagePreviewData)
+    }
 }
 
 @objcMembers class MockKnockMessageData: NSObject, ZMKnockMessageData {
@@ -90,6 +101,7 @@ import WireLinkPreview
 }
 
 @objcMembers class MockImageMessageData : NSObject, ZMImageMessageData {
+    
     var mockOriginalSize: CGSize = .zero
     var mockImageData = Data()
     var mockImageDataIdentifier = String()
@@ -98,12 +110,17 @@ import WireLinkPreview
     var previewData: Data! = Data()
     var imagePreviewDataIdentifier: String! = String()
     
+    var isDownloaded: Bool = true
     var isAnimatedGIF: Bool = false
     var imageType: String! = String()
     
     var imageData: Data { return mockImageData }
     var imageDataIdentifier: String { return mockImageDataIdentifier }
     var originalSize: CGSize { return mockOriginalSize }
+    
+    func fetchImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
+        
+    }
 }
 
 @objcMembers class MockLocationMessageData: NSObject, ZMLocationMessageData {

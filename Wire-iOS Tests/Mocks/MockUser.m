@@ -20,7 +20,7 @@
 #import "MockUser.h"
 #import "MockConversation.h"
 
-static id<ZMBareUser> mockSelfUser = nil;
+static id<UserType> mockSelfUser = nil;
 
 @implementation MockUser
 
@@ -64,7 +64,7 @@ static id<ZMBareUser> mockSelfUser = nil;
     return (MockUser *)mockSelfUser;
 }
 
-+ (void)setMockSelfUser:(id<ZMBareUser>)newMockUser
++ (void)setMockSelfUser:(id<UserType>)newMockUser
 {
     mockSelfUser = newMockUser;
 }
@@ -114,11 +114,8 @@ static id<ZMBareUser> mockSelfUser = nil;
 @synthesize isSelfUser;
 @synthesize isConnected;
 @synthesize accentColorValue;
-@synthesize imageMediumData;
-@synthesize imageSmallProfileData;
-@synthesize imageSmallProfileIdentifier;
-@synthesize imageMediumIdentifier;
-@synthesize canBeConnected;
+@synthesize previewImageData;
+@synthesize completeImageData;
 @synthesize connectionRequestMessage;
 @synthesize totalCommonConnections;
 @synthesize smallProfileImageCacheKey;
@@ -132,15 +129,9 @@ static id<ZMBareUser> mockSelfUser = nil;
     }        
 }
 
-- (id<ZMCommonContactsSearchToken>)searchCommonContactsInUserSession:(ZMUserSession *)session
-                                                        withDelegate:(id<ZMCommonContactsSearchDelegate>)delegate
-{
-    return nil;
-}
-
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
-    if (aProtocol == @protocol(ZMBareUser)) {
+    if (aProtocol == @protocol(UserType)) {
         return YES;
     }
     else {
