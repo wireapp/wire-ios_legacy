@@ -353,13 +353,6 @@ InputBarEditView: {
     }
 }
 
-IconButton.send-button {
-    circular: true;
-    borderWidth: 0.0;
-    iconColor[state: highlighted]: $color-background-light;
-    iconColor[state: normal]: $color-background-light;
-}
-
 IconButton.hourglass {
     iconColor: $color-icon-normal;
     iconColor[state:highlighted]: $color-icon-highlighted;

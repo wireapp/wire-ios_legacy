@@ -29,7 +29,6 @@
 
 // UI
 @import WireExtensionComponents;
-#import "UIColor+WAZExtensions.h"
 #import "ConversationCell.h"
 #import "ConversationCell+Private.h"
 #import "TextMessageCell.h"
