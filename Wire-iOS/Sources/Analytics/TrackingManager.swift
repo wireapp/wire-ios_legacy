@@ -22,7 +22,7 @@ import HockeySDK
 import WireExtensionComponents
 
 
-@objcMembers public class TrackingManager: NSObject {
+@objc public class TrackingManager: NSObject, TrackingInterface {
     private let flowManagerObserver: NSObjectProtocol
     
     private override init() {
@@ -33,10 +33,8 @@ import WireExtensionComponents
         })
     }
     
-    public static let shared = TrackingManager()
-}
+    @objc public static let shared = TrackingManager()
 
-extension TrackingManager: TrackingInterface {
     @objc public var disableCrashAndAnalyticsSharing: Bool {
         set {
             Analytics.shared().isOptedOut = newValue

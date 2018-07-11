@@ -202,9 +202,11 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
         }
         return NO;
     }] != NSNotFound;
+
+    TrackingManager *trackingManager = [TrackingManager shared];
     
     [AnalyticsProviderFactory shared].useConsoleAnalytics = containsConsoleAnalytics;
-    [Analytics loadSharedWithOptedOut:[[TrackingManager shared] disableCrashAndAnalyticsSharing]];
+    [Analytics loadSharedWithOptedOut:trackingManager.disableCrashAndAnalyticsSharing];
 }
 
 - (void)trackLaunchAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions
