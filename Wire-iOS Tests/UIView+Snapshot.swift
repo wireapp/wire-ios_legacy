@@ -16,27 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
 
-final class DraftSendInputAccessoryViewTests: ZMSnapshotTestCase {
-    
-    var sut: DraftSendInputAccessoryView!
-    
-    override func setUp() {
-        super.setUp()
-        sut = DraftSendInputAccessoryView()
-        sut.frame = CGRect(x: 0, y: 0, width: 375, height: 56)
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
-
-    func testForInitState(){
-        sut.prepareForSnapshot()
-        verify(view: sut)
+extension UIView {
+    func prepareForSnapshot() {
+        self.layer.speed = 0
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
 }
-
