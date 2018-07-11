@@ -31,14 +31,7 @@ class SketchToolbar : UIView {
     public init(buttons: [UIButton]) {
         
         guard buttons.count >= 2 else {  fatalError("SketchToolbar needs to be initialized with at least two buttons") }
-        
-        buttons.forEach { button in
-            let iconButton = button as? IconButton
-            iconButton?.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
-            iconButton?.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
-            iconButton?.setIconColor(UIColor.accent(), for: .selected)
-        }
-        
+
         var unassignedButtons = buttons
         
         leftButton = unassignedButtons.removeFirst()

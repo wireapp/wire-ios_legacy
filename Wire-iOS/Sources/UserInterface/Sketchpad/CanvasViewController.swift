@@ -146,6 +146,12 @@ import Cartography
         emojiButton.addTarget(self, action: #selector(openEmojiKeyboard), for: .touchUpInside)
         emojiButton.hitAreaPadding = hitAreaPadding
         emojiButton.accessibilityIdentifier = "emojiButton"
+
+        [photoButton, drawButton, emojiButton].forEach { iconButton in
+            iconButton.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
+            iconButton.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
+            iconButton.setIconColor(UIColor.accent(), for: .selected)
+        }
     }
     
     func configureColorPicker() {

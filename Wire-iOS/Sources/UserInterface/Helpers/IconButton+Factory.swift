@@ -20,9 +20,9 @@ import UIKit
 
 extension IconButton {
     
-    fileprivate static let width: CGFloat = 64
-    fileprivate static let height: CGFloat = 64
-    
+    static let width: CGFloat = 64
+    static let height: CGFloat = 64
+
     
     static func acceptCall() -> IconButton {
         return .init(
@@ -46,14 +46,18 @@ extension IconButton {
     }
 
     class var sendButton: IconButton {
+
+        let sendButtonIconColor = UIColor(scheme: .background, variant: .light)
+
         let sendButton = IconButton(
             icon: .send,
-            size: .tiny,
             accessibilityId: "sendButton",
-            backgroundColor: [.normal:      UIColor(scheme: .background, variant: .light),
-                              .highlighted: UIColor(scheme: .background, variant: .light)],
-            iconColor: [.normal:      UIColor.accent(),
-                        .highlighted: UIColor.accentDarken()]
+            backgroundColor: [.normal:      UIColor.accent(),
+                              .highlighted: UIColor.accentDarken()],
+            iconColor: [.normal: sendButtonIconColor,
+                        .highlighted: sendButtonIconColor,
+                        .disabled: sendButtonIconColor,
+                        .selected: sendButtonIconColor]
         )
 
         sendButton.adjustsImageWhenHighlighted = false
