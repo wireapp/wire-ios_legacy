@@ -193,7 +193,11 @@
         return nil;
     }
     
-    CGSize size = [self sizeForImageSource:source];
+    const CGSize size = [self sizeForImageSource:source];
+    if (size.width <= 0 || size.height <= 0) {
+        return nil;
+    }
+
     CGFloat longSideLength = shorterSideLength;
 
     if (size.width > size.height) {
