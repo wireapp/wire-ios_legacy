@@ -34,6 +34,7 @@ class ExtensionSettingsTests: XCTestCase {
         settings.reset()
         settings = nil
         defaults = nil
+        super.tearDown()
     }
 
     func testThatItDisablesAnalyticsByDefault() {
