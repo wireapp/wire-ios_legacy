@@ -22,17 +22,26 @@ import XCTest
 final class GiphySearchViewControllerTests: XCTestCase {
     
     weak var sut: GiphySearchViewController!
+
     var mockConversation: MockConversation!
+    var client: ZiphyClient!
+    var requester: MockURLSession!
+    var resultsController: ZiphySearchResultsController!
 
     override func setUp() {
         super.setUp()
 
         mockConversation = MockConversation.oneOnOneConversation()
+        requester = MockURLSession(cache: nil)
+        client = ZiphyClient(host: "localhost", requester: requester, downloadSession: requester)
+        resultsController = ZiphySearchResultsController(client: client, pageSize: 5)
     }
     
     override func tearDown() {
         sut = nil
         mockConversation = nil
+        client = nil
+        requester = nil
         super.tearDown()
     }
 
@@ -41,7 +50,7 @@ final class GiphySearchViewControllerTests: XCTestCase {
             // GIVEN
             let searchTerm: String = "apple"
 
-            var giphySearchViewController: GiphySearchViewController! = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
+            var giphySearchViewController: GiphySearchViewController! = GiphySearchViewController(searchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation, searchResultsController: resultsController)
             sut = giphySearchViewController
 
 

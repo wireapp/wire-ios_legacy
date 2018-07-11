@@ -95,12 +95,14 @@ class GiphyConfirmationViewController: UIViewController {
     func fetchImage() {
         guard let ziph = ziph, let searchResultController = searchResultController else { return }
         
-        searchResultController.fetchImageData(forZiph: ziph, imageType: .downsized) { [weak self] (imageData, _, error) in
-            if let imageData = imageData, error == nil {
-                self?.imagePreview.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
-                self?.imageData = imageData
-                self?.acceptButton.isEnabled = true
+        searchResultController.fetchImageData(for: ziph, imageType: .downsized) { [weak self] result in
+            guard case let .success(imageData) = result else {
+                return
             }
+
+            self?.imagePreview.animatedImage = FLAnimatedImage(animatedGIFData: imageData)
+            self?.imageData = imageData
+            self?.acceptButton.isEnabled = true
         }
     }
     
@@ -119,10 +121,16 @@ class GiphyConfirmationViewController: UIViewController {
     }
     
     func configureConstraints() {
-        constrain(view, imagePreview) { container, imagePreview in
-            imagePreview.edges == inset(container.edges, 32, 0, 104, 0)
-        }
-        
+
+        imagePreview.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            imagePreview.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            imagePreview.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
+            imagePreview.topAnchor.constraint(equalTo: safeTopAnchor),
+            imagePreview.bottomAnchor.constraint(equalTo: buttonContainer.topAnchor)
+        ])
+
         constrain(buttonContainer, cancelButton, acceptButton) { container, leftButton, rightButton in
             leftButton.height == 40
             leftButton.width >= 100
@@ -142,7 +150,7 @@ class GiphyConfirmationViewController: UIViewController {
         constrain(view, buttonContainer) { container, buttonContainer in
             buttonContainer.left >= container.left + 32
             buttonContainer.right <= container.right - 32
-            buttonContainer.bottom  == container.bottom - 32
+            buttonContainer.bottom == container.bottom - 32
             buttonContainer.width == 476 ~ 700.0
             buttonContainer.centerX == container.centerX
         }

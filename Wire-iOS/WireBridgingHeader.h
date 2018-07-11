@@ -53,7 +53,6 @@
 #import "StackView.h"
 #import "UIAlertController+NewSelfClients.h"
 #import "SwizzleTransition.h"
-#import "ZiphyClient+Convenience.h"
 #import "Country.h"
 #import "ContrastUserImageView.h"
 #import "PassthroughTouchesView.h"

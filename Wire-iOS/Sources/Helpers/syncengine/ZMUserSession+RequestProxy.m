@@ -27,17 +27,17 @@
 
 @implementation ZMUserSession (RequestProxy)
 
-- (id<ZiphyRequestIdentifier>)doRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler
+- (id<ZiphyRequestIdentifier>)performZiphyRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler
 {
     // Removing the https://host part from the given URL, so WireSyncEngine can prepend it with the Wire giphy proxy host
-    NSString *fullHost = [NSString stringWithFormat:@"%@://%@", request.URL.scheme, request.URL.host];
-    NSString *URLString = [request.URL absoluteString];
-    URLString = [URLString stringByReplacingOccurrencesOfString:fullHost withString:@""];
-    
-    return [self doRequestWithPath:URLString method:ZMMethodGET type:ProxiedRequestTypeGiphy completionHandler:completionHandler];
+    NSURL *requestURL = request.URL;
+    NSURLComponents *components = [NSURLComponents componentsWithURL:requestURL resolvingAgainstBaseURL:NO];
+    NSString *requestPath = [requestURL.absoluteString substringFromIndex:components.rangeOfPath.location];
+
+    return [self doRequestWithPath:requestPath method:ZMMethodGET type:ProxiedRequestTypeGiphy completionHandler:completionHandler];
 }
 
-- (void)cancelRequestWithRequestIdentifier:(id<ZiphyRequestIdentifier>)requestIdentifier
+- (void)cancelZiphyRequestWithRequestIdentifier:(id<ZiphyRequestIdentifier>)requestIdentifier
 {
     if ([(id)requestIdentifier isKindOfClass:ZMProxyRequest.class]) {
         [self cancelProxiedRequest:(ZMProxyRequest *)requestIdentifier];

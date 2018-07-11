@@ -18,8 +18,12 @@
 
 import Foundation
 
-protocol GroupDetailsSectionControllerDelegate: class {
+protocol GroupDetailsUserDetailPresenter: class {
     func presentDetails(for user: ZMUser)
+}
+
+protocol GroupDetailsSectionControllerDelegate: GroupDetailsUserDetailPresenter {
+    func presentFullParticipantsList(for users: [ZMBareUser], in conversation: ZMConversation)
 }
 
 class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
