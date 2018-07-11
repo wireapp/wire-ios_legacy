@@ -31,6 +31,7 @@ class ExtensionSettingsTests: XCTestCase {
     }
 
     override func tearDown() {
+        settings.reset()
         settings = nil
         defaults = nil
     }

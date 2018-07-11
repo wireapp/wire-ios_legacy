@@ -32,6 +32,7 @@ class AnalyticsMixpanelProviderTests: XCTestCase {
     
     override func tearDown() {
         userDefaults.removeObject(forKey: MixpanelDistinctIdKey)
+        settings.reset()
         settings = nil
         userDefaults = nil
         super.tearDown()
