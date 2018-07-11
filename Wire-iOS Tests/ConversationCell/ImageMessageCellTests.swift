@@ -145,7 +145,7 @@ internal extension ImageMessageCell {
             setImage(image)
         }
 
-        layer.speed = 0
+        prepareForSnapshot()
 
         return self.wrapInTableView()
     }
