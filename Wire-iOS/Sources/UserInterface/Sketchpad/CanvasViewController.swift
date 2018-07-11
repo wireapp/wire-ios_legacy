@@ -43,7 +43,7 @@ import Cartography
     var toolbar : SketchToolbar!
     let drawButton = IconButton()
     let emojiButton = IconButton()
-    let sendButton = IconButton.sendButton
+    let sendButton = IconButton.sendButton()
     let photoButton = IconButton()
     let separatorLine = UIView()
     let hintLabel = UILabel()

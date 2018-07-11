@@ -25,7 +25,7 @@ final class DraftSendInputAccessoryView: UIView {
 
     var onSend: (() -> Void)?
 
-    public let sendButton = IconButton.sendButton
+    public let sendButton = IconButton.sendButton()
 
     public var isEnabled: Bool = false {
         didSet {
