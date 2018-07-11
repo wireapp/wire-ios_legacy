@@ -34,7 +34,7 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         return ColorScheme.default.statusBarStyle
     }
     
-    init(participants: [ZMBareUser], conversation: ZMConversation) {
+    init(participants: [UserType], conversation: ZMConversation) {
         viewModel = GroupParticipantsDetailViewModel(
             participants: participants,
             conversation: conversation
