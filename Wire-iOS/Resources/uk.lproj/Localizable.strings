@@ -29,7 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Не зараз";
 "general.accept" = "Прийняти";
-"general.decline" = "No, thanks";
+"general.decline" = "Ні, дякую";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Торкніться для надсилання";
 "conversation.input_bar.audio_message.too_long.title" = "Запис зупинено";
 "conversation.input_bar.audio_message.too_long.message" = "Довжина аудіоповідомлень обмежена до %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Надіслати";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Торкніться, щоб почати запис\nВи можете %@ після цього";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "з %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ встановив(-ла) таймер повідомлень на %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Ви";
+
+"content.system.message_timer_off" = "%@ вимкнув(-ла) таймер повідомлень";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
@@ -560,10 +569,12 @@
 "participants.avatar.guest.title" = "Гість";
 
 "participants.title" = "Подробиці";
+"participants.all.title" = "Люди";
 "participants.section.participants" = "Учасники (%d)";
 "participants.section.services" = "Сервіси (%d)";
+"participants.section.settings" = "Налаштування";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "До цієї розмови може прєднатись не більше 256 учасників. Відеодзвінки будуть працювати тільки в розмовах. що містять до чотирьох учасників.";
 
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";
@@ -674,10 +685,10 @@
 "participants.services.remove_integration.button" = "видалити інтеграцію";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Гості";
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
-"group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.timeout_options_cell.title" = "Тимчасові повідомлення";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

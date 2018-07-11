@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Göndermek için tıkla";
 "conversation.input_bar.audio_message.too_long.title" = "Kayıt durdu";
 "conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Gönder";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Kaydetmek için tıkla\nDaha sonra %@ bilirsin";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "with %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Sen";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek.";
 
@@ -560,8 +569,10 @@
 "participants.avatar.guest.title" = "Misafir";
 
 "participants.title" = "Ayrıntılar";
+"participants.all.title" = "İnsanlar";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Ayarlar";
 "participants.footer.add_title" = "Add Participants";
 "participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
