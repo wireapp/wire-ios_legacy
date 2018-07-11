@@ -1,4 +1,5 @@
-////
+//
+<<<<<<< Updated upstream
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,10 +17,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface StartUIViewController ()
 
-@property (nonatomic) UserSelection *userSelection;
+import Foundation
 
-- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath;
-
-@end
+extension UserImageView {
+    
+    @objc
+    func updateUserImage() {
+        
+        user?.fetchProfileImage(.preview, completion: { (image) in
+            guard let image = image else { return }
+            self.setUserImage(image)
+        })
+        
+    }
+    
+}

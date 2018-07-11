@@ -295,7 +295,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }];
 }
 
-- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
+- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath
 {
     [self.searchHeaderViewController.tokenField resignFirstResponder];
 

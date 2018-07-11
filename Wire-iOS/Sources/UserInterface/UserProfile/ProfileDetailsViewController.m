@@ -76,7 +76,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @interface ProfileDetailsViewController ()
 
 @property (nonatomic) ProfileViewControllerContext context;
-@property (nonatomic) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> bareUser;
+@property (nonatomic) id<UserType, AccentColorProvider> bareUser;
 @property (nonatomic) ZMConversation *conversation;
 @property (nonatomic) ConversationActionController *actionsController;
 
@@ -93,7 +93,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 @implementation ProfileDetailsViewController
 
-- (instancetype)initWithUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     self = [super initWithNibName:nil bundle:nil];
     
@@ -101,7 +101,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         _context = context;
         _bareUser = user;
         _conversation = conversation;
-        _showGuestLabel = [user isGuestInConversation:conversation];
+        _showGuestLabel = [user isGuestIn:conversation];
         _availabilityView = [[AvailabilityTitleView alloc] initWithUser:[self fullUser] style:AvailabilityTitleViewStyleOtherProfile];
     }
     return self;
@@ -545,10 +545,10 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self dismissViewControllerWithCompletion:^{
         @strongify(self);
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.bareUser connectWithMessageText:message completionHandler:nil];
+            [self.bareUser connectWithMessage:message];
         } completionHandler:^{
             AnalyticsConnectionRequestMethod method = [self connectionRequestMethodForContext:self.context];
-            [Analytics.shared tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:method connectRequestCount:self.bareUser.totalCommonConnections]];
+            [Analytics.shared tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:method connectRequestCount:0]]; // TODO jacob remove connectRequestCount parameter
         }];
     }];
 }

@@ -147,7 +147,7 @@
 
 #pragma mark - Get, set
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
+- (void)setUser:(id<UserType, AccentColorProvider>)user
 {
     _user = user;
     self.badgeUserImageView.user = user;

@@ -30,7 +30,7 @@ final public class BackgroundViewController: UIViewController {
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
     private var statusBarBlurViewHeightConstraint: NSLayoutConstraint!
-    private let user: ZMBareUser
+    private let user: UserType
     private let userSession: ZMUserSession?
     
     public var darkMode: Bool = false {
@@ -43,13 +43,13 @@ final public class BackgroundViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc public init(user: ZMBareUser, userSession: ZMUserSession?) {
+    @objc public init(user: UserType, userSession: ZMUserSession?) {
         self.user = user
         self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
         
         if let userSession = userSession {
-            self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: self.user, userSession: userSession)
+            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
         }
         
         NotificationCenter.default.addObserver(self,
@@ -153,36 +153,33 @@ final public class BackgroundViewController: UIViewController {
         guard self.isViewLoaded else {
             return
         }
-        
-        if let imageData = user.imageMediumData {
-            self.setBackground(imageData: imageData)
-        } else {
-            if let searchUser = user as? ZMSearchUser, let userSession = self.userSession {
-                searchUser.requestMediumProfileImage(in: userSession)
+    
+        user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { (imageData) in
+            var image: UIImage? = nil
+            if let imageData = imageData {
+                image = BackgroundViewController.blurredAppBackground(with: imageData)
             }
             
-            self.setBackground(color: user.accentColorValue.color)
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
         }
+        
+//        if let imageData = user.imageMediumData {
+//            self.setBackground(imageData: imageData)
+//        } else {
+//            if let searchUser = user as? ZMSearchUser, let userSession = self.userSession {
+//                searchUser.requestMediumProfileImage(in: userSession)
+//            }
+//
+//            self.setBackground(color: user.accentColorValue.color)
+//        }
     }
     
     private func updateForColorScheme() {
         self.darkMode = (ColorScheme.default.variant == .dark)
     }
-    
-    internal func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
-        guard imageMediumDataChanged || accentColorValueChanged else {
-            return
-        }
         
-        if let data = user.imageMediumData {
-            if imageMediumDataChanged {
-                self.setBackground(imageData: data)
-            }
-        } else if accentColorValueChanged {
-            self.setBackground(color: user.accentColorValue.color)
-        }
-    }
-    
     static let ciContext: CIContext = {
         return CIContext()
     }()
@@ -213,8 +210,11 @@ final public class BackgroundViewController: UIViewController {
 
 extension BackgroundViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
-        self.updateFor(imageMediumDataChanged: changeInfo.imageMediumDataChanged,
-                       accentColorValueChanged: changeInfo.accentColorValueChanged)
+        guard changeInfo.imageMediumDataChanged || changeInfo.accentColorValueChanged else {
+            return
+        }
+        
+        updateForUser()
     }
 }
 

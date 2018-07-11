@@ -78,12 +78,12 @@ class ParticipantsSectionController: GroupDetailsSectionController {
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    init(participants: [ZMBareUser], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
+    init(participants: [UserType], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
         viewModel = .init(participants: participants)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
-        token = UserChangeInfo.add(observer: self, for: nil, userSession: ZMUserSession.shared()!)
+        token = UserChangeInfo.add(userObserver: self, for: nil, userSession: ZMUserSession.shared()!)
     }
     
     override func prepareForUse(in collectionView : UICollectionView?) {

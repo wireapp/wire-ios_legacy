@@ -660,15 +660,6 @@ extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
             guard section != .loading else {
                 continue
             }
-            
-            let message = self.message(for: indexPath)
-            if message.canBePrefetched() {
-                message.requestImageDownload()
-            }
-            
-            if message.isImage, let _ = message.imageMessageData?.imageData {
-                CollectionImageCell.loadImageThumbnail(for: message, completion: .none)
-            }
         }
     }
 }

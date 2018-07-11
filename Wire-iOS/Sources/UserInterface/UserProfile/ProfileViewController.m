@@ -79,12 +79,12 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 @implementation ProfileViewController
 
-- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user context:(ProfileViewControllerContext)context
 {
     return [self initWithUser:user conversation:nil context:context];
 }
 
-- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation
 {
     if (conversation.conversationType == ZMConversationTypeGroup) {
         return [self initWithUser:user conversation:conversation context:ProfileViewControllerContextGroupConversation];
@@ -94,7 +94,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
     }
 }
 
-- (id)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (id)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     if (self = [super init]) {
         _bareUser = user;
@@ -189,7 +189,7 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)setupHeader
 {
-    id<ZMBareUser> user = self.bareUser;
+    id<UserType> user = self.bareUser;
     
     UserNameDetailViewModel *viewModel = [[UserNameDetailViewModel alloc] initWithUser:user fallbackName:user.displayName addressBookName:BareUserToUser(user).addressBookEntry.cachedName];
     UserNameDetailView *usernameDetailsView = [[UserNameDetailView alloc] init];

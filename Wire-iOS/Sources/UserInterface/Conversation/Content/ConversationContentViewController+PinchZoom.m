@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
     return message != nil &&
            [Message isImageMessage:message] &&
            message.imageMessageData != nil &&
-           message.imageMessageData.imageData != nil;
+           message.imageMessageData.isDownloaded;
 }
 
 - (void)onPinchZoom:(UIPinchGestureRecognizer *)pinchGestureRecognizer
@@ -72,12 +72,12 @@ NS_ASSUME_NONNULL_BEGIN
             id<MediaAsset> image;
             
             if (isAnimatedGIF) {
-                // We MUST make a copy of the data here because FLAnimatedImage doesn't read coredata blobs efficiently
-                NSData *copy = [NSData dataWithBytes:message.imageMessageData.imageData.bytes length:message.imageMessageData.imageData.length];
-                image = [[FLAnimatedImage alloc] initWithAnimatedGIFData:copy];
+                image = [[FLAnimatedImage alloc] initWithAnimatedGIFData:message.imageMessageData.imageData];
             } else {
                 image = [UIImage imageWithData:message.imageMessageData.imageData];
             }
+            
+            // TODO jacob. Load images asynchrounously
             
             self.initialPinchLocation = [pinchGestureRecognizer locationInView:self.view];
             

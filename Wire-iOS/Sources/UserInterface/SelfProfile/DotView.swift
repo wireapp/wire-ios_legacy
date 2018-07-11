@@ -75,7 +75,7 @@ class DotView: UIView {
     }
     
     internal func updateIndicator() {
-        showIndicator = hasUnreadMessages || (user?.clientsRequiringUserAttention?.count ?? 0) > 0
+        showIndicator = hasUnreadMessages || (user?.clientsRequiringUserAttention.count ?? 0) > 0
     }
 }
 

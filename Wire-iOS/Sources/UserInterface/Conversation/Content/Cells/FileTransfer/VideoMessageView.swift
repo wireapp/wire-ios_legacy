@@ -123,16 +123,15 @@ import Classy
         } else {
             updateTimeLabel(withFileMessageData: fileMessageData)
             
-            if let previewData = fileMessageData.previewData {
-                visibleViews.append(contentsOf: [previewImageView, bottomGradientView, playButton])
-                self.previewImageView.image = UIImage(data: previewData)
-                self.timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
-            } else {
-                visibleViews.append(contentsOf: [previewImageView, playButton])
-                self.previewImageView.image = nil
-                self.timeLabel.textColor = UIColor(scheme: .textForeground)
-            }
+            visibleViews.append(contentsOf: [previewImageView, playButton])
+            self.previewImageView.image = nil
+            self.timeLabel.textColor = UIColor(scheme: .textForeground)
             
+            fileMessageData.fetchPreviewImage { [weak self] (image) in
+                guard let image = image else { return }
+                self?.updatePreviewImage(image)
+            }
+                        
             if !self.timeLabelHidden {
                 visibleViews.append(timeLabel)
             }
@@ -150,6 +149,18 @@ import Classy
         
         if state == .obfuscated {
             visibleViews = []
+        }
+        
+        self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
+    }
+    
+    private func updatePreviewImage(_ image: UIImage) {
+        self.previewImageView.image = image
+        self.timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        var visibleViews = [previewImageView, bottomGradientView, playButton]
+        
+        if !self.timeLabelHidden {
+            visibleViews.append(timeLabel)
         }
         
         self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)

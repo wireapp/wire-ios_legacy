@@ -258,8 +258,9 @@
 
 - (void)userDidChange:(UserChangeInfo *)note
 {
-    if (note.imageMediumDataChanged) {
-        self.selfUserImageView.image = [UIImage imageWithData:note.user.imageMediumData];
+    if (note.imageMediumDataChanged) {        
+        // TODO jacob re-implement
+//        self.selfUserImageView.image = [UIImage imageWithData:note.user.imageMediumData];
     }
 }
 

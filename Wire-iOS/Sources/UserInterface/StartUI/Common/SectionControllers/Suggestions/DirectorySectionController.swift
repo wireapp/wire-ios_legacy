@@ -69,10 +69,9 @@ class DirectorySectionController: SearchSectionController {
         let user = suggestions[indexPath.row]
         
         ZMUserSession.shared()?.enqueueChanges {
-            let messageText = "missive.connection_request.default_message".localized(args: user.displayName, ZMUser.selfUser().name)
-            user.connect(withMessageText: messageText, completionHandler: {
-                Analytics.shared().tagEventObject(AnalyticsConnectionRequestEvent(forAddContactMethod: .userSearch, connectRequestCount: 1))
-            })
+            let messageText = "missive.connection_request.default_message".localized(args: user.displayName, ZMUser.selfUser().name ?? "")
+            Analytics.shared().tagEventObject(AnalyticsConnectionRequestEvent(forAddContactMethod: .userSearch, connectRequestCount: 1))
+            user.connect(message: messageText)
         }
     }
     

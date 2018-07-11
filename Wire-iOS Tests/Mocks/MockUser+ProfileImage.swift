@@ -18,7 +18,7 @@
 
 import Foundation
 
-extension MockUser: ZMSearchableUser {
+extension MockUser: UserType {
     public func requestMediumProfileImage(in userSession: ZMUserSession!) {
         // no-op
     }

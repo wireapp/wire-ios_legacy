@@ -41,7 +41,7 @@ class UserCell: SeparatorCollectionViewCell {
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
     
-    weak var user: ZMBareUser? = nil
+    weak var user: UserType? = nil
     
     fileprivate static let boldFont: UIFont! = FontSpec.init(.small, .regular).font!
     fileprivate static let lightFont: UIFont! = FontSpec.init(.small, .light).font!
@@ -182,7 +182,7 @@ class UserCell: SeparatorCollectionViewCell {
         titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
     }
     
-    public func configure(with user: ZMBareUser, conversation: ZMConversation? = nil) {
+    public func configure(with user: UserType, conversation: ZMConversation? = nil) {
         self.user = user
         
         avatar.user = user
@@ -214,7 +214,7 @@ class UserCell: SeparatorCollectionViewCell {
 
 extension UserCell {
     
-    func subtitle(for user: ZMBareUser) -> NSAttributedString? {
+    func subtitle(for user: UserType) -> NSAttributedString? {
         if user.isServiceUser, let service = user as? SearchServiceUser {
             return subtitle(forServiceUser: service)
         } else {
@@ -222,7 +222,7 @@ extension UserCell {
         }
     }
     
-    private func subtitle(forRegularUser user: ZMBareUser) -> NSAttributedString {
+    private func subtitle(forRegularUser user: UserType) -> NSAttributedString {
         var components: [NSAttributedString?] = []
         
         if let handle = user.handle, !handle.isEmpty {
@@ -265,7 +265,7 @@ extension UserCell {
 
 // MARK: - Availability
 
-extension ZMBareUser {
+extension UserType {
     
     func nameIncludingAvailability(color: UIColor) -> NSAttributedString? {
         if ZMUser.selfUser().isTeamMember, let user = self as? ZMUser {
