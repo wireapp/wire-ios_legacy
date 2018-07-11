@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
-
 
 private enum ExtensionSettingsKey: String {
 
@@ -34,9 +32,8 @@ private enum ExtensionSettingsKey: String {
 
     private var defaultValue: Any? {
         switch self {
-        // In case the user opted out and we did not yet migrate the opt out value
-        // into the shared settings (which is only done from the main app).
-        case .disableCrashAndAnalyticsSharing: return false
+        // Always disable analytics by default.
+        case .disableCrashAndAnalyticsSharing: return true
         case .disableLinkPreviews: return false
         }
     }
@@ -51,20 +48,19 @@ private enum ExtensionSettingsKey: String {
 
 }
 
+@objc public class ExtensionSettings: NSObject {
 
-private let defaults = UserDefaults.shared()!
+    @objc public static let shared = ExtensionSettings(defaults: .shared()!)
 
+    private let defaults: UserDefaults
 
-public class ExtensionSettings: NSObject {
-
-    @objc public static let shared = ExtensionSettings()
-
-    private override init() {
+    @objc public init(defaults: UserDefaults) {
+        self.defaults = defaults
         super.init()
-        type(of: self).setupDefaultValues()
+        setupDefaultValues()
     }
 
-    private static func setupDefaultValues() {
+    private func setupDefaultValues() {
         defaults.register(defaults: ExtensionSettingsKey.defaultValueDictionary)
     }
 
@@ -81,7 +77,6 @@ public class ExtensionSettings: NSObject {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
         }
-
         set {
             defaults.set(newValue, forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
         }
@@ -91,7 +86,6 @@ public class ExtensionSettings: NSObject {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }
-        
         set {
             defaults.set(newValue, forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }

@@ -37,16 +37,31 @@ import WireExtensionComponents
 }
 
 extension TrackingManager: TrackingInterface {
-    public var disableCrashAndAnalyticsSharing: Bool {
+    @objc public var disableCrashAndAnalyticsSharing: Bool {
         set {
-            BITHockeyManager.shared().setTrackingEnabled(!newValue)
             Analytics.shared().isOptedOut = newValue
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
+            updateHockeyStateIfNeeded(oldState: disableCrashAndAnalyticsSharing, newValue)
             ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue
         }
         
         get {
             return ExtensionSettings.shared.disableCrashAndAnalyticsSharing
+        }
+    }
+
+    private func updateHockeyStateIfNeeded(oldState: Bool, _ newState: Bool) {
+        switch (oldState, newState) {
+        case (true, false):
+            BITHockeyManager.shared().setTrackingEnabled(true)
+            BITHockeyManager.shared().start()
+            BITHockeyManager.shared().authenticator.authenticateInstallation()
+
+        case (false, true):
+            BITHockeyManager.shared().setTrackingEnabled(false)
+
+        default:
+            return
         }
     }
 }
