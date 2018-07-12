@@ -33,7 +33,9 @@ static id<UserType> mockSelfUser = nil;
         _clients = [NSSet set];
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
+            if (value == NSNull.null) { continue; }
             [self setValue:value forKey:key];
+        
         }
     }
     return self;
@@ -122,13 +124,6 @@ static id<UserType> mockSelfUser = nil;
 @synthesize mediumProfileImageCacheKey;
 
 
-- (void)connectWithMessageText:(NSString *)text completionHandler:(dispatch_block_t)handler
-{
-    if (handler) {
-        handler();
-    }        
-}
-
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
     if (aProtocol == @protocol(UserType)) {
@@ -182,6 +177,35 @@ static id<UserType> mockSelfUser = nil;
 - (void)refreshData
 {
     // no-op
+}
+
+- (void)connectWithMessage:(NSString * _Nonnull)message {
+    
+}
+
+- (void)imageDataFor:(enum ProfileImageSize)size queue:(dispatch_queue_t _Nonnull)queue completion:(void (^ _Nonnull)(NSData * _Nullable))completion {
+    switch (size) {
+        case ProfileImageSizePreview:
+            completion(previewImageData);
+            break;
+        case ProfileImageSizeComplete:
+            completion(completeImageData);
+    }
+}
+
+
+- (BOOL)isGuestIn:(ZMConversation * _Nonnull)conversation {
+    return self.isGuestInConversation;
+}
+
+
+- (void)requestCompleteProfileImage {
+    
+}
+
+
+- (void)requestPreviewProfileImage {
+    
 }
 
 - (Team *)team
