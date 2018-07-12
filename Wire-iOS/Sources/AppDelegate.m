@@ -196,6 +196,15 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)userSessionDidBecomeAvailable:(NSNotification *)notification
 {
+    self.launchType = ApplicationLaunchDirect;
+    if (self.launchOptions[UIApplicationLaunchOptionsURLKey] != nil) {
+        self.launchType = ApplicationLaunchURL;
+    }
+    
+    if (self.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil ||
+        self.launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] != nil) {
+        self.launchType = ApplicationLaunchPush;
+    }
     [self trackErrors];
 }
 
