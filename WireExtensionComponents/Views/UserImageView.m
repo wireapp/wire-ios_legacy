@@ -20,7 +20,6 @@
 #import "UserImageView.h"
 @import PureLayout;
 @import WireSyncEngine;
-#import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "UIImage+ZetaIconsNeue.h"
 
@@ -246,50 +245,6 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
     if (change.accentColorValueChanged) {
         [self updateIndicatorColor];
     }
-}
-
-#pragma mark - Class Methods
-
-+ (ImageCache *)sharedFullColorImageCacheForSize:(UserImageViewSize)size
-{
-    static NSArray *fullColorImageCaches;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableArray *fullColorImageCachesMutable = [NSMutableArray arrayWithCapacity:UserImageViewSizeLast - UserImageViewSizeFirst];
-        
-        for (UserImageViewSize s = UserImageViewSizeFirst; s <= UserImageViewSizeLast; s++) {            
-            ImageCache *fullColorImageCache = [[ImageCache alloc] initWithName:[NSString stringWithFormat:@"_UserImageView.fullColorImageCache_%d", (int)s]];
-            fullColorImageCache.maxConcurrentOperationCount = 4;
-            fullColorImageCache.countLimit = 100;
-            fullColorImageCache.totalCostLimit = 1024 * 1024 * 10;
-            fullColorImageCache.qualityOfService = NSQualityOfServiceUtility;
-            [fullColorImageCachesMutable addObject:fullColorImageCache];
-        }
-        
-        fullColorImageCaches = fullColorImageCachesMutable;
-    });
-    return fullColorImageCaches[size];
-}
-
-+ (ImageCache *)sharedDesaturatedImageCacheForSize:(UserImageViewSize)size
-{
-    static NSArray *desaturatedImageCaches;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableArray *desaturatedImageCachesMutable = [NSMutableArray arrayWithCapacity:UserImageViewSizeLast - UserImageViewSizeFirst];
-        
-        for (UserImageViewSize s = UserImageViewSizeFirst; s <= UserImageViewSizeLast; s++) {            
-            ImageCache *desaturatedImageCache = [[ImageCache alloc] initWithName:[NSString stringWithFormat:@"_UserImageView.desaturatedImageCache_%d", (int)s]];
-            desaturatedImageCache.maxConcurrentOperationCount = 4;
-            desaturatedImageCache.countLimit = 100;
-            desaturatedImageCache.totalCostLimit = 1024 * 1024 * 10;
-            desaturatedImageCache.qualityOfService = NSQualityOfServiceUtility;
-            [desaturatedImageCachesMutable addObject:desaturatedImageCache];
-        }
-        
-        desaturatedImageCaches = desaturatedImageCachesMutable;
-    });
-    return desaturatedImageCaches[size];
 }
 
 @end

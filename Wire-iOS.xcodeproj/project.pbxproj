@@ -627,8 +627,6 @@
 		87B7DAB51E696F64005F5140 /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
 		87B7DAB81E6973B0005F5140 /* UserImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 87B7DAB61E6973B0005F5140 /* UserImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87B7DAB91E6973B0005F5140 /* UserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B7DAB71E6973B0005F5140 /* UserImageView.m */; };
-		87B7DABC1E6976C1005F5140 /* ImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 87B7DABA1E6976C1005F5140 /* ImageCache.h */; };
-		87B7DABD1E6976C1005F5140 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B7DABB1E6976C1005F5140 /* ImageCache.m */; };
 		87B7DAEB1E697C11005F5140 /* AccentColorProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B8C33B1DF9788B0015EC89 /* BrowserOpening.swift */; };
 		87B8C3401DF9788B0015EC89 /* LinkOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B8C33C1DF9788B0015EC89 /* LinkOpener.swift */; };
@@ -2122,8 +2120,6 @@
 		87B7DAAC1E696E4E005F5140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87B7DAB61E6973B0005F5140 /* UserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserImageView.h; sourceTree = "<group>"; };
 		87B7DAB71E6973B0005F5140 /* UserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserImageView.m; sourceTree = "<group>"; };
-		87B7DABA1E6976C1005F5140 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
-		87B7DABB1E6976C1005F5140 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccentColorProvider.h; sourceTree = "<group>"; };
 		87B8C33B1DF9788B0015EC89 /* BrowserOpening.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserOpening.swift; sourceTree = "<group>"; };
 		87B8C33C1DF9788B0015EC89 /* LinkOpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkOpener.swift; sourceTree = "<group>"; };
@@ -3334,8 +3330,6 @@
 				CE8E4FC31DF17CFE0009F437 /* NSString+TextTransform.h */,
 				CE8E4FC41DF17CFE0009F437 /* NSString+TextTransform.m */,
 				8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */,
-				87B7DABA1E6976C1005F5140 /* ImageCache.h */,
-				87B7DABB1E6976C1005F5140 /* ImageCache.m */,
 				87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */,
 				87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */,
 				87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */,
@@ -6023,7 +6017,6 @@
 				1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */,
 				1EE9DCC11B5F9A6D00E347DF /* TextView.h in Headers */,
 				1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */,
-				87B7DABC1E6976C1005F5140 /* ImageCache.h in Headers */,
 				D5168F43200F6F2300F8222A /* CABasicAnimation+Rotation.h in Headers */,
 				1E5E0CFD1B6B8EDB003B0CAC /* ZetaIconTypes.h in Headers */,
 				87E7C9651BF5E4E2001C5485 /* WireStyleKit.h in Headers */,
@@ -6600,7 +6593,6 @@
 				1E5E0D031B6B8EDB003B0CAC /* UIColor+Mixing.m in Sources */,
 				7CE71D8E1FC454AA00C43E19 /* AppLock.swift in Sources */,
 				1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */,
-				87B7DABD1E6976C1005F5140 /* ImageCache.m in Sources */,
 				CE06C9411DF5C3D900497685 /* AVAsset+VideoConvert.swift in Sources */,
 				87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */,
 				EFF6EA3E2020CF4100A7023B /* Button+ServiceButton.swift in Sources */,

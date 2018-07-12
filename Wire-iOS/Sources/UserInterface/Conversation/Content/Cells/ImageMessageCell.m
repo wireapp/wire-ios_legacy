@@ -26,7 +26,6 @@
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 @import FLAnimatedImage;
-#import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
 #import "Analytics.h"
@@ -64,21 +63,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ImageMessageCell
 
-static ImageCache *imageCache(void)
-{
-    static ImageCache *cache;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cache = [[ImageCache alloc] initWithName:@"ConversationImageTableCell.imageCache"];
-        cache.maxConcurrentOperationCount = 4;
-        cache.totalCostLimit = 1024 * 1024 * 10; // 10 MB
-        cache.qualityOfService = NSQualityOfServiceUtility;
-    });
-    return cache;
-}
-
 static const CGFloat ImageToolbarMinimumSize = 192;
-
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

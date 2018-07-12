@@ -18,59 +18,89 @@
 
 import Foundation
 
-// TODO jacob move into class for easier testing
-fileprivate var cache: NSCache<NSString, UIImage> = NSCache()
-fileprivate var processingQueue = DispatchQueue(label: "ImageProcessingQueue", qos: .background, attributes: [.concurrent])
+class ImageCache<T : NSObjectProtocol> {
+    
+    var cache: NSCache<NSString, T> = NSCache()
+    var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
+    
+}
+
+fileprivate var defaultMessageImageCache = ImageCache<UIImage>()
 
 extension ZMTextMessageData {
-
-    /// Fetch image data and calls the completion handler when it's available on the main queue.=
-    func fetchLinkPreviewImage(completion: @escaping (_ image: UIImage?) -> Void) {
-
-        guard let cacheKey = linkPreviewImageCacheKey as NSString? else { return }
-
-        if let image = cache.object(forKey: cacheKey) {
-            return completion(image)
-        }
-
-        (self as? ZMConversationMessage)?.requestImageDownload() // TODO jacob
-        
-        fetchLinkPreviewImageData(with: processingQueue) { (imageData) in
-            var image: UIImage? = nil
-
-            defer {
-                DispatchQueue.main.async {
-                    completion(image)
-                }
-            }
-
-            guard let imageData = imageData else { return }
-
-            image = UIImage.deviceOptimizedImage(from: imageData)
-
-            if let image = image {
-                cache.setObject(image, forKey: cacheKey)
-            }
-        }
+    
+    func fetchLinkPreviewImage(cache: ImageCache<UIImage> = defaultMessageImageCache, completion: @escaping (_ image: UIImage?) -> Void) {
+        LinkPreviewImageAdaptor(textMessageData: self).fetchImage(cache: cache, completion: completion)
     }
-
-
+    
 }
 
 extension ZMFileMessageData {
     
-    /// Fetch image data and calls the completion handler when it's available on the main queue.
-    func fetchPreviewImage(completion: @escaping (_ image: UIImage?) -> Void) {
+    func fetchPreviewImage(cache: ImageCache<UIImage> = defaultMessageImageCache, completion: @escaping (_ image: UIImage?) -> Void) {
+        FileMessageImageAdaptor(fileMesssageData: self).fetchImage(cache: cache, completion: completion)
+    }
+    
+}
+
+struct LinkPreviewImageAdaptor: ImageMessage {
+    
+    let textMessageData: ZMTextMessageData
+    
+    var cacheIdentifier: String? {
+        return textMessageData.linkPreviewImageCacheKey
+    }
+    
+    func requestImageDownload() {
+        (textMessageData as? ZMConversationMessage)?.requestImageDownload()
+    }
+    
+    func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        textMessageData.fetchLinkPreviewImageData(with: queue, completionHandler: completionHandler)
+    }
+    
+}
+
+struct FileMessageImageAdaptor: ImageMessage {
+    
+    let fileMesssageData: ZMFileMessageData
+    
+    var cacheIdentifier: String? {
+        return fileMesssageData.imagePreviewDataIdentifier
+    }
+    
+    func requestImageDownload() {
+        (fileMesssageData as? ZMConversationMessage)?.requestImageDownload()
+    }
+    
+    func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        fileMesssageData.fetchImagePreviewData(queue: queue, completionHandler: completionHandler)
+    }
+    
+}
+
+fileprivate protocol ImageMessage {
+    
+    var cacheIdentifier: String? { get }
+    
+    func requestImageDownload()
+    func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (_ imageData: Data?) -> Void)
+    
+}
+
+extension ImageMessage {
+    
+    func fetchImage(cache: ImageCache<UIImage>, completion: @escaping (_ image: UIImage?) -> Void) {
         
-        guard let cacheKey = imagePreviewDataIdentifier as NSString? else { return }
+        guard let cacheKey = cacheIdentifier as NSString? else { return }
         
-        if let image = cache.object(forKey: cacheKey) {
+        if let image = cache.cache.object(forKey: cacheKey) {
             return completion(image)
         }
         
-        (self as? ZMConversationMessage)?.requestImageDownload() // TODO jacob
+        requestImageDownload()
         
-        fetchImagePreviewData(queue: processingQueue) { (imageData) in
+        fetchImageData(queue: cache.processingQueue) { (imageData) in
             var image: UIImage? = nil
             
             defer {
@@ -84,12 +114,10 @@ extension ZMFileMessageData {
             image = UIImage.deviceOptimizedImage(from: imageData)
             
             if let image = image {
-                cache.setObject(image, forKey: cacheKey)
+                cache.cache.setObject(image, forKey: cacheKey)
             }
         }
     }
     
-    
 }
-
 

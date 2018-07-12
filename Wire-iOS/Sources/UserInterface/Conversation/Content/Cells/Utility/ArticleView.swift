@@ -159,14 +159,6 @@ import Classy
         }
     }
     
-    private static var imageCache : ImageCache  = {
-        let cache = ImageCache(name: "ArticleView.imageCache")
-        cache.maxConcurrentOperationCount = 4;
-        cache.totalCostLimit = UInt(1024 * 1024 * 10); // 10 MB
-        cache.qualityOfService = .utility;
-        return cache
-    }()
-    
     func configure(withTextMessageData textMessageData: ZMTextMessageData, obfuscated: Bool) {
         guard let linkPreview = textMessageData.linkPreview else {
             return

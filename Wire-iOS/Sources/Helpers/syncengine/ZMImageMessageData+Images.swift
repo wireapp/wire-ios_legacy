@@ -18,10 +18,6 @@
 
 import Foundation
 
-// TODO jacob move into class for easier testing
-fileprivate var cache: NSCache<NSString, MediaAsset> = NSCache()
-fileprivate var processingQueue = DispatchQueue(label: "ImageProcessingQueue", qos: .background, attributes: [.concurrent])
-
 enum ImageSizeLimit {
     case none
     case maxDimension(CGFloat)
@@ -42,10 +38,12 @@ extension ImageSizeLimit {
     }
 }
 
+var defaultConversationImageCache = ImageCache<MediaAsset>()
+
 extension ZMConversationMessage {
 
     /// Fetch image data and calls the completion handler when it's available on the main queue.
-    func fetchImage(sizeLimit: ImageSizeLimit = .none, completion: @escaping (_ image: MediaAsset?) -> Void) {
+    func fetchImage(cache: ImageCache<MediaAsset> = defaultConversationImageCache, sizeLimit: ImageSizeLimit = .none, completion: @escaping (_ image: MediaAsset?) -> Void) {
         guard let imageMessageData = imageMessageData else { return completion(nil) }
         
         let isAnimatedGIF = imageMessageData.isAnimatedGIF
@@ -58,13 +56,13 @@ extension ZMConversationMessage {
         
         let cacheKey = "\(imageMessageData.imageDataIdentifier)_\(sizeLimit.cacheKeyExtension)" as NSString
         
-        if let image = cache.object(forKey: cacheKey) {
+        if let image = cache.cache.object(forKey: cacheKey) {
             return completion(image)
         }
         
         requestImageDownload()
         
-        imageMessageData.fetchImageData(with: processingQueue) { (imageData) in
+        imageMessageData.fetchImageData(with: cache.processingQueue) { (imageData) in
             var image: MediaAsset?
             
             defer {
@@ -89,9 +87,8 @@ extension ZMConversationMessage {
                 }
             }
 
-            
             if let image = image {
-                cache.setObject(image, forKey: cacheKey)
+                cache.cache.setObject(image, forKey: cacheKey)
             }
         }
     }
