@@ -29,7 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Agora não";
 "general.accept" = "Aceitar";
-"general.decline" = "No, thanks";
+"general.decline" = "Não, obrigado";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Toque para enviar";
 "conversation.input_bar.audio_message.too_long.title" = "Gravação Parou";
 "conversation.input_bar.audio_message.too_long.message" = "Mensagens de áudio são limitadas a %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "O tamanho do arquivo para mensagens de áudio é limitado a %@.";
+
 "conversation.input_bar.audio_message.send" = "Enviar";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Toque para gravar\nVocê pode %@ depois disso";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "com %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ definiu o tempo da mensagem para %@";
+"content.system.message_timer_changes.you" = "Você definiu o tempo da mensagem para %@";
+
+"content.system.message_timer.you_part" = "Você";
+
+"content.system.message_timer_off" = "%@ desligou o tempo da mensagem";
+"content.system.message_timer_off.you" = "Você desligou o tempo da mensagem";
 
 "content.system.reactivated_device" = "Você começou a usar o %@ novamente. Mensagens enviadas entretanto não aparecerão aqui.";
 
@@ -560,10 +569,12 @@
 "participants.avatar.guest.title" = "Convidado";
 
 "participants.title" = "Detalhes";
+"participants.all.title" = "Pessoas";
 "participants.section.participants" = "Pessoas (%d)";
 "participants.section.services" = "Serviços (%d)";
+"participants.section.settings" = "Ajustes";
 "participants.footer.add_title" = "Adicionar Participantes";
-"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "Até 256 pessoas podem participar de uma conversa de grupo. As vídeo chamadas funcionam com até 3 outras pessoas e você.";
 
 // Meta Menu
 "meta.menu.rename" = "Renomear";
@@ -674,10 +685,10 @@
 "participants.services.remove_integration.button" = "remover integração";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Visitantes";
 "group_details.guest_options_cell.enabled" = "Ligado";
 "group_details.guest_options_cell.disabled" = "Desligar";
-"group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.timeout_options_cell.title" = "Mensagens com tempo";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

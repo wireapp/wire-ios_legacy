@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "點擊來發送";
 "conversation.input_bar.audio_message.too_long.title" = "錄音停止";
 "conversation.input_bar.audio_message.too_long.message" = "語音訊息長度上限是%@。";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "語音訊息的檔案大小限制為%@。";
+
 "conversation.input_bar.audio_message.send" = "發送";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "點擊錄製語音訊息\n之後您可%@該訊息";
@@ -361,7 +364,7 @@
 "content.system.connected_to" = "與%@成為連絡人\n開始聊天吧";
 "content.system.other_wanted_to_talk" = "%@曾來電";
 "content.system.you_wanted_to_talk" = "您曾打電話";
-"content.system.ephemeral_time_remaining" = "還餘%@";
+"content.system.ephemeral_time_remaining" = "餘下%@";
 
 "content.system.you_started" = "您";
 "content.system.this_device" = "這個設備";
@@ -380,6 +383,12 @@
 "content.system.conversation.with_name.participants" = "與%@";
 
 "content.system.message_timer_changes" = "%@將訊息時限設置為%@";
+"content.system.message_timer_changes.you" = "你將訊息時限設置為%@";
+
+"content.system.message_timer.you_part" = "您";
+
+"content.system.message_timer_off" = "%@關閉了訊息時限";
+"content.system.message_timer_off.you" = "你關閉了訊息時限";
 
 "content.system.reactivated_device" = "您重新使用%@，在停用期間的訊息不會顯示出來。";
 
@@ -560,8 +569,10 @@
 "participants.avatar.guest.title" = "訪客";
 
 "participants.title" = "詳細資訊";
+"participants.all.title" = "聯絡人";
 "participants.section.participants" = "參與者(%d)";
 "participants.section.services" = "服務 (%d)";
+"participants.section.settings" = "設定";
 "participants.footer.add_title" = "加入參與者";
 "participants.section.name.footer" = "最多256人可以加入群組對話。視像通話可用以你與另外三人。";
 

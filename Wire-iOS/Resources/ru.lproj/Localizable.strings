@@ -56,7 +56,7 @@
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
 
-"peoplepicker.header.people" = "Люди";
+"peoplepicker.header.people" = "Участники";
 "peoplepicker.header.services" = "Службы";
 "peoplepicker.services.create_conversation.item" = "Создать новый разговор";
 "peoplepicker.services.add_service.button" = "Добавить службу";
@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Нажмите для отправки";
 "conversation.input_bar.audio_message.too_long.title" = "Запись остановлена";
 "conversation.input_bar.audio_message.too_long.message" = "Аудиосообщения ограничены %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "Размер файла аудиосообщения ограничен до %@.";
+
 "conversation.input_bar.audio_message.send" = "Отправить";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Коснитесь для записи\nВы можете %@ после этого";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "с %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ установил таймер сообщения на %@";
+"content.system.message_timer_changes.you" = "Вы установили таймер сообщения на %@";
+
+"content.system.message_timer.you_part" = "Вы";
+
+"content.system.message_timer_off" = "%@ отключил таймер сообщения";
+"content.system.message_timer_off.you" = "Вы отключили таймер сообщения";
 
 "content.system.reactivated_device" = "Вы начали использовать %@ снова. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
@@ -560,8 +569,10 @@
 "participants.avatar.guest.title" = "Гость";
 
 "participants.title" = "Профиль";
+"participants.all.title" = "Участники";
 "participants.section.participants" = "Участники (%d)";
 "participants.section.services" = "Сервисов (%d)";
+"participants.section.settings" = "Настройки";
 "participants.footer.add_title" = "Добавить участников";
 "participants.section.name.footer" = "К групповому разговору может присоединиться до 256 человек. Видеозвонки возможны между вами и еще тремя участниками.";
 

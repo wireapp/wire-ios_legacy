@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Saatmiseks toksa";
 "conversation.input_bar.audio_message.too_long.title" = "Salvestamine peatatud";
 "conversation.input_bar.audio_message.too_long.message" = "Audiosõnumitte pikkuse piirang: %@";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Saada";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Salvestamiseks toksa nuppu.\nSeejärel saad sellele %@ filtri lisada.";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "ja lisas kasutaja(d) %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ määras sõnumi taimeriks: %@";
+"content.system.message_timer_changes.you" = "Sina määrasid sõnumi taimeriks %@";
+
+"content.system.message_timer.you_part" = "Sina";
+
+"content.system.message_timer_off" = "%@ lülitas sõnumi taimeri välja";
+"content.system.message_timer_off.you" = "Sa lülitasid sõnumi taimeri välja";
 
 "content.system.reactivated_device" = "Hakkasid uuesti kasutama seadet %@. Vahepeal saadetud sõnumid siia ei ilmu.";
 
@@ -560,10 +569,12 @@
 "participants.avatar.guest.title" = "Külaline";
 
 "participants.title" = "Üksikasjad";
+"participants.all.title" = "Inimesed";
 "participants.section.participants" = "Inimesed (%d)";
 "participants.section.services" = "Teenused (%d)";
+"participants.section.settings" = "Seaded";
 "participants.footer.add_title" = "Lisa osalejaid";
-"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "Grupivestlusega saavad liituda kuni 256 inimest. Videokõned töötavad kuni 3 inimesega, pluss sina.";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeta ümber";

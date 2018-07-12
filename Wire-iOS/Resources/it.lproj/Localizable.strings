@@ -29,7 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Non ora";
 "general.accept" = "Accetta";
-"general.decline" = "No, thanks";
+"general.decline" = "No, grazie";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -60,7 +60,7 @@
 "peoplepicker.header.services" = "Servizi";
 "peoplepicker.services.create_conversation.item" = "Crea una nuova conversazione";
 "peoplepicker.services.add_service.button" = "Aggiungi servizio";
-"peoplepicker.services.add_service.error.title" = "The service can’t be added";
+"peoplepicker.services.add_service.error.title" = "Il servizio non può essere aggiunto";
 "peoplepicker.services.add_service.error.default" = "Il servizio non è disponibile al momento";
 "peoplepicker.services.add_service.error.full" = "La conversazione è piena";
 
@@ -120,8 +120,8 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ha nuovi messaggi.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
+"conversation_list.date_usage_permission_alert.title" = "Aiutaci a migliorare Wire";
+"conversation_list.date_usage_permission_alert.message" = "L'invio di rapporti anonimi riguardanti l'utilizzo e gli arresti anomali ci aiuta a migliorare i nostri prodotti e servizi. Non utilizziamo queste informazioni per qualsiasi altro scopo.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contatti";
@@ -144,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "componi i messaggi e salva per dopo";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "fotocamera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "scattare una foto e invia rapidamente";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "Hai messaggi non letti.";
 
 // Archived List
 "archived_list.title" = "archivio";
@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tocca per inviare";
 "conversation.input_bar.audio_message.too_long.title" = "Registrazione interrotta";
 "conversation.input_bar.audio_message.too_long.message" = "I messaggi vocali sono limitati ad una durata di %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Invia";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tocca per registrare un messaggio\nLo puoi %@ in seguito";
@@ -264,9 +267,9 @@
 "conversation.create.toggle.subtitle" = "Apri questa conversazione a persone fuori dal tuo team. Puoi sempre cambiare questa impostazione più tardi.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Chiamata in corso";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
-"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
-"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Non è possibile registrare un messaggio vocale durante una chiamata.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Non è possibile registrare un video durante una chiamata.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "Non è possibile scattare una foto durante una chiamata.";
 
 "conversation.guests_present" = "Sono presenti ospiti";
 "conversation.action.search" = "Cerca";
@@ -279,7 +282,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire ha bisogno di accedere alla fotocamera.";
-"video_call.camera_access.denied" = "Wire doesn’t have access to the camera";
+"video_call.camera_access.denied" = "Wire non ha accesso alla fotocamera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Abilitalo nelle impostazioni di Wire";
 
@@ -288,7 +291,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire ha bisogno di accedere alle tue foto e alla fotocamera."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire ha bisogno di accedere alle tue foto.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire ha bisogno di accedere alla fotocamera.";
-"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "Non puoi accedere alla fotocamera durante una chiamata video.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "Blocco AE/AF";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "con %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Tu";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Hai iniziato a utilizzare %@ nuovamente. I messaggi inviati nel frattempo non verranno visualizzato qui.";
 
@@ -425,7 +434,7 @@
 "content.message.delete" = "Elimina";
 "content.message.save" = "Salva";
 
-"content.message.delete_ellipsis" = "Delete…";
+"content.message.delete_ellipsis" = "Elimina…";
 
 "content.message.like" = "Mi piace";
 "content.message.unlike" = "Non mi piace più";
@@ -489,7 +498,7 @@
 "voice.speaker_button.title" = "Altoparlante";
 "voice.cancel_button.title" = "Annulla";
 "voice.call_button.title" = "Chiama";
-"voice.end_call_button.title" = "End Call";
+"voice.end_call_button.title" = "Termina chiamata";
 
 "voice.alert.call_in_progress.title" = "Chiamata in corso";
 "voice.alert.call_in_progress.message" = "Puoi avere solo una chiamata attiva alla volta";
@@ -501,56 +510,56 @@
 "voice.alert.camera_warning.title" = "Wire ha bisogno di accedere alla fotocamera.";
 "voice.alert.camera_warning.explanation" = "Vai nelle impostazioni e consenti a Wire di accedere alla fotocamera.";
 
-"voice.top_overlay.tap_to_return" = "Tap to return to call";
+"voice.top_overlay.tap_to_return" = "Tocca per tornare alla chiamata";
 "voice.top_overlay.accessibility_title" = "Chiamata in corso";
 
 // Voice New
 
 "call.status.connecting" = "Connessione in corso…";
-"call.status.incoming.user" = "%@ is calling…";
+"call.status.incoming.user" = "%@ sta chiamando…";
 "call.status.incoming" = "Chiamata in corso…";
 "call.status.outgoing" = "Sta squillando…";
-"call.status.reconnecting" = "Reconnecting…";
+"call.status.reconnecting" = "Riconnessione in corso…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Bit Rate costante";
 
-"call.participants.show_all" = "Show All (%@)";
-"call.participants.list.title" = "Participants";
+"call.participants.show_all" = "Mostra tutti (%@)";
+"call.participants.list.title" = "Partecipanti";
 
-"call.video.paused" = "Video paused";
+"call.video.paused" = "Video in pausa";
 
-"call.video.too_many.alert.title" = "Too many people for Video";
-"call.video.too_many.alert.message" = "Video calls only work in groups of 4 or less.";
+"call.video.too_many.alert.title" = "Troppe persone per la videochiamata";
+"call.video.too_many.alert.message" = "Le videochiamate funzionano solo in gruppi da massimo 4 persone.";
 
-"call.degraded.alert.title" = "New Device";
+"call.degraded.alert.title" = "Nuovo dispositivo";
 "call.degraded.alert.message.self" = "Hai iniziato a usare un nuovo dispositivo.";
 "call.degraded.alert.message.user" = "%@ ha iniziato a usare un nuovo dispositivo.";
 "call.degraded.alert.message.unknown" = "Qualcuno ha iniziato ad usare un nuovo dispositivo.";
 "call.degraded.alert.action.continue" = "Chiama comunque";
 
-"call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
-"call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
-"call.alert.ongoing.join.button" = "Join Anyway";
+"call.alert.ongoing.start.title" = "Una chiamata è attiva in un'altra conversazione. La nuova chiamata interromperà quella in corso.";
+"call.alert.ongoing.start.button" = "Chiama comunque";
+"call.alert.ongoing.join.title" = "Una chiamata è attiva in un'altra conversazione. Unendosi a questa chiamata verrà interrotta quella in corso.";
+"call.alert.ongoing.join.button" = "Entra comunque";
 
 // Call Actions (accessibility)
 
-"call.announcement.incoming" = "Incoming call from %@";
+"call.announcement.incoming" = "Chiamata in arrivo da %@";
 "call.actions.label.toggle_mute_on" = "Silenzia";
 "call.actions.label.toggle_mute_off" = "Riattiva audio";
 "call.actions.label.flip_camera" = "Flip camera";
-"call.actions.label.toggle_speaker_on" = "Enable speaker";
-"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.toggle_speaker_on" = "Attiva l'altoparlante";
+"call.actions.label.toggle_speaker_off" = "Disattiva l'altoparlante";
 "call.actions.label.accept_call" = "Accetta la chiamata";
-"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.reject_call" = "Rifiuta chiamata";
 "call.actions.label.terminate_call" = "Termina chiamata";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
 "call.actions.label.minimize_call" = "Minimize call";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.make_audio_call" = "Inizia chiamata audio";
+"call.actions.label.make_video_call" = "Inizia videochiamata";
 "call.actions.label.join_call" = "Entra nella chiamata";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,21 +569,23 @@
 "participants.avatar.guest.title" = "Ospite";
 
 "participants.title" = "Dettagli";
+"participants.all.title" = "Persone";
 "participants.section.participants" = "Persone (%d)";
 "participants.section.services" = "Servizi (%d)";
+"participants.section.settings" = "Impostazioni";
 "participants.footer.add_title" = "Aggiungi partecipanti";
-"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "Fino a 256 persone possono partecipare a una conversazione di gruppo. Le videochiamate funzionano con altre 3 persone oltre a te.";
 
 // Meta Menu
 "meta.menu.rename" = "Rinomina";
-"meta.menu.leave" = "Leave Group…";
+"meta.menu.leave" = "Abbandona il gruppo…";
 "meta.menu.archive" = "Archivia";
 "meta.menu.unarchive" = "Disarchivia";
 "meta.menu.delete" = "Elimina contenuti…";
 "meta.menu.silence.mute" = "Silenzia";
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
-"meta.menu.cancel_connection_request" = "Cancel Request…";
+"meta.menu.cancel_connection_request" = "Annulla richiesta…";
 "meta.menu.mark_unread" = "Segna come non letto";
 "meta.menu.mark_read" = "Segna come letto";
 "shortcut.mark_all_as_read.title" = "Segna tutti come letti";
@@ -674,10 +685,10 @@
 "participants.services.remove_integration.button" = "rimuovi integrazione";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Ospiti";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Disattivo";
-"group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.timeout_options_cell.title" = "Messaggi a tempo";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -696,7 +707,7 @@
 "self.voiceover.hint" = "Apri profilo e impostazioni";
 "self.new-device.voiceover.label" = "Profilo, nuovi dispositivi aggiunti";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
+"self.profile.change_user_image.accessibility" = "Tocca per cambiare la tua foto profilo";
 
 "self.add_phone_number" = "Aggiungi un numero di telefono";
 "self.add_email_password" = "Aggiungi indirizzo email e password";
@@ -725,7 +736,7 @@
 "self.settings.add_account.error.message" = "Puoi connetterti solo con tre account per volta. Esci da un account per aggiungerne un altro.";
 
 "self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch account";
+"self.settings.switch_account.action" = "Cambia account";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -752,7 +763,7 @@
 "self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Colore";
 
-"self.settings.account_personal_information_group.title" = "Personal Information";
+"self.settings.account_personal_information_group.title" = "Informazioni personali";
 
 "self.settings.account_picture_group.theme" = "Tema scuro";
 
@@ -774,9 +785,9 @@
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Segnalazioni di crash e dati di utilizzo";
 "self.settings.privacy_analytics.title" = "Inviare dati anonimi";
-"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending anonymous usage and crash reports.";
+"self.settings.privacy_analytics_menu.description.title" = "Contribuisci a migliorare Wire inviando rapporti anonimi di utilizzo e crash anonimi.";
 
-"self.settings.receiveNews_and_offers.title" = "Receive Newsletter";
+"self.settings.receiveNews_and_offers.title" = "Ricevi newsletter";
 "self.settings.receiveNews_and_offers.description.title" = "Receive news and product updates from Wire via email.";
 
 
@@ -922,7 +933,7 @@
 "self.settings.advanced.version_technical_details.title" = "Dettagli tecnici della versione";
 
 // data usage permissions options
-"self.settings.account.data_usage_permissions.title" = "Data Usage Permissions";
+"self.settings.account.data_usage_permissions.title" = "Autorizzazioni all'utilizzo dei dati";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Relazione tecnica";
@@ -1004,7 +1015,7 @@
 "team.email.textfield.accessibility" = "Email dell'azienda";
 "team.email.button.learn_more" = "Ulteriori informazioni";
 
-"team.activation_code.headline" = "You’ve got mail";
+"team.activation_code.headline" = "C'è posta per te";
 "team.activation_code.subheadline" = "Inserisci il codice di verifica che abbiamo inviato a %@.";
 "team.activation_code.button.resend" = "Invia di nuovo il codice";
 "team.activation_code.button.change_email" = "Cambia email";
@@ -1360,7 +1371,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action
 
-"url_action.confirm" = "Confirm";
+"url_action.confirm" = "Conferma";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
 

@@ -120,7 +120,7 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Helfen Sie uns, Wire besser zu machen";
+"conversation_list.date_usage_permission_alert.title" = "Hilf uns, Wire zu verbessern";
 "conversation_list.date_usage_permission_alert.message" = "Anonymisierte Nutzungs- und Fehlerberichte helfen uns, unsere Produkte und Dienstleistungen zu verbessern. Wir verwenden diese Informationen nicht für andere Zwecke.";
 
 // Profile Header View
@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tippe, um zu senden";
 "conversation.input_bar.audio_message.too_long.title" = "Die Aufnahme wurde beendet";
 "conversation.input_bar.audio_message.too_long.message" = "Audio-Nachrichten sind auf %@ beschränkt.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "Die Dateigröße für Sprachnachrichten ist auf %@ begrenzt.";
+
 "conversation.input_bar.audio_message.send" = "Senden";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Zum Aufnehmen tippen\nDu kannst es danach %@";
@@ -379,8 +382,8 @@
 
 "content.system.conversation.with_name.participants" = "mit %@";
 
-"content.system.message_timer_changes" = "%@ hat die temporären Nachrichten auf %@ gestellt";
-"content.system.message_timer_changes.you" = "Du hast die temporären Nachrichten auf %@ gestellt";
+"content.system.message_timer_changes" = "%@ hat temporäre Nachrichten auf %@ gestellt";
+"content.system.message_timer_changes.you" = "Du hast temporäre Nachrichten auf %@ gestellt";
 
 "content.system.message_timer.you_part" = "Du";
 
@@ -442,7 +445,7 @@
 "content.message.copy" = "Kopieren";
 
 "content.message.open_link_alert.title" = "Link öffnen";
-"content.message.open_link_alert.message" = "Dies führt Sie zu\n%@";
+"content.message.open_link_alert.message" = "Dieser Link öffnet\n%@";
 "content.message.open_link_alert.open" = "Öffnen";
 
 "content.reactions_list.likers" = "Gefällt";
@@ -566,8 +569,10 @@
 "participants.avatar.guest.title" = "Gast";
 
 "participants.title" = "Details";
+"participants.all.title" = "Kontakte";
 "participants.section.participants" = "Personen (%d)";
 "participants.section.services" = "Dienste (%d)";
+"participants.section.settings" = "Einstellungen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
 "participants.section.name.footer" = "Bis zu 256 Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu 3 anderen Personen und dir.";
 
@@ -1169,7 +1174,7 @@
 
 "registration.push_access_denied.hero.title" = "Verpassen Sie keinen Anruf oder eine Nachricht.";
 "registration.push_access_denied.hero.paragraph1" = "Aktivieren Sie Benachrichtigungen in den Einstellungen.";
-"registration.push_access_denied.settings_button.title" = "Gehen Sie zu Einstellungen";
+"registration.push_access_denied.settings_button.title" = "Einstellungen öffnen";
 "registration.push_access_denied.maybe_later_button.title" = "Vielleicht später";
 
 "registration.signin.title" = "Einloggen";
