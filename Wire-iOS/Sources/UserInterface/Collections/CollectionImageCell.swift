@@ -35,6 +35,10 @@ final public class CollectionImageCell: CollectionCell {
         
     private let imageView = FLAnimatedImageView()
     private let loadingView = ThreeDotsLoadingView()
+    
+    /// This token is changes everytime the cell is re-used. Useful when performing
+    /// asynchronous tasks where the cell might have been re-used in the mean time.
+    private var reuseToken = UUID()
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -68,6 +72,7 @@ final public class CollectionImageCell: CollectionCell {
         super.prepareForReuse()
         self.message = .none
         self.isHeightCalculated = false
+        self.reuseToken = UUID()
     }
 
     override var obfuscationIcon: ZetaIconType {
@@ -134,9 +139,10 @@ final public class CollectionImageCell: CollectionCell {
         imageView.isHidden = true
         loadingView.isHidden = false
         
-        // TODO jacob load a thumbnail instead of full image
-        message.fetchImage { [weak self] (image) in
-            // TODO jacob handle the case when the cell has been re-used before completion handler is called
+        let token = reuseToken
+        
+        message.fetchImage(sizeLimit: .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)) { [weak self] (image) in
+            guard token == self?.reuseToken else { return }
             
             self?.imageView.setMediaAsset(image)
             self?.imageView.isHidden = false

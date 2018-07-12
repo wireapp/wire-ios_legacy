@@ -22,14 +22,41 @@ import Foundation
 fileprivate var cache: NSCache<NSString, MediaAsset> = NSCache()
 fileprivate var processingQueue = DispatchQueue(label: "ImageProcessingQueue", qos: .background, attributes: [.concurrent])
 
+enum ImageSizeLimit {
+    case none
+    case maxDimension(CGFloat)
+    case maxDimensionForShortSide(CGFloat)
+}
+
+extension ImageSizeLimit {
+    
+    var cacheKeyExtension: String {
+        switch self {
+        case .none:
+            return "default"
+        case .maxDimension(let size):
+            return "max_\(String(Int(size)))"
+        case .maxDimensionForShortSide(let size):
+            return "maxshort_\(String(Int(size)))"
+        }
+    }
+}
+
 extension ZMConversationMessage {
 
-    /// Fetch image data and calls the completion handler when it's available on the main queue.=
-    func fetchImage(completion: @escaping (_ image: MediaAsset?) -> Void) {
+    /// Fetch image data and calls the completion handler when it's available on the main queue.
+    func fetchImage(sizeLimit: ImageSizeLimit = .none, completion: @escaping (_ image: MediaAsset?) -> Void) {
         guard let imageMessageData = imageMessageData else { return completion(nil) }
         
-        let cacheKey = imageMessageData.imageDataIdentifier as NSString
         let isAnimatedGIF = imageMessageData.isAnimatedGIF
+        var sizeLimit = sizeLimit
+        
+        if isAnimatedGIF {
+            // animated GIFs can't be resized
+            sizeLimit = .none
+        }
+        
+        let cacheKey = "\(imageMessageData.imageDataIdentifier)_\(sizeLimit.cacheKeyExtension)" as NSString
         
         if let image = cache.object(forKey: cacheKey) {
             return completion(image)
@@ -48,11 +75,20 @@ extension ZMConversationMessage {
             
             guard let imageData = imageData else { return }
             
+            
             if isAnimatedGIF {
-                image = FLAnimatedImage(animatedGIFData: imageData) }
-            else {
-                image = UIImage(data: imageData)?.decoded
+                image = FLAnimatedImage(animatedGIFData: imageData)
+            } else {
+                switch sizeLimit {
+                case .none:
+                    image = UIImage(data: imageData)?.decoded
+                case .maxDimension(let limit):
+                    image = UIImage(from: imageData, withMaxSize: limit)
+                case .maxDimensionForShortSide(let limit):
+                    image = UIImage(from: imageData, withShorterSideLength: limit)
+                }
             }
+
             
             if let image = image {
                 cache.setObject(image, forKey: cacheKey)
