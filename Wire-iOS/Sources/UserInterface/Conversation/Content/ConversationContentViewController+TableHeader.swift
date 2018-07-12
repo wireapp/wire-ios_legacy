@@ -19,7 +19,7 @@
 import UIKit
 
 extension ConversationContentViewController {
-    @objc var headerHeight: CGFloat {
+    var headerHeight: CGFloat {
         var height: CGFloat = 20
         if messageWindow.messages.count == 1,
             let message = messageWindow.messages.firstObject as? ZMConversationMessage,
