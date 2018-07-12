@@ -45,8 +45,8 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         line: UInt = #line
         ) {
         sut.conversation = conversation
-        sut.setNeedsLayout()
-        sut.layoutIfNeeded()
+        
+        sut.prepareForSnapshot()
         verify(view: sut, file: file, line: line)
     }
     
