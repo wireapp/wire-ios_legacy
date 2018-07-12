@@ -21,7 +21,6 @@
 #import "PermissionDeniedViewController.h"
 #import "Button.h"
 #import "UIColor+WAZExtensions.h"
-#import "AnalyticsTracker+Permissions.h"
 #import "Wire-Swift.h"
 
 
@@ -121,7 +120,6 @@
 - (void)createAddressBookAccessDeniedViewController
 {
     self.addressBookAccessDeniedViewController = [PermissionDeniedViewController addressBookAccessDeniedViewControllerWithMonochromeStyle:self.monochromeStyle];
-    self.addressBookAccessDeniedViewController.analyticsTracker = self.analyticsTracker;
     self.addressBookAccessDeniedViewController.delegate = self;
     self.addressBookAccessDeniedViewController.backgroundBlurDisabled = self.backgroundBlurDisabled;
     
@@ -176,11 +174,7 @@
 
 - (IBAction)shareContacts:(id)sender
 {
-    [self.analyticsTracker tagAddressBookPreflightPermissions:YES];
-
     [AddressBookHelper.sharedHelper requestPermissions:^(BOOL success) {
-        [self.analyticsTracker tagAddressBookSystemPermissions:success];
-
         if (success) {
             [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:self.uploadAddressBookImmediately];
             [self.formStepDelegate didCompleteFormStep:self];
@@ -192,10 +186,6 @@
 
 - (IBAction)shareContactsLater:(id)sender
 {
-    if (!self.showingAddressBookAccessDeniedViewController) {
-        [self.analyticsTracker tagAddressBookPreflightPermissions:NO];
-    }
-
     [AddressBookHelper sharedHelper].addressBookSearchWasPostponed = YES;
     [self.formStepDelegate didSkipFormStep:self];
 }

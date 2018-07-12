@@ -23,17 +23,6 @@ class StartUIView : UIView { }
 extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
         
-        if let user = user as? AnalyticsConnectionStateProvider {
-            Analytics.shared().tagSelectedUnconnectedUser(with: user, context: .startUI)
-        }
-        
-        switch section {
-        case .topPeople: Analytics.shared().tagSelectedTopContact()
-        case .contacts: Analytics.shared().tagSelectedSearchResultUser(with: UInt(indexPath.row))
-        case .directory: Analytics.shared().tagSelectedSuggestedUser(with: UInt(indexPath.row))
-        default: break
-        }
-        
         if !user.isConnected && !user.isTeamMember {
             self.presentProfileViewController(for: user, at: indexPath)
         } else if let unboxed = BareUserToUser(user) {

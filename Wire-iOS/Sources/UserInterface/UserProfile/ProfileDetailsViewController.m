@@ -39,8 +39,6 @@
 #import "Button.h"
 #import "ContactsDataSource.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
-#import "AnalyticsTracker+Invitations.h"
 #import "Wire-Swift.h"
 
 #import "ZClientViewController.h"
@@ -461,7 +459,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         [self presentViewController:presentedViewController
                            animated:YES
                          completion:^{
-            [Analytics.shared tagOpenedPeoplePickerGroupAction];
             [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
         }];
     }
@@ -498,8 +495,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [[self fullUser] accept];
-    } completionHandler:^{
-        [[Analytics shared] tagUnblocking];
     }];
     
     [self openOneToOneConversation];
@@ -546,23 +541,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         @strongify(self);
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [self.bareUser connectWithMessageText:message completionHandler:nil];
-        } completionHandler:^{
-            AnalyticsConnectionRequestMethod method = [self connectionRequestMethodForContext:self.context];
-            [Analytics.shared tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:method connectRequestCount:self.bareUser.totalCommonConnections]];
         }];
     }];
-}
-
-- (AnalyticsConnectionRequestMethod)connectionRequestMethodForContext:(ProfileViewControllerContext)context
-{
-    switch (context) {
-        case ProfileViewControllerContextGroupConversation:
-            return AnalyticsConnectionRequestMethodParticipants;
-        case ProfileViewControllerContextSearch:
-            return AnalyticsConnectionRequestMethodUserSearch;
-        default:
-            return AnalyticsConnectionRequestMethodUnknown;
-    }
 }
 
 - (void)openOneToOneConversation

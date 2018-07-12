@@ -117,7 +117,8 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         BackupEvent.importSucceeded.name,
         BackupEvent.importFailed.name,
         BackupEvent.exportSucceeded.name,
-        BackupEvent.exportFailed.name
+        BackupEvent.exportFailed.name,
+        "debug.database_context_save_failure"
         ])
     
     private static let enabledSuperProperties = Set<String>([
@@ -184,10 +185,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        guard AnalyticsMixpanelProvider.enabledEvents.contains(event) else {
-            zmLog.info("Analytics: event \(event) is disabled")
-            return
-        }
+        assert(AnalyticsMixpanelProvider.enabledEvents.contains(event), "Analytics: event \(event) is disabled")
         
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
@@ -202,10 +200,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        guard AnalyticsMixpanelProvider.enabledSuperProperties.contains(name) else {
-            zmLog.info("Analytics: Super property \(name) is disabled")
-            return
-        }
+        assert(AnalyticsMixpanelProvider.enabledSuperProperties.contains(name), "Analytics: Super property \(name) is disabled")
         
         if let valueNotNil = Dictionary.bridgeOrDescription(for: value) {
             mixpanelInstance.registerSuperProperties([name: valueNotNil])

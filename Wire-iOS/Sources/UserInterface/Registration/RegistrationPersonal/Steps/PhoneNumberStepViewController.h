@@ -22,9 +22,6 @@
 
 
 @class ZMIncompleteRegistrationUser;
-@class AnalyticsTracker;
-
-
 
 @interface PhoneNumberStepViewController : RegistrationStepViewController
 

@@ -283,8 +283,6 @@ private let zmLog = ZMSLog(tag: "UI")
 
         self.clients = remainingClients
 
-        Analytics.shared().tagDeleteDevice()
-
         self.editingList = false
     }
     

@@ -36,9 +36,7 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
 @implementation ConversationInputBarViewController (Files)
 
 - (void)docUploadPressed:(IconButton *)sender
-{
-    [Analytics.shared tagMediaAction:ConversationMediaActionFileTransfer inConversation:self.conversation];
-    
+{    
     self.mode = ConversationInputBarViewControllerModeTextInput;
     [self.inputBar.textView resignFirstResponder];
     
@@ -235,15 +233,9 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             NSString *errorMessage = [NSString stringWithFormat:NSLocalizedString(@"content.file.too_big", @""), maxSizeString];
             [self showAlertForMessage:errorMessage];
             
-            [self.analyticsTracker tagCannotUploadFileSizeExceedsWithSize:[attributes[NSFileSize] unsignedLongLongValue]
-                                                            fileExtension:[url pathExtension]];
             completion();
         }
         else {
-            [self.analyticsTracker tagInitiatedFileUploadWithSize:[attributes[NSFileSize] unsignedLongLongValue]
-                                                    fileExtension:[url pathExtension]
-                                                          context:FileTransferContextApp];
-            
             [FileMetaDataGenerator metadataForFileAtURL:url UTI:url.UTI name:url.lastPathComponent completion:^(ZMFileMetadata * _Nonnull metadata) {
                 [self.impactFeedbackGenerator prepare];
                 [ZMUserSession.sharedSession performChanges:^{
@@ -311,9 +303,6 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         picker.showLoadingView = YES;
         [AVAsset wr_convertVideoAtURL:videoTempURL toUploadFormatWithCompletion:^(NSURL *resultURL, AVAsset *asset, NSError *error) {
             if (error == nil && resultURL != nil) {
-                [[Analytics shared] tagSentVideoMessageInConversation:self.conversation
-                                                              context:self.videoSendContext
-                                                             duration:CMTimeGetSeconds(asset.duration)];
                 [self uploadFileAtURL:resultURL];
             }
             
@@ -334,23 +323,14 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
                 picker.showLoadingView = YES;
                 
-                ConversationMediaPictureCamera camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
-                
-                [Analytics.shared tagMediaSentPictureSourceCameraInConversation:self.conversation method:ConversationMediaPictureTakeMethodFullFromKeyboard camera:camera];
-
                 [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
                     picker.showLoadingView = NO;
-                    ImageMetadata *metadata = [ImageMetadata metadataWith:camera method:ConversationMediaPictureTakeMethodFullFromKeyboard];
-                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) metadata:metadata];
+                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) isFromCamera:YES];
                 }];
             }
             else {
                 [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
-                    ImageMetadata *metadata = [[ImageMetadata alloc] init];
-                    metadata.method = ConversationMediaPictureTakeMethodFullFromKeyboard;
-                    metadata.source = ConversationMediaPictureSourceGallery;
-                    
-                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) metadata:metadata];
+                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) isFromCamera:NO];
                 }];
             }
             

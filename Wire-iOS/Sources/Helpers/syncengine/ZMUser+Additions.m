@@ -21,7 +21,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
-#import "Analytics+SearchEvents.h"
 #import "ColorScheme.h"
 
 ZMUser *BareUserToUser(id bareUser) {
@@ -54,10 +53,8 @@ ZMUser *BareUserToUser(id bareUser) {
 {
     if (self.isBlocked) {
         [self accept];
-        [[Analytics shared] tagUnblocking];
     } else {
         [self block];
-        [[Analytics shared] tagBlockingAction:BlockingTypeBlock];
     }
 }
 

@@ -21,7 +21,6 @@
 
 #import "WireSyncEngine+iOS.h"
 
-@class AnalyticsTracker;
 @protocol ConversationCellDelegate;
 
 @interface ConversationMessageWindowTableViewAdapter : NSObject <UITableViewDataSource>
@@ -29,7 +28,6 @@
 @property (nonatomic) id<ZMConversationMessage> firstUnreadMessage;
 @property (nonatomic) id<ZMConversationMessage> selectedMessage;
 @property (nonatomic) id<ZMConversationMessage> editingMessage;
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic, weak) id<ConversationCellDelegate> conversationCellDelegate;
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 

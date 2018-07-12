@@ -39,9 +39,7 @@
 
 #import "Constants.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
 #import "Settings.h"
-#import "StopWatch.h"
 
 #import "Wire-Swift.h"
 
@@ -308,9 +306,6 @@
 
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
-    StopWatch *stopWatch = [StopWatch stopWatch];
-    [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
-    
     [self dismissAllModalControllersWithCallback:^{
         [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
     }];

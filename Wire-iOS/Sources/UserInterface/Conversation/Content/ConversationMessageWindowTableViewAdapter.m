@@ -306,7 +306,6 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
     
     conversationCell.searchQueries = self.searchQueries;
     conversationCell.delegate = self.conversationCellDelegate;
-    conversationCell.analyticsTracker = self.analyticsTracker;
     
     // Configuration of the cell is not possible when `ZMUserSession` is not available. 
     if (nil != [ZMUserSession sharedSession]) {

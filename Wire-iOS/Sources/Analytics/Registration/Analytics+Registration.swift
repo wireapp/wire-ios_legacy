@@ -19,37 +19,42 @@
 
 import Foundation
 
-extension AnalyticsTracker {
-    func tagOpenedLandingScreen() {
-        self.tagEvent("start.opened_start_screen")
+extension Analytics {
+    @objc(tagRegistrationSuccededWithContext:)
+    func tagRegistrationSucceded(context: String) {
+        self.tagEvent("registration.succeeded", attributes: ["context": context])
     }
     
-    func tagOpenedUserRegistration() {
-        self.tagEvent("start.opened_person_registration")
+    func tagOpenedLandingScreen(context: String) {
+        self.tagEvent("start.opened_start_screen", attributes: ["context": context])
     }
     
-    func tagOpenedTeamCreation() {
-        self.tagEvent("start.opened_team_registration")
+    func tagOpenedUserRegistration(context: String) {
+        self.tagEvent("start.opened_person_registration", attributes: ["context": context])
     }
     
-    func tagOpenedLogin() {
-        self.tagEvent("start.opened_login")
+    func tagOpenedTeamCreation(context: String) {
+        self.tagEvent("start.opened_team_registration", attributes: ["context": context])
     }
     
-    func tagTeamCreationEmailVerified() {
-        self.tagEvent("team.verified")
+    func tagOpenedLogin(context: String) {
+        self.tagEvent("start.opened_login", attributes: ["context": context])
     }
     
-    func tagTeamCreationAddedTeamName() {
-        self.tagEvent("team.added_team_name")
+    func tagTeamCreationEmailVerified(context: String) {
+        self.tagEvent("team.verified", attributes: ["context": context])
     }
     
-    func tagTeamCreationAcceptedTerms() {
-        self.tagEvent("team.accepted_terms")
+    func tagTeamCreationAddedTeamName(context: String) {
+        self.tagEvent("team.added_team_name", attributes: ["context": context])
     }
     
-    func tagTeamCreated() {
-        self.tagEvent("team.created")
+    func tagTeamCreationAcceptedTerms(context: String) {
+        self.tagEvent("team.accepted_terms", attributes: ["context": context])
+    }
+    
+    func tagTeamCreated(context: String) {
+        self.tagEvent("team.created", attributes: ["context": context])
     }
     
     enum InviteResult {

@@ -30,8 +30,6 @@ import Cartography
 final class LandingViewController: UIViewController {
     weak var delegate: LandingViewControllerDelegate?
 
-    private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
-
     fileprivate var device: DeviceProtocol
 
     // MARK: - UI styles
@@ -163,7 +161,7 @@ final class LandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tracker?.tagOpenedLandingScreen()
+        Analytics.shared().tagOpenedLandingScreen(context: "email")
 
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
         [logoView, headline].forEach(headlineStackView.addArrangedSubview)
@@ -344,17 +342,17 @@ final class LandingViewController: UIViewController {
     // MARK: - Button tapped target
 
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedUserRegistration()
+        Analytics.shared().tagOpenedUserRegistration(context: "email")
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
 
     @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedTeamCreation()
+        Analytics.shared().tagOpenedTeamCreation(context: "email")
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
     @objc public func loginButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedLogin()
+        Analytics.shared().tagOpenedLogin(context: "email")
         delegate?.landingViewControllerDidChooseLogin()
     }
     

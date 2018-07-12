@@ -25,7 +25,6 @@
 #import "RegistrationViewController.h"
 #import "RegistrationFormController.h"
 #import "SignInViewController.h"
-#import "AnalyticsTracker+Registration.h"
 #import "Constants.h"
 
 #import "Wire-Swift.h"
@@ -70,7 +69,6 @@
     self.view.backgroundColor = [UIColor clearColor];
     
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
-    signInViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextSignIn];
     signInViewController.loginCredentials = self.loginCredentials;
     
     UIViewController *flowViewController = nil;

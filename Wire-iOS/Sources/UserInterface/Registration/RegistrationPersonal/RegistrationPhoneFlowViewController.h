@@ -24,7 +24,6 @@
 
 
 @class ZMIncompleteRegistrationUser;
-@class AnalyticsTracker;
 @class FormFlowViewController;
 @class RegistrationPhoneFlowViewController;
 @class LoginCredentials;
@@ -35,7 +34,6 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, strong) AnalyticsTracker *analyticsTracker;
 @property (nonatomic, weak) id <RegistrationFlowViewControllerDelegate> registrationDelegate;
 
 @end

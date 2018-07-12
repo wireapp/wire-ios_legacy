@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
 @property (nonatomic)           BOOL inputBarOverlapsContent;
-@property (nonatomic)           NSUInteger videoSendContext;
 
 // Counter keeping track of calls being made when the audio keyboard ewas visible before.
 @property (nonatomic)           NSInteger callCountWhileCameraKeyboardWasVisible;

@@ -20,53 +20,6 @@
 import Foundation
 import WireSyncEngine
 
-public extension ReactionType {
-    var analyticsTypeString : String {
-        switch self {
-        case .undefined:    return "undefined"
-        case .like:         return "like"
-        case .unlike:       return "unlike"
-        }
-    }
-}
-
-public extension InteractionMethod {
-    var analyticsTypeString : String {
-        switch self {
-        case .undefined:    return "undefined"
-        case .button:       return "button"
-        case .menu:         return "menu"
-        case .doubleTap:    return "double-tap"
-        }
-    }
-}
-
-public extension Analytics {
-    
-    public func tagReactedOnMessage(_ message: ZMConversationMessage, reactionType:ReactionType, method: InteractionMethod) {
-        guard let conversation = message.conversation,
-            let sender = message.sender,
-            let lastMessage = (conversation.messages.lastObject as? ZMMessage),
-            let zmMessage = message as? ZMMessage
-            else { return }
-        
-        var attributes = [
-            "type"                    : Message.messageType(message).analyticsTypeString,
-            "action"                  : reactionType.analyticsTypeString,
-            "method"                  : method.analyticsTypeString,
-            "with_service"            : (conversation.includesServiceUser ? "true" : "false"),
-            "user"                    : (sender.isSelfUser                ? "sender" : "receiver"),
-            "reacted_to_last_message" : (lastMessage == zmMessage         ? "true"   : "false")
-        ]
-
-        if let convType = ConversationType.type(conversation) {
-            attributes["conversation_type"] = convType.analyticsTypeString
-        }
-        
-        tagEvent("conversation.reacted_to_message", attributes:attributes)
-    }
-}
-
 public enum ConversationEvent: Event {
 
     static let toggleAllowGuestsName = "guest_rooms.allow_guests"

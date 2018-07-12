@@ -16,15 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import <UIKit/UIKit.h>
 
-@class AnalyticsTracker, LoginCredentials;
-
+@class LoginCredentials;
 
 @interface EmailSignInViewController : UIViewController
 
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) LoginCredentials *loginCredentials;
 
 - (void)takeFirstResponder;

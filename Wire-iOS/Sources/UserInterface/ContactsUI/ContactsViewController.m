@@ -33,7 +33,6 @@
 #import "UITableView+RowCount.h"
 #import "ContactsEmptyResultView.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+WR_Invite.h"
 #import "UIViewController+WR_Additions.h"
@@ -405,10 +404,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 {
     self.dataSource.searchQuery = text ? text : @"";
     [self updateEmptyResults];
-    if (text.length > 0) {
-        BOOL leadingAt = [[text substringToIndex:1] isEqualToString:@"@"];
-        [Analytics.shared tagEnteredSearchWithLeadingAtSign:leadingAt context:SearchContextStartUI];
-    }
 }
 
 - (void)tokenFieldDidConfirmSelection:(TokenField *)controller
@@ -475,11 +470,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didSelectUser:(ZMSearchUser *)user
 {
-    if ([user conformsToProtocol:@protocol(AnalyticsConnectionStateProvider)]) {
-        [Analytics.shared tagSelectedSearchResultWithConnectionStateProvider:(id<AnalyticsConnectionStateProvider>)user
-                                                                     context:SearchContextAddContacts];
-    }
-
     [self.tokenField addToken:[[Token alloc] initWithTitle:user.displayName representedObject:user]];
     [UIView performWithoutAnimation:^{
         [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
@@ -539,25 +529,12 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view
 {
-    NSMutableDictionary *eventAttributes = [NSMutableDictionary dictionaryWithDictionary:@{AnalyticsEventInvitationSentToAddressBookFromSearch: self.tokenField.filterText.length != 0 ? @"true" : @"false"}];
-    
     if (contact.contactDetails.count == 1) {
         if (contact.emailAddresses.count == 1 && [ZMAddressBookContact canInviteLocallyWithEmail]) {
             [contact inviteLocallyWithEmail:contact.emailAddresses[0]];
-            
-            [eventAttributes setObject:AnalyticsEventInvitationSentToAddressBookMethodEmail forKey:AnalyticsMethodKey];
-            
-            [self.analyticsTracker tagEvent:AnalyticsEventInvitationSentToAddressBook
-                                 attributes:eventAttributes];
-            
         }
         else if (contact.rawPhoneNumbers.count == 1 && [ZMAddressBookContact canInviteLocallyWithPhoneNumber]) {
             [contact inviteLocallyWithPhoneNumber:contact.rawPhoneNumbers[0]];
-
-            [eventAttributes setObject:AnalyticsEventInvitationSentToAddressBookMethodPhone forKey:AnalyticsMethodKey];
-
-            [self.analyticsTracker tagEvent:AnalyticsEventInvitationSentToAddressBook
-                                 attributes:eventAttributes];
         }
         else {
             // Cannot invite
@@ -617,10 +594,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
                     [contact inviteLocallyWithEmail:contactEmail];
 
-                    [eventAttributes setObject:AnalyticsEventInvitationSentToAddressBookMethodEmail forKey:AnalyticsMethodKey];
-
-                    [self.analyticsTracker tagEvent:AnalyticsEventInvitationSentToAddressBook
-                                         attributes:eventAttributes];
                     [chooseContactDetailController dismissViewControllerAnimated:YES completion:nil];
                 }];
                 [chooseContactDetailController addAction:action];
@@ -632,10 +605,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
                 UIAlertAction *action = [UIAlertAction actionWithTitle:contactPhone style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                     [contact inviteLocallyWithPhoneNumber:contactPhone];
 
-                    [eventAttributes setObject:AnalyticsEventInvitationSentToAddressBookMethodPhone forKey:AnalyticsMethodKey];
-                
-                    [self.analyticsTracker tagEvent:AnalyticsEventInvitationSentToAddressBook
-                                         attributes:eventAttributes];
                     [chooseContactDetailController dismissViewControllerAnimated:YES completion:nil];
                 }];
                 [chooseContactDetailController addAction:action];

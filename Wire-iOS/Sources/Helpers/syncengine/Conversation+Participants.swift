@@ -35,10 +35,9 @@ extension ZMConversation {
         self.addParticipants(participants,
                              userSession: ZMUserSession.shared()!) { result in
                                 switch result {
-                                case .success:
-                                    Analytics.shared().tagAddParticipants(source:.conversationDetails, participants, allowGuests: self.allowGuests, in: self)
                                 case .failure(let error):
                                     self.showAlertForAdding(for: error)
+                                default: break
                                 }
         }
     }
@@ -61,9 +60,6 @@ extension ZMConversation {
                                 case .success:
                                     if user.isServiceUser {
                                         Analytics.shared().tagDidRemoveService(user)
-                                    }
-                                    else if user.isSelfUser {
-                                        Analytics.shared().tagEventObject(AnalyticsGroupConversationEvent(forLeave: .leave, participantCount: UInt(self.activeParticipants.count)))
                                     }
                                 case .failure(let error):
                                     self.showAlertForRemoval(for: error)
