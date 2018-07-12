@@ -129,6 +129,7 @@
 
 // Utils
 #import "Analytics.h"
+#import "AnalyticsProvider.h"
 #import "Application+runDuration.h"
 #import "NSURL+WireLocale.h"
 #import "DeveloperMenuState.h"

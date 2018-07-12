@@ -19,9 +19,11 @@
 @import WireSystem;
 
 #import "Analytics.h"
+#import "AnalyticsProvider.h"
 #import "ZMUser+Additions.h"
 #import "WireSyncEngine+iOS.h"
 #import "ZMUser+Additions.h"
+#import "AnalyticsDecryptionFailedObserver.h"
 #import <avs/AVSFlowManager.h>
 #import "Wire-Swift.h"
 
@@ -38,6 +40,8 @@ BOOL UseAnalytics = USE_ANALYTICS;
 @property (nonatomic, strong, nullable) id<AnalyticsProvider> provider;
 @property (nonatomic, strong) AnalyticsSessionSummaryEvent *sessionSummary;
 @property (nonatomic, strong) AnalyticsCallingTracker *callingTracker;
+@property (nonatomic, strong) AnalyticsDecryptionFailedObserver *decryptionFailedObserver;
+
 @property (nonatomic, strong, readwrite) AnalyticsRegistration *analyticsRegistration;
 
 @end
@@ -116,7 +120,7 @@ static Analytics *sharedAnalytics = nil;
 - (void)userSessionDidBecomeAvailable:(NSNotification *)note
 {
     self.callingTracker                 = [[AnalyticsCallingTracker alloc] initWithAnalytics:self];
-    
+    self.decryptionFailedObserver       = [[AnalyticsDecryptionFailedObserver alloc] initWithAnalytics:self];
     self.team = [[ZMUser selfUser] team];
 }
 
