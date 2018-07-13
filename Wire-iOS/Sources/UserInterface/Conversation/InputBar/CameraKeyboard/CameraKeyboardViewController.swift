@@ -27,7 +27,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
-    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data)
+    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, isFromCamera: Bool)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController)
 }
@@ -233,7 +233,7 @@ open class CameraKeyboardViewController: UIViewController {
                     }
                     
                     DispatchQueue.main.async(execute: {
-                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
+                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, isFromCamera: false)
                     })
                 })
                 
@@ -241,7 +241,7 @@ open class CameraKeyboardViewController: UIViewController {
             }
             DispatchQueue.main.async(execute: {
                 
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data)
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, isFromCamera: false)
             })
         })
     }
@@ -452,7 +452,7 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
-        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData)
+        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true)
     }
 }
 

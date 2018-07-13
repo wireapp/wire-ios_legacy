@@ -321,11 +321,11 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         if (image != nil) {
             // In this case the completion was shown already by image picker
             if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                picker.showLoadingView = YES;
-                
+                UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+                // In case of picking from the camera, the iOS contorller is showing it's own confirmation screen.
                 [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
-                    picker.showLoadingView = NO;
-                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) isFromCamera:YES];
+                    [self.sendController sendMessageWithImageData:UIImageJPEGRepresentation(image, 0.9)
+                                                       completion:nil];
                 }];
             }
             else {

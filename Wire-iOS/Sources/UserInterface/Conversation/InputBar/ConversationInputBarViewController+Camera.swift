@@ -120,11 +120,11 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData imageData: Data) {
-        self.showConfirmationForImage(imageData as NSData, isFromCamera: false)
+    public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData imageData: Data, isFromCamera: Bool) {
+        self.showConfirmationForImage(imageData as NSData, isFromCamera: isFromCamera)
     }
     
-    @objc fileprivate func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    @objc func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let error = error {
             zmLog.error("didFinishSavingWithError: \(error)")
         }
