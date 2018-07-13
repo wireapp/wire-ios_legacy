@@ -72,6 +72,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
     private let defaults: UserDefaults
     
+    // INFO: this list has to go after we are sure that we are not sending any unexpected events.
     private static let enabledEvents = Set<String>([
         conversationMediaCompleteActionEventName,
         "settings.opted_in_tracking",

@@ -72,7 +72,6 @@
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
-@property (nonatomic) LegacyMessageTracker *messageCountTracker;
 
 @property (nonatomic) id incomingApnsObserver;
 @property (nonatomic) id networkAvailabilityObserverToken;
@@ -100,7 +99,6 @@
     if (self) {
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
-        self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
 
         [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
@@ -497,7 +495,6 @@
 {
     [self uploadAddressBookIfNeeded];
     [self trackShareExtensionEventsIfNeeded];
-    [self.messageCountTracker trackLegacyMessageCount];
 }
 
 #pragma mark - Adressbook Upload
