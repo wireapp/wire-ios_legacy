@@ -26,7 +26,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         accentColor = .strongBlue
-        recordMode = true
     }
 
     // MARK: - Started a Conversation
