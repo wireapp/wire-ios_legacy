@@ -19,15 +19,16 @@
 
 import Classy
 import Cartography
+import TTTAttributedLabel
 
-@objcMembers public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate {
+@objcMembers public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate, TTTAttributedLabelDelegate {
 
     private let stackView = UIStackView()
     private let topContainer = UIView()
     private let bottomContainer = UIView()
     private let leftIconView = UIImageView()
     private let leftIconContainer = UIView()
-    private let labelView = UILabel()
+    private let labelView = TTTAttributedLabel(frame: .zero)
     private let nameLabel = UILabel()
     private let verticalInset: CGFloat = 16
     private var lineBaseLineConstraint: NSLayoutConstraint?
@@ -42,6 +43,7 @@ import Cartography
         didSet {
             labelView.attributedText = attributedText
             labelView.accessibilityLabel = attributedText?.string
+            labelView.addLinks()
         }
     }
     
@@ -71,6 +73,14 @@ import Cartography
         nameLabel.numberOfLines = 0
         nameLabel.isAccessibilityElement = true
         labelView.numberOfLines = 0
+        labelView.extendsLinkTouchArea = true
+        
+        labelView.linkAttributes = [
+            NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue,
+            NSAttributedStringKey.foregroundColor.rawValue: ZMUser.selfUser().accentColor
+        ]
+        
+        labelView.delegate = self
         labelView.isAccessibilityElement = true
 
         stackView.axis = .vertical
@@ -116,7 +126,7 @@ import Cartography
             labelView.top == bottomContainer.top
             nameLabel.leading == leftIconContainer.trailing
             nameLabel.trailing <= messageContentView.trailing - 72
-            labelView.bottom == bottomContainer.bottom
+            labelView.bottom <= bottomContainer.bottom
             messageContentView.height >= 32
         }
         
@@ -140,6 +150,7 @@ import Cartography
     
     private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
+            // TODO: Fix line vertical offset (probably caused by using TTTAttributedLabel instead of UILabel for the link support here)
             lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median
             icon.centerY == lineView.centerY
         }
@@ -185,4 +196,12 @@ import Cartography
     func invitePeopleViewInviteButtonTapped(_ invitePeopleView: ParticipantsInvitePeopleView) {
         delegate?.conversationCell?(self, openGuestOptionsFrom: invitePeopleView.inviteButton)
     }
+    
+    // MARK: - TTTAttributedLabelDelegate
+
+    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        guard url.absoluteString == ParticipantsCellViewModel.showMoreLinkURL.absoluteString else { return }
+        // TODO
+    }
+
 }
