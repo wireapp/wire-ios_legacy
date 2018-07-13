@@ -19,8 +19,25 @@
 import UIKit
 
 extension ConversationContentViewController {
+    var headerHeight: CGFloat {
+        var height: CGFloat = 20
+        if messageWindow.messages.count == 1,
+            let message = messageWindow.messages.firstObject as? ZMConversationMessage,
+            let cell = self.cell(for:message) {
+
+            height += cell.bounds.height
+        }
+
+        if tableView.bounds.size.height <= 0 {
+            tableView.setNeedsLayout()
+            tableView.layoutIfNeeded()
+        }
+
+        return tableView.bounds.size.height - height
+    }
+
     @objc func headerViewFrame(view: UIView) -> CGRect {
-        let fittingSize = CGSize(width: tableView.bounds.size.width, height: headerHeight())
+        let fittingSize = CGSize(width: tableView.bounds.size.width, height: headerHeight)
         let requiredSize = view.systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: UILayoutPriority.required, verticalFittingPriority: UILayoutPriority.defaultLow)
 
         return CGRect(origin: .zero, size: requiredSize)

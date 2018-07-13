@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
                           blurRadius:(CGFloat)radius;
 + (nullable UIImage *)deviceOptimizedImageFromData:(NSData *)imageData;
 + (nullable UIImage *)imageFromData:(NSData *)imageData withMaxSize:(CGFloat)maxSize;
++ (nullable UIImage *)imageFromData:(NSData *)imageData withShorterSideLength:(CGFloat)shorterSideLength;
 
 + (UIImage *)imageWithColor:(UIColor *)color andSize:(CGSize)size;
 @end

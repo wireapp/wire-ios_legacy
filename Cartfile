@@ -10,5 +10,5 @@ github "wireapp/wire-ios-canvas" ~> 7.0
 github "wireapp/HockeySDK-iOS" ~> 5.0
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/PureLayout" "v3.0.0"
-github "wireapp/mixpanel-swift" "v2.3.3"
+github "wireapp/mixpanel-swift" "v2.4.4"
 github "wireapp/Down" "v2.0.1"

@@ -46,7 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeHighlightsAndMenu;
 - (nullable ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message;
-- (CGFloat)headerHeight;
 
 @end
 

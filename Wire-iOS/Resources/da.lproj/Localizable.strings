@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tryk for at sende";
 "conversation.input_bar.audio_message.too_long.title" = "Optagelse stoppet";
 "conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Send";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tryk for at optage\nDu kan %@ efter det";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "with %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Dig";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Du begyndte at bruge %@ igen. Beskeder der sendes, vises i mellemtiden ikke her.";
 
@@ -560,8 +569,10 @@
 "participants.avatar.guest.title" = "Gæst";
 
 "participants.title" = "Detaljer";
+"participants.all.title" = "Personer";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Indstillinger";
 "participants.footer.add_title" = "Add Participants";
 "participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 

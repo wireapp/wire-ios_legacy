@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, WireStyleKitResizingBehavior)
     WireStyleKitResizingBehaviorAspectFill, //!< The content is proportionally resized to completely fill the target rectangle.
     WireStyleKitResizingBehaviorStretch, //!< The content is stretched to match the entire target rectangle.
     WireStyleKitResizingBehaviorCenter, //!< The content is centered in the target rectangle, but it is NOT resized.
-
+    
 };
 
 extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior behavior, CGRect rect, CGRect target);

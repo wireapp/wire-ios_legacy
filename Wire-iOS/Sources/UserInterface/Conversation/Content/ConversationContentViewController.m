@@ -278,22 +278,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView.tableHeaderView = headerView;
 }
 
-- (CGFloat)headerHeight
-{
-    CGFloat height = 20;
-    if (self.messageWindow.messages.count == 1) {
-        UITableViewCell *cell = [self cellForMessage:self.messageWindow.messages.firstObject];
-        height += CGRectGetHeight(cell.bounds);
-    }
-
-    if (self.tableView.bounds.size.height <= 0) {
-        [self.tableView setNeedsLayout];
-        [self.tableView layoutIfNeeded];
-    }
-
-    return self.tableView.bounds.size.height - height;
-}
-
 - (void)setSearchQueries:(NSArray<NSString *> *)searchQueries
 {
     if (_searchQueries.count == 0 && searchQueries.count == 0) {

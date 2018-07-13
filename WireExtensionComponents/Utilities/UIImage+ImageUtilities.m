@@ -156,15 +156,9 @@
         return nil;
     }
     
-    CFDictionaryRef options = (__bridge CFDictionaryRef)[NSDictionary dictionaryWithObjectsAndKeys:
-                                                         (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
-                                                         (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
-                                                         (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailFromImageAlways,
-                                                         (id)[NSNumber numberWithFloat:maxSize], (id)kCGImageSourceThumbnailMaxPixelSize,
-                                                         nil];
+    CFDictionaryRef options = [self thumbnailOptionsWithMaxSize:maxSize];
     
-    
-    CGImageRef scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, (CFDictionaryRef)options);
+    CGImageRef scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options);
     if (scaledImage == NULL) {
         CFRelease(source);
         return nil;
@@ -176,6 +170,80 @@
     CFRelease(scaledImage);
     
     return image;
+}
+
++ (CFDictionaryRef)thumbnailOptionsWithMaxSize:(CGFloat)maxSize
+{
+    return (__bridge CFDictionaryRef)[NSDictionary dictionaryWithObjectsAndKeys:
+                                      (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
+                                      (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
+                                      (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailFromImageAlways,
+                                      (id)[NSNumber numberWithFloat:maxSize], (id)kCGImageSourceThumbnailMaxPixelSize,
+                                      nil];
+}
+
++ (UIImage *)imageFromData:(NSData *)imageData withShorterSideLength:(CGFloat)shorterSideLength
+{
+    if (! imageData) {
+        return nil;
+    }
+    
+    CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)imageData, NULL);
+    if (source == NULL) {
+        return nil;
+    }
+    
+    const CGSize size = [self sizeForImageSource:source];
+    if (size.width <= 0 || size.height <= 0) {
+        return nil;
+    }
+
+    CGFloat longSideLength = shorterSideLength;
+
+    if (size.width > size.height) {
+        longSideLength = shorterSideLength * (size.width / size.height);
+    } else if (size.height > size.width) {
+        longSideLength = shorterSideLength * (size.height / size.width);
+    }
+    
+    CFDictionaryRef options = [self thumbnailOptionsWithMaxSize:longSideLength];
+    
+    CGImageRef scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options);
+    if (scaledImage == NULL) {
+        CFRelease(source);
+        return nil;
+    }
+    
+    UIImage *image = [UIImage imageWithCGImage:scaledImage scale:2.0 orientation:UIImageOrientationUp];
+    CFRelease(source);
+    CFRelease(scaledImage);
+    
+    return image;
+}
+
++ (CGSize)sizeForImageSource:(CGImageSourceRef)source
+{
+    CGSize size = CGSizeZero;
+    
+    if (!source) {
+        return size;
+    }
+    
+    CFDictionaryRef options = (__bridge CFDictionaryRef)@{ (id)kCGImageSourceShouldCache: (id)kCFBooleanTrue };
+    NSDictionary *properties = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(source, 0, options);
+    
+    if (!properties) {
+        return size;
+    }
+
+    NSNumber *width = [properties objectForKey:(NSString *)kCGImagePropertyPixelWidth];
+    NSNumber *height = [properties objectForKey:(NSString *)kCGImagePropertyPixelHeight];
+    
+    if (nil != height && nil != width) {
+        size = CGSizeMake(width.floatValue, height.floatValue);
+    }
+
+    return size;
 }
 
 + (UIImage *)imageWithColor:(UIColor *)color andSize:(CGSize)size

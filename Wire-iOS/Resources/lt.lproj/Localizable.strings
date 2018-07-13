@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Spustelėję išsiųsite";
 "conversation.input_bar.audio_message.too_long.title" = "Įrašymas sustabdytas";
 "conversation.input_bar.audio_message.too_long.message" = "Garso pranešimai yra riboti iki %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Siųsti";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Spustelėkite norėdami įrašyti\nGalėsite %@ po to";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "su %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Jūs";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
@@ -560,10 +569,12 @@
 "participants.avatar.guest.title" = "Svečias";
 
 "participants.title" = "Išsamiau";
+"participants.all.title" = "Žmonės";
 "participants.section.participants" = "Žmonės (%d)";
 "participants.section.services" = "Paslaugos (%d)";
+"participants.section.settings" = "Nustatymai";
 "participants.footer.add_title" = "Pridėti dalyvių";
-"participants.section.name.footer" = "Prie pokalbio gali prisijungti iki 256 pašnekovų. Vaizdo skambučiai veikia grupėse iki 3 pašnekovų ir jumis.";
+"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Pervadinti";

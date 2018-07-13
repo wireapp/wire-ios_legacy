@@ -121,7 +121,7 @@
 
 // Conversation List Data Usage Permission Dialog
 "conversation_list.date_usage_permission_alert.title" = "帮助我们改善Wire";
-"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
+"conversation_list.date_usage_permission_alert.message" = "发送匿名使用状况和崩溃报告有助改善我们的产品和服务。我们不会将这些资讯用于其他地方。";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在联系人中";
@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "点击发送";
 "conversation.input_bar.audio_message.too_long.title" = "录制停止";
 "conversation.input_bar.audio_message.too_long.message" = "语音讯息长度上限是%@。";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "发送";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "点击录制语音讯息\n之后您可%@该讯息";
@@ -264,7 +267,7 @@
 "conversation.create.toggle.subtitle" = "对团队以外的人公开此对话。您以后可随时更改。";
 
 "conversation.input_bar.ongoing_call_alert.title" = "正在呼叫";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "在通话时不能录制语音讯息。";
 "conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "与%@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "你";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "您再次开始使用%@。在此期间发送的信息将不会在这里显示。";
 
@@ -425,7 +434,7 @@
 "content.message.delete" = "删除";
 "content.message.save" = "保存";
 
-"content.message.delete_ellipsis" = "Delete…";
+"content.message.delete_ellipsis" = "删除...";
 
 "content.message.like" = "赞";
 "content.message.unlike" = "取消赞";
@@ -515,7 +524,7 @@
 "call.status.constant_bitrate" = "固定码率";
 
 "call.participants.show_all" = "Show All (%@)";
-"call.participants.list.title" = "Participants";
+"call.participants.list.title" = "参与者";
 
 "call.video.paused" = "Video paused";
 
@@ -542,9 +551,9 @@
 "call.actions.label.toggle_speaker_on" = "Enable speaker";
 "call.actions.label.toggle_speaker_off" = "Disable speaker";
 "call.actions.label.accept_call" = "接受呼叫";
-"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.reject_call" = "拒接来电";
 "call.actions.label.terminate_call" = "结束通话";
-"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_on" = "打开摄像头";
 "call.actions.label.toggle_video_off" = "Turn off camera";
 "call.actions.label.switch_to_back_camera" = "Switch to back camera";
 "call.actions.label.switch_to_front_camera" = "Switch to front camera";
@@ -560,8 +569,10 @@
 "participants.avatar.guest.title" = "游客";
 
 "participants.title" = "详细信息";
+"participants.all.title" = "联系人";
 "participants.section.participants" = "参与者(%d)";
 "participants.section.services" = "服务 (%d)";
+"participants.section.settings" = "设置";
 "participants.footer.add_title" = "添加参与者";
 "participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
