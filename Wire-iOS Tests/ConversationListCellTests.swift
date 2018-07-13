@@ -92,8 +92,8 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersConversationWithNewMessages() {
         // when
-        (0..<8).forEach {
-            let message = otherUserConversation.appendMessage(withText: "Message #\($0)")
+        (0..<8).forEach {_ in 
+            let message = otherUserConversation.appendMessage(withText: "Hey there!")
             (message as! ZMClientMessage).sender = otherUser
         }
         
