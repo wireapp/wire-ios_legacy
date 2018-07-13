@@ -78,7 +78,6 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "settings.opted_in_tracking",
         "settings.opted_out_tracking",
         "settings.changed_status",
-        "e2ee.failed_message_decyption",
         "start.opened_start_screen",
         "start.opened_person_registration",
         "start.opened_team_registration",
@@ -114,6 +113,8 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         BackupEvent.importFailed.name,
         BackupEvent.exportSucceeded.name,
         BackupEvent.exportFailed.name,
+        "e2ee.failed_message_decyption",
+        "request.loop",
         "debug.database_context_save_failure"
         ])
     
