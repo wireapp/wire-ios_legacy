@@ -20,18 +20,22 @@ import UIKit
 
 extension UIAlertController {
 
-    static func ongoingCallJoinCallConfirmation(completion: @escaping (Bool) -> Void) -> UIAlertController {
+    static func ongoingCallJoinCallConfirmation(forceAlertModal: Bool = false, completion: @escaping (Bool) -> Void) -> UIAlertController {
         return ongoingCallConfirmation(
-            titleKey: "call.alert.ongoing.join.title",
+            titleKey: "call.alert.ongoing.join.alert_title",
+            messageKey: "call.alert.ongoing.join.message",
             buttonTitleKey: "call.alert.ongoing.join.button",
+            forceAlertModal: forceAlertModal,
             completion: completion
         )
     }
     
     static func ongoingCallStartCallConfirmation(completion: @escaping (Bool) -> Void) -> UIAlertController {
         return ongoingCallConfirmation(
-            titleKey: "call.alert.ongoing.start.title",
+            titleKey: "call.alert.ongoing.start.alert_title",
+            messageKey: "call.alert.ongoing.start.message",
             buttonTitleKey: "call.alert.ongoing.start.button",
+            forceAlertModal: false,
             completion: completion
         )
     }
@@ -59,13 +63,19 @@ extension UIAlertController {
     
     private static func ongoingCallConfirmation(
         titleKey: String,
+        messageKey: String,
         buttonTitleKey: String,
+        forceAlertModal: Bool,
         completion: @escaping (Bool) -> Void
         ) -> UIAlertController {
+
+        let defaultStyle: UIAlertControllerStyle = UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
+        let effectiveStyle = forceAlertModal ? .alert : defaultStyle
+
         let controller = UIAlertController(
-            title: titleKey.localized,
-            message: nil,
-            preferredStyle: UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
+            title: effectiveStyle == .alert ? titleKey.localized : messageKey.localized,
+            message: effectiveStyle == .alert ? messageKey.localized : nil,
+            preferredStyle: effectiveStyle
         )
         controller.addAction(.init(title: buttonTitleKey.localized, style: .default) { _ in completion(true) })
         controller.addAction(.cancel { completion(false) })

@@ -29,7 +29,7 @@
 "general.confirm" = "موافق";
 "general.skip" = "ليس الآن";
 "general.accept" = "قبول";
-"general.decline" = "No, thanks";
+"general.decline" = "لا، شكرًا";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "اُنقُر للإرسال";
 "conversation.input_bar.audio_message.too_long.title" = "تم إيقاف التسجيل";
 "conversation.input_bar.audio_message.too_long.message" = "الرسائل الصوتية محدودة بـ%@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "إرسال";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "انقر لبدء التسجيل\nبإمكانك %@ بعد ذلك";
@@ -263,7 +266,7 @@
 "conversation.create.toggle.title" = "اسمح بالضيوف";
 "conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
 
-"conversation.input_bar.ongoing_call_alert.title" = "المكالمة الجارية";
+"conversation.input_bar.ongoing_call_alert.title" = "مكالمة جارية";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
@@ -379,7 +382,13 @@
 
 "content.system.conversation.with_name.participants" = "مع %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "أنت";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
 
@@ -470,7 +479,7 @@
 "voice.status.group_call.incoming" = "%@\nيرن";
 "voice.status.one_to_one.outgoing" = "%@\nيرن";
 "voice.status.joining" = "%@\nجار الاتصال";
-"voice.status.leaving" = "%@\nCall ended";
+"voice.status.leaving" = "%@\nانتهت المكالمة";
 "voice.status.video_not_available" = "تم إيقاف الفيديو";
 "voice.status.low_connection" = "حالة الإتصال سيئة";
 "voice.network_error.title" = "لا يوجد اتصال بالإنترنت";
@@ -502,15 +511,15 @@
 "voice.alert.camera_warning.explanation" = "اسمح لـWire بالوصول للكاميرا من الإعدادات.";
 
 "voice.top_overlay.tap_to_return" = "انقر للعودة إلى المكالمة";
-"voice.top_overlay.accessibility_title" = "المكالمة الجارية";
+"voice.top_overlay.accessibility_title" = "مكالمة جارية";
 
 // Voice New
 
-"call.status.connecting" = "جاري الربط";
-"call.status.incoming.user" = "%@ is calling…";
+"call.status.connecting" = "جارٍ الربط…";
+"call.status.incoming.user" = "%@ يتصل…";
 "call.status.incoming" = "يتصل بك";
-"call.status.outgoing" = "جاري الاتصال";
-"call.status.reconnecting" = "Reconnecting…";
+"call.status.outgoing" = "رنين…";
+"call.status.reconnecting" = "إعادة الاتصال…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "معدل بت ثابت";
 
@@ -535,22 +544,22 @@
 
 // Call Actions (accessibility)
 
-"call.announcement.incoming" = "Incoming call from %@";
+"call.announcement.incoming" = "مكالمة واردة من %@";
 "call.actions.label.toggle_mute_on" = "كتم الصوت";
 "call.actions.label.toggle_mute_off" = "إلغاء كتم الصوت";
 "call.actions.label.flip_camera" = "تبديل الكاميرا";
-"call.actions.label.toggle_speaker_on" = "Enable speaker";
-"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.toggle_speaker_on" = "تمكين مكبر صوت";
+"call.actions.label.toggle_speaker_off" = "تعطيل مكبر الصوت";
 "call.actions.label.accept_call" = "اقبل المكالمة";
 "call.actions.label.reject_call" = "رفض المكالمة";
 "call.actions.label.terminate_call" = "إنهاء المكالمة";
 "call.actions.label.toggle_video_on" = "تشغيل الكاميرا";
 "call.actions.label.toggle_video_off" = "إيقاف الكاميرا";
-"call.actions.label.switch_to_back_camera" = "Switch to back camera";
-"call.actions.label.switch_to_front_camera" = "Switch to front camera";
-"call.actions.label.minimize_call" = "Minimize call";
-"call.actions.label.make_audio_call" = "Start audio call";
-"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.switch_to_back_camera" = "تبديل إلى الكاميرا الخلفية";
+"call.actions.label.switch_to_front_camera" = "تبديل إلى الكاميرا الأمامية";
+"call.actions.label.minimize_call" = "تصغير المكالمة";
+"call.actions.label.make_audio_call" = "بدء مكالمة صوتية";
+"call.actions.label.make_video_call" = "بدء مكالمة فيديو";
 "call.actions.label.join_call" = "انضم للمكالمة";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -560,8 +569,10 @@
 "participants.avatar.guest.title" = "ضيف";
 
 "participants.title" = "التفاصيل";
+"participants.all.title" = "أشخاص";
 "participants.section.participants" = "أشخاص (%d)";
 "participants.section.services" = "خدمات (%d)";
+"participants.section.settings" = "الإعدادات";
 "participants.footer.add_title" = "إضافة مشاركين";
 "participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
@@ -677,7 +688,7 @@
 "group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "مفعل";
 "group_details.guest_options_cell.disabled" = "غير مفعل";
-"group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.timeout_options_cell.title" = "رسال مؤقّتة";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -696,7 +707,7 @@
 "self.voiceover.hint" = "فتح الملف والإعدادات";
 "self.new-device.voiceover.label" = "الملف، أجهزة مضافة جديدة";
 
-"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
+"self.profile.change_user_image.accessibility" = "انقر لتغيير الصورة الشخصية";
 
 "self.add_phone_number" = "أضف رقم الهاتف";
 "self.add_email_password" = "إضافة عنوان البريد الإلكتروني وكلمة المرور";

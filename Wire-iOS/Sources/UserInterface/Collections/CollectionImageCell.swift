@@ -46,7 +46,7 @@ final public class CollectionImageCell: CollectionCell {
                 if (isAnimatedGIF) {
                     image = FLAnimatedImage(animatedGIFData: data)
                 } else {
-                    image = UIImage(from: data, withMaxSize: CollectionImageCell.maxCellSize * UIScreen.main.scale)
+                    image = UIImage(from: data, withShorterSideLength: CollectionImageCell.maxCellSize * UIScreen.main.scale)
                 }
                 
                 guard let finalImage = image else {

@@ -29,12 +29,12 @@
 "general.confirm" = "OK";
 "general.skip" = "Ahora no";
 "general.accept" = "Aceptar";
-"general.decline" = "No, thanks";
+"general.decline" = "No, gracias";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
-"general.guest-room-name" = "Guest room";
+"general.guest-room-name" = "Habitación de invitados";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -94,7 +94,7 @@
 "peoplepicker.quick-action.create-conversation" = "Crear grupo";
 "peoplepicker.quick-action.create-guest-room" = "Create guest room";
 
-"add_participants.all_contacts_added" = "Everyone’s here.";
+"add_participants.all_contacts_added" = "Todos están aquí.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Buscar por nombre";
@@ -109,7 +109,7 @@
 "contacts_ui.title" = "Invitar contactos";
 
 "conversation_list.empty.all_archived.message" = "Todo archivado";
-"conversation_list.empty.no_contacts.message" = "Start a conversation or\ncreate a group.";
+"conversation_list.empty.no_contacts.message" = "Iniciar una conversación o crear un grupo.";
 
 
 // Conversation List Indicator
@@ -144,7 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "redactar mensajes y guardar para más tarde";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "cámara";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "toma foto y enviar rápidamente";
-"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
+"conversation_list.voiceover.unread_messages.hint" = "Tienes mensajes sin leer.";
 
 // Archived List
 "archived_list.title" = "archivar";
@@ -238,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Pulsa para enviar";
 "conversation.input_bar.audio_message.too_long.title" = "La grabación se detuvo";
 "conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Enviar";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Pulsa para grabar\nPodrás %@ después de hacerlo";
@@ -287,7 +290,7 @@
 "keyboard_photos_access.denied.keyboard.settings" = "Ajustes";
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
-"keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
+"keyboard_photos_access.denied.keyboard.camera" = "Wire necesita acceder a la cámara.";
 "keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
 
 // Camera Controls
@@ -375,11 +378,17 @@
 "content.system.renamed_conv.title.you" = "Tú";
 
 "content.system.conversation.with_name.title" = "%@ started the conversation";
-"content.system.conversation.with_name.title-you" = "%@ started the conversation";
+"content.system.conversation.with_name.title-you" = "%@ comenzó la conversación";
 
-"content.system.conversation.with_name.participants" = "with %@";
+"content.system.conversation.with_name.participants" = "con: %@";
 
-"content.system.message_timer_changes" = "%@ set the timed messages to %@";
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Tú";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Has activado %@ de nuevo. Los mensajes enviados durante el intervalo de inactividad no aparecerán aquí.";
 
@@ -435,7 +444,7 @@
 "content.message.open" = "Abrir";
 "content.message.copy" = "Copiar";
 
-"content.message.open_link_alert.title" = "Visit Link";
+"content.message.open_link_alert.title" = "Abrir enlace";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
 "content.message.open_link_alert.open" = "Abrir";
 
@@ -443,8 +452,8 @@
 
 "content.file.too_big" = "Puedes enviar archivos de hasta %@";
 // Someone pinged
-"content.ping.text" = "%@ pinged";
-"content.ping.text-you" = "%@ pinged";
+"content.ping.text" = "%@ hizo ping";
+"content.ping.text-you" = "%@ hizo ping";
 
 // Current user pinged
 "content.ping.text.you" = "Tú";
@@ -489,7 +498,7 @@
 "voice.speaker_button.title" = "Altavoz";
 "voice.cancel_button.title" = "Cancelar";
 "voice.call_button.title" = "Llamar";
-"voice.end_call_button.title" = "End Call";
+"voice.end_call_button.title" = "Finalizar llamada";
 
 "voice.alert.call_in_progress.title" = "Llamada en curso";
 "voice.alert.call_in_progress.message" = "Usted puede tener sólo una llamada activa a la vez";
@@ -510,7 +519,7 @@
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Llamando…";
 "call.status.outgoing" = "Llamando…";
-"call.status.reconnecting" = "Reconnecting…";
+"call.status.reconnecting" = "Reconectando…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Tasa de bits constante";
 
@@ -539,17 +548,17 @@
 "call.actions.label.toggle_mute_on" = "Silenciar";
 "call.actions.label.toggle_mute_off" = "No silenciar";
 "call.actions.label.flip_camera" = "Flip camera";
-"call.actions.label.toggle_speaker_on" = "Enable speaker";
-"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.toggle_speaker_on" = "Habilitar altavoz";
+"call.actions.label.toggle_speaker_off" = "Deshabilitar altavoz";
 "call.actions.label.accept_call" = "¿Acepta la llamada?";
-"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.reject_call" = "Rechazar llamada";
 "call.actions.label.terminate_call" = "Finalizar llamada";
 "call.actions.label.toggle_video_on" = "Turn on camera";
 "call.actions.label.toggle_video_off" = "Turn off camera";
-"call.actions.label.switch_to_back_camera" = "Switch to back camera";
-"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.switch_to_back_camera" = "Cambiar a cámara trasera";
+"call.actions.label.switch_to_front_camera" = "Cambiar a cámara frontal";
 "call.actions.label.minimize_call" = "Minimize call";
-"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_audio_call" = "Iniciar una llamada";
 "call.actions.label.make_video_call" = "Start video call";
 "call.actions.label.join_call" = "Unirse a la llamada";
 
@@ -560,9 +569,11 @@
 "participants.avatar.guest.title" = "Invitado";
 
 "participants.title" = "Detalles";
+"participants.all.title" = "Personas";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
-"participants.footer.add_title" = "Add Participants";
+"participants.section.settings" = "Ajustes";
+"participants.footer.add_title" = "Añadir Participantes";
 "participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu

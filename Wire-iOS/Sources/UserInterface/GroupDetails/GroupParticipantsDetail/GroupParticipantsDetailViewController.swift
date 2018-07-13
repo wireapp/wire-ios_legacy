@@ -18,7 +18,7 @@
 
 import UIKit
 
-final class GroupParticipantsDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+final class GroupParticipantsDetailViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private let collectionView = UICollectionView(forUserList: ())
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
@@ -64,7 +64,6 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
-        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = .init(width: view.bounds.size.width, height: 56)
         title = "participants.all.title".localized.uppercased()
         view.backgroundColor = UIColor(scheme: .contentBackground)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
@@ -105,6 +104,11 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let user = viewModel.participants[indexPath.row] as? ZMUser else { return }
         delegate?.presentDetails(for: user)
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: view.bounds.size.width, height: 56)
     }
 
 }
