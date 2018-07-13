@@ -419,7 +419,6 @@
                                                                             // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
 "content.system.unknown_message.body" = "This message can’t be displayed. You may be using an older version of Wire.";
-"content.system.expired_message.body" = "This message is expired.";
 
 "content.file.uploading" = "Uploading…";
 "content.file.downloading" = "Downloading…";

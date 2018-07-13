@@ -40,7 +40,6 @@ extension ConversationMessageWindowTableViewAdapter {
         tableView.register(LocationMessageCell.self, forCellReuseIdentifier: ConversationLocationMessageCellId)
         tableView.register(MessageDeletedCell.self, forCellReuseIdentifier: ConversationMessageDeletedCellId)
         tableView.register(UnknownMessageCell.self, forCellReuseIdentifier: ConversationUnknownMessageCellId)
-        tableView.register(ExpiredMessageCell.self, forCellReuseIdentifier: ConversationExpiredMessageCellId)
         tableView.register(MessageTimerUpdateCell.self, forCellReuseIdentifier: ConversationMessageTimerUpdateCellId)
     }
 }
@@ -125,10 +124,6 @@ extension ZMConversationMessage {
             default:
                 break
             }
-        } else if let destructionDate = self.destructionDate,
-            destructionDate.timeIntervalSinceNow <= 0,
-            isObfuscated == false {
-            cellIdentifier = ConversationExpiredMessageCellId
         } else {
             cellIdentifier = ConversationUnknownMessageCellId
         }

@@ -36,7 +36,6 @@ static NSString *const ConversationAudioMessageCellId       = @"conversationAudi
 static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
 static NSString *const ConversationMessageDeletedCellId     = @"conversationMessageDeletedCellId";
 static NSString *const ConversationUnknownMessageCellId     = @"conversationUnknownMessageCellId";
-static NSString *const ConversationExpiredMessageCellId     = @"conversationExpiredMessageCellId";
 static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMessageTimerUpdateCellId";
 
 @class ConversationCell;
