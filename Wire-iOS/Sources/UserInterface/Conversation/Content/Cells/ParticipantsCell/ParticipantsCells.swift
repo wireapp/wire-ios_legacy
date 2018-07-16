@@ -33,6 +33,7 @@ import TTTAttributedLabel
     private let verticalInset: CGFloat = 16
     private var lineBaseLineConstraint: NSLayoutConstraint?
     private let inviteView = ParticipantsInvitePeopleView()
+    private var viewModel: ParticipantsCellViewModel?
     
     // Classy
     let lineView = UIView()
@@ -178,6 +179,7 @@ import TTTAttributedLabel
         topContainer.isHidden = nameLabel.attributedText == nil
         bottomContainer.isHidden = model.sortedUsers().count == 0
         inviteView.isHidden = !model.showInviteButton
+        viewModel = model
     }
 
     open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
@@ -201,7 +203,8 @@ import TTTAttributedLabel
 
     public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
         guard url.absoluteString == ParticipantsCellViewModel.showMoreLinkURL.absoluteString else { return }
-        // TODO
+        guard let model = viewModel else { return }
+        delegate?.conversationCell?(self, openParticipantsDetailsWithSelectedUsers: model.selectedUsers, from: self)
     }
 
 }

@@ -178,20 +178,27 @@ struct ParticipantsCellViewModel {
     
     // Users not displayed in the system message but
     // collapsed into a link e.g. `and 5 others`.
-    var truncatedUsers: [ZMUser] {
+    private var truncatedUsers: [ZMUser] {
         let users = sortedUsersWithoutSelf().filter { !$0.isSelfUser }
         guard users.count > maxShownUsers else { return [] }
         return Array(users.dropFirst(maxShownUsersWhenCollapsed))
     }
-    
+
+    var selectedUsers: [ZMUser] {
+        switch message.actionType {
+        case .added: return truncatedUsers
+        default: return []
+        }
+    }
+
     private var maxShownUsers: Int {
-        return isSelfIncludedInUsers ? 16 : 17
+        return isSelfIncludedInUsers ? 1 : 2
     }
-    
+
     private var maxShownUsersWhenCollapsed: Int {
-        return isSelfIncludedInUsers ? 14 : 15
+        return isSelfIncludedInUsers ? 1 : 2
     }
-    
+
     // Users displayed in the system message, up to 17 when not collapsed
     // but only 15 when there are more than 15 users and we collapse them.
     var shownUsers: [ZMUser] {

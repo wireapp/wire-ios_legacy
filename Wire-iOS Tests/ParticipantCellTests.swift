@@ -66,6 +66,12 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         let sut = cell(for: .participantsAdded, fromSelf: false, fillUsers: .many)
         verify(view: sut.prepareForSnapshots())
     }
+    
+    func testThatItRendersParticipantsCellAddedParticipants_Overflow() {
+        recordMode = true
+        let sut = cell(for: .participantsAdded, fromSelf: false, fillUsers: .overflow)
+        verify(view: sut.prepareForSnapshots())
+    }
 
     // MARK: - Removed Users
 

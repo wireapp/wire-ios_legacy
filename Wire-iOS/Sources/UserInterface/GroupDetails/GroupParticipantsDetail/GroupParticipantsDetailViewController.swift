@@ -34,9 +34,10 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         return ColorScheme.default.statusBarStyle
     }
     
-    init(participants: [ZMBareUser], conversation: ZMConversation) {
+    init(participants: [ZMBareUser], selectedParticipants: [ZMBareUser], conversation: ZMConversation) {
         viewModel = GroupParticipantsDetailViewModel(
             participants: participants,
+            selectedParticipants: selectedParticipants,
             conversation: conversation
         )
 
@@ -94,11 +95,16 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
+        let user = viewModel.participants[indexPath.row]
+        
         cell.configure(
-            with: .user(viewModel.participants[indexPath.row]),
+            with: .user(user),
             conversation: viewModel.conversation,
             showSeparator: viewModel.participants.count - 1 != indexPath.row
         )
+        
+        // TODO: select selected users cells and scroll to first visible cell
+//        let preSelected = viewModel.selectedParticipants.contains { user.handle == $0.handle }
         return cell
     }
     
