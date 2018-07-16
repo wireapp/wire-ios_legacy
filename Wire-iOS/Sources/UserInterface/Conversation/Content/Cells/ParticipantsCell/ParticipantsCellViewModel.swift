@@ -192,11 +192,11 @@ struct ParticipantsCellViewModel {
     }
 
     private var maxShownUsers: Int {
-        return isSelfIncludedInUsers ? 1 : 2
+        return isSelfIncludedInUsers ? 16 : 17
     }
 
     private var maxShownUsersWhenCollapsed: Int {
-        return isSelfIncludedInUsers ? 1 : 2
+        return isSelfIncludedInUsers ? 14 : 15
     }
 
     // Users displayed in the system message, up to 17 when not collapsed
