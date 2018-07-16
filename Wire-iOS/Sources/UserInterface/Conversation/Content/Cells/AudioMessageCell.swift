@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 /// Displays the audio message with different states
-public final class AudioMessageCell: ConversationCell {
+@objcMembers public final class AudioMessageCell: ConversationCell {
     private let audioMessageView = AudioMessageView()
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .microphone)
@@ -76,11 +76,7 @@ public final class AudioMessageCell: ConversationCell {
 
         constrain(audioMessageView, obfuscationView) { audioMessageView, obfuscationView in
             obfuscationView.edges == audioMessageView.edges
-        }
-        
-        constrain(audioMessageView, countdownContainerView) { container, countDownContainer in
-            countDownContainer.top == container.top
-        }
+        }        
     }
     
     override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
@@ -181,7 +177,7 @@ public final class AudioMessageCell: ConversationCell {
         return super.canPerformAction(action, withSender: sender)
     }
     
-    open func wr_saveAudio() {
+    @objc open func wr_saveAudio() {
         if self.message.audioCanBeSaved() {
             self.delegate?.conversationCell?(self, didSelect: .save)
         }

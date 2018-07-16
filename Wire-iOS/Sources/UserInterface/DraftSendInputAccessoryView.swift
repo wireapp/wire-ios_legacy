@@ -25,7 +25,7 @@ final class DraftSendInputAccessoryView: UIView {
 
     var onSend: (() -> Void)?
 
-    public let sendButton = IconButton.iconButtonDefault()
+    public let sendButton = IconButton.sendButton()
 
     public var isEnabled: Bool = false {
         didSet {
@@ -48,20 +48,16 @@ final class DraftSendInputAccessoryView: UIView {
     func setupViews() {
         backgroundColor = UIColor.clear
         [sendButton, separator].forEach(addSubview)
-        separator.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorSeparator)
-        sendButton.cas_styleClass = "send-button"
-        sendButton.adjustsImageWhenHighlighted = false
-        sendButton.adjustBackgroundImageWhenHighlighted = true
-        sendButton.hitAreaPadding = CGSize(width: 30, height: 30)
-        sendButton.setIcon(.send, with: .tiny, for: .normal)
+        separator.backgroundColor = UIColor(scheme: .separator)
 
+
+        sendButton.hitAreaPadding = CGSize(width: 30, height: 30)
         sendButton.addTarget(self, action: #selector(sendTapped), for: .touchUpInside)
-        sendButton.accessibilityIdentifier = "sendButton"
 
         CASStyler.default().styleItem(sendButton)
     }
 
-    private dynamic  func sendTapped() {
+    @objc private dynamic  func sendTapped() {
         onSend?()
     }
 

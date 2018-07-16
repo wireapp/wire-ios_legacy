@@ -19,7 +19,7 @@
 
 import Foundation
 
-public typealias FileInDirectory = (NSFileManager.SearchPathDirectory, String)
+public typealias FileInDirectory = (FileManager.SearchPathDirectory, String)
 
 public extension URL {
 
@@ -30,7 +30,7 @@ public extension URL {
         try mutableCopy.setResourceValues(resourceValues)
     }
 
-    public static func wr_directory(for searchPathDirectory: NSFileManager.SearchPathDirectory) -> URL {
+    public static func wr_directory(for searchPathDirectory: FileManager.SearchPathDirectory) -> URL {
         return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(searchPathDirectory, .userDomainMask, true).first!)
     }
 

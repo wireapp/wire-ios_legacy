@@ -42,7 +42,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         client = nil
         selfClient = nil
 
-        ColorScheme.default().variant = .light
+        ColorScheme.default.variant = .light
 
         super.tearDown()
     }
@@ -100,6 +100,15 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     func testForOneDeviceWithNoEditButton(){
         prepareSut(variant: .light, numberOfClients: 0)
         let navWrapperController = sut.wrapInNavigationController()
+
+        self.verify(view: navWrapperController.view)
+    }
+
+    func testForOneDeviceWithBackButtonAndNoEditButton(){
+        prepareSut(variant: .light, numberOfClients: 0)
+        let mockRootViewController = UIViewController()
+        let navWrapperController = mockRootViewController.wrapInNavigationController()
+        navWrapperController.pushViewController(sut, animated: false)
 
         self.verify(view: navWrapperController.view)
     }

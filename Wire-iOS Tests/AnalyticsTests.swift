@@ -22,6 +22,7 @@ import Wire
 import HockeySDK
 
 class AnalyticsTests : XCTestCase {
+
     func testThatItSetsOptOutOnHockey() {
         // GIVEN
         TrackingManager.shared.disableCrashAndAnalyticsSharing = false

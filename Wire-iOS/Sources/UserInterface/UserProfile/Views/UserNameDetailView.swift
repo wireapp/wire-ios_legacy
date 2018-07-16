@@ -25,7 +25,7 @@ fileprivate let smallLightFont = FontSpec(.small, .light).font!
 fileprivate let smallBoldFont = FontSpec(.small, .medium).font!
 fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 
-@objc public class AddressBookCorrelationFormatter: NSObject {
+@objcMembers public class AddressBookCorrelationFormatter: NSObject {
 
     let lightFont, boldFont: UIFont
     let color: UIColor
@@ -58,7 +58,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 }
 
 
-@objc final class UserNameDetailViewModel: NSObject {
+@objcMembers final class UserNameDetailViewModel: NSObject {
 
     let title: NSAttributedString
 
@@ -90,7 +90,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
     }
 
     static var formatter: AddressBookCorrelationFormatter = {
-        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed))
+        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor(scheme: .textDimmed))
     }()
 
     init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?) {
@@ -100,12 +100,12 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
     }
 
     static func attributedTitle(for user: ZMBareUser?, fallback: String) -> NSAttributedString {
-        return (user?.name ?? fallback) && normalBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        return (user?.name ?? fallback) && normalBoldFont && UIColor(scheme: .textForeground)
     }
 
     static func attributedSubtitle(for user: ZMBareUser?) -> NSAttributedString? {
         guard let handle = user?.handle, handle.count > 0 else { return nil }
-        return ("@" + handle) && smallBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        return ("@" + handle) && smallBoldFont && UIColor(scheme: .textDimmed)
     }
 
     static func attributedCorrelationText(for user: ZMBareUser?, addressBookName: String?) -> NSAttributedString? {
@@ -115,7 +115,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 }
 
 
-final class UserNameDetailView: UIView {
+@objcMembers final class UserNameDetailView: UIView {
 
     let subtitleLabel = UILabel()
     let correlationLabel = UILabel()

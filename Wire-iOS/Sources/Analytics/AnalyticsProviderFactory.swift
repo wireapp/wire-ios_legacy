@@ -22,11 +22,17 @@ private let zmLog = ZMSLog(tag: "Analytics")
 
 fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
 
-@objc class AnalyticsProviderFactory: NSObject {
-    @objc public static let shared = AnalyticsProviderFactory()
+@objcMembers class AnalyticsProviderFactory: NSObject {
+    @objc public static let shared = AnalyticsProviderFactory(userDefaults: .shared()!)
     @objc public static let ZMConsoleAnalyticsArgumentKey = "-ConsoleAnalytics"
 
     @objc public var useConsoleAnalytics: Bool = false
+
+    private let userDefaults: UserDefaults
+
+    @objc public init(userDefaults: UserDefaults) {
+        self.userDefaults = userDefaults
+    }
   
     @objc public func analyticsProvider() -> AnalyticsProvider? {
         if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
@@ -35,7 +41,9 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
         }
         else if UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics {
             zmLog.info("Creating analyticsProvider: AnalyticsMixpanelProvider")
-            return AnalyticsMixpanelProvider()
+            let provider = AnalyticsMixpanelProvider(defaults: userDefaults)
+            provider.isOptedOut = false
+            return provider
         }
         else {
             zmLog.info("Creating analyticsProvider: no provider")

@@ -31,7 +31,7 @@ enum ClientSection: Int {
     case removeDevice = 3
 }
 
-class SettingsClientViewController: UIViewController,
+@objcMembers class SettingsClientViewController: UIViewController,
                                     UITableViewDelegate,
                                     UITableViewDataSource,
                                     UserClientObserver,
@@ -158,7 +158,7 @@ class SettingsClientViewController: UIViewController,
         fatalError("init(coder:) has not been implemented")
     }
     
-    func onVerifiedChanged(_ sender: UISwitch!) {
+    @objc func onVerifiedChanged(_ sender: UISwitch!) {
         let selfClient = ZMUserSession.shared()!.selfUserClient()
         
         ZMUserSession.shared()?.enqueueChanges({
@@ -175,7 +175,7 @@ class SettingsClientViewController: UIViewController,
         })
     }
     
-    func onDonePressed(_ sender: AnyObject!) {
+    @objc func onDonePressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: .none)
     }
     
@@ -253,6 +253,7 @@ class SettingsClientViewController: UIViewController,
                     cell.cellNameLabel.accessibilityIdentifier = "device verified label"
                     cell.switchView.addTarget(self, action: #selector(SettingsClientViewController.onVerifiedChanged(_:)), for: .touchUpInside)
                     cell.switchView.accessibilityIdentifier = "device verified"
+                    cell.accessibilityIdentifier = "device verified"
                     cell.switchView.isOn = self.userClient.verified
                     styler(cell)
                     cell.variant = self.variant

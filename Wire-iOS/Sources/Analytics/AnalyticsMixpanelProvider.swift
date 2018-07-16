@@ -70,7 +70,7 @@ extension Dictionary where Key == String, Value == Any {
 
 final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
-    
+    private let defaults: UserDefaults
     
     private static let enabledEvents = Set<String>([
         conversationMediaCompleteActionEventName,
@@ -132,9 +132,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         zmLog.info("AnalyticsMixpanelProvider \(self) deallocated")
     }
     
-    override init() {
+    init(defaults: UserDefaults) {
+        self.defaults = defaults
+
         if !MixpanelAPIKey.isEmpty {
-            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey)
+            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey, optOutTrackingByDefault: true)
         }
         super.init()
         mixpanelInstance?.distinctId = mixpanelDistinctId
@@ -153,21 +155,26 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     }
     
     var mixpanelDistinctId: String {
-        if let id = UserDefaults.shared().string(forKey: MixpanelDistinctIdKey) {
+        if let id = defaults.string(forKey: MixpanelDistinctIdKey) {
             return id
         }
         else {
             let id = UUID().transportString()
-            UserDefaults.shared().set(id, forKey: MixpanelDistinctIdKey)
-            UserDefaults.shared().synchronize()
+            defaults.set(id, forKey: MixpanelDistinctIdKey)
+            defaults.synchronize()
             return id
         }
     }
     
-    public var isOptedOut : Bool = false {
-        didSet {
-            if isOptedOut {
-                self.mixpanelInstance?.flush(completion: {})
+    public var isOptedOut: Bool {
+        get {
+            return mixpanelInstance?.hasOptedOutTracking() ?? true
+        }
+        set {
+            if newValue == true {
+                mixpanelInstance?.optOutTracking()
+            } else {
+                mixpanelInstance?.optInTracking()
             }
         }
     }

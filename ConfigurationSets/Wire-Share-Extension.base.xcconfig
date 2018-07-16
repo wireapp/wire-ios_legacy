@@ -22,5 +22,3 @@ SHARE_EXTENSION_BUNDLE_SUFFIX = extension-share
 SWIFT_OBJC_BRIDGING_HEADER = $(TARGET_NAME)/WireShareExtensionBridgingHeader.h
 
 APPLICATION_EXTENSION_API_ONLY = YES
-
-HEADER_SEARCH_PATHS = $(inherited) "${SRCROOT}/Pods/Headers/Public/"

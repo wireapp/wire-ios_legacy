@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 
-class ProfileClientViewController: UIViewController {
+@objcMembers class ProfileClientViewController: UIViewController {
 
     let userClient: UserClient
     let contentView = UIView()
@@ -92,7 +92,7 @@ class ProfileClientViewController: UIViewController {
     }
 
     func setupViews() {
-        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        view.backgroundColor = UIColor(scheme: .background)
 
         self.setupContentView()
         self.setupBackButton()
@@ -141,24 +141,24 @@ class ProfileClientViewController: UIViewController {
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
-        descriptionTextView.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-        descriptionTextView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
+        descriptionTextView.textColor = UIColor(scheme: .textForeground)
+        descriptionTextView.backgroundColor = UIColor(scheme: .textBackground)
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = self.userClient.user {
             descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
                 descriptionTextFont &&
-                UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)) +
+                UIColor(scheme: .textForeground)) +
                 "\n" +
                 ("profile.devices.detail.verify_message.link".localized &&
-                    [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: URL.wr_fingerprintHowToVerify])
+                    [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
         }
         self.contentView.addSubview(descriptionTextView)
     }
     
     private func setupSeparatorLineView() {
-        separatorLineView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        separatorLineView.backgroundColor = UIColor(scheme: .separator)
         self.contentView.addSubview(separatorLineView)
     }
     
@@ -166,13 +166,13 @@ class ProfileClientViewController: UIViewController {
         typeLabel.text = self.userClient.deviceClass?.uppercased()
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
-        typeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        typeLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(typeLabel)
     }
     
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
-        IDLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        IDLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(IDLabel)
         self.updateIDLabel()
     }
@@ -182,15 +182,15 @@ class ProfileClientViewController: UIViewController {
         let fingerprintSmallBoldMonospaceFont = self.fingerprintSmallBoldFont.monospaced()
         
         IDLabel.attributedText = self.userClient.attributedRemoteIdentifier(
-            [NSFontAttributeName: fingerprintSmallMonospaceFont],
-            boldAttributes: [NSFontAttributeName: fingerprintSmallBoldMonospaceFont],
+            [.font: fingerprintSmallMonospaceFont],
+            boldAttributes: [.font: fingerprintSmallBoldMonospaceFont],
             uppercase: true
         )
     }
 
     private func setupFullIDLabel() {
         fullIDLabel.numberOfLines = 0
-        fullIDLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        fullIDLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(fullIDLabel)
     }
     
@@ -204,8 +204,8 @@ class ProfileClientViewController: UIViewController {
         let fingerprintBoldMonospaceFont = self.fingerprintBoldFont.monospaced()
         
         if let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
-            attributes: [NSFontAttributeName: fingerprintMonospaceFont],
-            boldAttributes: [NSFontAttributeName: fingerprintBoldMonospaceFont],
+            attributes: [.font: fingerprintMonospaceFont],
+            boldAttributes: [.font: fingerprintBoldMonospaceFont],
             uppercase: false)
         {
             fullIDLabel.attributedText = attributedFingerprint
@@ -227,7 +227,7 @@ class ProfileClientViewController: UIViewController {
     
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
-        verifiedToggleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        verifiedToggleLabel.textColor = UIColor(scheme: .textForeground)
         verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
@@ -323,7 +323,7 @@ class ProfileClientViewController: UIViewController {
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
         let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(),
                                                                 fromConversation:self.fromConversation,
-                                                                variant: ColorScheme.default().variant)
+                                                                variant: ColorScheme.default.variant)
 
         let navigationControllerWrapper = selfClientController.wrapInNavigationController()
 

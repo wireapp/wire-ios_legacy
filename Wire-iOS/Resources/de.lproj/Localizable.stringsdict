@@ -70,7 +70,7 @@
     <key>list.connect_request.people_waiting</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_people@ warten</string>
+      <string>%#@d_number_of_people@</string>
       <key>d_number_of_people</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -78,7 +78,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Eine Kontaktanfrage</string>
+        <string>Eine Kontaktanfrage wartet</string>
         <key>other</key>
         <string>%d Kontakte warten</string>
       </dict>

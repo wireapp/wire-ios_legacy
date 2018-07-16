@@ -100,7 +100,7 @@ class CallParticipantsViewController: UIViewController, UICollectionViewDelegate
         ])
 
         let widthConstraint = collectionView.widthAnchor.constraint(equalToConstant: 414)
-        widthConstraint.priority = UILayoutPriorityDefaultHigh
+        widthConstraint.priority = UILayoutPriority.defaultHigh
         widthConstraint.isActive = true
         
         topConstraint = collectionView.topAnchor.constraint(equalTo: view.topAnchor)

@@ -58,7 +58,7 @@ class StartUIIconCell: UICollectionViewCell {
         titleLabel.font = FontSpec(.normal, .light).font
         titleLabel.textColor = .white
         [iconView, titleLabel, separator].forEach(contentView.addSubview)
-        separator.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorCellSeparator, variant: .dark)
+        separator.backgroundColor = UIColor(scheme: .cellSeparator, variant: .dark)
     }
     
     fileprivate  func createConstraints() {

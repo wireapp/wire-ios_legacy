@@ -95,7 +95,7 @@ extension ZClientViewController {
         }
     }
     
-    func createTopViewConstraints() {
+    @objc func createTopViewConstraints() {
         topOverlayContainer = UIView()
         topOverlayContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topOverlayContainer)
@@ -113,11 +113,11 @@ extension ZClientViewController {
             ])
 
         let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
-        heightConstraint.priority = UILayoutPriorityDefaultLow
+        heightConstraint.priority = UILayoutPriority.defaultLow
         heightConstraint.isActive = true
     }
 
-    func updateSplitViewTopConstraint() {
+    @objc func updateSplitViewTopConstraint() {
 
         let isRegularContainer = traitCollection.horizontalSizeClass == .regular
         
@@ -138,7 +138,7 @@ extension ZClientViewController {
         var viewController: UIViewController?
 
         if user.isSelfUser {
-            let clientListViewController = ClientListViewController(clientsList: Array(user.clients), credentials: nil, detailedView: true, showTemporary: true, variant: ColorScheme.default().variant)
+            let clientListViewController = ClientListViewController(clientsList: Array(user.clients), credentials: nil, detailedView: true, showTemporary: true, variant: ColorScheme.default.variant)
             clientListViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissClientListController(_:)))
             viewController = clientListViewController
         } else {

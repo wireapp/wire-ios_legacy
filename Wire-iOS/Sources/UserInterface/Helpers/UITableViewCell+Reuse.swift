@@ -19,18 +19,20 @@
 
 import UIKit
 
+// MARK: Cell Registration
+
 extension UITableViewCell {
-    static var zm_reuseIdentifier: String {
+    @objc static var zm_reuseIdentifier: String {
     	return NSStringFromClass(self) + "_ReuseIdentifier"
     }
     
-    static func register(in tableView: UITableView) {
+    @objc static func register(in tableView: UITableView) {
         tableView.register(self, forCellReuseIdentifier: zm_reuseIdentifier)
     }
 }
 
 extension UICollectionViewCell {
-    static var zm_reuseIdentifier: String {
+    @objc static var zm_reuseIdentifier: String {
         return NSStringFromClass(self) + "_ReuseIdentifier"
     }
     
@@ -39,3 +41,16 @@ extension UICollectionViewCell {
     }
 }
 
+// MARK: - Cell Dequeuing
+
+extension UICollectionView {
+    func dequeueReusableCell<T: UICollectionViewCell>(ofType cellType: T.Type, for indexPath: IndexPath) -> T {
+        return dequeueReusableCell(withReuseIdentifier: T.zm_reuseIdentifier, for: indexPath) as! T
+    }
+}
+
+extension UITableView {
+    func dequeueReusableCell<T: UITableViewCell>(ofType cellType: T.Type, for indexPath: IndexPath) -> T {
+        return dequeueReusableCell(withIdentifier: T.zm_reuseIdentifier, for: indexPath) as! T
+    }
+}

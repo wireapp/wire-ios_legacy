@@ -22,7 +22,7 @@ import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objc final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
+@objcMembers final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
     enum State {
         case ready, recording, effects
     }
@@ -64,7 +64,7 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     @objc convenience init() {
-        self.init(audioRecorder: AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0)!)
+        self.init(audioRecorder: AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0, maxFileSize: ZMUserSession.shared()?.maxUploadFileSize() )!)
     }
     
     init(audioRecorder: AudioRecorderType) {
@@ -89,7 +89,7 @@ private let zmLog = ZMSLog(tag: "UI")
         let colorScheme = ColorScheme()
         colorScheme.variant = .light
         
-        self.view.backgroundColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        self.view.backgroundColor = colorScheme.color(named: .textForeground)
         
         self.recordTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recordButtonPressed(_:)))
         self.view.addGestureRecognizer(self.recordTapGestureRecognizer)
@@ -101,14 +101,14 @@ private let zmLog = ZMSLog(tag: "UI")
         [self.audioPreviewView, self.timeLabel, self.tipLabel, self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton, self.bottomToolbar, self.topContainer, self.topSeparator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         self.audioPreviewView.gradientWidth = 20
-        self.audioPreviewView.gradientColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+        self.audioPreviewView.gradientColor = colorScheme.color(named: .textForeground)
         
-        self.topSeparator.backgroundColor = colorScheme.color(withName: ColorSchemeColorSeparator)
+        self.topSeparator.backgroundColor = colorScheme.color(named: .separator)
         
         self.createTipLabel()
         
         self.timeLabel.font = FontSpec(.small, .light).font!
-        self.timeLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        self.timeLabel.textColor = colorScheme.color(named: .textForeground, variant: .dark)
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
         
@@ -167,7 +167,7 @@ private let zmLog = ZMSLog(tag: "UI")
             
             let maxEffect : UInt32 = UInt32(suitableEffects.count)
             let randomEffect = suitableEffects[Int(arc4random_uniform(maxEffect))]
-            let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(withName: ColorSchemeColorTextDimmed))
+            let randomEffectImage = UIImage(for: randomEffect.icon, iconSize: .searchBar, color: colorScheme.color(named: .textDimmed))
             
             let tipEffectImageAttachment = NSTextAttachment()
             tipEffectImageAttachment.image = randomEffectImage
@@ -179,11 +179,11 @@ private let zmLog = ZMSLog(tag: "UI")
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
         
-        attributedTipText.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
+        attributedTipText.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, (attributedTipText.string as NSString).length))
         self.tipLabel.attributedText = NSAttributedString(attributedString: attributedTipText)
         self.tipLabel.numberOfLines = 2
         self.tipLabel.font = FontSpec(.small, .light).font!
-        self.tipLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextDimmed)
+        self.tipLabel.textColor = colorScheme.color(named: .textDimmed)
         self.tipLabel.textAlignment = .center
         
     }
@@ -273,26 +273,14 @@ private let zmLog = ZMSLog(tag: "UI")
             AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
-        recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in
+        recorder.recordEndedCallback = { [weak self] result in
             guard let `self` = self else { return }
             self.state = .effects
-            if reachedMaxRecordingDuration {
-                
-                let duration = Int(ceil(self.recorder.maxRecordingDuration ?? 0))
-                let (seconds, minutes) = (duration % 60, duration / 60)
-                let durationLimit = String(format: "%d:%02d", minutes, seconds)
-                
-                let alertController = UIAlertController(
-                    title: "conversation.input_bar.audio_message.too_long.title".localized,
-                    message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit),
-                    preferredStyle: .alert
-                )
-                
-                let actionOk = UIAlertAction(title: "general.ok".localized, style: .default, handler: nil)
-                alertController.addAction(actionOk)
-                
-                self.present(alertController, animated: true, completion: .none)
-            }
+            
+            guard let error = result.error as? RecordingError,
+                let alert = self.recorder.alertForRecording(error: error) else { return }
+            
+            self.present(alert, animated: true, completion: .none)
         }
         
         recorder.recordLevelCallBack = { [weak self] level in
@@ -400,17 +388,17 @@ private let zmLog = ZMSLog(tag: "UI")
     
     // MARK: - Button actions
     
-    internal func recordButtonPressed(_ sender: AnyObject!) {
+    @objc internal func recordButtonPressed(_ sender: AnyObject!) {
         self.state = .recording
         self.recorder.startRecording()
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
     }
     
-    func stopRecordButtonPressed(_ button: UIButton?) {
+    @objc func stopRecordButtonPressed(_ button: UIButton?) {
         self.recorder.stopRecording()
     }
     
-    func confirmButtonPressed(_ button: UIButton?) {
+    @objc func confirmButtonPressed(_ button: UIButton?) {
         
         guard let audioPath = self.currentEffectFilePath else {
             zmLog.error("No file to send")
@@ -440,11 +428,11 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func redoButtonPressed(_ button: UIButton?) {
+    @objc func redoButtonPressed(_ button: UIButton?) {
         self.state = .ready
     }
     
-    func cancelButtonPressed(_ button: UIButton?) {
+    @objc func cancelButtonPressed(_ button: UIButton?) {
         self.delegate?.audioRecordViewControllerDidCancel(self)
     }
 }

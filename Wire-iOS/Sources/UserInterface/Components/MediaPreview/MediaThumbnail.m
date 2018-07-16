@@ -31,4 +31,15 @@
     return self;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    MediaThumbnail *otherThumbnail = (MediaThumbnail *)object;
+    return [self.URL isEqual:otherThumbnail.URL] && CGSizeEqualToSize(self.size, otherThumbnail.size);
+}
+
+- (NSUInteger)hash
+{
+    return ((NSUInteger)self.size.width << 10 ^ (NSUInteger)self.size.height) + self.URL.hash;
+}
+
 @end

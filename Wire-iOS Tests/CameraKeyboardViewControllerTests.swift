@@ -48,7 +48,7 @@ class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDele
 }
 
 
-@objc class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
+@objcMembers class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
     @objc var layoutSize: SplitViewControllerLayoutSize = .compact
     @objc var leftViewControllerWidth: CGFloat = 0
 }
@@ -62,7 +62,7 @@ private final class MockAssetLibrary: AssetLibrary {
 }
 
 fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
-    override var shouldBlockCallingRelatedActions: Bool {
+    @objc override var shouldBlockCallingRelatedActions: Bool {
         return true
     }
 }
@@ -86,7 +86,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         
         let container = UIView()
         container.addSubview(self.sut.view)
-        container.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+        container.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
         
         constrain(self.sut.view, container) { view, container in
             container.height == size.height

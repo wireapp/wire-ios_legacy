@@ -29,7 +29,6 @@
 
 // UI
 @import WireExtensionComponents;
-#import "UIColor+WAZExtensions.h"
 #import "ConversationCell.h"
 #import "ConversationCell+Private.h"
 #import "TextMessageCell.h"
@@ -47,15 +46,12 @@
 #import "NextResponderTextView.h"
 #import "RegistrationTextField.h"
 #import "InvisibleInputAccessoryView.h"
-#import <SCSiriWaveformView/SCSiriWaveformView.h>
+#import "SCSiriWaveformView.h"
 #import "ConversationInputBarSendController.h"
 #import "ConversationContentViewController+Private.h"
 #import "StackView.h"
 #import "UIAlertController+NewSelfClients.h"
 #import "SwizzleTransition.h"
-#import "ARCollectionViewMasonryLayout.h"
-#import "ZiphyClient+Convenience.h"
-#import "ConversationDetailsTransitioningDelegate.h"
 #import "Country.h"
 #import "ContrastUserImageView.h"
 #import "PassthroughTouchesView.h"
@@ -111,6 +107,7 @@
 #import "BadgeUserImageView.h"
 #import "LaunchImageViewController.h"
 #import "ProfilePictureStepViewController.h"
+#import "ProfilePictureStepViewController+Private.h"
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "RegistrationFormController.h"
@@ -129,6 +126,7 @@
 #import "PassthroughWindow.h"
 #import "PassthroughTouchesView.h"
 #import "StopWatch.h"
+#import "ZMUserSession+RequestProxy.h"
 
 // Utils
 #import "Analytics.h"
@@ -172,6 +170,7 @@
 #import "UILabel+TextTransform.h"
 #import "NSString+TextTransform.h"
 #import "KeyboardFrameObserver+iOS.h"
+#import "UIColor+Mixing.h"
 
 // Camera
 #import "CameraController.h"
@@ -181,3 +180,6 @@
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
 
+// Media
+#import "MediaPreviewData.h"
+#import "MediaThumbnail.h"

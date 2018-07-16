@@ -37,7 +37,7 @@ extension UIFont {
     }
     
     class var smallSemiboldFont: UIFont {
-        return FontSpec(.small, .medium).font!
+        return FontSpec(.small, .semibold).font!
     }
     
 

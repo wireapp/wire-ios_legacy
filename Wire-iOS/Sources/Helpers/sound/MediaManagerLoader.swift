@@ -58,7 +58,7 @@ extension MediaManagerState {
     }
 }
 
-@objc final class MediaManagerLoader: NSObject {
+@objcMembers final class MediaManagerLoader: NSObject {
     
     private var flowManagerObserver: AnyObject?
     private var state: MediaManagerState = .initial {

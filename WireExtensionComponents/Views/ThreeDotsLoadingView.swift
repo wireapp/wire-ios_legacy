@@ -21,16 +21,16 @@ import UIKit
 import Foundation
 import Cartography
 
-public class ThreeDotsLoadingView: UIView {
+@objcMembers public class ThreeDotsLoadingView: UIView {
     
-    let loadingAnimationKey = "loading"
-    let dotRadius = 2
-    let activeColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLoadingDotActive)
-    let inactiveColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorLoadingDotInactive)
+    @objc let loadingAnimationKey = "loading"
+    @objc let dotRadius = 2
+    @objc let activeColor = UIColor(scheme: .loadingDotActive)
+    @objc let inactiveColor = UIColor(scheme: .loadingDotInactive)
     
-    let dot1 = UIView()
-    let dot2 = UIView()
-    let dot3 = UIView()
+    @objc let dot1 = UIView()
+    @objc let dot2 = UIView()
+    @objc let dot3 = UIView()
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -54,14 +54,14 @@ public class ThreeDotsLoadingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupViews() {
+    @objc func setupViews() {
         [dot1, dot2, dot3].forEach { (dot) in
             dot.layer.cornerRadius = CGFloat(dotRadius);
             dot.backgroundColor = inactiveColor
         }
     }
     
-    func setupConstraints() {
+    @objc func setupConstraints() {
         
         constrain(self, dot1, dot3) { container, leadingDot, trailingDot in
             leadingDot.left == container.left
@@ -88,7 +88,7 @@ public class ThreeDotsLoadingView: UIView {
         }
     }
     
-    func updateLoadingAnimation() {
+    @objc func updateLoadingAnimation() {
         if (isHidden) {
             stopProgressAnimation()
         } else {
@@ -96,7 +96,7 @@ public class ThreeDotsLoadingView: UIView {
         }
     }
     
-    func startProgressAnimation() {
+    @objc func startProgressAnimation() {
         let stepDuration = 0.350
         let colorShift = CAKeyframeAnimation(keyPath: "backgroundColor")
         colorShift.values = [activeColor.cgColor, inactiveColor.cgColor, inactiveColor.cgColor, activeColor.cgColor]
@@ -119,14 +119,14 @@ public class ThreeDotsLoadingView: UIView {
         dot3.layer.add(colorShift3, forKey: loadingAnimationKey)
     }
     
-    func stopProgressAnimation() {
+    @objc func stopProgressAnimation() {
         [dot1, dot2, dot3].forEach { $0.layer.removeAnimation(forKey: loadingAnimationKey) }
     }
 
 }
 
 extension ThreeDotsLoadingView {
-    func applicationDidBecomeActive(_ notification : Notification) {
+    @objc func applicationDidBecomeActive(_ notification : Notification) {
         updateLoadingAnimation()
     }
 }

@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import Classy
 
-final public class FileTransferView: UIView, TransferView {
+@objcMembers final public class FileTransferView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
 
     weak public var delegate: TransferViewDelegate?
@@ -186,7 +186,7 @@ final public class FileTransferView: UIView, TransferView {
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
             
-        case .uploaded, .failedDownload:
+        case .uploaded, .failedDownload, .unavailable:
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + extAttributed
             self.topLabel.attributedText = firstLine
@@ -248,7 +248,7 @@ final public class FileTransferView: UIView, TransferView {
     
     // MARK: - Actions
     
-    open func onActionButtonPressed(_ sender: UIButton) {
+    @objc open func onActionButtonPressed(_ sender: UIButton) {
         guard let message = self.fileMessage, let fileMessageData = message.fileMessageData else {
             return
         }
@@ -269,6 +269,7 @@ final public class FileTransferView: UIView, TransferView {
             self.delegate?.transferView(self, didSelect: .present)
         case .uploaded:
             self.delegate?.transferView(self, didSelect: .present)
+        case .unavailable:
             break
         }
     }

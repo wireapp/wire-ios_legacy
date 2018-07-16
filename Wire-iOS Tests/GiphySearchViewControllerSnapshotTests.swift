@@ -25,13 +25,20 @@ final class GiphySearchViewControllerSnapshotTests: ZMSnapshotTestCase {
     var mockConversation: MockConversation!
     var mockNavigationController: UINavigationController!
 
+    var client: ZiphyClient!
+    var requester: MockURLSession!
+    var resultsController: ZiphySearchResultsController!
+
     override func setUp() {
         super.setUp()
 
         mockConversation = MockConversation.oneOnOneConversation()
+        requester = MockURLSession(cache: nil)
+        client = ZiphyClient(host: "localhost", requester: requester, downloadSession: requester)
+        resultsController = ZiphySearchResultsController(client: client, pageSize: 5)
 
         let searchTerm: String = "apple"
-        sut = GiphySearchViewController(withSearchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation)
+        sut = GiphySearchViewController(searchTerm: searchTerm, conversation: (mockConversation as Any) as! ZMConversation, searchResultsController: resultsController)
         mockNavigationController = sut.wrapInsideNavigationController()
 
         sut.collectionView?.backgroundColor = .white

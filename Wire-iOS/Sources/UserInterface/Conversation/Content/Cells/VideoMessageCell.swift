@@ -23,8 +23,8 @@ import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
-/// Displays the video message with different states
-public final class VideoMessageCell: ConversationCell {
+/// Displays the video message@objc  with different states
+@objcMembers public final class VideoMessageCell: ConversationCell {
 
     private let videoMessageView = VideoMessageView()
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
@@ -173,7 +173,7 @@ public final class VideoMessageCell: ConversationCell {
         return super.canPerformAction(action, withSender: sender)
     }
     
-    open func wr_saveVideo() {
+    @objc open func wr_saveVideo() {
         if let fileMessageData = self.message.fileMessageData,
             let fileURL = fileMessageData.fileURL,
             self.message.videoCanBeSavedToCameraRoll() {
@@ -189,7 +189,7 @@ public final class VideoMessageCell: ConversationCell {
         }
     }
     
-    override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
+    @objc override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         super.prepareLayoutForPreview(message: message)
         return PreviewHeightCalculator.heightForVideo()
     }

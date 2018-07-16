@@ -21,7 +21,7 @@
 import Foundation
 import Cartography
 
-@objc public final class AudioButtonOverlay: UIView {
+@objcMembers public final class AudioButtonOverlay: UIView {
     
     enum AudioButtonOverlayButtonType {
         case play, send, stop
@@ -40,11 +40,11 @@ import Cartography
     fileprivate var heightConstraint: NSLayoutConstraint?
     fileprivate var widthConstraint: NSLayoutConstraint?
     
-    let darkColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-    let brightColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
+    let darkColor = UIColor(scheme: .textForeground)
+    let brightColor = UIColor(scheme: .textBackground)
     let greenColor = ZMAccentColor.strongLimeGreen.color;
-    let grayColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAudioButtonOverlay)
-    let superviewColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+    let grayColor = UIColor(scheme: .audioButtonOverlay)
+    let superviewColor = UIColor(scheme: .background)
     
     let audioButton = IconButton()
     let playButton = IconButton()
@@ -132,7 +132,7 @@ import Cartography
         playButton.accessibilityValue = state.description
     }
     
-    func buttonPressed(_ sender: IconButton) {
+    @objc func buttonPressed(_ sender: IconButton) {
         let type: AudioButtonOverlayButtonType
         
         if sender == sendButton {

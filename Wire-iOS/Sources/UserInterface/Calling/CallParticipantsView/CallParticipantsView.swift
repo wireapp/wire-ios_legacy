@@ -82,7 +82,7 @@ class CallParticipantsView: UICollectionView, Themeable {
         }
     }
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -125,7 +125,7 @@ extension CallParticipantsView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cellConfiguration = rows[indexPath.row]
         let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellConfiguration.cellType.reuseIdentifier, for: indexPath)
-        
+
         if let configurableCell = cell as? CallParticipantsCellConfigurationConfigurable {
             configurableCell.configure(with: cellConfiguration, variant: colorSchemeVariant)
         }

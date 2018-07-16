@@ -24,7 +24,7 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-class ClientListViewController: UIViewController,
+@objcMembers class ClientListViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,
                                 ZMClientUpdateObserver,
@@ -65,6 +65,7 @@ class ClientListViewController: UIViewController,
         didSet {
             guard clients.count > 0 else {
                 self.navigationItem.rightBarButtonItem = nil
+                self.navigationItem.setHidesBackButton(false, animated: true)
                 return
             }
 
@@ -233,19 +234,17 @@ class ClientListViewController: UIViewController,
     
     // MARK: - Actions
     
-    func startEditing(_ sender: AnyObject!) {
+    @objc func startEditing(_ sender: AnyObject!) {
         self.editingList = true
     }
     
-    func endEditing(_ sender: AnyObject!) {
+    @objc func endEditing(_ sender: AnyObject!) {
         self.editingList = false
     }
     
-    func backPressed(_ sender: AnyObject!) {
+    @objc func backPressed(_ sender: AnyObject!) {
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
-
-
 
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
         showLoadingView = true
@@ -285,6 +284,8 @@ class ClientListViewController: UIViewController,
         self.clients = remainingClients
 
         Analytics.shared().tagDeleteDevice()
+
+        self.editingList = false
     }
     
     func failedToDeleteClientsWithError(_ error: Error!) {

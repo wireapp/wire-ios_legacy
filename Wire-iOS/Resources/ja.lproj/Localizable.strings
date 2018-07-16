@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "いまは行わない";
 "general.accept" = "承諾";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -237,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "タップして送信";
 "conversation.input_bar.audio_message.too_long.title" = "録音を停止";
 "conversation.input_bar.audio_message.too_long.message" = "音声メッセージは %@ に制限されます。";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "送信";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "タップして録音を開始します、その後  %@  できます。";
@@ -377,6 +381,14 @@
 "content.system.conversation.with_name.title-you" = "%@ が会話を開始しました。";
 
 "content.system.conversation.with_name.participants" = "with %@";
+
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "あなた";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "あなたは %@ を再び利用しています。いままでのメッセージはここには表示されません。";
 
@@ -557,10 +569,12 @@
 "participants.avatar.guest.title" = "ゲスト";
 
 "participants.title" = "詳細";
+"participants.all.title" = "メンバー";
 "participants.section.participants" = "人 (%d)";
 "participants.section.services" = "サービス (%d)";
+"participants.section.settings" = "設定";
 "participants.footer.add_title" = "参加者を追加";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "名前の変更";
@@ -671,9 +685,10 @@
 "participants.services.remove_integration.button" = "連携を削除する";
 
 // Group details
-"group_details.guest_options_cell.title" = "ゲスト オプション";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "オン";
 "group_details.guest_options_cell.disabled" = "オフ";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +878,7 @@
 
 "open_link.maps.option.apple" = "マップ";
 "open_link.maps.option.google" = "Google マップ";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";

@@ -251,7 +251,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
 
     private func prepareAsFile(name: String?, typeIdentifier: String, completion: @escaping () -> Void) {
         self.attachment.loadItem(forTypeIdentifier: typeIdentifier, options: [:], dataCompletionHandler: { [weak self] (data, error) in
-            guard let data = data, let UTIString = self?.attachment.registeredTypeIdentifiers.first as? String, error == nil else {
+            guard let data = data, let UTIString = self?.attachment.registeredTypeIdentifiers.first, error == nil else {
                 error?.log(message: "Unable to load file from attachment")
                 return completion()
             }

@@ -38,13 +38,13 @@ class ChatHeadView: UIView {
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
     
-    private let titleRegularAttributes: [String: AnyObject] = [
-        NSFontAttributeName: FontSpec(.medium, .none).font!.withSize(14),
-        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+    private let titleRegularAttributes: [NSAttributedStringKey: AnyObject] = [
+        .font: FontSpec(.medium, .none).font!.withSize(14),
+        .foregroundColor: UIColor(scheme: .chatHeadTitleText)
     ]
-    private let titleMediumAttributes: [String: AnyObject] = [
-        NSFontAttributeName: FontSpec(.medium, .medium).font!.withSize(14),
-        NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorChatHeadTitleText)
+    private let titleMediumAttributes: [NSAttributedStringKey: AnyObject] = [
+        .font: FontSpec(.medium, .medium).font!.withSize(14),
+        .foregroundColor: UIColor(scheme: .chatHeadTitleText)
     ]
     
     private lazy var bodyFont: UIFont = {
@@ -59,11 +59,7 @@ class ChatHeadView: UIView {
         let height = imageDiameter + 2 * padding
         return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
-    
-    private func color(withName name: String) -> UIColor {
-        return ColorScheme.default().color(withName: name)
-    }
-    
+
     init(title: String?, body: String, userID: UUID, sender: ZMUser?, userInfo: [AnyHashable : Any]? = nil, isEphemeral: Bool = false) {
         self.title = title
         self.body = body
@@ -82,10 +78,10 @@ class ChatHeadView: UIView {
     // MARK: - Setup
     
     private func setup() {
-        backgroundColor = color(withName: ColorSchemeColorChatHeadBackground)
+        backgroundColor = UIColor(scheme: .chatHeadBackground)
         layer.cornerRadius = 6
         layer.borderWidth = 0.5
-        layer.borderColor = color(withName: ColorSchemeColorChatHeadBorder).cgColor
+        layer.borderColor = UIColor(scheme: .chatHeadBorder).cgColor
         
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.12
@@ -110,7 +106,7 @@ class ChatHeadView: UIView {
             label.backgroundColor = .clear
             label.isUserInteractionEnabled = false
             label.attributedText = attributedTitleText(title)
-            label.textColor = color(withName: ColorSchemeColorChatHeadTitleText)
+            label.textColor = UIColor(scheme: .chatHeadTitleText)
             label.lineBreakMode = .byTruncatingTail
             titleLabel = label
             labelContainer.addSubview(label)
@@ -121,8 +117,8 @@ class ChatHeadView: UIView {
         subtitleLabel.isUserInteractionEnabled = false
         
         let bodyAttributes = (!isEphemeral && titleLabel == nil) ? titleMediumAttributes : [
-            NSFontAttributeName: bodyFont,
-            NSForegroundColorAttributeName: color(withName: ColorSchemeColorChatHeadSubtitleText)
+            .font: bodyFont,
+            .foregroundColor: UIColor(scheme: .chatHeadSubtitleText)
         ]
         
         subtitleLabel.attributedText = NSAttributedString(string: body, attributes: bodyAttributes)
@@ -133,7 +129,7 @@ class ChatHeadView: UIView {
     private func createImageView() {
         if let sender = sender {
             let imageView = ContrastUserImageView()
-            imageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
+            imageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
             imageView.userSession = SessionManager.shared?.backgroundUserSessions[userID]
             imageView.isUserInteractionEnabled = false
             imageView.translatesAutoresizingMaskIntoConstraints = false

@@ -19,18 +19,11 @@
 import Foundation
 
 extension ConversationInputBarViewController {
-    var popoverSourceRectFromPhotoButton: CGRect {
-        let sourceView: UIView = self.parent?.view ?? self.view
-        let buttonCenter = self.photoButton.convert(self.photoButton.center, to: sourceView)
-        let sourceRect = CGRect(origin: buttonCenter, size: .zero)
-
-        return sourceRect
-    }
 
     @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:)
     func presentImagePicker(with sourceType: UIImagePickerControllerSourceType,
-                                  mediaTypes: [String],
-                                  allowsEditing: Bool) {
+                            mediaTypes: [String],
+                            allowsEditing: Bool) {
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
             if UIDevice.isSimulator {
                 let testFilePath = "/var/tmp/video.mp4"
@@ -46,27 +39,36 @@ extension ConversationInputBarViewController {
 
             let sourceView: UIView = self.parent?.view ?? self.view
 
-            let context = ImagePickerPopoverPresentationContext(sourceRect:self.popoverSourceRectFromPhotoButton,
-                                                    sourceView: sourceView,
-                                                    presentViewController: self,
-                                                    sourceType: sourceType)
+            if let parentViewConvtoller = self.parent {
+                let context = ImagePickerPopoverPresentationContext(sourceRect: self.photoButton.popoverSourceRect(from: self),
+                                                                    sourceView: sourceView,
+                                                                    presentViewController: parentViewConvtoller,
+                                                                    sourceType: sourceType)
 
-            let pickerController = UIImagePickerController.popoverForIPadRegular(with: context)
-            pickerController.delegate = self
-            pickerController.allowsEditing = allowsEditing
-            pickerController.mediaTypes = mediaTypes
-            pickerController.videoMaximumDuration = TimeInterval(ConversationUploadMaxVideoDuration)
-            
-            if sourceType == .camera {
-                switch Settings.shared().preferredCamera {
-                case .back:
-                    pickerController.cameraDevice = .rear
-                case .front:
-                    pickerController.cameraDevice = .front
+                let pickerController = UIImagePickerController.popoverForIPadRegular(with: context)
+                pickerController.delegate = self
+                pickerController.allowsEditing = allowsEditing
+                pickerController.mediaTypes = mediaTypes
+                pickerController.videoMaximumDuration = TimeInterval(ConversationUploadMaxVideoDuration)
+
+                if let popover = pickerController.popoverPresentationController, let imageView = self.photoButton.imageView {
+                    popover.config(from: self,
+                                   pointToView: imageView,
+                                   sourceView: parentViewConvtoller.view,
+                                   backgroundColor: .white)
                 }
-            }
 
-            self.parent?.present(pickerController, animated: true)
+                if sourceType == .camera {
+                    switch Settings.shared().preferredCamera {
+                    case .back:
+                        pickerController.cameraDevice = .rear
+                    case .front:
+                        pickerController.cameraDevice = .front
+                    }
+                }
+
+                parentViewConvtoller.present(pickerController, animated: true)
+            }
         }
 
         if sourceType == .camera {

@@ -25,7 +25,7 @@
 }
 
 extension CollectionItemType {
-    init(message: ZMConversationMessage) {
+    init?(message: ZMConversationMessage) {
         if message.isImage {
             self = .image
         }
@@ -42,7 +42,7 @@ extension CollectionItemType {
             self = .link
         }
         else {
-            fatal("Unknown message type")
+            return nil
         }
     }
 }
@@ -102,8 +102,11 @@ extension Analytics {
     }
     
     @objc(tagCollectionOpenItemForConversation:withItemType:)
-    func tagCollectionOpenItem(for conversation:ZMConversation, itemType:CollectionItemType)
+    func tagCollectionOpenItem(for conversation:ZMConversation, message: ZMConversationMessage)
     {
+        guard let itemType = CollectionItemType(message: message) else {
+            return
+        }
         var attributes = conversation.conversationAttributes
         attributes["type"] = string(for: itemType)
         
@@ -112,8 +115,11 @@ extension Analytics {
     }
     
     @objc(tagCollectionOpenItemMenyForConversation:withItemType:)
-    func tagCollectionOpenItemMenu(for conversation:ZMConversation, itemType: CollectionItemType)
+    func tagCollectionOpenItemMenu(for conversation:ZMConversation, message: ZMConversationMessage)
     {
+        guard let itemType = CollectionItemType(message: message) else {
+            return
+        }
         var attributes = conversation.conversationAttributes
         attributes["type"] = string(for: itemType)
         
@@ -121,8 +127,11 @@ extension Analytics {
     }
     
     @objc(tagCollectionDidItemActionForConversation:withItemType:actionType:)
-    func tagCollectionDidItemAction(for conversation:ZMConversation, itemType:CollectionItemType, action: CollectionActionType)
+    func tagCollectionDidItemAction(for conversation:ZMConversation, message: ZMConversationMessage, action: CollectionActionType)
     {
+        guard let itemType = CollectionItemType(message: message) else {
+            return
+        }
         var attributes = conversation.conversationAttributes
         
         attributes["type"] = string(for: itemType)

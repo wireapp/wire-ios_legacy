@@ -59,17 +59,22 @@ public enum AudioRecorderState {
     case recording, playback
 }
 
+public enum RecordingError: Error {
+    case toMaxDuration, toMaxSize
+}
+
 public protocol AudioRecorderType: class {
     var format: AudioRecorderFormat { get }
     var state: AudioRecorderState { get set }
     var fileURL: URL? { get }
     var maxRecordingDuration: TimeInterval? { get set }
+    var maxFileSize: UInt64? { get set }
     var currentDuration: TimeInterval { get }
     var recordTimerCallback: ((TimeInterval) -> Void)? { get set }
     var recordLevelCallBack: ((RecordingLevel) -> Void)? { get set }
     var playingStateCallback: ((PlayingState) -> Void)? { get set }
     var recordStartedCallback: (() -> Void)? { get set }
-    var recordEndedCallback: ((Bool) -> Void)? { get set } // recordedToMaxDuration: Bool
+    var recordEndedCallback: ((VoidResult) -> Void)? { get set }
     
     func startRecording()
     @discardableResult func stopRecording() -> Bool
@@ -78,6 +83,7 @@ public protocol AudioRecorderType: class {
     func stopPlaying()
     func levelForCurrentState() -> RecordingLevel
     func durationForCurrentState() -> TimeInterval?
+    func alertForRecording(error: RecordingError) -> UIAlertController?
 }
 
 public final class AudioRecorder: NSObject, AudioRecorderType {
@@ -89,7 +95,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         guard let `self` = self else { return nil }
         let fileName = String.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
         let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-
+        self.fileURL = fileURL
         let settings = [
             AVFormatIDKey : self.format.audioFormat(),
             AVSampleRateKey : 32000,
@@ -119,8 +125,9 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public var recordLevelCallBack: ((RecordingLevel) -> Void)?
     public var playingStateCallback: ((PlayingState) -> Void)?
     public var recordStartedCallback: (() -> Void)?
-    public var recordEndedCallback: ((Bool) -> Void)? // recordedToMaxDuration: Bool
+    public var recordEndedCallback: ((VoidResult) -> Void)?
     public var fileURL: URL?
+    public var maxFileSize: UInt64?
     
     fileprivate var recordingStartTime: TimeInterval?
     
@@ -128,9 +135,10 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         fatalError("init() is not implemented for AudioRecorder")
     }
     
-    init?(format: AudioRecorderFormat = .m4A, maxRecordingDuration: TimeInterval?) {
+    init?(format: AudioRecorderFormat = .m4A, maxRecordingDuration: TimeInterval?, maxFileSize: UInt64?) {
         self.maxRecordingDuration = maxRecordingDuration
         self.format = format
+        self.maxFileSize = maxFileSize
         super.init()
     }
     
@@ -140,7 +148,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     // MARK: Audio Session Interruption handling
     
-    func handleInterruption(_ notification: Notification) {
+    @objc func handleInterruption(_ notification: Notification) {
         guard let info = notification.userInfo,
             let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
             let type = AVAudioSessionInterruptionType(rawValue: typeValue) else {
@@ -157,9 +165,9 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         guard let audioRecorder = self.audioRecorder else { return }
 
         AVSMediaManager.sharedInstance().startRecording {
+                
             self.state = .recording
             self.recordTimerCallback?(0)
-            self.fileURL = nil
             self.setupDisplayLink()
             
             var successfullyStarted = false
@@ -213,8 +221,26 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         guard let duration = durationForCurrentState() , currentDuration != duration else { return }
         currentDuration = duration
         recordTimerCallback?(currentDuration)
-    }
         
+        if audioSizeIsCritical {
+            stopRecording()
+        }
+    }
+    
+    fileprivate var audioSizeIsCritical: Bool {
+        guard let fileURL = fileURL,
+            let attribs = try? FileManager.default.attributesOfItem(atPath: fileURL.path),
+            let size = attribs[.size] as? UInt32,
+            size > maxAllowedSize else { return false }
+        zmLog.debug("Audio message size is over the maximum amount allowed. File size is \(size), threshold is \(maxAllowedSize)")
+        return true
+    }
+    
+    private var maxAllowedSize: UInt32 {
+        guard let maxSize = maxFileSize else { return 0 }
+        return UInt32(Double(maxSize) * (1.00 - 0.01)) // 1% of tolerance
+    }
+
     // MARK: Playing
     
     public func playRecording() {
@@ -276,6 +302,39 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         }
     }
     
+    public func alertForRecording(error: RecordingError) -> UIAlertController? {
+        
+        var alertMessage: String?
+        
+        if error == .toMaxDuration {
+            
+            let duration = Int(ceil(self.maxRecordingDuration ?? 0))
+            let (seconds, minutes) = (duration % 60, duration / 60)
+            let durationLimit = String(format: "%d:%02d", minutes, seconds)
+            
+            alertMessage = "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit)
+        }
+        
+        if error == .toMaxSize, let maxSize = maxFileSize {
+            let size = ByteCountFormatter.string(fromByteCount: Int64(maxSize), countStyle: .binary)
+            
+            alertMessage = "conversation.input_bar.audio_message.too_long_size.message".localized(args: size)
+        }
+        
+        guard alertMessage != nil else { return nil }
+        
+        let alertController = UIAlertController(
+            title: "conversation.input_bar.audio_message.too_long.title".localized,
+            message: alertMessage!,
+            preferredStyle: .alert
+        )
+        
+        let actionOk = UIAlertAction(title: "general.ok".localized, style: .default,
+                                     handler: nil)
+        alertController.addAction(actionOk)
+        
+        return alertController
+    }
 }
 
 
@@ -283,6 +342,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
     public func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         
         var recordedToMaxDuration = false
+        let recordedToMaxSize = audioSizeIsCritical
         recordingStartTime = nil
         
         if let maxRecordingDuration = self.maxRecordingDuration {
@@ -294,7 +354,14 @@ extension AudioRecorder: AVAudioRecorderDelegate {
         // reached, we should still clean up afterwards
         if recordedToMaxDuration { _ = postRecordingProcessing() }
         
-        self.recordEndedCallback?(recordedToMaxDuration)
+        if recordedToMaxSize {
+            self.recordEndedCallback?(.failure(RecordingError.toMaxSize))
+        } else if recordedToMaxDuration {
+            self.recordEndedCallback?(.failure(RecordingError.toMaxDuration))
+        } else {
+            self.recordEndedCallback?(.success)
+        }
+        
         AVSMediaManager.sharedInstance().stopRecording()
     }
         

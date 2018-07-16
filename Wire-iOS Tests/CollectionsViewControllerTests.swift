@@ -30,8 +30,17 @@ extension MockMessage {
 class CollectionsViewControllerTests: ZMSnapshotTestCase {
     
     var emptyCollection: AssetCollectionWrapper!
+    var imageMessage: ZMConversationMessage!
+    var videoMessage: ZMConversationMessage!
+    var audioMessage: ZMConversationMessage!
     var fileMessage: ZMConversationMessage!
     var linkMessage: ZMConversationMessage!
+
+    var expiredImageMessage: ZMConversationMessage!
+    var expiredVideoMessage: ZMConversationMessage!
+    var expiredAudioMessage: ZMConversationMessage!
+    var expiredFileMessage: ZMConversationMessage!
+    var expiredLinkMessage: ZMConversationMessage!
 
     override func setUp() {
         super.setUp()
@@ -39,9 +48,18 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
         let assetCollection = MockCollection.empty
         let delegate = AssetCollectionMulticastDelegate()
         emptyCollection = AssetCollectionWrapper(conversation: conversation, assetCollection: assetCollection, assetCollectionDelegate: delegate, matchingCategories: [])
-        
+
+        imageMessage = MockMessageFactory.imageMessage()
+        videoMessage = MockMessageFactory.videoMessage()
+        audioMessage = MockMessageFactory.audioMessage()
         fileMessage = MockMessageFactory.fileTransferMessage()
         linkMessage = MockMessageFactory.linkMessage()
+
+        expiredImageMessage = MockMessageFactory.expiredImageMessage()
+        expiredVideoMessage = MockMessageFactory.expiredVideoMessage()
+        expiredFileMessage = MockMessageFactory.expiredFileMessage()
+        expiredLinkMessage = MockMessageFactory.expiredLinkMessage()
+        expiredAudioMessage = MockMessageFactory.expiredAudioMessage()
     }
     
     func testThatNoElementStateIsShownWhenCollectionIsEmpty() {
@@ -77,6 +95,34 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
         let assetCollection = MockCollection(linkMessages: [linkMessage, linkMessage, linkMessage, linkMessage])
         let controller = createController(showingCollection: assetCollection)
         verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+    }
+
+    // MARK: - Expiration
+
+    func testImagesSectionWhenExpired() {
+        let assetCollection = MockCollection(messages: [
+            MockCollection.onlyImagesCategory: [expiredImageMessage],
+            MockCollection.onlyVideosCategory: [videoMessage, expiredVideoMessage]])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+
+    func testFilesSectionWhenExpired() {
+        let assetCollection = MockCollection(fileMessages: [fileMessage, expiredFileMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+
+    func testAudioSectionWhenExpired() {
+        let assetCollection = MockCollection(fileMessages: [audioMessage, expiredAudioMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
+    }
+
+    func testLinksSectionWhenExpired() {
+        let assetCollection = MockCollection(linkMessages: [expiredLinkMessage, linkMessage])
+        let controller = createController(showingCollection: assetCollection)
+        verifyInAllIPhoneSizes(view: controller.view)
     }
 
 }

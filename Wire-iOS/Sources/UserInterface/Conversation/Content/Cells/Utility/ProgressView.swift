@@ -19,7 +19,7 @@
 
 import Foundation
 
-@objc open class ProgressView: UIView {
+@objcMembers open class ProgressView: UIView {
     fileprivate var deterministic: Bool? = .none
     fileprivate var progress: Float = 0
     fileprivate var progressView: UIView = UIView()

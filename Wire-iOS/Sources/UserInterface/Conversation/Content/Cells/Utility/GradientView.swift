@@ -19,7 +19,7 @@
 
 import Foundation
 
-@objc open class GradientView: UIView {
+@objcMembers open class GradientView: UIView {
     override open class var layerClass : AnyClass {
         return CAGradientLayer.self;
     }

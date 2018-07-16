@@ -19,7 +19,7 @@
 
 import Foundation
 
-@objc open class CircularProgressView: UIView {
+@objcMembers open class CircularProgressView: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -61,13 +61,13 @@ import Foundation
         }
     }
     
-    open var lineWidth : Float = 2 {
+    @objc open var lineWidth : Float = 2 {
         didSet {
             setNeedsLayout()
         }
     }
     
-    open var deterministic : Bool = true {
+    @objc open var deterministic : Bool = true {
         didSet {
             updateSpinningAnimation()
         }
@@ -81,7 +81,7 @@ import Foundation
         return CAShapeLayer.self
     }
     
-    open var shapeLayer: CAShapeLayer {
+    @objc open var shapeLayer: CAShapeLayer {
         get {
             if let shapeLayer = self.layer as? CAShapeLayer {
                 return shapeLayer
@@ -90,9 +90,9 @@ import Foundation
         }
     }
     
-    open fileprivate(set) var progress : Float = 0.0
+    @objc open fileprivate(set) var progress : Float = 0.0
         
-    open func setProgress(_ progress: Float, animated: Bool) {
+    @objc open func setProgress(_ progress: Float, animated: Bool) {
         self.progress = progress
         
         if (animated) {
@@ -121,7 +121,7 @@ import Foundation
     
     /// pragma mark - Spinning animation
     
-    let SpinningAnimationKey = "com.wire.animations.spin"
+    @objc let SpinningAnimationKey = "com.wire.animations.spin"
     
     fileprivate func updateSpinningAnimation() {
         if !deterministic {
@@ -149,7 +149,7 @@ import Foundation
 }
 
 extension CircularProgressView {
-    func applicationDidBecomeActive(_ notification : Notification) {
+    @objc func applicationDidBecomeActive(_ notification : Notification) {
         updateSpinningAnimation()
     }
 }

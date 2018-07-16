@@ -18,9 +18,7 @@
 
 
 #import <UIKit/UIKit.h>
-#import <RBBAnimation/RBBEasingFunction.h>
-
-
+@import WireExtensionComponents;
 
 typedef NS_OPTIONS(NSUInteger, WRExtendedBlockAnimationsOptions) {
     WRExtendedBlockAnimationsOptionsNone = 0,
@@ -31,27 +29,28 @@ typedef NS_OPTIONS(NSUInteger, WRExtendedBlockAnimationsOptions) {
 
 @interface UIView (WR_ExtendedBlockAnimations)
 
-+ (void)wr_animateWithEasing:(RBBEasingFunction)easing
++ (void)wr_animateWithEasing:(WREasingFunction)easing
                     duration:(NSTimeInterval)duration
-                  animations:(void (^)(void))animations;
+                  animations:(void (^)(void))animations NS_SWIFT_NAME(wr_animate(easing:duration:animations:));
 
-+ (void)wr_animateWithEasing:(RBBEasingFunction)easing
++ (void)wr_animateWithEasing:(WREasingFunction)easing
                     duration:(NSTimeInterval)duration
                   animations:(void (^)(void))animations
-                  completion:(void (^)(BOOL finished))completion;
+                  completion:(void (^)(BOOL finished))completion NS_SWIFT_NAME(wr_animate(easing:duration:animations:completion:));
 
-+ (void)wr_animateWithEasing:(RBBEasingFunction)easing
++ (void)wr_animateWithEasing:(WREasingFunction)easing
                     duration:(NSTimeInterval)duration
                        delay:(NSTimeInterval)delay
                   animations:(void (^)(void))animations
-                  completion:(void (^)(BOOL finished))completion;
+                  completion:(void (^)(BOOL finished))completion NS_SWIFT_NAME(wr_animate(easing:duration:delay:animations:completion:));
 
-+ (void)wr_animateWithEasing:(RBBEasingFunction)easing
++ (void)wr_animateWithEasing:(WREasingFunction)easing
                     duration:(NSTimeInterval)duration
                        delay:(NSTimeInterval)delay
                   animations:(void (^)(void))animations
                      options:(WRExtendedBlockAnimationsOptions)options
-                  completion:(void (^)(BOOL finished))completion;
+                  completion:(void (^)(BOOL finished))completion NS_SWIFT_NAME(wr_animate(easing:duration:delay:animations:options:completion:));
+
 
 + (void)wr_animateWithBasicAnimation:(CABasicAnimation *)animation
                             duration:(NSTimeInterval)duration

@@ -57,7 +57,7 @@ extension CollectionCell: SelectableView {
 }
 
 
-@objc final class DeletionDialogPresenter: NSObject {
+@objcMembers final class DeletionDialogPresenter: NSObject {
 
     private weak var sourceViewController: UIViewController?
 

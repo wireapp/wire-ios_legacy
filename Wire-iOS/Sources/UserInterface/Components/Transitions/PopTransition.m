@@ -67,7 +67,7 @@
     
     NSTimeInterval duration = [self transitionDuration:transitionContext];
     
-    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:duration animations:animation completion:^(BOOL finished) {
+    [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:duration animations:animation completion:^(BOOL finished) {
         completion(finished);
     }];
 }

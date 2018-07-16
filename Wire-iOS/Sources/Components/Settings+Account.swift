@@ -53,7 +53,7 @@ extension Settings {
         self.defaults().setValue(accountPayload, forKey: account.userDefaultsKey())
     }
     
-    func lastViewedConversation(for account: Account) -> ZMConversation? {
+    @objc func lastViewedConversation(for account: Account) -> ZMConversation? {
         guard let conversationID: String = self.value(for: UserDefaultLastViewedConversation, in: account) else {
             return nil
         }
@@ -64,7 +64,7 @@ extension Settings {
         return ZMConversation.existingObject(with: objectID, inUserSession: session)
     }
 
-    func setLastViewed(conversation: ZMConversation, for account: Account) {
+    @objc func setLastViewed(conversation: ZMConversation, for account: Account) {
         let conversationURI = conversation.objectID.uriRepresentation()
         self.setValue(conversationURI.absoluteString, for: UserDefaultLastViewedConversation, in: account)
         self.defaults().synchronize()

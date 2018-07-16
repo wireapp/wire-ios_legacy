@@ -54,10 +54,10 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         }
         
         if result.count > maxLength {
-            result = Array(result.prefix(maxLength))
+            result = String(result.prefix(maxLength))
         }
         
-        return String(result)
+        return result
     }
     
     private func updateCharacterViews(isFirstResponder: Bool) {

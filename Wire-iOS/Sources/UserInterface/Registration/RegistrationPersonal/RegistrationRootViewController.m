@@ -101,6 +101,7 @@
     }
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+    self.registrationTabBarController.interactive = NO;
 
     self.signInViewController = signInViewController;
     

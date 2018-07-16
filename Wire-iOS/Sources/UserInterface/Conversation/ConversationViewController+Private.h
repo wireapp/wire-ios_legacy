@@ -21,7 +21,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class ConversationInputBarViewController;
-@class ConversationDetailsTransitioningDelegate;
 @class CollectionsViewController;
 @class AnalyticsTracker;
 

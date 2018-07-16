@@ -19,7 +19,7 @@
 import Foundation
 
 extension ImageMessageCell {
-    func updateImageBorder() {
+    @objc func updateImageBorder() {
         let showBorder = !imageSmallerThanMinimumSize()
         fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0
 

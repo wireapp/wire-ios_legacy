@@ -191,8 +191,8 @@ final class OperationLoop : NSObject, RequestAvailableObserver {
         let updatedObjectsIds  =  updatedObjects.map({ $0.objectID })
 
         syncContext.performGroupedBlock {
-            let insertedObjects = insertedObjectsIds.flatMap({ self.syncContext.object(with: $0) })
-            let updatedObjects = updatedObjectsIds.flatMap({ self.syncContext.object(with: $0) })
+            let insertedObjects = insertedObjectsIds.compactMap({ self.syncContext.object(with: $0) })
+            let updatedObjects = updatedObjectsIds.compactMap({ self.syncContext.object(with: $0) })
 
             self.changeClosure?(Set(insertedObjects).union(updatedObjects))
         }

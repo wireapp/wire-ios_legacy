@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Nicht jetzt";
 "general.accept" = "Annehmen";
+"general.decline" = "Nein, danke";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -119,7 +120,7 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Helfen Sie uns, Wire besser zu machen";
+"conversation_list.date_usage_permission_alert.title" = "Hilf uns, Wire zu verbessern";
 "conversation_list.date_usage_permission_alert.message" = "Anonymisierte Nutzungs- und Fehlerberichte helfen uns, unsere Produkte und Dienstleistungen zu verbessern. Wir verwenden diese Informationen nicht für andere Zwecke.";
 
 // Profile Header View
@@ -168,7 +169,7 @@
 "notifications.pinged" = "HAT GEPINGT";
 "notifications.sent_file" = "hat eine Datei geteilt";
 "notifications.sent_location" = "hat einen Standort geteilt";
-"notifications.sent_video" = "hat eine Video geteilt";
+"notifications.sent_video" = "hat ein Video geteilt";
 "notifications.sent_audio" = "hat eine Audio-Nachricht geteilt";
 "notifications.in_conversation" = "%@ - %@";
 "notifications.this_conversation" = "%@ in dieser Unterhaltung";
@@ -237,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tippe, um zu senden";
 "conversation.input_bar.audio_message.too_long.title" = "Die Aufnahme wurde beendet";
 "conversation.input_bar.audio_message.too_long.message" = "Audio-Nachrichten sind auf %@ beschränkt.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "Die Dateigröße für Sprachnachrichten ist auf %@ begrenzt.";
+
 "conversation.input_bar.audio_message.send" = "Senden";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Zum Aufnehmen tippen\nDu kannst es danach %@";
@@ -343,7 +347,7 @@
 "content.system.conversation.guest.joined" = "%@ ist beigetreten";
 
 "content.system.conversation.invite.title" = "Personen außerhalb des Teams können an dieser Unterhaltung teilnehmen.";
-"content.system.conversation.invite.button" = "Freunde einladen";
+"content.system.conversation.invite.button" = "Personen einladen";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
 "content.system.you_renamed_conv_to_nothing" = "Du hast den Namen der Unterhaltung entfernt";
@@ -377,6 +381,14 @@
 "content.system.conversation.with_name.title-you" = "%@ hast die Unterhaltung begonnen";
 
 "content.system.conversation.with_name.participants" = "mit %@";
+
+"content.system.message_timer_changes" = "%@ hat temporäre Nachrichten auf %@ gestellt";
+"content.system.message_timer_changes.you" = "Du hast temporäre Nachrichten auf %@ gestellt";
+
+"content.system.message_timer.you_part" = "Du";
+
+"content.system.message_timer_off" = "%@ hat temporäre Nachrichten ausgeschaltet";
+"content.system.message_timer_off.you" = "Du hast temporäre Nachrichten ausgeschaltet";
 
 "content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
@@ -433,7 +445,7 @@
 "content.message.copy" = "Kopieren";
 
 "content.message.open_link_alert.title" = "Link öffnen";
-"content.message.open_link_alert.message" = "Dies führt Sie zu\n%@";
+"content.message.open_link_alert.message" = "Dieser Link öffnet\n%@";
 "content.message.open_link_alert.open" = "Öffnen";
 
 "content.reactions_list.likers" = "Gefällt";
@@ -463,8 +475,8 @@
 "library.alert.permission_warning.not_allowed.explaination" = "Gehe zu den Einstellungen und erlaube Wire Zugriff auf Fotos.";
 
 // Voice
-"voice.status.one_to_one.incoming" = "%@\nAnruf";
-"voice.status.group_call.incoming" = "%@\nAnruf";
+"voice.status.one_to_one.incoming" = "%@ \nruft an";
+"voice.status.group_call.incoming" = "%@ \nruft an";
 "voice.status.one_to_one.outgoing" = "%@\nAnruf";
 "voice.status.joining" = "%@\nVerbinden";
 "voice.status.leaving" = "%@\nAnruf beendet";
@@ -505,7 +517,7 @@
 
 "call.status.connecting" = "Verbinden…";
 "call.status.incoming.user" = "%@ ruft an…";
-"call.status.incoming" = "Anruf wird aufgebaut…";
+"call.status.incoming" = "Ruft an…";
 "call.status.outgoing" = "Klingeln…";
 "call.status.reconnecting" = "Erneut verbinden…";
 "call.status.terminating" = "Auflegen…";
@@ -516,7 +528,7 @@
 
 "call.video.paused" = "Video wurde angehalten";
 
-"call.video.too_many.alert.title" = "Zu viele Teilnehmer für Videokonfernz";
+"call.video.too_many.alert.title" = "Zu viele Teilnehmer";
 "call.video.too_many.alert.message" = "Videoanrufe funktionieren nur in Gruppen von 4 oder weniger Personen.";
 
 "call.degraded.alert.title" = "Neues Gerät";
@@ -546,7 +558,7 @@
 "call.actions.label.switch_to_back_camera" = "Kamera auf der Rückseite verwenden";
 "call.actions.label.switch_to_front_camera" = "Frontkamera verwenden";
 "call.actions.label.minimize_call" = "Anruf minimieren";
-"call.actions.label.make_audio_call" = "Telefonat beginnen";
+"call.actions.label.make_audio_call" = "Anruf beginnen";
 "call.actions.label.make_video_call" = "Videoanruf beginnen";
 "call.actions.label.join_call" = "Anruf annehmen";
 
@@ -557,10 +569,12 @@
 "participants.avatar.guest.title" = "Gast";
 
 "participants.title" = "Details";
+"participants.all.title" = "Kontakte";
 "participants.section.participants" = "Personen (%d)";
 "participants.section.services" = "Dienste (%d)";
+"participants.section.settings" = "Einstellungen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
-"participants.section.name.footer" = "Bis zu 128 Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren in Gruppen mit 4 oder weniger Personen.";
+"participants.section.name.footer" = "Bis zu 256 Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu 3 anderen Personen und dir.";
 
 // Meta Menu
 "meta.menu.rename" = "Umbenennen";
@@ -671,9 +685,10 @@
 "participants.services.remove_integration.button" = "Integration entfernen";
 
 // Group details
-"group_details.guest_options_cell.title" = "Gast-Optionen";
+"group_details.guest_options_cell.title" = "Gäste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
+"group_details.timeout_options_cell.title" = "Temporäre Nachrichten";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +878,7 @@
 
 "open_link.maps.option.apple" = "Karten";
 "open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Einige Standort-Links öffnen sich immer in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
@@ -1158,7 +1174,7 @@
 
 "registration.push_access_denied.hero.title" = "Verpassen Sie keinen Anruf oder eine Nachricht.";
 "registration.push_access_denied.hero.paragraph1" = "Aktivieren Sie Benachrichtigungen in den Einstellungen.";
-"registration.push_access_denied.settings_button.title" = "Gehen Sie zu Einstellungen";
+"registration.push_access_denied.settings_button.title" = "Einstellungen öffnen";
 "registration.push_access_denied.maybe_later_button.title" = "Vielleicht später";
 
 "registration.signin.title" = "Einloggen";
@@ -1267,7 +1283,7 @@
 "error.conversation.cannot_add" = "Teilnehmer konnte nicht hinzugefügt werden";
 "error.conversation.cannot_remove" = "Teilnehmer konnte nicht entfernt werden";
 "error.conversation.too_many_members" = "Die Unterhaltung ist voll";
-"error.conversation.offline" = "Es scheint ein Problem mit deiner Internetverbindung zu geben. Bitte stelle sicher, dass sie funktioniert.";
+"error.conversation.offline" = "Es scheint ein Problem mit der Internetverbindung zu geben. Bitte sicherstellen, dass sie funktioniert.";
 
 "sketchpad.initial_hint" = "Tippe auf die Farben, um die Pinselgröße zu ändern";
 
@@ -1364,4 +1380,4 @@
 
 "news_offers.consent.title" = "Möchtest du Neuigkeiten und Informationen zu Produktaktualisierungen von Wire per E-Mail erhalten?";
 "news_offers.consent.message" = "Du kannst dich jederzeit abmelden.";
-"news_offers.consent.button.privacy_policy.title" = "Datenschutzrichtlinie";
+"news_offers.consent.button.privacy_policy.title" = "Datenschutzerklärung";

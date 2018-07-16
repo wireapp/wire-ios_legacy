@@ -99,10 +99,10 @@ final internal class SelfProfileViewController: UIViewController {
         view.addSubview(settingsController.view)
         addChildViewController(settingsController)
         
-        settingsController.view.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        settingsController.view.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        settingsController.tableView.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        settingsController.tableView.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        settingsController.view.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        settingsController.view.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        settingsController.tableView.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        settingsController.tableView.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         
         createCloseButton()
         configureAccountTitle()
@@ -124,7 +124,7 @@ final internal class SelfProfileViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    func dismissNotification(_ notification: NSNotification) {
+    @objc func dismissNotification(_ notification: NSNotification) {
         dismiss()
     }
     
@@ -184,7 +184,7 @@ final internal class SelfProfileViewController: UIViewController {
 
 extension SelfProfileViewController {
     
-    func soundIntensityChanged(_ notification: Notification) {
+    @objc func soundIntensityChanged(_ notification: Notification) {
         let soundProperty = settingsCellDescriptorFactory?.settingsPropertyFactory.property(.soundAlerts)
         
         if let intensivityLevel = soundProperty?.rawValue() as? AVSIntensityLevel {

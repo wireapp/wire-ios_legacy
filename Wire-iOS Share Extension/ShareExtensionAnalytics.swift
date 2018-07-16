@@ -138,7 +138,7 @@ extension NSItemProvider {
     }
 
     var hasVideo: Bool {
-        guard let uti = registeredTypeIdentifiers.first as? String else { return false }
+        guard let uti = registeredTypeIdentifiers.first else { return false }
         return UTTypeConformsTo(uti as CFString, kUTTypeMovie)
     }
     

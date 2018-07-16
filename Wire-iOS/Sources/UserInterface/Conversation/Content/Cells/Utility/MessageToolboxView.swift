@@ -61,13 +61,22 @@ extension ZMSystemMessageData {
     func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
 }
 
-@objc open class MessageToolboxView: UIView {
+@objcMembers open class MessageToolboxView: UIView {
     fileprivate static let resendLink = URL(string: "settings://resend-message")!
     fileprivate static let deleteLink = URL(string: "settings://delete-message")!
 
     private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 
-    open let statusLabel = TTTAttributedLabel(frame: CGRect.zero)
+    open let statusLabel: TTTAttributedLabel = {
+        let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
+        attributedLabel.font = UIFont.smallSemiboldFont
+        attributedLabel.backgroundColor = .clear
+        attributedLabel.textColor = UIColor(scheme: .textDimmed)
+        attributedLabel.textInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
+        return attributedLabel
+    }()
+
     open let reactionsView = ReactionsView()
     fileprivate let labelClipView = UIView()
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
@@ -103,10 +112,10 @@ extension ZMSystemMessageData {
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
-        statusLabel.linkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                      NSForegroundColorAttributeName: UIColor(for: .vividRed)]
-        statusLabel.activeLinkAttributes = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-                                            NSForegroundColorAttributeName: UIColor(for: .vividRed).withAlphaComponent(0.5)]
+        statusLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle.rawValue,
+                                      NSAttributedStringKey.foregroundColor.rawValue: UIColor(for: .vividRed)]
+        statusLabel.activeLinkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle.rawValue,
+                                            NSAttributedStringKey.foregroundColor.rawValue: UIColor(for: .vividRed).withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)
         
@@ -220,7 +229,7 @@ extension ZMSystemMessageData {
             return user.displayName
         }.joined(separator: ", ")
         
-        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : AnyObject]
+        let attributes: [NSAttributedStringKey : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
         let likersNamesAttributedString = likersNames && attributes
 
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
@@ -280,7 +289,15 @@ extension ZMSystemMessageData {
         let showDestructionTimer = message.isEphemeral && !message.isObfuscated && nil != message.destructionDate
         if let destructionDate = message.destructionDate, showDestructionTimer {
             let remaining = destructionDate.timeIntervalSinceNow + 1 // We need to add one second to start with the correct value
-            deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
+            
+            if remaining > 0 {
+                deliveryStateString = MessageToolboxView.ephemeralTimeFormatter.string(from: remaining)
+            } else if message.isAudio {
+                // do nothing, audio messages are allowed to extend the timer
+                // past the destruction date.
+            } else {
+                requireInternal(remaining > 0, "invalid negative timeout value")
+            }
         }
 
         let finalText: String
@@ -288,11 +305,11 @@ extension ZMSystemMessageData {
         if let childMessages = message.systemMessageData?.childMessages,
             !childMessages.isEmpty,
             let timestamp = timestampString(message) {
-            let childrenTimestamps = childMessages.flatMap {
+            let childrenTimestamps = childMessages.compactMap {
                 $0 as? ZMConversationMessage
-            }.sorted {
-                $0.0.serverTimestamp < $0.1.serverTimestamp
-            }.flatMap(timestampString)
+            }.sorted { left, right in
+                left.serverTimestamp < right.serverTimestamp
+            }.compactMap(timestampString)
 
             finalText = childrenTimestamps.reduce(timestamp) { (text, current) in
                 return "\(text)\n\(current)"
@@ -309,21 +326,16 @@ extension ZMSystemMessageData {
             finalText = (deliveryStateString ?? "")
         }
         
-        let attributedText = NSMutableAttributedString(attributedString: finalText && [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor])
+        let attributedText = NSMutableAttributedString(attributedString: finalText && [.font: statusLabel.font, .foregroundColor: statusLabel.textColor])
         
         if message.deliveryState == .failedToSend {
             let linkRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_resend".localized)
-            attributedText.addAttributes([NSLinkAttributeName: type(of: self).resendLink], range: linkRange)
+            attributedText.addAttributes([.link: type(of: self).resendLink], range: linkRange)
             
             let deleteRange = (finalText as NSString).range(of: "content.system.failedtosend_message_timestamp_delete".localized)
-            attributedText.addAttributes([NSLinkAttributeName: type(of: self).deleteLink], range: deleteRange)
+            attributedText.addAttributes([.link: type(of: self).deleteLink], range: deleteRange)
         }
 
-        if showDestructionTimer, let stateString = deliveryStateString {
-            let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
-            attributedText.addAttributes([NSForegroundColorAttributeName: ephemeralColor], to: stateString)
-        }
-        
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {
             return
         }
@@ -344,7 +356,7 @@ extension ZMSystemMessageData {
     
     fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
         let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes = [NSFontAttributeName: statusLabel.font, NSForegroundColorAttributeName: statusLabel.textColor] as [String : AnyObject]
+        let attributes: [NSAttributedStringKey : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
         let attributedText = likeTooltipText && attributes
 
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {

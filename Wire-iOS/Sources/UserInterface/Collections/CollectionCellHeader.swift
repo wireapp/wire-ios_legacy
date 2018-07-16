@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-@objc public final class CollectionCellHeader: UIView {
+@objcMembers public final class CollectionCellHeader: UIView {
     public var message: ZMConversationMessage? {
         didSet {
             guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.sender else {

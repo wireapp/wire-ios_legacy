@@ -29,6 +29,7 @@
 "general.confirm" = "OK";
 "general.skip" = "Nie teraz";
 "general.accept" = "Odbierz";
+"general.decline" = "No, thanks";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -237,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Dotknij, aby wysłać";
 "conversation.input_bar.audio_message.too_long.title" = "Nagrywanie zatrzymane";
 "conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Wyślij";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Stuknij aby nagrywać\npo zakończeniu możesz %@";
@@ -377,6 +381,14 @@
 "content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
 "content.system.conversation.with_name.participants" = "with %@";
+
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Ty";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Ponownie zacząłeś używać %@. Wiadomości które zostały wysłane wcześniej nie będą pokazane.";
 
@@ -557,10 +569,12 @@
 "participants.avatar.guest.title" = "Gość";
 
 "participants.title" = "Szczegóły";
+"participants.all.title" = "Osoby";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Ustawienia";
 "participants.footer.add_title" = "Add Participants";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Zmień nazwę";
@@ -671,9 +685,10 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.title" = "Guests";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Wyłącz";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -863,6 +878,7 @@
 
 "open_link.maps.option.apple" = "Mapy";
 "open_link.maps.option.google" = "Mapy Google";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";

@@ -31,7 +31,7 @@ final class CallAccessoryViewController: UIViewController, CallParticipantsViewC
         key: "video_call.camera_access.denied",
         size: .normal,
         weight: .semibold,
-        color: ColorSchemeColorTextForeground,
+        color: .textForeground,
         variant: .dark
     )
 

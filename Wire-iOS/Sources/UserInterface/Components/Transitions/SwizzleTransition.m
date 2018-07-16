@@ -57,7 +57,7 @@
     }
     toView.alpha = 0;
     
-    [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:durationPhase1 delay:0 animations:^{
+    [UIView wr_animateWithEasing:WREasingFunctionEaseInExpo duration:durationPhase1 delay:0 animations:^{
         fromView.alpha = 0;
         if (self.direction == SwizzleTransitionDirectionHorizontal) {
             fromView.layer.transform = CATransform3DMakeTranslation(48.0f, 0.0f, 0.0f);
@@ -66,7 +66,7 @@
             fromView.layer.transform = CATransform3DMakeTranslation(0.0f, 88.0f, 0.0f);
         }
     } completion:^(BOOL finished) {
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:durationPhase2 delay:0 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:durationPhase2 delay:0 animations:^{
             toView.layer.transform = CATransform3DIdentity;
             toView.alpha = 1;
         } completion:^(BOOL finished) {

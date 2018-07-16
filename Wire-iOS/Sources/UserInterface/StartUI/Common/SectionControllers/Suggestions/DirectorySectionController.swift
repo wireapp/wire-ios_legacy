@@ -52,7 +52,7 @@ class DirectorySectionController: SearchSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
         cell.configure(with: user)
-        cell.separator.isHidden = (suggestions.count - 1) == indexPath.row
+        cell.showSeparator = (suggestions.count - 1) != indexPath.row
         cell.guestIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
         cell.connectButton.isHidden = false
@@ -62,7 +62,7 @@ class DirectorySectionController: SearchSectionController {
         return cell
     }
     
-    func connect(_ sender: AnyObject) {
+    @objc func connect(_ sender: AnyObject) {
         guard let button = sender as? UIButton else { return }
         
         let indexPath = IndexPath(row: button.tag, section: 0)

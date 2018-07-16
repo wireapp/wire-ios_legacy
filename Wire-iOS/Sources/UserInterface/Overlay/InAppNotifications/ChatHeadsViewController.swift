@@ -55,11 +55,11 @@ class ChatHeadsViewController: UIViewController {
     
     // MARK: - Public Interface
     
-    public func tryToDisplayNotification(_ note: ZMLocalNotification) {
+    @objc public func tryToDisplayNotification(_ note: ZMLocalNotification) {
 
         // hide visible chat head and try again
         if chatHeadState != .hidden {
-            hideChatHeadFromCurrentStateWithTiming(RBBEasingFunctionEaseInExpo, duration: 0.3)
+            hideChatHeadFromCurrentStateWithTiming(.easeInExpo, duration: 0.3)
             perform(#selector(tryToDisplayNotification(_:)), with: note, afterDelay: 0.3)
             return
         }
@@ -127,13 +127,14 @@ class ChatHeadsViewController: UIViewController {
             return false
         }
         
-        // if current conversation contains message & is visible
-        if clientVC.currentConversation.remoteIdentifier == conversationID && clientVC.isConversationViewVisible {
-            return false
+        // Always show the notification when the call overlay is shown
+        if true == AppDelegate.shared().callWindowRootViewController?.voiceChannelController?.voiceChannelIsActive {
+            return true
         }
         
-        if AppDelegate.shared().notificationWindowController?.voiceChannelController?.voiceChannelIsActive ?? false {
-            return false;
+        // If current conversation contains the notification message and is visible
+        if clientVC.currentConversation.remoteIdentifier == conversationID && clientVC.isConversationViewVisible {
+            return false
         }
 
         return clientVC.splitViewController.shouldDisplayNotification(from: account)
@@ -145,7 +146,7 @@ class ChatHeadsViewController: UIViewController {
         
         // slide in chat head from screen left
         UIView.wr_animate(
-            easing: RBBEasingFunctionEaseOutExpo,
+            easing: .easeOutExpo,
             duration: 0.35,
             animations: {
                 self.chatHeadView?.alpha = 1
@@ -158,16 +159,16 @@ class ChatHeadsViewController: UIViewController {
     }
     
     private func hideChatHeadFromCurrentState() {
-        hideChatHeadFromCurrentStateWithTiming(RBBEasingFunctionEaseInExpo, duration: 0.35)
+        hideChatHeadFromCurrentStateWithTiming(.easeInExpo, duration: 0.35)
     }
     
-    private func hideChatHeadFromCurrentStateWithTiming(_ timing: RBBEasingFunction, duration: TimeInterval) {
+    private func hideChatHeadFromCurrentStateWithTiming(_ timing: EasingFunction, duration: TimeInterval) {
         chatHeadViewLeftMarginConstraint?.constant = -animationContainerInset
         chatHeadViewRightMarginConstraint?.constant = -animationContainerInset
         chatHeadState = .hiding
         
         UIView.wr_animate(
-            easing: RBBEasingFunctionEaseOutExpo,
+            easing: .easeOutExpo,
             duration: duration,
             animations: {
                 self.chatHeadView?.alpha = 0
@@ -228,7 +229,7 @@ extension ChatHeadsViewController {
             if time < 0.05 { time = 0.05 }
             else if time > 0.2 { time = 0.2 }
             
-            UIView.wr_animate(easing: RBBEasingFunctionEaseInQuad, duration: time, animations: view.layoutIfNeeded) { _ in
+            UIView.wr_animate(easing: .easeInQuad, duration: time, animations: view.layoutIfNeeded) { _ in
                 self.chatHeadView?.removeFromSuperview()
                 self.chatHeadState = .hidden
             }
@@ -242,7 +243,7 @@ extension ChatHeadsViewController {
 
 extension Account {
     
-    var isActive: Bool {
+    @objc var isActive: Bool {
         return SessionManager.shared?.accountManager.selectedAccount == self 
     }
 }

@@ -20,11 +20,12 @@ import Foundation
 import UIKit
 import Classy
 
-@objc
-class AppRootViewController: UIViewController {
+@objcMembers class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
-    public let overlayWindow: UIWindow
+    public let callWindow: CallWindow
+    public let overlayWindow: NotificationWindow
+
     public fileprivate(set) var sessionManager: SessionManager?
     public fileprivate(set) var quickActionsManager: QuickActionsManager?
     
@@ -78,13 +79,9 @@ class AppRootViewController: UIViewController {
 
         mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
-
-        overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
-        overlayWindow.backgroundColor = .clear
-        overlayWindow.windowLevel = UIWindowLevelStatusBar - 1
-        overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
-        overlayWindow.rootViewController = NotificationWindowRootViewController()
-        overlayWindow.accessibilityViewIsModal = true
+        
+        callWindow = CallWindow(frame: UIScreen.main.bounds)
+        overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
 
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
@@ -96,6 +93,7 @@ class AppRootViewController: UIViewController {
         // not possible because it has to be below the status bar.
         mainWindow.rootViewController = self
         mainWindow.makeKeyAndVisible()
+        callWindow.makeKeyAndVisible()
         overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
 
@@ -212,7 +210,7 @@ class AppRootViewController: UIViewController {
         case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
-            
+
             // check if needs to reauthenticate
             var needsToReauthenticate = false
             var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
@@ -239,6 +237,7 @@ class AppRootViewController: UIViewController {
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
+                TrackingManager.shared.disableCrashAndAnalyticsSharing = true
                 
                 let navigationController = NavigationController(rootViewController: landingViewController)
                 navigationController.backButtonEnabled = false
@@ -334,7 +333,7 @@ class AppRootViewController: UIViewController {
     func prepare(for appState: AppState, completionHandler: @escaping () -> Void) {
 
         if appState == .authenticated(completedRegistration: false) {
-            (overlayWindow.rootViewController as? NotificationWindowRootViewController)?.transitionToLoggedInSession()
+            callWindow.callController.transitionToLoggedInSession()
         } else {
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
@@ -342,7 +341,7 @@ class AppRootViewController: UIViewController {
         if !isClassyInitialized && isClassyRequired(for: appState) {
             isClassyInitialized = true
 
-            let windows = [mainWindow, overlayWindow]
+            let windows = [mainWindow, callWindow, overlayWindow]
             DispatchQueue.main.async {
                 self.setupClassy(with: windows)
                 completionHandler()
@@ -367,7 +366,7 @@ class AppRootViewController: UIViewController {
 
     func setupClassy(with windows: [UIWindow]) {
 
-        let colorScheme = ColorScheme.default()
+        let colorScheme = ColorScheme.default
         colorScheme.accentColor = UIColor.accent()
         colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
 
@@ -378,7 +377,7 @@ class AppRootViewController: UIViewController {
         CASStyler.default().apply(fontScheme: fontScheme)
     }
 
-    func onContentSizeCategoryChange() {
+    @objc func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
@@ -513,7 +512,7 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
 
 extension AppRootViewController {
 
-    func onUserGrantedAudioPermissions() {
+    @objc func onUserGrantedAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }
@@ -569,7 +568,7 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 
 public extension SessionManager {
     
-    var firstAuthenticatedAccount: Account? {
+    @objc var firstAuthenticatedAccount: Account? {
         
         if let selectedAccount = accountManager.selectedAccount {
             if selectedAccount.isAuthenticated {
