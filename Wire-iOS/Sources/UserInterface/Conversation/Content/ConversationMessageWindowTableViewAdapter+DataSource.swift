@@ -66,7 +66,6 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
 
         conversationCell.searchQueries = searchQueries
         conversationCell.delegate = conversationCellDelegate
-        conversationCell.analyticsTracker = analyticsTracker
         // Configuration of the cell is not possible when `ZMUserSession` is not available.
         if let _ = ZMUserSession.shared() {
             configureConversationCell(conversationCell, with: message)
