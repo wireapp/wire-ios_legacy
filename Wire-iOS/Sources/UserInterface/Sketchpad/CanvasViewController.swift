@@ -24,13 +24,6 @@ import Cartography
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
 }
 
-@objc public enum ConversationMediaSketchSource : UInt {
-    case none
-    case sketchButton
-    case cameraGallery
-    case imageFullView
-}
-
 @objc public enum CanvasViewControllerEditMode : UInt {
     case draw
     case emoji
@@ -49,7 +42,6 @@ import Cartography
     let hintLabel = UILabel()
     let hintImageView = UIImageView()
     var isEmojiKeyboardInTransition = false
-    var source : ConversationMediaSketchSource = .none
     var sketchImage : UIImage? = nil {
         didSet {
             if let image = sketchImage {

@@ -19,23 +19,8 @@
 
 #import "Analytics.h"
 
-typedef NS_ENUM(NSUInteger, DeviceVerificationType) {
-    DeviceVerificationTypeVerified,
-    DeviceVerificationTypeUnverified
-};
-
-typedef NS_ENUM(NSUInteger, DeviceOwnerType) {
-    DeviceOwnerTypeSelf,
-    DeviceOwnerTypeOther
-};
-
 @interface Analytics (OTREvents)
 
-- (void)tagDeleteDevice;
-- (void)tagChangeDeviceVerification:(DeviceVerificationType)verificationType deviceOwner:(DeviceOwnerType)ownerType;
-- (void)tagConversationIsVerified;
-- (void)tagSelfDeviceList;
-- (void)tagOtherDeviceList;
 - (void)tagCannotDecryptMessageWithAttributes:(NSDictionary *)userInfo;
 
 @end

@@ -19,7 +19,6 @@
 @interface ProfilePictureStepViewController ()
 
 @property (nonatomic) UIImageView *profilePictureImageView;
-@property (nonatomic) AnalyticsPhotoSource photoSource;
 
 - (void)setPictureImageData:(NSData *)imageData;
 - (void)showController:(UIViewController *)controller inPopoverFromView:(UIView *)view;

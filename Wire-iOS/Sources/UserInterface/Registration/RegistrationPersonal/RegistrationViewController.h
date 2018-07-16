@@ -23,7 +23,6 @@
 #import "RegistrationRootViewController.h"
 #import "WireSyncEngine+iOS.h"
 
-@class AnalyticsTracker;
 @class ZMEmailCredentials;
 
 NS_ASSUME_NONNULL_BEGIN

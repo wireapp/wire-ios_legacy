@@ -36,8 +36,6 @@
 #import "RegistrationFormController.h"
 #import "CheckmarkViewController.h"
 
-#import "AnalyticsTracker+Registration.h"
-
 
 
 @interface AddPhoneNumberViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, UserProfileUpdateObserver, ZMUserObserver>
@@ -205,8 +203,6 @@
 
 - (IBAction)skip:(id)sender
 {
-    [self.analyticsTracker tagSkippedAddingPhone];
-    
     if ([self.formStepDelegate respondsToSelector:@selector(didSkipFormStep:)]) {
         [self.view endEditing:NO];
         [self.formStepDelegate didSkipFormStep:self];
@@ -219,8 +215,6 @@
 {
     if ([viewController isKindOfClass:[PhoneNumberStepViewController class]]) {
         
-        [self.analyticsTracker tagEnteredPhone];
-
         self.showLoadingView = YES;
 
         [self.userProfile requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
@@ -270,8 +264,6 @@
     if (note.profileInformationChanged && ZMUser.selfUser.phoneNumber.length > 0) {
         self.showLoadingView = NO;
         
-        [self.analyticsTracker tagVerifiedPhone];
-        
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
@@ -287,7 +279,6 @@
         [self proceedToCodeVerification];
     }
     else {
-        [self.analyticsTracker tagResentPhoneVerification];
         [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
     }
 }
@@ -308,9 +299,6 @@
     self.showLoadingView = NO;
     
     if (! [self.rootNavigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-        [self.analyticsTracker tagEnteredPhoneFailedWithError:error];
-    } else {
-        [self.analyticsTracker tagResentPhoneVerificationFailedWithError:error];
     }
     
     [self showAlertForError:error];
@@ -319,7 +307,6 @@
 - (void)phoneNumberChangeDidFail:(NSError *)error
 {
     self.showLoadingView = NO;
-    [self.analyticsTracker tagVerifiedPhoneFailedWithError:error];
     [self showAlertForError:error];
 }
 

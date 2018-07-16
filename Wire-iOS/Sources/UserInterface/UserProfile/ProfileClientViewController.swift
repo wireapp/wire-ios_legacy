@@ -342,9 +342,6 @@ import Classy
             }
         }, completionHandler: {
             self.verifiedToggle.isOn = self.userClient.verified
-            
-            let verificationType: DeviceVerificationType = self.verifiedToggle.isOn ? .verified : .unverified
-            Analytics.shared().tagChange(verificationType, deviceOwner: .other)
         })
     }
 

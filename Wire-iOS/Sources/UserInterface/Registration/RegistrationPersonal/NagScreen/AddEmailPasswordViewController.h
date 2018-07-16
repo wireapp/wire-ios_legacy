@@ -14,31 +14,20 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
-
+//
 
 #import <UIKit/UIKit.h>
-
 #import "FormStepDelegate.h"
-
-
 
 typedef NS_ENUM(NSInteger, AddEmailPasswordViewControllerSkipButtonType) {
     AddEmailPasswordViewControllerSkipButtonTypeNone,
     AddEmailPasswordViewControllerSkipButtonTypeClose
 };
 
-
-
-@class AnalyticsTracker;
-
-
-
 @interface AddEmailPasswordViewController : UIViewController
 
 @property (nonatomic) BOOL showsNavigationBar;
 @property (nonatomic, weak) id<FormStepDelegate> formStepDelegate;
 @property (nonatomic) AddEmailPasswordViewControllerSkipButtonType skipButtonType;
-@property (nonatomic, strong) AnalyticsTracker *analyticsTracker;
 
 @end

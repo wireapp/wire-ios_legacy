@@ -22,7 +22,6 @@
 @class ZMConversation;
 @protocol ZMConversationMessage;
 @class ConversationInputBarSendController;
-@class AnalyticsTracker;
 
 
 @protocol ConversationInputBarSendControllerDelegate <NSObject>
@@ -35,7 +34,6 @@
 @interface ConversationInputBarSendController : NSObject
 
 @property (nonatomic, readonly) ZMConversation *conversation;
-@property (nonatomic, strong) AnalyticsTracker *analyticsTracker;
 @property (nonatomic, weak) id<ConversationInputBarSendControllerDelegate> delegate;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;

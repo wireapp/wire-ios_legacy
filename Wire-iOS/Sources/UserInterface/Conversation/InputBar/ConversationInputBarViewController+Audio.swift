@@ -178,20 +178,11 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
     }
     
     @objc public func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {
-        guard let conversation = self.conversation else { return }
-        let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
-
-        if type == .minimised {
-            Analytics.shared().tagMediaAction(.audioMessage, inConversation: conversation)
-        }
-
-        Analytics.shared().tagStartedAudioMessageRecording(inConversation: conversation, type: type)
+        // no op
     }
     
-    @objc public func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
-        let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
+    @objc public func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType) {
         
-        Analytics.shared().tagSentAudioMessage(in: conversation, duration: duration, context: context, filter: filter, type: type)
         uploadFile(at: recordingURL as URL)
         
         self.hideAudioRecordViewController()

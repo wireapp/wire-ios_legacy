@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithTitle:(NSString *)title thumbnails:(NSArray<MediaThumbnail *> *)thumbnails provider:(MediaPreviewDataProvider)provider NS_DESIGNATED_INITIALIZER;
-- (MediaThumbnail *)bestThumbnailForSize:(CGSize)size;
+- (nullable MediaThumbnail *)bestThumbnailForSize:(CGSize)size;
 
 @end
 

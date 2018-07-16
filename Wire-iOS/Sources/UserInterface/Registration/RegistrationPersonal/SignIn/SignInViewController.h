@@ -21,16 +21,9 @@
 
 #import "FormFlowViewController.h"
 
-
-
-@class AnalyticsTracker, LoginCredentials;
-
+@class LoginCredentials;
 
 @interface SignInViewController : FormFlowViewController
-
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) LoginCredentials *loginCredentials;
-
 - (void)presentSignInViewControllerWithCredentials:(LoginCredentials*)credentials;
-
 @end

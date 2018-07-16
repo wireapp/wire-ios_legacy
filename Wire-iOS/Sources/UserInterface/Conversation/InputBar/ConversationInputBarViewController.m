@@ -24,7 +24,6 @@
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"
-#import "Analytics+Events.h"
 @import WireExtensionComponents;
 #import "ConfirmAssetViewController.h"
 #import "TextView.h"
@@ -32,7 +31,6 @@
 
 #import "ZClientViewController.h"
 #import "Analytics.h"
-#import "AnalyticsTracker+FileTransfer.h"
 #import "Wire-Swift.h"
 
 #import "WireSyncEngine+iOS.h"
@@ -279,12 +277,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         self.inRotation = NO;
     }];
-}
-
-- (void)setAnalyticsTracker:(AnalyticsTracker *)analyticsTracker
-{
-    _analyticsTracker = analyticsTracker;
-    self.sendController.analyticsTracker = analyticsTracker;
 }
 
 - (void)createInputBar
@@ -665,7 +657,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
                 self.inputController = self.audioRecordKeyboardViewController;
             }
-            [Analytics.shared tagMediaAction:ConversationMediaActionAudioMessage inConversation:self.conversation];
 
             self.singleTapGestureRecognizer.enabled = YES;
             [self selectInputControllerButton:self.audioButton];
@@ -699,7 +690,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
             self.singleTapGestureRecognizer.enabled = NO;
             [self selectInputControllerButton:self.emojiButton];
-            [Analytics.shared tagEmojiKeyboardOpenend:self.conversation];
             break;
             
         case ConversationInputBarViewControllerModeTimeoutConfguration:
@@ -880,9 +870,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)postImage:(id<MediaAsset>)image
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [self.sendController sendMessageWithImageData:image.data completion:^() {
-            [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourcePaste];
-        }];
+        [self.sendController sendMessageWithImageData:image.data completion:^() {}];
     });
 }
 
@@ -917,8 +905,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         return;
     }
     
-    [Analytics.shared tagMediaAction:ConversationMediaActionVideoMessage inConversation:self.conversation];
-    self.videoSendContext = ConversationMediaVideoContextCursorButton;
     [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
 }
 
@@ -944,12 +930,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)sketchButtonPressed:(id)sender
 {
     [self.inputBar.textView resignFirstResponder];
-    [Analytics.shared tagMediaAction:ConversationMediaActionPhoto inConversation:self.conversation];
     
     CanvasViewController *viewController = [[CanvasViewController alloc] init];
     viewController.delegate = self;
     viewController.title = self.conversation.displayName.uppercaseString;
-    viewController.source = ConversationMediaSketchSourceSketchButton;
     
     [self.parentViewController presentViewController:[viewController wrapInNavigationController] animated:YES completion:nil];
 }
@@ -982,8 +966,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if (![AppDelegate isOffline]) {
         
-        [Analytics.shared tagMediaAction:ConversationMediaActionGif inConversation:self.conversation];
-    
         NSString *searchTerm = [self.inputBar.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:searchTerm conversation:self.conversation];
         giphySearchViewController.delegate = self;
@@ -1044,7 +1026,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [[ZMUserSession sharedSession] enqueueChanges:^{
         id<ZMConversationMessage> knockMessage = [self.conversation appendKnock];
         if (knockMessage) {
-            [Analytics.shared tagMediaAction:ConversationMediaActionPing inConversation:self.conversation];
             [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
 
             [AVSMediaManager.sharedInstance playSound:MediaManagerSoundOutgoingKnockSound];
@@ -1152,7 +1133,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)giphySearchViewController:(GiphySearchViewController *)giphySearchViewController didSelectImageData:(NSData *)imageData searchTerm:(NSString *)searchTerm
 {
-    [[Analytics shared] tagMediaSentPictureSourceOtherInConversation:self.conversation source:ConversationMediaPictureSourceGiphy];
     [self clearInputBar];
     [self dismissViewControllerAnimated:YES completion:nil];
     
