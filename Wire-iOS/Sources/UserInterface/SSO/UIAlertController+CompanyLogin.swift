@@ -23,7 +23,12 @@ extension UIAlertController {
     /// Creates an `UIAlertController` with a textfield to get a SSO login code from the user.
     /// - parameter prefilledCode: A code which should be used to prefill the textfield of the controller (or `nil`).
     /// - parameter completion: The completion closure which will be called with the provided code or nil if cancelled.
-    @objc static func companyLogin(prefilledCode: String?, completion: @escaping (String?) -> Void) -> UIAlertController {
+    @objc static func companyLogin(
+        prefilledCode: String?,
+        validator: @escaping (String) -> Bool,
+        completion: @escaping (String?) -> Void
+        ) -> UIAlertController {
+
         var token: Any?
 
         func complete(_ result: String?) {
@@ -41,14 +46,15 @@ extension UIAlertController {
             complete(controller.textFields?.first?.text)
         }
         
-        loginAction.isEnabled = false
-        
         controller.addTextField { textField in
             textField.text = prefilledCode
             textField.placeholder = "login.sso.alert.text_field.placeholder".localized
             token = NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange, object: textField, queue: .main) { _ in
-                loginAction.isEnabled = textField.text?.isEmpty == false
+                loginAction.isEnabled = textField.text.map(validator) ?? false
             }
+
+            // Enable the login button initially if the prefilled code is valid.
+            loginAction.isEnabled = prefilledCode.map(validator) ?? false
         }
         
         controller.addAction(.cancel { complete(nil) })

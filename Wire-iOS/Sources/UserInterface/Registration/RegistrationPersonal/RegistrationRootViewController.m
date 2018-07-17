@@ -287,8 +287,14 @@
 
 #pragma mark - SingleSignOnControllerDelegate
 
-- (void)controller:(SingleSignOnController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert {
+- (void)controller:(SingleSignOnController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert
+{
     [self presentViewController:presentAlert animated:YES completion:nil];
+}
+
+- (void)controller:(SingleSignOnController *)controller showLoadingView:(BOOL)showLoadingView
+{
+    self.showLoadingView = showLoadingView;
 }
 
 @end

@@ -23,6 +23,10 @@ import Foundation
     /// The `SingleSignOnController` will never present any alerts on its own and will
     /// always ask its delegate to handle the actual presentation of the alerts.
     func controller(_ controller: SingleSignOnController, presentAlert: UIAlertController)
+    
+    /// The `SingleSignOnController` will never present any loading views on its own and will
+    /// always ask its delegate to handle the actual presentation of loading indicators.
+    func controller(_ controller: SingleSignOnController, showLoadingView: Bool)
 
 }
 
@@ -33,6 +37,7 @@ import Foundation
 @objc public final class SingleSignOnController: NSObject {
 
     @objc weak var delegate: SingleSignOnControllerDelegate?
+    @objc(autoDetectionEnabled) var isAutoDetectionEnabled = true
 
     private var token: Any?
     private let detector = SharedIdentitySessionRequestDetector.shared
@@ -55,43 +60,47 @@ import Foundation
     }
     
     private func setupObservers() {
-        token = NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: .main) { [detectLoginCode] _ in
-            detectLoginCode()
-        }
+        token = NotificationCenter.default.addObserver(
+            forName: .UIApplicationWillEnterForeground,
+            object: nil,
+            queue: .main,
+            using: { [detectLoginCode] _ in detectLoginCode() }
+        )
     }
 
     /// This method will be called when the app comes back to the foreground.
     /// We then check if the clipboard contains a valid SSO login code.
-    /// This method will trigger the delegate (if set) to be queried if the alert should be shown or not.
+    /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
     @objc func detectLoginCode() {
+        guard isAutoDetectionEnabled else { return }
         detector.detectCopiedRequestCode { [presentLoginAlert] code in
-            code.apply {
-                presentLoginAlert($0.transportString())
-            }
+            code.apply(presentLoginAlert)
         }
     }
     
     /// Presents the SSO login alert without an optional prefilled code.
-    /// This method will *NOT* trigger the delegate to be queried if the alert should be shown or not.
     @objc func presentLoginAlert(prefilledCode: String? = nil) {
-        let alertController = UIAlertController.companyLogin(prefilledCode: prefilledCode) { [attemptLogin] code in
-            code.apply(attemptLogin)
-        }
+        let alertController = UIAlertController.companyLogin(
+            prefilledCode: prefilledCode,
+            validator: SharedIdentitySessionRequestDetector.isValidRequestCode,
+            completion: { [attemptLogin] code in code.apply(attemptLogin) }
+        )
         
         delegate?.controller(self, presentAlert: alertController)
     }
     
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
-    @objc private func attemptLogin(using code: String) {
-        guard let uuid = detector.detectRequestCode(in: code) else { return presentParsingError() }
-        requester.requestIdentity(for: uuid) { [handleResponse] response in
+    private func attemptLogin(using code: String) {
+        guard let uuid = SharedIdentitySessionRequestDetector.requestCode(in: code) else {
+            return requireInternalFailure("Should never try to login with invalid code.")
+        }
+
+        delegate?.controller(self, showLoadingView: true)
+        requester.requestIdentity(for: uuid) { [delegate, handleResponse] response in
+            delegate?.controller(self, showLoadingView: false)
             handleResponse(response)
         }
-    }
-    
-    private func presentParsingError() {
-        delegate?.controller(self, presentAlert: .ssoError("login.sso.error.alert.wrong_format.message".localized))
     }
     
     private func handleResponse(_ response: SharedIdentitySessionResponse) {
