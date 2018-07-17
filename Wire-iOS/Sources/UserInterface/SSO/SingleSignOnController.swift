@@ -77,9 +77,16 @@ import Foundation
             code.apply(presentLoginAlert)
         }
     }
-    
-    /// Presents the SSO login alert without an optional prefilled code.
-    @objc func presentLoginAlert(prefilledCode: String? = nil) {
+
+    /// Presents the SSO login alert. If the code is available in the clipboard, we pre-fill it.
+    @objc func displayLoginCodePrompt() {
+        detector.detectCopiedRequestCode { code in
+            self.presentLoginAlert(prefilledCode: code)
+        }
+    }
+
+    /// Presents the SSO login alert with an optional prefilled code.
+    private func presentLoginAlert(prefilledCode: String?) {
         let alertController = UIAlertController.companyLogin(
             prefilledCode: prefilledCode,
             validator: SharedIdentitySessionRequestDetector.isValidRequestCode,
@@ -88,7 +95,7 @@ import Foundation
         
         delegate?.controller(self, presentAlert: alertController)
     }
-    
+
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
     private func attemptLogin(using code: String) {
