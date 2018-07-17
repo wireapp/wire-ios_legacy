@@ -40,8 +40,9 @@ extension ConversationInputBarViewController {
 
     @objc func appUnlocked() {
         // show the record keyboard after it is hide after the app went to background
-        if mode == .audioRecord && !self.inputBar.textView.isFirstResponder {
-            ///TODO: delay after unlocked
+        if AppLock.isActive &&
+           mode == .audioRecord &&
+           !self.inputBar.textView.isFirstResponder {
             displayRecordKeyboard()
         }
     }
