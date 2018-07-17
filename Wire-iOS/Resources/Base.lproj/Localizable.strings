@@ -1214,6 +1214,7 @@
 "signin.use_one_password.label" = "Log in with 1Password";
 "signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
 "signin.confirm" = "Log In";
+"signin.company_idp.button.title" = "For Companies";
 
 "registration.phone_country" = "Country";
 "registration.phone_code" = "Country Code";
