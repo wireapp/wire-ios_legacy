@@ -1139,7 +1139,6 @@
 
 
 "login.sso.error.alert.title" = "Something went wrong";
-"login.sso.error.alert.wrong_format.message" = "The provided code is in the wrong format. Please verify it is correct and try again.";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
