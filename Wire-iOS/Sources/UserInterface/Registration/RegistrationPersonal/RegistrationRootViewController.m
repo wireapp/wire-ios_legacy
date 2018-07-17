@@ -270,7 +270,7 @@
 
 - (void)showCompanyLoginAlert
 {
-    [self.ssoController presentLoginAlertWithPrefilledCode:nil];
+    [self.ssoController displayLoginCodePrompt];
 }
 
 #pragma mark - FormStepDelegate
