@@ -22,6 +22,10 @@ import WireExtensionComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
+extension Notification.Name {
+    static let appUnlocked = Notification.Name("AppUnlocked")
+}
+
 @objcMembers final class AppLockViewController: UIViewController {
     fileprivate var lockView: AppLockView!
     fileprivate static let authenticationPersistancePeriod: TimeInterval = 10
@@ -137,6 +141,8 @@ private let zmLog = ZMSLog(tag: "UI")
                 callback(success)
                 if let success = success, success {
                     AppLock.lastUnlockedDate = Date()
+                    NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
+
                 } else {
                     zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
@@ -150,7 +156,7 @@ private let zmLog = ZMSLog(tag: "UI")
 extension AppLockViewController {
     @objc func applicationWillResignActive() {
         if AppLock.isActive {
-            self.resignKeyboard() ///TODO: remember the current keyboard
+            self.resignKeyboard()
             self.dimContents = true
         }
     }

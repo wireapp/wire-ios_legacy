@@ -33,12 +33,12 @@ extension ConversationInputBarViewController {
 
     @objc func setupAppStateObserver() {
         NotificationCenter.default.addObserver(self,
-        selector: #selector(ConversationInputBarViewController.applicationDidBecomeActive),
-        name: .UIApplicationDidBecomeActive,
+        selector: #selector(ConversationInputBarViewController.appUnlocked),
+        name: .appUnlocked,
         object: .none)
     }
 
-    @objc func applicationDidBecomeActive() {
+    @objc func appUnlocked() {
         // show the record keyboard after it is hide after the app went to background
         if mode == .audioRecord && !self.inputBar.textView.isFirstResponder {
             ///TODO: delay after unlocked
