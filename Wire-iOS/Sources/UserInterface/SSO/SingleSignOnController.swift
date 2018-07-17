@@ -98,7 +98,7 @@ import Foundation
 
         delegate?.controller(self, showLoadingView: true)
         requester.requestIdentity(for: uuid) { [delegate, handleResponse] response in
-            delegate?.controller(self, showLoadingView: true)
+            delegate?.controller(self, showLoadingView: false)
             handleResponse(response)
         }
     }
