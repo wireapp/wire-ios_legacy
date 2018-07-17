@@ -25,6 +25,7 @@ import Classy
     public let mainWindow: UIWindow
     public let callWindow: CallWindow
     public let overlayWindow: NotificationWindow
+    private let singleSignOnController = SingleSignOnController()
 
     public fileprivate(set) var sessionManager: SessionManager?
     public fileprivate(set) var quickActionsManager: QuickActionsManager?
@@ -88,6 +89,7 @@ import Classy
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
         appStateController.delegate = self
+        singleSignOnController.delegate = self
 
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
         // not possible because it has to be below the status bar.
@@ -435,6 +437,18 @@ extension AppRootViewController: AppStateControllerDelegate {
         enqueueTransition(to: appState, completion: transitionCompleted)
     }
 
+}
+
+extension AppRootViewController: SingleSignOnControllerDelegate {
+    
+    func controllerShouldPresentLoginCodeAlert(_ controller: SingleSignOnController) -> Bool {
+        return true
+    }
+    
+    func controller(_ controller: SingleSignOnController, presentAlert alert: UIAlertController) {
+        visibleViewController?.present(alert, animated: true)
+    }
+    
 }
 
 // MARK: - RequestToOpenViewsDelegate

@@ -41,12 +41,12 @@ protocol SingleSignOnControllerDelegate: class {
     private let requester: SharedIdentitySessionRequester
     
     /// Create a new `SingleSignOnController` instance using the standard requester.
-//    @objc public override init() {
-//        self.init(requester: TimeoutIdentitySessionRequester(delay: 2))
-//    }
+    @objc public override convenience init() {
+        self.init(requester: TimeoutIdentitySessionRequester(delay: 2))
+    }
 
     /// Create a new `SingleSignOnController` instance using the specified requester.
-    public init(requester: SharedIdentitySessionRequester) {
+    public required init(requester: SharedIdentitySessionRequester) {
         self.requester = requester
         super.init()
         setupObservers()
