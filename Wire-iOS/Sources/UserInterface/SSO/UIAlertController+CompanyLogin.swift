@@ -56,4 +56,17 @@ extension UIAlertController {
         return controller
     }
 
+    /// Creates an `UIAlertController` with a generic error title, a single OK button and the provided message.
+    /// - parameter message: The error message that should be used as the message of the controller.
+    static func ssoError(_ message: String) -> UIAlertController {
+        let controller = UIAlertController(
+            title: "login.sso.error.alert.title".localized,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        controller.addAction(.ok())
+        return controller
+    }
+
 }
