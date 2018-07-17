@@ -5613,7 +5613,6 @@
 				EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */,
 				EF2126C41FB9DFE300625A9B /* CheckmarkViewController.m */,
 				EF2126C51FB9DFE300625A9B /* FormStepDelegate.h */,
-				EF2126C61FB9DFE300625A9B /* RegistrationRootViewController.h */,
 				EF2126D11FB9DFE300625A9B /* GuidanceDotView.h */,
 				EF2126D21FB9DFE300625A9B /* RegistrationTextField.h */,
 				EF2126D31FB9DFE300625A9B /* RegistrationViewController.h */,
@@ -5626,6 +5625,7 @@
 				EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */,
 				EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */,
 				EF2127001FB9DFE300625A9B /* RegistrationPhoneFlowViewController.m */,
+				EF2126C61FB9DFE300625A9B /* RegistrationRootViewController.h */,
 				EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */,
 				EF2127021FB9DFE300625A9B /* CheckmarkViewController.h */,
 			);

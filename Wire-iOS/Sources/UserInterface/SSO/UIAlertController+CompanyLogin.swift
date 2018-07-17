@@ -23,7 +23,7 @@ extension UIAlertController {
     /// Creates an `UIAlertController` with a textfield to get a SSO login code from the user.
     /// - parameter prefilledCode: A code which should be used to prefill the textfield of the controller (or `nil`).
     /// - parameter completion: The completion closure which will be called with the provided code or nil if cancelled.
-    static func companyLogin(prefilledCode: String?, completion: @escaping (String?) -> Void) -> UIAlertController {
+    @objc static func companyLogin(prefilledCode: String?, completion: @escaping (String?) -> Void) -> UIAlertController {
         var token: Any?
 
         func complete(_ result: String?) {
