@@ -201,7 +201,7 @@
     self.contentHeightConstraint.active = YES;
     [self.registrationTabBarController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor].active = YES;
 
-    [self.rightButtonsStack autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
+    [self.rightButtonsStack autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 36];
     [self.rightButtonsStack autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
 
     if (self.backButton) {
