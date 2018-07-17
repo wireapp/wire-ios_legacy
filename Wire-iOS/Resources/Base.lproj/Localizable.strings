@@ -1131,6 +1131,13 @@
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
 
+// SSO – Company Login
+"login.sso.alert.title" = "Company Log In";
+"login.sso.alert.message" = "Paste the access code of your company here";
+"login.sso.alert.action" = "Log in";
+"login.sso.alert.text_field.placeholder" = "Access code";
+
+
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
 "registration.no_history.restore_backup.completed" = "Completed";
