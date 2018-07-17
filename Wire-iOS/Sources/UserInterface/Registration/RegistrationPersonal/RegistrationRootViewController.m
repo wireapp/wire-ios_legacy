@@ -132,6 +132,14 @@
     [super viewWillAppear:animated];
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
     [self updateCompanyLoginButton];
+    self.ssoController.autoDetectionEnabled = YES;
+    [self.ssoController detectLoginCode];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.ssoController.autoDetectionEnabled = NO;
 }
 
 - (void)setupBackButton
