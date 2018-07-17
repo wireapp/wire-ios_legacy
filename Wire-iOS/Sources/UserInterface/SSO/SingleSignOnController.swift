@@ -18,14 +18,12 @@
 
 import Foundation
 
-protocol SingleSignOnControllerDelegate: class {
-    /// Whether or not the SSO login alert should be shown or not. A delegate can use this method
-    /// to decide if it current context allows fot the controller to be shown.
-    func controllerShouldPresentLoginCodeAlert(_ controller: SingleSignOnController) -> Bool
-    
+@objc protocol SingleSignOnControllerDelegate: class {
+
     /// The `SingleSignOnController` will never present any alerts on its own and will
     /// always ask its delegate to handle the actual presentation of the alerts.
     func controller(_ controller: SingleSignOnController, presentAlert: UIAlertController)
+
 }
 
 /// `SingleSignOnController` handles the logic of deciding when to present the SSO login alert.
@@ -34,7 +32,7 @@ protocol SingleSignOnControllerDelegate: class {
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` can be provided.
 @objc public final class SingleSignOnController: NSObject {
 
-    weak var delegate: SingleSignOnControllerDelegate?
+    @objc weak var delegate: SingleSignOnControllerDelegate?
 
     private var token: Any?
     private let detector = SharedIdentitySessionRequestDetector.shared
@@ -61,19 +59,11 @@ protocol SingleSignOnControllerDelegate: class {
             detectLoginCode()
         }
     }
-    
-    /// Presents the SSO login alert without any prefilled code.
-    /// This method will trigger the delegate (if set) to be queried if the alert should be shown or not.
-    @objc public func showLoginAlert() {
-        guard delegate?.controllerShouldPresentLoginCodeAlert(self) ?? true else { return }
-        presentLoginAlert()
-    }
-    
+
     /// This method will be called when the app comes back to the foreground.
     /// We then check if the clipboard contains a valid SSO login code.
     /// This method will trigger the delegate (if set) to be queried if the alert should be shown or not.
-    @objc private func detectLoginCode() {
-        guard delegate?.controllerShouldPresentLoginCodeAlert(self) ?? true else { return }
+    @objc func detectLoginCode() {
         detector.detectCopiedRequestCode { [presentLoginAlert] code in
             code.apply {
                 presentLoginAlert($0.transportString())
@@ -83,7 +73,7 @@ protocol SingleSignOnControllerDelegate: class {
     
     /// Presents the SSO login alert without an optional prefilled code.
     /// This method will *NOT* trigger the delegate to be queried if the alert should be shown or not.
-    private func presentLoginAlert(prefilledCode: String? = nil) {
+    @objc func presentLoginAlert(prefilledCode: String? = nil) {
         let alertController = UIAlertController.companyLogin(prefilledCode: prefilledCode) { [attemptLogin] code in
             code.apply(attemptLogin)
         }
@@ -93,7 +83,7 @@ protocol SingleSignOnControllerDelegate: class {
     
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
-    private func attemptLogin(using code: String) {
+    @objc private func attemptLogin(using code: String) {
         guard let uuid = detector.detectRequestCode(in: code) else { return presentParsingError() }
         requester.requestIdentity(for: uuid) { [handleResponse] response in
             handleResponse(response)

@@ -29,7 +29,9 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, TabBarControllerDelegate>
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, TabBarControllerDelegate, SingleSignOnControllerDelegate>
+
+@property (nonatomic) SingleSignOnController *ssoController;
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
@@ -58,6 +60,7 @@
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
+        self.ssoController = [[SingleSignOnController alloc] init];
         self.flowType = flow;
     }
 
@@ -67,7 +70,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.ssoController.delegate = self;
+
     self.view.opaque = NO;
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -258,7 +262,7 @@
 
 - (void)showCompanyLoginAlert
 {
-    // no-op
+    [self.ssoController presentLoginAlertWithPrefilledCode:nil];
 }
 
 #pragma mark - FormStepDelegate
@@ -279,6 +283,12 @@
 - (void)tabBarController:(TabBarController *)controller tabBarDidSelectIndex:(NSInteger)tabBarDidSelectIndex
 {
     [self updateCompanyLoginButton];
+}
+
+#pragma mark - SingleSignOnControllerDelegate
+
+- (void)controller:(SingleSignOnController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert {
+    [self presentViewController:presentAlert animated:YES completion:nil];
 }
 
 @end
