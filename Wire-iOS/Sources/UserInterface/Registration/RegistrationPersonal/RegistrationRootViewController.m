@@ -29,14 +29,17 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate>
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, TabBarControllerDelegate>
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) AuthenticationFlowType flowType;
 @property (nonatomic, weak) SignInViewController *signInViewController;
+
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) IconButton *backButton;
+@property (nonatomic) IconButton *companyLoginButton;
+@property (nonatomic) UIStackView *rightButtonsStack;
 
 @property (nonatomic) NSLayoutConstraint *contentWidthConstraint;
 @property (nonatomic) NSLayoutConstraint *contentHeightConstraint;
@@ -100,6 +103,7 @@
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.registrationTabBarController.interactive = NO;
+    self.registrationTabBarController.delegate = self;
 
     self.signInViewController = signInViewController;
     
@@ -109,20 +113,13 @@
     
     self.registrationTabBarController.style = ColorSchemeVariantDark;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    self.cancelButton = [[IconButton alloc] init];
-    [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.cancelButton.accessibilityIdentifier = @"cancelAddAccount";
-    [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
-    self.cancelButton.hidden = self.shouldHideCancelButton || [[SessionManager shared] firstAuthenticatedAccount] == nil;
-    self.cancelButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
 
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];
     [self.view addSubview:self.cancelButton];
     [self.registrationTabBarController didMoveToParentViewController:self];
-    
+
+    [self setUpRightButtons];
     [self createConstraints];
 }
 
@@ -130,6 +127,7 @@
 {
     [super viewWillAppear:animated];
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    [self updateCompanyLoginButton];
 }
 
 - (void)setupBackButton
@@ -147,13 +145,47 @@
     [self.backButton addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)setUpRightButtons
+{
+    self.rightButtonsStack = [[UIStackView alloc] initForAutoLayout];
+    self.rightButtonsStack.spacing = 16;
+    self.rightButtonsStack.alignment = UIStackViewAlignmentCenter;
+    self.rightButtonsStack.axis = UILayoutConstraintAxisHorizontal;
+
+    self.companyLoginButton = [[IconButton alloc] init];
+    self.companyLoginButton.adjustsTitleWhenHighlighted = YES;
+    self.companyLoginButton.titleLabel.font = [UIFont smallSemiboldFont];
+    self.companyLoginButton.accessibilityIdentifier = @"companyLoginButton";
+    [self.companyLoginButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    [self.companyLoginButton setTitle:NSLocalizedString(@"signin.company_idp.button.title", @"").uppercaseString forState:UIControlStateNormal];
+
+    self.cancelButton = [[IconButton alloc] init];
+    [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.cancelButton.accessibilityIdentifier = @"cancelAddAccount";
+    self.cancelButton.hidden = self.shouldHideCancelButton || [[SessionManager shared] firstAuthenticatedAccount] == nil;
+    self.cancelButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
+
+    [self.companyLoginButton addTarget:self action:@selector(showCompanyLoginAlert) forControlEvents:UIControlEventTouchUpInside];
+    [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.rightButtonsStack addArrangedSubview:self.companyLoginButton];
+    [self.rightButtonsStack addArrangedSubview:self.cancelButton];
+    [self.view addSubview:self.rightButtonsStack];
+}
+
+- (void)updateCompanyLoginButton
+{
+    BOOL isCompanyLoginAvailable = self.registrationTabBarController.selectedIndex == 1;
+    self.companyLoginButton.hidden = !isCompanyLoginAvailable;
+}
 
 /**
  Setter of showLogin. When this is set to true, switch to login tab animatied. Else animates to register tab
 
  @param newValue showLogin's new value
  */
-- (void)setShowLogin: (BOOL)newValue{
+- (void)setShowLogin: (BOOL)newValue {
     _showLogin = newValue;
     [self.registrationTabBarController selectIndex:_showLogin ? 1 : 0 animated:YES];
 }
@@ -169,8 +201,8 @@
     self.contentHeightConstraint.active = YES;
     [self.registrationTabBarController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor].active = YES;
 
-    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
-    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
+    [self.rightButtonsStack autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
+    [self.rightButtonsStack autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
 
     if (self.backButton) {
         CGFloat topMargin = 32 + UIScreen.safeArea.top;
@@ -224,6 +256,11 @@
                tearDownCompletion:nil];
 }
 
+- (void)showCompanyLoginAlert
+{
+    // no-op
+}
+
 #pragma mark - FormStepDelegate
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
@@ -237,5 +274,11 @@
     [self.signInViewController presentSignInViewControllerWithCredentials:loginCredentials];
 }
 
+#pragma mark - TabBarControllerDelegate
+
+- (void)tabBarController:(TabBarController *)controller tabBarDidSelectIndex:(NSInteger)tabBarDidSelectIndex
+{
+    [self updateCompanyLoginButton];
+}
 
 @end
