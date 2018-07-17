@@ -19,10 +19,19 @@
 import Foundation
 
 protocol SingleSignOnControllerDelegate: class {
+    /// Whether or not the SSO login alert should be shown or not. A delegate can use this method
+    /// to decide if it current context allows fot the controller to be shown.
     func controllerShouldPresentLoginCodeAlert(_ controller: SingleSignOnController) -> Bool
+    
+    /// The `SingleSignOnController` will never present any alerts on its own and will
+    /// always ask its delegate to handle the actual presentation of the alerts.
     func controller(_ controller: SingleSignOnController, presentAlert: UIAlertController)
 }
 
+/// `SingleSignOnController` handles the logic of deciding when to present the SSO login alert.
+/// The controller will ask its `SingleSignOnControllerDelegate` to present alerts and never do any
+/// presentation on it's own. It will also query its delegate before presenting any SSO login alert.
+/// A concrete implementation of the internally used `SharedIdentitySessionRequester` can be provided.
 @objc public final class SingleSignOnController: NSObject {
 
     weak var delegate: SingleSignOnControllerDelegate?
@@ -30,7 +39,13 @@ protocol SingleSignOnControllerDelegate: class {
     private var token: Any?
     private let detector = SharedIdentitySessionRequestDetector.shared
     private let requester: SharedIdentitySessionRequester
+    
+    /// Create a new `SingleSignOnController` instance using the standard requester.
+//    @objc public override init() {
+//        self.init(requester: TimeoutIdentitySessionRequester(delay: 2))
+//    }
 
+    /// Create a new `SingleSignOnController` instance using the specified requester.
     public init(requester: SharedIdentitySessionRequester) {
         self.requester = requester
         super.init()
@@ -47,11 +62,16 @@ protocol SingleSignOnControllerDelegate: class {
         }
     }
     
+    /// Presents the SSO login alert without any prefilled code.
+    /// This method will trigger the delegate (if set) to be queried if the alert should be shown or not.
     @objc public func showLoginAlert() {
         guard delegate?.controllerShouldPresentLoginCodeAlert(self) ?? true else { return }
         presentLoginAlert()
     }
     
+    /// This method will be called when the app comes back to the foreground.
+    /// We then check if the clipboard contains a valid SSO login code.
+    /// This method will trigger the delegate (if set) to be queried if the alert should be shown or not.
     @objc private func detectLoginCode() {
         guard delegate?.controllerShouldPresentLoginCodeAlert(self) ?? true else { return }
         detector.detectCopiedRequestCode { [presentLoginAlert] code in
@@ -61,10 +81,8 @@ protocol SingleSignOnControllerDelegate: class {
         }
     }
     
-    private func handleDetectedLoginCode(_ uuid: UUID) {
-        presentLoginAlert(prefilledCode: uuid.transportString())
-    }
-    
+    /// Presents the SSO login alert without an optional prefilled code.
+    /// This method will *NOT* trigger the delegate to be queried if the alert should be shown or not.
     private func presentLoginAlert(prefilledCode: String? = nil) {
         let alertController = UIAlertController.companyLogin(prefilledCode: prefilledCode) { [attemptLogin] code in
             code.apply(attemptLogin)
@@ -73,21 +91,23 @@ protocol SingleSignOnControllerDelegate: class {
         delegate?.controller(self, presentAlert: alertController)
     }
     
+    /// Attempt to login using the requester specified in `init`
+    /// - parameter code: the code used to attempt the SSO login.
     private func attemptLogin(using code: String) {
-        guard let uuid = detector.detectRequestCode(in: code) else { return presentParsingErrorAlert(for: code) }
+        guard let uuid = detector.detectRequestCode(in: code) else { return presentParsingError() }
         requester.requestIdentity(for: uuid) { [handleResponse] response in
             handleResponse(response)
         }
     }
     
-    private func presentParsingErrorAlert(for code: String) {
+    private func presentParsingError() {
         delegate?.controller(self, presentAlert: .ssoError("login.sso.error.alert.wrong_format.message".localized))
     }
     
     private func handleResponse(_ response: SharedIdentitySessionResponse) {
         switch response {
-        case .success(_): break // TODO
-        case .pendingAdditionalInformation(_): break // TODO
+        case .success(_): preconditionFailure("unimplemented") // TODO
+        case .pendingAdditionalInformation(_): preconditionFailure("unimplemented") // TODO
         case .error(let error): presentError(error)
         }
     }
