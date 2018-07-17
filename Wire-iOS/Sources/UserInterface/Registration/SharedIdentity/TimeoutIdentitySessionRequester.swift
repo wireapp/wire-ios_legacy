@@ -24,14 +24,14 @@ struct SharedIdentitySessionRequesterTimeoutError: LocalizedError {
 
 class TimeoutIdentitySessionRequester: SharedIdentitySessionRequester {
 
-    let delay: Int
+    let delay: TimeInterval
 
-    init(delay: Int) {
+    init(delay: TimeInterval) {
         self.delay = delay
     }
 
     func requestIdentity(for token: UUID, _ completion: @escaping (SharedIdentitySessionResponse) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             completion(.error(SharedIdentitySessionRequesterTimeoutError()))
         }
     }
