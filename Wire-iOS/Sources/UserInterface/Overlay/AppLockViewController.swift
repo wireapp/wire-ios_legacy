@@ -150,7 +150,7 @@ private let zmLog = ZMSLog(tag: "UI")
 extension AppLockViewController {
     @objc func applicationWillResignActive() {
         if AppLock.isActive {
-            self.resignKeyboard()
+            self.resignKeyboard() ///TODO: remember the current keyboard
             self.dimContents = true
         }
     }
@@ -170,6 +170,5 @@ extension AppLockViewController {
     
     @objc func applicationDidBecomeActive() {
         self.showUnlockIfNeeded()
-        self.resignKeyboardIfNeeded()
     }
 }
