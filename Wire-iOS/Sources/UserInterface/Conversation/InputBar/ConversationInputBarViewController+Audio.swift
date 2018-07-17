@@ -31,7 +31,7 @@ extension ConversationInputBarViewController {
         }
     }
 
-    @objc func setupAppStateObserver() {
+    @objc func setupAppLockedObserver() {
         NotificationCenter.default.addObserver(self,
         selector: #selector(ConversationInputBarViewController.appUnlocked),
         name: .appUnlocked,

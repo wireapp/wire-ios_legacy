@@ -82,7 +82,6 @@ private let zmLog = ZMSLog(tag: "UI")
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         recorder.stopRecording()
-//        delegate?.audioRecordViewControllerDidCancel(self) ///TODO: prepare for resume the record process
     }
     
     func configureViews() {
