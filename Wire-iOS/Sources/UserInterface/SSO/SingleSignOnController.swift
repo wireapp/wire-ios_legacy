@@ -96,7 +96,9 @@ import Foundation
             return requireInternalFailure("Should never try to login with invalid code.")
         }
 
-        requester.requestIdentity(for: uuid) { [handleResponse] response in
+        delegate?.controller(self, showLoadingView: true)
+        requester.requestIdentity(for: uuid) { [delegate, handleResponse] response in
+            delegate?.controller(self, showLoadingView: true)
             handleResponse(response)
         }
     }

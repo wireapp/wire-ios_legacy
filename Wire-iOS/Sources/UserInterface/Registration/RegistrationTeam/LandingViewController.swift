@@ -27,10 +27,11 @@ import Cartography
 }
 
 /// Landing screen for choosing create team or personal account
-final class LandingViewController: UIViewController {
+final class LandingViewController: UIViewController, SingleSignOnControllerDelegate {
     weak var delegate: LandingViewControllerDelegate?
 
     fileprivate var device: DeviceProtocol
+    private let singleSignOnController = SingleSignOnController()
 
     // MARK: - UI styles
 
@@ -167,7 +168,7 @@ final class LandingViewController: UIViewController {
         [logoView, headline].forEach(headlineStackView.addArrangedSubview)
         headerContainerView.addSubview(headlineStackView)
         
-        [createAccountButton, createTeamButton].forEach() { button in
+        [createAccountButton, createTeamButton].forEach { button in
             buttonStackView.addArrangedSubview(button)
         }
 
@@ -175,6 +176,7 @@ final class LandingViewController: UIViewController {
         navigationBar.pushItem(navigationItem, animated: false)
         navigationBar.tintColor = .black
         view.addSubview(navigationBar)
+        singleSignOnController.delegate = self
 
         self.createConstraints()
         self.configureAccessibilityElements()
@@ -187,6 +189,17 @@ final class LandingViewController: UIViewController {
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
             queue: nil) { _ in self.updateBarButtonItem()  }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        singleSignOnController.isAutoDetectionEnabled = true
+        singleSignOnController.detectLoginCode()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        singleSignOnController.isAutoDetectionEnabled = false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -363,6 +376,16 @@ final class LandingViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    // MARK: - SingleSignOnControllerDelegate
+    
+    func controller(_ controller: SingleSignOnController, presentAlert alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
+    func controller(_ controller: SingleSignOnController, showLoadingView: Bool) {
+        self.showLoadingView = showLoadingView
     }
 
 }
