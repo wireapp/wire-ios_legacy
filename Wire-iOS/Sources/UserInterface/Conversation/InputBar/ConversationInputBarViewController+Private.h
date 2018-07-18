@@ -52,6 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) IconButton *sendButton;
 @property (nonatomic) IconButton *hourglassButton;
 
+@property (nonatomic) BOOL inRotation;
+
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;
