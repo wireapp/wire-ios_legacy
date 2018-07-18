@@ -43,11 +43,4 @@ extension ConversationInputBarViewController {
 
         updatePopoverSourceRect()
     }
-
-    fileprivate func updatePopoverSourceRect() {
-        guard let presentedPopover = presentedPopover,
-            let popoverPointToView = popoverPointToView else { return }
-
-        presentedPopover.sourceRect = popoverPointToView.popoverSourceRect(from: self)
-    }
 }
