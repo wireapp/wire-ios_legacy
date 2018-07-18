@@ -1171,7 +1171,7 @@
 		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
 		EFCDA974209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */; };
 		EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */; };
-		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+Files.swift */; };
+		EFDACABB20FF84B900791207 /* UIDocumentMenuViewController+Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* UIDocumentMenuViewController+Popover.swift */; };
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
 		EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */; };
@@ -2811,7 +2811,7 @@
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
 		EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+ImageBorder.swift"; sourceTree = "<group>"; };
 		EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+OrientationAndSize.swift"; sourceTree = "<group>"; };
-		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Files.swift"; sourceTree = "<group>"; };
+		EFDACABA20FF84B900791207 /* UIDocumentMenuViewController+Popover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDocumentMenuViewController+Popover.swift"; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
@@ -4862,9 +4862,9 @@
 				874D0EB21D3E6D77003DF418 /* ConversationInputBarViewController+Camera.swift */,
 				87AAD74D1CF2E4FF002760FF /* ConversationInputBarViewController+Files.h */,
 				87AAD74B1CF2E312002760FF /* ConversationInputBarViewController+Files.m */,
-				EFDACABA20FF84B900791207 /* ConversationInputBarViewController+Files.swift */,
 				EF24036B20A1A2EE002813BE /* ConversationInputBarViewController+ImagePicker.swift */,
 				EF71BFD320EBC39000894A7C /* ConversationInputBarViewController+Location.swift */,
+				EFDACABA20FF84B900791207 /* UIDocumentMenuViewController+Popover.swift */,
 				EF71BFD520EBCC5F00894A7C /* UIView+IPadPopover.swift */,
 				EF71BFD720EBD0DC00894A7C /* UIPopoverPresentationController+config.swift */,
 				87BEB03A1D3E44BA00DE9575 /* CameraKeyboard */,
@@ -6787,7 +6787,7 @@
 				1682AEC120483FA5003A052A /* GroupDetailsSectionController.swift in Sources */,
 				CEEEAF071CB562BF00111759 /* PlaceholderConversationView.swift in Sources */,
 				872CB8B519E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m in Sources */,
-				EFDACABB20FF84B900791207 /* ConversationInputBarViewController+Files.swift in Sources */,
+				EFDACABB20FF84B900791207 /* UIDocumentMenuViewController+Popover.swift in Sources */,
 				870EB7701C60E9B400F274A3 /* CannotDecryptCell.swift in Sources */,
 				879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */,
 				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,

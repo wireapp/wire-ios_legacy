@@ -18,22 +18,19 @@
 
 import Foundation
 
-extension ConversationInputBarViewController: PopoverPresenter {
-    
-}
+extension ConversationInputBarViewController: PopoverPresenter { }
 
 extension ConversationInputBarViewController {
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
 
-        if let coordinator = coordinator {
-            super.viewWillTransition(to: size, with: coordinator)
-            self.inRotation = true
+        guard let coordinator = coordinator else { return }
 
-            coordinator.animate(alongsideTransition: { (context) in
-            }) { _ in
-                self.inRotation = false
-                self.updatePopoverSourceRect()
-            }
+        super.viewWillTransition(to: size, with: coordinator)
+        self.inRotation = true
+
+        coordinator.animate(alongsideTransition: nil) { _ in
+            self.inRotation = false
+            self.updatePopoverSourceRect()
         }
     }
 
@@ -49,9 +46,7 @@ extension ConversationInputBarViewController {
 
     fileprivate func updatePopoverSourceRect() {
         guard let presentedPopover = presentedPopover,
-              let popoverPointToView = popoverPointToView else {
-            return
-        }
+            let popoverPointToView = popoverPointToView else { return }
 
         presentedPopover.sourceRect = popoverPointToView.popoverSourceRect(from: self)
     }

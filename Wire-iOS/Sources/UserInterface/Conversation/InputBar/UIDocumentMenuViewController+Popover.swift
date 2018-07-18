@@ -18,10 +18,6 @@
 
 import Foundation
 
-extension ConversationInputBarViewController {
-    
-}
-
 extension UIDocumentMenuViewController {
 
     @objc func configPopover(popoverPresenter: PopoverPresenter,
