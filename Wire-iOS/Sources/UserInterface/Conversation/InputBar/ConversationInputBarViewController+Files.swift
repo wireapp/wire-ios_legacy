@@ -24,8 +24,13 @@ extension ConversationInputBarViewController {
 
 extension UIDocumentMenuViewController {
 
-    @objc func configPopover(popoverPresenter: PopoverPresenter, sourceView: UIView, delegate: UIPopoverPresentationControllerDelegate, pointToView: UIView){
+    @objc func configPopover(popoverPresenter: PopoverPresenter,
+                             sourceView: UIView,
+                             delegate: UIPopoverPresentationControllerDelegate,
+                             pointToView: UIView) {
+
         let popover = self.popoverPresentationController
+
         popover?.delegate = delegate
         popover?.config(from: popoverPresenter, pointToView: pointToView, sourceView: sourceView, backgroundColor: nil, permittedArrowDirections: .down)
     }

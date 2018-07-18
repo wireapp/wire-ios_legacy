@@ -23,32 +23,36 @@ extension ConversationInputBarViewController: PopoverPresenter {
 }
 
 extension ConversationInputBarViewController {
-    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
 
         if let coordinator = coordinator {
             super.viewWillTransition(to: size, with: coordinator)
             self.inRotation = true
 
             coordinator.animate(alongsideTransition: { (context) in
-                self.updatePopoverSourceRect()
             }) { _ in
                 self.inRotation = false
+                self.updatePopoverSourceRect()
             }
         }
     }
 
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+
+        guard !self.inRotation else { return }
 
         updatePopoverSourceRect()
     }
 
     fileprivate func updatePopoverSourceRect() {
-        ///TODO: if popoverPresentationController is nil, may be it was in compact mode and full screen UI
-        if let presentedPopover = presentedPopover,
-            let popoverPointToView = popoverPointToView{
-            presentedPopover.sourceRect = popoverPointToView.popoverSourceRect(from: self)
+        guard let presentedPopover = presentedPopover,
+              let popoverPointToView = popoverPointToView else {
+            return
         }
+
+        presentedPopover.sourceRect = popoverPointToView.popoverSourceRect(from: self)
     }
 }
