@@ -18,6 +18,10 @@
 
 import Foundation
 
+extension ConversationInputBarViewController: PopoverPresenter {
+    
+}
+
 extension ConversationInputBarViewController {
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
 
@@ -37,13 +41,14 @@ extension ConversationInputBarViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
 
-        self.updatePopoverSourceRect()
+        updatePopoverSourceRect()
     }
 
     fileprivate func updatePopoverSourceRect() {
-        if let popoverPresentationController = popoverPresentationController,
+        ///TODO: if popoverPresentationController is nil, may be it was in compact mode and full screen UI
+        if let presentedPopover = presentedPopover,
             let popoverSourceView = popoverSourceView{
-            popoverPresentationController.sourceRect = popoverSourceView.popoverSourceRect(from: self)
+            presentedPopover.sourceRect = popoverSourceView.popoverSourceRect(from: self)
         }
     }
 }

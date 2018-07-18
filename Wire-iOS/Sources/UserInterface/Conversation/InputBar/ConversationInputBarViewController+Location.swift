@@ -27,13 +27,10 @@ extension ConversationInputBarViewController {
         
         if let popover = locationSelectionViewController.popoverPresentationController,
            let imageView = sender?.imageView {
-            popoverPresentationController = popover
-            popoverSourceView = imageView
 
             popover.config(from: self,
                            pointToView: imageView,
                            sourceView: parentViewConvtoller.view)
-
         }
 
         locationSelectionViewController.title = conversation.displayName
