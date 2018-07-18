@@ -199,6 +199,7 @@
 		54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF9E271E813BA500323D2E /* DebugAlert.swift */; };
 		55A42A701FC872600056752F /* CallQualityScoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */; };
 		55DD5C341FA236F60082170C /* CallQualityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityController.swift */; };
+		5E0EB1ED20FF6DAB00B5DC2B /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EB1EC20FF6DAB00B5DC2B /* TaskBrowserViewController.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
 		5E2B13E820E67EA7002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */; };
 		5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */; };
@@ -1513,6 +1514,7 @@
 		54FF9E271E813BA500323D2E /* DebugAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAlert.swift; sourceTree = "<group>"; };
 		55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityScoreProvider.swift; sourceTree = "<group>"; };
 		55DD5C331FA236F60082170C /* CallQualityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityController.swift; sourceTree = "<group>"; };
+		5E0EB1EC20FF6DAB00B5DC2B /* TaskBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskBrowserViewController.swift; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
 		5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewLayout.swift; sourceTree = "<group>"; };
 		5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewLayoutTests.swift; sourceTree = "<group>"; };
@@ -3351,12 +3353,13 @@
 			path = CallQualityController;
 			sourceTree = "<group>";
 		};
-		5E0EAFD120FDDE9100B5DC2B /* SharedIdentity */ = {
+		5E0EAFD120FDDE9100B5DC2B /* Company */ = {
 			isa = PBXGroup;
 			children = (
+				5E0EB1EC20FF6DAB00B5DC2B /* TaskBrowserViewController.swift */,
 				5E8EE1F420FCFEA200DB1F9B /* TimeoutIdentitySessionRequester.swift */,
 			);
-			path = SharedIdentity;
+			path = Company;
 			sourceTree = "<group>";
 		};
 		5E2B13E520E67206002F27E2 /* CollectionLayouts */ = {
@@ -5533,7 +5536,7 @@
 			children = (
 				EF2126C01FB9DFE300625A9B /* NavigationController.h */,
 				EF2126F81FB9DFE300625A9B /* NavigationController.m */,
-				5E0EAFD120FDDE9100B5DC2B /* SharedIdentity */,
+				5E0EAFD120FDDE9100B5DC2B /* Company */,
 				EF2126B51FB9DFE300625A9B /* RegistrationTeam */,
 				EF2126B61FB9DFE300625A9B /* RegistrationPersonal */,
 			);
@@ -6548,6 +6551,7 @@
 				D5168F2A2008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift in Sources */,
 				BFE4185D209B06D600503C7C /* AVSMediaManager+Helper.swift in Sources */,
 				5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */,
+				5E0EB1ED20FF6DAB00B5DC2B /* TaskBrowserViewController.swift in Sources */,
 				D5189473204D543C00C095C1 /* InitialSyncObserver.swift in Sources */,
 				871BC3611D34F94200DF0793 /* Settings+ColorScheme.m in Sources */,
 				87DCF49E1D34E9E600BB420F /* ModalTopBar.swift in Sources */,

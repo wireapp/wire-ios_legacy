@@ -35,6 +35,14 @@ class TimeoutIdentitySessionRequester: SharedIdentitySessionRequester {
     }
 
     func requestIdentity(for token: UUID, _ completion: @escaping (SharedIdentitySessionResponse) -> Void) {
+//        let browser = TaskBrowserViewController(nibName: nil, bundle: nil)
+//        let controller = UINavigationController(rootViewController: browser)
+//
+//        UIApplication.shared.wr_topmostController(onlyFullScreen: true)?.present(controller, animated: true) {
+//            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+//            browser.open(URL(string: "https://sso.wire.com/initiate-login/\(token.transportString())")!)
+//        }
+
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             completion(.error(SharedIdentitySessionRequesterTimeoutError()))
         }
