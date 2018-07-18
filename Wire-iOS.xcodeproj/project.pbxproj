@@ -4742,7 +4742,7 @@
 				D5C34E8F203D75CA004A0986 /* Conversation Options */,
 				8FC852BC199245760008B66B /* UserProfile */,
 				874547691E9E54D500C206E5 /* SelfProfile */,
-				BFFA182920FDE23600F64377 /* SSO */,
+				BFFA182920FDE23600F64377 /* Company Login */,
 				8775BF1F2008CF2700A8AD93 /* Services */,
 				8FC8517F199245760008B66B /* Conversation */,
 				8FC851C0199245760008B66B /* ConversationList */,
@@ -5441,13 +5441,13 @@
 			path = "Haptic Feedback";
 			sourceTree = "<group>";
 		};
-		BFFA182920FDE23600F64377 /* SSO */ = {
+		BFFA182920FDE23600F64377 /* Company Login */ = {
 			isa = PBXGroup;
 			children = (
 				BFFA182A20FDE93400F64377 /* SingleSignOnController.swift */,
 				BFFA182720FDE22B00F64377 /* UIAlertController+CompanyLogin.swift */,
 			);
-			path = SSO;
+			path = "Company Login";
 			sourceTree = "<group>";
 		};
 		CE8E4FB61DF17BBE0009F437 /* TextTransform */ = {
