@@ -372,12 +372,6 @@
 		871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */; };
 		871BC2591D34F8F800DF0793 /* VerticalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A31D34F8F800DF0793 /* VerticalTransition.m */; };
 		871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A51D34F8F800DF0793 /* ZoomTransition.m */; };
-		871BC25B1D34F8F800DF0793 /* ColorBandsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A91D34F8F800DF0793 /* ColorBandsView.m */; };
-		871BC25D1D34F8F800DF0793 /* ColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1AE1D34F8F800DF0793 /* ColorPickerController.m */; };
-		871BC25E1D34F8F800DF0793 /* ColorPickerKnobView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B01D34F8F800DF0793 /* ColorPickerKnobView.m */; };
-		871BC25F1D34F8F800DF0793 /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B21D34F8F800DF0793 /* ColorPickerView.m */; };
-		871BC2601D34F8F800DF0793 /* IdentifiableColor+AccentColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B41D34F8F800DF0793 /* IdentifiableColor+AccentColors.m */; };
-		871BC2611D34F8F800DF0793 /* IdentifiableColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */; };
 		871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */; };
 		871BC26E1D34F8F800DF0793 /* PassthroughWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D11D34F8F800DF0793 /* PassthroughWindow.m */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.m */; };
@@ -1723,19 +1717,6 @@
 		871BC1A31D34F8F800DF0793 /* VerticalTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerticalTransition.m; sourceTree = "<group>"; };
 		871BC1A41D34F8F800DF0793 /* ZoomTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomTransition.h; sourceTree = "<group>"; };
 		871BC1A51D34F8F800DF0793 /* ZoomTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomTransition.m; sourceTree = "<group>"; };
-		871BC1A81D34F8F800DF0793 /* ColorBandsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorBandsView.h; sourceTree = "<group>"; };
-		871BC1A91D34F8F800DF0793 /* ColorBandsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorBandsView.m; sourceTree = "<group>"; };
-		871BC1AC1D34F8F800DF0793 /* ColorPickerController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ColorPickerController+Internal.h"; sourceTree = "<group>"; };
-		871BC1AD1D34F8F800DF0793 /* ColorPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerController.h; sourceTree = "<group>"; };
-		871BC1AE1D34F8F800DF0793 /* ColorPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerController.m; sourceTree = "<group>"; };
-		871BC1AF1D34F8F800DF0793 /* ColorPickerKnobView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerKnobView.h; sourceTree = "<group>"; };
-		871BC1B01D34F8F800DF0793 /* ColorPickerKnobView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerKnobView.m; sourceTree = "<group>"; };
-		871BC1B11D34F8F800DF0793 /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
-		871BC1B21D34F8F800DF0793 /* ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerView.m; sourceTree = "<group>"; };
-		871BC1B31D34F8F800DF0793 /* IdentifiableColor+AccentColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IdentifiableColor+AccentColors.h"; sourceTree = "<group>"; };
-		871BC1B41D34F8F800DF0793 /* IdentifiableColor+AccentColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IdentifiableColor+AccentColors.m"; sourceTree = "<group>"; };
-		871BC1B51D34F8F800DF0793 /* IdentifiableColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentifiableColor.h; sourceTree = "<group>"; };
-		871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IdentifiableColor.m; sourceTree = "<group>"; };
 		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughTouchesView.h; sourceTree = "<group>"; };
 		871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassthroughTouchesView.m; sourceTree = "<group>"; };
 		871BC1D01D34F8F800DF0793 /* PassthroughWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughWindow.h; sourceTree = "<group>"; };
@@ -3760,7 +3741,6 @@
 				5EA73D8420D900FF0001D106 /* DetailsCollectionViewCell.swift */,
 				5EA73D8520D900FF0001D106 /* ImageContainer.swift */,
 				5EA73D8320D900FE0001D106 /* SeparatorCollectionViewCell.swift */,
-				871BC1A71D34F8F800DF0793 /* AccentColorPicker */,
 				EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */,
 				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */,
 				871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */,
@@ -3798,26 +3778,6 @@
 				EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		871BC1A71D34F8F800DF0793 /* AccentColorPicker */ = {
-			isa = PBXGroup;
-			children = (
-				871BC1A81D34F8F800DF0793 /* ColorBandsView.h */,
-				871BC1A91D34F8F800DF0793 /* ColorBandsView.m */,
-				871BC1AC1D34F8F800DF0793 /* ColorPickerController+Internal.h */,
-				871BC1AD1D34F8F800DF0793 /* ColorPickerController.h */,
-				871BC1AE1D34F8F800DF0793 /* ColorPickerController.m */,
-				871BC1AF1D34F8F800DF0793 /* ColorPickerKnobView.h */,
-				871BC1B01D34F8F800DF0793 /* ColorPickerKnobView.m */,
-				871BC1B11D34F8F800DF0793 /* ColorPickerView.h */,
-				871BC1B21D34F8F800DF0793 /* ColorPickerView.m */,
-				871BC1B31D34F8F800DF0793 /* IdentifiableColor+AccentColors.h */,
-				871BC1B41D34F8F800DF0793 /* IdentifiableColor+AccentColors.m */,
-				871BC1B51D34F8F800DF0793 /* IdentifiableColor.h */,
-				871BC1B61D34F8F800DF0793 /* IdentifiableColor.m */,
-			);
-			path = AccentColorPicker;
 			sourceTree = "<group>";
 		};
 		871BC1DC1D34F8F800DF0793 /* UserImageView */ = {
@@ -6607,7 +6567,6 @@
 				5EBC343C20EE49D700AFB6DF /* DecodeImageOperation.swift in Sources */,
 				BF38FAF11C9B1D0500E2ACBB /* ConversationTitleView.swift in Sources */,
 				871BC2701D34F8F800DF0793 /* StackView.m in Sources */,
-				871BC25F1D34F8F800DF0793 /* ColorPickerView.m in Sources */,
 				EF2127101FB9DFE300625A9B /* SignInViewController.m in Sources */,
 				871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */,
 				8F89140D1A9F287E0056AB0C /* ConnectRequestsCell.m in Sources */,
@@ -6632,7 +6591,6 @@
 				BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */,
 				16D49328203DCC88008DDFFA /* GroupDetailsViewController.swift in Sources */,
 				BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */,
-				871BC25B1D34F8F800DF0793 /* ColorBandsView.m in Sources */,
 				EF2127221FB9DFE300625A9B /* FormFlowViewController.m in Sources */,
 				871BC3621D34F94200DF0793 /* Settings.m in Sources */,
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
@@ -6721,7 +6679,6 @@
 				87D679E61EBC8002005BEB4C /* String+Compatibility.swift in Sources */,
 				8719FD671C88802C005FBEC0 /* Delay.swift in Sources */,
 				871BC2841D34F8F800DF0793 /* UIApplication+StatusBar.swift in Sources */,
-				871BC2611D34F8F800DF0793 /* IdentifiableColor.m in Sources */,
 				BF27AE4B1E9E4CED00809A2B /* MessageDraft.swift in Sources */,
 				87E4D2CA1FC6E39800F3C664 /* CharacterInputField.swift in Sources */,
 				D5189475204ED04400C095C1 /* ParticipantsInvitePeopleView.swift in Sources */,
@@ -6792,7 +6749,6 @@
 				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,
 				871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */,
 				EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */,
-				871BC2601D34F8F800DF0793 /* IdentifiableColor+AccentColors.m in Sources */,
 				8FC853FE199245770008B66B /* AppDelegate+Hockey.m in Sources */,
 				BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */,
 				8711A5A01E0C320100043ACF /* FloatingPoint.swift in Sources */,
@@ -6840,7 +6796,6 @@
 				D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */,
 				D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */,
 				871BC2531D34F8F800DF0793 /* MediaThumbnail.m in Sources */,
-				871BC25E1D34F8F800DF0793 /* ColorPickerKnobView.m in Sources */,
 				871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */,
 				871BC2951D34F8F800DF0793 /* UIViewController+Errors.m in Sources */,
 				EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */,
@@ -7065,7 +7020,6 @@
 				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
 				8FC85422199245770008B66B /* ZMConversation+Validation.m in Sources */,
-				871BC25D1D34F8F800DF0793 /* ColorPickerController.m in Sources */,
 				EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */,
 				BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */,
 				EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */,
