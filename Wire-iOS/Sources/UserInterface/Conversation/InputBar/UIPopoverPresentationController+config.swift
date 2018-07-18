@@ -28,7 +28,7 @@ import Foundation
 }
 
 extension UIPopoverPresentationController {
-    @objc public func config(from popoverPresenter: PopoverPresenter,
+    public func config(from popoverPresenter: PopoverPresenter,
                              pointToView: UIView,
                              sourceView: UIView,
                              backgroundColor: UIColor? = nil,

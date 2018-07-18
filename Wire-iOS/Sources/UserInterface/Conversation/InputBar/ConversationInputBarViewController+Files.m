@@ -132,10 +132,8 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
                               handler:^{
                                   [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
                               }];
-    
-    UIPopoverPresentationController* popover = docController.popoverPresentationController;
-    popover.delegate = self;
-    [popover configFrom:self pointToView:sender.imageView sourceView:self.parentViewController.view backgroundColor:nil permittedArrowDirections:UIPopoverArrowDirectionDown];
+
+    [docController configPopoverWithPopoverPresenter:self sourceView:self.parentViewController.view delegate:self pointToView:sender.imageView];
 
     [self.parentViewController presentViewController:docController animated:YES completion:^() {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];

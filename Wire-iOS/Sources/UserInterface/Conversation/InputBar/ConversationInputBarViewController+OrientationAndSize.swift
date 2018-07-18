@@ -47,8 +47,8 @@ extension ConversationInputBarViewController {
     fileprivate func updatePopoverSourceRect() {
         ///TODO: if popoverPresentationController is nil, may be it was in compact mode and full screen UI
         if let presentedPopover = presentedPopover,
-            let popoverSourceView = popoverSourceView{
-            presentedPopover.sourceRect = popoverSourceView.popoverSourceRect(from: self)
+            let popoverPointToView = popoverPointToView{
+            presentedPopover.sourceRect = popoverPointToView.popoverSourceRect(from: self)
         }
     }
 }
