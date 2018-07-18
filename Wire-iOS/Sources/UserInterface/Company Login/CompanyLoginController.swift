@@ -38,13 +38,22 @@ import Foundation
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
 /// `SharedIdentitySessionRequestDetector` can be provided.
 ///
-
 @objc public final class CompanyLoginController: NSObject {
 
     @objc weak var delegate: CompanyLoginControllerDelegate?
-    @objc(autoDetectionEnabled) var isAutoDetectionEnabled = true
+
+    @objc(autoDetectionEnabled) var isAutoDetectionEnabled = true {
+        didSet {
+            isAutoDetectionEnabled ? startPollingTimer() : stopPollingTimer()
+        }
+    }
+
+    // Whether the presence of a code should be checked periodically on iPad.
+    // This is in order to work around https://openradar.appspot.com/28771678.
+    private static let isPollingEnabled = true
 
     private var token: Any?
+    private var pollingTimer: Timer?
     private let detector: SharedIdentitySessionRequestDetector
     private let requester: SharedIdentitySessionRequester
 
@@ -72,27 +81,46 @@ import Foundation
             forName: .UIApplicationWillEnterForeground,
             object: nil,
             queue: .main,
-            using: { [detectLoginCode] _ in detectLoginCode() }
+            using: { [internalDetectLoginCode] _ in internalDetectLoginCode(false) }
         )
+    }
+    
+    private func startPollingTimer() {
+        guard UIDevice.current.userInterfaceIdiom == .pad, CompanyLoginController.isPollingEnabled else { return }
+        pollingTimer = Timer.allVersionCompatibleScheduledTimer(
+            withTimeInterval: 1,
+            repeats: true,
+            block: { [internalDetectLoginCode] _ in internalDetectLoginCode(true) }
+        )
+    }
+    
+    private func stopPollingTimer() {
+        pollingTimer?.invalidate()
+        pollingTimer = nil
     }
 
     // MARK: - Login Prompt Presentation
+    
+    @objc func detectLoginCode() {
+        internalDetectLoginCode(onlyNew: false)
+    }
 
     /// This method will be called when the app comes back to the foreground.
     /// We then check if the clipboard contains a valid SSO login code.
     /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
-    @objc func detectLoginCode() {
+    @objc func internalDetectLoginCode(onlyNew: Bool) {
         guard isAutoDetectionEnabled else { return }
-        detector.detectCopiedRequestCode { [presentLoginAlert] code in
-            code.apply(presentLoginAlert)
+        detector.detectCopiedRequestCode { [presentLoginAlert] result in
+            guard let result = result, !onlyNew || result.isNew else { return }
+            presentLoginAlert(result.code)
         }
     }
 
     /// Presents the SSO login alert. If the code is available in the clipboard, we pre-fill it.
     /// Call this method when you need to present the alert in response to user interaction.
     @objc func displayLoginCodePrompt() {
-        detector.detectCopiedRequestCode { code in
-            self.presentLoginAlert(prefilledCode: code)
+        detector.detectCopiedRequestCode { [presentLoginAlert] result in
+            presentLoginAlert(result?.code)
         }
     }
 
