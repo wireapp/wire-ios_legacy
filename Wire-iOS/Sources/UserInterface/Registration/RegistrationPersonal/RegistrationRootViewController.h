@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
     AuthenticationFlowOnlyRegistration
 };
 
-@class ZMIncompleteRegistrationUser, LoginCredentials, SingleSignOnController;
+@class ZMIncompleteRegistrationUser, LoginCredentials;
 
 @interface RegistrationRootViewController : FormFlowViewController
 

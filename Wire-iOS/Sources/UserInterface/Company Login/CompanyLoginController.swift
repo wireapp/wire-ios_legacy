@@ -18,30 +18,30 @@
 
 import Foundation
 
-@objc protocol SingleSignOnControllerDelegate: class {
+@objc protocol CompanyLoginControllerDelegate: class {
 
-    /// The `SingleSignOnController` will never present any alerts on its own and will
+    /// The `CompanyLoginController` will never present any alerts on its own and will
     /// always ask its delegate to handle the actual presentation of the alerts.
-    func controller(_ controller: SingleSignOnController, presentAlert: UIAlertController)
+    func controller(_ controller: CompanyLoginController, presentAlert: UIAlertController)
     
-    /// The `SingleSignOnController` will never present any loading views on its own and will
+    /// The `CompanyLoginController` will never present any loading views on its own and will
     /// always ask its delegate to handle the actual presentation of loading indicators.
-    func controller(_ controller: SingleSignOnController, showLoadingView: Bool)
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool)
 
 }
 
 ///
-/// `SingleSignOnController` handles the logic of deciding when to present the SSO login alert.
-/// The controller will ask its `SingleSignOnControllerDelegate` to present alerts and never do any
+/// `CompanyLoginController` handles the logic of deciding when to present the company login alert.
+/// The controller will ask its `CompanyLoginControllerDelegate` to present alerts and never do any
 /// presentation on its own.
 ///
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
 /// `SharedIdentitySessionRequestDetector` can be provided.
 ///
 
-@objc public final class SingleSignOnController: NSObject {
+@objc public final class CompanyLoginController: NSObject {
 
-    @objc weak var delegate: SingleSignOnControllerDelegate?
+    @objc weak var delegate: CompanyLoginControllerDelegate?
     @objc(autoDetectionEnabled) var isAutoDetectionEnabled = true
 
     private var token: Any?
@@ -50,12 +50,12 @@ import Foundation
 
     // MARK: - Initialization
 
-    /// Create a new `SingleSignOnController` instance using the standard detector and requester.
+    /// Create a new `CompanyLoginController` instance using the standard detector and requester.
     @objc public override convenience init() {
         self.init(detector: .shared, requester: TimeoutIdentitySessionRequester(delay: 2))
     }
 
-    /// Create a new `SingleSignOnController` instance using the specified requester.
+    /// Create a new `CompanyLoginController` instance using the specified requester.
     public required init(detector: SharedIdentitySessionRequestDetector, requester: SharedIdentitySessionRequester) {
         self.detector = detector
         self.requester = requester

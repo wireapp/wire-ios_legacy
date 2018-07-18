@@ -27,11 +27,11 @@ import Cartography
 }
 
 /// Landing screen for choosing create team or personal account
-final class LandingViewController: UIViewController, SingleSignOnControllerDelegate {
+final class LandingViewController: UIViewController, CompanyLoginControllerDelegate {
     weak var delegate: LandingViewControllerDelegate?
 
     fileprivate var device: DeviceProtocol
-    private let singleSignOnController = SingleSignOnController()
+    private let companyLoginController = CompanyLoginController()
 
     // MARK: - UI styles
 
@@ -176,7 +176,7 @@ final class LandingViewController: UIViewController, SingleSignOnControllerDeleg
         navigationBar.pushItem(navigationItem, animated: false)
         navigationBar.tintColor = .black
         view.addSubview(navigationBar)
-        singleSignOnController.delegate = self
+        companyLoginController.delegate = self
 
         self.createConstraints()
         self.configureAccessibilityElements()
@@ -193,13 +193,13 @@ final class LandingViewController: UIViewController, SingleSignOnControllerDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        singleSignOnController.isAutoDetectionEnabled = true
-        singleSignOnController.detectLoginCode()
+        companyLoginController.isAutoDetectionEnabled = true
+        companyLoginController.detectLoginCode()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        singleSignOnController.isAutoDetectionEnabled = false
+        companyLoginController.isAutoDetectionEnabled = false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -378,13 +378,13 @@ final class LandingViewController: UIViewController, SingleSignOnControllerDeleg
         return true
     }
     
-    // MARK: - SingleSignOnControllerDelegate
+    // MARK: - CompanyLoginControllerDelegate
     
-    func controller(_ controller: SingleSignOnController, presentAlert alert: UIAlertController) {
+    func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
         present(alert, animated: true)
     }
     
-    func controller(_ controller: SingleSignOnController, showLoadingView: Bool) {
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
         self.showLoadingView = showLoadingView
     }
 

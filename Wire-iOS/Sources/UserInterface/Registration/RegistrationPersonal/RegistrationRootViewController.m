@@ -29,9 +29,9 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, TabBarControllerDelegate, SingleSignOnControllerDelegate>
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, TabBarControllerDelegate, CompanyLoginControllerDelegate>
 
-@property (nonatomic) SingleSignOnController *ssoController;
+@property (nonatomic) CompanyLoginController *companyLoginController;
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
@@ -60,7 +60,7 @@
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
-        self.ssoController = [[SingleSignOnController alloc] init];
+        self.companyLoginController = [[CompanyLoginController alloc] init];
         self.flowType = flow;
     }
 
@@ -70,7 +70,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.ssoController.delegate = self;
+    self.companyLoginController.delegate = self;
 
     self.view.opaque = NO;
     self.view.backgroundColor = [UIColor clearColor];
@@ -132,14 +132,14 @@
     [super viewWillAppear:animated];
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
     [self updateCompanyLoginButton];
-    self.ssoController.autoDetectionEnabled = YES;
-    [self.ssoController detectLoginCode];
+    self.companyLoginController.autoDetectionEnabled = YES;
+    [self.companyLoginController detectLoginCode];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    self.ssoController.autoDetectionEnabled = NO;
+    self.companyLoginController.autoDetectionEnabled = NO;
 }
 
 - (void)setupBackButton
@@ -270,7 +270,7 @@
 
 - (void)showCompanyLoginAlert
 {
-    [self.ssoController displayLoginCodePrompt];
+    [self.companyLoginController displayLoginCodePrompt];
 }
 
 #pragma mark - FormStepDelegate
@@ -293,14 +293,14 @@
     [self updateCompanyLoginButton];
 }
 
-#pragma mark - SingleSignOnControllerDelegate
+#pragma mark - CompanyLoginControllerDelegate
 
-- (void)controller:(SingleSignOnController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert
+- (void)controller:(CompanyLoginController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert
 {
     [self presentViewController:presentAlert animated:YES completion:nil];
 }
 
-- (void)controller:(SingleSignOnController *)controller showLoadingView:(BOOL)showLoadingView
+- (void)controller:(CompanyLoginController *)controller showLoadingView:(BOOL)showLoadingView
 {
     self.showLoadingView = showLoadingView;
 }
