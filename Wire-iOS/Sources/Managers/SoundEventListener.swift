@@ -30,6 +30,21 @@ extension ZMConversationMessage {
     var isFirstMessage: Bool {
         return (self.conversation?.messages.count ?? 0) == 1
     }
+    
+    var isSystemMessageWithSoundNotification: Bool {
+        guard isSystem, let data = systemMessageData else {
+            return false
+        }
+        
+        switch data.systemMessageType {
+        // No sound must be played for the case when the user participated in the call.
+        case .performedCall:
+            return false
+            
+        default:
+            return true
+        }
+    }
 }
 
 class SoundEventListener : NSObject {
@@ -96,8 +111,8 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             let isSilencedConversation = message.conversation?.isSilenced ?? false
             
             provideHapticFeedback(for: message)
-            
-            guard (message.isNormal || message.isSystem) &&
+
+            guard (message.isNormal || message.isSystemMessageWithSoundNotification) &&
                   message.isRecentMessage &&
                   !message.isSentBySelfUser &&
                   !message.isFirstMessage &&
@@ -106,7 +121,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             }
             
             let isFirstUnreadMessage = message.isEqual(message.conversation?.firstUnreadMessage)
-                        
+
             if isFirstUnreadMessage {
                 playSoundIfAllowed(MediaManagerSoundFirstMessageReceivedSound)
             } else {
