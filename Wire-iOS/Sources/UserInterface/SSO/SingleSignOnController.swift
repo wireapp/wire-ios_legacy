@@ -30,26 +30,34 @@ import Foundation
 
 }
 
+///
 /// `SingleSignOnController` handles the logic of deciding when to present the SSO login alert.
 /// The controller will ask its `SingleSignOnControllerDelegate` to present alerts and never do any
-/// presentation on it's own. It will also query its delegate before presenting any SSO login alert.
-/// A concrete implementation of the internally used `SharedIdentitySessionRequester` can be provided.
+/// presentation on its own.
+///
+/// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
+/// `SharedIdentitySessionRequestDetector` can be provided.
+///
+
 @objc public final class SingleSignOnController: NSObject {
 
     @objc weak var delegate: SingleSignOnControllerDelegate?
     @objc(autoDetectionEnabled) var isAutoDetectionEnabled = true
 
     private var token: Any?
-    private let detector = SharedIdentitySessionRequestDetector.shared
+    private let detector: SharedIdentitySessionRequestDetector
     private let requester: SharedIdentitySessionRequester
-    
-    /// Create a new `SingleSignOnController` instance using the standard requester.
+
+    // MARK: - Initialization
+
+    /// Create a new `SingleSignOnController` instance using the standard detector and requester.
     @objc public override convenience init() {
-        self.init(requester: TimeoutIdentitySessionRequester(delay: 2))
+        self.init(detector: .shared, requester: TimeoutIdentitySessionRequester(delay: 2))
     }
 
     /// Create a new `SingleSignOnController` instance using the specified requester.
-    public required init(requester: SharedIdentitySessionRequester) {
+    public required init(detector: SharedIdentitySessionRequestDetector, requester: SharedIdentitySessionRequester) {
+        self.detector = detector
         self.requester = requester
         super.init()
         setupObservers()
@@ -68,6 +76,8 @@ import Foundation
         )
     }
 
+    // MARK: - Login Prompt Presentation
+
     /// This method will be called when the app comes back to the foreground.
     /// We then check if the clipboard contains a valid SSO login code.
     /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
@@ -79,6 +89,7 @@ import Foundation
     }
 
     /// Presents the SSO login alert. If the code is available in the clipboard, we pre-fill it.
+    /// Call this method when you need to present the alert in response to user interaction.
     @objc func displayLoginCodePrompt() {
         detector.detectCopiedRequestCode { code in
             self.presentLoginAlert(prefilledCode: code)
@@ -95,6 +106,8 @@ import Foundation
         
         delegate?.controller(self, presentAlert: alertController)
     }
+
+    // MARK: - Login Handling
 
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
