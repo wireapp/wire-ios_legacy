@@ -54,6 +54,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) BOOL inRotation;
 
+
+/**
+ The presenting popover. Its frame should be updated when the orientation or screen size changes.
+ */
+@property (nonatomic, nullable) UIPopoverPresentationController *popoverPresentationController;
+
+
+/**
+ The popover's arrow points to this view
+ */
+@property (nonatomic, nullable) UIView *popoverSourceView;
+
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;

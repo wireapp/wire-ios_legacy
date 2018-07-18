@@ -20,12 +20,13 @@ import Foundation
 
 extension UIPopoverPresentationController {
     @objc public func config(from viewController: UIViewController,
-                pointToView: UIView,
-                sourceView: UIView,
-                backgroundColor: UIColor? = nil,
-                permittedArrowDirections: UIPopoverArrowDirection = .down) {
+                             pointToView: UIView,
+                             sourceView: UIView,
+                             backgroundColor: UIColor? = nil,
+                             permittedArrowDirections: UIPopoverArrowDirection = .down) {
         sourceRect = pointToView.popoverSourceRect(from: viewController)
         self.sourceView = sourceView
+        
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
         }

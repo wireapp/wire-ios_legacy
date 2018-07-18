@@ -24,12 +24,26 @@ extension ConversationInputBarViewController {
         if let coordinator = coordinator {
             super.viewWillTransition(to: size, with: coordinator)
             self.inRotation = true
+
             coordinator.animate(alongsideTransition: { (context) in
-                //TODO: update popover frame
+                self.updatePopoverSourceRect()
             }) { _ in
                 self.inRotation = false
             }
         }
     }
 
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+
+        self.updatePopoverSourceRect()
+    }
+
+    fileprivate func updatePopoverSourceRect() {
+        if let popoverPresentationController = popoverPresentationController,
+            let popoverSourceView = popoverSourceView{
+            popoverPresentationController.sourceRect = popoverSourceView.popoverSourceRect(from: self)
+        }
+    }
 }

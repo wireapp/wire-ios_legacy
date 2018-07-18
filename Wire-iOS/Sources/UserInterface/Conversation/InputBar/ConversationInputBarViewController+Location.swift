@@ -24,8 +24,11 @@ extension ConversationInputBarViewController {
 
         let locationSelectionViewController = LocationSelectionViewController(forPopoverPresentation: isIPadRegular())
         locationSelectionViewController.modalPresentationStyle = .popover
+        
         if let popover = locationSelectionViewController.popoverPresentationController,
-            let imageView = sender?.imageView {
+           let imageView = sender?.imageView {
+            popoverPresentationController = popover
+            popoverSourceView = imageView
 
             popover.config(from: self,
                            pointToView: imageView,
