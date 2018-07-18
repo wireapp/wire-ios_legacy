@@ -37,7 +37,6 @@ class TaskBrowserViewController: UIViewController, WKNavigationDelegate {
 
     private let webView = WKWebView()
     private let loadIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    private var titleObservationToken: NSKeyValueObservation?
     private var loadObservationToken: NSKeyValueObservation?
 
     // MARK: - Configuration
@@ -58,10 +57,6 @@ class TaskBrowserViewController: UIViewController, WKNavigationDelegate {
 
     private func setUpObservers() {
         webView.navigationDelegate = self
-
-        titleObservationToken = webView.observe(\WKWebView.title) { webView, _ in
-            self.title = webView.title
-        }
 
         loadObservationToken = webView.observe(\.isLoading) { webView, _ in
             if webView.isLoading {
@@ -92,7 +87,6 @@ class TaskBrowserViewController: UIViewController, WKNavigationDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        titleObservationToken?.invalidate()
         loadObservationToken?.invalidate()
         webView.navigationDelegate = nil
     }
@@ -103,6 +97,17 @@ class TaskBrowserViewController: UIViewController, WKNavigationDelegate {
     func open(_ url: URL) {
         let request = URLRequest(url: url)
         self.webView.load(request)
+    }
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        guard let url = navigationAction.request.url, let host = url.host else {
+            decisionHandler(.allow)
+            return
+        }
+
+        self.title = host
+        decisionHandler(.allow)
     }
 
 }
