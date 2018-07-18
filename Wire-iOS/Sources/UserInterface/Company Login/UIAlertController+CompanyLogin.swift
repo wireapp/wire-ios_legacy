@@ -64,10 +64,22 @@ extension UIAlertController {
 
     /// Creates an `UIAlertController` with a generic error title, a single OK button and the provided message.
     /// - parameter message: The error message that should be used as the message of the controller.
-    static func ssoError(_ message: String) -> UIAlertController {
+    static func companyLoginError(_ message: String) -> UIAlertController {
         let controller = UIAlertController(
             title: "login.sso.error.alert.title".localized,
             message: message,
+            preferredStyle: .alert
+        )
+        
+        controller.addAction(.ok())
+        return controller
+    }
+    
+    /// Creates an `UIAlertController` warning about no network connection.
+    static func noInternetError() -> UIAlertController {
+        let controller = UIAlertController(
+            title: "team.invite.error.no_internet".localized,
+            message: "login.sso.error.offline.alert.message".localized,
             preferredStyle: .alert
         )
         

@@ -112,6 +112,8 @@ import Foundation
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
     private func attemptLogin(using code: String) {
+        guard !presentOfflineAlertIfNeeded() else { return }
+
         guard let uuid = SharedIdentitySessionRequestDetector.requestCode(in: code) else {
             return requireInternalFailure("Should never try to login with invalid code.")
         }
@@ -123,6 +125,14 @@ import Foundation
         }
     }
     
+    /// Attempt to login using the requester specified in `init`
+    /// - returns: `true` when the application is offline and an alert was presented, `false` otherwise.
+    private func presentOfflineAlertIfNeeded() -> Bool {
+        guard AppDelegate.isOffline else { return false }
+        delegate?.controller(self, presentAlert: .noInternetError())
+        return true
+    }
+    
     private func handleResponse(_ response: SharedIdentitySessionResponse) {
         switch response {
         case .success(_): preconditionFailure("unimplemented") // TODO
@@ -132,7 +142,7 @@ import Foundation
     }
     
     private func presentError(_ error: LocalizedError) {
-        delegate?.controller(self, presentAlert: .ssoError(error.localizedDescription))
+        delegate?.controller(self, presentAlert: .companyLoginError(error.localizedDescription))
     }
 
 }

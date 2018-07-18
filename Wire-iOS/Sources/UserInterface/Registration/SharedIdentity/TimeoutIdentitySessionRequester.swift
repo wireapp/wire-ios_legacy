@@ -21,7 +21,7 @@ import Foundation
 struct SharedIdentitySessionRequesterTimeoutError: LocalizedError {
 
     var errorDescription: String? {
-        return "The Single Sign-On provider did not respond to the authentication request. Contact your team administrator for further details."
+        return "Please contact your team administrator for details."
     }
 
 }

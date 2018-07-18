@@ -1133,12 +1133,12 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Company Log In";
-"login.sso.alert.message" = "Paste the access code of your company here";
+"login.sso.alert.message" = "Enter the company SSO access code.";
 "login.sso.alert.action" = "Log in";
-"login.sso.alert.text_field.placeholder" = "Access code";
-
+"login.sso.alert.text_field.placeholder" = "SSO access code";
 
 "login.sso.error.alert.title" = "Something went wrong";
+"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again."
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
