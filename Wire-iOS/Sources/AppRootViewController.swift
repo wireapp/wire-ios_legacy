@@ -612,6 +612,14 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             alert.addAction(cancelAction)
             
             self.present(alert, animated: true, completion: nil)
+
+        case .companyLoginFailure:
+            print("Handle error")
+            callback(true)
+
+        case .companyLoginSuccess:
+            print("Success")
+            callback(true)
         }
     }
 }

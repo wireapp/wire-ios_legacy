@@ -384,9 +384,5 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         present(alert, animated: true)
     }
     
-    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
-        self.showLoadingView = showLoadingView
-    }
-
 }
 
