@@ -21,12 +21,18 @@ import Foundation
 extension ConversationListViewController {
     @objc func showDataUsagePermissionDialogIfNeeded() {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
+
+        // If the usage dialog was already displayed in this run, do not show it again
         guard !dataUsagePermissionDialogDisplayed else { return }
+
+        // Check if the app state requires showing the alert
         guard needToShowDataUsagePermissionDialog else { return }
 
+        // If the user registers, show the alert.
+        // If the user logs in and hasn't accepted analytics yet, show the alert.
         guard isComingFromRegistration ||
               (isComingFromSetUsername && ZMUser.selfUser().isTeamMember) ||
-              TrackingManager.shared.disableCrashAndAnalyticsSharing else { return }
+              !userAcceptedAnalytics else { return }
 
         let alertController = UIAlertController(title: "conversation_list.date_usage_permission_alert.title".localized, message: "conversation_list.date_usage_permission_alert.message".localized, preferredStyle: .alert)
 
@@ -42,5 +48,9 @@ extension ConversationListViewController {
         ZClientViewController.shared()?.present(alertController, animated: true) { [weak self] in
             self?.dataUsagePermissionDialogDisplayed = true
         }
+    }
+
+    private var userAcceptedAnalytics: Bool {
+        return TrackingManager.shared.disableCrashAndAnalyticsSharing == false
     }
 }

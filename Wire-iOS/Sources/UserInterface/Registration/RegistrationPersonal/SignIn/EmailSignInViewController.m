@@ -36,9 +36,7 @@
 #import "NSURL+WireLocale.h"
 #import "Wire-Swift.h"
 
-#import "AnalyticsTracker+Registration.h"
 #import "Analytics.h"
-#import "StopWatch.h"
 #import "NSLayoutConstraint+Helpers.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -253,14 +251,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     ZMCredentials *credentials = self.credentials;
     
-    StopWatch *stopWatch = [StopWatch stopWatch];
-    [stopWatch restartEvent:@"Login"];
-    
     self.navigationController.showLoadingView = YES;
     
-    dispatch_async(dispatch_get_main_queue(), ^{        
-        [self.analyticsTracker tagRequestedEmailLogin];
-        
+    dispatch_async(dispatch_get_main_queue(), ^{                
         [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
     });
 }
@@ -268,7 +261,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (IBAction)resetPassword:(id)sender
 {
     [[UIApplication sharedApplication] openURL:[NSURL.wr_passwordResetURL wr_URLByAppendingLocaleParameter]];
-    [[Analytics shared] tagResetPassword:YES fromType:ResetFromSignIn];
+    
 }
 
 - (IBAction)open1PasswordExtension:(id)sender
@@ -353,21 +346,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)authenticationDidSucceed
 {
-    [self.analyticsTracker tagEmailLogin];
     // Not necessary to remove the loading view, since the controller would not be used any more.
 }
 
 - (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
     self.navigationController.showLoadingView = NO;
-    [self.analyticsTracker tagEmailLogin];
 }
 
 - (void)authenticationDidFail:(NSError *)error
 {
     ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
-    [self.analyticsTracker tagEmailLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;
     
     if (error.code != ZMUserSessionNetworkError) {

@@ -337,11 +337,11 @@ private let zmLog = ZMSLog(tag: "UI")
         recorder.deleteRecording()
     }
     
-    func sendAudioAsIs(_ context: AudioMessageContext) {
+    func sendAudioAsIs() {
         recorder.stopPlaying()
         guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to send as audio file") }
         
-        delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, context: context, filter: .none)
+        delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: url, duration: recorder.currentDuration, filter: .none)
     }
     
     fileprivate func openEffectsPicker() {
@@ -423,7 +423,7 @@ private let zmLog = ZMSLog(tag: "UI")
         AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { (success) in
             if success {
                 audioPath.deleteFileAtPath()
-                self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: URL(fileURLWithPath: convertedPath), duration: self.recorder.currentDuration, context: .afterEffect, filter: self.currentEffect)
+                self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: URL(fileURLWithPath: convertedPath), duration: self.recorder.currentDuration, filter: self.currentEffect)
             }
         }
     }

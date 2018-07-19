@@ -447,9 +447,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 - (void)copy:(id)sender
 {
-    [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-    [[Analytics shared] tagMessageCopy];
-
     [[UIPasteboard generalPasteboard] setMediaAsset:[self.fullImageView mediaAsset]];
 }
 

@@ -169,9 +169,6 @@ enum ClientSection: Int {
             }
         }, completionHandler: {
             sender.isOn = self.userClient.verified
-            
-            let verificationType : DeviceVerificationType = sender.isOn ? .verified : .unverified
-            Analytics.shared().tagChange(verificationType, deviceOwner: .self)
         })
     }
     

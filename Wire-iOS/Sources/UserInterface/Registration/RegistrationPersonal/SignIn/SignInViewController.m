@@ -151,7 +151,6 @@
 {
     EmailSignInViewController *emailSignInViewController = [[EmailSignInViewController alloc] init];
     emailSignInViewController.loginCredentials = self.loginCredentials;
-    emailSignInViewController.analyticsTracker = self.analyticsTracker;
     emailSignInViewController.view.frame = self.viewControllerContainer.frame;
     emailSignInViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.emailSignInViewController = emailSignInViewController;
@@ -163,7 +162,6 @@
     PhoneSignInViewController *phoneSignInViewController = [[PhoneSignInViewController alloc] init];
     phoneSignInViewController.formStepDelegate = self.formStepDelegate;
     phoneSignInViewController.loginCredentials = self.loginCredentials;
-    phoneSignInViewController.analyticsTracker = self.analyticsTracker;
     phoneSignInViewController.view.frame = self.viewControllerContainer.frame;
     phoneSignInViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     phoneSignInViewController.delegate = self;

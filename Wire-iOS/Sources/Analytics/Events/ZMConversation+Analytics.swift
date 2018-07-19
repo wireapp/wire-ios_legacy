@@ -18,6 +18,10 @@
 
 import Foundation
 
+@objc public enum ConversationType: Int {
+    case oneToOne
+    case group
+}
 
 extension ConversationType {
     var analyticsTypeString : String {

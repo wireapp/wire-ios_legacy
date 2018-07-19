@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class PermissionDeniedViewController, AnalyticsTracker;
+@class PermissionDeniedViewController;
 
 @protocol PermissionDeniedViewControllerDelegate <NSObject>
 @optional
@@ -34,6 +34,5 @@
 
 @property (nonatomic) BOOL backgroundBlurDisabled;
 @property (nonatomic, weak) id<PermissionDeniedViewControllerDelegate> delegate;
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 
 @end

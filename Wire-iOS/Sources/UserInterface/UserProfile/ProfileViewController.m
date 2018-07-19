@@ -340,9 +340,6 @@ typedef NS_ENUM(NSUInteger, ProfileViewControllerTabBarIndex) {
 
 - (void)tabBarController:(TabBarController *)controller tabBarDidSelectIndex:(NSInteger)index
 {
-    if ([controller.viewControllers[index] isKindOfClass:[ProfileDevicesViewController  class]]) {
-        [[Analytics shared] tagOtherDeviceList];
-    }
     [self updateShowVerifiedShield];
 }
 

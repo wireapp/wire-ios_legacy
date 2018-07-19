@@ -19,9 +19,7 @@
 
 #import "UIActivityViewController+Invite.h"
 #import "ShareItemProvider.h"
-#import "Analytics+ProfileEvents.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
 
 NSString *NSStringFromGenericInviteContext(GenericInviteContext logicalContext);
 NSString *NSStringFromGenericInviteContext(GenericInviteContext logicalContext) {
@@ -43,20 +41,10 @@ NSString *NSStringFromGenericInviteContext(GenericInviteContext logicalContext) 
 
 + (instancetype)shareInviteActivityViewControllerWithCompletion:(UIActivityViewControllerCompletionWithItemsHandler)completion logicalContext:(GenericInviteContext)logicalContext
 {
-    [[Analytics shared] tagEvent:AnalyticsEventOpenedMenuForGenericInvite
-                      attributes:@{AnalyticsContextKey: NSStringFromGenericInviteContext(logicalContext)}];
-    
     ShareItemProvider *item = [[ShareItemProvider alloc] initWithPlaceholderItem:@""];
     UIActivityViewController *activity = [[UIActivityViewController alloc] initWithActivityItems:@[item] applicationActivities:nil];
     activity.excludedActivityTypes = @[UIActivityTypeAirDrop];
     activity.completionWithItemsHandler = ^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) {
-        
-        if (completed) {
-            NSString *analyticsActivity = ActivityToAnalyticsString(activityType);
-            [[Analytics shared] tagSendInviteViaMethod:analyticsActivity];
-        } else {
-            [[Analytics shared] tagSendInviteCanceled];
-        }
         if (completion) {
             completion(activityType, completed, returnedItems, activityError);
         }

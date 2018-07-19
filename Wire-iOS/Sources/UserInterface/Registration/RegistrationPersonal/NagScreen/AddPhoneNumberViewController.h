@@ -21,8 +21,6 @@
 
 #import "FormStepDelegate.h"
 
-@class AnalyticsTracker;
-
 typedef NS_ENUM(NSInteger, AddPhoneNumberViewControllerSkipButtonType) {
     AddPhoneNumberViewControllerSkipButtonTypeNone,
     AddPhoneNumberViewControllerSkipButtonTypeSkip,
@@ -34,6 +32,5 @@ typedef NS_ENUM(NSInteger, AddPhoneNumberViewControllerSkipButtonType) {
 @property (nonatomic, assign) BOOL showsNavigationBar;
 @property (nonatomic, weak) id<FormStepDelegate> formStepDelegate;
 @property (nonatomic) AddPhoneNumberViewControllerSkipButtonType skipButtonType;
-@property (nonatomic, strong) AnalyticsTracker *analyticsTracker;
 
 @end

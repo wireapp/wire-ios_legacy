@@ -46,7 +46,6 @@ extension ProfilePictureStepViewController: UIImagePickerControllerDelegate & UI
             }
 
             self.profilePictureImageView.image = image
-            self.photoSource = .cameraRoll
             self.setPictureImageData(UIImageJPEGRepresentation(image, 1.0))
 
             self.dismiss(animated: true)
@@ -56,7 +55,6 @@ extension ProfilePictureStepViewController: UIImagePickerControllerDelegate & UI
             })
             UIImagePickerController.imageData(fromMediaInfo: info, resultBlock: { imageData in
                 self.dismiss(animated: true)
-                self.photoSource = .cameraRoll
                 self.setPictureImageData(imageData)
             })
         }

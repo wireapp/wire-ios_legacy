@@ -19,10 +19,6 @@
 
 #import "RegistrationStepViewController.h"
 
-@class AnalyticsTracker;
-
-
-
 @protocol EmailVerificationStepViewControllerDelegate <NSObject>
 
 - (void)emailVerificationStepDidRequestVerificationEmail;

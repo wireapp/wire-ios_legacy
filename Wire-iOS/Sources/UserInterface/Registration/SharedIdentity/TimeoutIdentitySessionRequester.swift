@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,18 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
+struct SharedIdentitySessionRequesterTimeoutError: LocalizedError {
 
-private let emojiKeyboardEvent = "media.opened_emoji_keyboard"
+    var errorDescription: String? {
+        return "Please contact your team administrator for details."
+    }
 
+}
 
-extension Analytics {
+class TimeoutIdentitySessionRequester: SharedIdentitySessionRequester {
 
-    @objc public func tagEmojiKeyboardOpenend(_ conversation: ZMConversation) {
-        let isBot = conversation.includesServiceUser ? "true" : "false"
-        tagEvent(emojiKeyboardEvent, attributes: ["with_service": isBot])
+    let delay: TimeInterval
+
+    init(delay: TimeInterval) {
+        self.delay = delay
+    }
+
+    func requestIdentity(for token: UUID, _ completion: @escaping (SharedIdentitySessionResponse) -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            completion(.error(SharedIdentitySessionRequesterTimeoutError()))
+        }
     }
 
 }

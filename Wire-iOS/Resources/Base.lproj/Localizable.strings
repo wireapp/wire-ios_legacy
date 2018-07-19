@@ -537,9 +537,12 @@
 "call.degraded.alert.message.unknown" = "Someone started using a new device.";
 "call.degraded.alert.action.continue" = "Call anyway";
 
-"call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.start.alert_title" = "Start Call?";
+"call.alert.ongoing.join.alert_title" = "Join Call?";
+
+"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.join.button" = "Join Anyway";
 
 // Call Actions (accessibility)
@@ -572,7 +575,7 @@
 "participants.all.title" = "People";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
-"participants.section.settings" = "Settings";
+"participants.section.settings" = "Options";
 "participants.footer.add_title" = "Add Participants";
 "participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
@@ -1128,6 +1131,15 @@
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
 
+// SSO – Company Login
+"login.sso.alert.title" = "Company Log In";
+"login.sso.alert.message" = "Enter the company SSO access code.";
+"login.sso.alert.action" = "Log in";
+"login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.error.alert.title" = "Something went wrong";
+"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
+
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
 "registration.no_history.restore_backup.completed" = "Completed";
@@ -1201,6 +1213,7 @@
 "signin.use_one_password.label" = "Log in with 1Password";
 "signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
 "signin.confirm" = "Log In";
+"signin.company_idp.button.title" = "For Companies";
 
 "registration.phone_country" = "Country";
 "registration.phone_code" = "Country Code";

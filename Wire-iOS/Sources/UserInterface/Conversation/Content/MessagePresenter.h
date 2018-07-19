@@ -22,11 +22,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZMConversationMessage;
-@class AnalyticsTracker;
 @class MessagePresenter;
 
 @interface MessagePresenter : NSObject
-@property (nonatomic, nullable) AnalyticsTracker *analyticsTracker;
 
 /// Container of the view that hosts popover controller.
 @property (nonatomic, nullable, weak) UIViewController *targetViewController;

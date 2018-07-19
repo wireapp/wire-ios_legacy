@@ -18,12 +18,8 @@
 
 
 #import <WireSyncEngine/WireSyncEngine.h>
-#import "Analytics+ConversationEvents.h"
-
 
 @interface Message (UI)
-
-+ (MessageType)messageType:(id<ZMConversationMessage>)message;
 
 + (BOOL)shouldShowTimestamp:(id<ZMConversationMessage>)message;
 

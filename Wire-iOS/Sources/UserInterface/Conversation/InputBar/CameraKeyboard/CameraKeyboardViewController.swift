@@ -27,7 +27,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
-    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, metadata: ImageMetadata)
+    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, isFromCamera: Bool)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController)
 }
@@ -233,13 +233,7 @@ open class CameraKeyboardViewController: UIViewController {
                     }
                     
                     DispatchQueue.main.async(execute: {
-                        let metadata = ImageMetadata()
-                        metadata.camera = .none
-                        metadata.method = ConversationMediaPictureTakeMethod.keyboard
-                        metadata.source = ConversationMediaPictureSource.gallery
-                        metadata.sketchSource = .none
-                        
-                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
+                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, isFromCamera: false)
                     })
                 })
                 
@@ -247,13 +241,7 @@ open class CameraKeyboardViewController: UIViewController {
             }
             DispatchQueue.main.async(execute: {
                 
-                let metadata = ImageMetadata()
-                metadata.camera = .none
-                metadata.method = ConversationMediaPictureTakeMethod.keyboard
-                metadata.source = ConversationMediaPictureSource.gallery
-                metadata.sketchSource = .none
-                
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, isFromCamera: false)
             })
         })
     }
@@ -464,17 +452,7 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
-        guard let cameraController = cameraCell.cameraController else {
-            return
-        }
-        
-        let isFrontCamera = cameraController.currentCamera == .front
-        
-        let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.front : ConversationMediaPictureCamera.back
-
-        let metadata = ImageMetadata.metadata(with: camera, method: .keyboard)
-
-        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, metadata: metadata)
+        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true)
     }
 }
 

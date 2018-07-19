@@ -128,7 +128,6 @@ import SafariServices
             presentationStyle: PresentationStyle.navigation,
             identifier: type(of: self).settingsDevicesCellIdentifier,
             presentationAction: { () -> (UIViewController?) in
-                Analytics.shared().tagSelfDeviceList()
                 return ClientListViewController(clientsList: .none,
                                                 credentials: .none,
                                                 detailedView: true)
@@ -262,7 +261,6 @@ import SafariServices
     func helpSection() -> SettingsCellDescriptorType {
         
         let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
-            Analytics.shared().tagHelp()
             return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
         }, previewGenerator: .none)
         
