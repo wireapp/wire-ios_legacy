@@ -85,7 +85,14 @@ extension CollectionCell: SelectableView {
                 ZMUserSession.shared()?.enqueueChanges({ 
                     switch type {
                     case .local:
-                        ZMMessage.hideMessage(message)
+                        // when deleteing ephemeral, we must delete for everyone
+                        // (only self & sender will receieve delete message, see DM)
+                        // b/c deleting locally will void the destruction timer completion.
+                        if message.isEphemeral {
+                            ZMMessage.deleteForEveryone(message)
+                        } else {
+                            ZMMessage.hideMessage(message)
+                        }
                     case .everywhere:
                         ZMMessage.deleteForEveryone(message)
                     }
