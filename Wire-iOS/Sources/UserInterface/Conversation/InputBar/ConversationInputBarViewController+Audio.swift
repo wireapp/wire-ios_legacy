@@ -43,13 +43,12 @@ extension ConversationInputBarViewController {
     }
 
     @objc func revealRecordKeyboardWhenAppLocked() {
-        // show the record keyboard after it is hide after the app went to background
-        if AppLock.isActive &&
-            !AppLockViewController.isLocked &&
-            mode == .audioRecord &&
-            !self.inputBar.textView.isFirstResponder {///TODO: check lock screen is stll there?
-            displayRecordKeyboard()
-        }
+        guard AppLock.isActive,
+              !AppLockViewController.isLocked,
+              mode == .audioRecord,
+              !self.inputBar.textView.isFirstResponder else { return }
+
+        displayRecordKeyboard()
     }
 
     @objc func configureAudioButton(_ button: IconButton) {
