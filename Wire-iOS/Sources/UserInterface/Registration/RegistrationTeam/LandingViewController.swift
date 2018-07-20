@@ -366,11 +366,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
 
     @objc public func loginButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedLogin(context: "email")
-
-        let url = URL(string: "wire://login/success?user_id=4B53D5C7-A580-427A-9D09-9DF43F0226D5&cookie=yiphYur5NmSu5NW4HVDaiQN53inGtSid035mMafMgSyP_PB2X_OaSXcIpvPFh_Q_Wn-cNFVNB26I6Rqe1LzKAg==.v=1.k=1.d=1536929135.t=u.l=.u=4b53d5c7-a580-427a-9d09-9df43f0226d5.r=6161aaba")!
-        UIApplication.shared.openURL(url)
-
-        //delegate?.landingViewControllerDidChooseLogin()
+        delegate?.landingViewControllerDidChooseLogin()
     }
     
     @objc public func cancelButtonTapped() {
