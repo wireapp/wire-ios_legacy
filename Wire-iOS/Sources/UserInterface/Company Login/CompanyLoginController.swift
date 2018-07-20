@@ -154,7 +154,7 @@ import Foundation
 
     // MARK: - Flow
 
-    public func companyLoginSessionRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {
+    public func companyLoginRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {
         flowHandler.open(authenticationURL: url)
     }
 

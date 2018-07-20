@@ -585,8 +585,8 @@ public extension SessionManager {
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
-    func sessionManagerShouldExecute(URLAction: RawURLAction, callback: @escaping (Bool) -> (Void)) {
-        switch URLAction {
+    func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
+        switch action {
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
                 callback(false)
@@ -613,11 +613,30 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
             self.present(alert, animated: true, completion: nil)
 
-        case .companyLoginFailure:
-            print("Handle error")
-            callback(true)
+        case .companyLoginFailure(let message):
+            guard case .unauthenticated = appStateController.appState else {
+                callback(false)
+                return
+            }
+
+            let alert = UIAlertController(title: "general.failure".localized,
+                                          message: message,
+                                          preferredStyle: .alert)
+
+            let doneAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
+                callback(false)
+            }
+
+            alert.addAction(doneAction)
+
+            self.present(alert, animated: true, completion: nil)
 
         case .companyLoginSuccess:
+            guard case .unauthenticated = appStateController.appState else {
+                callback(false)
+                return
+            }
+            
             print("Success")
             callback(true)
         }
