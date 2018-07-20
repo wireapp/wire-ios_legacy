@@ -79,13 +79,12 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
 
-    deinit {
-        recorder.stopRecording()
-    }
-    
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.keyWindow?.endEditing(true)
+
+        if AppLock.isActive {
+            UIApplication.shared.keyWindow?.endEditing(true)
+        }
     }
     
     func configureViews() {
