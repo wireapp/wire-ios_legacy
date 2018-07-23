@@ -35,6 +35,7 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         verify(view: wrapped.view)
     }
     
+<<<<<<< Updated upstream
     func testThatItRendersALotOfUsers_Dark() {
         // given
         ColorScheme.default.variant = .dark
@@ -51,4 +52,6 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         ColorScheme.default.variant = .light
     }
     
+=======
+>>>>>>> Stashed changes
 }

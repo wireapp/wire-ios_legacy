@@ -19,20 +19,21 @@
 
 import Classy
 import Cartography
+import TTTAttributedLabel
 
-@objcMembers public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate {
+@objcMembers public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate, TTTAttributedLabelDelegate {
 
-    private let collectionViewController = ParticipantsCollectionViewController<ParticipantsUserCell>()
     private let stackView = UIStackView()
     private let topContainer = UIView()
     private let bottomContainer = UIView()
     private let leftIconView = UIImageView()
     private let leftIconContainer = UIView()
-    private let labelView = UILabel()
+    private let labelView = TTTAttributedLabel(frame: .zero)
     private let nameLabel = UILabel()
     private let verticalInset: CGFloat = 16
     private var lineBaseLineConstraint: NSLayoutConstraint?
     private let inviteView = ParticipantsInvitePeopleView()
+    private var viewModel: ParticipantsCellViewModel?
     
     // Classy
     let lineView = UIView()
@@ -43,6 +44,7 @@ import Cartography
         didSet {
             labelView.attributedText = attributedText
             labelView.accessibilityLabel = attributedText?.string
+            labelView.addLinks()
         }
     }
     
@@ -55,25 +57,8 @@ import Cartography
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        setupCollectionView()
         createConstraints()
         CASStyler.default().styleItem(self)
-    }
-
-    private func setupCollectionView() {
-        // Cells should not be selectable (for now)
-        collectionViewController.collectionView.isUserInteractionEnabled = false
-        bottomContainer.addSubview(collectionViewController.view)
-
-        collectionViewController.configureCell = { [weak self] user, cell in
-            cell.user = user
-            cell.dimmed = self?.message.systemMessageData?.systemMessageType == .participantsRemoved
-        }
-
-        collectionViewController.selectAction = { [weak self] user, cell in
-            guard let `self` = self else { return }
-            self.delegate.conversationCell?(self, userTapped: user, in: cell)
-        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -89,6 +74,14 @@ import Cartography
         nameLabel.numberOfLines = 0
         nameLabel.isAccessibilityElement = true
         labelView.numberOfLines = 0
+        labelView.extendsLinkTouchArea = true
+        
+        labelView.linkAttributes = [
+            NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue,
+            NSAttributedStringKey.foregroundColor.rawValue: ZMUser.selfUser().accentColor
+        ]
+        
+        labelView.delegate = self
         labelView.isAccessibilityElement = true
 
         stackView.axis = .vertical
@@ -146,13 +139,6 @@ import Cartography
         createLineViewConstraints()
         updateLineBaseLineConstraint()
         createBaselineConstraint()
-        
-        constrain(messageContentView, labelView, collectionViewController.view, bottomContainer) { container, label, participants, bottomContainer in
-            participants.leading == label.leading
-            participants.trailing == container.trailing - 72
-            participants.top == label.bottom + 8
-            participants.bottom == bottomContainer.bottom
-        }
     }
     
     private func createLineViewConstraints() {
@@ -165,6 +151,7 @@ import Cartography
     
     private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
+            // TODO: Fix line vertical offset (probably caused by using TTTAttributedLabel instead of UILabel for the link support here)
             lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median
             icon.centerY == lineView.centerY
         }
@@ -192,11 +179,7 @@ import Cartography
         topContainer.isHidden = nameLabel.attributedText == nil
         bottomContainer.isHidden = model.sortedUsers().count == 0
         inviteView.isHidden = !model.showInviteButton
-
-        // We need a layout pass here in order for the collectionView to pick up the correct size
-        setNeedsLayout()
-        layoutIfNeeded()
-        collectionViewController.users = model.sortedUsers()
+        viewModel = model
     }
 
     open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
@@ -215,4 +198,13 @@ import Cartography
     func invitePeopleViewInviteButtonTapped(_ invitePeopleView: ParticipantsInvitePeopleView) {
         delegate?.conversationCell?(self, openGuestOptionsFrom: invitePeopleView.inviteButton)
     }
+    
+    // MARK: - TTTAttributedLabelDelegate
+
+    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        guard url.absoluteString == ParticipantsCellViewModel.showMoreLinkURL.absoluteString else { return }
+        guard let model = viewModel else { return }
+        delegate?.conversationCell?(self, openParticipantsDetailsWithSelectedUsers: model.selectedUsers, from: self)
+    }
+
 }

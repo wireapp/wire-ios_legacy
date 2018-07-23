@@ -24,21 +24,32 @@ fileprivate extension String {
     }
 }
 
+fileprivate extension ZMUser {
+    private func name(in conversation: ZMConversation) -> String {
+        return conversation.activeParticipants.contains(self)
+            ? displayName(in: conversation)
+            : displayName
+    }
+}
+
 class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate {
 
     private let internalParticipants: [ZMBareUser]
     private var filterQuery: String?
     
+    let selectedParticipants: [ZMBareUser]
     let conversation: ZMConversation
     var participantsDidChange: (() -> Void)? = nil
     
     var participants = [ZMBareUser]() {
         didSet { participantsDidChange?() }
     }
-    
-    init(participants: [ZMBareUser], conversation: ZMConversation) {
+
+    init(participants: [ZMBareUser], selectedParticipants: [ZMBareUser], conversation: ZMConversation) {
         internalParticipants = participants
         self.conversation = conversation
+        self.selectedParticipants = selectedParticipants.sorted { $0.displayName < $1.displayName }
+        
         super.init()
         computeVisibleParticipants()
     }
