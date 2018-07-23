@@ -134,8 +134,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) UIViewController *inputController;
 
-@property (nonatomic) BOOL inRotation;
-
 @property (nonatomic) id typingObserverToken;
 
 @property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
@@ -267,17 +265,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLayoutSubviews];
     self.ephemeralIndicatorButton.layer.cornerRadius = CGRectGetWidth(self.ephemeralIndicatorButton.bounds) / 2;
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    self.inRotation = YES;
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        self.inRotation = NO;
-    }];
 }
 
 - (void)createInputBar

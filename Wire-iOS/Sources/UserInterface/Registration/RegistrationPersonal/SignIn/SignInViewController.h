@@ -22,8 +22,14 @@
 #import "FormFlowViewController.h"
 
 @class LoginCredentials;
+@protocol SignInViewControllerDelegate;
 
 @interface SignInViewController : FormFlowViewController
 @property (nonatomic) LoginCredentials *loginCredentials;
+@property (nonatomic, weak) id<SignInViewControllerDelegate> delegate;
 - (void)presentSignInViewControllerWithCredentials:(LoginCredentials*)credentials;
+@end
+
+@protocol SignInViewControllerDelegate
+- (void)signInViewControllerDidTapCompanyLoginButton:(SignInViewController *)signInViewController;
 @end

@@ -29,7 +29,7 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, TabBarControllerDelegate, CompanyLoginControllerDelegate>
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, CompanyLoginControllerDelegate, SignInViewControllerDelegate>
 
 @property (nonatomic) CompanyLoginController *companyLoginController;
 
@@ -40,7 +40,6 @@
 
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) IconButton *backButton;
-@property (nonatomic) IconButton *companyLoginButton;
 @property (nonatomic) UIStackView *rightButtonsStack;
 
 @property (nonatomic) NSLayoutConstraint *contentWidthConstraint;
@@ -77,6 +76,7 @@
     
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
     signInViewController.loginCredentials = self.loginCredentials;
+    signInViewController.delegate = self;
     
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
@@ -107,7 +107,6 @@
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.registrationTabBarController.interactive = NO;
-    self.registrationTabBarController.delegate = self;
 
     self.signInViewController = signInViewController;
     
@@ -131,7 +130,6 @@
 {
     [super viewWillAppear:animated];
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
-    [self updateCompanyLoginButton];
     self.companyLoginController.autoDetectionEnabled = YES;
     [self.companyLoginController detectLoginCode];
 }
@@ -164,13 +162,6 @@
     self.rightButtonsStack.alignment = UIStackViewAlignmentCenter;
     self.rightButtonsStack.axis = UILayoutConstraintAxisHorizontal;
 
-    self.companyLoginButton = [[IconButton alloc] init];
-    self.companyLoginButton.adjustsTitleWhenHighlighted = YES;
-    self.companyLoginButton.titleLabel.font = [UIFont smallSemiboldFont];
-    self.companyLoginButton.accessibilityIdentifier = @"companyLoginButton";
-    [self.companyLoginButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    [self.companyLoginButton setTitle:NSLocalizedString(@"signin.company_idp.button.title", @"").uppercaseString forState:UIControlStateNormal];
-
     self.cancelButton = [[IconButton alloc] init];
     [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
@@ -178,18 +169,10 @@
     self.cancelButton.hidden = self.shouldHideCancelButton || [[SessionManager shared] firstAuthenticatedAccount] == nil;
     self.cancelButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
 
-    [self.companyLoginButton addTarget:self action:@selector(showCompanyLoginAlert) forControlEvents:UIControlEventTouchUpInside];
     [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
 
-    [self.rightButtonsStack addArrangedSubview:self.companyLoginButton];
     [self.rightButtonsStack addArrangedSubview:self.cancelButton];
     [self.view addSubview:self.rightButtonsStack];
-}
-
-- (void)updateCompanyLoginButton
-{
-    BOOL isCompanyLoginAvailable = self.registrationTabBarController.selectedIndex == 1;
-    self.companyLoginButton.hidden = !isCompanyLoginAvailable;
 }
 
 /**
@@ -268,11 +251,6 @@
                tearDownCompletion:nil];
 }
 
-- (void)showCompanyLoginAlert
-{
-    [self.companyLoginController displayLoginCodePrompt];
-}
-
 #pragma mark - FormStepDelegate
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
@@ -286,11 +264,11 @@
     [self.signInViewController presentSignInViewControllerWithCredentials:loginCredentials];
 }
 
-#pragma mark - TabBarControllerDelegate
+#pragma mark - SignInViewControllerDelegate
 
-- (void)tabBarController:(TabBarController *)controller tabBarDidSelectIndex:(NSInteger)tabBarDidSelectIndex
+- (void)signInViewControllerDidTapCompanyLoginButton:(SignInViewController *)signInViewController
 {
-    [self updateCompanyLoginButton];
+    [self.companyLoginController displayLoginCodePrompt];
 }
 
 #pragma mark - CompanyLoginControllerDelegate
