@@ -623,12 +623,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                                           message: message,
                                           preferredStyle: .alert)
 
-            let doneAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
-                callback(false)
-            }
-
-            alert.addAction(doneAction)
-
+            alert.addAction(.ok { callback(false) })
             self.present(alert, animated: true, completion: nil)
 
         case .companyLoginSuccess:
