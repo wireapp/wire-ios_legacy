@@ -36,9 +36,7 @@
 #import "NSURL+WireLocale.h"
 #import "Wire-Swift.h"
 
-#import "AnalyticsTracker+Registration.h"
 #import "Analytics.h"
-#import "StopWatch.h"
 #import "NSLayoutConstraint+Helpers.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -48,6 +46,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) RegistrationTextField *emailField;
 @property (nonatomic) RegistrationTextField *passwordField;
 @property (nonatomic) ButtonWithLargerHitArea *forgotPasswordButton;
+@property (nonatomic) ButtonWithLargerHitArea *companyLoginButton;
 
 @property (nonatomic) id preLoginAuthenticationToken;
 @property (nonatomic) id postLoginAuthenticationToken;
@@ -74,6 +73,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createEmailField];
     [self createPasswordField];
     [self createForgotPasswordButton];
+    [self createCompanyLoginButton];
     [self createConstraints];
 }
 
@@ -191,6 +191,21 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addSubview:self.forgotPasswordButton];
 }
 
+- (void)createCompanyLoginButton
+{
+    self.companyLoginButton = [ButtonWithLargerHitArea buttonWithType:UIButtonTypeCustom];
+    self.companyLoginButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.companyLoginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.companyLoginButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateHighlighted];
+    self.companyLoginButton.accessibilityIdentifier = @"companyLoginButton";
+    [self.companyLoginButton setTitle:[NSLocalizedString(@"signin.company_idp.button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
+    self.companyLoginButton.titleLabel.font = UIFont.smallLightFont;
+    [self.companyLoginButton addTarget:self action:@selector(companyLoginButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.companyLoginButton.accessibilityTraits |= UIAccessibilityTraitLink;
+    [self.view addSubview:self.companyLoginButton];
+}
+
 - (void)createConstraints
 {
     [self.emailField autoPinEdgeToSuperviewEdge:ALEdgeTop];
@@ -205,7 +220,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
     [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
-    [self.forgotPasswordButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    [self.forgotPasswordButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view withOffset:28];
+    
+    [self.companyLoginButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
+    [self.companyLoginButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
+    [self.companyLoginButton autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view withOffset:-28];
 }
 
 - (ZMEmailCredentials *)credentials
@@ -253,14 +272,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     ZMCredentials *credentials = self.credentials;
     
-    StopWatch *stopWatch = [StopWatch stopWatch];
-    [stopWatch restartEvent:@"Login"];
-    
     self.navigationController.showLoadingView = YES;
     
-    dispatch_async(dispatch_get_main_queue(), ^{        
-        [self.analyticsTracker tagRequestedEmailLogin];
-        
+    dispatch_async(dispatch_get_main_queue(), ^{                
         [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
     });
 }
@@ -268,7 +282,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (IBAction)resetPassword:(id)sender
 {
     [[UIApplication sharedApplication] openURL:[NSURL.wr_passwordResetURL wr_URLByAppendingLocaleParameter]];
-    [[Analytics shared] tagResetPassword:YES fromType:ResetFromSignIn];
+}
+
+- (void)companyLoginButtonTapped:(ButtonWithLargerHitArea *)button
+{
+    [self.delegate emailSignInViewControllerDidTapCompanyLoginButton:self];
 }
 
 - (IBAction)open1PasswordExtension:(id)sender
@@ -353,21 +371,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)authenticationDidSucceed
 {
-    [self.analyticsTracker tagEmailLogin];
     // Not necessary to remove the loading view, since the controller would not be used any more.
 }
 
 - (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
     self.navigationController.showLoadingView = NO;
-    [self.analyticsTracker tagEmailLogin];
 }
 
 - (void)authenticationDidFail:(NSError *)error
 {
     ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
-    [self.analyticsTracker tagEmailLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;
     
     if (error.code != ZMUserSessionNetworkError) {

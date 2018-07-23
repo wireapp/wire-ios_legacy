@@ -19,12 +19,7 @@
 
 #import "RegistrationStepViewController.h"
 
-
-
 @class ZMIncompleteRegistrationUser;
-@class AnalyticsTracker;
-
-
 
 @interface EmailStepViewController : RegistrationStepViewController
 
@@ -33,7 +28,5 @@
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
 - (void)takeFirstResponder;
 - (void)reset;
-
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 
 @end

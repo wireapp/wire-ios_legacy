@@ -169,7 +169,7 @@ open class CollectionCell: UICollectionViewCell {
     }
     
     func showMenu() {
-        guard let menuConfigurationProperties = self.menuConfigurationProperties(), let message = self.message else {
+        guard let menuConfigurationProperties = self.menuConfigurationProperties() else {
             return
         }
         /**
@@ -192,8 +192,6 @@ open class CollectionCell: UICollectionViewCell {
         menuController.menuItems = menuConfigurationProperties.additionalItems + menuItems
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
-        
-        Analytics.shared().tagCollectionOpenItemMenu(for: message.conversation!, message: message)
     }
     
     override open var canBecomeFirstResponder: Bool {
@@ -231,18 +229,10 @@ open class CollectionCell: UICollectionViewCell {
 
     @objc func forward(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .forward)
-        guard let message = self.message else {
-            return
-        }
-        Analytics.shared().tagCollectionDidItemAction(for: message.conversation!, message: message, action: .forward)
     }
     
     @objc func showInConversation(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .showInConversation)
-        guard let message = self.message else {
-            return
-        }
-        Analytics.shared().tagCollectionDidItemAction(for: message.conversation!, message: message, action: .goto)
     }
 }
 

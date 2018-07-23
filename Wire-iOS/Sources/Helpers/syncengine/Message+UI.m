@@ -29,38 +29,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation Message (UI)
 
-+ (MessageType)messageType:(id<ZMConversationMessage>)message
-{
-    if ([self isImageMessage:message]) {
-        return MessageTypeImage;
-    }
-    if ([self isKnockMessage:message]) {
-        return MessageTypePing;
-    }
-    if ([self isTextMessage:message]) {
-        if ((message.textMessageData.linkPreview != nil) || ([self linkAttachments:message.textMessageData].count > 0)) {
-            return MessageTypeRichMedia;
-        }
-        return MessageTypeText;
-    }
-    if ([self isFileTransferMessage:message]) {
-        if (message.fileMessageData.isVideo) {
-            return MessageTypeVideo;
-        }
-        if (message.fileMessageData.isAudio) {
-            return MessageTypeAudio;
-        }
-        return MessageTypeFile;
-    }
-    if ([self isSystemMessage:message]) {
-        return MessageTypeSystem;
-    }
-    if ([self isLocationMessage:message]) {
-        return MessageTypeLocation;
-    }
-    return MessageTypeUnknown;
-}
-
 + (NSString *)formattedReceivedDateForMessage:(id<ZMConversationMessage>)message
 {
     // Today's date

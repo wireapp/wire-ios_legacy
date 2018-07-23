@@ -32,17 +32,12 @@ private let zmLog = ZMSLog(tag: "UI")
 @objc public protocol AudioRecordViewControllerDelegate: class {
     func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController)
     func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController)
-    func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType)
+    func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType)
 }
 
 
 @objc enum AudioRecordState: UInt {
     case recording, finishedRecording
-}
-
-
-@objc public enum AudioMessageContext: UInt {
-    case afterSlideUp, afterPreview, afterEffect
 }
 
 @objcMembers public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
@@ -115,7 +110,7 @@ private let zmLog = ZMSLog(tag: "UI")
         guard recorder.stopRecording() else { return zmLog.warn("Stopped recording but did not get file URL") }
         
         if shouldSend {
-            sendAudio(.afterSlideUp)
+            sendAudio()
         }
     }
     
@@ -167,9 +162,9 @@ private let zmLog = ZMSLog(tag: "UI")
                 return
             }
             switch buttonType {
-            case .send: self.sendAudio(.afterPreview)
+            case .send: self.sendAudio()
             case .play:
-                Analytics.shared().tagPreviewedAudioMessageRecording(.minimised)
+               
                 self.recorder.playRecording()
             case .stop: self.recorder.stopPlaying()
             }
@@ -360,9 +355,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    @objc func cancelButtonPressed(_ sender: IconButton) {
-        Analytics.shared().tagCancelledAudioMessageRecording()
-        
+    @objc func cancelButtonPressed(_ sender: IconButton) {        
         recorder.stopPlaying()
         stopAndDeleteRecordingIfNeeded()
         delegate?.audioRecordViewControllerDidCancel(self)
@@ -374,7 +367,7 @@ private let zmLog = ZMSLog(tag: "UI")
         recorder.deleteRecording()
     }
     
-    func sendAudio(_ context: AudioMessageContext) {
+    func sendAudio() {
         recorder.stopPlaying()
         guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to send as audio file") }
         
@@ -393,7 +386,7 @@ private let zmLog = ZMSLog(tag: "UI")
                 effectPath.deleteFileAtPath()
                 
                 if success {
-                    self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath) as URL, duration: self.recorder.currentDuration, context: context, filter: .none)
+                    self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath) as URL, duration: self.recorder.currentDuration, filter: .none)
                 }
             }
         }

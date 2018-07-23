@@ -249,8 +249,7 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
         if case let .terminating(reason) = callState {
             
-            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!],
-                AutomationHelper.sharedHelper.useAnalytics else {
+            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!] else {
                 return
             }
 
@@ -258,6 +257,11 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
             let callDuration = changeDate.timeIntervalSince(callStartDate)
 
+            guard AutomationHelper.sharedHelper.useAnalytics else {
+                CallQualityScoreProvider.shared.recordCallQualityReview(.notDisplayed(reason: .callTooShort, duration: Int(callDuration)))
+                return
+            }
+            
             guard callDuration > 10 else {
                 CallQualityScoreProvider.shared.recordCallQualityReview(.notDisplayed(reason: .callTooShort, duration: Int(callDuration)))
                 return

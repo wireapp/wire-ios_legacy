@@ -55,10 +55,7 @@
 // Cells
 #import "TextMessageCell.h"
 #import "PingCell.h"
-#import "StopWatch.h"
 #import "ImageMessageCell.h"
-
-#import "AnalyticsTracker+FileTransfer.h"
 
 #import "Wire-Swift.h"
 
@@ -90,7 +87,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) BOOL conversationLoadStopwatchFired;
 @property (nonatomic) NSMutableDictionary *cachedRowHeights;
 @property (nonatomic) BOOL hasDoneInitialLayout;
 @property (nonatomic) id messageWindowObserverToken;
@@ -113,7 +109,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.messagePresenter = [[MessagePresenter alloc] init];
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
-        self.messagePresenter.analyticsTracker = self.analyticsTracker;
     }
     
     return self;
@@ -152,7 +147,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.conversationMessageWindowTableViewAdapter =
     [[ConversationMessageWindowTableViewAdapter alloc] initWithTableView:self.tableView
                                                            messageWindow:self.messageWindow];
-    self.conversationMessageWindowTableViewAdapter.analyticsTracker = self.analyticsTracker;
     self.conversationMessageWindowTableViewAdapter.conversationCellDelegate = self;
     
     self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
@@ -319,8 +313,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             {
                 [[ZMUserSession sharedSession] enqueueChanges:^{
                     [cell.message.fileMessageData cancelTransfer];
-                    [self.analyticsTracker tagCancelledFileUploadWithSize:cell.message.fileMessageData.size
-                                                            fileExtension:[cell.message.fileMessageData.filename pathExtension]];
                 }];
             }
                 break;
@@ -437,9 +429,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionCopy:
             {
-                [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-                [[Analytics shared] tagMessageCopy];
-                
                 NSData *imageData = cell.message.imageMessageData.imageData;
                 [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
             }
@@ -538,9 +527,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [self.conversation appendMessageWithImageData:imageData];
         } completionHandler:^{
-            [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:self.conversation];
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
-            [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:ConversationMediaSketchSourceImageFullView];
         }];
     }
 }
@@ -770,11 +757,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
 {
-    ConversationType conversationType = self.conversation.conversationType == ZMConversationTypeGroup ? ConversationTypeGroup : ConversationTypeOneToOne;
-    
-    [[Analytics shared] tagSelectedMessage:SelectionTypeSingle
-                          conversationType:conversationType
-                               messageType:messageType];
+    // no op
 }
 
 - (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell

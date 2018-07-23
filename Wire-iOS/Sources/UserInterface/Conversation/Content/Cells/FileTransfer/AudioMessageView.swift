@@ -325,8 +325,6 @@ private let zmLog = ZMSLog(tag: "UI")
                     let duration = TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
                     let earliestEndDate = Date(timeIntervalSinceNow: duration)
                     self?.extendEphemeralTimerIfNeeded(to: earliestEndDate)
-                    
-                    Analytics.shared().tagPlayedAudioMessage(duration, extensionString: ((fileMessageData.filename ?? "") as NSString).pathExtension)
                 }
                 else {
                     zmLog.warn("Cannot load track \(track): \(String(describing: error))")

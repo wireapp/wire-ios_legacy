@@ -32,7 +32,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 #import "UIImage+ZetaIconsNeue.h"
-#import "AnalyticsTracker+Registration.h"
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -149,8 +148,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (IBAction)skip:(id)sender
 {
-    [self.analyticsTracker tagSkippedAddingEmail];
-    
     if ([self.formStepDelegate respondsToSelector:@selector(didSkipFormStep:)]) {
         [self.formStepDelegate didSkipFormStep:self];
     }
@@ -162,8 +159,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if ([viewController isKindOfClass:[AddEmailStepViewController class]]) {
         AddEmailStepViewController *addEmailStepViewController = (AddEmailStepViewController *)viewController;
-        
-        [self.analyticsTracker tagEnteredEmailAndPassword];
         
         self.credentials = [ZMEmailCredentials credentialsWithEmail:addEmailStepViewController.emailAddress
                                                            password:addEmailStepViewController.password];
@@ -184,7 +179,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)emailVerificationStepDidRequestVerificationEmail
 {
-    [self.analyticsTracker tagResentEmailVerification];
     NSError *error;
     [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
 
@@ -198,8 +192,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)userDidChange:(UserChangeInfo *)note
 {
     if (note.profileInformationChanged && ZMUser.selfUser.emailAddress.length > 0) {
-	    [self.analyticsTracker tagVerifiedEmail];
-
         [self.formStepDelegate didCompleteFormStep:self];
     }
 }
@@ -224,7 +216,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)emailUpdateDidFail:(NSError *)error
 {
     self.showLoadingView = NO;
-    [self.analyticsTracker tagVerifiedEmailFailedWithError:error];
     
     @weakify(self);
     

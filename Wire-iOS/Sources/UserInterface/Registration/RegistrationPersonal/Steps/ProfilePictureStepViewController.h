@@ -18,7 +18,6 @@
 
 
 #import "RegistrationStepViewController.h"
-#import "AnalyticsTracker+Registration.h"
 
 extern NSString * const UnsplashRandomImageHiQualityURL;
 
@@ -29,8 +28,5 @@ extern NSString * const UnsplashRandomImageHiQualityURL;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
-
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
-@property (nonatomic, readonly) AnalyticsPhotoSource photoSource;
 
 @end

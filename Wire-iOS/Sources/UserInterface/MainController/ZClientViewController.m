@@ -39,9 +39,7 @@
 
 #import "Constants.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
 #import "Settings.h"
-#import "StopWatch.h"
 
 #import "Wire-Swift.h"
 
@@ -74,7 +72,6 @@
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
-@property (nonatomic) LegacyMessageTracker *messageCountTracker;
 
 @property (nonatomic) id incomingApnsObserver;
 @property (nonatomic) id networkAvailabilityObserverToken;
@@ -102,7 +99,6 @@
     if (self) {
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
-        self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
 
         [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
@@ -308,9 +304,6 @@
 
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
-    StopWatch *stopWatch = [StopWatch stopWatch];
-    [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
-    
     [self dismissAllModalControllersWithCallback:^{
         [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
     }];
@@ -502,7 +495,6 @@
 {
     [self uploadAddressBookIfNeeded];
     [self trackShareExtensionEventsIfNeeded];
-    [self.messageCountTracker trackLegacyMessageCount];
 }
 
 #pragma mark - Adressbook Upload

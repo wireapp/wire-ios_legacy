@@ -29,7 +29,6 @@
 @class ZMSearchUser;
 @class ZMAddressBookContact;
 @class Button;
-@class AnalyticsTracker;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -62,7 +61,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<ContactsViewControllerDelegate> __nullable delegate;
 @property (nonatomic, weak) id<ContactsViewControllerContentDelegate> __nullable contentDelegate;
 @property (nonatomic) ColorSchemeVariant colorSchemeVariant;
-@property (nonatomic) AnalyticsTracker *__nullable analyticsTracker;
 
 /// Button displayed at the bottom of the screen. If nil a default button is displayed.
 @property (nonatomic) Button *__nullable bottomButton;

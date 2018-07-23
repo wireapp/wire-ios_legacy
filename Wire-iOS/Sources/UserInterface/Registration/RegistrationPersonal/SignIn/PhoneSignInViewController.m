@@ -32,8 +32,6 @@
 #import "UIViewController+Errors.h"
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import "CheckmarkViewController.h"
-#import "StopWatch.h"
-#import "AnalyticsTracker+Registration.h"
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -114,7 +112,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     
     AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-    addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
     addEmailPasswordViewController.formStepDelegate = self;
     
     [self.wr_navigationController setBackButtonEnabled:NO];
@@ -126,9 +123,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
     if ([viewController isKindOfClass:[PhoneNumberStepViewController class]]) {
-        self.navigationController.showLoadingView  = YES;
-        [self.analyticsTracker tagRequestedPhoneLogin];
-        
+        self.navigationController.showLoadingView  = YES;        
         PhoneNumberStepViewController *phoneNumberStepViewController = (PhoneNumberStepViewController *)viewController;
         self.phoneNumber = phoneNumberStepViewController.phoneNumber;
         [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForLogin:self.phoneNumber];
@@ -139,9 +134,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         PhoneVerificationStepViewController *phoneVerificationStepViewController = (PhoneVerificationStepViewController *)viewController;
         ZMPhoneCredentials *credentials = [ZMPhoneCredentials credentialsWithPhoneNumber:phoneVerificationStepViewController.phoneNumber
                                                                         verificationCode:phoneVerificationStepViewController.verificationCode];
-        
-        StopWatch *stopWatch = [StopWatch stopWatch];
-        [stopWatch restartEvent:@"Login"];
         
         [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
     }
@@ -162,7 +154,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self proceedToCodeVerification];
     }
     else {
-        [self.analyticsTracker tagResentPhoneLoginVerification];
         [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
     }
 }
@@ -185,12 +176,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.navigationController.showLoadingView = NO;
     
     if (error.code != ZMUserSessionCodeRequestIsAlreadyPending) {
-        if ([self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-            [self.analyticsTracker tagResentPhoneLoginVerificationFailedWithError:error];
-        } else {
-            [self.analyticsTracker tagPhoneLoginFailedWithError:error];
-        }
-
         [self showAlertForError:error];
     }
     else {
@@ -206,7 +191,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
-    [self.analyticsTracker tagPhoneLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;
     
     if (error.code == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {        
@@ -228,7 +212,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)authenticationDidSucceed
 {
-    [self.analyticsTracker tagPhoneLogin];
     self.navigationController.showLoadingView = NO;
 }
 

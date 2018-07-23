@@ -210,7 +210,7 @@ import Classy
         case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
-            
+
             // check if needs to reauthenticate
             var needsToReauthenticate = false
             var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
@@ -237,6 +237,7 @@ import Classy
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
+                TrackingManager.shared.disableCrashAndAnalyticsSharing = true
                 
                 let navigationController = NavigationController(rootViewController: landingViewController)
                 navigationController.backButtonEnabled = false
@@ -458,7 +459,7 @@ extension AppRootViewController: ZMRequestsToOpenViewsDelegate {
         })
     }
 
-    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate)->()) {
+    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate) -> ()) {
         if let delegate = self.requestToOpenViewDelegate {
             closure(delegate)
         }
@@ -556,10 +557,8 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
             self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
             completion(true)
         }))
-        alert.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (action) in
-            completion(false)
-        }))
-        
+        alert.addAction(.cancel { completion(false) })
+
         topmostController.present(alert, animated: true, completion: nil)
     }
     

@@ -31,7 +31,6 @@
 
 #import "Constants.h"
 #import "PermissionDeniedViewController.h"
-#import "AnalyticsTracker.h"
 
 #import "WireSyncEngine+iOS.h"
 
@@ -534,7 +533,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
         PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];
-        permissions.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
         permissions.delegate = self;
         
         [self addChildViewController:permissions];
@@ -716,7 +714,6 @@
     switch (buttonType) {
         case ConversationListButtonTypeArchive:
             [self setState:ConversationListStateArchived animated:YES];
-            [Analytics.shared tagArchiveOpened];
             break;
 
         case ConversationListButtonTypeStartUI:
@@ -759,7 +756,6 @@
     [ZMUserSession.sharedSession enqueueChanges:^{
         conversation.isArchived = NO;
     } completionHandler:^{
-        [Analytics.shared tagUnarchivedConversation];
         [self setState:ConversationListStateConversationList animated:YES completion:^{
             @strongify(self)
             [self.listContentController selectConversation:conversation focusOnView:YES animated:YES];

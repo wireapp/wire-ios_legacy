@@ -273,8 +273,6 @@ import Cartography
     }
     
     fileprivate func playMedia(_ atPath: String) {
-        Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
-
         self.audioPlayerController?.tearDown()
 
         self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))

@@ -48,25 +48,8 @@ public extension ConversationCell {
         guard let _ = message else { return }
         guard message.canBeLiked else { return }
 
-        let reactionType: ReactionType = message.liked ? .unlike : .like
-        trackReaction(sender, reaction: reactionType)
-
         self.likeButton.setSelected(!self.message.liked, animated: true)
         delegate.conversationCell!(self, didSelect: .like)
-    }
-
-    @objc func trackReaction(_ sender: AnyObject, reaction: ReactionType) {
-        var interactionMethod = InteractionMethod.undefined
-        if sender is LikeButton {
-            interactionMethod = .button
-        }
-        if sender is UIMenuController {
-            interactionMethod = .menu
-        }
-        if sender is UITapGestureRecognizer {
-            interactionMethod = .doubleTap
-        }
-        Analytics.shared().tagReactedOnMessage(message, reactionType:reaction, method: interactionMethod)
     }
 }
 

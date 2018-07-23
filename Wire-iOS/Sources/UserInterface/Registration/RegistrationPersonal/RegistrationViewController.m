@@ -47,8 +47,6 @@
 #import "PhoneSignInViewController.h"
 #import "EmailSignInViewController.h"
 
-#import "AnalyticsTracker+Registration.h"
-
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
@@ -152,7 +150,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     if (userSessionErrorCode == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
         AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-        addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
         addEmailPasswordViewController.formStepDelegate = self;
         rootViewController = addEmailPasswordViewController;
     }
@@ -299,7 +296,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         }
         
         AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-        addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
         addEmailPasswordViewController.formStepDelegate = self;
         addEmailPasswordViewController.skipButtonType = AddEmailPasswordViewControllerSkipButtonTypeNone;
         

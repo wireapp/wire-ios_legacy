@@ -1,4 +1,4 @@
-////
+//
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -25,6 +25,19 @@ extension Analytics {
             "user_type" : ZMUser.selfUser().isGuest(in: conversation) ? "guest" : "user"
         ]
     }
+}
+
+protocol Event {
+    var name: String { get }
+    var attributes: [AnyHashable: Any]? { get }
+}
+
+extension Analytics {
+    
+    func tag(_ event: Event) {
+        tagEvent(event.name, attributes: event.attributes ?? [:])
+    }
+    
 }
 
 enum GuestLinkEvent: Event {

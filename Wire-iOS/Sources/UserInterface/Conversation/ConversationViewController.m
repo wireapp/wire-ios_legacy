@@ -56,8 +56,6 @@
 #import "VerticalTransition.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "AnalyticsTracker.h"
-#import "AnalyticsTracker+Invitations.h"
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -111,8 +109,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
 
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
-
 @property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
 @property (nonatomic) CollectionsViewController *collectionController;
@@ -149,8 +145,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [UIView performWithoutAnimation:^{
         self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground];
     }];
-
-    self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextConversation];
     
     [self createInputBarController];
     [self createContentViewController];
@@ -181,7 +175,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self.inputBarController = [[ConversationInputBarViewController alloc] initWithConversation:self.conversation];
     self.inputBarController.delegate = self;
-    self.inputBarController.analyticsTracker = self.analyticsTracker;
     self.inputBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
 
     // Create an invisible input accessory view that will allow us to take advantage of built in keyboard
@@ -197,7 +190,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation];
     self.contentViewController.delegate = self;
-    self.contentViewController.analyticsTracker = self.analyticsTracker;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;
 }
@@ -502,12 +494,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return _participantsController;
 }
 
-- (void)setAnalyticsTracker:(AnalyticsTracker *)analyticsTracker
-{
-    _analyticsTracker = analyticsTracker;
-    self.contentViewController.analyticsTracker = _analyticsTracker;
-}
-
 - (void)didTapMediaBar:(UITapGestureRecognizer *)tapGestureRecognizer
 {
     MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
@@ -771,15 +757,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)conversationInputBarViewControllerDidFinishEditingMessage:(id<ZMConversationMessage>)message withText:(NSString *)newText
 {
     [self.contentViewController didFinishEditingMessage:message];
-    ConversationType conversationType = (self.conversation.conversationType == ZMConversationTypeGroup) ? ConversationTypeGroup : ConversationTypeOneToOne;
-    MessageType messageType = [Message messageType:message];
-    NSTimeInterval elapsedTime = 0 - [message.serverTimestamp timeIntervalSinceNow];
     [[ZMUserSession sharedSession] enqueueChanges:^{
         if (newText == nil || [newText isEqualToString:@""]) {
-            [[Analytics shared] tagDeletedMessage:messageType messageDeletionType:MessageDeletionTypeEverywhere conversationType:conversationType timeElapsed:elapsedTime];
             [ZMMessage deleteForEveryone:message];
         } else {
-            [[Analytics shared] tagEditedMessageConversationType:conversationType timeElapsed:elapsedTime];
             BOOL fetchLinkPreview = ![[Settings sharedSettings] disableLinkPreviews];
             (void)[ZMMessage edit:message newText:newText fetchLinkPreview:fetchLinkPreview];
         }

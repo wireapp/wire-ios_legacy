@@ -72,12 +72,12 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
     private let defaults: UserDefaults
     
+    // INFO: this list has to go after we are sure that we are not sending any unexpected events.
     private static let enabledEvents = Set<String>([
         conversationMediaCompleteActionEventName,
         "settings.opted_in_tracking",
         "settings.opted_out_tracking",
         "settings.changed_status",
-        "e2ee.failed_message_decyption",
         "start.opened_start_screen",
         "start.opened_person_registration",
         "start.opened_team_registration",
@@ -90,15 +90,10 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         "settings.opened_manage_team",
         "registration.succeeded",
         "calling.joined_call",
-        "calling.joined_video_call",
         "calling.established_call",
-        "calling.established_video_call",
         "calling.ended_call",
-        "calling.ended_video_call",
         "calling.initiated_call",
-        "calling.initiated_video_call",
         "calling.received_call",
-        "calling.received_video_call",
         "calling.avs_metrics_ended_call",
         "notifications.processing",
         TeamInviteEvent.sentInvite(.teamCreation).name,
@@ -117,7 +112,10 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         BackupEvent.importSucceeded.name,
         BackupEvent.importFailed.name,
         BackupEvent.exportSucceeded.name,
-        BackupEvent.exportFailed.name
+        BackupEvent.exportFailed.name,
+        "e2ee.failed_message_decyption",
+        "request.loop",
+        "debug.database_context_save_failure"
         ])
     
     private static let enabledSuperProperties = Set<String>([
@@ -184,10 +182,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        guard AnalyticsMixpanelProvider.enabledEvents.contains(event) else {
-            zmLog.info("Analytics: event \(event) is disabled")
-            return
-        }
+        assert(AnalyticsMixpanelProvider.enabledEvents.contains(event), "Analytics: event \(event) is disabled")
         
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
@@ -202,10 +197,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        guard AnalyticsMixpanelProvider.enabledSuperProperties.contains(name) else {
-            zmLog.info("Analytics: Super property \(name) is disabled")
-            return
-        }
+        assert(AnalyticsMixpanelProvider.enabledSuperProperties.contains(name), "Analytics: Super property \(name) is disabled")
         
         if let valueNotNil = Dictionary.bridgeOrDescription(for: value) {
             mixpanelInstance.registerSuperProperties([name: valueNotNil])

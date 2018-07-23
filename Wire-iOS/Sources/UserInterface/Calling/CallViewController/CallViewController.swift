@@ -265,14 +265,20 @@ extension CallViewController: AVSMediaManagerClientObserver {
 extension CallViewController {
 
     fileprivate func acceptCallIfPossible() {
+        guard let conversation = self.conversation else {
+            fatalError("Trying to accept a call for a voice channel without conversation.")
+        }
+
         permissions.requestOrWarnAboutAudioPermission { audioGranted in
             guard audioGranted else {
                 return self.voiceChannel.leave(userSession: ZMUserSession.shared()!)
             }
 
-            self.checkVideoPermissions { videoGranted in
-                self.conversation?.joinVoiceChannel(video: videoGranted)
-                self.disableVideoIfNeeded()
+            conversation.confirmJoiningCallIfNeeded(alertPresenter: self, forceAlertModal: true) {
+                self.checkVideoPermissions { videoGranted in
+                    conversation.joinVoiceChannel(video: videoGranted)
+                    self.disableVideoIfNeeded()
+                }
             }
         }
     }

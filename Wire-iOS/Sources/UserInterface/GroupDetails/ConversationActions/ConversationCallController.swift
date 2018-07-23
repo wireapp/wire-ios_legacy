@@ -57,7 +57,7 @@ import Foundation
     
     @objc public func joinCall() {
         guard conversation.canJoinCall else { return }
-        confirmJoiningCallIfNeeded { [conversation] in
+        conversation.confirmJoiningCallIfNeeded(alertPresenter: target) { [conversation] in
             conversation.joinCall() // This will result in joining an ongoing call.
         }
     }
@@ -73,17 +73,7 @@ import Foundation
         }
         target.present(controller, animated: true)
     }
-    
-    private func confirmJoiningCallIfNeeded(completion: @escaping () -> Void) {
-        guard true == ZMUserSession.shared()?.isCallOngoing else { return completion() }
-        let controller = UIAlertController.ongoingCallJoinCallConfirmation { confirmed in
-            guard confirmed else { return }
-            ZMUserSession.shared()?.callCenter?.endAllCalls()
-            completion()
-        }
-        target.present(controller, animated: true)
-    }
-    
+
     private func confirmGroupCall(completion: @escaping (_ completion: Bool) -> ()) {
         let controller = UIAlertController.confirmGroupCall(
             participants: conversation.activeParticipants.count - 1,

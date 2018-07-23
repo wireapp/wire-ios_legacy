@@ -36,6 +36,7 @@ final class TeamCreationStepController: UIViewController {
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
+    private let companyLoginController = CompanyLoginController()
 
     fileprivate var secondaryViewsStackView: UIStackView!
     fileprivate var errorViewContainer: UIView!
@@ -77,9 +78,9 @@ final class TeamCreationStepController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        companyLoginController.delegate = self
         view.backgroundColor = UIColor.Team.background
-
+        
         createViews()
         createConstraints()
     }
@@ -87,6 +88,8 @@ final class TeamCreationStepController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         observeKeyboard()
+        companyLoginController.isAutoDetectionEnabled = true
+        companyLoginController.detectLoginCode()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
 
@@ -97,6 +100,7 @@ final class TeamCreationStepController: UIViewController {
         super.viewWillDisappear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         NotificationCenter.default.removeObserver(self)
+        companyLoginController.isAutoDetectionEnabled = false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -390,4 +394,16 @@ extension TeamCreationStepController {
         }
     }
 
+}
+
+// MARK: - CompanyLoginControllerDelegate
+
+extension TeamCreationStepController: CompanyLoginControllerDelegate {
+    func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
+        self.showLoadingView = showLoadingView
+    }
 }

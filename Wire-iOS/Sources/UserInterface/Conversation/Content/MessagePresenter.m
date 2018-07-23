@@ -19,8 +19,6 @@
 #import "MessagePresenter.h"
 #import "WireSyncEngine+iOS.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
-#import "AnalyticsTracker+FileTransfer.h"
 #import "Wire-Swift.h"
 #import "UIViewController+WR_Additions.h"
 
@@ -106,9 +104,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     (void)[message startSelfDestructionIfNeeded];
     
-    [self.analyticsTracker tagOpenedFileWithSize:message.fileMessageData.size
-                                   fileExtension:[message.fileMessageData.filename pathExtension]];
-    
     if (message.fileMessageData.isVideo) {
         AVPlayer *player = [[AVPlayer alloc] initWithURL:message.fileMessageData.fileURL];
         MediaPlayerController *playerController = [[MediaPlayerController alloc]  initWithPlayer:player message:message delegate: AppDelegate.sharedAppDelegate.mediaPlaybackManager];
@@ -119,7 +114,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.targetViewController presentViewController:playerViewController animated:YES completion:^() {
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
             [player play];
-            [Analytics.shared tagPlayedVideoMessage:CMTimeGetSeconds(player.currentItem.duration)];
         }];
     }
     else {
