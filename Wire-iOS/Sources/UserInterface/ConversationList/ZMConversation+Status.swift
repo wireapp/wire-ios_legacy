@@ -346,15 +346,10 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
                     if let _ = $0.sender,
                         let type = StatusMessageType(message: $0),
-                        let _ = matchedTypesDescriptions[type] {
-                        
-                        if let message = $0 as? ZMSystemMessage, !message.isRelevant {
-                            return false
-                        } else {
-                            return true
-                        }
-                    }
-                    else {
+                        let _ = matchedTypesDescriptions[type],
+                        $0.isRelevant {
+                        return true
+                    } else {
                         return false
                     }
                 }),
@@ -386,12 +381,9 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
-                     let _ = matchedTypesDescriptions[type] {
-                    if let message = $0 as? ZMSystemMessage, !message.isRelevant {
-                        return false
-                    } else {
-                        return true
-                    }
+                     let _ = matchedTypesDescriptions[type],
+                     $0.isRelevant {
+                    return true
                 }
                 else {
                     return false
@@ -412,6 +404,12 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
+}
+
+fileprivate extension ZMConversationMessage {
+    var isRelevant: Bool {
+        return (self as? ZMSystemMessage)?.isRelevant ?? true
+    }
 }
 
 // ! Failed to send
