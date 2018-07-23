@@ -221,7 +221,7 @@ enum ClientSection: Int {
             
         case .info:
             if let cell = tableView.dequeueReusableCell(withIdentifier: ClientTableViewCell.zm_reuseIdentifier, for: indexPath) as? ClientTableViewCell {
-                cell.selectionStyle = .none
+                cell.selectionStyle = .default
                 cell.userClient = self.userClient
                 cell.wr_editable = false
                 cell.showVerified = false
