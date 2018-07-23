@@ -347,7 +347,12 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                     if let _ = $0.sender,
                         let type = StatusMessageType(message: $0),
                         let _ = matchedTypesDescriptions[type] {
-                        return true
+                        
+                        if let message = $0 as? ZMSystemMessage, !message.isRelevant {
+                            return false
+                        } else {
+                            return true
+                        }
                     }
                     else {
                         return false
@@ -382,7 +387,11 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
                      let _ = matchedTypesDescriptions[type] {
-                    return true
+                    if let message = $0 as? ZMSystemMessage, !message.isRelevant {
+                        return false
+                    } else {
+                        return true
+                    }
                 }
                 else {
                     return false
