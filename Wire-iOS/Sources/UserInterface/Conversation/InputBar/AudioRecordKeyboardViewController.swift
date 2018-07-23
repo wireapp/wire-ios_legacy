@@ -78,10 +78,13 @@ private let zmLog = ZMSLog(tag: "UI")
             self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
         }
     }
-    
+
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        recorder.stopRecording()
+
+        if AppLock.isActive {
+            UIApplication.shared.keyWindow?.endEditing(true)
+        }
     }
     
     func configureViews() {
