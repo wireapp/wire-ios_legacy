@@ -60,10 +60,8 @@ class CompanyLoginFlowHandler {
     private func openSafariAuthenticationSession(at url: URL) {
         let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
             if let url = url {
-                print(url)
                 SessionManager.shared?.urlHandler.openURL(url, options: [:])
             }
-            dump(error)
 
             self.currentAuthenticationSession = nil
         }
@@ -73,8 +71,8 @@ class CompanyLoginFlowHandler {
     }
 
     private func openSafariEmbed(at url: URL) {
-        let viewController = SFSafariViewController(url: url)
-        print(viewController) // TODO: Actually show the VC
+        let safariViewController = SFSafariViewController(url: url)
+        UIApplication.shared.wr_topmostController()?.present(safariViewController, animated: true, completion: nil)
     }
 
 }

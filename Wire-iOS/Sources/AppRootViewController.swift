@@ -637,7 +637,6 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 return
             }
             
-            print("Success")
             callback(true)
         }
     }
