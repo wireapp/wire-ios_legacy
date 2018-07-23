@@ -72,4 +72,14 @@
     return NO;
 }
 
+- (id<ZMConversationMessage>)firstUnreadMessage
+{
+    return nil;
+}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    return nil;
+}
+
 @end
