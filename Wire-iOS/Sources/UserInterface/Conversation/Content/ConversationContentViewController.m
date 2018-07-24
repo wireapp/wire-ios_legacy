@@ -212,6 +212,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)viewWillDisappear:(BOOL)animated
 {
     self.onScreen = NO;
+    [self removeHighlightsAndMenu];
     [super viewWillDisappear:animated];
 }
 
