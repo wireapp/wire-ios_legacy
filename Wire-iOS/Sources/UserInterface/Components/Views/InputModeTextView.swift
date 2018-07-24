@@ -17,3 +17,26 @@
 //
 
 import Foundation
+
+class InputModeTextView: MarkdownTextView {
+    var inputLanguage: String?
+
+    var originalTextInputMode: UITextInputMode? {
+        return super.textInputMode
+    }
+
+    override public var textInputMode: UITextInputMode? {
+        if inputLanguage == nil {//} || (inputLanguage?.count)! <= 0 {
+            return super.textInputMode
+        }
+
+        for textInputMode: UITextInputMode in UITextInputMode.activeInputModes {
+            if textInputMode.primaryLanguage == inputLanguage {
+                return textInputMode
+            }
+        }
+
+
+        return super.textInputMode
+    }
+}

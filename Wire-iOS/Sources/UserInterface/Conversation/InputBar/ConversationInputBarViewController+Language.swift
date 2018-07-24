@@ -19,20 +19,24 @@
 import Foundation
 
 extension ConversationInputBarViewController {
+    ///TODO: mv to textView?
     @objc func setupInputLanguageObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(inputModeDidChange(_:)), name: .UITextInputCurrentInputModeDidChange, object: nil)
 
     }
 
     @objc func inputModeDidChange(_ notification: Notification?) {
-        let keyboardLanguage =  self.inputBar.textView.textInputMode?.primaryLanguage
+
+        let keyboardLanguage =  self.inputBar.textView.originalTextInputMode?.primaryLanguage
         print("\(keyboardLanguage ?? "")")
-        // e.g. en-US
 
         ZMUserSession.shared()?.enqueueChanges {
             self.conversation.inputLanguage = keyboardLanguage
+            self.setInputLanguage()
         }
-
     }
 
+    @objc func setInputLanguage() {
+        self.inputBar.textView.inputLanguage = self.conversation.inputLanguage
+    }
 }

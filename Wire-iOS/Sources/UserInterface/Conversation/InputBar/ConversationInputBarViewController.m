@@ -240,6 +240,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateWritingStateAnimated:NO];
     [self updateButtonIcons];
     [self updateAvailabilityPlaceholder];
+
+    [self setInputLanguage];
 }
 
 - (void)viewWillAppear:(BOOL)animated
