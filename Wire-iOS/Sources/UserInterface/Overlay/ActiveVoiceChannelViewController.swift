@@ -114,6 +114,18 @@ class ActiveVoiceChannelViewController : UIViewController {
         }
     }
     
+    fileprivate func updateMinimisedCall(with callState: CallState,
+                                         conversation: ZMConversation) {
+        switch callState {
+        case .terminating(_):
+            if minimisedCall == conversation.remoteIdentifier! {
+                minimisedCall = nil
+            }
+        default:
+            break
+        }
+    }
+    
     private func shouldPresentCallOverlay() -> Bool {
         switch (primaryCallingConversation?.voiceChannel?.state, SessionManager.shared?.callNotificationStyle) {
         case (.incoming?, .callKit?): return false
@@ -221,7 +233,8 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
         updateVisibleVoiceChannelViewController()
-
+        updateMinimisedCall(with: callState, conversation: conversation)
+        
         let changeDate = Date()
 
         // Only show the survey in internal builds (review required)
@@ -235,10 +248,6 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
         switch callState {
         case .established:
             answeredCalls[conversation.remoteIdentifier!] = Date()
-        case .terminating(_):
-            if minimisedCall == conversation.remoteIdentifier! {
-                minimisedCall = nil
-            }
         default:
             break
         }
