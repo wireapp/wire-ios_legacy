@@ -31,7 +31,7 @@ extension Notification.Name {
     fileprivate static let authenticationPersistancePeriod: TimeInterval = 10
     fileprivate var localAuthenticationCancelled: Bool = false
     fileprivate var localAuthenticationNeeded: Bool = true
-    
+
     fileprivate var dimContents: Bool = false {
         didSet {
             self.view.isHidden = !self.dimContents
@@ -39,7 +39,10 @@ extension Notification.Name {
     }
     
     static let shared = AppLockViewController()
-    
+
+    static var isLocked: Bool {
+        return shared.dimContents
+    }
 
     convenience init() {
         self.init(nibName:nil, bundle:nil)

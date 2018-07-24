@@ -37,7 +37,8 @@ final class ZMConversationMessageWindowTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = ZMConversationMessageWindow()
+        let mockConversation = MockConversationFactory.mockConversation() as Any
+        sut = ZMConversationMessageWindow.init(conversation: mockConversation as! ZMConversation, size: 50)
     }
     
     override func tearDown() {

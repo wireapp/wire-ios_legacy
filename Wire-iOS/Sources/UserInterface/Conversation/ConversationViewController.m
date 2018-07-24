@@ -858,27 +858,34 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                 break;
             case ConversationDegradedResultShowDetails:
                 [self.conversation doNotResendMessagesThatCausedDegradation];
-                if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-                    ZMUser *user = self.conversation.connectedUser;
-                    if (user.clients.count == 1) {
-                        ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
-                        userClientController.showBackButton = NO;
-                        UINavigationController *navigationController = userClientController.wrapInNavigationController;
-                        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                        userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
-                        [self presentViewController:navigationController animated:YES completion:nil];
-                    } else {
-                        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
-                        profileViewController.delegate = self;
-                        profileViewController.viewControllerDismisser = self;
-                        UINavigationController *navigationController = profileViewController.wrapInNavigationController;
-                        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                        [self presentViewController:navigationController animated:YES completion:nil];
-                    }
-                } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
-                    UIViewController *participantsController = [self participantsController];
-                    [self presentViewController:participantsController animated:YES completion:nil];
+
+                if ([[ZMUser selfUser] hasUntrustedClients]) {
+                    [[ZClientViewController sharedZClientViewController] openClientListScreenForUser:[ZMUser selfUser]];
                 }
+                else {
+                    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+                        ZMUser *user = self.conversation.connectedUser;
+                        if (user.clients.count == 1) {
+                            ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
+                            userClientController.showBackButton = NO;
+                            UINavigationController *navigationController = userClientController.wrapInNavigationController;
+                            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                            userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
+                            [self presentViewController:navigationController animated:YES completion:nil];
+                        } else {
+                            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
+                            profileViewController.delegate = self;
+                            profileViewController.viewControllerDismisser = self;
+                            UINavigationController *navigationController = profileViewController.wrapInNavigationController;
+                            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                            [self presentViewController:navigationController animated:YES completion:nil];
+                        }
+                    } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
+                        UIViewController *participantsController = [self participantsController];
+                        [self presentViewController:participantsController animated:YES completion:nil];
+                    }
+                }
+                
                 break;
         }
     }];

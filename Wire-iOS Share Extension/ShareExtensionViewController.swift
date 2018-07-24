@@ -82,7 +82,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        StorageStack.reset()
     }
     
     override func viewDidLoad() {
