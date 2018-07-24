@@ -58,7 +58,9 @@ import Foundation
 
     /// Create a new `CompanyLoginController` instance using the standard detector and requester.
     @objc public override convenience init() {
-        self.init(detector: .shared, requester: CompanyLoginRequester(backendHost: "staging-nginz-https.zinfra.io", callbackScheme: "wire"))
+        let environment = ZMBackendEnvironment(userDefaults: .standard)
+        let requester = CompanyLoginRequester(backendHost: environment.backendURL.host!, callbackScheme: "wire")
+        self.init(detector: .shared, requester: requester)
     }
 
     /// Create a new `CompanyLoginController` instance using the specified requester.
