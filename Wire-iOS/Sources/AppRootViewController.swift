@@ -613,11 +613,13 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
             self.present(alert, animated: true, completion: nil)
 
-        case .companyLoginFailure(let message):
+        case .companyLoginFailure(let label):
             guard case .unauthenticated = appStateController.appState else {
                 callback(false)
                 return
             }
+
+            let message = "login.sso.error.alert.message".localized(args: label)
 
             let alert = UIAlertController(title: "general.failure".localized,
                                           message: message,
