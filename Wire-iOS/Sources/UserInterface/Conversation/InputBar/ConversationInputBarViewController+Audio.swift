@@ -32,19 +32,23 @@ extension ConversationInputBarViewController {
     }
 
     @objc func setupAppLockedObserver() {
+
         NotificationCenter.default.addObserver(self,
-        selector: #selector(ConversationInputBarViewController.appUnlocked),
+        selector: #selector(revealRecordKeyboardWhenAppLocked),
         name: .appUnlocked,
         object: .none)
+
+        // If the app is locked and not yet reach the time to unlock and the app became active, reveal the keyboard (it was dismissed when app resign active)
+        NotificationCenter.default.addObserver(self, selector: #selector(revealRecordKeyboardWhenAppLocked), name: .UIApplicationDidBecomeActive, object: nil)
     }
 
-    @objc func appUnlocked() {
-        // show the record keyboard after it is hide after the app went to background
-        if AppLock.isActive &&
-           mode == .audioRecord &&
-           !self.inputBar.textView.isFirstResponder {
-            displayRecordKeyboard()
-        }
+    @objc func revealRecordKeyboardWhenAppLocked() {
+        guard AppLock.isActive,
+              !AppLockViewController.isLocked,
+              mode == .audioRecord,
+              !self.inputBar.textView.isFirstResponder else { return }
+
+        displayRecordKeyboard()
     }
 
     @objc func configureAudioButton(_ button: IconButton) {

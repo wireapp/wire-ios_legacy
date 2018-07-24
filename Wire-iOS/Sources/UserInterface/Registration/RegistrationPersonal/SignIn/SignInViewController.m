@@ -33,7 +33,7 @@
 
 
 
-@interface SignInViewController () <PhoneSignInViewControllerDelegate>
+@interface SignInViewController () <PhoneSignInViewControllerDelegate, EmailSignInViewControllerDelegate>
 
 @property (nonatomic) EmailSignInViewController *emailSignInViewController;
 @property (nonatomic) UIView *viewControllerContainer;
@@ -150,6 +150,7 @@
 - (void)setupEmailSignInViewController
 {
     EmailSignInViewController *emailSignInViewController = [[EmailSignInViewController alloc] init];
+    emailSignInViewController.delegate = self;
     emailSignInViewController.loginCredentials = self.loginCredentials;
     emailSignInViewController.view.frame = self.viewControllerContainer.frame;
     emailSignInViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -295,6 +296,13 @@
 - (void)phoneSignInViewControllerNeedsPasswordFor:(LoginCredentials *)loginCredentials
 {
     [self presentSignInViewControllerWithCredentials:loginCredentials];
+}
+
+#pragma mark - EmailSignInViewControllerDelegate
+
+- (void)emailSignInViewControllerDidTapCompanyLoginButton:(EmailSignInViewController *)signInViewController
+{
+    [self.delegate signInViewControllerDidTapCompanyLoginButton:self];
 }
 
 @end

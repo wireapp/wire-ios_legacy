@@ -52,6 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) IconButton *sendButton;
 @property (nonatomic) IconButton *hourglassButton;
 
+@property (nonatomic) BOOL inRotation;
+
+// PopoverPresenter
+@property (nonatomic, nullable) UIPopoverPresentationController *presentedPopover;
+@property (nonatomic, nullable) UIView *popoverPointToView;
+
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;

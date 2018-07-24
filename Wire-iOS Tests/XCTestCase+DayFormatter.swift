@@ -39,6 +39,10 @@ extension XCTestCase {
     func resetDayFormatter() {
         let locale = Locale(identifier: "en_US")
         WRDateFormatter.thisYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMM", options: 0, locale: locale)
-        WRDateFormatter.otherYearFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .full
+
+        WRDateFormatter.otherYearFormatter = dateFormatter
     }
 }

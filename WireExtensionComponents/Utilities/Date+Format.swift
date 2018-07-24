@@ -71,15 +71,14 @@ public class WRDateFormatter {
 
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = formatString
+
         return dateFormatter
     }()
 
     public static var otherYearFormatter: DateFormatter = {
-        let locale = Locale.current
-        let formatString = DateFormatter.dateFormat(fromTemplate: "EEEEdMMMMYYYY", options: 0, locale: locale)
-
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = formatString
+        dateFormatter.dateStyle = .full
+
         return dateFormatter
     }()
 }

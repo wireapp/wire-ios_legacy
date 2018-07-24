@@ -16,28 +16,25 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-struct SharedIdentitySessionRequesterTimeoutError: LocalizedError {
+final class MessageTests: XCTestCase {
 
-    var errorDescription: String? {
-        return "Please contact your team administrator for details."
+    func testThatDayFormatterProduceCorrectStringForTheLastDayOfAYear() {
+        // GIVEN
+        var components = DateComponents()
+        components.year = 2017
+        components.month = 12
+        components.day = 31
+        components.hour = 8
+
+        let serverTimestamp = Calendar.current.date(from: components)!
+
+        // WHEN
+        let dateString = Message.dayFormatter(date: serverTimestamp).string(from: serverTimestamp)
+
+        // THEN
+        XCTAssertEqual(dateString, "Sunday, December 31, 2017")
     }
-
-}
-
-class TimeoutIdentitySessionRequester: SharedIdentitySessionRequester {
-
-    let delay: TimeInterval
-
-    init(delay: TimeInterval) {
-        self.delay = delay
-    }
-
-    func requestIdentity(for token: UUID, _ completion: @escaping (SharedIdentitySessionResponse) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            completion(.error(SharedIdentitySessionRequesterTimeoutError()))
-        }
-    }
-
 }
