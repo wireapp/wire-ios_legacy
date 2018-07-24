@@ -105,27 +105,7 @@ class VerticalColumnCollectionViewLayout: UICollectionViewLayout {
     }
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        if #available(iOS 11, *) {
-            return positioning?.rows.filter { $0.frame.height > 0 && $0.frame.intersects(rect) }
-        } else {
-            // Fix the crashes on iOS < 11.0 for "no UICollectionViewLayoutAttributes instance for layoutAttributesForItemAtIndexPath". UICollectionViewLayoutAttributes with 0-height frame causes the crash.
-            let mapped :[UICollectionViewLayoutAttributes]? = positioning?.rows.map {
-
-                let attributes = $0
-                if attributes.frame.height <= 0 {
-                    attributes.frame = CGRect(origin: attributes.frame.origin, size: CGSize(width: attributes.frame.width, height: 1))
-                    return attributes
-                } else {
-                    return $0
-                }
-            }
-
-            let layoutAttributes = mapped?.filter {
-                $0.frame.intersects(rect)
-            }
-
-            return layoutAttributes
-        }
+        return positioning?.rows.filter { $0.frame.height > 0 && $0.frame.intersects(rect) }
     }
 
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
