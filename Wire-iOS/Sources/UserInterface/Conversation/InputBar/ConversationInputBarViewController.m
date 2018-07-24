@@ -164,6 +164,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+
+        [self setupInputLanguageObserver];
         
         if (nil != [UINotificationFeedbackGenerator class]) {
             self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
