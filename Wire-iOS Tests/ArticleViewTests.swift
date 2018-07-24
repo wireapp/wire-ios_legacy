@@ -118,6 +118,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -127,32 +128,20 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
         sut.layoutIfNeeded()
-
-        let expectation = self.expectation(description: "Wait for image to load")
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            expectation.fulfill()
-            self.verifyInAllPhoneWidths(view: self.sut)
-        }
-        
-        self.waitForExpectations(timeout: 2, handler: nil)
+        self.verifyInAllPhoneWidths(view: self.sut)
     }
     
+    // TODO jacob isn't this the same as testArticleViewWithPictureStillDownloading
     func testArticleWithNilPicture() {
         sut = ArticleView(withImagePlaceholder: true)
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithNilPicture(), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
-        
-        let expectation = self.expectation(description: "Wait for image to load")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            expectation.fulfill()
-            self.verifyInAllPhoneWidths(view: self.sut)
-        }
-        
-        self.waitForExpectations(timeout: 2, handler: nil)
+        self.verifyInAllPhoneWidths(view: self.sut)
     }
     
     func testArticleViewWithPictureStillDownloading() {
@@ -165,6 +154,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         textMessageData.imageData = .none
         sut.configure(withTextMessageData: textMessageData, obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -174,15 +164,9 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
-        let expectation = self.expectation(description: "Wait for image to load")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            expectation.fulfill()
-            self.verifyInAllPhoneWidths(view: self.sut)
-        }
-        
-        self.waitForExpectations(timeout: 2, handler: nil)
+        self.verifyInAllPhoneWidths(view: self.sut)
     }
     
     func testArticleViewWithTwitterStatusWithoutPicture() {
@@ -190,6 +174,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: twitterStatusWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -200,6 +185,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: true)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
 
         verifyInAllPhoneWidths(view: sut)
     }
@@ -227,14 +213,8 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(imageNamed: named), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
-        let expectation = self.expectation(description: "Wait for image to load")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            expectation.fulfill()
-            self.verifyInAllPhoneWidths(view: self.sut)
-        }
-        
-        self.waitForExpectations(timeout: 2, handler: nil)
+        self.verifyInAllPhoneWidths(view: self.sut)
     }
 }

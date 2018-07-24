@@ -29,7 +29,7 @@ import WireLinkPreview
     var linkPreviewImageCacheKey: String? = nil
     
     func fetchLinkPreviewImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
-        
+        completionHandler(imageData)
     }
 }
 

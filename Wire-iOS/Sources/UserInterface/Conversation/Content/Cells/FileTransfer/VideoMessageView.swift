@@ -40,6 +40,7 @@ import Classy
     private let normalColor = UIColor.black.withAlphaComponent(0.4)
     private let failureColor = UIColor.red.withAlphaComponent(0.24)
     private var allViews : [UIView] = []
+    private var state: FileMessageViewState = .unavailable
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
@@ -114,32 +115,21 @@ import Classy
         
         fileMessage.requestImageDownload()
         
-        var visibleViews : [UIView] = [previewImageView]
+        self.state = state
+        self.previewImageView.image = nil
         
-        
-        if (state == .unavailable) {
-            visibleViews = [previewImageView, loadingView]
-            self.previewImageView.image = nil
-        } else {
+        if (state != .unavailable) {
             updateTimeLabel(withFileMessageData: fileMessageData)
-            
-            visibleViews.append(contentsOf: [previewImageView, playButton])
-            self.previewImageView.image = nil
             self.timeLabel.textColor = UIColor(scheme: .textForeground)
             
             fileMessageData.fetchPreviewImage { [weak self] (image) in
                 guard let image = image else { return }
                 self?.updatePreviewImage(image)
             }
-                        
-            if !self.timeLabelHidden {
-                visibleViews.append(timeLabel)
-            }
         }
         
         if state == .uploading || state == .downloading {
             self.progressView.setProgress(fileMessageData.progress, animated: !isInitial)
-            visibleViews.append(progressView)
         }
         
         if let viewsState = state.viewsStateForVideo() {
@@ -147,23 +137,42 @@ import Classy
             self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
         }
         
-        if state == .obfuscated {
-            visibleViews = []
-        }
-        
-        self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
+        updateVisibleViews()
     }
     
-    private func updatePreviewImage(_ image: UIImage) {
-        self.previewImageView.image = image
-        self.timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
-        var visibleViews = [previewImageView, bottomGradientView, playButton]
+    private func visibleViews(for state: FileMessageViewState) -> [UIView] {
+        guard state != .obfuscated else {
+            return []
+        }
         
-        if !self.timeLabelHidden {
+        guard state != .unavailable else {
+            return [loadingView]
+        }
+        
+        var visibleViews: [UIView] = [playButton, previewImageView]
+        
+        switch state {
+        case .uploading, .downloading:
+            visibleViews.append(progressView)
+        default:
+            break
+        }
+        
+        if !previewImageView.isHidden && previewImageView.image != nil {
+            visibleViews.append(bottomGradientView)
+        }
+        
+        if !timeLabelHidden {
             visibleViews.append(timeLabel)
         }
         
-        self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
+        return visibleViews
+    }
+    
+    private func updatePreviewImage(_ image: UIImage) {
+        previewImageView.image = image
+        timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        updateVisibleViews()
     }
     
     private func updateTimeLabel(withFileMessageData fileMessageData: ZMFileMessageData) {
@@ -178,6 +187,10 @@ import Classy
         
         self.timeLabel.text = timeLabelText
         self.timeLabel.accessibilityValue = self.timeLabel.text
+    }
+    
+    private func updateVisibleViews() {
+        updateVisibleViews(allViews, visibleViews: visibleViews(for: state), animated: !self.loadingView.isHidden)
     }
     
     override open var tintColor: UIColor! {

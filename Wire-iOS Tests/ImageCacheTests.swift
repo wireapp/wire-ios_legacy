@@ -20,7 +20,7 @@ import Foundation
 import XCTest
 @testable import Wire
 
-
+// TODO jacob removed from project
 class ImageCacheTests: XCTestCase {
     var sut = ImageCache(name: "TestImageCache")
     var imageData = try! Data(contentsOf: Bundle(for: ImageCacheTests.self).url(forResource: "unsplash_matterhorn", withExtension: "jpg")!)

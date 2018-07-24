@@ -22,14 +22,15 @@ class ImageCache<T : NSObjectProtocol> {
     
     var cache: NSCache<NSString, T> = NSCache()
     var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
+    var dispatchGroup: DispatchGroup = DispatchGroup()
     
 }
 
-fileprivate var defaultMessageImageCache = ImageCache<UIImage>()
+var defaultImageCache = ImageCache<UIImage>()
 
 extension ZMTextMessageData {
     
-    func fetchLinkPreviewImage(cache: ImageCache<UIImage> = defaultMessageImageCache, completion: @escaping (_ image: UIImage?) -> Void) {
+    func fetchLinkPreviewImage(cache: ImageCache<UIImage> = defaultImageCache, completion: @escaping (_ image: UIImage?) -> Void) {
         LinkPreviewImageAdaptor(textMessageData: self).fetchImage(cache: cache, completion: completion)
     }
     
@@ -37,7 +38,7 @@ extension ZMTextMessageData {
 
 extension ZMFileMessageData {
     
-    func fetchPreviewImage(cache: ImageCache<UIImage> = defaultMessageImageCache, completion: @escaping (_ image: UIImage?) -> Void) {
+    func fetchPreviewImage(cache: ImageCache<UIImage> = defaultImageCache, completion: @escaping (_ image: UIImage?) -> Void) {
         FileMessageImageAdaptor(fileMesssageData: self).fetchImage(cache: cache, completion: completion)
     }
     
@@ -100,12 +101,15 @@ extension ImageMessage {
         
         requestImageDownload()
         
+        cache.dispatchGroup.enter()
+        
         fetchImageData(queue: cache.processingQueue) { (imageData) in
             var image: UIImage? = nil
             
             defer {
                 DispatchQueue.main.async {
                     completion(image)
+                    cache.dispatchGroup.leave()
                 }
             }
             

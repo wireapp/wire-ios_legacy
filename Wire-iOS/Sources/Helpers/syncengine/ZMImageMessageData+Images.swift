@@ -38,12 +38,12 @@ extension ImageSizeLimit {
     }
 }
 
-var defaultConversationImageCache = ImageCache<MediaAsset>()
+var defaultMediaAssetCache = ImageCache<MediaAsset>()
 
 extension ZMConversationMessage {
 
     /// Fetch image data and calls the completion handler when it's available on the main queue.
-    func fetchImage(cache: ImageCache<MediaAsset> = defaultConversationImageCache, sizeLimit: ImageSizeLimit = .none, completion: @escaping (_ image: MediaAsset?) -> Void) {
+    func fetchImage(cache: ImageCache<MediaAsset> = defaultMediaAssetCache, sizeLimit: ImageSizeLimit = .none, completion: @escaping (_ image: MediaAsset?) -> Void) {
         guard let imageMessageData = imageMessageData else { return completion(nil) }
         
         let isAnimatedGIF = imageMessageData.isAnimatedGIF
@@ -92,6 +92,5 @@ extension ZMConversationMessage {
             }
         }
     }
-    
     
 }

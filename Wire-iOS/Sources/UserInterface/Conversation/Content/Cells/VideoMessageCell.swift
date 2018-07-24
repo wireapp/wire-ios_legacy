@@ -25,14 +25,14 @@ private let zmLog = ZMSLog(tag: "UI")
 
 /// Displays the video message@objc  with different states
 @objcMembers public final class VideoMessageCell: ConversationCell {
-
+    
     private let videoMessageView = VideoMessageView()
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
 
     public var videoViewHeight : CGFloat = PreviewHeightCalculator.videoViewHeight
 
     private var topMargin: NSLayoutConstraint!
-    
+        
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

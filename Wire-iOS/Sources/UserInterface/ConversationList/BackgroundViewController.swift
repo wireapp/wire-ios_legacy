@@ -23,6 +23,9 @@ import WireSyncEngine
 import WireExtensionComponents
 
 final public class BackgroundViewController: UIViewController {
+    
+    internal var dispatchGroup: DispatchGroup = DispatchGroup()
+    
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
     private let darkenOverlay = UIView()
@@ -159,14 +162,16 @@ final public class BackgroundViewController: UIViewController {
     }
 
     private func updateForUserImage() {
-        user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { (imageData) in
+        dispatchGroup.enter()
+        user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { [weak self] (imageData) in
             var image: UIImage? = nil
             if let imageData = imageData {
                 image = BackgroundViewController.blurredAppBackground(with: imageData)
             }
             
             DispatchQueue.main.async {
-                self.imageView.image = image
+                self?.imageView.image = image
+                self?.dispatchGroup.leave()
             }
         }
     }

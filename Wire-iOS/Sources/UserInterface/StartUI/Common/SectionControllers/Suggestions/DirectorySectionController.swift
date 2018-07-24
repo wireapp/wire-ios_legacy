@@ -70,7 +70,7 @@ class DirectorySectionController: SearchSectionController {
         
         ZMUserSession.shared()?.enqueueChanges {
             let messageText = "missive.connection_request.default_message".localized(args: user.displayName, ZMUser.selfUser().name ?? "")
-            user.connect(withMessageText: messageText, completionHandler: {})
+            user.connect(message: messageText)
         }
     }
     

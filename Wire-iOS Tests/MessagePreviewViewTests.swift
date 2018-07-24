@@ -59,7 +59,10 @@ class MessagePreviewViewTests: ZMSnapshotTestCase {
         textMessageData.linkPreviewHasImage = true
         message.backingTextMessageData = textMessageData
         
-        verify(view: message.previewView()!)
+        let previewView = message.previewView()!
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        
+        verify(view: previewView)
     }
     
     func testThatItRendersVideoMessagePreview() {
@@ -67,7 +70,11 @@ class MessagePreviewViewTests: ZMSnapshotTestCase {
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
         message.backingFileMessageData.imagePreviewData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
-        verify(view: message.previewView()!)
+        
+        let previewView = message.previewView()!
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        
+        verify(view: previewView)
     }
     
 }
