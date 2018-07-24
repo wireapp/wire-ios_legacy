@@ -25,6 +25,13 @@ class ArticleViewTests: ZMSnapshotTestCase {
     
     var sut: ArticleView!
         
+    override func tearDown() {
+        
+        defaultImageCache.cache.removeAllObjects()
+        
+        super.tearDown()
+    }
+        
     /// MARK - Fixture
     
     func articleWithoutPicture() -> MockTextMessageData {

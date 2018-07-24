@@ -45,6 +45,12 @@ extension XCTestCase {
 }
 
 class VideoMessageCellTests: ZMSnapshotTestCase {
+        
+    override func tearDown() {
+        defaultImageCache.cache.removeAllObjects()
+        
+        super.tearDown()
+    }
     
     func wrappedCellWithConfig(_ config: ((MockMessage) -> ())?) -> UITableView {
         
