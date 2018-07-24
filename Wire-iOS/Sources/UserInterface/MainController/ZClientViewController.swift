@@ -134,6 +134,7 @@ extension ZClientViewController {
     /// Open the user client list screen
     ///
     /// - Parameter user: the ZMUser with client list to show
+    @objc(openClientListScreenForUser:)
     func openClientListScreen(for user: ZMUser) {
         var viewController: UIViewController?
 

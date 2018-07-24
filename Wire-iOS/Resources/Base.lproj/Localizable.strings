@@ -30,6 +30,7 @@
 "general.skip" = "Not now";
 "general.accept" = "Accept";
 "general.decline" = "No, thanks";
+"general.failure" = "Something went wrong";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -1138,7 +1139,6 @@
 "login.sso.alert.text_field.placeholder" = "SSO access code";
 
 "login.sso.error.alert.title" = "Something went wrong";
-"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
