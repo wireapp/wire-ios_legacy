@@ -38,7 +38,7 @@ CODE_SIGN_ENTITLEMENTS_SHARE_EXT = Wire-Sharing-Extension-iOS/Wire-Sharing-Exten
 //Bundle ID and Version number
 WIRE_BUNDLE_ID = com.wearezeta.zclient-alpha
 WIRE_BUILD_NUMBER = 999999
-SSO_URL_SCHEME = wire-sso-develop
+SSO_URL_SCHEME = wire-sso-alpha
 
 
 //Icon

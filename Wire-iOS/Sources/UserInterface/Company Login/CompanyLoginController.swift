@@ -65,7 +65,7 @@ import Foundation
         guard CompanyLoginController.isCompanyLoginEnabled else { return nil } // Disable on public builds
 
         let environment = ZMBackendEnvironment(userDefaults: .standard)
-        let callbackScheme = wr_URLScheme()
+        let callbackScheme = wr_companyLoginURLScheme()
         requireInternal(nil != callbackScheme, "no valid callback scheme")
 
         let requester = CompanyLoginRequester(

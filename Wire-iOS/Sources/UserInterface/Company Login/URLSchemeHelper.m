@@ -23,6 +23,6 @@
 #define STRINGIZE_INTERNAL(x) #x
 #define STRINGIZE(x) STRINGIZE_INTERNAL(x)
 
-NSString *wr_URLScheme() {
+NSString *wr_companyLoginURLScheme() {
     return @STRINGIZE(WIRE_SSO_URL_SCHEME);
 }

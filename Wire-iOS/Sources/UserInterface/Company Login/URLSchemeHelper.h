@@ -18,4 +18,4 @@
 
 #import <Foundation/Foundation.h>
 
-NSString *wr_URLScheme(void);
+NSString *wr_companyLoginURLScheme(void);
