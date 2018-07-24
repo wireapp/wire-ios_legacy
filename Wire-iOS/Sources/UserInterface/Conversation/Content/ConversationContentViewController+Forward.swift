@@ -23,12 +23,18 @@ import Cartography
 
 extension ZMConversation: ShareDestination {
     
+    public var showsGuestIcon: Bool {
+        return ZMUser.selfUser().hasTeam &&
+            self.conversationType == .oneOnOne &&
+            self.activeParticipants.first {
+                $0 is ZMUser && ($0 as! ZMUser).isGuest(in: self) } != nil
+    }
+    
     public var avatarView: UIView? {
         let avatarView = ConversationAvatarView()
         avatarView.conversation = self
         return avatarView
     }
-    
 }
 
 extension Array where Element == ZMConversation {
@@ -36,10 +42,10 @@ extension Array where Element == ZMConversation {
     // Should be called inside ZMUserSession.shared().performChanges block
     func forEachNonEphemeral(_ block: (ZMConversation) -> Void) {
         forEach {
-            let timeout = $0.destructionTimeout
-            $0.updateMessageDestructionTimeout(timeout: .none)
+            let timeout = $0.messageDestructionTimeout
+            $0.messageDestructionTimeout = nil
             block($0)
-            $0.updateMessageDestructionTimeout(timeout: timeout)
+            $0.messageDestructionTimeout = timeout
         }
     }
 }
@@ -74,7 +80,7 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
         }
     }
     else {
-        fatal("Cannot forward \(message)")
+        fatal("Cannot forward message")
     }
 }
 
@@ -112,7 +118,7 @@ extension ZMConversationMessage {
             cell = FileTransferCell(style: .default, reuseIdentifier: "")
         }
         else {
-            fatal("Cannot create preview for \(self)")
+            fatal("Cannot create preview for \(type(of: self))")
         }
         
         cell.translatesAutoresizingMaskIntoConstraints = false
@@ -160,7 +166,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
         
-        keyboardAvoiding.preferredContentSize = CGSize(width: 320, height: 568)
+        keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
         
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
@@ -190,7 +196,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 }
 
 extension ConversationContentViewController {
-    func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
+    @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
         guard messageToShow.conversation == self.conversation else {
             fatal("Message from the wrong conversation")
         }
@@ -220,7 +226,7 @@ extension ConversationContentViewController {
         }
     }
     
-    func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
+    @objc func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
         let cellIndexPath = IndexPath(row: indexToShow, section: 0)
 
         self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)

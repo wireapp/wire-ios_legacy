@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc final class ConversationActionController: NSObject {
+@objcMembers final class ConversationActionController: NSObject {
     
     struct PresentationContext {
         let view: UIView
@@ -76,7 +76,6 @@
         switch action {
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
             self.conversation.isArchived = !isArchived
-            Analytics.shared().tagArchivedConversation(!isArchived)
             }
         case .markRead: self.enqueue {
             self.conversation.markAsRead()

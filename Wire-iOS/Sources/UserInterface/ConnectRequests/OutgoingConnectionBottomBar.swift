@@ -26,7 +26,7 @@ import Cartography
 }
 
 
-@objc final class OutgoingConnectionViewController: UIViewController {
+@objcMembers final class OutgoingConnectionViewController: UIViewController {
 
     private let cancelButton = IconButton.iconButtonDefault()
     private let archiveButton = IconButton.iconButtonDefault()
@@ -54,7 +54,7 @@ import Cartography
         cancelButton.setIcon(.undo, with: .tiny, for: .normal)
         cancelButton.setTitle("profile.cancel_connection_button_title".localized.uppercased(), for: .normal)
         cancelButton.titleLabel?.font = FontSpec(.small, .light).font!
-        cancelButton.setTitleColor(ColorScheme.default().color(withName: ColorSchemeColorTextForeground), for: .normal)
+        cancelButton.setTitleColor(UIColor(scheme: .textForeground), for: .normal)
         cancelButton.titleImageSpacing = 24
         cancelButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }

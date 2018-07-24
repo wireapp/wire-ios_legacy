@@ -24,10 +24,6 @@ import XCTest
 class CallSystemMessageTests: CoreDataSnapshotTestCase {
 
     // MARK: - Missed Call
-    
-    override func setUp() {
-        super.setUp()
-    }
 
     func testThatItRendersMissedCallFromSelfUser() {
         let missedCell = cell(for: .missedCall, fromSelf: true)
@@ -107,8 +103,8 @@ private extension UITableViewCell {
 
         bounds.size = systemLayoutSizeFitting(
             CGSize(width: 320, height: 0),
-            withHorizontalFittingPriority: UILayoutPriorityRequired,
-            verticalFittingPriority: UILayoutPriorityFittingSizeLevel
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
         )
 
         return wrapInTableView()

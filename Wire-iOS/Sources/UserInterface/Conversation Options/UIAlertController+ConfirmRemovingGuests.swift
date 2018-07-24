@@ -20,14 +20,14 @@ import UIKit
 
 extension UIAlertController {
     
-    static func checkYouConnection() -> UIAlertController {
+    static func checkYourConnection() -> UIAlertController {
         let controller = UIAlertController(
             title: "guest_room.error.generic.title".localized,
             message: "guest_room.error.generic.message".localized,
             preferredStyle: .alert
         )
         controller.addAction(.ok())
-        controller.view.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+        controller.view.tintColor = UIColor(scheme: .textForeground, variant: .light)
         return controller
     }
     
@@ -54,7 +54,7 @@ extension UIAlertController {
         }
         controller.addAction(removeAction)
         controller.addAction(.cancel { completion(false) })
-        controller.view.tintColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+        controller.view.tintColor = UIColor(scheme: .textForeground, variant: .light)
         return controller
     }
 }

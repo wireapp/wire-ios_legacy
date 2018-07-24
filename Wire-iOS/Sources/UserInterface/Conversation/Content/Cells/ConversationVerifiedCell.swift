@@ -19,7 +19,7 @@
 
 import Foundation
 
-class ConversationVerifiedCell: IconSystemCell {
+@objcMembers class ConversationVerifiedCell: IconSystemCell {
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         
@@ -34,7 +34,7 @@ class ConversationVerifiedCell: IconSystemCell {
             let labelTextColor = self.labelTextColor,
             systemMessageData.systemMessageType == ZMSystemMessageType.conversationIsSecure {
                 
-                attributedText = (NSLocalizedString("content.system.is_verified", comment: "") && [NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor])
+                attributedText = (NSLocalizedString("content.system.is_verified", comment: "") && [.font: labelFont, .foregroundColor: labelTextColor])
         }
     }
 }

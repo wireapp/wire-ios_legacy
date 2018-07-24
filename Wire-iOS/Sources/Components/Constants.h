@@ -17,24 +17,6 @@
 // 
 
 
-
-
-#pragma mark - Turn features on or off
-
-
-
-#pragma mark - URLs
-FOUNDATION_EXTERN NSString *const WireURLScheme;
-FOUNDATION_EXTERN NSString *const WireURLSchemeInvite;
-
-FOUNDATION_EXTERN NSString *const WireURLPathTeamJoin;
-
-
-#pragma mark - Preference keys
-
-FOUNDATION_EXPORT NSString *const UserPrefKeyProfilePictureTipCompleted;
-FOUNDATION_EXPORT NSString *const UserPrefKeyAccentColorTipCompleted;
-
 #pragma mark - Unsorted stuff
 
 #define IS_IPHONE ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)

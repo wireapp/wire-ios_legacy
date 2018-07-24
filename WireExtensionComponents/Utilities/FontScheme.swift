@@ -44,25 +44,40 @@ public enum FontWeight: String {
 
 @available(iOSApplicationExtension 8.2, *)
 extension FontWeight {
-    static let weightMapping: [FontWeight: CGFloat] = [
-        .ultraLight: UIFontWeightUltraLight,
-        .thin:       UIFontWeightThin,
-        .light:      UIFontWeightLight,
-        .regular:    UIFontWeightRegular,
-        .medium:     UIFontWeightMedium,
-        .semibold:   UIFontWeightSemibold,
-        .bold:       UIFontWeightBold,
-        .heavy:      UIFontWeightHeavy,
-        .black:      UIFontWeightBlack
+    static let weightMapping: [FontWeight: UIFont.Weight] = [
+        .ultraLight: UIFont.Weight.ultraLight,
+        .thin:       UIFont.Weight.thin,
+        .light:      UIFont.Weight.light,
+        .regular:    UIFont.Weight.regular,
+        .medium:     UIFont.Weight.medium,
+        .semibold:   UIFont.Weight.semibold,
+        .bold:       UIFont.Weight.bold,
+        .heavy:      UIFont.Weight.heavy,
+        .black:      UIFont.Weight.black
     ]
     
-    public var fontWeight: CGFloat {
-        get {
-            return type(of: self).weightMapping[self]!
-        }
+    /// Weight mapping used when the bold text accessibility setting is
+    /// enabled. Light weight fonts won't render bold, so we use regular
+    /// weights instead.
+    static let accessibilityWeightMapping: [FontWeight: UIFont.Weight] = [
+        .ultraLight: UIFont.Weight.regular,
+        .thin:       UIFont.Weight.regular,
+        .light:      UIFont.Weight.regular,
+        .regular:    UIFont.Weight.regular,
+        .medium:     UIFont.Weight.medium,
+        .semibold:   UIFont.Weight.semibold,
+        .bold:       UIFont.Weight.bold,
+        .heavy:      UIFont.Weight.heavy,
+        .black:      UIFont.Weight.black
+    ]
+    
+    public func fontWeight(accessibilityBoldText: Bool? = nil) -> UIFont.Weight {
+        let boldTextEnabled = accessibilityBoldText ?? UIAccessibilityIsBoldTextEnabled()
+        let mapping = boldTextEnabled ? type(of: self).accessibilityWeightMapping : type(of: self).weightMapping
+        return mapping[self]!
     }
     
-    public init(weight: CGFloat) {
+    public init(weight: UIFont.Weight) {
         self = (type(of: self).weightMapping.filter {
             $0.value == weight
             }.first?.key) ?? FontWeight.regular
@@ -72,22 +87,22 @@ extension FontWeight {
 extension UIFont {
     static func systemFont(ofSize size: CGFloat, contentSizeCategory: UIContentSizeCategory, weight: FontWeight) -> UIFont {
         if #available(iOSApplicationExtension 8.2, *) {
-            return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: weight.fontWeight)
+            return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: weight.fontWeight())
         } else {
             return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)))
         }
     }
     
-    public var classySystemFontName: String {
+    @objc public var classySystemFontName: String {
         get {
             let weightSpecifier = { () -> String in 
                 guard #available(iOSApplicationExtension 8.2, *),
-                    let traits = self.fontDescriptor.object(forKey: UIFontDescriptorTraitsAttribute) as? NSDictionary,
-                    let floatWeight = traits[UIFontWeightTrait] as? NSNumber else {
+                    let traits = self.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.traits) as? NSDictionary,
+                    let floatWeight = traits[UIFontDescriptor.TraitKey.weight] as? NSNumber else {
                         return ""
                 }
                 
-                return "-\(FontWeight(weight: CGFloat(floatWeight.floatValue)).rawValue.capitalized)"
+                return "-\(FontWeight(weight: UIFont.Weight(rawValue: CGFloat(floatWeight.floatValue))).rawValue.capitalized)"
             }()
             
             return "System\(weightSpecifier) \(self.pointSize)"
@@ -96,11 +111,11 @@ extension UIFont {
 }
 
 extension UIFont {
-    public var isItalic: Bool {
+    @objc public var isItalic: Bool {
         return fontDescriptor.symbolicTraits.contains(.traitItalic)
     }
     
-    public func italicFont() -> UIFont {
+    @objc public func italicFont() -> UIFont {
         
         if isItalic {
             return self
@@ -172,7 +187,7 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
     return left.size == right.size && left.weight == right.weight && left.fontTextStyle == right.fontTextStyle
 }
 
-@objc public final class FontScheme: NSObject {
+@objcMembers public final class FontScheme: NSObject {
     public typealias FontMapping = [FontSpec: UIFont]
     
     public var fontMapping: FontMapping = [:]
@@ -236,7 +251,7 @@ public func==(left: FontSpec, right: FontSpec) -> Bool {
         return mapping
     }
     
-    public convenience init(contentSizeCategory: UIContentSizeCategory) {
+    @objc public convenience init(contentSizeCategory: UIContentSizeCategory) {
         self.init(fontMapping: type(of: self).defaultFontMapping(with: contentSizeCategory))
     }
     

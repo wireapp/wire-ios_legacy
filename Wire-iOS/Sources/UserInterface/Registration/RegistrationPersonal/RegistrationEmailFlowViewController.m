@@ -31,8 +31,6 @@
 #import "NavigationController.h"
 #import "AppDelegate.h"
 
-#import "AnalyticsTracker+Registration.h"
-
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
@@ -44,6 +42,7 @@
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) id<ZMRegistrationObserverToken> registrationToken;
 @property (nonatomic) id authenticationToken;
+@property (nonatomic) BOOL marketingConsent;
 
 @end
 
@@ -67,8 +66,6 @@
     if (self) {
         self.title = NSLocalizedString(@"registration.title", @"");
         self.unregisteredUser = unregisteredUser;
-        
-        self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextRegistrationEmail];
     }
 
     return self;
@@ -121,7 +118,6 @@
 - (void)presentProfilePictureStep
 {
     ProfilePictureStepViewController *pictureStepViewController = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-    pictureStepViewController.analyticsTracker = self.analyticsTracker;
     pictureStepViewController.formStepDelegate = self;
     
     self.wr_navigationController.backButtonEnabled = NO;
@@ -134,19 +130,15 @@
 {
     if ([viewController isKindOfClass:[EmailStepViewController class]] ) {
         
-        [self.analyticsTracker tagEnteredEmailAndPassword];
-
         self.navigationController.showLoadingView = YES;
         
         ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
         [[UnauthenticatedSession sharedSession] registerUser:completeUser];
-        
     }
     else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]] ||
              ([viewController isKindOfClass:[EmailStepViewController class]] && [self hasUserAcceptedTOS]))
     {
-        [self.analyticsTracker tagAcceptedTermsOfUse];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [[SessionManager shared] configureUserNotifications];
         
         self.hasUserAcceptedTOS = YES;
         
@@ -156,11 +148,16 @@
         emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         [self.navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
+
+        [UIAlertController showNewsletterSubscriptionDialogWithOver: self
+                                                  completionHandler: ^(BOOL marketingConsent) {
+            self.marketingConsent = marketingConsent;
+        }];
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
-        ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
-        [self.analyticsTracker tagAddedPhotoFromSource:step.photoSource];
         [self.formStepDelegate didCompleteFormStep:self];
+
+        [[ZMUserSession sharedSession] submitMarketingConsentWith:self.marketingConsent];
     }
 }
 
@@ -174,7 +171,6 @@
 - (void)emailVerificationStepDidRequestVerificationEmail
 {
     [[UnauthenticatedSession sharedSession] resendRegistrationVerificationEmail];
-    [self.analyticsTracker tagResentEmailVerification];
 }
 
 #pragma mark - ZMRegistrationObserver
@@ -201,7 +197,6 @@
 - (void)emailVerificationDidFail:(NSError *)error
 {
     self.navigationController.showLoadingView = NO;
-    [self.analyticsTracker tagResentEmailVerificationFailedWithError:error];
     
     [self showAlertForError:error];
 }
@@ -224,7 +219,7 @@
 
 - (void)authenticationDidSucceed
 {
-    [self.analyticsTracker tagRegistrationSucceded];
+    [[Analytics shared] tagRegistrationSuccededWithContext:@"email"];
     [self presentProfilePictureStep];
 }
 

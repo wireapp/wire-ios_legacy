@@ -30,7 +30,7 @@ public final class UserConnectionView: UIView, Copyable {
         return AddressBookCorrelationFormatter(
             lightFont: FontSpec(.small, .light).font!,
             boldFont: FontSpec(.small, .medium).font!,
-            color: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+            color: UIColor(scheme: .textDimmed)
         )
     }()
 
@@ -98,8 +98,8 @@ public final class UserConnectionView: UIView, Copyable {
     private var handleLabelText: NSAttributedString? {
         guard let handle = user.handle, handle.count > 0 else { return nil }
         return ("@" + handle) && [
-            NSForegroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorTextDimmed),
-            NSFontAttributeName: FontSpec(.small, .semibold).font!
+            .foregroundColor: UIColor(scheme: .textDimmed),
+            .font: FontSpec(.small, .semibold).font!
         ]
     }
 
@@ -116,17 +116,22 @@ public final class UserConnectionView: UIView, Copyable {
             labelContainer.top == selfView.top
             labelContainer.left >= selfView.left
 
+            userImageView.top >= labelContainer.bottom
             userImageView.center == selfView.center
             userImageView.left >= selfView.left + 54
             userImageView.width == userImageView.height
             userImageView.height <= 264
+            userImageView.bottom <= selfView.bottom
         }
 
+        let verticalMargin = CGFloat(16)
+
         constrain(labelContainer, firstLabel, secondLabel) { labelContainer, handleLabel, correlationLabel in
-            handleLabel.top == labelContainer.top + 16
+            handleLabel.top == labelContainer.top + verticalMargin
             handleLabel.height == 16
             correlationLabel.top == handleLabel.bottom
             handleLabel.height == 16
+            correlationLabel.bottom == labelContainer.bottom - verticalMargin
 
             [handleLabel, correlationLabel].forEach {
                 $0.leading == labelContainer.leading

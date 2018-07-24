@@ -34,7 +34,6 @@
 #import "AppDelegate.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "UIView+Borders.h"
 
 #import "ZClientViewController.h"
 #import "AnimatedListMenuView.h"
@@ -67,7 +66,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 - (void)dealloc
 {
     [AVSMediaManagerClientChangeNotification removeObserver:self];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -189,7 +187,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     }
     else if (self.conversation.canJoinCall)
     {
-        [self.conversation joinCall];
+        [self.delegate conversationListCellJoinCallButtonTapped:self];
     }
 }
     

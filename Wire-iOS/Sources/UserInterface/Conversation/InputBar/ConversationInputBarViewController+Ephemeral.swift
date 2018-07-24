@@ -19,19 +19,18 @@
 
 import Foundation
 
-
 extension ConversationInputBarViewController {
 
-    public func createEphemeralKeyboardViewController() {
+    @objc public func createEphemeralKeyboardViewController() {
         ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
         ephemeralKeyboardViewController?.delegate = self
     }
 
-    public func configureEphemeralKeyboardButton(_ button: IconButton) {
+    @objc public func configureEphemeralKeyboardButton(_ button: IconButton) {
         button.addTarget(self, action: #selector(ephemeralKeyboardButtonTapped), for: .touchUpInside)
     }
 
-    public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
+    @objc public func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
         updateEphemeralKeyboardVisibility()
     }
 
@@ -65,21 +64,30 @@ extension ConversationInputBarViewController {
     private func presentEphemeralControllerAsPopover() {
         createEphemeralKeyboardViewController()
         ephemeralKeyboardViewController?.modalPresentationStyle = .popover
-        let popover = ephemeralKeyboardViewController?.popoverPresentationController
-        popover?.sourceRect = ephemeralIndicatorButton.frame
-        popover?.sourceView = ephemeralIndicatorButton
-        popover?.backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor
-        ephemeralKeyboardViewController?.preferredContentSize = CGSize(width: 320, height: 275)
+        ephemeralKeyboardViewController?.preferredContentSize = CGSize.IPadPopover.pickerSize
+
+        if let popover = ephemeralKeyboardViewController?.popoverPresentationController,
+            let presentInView = self.parent?.view,
+            let backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor,
+            let pointToView = ephemeralIndicatorButton.isHidden ? hourglassButton : ephemeralIndicatorButton {
+            popover.config(from: self,
+                           pointToView: pointToView,
+                           sourceView: presentInView,
+                           backgroundColor: backgroundColor)
+        }
+
         guard let controller = ephemeralKeyboardViewController else { return }
-        present(controller, animated: true, completion: nil)
+        self.parent?.present(controller, animated: true)
     }
 
-    public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
-        guard let conversation = self.conversation else {
+    @objc public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
+        guard let conversation = self.conversation,
+              let timerValue = conversation.destructionTimeout else {
+            button.setTitle("", for: .normal)
             return
         }
         
-        let title = conversation.destructionTimeout.shortDisplayString
+        let title = timerValue.shortDisplayString
         button.setTitle(title, for: .normal)
     }
 
@@ -87,19 +95,37 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
 
-    func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
+    @objc func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
         updateEphemeralKeyboardVisibility()
     }
 
-    func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout) {
-        inputBar.setInputBarState(.writing(ephemeral: timeout != .none), animated: true)
+    func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: TimeInterval) {
+        inputBar.setInputBarState(.writing(ephemeral: timeout != 0 ? .message : .none), animated: true)
         updateMarkdownButton()
 
         ZMUserSession.shared()?.enqueueChanges {
-            self.conversation.updateMessageDestructionTimeout(timeout: timeout)
+            self.conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue(rawValue: timeout))
             self.updateRightAccessoryView()
-            self.updateButtonIconsForEphemeral()
         }
     }
+    
+}
 
+extension ConversationInputBarViewController {
+    var ephemeralState: EphemeralState {
+        var state = EphemeralState.none
+        if !sendButtonState.ephemeral {
+            state = .none
+        } else if self.conversation.hasSyncedMessageDestructionTimeout {
+            state = .conversation
+        } else {
+            state = .message
+        }
+        
+        return state
+    }
+
+    @objc func updateInputBar() {
+        inputBar.changeEphemeralState(to: ephemeralState)
+    }
 }

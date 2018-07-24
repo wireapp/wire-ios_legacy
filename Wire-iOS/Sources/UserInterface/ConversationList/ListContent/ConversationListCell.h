@@ -37,5 +37,6 @@
 @protocol ConversationListCellDelegate <NSObject>
 
 - (void)conversationListCellOverscrolled:(ConversationListCell *)cell;
+- (void)conversationListCellJoinCallButtonTapped:(ConversationListCell *)cell;
 
 @end

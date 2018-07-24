@@ -21,7 +21,7 @@ import Classy
 import Cartography
 
 
-@objc final public class ConversationCellBurstTimestampView: UIView {
+@objcMembers final public class ConversationCellBurstTimestampView: UIView {
 
     public let unreadDot = UIView()
     public let label = UILabel()

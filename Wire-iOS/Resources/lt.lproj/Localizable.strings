@@ -24,9 +24,13 @@
 "general.close" = "Užverti";
 "general.back" = "Atgal";
 "general.open_settings" = "Atidaryti Wire nustatymus";
-"general.edit" = "Taisyti";
+"general.edit" = "Taisa";
 "general.done" = "Baigta";
 "general.confirm" = "GERAI";
+"general.skip" = "Vėliau";
+"general.accept" = "Priimti";
+"general.decline" = "Ne, dėkui";
+
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
@@ -115,6 +119,10 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Aktyvi dabar.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Turi naujų žinučių.";
 
+// Conversation List Data Usage Permission Dialog
+"conversation_list.date_usage_permission_alert.title" = "Pagerinkite „Wire“";
+"conversation_list.date_usage_permission_alert.message" = "Siųsdami anoniminę naudojimosi ir trikčių ataskaitą padedate mums pagerinti produktus ir paslaugas. Šios informacijos daugiau niekur nenaudojame.";
+
 // Profile Header View
 "conversation.connection_view.in_address_book" = "konktaktuose";
 
@@ -136,6 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "sukurti žinutę ir išsaugoti vėlesniam laikui";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "fotoaparatas";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "nufotografuokite ir greitai siųskite";
+"conversation_list.voiceover.unread_messages.hint" = "Gavote žinutę.";
 
 // Archived List
 "archived_list.title" = "archyvas";
@@ -229,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Spustelėję išsiųsite";
 "conversation.input_bar.audio_message.too_long.title" = "Įrašymas sustabdytas";
 "conversation.input_bar.audio_message.too_long.message" = "Garso pranešimai yra riboti iki %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Siųsti";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Spustelėkite norėdami įrašyti\nGalėsite %@ po to";
@@ -254,7 +266,13 @@
 "conversation.create.toggle.title" = "Leisti svečius";
 "conversation.create.toggle.subtitle" = "Atverti šį pokalbį žmonėms ne iš jūsų komandos. Vėliau, visada galite tai pakeisti.";
 
+"conversation.input_bar.ongoing_call_alert.title" = "Vykstantis skambutis";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Kol kalbate, garso pranešimo įrašyti negalite.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Kol kalbate, vaizdo pranešimo įrašyti negalite.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "Kol kalbate, fotografuoti negalite.";
+
 "conversation.guests_present" = "Yra svečių";
+"conversation.action.search" = "Ieškoti";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "GERAI";
@@ -264,6 +282,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire reikalingas priėjimas prie kameros.";
+"video_call.camera_access.denied" = "„Wire“ neturi leidimo naudotis kamera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Įjunkite Wire nustatymuose";
 
@@ -272,6 +291,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "„Wire“ būtinas prisijungimas prie \nkameros ir nuotraukų."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "„Wire“ būtinas prisijungimas prie jūsų nuotraukų.";
 "keyboard_photos_access.denied.keyboard.camera" = "„Wire“ būtinas prisijungimas prie jūsų kameros.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "Kol kalbate su vaizdu, negalite naudotis kamera.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF užraktas";
@@ -362,6 +382,14 @@
 
 "content.system.conversation.with_name.participants" = "su %@";
 
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Jūs";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
+
 "content.system.reactivated_device" = "Vėl pradėjote naudotis „%@“. Žinutės parašytos įrenginio nenaudojimo laikotarpiu čia neatsiras.";
 
 "content.system.new_device" = "naujas įrenginys";
@@ -390,7 +418,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(įrenginys %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "Naudojate senesnę „Wire“ versiją, kuri negali parodyti šios žinutės.";
+"content.system.unknown_message.body" = "Žinutės negalima parodyti. Gali būti, kad naudojate senesnę „Wire“ versiją.";
 
 "content.file.uploading" = "Įkeliama…";
 "content.file.downloading" = "Atsiunčiama…";
@@ -405,6 +433,8 @@
 
 "content.message.delete" = "Ištrinti";
 "content.message.save" = "Įrašyti";
+
+"content.message.delete_ellipsis" = "Ištrinti…";
 
 "content.message.like" = "Patinka";
 "content.message.unlike" = "Nebepatinka";
@@ -464,9 +494,11 @@
 "voice.hang_up_button.title" = "Užbaigti";
 "voice.mute_button.title" = "Išjungti pranešimus";
 "voice.video_button.title" = "Vaizdas";
+"voice.flip_video_button.title" = "Apversti";
 "voice.speaker_button.title" = "Garsiakalbis";
 "voice.cancel_button.title" = "Atsisakyti";
 "voice.call_button.title" = "Skambutis";
+"voice.end_call_button.title" = "Baigti pokalbį";
 
 "voice.alert.call_in_progress.title" = "Vykstantis pokalbis";
 "voice.alert.call_in_progress.message" = "Vienu metu gali vykti tik vienas skambutis";
@@ -478,6 +510,57 @@
 "voice.alert.camera_warning.title" = "Wire reikalingas priėjimas prie kameros.";
 "voice.alert.camera_warning.explanation" = "Eikite į nustatymus ir leiskite „Wire“ naudoti kamerą.";
 
+"voice.top_overlay.tap_to_return" = "Bakstelėję grįšite į skambutį";
+"voice.top_overlay.accessibility_title" = "Vykstantis skambutis";
+
+// Voice New
+
+"call.status.connecting" = "Jungiamasi…";
+"call.status.incoming.user" = "%@ skambina…";
+"call.status.incoming" = "Skambinama…";
+"call.status.outgoing" = "Kviečiama…";
+"call.status.reconnecting" = "Jungiamasi iš naujo…";
+"call.status.terminating" = "Baigiama…";
+"call.status.constant_bitrate" = "Pastovi sparta (bitais)";
+
+"call.participants.show_all" = "Rodyti visus (%@)";
+"call.participants.list.title" = "Dalyviai";
+
+"call.video.paused" = "Vaizdas pristabdytas";
+
+"call.video.too_many.alert.title" = "Per daug žmonių, norint bendrauti vaizdu";
+"call.video.too_many.alert.message" = "Bendrauti vaizdu galite tik iki 4 pašnekovų.";
+
+"call.degraded.alert.title" = "Naujas įrenginys";
+"call.degraded.alert.message.self" = "Pradėjote naudotis nauju įrenginiu.";
+"call.degraded.alert.message.user" = "%@ pradėjo naudotis nauju įrenginiu.";
+"call.degraded.alert.message.unknown" = "Kažkas pradėjo naudotis nauju įrenginiu.";
+"call.degraded.alert.action.continue" = "Vis tiek skambinti";
+
+"call.alert.ongoing.start.title" = "Kitame susirašinėjime vyksta pokalbis.\nSkambindami čia baigsite aną pokalbį.";
+"call.alert.ongoing.start.button" = "Skambinti vis tiek";
+"call.alert.ongoing.join.title" = "Kitame susirašinėjime vyksta pokalbis.\nPrisijungę prie šio pokalbio baigsite aną.";
+"call.alert.ongoing.join.button" = "Jungtis vis tiek";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Jums skambina %@";
+"call.actions.label.toggle_mute_on" = "Išjungti mikrofoną";
+"call.actions.label.toggle_mute_off" = "Įjungti mikrofoną";
+"call.actions.label.flip_camera" = "Perjungti kamerą";
+"call.actions.label.toggle_speaker_on" = "Įjungti garsiakalbį";
+"call.actions.label.toggle_speaker_off" = "Išjungti garsiakalbį";
+"call.actions.label.accept_call" = "Atsiliepti";
+"call.actions.label.reject_call" = "Atmesti skambutį";
+"call.actions.label.terminate_call" = "Baigti pokalbį";
+"call.actions.label.toggle_video_on" = "Įjungti vaizdą";
+"call.actions.label.toggle_video_off" = "Išjungti vaizdą";
+"call.actions.label.switch_to_back_camera" = "Rodyti galinę kamerą";
+"call.actions.label.switch_to_front_camera" = "Rodyti priekinę kamerą";
+"call.actions.label.minimize_call" = "Minimizuoti skambutį";
+"call.actions.label.make_audio_call" = "Pradėti garso skambutį";
+"call.actions.label.make_video_call" = "Pradėti vaizdo skambutį";
+"call.actions.label.join_call" = "Jungtis prie pokalbio";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -486,20 +569,23 @@
 "participants.avatar.guest.title" = "Svečias";
 
 "participants.title" = "Išsamiau";
+"participants.all.title" = "Žmonės";
 "participants.section.participants" = "Žmonės (%d)";
 "participants.section.services" = "Paslaugos (%d)";
+"participants.section.settings" = "Nustatymai";
 "participants.footer.add_title" = "Pridėti dalyvių";
+"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Pervadinti";
-"meta.menu.leave" = "Išeiti…";
-"meta.menu.archive" = "Archyvas";
+"meta.menu.leave" = "Išeiti iš grupės…";
+"meta.menu.archive" = "Archyvuoti";
 "meta.menu.unarchive" = "Išarchyvuoti";
 "meta.menu.delete" = "Trinti turinį…";
 "meta.menu.silence.mute" = "Išjungti pranešimus";
 "meta.menu.silence.unmute" = "Įjungti pranešimus";
 "meta.menu.cancel" = "Atsisakyti";
-"meta.menu.cancel_connection_request" = "Atšaukti prašymą";
+"meta.menu.cancel_connection_request" = "Atšaukti prašymą…";
 "meta.menu.mark_unread" = "Žymėti kaip neskaitytą";
 "meta.menu.mark_read" = "Žymėti kaip skaitytą";
 "shortcut.mark_all_as_read.title" = "Žymėti visus kaip skaitytus";
@@ -599,9 +685,10 @@
 "participants.services.remove_integration.button" = "pašalinti integraciją";
 
 // Group details
-"group_details.guest_options_cell.title" = "Svečių nustatymai";
+"group_details.guest_options_cell.title" = "Svečių";
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
+"group_details.timeout_options_cell.title" = "Laikinos žinutės";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -619,6 +706,8 @@
 "self.voiceover.label" = "Profilis";
 "self.voiceover.hint" = "Atverti profilį ir nustatymus";
 "self.new-device.voiceover.label" = "Profilis, pridėtas naujas įrenginys";
+
+"self.profile.change_user_image.accessibility" = "Spustelėję galėsite pakeisti profilio nuotrauką";
 
 "self.add_phone_number" = "Pridėti telefono numerį";
 "self.add_email_password" = "Pridėkite el. pašto adresą ir slaptažodį";
@@ -646,6 +735,9 @@
 "self.settings.add_account.error.title" = "Aktyvios trys paskyros";
 "self.settings.add_account.error.message" = "Vienu metu galite būti prisijungęs iki trijų paskyrų. Atsijunkite nuo vienos, kad galėtumėte pridėti kitą.";
 
+"self.settings.switch_account.title" = "Perjungdami paskyrą baigsite dabar vykstantį pokalbį.";
+"self.settings.switch_account.action" = "Perjungti paskyrą";
+
 // Settings - Account details
 "self.settings.account_section" = "Paskyra";
 
@@ -671,6 +763,8 @@
 "self.settings.account_picture_group.picture" = "Paveikslas";
 "self.settings.account_picture_group.color" = "Spalva";
 
+"self.settings.account_personal_information_group.title" = "Asmeninė informacija";
+
 "self.settings.account_picture_group.theme" = "Tamsi tema";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire kiekvienam įrenginiui suteikia unikalų kontrolinį kodą. Palyginkite juos ir patvirtinkite savo įrenginius ir pokalbius.";
@@ -687,6 +781,15 @@
 
 "self.settings.account_details.log_out.alert.title" = "Atsijungti";
 "self.settings.account_details.log_out.alert.message" = "Susirašinėjimų praeitis šiame įrenginyje bus ištrinta.";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Naudojimo ir gedimo ataskaitos";
+"self.settings.privacy_analytics.title" = "Siųsti nuasmenintą informaciją";
+"self.settings.privacy_analytics_menu.description.title" = "Pagerinkite „Wire“ siųsdami anoniminę naudojimosi ir trikčių ataskaitą.";
+
+"self.settings.receiveNews_and_offers.title" = "Gaukite naujienlaiškį";
+"self.settings.receiveNews_and_offers.description.title" = "Gaukite naujienas ir produktų pakeitimo informaciją iš „Wire“ el. paštu.";
+
 
 
 // Change Username
@@ -775,10 +878,13 @@
 
 "open_link.maps.option.apple" = "Žemėlapiai";
 "open_link.maps.option.google" = "„Google Maps“";
+"open_link.maps.footer" = "Kai kurios vietos nuorodos visada bus atvertos per „Apple Maps“.";
 
 "open_link.browser.option.safari" = "„Safari“";
 "open_link.browser.option.chrome" = "„Chrome“";
 "open_link.browser.option.firefox" = "„Firefox“";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Garso signalai";
@@ -813,10 +919,6 @@
 
 "self.settings.privacy_analytics_menu.devices.title" = "Įrenginiai";
 
-"self.settings.privacy_analytics_section.title" = "Naudojimo ir gedimo ataskaitos";
-"self.settings.privacy_analytics.title" = "Siųsti nuasmenintą informaciją";
-"self.settings.privacy_analytics_menu.description.title" = "Pagerinkite „Wire“ siųsdami nuasmenintą informaciją.\n";
-
 "self.settings.privacy.clear_history.title" = "Valyti praeitį";
 "self.settings.privacy.clear_history.subtitle" = "Tai negrįžtamai ištrins visą susirašinėjimų praeitį.";
 
@@ -829,6 +931,9 @@
 "self.settings.advanced.reset_push_token_alert.title" = "Naujienų pranešimų tarnybos atpažinimo ženklas nustatytas iš naujo";
 "self.settings.advanced.reset_push_token_alert.message" = "Pranešimai bus atkurti po kelių sekundžių.";
 "self.settings.advanced.version_technical_details.title" = "Versijos techniniai duomenys";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Duomenų naudojimo leidimas";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Techninė ataskaita";
@@ -849,7 +954,7 @@
 
 "self.settings.conversations.title" = "Praeitis";
 "self.settings.history_backup.title" = "Kurti susirašinėjimų atsarginę kopiją";
-"self.settings.history_backup.description" = "Kurkite atsarginę kopiją, kad išsaugotumėte susirašinėjimo praeitį. Jei prarasite savo įrenginį arba pasikeisite nauju, tai galėsite panaudoti praeitis atstatymui.\n\nAtsarginės kopijos failas nėra apsaugotas „Wire“ kodavimo, dėl to jūs turite parinkti jam saugią vietą.";
+"self.settings.history_backup.description" = "Kurkite atsarginę kopiją, kad išsaugotumėte susirašinėjimo praeitį. Jei prarasite savo įrenginį arba pasikeisite nauju, tai galėsite panaudoti praeities atstatymui.\n\nPasirinkite stiprų slaptažodį, kad apsaugotumėte atsarginės kopijos failą.";
 "self.settings.history_backup.action" = "Kurti atsarginę kopiją dabar";
 "self.settings.history_backup.error.title" = "Klaida";
 
@@ -1012,7 +1117,7 @@
 "registration.no_history.restore_backup_failed.try_again" = "Bandykite dar kartą";
 
 // Generic
-"registration.no_history.restore_backup_failed.title" = "Kažkas atsitiko";
+"registration.no_history.restore_backup_failed.title" = "Kažkas nutiko";
 "registration.no_history.restore_backup_failed.message" = "Praeities atkurti nepavyko.";
 
 // Wrong Account
@@ -1262,3 +1367,17 @@
 "calling.quality_survey.answer.3" = "Nebloga";
 "calling.quality_survey.answer.4" = "Gera";
 "calling.quality_survey.answer.5" = "Puiki";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Patvirtinti";
+"url_action.title" = "Patvirtinti URL adresą";
+"url_action.connect_to_bot.message" = "Ar norite prisijungti prie roboto?";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Ar norite gauti naujienas ir produktų pakeitimus iš „Wire“ el. paštu?";
+"news_offers.consent.message" = "Atsisakyti galite bet kada.";
+"news_offers.consent.button.privacy_policy.title" = "Privatumo politika";

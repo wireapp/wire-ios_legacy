@@ -21,17 +21,13 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class ConversationInputBarViewController;
-@class ConversationDetailsTransitioningDelegate;
 @class CollectionsViewController;
-@class AnalyticsTracker;
 
 @interface ConversationViewController (Private)
 
 @property (nonatomic, readonly) ConversationContentViewController *contentViewController;
 @property (nonatomic, readonly) ConversationInputBarViewController *inputBarController;
 @property (nonatomic, readonly) UIViewController *participantsController;
-@property (nonatomic, readonly) AnalyticsTracker *analyticsTracker;
-@property (nonatomic, readonly) ConversationDetailsTransitioningDelegate *conversationDetailsTransitioningDelegate;
 @property (nonatomic, nullable) CollectionsViewController *collectionController;
 
 - (void)onBackButtonPressed:(UIButton *)backButton;

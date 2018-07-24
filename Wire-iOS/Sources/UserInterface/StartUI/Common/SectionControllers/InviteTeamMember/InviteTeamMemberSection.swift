@@ -18,9 +18,14 @@
 
 import Foundation
 
+protocol InviteTeamMemberSectionDelegate: class {
+    func inviteSectionDidRequestTeamManagement()
+}
+
 class InviteTeamMemberSection: NSObject, CollectionViewSectionController {
     
     var team: Team?
+    weak var delegate: InviteTeamMemberSectionDelegate?
     
     init(team: Team?) {
         super.init()
@@ -52,7 +57,7 @@ class InviteTeamMemberSection: NSObject, CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        URL.manageTeam(source: .onboarding).open()
+        delegate?.inviteSectionDidRequestTeamManagement()
     }
     
 }

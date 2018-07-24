@@ -26,7 +26,7 @@ public protocol CameraCellDelegate: class {
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }
 
-open class CameraCell: UICollectionViewCell, Reusable {
+open class CameraCell: UICollectionViewCell {
     let cameraController: CameraController?
     
     let expandButton = IconButton()
@@ -51,7 +51,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
         if let cameraController = self.cameraController {
             cameraController.previewLayer.frame = self.contentView.bounds
             cameraController.currentCamera = Settings.shared().preferredCamera
-            cameraController.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            cameraController.previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
             self.contentView.layer.addSublayer(cameraController.previewLayer)
         }
         
@@ -190,11 +190,11 @@ open class CameraCell: UICollectionViewCell, Reusable {
         }
     }
     
-    func deviceOrientationDidChange(_ notification: Notification!) {
+    @objc func deviceOrientationDidChange(_ notification: Notification!) {
         self.updateVideoOrientation()
     }
     
-    func cameraControllerWillChangeCurrentCamera(_ notification: Notification!) {
+    @objc func cameraControllerWillChangeCurrentCamera(_ notification: Notification!) {
         
         guard let _ = self.window,
                 let cameraController = self.cameraController,
@@ -251,11 +251,11 @@ open class CameraCell: UICollectionViewCell, Reusable {
     
     // MARK: - Actions
     
-    func expandButtonPressed(_ sender: AnyObject) {
+    @objc func expandButtonPressed(_ sender: AnyObject) {
         self.delegate?.cameraCellWantsToOpenFullCamera(self)
     }
     
-    func shutterButtonPressed(_ sender: AnyObject) {
+    @objc func shutterButtonPressed(_ sender: AnyObject) {
         guard let cameraController = self.cameraController else {
             return
         }
@@ -267,7 +267,7 @@ open class CameraCell: UICollectionViewCell, Reusable {
         }
     }
     
-    func changeCameraPressed(_ sender: AnyObject) {
+    @objc func changeCameraPressed(_ sender: AnyObject) {
         guard let cameraController = self.cameraController else {
             return
         }

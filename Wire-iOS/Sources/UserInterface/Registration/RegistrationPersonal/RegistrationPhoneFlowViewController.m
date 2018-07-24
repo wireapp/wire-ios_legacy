@@ -37,7 +37,6 @@
 #import "ProfilePictureStepViewController.h"
 #import "AppDelegate.h"
 #import "AddEmailPasswordViewController.h"
-#import "AnalyticsTracker+Registration.h"
 #import "Wire-Swift.h"
 
 @import WireExtensionComponents;
@@ -51,6 +50,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) id authToken;
 @property (nonatomic) id<ZMRegistrationObserverToken> registrationToken;
+@property (nonatomic) BOOL marketingConsent;
 
 @end
 
@@ -74,8 +74,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (self) {
         self.title = NSLocalizedString(@"registration.title", @"");
         self.unregisteredUser = unregisteredUser;
-   
-        self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextRegistrationPhone];
     }
 
     return self;
@@ -153,7 +151,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         ProfilePictureStepViewController *profilePictureStepViewController = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
         profilePictureStepViewController.formStepDelegate = self;
-        profilePictureStepViewController.analyticsTracker = self.analyticsTracker;
         
         [self.navigationController pushViewController:profilePictureStepViewController animated:YES];
     });
@@ -165,7 +162,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if ([viewController isKindOfClass:[PhoneNumberStepViewController class]]) {
         self.navigationController.showLoadingView = YES;
-        [self.analyticsTracker tagEnteredPhone];
         
         [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
         
@@ -182,22 +178,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                                        verificationCode:phoneVerificationStepViewController.verificationCode];
     }
     else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]]) {
-        [self.analyticsTracker tagAcceptedTermsOfUse];
         [self presentNameStepController];
     }
     else if ([viewController isKindOfClass:[NameStepViewController class]]) {
-        [self.analyticsTracker tagEnteredName];
         [self presentPictureStepController];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        [[SessionManager shared] configureUserNotifications];
     }
     else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
-        ProfilePictureStepViewController *step = (ProfilePictureStepViewController *)viewController;
-        [self.analyticsTracker tagAddedPhotoFromSource:step.photoSource];
-        
         ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
         [[UnauthenticatedSession sharedSession] registerUser:completeUser];
         
         self.navigationController.showLoadingView = YES;
+        [[ZMUserSession sharedSession] submitMarketingConsentWith:self.marketingConsent];
     }
     else {
         [self.formStepDelegate didCompleteFormStep:self];
@@ -221,8 +213,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)authenticationDidSucceed
 {
     self.showLoadingView = NO;
-    [self.analyticsTracker tagRegistrationSucceded];
-    
+    [[Analytics shared] tagRegistrationSuccededWithContext:@"phone"];
+
     [self.formStepDelegate didCompleteFormStep:self];
 }
 
@@ -230,13 +222,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
-    [self.analyticsTracker tagPhoneLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;
     
     if (error.code == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
         if (![self.navigationController.topViewController isKindOfClass:[AddEmailPasswordViewController class]]) {
             AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-            addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
             addEmailPasswordViewController.formStepDelegate = self;
             [self.wr_navigationController setBackButtonEnabled:NO];
             [self.navigationController pushViewController:addEmailPasswordViewController animated:YES];
@@ -303,7 +293,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.navigationController.showLoadingView = NO;
     
     PhoneVerificationStepViewController *phoneVerificationStepViewController = [[PhoneVerificationStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-    phoneVerificationStepViewController.analyticsTracker = self.analyticsTracker;
     phoneVerificationStepViewController.formStepDelegate = self;
     phoneVerificationStepViewController.delegate = self;
     phoneVerificationStepViewController.isLoggingIn = login;
@@ -317,7 +306,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
         [self proceedToCodeVerificationForLogin:NO];
     } else {
-        [self.analyticsTracker tagResentPhoneVerification];
         [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
     }
 }
@@ -325,9 +313,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)phoneVerificationCodeRequestDidFail:(NSError *)error
 {
     if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-        [self.analyticsTracker tagEnteredPhoneFailedWithError:error];
-    } else {
-        [self.analyticsTracker tagResentPhoneVerificationFailedWithError:error];
     }
     
     self.navigationController.showLoadingView = NO;
@@ -343,14 +328,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)phoneVerificationDidSucceed
 {
-    [self.analyticsTracker tagVerifiedPhone];
     self.navigationController.showLoadingView = NO;
-    [self presentTermsOfUseStepController];
+
+    [UIAlertController showNewsletterSubscriptionDialogWithOver: self
+                                              completionHandler: ^(BOOL marketingConsent) {
+        self.marketingConsent = marketingConsent;
+
+        [self presentTermsOfUseStepController];
+    }];
 }
 
 - (void)phoneVerificationDidFail:(NSError *)error
 {
-    [self.analyticsTracker tagVerifiedPhoneFailedWithError:error];
     self.navigationController.showLoadingView = NO;
     [self showAlertForError:error];
 }

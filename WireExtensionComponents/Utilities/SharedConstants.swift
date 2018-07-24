@@ -19,5 +19,5 @@
 import UIKit
 
 public class SharedConstants: NSObject {
-    public static let maximumMessageLength = 8000
+    @objc public static let maximumMessageLength = 8000
 }

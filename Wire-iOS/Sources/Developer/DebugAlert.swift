@@ -20,7 +20,7 @@ import Foundation
 import MessageUI
 
 /// Presents debug alerts
-@objc public class DebugAlert: NSObject {
+@objcMembers public class DebugAlert: NSObject {
     
     private static var isShown = false
     
@@ -86,7 +86,7 @@ import MessageUI
 }
 
 /// Sends debug logs by email
-@objc public class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
+@objcMembers public class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
 
     private var mailViewController : MFMailComposeViewController? = nil
     static private var senderInstance: DebugLogSender? = nil

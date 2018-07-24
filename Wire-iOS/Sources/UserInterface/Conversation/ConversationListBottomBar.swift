@@ -30,7 +30,7 @@ import Cartography
 }
 
 
-@objc final class ConversationListBottomBarController: UIViewController {
+@objcMembers final class ConversationListBottomBarController: UIViewController {
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
@@ -75,7 +75,7 @@ import Cartography
 
 
     private func createViews() {
-        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator, variant: .light)
+        separator.backgroundColor = UIColor(scheme: .separator, variant: .light)
         
         archivedButton.setIcon(.archive, with: .tiny, for: UIControlState())
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
@@ -102,7 +102,7 @@ import Cartography
         cameraButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.camera_button.hint".localized
 
         [archivedButton, startUIButton, composeButton, cameraButton].forEach { button in
-            button.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark), for: .normal)
+            button.setIconColor(UIColor(scheme: .textForeground, variant: .dark), for: .normal)
         }
 
         addSubviews()
@@ -194,19 +194,19 @@ import Cartography
 
     // MARK: - Target Action
 
-    private dynamic func archivedButtonTapped(_ sender: IconButton) {
+    @objc private dynamic func archivedButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
 
-    private dynamic func startUIButtonTapped(_ sender: IconButton) {
+    @objc private dynamic func startUIButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 
-    private dynamic func cameraButtonTapped(_ sender: IconButton) {
+    @objc private dynamic func cameraButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .camera)
     }
 
-    private dynamic func composeButtonTapped(_ sender: IconButton) {
+    @objc private dynamic func composeButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .compose)
     }
 }

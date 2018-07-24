@@ -45,7 +45,7 @@
 
 - (void)createViews
 {
-    self.leftButton = [IconButton iconButtonCircular];
+    self.leftButton = [IconButton iconButtonDefault];
     self.leftButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.leftButton.accessibilityIdentifier = @"left_button";
     [self.leftButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground] forState:UIControlStateNormal];

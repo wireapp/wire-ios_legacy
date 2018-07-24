@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final internal class ConversationListAccessoryView: UIView {
+@objcMembers final internal class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
         didSet {
             self.updateForIcon()
@@ -34,30 +34,30 @@ final internal class ConversationListAccessoryView: UIView {
     let iconView = UIImageView()
     var collapseWidthConstraint: NSLayoutConstraint!
     
-    init(mediaPlaybackManager: MediaPlaybackManager) {
+    @objc init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
         
         self.isAccessibilityElement = true
         
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
+        textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.textAlignment = .center
         textLabel.font = FontSpec(.medium, .semibold).font!
         
         typingView.contentMode = .center
-        typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        typingView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        typingView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        typingView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        typingView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        typingView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        typingView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         iconView.contentMode = .center
-        iconView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        iconView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        iconView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        iconView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        iconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        iconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         [badgeView, typingView].forEach(addSubview)
         
@@ -89,16 +89,16 @@ final internal class ConversationListAccessoryView: UIView {
             iconView.image = UIImage(for: .clock, fontSize: iconSize, color: .white)
             self.accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
-        case .activeCall(true):
+        case .activeCall(false):
             iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
             self.accessibilityValue = "conversation_list.voiceover.status.active_call".localized
             return iconView
-        case .activeCall(false):
+        case .activeCall(true):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized.uppercased()
             self.accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
+            iconView.image = UIImage(for: .missedCall, fontSize: iconSize, color: .black)
             self.accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
@@ -138,7 +138,7 @@ final internal class ConversationListAccessoryView: UIView {
         self.badgeView.isHidden = false
         self.typingView.isHidden = true
         
-        self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+        self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         
         self.collapseWidthConstraint.isActive = false
         
@@ -159,14 +159,14 @@ final internal class ConversationListAccessoryView: UIView {
             
         case .unreadMessages(_):
             self.badgeView.backgroundColor = UIColor(white: 0, alpha: 0.16)
-            self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
             
         case .unreadPing:
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
 
         case .missedCall:
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
 
         default:
             self.typingView.image = .none

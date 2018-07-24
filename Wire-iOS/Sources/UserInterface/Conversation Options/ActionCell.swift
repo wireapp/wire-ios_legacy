@@ -65,6 +65,6 @@ final class ActionCell: UITableViewCell, CellConfigurationConfigurable {
         guard case let .leadingButton(title, identifier, _) = configuration else { preconditionFailure() }
         accessibilityIdentifier = identifier
         label.text = title
-        backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground, variant: variant)
+        backgroundColor = UIColor(scheme: .barBackground, variant: variant)
     }
 }

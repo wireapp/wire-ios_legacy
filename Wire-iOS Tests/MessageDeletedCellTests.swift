@@ -58,7 +58,7 @@ extension MessageDeletedCellTests {
         cell.layer.speed = 0
         cell.configure(for: message, layoutProperties: layoutProperties)
         
-        let size = cell.systemLayoutSizeFitting(CGSize(width: 375, height: 0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        let size = cell.systemLayoutSizeFitting(CGSize(width: 375, height: 0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         cell.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         cell.setNeedsLayout()
         cell.layoutIfNeeded()

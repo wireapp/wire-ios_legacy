@@ -35,7 +35,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         )
         self.init(
             viewModel: .init(configuration: configuration),
-            variant: ColorScheme.default().variant
+            variant: ColorScheme.default.variant
         )
     }
     
@@ -66,7 +66,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorContentBackground, variant: variant)
+        tableView.backgroundColor = UIColor(scheme: .contentBackground, variant: variant)
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
@@ -91,7 +91,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {
-        present(UIAlertController.checkYouConnection(), animated: false)
+        present(UIAlertController.checkYourConnection(), animated: false)
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) {

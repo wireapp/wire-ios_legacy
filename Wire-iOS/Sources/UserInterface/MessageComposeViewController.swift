@@ -33,7 +33,6 @@ final class MessageComposeViewController: UIViewController {
 
     private let subjectTextField = UITextField()
     fileprivate let messageTextView = MarkdownTextView()
-    private let color = ColorScheme.default().color(withName:)
     private let sendButtonView = DraftSendInputAccessoryView()
     fileprivate let markdownBarView = MarkdownBarView()
     private var bottomEdgeConstraint : NSLayoutConstraint?
@@ -82,7 +81,7 @@ final class MessageComposeViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = color(ColorSchemeColorBackground)
+        view.backgroundColor = UIColor(scheme: .background)
         [messageTextView, sendButtonView, markdownBarView].forEach(view.addSubview)
         setupInputAccessoryView()
         setupNavigationItem()
@@ -104,28 +103,28 @@ final class MessageComposeViewController: UIViewController {
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.backgroundColor = .clear
         messageTextView.delegate = self
-        messageTextView.indicatorStyle = ColorScheme.default().indicatorStyle
+        messageTextView.indicatorStyle = ColorScheme.default.indicatorStyle
         messageTextView.accessibilityLabel = "messageTextField"
-        messageTextView.keyboardAppearance = ColorScheme.default().keyboardAppearance
+        messageTextView.keyboardAppearance = ColorScheme.default.keyboardAppearance
         markdownBarView.delegate = messageTextView
     }
 
-    private dynamic func backButtonPressed() {
+    @objc private dynamic func backButtonPressed() {
         navigationController?.navigationController?.popViewController(animated: true)
     }
 
     private func setupNavigationItem() {
         subjectTextField.delegate = self
-        subjectTextField.textColor = color(ColorSchemeColorTextForeground)
+        subjectTextField.textColor = UIColor(scheme: .textForeground)
         subjectTextField.tintColor = .accent()
         subjectTextField.textAlignment = .center
         subjectTextField.font = FontSpec(.medium, .semibold).font!
         let placeholder = "compose.drafts.compose.subject.placeholder".localized.uppercased()
-        subjectTextField.attributedPlaceholder = placeholder && color(ColorSchemeColorSeparator) && FontSpec(.medium, .semibold).font!
+        subjectTextField.attributedPlaceholder = placeholder && UIColor(scheme: .separator) && FontSpec(.medium, .semibold).font!
         subjectTextField.bounds = CGRect(x: 0, y: 0, width: 200, height: 44)
         subjectTextField.accessibilityLabel = "subjectTextField"
         subjectTextField.alpha = 0
-        subjectTextField.keyboardAppearance = ColorScheme.default().keyboardAppearance
+        subjectTextField.keyboardAppearance = ColorScheme.default.keyboardAppearance
         navigationItem.titleView = subjectTextField
     }
 
@@ -152,8 +151,8 @@ final class MessageComposeViewController: UIViewController {
         draftsBackButton.setIcon(.compose, with: .tiny, for: .normal)
         draftsBackButton.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
         draftsBackButton.titleLabel?.font = FontSpec(.medium, .semibold).font
-        draftsBackButton.setIconColor(color(ColorSchemeColorTextForeground), for: .normal)
-        draftsBackButton.setTitleColor(color(ColorSchemeColorSeparator), for: .normal)
+        draftsBackButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
+        draftsBackButton.setTitleColor(UIColor(scheme: .separator), for: .normal)
         draftsBackButton.accessibilityIdentifier = "back"
 
         let count = persistence.numberOfStoredDrafts()
@@ -181,7 +180,7 @@ final class MessageComposeViewController: UIViewController {
         }
     }
 
-    fileprivate dynamic func dismissTapped() {
+    @objc fileprivate dynamic func dismissTapped() {
         
         // if nothing to save/delete, just dismiss
         if !hasDraftContent {
@@ -211,12 +210,12 @@ final class MessageComposeViewController: UIViewController {
         self.present(controller, animated: true, completion: nil)
     }
 
-    fileprivate dynamic func updateDraftThrottled() {
+    @objc fileprivate dynamic func updateDraftThrottled() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(updateDraft), object: nil)
         perform(#selector(updateDraft), with: nil, afterDelay: 0.2)
     }
 
-    fileprivate dynamic func updateDraft() {
+    @objc fileprivate dynamic func updateDraft() {
         if let draft = draft {
             persistence.enqueue(block: {
                 if self.hasDraftContent {
@@ -275,7 +274,7 @@ final class MessageComposeViewController: UIViewController {
         updateButtonStates()
     }
 
-    func keyboardFrameWillChange(_ notification: Notification) {
+    @objc func keyboardFrameWillChange(_ notification: Notification) {
         guard let endSize = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
             return
         }

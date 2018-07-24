@@ -23,8 +23,6 @@ import Foundation
  
  - ChatHeadsDisabled:      Disable chat heads in conversation and self profile
  - DisableMarkdown:        Disable markdown formatter for messages
- - SkipFirstTimeUseChecks: Temporarily skip firts time checks
- - PreferredFlashMode:     Flash mode for internal camera UI
  - DarkMode:               Dark mode for conversation
  - PriofileName:           User name
  - SoundAlerts:            Sound alerts level
@@ -39,11 +37,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case chatHeadsDisabled = "ChatHeadsDisabled"
     case notificationContentVisible = "NotificationContentVisible"
     case disableMarkdown = "Markdown"
-    
-    case skipFirstTimeUseChecks = "SkipFirstTimeUseChecks"
-    
-    case preferredFlashMode = "PreferredFlashMode"
-    
+        
     case darkMode = "DarkMode"
     
     case disableSendButton = "DisableSendButton"
@@ -57,10 +51,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     // AVS
     case soundAlerts = "SoundAlerts"
     case callingConstantBitRate = "constantBitRate"
-    
-    // Analytics
-    case disableCrashAndAnalyticsSharing = "DisableCrashAndAnalyticsSharing"
-    
+
     // Sounds
     case messageSoundName = "MessageSoundName"
     case callSoundName = "CallSoundName"
@@ -70,7 +61,12 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case tweetOpeningOption = "TweetOpeningOption"
     case mapsOpeningOption = "MapsOpeningOption"
     case browserOpeningOption = "BrowserOpeningOption"
-    
+
+    // Persoanl Information
+    // Analytics
+    case disableCrashAndAnalyticsSharing = "DisableCrashAndAnalyticsSharing"
+    case receiveNewsAndOffers = "ReceiveNewsAndOffers"
+
     // Debug
     case disableCallKit = "DisableCallKit"
     case callingProtocolStrategy = "CallingProtcolStrategy"

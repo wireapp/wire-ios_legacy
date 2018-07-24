@@ -28,56 +28,97 @@ class DestructionCountdownViewTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .white
-        sut = DestructionCountdownView()
+    }
+
+    override func tearDown() {
+        ColorScheme.default.variant = .light
+
+        super.tearDown()
+    }
+
+    func prepareSut(variant: ColorSchemeVariant = .light) {
+        ColorScheme.default.variant = variant
+        sut = DestructionCountdownView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        sut.backgroundColor = UIColor(scheme: .contentBackground)
     }
 
     func testThatItRendersCorrectlyInInitialState() {
+        prepareSut()
+
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
         verify(view: sut)
     }
 
-    func testThatItRendersCorrectly_80_Percent_Fraction() {
-        sut.update(fraction: 0.8)
+    func testThatItRendersCorrectly_80_Percent_Progress() {
+        prepareSut()
+
+        sut.setProgress(0.8)
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
         verify(view: sut)
     }
 
-    func testThatItRendersCorrectly_60_Percent_Fraction() {
-        sut.update(fraction: 0.6)
+    func testThatItRendersCorrectly_60_Percent_Progress() {
+        prepareSut()
+
+        sut.setProgress(0.6)
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
         verify(view: sut)
     }
 
-    func testThatItRendersCorrectly_50_Percent_Fraction() {
-        sut.update(fraction: 0.5)
+    func testThatItRendersCorrectly_50_Percent_Progress() {
+        prepareSut()
+
+        sut.setProgress(0.5)
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
         verify(view: sut)
     }
 
-    func testThatItRendersCorrectly_40_Percent_Fraction() {
-        sut.update(fraction: 0.4)
+    func testThatItRendersCorrectly_40_Percent_Progress() {
+        prepareSut()
+
+        sut.setProgress(0.4)
+        sut.setNeedsLayout()
+        sut.layoutIfNeeded()
+        verify(view: sut)    }
+
+    func testThatItRendersCorrectly_20_Percent_Progress() {
+        prepareSut()
+
+        sut.setProgress(0.2)
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
         verify(view: sut)
     }
 
-    func testThatItRendersCorrectly_20_Percent_Fraction() {
-        sut.update(fraction: 0.2)
+    func testThatItRendersCorrectly_0_Percent_Progress() {
+        prepareSut()
+
+        sut.setProgress(0)
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
         verify(view: sut)
     }
 
-    func testThatItRendersCorrectly_0_Percent_Fraction() {
-        sut.update(fraction: 0)
+    func testThatItAnimatesProgress() {
+        prepareSut()
+
+        sut.startAnimating(duration: 5, currentProgress: 0.2)
+        XCTAssertTrue(sut.isAnimatingProgress)
+
+        sut.stopAnimating()
+        XCTAssertFalse(sut.isAnimatingProgress)
+    }
+
+    func testThatItRendersCorrectly_80_Percent_Progress_in_dark_theme() {
+        prepareSut(variant: .dark)
+
+        sut.setProgress(0.8)
         sut.setNeedsLayout()
         sut.layoutIfNeeded()
         verify(view: sut)
     }
-
 }

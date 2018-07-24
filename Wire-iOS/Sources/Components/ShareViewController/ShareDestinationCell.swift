@@ -29,11 +29,13 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     let shieldSize: CGFloat = 20
     let margin: CGFloat = 16
     
+    let stackView = UIStackView(axis: .horizontal)
     let titleLabel = UILabel()
     let checkImageView = UIImageView()
     let avatarViewContainer = UIView()
     var avatarView : UIView?
-    var shieldView: UIImageView?
+    var shieldView: UIImageView!
+    var guestUserIcon: UIImageView!
 
     var allowsMultipleSelection: Bool = true {
         didSet {
@@ -43,16 +45,18 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     
     var destination: D? {
         didSet {
-            self.titleLabel.text = destination?.displayName
-            self.shieldView = destination?.securityLevel == .secure ? UIImageView(image: verifiedShieldImage) : nil
+            
+            guard let destination = destination else { return }
+            
+            self.titleLabel.text = destination.displayName
+            self.shieldView.isHidden = destination.securityLevel != .secure
+            self.guestUserIcon.isHidden = !destination.showsGuestIcon
 
-            if let avatarView = destination?.avatarView {
+            if let avatarView = destination.avatarView {
                 avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
                 self.avatarViewContainer.addSubview(avatarView)
                 self.avatarView = avatarView
             }
-            
-            self.setShieldConstraintsIfNeeded()
         }
     }
     
@@ -65,56 +69,70 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = .clear
-        self.titleLabel.cas_styleClass = "normal-light"
-        self.titleLabel.backgroundColor = .clear
-        self.titleLabel.textColor = .white
         
         self.selectionStyle = .none
         self.contentView.backgroundColor = .clear
+        self.stackView.backgroundColor = .clear
+        self.stackView.spacing = margin
+        self.stackView.alignment = .center
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
+        
+        self.contentView.addSubview(self.stackView)
+        
+        self.stackView.addArrangedSubview(avatarViewContainer)
+        constrain(self.contentView, self.avatarViewContainer) { contentView, avatarView in
+            avatarView.centerY == contentView.centerY
+            avatarView.width == self.avatarSize
+            avatarView.height == self.avatarSize
+        }
+        
+        self.titleLabel.cas_styleClass = "normal-light"
+        self.titleLabel.backgroundColor = .clear
+        self.titleLabel.textColor = .white
+        self.titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
+        
+        self.stackView.addArrangedSubview(self.titleLabel)
+        
+        self.shieldView = UIImageView(image: verifiedShieldImage)
+        self.stackView.addArrangedSubview(self.shieldView)
+        
+        constrain(shieldView) { shieldView in
+            shieldView.width == self.shieldSize
+            shieldView.height == self.shieldSize
+        }
+        
+        self.guestUserIcon = UIImageView(image: UIImage(for: .guest, iconSize: .tiny, color: UIColor(white: 1.0, alpha: 0.64)))
+        self.stackView.addArrangedSubview(self.guestUserIcon)
+        
+        constrain(self.guestUserIcon) { guestUserIcon in
+            guestUserIcon.width == self.shieldSize
+            guestUserIcon.height == self.shieldSize
+        }
         
         self.checkImageView.layer.borderColor = UIColor.white.cgColor
         self.checkImageView.layer.borderWidth = 2
         self.checkImageView.contentMode = .center
         self.checkImageView.layer.cornerRadius = self.checkmarkSize / 2.0
         
-        self.contentView.addSubview(self.avatarViewContainer)
-        self.contentView.addSubview(self.titleLabel)
-        self.contentView.addSubview(self.checkImageView)
+        self.stackView.addArrangedSubview(self.checkImageView)
         
-        constrain(self.contentView, self.avatarViewContainer, self.titleLabel, self.checkImageView) {
-            contentView, avatarView, titleLabel, checkImageView in
+        constrain(self.contentView, self.stackView, self.titleLabel, self.checkImageView) {
+            contentView, stackView, titleLabel, checkImageView in
 
-            avatarView.left == contentView.left + margin
-            avatarView.centerY == contentView.centerY
-            avatarView.width == self.avatarSize
-            avatarView.height == avatarView.width
+            stackView.left == contentView.left + margin
+            stackView.right == contentView.right - margin
+            stackView.top == contentView.top
+            stackView.bottom == contentView.bottom
             
-            titleLabel.left == avatarView.right + margin
+            titleLabel.height == 44
             titleLabel.centerY == contentView.centerY
-            titleLabel.right <= checkImageView.left - margin
             
             checkImageView.centerY == contentView.centerY
-            checkImageView.right == contentView.right - margin
             checkImageView.width == self.checkmarkSize
-            checkImageView.height == checkImageView.width
+            checkImageView.height == self.checkmarkSize
          }
-    }
-    
-    private func setShieldConstraintsIfNeeded() {
-        guard let shieldView = shieldView else { return }
         
-        self.contentView.addSubview(shieldView)
-        
-        constrain(self.contentView, self.titleLabel, self.checkImageView, shieldView) {
-            contentView, titleLabel, checkImageView, shieldView in
-            titleLabel.right <= shieldView.left - margin
-            shieldView.centerY == contentView.centerY
-            shieldView.right == checkImageView.left - margin
-            shieldView.width == self.shieldSize
-            shieldView.height == shieldView.width
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -125,6 +143,6 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         self.checkImageView.image = selected ? UIImage(for: .checkmark, iconSize: .like, color: .white) : nil
-        self.checkImageView.backgroundColor = selected ? ColorScheme.default().color(withName: ColorSchemeColorAccent) : UIColor.clear
+        self.checkImageView.backgroundColor = selected ? UIColor(scheme: .accent) : UIColor.clear
     }
 }

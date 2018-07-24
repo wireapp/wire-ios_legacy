@@ -111,6 +111,10 @@ extension Service: Shareable {
 }
 
 extension ServiceConversation: ShareDestination {
+    public var showsGuestIcon: Bool {
+        return false
+    }
+    
     public var displayName: String {
         switch self {
         case .new:
@@ -167,7 +171,7 @@ final class ServiceDetailViewController: UIViewController {
     let destinationConversation: ZMConversation?
 
     public let variant: ServiceDetailVariant
-    public weak var viewControllerDismissable: ViewControllerDismissable?
+    public weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView
     private let actionButton: Button
@@ -224,8 +228,8 @@ final class ServiceDetailViewController: UIViewController {
         }
 
         if self.variant.opaque {
-            view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground,
-                                                               variant: self.variant.colorScheme)
+            view.backgroundColor = UIColor(scheme: .background,
+                                                             variant: self.variant.colorScheme)
         }
         else {
             view.backgroundColor = .clear
@@ -300,7 +304,7 @@ final class ServiceDetailViewController: UIViewController {
 
             self.presentRemoveDialogue(for: user,
                                        from: conversation,
-                                       dismissable: self.viewControllerDismissable)
+                                       dismisser: self.viewControllerDismisser)
         }
 
         return buttonCallback

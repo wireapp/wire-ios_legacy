@@ -25,14 +25,12 @@
 #import "UIColor+WAZExtensions.h"
 #import "Message+UI.h"
 #import "UIColor+WR_ColorScheme.h"
-#import "UIView+Borders.h"
 #import "Wire-Swift.h"
 #import "UserImageView.h"
 #import "AccentColorChangeHandler.h"
 #import "Analytics.h"
-#import "Analytics+ConversationEvents.h"
 #import "UIResponder+FirstResponder.h"
-#import "UIScreen+Compact.h"
+#import "Wire-Swift.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -80,10 +78,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 @property (nonatomic) NSLayoutConstraint *toolboxCollapseConstraint;
 
-@property (nonatomic) BOOL countdownContainerViewHidden;
 @property (nonatomic) UIView *countdownContainerView;
-@property (nonatomic) DestructionCountdownView *countdownView;
-@property (nonatomic) CADisplayLink *destructionLink;
 
 @end
 
@@ -137,7 +132,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (newWindow != nil) {
         [self scheduledTimerForUpdateBurstTimestamp];
     } else {
-        [self tearDownCountdownLink];
+        [self tearDownCountdown];
         [self.burstTimestampTimer invalidate];
         self.burstTimestampTimer = nil;
     }
@@ -229,7 +224,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     [self.burstTimestampTimer invalidate];
     self.burstTimestampTimer = nil;
-    [self tearDownCountdownLink];
+    [self tearDownCountdown];
 }
 
 - (void)createBaseConstraints
@@ -283,8 +278,19 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     
     [self.likeButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.toolboxView];
     [self.likeButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.authorImageContainer];
+
+    const CGFloat inset = UIFont.normalRegularFont.lineHeight / 2;
     
-    [self.countdownContainerView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:8];
+    NSArray *countdownContainerConstraints =
+    @[
+      [self.countdownContainerView.topAnchor constraintEqualToAnchor:self.authorImageView.bottomAnchor constant:inset],
+      [self.countdownContainerView.centerXAnchor constraintEqualToAnchor:self.authorImageView.centerXAnchor],
+      [self.countdownContainerView.widthAnchor constraintEqualToConstant:8],
+      [self.countdownContainerView.heightAnchor constraintEqualToConstant:8]
+      ];
+
+    [NSLayoutConstraint activateConstraints:countdownContainerConstraints];
+
 }
 
 - (void)setContentLayoutMargins:(UIEdgeInsets)contentLayoutMargins
@@ -298,16 +304,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.messageContentView.layoutMargins = contentLayoutMargins;
     self.toolboxView.layoutMargins = contentLayoutMargins;
     self.burstTimestampView.layoutMargins = contentLayoutMargins;
-}
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    if (!self.countdownContainerViewHidden) {
-        self.countdownContainerView.layer.cornerRadius = CGRectGetWidth(self.countdownContainerView.bounds) / 2;
-    }
-    
-    [self.contentView layoutIfNeeded];
 }
 
 - (void)updateConstraintConstants
@@ -368,7 +364,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     BOOL showLikeButton = [Message messageCanBeLiked:self.message] && !hideLikeButton;
     
     self.toolboxCollapseConstraint.active = ! shouldBeVisible;
-    
+    self.toolboxView.isAccessibilityElement = shouldBeVisible;
+
     if (shouldBeVisible) {
         [self.toolboxView configureForMessage:self.message forceShowTimestamp:self.selected animated:animated];
     }
@@ -412,10 +409,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (nil == self.countdownView) {
         if (!countdownContainerViewHidden) {
             self.countdownView = [[DestructionCountdownView alloc] init];
-            self.countdownView.accessibilityLabel = @"EphemeralMessageCountdownView";
+            self.countdownView.accessibilityIdentifier = @"EphemeralMessageCountdownView";
+            self.countdownView.isAccessibilityElement = false;
             [self.countdownContainerView addSubview:self.countdownView];
-            [self.countdownView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(2, 2, 2, 2)];
-            self.countdownContainerView.layer.cornerRadius = CGRectGetWidth(self.countdownContainerView.bounds) / 2;
+            [self.countdownView autoPinEdgesToSuperviewEdges];
         }
     }
     else {
@@ -483,7 +480,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     self.showsMenu = NO;
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (self.menuConfigurationProperties.selectedMenuBlock != nil && !self.beingEdited) {
         self.menuConfigurationProperties.selectedMenuBlock(NO, YES);
     }
@@ -607,7 +603,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.beingEdited = YES;
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         [self.delegate conversationCell:self didSelectAction:MessageActionDelete];
-        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeDelete];
     }
 }
 
@@ -668,10 +663,13 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 #pragma mark - Countdown Timer
 
-- (void)tearDownCountdownLink
+- (void)tearDownCountdown
 {
     [self.destructionLink invalidate];
     self.destructionLink = nil;
+    self.countdownView.hidden = YES;
+    self.messageContentView.alpha = 1;
+    [self.countdownView stopAnimating];
 }
 
 - (void)startCountdownAnimationIfNeeded:(id<ZMConversationMessage>)message
@@ -684,23 +682,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 - (BOOL)showDestructionCountdown
 {
-    return !self.message.hasBeenDeleted && self.message.isEphemeral && !self.message.isObfuscated;
-}
-
-- (void)updateCountdownView
-{
-    self.countdownContainerViewHidden = !self.showDestructionCountdown;
-
-    if (! self.showDestructionCountdown && nil != self.destructionLink) {
-        [self tearDownCountdownLink];
-        return;
-    }
-
-    if (!self.countdownContainerViewHidden && nil != self.message.destructionDate) {
-        CGFloat fraction = self.message.destructionDate.timeIntervalSinceNow / self.message.deletionTimeout;
-        [self.countdownView updateWithFraction:fraction];
-        [self.toolboxView updateTimestamp:self.message];
-    }
+    return !self.message.hasBeenDeleted && self.message.isEphemeral && !self.message.isObfuscated && ![Message isKnockMessage:self.message];
 }
 
 @end

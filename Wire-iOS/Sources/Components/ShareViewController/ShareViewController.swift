@@ -21,6 +21,7 @@ import Foundation
 public protocol ShareDestination: Hashable {
     var displayName: String { get }
     var securityLevel: ZMConversationSecurityLevel { get }
+    var showsGuestIcon: Bool { get }
     var avatarView: UIView? { get }
 }
 
@@ -107,11 +108,11 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     
     // MARK: - Actions
     
-    public func onCloseButtonPressed(sender: AnyObject?) {
+    @objc public func onCloseButtonPressed(sender: AnyObject?) {
         self.onDismiss?(self, false)
     }
     
-    public func onSendButtonPressed(sender: AnyObject?) {
+    @objc public func onSendButtonPressed(sender: AnyObject?) {
         if self.selectedDestinations.count > 0 {
             self.shareable.share(to: Array(self.selectedDestinations))
             self.onDismiss?(self, true)
@@ -189,7 +190,7 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: true)
     }
     
-    func keyboardFrameWillChange(notification: Notification) {
+    @objc func keyboardFrameWillChange(notification: Notification) {
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         

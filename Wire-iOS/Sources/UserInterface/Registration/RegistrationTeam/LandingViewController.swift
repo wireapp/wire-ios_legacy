@@ -27,33 +27,32 @@ import Cartography
 }
 
 /// Landing screen for choosing create team or personal account
-final class LandingViewController: UIViewController {
+final class LandingViewController: UIViewController, CompanyLoginControllerDelegate {
     weak var delegate: LandingViewControllerDelegate?
 
-    private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
-
     fileprivate var device: DeviceProtocol
+    private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
 
     // MARK: - UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
-    static let buttonTitleAttribute: [String: Any] = {
+    static let buttonTitleAttribute: [NSAttributedStringKey: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: semiboldFont]
+        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: semiboldFont]
     }()
 
-    static let buttonSubtitleAttribute: [String: Any] = {
+    static let buttonSubtitleAttribute: [NSAttributedStringKey: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
         alignCenterStyle.paragraphSpacingBefore = 4
 
         let lightFont = FontSpec(.normal, .light).font!
 
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: lightFont]
+        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
     }()
 
     // MARK: - constraints for iPad
@@ -78,7 +77,7 @@ final class LandingViewController: UIViewController {
         label.text = "landing.title".localized
         label.font = LandingViewController.regularFont
         label.textColor = UIColor.Team.subtitleColor
-        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
 
@@ -163,13 +162,13 @@ final class LandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tracker?.tagOpenedLandingScreen()
+        Analytics.shared().tagOpenedLandingScreen(context: "email")
 
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
         [logoView, headline].forEach(headlineStackView.addArrangedSubview)
         headerContainerView.addSubview(headlineStackView)
         
-        [createAccountButton, createTeamButton].forEach() { button in
+        [createAccountButton, createTeamButton].forEach { button in
             buttonStackView.addArrangedSubview(button)
         }
 
@@ -177,6 +176,7 @@ final class LandingViewController: UIViewController {
         navigationBar.pushItem(navigationItem, animated: false)
         navigationBar.tintColor = .black
         view.addSubview(navigationBar)
+        companyLoginController?.delegate = self
 
         self.createConstraints()
         self.configureAccessibilityElements()
@@ -189,6 +189,17 @@ final class LandingViewController: UIViewController {
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
             queue: nil) { _ in self.updateBarButtonItem()  }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        companyLoginController?.isAutoDetectionEnabled = true
+        companyLoginController?.detectLoginCode()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        companyLoginController?.isAutoDetectionEnabled = false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -257,8 +268,8 @@ final class LandingViewController: UIViewController {
         }
 
         [createAccountButton, createTeamButton].forEach() { button in
-            button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-            button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+            button.setContentCompressionResistancePriority(.required, for: .vertical)
+            button.setContentCompressionResistancePriority(.required, for: .horizontal)
         }
     }
 
@@ -344,17 +355,17 @@ final class LandingViewController: UIViewController {
     // MARK: - Button tapped target
 
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedUserRegistration()
+        Analytics.shared().tagOpenedUserRegistration(context: "email")
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
 
     @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedTeamCreation()
+        Analytics.shared().tagOpenedTeamCreation(context: "email")
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
     @objc public func loginButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedLogin()
+        Analytics.shared().tagOpenedLogin(context: "email")
         delegate?.landingViewControllerDidChooseLogin()
     }
     
@@ -366,6 +377,12 @@ final class LandingViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-
+    
+    // MARK: - CompanyLoginControllerDelegate
+    
+    func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
 }
 

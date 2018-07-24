@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 
-class ProfileClientViewController: UIViewController {
+@objcMembers class ProfileClientViewController: UIViewController {
 
     let userClient: UserClient
     let contentView = UIView()
@@ -75,6 +75,8 @@ class ProfileClientViewController: UIViewController {
         self.updateFingerprintLabel()
         self.modalPresentationStyle = .overCurrentContext
         self.title = NSLocalizedString("registration.devices.title", comment:"")
+
+        setupViews()
     }
     
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -89,10 +91,8 @@ class ProfileClientViewController: UIViewController {
         return [.portrait]
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+    func setupViews() {
+        view.backgroundColor = UIColor(scheme: .background)
 
         self.setupContentView()
         self.setupBackButton()
@@ -110,7 +110,7 @@ class ProfileClientViewController: UIViewController {
         self.createConstraints()
         self.updateFingerprintLabel()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = ""
@@ -141,20 +141,24 @@ class ProfileClientViewController: UIViewController {
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.isEditable = false
         descriptionTextView.delegate = self
-        descriptionTextView.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-        descriptionTextView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
+        descriptionTextView.textColor = UIColor(scheme: .textForeground)
+        descriptionTextView.backgroundColor = UIColor(scheme: .textBackground)
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
-        
+
         if let user = self.userClient.user {
-            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) && descriptionTextFont) + "\n" +
-                ("profile.devices.detail.verify_message.link".localized && [NSFontAttributeName: descriptionTextFont, NSLinkAttributeName: NSURL.wr_fingerprintHowToVerify()])
+            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
+                descriptionTextFont &&
+                UIColor(scheme: .textForeground)) +
+                "\n" +
+                ("profile.devices.detail.verify_message.link".localized &&
+                    [.font: descriptionTextFont, .link: URL.wr_fingerprintHowToVerify])
         }
         self.contentView.addSubview(descriptionTextView)
     }
     
     private func setupSeparatorLineView() {
-        separatorLineView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        separatorLineView.backgroundColor = UIColor(scheme: .separator)
         self.contentView.addSubview(separatorLineView)
     }
     
@@ -162,13 +166,13 @@ class ProfileClientViewController: UIViewController {
         typeLabel.text = self.userClient.deviceClass?.uppercased()
         typeLabel.numberOfLines = 1
         typeLabel.font = FontSpec(.small, .semibold).font!
-        typeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        typeLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(typeLabel)
     }
     
     private func setupIDLabel() {
         IDLabel.numberOfLines = 1
-        IDLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        IDLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(IDLabel)
         self.updateIDLabel()
     }
@@ -178,15 +182,15 @@ class ProfileClientViewController: UIViewController {
         let fingerprintSmallBoldMonospaceFont = self.fingerprintSmallBoldFont.monospaced()
         
         IDLabel.attributedText = self.userClient.attributedRemoteIdentifier(
-            [NSFontAttributeName: fingerprintSmallMonospaceFont],
-            boldAttributes: [NSFontAttributeName: fingerprintSmallBoldMonospaceFont],
+            [.font: fingerprintSmallMonospaceFont],
+            boldAttributes: [.font: fingerprintSmallBoldMonospaceFont],
             uppercase: true
         )
     }
 
     private func setupFullIDLabel() {
         fullIDLabel.numberOfLines = 0
-        fullIDLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        fullIDLabel.textColor = UIColor(scheme: .textForeground)
         self.contentView.addSubview(fullIDLabel)
     }
     
@@ -200,8 +204,8 @@ class ProfileClientViewController: UIViewController {
         let fingerprintBoldMonospaceFont = self.fingerprintBoldFont.monospaced()
         
         if let attributedFingerprint = self.userClient.fingerprint?.attributedFingerprint(
-            attributes: [NSFontAttributeName: fingerprintMonospaceFont],
-            boldAttributes: [NSFontAttributeName: fingerprintBoldMonospaceFont],
+            attributes: [.font: fingerprintMonospaceFont],
+            boldAttributes: [.font: fingerprintBoldMonospaceFont],
             uppercase: false)
         {
             fullIDLabel.attributedText = attributedFingerprint
@@ -223,7 +227,7 @@ class ProfileClientViewController: UIViewController {
     
     private func setupVerifiedToggleLabel() {
         verifiedToggleLabel.font = FontSpec(.small, .light).font!
-        verifiedToggleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        verifiedToggleLabel.textColor = UIColor(scheme: .textForeground)
         verifiedToggleLabel.text = NSLocalizedString("device.verified", comment: "").uppercased()
         verifiedToggleLabel.numberOfLines = 0
         self.contentView.addSubview(verifiedToggleLabel)
@@ -317,8 +321,12 @@ class ProfileClientViewController: UIViewController {
     }
 
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
-        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(), fromConversation:self.fromConversation)
-        let navigationControllerWrapper = UINavigationController(rootViewController: selfClientController)
+        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(),
+                                                                fromConversation:self.fromConversation,
+                                                                variant: ColorScheme.default.variant)
+
+        let navigationControllerWrapper = selfClientController.wrapInNavigationController()
+
         navigationControllerWrapper.modalPresentationStyle = .currentContext
         self.present(navigationControllerWrapper, animated: true, completion: .none)
     }
@@ -334,9 +342,6 @@ class ProfileClientViewController: UIViewController {
             }
         }, completionHandler: {
             self.verifiedToggle.isOn = self.userClient.verified
-            
-            let verificationType: DeviceVerificationType = self.verifiedToggle.isOn ? .verified : .unverified
-            Analytics.shared().tagChange(verificationType, deviceOwner: .other)
         })
     }
 
@@ -386,14 +391,12 @@ extension ProfileClientViewController: UserClientObserver {
 
 extension ProfileClientViewController: UITextViewDelegate {
 
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        if URL == NSURL.wr_fingerprintHowToVerify() as URL {
-            UIApplication.shared.openURL(URL)
-            return true
-        }
-        else {
+    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange) -> Bool {
+        guard url == .wr_fingerprintHowToVerify else {
             return false
         }
+        url.openInApp(above: self)
+        return false
     }
 
 }

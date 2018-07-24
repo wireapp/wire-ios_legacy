@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import Classy
 
-final class VideoMessageView: UIView, TransferView {
+@objcMembers final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     
@@ -46,7 +46,7 @@ final class VideoMessageView: UIView, TransferView {
 
         self.previewImageView.contentMode = .scaleAspectFill
         self.previewImageView.clipsToBounds = true
-        self.previewImageView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorPlaceholderBackground)
+        self.previewImageView.backgroundColor = UIColor(scheme: .placeholderBackground)
 
         self.playButton.addTarget(self, action: #selector(VideoMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityIdentifier = "VideoActionButton"
@@ -126,11 +126,11 @@ final class VideoMessageView: UIView, TransferView {
             if let previewData = fileMessageData.previewData {
                 visibleViews.append(contentsOf: [previewImageView, bottomGradientView, playButton])
                 self.previewImageView.image = UIImage(data: previewData)
-                self.timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+                self.timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
             } else {
                 visibleViews.append(contentsOf: [previewImageView, playButton])
                 self.previewImageView.image = nil
-                self.timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+                self.timeLabel.textColor = UIColor(scheme: .textForeground)
             }
             
             if !self.timeLabelHidden {
@@ -182,7 +182,7 @@ final class VideoMessageView: UIView, TransferView {
     
     // MARK: - Actions
     
-    open func onActionButtonPressed(_ sender: UIButton) {
+    @objc open func onActionButtonPressed(_ sender: UIButton) {
         guard let fileMessageData = self.fileMessage?.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {
@@ -197,6 +197,7 @@ final class VideoMessageView: UIView, TransferView {
             self.delegate?.transferView(self, didSelect: .resend)
         case .uploaded, .downloaded, .failedDownload:
             self.delegate?.transferView(self, didSelect: .present)
+        case .unavailable: break
         }
     }
     

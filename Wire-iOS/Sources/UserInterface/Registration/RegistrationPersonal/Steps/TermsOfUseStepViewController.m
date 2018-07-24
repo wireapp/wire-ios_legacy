@@ -28,17 +28,11 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 #import "NSURL+WireLocale.h"
-#import "NSURL+WireURLs.h"
 #import "Button.h"
 
 
 @interface TermsOfUseStepViewController () <UITextViewDelegate>
 
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UITextView *termsOfUseText;
-@property (nonatomic) Button *agreeButton;
-@property (nonatomic) UIView *containerView;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 @end
@@ -50,22 +44,21 @@
     self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
+        self.device = UIDevice.currentDevice;
+
         self.unregisteredUser = unregisteredUser;
+
+        [self createContainerView];
+        [self createTitleLabel];
+        [self createTermsOfUseText];
+        [self createAgreeButton];
+
+        [self updateViewConstraints];
+
+        [self updateConstraintsForSizeClass];
     }
 
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self createContainerView];
-    [self createTitleLabel];
-    [self createTermsOfUseText];
-    [self createAgreeButton];
-    
-    [self updateViewConstraints];
 }
 
 - (void)createContainerView {
@@ -126,52 +119,11 @@
     [self.containerView addSubview:self.agreeButton];
 }
 
-- (void)updateViewConstraints
-{
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        CGFloat inset = 28.0;
-        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        
-        [self.termsOfUseText autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:5];
-        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.termsOfUseText autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        
-        [self.agreeButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.termsOfUseText withOffset:24];
-        [self.agreeButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.agreeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [[self.agreeButton.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset] setActive:YES];
-        [self.agreeButton autoSetDimension:ALDimensionHeight toSize:40];
-        
-        if(IS_IPAD_FULLSCREEN) {
-             [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh + 1 forConstraints:^{
-                 [self.containerView autoSetDimension:ALDimensionWidth toSize:self.registrationFormViewController.maximumFormSize.width];
-                 [self.containerView autoSetDimension:ALDimensionHeight toSize:self.registrationFormViewController.maximumFormSize.height];
-             }];
-            
-            [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh - 1 forConstraints:^{
-                [self.containerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-            }];
-            
-            [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-            [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-            
-            [self.containerView autoCenterInSuperview];
-        } else {
-            [self.containerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        }
-    }
-}
-
 #pragma mark - Actions
 
 - (void)openTOS:(id)sender
 {
-    SFSafariViewController *webViewController = [[SFSafariViewController alloc] initWithURL:self.termsOfServiceURL];
+    BrowserViewController *webViewController = [[BrowserViewController alloc] initWithURL:self.termsOfServiceURL];
     [self presentViewController:webViewController animated:YES completion:nil];
 }
 

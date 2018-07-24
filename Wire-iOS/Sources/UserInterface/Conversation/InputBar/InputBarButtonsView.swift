@@ -47,7 +47,12 @@ public final class InputBarButtonsView: UIView {
     fileprivate var lastLayoutWidth: CGFloat = 0
     
     public let expandRowButton = IconButton()
-    public let buttons: [UIButton]
+    public var buttons: [UIButton] {
+        didSet {
+            buttonInnerContainer.subviews.forEach({ $0.removeFromSuperview() })
+            layoutAndConstrainButtonRows()
+        }
+    }
     fileprivate let buttonInnerContainer = UIView()
     fileprivate let buttonOuterContainer = UIView()
     fileprivate let constants = InputBarRowConstants()
@@ -80,7 +85,7 @@ public final class InputBarButtonsView: UIView {
         buttonOuterContainer.clipsToBounds = true
         addSubview(buttonOuterContainer)
         addSubview(expandRowButton)
-        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        self.backgroundColor = UIColor(scheme: .barBackground)
     }
     
     func createConstraints() {
@@ -113,7 +118,7 @@ public final class InputBarButtonsView: UIView {
         guard rowIndex != currentRow else { return }
         currentRow = rowIndex
         buttonRowTopInset.constant = CGFloat(rowIndex) * constants.buttonsBarHeight
-        UIView.wr_animate(easing: RBBEasingFunctionEaseInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
+        UIView.wr_animate(easing: .easeInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
     }
     
     // MARK: - Button Layout
@@ -123,15 +128,16 @@ public final class InputBarButtonsView: UIView {
     }
     
     fileprivate func layoutAndConstrainButtonRows() {
-        guard bounds.size.width > 0 else { return }
+        let minButtonWidth = constants.minimumButtonWidth(forWidth: bounds.width)
+
+        guard bounds.size.width >= minButtonWidth * 2 else { return }
 
         // Drop existing constraints
         buttons.forEach {
             $0.removeFromSuperview()
             buttonInnerContainer.addSubview($0)
         }
-        
-        let minButtonWidth = constants.minimumButtonWidth(forWidth: bounds.width)
+
         let numberOfButtons = Int(floorf(Float(bounds.width / minButtonWidth)))
         multilineLayout = numberOfButtons < buttons.count
         

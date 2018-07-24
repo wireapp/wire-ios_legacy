@@ -27,6 +27,10 @@
 "general.edit" = "Bewerken";
 "general.done" = "Klaar";
 "general.confirm" = "OK";
+"general.skip" = "Niet nu";
+"general.accept" = "Neem op";
+"general.decline" = "Nee, bedankt";
+
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
@@ -115,6 +119,10 @@
 "conversation_list.header.self_team.accessibility_value.active" = "Nu activeren.";
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Heeft nieuwe berichten.";
 
+// Conversation List Data Usage Permission Dialog
+"conversation_list.date_usage_permission_alert.title" = "Help ons Wire te verbeteren";
+"conversation_list.date_usage_permission_alert.message" = "Het anoniem versturen van gebruikers data van de app help ons om onze producten en services te verbeteren. We gebruiken deze informatie voor niks anders.";
+
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacten";
 
@@ -136,6 +144,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "stel een bericht samen en sla het op voor later";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "camera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "maak een foto en verstuur hem snel";
+"conversation_list.voiceover.unread_messages.hint" = "Je hebt ongelezen berichten.";
 
 // Archived List
 "archived_list.title" = "archief";
@@ -229,6 +238,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Tik om te verzenden";
 "conversation.input_bar.audio_message.too_long.title" = "Opname gestopt";
 "conversation.input_bar.audio_message.too_long.message" = "Audio berichten zijn gelimiteerd tot %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Stuur";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tap om op te nemen\nJe kan hier na %@";
@@ -254,7 +266,13 @@
 "conversation.create.toggle.title" = "Sta gasten toe";
 "conversation.create.toggle.subtitle" = "Laat mensen van buiten je team toe aan dit gesprek. Je kan dit later nog aanpassen.";
 
+"conversation.input_bar.ongoing_call_alert.title" = "Uitgaand gesprek";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "Je kan geen bericht opnemen tijdens een telefoongesprek.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "Je kan geen video maken tijdens een telefoongesprek.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "Je kan geen foto maken tijdens een telefoongesprek.";
+
 "conversation.guests_present" = "Er zijn gasten in dit geprek";
+"conversation.action.search" = "Zoeken";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
@@ -264,6 +282,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire heeft toegang nodig tot de camera.";
+"video_call.camera_access.denied" = "Wire heeft geen toegang to je camera";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "Open instellingen voor Wire om toegang tot de camera te geven";
 
@@ -272,6 +291,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire heeft toegang nodig tot jou camera en foto's."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire heeft toegang nodig tot jouw foto's.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire heeft toegang nodig tot jou camera.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF-vergrendeling";
@@ -362,6 +382,14 @@
 
 "content.system.conversation.with_name.participants" = "met %@";
 
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Jij";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
+
 "content.system.reactivated_device" = "Je bent %@ weer gaan gebruiken. Berichten die in de tussentijd verzonden zijn worden hier niet getoond.";
 
 "content.system.new_device" = "een nieuw apparaat";
@@ -390,7 +418,7 @@
 "content.system.cannot_decrypt.otherDevice_part" = "(Apparaat %@)"; // example " (device d1b23c54f34a)".
 // Full sentence: "A message from %@ was not received. [...] (device d1b23c54f34a). This is a debug information.
 
-"content.system.unknown_message.body" = "Je gebruik een oudere versie van Wire die dit type bericht niet kan weergeven.";
+"content.system.unknown_message.body" = "Dit bericht kan niet getoond worden. Dit kan komen doordat je een oudere versie van Wire gebruikt.";
 
 "content.file.uploading" = "Uploaden…";
 "content.file.downloading" = "Downloaden…";
@@ -405,6 +433,8 @@
 
 "content.message.delete" = "Verwijderen";
 "content.message.save" = "Opslaan";
+
+"content.message.delete_ellipsis" = "Verwijder…";
 
 "content.message.like" = "Vind ik leuk";
 "content.message.unlike" = "Vind ik niet leuk";
@@ -445,9 +475,9 @@
 "library.alert.permission_warning.not_allowed.explaination" = "Open instellingen voor Wire om toegang tot de camera te geven.";
 
 // Voice
-"voice.status.one_to_one.incoming" = "%@\ncalling";
-"voice.status.group_call.incoming" = "%@\nringing";
-"voice.status.one_to_one.outgoing" = "%@\nringing";
+"voice.status.one_to_one.incoming" = "%@ bellen";
+"voice.status.group_call.incoming" = "%@ belt";
+"voice.status.one_to_one.outgoing" = "%@ belt";
 "voice.status.joining" = "%@ Verbinden";
 "voice.status.leaving" = "%@\nCall ended";
 "voice.status.video_not_available" = "Video is uitgeschakeld";
@@ -464,9 +494,11 @@
 "voice.hang_up_button.title" = "Ophangen";
 "voice.mute_button.title" = "Dempen";
 "voice.video_button.title" = "Video";
+"voice.flip_video_button.title" = "Draai om";
 "voice.speaker_button.title" = "Luidspreker";
 "voice.cancel_button.title" = "Annuleer";
 "voice.call_button.title" = "Oproep";
+"voice.end_call_button.title" = "Gesprek beëindigen";
 
 "voice.alert.call_in_progress.title" = "Bezig met bellen";
 "voice.alert.call_in_progress.message" = "Je kunt maximaal een gesprek tegelijk voeren";
@@ -478,6 +510,57 @@
 "voice.alert.camera_warning.title" = "Wire heeft toegang nodig tot de camera.";
 "voice.alert.camera_warning.explanation" = "Open instellingen voor Wire om toegang tot de camera te geven.";
 
+"voice.top_overlay.tap_to_return" = "Tik om terug te keren";
+"voice.top_overlay.accessibility_title" = "Uitgaand gesprek";
+
+// Voice New
+
+"call.status.connecting" = "Verbinden…";
+"call.status.incoming.user" = "%@ belt…";
+"call.status.incoming" = "Bellen…";
+"call.status.outgoing" = "Bellen…";
+"call.status.reconnecting" = "Opnieuw verbinden…";
+"call.status.terminating" = "Ophangen…";
+"call.status.constant_bitrate" = "Constante Bit Rate";
+
+"call.participants.show_all" = "Toon alle (%@)";
+"call.participants.list.title" = "Deelnemers";
+
+"call.video.paused" = "Video is gepauzeerd";
+
+"call.video.too_many.alert.title" = "Te veel mensen voor Video bellen";
+"call.video.too_many.alert.message" = "Video gesprekken werken in groepen van 4 personen of minder.";
+
+"call.degraded.alert.title" = "Nieuw apparaat";
+"call.degraded.alert.message.self" = "Je gebruikt een nieuw apparaat.";
+"call.degraded.alert.message.user" = "%@ is een ander apparaat gaan gebruiken.";
+"call.degraded.alert.message.unknown" = "Iemand begon met een nieuw apparaat.";
+"call.degraded.alert.action.continue" = "Toch bellen";
+
+"call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.start.button" = "Toch bellen";
+"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.join.button" = "Toch aanmelden";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "Dempen";
+"call.actions.label.toggle_mute_off" = "Dempen opheffen";
+"call.actions.label.flip_camera" = "Schakelen tussen camera's";
+"call.actions.label.toggle_speaker_on" = "Luidspreker inschakelen";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Gesprek aannemen";
+"call.actions.label.reject_call" = "Weiger oproep";
+"call.actions.label.terminate_call" = "Gesprek beëindigen";
+"call.actions.label.toggle_video_on" = "Zet camera aan";
+"call.actions.label.toggle_video_off" = "Zet camera uit";
+"call.actions.label.switch_to_back_camera" = "Switch naar camera achterkant";
+"call.actions.label.switch_to_front_camera" = "Switch naar camera voorkant";
+"call.actions.label.minimize_call" = "Minimaliser gesprek";
+"call.actions.label.make_audio_call" = "Start audio gesprek";
+"call.actions.label.make_video_call" = "Start video gesprek";
+"call.actions.label.join_call" = "Doe mee met gesprek";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -486,20 +569,23 @@
 "participants.avatar.guest.title" = "Gast";
 
 "participants.title" = "Beschrijving";
+"participants.all.title" = "Deelnemers";
 "participants.section.participants" = "Personen (%d)";
 "participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Instellingen";
 "participants.footer.add_title" = "Deelnemers toevoegen";
+"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Wijzig naam";
-"meta.menu.leave" = "Leave…";
+"meta.menu.leave" = "Verlaat groep…";
 "meta.menu.archive" = "Archiveren";
 "meta.menu.unarchive" = "Terugzetten";
-"meta.menu.delete" = "Delete Content…";
+"meta.menu.delete" = "Inhoud Verwijderen…";
 "meta.menu.silence.mute" = "Dempen";
 "meta.menu.silence.unmute" = "Dempen opheffen";
 "meta.menu.cancel" = "Annuleer";
-"meta.menu.cancel_connection_request" = "Annuleer verzoek";
+"meta.menu.cancel_connection_request" = "Verzoek annuleren…";
 "meta.menu.mark_unread" = "Markeer als ongelezen";
 "meta.menu.mark_read" = "Markeren als gelezen";
 "shortcut.mark_all_as_read.title" = "Alles markeren als gelezen";
@@ -562,8 +648,8 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Ja";
 
 // Unblock button
-"profile.block_button_title" = "Block…";
-"profile.unblock_button_title" = "Unblock…";
+"profile.block_button_title" = "Blokeer…";
+"profile.unblock_button_title" = "Deblokkeer…";
 
 "profile.cancel_connection_button_title" = "VERZOEK ANNULEREN";
 "profile.connection_request_state.blocked" = "GEBLOKKEERD";
@@ -581,7 +667,7 @@
 // Device list
 "profile.devices.title" = "Apparaten";
 "profile.devices.fingerprint_message_unencrypted" = "%@ gebruikt een oude versie van Wire. Er worden daarom geen apparaten getoond.";
-"profile.devices.fingerprint_message.title" = "Wire gives every device a unique fingerprint. Compare them with %@ and verify your conversation.";
+"profile.devices.fingerprint_message.title" = "Wire geeft elk apparaat een unieke vingerafdruk. Vergelijk deze met %@ en verifieer het gesprek.";
 "profile.devices.fingerprint_message.link" = "Waarom gesprekken verifiëren?";
 
 // Device detail
@@ -599,9 +685,10 @@
 "participants.services.remove_integration.button" = "verwijder integratie";
 
 // Group details
-"group_details.guest_options_cell.title" = "Gast opties";
+"group_details.guest_options_cell.title" = "Gasten";
 "group_details.guest_options_cell.enabled" = "Aan";
 "group_details.guest_options_cell.disabled" = "Uit";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -619,6 +706,8 @@
 "self.voiceover.label" = "Profiel";
 "self.voiceover.hint" = "Open profile en instellingen";
 "self.new-device.voiceover.label" = "Profiel, nieuwe apparaten toegevoegd";
+
+"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
 
 "self.add_phone_number" = "Voeg telefoonnummer toe";
 "self.add_email_password" = "Voeg e-mailadres en wachtwoord toe";
@@ -646,6 +735,9 @@
 "self.settings.add_account.error.title" = "Drie accounts zijn actief";
 "self.settings.add_account.error.message" = "Je kan maximaal met 3 accounts te gelijk inloggen. Log op een ander account uit, om een nieuw account toe te voegen.";
 
+"self.settings.switch_account.title" = "Het wisselen van account stopt het lopende gesprek.";
+"self.settings.switch_account.action" = "Wissel account";
+
 // Settings - Account details
 "self.settings.account_section" = "Profiel";
 
@@ -671,6 +763,8 @@
 "self.settings.account_picture_group.picture" = "Foto";
 "self.settings.account_picture_group.color" = "Kleur";
 
+"self.settings.account_personal_information_group.title" = "Persoonlijke informatie";
+
 "self.settings.account_picture_group.theme" = "Donker thema";
 
 "self.settings.device_details.fingerprint.subtitle" = "Wire geeft elk apparaat een eigen vingerafdruk. Vergelijk deze en verifieer je apparaten en gesprekken.";
@@ -687,6 +781,15 @@
 
 "self.settings.account_details.log_out.alert.title" = "Uitloggen";
 "self.settings.account_details.log_out.alert.message" = "Je berichten history word verwijdert op dit apparaat.";
+
+// Settings - Personal information
+"self.settings.privacy_analytics_section.title" = "Diagnose en gebruik";
+"self.settings.privacy_analytics.title" = "Anoniem gegevens delen";
+"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending anonymous usage and crash reports.";
+
+"self.settings.receiveNews_and_offers.title" = "Ontvang nieuwsbrief";
+"self.settings.receiveNews_and_offers.description.title" = "Ontvang nieuws en product updates van Wire via de mail.";
+
 
 
 // Change Username
@@ -775,10 +878,13 @@
 
 "open_link.maps.option.apple" = "Kaarten";
 "open_link.maps.option.google" = "Google Maps";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
 "open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Geluidswaarschuwing";
@@ -813,10 +919,6 @@
 
 "self.settings.privacy_analytics_menu.devices.title" = "Apparaten";
 
-"self.settings.privacy_analytics_section.title" = "Diagnose en gebruik";
-"self.settings.privacy_analytics.title" = "Anoniem gegevens delen";
-"self.settings.privacy_analytics_menu.description.title" = "Maak Wire beter door anoniem data te versturen.\n";
-
 "self.settings.privacy.clear_history.title" = "Geschiedenis verwijderen";
 "self.settings.privacy.clear_history.subtitle" = "Dit verwijdert alle inhoud van al je gesprekken.";
 
@@ -829,6 +931,9 @@
 "self.settings.advanced.reset_push_token_alert.title" = "Push token is gereset";
 "self.settings.advanced.reset_push_token_alert.message" = "Notificaties zullen over een paar seconden worden hersteld.";
 "self.settings.advanced.version_technical_details.title" = "Technische details van deze versie";
+
+// data usage permissions options
+"self.settings.account.data_usage_permissions.title" = "Data gebruik toestemmingen";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Technisch rapport";
@@ -847,9 +952,9 @@
 
 // History backup
 
-"self.settings.conversations.title" = "History";
-"self.settings.history_backup.title" = "Back Up Conversations";
-"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nThe backup file is not protected by Wire end-to-end encryption, so store it in a safe place.";
+"self.settings.conversations.title" = "Geschiedenis";
+"self.settings.history_backup.title" = "Gesprekken backupen";
+"self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
 "self.settings.history_backup.action" = "Nu Backuppen";
 "self.settings.history_backup.error.title" = "Fout";
 
@@ -858,7 +963,7 @@
 
 // History backup password
 
-"self.settings.history_backup.password.title" = "Set Password";
+"self.settings.history_backup.password.title" = "Wachtwoord instellen";
 "self.settings.history_backup.password.cancel" = "Annuleer";
 "self.settings.history_backup.password.next" = "Volgende";
 "self.settings.history_backup.password.placeholder" = "Minimaal 8 tekens";
@@ -889,10 +994,10 @@
 
 "landing.app_name" = "Wire";
 "landing.title" = "Veilig communiceren voor iedereen.";
-"landing.create_account.title" = "For personal use";
-"landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
-"landing.create_team.subtitle" = "create a team";
+"landing.create_account.title" = "Voor persoonlijk gebruik";
+"landing.create_account.subtitle" = "account aanmaken";
+"landing.create_team.title" = "Voor organisaties";
+"landing.create_team.subtitle" = "creëer Team";
 "landing.login.hints" = "Heb je al een account?";
 "landing.login.button.title" = "Inloggen";
 
@@ -910,7 +1015,7 @@
 "team.email.textfield.accessibility" = "Je bedrijfs email";
 "team.email.button.learn_more" = "Leer meer";
 
-"team.activation_code.headline" = "Je hebt een email ontvangen";
+"team.activation_code.headline" = "Je hebt een e-mail ontvangen";
 "team.activation_code.subheadline" = "Voer de verificatiecode in die we naar %@ gestuurde hebben.";
 "team.activation_code.button.resend" = "Code opnieuw verzenden";
 "team.activation_code.button.change_email" = "E-mailadres wijzigen";
@@ -956,14 +1061,14 @@
 "guest_room.error.generic.message" = "Controleer je verbinding en probeer het opnieuw";
 
 "guest_room.link.header.title" = "Nodig andere uit met een link";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
 
 "guest_room.link.button.title" = "Maak link aan";
 
 "guest_room.actions.copy_link" = "Kopieer link";
 "guest_room.actions.copied_link" = "Link gekopieerd!";
 "guest_room.actions.share_link" = "Deel link";
-"guest_room.actions.revoke_link" = "Revoke Link…";
+"guest_room.actions.revoke_link" = "Link intrekken…";
 
 "guest_room.share.message" = "Join me in a conversation on Wire:\n%@";
 
@@ -1004,34 +1109,34 @@
 "registration.no_history.restore_backup" = "Herstellen vanuit backup";
 
 // Restore History Warning Alert
-"registration.no_history.restore_backup_warning.title" = "Restore history";
+"registration.no_history.restore_backup_warning.title" = "Geschiedenis terug zetten";
 "registration.no_history.restore_backup_warning.message" = "The backup contents will replace the conversation history on this device.\nYou can only restore history from a backup of the same platform.";
-"registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
+"registration.no_history.restore_backup_warning.proceed" = "Kies back-up bestand";
 
 /// Restore History Failure Alerts
 "registration.no_history.restore_backup_failed.try_again" = "Probeer opnieuw";
 
 // Generic
 "registration.no_history.restore_backup_failed.title" = "Er is iets mis gegaan";
-"registration.no_history.restore_backup_failed.message" = "Your history could not be restored.";
+"registration.no_history.restore_backup_failed.message" = "Je geschiedenis kan niet worden hersteld.";
 
 // Wrong Account
-"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatible backup";
-"registration.no_history.restore_backup_failed.wrong_account.message" = "You cannot restore history from a different account.";
+"registration.no_history.restore_backup_failed.wrong_account.title" = "Incompatibele backup";
+"registration.no_history.restore_backup_failed.wrong_account.message" = "Je kan geen geschiedenis terug zetten van een ander account.";
 
 // Incompatible Version
-"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
+"registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatibele backup";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
 
 // Restore In Progress Loading Titles
-"registration.no_history.restore_backup.restoring" = "Restoring…";
-"registration.no_history.restore_backup.completed" = "Completed";
+"registration.no_history.restore_backup.restoring" = "Herstellen…";
+"registration.no_history.restore_backup.completed" = "Voltooid";
 
 // Password Import Alert
-"registration.no_history.restore_backup.password.title" = "This backup is password protected.";
+"registration.no_history.restore_backup.password.title" = "Deze backup is beveiligd met een wachtwoord.";
 "registration.no_history.restore_backup.password.message" = "The password is required to restore this backup.";
 "registration.no_history.restore_backup.password.placeholder" = "Wachtwoord";
-"registration.no_history.restore_backup.password_error.title" = "Wrong Password";
+"registration.no_history.restore_backup.password_error.title" = "Onjuist wachtwoord";
 
 "registration.no_history.logged_out.hero" = "Je hebt Wire eerder op dit apparaat gebruikt.";
 "registration.no_history.logged_out.subtitle" = "Berichten die in de tussentijd worden verzonden worden niet weergegeven.";
@@ -1094,13 +1199,13 @@
 "signin.use_phone.label" = "Aanmelden met telefoon nummer";
 "signin.forgot_password" = "Wachtwoord vergeten?";
 "signin.use_one_password.label" = "Log in met 1Password";
-"signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
+"signin.use_one_password.hint" = "Klik twee keer om je wachtwoord in te laten vullen door 1Password";
 "signin.confirm" = "Inloggen";
 
 "registration.phone_country" = "Land";
 "registration.phone_code" = "Landcode";
 "registration.phone_country.hint" = "Dubbel tap om een ander land te selecteren.";
-"registration.phone_code.hint" = "Double tap to select another country code.";
+"registration.phone_code.hint" = "Dubbel tap om een ander land nummer te selecteren.";
 "registration.phone.verify.label" = "Verifieer telefoonnummer";
 "registration.phone.verify_field.label" = "Verificatie code";
 
@@ -1262,3 +1367,17 @@
 "calling.quality_survey.answer.3" = "Redelijk";
 "calling.quality_survey.answer.4" = "Goed";
 "calling.quality_survey.answer.5" = "Uitstekend";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// URL Action
+
+"url_action.confirm" = "Bevestig";
+"url_action.title" = "Bevestig deze URL";
+"url_action.connect_to_bot.message" = "Wil je met deze bot connecten?";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// News and offers consent prompt
+
+"news_offers.consent.title" = "Wil je nieuws en product updates van Wire via de mail ontvangen?";
+"news_offers.consent.message" = "Je kan dit altijd stopzetten.";
+"news_offers.consent.button.privacy_policy.title" = "Privacybeleid";

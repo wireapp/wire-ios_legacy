@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
+@objcMembers class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
@@ -27,7 +27,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     fileprivate let bottomSpacer = UIView()
     fileprivate var token: NSObjectProtocol?
     fileprivate var actionController: ConversationActionController?
-    fileprivate var renameGroupSectionController : RenameGroupSectionController?
+    fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
 
     var didCompleteInitialSync = false {
@@ -41,7 +41,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default().statusBarStyle
+        return ColorScheme.default.statusBarStyle
     }
     
     public init(conversation: ZMConversation) {
@@ -61,28 +61,16 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "participants.title".localized.uppercased()
-        view.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorContentBackground)
+        view.backgroundColor = UIColor(scheme: .contentBackground)
         
-        let collectionViewLayout = UICollectionViewFlowLayout()
-        collectionViewLayout.scrollDirection = .vertical
-        collectionViewLayout.minimumInteritemSpacing = 12
-        collectionViewLayout.minimumLineSpacing = 0
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-        collectionView.backgroundColor = .clear
-        collectionView.allowsMultipleSelection = false
-        collectionView.keyboardDismissMode = .onDrag
-        collectionView.bounces = true
-        collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 32, right: 0)
-        collectionView.accessibilityIdentifier = "group_details.list"
-        
+        let collectionView = UICollectionView(forUserList: ())
+
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
         }
         
         [collectionView, footerView, bottomSpacer].forEach(view.addSubview)
-        bottomSpacer.backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground)
+        bottomSpacer.backgroundColor = UIColor(scheme: .barBackground)
         
         constrain(view, collectionView, footerView, bottomSpacer) { container, collectionView, footerView, bottomSpacer in
             collectionView.top == container.top
@@ -122,10 +110,9 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        if conversation.canManageAccess {
-            let guestOptionsSectionController = GuestOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
-            sections.append(guestOptionsSectionController)
-        }
+        let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
+        sections.append(optionsSectionController)
+
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
             let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, delegate: self)
@@ -140,7 +127,7 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     }
     
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-        guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged else { return }
+        guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged || changeInfo.destructionTimeoutChanged else { return }
         collectionViewController.sections = computeVisibleSections()
     }
     
@@ -163,9 +150,9 @@ class GroupDetailsViewController: UIViewController, ZMConversationObserver, Grou
     
 }
 
-extension GroupDetailsViewController: ViewControllerDismissable, ProfileViewControllerDelegate {
+extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewControllerDelegate {
     
-    func viewControllerWants(toBeDismissed controller: UIViewController!, completion: (() -> Void)!) {
+    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
         navigationController?.popViewController(animated: true, completion: completion)
     }
     
@@ -177,20 +164,35 @@ extension GroupDetailsViewController: ViewControllerDismissable, ProfileViewCont
     
 }
 
-extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GuestOptionsSectionControllerDelegate {
+extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {
     
     func presentDetails(for user: ZMUser) {
-        let viewController = UserDetailViewControllerFactory.createUserDetailViewController(user: user,
-                                                                                            conversation: conversation,
-                                                                                            profileViewControllerDelegate: self,
-                                                                                            viewControllerDismissable: self)
-        
+        let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
+            user: user,
+            conversation: conversation,
+            profileViewControllerDelegate: self,
+            viewControllerDismisser: self
+        )
+
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func presentFullParticipantsList(for users: [ZMBareUser], in conversation: ZMConversation) {
+        let detailsViewController = GroupParticipantsDetailViewController(participants: users, conversation: conversation)
+        detailsViewController.delegate = self
+        navigationController?.pushViewController(detailsViewController, animated: true)
     }
     
     @objc(presentGuestOptionsAnimated:)
     func presentGuestOptions(animated: Bool) {
         let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
+        navigationController?.pushViewController(menu, animated: animated)
+    }
+
+    func presentTimeoutOptions(animated: Bool) {
+        let menu = ConversationTimeoutOptionsViewController(conversation: conversation,
+                                                            userSession: ZMUserSession.shared()!)
+        menu.dismisser = self
         navigationController?.pushViewController(menu, animated: animated)
     }
     

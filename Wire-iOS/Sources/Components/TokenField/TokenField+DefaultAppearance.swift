@@ -19,7 +19,7 @@
 import UIKit
 
 extension TokenField {
-    func setupFonts() {
+    @objc func setupFonts() {
         // Dynamic Type is disabled for now until the separator dots
         // vertical alignment has been fixed for larger fonts.
         let schema = FontScheme(contentSizeCategory: .medium)

@@ -26,6 +26,7 @@
 #import "UILabel+TextTransform.h"
 #import "UIPasteboard+Compatibility.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
+#import "Wire-Swift.h"
 @import Classy;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -93,11 +94,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if ([AutomationHelper.sharedHelper disableAutocorrection]) {
         self.autocorrectionType = UITextAutocorrectionTypeNo;
     }
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setPlaceholder:(NSString *)placeholder

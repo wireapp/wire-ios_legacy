@@ -20,7 +20,7 @@
 import Foundation
 import WireLinkPreview
 
-@objc class MockTextMessageData : NSObject, ZMTextMessageData {
+@objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
     var messageText: String = ""
     var linkPreview: LinkPreview? = nil
     var imageData: Data? = nil
@@ -28,7 +28,9 @@ import WireLinkPreview
     var imageDataIdentifier: String? = nil
 }
 
-@objc class MockSystemMessageData: NSObject, ZMSystemMessageData {
+@objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {
+
+    var messageTimer: NSNumber!
     var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser>! = Set()
     var clients: Set<AnyHashable>! = Set()
@@ -48,7 +50,7 @@ import WireLinkPreview
 }
 
 
-@objc class MockFileMessageData: NSObject, ZMFileMessageData {
+@objcMembers class MockFileMessageData: NSObject, ZMFileMessageData {
     var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
     var transferState: ZMFileTransferState = .uploaded
@@ -83,11 +85,11 @@ import WireLinkPreview
     }
 }
 
-@objc class MockKnockMessageData: NSObject, ZMKnockMessageData {
+@objcMembers class MockKnockMessageData: NSObject, ZMKnockMessageData {
     
 }
 
-@objc class MockImageMessageData : NSObject, ZMImageMessageData {
+@objcMembers class MockImageMessageData : NSObject, ZMImageMessageData {
     var mockOriginalSize: CGSize = .zero
     var mockImageData = Data()
     var mockImageDataIdentifier = String()
@@ -104,7 +106,7 @@ import WireLinkPreview
     var originalSize: CGSize { return mockOriginalSize }
 }
 
-@objc class MockLocationMessageData: NSObject, ZMLocationMessageData {
+@objcMembers class MockLocationMessageData: NSObject, ZMLocationMessageData {
     var longitude: Float = 0
     var latitude: Float = 0
     var name: String? = nil
@@ -112,7 +114,7 @@ import WireLinkPreview
 }
 
 
-@objc class MockMessage: NSObject, ZMConversationMessage {
+@objcMembers class MockMessage: NSObject, ZMConversationMessage {
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage

@@ -21,7 +21,7 @@
 
 #include "Warnings.xcconfig"
 #include "Version.xcconfig"
-#include "../wire-ios-build-assets/Base_private.xcconfig"
+#include? "../wire-ios-build-assets/Base_private.xcconfig"
 
 
 // Packaging

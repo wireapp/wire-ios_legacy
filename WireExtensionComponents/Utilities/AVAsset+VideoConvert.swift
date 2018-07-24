@@ -24,7 +24,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 extension AVAsset {
 
-    public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
+    @objc public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
 
         let fileURL = URL(fileURLWithPath: inPath)
         let alteredAsset = AVAsset(url: fileURL)
@@ -39,7 +39,7 @@ extension AVAsset {
         let encodedEffectAudioURL = URL(fileURLWithPath: outPath)
         
         exportSession.outputURL = encodedEffectAudioURL as URL
-        exportSession.outputFileType = AVFileTypeAppleM4A
+        exportSession.outputFileType = AVFileType.m4a
         
         exportSession.exportAsynchronously { [unowned exportSession] in
             switch exportSession.status {

@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc final public class CollectionHeaderView: UICollectionReusableView, Reusable {
+@objcMembers final public class CollectionHeaderView: UICollectionReusableView {
     
     public var section: CollectionsSectionSet = .none {
         didSet {
@@ -41,7 +41,7 @@ import Cartography
             default: fatal("Unknown section")
             }
             
-            let iconColor = ColorScheme.default().color(withName: ColorSchemeColorLightGraphite)
+            let iconColor = UIColor(scheme: .lightGraphite)
             self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: iconColor)
         }
     }
@@ -112,7 +112,7 @@ import Cartography
         return layoutAttributes
     }
     
-    public func didSelect(_ button: UIButton!) {
+    @objc public func didSelect(_ button: UIButton!) {
         self.selectionAction?(self.section)
     }
 }

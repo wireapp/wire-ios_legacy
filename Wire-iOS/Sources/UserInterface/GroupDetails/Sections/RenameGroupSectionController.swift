@@ -20,10 +20,11 @@ import Foundation
 
 class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
-    fileprivate var validName : String? = nil
+    fileprivate var validName: String? = nil
     fileprivate var conversation: ZMConversation
-    fileprivate var renameCell : GroupDetailsRenameCell?
-    fileprivate var token : AnyObject?
+    fileprivate var renameCell: GroupDetailsRenameCell?
+    fileprivate var token: AnyObject?
+    private var sizingFooter = SectionFooter(frame: .zero)
     
     var isHidden: Bool {
         return false
@@ -31,9 +32,7 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
     init(conversation: ZMConversation) {
         self.conversation = conversation
-        
         super.init()
-        
         self.token = ConversationChangeInfo.add(observer: self, for: conversation)
     }
     
@@ -43,7 +42,8 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {
-        collectionView?.register(GroupDetailsRenameCell.self, forCellWithReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier)
+        collectionView.flatMap(GroupDetailsRenameCell.register)
+        collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SectionFooter")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -51,7 +51,7 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupDetailsRenameCell.zm_reuseIdentifier, for: indexPath) as! GroupDetailsRenameCell
+        let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
         cell.configure(for: conversation)
         cell.titleTextField.textFieldDelegate = self
         renameCell?.titleTextField.isUserInteractionEnabled = conversation.isSelfAnActiveMember
@@ -60,8 +60,20 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
+        (view as? SectionFooter)?.titleLabel.text = "participants.section.name.footer".localized
+        return view
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: 56)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard ZMUser.selfUser().hasTeam else { return .zero }
+        sizingFooter.titleLabel.text = "participants.section.name.footer".localized
+        return sizingFooter.sized(fittingWidth: collectionView.bounds.width).bounds.size
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

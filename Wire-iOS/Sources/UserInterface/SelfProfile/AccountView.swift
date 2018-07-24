@@ -231,7 +231,7 @@ extension BaseAccountView: ZMUserObserver {
     }
 }
 
-public final class PersonalAccountView: BaseAccountView {
+@objcMembers public final class PersonalAccountView: BaseAccountView {
     internal let userImageView = AvatarImageView(frame: .zero)
 
     private var conversationListObserver: NSObjectProtocol!
@@ -294,7 +294,7 @@ extension PersonalAccountView {
     }
 }
 
-public final class TeamImageView: UIImageView {
+@objcMembers public final class TeamImageView: UIImageView {
     public enum TeamImageViewStyle {
         case small
         case big
@@ -346,7 +346,7 @@ public final class TeamImageView: UIImageView {
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(withFrame: bounds, resizing: WireStyleKitResizingBehaviorAspectFit, color: .black)
+        WireStyleKit.drawSpace(withFrame: bounds, resizing: .aspectFit, color: .black)
         
         if let image = UIGraphicsGetImageFromCurrentImageContext() {
             UIGraphicsEndImageContext()
@@ -372,12 +372,12 @@ public final class TeamImageView: UIImageView {
         }
         else if let name = self.account.teamName {
             self.image = nil
-            self.initialLabel.text = name.substring(to: name.index(after: name.startIndex))
+            self.initialLabel.text = String(name[..<name.index(after: name.startIndex)])
         }
     }
 }
 
-@objc internal class TeamAccountView: BaseAccountView {
+@objcMembers internal class TeamAccountView: BaseAccountView {
     
     public override var collapsed: Bool {
         didSet {

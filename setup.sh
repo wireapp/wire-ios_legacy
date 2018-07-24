@@ -31,15 +31,14 @@ function die { ( >&2 echo "$*"); exit 1; }
 # CHECK PREREQUISITES
 hash carthage 2>/dev/null || die "Can't find Carthage, please install from https://github.com/Carthage/Carthage"
 hash xcodebuild 2>/dev/null || die "Can't find Xcode, please install from the App Store"
-hash gem 2>/dev/null || die "Can't find Ruby (gem), please install from https://www.ruby-lang.org/en/"
 
 version=`carthage version | tail -n 1`
 CARTHAGE_VERSION=( ${version//./ } )
 version=`xcodebuild -version | head -n 1 | sed "s/Xcode //"`
 XCODE_VERSION=( ${version//./ } )
 
-[[ ${CARTHAGE_VERSION[0]} -gt 0 || ${CARTHAGE_VERSION[1]} -ge 17 ]] || die "Carthage should be at least version 0.17"
-[[ ${XCODE_VERSION[0]} -gt 7 || ( ${XCODE_VERSION[0]} -eq 7 && ${XCODE_VERSION[1]} -ge 3 ) ]] || die "Xcode version should be at least 7.3.1"
+[[ ${CARTHAGE_VERSION[0]} -gt 0 || ${CARTHAGE_VERSION[1]} -ge 29 ]] || die "Carthage should be at least version 0.29"
+[[ ${XCODE_VERSION[0]} -gt 9 || ( ${XCODE_VERSION[0]} -eq 9 && ${XCODE_VERSION[1]} -ge 3 ) ]] || die "Xcode version should be at least 9.3.0"
 
 # SETUP
 echo "ℹ️  Carthage bootstrap. This might take a while..."
@@ -50,16 +49,8 @@ echo "ℹ️  Downloading AVS library..."
 ./Scripts/download-avs.sh
 echo ""
 
-echo "ℹ️  Check that bundler is installed... (requires SUDO)"
-hash bundle 2>/dev/null || sudo gem install bundler
-echo ""
-
-echo "ℹ️  Pod install. This might take a while..."
-bundle install --path ~/.gem && bundle exec pod install
-echo ""
-
 echo "ℹ️  Downloading additional assets..."
 ./Scripts/download-assets.sh
 echo ""
 
-echo "✅  Wire project was set up, you can now open Wire-iOS.xcworkspace"
+echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"

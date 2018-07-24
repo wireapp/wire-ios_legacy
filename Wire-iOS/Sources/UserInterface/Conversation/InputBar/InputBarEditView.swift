@@ -27,7 +27,7 @@ import Cartography
     func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView)
 }
 
-public final class InputBarEditView: UIView {
+@objcMembers public final class InputBarEditView: UIView {
 
     let undoButton = IconButton()
     let confirmButton = IconButton()

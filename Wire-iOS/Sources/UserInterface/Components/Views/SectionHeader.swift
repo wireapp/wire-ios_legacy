@@ -18,12 +18,11 @@
 
 import Foundation
 
-
-class SectionHeader: UICollectionReusableView, Themeable {
+final class SectionHeader: UICollectionReusableView, Themeable {
     
     let titleLabel = UILabel()
  
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -58,7 +57,7 @@ class SectionHeader: UICollectionReusableView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
     }
     
 }

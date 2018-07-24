@@ -23,7 +23,7 @@ import CoreLocation
 import Contacts
 import Classy
 
-class ClientTableViewCell: UITableViewCell {
+@objcMembers class ClientTableViewCell: UITableViewCell {
     
     let nameLabel = UILabel(frame: CGRect.zero)
     let labelLabel = UILabel(frame: CGRect.zero)
@@ -98,6 +98,27 @@ class ClientTableViewCell: UITableViewCell {
     }
     
     var wr_editable: Bool
+
+    var variant: ColorSchemeVariant? {
+        didSet {
+            switch variant {
+            case .dark?, .none:
+                self.verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
+                fingerprintTextColor = .white
+                nameLabel.textColor = .white
+                labelLabel.textColor = .white
+                activationLabel.textColor = .white
+            case .light?:
+                let textColor = UIColor(scheme: .textForeground, variant: .light)
+                self.verifiedLabel.textColor = textColor
+                fingerprintTextColor = textColor
+                nameLabel.textColor = textColor
+                labelLabel.textColor = textColor
+                activationLabel.textColor = textColor
+            }
+        }
+    }
+
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.wr_editable = true
@@ -156,15 +177,15 @@ class ClientTableViewCell: UITableViewCell {
     }
     
     func updateVerifiedLabel() {
-        if let userClient = self.userClient
-            , self.showVerified {
+        if let userClient = self.userClient,
+            self.showVerified {
+            
             if userClient.verified {
                 self.verifiedLabel.text = NSLocalizedString("device.verified", comment: "");
             }
             else {
                 self.verifiedLabel.text = NSLocalizedString("device.not_verified", comment: "");
             }
-            self.verifiedLabel.textColor = UIColor(white: 1, alpha: 0.4)
         }
         else {
             self.verifiedLabel.text = ""
@@ -178,8 +199,8 @@ class ClientTableViewCell: UITableViewCell {
             let userClient = self.userClient, userClient.remoteIdentifier != nil {
                 
                 self.fingerprintLabel.attributedText =  userClient.attributedRemoteIdentifier(
-                    [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: fingerprintLabelTextColor],
-                    boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: fingerprintLabelTextColor],
+                    [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabelTextColor],
+                    boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabelTextColor],
                     uppercase: true
                 )
         }

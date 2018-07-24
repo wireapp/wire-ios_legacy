@@ -27,7 +27,7 @@ import CoreLocation
     func locationSelectionViewControllerDidCancel(_ viewController: LocationSelectionViewController)
 }
 
-@objc final public class LocationSelectionViewController: UIViewController {
+@objcMembers final public class LocationSelectionViewController: UIViewController {
     
     weak var delegate: LocationSelectionViewControllerDelegate?
     public let locationButton = IconButton()

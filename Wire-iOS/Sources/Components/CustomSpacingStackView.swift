@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-class CustomSpacingStackView: UIView {
+@objcMembers class CustomSpacingStackView: UIView {
 
     private var stackView: UIStackView
     
@@ -105,8 +105,10 @@ fileprivate class SpacingView : UIView {
         
         super.init(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: size, height: size)))
         
-        setContentCompressionResistancePriority(999, for: .vertical)
-        setContentCompressionResistancePriority(999, for: .horizontal)
+        isAccessibilityElement = false
+        accessibilityElementsHidden = true
+        setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .vertical)
+        setContentCompressionResistancePriority(UILayoutPriority(rawValue: 999), for: .horizontal)
     }
     
     required init?(coder aDecoder: NSCoder) {

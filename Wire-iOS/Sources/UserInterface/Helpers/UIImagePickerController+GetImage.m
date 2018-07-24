@@ -18,7 +18,6 @@
 
 
 #import "UIImagePickerController+GetImage.h"
-#import "NSError+Zeta.h"
 
 @import Photos;
 @import MobileCoreServices;
@@ -33,6 +32,9 @@
 + (nullable PHAsset *)loadFromMediaInfo:(nonnull NSDictionary *)mediaInfo
 {
     NSURL *assetURL = [mediaInfo objectForKey:UIImagePickerControllerReferenceURL];
+    if (nil == assetURL) {
+        return nil;
+    }
     PHFetchResult<PHAsset *> *result = [PHAsset fetchAssetsWithALAssetURLs:@[assetURL] options:nil];
     return result.firstObject;
 }

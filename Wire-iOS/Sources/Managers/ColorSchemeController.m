@@ -41,11 +41,6 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
 
 #pragma mark - SettingsColorSchemeDidChangeNotification
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (instancetype)init
 {
     self = [super init];

@@ -66,7 +66,7 @@
         fromView.alpha = 1.0f;
         fromView.layer.needsDisplayOnBoundsChange = NO;
         
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:0.35 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseInExpo duration:0.35 animations:^{
             fromView.alpha = 0.0f;
             fromView.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
         } completion:^(BOOL finished) {
@@ -77,7 +77,7 @@
         toView.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
         
         
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35 delay:0.3 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35 delay:0.3 animations:^{
             toView.alpha = 1;
             toView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
@@ -91,7 +91,7 @@
         fromView.layer.anchorPoint = self.interactionPoint;
         fromView.frame = frame;
         
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseInExpo duration:0.35 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseInExpo duration:0.35 animations:^{
             fromView.alpha = 0.0f;
             fromView.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
         } completion:^(BOOL finished) {
@@ -106,7 +106,7 @@
         toView.transform = CGAffineTransformMakeScale(0.5, 0.5);
         
         
-        [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.35 delay:0.3 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35 delay:0.3 animations:^{
             toView.alpha = 1;
             toView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {

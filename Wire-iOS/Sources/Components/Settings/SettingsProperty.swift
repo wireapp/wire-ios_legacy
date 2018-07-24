@@ -19,6 +19,7 @@ import Foundation
 import WireExtensionComponents
 
 enum SettingsPropertyValue: Equatable {
+    case bool(value: Bool)
     case number(value: NSNumber)
     case string(value: Swift.String)
     case none
@@ -61,6 +62,8 @@ enum SettingsPropertyValue: Equatable {
         case .number(let value):
             return value as AnyObject?
         case .string(let value):
+            return value as AnyObject?
+        case .bool(let value):
             return value as AnyObject?
         case .none:
             return .none

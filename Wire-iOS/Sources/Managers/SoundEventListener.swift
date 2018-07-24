@@ -30,6 +30,21 @@ extension ZMConversationMessage {
     var isFirstMessage: Bool {
         return (self.conversation?.messages.count ?? 0) == 1
     }
+    
+    var isSystemMessageWithSoundNotification: Bool {
+        guard isSystem, let data = systemMessageData else {
+            return false
+        }
+        
+        switch data.systemMessageType {
+        // No sound must be played for the case when the user participated in the call.
+        case .performedCall:
+            return false
+            
+        default:
+            return true
+        }
+    }
 }
 
 class SoundEventListener : NSObject {
@@ -96,8 +111,8 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             let isSilencedConversation = message.conversation?.isSilenced ?? false
             
             provideHapticFeedback(for: message)
-            
-            guard (message.isNormal || message.isSystem) &&
+
+            guard (message.isNormal || message.isSystemMessageWithSoundNotification) &&
                   message.isRecentMessage &&
                   !message.isSentBySelfUser &&
                   !message.isFirstMessage &&
@@ -105,19 +120,8 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
                 continue
             }
             
-            var isFirstUnreadMessage = false
-            
-            if let conversation = message.conversation,
-               let lastReadMessage = conversation.lastReadMessage
-            {
-                let lastReadIndex = conversation.messages.index(of: lastReadMessage)
-                let messageIndex = conversation.messages.index(of: message)
-                
-                if lastReadIndex != NSNotFound && lastReadIndex + 1 == messageIndex {
-                    isFirstUnreadMessage = true
-                }
-            }
-            
+            let isFirstUnreadMessage = message.isEqual(message.conversation?.firstUnreadMessage)
+
             if isFirstUnreadMessage {
                 playSoundIfAllowed(MediaManagerSoundFirstMessageReceivedSound)
             } else {
@@ -213,7 +217,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
 
 extension SoundEventListener {
     
-    func applicationWillEnterForeground() {
+    @objc func applicationWillEnterForeground() {
         soundEventWatchDog.startIgnoreDate = Date()
         soundEventWatchDog.isMuted = userSession?.networkState == .onlineSynchronizing
         
@@ -224,7 +228,7 @@ extension SoundEventListener {
         }
     }
     
-    func applicationDidEnterBackground() {
+    @objc func applicationDidEnterBackground() {
         soundEventWatchDog.isMuted = true
     }
 }

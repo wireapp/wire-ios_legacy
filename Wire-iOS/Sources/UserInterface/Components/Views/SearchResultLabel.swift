@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc final public class SearchResultLabel: UILabel, Copyable {
+@objcMembers final public class SearchResultLabel: UILabel, Copyable {
     public convenience init(instance: SearchResultLabel) {
         self.init()
         self.font = instance.font
@@ -29,7 +29,15 @@ import Foundation
 
     public var resultText: String? = .none
     public var queries: [String] = []
-    
+
+    private let redactedFont = UIFont(name: "RedactedScript-Regular", size: 16)!
+
+    public var isObfuscated: Bool = false {
+        didSet {
+            self.updateText()
+        }
+    }
+
     public override var font: UIFont! {
         didSet {
             self.updateText()
@@ -75,17 +83,18 @@ import Foundation
         
         self.resultText = text
         self.queries = queries
-        
-        let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color])
-        
+
+        let currentFont = isObfuscated ? redactedFont.withSize(font.pointSize) : font
+        let attributedText = NSMutableAttributedString(string: text, attributes: [.font: currentFont, .foregroundColor: color])
+
         let currentRange = text.range(of: queries,
                                       options: [.diacriticInsensitive, .caseInsensitive])
         
         if let range = currentRange {
             let nsRange = text.nsRange(from: range)
             
-            let highlightedAttributes = [NSFontAttributeName: font,
-                                         NSBackgroundColorAttributeName: ColorScheme.default().color(withName: ColorSchemeColorAccentDarken)]
+            let highlightedAttributes = [NSAttributedStringKey.font: font,
+                                         .backgroundColor: UIColor(scheme: .accentDarken)]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
                 self.attributedText = attributedText.highlightingAppearances(of: queries,

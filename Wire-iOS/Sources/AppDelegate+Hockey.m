@@ -23,6 +23,7 @@
 #import "Application+runDuration.h"
 #import "Settings.h"
 #import "Wire-Swift.h"
+@import WireExtensionComponents;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -30,40 +31,49 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)setupHockeyWithCompletion:(dispatch_block_t)completed
 {
-    BOOL userDefaultsUseHockey = AutomationHelper.sharedHelper.useHockey;
-    if ((userDefaultsUseHockey || (!userDefaultsUseHockey && USE_HOCKEY))) {
-        // see https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kBITExcludeApplicationSupportFromBackup"];
-        
-        BITHockeyManager *hockeyManager = [BITHockeyManager sharedHockeyManager];
-        hockeyManager.disableCrashManager = [[TrackingManager shared] disableCrashAndAnalyticsSharing];
-        [hockeyManager configureWithIdentifier:@STRINGIZE(HOCKEY_APP_ID_KEY) delegate:self];
-        [hockeyManager.authenticator setIdentificationType:BITAuthenticatorIdentificationTypeAnonymous];
-        if (! [BITHockeyManager sharedHockeyManager].crashManager.didCrashInLastSession) {
-            [[UIApplication sharedApplication] resetRunDuration];
+    BOOL shouldUseHockey = AutomationHelper.sharedHelper.useHockey || USE_HOCKEY;
+    
+    if (!shouldUseHockey) {
+        if (nil != completed) {
+            completed();
         }
-        NSNumber *commandLineDisableUpdateManager = [[NSUserDefaults standardUserDefaults] objectForKey:@"DisableHockeyUpdates"];
+        return;
+    }
+    
+    // see https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"kBITExcludeApplicationSupportFromBackup"];
+    BOOL hockeyTrackingEnabled = ![[TrackingManager shared] disableCrashAndAnalyticsSharing];
 
-        if ([commandLineDisableUpdateManager boolValue]) {
-            hockeyManager.updateManager.updateSetting = BITUpdateCheckManually;
-        }
+    BITHockeyManager *hockeyManager = [BITHockeyManager sharedHockeyManager];
+    [hockeyManager configureWithIdentifier:@STRINGIZE(HOCKEY_APP_ID_KEY) delegate:self];
+    [hockeyManager.authenticator setIdentificationType:BITAuthenticatorIdentificationTypeAnonymous];
+    
+    if (! [BITHockeyManager sharedHockeyManager].crashManager.didCrashInLastSession) {
+        [[UIApplication sharedApplication] resetRunDuration];
+    }
+    
+    NSNumber *commandLineDisableUpdateManager = [[NSUserDefaults standardUserDefaults] objectForKey:@"DisableHockeyUpdates"];
+    if ([commandLineDisableUpdateManager boolValue]) {
+        hockeyManager.updateManager.updateSetting = BITUpdateCheckManually;
+    }
 
-        hockeyManager.crashManager.crashManagerStatus = BITCrashManagerStatusAutoSend;
+    hockeyManager.crashManager.crashManagerStatus = BITCrashManagerStatusAutoSend;
+    [hockeyManager setTrackingEnabled: hockeyTrackingEnabled]; // We need to disable tracking before starting the manager!
+
+    if (hockeyTrackingEnabled) {
         [hockeyManager startManager];
         [hockeyManager.authenticator authenticateInstallation];
+    }
+
+    if (hockeyTrackingEnabled && // no need to wait for crash upload if uploads are disabled
+        hockeyManager.crashManager.didCrashInLastSession &&
+        hockeyManager.crashManager.timeIntervalCrashInLastSessionOccurred < 5)
+    {
+        ZMLogError(@"HockeyIntegration: START Waiting for the crash log upload...");
+        self.hockeyInitCompletion = completed;
         
-        if (hockeyManager.crashManager.didCrashInLastSession && hockeyManager.crashManager.timeIntervalCrashInLastSessionOccurred < 5) {
-            ZMLogError(@"HockeyIntegration: START Waiting for the crash log upload...");
-            self.hockeyInitCompletion = completed;
-            
-            // Timeout for crash log upload
-            [self performSelector:@selector(crashReportUploadDone) withObject:nil afterDelay:5];
-        }
-        else {
-            if (nil != completed) {
-                completed();
-            }
-        }
+        // Timeout for crash log upload
+        [self performSelector:@selector(crashReportUploadDone) withObject:nil afterDelay:5];
     }
     else {
         if (nil != completed) {
@@ -86,7 +96,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)crashManagerWillSendCrashReport:(BITCrashManager *)crashManager
 {
-    [[Analytics shared] tagAppException:@"" screen:@"" timeInSession:[[UIApplication sharedApplication] lastApplicationRunDuration]];
     [[UIApplication sharedApplication] resetRunDuration];
 }
 

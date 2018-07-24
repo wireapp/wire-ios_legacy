@@ -21,14 +21,14 @@ import Classy
 
 extension MessagePresenter {
 
-    func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
+    @objc func imagesViewController(for message: ZMConversationMessage, actionResponder: MessageActionResponder, isPreviewing: Bool) -> UIViewController {
         
         guard let conversation = message.conversation else {
-            fatal("Message \(message) has no conversation.")
+            fatal("Message has no conversation.")
         }
 
         guard let imageSize = message.imageMessageData?.originalSize else {
-            fatal("Image in message \(message) has no size.")
+            fatal("Image in message has no size.")
         }
 
         let imagesCategoryMatch = CategoryMatch(including: .image, excluding: .none)

@@ -44,9 +44,6 @@
 
     if (self.conversationType == ZMConversationTypeGroup) {
         [self addParticipantsOrShowError:participants];
-        
-        AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForAddParticipantsWithCount:participants.count];
-        [[Analytics shared] tagEventObject:event];
         return self;
     }
     else if (self.conversationType == ZMConversationTypeOneOnOne &&
@@ -59,9 +56,7 @@
         ZMConversation *conversation = [ZMConversation insertGroupConversationIntoUserSession:[ZMUserSession sharedSession]
                                                                              withParticipants:listOfPeople
                                                                                        inTeam:team];
-        AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextConversation
-                                                                                                 participantCount:conversation.activeParticipants.count];
-        [[Analytics shared] tagEventObject:event];
+
         return conversation;
     }
 

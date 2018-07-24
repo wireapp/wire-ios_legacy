@@ -19,7 +19,6 @@
 
 #import "GuidanceLabel.h"
 
-#import "Guidance.h"
 #import "Wire-Swift.h"
 
 

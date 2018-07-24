@@ -198,20 +198,11 @@ PersonalAccountView {
 /* Conversation */
 
 MessageToolboxView {
-    statusLabel: @{
-        font: $font-small-semibold;
-        backgroundColor: clear;
-        textColor: $color-text-dimmed;
-        textContainerInset: 0, 0, 0, 0;
-    }
     backgroundColor: clear;
     clipsToBounds: true;
 }
 
-ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, UnknownMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell {
-    countdownContainerView: @{
-        backgroundColor: $color-background;
-    }
+ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell, MessageTimerUpdateCell {
 
     burstTimestampView: @{
         label: @{
@@ -230,7 +221,7 @@ ConversationCellBurstTimestampView {
 }
 
 
-IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell {
+IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, MessageTimerUpdateCell {
     lineView: @{
         backgroundColor: $color-separator;
     }
@@ -312,15 +303,6 @@ MessageDeletedCell {
     trashColor: $color-icon-normal;
 }
 
-UnknownMessageCell {
-    messageLabelFont: $font-small-light;
-    messageLabelTextColor: $color-text-foreground;
-    
-    messageLabel: @{
-        textTransform: upper;
-    }
-}
-
 ArticleView {
     containerColor: $color-placeholder-background;
     titleTextColor: $color-text-foreground;
@@ -345,7 +327,6 @@ InputBar: {
     barBackgroundColor: $color-bar-background;
     editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
-    ephemeralColor: $color-accent-current;
     placeholderColor: $color-text-placeholder;
     textColor: $color-text-foreground;
 
@@ -363,18 +344,8 @@ InputBarEditView: {
     }
 }
 
-IconButton.send-button {
-    circular: true;
-    borderWidth: 0.0;
-    iconColor[state: highlighted]: $color-background-light;
-    iconColor[state: normal]: $color-background-light;
-    backgroundImageColor[state:highlighted]: $color-accent-current-darken;
-    backgroundImageColor[state:normal]: $color-accent-current;
-}
-
 IconButton.hourglass {
     iconColor: $color-icon-normal;
-    iconColor[state:selected]: $color-accent-current;
     iconColor[state:highlighted]: $color-icon-highlighted;
     backgroundImageColor[state:selected]: clear;
 }
@@ -383,7 +354,6 @@ ConversationInputBarViewController {
 
     ephemeralIndicatorButton: @{
         borderWidth: 0.0;
-        titleColor: $color-accent-current;
         titleLabel: @{
             font: $font-small-semibold;
         }
@@ -501,34 +471,11 @@ LocationSendViewController {
     }
 }
 
-/* Camera */
-
-CameraViewController {
-    titleLabel: @{
-        font: $font-small-light;
-        textColor: white;
-    }
-    editButton: @{
-        iconColor: white;
-    }
-}
-
 /* Giphy */
 
 GiphyConfirmationViewController {
     view: @{
         backgroundColor: $color-background;
-    }
-}
-
-GiphySearchViewController {
-    collectionView: @{
-        backgroundColor: $color-background;
-    }
-    
-    noResultsLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-placeholder;
     }
 }
 
@@ -786,24 +733,13 @@ SettingsClientViewController.conversation {
         
         titleLabel: @{
             font: $font-small-semibold;
-            textColor: $color-text-foreground;
         }
-        fingerprintLabel: @{
-            textColor: $color-text-foreground;
-        }
-    }
-}
-
-SettingsClientViewController {
-    tableView: @{
-        separatorColor: rgb(255,255,255,0.1)
     }
 }
 
 SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
     cellNameLabel: @{
         font: $font-normal-light;
-        textColor: $color-text-foreground-dark;
     }
 }
 
@@ -845,10 +781,6 @@ FingerprintTableViewCell{
     
     titleLabel: @{
         font: $font-small-semibold;
-        textColor: white;
-    }
-    fingerprintLabel: @{
-        textColor: white;
     }
 }
 
@@ -856,22 +788,18 @@ FingerprintTableViewCell{
 ClientTableViewCell {
     nameLabel: @{
         font: $font-normal-semibold;
-        textColor: white;
     }
     labelLabel: @{
         font: $font-small-semibold;
-        textColor: white;
     }
     activationLabel: @{
         font: $font-small-light;
-        textColor: white;
     }
     verifiedLabel: @{
         font: $font-small;
     }
     fingerprintLabelFont: $font-small-light;
     fingerprintLabelBoldFont: $font-small-semibold;
-    fingerprintTextColor: white
 }
 
 /* Registration */

@@ -20,14 +20,14 @@
 import Foundation
 import Cartography
 
-@objc class PlaceholderConversationView : UIView {
+@objcMembers class PlaceholderConversationView : UIView {
     
     var shieldImageView: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        self.backgroundColor = UIColor(scheme: .background)
         
         let image = WireStyleKit.imageOfShield(with: UIColor(rgb: 0xbac8d1, alpha: 0.24))
         shieldImageView = UIImageView(image: image)

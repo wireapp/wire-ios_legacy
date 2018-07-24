@@ -26,7 +26,7 @@ public extension ZMConversationList {
     }
 
     func conversations() -> [ZMConversation] {
-        return self.flatMap { $0 as? ZMConversation }
+        return self.compactMap { $0 as? ZMConversation }
     }
 }
 
@@ -42,19 +42,23 @@ extension ConversationViewController {
 }
 
 public extension ConversationViewController {
-    func addCallStateObserver() -> Any? {
+    @objc func addCallStateObserver() -> Any? {
         return conversation.voiceChannel?.addCallStateObserver(self)
     }
     
     var audioCallButton: UIBarButtonItem {
         let button = UIBarButtonItem(icon: .callAudio, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
         button.accessibilityIdentifier = "audioCallBarButton"
+        button.accessibilityTraits |= UIAccessibilityTraitStartsMediaSession
+        button.accessibilityLabel = "call.actions.label.make_audio_call".localized
         return button
     }
 
     var videoCallButton: UIBarButtonItem {
         let button = UIBarButtonItem(icon: .callVideo, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
         button.accessibilityIdentifier = "videoCallBarButton"
+        button.accessibilityTraits |= UIAccessibilityTraitStartsMediaSession
+        button.accessibilityLabel = "call.actions.label.make_video_call".localized
         return button
     }
 
@@ -63,6 +67,8 @@ public extension ConversationViewController {
         button.adjustsTitleWhenHighlighted = true
         button.adjustBackgroundImageWhenHighlighted = true
         button.setTitle("conversation_list.right_accessory.join_button.title".localized.uppercased(), for: .normal)
+        button.accessibilityLabel = "conversation.join_call.voiceover".localized
+        button.accessibilityTraits |= UIAccessibilityTraitStartsMediaSession
         button.titleLabel?.font = FontSpec(.small, .semibold).font
         button.backgroundColor = UIColor(for: .strongLimeGreen)
         button.addTarget(self, action: #selector(joinCallButtonTapped), for: .touchUpInside)
@@ -79,19 +85,22 @@ public extension ConversationViewController {
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
         let button = UIBarButtonItem(icon: icon, target: self, action: action)
         button.accessibilityIdentifier = "ConversationBackButton"
-        
+        button.accessibilityLabel = "general.back".localized
+
         if hasUnreadInOtherConversations {
             button.tintColor = UIColor.accent()
+            button.accessibilityValue = "conversation_list.voiceover.unread_messages.hint".localized
         }
         
         return button
     }
 
-    var collectionsBarButtonItem: UIBarButtonItem {
+    @objc var collectionsBarButtonItem: UIBarButtonItem {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
         let button = UIBarButtonItem(icon: showingSearchResults ? .searchOngoing : .search, target: self, action: action)
         button.accessibilityIdentifier = "collection"
+        button.accessibilityLabel = "conversation.action.search".localized
         
         if showingSearchResults {
             button.tintColor = UIColor.accent()
@@ -100,28 +109,28 @@ public extension ConversationViewController {
         return button
     }
 
-    var hasUnreadMessagesInOtherConversations: Bool {
+    @objc var hasUnreadMessagesInOtherConversations: Bool {
         guard let userSession = ZMUserSession.shared() else {
             return false
         }
         return ZMConversationList.conversations(inUserSession: userSession).hasUnreadMessages(excluding: self.conversation)
     }
 
-    public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.lastServerSyncedActiveParticipants.count != 0 else { return [] }
 
         if conversation.canJoinCall {
             return [joinCallButton]
-        }
-
-        if conversation.conversationType == .oneOnOne {
+        } else if conversation.isCallOngoing {
+            return []
+        } else if conversation.canStartVideoCall {
             return [audioCallButton, videoCallButton]
+        } else {
+            return [audioCallButton]
         }
-
-        return [audioCallButton]
     }
 
-    public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    @objc public func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
 
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
@@ -135,7 +144,7 @@ public extension ConversationViewController {
         return items
     }
 
-    public func updateRightNavigationItemsButtons() {
+    @objc public func updateRightNavigationItemsButtons() {
         if UIApplication.isLeftToRightLayout {
             navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
         } else {
@@ -144,7 +153,7 @@ public extension ConversationViewController {
     }
 
     /// Update left navigation bar items
-    func updateLeftNavigationBarItems() {
+    @objc func updateLeftNavigationBarItems() {
         if UIApplication.isLeftToRightLayout {
             navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
         } else {
@@ -166,57 +175,19 @@ public extension ConversationViewController {
         }
     }
 
-    private func confirmCallInGroup(completion: @escaping (_ accepted: Bool) -> ()) {
-        let participantsCount = self.conversation.activeParticipants.count - 1
-        let message = "conversation.call.many_participants_confirmation.message".localized(args: participantsCount)
-
-        let confirmation = UIAlertController(title: "conversation.call.many_participants_confirmation.title".localized,
-                                             message: message,
-                                             preferredStyle: .alert)
-
-        let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel) { _ in
-            completion(false)
-        }
-        confirmation.addAction(actionCancel)
-
-        let actionSend = UIAlertAction(title: "conversation.call.many_participants_confirmation.call".localized, style: .default) { _ in
-            completion(true)
-        }
-        confirmation.addAction(actionSend)
-
-        self.present(confirmation, animated: true, completion: .none)
+    @objc func voiceCallItemTapped(_ sender: UIBarButtonItem) {
+        startCallController.startAudioCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
-    func voiceCallItemTapped(_ sender: UIBarButtonItem) {
-        let startCall = {
-            ConversationInputBarViewController.endEditingMessage()
-            self.conversation.startAudioCall()
-        }
-
-        if self.conversation.activeParticipants.count <= 4 {
-            startCall()
-        } else {
-            self.confirmCallInGroup { accepted in
-                if accepted {
-                    startCall()
-                }
-            }
-        }
+    @objc func videoCallItemTapped(_ sender: UIBarButtonItem) {
+        startCallController.startVideoCall(started: ConversationInputBarViewController.endEditingMessage)
     }
 
-    func videoCallItemTapped(_ sender: UIBarButtonItem) {
-        ConversationInputBarViewController.endEditingMessage()
-        conversation.startVideoCall()
+    @objc private dynamic func joinCallButtonTapped(_sender: AnyObject!) {
+        startCallController.joinCall()
     }
 
-    private dynamic func joinCallButtonTapped(_sender: AnyObject!) {
-        guard conversation.canJoinCall else { return }
-
-        // This will result in joining an ongoing call.
-        conversation.joinCall()
-    }
-
-    func onCollectionButtonPressed(_ sender: AnyObject!) {
+    @objc func onCollectionButtonPressed(_ sender: AnyObject!) {
         if self.collectionController == .none {
             let collections = CollectionsViewController(conversation: conversation)
             collections.delegate = self
@@ -239,14 +210,13 @@ public extension ConversationViewController {
         collectionController?.shouldTrackOnNextOpen = true
 
         let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController(RotationAwareNavigationController.self)
-        navigationController.transitioningDelegate = self.conversationDetailsTransitioningDelegate
 
         ZClientViewController.shared()?.present(navigationController, animated: true, completion: {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
     }
 
-    internal func dismissCollectionIfNecessary() {
+    @objc internal func dismissCollectionIfNecessary() {
         if let collectionController = self.collectionController {
             collectionController.dismiss(animated: false)
         }
@@ -258,7 +228,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
         switch action {
         case .forward:
             viewController.dismiss(animated: true) {
-                self.contentViewController.scroll(to: message) {[weak self] cell in
+                self.contentViewController.scroll(to: message) { [weak self] cell in
                     guard let `self` = self else {
                         return
                     }
@@ -293,14 +263,39 @@ extension ConversationViewController: WireCallCenterCallStateObserver {
 extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
-    var canJoinCall: Bool {
-        guard let state = voiceChannel?.state else { return false }
-
-        if case .incoming = state {
-            return true
-        } else {
-            return false
+    @objc var canJoinCall: Bool {
+        switch (voiceChannel?.state, conversationType) {
+        case (.incoming?, .group): return true
+        default: return false
         }
     }
+    
+    @objc static let maxVideoCallParticipants: Int = 4
 
+    var canStartVideoCall: Bool {
+        guard !isCallOngoing else { return false }
+
+        if self.conversationType == .oneOnOne {
+            return true
+        }
+
+        if self.conversationType == .group &&
+            ZMUser.selfUser().isTeamMember &&
+            isConversationEligibleForVideoCalls {
+            return true
+        }
+
+        return false
+    }
+
+    var isConversationEligibleForVideoCalls: Bool {
+        return self.activeParticipants.count <= ZMConversation.maxVideoCallParticipants
+    }
+
+    var isCallOngoing: Bool {
+        switch voiceChannel?.state {
+        case .none?, .incoming?: return false
+        default: return true
+        }
+    }
 }

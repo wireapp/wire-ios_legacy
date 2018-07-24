@@ -32,7 +32,7 @@ public struct AudioEffectCellBorders : OptionSet {
     public static let Bottom = AudioEffectCellBorders(rawValue: 1 << 1)
 }
 
-@objc public final class AudioEffectCell: UICollectionViewCell, Reusable {
+@objcMembers public final class AudioEffectCell: UICollectionViewCell {
     fileprivate let iconView = IconButton()
     fileprivate let borderRightView = UIView()
     fileprivate let borderBottomView = UIView()

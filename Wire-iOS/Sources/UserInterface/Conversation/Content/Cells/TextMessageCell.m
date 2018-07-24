@@ -26,9 +26,7 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "Message+Formatting.h"
-#import "UIView+Borders.h"
 #import "Constants.h"
-#import "AnalyticsTracker+Media.h"
 #import "LinkAttachmentViewControllerFactory.h"
 #import "LinkAttachment.h"
 #import "Wire-Swift.h"
@@ -142,7 +140,6 @@
     
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
     [self.editedImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
-    [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.messageTextView];
 }
 
 - (void)updateTextMessageConstraintConstants
@@ -223,7 +220,7 @@
             articleView.authorLabel.numberOfLines = 1;
             
             if(showImage) {
-                articleView.imageHeight = [UIScreen isCompact] ? 75.0 : 125.0;
+                articleView.imageHeight = [[UIScreen mainScreen] isCompact] ? 75.0 : 125.0;
             }
         }
         articleView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -328,8 +325,6 @@
 - (void)copy:(id)sender
 {
     if (self.message.textMessageData.messageText) {
-        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-        [[Analytics shared] tagMessageCopy];
         [UIPasteboard generalPasteboard].string = self.message.textMessageData.messageText;
     }
 }
@@ -339,7 +334,6 @@
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         self.beingEdited = YES;
         [self.delegate conversationCell:self didSelectAction:MessageActionEdit];
-        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeEdit];
     }
 }
 
@@ -435,16 +429,6 @@
 
 - (BOOL)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
-    LinkAttachment *linkAttachment = [self.layoutProperties.linkAttachments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.URL == %@", url]].lastObject;
-    
-    if (linkAttachment != nil) {
-        [self.analyticsTracker tagExternalLinkVisitEventForAttachmentType:linkAttachment.type
-                                                         conversationType:self.message.conversation.conversationType];
-    } else {
-        [self.analyticsTracker tagExternalLinkVisitEventForAttachmentType:LinkAttachmentTypeNone
-                                                         conversationType:self.message.conversation.conversationType];
-    }
-
     return [url open];
 }
 

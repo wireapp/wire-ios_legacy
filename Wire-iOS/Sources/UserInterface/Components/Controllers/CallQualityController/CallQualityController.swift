@@ -31,7 +31,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
 
     @objc weak var delegate: CallQualityViewControllerDelegate?
 
-    let contentView = ContinuousCornersView(cornerRadius: 32)
+    let contentView = RoundedView()
     let dimmingView = UIView()
     let closeButton = IconButton()
     let titleLabel = UILabel()
@@ -123,7 +123,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         closeButton.addTarget(self, action: #selector(onCloseButtonTapped), for: .touchUpInside)
 
         titleLabel.textColor = UIColor.CallQuality.title
-        titleLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFontWeightMedium)
+        titleLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight.medium)
         titleLabel.text = NSLocalizedString("calling.quality_survey.title", comment: "")
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textAlignment = .center
@@ -146,6 +146,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         dismissTapGestureRecognizer.delegate = self
         view.addGestureRecognizer(dismissTapGestureRecognizer)
 
+        contentView.shape = .rounded(radius: 32)
         contentView.backgroundColor = UIColor.CallQuality.contentBackground
         contentView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -202,11 +203,11 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     
     // MARK: Dismiss Events
     
-    func onCloseButtonTapped() {
+    @objc func onCloseButtonTapped() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
     }
     
-    func onTapToDismiss() {
+    @objc func onTapToDismiss() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
     }
     
@@ -270,7 +271,7 @@ class CallQualityView : UIStackView {
         scoreButton.tag = buttonScore
         scoreButton.circular = true
         scoreButton.setTitle(String(buttonScore), for: .normal)
-        scoreButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 18, weight: UIFontWeightRegular)
+        scoreButton.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 18, weight: UIFont.Weight.regular)
         scoreButton.setTitleColor(UIColor.CallQuality.score, for: .normal)
         scoreButton.setTitleColor(.white, for: .highlighted)
         scoreButton.setTitleColor(.white, for: .selected)
@@ -294,7 +295,7 @@ class CallQualityView : UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func onClick(_ sender: UIButton) {
+    @objc func onClick(_ sender: UIButton) {
         callback(buttonScore)
     }
 }

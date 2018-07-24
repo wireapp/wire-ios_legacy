@@ -25,21 +25,21 @@ final class UserDetailViewControllerFactory: NSObject {
     ///   - user: user to show the details
     ///   - conversation: conversation currently displaying
     ///   - profileViewControllerDelegate: a ProfileViewControllerDelegate for ProfileViewController
-    ///   - viewControllerDismissable: a ViewControllerDismissable for returing UIViewController's dismiss action
+    ///   - viewControllerDismisser: a ViewControllerDismisser for returing UIViewController's dismiss action
     /// - Returns: if the user is a serviceUser, return a ProfileHeaderServiceDetailViewController. if the user not a serviceUser, return a ProfileViewController
     @objc static func createUserDetailViewController(user: ZMUser,
                                                      conversation: ZMConversation,
                                                      profileViewControllerDelegate: ProfileViewControllerDelegate,
-                                                     viewControllerDismissable: ViewControllerDismissable) -> UIViewController {
+                                                     viewControllerDismisser: ViewControllerDismisser) -> UIViewController {
         if user.isServiceUser {
-            let variant = ServiceDetailVariant(colorScheme: ColorScheme.default().variant, opaque: true)
+            let variant = ServiceDetailVariant(colorScheme: ColorScheme.default.variant, opaque: true)
             let serviceDetailViewController = ServiceDetailViewController(serviceUser: user, destinationConversation: conversation, actionType: .removeService, variant: variant)
-            serviceDetailViewController.viewControllerDismissable = viewControllerDismissable
+            serviceDetailViewController.viewControllerDismisser = viewControllerDismisser
             return serviceDetailViewController
         } else {
             let profileViewController = ProfileViewController(user: user, conversation: conversation)
             profileViewController.delegate = profileViewControllerDelegate
-            profileViewController.viewControllerDismissable = viewControllerDismissable
+            profileViewController.viewControllerDismisser = viewControllerDismisser
             return profileViewController
         }
     }

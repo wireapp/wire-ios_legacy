@@ -107,11 +107,6 @@ NS_ASSUME_NONNULL_BEGIN
         [countries addObject:[Country countryWithISO:[countryData valueForKey:@"iso"] e164:[countryData valueForKey:@"e164"]]];
     }
 
-#if WIRESTAN
-    Country *wirestan = [self countryWirestan];
-    [countries addObject:wirestan];
-#endif
-    
     return [countries copy];
 }
 

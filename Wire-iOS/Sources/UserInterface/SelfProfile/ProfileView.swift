@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc internal class ProfileView: UIView {
+@objcMembers internal class ProfileView: UIView {
     public let imageView =  UserImageView(size: .big)
     public let nameLabel = UILabel()
     public let handleLabel = UILabel()
@@ -35,6 +35,10 @@ import Cartography
         imageView.accessibilityIdentifier = "user image"
         imageView.userSession = session
         imageView.user = user
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityLabel = "self.profile.change_user_image.accessibility".localized
+        imageView.accessibilityTraits = UIAccessibilityTraitButton
+        imageView.accessibilityElementsHidden = false
         
         availabilityView.tapHandler = { [weak self] button in
             guard let `self` = self else { return }
@@ -50,21 +54,21 @@ import Cartography
         
         nameLabel.accessibilityLabel = "profile_view.accessibility.name".localized
         nameLabel.accessibilityIdentifier = "name"
-        nameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        nameLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        nameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        nameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        nameLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         nameLabel.font = FontSpec(.large, .light).font!
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
         handleLabel.accessibilityIdentifier = "username"
-        handleLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        handleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        handleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        handleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        handleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        handleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         handleLabel.font = FontSpec(.small, .regular).font!
         teamNameLabel.accessibilityLabel = "profile_view.accessibility.team_name".localized
         teamNameLabel.accessibilityIdentifier = "team name"
-        teamNameLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        teamNameLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        teamNameLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        teamNameLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        teamNameLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        teamNameLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         teamNameLabel.font = FontSpec(.small, .regular).font!
         
         nameLabel.text = user.name

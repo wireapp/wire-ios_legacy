@@ -42,13 +42,13 @@ class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDele
     }
     
     var cameraKeyboardViewControllerDidSelectImageDataHitCount: UInt = 0
-    @objc func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, metadata: ImageMetadata) {
+    @objc func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, isFromCamera: Bool) {
         cameraKeyboardViewControllerDidSelectImageDataHitCount = cameraKeyboardViewControllerDidSelectImageDataHitCount + 1
     }
 }
 
 
-@objc class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
+@objcMembers class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
     @objc var layoutSize: SplitViewControllerLayoutSize = .compact
     @objc var leftViewControllerWidth: CGFloat = 0
 }
@@ -61,7 +61,13 @@ private final class MockAssetLibrary: AssetLibrary {
     }
 }
 
-final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
+fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
+    @objc override var shouldBlockCallingRelatedActions: Bool {
+        return true
+    }
+}
+
+final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     var sut: CameraKeyboardViewController!
     var splitView: SplitLayoutObservableMock!
     var delegateMock: CameraKeyboardViewControllerDelegateMock!
@@ -80,7 +86,7 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         
         let container = UIView()
         container.addSubview(self.sut.view)
-        container.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+        container.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
         
         constrain(self.sut.view, container) { view, container in
             container.height == size.height
@@ -93,6 +99,12 @@ final class CameraKeyboardViewControllerTests: ZMSnapshotTestCase {
         container.setNeedsLayout()
         container.layoutIfNeeded()
         return container
+    }
+    
+    func testWithCallingOverlay() {
+        let permissions = MockPhotoPermissionsController(camera: true, library: true)
+        self.sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: self.splitView, assetLibrary: assetLibrary, permissions: permissions)
+        self.verify(view: self.prepareForSnapshot())
     }
     
     func testThatFirstSectionContainsCameraCellOnly() {

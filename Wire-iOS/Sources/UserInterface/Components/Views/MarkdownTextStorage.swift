@@ -20,6 +20,10 @@ import Foundation
 import UIKit
 import Down
 
+extension NSAttributedStringKey {
+    public static let markdownID = NSAttributedStringKey(rawValue: "MarkdownIDAttributeName")
+}
+
 class MarkdownTextStorage: NSTextStorage {
     
     private let storage = NSTextStorage()
@@ -29,11 +33,11 @@ class MarkdownTextStorage: NSTextStorage {
     var currentMarkdown: Markdown = .none
     private var needsCheck: Bool = false
     
-    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [String : Any] {
+    override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedStringKey : Any] {
         return storage.attributes(at: location, effectiveRange: range)
     }
     
-    override func setAttributes(_ attrs: [String : Any]?, range: NSRange) {
+    override func setAttributes(_ attrs: [NSAttributedStringKey : Any]?, range: NSRange) {
         beginEditing()
         storage.setAttributes(attrs, range: range)
         
@@ -41,9 +45,9 @@ class MarkdownTextStorage: NSTextStorage {
         // after automatically inserts corrections or fullstops after a space.
         // If the needsCheck flag is set (after characters are replaced) & the
         // attrs is missing the markdown id, then we need to included it.
-        if  needsCheck, let attrs = attrs, attrs[MarkdownIDAttributeName] == nil {
+        if  needsCheck, let attrs = attrs, attrs[NSAttributedStringKey.markdownID] == nil {
             needsCheck = false
-            storage.addAttribute(MarkdownIDAttributeName, value: currentMarkdown, range: range)
+            storage.addAttribute(NSAttributedStringKey.markdownID, value: currentMarkdown, range: range)
         }
         
         edited(.editedAttributes, range: range, changeInLength: 0)

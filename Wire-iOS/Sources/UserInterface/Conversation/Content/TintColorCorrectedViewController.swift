@@ -24,7 +24,7 @@ class TintColorOverrider: NSObject {
     
     func override() {
         windowTintColor = UIApplication.shared.delegate?.window??.tintColor
-        UIApplication.shared.delegate?.window??.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+        UIApplication.shared.delegate?.window??.tintColor = UIColor(scheme: .textForeground, variant: .light)
     }
     
     func restore() {
@@ -42,24 +42,12 @@ class TintColorCorrectedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         overrider.override()
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         overrider.restore()
-    }
-}
-
-class TintColorCorrectedSafariViewController: SFSafariViewController {
-    private var overrider = TintColorOverrider()
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        overrider.override()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        overrider.restore()
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 }

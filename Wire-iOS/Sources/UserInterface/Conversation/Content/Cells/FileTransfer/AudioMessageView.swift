@@ -22,7 +22,7 @@ import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
-final class AudioMessageView: UIView, TransferView {
+@objcMembers final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     private var _audioTrackPlayer: AudioTrackPlayer?
@@ -315,6 +315,7 @@ final class AudioMessageView: UIView, TransferView {
         
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
         
+        // first play
         if let track = fileMessage.audioTrack(), !audioTrackPlayingSame {
             audioTrackPlayer.load(track, sourceMessage: fileMessage) { [weak self] success, error in
                 if success {
@@ -322,13 +323,15 @@ final class AudioMessageView: UIView, TransferView {
                     audioTrackPlayer.play()
                     
                     let duration = TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
-                    Analytics.shared().tagPlayedAudioMessage(duration, extensionString: ((fileMessageData.filename ?? "") as NSString).pathExtension)
+                    let earliestEndDate = Date(timeIntervalSinceNow: duration)
+                    self?.extendEphemeralTimerIfNeeded(to: earliestEndDate)
                 }
                 else {
                     zmLog.warn("Cannot load track \(track): \(String(describing: error))")
                 }
             }
         } else {
+            // pausing and restarting
             if audioTrackPlayer.isPlaying {
                 audioTrackPlayer.pause()
             } else {
@@ -337,6 +340,16 @@ final class AudioMessageView: UIView, TransferView {
         }
     }
     
+    /// Extend the ephemeral timer to the given date iff the audio message
+    /// is ephemeral and it would exceed its destruction date.
+    private func extendEphemeralTimerIfNeeded(to endDate: Date) {
+        guard let destructionDate = fileMessage?.destructionDate,
+            endDate > destructionDate,
+            let assetMsg = fileMessage as? ZMAssetClientMessage
+            else { return }
+        
+        assetMsg.extendDestructionTimer(to: endDate)
+    }
     
     /// Check if the audioTrackPlayer is playing my track
     ///
@@ -360,7 +373,7 @@ final class AudioMessageView: UIView, TransferView {
 
     // MARK: - Actions
     
-    dynamic private func onActionButtonPressed(_ sender: UIButton) {
+    @objc dynamic private func onActionButtonPressed(_ sender: UIButton) {
         
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
         
@@ -378,17 +391,14 @@ final class AudioMessageView: UIView, TransferView {
             }
         case .uploaded, .failedDownload:
             self.expectingDownload = true
-            ZMUserSession.shared()?.enqueueChanges({
-                fileMessage.requestFileDownload()
-            })
-            
-        case .downloaded:
-            self.playTrack()
+            ZMUserSession.shared()?.enqueueChanges(fileMessage.requestFileDownload)
+        case .downloaded: playTrack()
+        case .unavailable: return
         }
     }
     
     // MARK: - Audio state observer
-    dynamic private func audioProgressChanged(_ change: NSDictionary) {
+    @objc dynamic private func audioProgressChanged(_ change: NSDictionary) {
         DispatchQueue.main.async {
             if self.isOwnTrackPlayingInAudioPlayer() {
                 self.updateActivePlayerProgressAnimated(false)
@@ -404,7 +414,7 @@ final class AudioMessageView: UIView, TransferView {
     ///          This function may called from background thread (in case incoming call).
     ///
     /// - Parameter change: a dictionary with KVP kind and new (enum MediaPlayerState: 0 = ready, 1 = play, 2 = pause, 3 = completed, 4 = error)
-    dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
+    @objc dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
         DispatchQueue.main.async {
             if self.isOwnTrackPlayingInAudioPlayer() {
                 self.updateActivePlayerProgressAnimated(false)

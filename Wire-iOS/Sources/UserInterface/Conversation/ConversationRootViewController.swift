@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
-@objc open class ConversationRootViewController: UIViewController {
+@objcMembers open class ConversationRootViewController: UIViewController {
 
     let navBarContainer: UINavigationBarContainer
     fileprivate var contentView = UIView()
@@ -32,7 +32,7 @@ import Cartography
 
     fileprivate let networkStatusViewController: NetworkStatusViewController
 
-    open fileprivate(set) weak var conversationViewController: ConversationViewController?
+    @objc open fileprivate(set) weak var conversationViewController: ConversationViewController?
 
     public init(conversation: ZMConversation, clientViewController: ZClientViewController) {
         let conversationController = ConversationViewController()
@@ -46,8 +46,8 @@ import Cartography
         navbar.isOpaque = true
         navbar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         navbar.shadowImage = UIImage()
-        navbar.barTintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
-        navbar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        navbar.barTintColor = UIColor(scheme: .barBackground)
+        navbar.tintColor = UIColor(scheme: .textForeground)
 
         navBarContainer = UINavigationBarContainer(navbar)
 
@@ -73,15 +73,13 @@ import Cartography
             return
         }
 
-        self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBarBackground)
+        self.view.backgroundColor = UIColor(scheme: .barBackground)
 
         self.addToSelf(navBarContainer)
         self.view.addSubview(self.contentView)
         self.addToSelf(networkStatusViewController)
 
-        networkStatusViewController.createConstraintsInContainer(bottomView: navBarContainer.view,
-                                                                 containerView: self.view, 
-                                                                 topMargin: UIScreen.safeArea.top)
+        networkStatusViewController.createConstraintsInParentController(bottomView: navBarContainer.view, controller: self)
 
         constrain(navBarContainer.view, view, contentView, conversationViewController.view) {
             navBarContainer, view, contentView, conversationViewControllerView in
@@ -91,12 +89,13 @@ import Cartography
 
             contentView.left == view.left
             contentView.right == view.right
-            contentView.bottom == view.bottom - UIScreen.safeArea.bottom
             contentView.top == navBarContainer.bottom
 
             conversationViewControllerView.edges == contentView.edges
         }
-
+        
+        contentView.bottomAnchor.constraint(equalTo: self.safeBottomAnchor).isActive = true
+        
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
 
@@ -114,7 +113,7 @@ import Cartography
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        switch ColorScheme.default().variant {
+        switch ColorScheme.default.variant {
         case .light:
             return .default
         case .dark:

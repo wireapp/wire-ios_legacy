@@ -32,7 +32,7 @@ private let zmLog = ZMSLog(tag: "UI")
 @objc public protocol AudioRecordViewControllerDelegate: class {
     func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController)
     func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController)
-    func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType)
+    func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType)
 }
 
 
@@ -40,12 +40,7 @@ private let zmLog = ZMSLog(tag: "UI")
     case recording, finishedRecording
 }
 
-
-@objc public enum AudioMessageContext: UInt {
-    case afterSlideUp, afterPreview, afterEffect
-}
-
-@objc public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
+@objcMembers public final class AudioRecordViewController: UIViewController, AudioRecordBaseViewController {
     
     let buttonOverlay = AudioButtonOverlay()
     let topSeparator = UIView()
@@ -61,7 +56,9 @@ private let zmLog = ZMSLog(tag: "UI")
     var recordingDotViewVisible: ConstraintGroup?
     var recordingDotViewHidden: ConstraintGroup?
 
-    public let recorder = AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0)! // 25 Minutes
+    public let recorder = AudioRecorder(format: .wav,
+                                        maxRecordingDuration: 25.0 * 60.0,
+                                        maxFileSize: ZMUserSession.shared()?.maxUploadFileSize())! // 25 Minutes || 25 Mb
     
     weak public var delegate: AudioRecordViewControllerDelegate?
     
@@ -113,7 +110,7 @@ private let zmLog = ZMSLog(tag: "UI")
         guard recorder.stopRecording() else { return zmLog.warn("Stopped recording but did not get file URL") }
         
         if shouldSend {
-            sendAudio(.afterSlideUp)
+            sendAudio()
         }
     }
     
@@ -131,11 +128,11 @@ private let zmLog = ZMSLog(tag: "UI")
             self.audioPreviewView.color = color
         }
         
-        topContainerView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
-        bottomContainerView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        topContainerView.backgroundColor = UIColor(scheme: .background)
+        bottomContainerView.backgroundColor = UIColor(scheme: .background)
         
-        topSeparator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
-        rightSeparator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        topSeparator.backgroundColor = UIColor(scheme: .separator)
+        rightSeparator.backgroundColor = UIColor(scheme: .separator)
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(topContainerTapped))
         topContainerView.addGestureRecognizer(tapRecognizer)
@@ -146,15 +143,15 @@ private let zmLog = ZMSLog(tag: "UI")
         
         timeLabel.accessibilityLabel = "audioRecorderTimeLabel"
         timeLabel.font = FontSpec(.small, .none).font!
-        timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        timeLabel.textColor = UIColor(scheme: .textForeground)
         
         topTooltipLabel.text = "conversation.input_bar.audio_message.tooltip.pull_send".localized.uppercased()
         topTooltipLabel.accessibilityLabel = "audioRecorderTopTooltipLabel"
         topTooltipLabel.font = FontSpec(.small, .none).font!
-        topTooltipLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        topTooltipLabel.textColor = UIColor(scheme: .textDimmed)
         
         cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
-        cancelButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)
+        cancelButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
         updateRecordingState(recordingState)
@@ -165,9 +162,9 @@ private let zmLog = ZMSLog(tag: "UI")
                 return
             }
             switch buttonType {
-            case .send: self.sendAudio(.afterPreview)
+            case .send: self.sendAudio()
             case .play:
-                Analytics.shared().tagPreviewedAudioMessageRecording(.minimised)
+               
                 self.recorder.playRecording()
             case .stop: self.recorder.stopPlaying()
             }
@@ -256,26 +253,14 @@ private let zmLog = ZMSLog(tag: "UI")
             AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
         }
         
-        recorder.recordEndedCallback = { [weak self] reachedMaxRecordingDuration in
+        recorder.recordEndedCallback = { [weak self] result in
             guard let `self` = self else { return }
             self.recordingState = .finishedRecording
-            if reachedMaxRecordingDuration {
-                
-                let duration = Int(ceil(self.recorder.maxRecordingDuration ?? 0))
-                let (seconds, minutes) = (duration % 60, duration / 60)
-                let durationLimit = String(format: "%d:%02d", minutes, seconds)
-                
-                let alertController = UIAlertController(
-                    title: "conversation.input_bar.audio_message.too_long.title".localized,
-                    message: "conversation.input_bar.audio_message.too_long.message".localized(args: durationLimit),
-                    preferredStyle: .alert
-                )
-                
-                let actionCancel = UIAlertAction(title: "general.ok".localized, style: .default, handler: nil)
-                alertController.addAction(actionCancel)
-                
-                self.present(alertController, animated: true, completion: .none)
-            }
+            
+            guard let error = result.error as? RecordingError,
+                let alert = self.recorder.alertForRecording(error: error) else { return }
+            
+            self.present(alert, animated: true, completion: .none)
         }
         
         recorder.playingStateCallback = { [weak self] state in
@@ -289,7 +274,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func topContainerTapped(_ sender: UITapGestureRecognizer) {
+    @objc func topContainerTapped(_ sender: UITapGestureRecognizer) {
         delegate?.audioRecordViewControllerDidCancel(self)
     }
     
@@ -370,9 +355,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func cancelButtonPressed(_ sender: IconButton) {
-        Analytics.shared().tagCancelledAudioMessageRecording()
-        
+    @objc func cancelButtonPressed(_ sender: IconButton) {        
         recorder.stopPlaying()
         stopAndDeleteRecordingIfNeeded()
         delegate?.audioRecordViewControllerDidCancel(self)
@@ -384,7 +367,7 @@ private let zmLog = ZMSLog(tag: "UI")
         recorder.deleteRecording()
     }
     
-    func sendAudio(_ context: AudioMessageContext) {
+    func sendAudio() {
         recorder.stopPlaying()
         guard let url = recorder.fileURL else { return zmLog.warn("Nil url passed to send as audio file") }
         
@@ -403,7 +386,7 @@ private let zmLog = ZMSLog(tag: "UI")
                 effectPath.deleteFileAtPath()
                 
                 if success {
-                    self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath) as URL, duration: self.recorder.currentDuration, context: context, filter: .none)
+                    self.delegate?.audioRecordViewControllerWantsToSendAudio(self, recordingURL: NSURL(fileURLWithPath: convertedPath) as URL, duration: self.recorder.currentDuration, filter: .none)
                 }
             }
         }

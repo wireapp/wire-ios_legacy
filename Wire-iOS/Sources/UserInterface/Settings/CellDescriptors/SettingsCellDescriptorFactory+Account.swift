@@ -36,6 +36,7 @@ extension SettingsCellDescriptorFactory {
         let sections: [SettingsSectionDescriptorType] = [
             infoSection(),
             appearanceSection(),
+            personalInformationSection(),
             conversationsSection(),
             actionsSection(),
             signOutSection()
@@ -65,6 +66,13 @@ extension SettingsCellDescriptorFactory {
         return SettingsSectionDescriptor(
             cellDescriptors: [pictureElement(), colorElement()],
             header: "self.settings.account_appearance_group.title".localized
+        )
+    }
+
+    func personalInformationSection() -> SettingsSectionDescriptorType {
+        return SettingsSectionDescriptor(
+            cellDescriptors: [dateUsagePermissionsElement()],
+            header: "self.settings.account_personal_information_group.title".localized
         )
     }
 
@@ -159,7 +167,6 @@ extension SettingsCellDescriptorFactory {
 
     func handleElement() -> SettingsCellDescriptorType {
         let presentation: () -> ChangeHandleViewController = {
-            Analytics.shared().tag(UserNameEvent.Settings.enteredUsernameScreen)
             return ChangeHandleViewController()
         }
 
@@ -226,22 +233,25 @@ extension SettingsCellDescriptorFactory {
                     )
                     let actionCancel = UIAlertAction(title: "general.ok".localized, style: .cancel, handler: nil)
                     alert.addAction(actionCancel)
-                    
+
                     guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return nil }
 
                     controller.present(alert, animated: true)
                     return nil
                 }
-            }
+        }
         )
     }
-    
+
+    func dateUsagePermissionsElement() -> SettingsCellDescriptorType {
+        return dataUsagePermissionsGroup()
+    }
+
     func ressetPasswordElement() -> SettingsCellDescriptorType {
         let resetPasswordTitle = "self.settings.password_reset_menu.title".localized
-        return SettingsButtonCellDescriptor(title: resetPasswordTitle, isDestructive: false) { _ in
-            UIApplication.shared.openURL(NSURL.wr_passwordReset().wr_URLByAppendingLocaleParameter() as URL)
-            Analytics.shared().tagResetPassword(true, from: ResetFromProfile)
-        }
+        return SettingsExternalScreenCellDescriptor(title: resetPasswordTitle, isDestructive: false, presentationStyle: .modal, presentationAction: { 
+            return BrowserViewController(url: URL.wr_passwordReset.appendingLocaleParameter)
+        }, previewGenerator: .none)
     }
 
     func deleteAccountButtonElement() -> SettingsCellDescriptorType {
@@ -283,7 +293,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsExternalScreenCellDescriptor(title: "self.sign_out".localized,
                                                     isDestructive: true,
                                                     presentationStyle: .modal,
-                                                    presentationAction: { _ in
+                                                    presentationAction: { 
             let alert = UIAlertController(
                 title: "self.settings.account_details.log_out.alert.title".localized,
                 message: "self.settings.account_details.log_out.alert.message".localized,

@@ -59,8 +59,8 @@ public class RoundedTextBadge: RoundedBadge {
     
     init(contentInset: UIEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)) {
         super.init(view: self.textLabel, contentInset: contentInset)
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        textLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        textLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         textLabel.textAlignment = .center
     }
     

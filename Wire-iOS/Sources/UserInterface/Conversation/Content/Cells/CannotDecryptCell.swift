@@ -23,7 +23,7 @@ import TTTAttributedLabel
 private let BaseLocalizationString = "content.system.cannot_decrypt"
 private let IdentityString = ".identity"
 
-class CannotDecryptCell: IconSystemCell {
+@objcMembers class CannotDecryptCell: IconSystemCell {
     static fileprivate let generalErrorURL : URL = URL(string:"action://general-error")!
     static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
 
@@ -49,7 +49,7 @@ class CannotDecryptCell: IconSystemCell {
         let remoteIDChanged = systemMessageData.systemMessageType == .decryptionFailed_RemoteIdentityChanged
         let link = remoteIDChanged ? type(of: self).remoteIDErrorURL : type(of: self).generalErrorURL
 
-        let linkAttributes = [NSFontAttributeName: labelFont, NSLinkAttributeName: link as AnyObject] as [String : AnyObject]
+        let linkAttributes: [NSAttributedStringKey : AnyObject] = [.font: labelFont, .link: link as AnyObject]
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
         let why = localizedWhyPart(remoteIDChanged) && labelFont && labelTextColor && linkAttributes
         let device : NSAttributedString?
@@ -61,7 +61,7 @@ class CannotDecryptCell: IconSystemCell {
         let messageString = localizedWhatPart(remoteIDChanged, name: name) && labelFont && labelTextColor
         let fullString = messageString + " " + why + (device ?? NSAttributedString())
         
-        attributedText = fullString.addAttributes([ NSFontAttributeName: labelBoldFont], toSubstring:name)
+        attributedText = fullString.addAttributes([ .font: labelBoldFont], toSubstring:name)
     }
     
     func localizedWhoPart(_ sender: ZMUser, remoteIDChanged: Bool) -> String {
@@ -90,10 +90,10 @@ class CannotDecryptCell: IconSystemCell {
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
         var url : Foundation.URL!
         if URL == type(of: self).generalErrorURL {
-            url = NSURL.wr_cannotDecryptHelp() as URL
+            url = .wr_cannotDecryptHelp
         }
         else if URL == type(of: self).remoteIDErrorURL {
-            url = NSURL.wr_cannotDecryptNewRemoteIDHelp() as URL
+            url = .wr_cannotDecryptNewRemoteIDHelp
         }
         UIApplication.shared.openURL(url)
     }

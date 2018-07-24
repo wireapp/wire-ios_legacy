@@ -102,7 +102,7 @@ public class AddParticipantsViewController: UIViewController {
         self.init(context: .add(conversation))
     }
         
-    public init(context: Context, variant: ColorSchemeVariant = ColorScheme.default().variant) {
+    public init(context: Context, variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant
         
         viewModel = AddParticipantsViewModel(with: context, variant: variant)
@@ -121,10 +121,10 @@ public class AddParticipantsViewController: UIViewController {
 
         confirmButton = IconButton()
         confirmButton.setIcon(ZetaIconType.convMetaAddPerson, with: .tiny, for: .normal)
-        confirmButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark), for: .normal)
-        confirmButton.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted, variant: .dark), for: .highlighted)
-        confirmButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark), for: .normal)
-        confirmButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted, variant: .dark), for: .highlighted)
+        confirmButton.setIconColor(UIColor(scheme: .iconNormal, variant: .dark), for: .normal)
+        confirmButton.setIconColor(UIColor(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
+        confirmButton.setTitleColor(UIColor(scheme: .iconNormal, variant: .dark), for: .normal)
+        confirmButton.setTitleColor(UIColor(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
         confirmButton.titleLabel?.font = FontSpec(.small, .medium).font!
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .left
@@ -140,7 +140,6 @@ public class AddParticipantsViewController: UIViewController {
         searchGroupSelector = SearchGroupSelector(style: self.variant)
 
         searchResultsViewController = SearchResultsViewController(userSelection: userSelection,
-                                                                  variant: self.variant,
                                                                   isAddingParticipants: true,
                                                                   shouldIncludeGuests: viewModel.context.includeGuests)
 
@@ -148,7 +147,7 @@ public class AddParticipantsViewController: UIViewController {
         updateValues()
 
         emptyResultLabel.text = everyoneHasBeenAddedText
-        emptyResultLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: self.variant)
+        emptyResultLabel.textColor = UIColor(scheme: .textForeground, variant: self.variant)
         emptyResultLabel.font = FontSpec(.normal, .none).font!
         
         confirmButton.addTarget(self, action: #selector(searchHeaderViewControllerDidConfirmAction(_:)), for: .touchUpInside)
@@ -193,10 +192,10 @@ public class AddParticipantsViewController: UIViewController {
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParentViewController: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
-        searchResultsViewController.searchResultsView?.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: self.variant)
+        searchResultsViewController.searchResultsView?.backgroundColor = UIColor(scheme: .contentBackground, variant: self.variant)
         searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "add_participants.list"
         
-        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: self.variant)
+        view.backgroundColor = UIColor(scheme: .contentBackground, variant: self.variant)
         
         createConstraints()
         updateSelectionValues()
@@ -290,7 +289,7 @@ public class AddParticipantsViewController: UIViewController {
         }
     }
     
-    func keyboardFrameWillChange(notification: Notification) {
+    @objc func keyboardFrameWillChange(notification: Notification) {
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin

@@ -26,7 +26,7 @@
 
 - (instancetype)initWithJSONObject:(NSDictionary *)jsonObject
 {
-    self = [super init];
+    self = [self init];
     
     if (self) {
         for (NSString *key in jsonObject.allKeys) {
@@ -34,6 +34,17 @@
             [self setValue:value forKey:key];
         }
     }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self) {
+        self.isConversationEligibleForVideoCalls = YES;
+    }
+    
     return self;
 }
 
@@ -61,9 +72,14 @@
     return NO;
 }
 
-- (NSTimeInterval)messageDestructionTimeout
+- (id<ZMConversationMessage>)firstUnreadMessage
 {
-    return 15;
+    return nil;
+}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    return nil;
 }
 
 @end

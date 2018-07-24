@@ -21,6 +21,10 @@ import Foundation
 @testable import Wire
 
 final class MockApplication: ApplicationProtocol {
+    static func wr_requestOrWarnAboutPhotoLibraryAccess(_ grantedHandler: ((Bool) -> Void)!) {
+        grantedHandler(true)
+    }
+
     var applicationState: UIApplicationState = .active
 
     var statusBarOrientation: UIInterfaceOrientation = .unknown

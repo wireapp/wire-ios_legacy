@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc public class AvailabilityStringBuilder: NSObject {
+@objcMembers public class AvailabilityStringBuilder: NSObject {
 
     static func string(for user: ZMUser, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString {
         
@@ -33,12 +33,12 @@
 
                 fontSize = .normal
                 if color == nil {
-                    color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
+                    color = UIColor(scheme: .textForeground, variant: .dark)
                 }
             }
             case .participants: do {
                 title = user.displayName.uppercased()
-                color = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+                color = UIColor(scheme: .textForeground)
             }
             case .placeholder: do {
                 if availability != .none { //Should use the default placeholder string

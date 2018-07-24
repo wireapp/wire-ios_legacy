@@ -21,7 +21,7 @@ import Cartography
 
 final class ToggleView: UIView, Themeable {
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
@@ -60,8 +60,8 @@ final class ToggleView: UIView, Themeable {
     }
 
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        backgroundColor = .wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
-        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
     }
     
     private func createConstraints() {

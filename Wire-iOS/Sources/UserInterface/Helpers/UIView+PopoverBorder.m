@@ -22,11 +22,6 @@
 
 @implementation UIView (PopoverBorder)
 
-- (BOOL)hasPopoverBorder
-{
-    return self.layer.cornerRadius == 11;
-}
-
 - (void)setPopoverBorderEnabled:(BOOL)setEnabled
 {
     if (setEnabled) {

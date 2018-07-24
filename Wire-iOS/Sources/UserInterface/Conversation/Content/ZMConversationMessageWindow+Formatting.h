@@ -25,6 +25,6 @@
 
 @interface ZMConversationMessageWindow (Formatting)
 
-- (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message lastUnreadMessage:(id <ZMConversationMessage>)lastUnreadMessage;
+- (ConversationCellLayoutProperties *)layoutPropertiesForMessage:(id<ZMConversationMessage>)message firstUnreadMessage:(id <ZMConversationMessage>)firstUnreadMessage;
 
 @end

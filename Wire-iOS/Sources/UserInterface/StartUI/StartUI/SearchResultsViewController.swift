@@ -112,7 +112,7 @@ extension UIViewController {
     }
 }
 
-public class SearchResultsViewController : UIViewController {
+@objcMembers public class SearchResultsViewController : UIViewController {
     
     var searchResultsView: SearchResultsView?
     let searchDirectory: SearchDirectory
@@ -152,7 +152,7 @@ public class SearchResultsViewController : UIViewController {
     }
     
     @objc
-    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
+    public init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
         self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
@@ -186,6 +186,7 @@ public class SearchResultsViewController : UIViewController {
         conversationsSection.delegate = self
         servicesSection.delegate = self
         createGroupSection.delegate = self
+        inviteTeamMemberSection.delegate = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -313,7 +314,7 @@ public class SearchResultsViewController : UIViewController {
     func updateSections(withSearchResult searchResult: SearchResult) {
         
         var contacts = searchResult.contacts
-        var teamContacts = searchResult.teamMembers.flatMap({ $0.user })
+        var teamContacts = searchResult.teamMembers.compactMap({ $0.user })
         
         if let filteredParticpants = filterConversation?.activeParticipants {
             contacts = contacts.filter({ !filteredParticpants.contains($0) })
@@ -321,7 +322,7 @@ public class SearchResultsViewController : UIViewController {
         }
         
         contactsSection.contacts = contacts
-
+        
         // Access mode is not set, or the guests are allowed.
         if shouldIncludeGuests {
             teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
@@ -329,7 +330,7 @@ public class SearchResultsViewController : UIViewController {
                 let name1 = $1.name ?? ""
 
                 return name0.compare(name1) == .orderedAscending
-             }
+                }
         }
         else {
             teamMemberAndContactsSection.contacts = teamContacts
@@ -392,3 +393,10 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
     
 }
 
+extension SearchResultsViewController : InviteTeamMemberSectionDelegate {
+
+    func inviteSectionDidRequestTeamManagement() {
+        URL.manageTeam(source: .onboarding).openInApp(above: self)
+    }
+
+}

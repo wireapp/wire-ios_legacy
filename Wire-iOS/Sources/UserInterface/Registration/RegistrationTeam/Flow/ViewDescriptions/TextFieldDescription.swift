@@ -56,7 +56,7 @@ extension TextFieldDescription: ViewDescriptor {
 
 extension TextFieldDescription: UITextFieldDelegate {
 
-    func confirmButtonTapped(_ sender: AnyObject) {
+    @objc func confirmButtonTapped(_ sender: AnyObject) {
         submitValue(with: currentValue)
     }
 

@@ -63,20 +63,21 @@ public extension UIApplication {
     
     public func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
         let orderedWindows = self.windows.sorted { win1, win2 in
-            win1.windowLevel > win2.windowLevel
+            win1.windowLevel < win2.windowLevel
         }
         
         let visibleWindow = orderedWindows.filter {
-            guard var controller = $0.rootViewController else {
+            guard let controller = $0.rootViewController else {
                 return false
             }
-            
-            if let notificationWindowRootController = controller as? NotificationWindowRootViewController,
-                let voiceChannelController = notificationWindowRootController.voiceChannelController {
-                controller = voiceChannelController
+
+            if let callWindowRootController = controller as? CallWindowRootViewController {
+                return callWindowRootController.voiceChannelController?.voiceChannelIsActive ?? false
+            } else if controller is AppRootViewController  {
+                return true
+            } else {
+                return false
             }
-            
-            return controller.view.isHidden == false && controller.view.alpha != 0
         }
         
         guard let window = visibleWindow.last,

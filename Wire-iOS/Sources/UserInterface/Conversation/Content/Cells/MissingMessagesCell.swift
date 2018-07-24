@@ -21,7 +21,7 @@ import Foundation
 import TTTAttributedLabel
 
 
-class MissingMessagesCell: IconSystemCell {
+@objcMembers class MissingMessagesCell: IconSystemCell {
     static fileprivate let userClientLink: URL = URL(string: "settings://user-client")!
 
     fileprivate let exclamationColor = UIColor(for: .vividRed)
@@ -53,7 +53,7 @@ class MissingMessagesCell: IconSystemCell {
             let userNames = users.map { $0.displayName }.joined(separator: ", ")
             let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
                 && font && color
-            return string.addAttributes([NSFontAttributeName: boldFont], toSubstring: userNames)
+            return string.addAttributes([.font: boldFont], toSubstring: userNames)
         }
         
         var title = "content.system.missing_messages.title".localized && font && color
@@ -73,7 +73,7 @@ class MissingMessagesCell: IconSystemCell {
         let deviceString = NSLocalizedString("content.system.this_device", comment: "")
         let fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && font && color
         
-        attributedText = fullString.setAttributes([NSLinkAttributeName: type(of: self).userClientLink as AnyObject, NSFontAttributeName: font], toSubstring: deviceString)
+        attributedText = fullString.setAttributes([.link: type(of: self).userClientLink as AnyObject, .font: font], toSubstring: deviceString)
     }
     
     // MARK: - TTTAttributedLabelDelegate

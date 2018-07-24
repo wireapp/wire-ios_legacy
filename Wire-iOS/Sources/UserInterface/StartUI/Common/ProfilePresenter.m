@@ -48,7 +48,7 @@
 
 @end
 
-@interface ProfilePresenter () <ViewControllerDismissable>
+@interface ProfilePresenter () <ViewControllerDismisser>
 @end
 
 @interface ProfilePresenter () <ProfileViewControllerDelegate>
@@ -62,11 +62,6 @@
 @end
 
 @implementation ProfilePresenter
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
 
 - (instancetype)init
 {
@@ -107,7 +102,7 @@
     ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextSearch];
     profileViewController = profileViewController;
     profileViewController.delegate = self;
-    profileViewController.viewControllerDismissable = self;
+    profileViewController.viewControllerDismisser = self;
 
     UINavigationController *navigationController = profileViewController.wrapInNavigationController;
     navigationController.transitioningDelegate = self.transitionDelegate;
@@ -122,9 +117,9 @@
     presentationController.sourceRect = rect;
 }
 
-#pragma mark - ViewControllerDismissable
+#pragma mark - ViewControllerDismisser
 
-- (void)viewControllerWantsToBeDismissed:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
+- (void)dismissViewController:(UIViewController *)profileViewController completion:(dispatch_block_t)completion
 {
     [profileViewController dismissViewControllerAnimated:YES completion:^{
         if (completion != nil) {
@@ -144,7 +139,7 @@
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
 {
-    [self viewControllerWantsToBeDismissed:controller completion:^{
+    [self dismissViewController:controller completion:^{
         [[[ZClientViewController sharedZClientViewController] conversationListViewController] dismissPeoplePickerWithCompletionBlock:^{
             [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                         focusOnView:YES

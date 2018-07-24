@@ -122,7 +122,7 @@ extension ConversationListViewController {
         let shareViewController: ShareViewController<ZMConversation, UIImage> = ShareViewController(shareable: image, destinations: conversations)
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
 
-        shareViewController.preferredContentSize = CGSize(width: 320, height: 568)
+        shareViewController.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         shareViewController.onDismiss = { [weak self] (shareController: ShareViewController<ZMConversation, UIImage>, _) -> () in
             guard let `self` = self else {
                 return
@@ -139,7 +139,7 @@ extension ConversationListViewController {
         let shareViewController: ShareViewController<ZMConversation, URL> = ShareViewController(shareable: videoAtURL, destinations: conversations)
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
 
-        shareViewController.preferredContentSize = CGSize(width: 320, height: 568)
+        shareViewController.preferredContentSize =  CGSize.IPadPopover.preferredContentSize
         shareViewController.onDismiss = { [weak self] (shareController: ShareViewController<ZMConversation, URL>, _) -> () in
             guard let `self` = self else {
                 return

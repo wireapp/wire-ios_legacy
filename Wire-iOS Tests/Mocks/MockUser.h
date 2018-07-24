@@ -50,9 +50,10 @@
 @property (nonatomic, assign) BOOL isServiceUser;
 @property (nonatomic, assign) BOOL isTeamMember;
 @property (nonatomic, assign) BOOL isGuestInConversation;
+@property (nonatomic, readwrite) BOOL canManageTeam;
+@property (nonatomic, readwrite) BOOL hasTeam;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
-- (UIColor *)accentColor;
 @property (nonatomic) ZMConnection *connection;
 @property (nonatomic) ZMAddressBookContact *contact;
 @property (nonatomic) AddressBookEntry *addressBookEntry;
@@ -61,5 +62,6 @@
 
 - (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
+- (void)fetchUserClients;
 
 @end

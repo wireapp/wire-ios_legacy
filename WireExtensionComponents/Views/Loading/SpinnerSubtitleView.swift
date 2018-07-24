@@ -18,15 +18,15 @@
 
 import UIKit
 
-@objc public class SpinnerSubtitleView: UIStackView {
+@objcMembers public class SpinnerSubtitleView: UIStackView {
 
-    public var subtitle: String? {
+    @objc public var subtitle: String? {
         didSet {
             updateSubtitle(subtitle)
         }
     }
 
-    public let spinner = ProgressSpinner()
+    @objc public let spinner = ProgressSpinner()
     private let label = UILabel()
 
     public init() {
@@ -44,7 +44,7 @@ import UIKit
         alignment = .center
         spacing = 20
         distribution = .fillProportionally
-        label.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        label.textColor = UIColor(scheme: .textForeground, variant: .dark)
         label.font = FontSpec(.small, .regular).fontWithoutDynamicType
         [spinner, label].forEach(addArrangedSubview)
     }

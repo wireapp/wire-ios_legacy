@@ -18,7 +18,7 @@
 
 import Foundation
 
-class GroupConversationCell: UICollectionViewCell, Reusable, Themeable {
+class GroupConversationCell: UICollectionViewCell, Themeable {
     
     let avatarSpacer = UIView()
     let avatarView = ConversationAvatarView()
@@ -28,7 +28,7 @@ class GroupConversationCell: UICollectionViewCell, Reusable, Themeable {
     var contentStackView : UIStackView!
     var titleStackView : UIStackView!
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -36,7 +36,7 @@ class GroupConversationCell: UICollectionViewCell, Reusable, Themeable {
     }
     
     // if nil the background color is the default content background color for the theme
-    dynamic var contentBackgroundColor: UIColor? = nil {
+    @objc dynamic var contentBackgroundColor: UIColor? = nil {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)
@@ -60,7 +60,7 @@ class GroupConversationCell: UICollectionViewCell, Reusable, Themeable {
     }
     
     fileprivate func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
     }
     
     fileprivate func setup() {
@@ -118,10 +118,10 @@ class GroupConversationCell: UICollectionViewCell, Reusable, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        let sectionTextColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSectionText, variant: colorSchemeVariant)
+        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        separator.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorCellSeparator, variant: colorSchemeVariant)
-        titleLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        separator.backgroundColor = UIColor(scheme: .cellSeparator, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
     }
     

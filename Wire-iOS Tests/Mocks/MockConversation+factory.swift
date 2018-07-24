@@ -20,10 +20,26 @@ import Foundation
 
 extension MockConversation {
     static func oneOnOneConversation() -> MockConversation {
+        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+        let otherUser = MockUser.mockUsers().first!
         let mockConversation = MockConversation()
         mockConversation.conversationType = .oneOnOne
-        mockConversation.displayName = "John Doe"
-        mockConversation.connectedUser = MockUser.mockUsers().last!
+        mockConversation.displayName = otherUser.displayName
+        mockConversation.connectedUser = otherUser
+        mockConversation.activeParticipants = [selfUser, otherUser]
+        mockConversation.isConversationEligibleForVideoCalls = true
+
+        return mockConversation
+    }
+    
+    static func groupConversation() -> MockConversation {
+        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+        let otherUser = MockUser.mockUsers().first!
+        let mockConversation = MockConversation()
+        mockConversation.conversationType = .group
+        mockConversation.displayName = otherUser.displayName
+        mockConversation.activeParticipants = [selfUser, otherUser]
+        mockConversation.isConversationEligibleForVideoCalls = true
 
         return mockConversation
     }

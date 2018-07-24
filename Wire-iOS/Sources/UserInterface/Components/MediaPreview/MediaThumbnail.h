@@ -19,6 +19,8 @@
 
 @import Foundation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MediaThumbnail : NSObject
 
 @property (assign, nonatomic) CGSize size;
@@ -28,3 +30,5 @@
 - (instancetype)initWithURL:(NSURL *)URL size:(CGSize)size NS_DESIGNATED_INITIALIZER;
 
 @end
+
+NS_ASSUME_NONNULL_END

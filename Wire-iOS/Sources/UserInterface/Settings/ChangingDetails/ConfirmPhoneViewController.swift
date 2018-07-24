@@ -34,7 +34,7 @@ protocol ConfirmPhoneDelegate: class {
     func didConfirmPhone(inController controller: ConfirmPhoneViewController)
 }
 
-final class ConfirmPhoneViewController: SettingsBaseTableViewController {
+@objcMembers final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     fileprivate var observer: NSObjectProtocol?
     fileprivate var observerToken: Any?
@@ -93,6 +93,18 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
             target: self,
             action: #selector(saveButtonTapped)
         )
+        
+        // Create top header
+        let description = DescriptionHeaderView()
+        let format = "self.settings.account_section.phone_number.change.verify.description".localized
+        let text = String(format: format, newNumber)
+        if let font = FontSpec(.normal, .medium).font {
+            let attributedString = NSAttributedString(string: text).addAttributes([.font : font], toSubstring: newNumber)
+            description.descriptionLabel.font = FontSpec(.normal, .semibold).font!
+            description.descriptionLabel.attributedText = attributedString
+        }
+
+        tableView.autolayoutTableHeaderView = description
     }
     
     fileprivate func startTimer() {
@@ -107,7 +119,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         tableView.reloadRows(at: [resend], with: .none)
     }
     
-    func saveButtonTapped() {
+    @objc func saveButtonTapped() {
         if let verificationCode = verificationCode {
             let credentials = ZMPhoneCredentials(phoneNumber: newNumber, verificationCode: verificationCode)
             userProfile?.requestPhoneNumberChange(credentials: credentials)
@@ -129,23 +141,6 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch Section(rawValue: section)! {
-        case .verificationCode:
-            let description = DescriptionHeaderView()
-            let format = "self.settings.account_section.phone_number.change.verify.description".localized
-            let text = String(format: format, newNumber)
-            if let font = FontSpec(.normal, .medium).font {
-                let attributedString = NSAttributedString(string: text).addAttributes([NSFontAttributeName : font], toSubstring: newNumber)
-                description.descriptionLabel.font = FontSpec(.normal, .semibold).font!
-                description.descriptionLabel.attributedText = attributedString
-            }
-            return description
-        case .buttons:
-            return nil
-        }
     }
     
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {

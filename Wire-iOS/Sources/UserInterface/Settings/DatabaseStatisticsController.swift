@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 import WireDataModel
 
-@objc open class DatabaseStatisticsController: UIViewController {
+@objcMembers open class DatabaseStatisticsController: UIViewController {
 
     let stackView = UIStackView()
     let spinner = UIActivityIndicatorView()
@@ -60,7 +60,7 @@ import WireDataModel
         let contentsLabel = UILabel()
         contentsLabel.text = contents
         contentsLabel.textColor = .white
-        contentsLabel.setContentHuggingPriority(200, for: .horizontal)
+        contentsLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 200), for: .horizontal)
         contentsLabel.textAlignment = .right
 
         let stackView = UIStackView(arrangedSubviews:[titleLabel, contentsLabel])
@@ -104,7 +104,7 @@ import WireDataModel
 
                 let assetMessages = ZMAssetClientMessage.sortedFetchRequest()!
                 let allAssets = try syncMoc.fetch(assetMessages)
-                    .flatMap {
+                    .compactMap {
                         $0 as? ZMAssetClientMessage
                     }
 

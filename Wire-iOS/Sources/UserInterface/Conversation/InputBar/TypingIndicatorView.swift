@@ -40,8 +40,8 @@ class AnimatedPenView : UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let iconColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        let iconColor = UIColor(scheme: .textForeground)
+        let backgroundColor = UIColor(scheme: .background)
         
         dots.image = UIImage(for: .typingDots, fontSize: 8, color: iconColor)
         pen.image = UIImage(for: .pencil, fontSize: 8, color: iconColor)
@@ -102,13 +102,13 @@ class AnimatedPenView : UIView {
         pen.layer.removeAnimation(forKey: WritingAnimationKey)
     }
     
-    func applicationDidBecomeActive(_ notification : Notification) {
+    @objc func applicationDidBecomeActive(_ notification : Notification) {
         startWritingAnimation()
     }
 
 }
 
-class TypingIndicatorView: UIView {
+@objcMembers class TypingIndicatorView: UIView {
     
     public let nameLabel = UILabel()
     public let animatedPen = AnimatedPenView()
@@ -194,8 +194,8 @@ class TypingIndicatorView: UIView {
             } else {
                 animatedPen.isAnimating = false
                 self.layoutSubviews()
-                UIView.wr_animate(easing: RBBEasingFunctionEaseInOutQuad, duration: 0.35, animations: expandLine)
-                UIView.wr_animate(easing: RBBEasingFunctionEaseInQuad, duration: 0.15, delay: 0.15, animations: showContainer, options: .beginFromCurrentState, completion: { _ in
+                UIView.wr_animate(easing: .easeInOutQuad, duration: 0.35, animations: expandLine)
+                UIView.wr_animate(easing: .easeInQuad, duration: 0.15, delay: 0.15, animations: showContainer, options: .beginFromCurrentState, completion: { _ in
                     self.animatedPen.isAnimating = true
                 })
             }

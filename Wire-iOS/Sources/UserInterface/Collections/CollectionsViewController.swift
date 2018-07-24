@@ -26,7 +26,7 @@ public protocol CollectionsViewControllerDelegate: class {
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
 
-final public class CollectionsViewController: UIViewController {
+@objcMembers final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
     public weak var delegate: CollectionsViewControllerDelegate?
@@ -204,11 +204,7 @@ final public class CollectionsViewController: UIViewController {
 
     private func trackOpeningIfNeeded() {
         guard shouldTrackOnNextOpen && fetchingDone else { return }
-        Analytics.shared().tagCollectionOpen(
-            for: self.collection.conversation,
-            itemCount: UInt(self.totalNumberOfElements()),
-            withSearchResults: isShowingSearchResults
-        )
+
         shouldTrackOnNextOpen = false
     }
 
@@ -260,7 +256,7 @@ final public class CollectionsViewController: UIViewController {
     }
     
     open override var preferredStatusBarStyle : UIStatusBarStyle {
-        return ColorScheme.default().variant == .dark ? .lightContent : .default
+        return ColorScheme.default.variant == .dark ? .lightContent : .default
     }
     
     fileprivate func updateNoElementsState() {
@@ -309,8 +305,7 @@ final public class CollectionsViewController: UIViewController {
             }
         case .present:
             self.selectedMessage = message
-            Analytics.shared().tagCollectionOpenItem(for: self.collection.conversation, itemType: CollectionItemType(message: message))
-            
+                        
             if message.isImage {
                 let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
             

@@ -23,7 +23,6 @@
 @class IconButton;
 @class ZMConversation;
 @class ConversationInputBarViewController;
-@class AnalyticsTracker;
 @class AudioRecordViewController;
 @protocol ZMConversationMessage;
 
@@ -57,7 +56,6 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic, readonly) InputBar *inputBar;
 @property (nonatomic, readonly) ZMConversation *conversation;
 @property (nonatomic, weak) id <ConversationInputBarViewControllerDelegate> delegate;
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) ConversationInputBarViewControllerMode mode;
 @property (nonatomic, readonly) UIViewController *inputController;
 

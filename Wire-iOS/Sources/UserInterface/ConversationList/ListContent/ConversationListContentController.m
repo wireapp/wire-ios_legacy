@@ -28,9 +28,7 @@
 #import "ConversationListViewModel.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "UIView+Borders.h"
 
-#import "StopWatch.h"
 #import "ProgressSpinner.h"
 
 #import "ZClientViewController+Internal.h"
@@ -57,6 +55,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic) BOOL animateNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
 @property (nonatomic) ConversationListCell *layoutCell;
+@property (nonatomic) ConversationCallController *startCallController;
 
 @property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
 @end
@@ -76,7 +75,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
     // Observer must be deallocated before `mediaPlaybackManager`
     self.activeMediaPlayerObserver = nil;
     self.mediaPlaybackManager = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init
@@ -87,12 +85,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
-        StopWatch *stopWatch = [StopWatch stopWatch];
-        StopWatchEvent *loadContactListEvent = [stopWatch stopEvent:@"LoadContactList"];
-        if (loadContactListEvent) {
-            ZMLogDebug(@"Contact List load after %lums", (unsigned long)loadContactListEvent.elapsedTime);
-        }
-        
+
         if (nil != [UISelectionFeedbackGenerator class]) {
             self.selectionFeedbackGenerator = [[UISelectionFeedbackGenerator alloc] init];
         }
@@ -314,13 +307,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (BOOL)selectModelItem:(id)itemToSelect
 {
-    if([itemToSelect isKindOfClass:[ZMConversation class]]) {
-        
-        ZMConversation *conversation = (ZMConversation *)itemToSelect;
-        StopWatch *stopWatch = [StopWatch stopWatch];
-        [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
-    }
-    
     return [self.listViewModel selectItem:itemToSelect];
 }
 
@@ -530,6 +516,12 @@ static NSString * const CellReuseIdConversation = @"CellId";
     if ([self.contentDelegate respondsToSelector:@selector(conversationListContentController:wantsActionMenuForConversation:fromSourceView:)]) {
         [self.contentDelegate conversationListContentController:self wantsActionMenuForConversation:conversation fromSourceView:cell];
     }
+}
+    
+- (void)conversationListCellJoinCallButtonTapped:(ConversationListCell *)cell
+{
+    self.startCallController = [[ConversationCallController alloc] initWithConversation:cell.conversation target:self];
+    [self.startCallController joinCall];
 }
 
 @end

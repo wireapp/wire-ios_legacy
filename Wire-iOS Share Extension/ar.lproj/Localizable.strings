@@ -21,7 +21,7 @@
 
 
 "share_extension.general.ok" = "موافق";
-"share_extension.conversation_selection.account" = "Account:";
+"share_extension.conversation_selection.account" = "الحساب:";
 "share_extension.conversation_selection.title" = "المُحادثة:";
 "share_extension.send_button.title" = "إرسال";
 "share_extension.conversation_selection.empty.value" = "اختيار";
@@ -31,11 +31,11 @@
 "share_extension.no_internet_connection.title" = "لا يوجد اتصال بالإنترنت";
 "share_extension.not_signed_in.title" = "لِج لـ Wire لتستطيع مشاركة أي شيء";
 "share_extension.not_signed_in.close_button" = "إغلاق";
-"share_extension.timeout.title" = "The connection has timed out.";
-"share_extension.timeout.message" = "Check your Internet connection and try again. The attachments were saved in the conversation.";
+"share_extension.timeout.title" = "انتهت مهلة الاتصال.";
+"share_extension.timeout.message" = "تحقق من اتّصالك بالإنترنت ثم حاول مجددًا. المرفقات حفظت في المحادثة.";
 "share_extension.privacy_security.lock_app.description" = "إلغاء تأمين Wire";
-"share_extension.logged_out.title" = "You've been logged out from this account.";
-"share_extension.logged_out.message" = "Please choose another account.";
+"share_extension.logged_out.title" = "سُجِّل خروجك من هذا الحساب.";
+"share_extension.logged_out.message" = "يُرجى اختيار حساب آخر.";
 
 "conversation.displayname.emptygroup" = "محادثة جماعية";
 "meta.degraded.degradation_reason_message.singular" = "%@ بدأ باستخدام جهاز جديد.";

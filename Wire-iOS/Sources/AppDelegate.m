@@ -28,12 +28,6 @@
 #import "Application+runDuration.h"
 #import "ZClientViewController.h"
 #import "Analytics.h"
-#import "AnalyticsTracker+Registration.h"
-#import "AnalyticsTracker+Permissions.h"
-
-// Performance Measurement
-#import "StopWatch.h"
-
 
 NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";
 
@@ -44,7 +38,6 @@ static AppDelegate *sharedAppDelegate = nil;
 @interface AppDelegate ()
 
 @property (nonatomic) AppRootViewController *rootViewController;
-@property (nonatomic, assign) BOOL trackedResumeEvent;
 @property (nonatomic, assign, readwrite) ApplicationLaunchType launchType;
 @property (nonatomic, copy) NSDictionary *launchOptions;
 
@@ -60,11 +53,6 @@ static AppDelegate *sharedAppDelegate = nil;
 + (instancetype)sharedAppDelegate;
 {
     return sharedAppDelegate;
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init
@@ -141,7 +129,7 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 {
-    ZMLogInfo(@"applicationDidBecomeActive START (applicationState = %ld)", (long)application.applicationState);
+    ZMLogInfo(@"applicationDidBecomeActive (applicationState = %ld)", (long)application.applicationState);
     
     switch (self.launchType) {
         case ApplicationLaunchURL:
@@ -151,14 +139,6 @@ static AppDelegate *sharedAppDelegate = nil;
             self.launchType = ApplicationLaunchDirect;
             break;
     }
-    
-    if (! self.trackedResumeEvent) {
-        [[Analytics shared] tagAppLaunchWithType:self.launchType];
-    }
-    
-    self.trackedResumeEvent = NO;
-    
-    ZMLogInfo(@"applicationDidBecomeActive END");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -200,9 +180,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)setupTracking
 {
-    // Migrate analytics settings
-    [[TrackingManager shared] migrateFromLocalytics];
-    
     BOOL containsConsoleAnalytics = [[[NSProcessInfo processInfo] arguments] indexOfObjectPassingTest:^BOOL(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isEqualToString:AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey]) {
             *stop = YES;
@@ -210,30 +187,24 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
         }
         return NO;
     }] != NSNotFound;
+
+    TrackingManager *trackingManager = [TrackingManager shared];
     
     [AnalyticsProviderFactory shared].useConsoleAnalytics = containsConsoleAnalytics;
-    [Analytics loadSharedWithOptedOut:[[TrackingManager shared] disableCrashAndAnalyticsSharing]];
-}
-
-- (void)trackLaunchAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions
-{
-    self.launchType = ApplicationLaunchDirect;
-    if (launchOptions[UIApplicationLaunchOptionsURLKey] != nil) {
-        self.launchType = ApplicationLaunchURL;
-    }
-    
-    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil ||
-        launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] != nil) {
-        self.launchType = ApplicationLaunchPush;
-    }
-    [[UIApplication sharedApplication] setupRunDurationCalculation];
-    [[Analytics shared] tagAppLaunchWithType:self.launchType];
-    self.trackedResumeEvent = YES;
+    [Analytics loadSharedWithOptedOut:trackingManager.disableCrashAndAnalyticsSharing];
 }
 
 - (void)userSessionDidBecomeAvailable:(NSNotification *)notification
 {
-    [self trackLaunchAnalyticsWithLaunchOptions:self.launchOptions];
+    self.launchType = ApplicationLaunchDirect;
+    if (self.launchOptions[UIApplicationLaunchOptionsURLKey] != nil) {
+        self.launchType = ApplicationLaunchURL;
+    }
+    
+    if (self.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil ||
+        self.launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] != nil) {
+        self.launchType = ApplicationLaunchPush;
+    }
     [self trackErrors];
 }
 
@@ -252,9 +223,9 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
     return [[SessionManager shared] unauthenticatedSession];
 }
 
-- (NotificationWindowRootViewController *)notificationWindowController
+- (CallWindowRootViewController *)callWindowRootViewController
 {
-    return (NotificationWindowRootViewController *)self.rootViewController.overlayWindow.rootViewController;
+    return (CallWindowRootViewController *)self.rootViewController.callWindow.rootViewController;
 }
 
 - (SessionManager *)sessionManager
@@ -295,29 +266,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
-    BOOL userGavePermissions = (notificationSettings.types != UIUserNotificationTypeNone);
-    AnalyticsTracker *analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:nil];
-    [analyticsTracker tagPushNotificationsPermissions:userGavePermissions];
-}
-
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
-{
-    ZMLogWarn(@"Received APNS token: %@", newDeviceToken);
-    
-    [[SessionManager shared] didRegisteredForRemoteNotificationsWith:newDeviceToken];
-}
-
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-{
-    ZMLogInfo(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
-    if (error != nil) {
-        [[Analytics shared] tagApplicationError:error.localizedDescription
-                                  timeInSession:[[UIApplication sharedApplication] lastApplicationRunDuration]];
-    }
-    ZMLogWarn(@"Error registering for push with APNS: %@", error);
-    
-    AnalyticsTracker *analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:nil];
-    [analyticsTracker tagPushNotificationsPermissions:NO];
+    // no op
 }
 
 @end
@@ -327,13 +276,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
     ZMLogInfo(@"application:didReceiveRemoteNotification:fetchCompletionHandler: notification: %@", userInfo);
-    if (application.applicationState == UIApplicationStateActive) {
-        [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchPush];
-        self.trackedResumeEvent = YES;
-    }
-    
-    [[SessionManager shared] didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
-    
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
 }
 

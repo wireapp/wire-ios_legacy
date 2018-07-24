@@ -21,16 +21,19 @@ import XCTest
 @testable import Wire
 
 class MockDestination: NSObject, ShareDestination {
+    var showsGuestIcon: Bool
+    
     var displayName: String
     
     var securityLevel: ZMConversationSecurityLevel
     
     var avatarView: UIView?
     
-    init(displayName: String, avatarView: UIView? = nil, securityLevel: ZMConversationSecurityLevel = .notSecure) {
+    init(displayName: String, avatarView: UIView? = nil, securityLevel: ZMConversationSecurityLevel = .notSecure, showsGuestIcon: Bool = false) {
         self.displayName = displayName
         self.securityLevel = securityLevel
         self.avatarView = avatarView
+        self.showsGuestIcon = showsGuestIcon
     }
 }
 
@@ -59,6 +62,19 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
                                           securityLevel: .notSecure)
         // when
         sut.destination = destination
+        let view = sut.prepareForSnapshots()
+        // then
+        verify(view: view)
+    }
+    
+    func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Unchecked_Guest() {
+        // given
+        let destination = MockDestination(displayName: "John Burger",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .notSecure,
+                                          showsGuestIcon: true)
+        // when
+        sut.destination = destination
         // then
         verify(view: sut.prepareForSnapshots())
     }
@@ -68,6 +84,18 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
                                           avatarView: mockAvatarView,
                                           securityLevel: .notSecure)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_NotSecure_Unchecked_Guest() {
+        // given
+        let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .notSecure,
+                                          showsGuestIcon: true)
         // when
         sut.destination = destination
         // then
@@ -85,11 +113,35 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshotWithCellSelected())
     }
     
+    func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Checked_Guest() {
+        // given
+        let destination = MockDestination(displayName: "John Burger",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .notSecure,
+                                          showsGuestIcon: true)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshotWithCellSelected())
+    }
+    
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_NotSecure_Checked() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
                                           avatarView: mockAvatarView,
                                           securityLevel: .notSecure)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshotWithCellSelected())
+    }
+    
+    func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_NotSecure_Checked_Guest() {
+        // given
+        let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .notSecure,
+                                          showsGuestIcon: true)
         // when
         sut.destination = destination
         // then
@@ -107,11 +159,35 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
     
+    func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_Secure_Unchecked_Guest() {
+        // given
+        let destination = MockDestination(displayName: "John Burger",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .secure,
+                                          showsGuestIcon: true)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshots())
+    }
+    
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_Secure_Unchecked() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
                                           avatarView: mockAvatarView,
                                           securityLevel: .secure)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_Secure_Unchecked_Guest() {
+        // given
+        let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .secure,
+                                          showsGuestIcon: true)
         // when
         sut.destination = destination
         // then
@@ -129,11 +205,35 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
         verify(view: sut.prepareForSnapshotWithCellSelected())
     }
     
+    func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_Secure_Checked_Guest() {
+        // given
+        let destination = MockDestination(displayName: "John Burger",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .secure,
+                                          showsGuestIcon: true)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshotWithCellSelected())
+    }
+    
     func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_Secure_Checked() {
         // given
         let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
                                           avatarView: mockAvatarView,
                                           securityLevel: .secure)
+        // when
+        sut.destination = destination
+        // then
+        verify(view: sut.prepareForSnapshotWithCellSelected())
+    }
+    
+    func testThatItRendersCorrectly_CellWithLongPersonalNameAndPicture_Secure_Checked_Guest() {
+        // given
+        let destination = MockDestination(displayName: "His Majesty John Carl Steven Bob Burger II",
+                                          avatarView: mockAvatarView,
+                                          securityLevel: .secure,
+                                          showsGuestIcon: true)
         // when
         sut.destination = destination
         // then
@@ -159,8 +259,8 @@ fileprivate extension UITableViewCell {
     func prepareForSnapshots() -> UITableView {
         bounds.size = systemLayoutSizeFitting(
             CGSize(width: 375, height: 0),
-            withHorizontalFittingPriority: UILayoutPriorityRequired,
-            verticalFittingPriority: UILayoutPriorityFittingSizeLevel
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
         )
         return wrapInTableView()
     }

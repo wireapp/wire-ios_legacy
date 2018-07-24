@@ -20,16 +20,12 @@
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
-#import "StopWatch.h"
 #import "Wire-Swift.h"
 
 
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        StopWatch *stopWatch = [StopWatch stopWatch];
-        [stopWatch startEvent:@"AppStart"];
-        
         return UIApplicationMain(argc, argv, NSStringFromClass([WireApplication class]), NSStringFromClass([AppDelegate class]));
     }
 }

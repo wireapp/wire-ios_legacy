@@ -19,48 +19,49 @@
 import Foundation
 import Cartography
 
-@objc internal class TextSearchResultCell: UITableViewCell {
+@objcMembers internal class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
     fileprivate let userImageView = UserImageView()
     fileprivate let separatorView = UIView()
+    fileprivate var observerToken: Any?
     public let resultCountView = RoundedTextBadge()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.userImageView.userSession = ZMUserSession.shared()
-        self.userImageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
+        userImageView.userSession = ZMUserSession.shared()
+        userImageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
         
-        self.accessibilityIdentifier = "search result cell"
+        accessibilityIdentifier = "search result cell"
         
-        self.contentView.addSubview(self.footerView)
-        self.selectionStyle = .none
-        self.messageTextLabel.accessibilityIdentifier = "text search result"
-        self.messageTextLabel.numberOfLines = 1
-        self.messageTextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        self.messageTextLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        contentView.addSubview(footerView)
+        selectionStyle = .none
+        messageTextLabel.accessibilityIdentifier = "text search result"
+        messageTextLabel.numberOfLines = 1
+        messageTextLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        messageTextLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         
-        self.contentView.addSubview(self.messageTextLabel)
+        contentView.addSubview(messageTextLabel)
         
-        self.userImageViewContainer.addSubview(self.userImageView)
+        userImageViewContainer.addSubview(userImageView)
         
-        self.contentView.addSubview(self.userImageViewContainer)
+        contentView.addSubview(userImageViewContainer)
         
-        self.separatorView.cas_styleClass = "separator"
-        self.contentView.addSubview(self.separatorView)
+        separatorView.cas_styleClass = "separator"
+        contentView.addSubview(separatorView)
         
-        self.resultCountView.textLabel.accessibilityIdentifier = "count of matches"
-        self.contentView.addSubview(self.resultCountView)
+        resultCountView.textLabel.accessibilityIdentifier = "count of matches"
+        contentView.addSubview(resultCountView)
         
-        constrain(self.userImageView, self.userImageViewContainer) { userImageView, userImageViewContainer in
+        constrain(userImageView, userImageViewContainer) { userImageView, userImageViewContainer in
             userImageView.height == 24
             userImageView.width == userImageView.height
             userImageView.center == userImageViewContainer.center
         }
         
-        constrain(self.contentView, self.footerView, self.messageTextLabel, self.userImageViewContainer, self.resultCountView) { contentView, footerView, messageTextLabel, userImageViewContainer, resultCountView in
+        constrain(contentView, footerView, messageTextLabel, userImageViewContainer, resultCountView) { contentView, footerView, messageTextLabel, userImageViewContainer, resultCountView in
             userImageViewContainer.leading == contentView.leading
             userImageViewContainer.top == contentView.top
             userImageViewContainer.bottom == contentView.bottom
@@ -81,7 +82,7 @@ import Cartography
             resultCountView.width >= 24
         }
         
-        constrain(self.contentView, self.separatorView, self.userImageViewContainer) { contentView, separatorView, userImageViewContainer in
+        constrain(contentView, separatorView, userImageViewContainer) { contentView, separatorView, userImageViewContainer in
             separatorView.leading == userImageViewContainer.trailing
             separatorView.trailing == contentView.trailing
             separatorView.bottom == contentView.bottom
@@ -95,31 +96,46 @@ import Cartography
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.message = .none
-        self.queries = []
+        message = .none
+        queries = []
     }
     
     private func updateTextView() {
-        guard let text = message?.textMessageData?.messageText else {
+        guard let message = message else {
             return
         }
+
+        if message.isObfuscated {
+            let obfuscatedText = messageTextLabel.text?.obfuscated() ?? ""
+            messageTextLabel.configure(with: obfuscatedText, queries: [])
+            messageTextLabel.isObfuscated = true
+            return
+        }
+
+        guard let text = message.textMessageData?.messageText else {
+            return
+        }
+
+        messageTextLabel.configure(with: text, queries: queries)
         
-        self.messageTextLabel.configure(with: text, queries: queries)
+        let totalMatches = messageTextLabel.estimatedMatchesCount
         
-        let totalMatches = self.messageTextLabel.estimatedMatchesCount
-        
-        self.resultCountView.isHidden = totalMatches <= 1
-        self.resultCountView.textLabel.text = "\(totalMatches)"
+        resultCountView.isHidden = totalMatches <= 1
+        resultCountView.textLabel.text = "\(totalMatches)"
     }
     
-    public func configure(with message: ZMConversationMessage, queries: [String]) {
-        self.message = message
-        self.queries = queries
+    public func configure(with newMessage: ZMConversationMessage, queries newQueries: [String]) {
+        message = newMessage
+        queries = newQueries
         
-        self.userImageView.user = self.message?.sender
-        self.footerView.message = self.message
+        userImageView.user = newMessage.sender
+        footerView.message = newMessage
         
-        self.updateTextView()
+        observerToken = MessageChangeInfo.add(observer: self,
+                                              for: newMessage,
+                                              userSession: ZMUserSession.shared()!)
+        
+        updateTextView()
     }
     
     var message: ZMConversationMessage? = .none
@@ -128,9 +144,15 @@ import Cartography
     override func setHighlighted(_ highlighted: Bool, animated: Bool)  {
         super.setHighlighted(highlighted, animated: animated)
         
-        let backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorContentBackground)
-        let foregroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
+        let backgroundColor = UIColor(scheme: .contentBackground)
+        let foregroundColor = UIColor(scheme: .textForeground)
         
-        self.contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor
+        contentView.backgroundColor = highlighted ? backgroundColor.mix(foregroundColor, amount: 0.1) : backgroundColor
+    }
+}
+
+extension TextSearchResultCell: ZMMessageObserver {
+    func messageDidChange(_ changeInfo: MessageChangeInfo) {
+        updateTextView()
     }
 }

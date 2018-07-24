@@ -204,11 +204,6 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
     case .disableMarkdown:
         return "Disable Markdown support"
         
-    case .skipFirstTimeUseChecks:
-        return "Skip first time use checks"
-        
-    case .preferredFlashMode:
-        return "Flash Mode"
     case .darkMode:
         return "self.settings.account_picture_group.theme".localized
         // Profile
@@ -218,11 +213,7 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         // AVS
     case .soundAlerts:
         return "self.settings.sound_menu.title".localized
-        
-        // Analytics
-    case .disableCrashAndAnalyticsSharing:
-        return "self.settings.privacy_analytics.title".localized
-    
+
     case .messageSoundName:
         return "self.settings.sound_menu.message.title".localized
     case .callSoundName:
@@ -253,6 +244,12 @@ func SettingsPropertyLabelText(_ name: SettingsPropertyName) -> String {
         return "self.settings.vbr.title".localized
     case .disableLinkPreviews:
         return "self.settings.privacy_security.disable_link_previews.title".localized
+
+        // personal information - Analytics
+    case .disableCrashAndAnalyticsSharing:
+        return "self.settings.privacy_analytics.title".localized
+    case .receiveNewsAndOffers:
+        return "self.settings.receiveNews_and_offers.title".localized
     }
 }
 

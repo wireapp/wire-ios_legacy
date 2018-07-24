@@ -31,7 +31,6 @@
 
 #import "Constants.h"
 #import "PermissionDeniedViewController.h"
-#import "AnalyticsTracker.h"
 
 #import "WireSyncEngine+iOS.h"
 
@@ -42,7 +41,6 @@
 // helpers
 
 #import "Analytics.h"
-#import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
 
 // Transitions
@@ -114,6 +112,11 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
+/// for data usage dialog
+@property (nonatomic) BOOL viewDidAppearCalled;
+
+@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
+
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
@@ -124,7 +127,6 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
 }
 
@@ -142,6 +144,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.viewDidAppearCalled = NO;
+    self.dataUsagePermissionDialogDisplayed = NO;
+
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
     
@@ -214,6 +219,12 @@
     [self closePushPermissionDialogIfNotNeeded];
 
     self.shouldAnimateNetworkStatusView = YES;
+
+    if (! self.viewDidAppearCalled) {
+        self.viewDidAppearCalled = YES;
+
+        [self showDataUsagePermissionDialogIfNeeded];
+    }
 }
 
 - (void)requestSuggestedHandlesIfNeeded
@@ -389,13 +400,17 @@
     [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeRight];
     self.bottomBarBottomOffset = [self.bottomBarController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    [self.networkStatusViewController createConstraintsInContainerWithBottomView: self.topBar containerView:self.contentContainer topMargin:0];
+    [self.networkStatusViewController createConstraintsInParentControllerWithBottomView:self.topBar controller:self];
     
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeLeft];
     [self.topBar autoPinEdgeToSuperviewEdge:ALEdgeRight];
 
     [self.topBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.conversationListContainer];
-    [self.contentContainer autoPinEdgesToSuperviewEdgesWithInsets:UIScreen.safeArea];
+    
+    [[self.contentContainer.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor] setActive:YES];
+    [[self.contentContainer.topAnchor constraintEqualToAnchor:self.safeTopAnchor] setActive:YES];
+    [[self.contentContainer.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor] setActive:YES];
+    [[self.contentContainer.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor] setActive:YES];
     
     [self.noConversationLabel autoCenterInSuperview];
     [self.noConversationLabel autoSetDimension:ALDimensionHeight toSize:120.0f];
@@ -518,7 +533,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
         PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];
-        permissions.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
         permissions.delegate = self;
         
         [self addChildViewController:permissions];
@@ -580,7 +594,6 @@
     KeyboardAvoidingViewController *keyboardAvoidingWrapperController = [[KeyboardAvoidingViewController alloc] initWithViewController:settingsViewController];
     
     if (self.wr_splitViewController.layoutSize == SplitViewControllerLayoutSizeCompact) {
-        keyboardAvoidingWrapperController.topInset = UIScreen.safeArea.top;
         keyboardAvoidingWrapperController.modalPresentationStyle = UIModalPresentationCurrentContext;
         keyboardAvoidingWrapperController.transitioningDelegate = self;
         [self presentViewController:keyboardAvoidingWrapperController animated:YES completion:nil];
@@ -701,7 +714,6 @@
     switch (buttonType) {
         case ConversationListButtonTypeArchive:
             [self setState:ConversationListStateArchived animated:YES];
-            [Analytics.shared tagArchiveOpened];
             break;
 
         case ConversationListButtonTypeStartUI:
@@ -744,7 +756,6 @@
     [ZMUserSession.sharedSession enqueueChanges:^{
         conversation.isArchived = NO;
     } completionHandler:^{
-        [Analytics.shared tagUnarchivedConversation];
         [self setState:ConversationListStateConversationList animated:YES completion:^{
             @strongify(self)
             [self.listContentController selectConversation:conversation focusOnView:YES animated:YES];

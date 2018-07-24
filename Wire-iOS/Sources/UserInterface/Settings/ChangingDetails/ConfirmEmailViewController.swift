@@ -26,7 +26,34 @@ protocol ConfirmEmailDelegate: class {
     func didConfirmEmail(inController controller: ConfirmEmailViewController)
 }
 
-final class ConfirmEmailViewController: SettingsBaseTableViewController {
+extension UITableView {
+    var autolayoutTableHeaderView: UIView? {
+        set {
+            if let newHeader = newValue {
+                newHeader.translatesAutoresizingMaskIntoConstraints = false
+                
+                self.tableHeaderView = newHeader
+                
+                NSLayoutConstraint.activate([
+                    newHeader.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                    newHeader.widthAnchor.constraint(equalTo: self.widthAnchor),
+                    newHeader.topAnchor.constraint(equalTo: self.topAnchor)
+                    ])
+                
+                self.tableHeaderView?.layoutIfNeeded()
+                self.tableHeaderView = newHeader
+            }
+            else {
+                self.tableHeaderView = nil
+            }
+        }
+        get {
+            return self.tableHeaderView
+        }
+    }
+}
+
+@objcMembers final class ConfirmEmailViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     weak var delegate: ConfirmEmailDelegate?
 
@@ -65,14 +92,12 @@ final class ConfirmEmailViewController: SettingsBaseTableViewController {
         tableView.isScrollEnabled = false
         
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
-        tableView.estimatedSectionHeaderHeight = 60;
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        tableView.estimatedSectionHeaderHeight = 30
+
         let description = DescriptionHeaderView()
         description.descriptionLabel.text = "self.settings.account_section.email.change.verify.description".localized
 
-        return description
+        tableView.autolayoutTableHeaderView = description
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -31,6 +31,7 @@ protocol AppStateControllerDelegate : class {
 class AppStateController : NSObject {
     
     private(set) var appState : AppState = .headless
+    private(set) var lastAppState : AppState = .headless
     private var authenticationObserverToken : ZMAuthenticationStatusObserver?
     public weak var delegate : AppStateControllerDelegate? = nil
     
@@ -42,7 +43,8 @@ class AppStateController : NSObject {
     fileprivate var hasCompletedRegistration = false
     fileprivate var loadingAccount : Account?
     fileprivate var authenticationError : NSError?
-    fileprivate let isRunningTests = ProcessInfo.processInfo.isRunningTests
+    fileprivate var isRunningTests = ProcessInfo.processInfo.isRunningTests
+    var isRunningSelfUnitTest = false
     
     override init() {
         super.init()
@@ -56,11 +58,8 @@ class AppStateController : NSObject {
     }
 
     func calculateAppState() -> AppState {
-        
-        if isRunningTests {
-            return .unauthenticated(error: nil)
-        }
-        
+        guard !isRunningTests || isRunningSelfUnitTest else { return .unauthenticated(error: nil) }
+
         if !hasEnteredForeground {
             return .headless
         }
@@ -101,6 +100,7 @@ class AppStateController : NSObject {
         
         if newAppState != appState {
             zmLog.debug("transitioning to app state: \(newAppState)")
+            lastAppState = appState
             appState = newAppState
             delegate?.appStateController(transitionedTo: appState) {
                 completion?()
@@ -128,8 +128,11 @@ extension AppStateController : SessionManagerDelegate {
         let selectedAccount = SessionManager.shared?.accountManager.selectedAccount
 
         // We only care about the error if it concerns the selected account, or the loading account.
-        // ignore the error when account is nil (selectedAccount and loadingAccount are nil also) when app launchs
         if account != nil && (selectedAccount == account || loadingAccount == account) {
+            authenticationError = error as NSError
+        }
+        // When the account is nil, we care about the error if there are some accounts in accountManager
+        else if account == nil && SessionManager.shared?.accountManager.accounts.count > 0 {
             authenticationError = error as NSError
         }
 
@@ -182,7 +185,7 @@ extension AppStateController : SessionManagerDelegate {
 
 extension AppStateController {
     
-    func applicationDidBecomeActive() {
+    @objc func applicationDidBecomeActive() {
         hasEnteredForeground = true
         updateAppState()
     }

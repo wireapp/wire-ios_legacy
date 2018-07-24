@@ -24,7 +24,7 @@ FOUNDATION_EXPORT NSTimeInterval const ConversationUploadMaxVideoDuration;
 
 @interface ConversationInputBarViewController (Files) <UIDocumentMenuDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-- (void)docUploadPressed:(id)sender;
-- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType mediaTypes:(NSArray *)mediaTypes allowsEditing:(BOOL)allowsEditing;
+- (void)docUploadPressed:(IconButton *)sender;
 - (void)uploadFileAtURL:(NSURL *)URL;
+- (void)executeWithVideoPermissions:(dispatch_block_t)toExecute;
 @end

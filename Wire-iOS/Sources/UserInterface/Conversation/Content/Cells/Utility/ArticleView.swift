@@ -29,7 +29,7 @@ import Classy
     func articleViewDidLongPressView(_ articleView: ArticleView)
 }
 
-class ArticleView: UIView {
+@objcMembers class ArticleView: UIView {
 
     /// MARK - Styling
     var containerColor: UIColor?
@@ -52,7 +52,7 @@ class ArticleView: UIView {
     var loadingView: ThreeDotsLoadingView?
     var linkPreview: LinkPreview?
     private let obfuscationView = ObfuscationView(icon: .link)
-    private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
+    private let ephemeralColor = UIColor(scheme: .accent)
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
     
@@ -90,11 +90,11 @@ class ArticleView: UIView {
 
         authorLabel.lineBreakMode = .byTruncatingMiddle
         authorLabel.accessibilityIdentifier = "linkPreviewSource"
-        authorLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        authorLabel.setContentHuggingPriority(.required, for: .vertical)
 
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
-        messageLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        messageLabel.setContentHuggingPriority(.required, for: .vertical)
         messageLabel.delegate = self
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
@@ -106,8 +106,8 @@ class ArticleView: UIView {
     }
 
     private func updateLabels(obfuscated: Bool = false) {
-        messageLabel.linkAttributes = obfuscated ? nil :  [NSForegroundColorAttributeName : UIColor.accent()]
-        messageLabel.activeLinkAttributes = obfuscated ? nil : [NSForegroundColorAttributeName : UIColor.accent().withAlphaComponent(0.5)]
+        messageLabel.linkAttributes = obfuscated ? nil :  [NSAttributedStringKey.foregroundColor.rawValue : UIColor.accent()]
+        messageLabel.activeLinkAttributes = obfuscated ? nil : [NSAttributedStringKey.foregroundColor.rawValue : UIColor.accent().withAlphaComponent(0.5)]
 
         authorLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 16) : authorFont
         messageLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 20) : titleFont
@@ -144,8 +144,8 @@ class ArticleView: UIView {
         }
     }
     
-    private var authorHighlightAttributes : [String: AnyObject] {
-        return [NSFontAttributeName : authorHighlightFont, NSForegroundColorAttributeName: authorHighlightTextColor]
+    private var authorHighlightAttributes : [NSAttributedStringKey: AnyObject] {
+        return [.font : authorHighlightFont, .foregroundColor: authorHighlightTextColor]
     }
     
     private func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
@@ -189,7 +189,7 @@ class ArticleView: UIView {
 
             if obfuscated {
                 ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
-                imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
+                imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
                 setContentMode(isObfuscated: true)
             } else {
                 imageView.image = nil
@@ -239,12 +239,12 @@ class ArticleView: UIView {
         messageLabel.text = twitterStatus.message
     }
 
-    dynamic private func viewTapped(_ sender: UITapGestureRecognizer) {
+    @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
     
-    dynamic private func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc private func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else { return }
         delegate?.articleViewDidLongPressView(self)
     }

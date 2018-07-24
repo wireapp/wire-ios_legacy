@@ -82,7 +82,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        StorageStack.reset()
     }
     
     override func viewDidLoad() {
@@ -174,7 +174,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     /// invoked when the user wants to post
-    func appendPostTapped() {
+    @objc func appendPostTapped() {
         navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
 
         postContent?.send(text: contentText, sharingSession: sharingSession!) { [weak self] progress in

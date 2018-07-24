@@ -23,9 +23,18 @@ import Cartography
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int)
 }
 
+extension UIPageViewController {
+    var scrollView: UIScrollView? {
+        return view.subviews
+            .lazy
+            .compactMap { $0 as? UIScrollView }
+            .first
+    }
+}
+
 extension UIViewController {
-    var wr_tabBarController: TabBarController? {
-        if (parent == nil) {
+    @objc var wr_tabBarController: TabBarController? {
+        if parent == nil {
             return nil
         } else if (parent?.isKind(of: TabBarController.self) != nil) {
             return parent as? TabBarController
@@ -41,33 +50,42 @@ extension UIViewController {
     }
 }
 
-@objc
-class TabBarController: UIViewController {
+@objcMembers
+class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate {
 
     weak var delegate: TabBarControllerDelegate?
+    
+    private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
-    fileprivate(set) var viewControllers: [UIViewController]
-    fileprivate(set) var selectedIndex: Int
+    private(set) var viewControllers: [UIViewController]
+    private(set) var selectedIndex: Int
+    
+    @objc(interactive) var isInteractive = true {
+        didSet {
+            pageViewController.dataSource = isInteractive ? self : nil
+            pageViewController.delegate = isInteractive ? self : nil
+            tabBar?.animatesTransition = isInteractive
+        }
+    }
 
-    var style: ColorSchemeVariant = ColorScheme.default().variant {
+    var style: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             tabBar?.style = style
         }
     }
 
     @objc(enabled)
-    var isEnabled: Bool = true {
+    var isEnabled = true {
         didSet {
-            self.tabBar?.isUserInteractionEnabled = self.isEnabled
+            tabBar?.isUserInteractionEnabled = isEnabled
         }
     }
 
     // MARK: - Views
-
-    fileprivate var presentedTabBarViewController: UIViewController?
-    fileprivate var tabBar: TabBar?
-    fileprivate var contentView: UIView!
-    fileprivate var isTransitioning: Bool = false
+    private var tabBar: TabBar?
+    private var contentView = UIView()
+    private var isSwiping = false
+    private var startOffset: CGFloat = 0
 
     // MARK: - Initialization
 
@@ -90,33 +108,44 @@ class TabBarController: UIViewController {
     }
 
     fileprivate func createViews() {
-        self.contentView = UIView(frame: self.view.bounds)
-        self.contentView!.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.contentView)
+        contentView.backgroundColor = viewControllers.first?.view?.backgroundColor
+        add(pageViewController, to: contentView)
+        pageViewController.scrollView?.delegate = self
 
+        if isInteractive {
+            pageViewController.dataSource = self
+            pageViewController.delegate = self
+        }
+        
         let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
+        tabBar?.animatesTransition = isInteractive
         self.tabBar?.delegate = self
         self.tabBar?.isUserInteractionEnabled = self.isEnabled && items.count > 1
         self.view.addSubview(self.tabBar!)
     }
 
     fileprivate func createConstraints() {
-
+        pageViewController.view.fitInSuperview()
+        
         if let tabBar = self.tabBar {
-            constrain(tabBar, self.contentView) { tabBar, contentView in
+            constrain(tabBar, contentView, view) { tabBar, contentView, view in
                 tabBar.top == tabBar.superview!.top
                 tabBar.left == tabBar.superview!.left
                 tabBar.right == tabBar.superview!.right
                 contentView.top == tabBar.bottom
+                contentView.bottom == view.bottom
             }
         }
 
-        constrain(self.contentView) { contentView in
+        constrain(contentView, view, pageViewController.view) { contentView, view, pageViewController in
             if (self.tabBar == nil) { contentView.top == contentView.superview!.top }
             contentView.left == contentView.superview!.left
             contentView.right == contentView.superview!.right
-            contentView.bottom == contentView.superview!.bottom
+            pageViewController.width == contentView.width
+            pageViewController.height == contentView.height
         }
     }
 
@@ -125,48 +154,76 @@ class TabBarController: UIViewController {
     func selectIndex(_ index: Int, animated: Bool) {
         selectedIndex = index
 
-        let toViewController = self.viewControllers[index]
-        let fromViewController = self.presentedTabBarViewController
+        let toViewController = viewControllers[index]
+        let fromViewController = pageViewController.viewControllers?.first
 
-        guard toViewController != fromViewController &&
-            self.contentView != nil &&
-            !isTransitioning
-            else {
-            return
-        }
+        guard toViewController != fromViewController else { return }
 
         delegate?.tabBarController(self, tabBarDidSelectIndex: index)
-        self.presentedTabBarViewController = toViewController
-        self.tabBar?.setSelectedIndex(index, animated: animated)
+        tabBar?.setSelectedIndex(index, animated: animated)
 
-        if (fromViewController != nil) {
-            fromViewController?.willMove(toParentViewController: nil)
+        let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
+        let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
+        pageViewController.setViewControllers([toViewController], direction: direction, animated: isInteractive)
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        return viewControllers.index(of: viewController).flatMap {
+            let index = $0 + 1
+            guard index >= 0 && index < viewControllers.count else { return nil }
+            return viewControllers[index]
         }
-
-        toViewController.view.translatesAutoresizingMaskIntoConstraints = true
-        toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        toViewController.view.frame = self.contentView.bounds
-
-        addChildViewController(toViewController)
-        self.contentView.addSubview(toViewController.view)
-
-        guard fromViewController != nil else {
-            toViewController.didMove(toParentViewController: self)
-            return
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        return viewControllers.index(of: viewController).flatMap {
+            let index = $0 - 1
+            guard index >= 0 && index < viewControllers.count else { return nil }
+            return viewControllers[index]
         }
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        guard let selected = pageViewController.viewControllers?.first else { return }
+        guard let index = viewControllers.index(of: selected) else { return }
+        
+        isSwiping = false
+        delegate?.tabBarController(self, tabBarDidSelectIndex: index)
+        selectedIndex = index
+        tabBar?.setSelectedIndex(selectedIndex, animated: isInteractive)
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        isSwiping = true
+        startOffset = scrollView.contentOffset.x
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        isSwiping = false
+    }
 
-        self.transition(from: fromViewController!, to: toViewController, duration: animated ? 0.25 : 0, options: .transitionCrossDissolve, animations: {
-            self.isTransitioning = true
-            if toViewController.responds(to: #selector(UIViewController.takeFirstResponder)) {
-                toViewController.perform(#selector(UIViewController.takeFirstResponder))
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard isSwiping else { return }
+    
+        let startPosition = abs(startOffset - scrollView.contentOffset.x)
+        let numberOfItems = CGFloat(viewControllers.count)
+        let percent = (startPosition / view.frame.width) / numberOfItems
+
+        // Percentage occupied by one page, e.g. 33% when we have 3 controllers.
+        let increment = 1.0 / numberOfItems
+        // Start percentage, for example 50% when starting to swipe from the last of 2 controllers.
+        let startPercentage = increment * CGFloat(selectedIndex)
+        
+        // The adjusted percentage of the movement based on the scroll direction
+        let adjustedPercent: CGFloat = {
+            if startOffset <= scrollView.contentOffset.x {
+                return startPercentage + percent // going right or not moving
+            } else {
+                return startPercentage - percent // going left
             }
-        }, completion: { (finished) in
-            self.isTransitioning = false
-            fromViewController?.view.removeFromSuperview()
-            fromViewController?.removeFromParentViewController()
-            toViewController.didMove(toParentViewController: self)
-        })
+        }()
 
+        tabBar?.setOffsetPercentage(adjustedPercent)
     }
 
 }

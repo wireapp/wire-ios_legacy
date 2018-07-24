@@ -21,7 +21,7 @@
 
 #import "FormFlowViewController.h"
 
-@class AnalyticsTracker, LoginCredentials;
+@class LoginCredentials;
 
 @protocol  PhoneSignInViewControllerDelegate <NSObject>
 
@@ -32,7 +32,6 @@
 @interface PhoneSignInViewController : FormFlowViewController
 
 @property (nonatomic, weak) id<PhoneSignInViewControllerDelegate> delegate;
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) LoginCredentials *loginCredentials;
 
 - (void)takeFirstResponder;
