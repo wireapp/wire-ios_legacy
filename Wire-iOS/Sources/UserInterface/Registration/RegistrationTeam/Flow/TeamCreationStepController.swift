@@ -36,7 +36,7 @@ final class TeamCreationStepController: UIViewController {
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
-    private let companyLoginController = CompanyLoginController()
+    private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
 
     fileprivate var secondaryViewsStackView: UIStackView!
     fileprivate var errorViewContainer: UIView!
@@ -78,7 +78,7 @@ final class TeamCreationStepController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        companyLoginController.delegate = self
+        companyLoginController?.delegate = self
         view.backgroundColor = UIColor.Team.background
         
         createViews()
@@ -88,8 +88,8 @@ final class TeamCreationStepController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         observeKeyboard()
-        companyLoginController.isAutoDetectionEnabled = true
-        companyLoginController.detectLoginCode()
+        companyLoginController?.isAutoDetectionEnabled = true
+        companyLoginController?.detectLoginCode()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
 
@@ -100,7 +100,7 @@ final class TeamCreationStepController: UIViewController {
         super.viewWillDisappear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         NotificationCenter.default.removeObserver(self)
-        companyLoginController.isAutoDetectionEnabled = false
+        companyLoginController?.isAutoDetectionEnabled = false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

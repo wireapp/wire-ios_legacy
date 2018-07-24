@@ -129,6 +129,7 @@
 #import "PassthroughWindow.h"
 #import "PassthroughTouchesView.h"
 #import "ZMUserSession+RequestProxy.h"
+#import "URLSchemeHelper.h"
 
 // Utils
 #import "Analytics.h"

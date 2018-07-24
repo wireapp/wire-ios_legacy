@@ -47,6 +47,10 @@ import Foundation
     // Whether the presence of a code should be checked periodically on iPad.
     // This is in order to work around https://openradar.appspot.com/28771678.
     private static let isPollingEnabled = true
+    private static let fallbackURLScheme = "wire-sso"
+
+    // Whether performing a company login is supported on the current build.
+    @objc(companyLoginEnabled) static public let isCompanyLoginEnabled = DeveloperMenuState.developerMenuEnabled()
 
     private var token: Any?
     private var pollingTimer: Timer?
@@ -57,9 +61,17 @@ import Foundation
     // MARK: - Initialization
 
     /// Create a new `CompanyLoginController` instance using the standard detector and requester.
-    @objc public override convenience init() {
+    @objc(initWithDefaultEnvironment) public convenience init?(withDefaultEnvironment: ()) {
+        guard CompanyLoginController.isCompanyLoginEnabled else { return nil } // Disable on public builds
+
         let environment = ZMBackendEnvironment(userDefaults: .standard)
-        let requester = CompanyLoginRequester(backendHost: environment.backendURL.host!, callbackScheme: "wire")
+        let callbackScheme = wr_URLScheme()
+        requireInternal(nil != callbackScheme, "no valid callback scheme")
+
+        let requester = CompanyLoginRequester(
+            backendHost: environment.backendURL.host!,
+            callbackScheme: callbackScheme ?? CompanyLoginController.fallbackURLScheme
+        )
         self.init(detector: .shared, requester: requester)
     }
 
