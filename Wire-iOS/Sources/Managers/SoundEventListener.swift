@@ -163,14 +163,6 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         previousCallStates[conversationId] = callState
         
         switch callState {
-        case .outgoing:
-            if callCenter.isVideoCall(conversationId: conversationId) {
-                playSoundIfAllowed(MediaManagerSoundRingingFromMeVideoSound)
-            } else {
-                playSoundIfAllowed(MediaManagerSoundRingingFromMeSound)
-            }
-        case .established:
-            playSoundIfAllowed(MediaManagerSoundUserJoinsVoiceChannelSound)
         case .incoming(video: _, shouldRing: true, degraded: _):
             guard let sessionManager = SessionManager.shared, !conversation.isSilenced else { return }
             
@@ -189,7 +181,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         case .terminating(reason: let reason):
             switch reason {
             case .normal, .canceled:
-                playSoundIfAllowed(MediaManagerSoundUserLeavesVoiceChannelSound)
+                break
             default:
                 playSoundIfAllowed(MediaManagerSoundCallDropped)
             }
@@ -207,8 +199,6 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
             
             mediaManager.stopSound(MediaManagerSoundRingingFromThemInCallSound)
             mediaManager.stopSound(MediaManagerSoundRingingFromThemSound)
-            mediaManager.stopSound(MediaManagerSoundRingingFromMeVideoSound)
-            mediaManager.stopSound(MediaManagerSoundRingingFromMeSound)
         }
         
     }
