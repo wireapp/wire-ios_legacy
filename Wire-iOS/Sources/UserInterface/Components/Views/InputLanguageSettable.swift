@@ -23,9 +23,6 @@ protocol InputLanguageSettable {
     var originalTextInputMode: UITextInputMode? {get}
 }
 
-extension InputLanguageSettable where Self: TextView {
-}
-
 extension TextView: InputLanguageSettable {
     var inputLanguage: String? {
         get {
