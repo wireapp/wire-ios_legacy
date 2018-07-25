@@ -82,7 +82,7 @@ import Foundation
         self.flowHandler = CompanyLoginFlowHandler(callbackScheme: requester.callbackScheme)
         super.init()
         setupObservers()
-        flowHandler.enableInAppBrowser = false
+        flowHandler.enableInAppBrowser = true
     }
 
     deinit {
