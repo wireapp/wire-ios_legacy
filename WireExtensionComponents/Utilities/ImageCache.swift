@@ -18,14 +18,14 @@
 
 import Foundation
 
-extension ProfileSelfPictureViewController: ZMUserObserver {
+public class ImageCache<T : NSObjectProtocol> {
     
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.imageMediumDataChanged else { return }
+    public init() {
         
-        changeInfo.user.fetchProfileImage(size: .complete) { (image) in
-            self.selfUserImageView.image = image
-        }
     }
+    
+    public var cache: NSCache<NSString, T> = NSCache()
+    public var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
+    public var dispatchGroup: DispatchGroup = DispatchGroup()
     
 }

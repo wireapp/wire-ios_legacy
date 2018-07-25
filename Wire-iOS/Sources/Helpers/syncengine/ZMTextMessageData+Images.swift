@@ -17,14 +17,7 @@
 //
 
 import Foundation
-
-class ImageCache<T : NSObjectProtocol> {
-    
-    var cache: NSCache<NSString, T> = NSCache()
-    var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
-    var dispatchGroup: DispatchGroup = DispatchGroup()
-    
-}
+import WireExtensionComponents
 
 var defaultImageCache = ImageCache<UIImage>()
 

@@ -18,24 +18,35 @@
 
 import Foundation
 
-// TODO jacob move into class for easier testing
-fileprivate var colorCache: NSCache<NSString, UIImage> = NSCache()
-fileprivate var desaturatedCache: NSCache<NSString, UIImage> = NSCache()
 fileprivate var ciContext = CIContext(options: nil)
-fileprivate var processingQueue = DispatchQueue(label: "UserImageProcessingQueue", qos: .background, attributes: [.concurrent])
+
+public var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
 
 extension UserType {
     
-    public func fetchProfileImage(_ size: ProfileImageSize, completion: @escaping (_ image: UIImage?) -> Void ) -> Void {
+    private func cacheKey(for size: ProfileImageSize, desaturate: Bool) -> String? {
         
-        guard let cacheKey = (size == .preview ? smallProfileImageCacheKey : mediumProfileImageCacheKey) as NSString? else {
+        guard let baseKey = (size == .preview ? smallProfileImageCacheKey : mediumProfileImageCacheKey) else {
+            return nil
+        }
+        
+        if desaturate {
+            return "\(baseKey)_desaturated"
+        } else {
+            return baseKey
+        }
+        
+    }
+    
+    public func fetchProfileImage(cache: ImageCache<UIImage> = defaultUserImageCache, size: ProfileImageSize, completion: @escaping (_ image: UIImage?) -> Void ) -> Void {
+        
+        let desaturate =  !isConnected && !isSelfUser && !isTeamMember || isServiceUser
+    
+        guard let cacheKey = cacheKey(for: size, desaturate: desaturate) as NSString? else {
             return completion(nil)
         }
         
-        let desaturate =  !isConnected && !isSelfUser && !isTeamMember || isServiceUser
-        let cache = desaturate ? desaturatedCache : colorCache
-        
-        if let image = cache.object(forKey: cacheKey) {
+        if let image = cache.cache.object(forKey: cacheKey) {
             return completion(image)
         }
         
@@ -46,7 +57,7 @@ extension UserType {
             requestCompleteProfileImage()
         }
         
-        imageData(for: size, queue: processingQueue) { (imageData) in
+        imageData(for: size, queue: cache.processingQueue) { (imageData) in
             guard let imageData = imageData, let rawImage = UIImage(data: imageData) else {
                 return DispatchQueue.main.async {
                     completion(nil)
@@ -61,7 +72,7 @@ extension UserType {
             }
             
             if let image = image {
-                cache.setObject(image, forKey: cacheKey)
+                cache.cache.setObject(image, forKey: cacheKey)
             }
             
             DispatchQueue.main.async {

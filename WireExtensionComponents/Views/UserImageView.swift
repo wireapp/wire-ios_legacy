@@ -24,7 +24,7 @@ extension UserImageView {
     @objc
     func updateUserImage() {
         
-        user?.fetchProfileImage(.preview, completion: { (image) in
+        user?.fetchProfileImage(size: .preview, completion: { (image) in
             guard let image = image else { return }
             self.setUserImage(image)
         })
