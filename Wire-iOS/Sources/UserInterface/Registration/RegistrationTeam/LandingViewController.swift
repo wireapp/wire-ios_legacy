@@ -31,7 +31,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     weak var delegate: LandingViewControllerDelegate?
 
     fileprivate var device: DeviceProtocol
-    private let companyLoginController = CompanyLoginController()
+    private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
 
     // MARK: - UI styles
 
@@ -176,7 +176,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         navigationBar.pushItem(navigationItem, animated: false)
         navigationBar.tintColor = .black
         view.addSubview(navigationBar)
-        companyLoginController.delegate = self
+        companyLoginController?.delegate = self
 
         self.createConstraints()
         self.configureAccessibilityElements()
@@ -193,13 +193,13 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        companyLoginController.isAutoDetectionEnabled = true
-        companyLoginController.detectLoginCode()
+        companyLoginController?.isAutoDetectionEnabled = true
+        companyLoginController?.detectLoginCode()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        companyLoginController.isAutoDetectionEnabled = false
+        companyLoginController?.isAutoDetectionEnabled = false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

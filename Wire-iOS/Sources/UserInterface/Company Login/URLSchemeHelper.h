@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2016 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,27 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+#import <Foundation/Foundation.h>
 
-import Foundation
-
-extension UserImageView {
-    
-    @objc
-    func updateUserImage() {
-        
-        var profileImageSize: ProfileImageSize
-        switch size {
-        case .small, .normal, .first:
-            profileImageSize = .preview
-        default:
-            profileImageSize = .complete
-        }
-        
-        user?.fetchProfileImage(size: profileImageSize, completion: { (image) in
-            guard let image = image else { return }
-            self.setUserImage(image)
-        })
-        
-    }
-    
-}
+NSString *wr_companyLoginURLScheme(void);
