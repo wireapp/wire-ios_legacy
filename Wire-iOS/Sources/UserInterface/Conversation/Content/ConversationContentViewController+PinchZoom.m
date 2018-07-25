@@ -66,19 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
             ImageMessageCell *imageCell = (ImageMessageCell *)cell;
             self.pinchImageCell = imageCell;
             CGRect imageFrame = [self.view.window convertRect:imageCell.fullImageView.bounds fromView:imageCell.fullImageView];
-            
-            BOOL isAnimatedGIF = message.imageMessageData.isAnimatedGIF;
-            
-            id<MediaAsset> image;
-            
-            if (isAnimatedGIF) {
-                image = [[FLAnimatedImage alloc] initWithAnimatedGIFData:message.imageMessageData.imageData];
-            } else {
-                image = [UIImage imageWithData:message.imageMessageData.imageData];
-            }
-            
-            // TODO jacob. Load images asynchrounously
-            
+                        
+            id<MediaAsset> image = imageCell.fullImageView.mediaAsset;
             self.initialPinchLocation = [pinchGestureRecognizer locationInView:self.view];
             
             self.dimView = [[UIView alloc] initWithFrame:self.view.window.bounds];

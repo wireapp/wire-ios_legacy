@@ -177,7 +177,6 @@ import Classy
         obfuscationView.isHidden = !obfuscated
         
         if obfuscated {
-            // TODO jacob remove iamge from cache
             imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
             setContentMode(isObfuscated: true)
         } else {
