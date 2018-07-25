@@ -72,15 +72,6 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         return imageView
     }()
 
-    let headline: UILabel = {
-        let label = UILabel()
-        label.text = "landing.title".localized
-        label.font = LandingViewController.regularFont
-        label.textColor = UIColor.Team.subtitleColor
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return label
-    }()
-
     let headlineStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillProportionally
@@ -165,7 +156,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         Analytics.shared().tagOpenedLandingScreen(context: "email")
 
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
-        [logoView, headline].forEach(headlineStackView.addArrangedSubview)
+        [logoView].forEach(headlineStackView.addArrangedSubview)
         headerContainerView.addSubview(headlineStackView)
         
         [createAccountButton, createTeamButton].forEach { button in
@@ -219,8 +210,8 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
             navigationBar.right == selfView.right
         }
 
-        constrain(headlineStackView, logoView, headline, headerContainerView) {
-            headlineStackView, logoView, headline, headerContainerView in
+        constrain(headlineStackView, logoView, headerContainerView) {
+            headlineStackView, logoView, headerContainerView in
 
             ///reserver space for status bar(20pt)
             headlineStackView.top >= headerContainerView.top + 36
@@ -229,7 +220,6 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
             logoView.width == 96
             logoView.height == 31
 
-            headline.height >= 18
             headlineStackView.bottom <= headerContainerView.bottom - 16
 
             if UIDevice.current.userInterfaceIdiom == .pad {
@@ -319,7 +309,6 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
 
     private func configureAccessibilityElements() {
         logoView.isAccessibilityElement = false
-        headline.isAccessibilityElement = false
 
         headlineStackView.isAccessibilityElement = true
         headlineStackView.accessibilityLabel = "landing.app_name".localized + "\n" + "landing.title".localized
