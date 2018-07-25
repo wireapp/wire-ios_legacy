@@ -347,7 +347,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                     if let _ = $0.sender,
                         let type = StatusMessageType(message: $0),
                         let _ = matchedTypesDescriptions[type],
-                        $0.isRelevant {
+                        $0.relevantForConversationStatus {
                         return true
                     } else {
                         return false
@@ -382,7 +382,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
                      let _ = matchedTypesDescriptions[type],
-                     $0.isRelevant {
+                     $0.relevantForConversationStatus {
                     return true
                 }
                 else {
@@ -407,8 +407,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
 }
 
 fileprivate extension ZMConversationMessage {
-    var isRelevant: Bool {
-        return (self as? ZMSystemMessage)?.isRelevant ?? true
+    var relevantForConversationStatus: Bool {
+        return (self as? ZMSystemMessage)?.relevantForConversationStatus ?? true
     }
 }
 
