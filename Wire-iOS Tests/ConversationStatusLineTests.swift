@@ -71,6 +71,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.sender = self.otherUser
         otherMessage.systemMessageType = .missedCall
+        otherMessage.relevantForConversationStatus = true
         sut.sortedAppendMessage(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
 
@@ -78,6 +79,22 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "Missed call")
+    }
+    
+    func testStatusRejectedCall() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
+        otherMessage.sender = self.otherUser
+        otherMessage.systemMessageType = .missedCall
+        otherMessage.relevantForConversationStatus = false
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "")
     }
     
     func testStatusForMultipleTextMessagesInConversation_silenced() {

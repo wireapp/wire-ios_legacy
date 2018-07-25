@@ -73,7 +73,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createEmailField];
     [self createPasswordField];
     [self createForgotPasswordButton];
-    [self createCompanyLoginButton];
+    if (CompanyLoginController.companyLoginEnabled) {
+        [self createCompanyLoginButton];
+    }
+
     [self createConstraints];
 }
 
@@ -218,13 +221,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.passwordField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
     [self.passwordField autoSetDimension:ALDimensionHeight toSize:40];
     
-    [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
-    [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
-    [self.forgotPasswordButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view withOffset:28];
-    
-    [self.companyLoginButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
-    [self.companyLoginButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
-    [self.companyLoginButton autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view withOffset:-28];
+    if (CompanyLoginController.companyLoginEnabled) {
+        [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
+        [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
+        [self.forgotPasswordButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view withOffset:28];
+        [self.companyLoginButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
+        [self.companyLoginButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
+        [self.companyLoginButton autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view withOffset:-28];
+    } else {
+        [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
+        [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
+        [self.forgotPasswordButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    }
 }
 
 - (ZMEmailCredentials *)credentials

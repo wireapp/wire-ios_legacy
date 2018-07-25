@@ -613,11 +613,17 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
             self.present(alert, animated: true, completion: nil)
 
-        case .companyLoginFailure(let message):
+        case .companyLoginFailure(let label):
+            defer {
+                notifyCompanyLoginCompletion()
+            }
+            
             guard case .unauthenticated = appStateController.appState else {
                 callback(false)
                 return
             }
+
+            let message = "login.sso.error.alert.message".localized(args: label)
 
             let alert = UIAlertController(title: "general.failure".localized,
                                           message: message,
@@ -627,12 +633,24 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             self.present(alert, animated: true, completion: nil)
 
         case .companyLoginSuccess:
+            defer {
+                notifyCompanyLoginCompletion()
+            }
+
             guard case .unauthenticated = appStateController.appState else {
                 callback(false)
                 return
             }
-            
+
             callback(true)
         }
     }
+
+    private func notifyCompanyLoginCompletion() {
+        NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
+    }
+}
+
+extension Notification.Name {
+    static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
 }

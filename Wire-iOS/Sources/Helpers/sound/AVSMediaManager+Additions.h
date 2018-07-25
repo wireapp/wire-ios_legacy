@@ -24,15 +24,10 @@
 
 extern NSString *const MediaManagerSoundOutgoingKnockSound;
 extern NSString *const MediaManagerSoundIncomingKnockSound;
-extern NSString *const MediaManagerSoundUserLeavesVoiceChannelSound;
 extern NSString *const MediaManagerSoundMessageReceivedSound;
 extern NSString *const MediaManagerSoundFirstMessageReceivedSound;
 extern NSString *const MediaManagerSoundSomeoneJoinsVoiceChannelSound;
-extern NSString *const MediaManagerSoundReadyToTalkSound;
 extern NSString *const MediaManagerSoundTransferVoiceToHereSound;
-extern NSString *const MediaManagerSoundUserJoinsVoiceChannelSound;
-extern NSString *const MediaManagerSoundRingingFromMeSound;
-extern NSString *const MediaManagerSoundRingingFromMeVideoSound;
 extern NSString *const MediaManagerSoundRingingFromThemSound;
 extern NSString *const MediaManagerSoundRingingFromThemInCallSound;
 extern NSString *const MediaManagerSoundCallDropped;

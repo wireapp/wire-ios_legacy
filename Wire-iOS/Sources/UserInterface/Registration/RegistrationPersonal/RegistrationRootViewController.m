@@ -59,7 +59,7 @@
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
-        self.companyLoginController = [[CompanyLoginController alloc] init];
+        self.companyLoginController = [[CompanyLoginController alloc] initWithDefaultEnvironment];
         self.flowType = flow;
     }
 
