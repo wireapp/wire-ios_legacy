@@ -243,16 +243,10 @@ import SafariServices
         developerCellDescriptors.append(shareCryptobox)
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
-        let appendManyMessages = SettingsButtonCellDescriptor(title: "Append 10.000 messages to the top conv (not sending)", isDestructive: true) { _ in
-            let userSession = ZMUserSession.shared()!
-            let conversation = ZMConversationList.conversations(inUserSession: userSession).firstObject! as! ZMConversation
+        let appendManyMessages = SettingsButtonCellDescriptor(title: "Append N messages to the top conv (not sending)", isDestructive: true) { _ in
             
-            (0...10000).forEach { i in
-                let genericMessage = ZMGenericMessage.message(text: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;",
-                    nonce: UUID())
-                let clientMessage = conversation.appendClientMessage(with: genericMessage)!
-                clientMessage.expire()
-                clientMessage.linkPreviewState = .done
+            self.requestNumber() { count in
+                self.appendMessages(count: count)
             }
         }
         developerCellDescriptors.append(appendManyMessages)
@@ -269,6 +263,54 @@ import SafariServices
         }
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
+    }
+    
+    func requestNumber(_ callback: @escaping (Int)->()) {
+        guard let controllerToPresentOver = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+
+        
+        let controller = UIAlertController(
+            title: "Enter count of messages",
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "general.ok".localized, style: .default) { [controller] _ in
+            callback(Int(controller.textFields?.first?.text ?? "0")!)
+        }
+        
+        controller.addTextField()
+        
+        controller.addAction(.cancel { })
+        controller.addAction(okAction)
+        controllerToPresentOver.present(controller, animated: true, completion: nil)
+    }
+    
+    func appendMessages(count: Int) {
+        let userSession = ZMUserSession.shared()!
+        let conversation = ZMConversationList.conversations(inUserSession: userSession).firstObject! as! ZMConversation
+        let conversationId = conversation.objectID
+        
+        let syncContext = userSession.syncManagedObjectContext!
+        syncContext.performGroupedBlock {
+            let syncConversation = try! syncContext.existingObject(with: conversationId) as! ZMConversation
+            let messages: [ZMClientMessage] = (0...count).map { i in
+                let nonce = UUID()
+                let genericMessage = ZMGenericMessage.message(text: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;",
+                    nonce: nonce)
+
+                let clientMessage = ZMClientMessage(nonce: nonce, managedObjectContext: syncContext)
+                clientMessage.add(genericMessage.data())
+                clientMessage.sender = ZMUser.selfUser(in: syncContext)
+                
+                clientMessage.expire()
+                clientMessage.linkPreviewState = .done
+                
+                return clientMessage
+            }
+            syncConversation.mutableMessages.addObjects(from: messages)
+            userSession.syncManagedObjectContext.saveOrRollback()
+        }
     }
     
     func helpSection() -> SettingsCellDescriptorType {
