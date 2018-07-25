@@ -122,6 +122,7 @@
 		16D4932A203DCCCA008DDFFA /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D49329203DCCCA008DDFFA /* UserCell.swift */; };
 		16D4932C203DD480008DDFFA /* UserCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D4932B203DD480008DDFFA /* UserCellTests.swift */; };
 		16D68E9B1CEF99C7003AB9E0 /* WaveformProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */; };
+		16E256212108AF6E00919DB0 /* FontSpec+DynamicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */; };
 		16E2A09A1F6ADE75005F4DB1 /* ActiveVoiceChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0991F6ADE75005F4DB1 /* ActiveVoiceChannelViewController.swift */; };
 		16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A09F1F6BEDE7005F4DB1 /* ProximityMonitorManager.swift */; };
 		16E2A0A21F6BEF6E005F4DB1 /* SoundEventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E2A0A11F6BEF6E005F4DB1 /* SoundEventListener.swift */; };
@@ -1418,6 +1419,7 @@
 		16D49329203DCCCA008DDFFA /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		16D4932B203DD480008DDFFA /* UserCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCellTests.swift; sourceTree = "<group>"; };
 		16D68E9A1CEF99C7003AB9E0 /* WaveformProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformProgressView.swift; sourceTree = "<group>"; };
+		16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FontSpec+DynamicType.swift"; sourceTree = "<group>"; };
 		16E2A0991F6ADE75005F4DB1 /* ActiveVoiceChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveVoiceChannelViewController.swift; sourceTree = "<group>"; };
 		16E2A09F1F6BEDE7005F4DB1 /* ProximityMonitorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProximityMonitorManager.swift; sourceTree = "<group>"; };
 		16E2A0A11F6BEF6E005F4DB1 /* SoundEventListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEventListener.swift; sourceTree = "<group>"; };
@@ -3824,6 +3826,7 @@
 				87A6BD0E1F0D2A58006A3232 /* UIApplication+StatusBar.m */,
 				871BC1FD1D34F8F800DF0793 /* UIColor+WAZExtensions.h */,
 				871BC1FE1D34F8F800DF0793 /* UIColor+WAZExtensions.m */,
+				16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */,
 				EF2F6DA220ED11D2007B6D70 /* UIColor+Accent.swift */,
 				871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */,
 				163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */,
@@ -6983,6 +6986,7 @@
 				871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */,
 				8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */,
 				F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */,
+				16E256212108AF6E00919DB0 /* FontSpec+DynamicType.swift in Sources */,
 				160C311F1E4C78480012E4BC /* UnknownMessageCell.swift in Sources */,
 				EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */,
 				87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */,
