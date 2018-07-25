@@ -23,10 +23,6 @@ import Foundation
     /// The `CompanyLoginController` will never present any alerts on its own and will
     /// always ask its delegate to handle the actual presentation of the alerts.
     func controller(_ controller: CompanyLoginController, presentAlert: UIAlertController)
-    
-    /// The `CompanyLoginController` will never present any loading views on its own and will
-    /// always ask its delegate to handle the actual presentation of loading indicators.
-    func controller(_ controller: CompanyLoginController, showLoadingView: Bool)
 
 }
 
@@ -38,7 +34,7 @@ import Foundation
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
 /// `SharedIdentitySessionRequestDetector` can be provided.
 ///
-@objc public final class CompanyLoginController: NSObject {
+@objc public final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
 
     @objc weak var delegate: CompanyLoginControllerDelegate?
 
@@ -51,25 +47,42 @@ import Foundation
     // Whether the presence of a code should be checked periodically on iPad.
     // This is in order to work around https://openradar.appspot.com/28771678.
     private static let isPollingEnabled = true
+    private static let fallbackURLScheme = "wire-sso"
+
+    // Whether performing a company login is supported on the current build.
+    @objc(companyLoginEnabled) static public let isCompanyLoginEnabled = DeveloperMenuState.developerMenuEnabled()
 
     private var token: Any?
     private var pollingTimer: Timer?
-    private let detector: SharedIdentitySessionRequestDetector
-    private let requester: SharedIdentitySessionRequester
+    private let detector: CompanyLoginRequestDetector
+    private let requester: CompanyLoginRequester
+    private let flowHandler: CompanyLoginFlowHandler
 
     // MARK: - Initialization
 
     /// Create a new `CompanyLoginController` instance using the standard detector and requester.
-    @objc public override convenience init() {
-        self.init(detector: .shared, requester: TimeoutIdentitySessionRequester(delay: 2))
+    @objc(initWithDefaultEnvironment) public convenience init?(withDefaultEnvironment: ()) {
+        guard CompanyLoginController.isCompanyLoginEnabled else { return nil } // Disable on public builds
+
+        let environment = ZMBackendEnvironment(userDefaults: .standard)
+        let callbackScheme = wr_companyLoginURLScheme()
+        requireInternal(nil != callbackScheme, "no valid callback scheme")
+
+        let requester = CompanyLoginRequester(
+            backendHost: environment.backendURL.host!,
+            callbackScheme: callbackScheme ?? CompanyLoginController.fallbackURLScheme
+        )
+        self.init(detector: .shared, requester: requester)
     }
 
     /// Create a new `CompanyLoginController` instance using the specified requester.
-    public required init(detector: SharedIdentitySessionRequestDetector, requester: SharedIdentitySessionRequester) {
+    public required init(detector: CompanyLoginRequestDetector, requester: CompanyLoginRequester) {
         self.detector = detector
         self.requester = requester
+        self.flowHandler = CompanyLoginFlowHandler(callbackScheme: requester.callbackScheme)
         super.init()
         setupObservers()
+        flowHandler.enableInAppBrowser = false
     }
 
     deinit {
@@ -77,6 +90,8 @@ import Foundation
     }
     
     private func setupObservers() {
+        requester.delegate = self
+
         token = NotificationCenter.default.addObserver(
             forName: .UIApplicationWillEnterForeground,
             object: nil,
@@ -128,7 +143,7 @@ import Foundation
     private func presentLoginAlert(prefilledCode: String?) {
         let alertController = UIAlertController.companyLogin(
             prefilledCode: prefilledCode,
-            validator: SharedIdentitySessionRequestDetector.isValidRequestCode,
+            validator: CompanyLoginRequestDetector.isValidRequestCode,
             completion: { [attemptLogin] code in code.apply(attemptLogin) }
         )
         
@@ -140,37 +155,21 @@ import Foundation
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
     private func attemptLogin(using code: String) {
-        guard !presentOfflineAlertIfNeeded() else { return }
-
-        guard let uuid = SharedIdentitySessionRequestDetector.requestCode(in: code) else {
+        guard let uuid = CompanyLoginRequestDetector.requestCode(in: code) else {
             return requireInternalFailure("Should never try to login with invalid code.")
         }
 
-        delegate?.controller(self, showLoadingView: true)
-        requester.requestIdentity(for: uuid) { [delegate, handleResponse] response in
-            delegate?.controller(self, showLoadingView: false)
-            handleResponse(response)
-        }
+        requester.requestIdentity(for: uuid)
     }
-    
-    /// Attempt to login using the requester specified in `init`
-    /// - returns: `true` when the application is offline and an alert was presented, `false` otherwise.
-    private func presentOfflineAlertIfNeeded() -> Bool {
-        guard AppDelegate.isOffline else { return false }
-        delegate?.controller(self, presentAlert: .noInternetError())
-        return true
-    }
-    
-    private func handleResponse(_ response: SharedIdentitySessionResponse) {
-        switch response {
-        case .success(_): preconditionFailure("unimplemented") // TODO
-        case .pendingAdditionalInformation(_): preconditionFailure("unimplemented") // TODO
-        case .error(let error): presentError(error)
-        }
-    }
-    
+
     private func presentError(_ error: LocalizedError) {
         delegate?.controller(self, presentAlert: .companyLoginError(error.localizedDescription))
+    }
+
+    // MARK: - Flow
+
+    public func companyLoginRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {
+        flowHandler.open(authenticationURL: url)
     }
 
 }

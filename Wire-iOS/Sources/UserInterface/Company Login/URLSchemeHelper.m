@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2016 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireDataModel
-import WireExtensionComponents
 
-extension ZMUser {
-    @objc var pov: PointOfView {
-        return self.isSelfUser ? .secondPerson : .thirdPerson
-    }
-    
-    @objc var canManageTeam: Bool {
-        return self.membership?.permissions.contains(.owner) ?? false || self.membership?.permissions.contains(.admin) ?? false
-    }
-    
-    @objc var hasUntrustedClients: Bool {
-        return nil != self.clients.first { !$0.verified }
-    }
+#import "URLSchemeHelper.h"
+@import Foundation;
+
+#define STRINGIZE_INTERNAL(x) #x
+#define STRINGIZE(x) STRINGIZE_INTERNAL(x)
+
+NSString *wr_companyLoginURLScheme() {
+    return @STRINGIZE(WIRE_SSO_URL_SCHEME);
 }

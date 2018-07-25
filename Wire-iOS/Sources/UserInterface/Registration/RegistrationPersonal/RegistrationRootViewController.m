@@ -59,7 +59,7 @@
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
-        self.companyLoginController = [[CompanyLoginController alloc] init];
+        self.companyLoginController = [[CompanyLoginController alloc] initWithDefaultEnvironment];
         self.flowType = flow;
     }
 
@@ -276,11 +276,6 @@
 - (void)controller:(CompanyLoginController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert
 {
     [self presentViewController:presentAlert animated:YES completion:nil];
-}
-
-- (void)controller:(CompanyLoginController *)controller showLoadingView:(BOOL)showLoadingView
-{
-    self.showLoadingView = showLoadingView;
 }
 
 @end
