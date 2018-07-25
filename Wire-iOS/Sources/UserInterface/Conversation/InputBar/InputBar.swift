@@ -117,7 +117,7 @@ private struct InputBarConstants {
     public static let rightIconSIze: CGFloat = 32
 
 
-    let textView = InputModeTextView(with: DownStyle.compact)
+    let textView = MarkdownTextView(with: DownStyle.compact)
     public let leftAccessoryView  = UIView()
     public let rightAccessoryStackView: UIStackView = {
         let stackView = UIStackView()

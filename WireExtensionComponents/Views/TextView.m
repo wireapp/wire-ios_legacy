@@ -255,4 +255,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return resigned;
 }
 
+#pragma mark Language
+
+- (UITextInputMode *) textInputMode {
+    return [self overriddenTextInputMode];
+}
+
 @end
