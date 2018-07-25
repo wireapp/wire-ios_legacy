@@ -190,9 +190,10 @@ import Ziphy
     override func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
         let ziph = self.ziphs[indexPath.item]
 
-        guard let representation = ziph.images[.preview] else {
+        guard let representation = ziph.previewImage else {
             return .zero
         }
+
 
         return CGSize(width: representation.width.rawValue, height: representation.height.rawValue)
     }

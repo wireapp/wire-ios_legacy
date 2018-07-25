@@ -25,11 +25,25 @@ import SafariServices
 
 class CompanyLoginFlowHandler {
 
-    /// Whether we allow the. Defaults to `true`.
+    /// Whether we allow the in-app browser. Defaults to `true`.
     var enableInAppBrowser: Bool = true
+
+    /// Whether we allow the system authentication session. Defaults to `false`.
+    var enableAuthenticationSession: Bool = false
 
     private let callbackScheme: String
     private var currentAuthenticationSession: NSObject?
+    private var token: Any?
+
+    private var activeWebBrowser: UIViewController? {
+        didSet {
+            startListeningToFlowCompletion()
+        }
+    }
+
+    deinit {
+        token.apply(NotificationCenter.default.removeObserver)
+    }
 
     // MARK: - Initialization
 
@@ -47,10 +61,22 @@ class CompanyLoginFlowHandler {
             return
         }
 
+        guard enableAuthenticationSession else {
+            openSafariEmbed(at: authenticationURL)
+            return
+        }
+
         if #available(iOS 11, *) {
             openSafariAuthenticationSession(at: authenticationURL)
         } else {
             openSafariEmbed(at: authenticationURL)
+        }
+    }
+
+    private func startListeningToFlowCompletion() {
+        token = NotificationCenter.default.addObserver(forName: .companyLoginDidFinish, object: nil, queue: .main) { [weak self] _ in
+            self?.activeWebBrowser?.dismiss(animated: true, completion: nil)
+            self?.activeWebBrowser = nil
         }
     }
 
@@ -71,7 +97,8 @@ class CompanyLoginFlowHandler {
     }
 
     private func openSafariEmbed(at url: URL) {
-        let safariViewController = SFSafariViewController(url: url)
+        let safariViewController = BrowserViewController(url: url)
+        activeWebBrowser = safariViewController
         UIApplication.shared.wr_topmostController()?.present(safariViewController, animated: true, completion: nil)
     }
 
