@@ -48,23 +48,6 @@ class ArticleViewTests: ZMSnapshotTestCase {
         return textMessageData
     }
     
-    func articleWithNilPicture() -> MockTextMessageData {
-        let article = Article(originalURLString: "https://www.example.com/article/1",
-                              permanentURLString: "https://www.example.com/article/1",
-                              resolvedURLString: "https://www.example.com/article/1",
-                              offset: 0)
-        
-        article.title = "Title with some words in it"
-        article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
-        
-        let textMessageData = MockTextMessageData()
-        textMessageData.linkPreview = article
-        textMessageData.linkPreviewImageCacheKey = "image-id-2"
-        textMessageData.imageData = Data()
-        textMessageData.linkPreviewHasImage = true
-        return textMessageData
-    }
-    
     func articleWithPicture(imageNamed: String = "unsplash_matterhorn.jpg") -> MockTextMessageData {
         let article = Article(originalURLString: "https://www.example.com/article/1",
                               permanentURLString: "https://www.example.com/article/1",
@@ -139,18 +122,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         
         self.verifyInAllPhoneWidths(view: self.sut)
     }
-    
-    // TODO jacob isn't this the same as testArticleViewWithPictureStillDownloading
-    func testArticleWithNilPicture() {
-        sut = ArticleView(withImagePlaceholder: true)
-        sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.configure(withTextMessageData: articleWithNilPicture(), obfuscated: false)
-        sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
-        self.verifyInAllPhoneWidths(view: self.sut)
-    }
-    
     func testArticleViewWithPictureStillDownloading() {
         
         sut = ArticleView(withImagePlaceholder: true)
