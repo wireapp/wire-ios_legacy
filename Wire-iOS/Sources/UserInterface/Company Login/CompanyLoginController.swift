@@ -141,12 +141,15 @@ import Foundation
 
     /// Presents the SSO login alert with an optional prefilled code.
     private func presentLoginAlert(prefilledCode: String?) {
+        // This might have changed in the meantime.
+        guard isAutoDetectionEnabled else { return }
+        
         let alertController = UIAlertController.companyLogin(
             prefilledCode: prefilledCode,
             validator: CompanyLoginRequestDetector.isValidRequestCode,
             completion: { [attemptLogin] code in code.apply(attemptLogin) }
         )
-        
+
         delegate?.controller(self, presentAlert: alertController)
     }
 

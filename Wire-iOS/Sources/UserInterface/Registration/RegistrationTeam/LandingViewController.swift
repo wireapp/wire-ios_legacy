@@ -27,11 +27,12 @@ import Cartography
 }
 
 /// Landing screen for choosing create team or personal account
-final class LandingViewController: UIViewController, CompanyLoginControllerDelegate {
+final class LandingViewController: UIViewController, CompanyLoginControllerDelegate, PreLoginAuthenticationObserver {
     weak var delegate: LandingViewControllerDelegate?
 
     fileprivate var device: DeviceProtocol
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
+    private var token: Any?
 
     // MARK: - UI styles
 
@@ -189,6 +190,8 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
             queue: nil) { _ in self.updateBarButtonItem()  }
+        
+        token = PreLoginAuthenticationNotification.register(self, for: SessionManager.shared?.unauthenticatedSession)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -384,5 +387,14 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         present(alert, animated: true)
     }
     
+    // MARK: - PreLoginAuthenticationObserver
+    
+    func authenticationReadyToImportBackup(existingAccount: Bool) {
+        if nil != AutomationHelper.sharedHelper.automationEmailCredentials {
+            UnauthenticatedSession.sharedSession?.continueAfterBackupImportStep()
+        } else {
+            // TODO: Present no history view controller, see RegistrationViewController.presentNoHistoryViewController
+        }
+    }
 }
 

@@ -246,7 +246,7 @@
 
 - (void)cancelAddAccount
 {
-    [SessionManager.shared select: [[SessionManager shared] firstAuthenticatedAccount]
+    [SessionManager.shared select:[[SessionManager shared] firstAuthenticatedAccount]
                        completion:nil
                tearDownCompletion:nil];
 }
