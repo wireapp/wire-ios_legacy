@@ -313,8 +313,10 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         self.imageViewContainer.backgroundColor = [UIColor clearColor];
     } else {
         // We did not download the medium image yet, start the progress animation
-        [self.loadingView startProgressAnimation];
-        self.loadingView.hidden = NO;
+        if (self.image == nil) {
+            [self.loadingView startProgressAnimation];
+            self.loadingView.hidden = NO;
+        }
         self.imageViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorPlaceholderBackground variant:self.variant];
     }
     
