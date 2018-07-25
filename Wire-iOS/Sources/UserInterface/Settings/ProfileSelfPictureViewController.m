@@ -49,12 +49,6 @@
 @property (nonatomic) id userObserverToken;
 @end
 
-
-@interface ProfileSelfPictureViewController (ZMUserObserver) <ZMUserObserver>
-
-@end
-
-
 @implementation ProfileSelfPictureViewController
 
 - (instancetype)init
@@ -249,14 +243,3 @@
 
 @end
 
-@implementation ProfileSelfPictureViewController (ZMUserObserver)
-
-- (void)userDidChange:(UserChangeInfo *)note
-{
-    if (note.imageMediumDataChanged) {        
-        // TODO jacob re-implement
-//        self.selfUserImageView.image = [UIImage imageWithData:note.user.imageMediumData];
-    }
-}
-
-@end

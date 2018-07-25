@@ -11,6 +11,7 @@
 		160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */; };
 		160C311F1E4C78480012E4BC /* UnknownMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */; };
 		160C31211E4C7E770012E4BC /* UnknownMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */; };
+		160FD05221085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */; };
 		1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */; };
 		1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */; };
 		161285DF1DD1E81E004728E9 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* NSString+URL.swift */; };
@@ -1297,6 +1298,7 @@
 		1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsShareDatabaseCellDescriptor.swift; sourceTree = "<group>"; };
 		160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCell.swift; sourceTree = "<group>"; };
 		160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCellTests.swift; sourceTree = "<group>"; };
+		160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileSelfPictureViewController+UserObserver.swift"; sourceTree = "<group>"; };
 		1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelfProfileViewController+NewDeviceAlert.swift"; sourceTree = "<group>"; };
 		1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRootViewController+Appearance.swift"; sourceTree = "<group>"; };
 		161285DD1DD1DA85004728E9 /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
@@ -4994,6 +4996,7 @@
 				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
 				8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */,
 				8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */,
+				160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */,
 				8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */,
 				8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */,
 				87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */,
@@ -6603,6 +6606,7 @@
 				871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */,
 				8F89140D1A9F287E0056AB0C /* ConnectRequestsCell.m in Sources */,
 				162836142016574D0027082D /* ProcessInfo+Tests.swift in Sources */,
+				160FD05221085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift in Sources */,
 				8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */,
 				EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */,
 				871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */,
