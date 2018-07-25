@@ -230,6 +230,7 @@ import Classy
             if needsToReauthenticate {
                 let registrationViewController = RegistrationViewController()
                 registrationViewController.delegate = appStateController
+                registrationViewController.shouldHideCancelButton = SessionManager.numberOfAccounts <= 1
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
@@ -582,6 +583,11 @@ public extension SessionManager {
         
         return nil
     }
+
+    @objc static var numberOfAccounts: Int {
+        return SessionManager.shared?.accountManager.accounts.count ?? 0
+    }
+
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
