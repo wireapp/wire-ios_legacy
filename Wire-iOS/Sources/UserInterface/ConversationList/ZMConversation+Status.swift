@@ -347,7 +347,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                     if let _ = $0.sender,
                         let type = StatusMessageType(message: $0),
                         let _ = matchedTypesDescriptions[type],
-                        $0.relevantForConversationStatus {
+                        $0.messageIsRelevantForConversationStatus {
                         return true
                     } else {
                         return false
@@ -382,7 +382,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
                      let _ = matchedTypesDescriptions[type],
-                     $0.relevantForConversationStatus {
+                     $0.messageIsRelevantForConversationStatus {
                     return true
                 }
                 else {
@@ -399,17 +399,15 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         case .missedCall:
             return .missedCall
         default:
-            return .unreadMessages(count: status.messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }.filter { matchedTypes.index(of: $0) != .none }.count)
+            return .unreadMessages(count: status.messagesRequiringAttention.compactMap {
+                    StatusMessageType(message: $0)
+                }.filter {
+                    matchedTypes.index(of: $0) != .none
+                }.count)
         }
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
-}
-
-fileprivate extension ZMConversationMessage {
-    var relevantForConversationStatus: Bool {
-        return (self as? ZMSystemMessage)?.relevantForConversationStatus ?? true
-    }
 }
 
 // ! Failed to send
@@ -643,6 +641,10 @@ extension ZMConversation {
             let systemMessageData = lastMessage.systemMessageData,
             systemMessageData.systemMessageType == .participantsRemoved || systemMessageData.systemMessageType == .participantsAdded || systemMessageData.systemMessageType == .newConversation {
             messagesRequiringAttention.append(lastMessage)
+        }
+        
+        if messagesRequiringAttention.count == 4 {
+            print("stop")
         }
         
         let messagesRequiringAttentionTypes = messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }
