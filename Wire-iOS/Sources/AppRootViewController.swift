@@ -543,6 +543,18 @@ extension AppRootViewController: LandingViewControllerDelegate {
             navigationController.pushViewController(registrationViewController, animated: true)
         }
     }
+    
+    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType) {
+        if let navigationController = self.visibleViewController as? NavigationController {
+            let registrationViewController = RegistrationViewController(authenticationFlow: .regular)
+            registrationViewController.delegate = appStateController
+            registrationViewController.shouldHideCancelButton = true
+            registrationViewController.loadViewIfNeeded()
+            registrationViewController.presentNoHistoryViewController(context, animated: false)
+            navigationController.pushViewController(registrationViewController, animated: true)
+        }
+    }
+    
 }
 
 // MARK: - Ask user if they want want switch account if there's an ongoing call
@@ -620,7 +632,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
             self.present(alert, animated: true, completion: nil)
 
-        case .companyLoginFailure(let label):
+        case .companyLoginFailure(let error):
             defer {
                 notifyCompanyLoginCompletion()
             }
@@ -630,7 +642,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 return
             }
 
-            let message = "login.sso.error.alert.message".localized(args: label)
+            let message = "login.sso.error.alert.message".localized(args: error.displayCode)
 
             let alert = UIAlertController(title: "general.failure".localized,
                                           message: message,

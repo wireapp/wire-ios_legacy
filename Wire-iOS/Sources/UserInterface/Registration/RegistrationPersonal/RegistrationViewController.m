@@ -191,7 +191,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return IS_IPAD ? RegistrationFlowEmail : RegistrationFlowPhone;
 }
 
-- (void)presentNoHistoryViewController:(ContextType)type
+- (void)presentNoHistoryViewController:(ContextType)type animated:(BOOL)animated
 {
     if ([self.rootNavigationController.topViewController isKindOfClass:[NoHistoryViewController class]]) {
         return;
@@ -200,7 +200,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     noHistoryViewController.formStepDelegate = self;
 
     self.rootNavigationController.backButtonEnabled = NO;
-    [self.rootNavigationController pushViewController:noHistoryViewController animated:YES];
+    [self.rootNavigationController pushViewController:noHistoryViewController animated:animated];
 }
 
 #pragma mark - FormStepProtocol
@@ -268,7 +268,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
     }
     else {
-        [self presentNoHistoryViewController:type];
+        [self presentNoHistoryViewController:type animated:YES];
     }
 }
 

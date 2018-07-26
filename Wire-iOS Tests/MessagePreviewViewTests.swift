@@ -21,6 +21,12 @@ import XCTest
 import WireLinkPreview
 
 class MessagePreviewViewTests: ZMSnapshotTestCase {
+    var sut: UIView!
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
     func testThatItRendersTextMessagePreview() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!

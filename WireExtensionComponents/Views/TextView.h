@@ -36,6 +36,7 @@ IB_DESIGNABLE
 @property (nonatomic) CGFloat lineFragmentPadding;
 @property (nonatomic) UIEdgeInsets placeholderTextContainerInset;
 @property (nonatomic) NSTextAlignment placeholderTextAlignment;
+@property (nonatomic, copy, nullable) NSString *language;
 
 - (void)showOrHidePlaceholder;
     
