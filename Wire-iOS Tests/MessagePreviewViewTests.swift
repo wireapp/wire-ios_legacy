@@ -21,6 +21,12 @@ import XCTest
 import WireLinkPreview
 
 class MessagePreviewViewTests: ZMSnapshotTestCase {
+    var sut: UIView!
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
     func testThatItRendersTextMessagePreview() {
         let message = MockMessageFactory.textMessage(withText: "Lorem Ipsum Dolor Sit Amed.")!
@@ -58,8 +64,18 @@ class MessagePreviewViewTests: ZMSnapshotTestCase {
         textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
         textMessageData.hasImageData = true
         message.backingTextMessageData = textMessageData
-        
-        verify(view: message.previewView()!)
+
+        let expectation = self.expectation(description: "Wait for image to load")
+
+        if let previewView = message.previewView() {
+            sut = previewView
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.verify(view: self.sut)
+                expectation.fulfill()
+            }
+
+            self.waitForExpectations(timeout: 2, handler: nil)
+        }
     }
     
     func testThatItRendersVideoMessagePreview() {
