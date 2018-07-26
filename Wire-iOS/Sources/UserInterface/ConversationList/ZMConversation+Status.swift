@@ -399,11 +399,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         case .missedCall:
             return .missedCall
         default:
-            return .unreadMessages(count: status.messagesRequiringAttention.compactMap {
-                    StatusMessageType(message: $0)
-                }.filter {
-                    matchedTypes.index(of: $0) != .none
-                }.count)
+            return .unreadMessages(count: status.messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }.filter { matchedTypes.index(of: $0) != .none }.count)
         }
     }
     
@@ -641,10 +637,6 @@ extension ZMConversation {
             let systemMessageData = lastMessage.systemMessageData,
             systemMessageData.systemMessageType == .participantsRemoved || systemMessageData.systemMessageType == .participantsAdded || systemMessageData.systemMessageType == .newConversation {
             messagesRequiringAttention.append(lastMessage)
-        }
-        
-        if messagesRequiringAttention.count == 4 {
-            print("stop")
         }
         
         let messagesRequiringAttentionTypes = messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }
