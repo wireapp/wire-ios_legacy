@@ -18,8 +18,8 @@
 
 
 #import <UIKit/UIKit.h>
-
 #import "FormFlowViewController.h"
+#import "NoHistoryViewController.h"
 
 typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
     AuthenticationFlowRegular,
