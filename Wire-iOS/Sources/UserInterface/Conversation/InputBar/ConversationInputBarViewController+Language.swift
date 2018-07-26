@@ -36,6 +36,6 @@ extension ConversationInputBarViewController {
     }
 
     @objc func setInputLanguage() {
-        self.inputBar.textView.language = self.conversation.language
+        inputBar.textView.language = conversation?.language
     }
 }
