@@ -73,9 +73,3 @@ extension UIFont {
     
 }
 
-extension FontSpec {
-    var font: UIFont? {
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        return fontScheme.font(for: self)
-    }
-}
