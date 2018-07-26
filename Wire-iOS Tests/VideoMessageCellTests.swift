@@ -20,30 +20,6 @@
 import XCTest
 @testable import Wire
 
-extension XCTestCase {
-    
-    func waitForGroupsToBeEmpty(_ groups: [DispatchGroup], timeout: TimeInterval = 5) -> Bool {
-        
-        let timeoutDate = Date(timeIntervalSinceNow: timeout)
-        var groupCounter = groups.count
-        
-        groups.forEach { (group) in
-            group.notify(queue: DispatchQueue.main, execute: {
-                groupCounter -= 1
-            })
-        }
-        
-        while (groupCounter > 0 && timeoutDate.timeIntervalSinceNow > 0) {
-            if !RunLoop.current.run(mode: .defaultRunLoopMode, before: Date(timeIntervalSinceNow: 0.002)) {
-                Thread.sleep(forTimeInterval: 0.002)
-            }
-        }
-        
-        return groupCounter == 0
-    }
-    
-}
-
 class VideoMessageCellTests: ZMSnapshotTestCase {
         
     override func tearDown() {
