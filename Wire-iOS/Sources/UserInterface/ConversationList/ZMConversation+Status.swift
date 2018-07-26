@@ -347,7 +347,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                     if let _ = $0.sender,
                         let type = StatusMessageType(message: $0),
                         let _ = matchedTypesDescriptions[type],
-                        $0.relevantForConversationStatus {
+                        $0.messageIsRelevantForConversationStatus {
                         return true
                     } else {
                         return false
@@ -382,7 +382,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
                      let _ = matchedTypesDescriptions[type],
-                     $0.relevantForConversationStatus {
+                     $0.messageIsRelevantForConversationStatus {
                     return true
                 }
                 else {
@@ -404,12 +404,6 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
-}
-
-fileprivate extension ZMConversationMessage {
-    var relevantForConversationStatus: Bool {
-        return (self as? ZMSystemMessage)?.relevantForConversationStatus ?? true
-    }
 }
 
 // ! Failed to send

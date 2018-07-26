@@ -20,6 +20,8 @@ import Foundation
 import UIKit
 import Classy
 
+var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+
 @objcMembers class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
@@ -88,7 +90,7 @@ import Classy
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
         appStateController.delegate = self
-
+        
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
         // not possible because it has to be below the status bar.
         mainWindow.rootViewController = self
@@ -230,6 +232,7 @@ import Classy
             if needsToReauthenticate {
                 let registrationViewController = RegistrationViewController()
                 registrationViewController.delegate = appStateController
+                registrationViewController.shouldHideCancelButton = SessionManager.numberOfAccounts <= 1
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
@@ -370,19 +373,18 @@ import Classy
         colorScheme.accentColor = UIColor.accent()
         colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
 
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         CASStyler.default().cache = classyCache
         CASStyler.bootstrapClassy(withTargetWindows: windows)
         CASStyler.default().apply(colorScheme)
-        CASStyler.default().apply(fontScheme: fontScheme)
+        CASStyler.default().apply(fontScheme: defaultFontScheme)
     }
 
     @objc func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        CASStyler.default().apply(fontScheme: fontScheme)
+        defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        CASStyler.default().apply(fontScheme: defaultFontScheme)
         type(of: self).configureAppearance()
     }
 
@@ -594,6 +596,11 @@ public extension SessionManager {
         
         return nil
     }
+
+    @objc static var numberOfAccounts: Int {
+        return SessionManager.shared?.accountManager.accounts.count ?? 0
+    }
+
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
@@ -625,7 +632,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
             self.present(alert, animated: true, completion: nil)
 
-        case .companyLoginFailure(let label):
+        case .companyLoginFailure(let error):
             defer {
                 notifyCompanyLoginCompletion()
             }
@@ -635,7 +642,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 return
             }
 
-            let message = "login.sso.error.alert.message".localized(args: label)
+            let message = "login.sso.error.alert.message".localized(args: error.displayCode)
 
             let alert = UIAlertController(title: "general.failure".localized,
                                           message: message,
