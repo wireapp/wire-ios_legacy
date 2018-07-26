@@ -60,7 +60,9 @@ extension ZMConversationMessage {
             return completion(image)
         }
         
-        requestImageDownload()
+        ZMUserSession.shared()?.enqueueChanges {
+            self.requestImageDownload()
+        }
         
         imageMessageData.fetchImageData(with: cache.processingQueue) { (imageData) in
             var image: MediaAsset?

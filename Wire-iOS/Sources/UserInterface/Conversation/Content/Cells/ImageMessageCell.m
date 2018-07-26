@@ -279,9 +279,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
     id<ZMImageMessageData> imageMessageData = convMessage.imageMessageData;
     
-    // request
-    [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
-
     CGFloat minimumMediaSize = 48.0;
     
     self.originalImageSize = [self sizeForMessage:imageMessageData];
