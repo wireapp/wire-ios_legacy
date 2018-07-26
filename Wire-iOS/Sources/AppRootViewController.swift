@@ -620,7 +620,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             
             self.present(alert, animated: true, completion: nil)
 
-        case .companyLoginFailure(let label):
+        case .companyLoginFailure(let error):
             defer {
                 notifyCompanyLoginCompletion()
             }
@@ -630,7 +630,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 return
             }
 
-            let message = "login.sso.error.alert.message".localized(args: label)
+            let message = "login.sso.error.alert.message".localized(args: error.displayCode)
 
             let alert = UIAlertController(title: "general.failure".localized,
                                           message: message,
