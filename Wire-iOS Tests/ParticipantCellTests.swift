@@ -52,11 +52,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
 
-    func testThatItRendersParticipantsCellAddedParticipantsHerself() {
-        let sut = cell(for: .participantsAdded, fromSelf: false, fillUsers: .sender)
-        verify(view: sut.prepareForSnapshots())
-    }
-
     func testThatItRendersParticipantsCellAddedParticipantsOtherUser() {
         let sut = cell(for: .participantsAdded, fromSelf: false)
         verify(view: sut.prepareForSnapshots())
@@ -68,8 +63,19 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersParticipantsCellAddedParticipants_Overflow() {
-        recordMode = true
         let sut = cell(for: .participantsAdded, fromSelf: false, fillUsers: .overflow)
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    // MARK: - Joined Users
+    
+    func testThatItRendersParticipantsCellAddedParticipantsHerself() {
+        let sut = cell(for: .participantsAdded, fromSelf: false, fillUsers: .sender)
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    func testThatItRendersParticipantsCellAddedParticipantsSelfUserOnly() {
+        let sut = cell(for: .participantsAdded, fromSelf: true, fillUsers: .sender)
         verify(view: sut.prepareForSnapshots())
     }
 
