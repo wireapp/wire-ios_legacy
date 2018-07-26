@@ -56,7 +56,6 @@ import WireLinkPreview
 
 
 @objcMembers class MockFileMessageData: NSObject, ZMFileMessageData {
-
     
     var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
@@ -70,6 +69,7 @@ import WireLinkPreview
     var durationMilliseconds: UInt64 = 233000
     var videoDimensions: CGSize = CGSize.zero
     var normalizedLoudness: [Float]? = []
+    var previewData: Data? = nil
     
     var isVideo: Bool {
         return mimeType == "video/mp4"
