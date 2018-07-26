@@ -33,7 +33,7 @@ enum ConversationActionType {
         }
     }
     
-    var hasGrammaticalObjects: Bool {
+    var involvesUsersOtherThanSender: Bool {
         switch self {
         case .left, .teamMemberLeave, .added(herself: true): return false
         default: return true
@@ -74,40 +74,109 @@ extension ZMConversationMessage {
 
 struct ParticipantsCellViewModel {
 
+    static let showMoreLinkURL = NSURL(string: "action://show-all")!
+    
     let font, boldFont, largeFont: UIFont?
     let textColor: UIColor?
     let message: ZMConversationMessage
-
-    func image() -> UIImage? {
-        return message.actionType.image(with: textColor)
+    
+    private var maxShownUsers: Int {
+        return isSelfIncludedInUsers ? 16 : 17
     }
     
+    private var maxShownUsersWhenCollapsed: Int {
+        return isSelfIncludedInUsers ? 14 : 15
+    }
+    
+    var showInviteButton: Bool {
+        guard case .started = message.actionType,
+            let conversation = message.conversation else { return false }
+        return conversation.canManageAccess && conversation.allowGuests
+    }
+    
+    /// Users displayed in the system message, up to 17 when not collapsed
+    /// but only 15 when there are more than 15 users and we collapse them.
+    var shownUsers: [ZMUser] {
+        let users = sortedUsersWithoutSelf()
+        let boundary = users.count <= maxShownUsers ? users.count : maxShownUsersWhenCollapsed
+        let result = users[..<boundary]
+        return result + (isSelfIncludedInUsers ? [.selfUser()] : [])
+    }
+    
+    /// Users not displayed in the system message but collapsed into a link.
+    /// E.g. `and 5 others`.
+    private var collapsedUsers: [ZMUser] {
+        let users = sortedUsersWithoutSelf()
+        guard users.count > maxShownUsers else { return [] }
+        return Array(users.dropFirst(maxShownUsersWhenCollapsed))
+    }
+    
+    /// The users represented by the collapsed link after being added to the
+    /// conversation.
+    var selectedUsers: [ZMUser] {
+        switch message.actionType {
+        case .added: return collapsedUsers
+        default: return []
+        }
+    }
+    
+    var isSelfIncludedInUsers: Bool {
+        return sortedUsers().any { $0.isSelfUser }
+    }
+    
+    /// The users involved in the conversation action sorted alphabetically by
+    /// name.
     func sortedUsers() -> [ZMUser] {
         guard let sender = message.sender else { return [] }
-        
-        if message.actionType.hasGrammaticalObjects {
-            guard let systemMessage = message.systemMessageData else { return [] }
-            return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
-        } else {
-            return [sender]
-        }
+        guard message.actionType.involvesUsersOtherThanSender else { return [sender] }
+        guard let systemMessage = message.systemMessageData else { return [] }
+        return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
     }
 
     func sortedUsersWithoutSelf() -> [ZMUser] {
         return sortedUsers().filter { !$0.isSelfUser }
     }
 
-
+    private func name(for user: ZMUser) -> String {
+        if user.isSelfUser {
+            return "content.system.you_\(grammaticalCase(for: user))".localized
+        }
+        if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
+            return user.displayName(in: conversation)
+        } else {
+            return user.displayName
+        }
+    }
+    
+    /// The user will, depending on the context, be in a specific case within the
+    /// sentence. This is important for localization of "you".
+    private func grammaticalCase(for user: ZMUser) -> String {
+        if user == message.sender {
+            // sender is always the subject doing the action
+            return "nominative"
+        } else if case ConversationActionType.started = message.actionType {
+            // "sender started the conversation WITH ... user"
+            return "dative"
+        } else {
+            return "accusative"
+        }
+    }
+    
+    // ------------------------------------------------------------
+    
+    func image() -> UIImage? {
+        return message.actionType.image(with: textColor)
+    }
+    
     func attributedHeading() -> NSAttributedString? {
         guard
+            case let .started(withName: conversationName?) = message.actionType,
             let sender = message.sender,
             let font = font,
             let boldFont = boldFont,
             let largeFont = largeFont,
             let textColor = textColor
             else { return nil }
-        
-        guard case let .started(withName: conversationName?) = message.actionType else { return nil }
         
         let formatter = ParticipantsStringFormatter(
             message: message,
@@ -117,15 +186,10 @@ struct ParticipantsCellViewModel {
             textColor: textColor
         )
         
-        return formatter.heading(sender: sender, conversationName: conversationName)
+        let senderName = name(for: sender).capitalized
+        return formatter.heading(senderName: senderName, senderIsSelf: sender.isSelfUser, convName: conversationName)
     }
     
-    var showInviteButton: Bool {
-        guard case .started = message.actionType,
-                let conversation = message.conversation else { return false }
-        return conversation.canManageAccess && conversation.allowGuests
-    }
-
     func attributedTitle() -> NSAttributedString? {
         guard
             let sender = message.sender,
@@ -143,131 +207,14 @@ struct ParticipantsCellViewModel {
             textColor: textColor
         )
         
-        if message.actionType.hasGrammaticalObjects {
-            return formatter.title(sender: sender, shownUsers: shownUsers, collapsedUsers: truncatedUsers)
-        } else {
-            return formatter.title(sender: sender)
-        }
-    }
-    
-    static let showMoreLinkURL = NSURL(string: "action://show-all")!
-    
-//    private var linkAttributes: [NSAttributedStringKey: AnyObject] {
-//        return [.link: ParticipantsCellViewModel.showMoreLinkURL]
-//    }
-    
-    // Users not displayed in the system message but
-    // collapsed into a link e.g. `and 5 others`.
-    private var truncatedUsers: [ZMUser] {
-        let users = sortedUsersWithoutSelf().filter { !$0.isSelfUser }
-        guard users.count > maxShownUsers else { return [] }
-        return Array(users.dropFirst(maxShownUsersWhenCollapsed))
-    }
-
-    var selectedUsers: [ZMUser] {
-        switch message.actionType {
-        case .added: return truncatedUsers
-        default: return []
-        }
-    }
-
-    private var maxShownUsers: Int {
-        return isSelfIncludedInUsers ? 16 : 17
-    }
-
-    private var maxShownUsersWhenCollapsed: Int {
-        return isSelfIncludedInUsers ? 14 : 15
-    }
-
-    // Users displayed in the system message, up to 17 when not collapsed
-    // but only 15 when there are more than 15 users and we collapse them.
-    var shownUsers: [ZMUser] {
-        let users = sortedUsersWithoutSelf()
+        let senderName = name(for: sender).capitalized
         
-        if users.count <= maxShownUsers {
-            if isSelfIncludedInUsers {
-                return users  + [.selfUser()]
-            } else {
-                return users
-            }
+        if message.actionType.involvesUsersOtherThanSender {
+            let userNames = shownUsers.map { self.name(for: $0) }
+            let nameList = NameList(names: userNames, collapsed: collapsedUsers.count, selfIncluded: isSelfIncludedInUsers)
+            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)
         } else {
-            let truncatedUsers = users[..<maxShownUsersWhenCollapsed]
-            if isSelfIncludedInUsers {
-                return truncatedUsers + [.selfUser()]
-            }
-            return Array(truncatedUsers)
-        }
-    }
-    
-    var isSelfIncludedInUsers: Bool {
-        return sortedUsers().any { $0.isSelfUser }
-    }
-    
-//    private var shownNames: String {
-//        return names
-//    }
-    
-//    private var collapsedNamesString: String? {
-//        return emphasizedCollapsedNameStringComponent.map {
-//            "content.system.started_conversation.truncated_people".localized(args: $0)
-//        }
-//    }
-//
-//    private var emphasizedCollapsedNameStringComponent: String? {
-//        guard truncatedUsers.count > 0 else { return nil }
-//        return "content.system.started_conversation.truncated_people.others".localized(args: "\(truncatedUsers.count)")
-//    }
-
-//    private var names: String {
-//        return shownUsers.map {
-//            if $0.isSelfUser {
-//                if case .started = message.actionType {
-//                    return "content.system.you_dative".localized
-//                }
-//                return "content.system.you_accusative".localized
-//            }
-//            return name(for: $0)
-//        }.joined(separator: ", ")
-//    }
-    
-//    private var attributedNames: NSAttributedString {
-//        guard let font = font, let boldFont = boldFont, let color = textColor else { preconditionFailure() }
-//
-//        func attributedString(for user: ZMUser, collapsed: Bool) -> NSAttributedString {
-//            if user.isSelfUser {
-//                if collapsed {
-//                    return "content.system.you_dative".localized && font && color
-//                } else {
-//                    return "content.system.and_you_dative".localized && font && color
-//                }
-//            }
-//            return name(for: user) && boldFont && color
-//        }
-//
-//        let collapsed = truncatedUsers.count > 0
-//        let mutableString = NSMutableAttributedString()
-//        for (index, user) in shownUsers.enumerated() {
-//            mutableString.append(attributedString(for: user, collapsed: collapsed))
-//
-//            if index == shownUsers.count - 2, shownUsers[index + 1].isSelfUser, !collapsed {
-//                mutableString.append(.breakingSpace && boldFont && color)
-//            } else if index < shownUsers.count - 1 {
-//                mutableString.append(", "  && boldFont && color)
-//            }
-//        }
-//
-//        return mutableString
-//    }
-
-    
-    private func name(for user: ZMUser) -> String {
-        if user.isSelfUser {
-            return "content.system.you_nominative".localized
-        }
-        if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
-            return user.displayName(in: conversation)
-        } else {
-            return user.displayName
+            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser)
         }
     }
 
@@ -299,24 +246,17 @@ private class FormatSequence {
     }
 }
 
-private extension ConversationActionType {
-    
-    /// The object of an action may be in accusative or dative form.
-    var objectGrammarCase: GrammarCase {
-        switch self {
-        case .started: return .dative
-        default: return .accusative
-        }
-    }
-}
 
-private enum GrammarCase: String {
-    case nominative, accusative, dative
+private struct NameList {
+    let names: [String]
+    let collapsed: Int
+    let selfIncluded: Bool
 }
 
 private class ParticipantsStringFormatter {
     
-    private let kStartedTheConversation = "content.system.conversation.with_name.title"
+    private let kYouStartedTheConversation = "content.system.conversation.with_name.title-you"
+    private let kXStartedTheConversation = "content.system.conversation.with_name.title"
     private let kXOthers = "content.system.started_conversation.truncated_people.others"
     private let kAndX = "content.system.started_conversation.truncated_people"
     private let kWith = "content.system.conversation.with_name.participants"
@@ -353,140 +293,101 @@ private class ParticipantsStringFormatter {
         self.textColor = textColor
     }
     
-    private func name(for user: ZMUser, grammarCase: GrammarCase, conversation: ZMConversation?) -> String {
-        if user.isSelfUser {
-            return nameForSelfUser(grammarCase: grammarCase)
+    func heading(senderName: String, senderIsSelf: Bool, convName: String) -> NSAttributedString {
+        // "... started the conversation"
+        var text: NSAttributedString
+        if senderIsSelf {
+            text = kYouStartedTheConversation.localized(args: senderName) && font
+        } else {
+            text = kXStartedTheConversation.localized(args: senderName) && font
+            text = text.adding(font: boldFont, to: senderName)
         }
-        else if let conv = conversation, conv.activeParticipants.contains(user) {
-            return user.displayName(in: conv)
-        }
-        else {
-            return user.displayName
-        }
-    }
-    
-    private func nameForSelfUser(grammarCase: GrammarCase) -> String {
-        return "content.system.you_\(grammarCase.rawValue)".localized
-    }
-    
-    
-    func heading(sender: ZMUser, conversationName: String) -> NSAttributedString {
-        // "You/Bob"
-        let senderName = name(for: sender, grammarCase: .nominative, conversation: message.conversation).capitalized
-        // "started the conversation"
-        var text = kStartedTheConversation.localized(pov: sender.pov, args: senderName) && font
-        if !sender.isSelfUser { text = text.adding(font: boldFont, to: senderName) }
         // "Italy Trip"
-        let title = conversationName.attributedString && largeFont
+        let title = convName.attributedString && largeFont
         return [text, title].joined(separator: "\n".attributedString) && textColor && .lineSpacing(4)
     }
-    
+
     // title involving only subject (sender)
-    func title(sender: ZMUser) -> NSAttributedString? {
-        let senderName = name(for: sender, grammarCase: .nominative, conversation: message.conversation).capitalized
-        let formatKey = message.actionType.formatKey
-        
+    func title(senderName: String, senderIsSelf: Bool) -> NSAttributedString? {
         switch message.actionType {
         case .left, .teamMemberLeave, .added(herself: true):
-            let title = formatKey(sender.isSelfUser).localized(args: senderName) && font && textColor
-            return sender.isSelfUser ? title : title.adding(font: boldFont, to: senderName)
+            let formatKey = message.actionType.formatKey
+            let title = formatKey(senderIsSelf).localized(args: senderName) && font && textColor
+            return senderIsSelf ? title : title.adding(font: boldFont, to: senderName)
         default: return nil
         }
     }
     
     // title involving subject (sender) and object(s) (users)
-    func title(sender: ZMUser, shownUsers: [ZMUser], collapsedUsers: [ZMUser]) -> NSAttributedString? {
-        let senderName = name(for: sender, grammarCase: .nominative, conversation: message.conversation).capitalized
+    func title(senderName: String, senderIsSelf: Bool, names: NameList) -> NSAttributedString? {
         let formatKey = message.actionType.formatKey
-        
-        let grammarCase = message.actionType.objectGrammarCase
-        let names = nameList(for: shownUsers, collapsedUsers: collapsedUsers, grammarCase: grammarCase)
+        let namesFormat = nameListFormat(for: names)
         
         switch message.actionType {
         case .removed, .added(herself: false), .started(withName: .none):
-            // "x, y, and 3 others"
-            var title = formatKey(sender.isSelfUser).localized(args: senderName, names.string) && font && textColor
-            if !sender.isSelfUser { title = title.adding(font: boldFont, to: senderName) }
-            return names.applyComponentAttributes(to: title)
+            var title = formatKey(senderIsSelf).localized(args: senderName, namesFormat.string) && font && textColor
+            if !senderIsSelf { title = title.adding(font: boldFont, to: senderName) }
+            return namesFormat.applyComponentAttributes(to: title)
             
         case .started(withName: .some):
-            let title = "\(kWith.localized) \(names.string)" && font && textColor
-            return names.applyComponentAttributes(to: title)
-        
+            let title = "\(kWith.localized) \(namesFormat.string)" && font && textColor
+            // this could be refactored
+            return namesFormat.applyComponentAttributes(to: title)
         default: return nil
         }
-        
     }
-    
     
     /// Returns a `FormatSequence` describing a list of names. The list is comprised
     /// of usernames for shown users (complete with punctuation) and a count string
     /// for collapsed users, if any.
     /// E.g: "x, y, z, and 3 others"
-    private func nameList(for shownUsers: [ZMUser], collapsedUsers: [ZMUser], grammarCase: GrammarCase) -> FormatSequence {
-        guard !shownUsers.isEmpty else { preconditionFailure() }
-        
+
+    private func nameListFormat(for nameList: NameList) -> FormatSequence {
+        // there must be some names
+        guard !nameList.names.isEmpty else { preconditionFailure() }
+
         let result = FormatSequence()
-        
+
         // all team users added?
         if let linkText = linkTextForWholeTeam() {
             result.append(linkText, with: linkAttributes)
             return result
         }
         
-        let lastUser = shownUsers.last!
+        let attrsForLastName = nameList.selfIncluded ? normalAttributes : boldAttributes
+        let names = nameList.names
         
-        // check if self user is shown & if so, it is the last
-        let selfIncluded = shownUsers.any { $0.isSelfUser }
-        guard !selfIncluded || (lastUser.isSelfUser) else { preconditionFailure() }
-        
-        // get the names of the users (with separator)
-        let separator = shownUsers.count > 2 ? ", " : ""
-        let userNames = shownUsers.map {
-            name(for: $0, grammarCase: grammarCase, conversation: message.conversation) + separator
-        }
-        
-        switch shownUsers.count {
+        switch names.count {
         case 1:
             // "x"
-            result.append(userNames.first!, with: selfIncluded ? normalAttributes : boldAttributes)
+            result.append(names.last!, with: attrsForLastName)
         case 2:
             // "x and y"
-            let part = kAndX.localized(args: userNames)
+            let part = kAndX.localized(args: names)
             result.append(part, with: normalAttributes)
-            result.define(boldAttributes, forComponent: userNames.first!)
-            result.define(selfIncluded ? normalAttributes : boldAttributes, forComponent: userNames.last!)
+            result.define(boldAttributes, forComponent: names.first!)
+            result.define(attrsForLastName, forComponent: names.last!)
         default:
             // "x, y, "
-            result.append(userNames.dropLast().joined(), with: boldAttributes)
+            result.append(names.dropLast().map { $0 + ", " }.joined(), with: boldAttributes)
             
-            // collapsed
-            if let linkText = linkText(for: collapsedUsers) {
+            if nameList.collapsed > 0 {
                 // "you/z, "
-                result.append(userNames.last!, with: selfIncluded ? normalAttributes : boldAttributes)
-                
-                // "and X others"
+                result.append(names.last! + ", ", with: attrsForLastName)
+                // "and X others
+                let linkText = kXOthers.localized(args: "\(nameList.collapsed)")
                 let linkPart = kAndX.localized(args: linkText)
                 result.append(linkPart, with: normalAttributes)
                 result.define(linkAttributes, forComponent: linkText)
-            }
-            else {
-                // trim the ", " off the end
-                let lastName = String(userNames.last!.dropLast(2))
+            } else {
                 // "and you/z"
-                let lastPart = kAndX.localized(args: lastName)
+                let lastPart = kAndX.localized(args: names.last!)
                 result.append(lastPart, with: normalAttributes)
-                if !selfIncluded { result.define(boldAttributes, forComponent: lastName) }
+                result.define(attrsForLastName, forComponent: names.last!)
             }
         }
         
         return result
-    }
-    
-    
-    private func linkText(for users: [ZMUser]) -> String? {
-        guard !users.isEmpty else { return nil }
-        return kXOthers.localized(args: "\(users.count)")
     }
     
     private func linkTextForWholeTeam() -> String? {
