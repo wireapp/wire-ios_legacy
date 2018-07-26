@@ -214,7 +214,7 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
 
 extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
     
-    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
         let isRecording = audioRecordKeyboardViewController?.isRecording
 
         switch (callState, isRecording, wasRecordingBeforeCall) {

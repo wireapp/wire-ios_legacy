@@ -73,11 +73,3 @@ extension UIFont {
     
 }
 
-fileprivate var debugFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-
-extension FontSpec {
-    var font: UIFont? {
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        return fontScheme.font(for: self)
-    }
-}
