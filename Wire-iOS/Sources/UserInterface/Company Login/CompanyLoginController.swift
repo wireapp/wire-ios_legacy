@@ -188,6 +188,10 @@ import Foundation
         case .invalidCode:
             delegate?.controller(self, presentAlert: .invalidCodeError())
 
+        case .invalidStatus(let status):
+            let message = "login.sso.error.alert.invalid_status.message".localized(args: String(status))
+            delegate?.controller(self, presentAlert: .companyLoginError(message))
+
         case .unknown:
             let message = "login.sso.error.alert.unknown.message".localized
             delegate?.controller(self, presentAlert: .companyLoginError(message))
