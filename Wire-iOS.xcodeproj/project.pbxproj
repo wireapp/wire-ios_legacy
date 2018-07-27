@@ -48,7 +48,7 @@
 		164A55AD20ECFD7400AE62A6 /* UserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55AC20ECFD7400AE62A6 /* UserImageView.swift */; };
 		164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* ZMUser+Images.swift */; };
 		164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */; };
-		164A55DC20F60A5700AE62A6 /* ImageResourceFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55DB20F60A5700AE62A6 /* ImageResourceFetching.swift */; };
+		164A55DC20F60A5700AE62A6 /* ImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55DB20F60A5700AE62A6 /* ImageResource.swift */; };
 		164B533C20A0A5E800EC8265 /* CallInfoConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164B533B20A0A5E800EC8265 /* CallInfoConfigurationTests.swift */; };
 		164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */; };
 		164C29AD1ED446660026562A /* UserSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AC1ED446660026562A /* UserSelection.swift */; };
@@ -1345,7 +1345,7 @@
 		1648EEF22049A6F800CC6B37 /* DirectorySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorySectionController.swift; sourceTree = "<group>"; };
 		164A55AC20ECFD7400AE62A6 /* UserImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageView.swift; sourceTree = "<group>"; };
 		164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Decoding.swift"; sourceTree = "<group>"; };
-		164A55DB20F60A5700AE62A6 /* ImageResourceFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceFetching.swift; sourceTree = "<group>"; };
+		164A55DB20F60A5700AE62A6 /* ImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResource.swift; sourceTree = "<group>"; };
 		164B533B20A0A5E800EC8265 /* CallInfoConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoConfigurationTests.swift; sourceTree = "<group>"; };
 		164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		164C29AC1ED446660026562A /* UserSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSelection.swift; sourceTree = "<group>"; };
@@ -4666,7 +4666,7 @@
 				161B75C720B6BCB50002B0F7 /* ZMUserSession+Calling.swift */,
 				8762BE141D8978F70040E4A5 /* ZMAccentColor+Additions.swift */,
 				87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */,
-				164A55DB20F60A5700AE62A6 /* ImageResourceFetching.swift */,
+				164A55DB20F60A5700AE62A6 /* ImageResource.swift */,
 				1687ABA920EBCED80007C240 /* ZMUser+Images.swift */,
 				8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */,
 				D50892FA2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift */,
@@ -7083,7 +7083,7 @@
 				AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */,
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
 				8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */,
-				164A55DC20F60A5700AE62A6 /* ImageResourceFetching.swift in Sources */,
+				164A55DC20F60A5700AE62A6 /* ImageResource.swift in Sources */,
 				8759E2C11FC828ED008E17C9 /* CAAnimation+Cursor.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
