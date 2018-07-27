@@ -676,7 +676,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         UINavigationController *navigationController = (UINavigationController *)participantsController;
         if ([navigationController.topViewController isKindOfClass:GroupDetailsViewController.class]) {
             [(GroupDetailsViewController *)navigationController.topViewController presentParticipantsDetailsWithUsers:self.conversation.sortedOtherParticipants
-                                                                                        selectedUsers:self.conversation.sortedOtherParticipants
+                                                                                        selectedUsers:selectedUsers
                                                                                              animated:NO];
         }
     }
