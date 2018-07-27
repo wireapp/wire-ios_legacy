@@ -68,14 +68,8 @@ class UpsideDownTableView: UITableView {
         }
 
         set {
-
-            let touchYInSuper = self.panGestureRecognizer.location(in: self.superview).y
-            print("😍 touchY in super = \(touchYInSuper)")
-            print("😍 frame = \(frame)")
-            print("😍 pannableView frame = \(String(describing: pannableView?.frame))")
-
-
-            if let pannableView = pannableView, touchYInSuper >= pannableView.frame.maxY {
+            if let pannableView = pannableView,
+               self.panGestureRecognizer.location(in: self.superview).y >= pannableView.frame.maxY - 10 {
                 return
             }
 
