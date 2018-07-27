@@ -154,11 +154,11 @@ import Classy
         fileTypeIconView.contentMode = .center
         fileTypeIconView.image = UIImage(for: .document, iconSize: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
         
-        fileMessageData.fetchPreviewImage { [weak self] (image) in
+        fileMessageData.thumbnailImage.fetchImage { [weak self] (image) in
             guard let image = image else { return }
             
             self?.fileTypeIconView.contentMode = .scaleAspectFit
-            self?.fileTypeIconView.image = image
+            self?.fileTypeIconView.setMediaAsset(image) 
         }
         
         self.actionButton.isUserInteractionEnabled = true

@@ -76,7 +76,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         
         _ = sut.view // make sure view is loaded
         
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultMediaAssetCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         self.verifyInAllDeviceSizes(view: sut.view)
     }

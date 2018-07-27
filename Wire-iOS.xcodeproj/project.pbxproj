@@ -48,7 +48,7 @@
 		164A55AD20ECFD7400AE62A6 /* UserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55AC20ECFD7400AE62A6 /* UserImageView.swift */; };
 		164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* ZMUser+Images.swift */; };
 		164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */; };
-		164A55DC20F60A5700AE62A6 /* ZMTextMessageData+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55DB20F60A5700AE62A6 /* ZMTextMessageData+Images.swift */; };
+		164A55DC20F60A5700AE62A6 /* ImageResourceFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55DB20F60A5700AE62A6 /* ImageResourceFetching.swift */; };
 		164B533C20A0A5E800EC8265 /* CallInfoConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164B533B20A0A5E800EC8265 /* CallInfoConfigurationTests.swift */; };
 		164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */; };
 		164C29AD1ED446660026562A /* UserSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AC1ED446660026562A /* UserSelection.swift */; };
@@ -88,7 +88,6 @@
 		1682AEC120483FA5003A052A /* GroupDetailsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */; };
 		1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */; };
 		1682AEC520484B9B003A052A /* Themeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC420484B9B003A052A /* Themeable.swift */; };
-		1687ABA620EB774C0007C240 /* ZMImageMessageData+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA520EB774C0007C240 /* ZMImageMessageData+Images.swift */; };
 		1687ABA820EBB5F30007C240 /* ImageMessageCell+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */; };
 		168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */; };
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
@@ -1346,7 +1345,7 @@
 		1648EEF22049A6F800CC6B37 /* DirectorySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorySectionController.swift; sourceTree = "<group>"; };
 		164A55AC20ECFD7400AE62A6 /* UserImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageView.swift; sourceTree = "<group>"; };
 		164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Decoding.swift"; sourceTree = "<group>"; };
-		164A55DB20F60A5700AE62A6 /* ZMTextMessageData+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMTextMessageData+Images.swift"; sourceTree = "<group>"; };
+		164A55DB20F60A5700AE62A6 /* ImageResourceFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceFetching.swift; sourceTree = "<group>"; };
 		164B533B20A0A5E800EC8265 /* CallInfoConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoConfigurationTests.swift; sourceTree = "<group>"; };
 		164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		164C29AC1ED446660026562A /* UserSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSelection.swift; sourceTree = "<group>"; };
@@ -1383,7 +1382,6 @@
 		1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsSectionController.swift; sourceTree = "<group>"; };
 		1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCollectionViewController.swift; sourceTree = "<group>"; };
 		1682AEC420484B9B003A052A /* Themeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themeable.swift; sourceTree = "<group>"; };
-		1687ABA520EB774C0007C240 /* ZMImageMessageData+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMImageMessageData+Images.swift"; sourceTree = "<group>"; };
 		1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+Configure.swift"; sourceTree = "<group>"; };
 		1687ABA920EBCED80007C240 /* ZMUser+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Images.swift"; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
@@ -4668,8 +4666,7 @@
 				161B75C720B6BCB50002B0F7 /* ZMUserSession+Calling.swift */,
 				8762BE141D8978F70040E4A5 /* ZMAccentColor+Additions.swift */,
 				87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */,
-				1687ABA520EB774C0007C240 /* ZMImageMessageData+Images.swift */,
-				164A55DB20F60A5700AE62A6 /* ZMTextMessageData+Images.swift */,
+				164A55DB20F60A5700AE62A6 /* ImageResourceFetching.swift */,
 				1687ABA920EBCED80007C240 /* ZMUser+Images.swift */,
 				8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */,
 				D50892FA2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift */,
@@ -7086,7 +7083,7 @@
 				AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */,
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
 				8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */,
-				164A55DC20F60A5700AE62A6 /* ZMTextMessageData+Images.swift in Sources */,
+				164A55DC20F60A5700AE62A6 /* ImageResourceFetching.swift in Sources */,
 				8759E2C11FC828ED008E17C9 /* CAAnimation+Cursor.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
@@ -7151,7 +7148,6 @@
 				EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */,
 				BF5DF5C320F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift in Sources */,
 				87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */,
-				1687ABA620EB774C0007C240 /* ZMImageMessageData+Images.swift in Sources */,
 				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
 				BF8ECC331E5AED6C0015177D /* UIMenuItem+MessageActions.swift in Sources */,

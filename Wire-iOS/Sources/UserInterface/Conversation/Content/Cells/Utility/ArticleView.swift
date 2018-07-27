@@ -183,9 +183,9 @@ import Classy
             imageView.image = nil
             imageView.contentMode = .scaleAspectFill
             
-            textMessageData.fetchLinkPreviewImage { [weak self] (image) in
+            textMessageData.linkPreviewImage.fetchImage { [weak self] (image) in
                 self?.loadingView?.isHidden = image != nil
-                self?.imageView.image = image
+                self?.imageView.setMediaAsset(image)
                 self?.setContentMode(isObfuscated: false)
             }
         }

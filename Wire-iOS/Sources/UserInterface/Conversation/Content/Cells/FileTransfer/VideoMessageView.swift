@@ -122,7 +122,7 @@ import Classy
             updateTimeLabel(withFileMessageData: fileMessageData)
             self.timeLabel.textColor = UIColor(scheme: .textForeground)
             
-            fileMessageData.fetchPreviewImage { [weak self] (image) in
+            fileMessageData.thumbnailImage.fetchImage { [weak self] (image) in
                 guard let image = image else { return }
                 self?.updatePreviewImage(image)
             }
@@ -169,8 +169,8 @@ import Classy
         return visibleViews
     }
     
-    private func updatePreviewImage(_ image: UIImage) {
-        previewImageView.image = image
+    private func updatePreviewImage(_ image: MediaAsset) {
+        previewImageView.setMediaAsset(image) 
         timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         updateVisibleViews()
     }

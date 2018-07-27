@@ -131,7 +131,7 @@ final public class CollectionImageCell: CollectionCell {
     }
 
     fileprivate func loadImage() {
-        guard let message = self.message, message.imageMessageData != nil else {
+        guard let imageMessageData = message?.imageMessageData else {
             self.imageView.image = .none
             return
         }
@@ -141,7 +141,7 @@ final public class CollectionImageCell: CollectionCell {
         
         let token = reuseToken
         
-        message.fetchImage(sizeLimit: .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)) { [weak self] (image) in
+        imageMessageData.image.fetchImage(sizeLimit: .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)) { [weak self] (image) in
             guard token == self?.reuseToken else { return }
             
             self?.imageView.setMediaAsset(image)
