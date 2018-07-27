@@ -114,13 +114,9 @@ private struct InputBarConstants {
 fileprivate extension CGFloat {
     enum fakeCursor {
         static let width: CGFloat = 2
-        static let height: CGFloat = 20
+        static let height: CGFloat = 21
     }
 }
-
-fileprivate let fakeCursorWidth = CGFloat(2)
-fileprivate let fakeCursorHeight = CGFloat(20)
-
 
 @objcMembers public final class InputBar: UIView {
 
@@ -172,7 +168,7 @@ fileprivate let fakeCursorHeight = CGFloat(20)
 
     fileprivate let fakeCursor: UIView = {
         let view = UIView()
-        view.layer.cornerRadius = fakeCursorWidth / 2
+        view.layer.cornerRadius = CGFloat.fakeCursor.width / 2
         return view
     }()
 
@@ -334,9 +330,9 @@ fileprivate let fakeCursorHeight = CGFloat(20)
         }
 
         constrain(fakeCursor) { fakeCursor in
-            fakeCursor.width == fakeCursorWidth
-            fakeCursor.height == fakeCursorHeight
-            fakeCursor.centerY == fakeCursor.superview!.centerY - 5
+            fakeCursor.width == CGFloat.fakeCursor.width
+            fakeCursor.height == CGFloat.fakeCursor.height
+            fakeCursor.centerY == fakeCursor.superview!.centerY - 1
             fakeCursor.leading == fakeCursor.superview!.leading
         }
     }
