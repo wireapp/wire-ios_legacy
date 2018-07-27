@@ -119,7 +119,7 @@ import WireLinkPreview
     var originalSize: CGSize { return mockOriginalSize }
     
     func fetchImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
-        
+        completionHandler(imageData)
     }
 }
 
