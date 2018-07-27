@@ -203,6 +203,8 @@ private struct InputBarConstants {
     override public func didMoveToWindow() {
         super.didMoveToWindow()
 
+        // This is a workaround for UITextView truncating long contents.
+        // However, this breaks the text view on iOS 8 ¯\_(ツ)_/¯.
         textView.isScrollEnabled = false
         textView.isScrollEnabled = true
 
