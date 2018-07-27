@@ -148,6 +148,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self createInputBarController];
     [self createContentViewController];
+
+    self.contentViewController.tableView.pannableView = self.inputBarController.view;
+
     [self createConversationBarController];
     [self createMediaBarViewController];
     [self createGuestsBarController];

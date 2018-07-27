@@ -19,6 +19,9 @@
 import Foundation
 
 class UpsideDownTableView: UITableView {
+
+    @objc weak var pannableView: UIView?
+
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
 
@@ -66,16 +69,13 @@ class UpsideDownTableView: UITableView {
 
         set {
 
-            let touchY = self.panGestureRecognizer.location(in: self).y
             let touchYInSuper = self.panGestureRecognizer.location(in: self.superview).y
-            print("😍 touchY = \(touchY)")
             print("😍 touchY in super = \(touchYInSuper)")
-            print("😍 bounds = \(bounds)")
             print("😍 frame = \(frame)")
+            print("😍 pannableView frame = \(String(describing: pannableView?.frame))")
 
 
-
-            if touchYInSuper >= frame.maxY {
+            if let pannableView = pannableView, touchYInSuper >= pannableView.frame.maxY {
                 return
             }
 
