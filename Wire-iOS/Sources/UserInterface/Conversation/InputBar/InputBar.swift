@@ -332,7 +332,7 @@ fileprivate extension CGFloat {
         constrain(fakeCursor) { fakeCursor in
             fakeCursor.width == CGFloat.fakeCursor.width
             fakeCursor.height == CGFloat.fakeCursor.height
-            fakeCursor.centerY == fakeCursor.superview!.centerY - 1
+            fakeCursor.centerY == fakeCursor.superview!.centerY - 1.5
             fakeCursor.leading == fakeCursor.superview!.leading
         }
     }
