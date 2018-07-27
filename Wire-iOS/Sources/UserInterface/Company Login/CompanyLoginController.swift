@@ -171,6 +171,7 @@ import Foundation
         delegate?.controller(self, showLoadingView: true)
 
         requester.validate(token: uuid) {
+            self.delegate?.controller(self, showLoadingView: false)
             guard !self.handleValidationErrorIfNeeded($0) else { return }
             self.requester.requestIdentity(for: uuid)
         }
@@ -181,14 +182,13 @@ import Foundation
     }
 
     private func handleValidationErrorIfNeeded(_ error: ValidationError?) -> Bool {
-        delegate?.controller(self, showLoadingView: false)
         guard let error = error else { return false }
 
         switch error {
         case .invalidCode:
             delegate?.controller(self, presentAlert: .invalidCodeError())
 
-        case unknown:
+        case .unknown:
             let message = "login.sso.error.alert.unknown.message".localized
             delegate?.controller(self, presentAlert: .companyLoginError(message))
         }
