@@ -77,6 +77,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
             destinations: [groupConversation, oneToOneConversation],
             showPreview: true
         )
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         self.verifyInAllDeviceSizes(view: sut.view)
     }
