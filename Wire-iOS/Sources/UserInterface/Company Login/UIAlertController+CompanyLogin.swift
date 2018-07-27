@@ -88,5 +88,16 @@ extension UIAlertController {
         controller.addAction(.ok())
         return controller
     }
+
+    static func invalidCodeError() -> UIAlertController {
+        let controller = UIAlertController(
+            title: "login.sso.error.alert.invalid_code.title".localized,
+            message: "login.sso.error.alert.invalid_code.message".localized,
+            preferredStyle: .alert
+        )
+
+        controller.addAction(.ok())
+        return controller
+    }
     
 }

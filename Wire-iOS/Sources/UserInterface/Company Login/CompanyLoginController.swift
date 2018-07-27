@@ -169,11 +169,31 @@ import Foundation
         }
 
         delegate?.controller(self, showLoadingView: true)
-        requester.requestIdentity(for: uuid)
+
+        requester.validate(token: uuid) {
+            guard !self.handleValidationErrorIfNeeded($0) else { return }
+            self.requester.requestIdentity(for: uuid)
+        }
     }
 
     private func presentError(_ error: LocalizedError) {
-        delegate?.controller(self, presentAlert: .companyLoginError(error.localizedDescription))
+
+    }
+
+    private func handleValidationErrorIfNeeded(_ error: ValidationError?) -> Bool {
+        delegate?.controller(self, showLoadingView: false)
+        guard let error = error else { return false }
+
+        switch error {
+        case .invalidCode:
+            delegate?.controller(self, presentAlert: .invalidCodeError())
+
+        case unknown:
+            let message = "login.sso.error.alert.unknown.message".localized
+            delegate?.controller(self, presentAlert: .companyLoginError(message))
+        }
+
+        return true
     }
 
     /// Attempt to login using the requester specified in `init`
