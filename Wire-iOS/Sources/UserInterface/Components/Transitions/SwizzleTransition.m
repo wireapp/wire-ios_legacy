@@ -24,7 +24,7 @@
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-    return 0.70f;
+    return 0.50f;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
@@ -51,22 +51,22 @@
         durationPhase2 = 0.55f;
     }
     else {
-        toView.layer.transform = CATransform3DMakeTranslation(0.0f, 88.0f, 0.0f);
-        durationPhase1 = 0.35f;
-        durationPhase2 = 0.55f;
+        toView.layer.transform = CATransform3DMakeTranslation(0.0f, 48.0f, 0.0f);
+        durationPhase1 = 0.10f;
+        durationPhase2 = 0.30f;
     }
     toView.alpha = 0;
     
-    [UIView wr_animateWithEasing:WREasingFunctionEaseInExpo duration:durationPhase1 delay:0 animations:^{
+    [UIView wr_animateWithEasing:WREasingFunctionEaseInQuad duration:durationPhase1 delay:0 animations:^{
         fromView.alpha = 0;
         if (self.direction == SwizzleTransitionDirectionHorizontal) {
             fromView.layer.transform = CATransform3DMakeTranslation(48.0f, 0.0f, 0.0f);
         }
         else {
-            fromView.layer.transform = CATransform3DMakeTranslation(0.0f, 88.0f, 0.0f);
+            fromView.layer.transform = CATransform3DMakeTranslation(0.0f, 48.0f, 0.0f);
         }
     } completion:^(BOOL finished) {
-        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:durationPhase2 delay:0 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseOutQuad duration:durationPhase2 delay:0 animations:^{
             toView.layer.transform = CATransform3DIdentity;
             toView.alpha = 1;
         } completion:^(BOOL finished) {
