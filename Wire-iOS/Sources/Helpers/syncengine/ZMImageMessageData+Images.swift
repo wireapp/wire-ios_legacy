@@ -64,12 +64,15 @@ extension ZMConversationMessage {
             self.requestImageDownload()
         }
         
+        cache.dispatchGroup.enter()
+        
         imageMessageData.fetchImageData(with: cache.processingQueue) { (imageData) in
             var image: MediaAsset?
             
             defer {
                 DispatchQueue.main.async {
                     completion(image)
+                    cache.dispatchGroup.leave()
                 }
             }
             
