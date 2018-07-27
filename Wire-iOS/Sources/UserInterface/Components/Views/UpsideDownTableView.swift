@@ -25,7 +25,6 @@ class UpsideDownTableView: UITableView {
         UIView.performWithoutAnimation({
             self.transform = CGAffineTransform(scaleX: 1, y: -1)
         })
-
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -57,6 +56,30 @@ class UpsideDownTableView: UITableView {
                                                            newValue.left,
                                                            newValue.top,
                                                            newValue.right)
+        }
+    }
+
+    override var contentOffset: CGPoint {
+        get {
+            return super.contentOffset
+        }
+
+        set {
+
+            let touchY = self.panGestureRecognizer.location(in: self).y
+            let touchYInSuper = self.panGestureRecognizer.location(in: self.superview).y
+            print("😍 touchY = \(touchY)")
+            print("😍 touchY in super = \(touchYInSuper)")
+            print("😍 bounds = \(bounds)")
+            print("😍 frame = \(frame)")
+
+
+
+            if touchYInSuper >= frame.maxY {
+                return
+            }
+
+            super.contentOffset = newValue
         }
     }
 
