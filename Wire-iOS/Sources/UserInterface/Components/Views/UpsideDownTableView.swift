@@ -34,23 +34,29 @@ class UpsideDownTableView: UITableView {
 
     @objc public var correctedContentInset: UIEdgeInsets {
         get {
-        let insets = super.contentInset
-        return UIEdgeInsetsMake(insets.bottom, insets.left, insets.top, insets.right)
+            let insets = super.contentInset
+            return UIEdgeInsetsMake(insets.bottom, insets.left, insets.top, insets.right)
         }
 
         set {
-            super.contentInset = UIEdgeInsetsMake(contentInset.bottom, contentInset.left, contentInset.top, contentInset.right)
+            super.contentInset = UIEdgeInsetsMake(newValue.bottom,
+                                                  newValue.left,
+                                                  newValue.top,
+                                                  newValue.right)
         }
     }
 
     public var correctedScrollIndicatorInsets: UIEdgeInsets {
         get {
-        let insets = super.scrollIndicatorInsets
-        return UIEdgeInsetsMake(insets.bottom, insets.left, insets.top, insets.right)
+            let insets = super.scrollIndicatorInsets
+            return UIEdgeInsetsMake(insets.bottom, insets.left, insets.top, insets.right)
         }
 
         set {
-            super.scrollIndicatorInsets = UIEdgeInsetsMake(correctedScrollIndicatorInsets.bottom, correctedScrollIndicatorInsets.left, correctedScrollIndicatorInsets.top, correctedScrollIndicatorInsets.right)
+            super.scrollIndicatorInsets = UIEdgeInsetsMake(newValue.bottom,
+                                                           newValue.left,
+                                                           newValue.top,
+                                                           newValue.right)
         }
     }
 
