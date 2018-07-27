@@ -386,7 +386,11 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
         present(alert, animated: true)
     }
-    
+
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
+        self.showLoadingView = showLoadingView
+    }
+
     // MARK: - PreLoginAuthenticationObserver
     
     func authenticationReadyToImportBackup(existingAccount: Bool) {

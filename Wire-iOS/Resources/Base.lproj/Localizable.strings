@@ -1139,6 +1139,7 @@
 "login.sso.alert.text_field.placeholder" = "SSO access code";
 
 "login.sso.error.alert.title" = "Something went wrong";
+"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
 
 // Restore In Progress Loading Titles

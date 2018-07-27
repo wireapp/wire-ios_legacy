@@ -278,4 +278,9 @@
     [self presentViewController:presentAlert animated:YES completion:nil];
 }
 
+- (void)controller:(CompanyLoginController *)controller showLoadingView:(BOOL)showLoadingView
+{
+    self.showLoadingView = showLoadingView;
+}
+
 @end

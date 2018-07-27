@@ -24,6 +24,10 @@ import Foundation
     /// always ask its delegate to handle the actual presentation of the alerts.
     func controller(_ controller: CompanyLoginController, presentAlert: UIAlertController)
 
+    /// Called when the company login controller asks the presenter to show the login spinner
+    /// when performing a required task.
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool)
+
 }
 
 ///
@@ -158,15 +162,26 @@ import Foundation
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
     private func attemptLogin(using code: String) {
+        guard !presentOfflineAlertIfNeeded() else { return }
+
         guard let uuid = CompanyLoginRequestDetector.requestCode(in: code) else {
             return requireInternalFailure("Should never try to login with invalid code.")
         }
 
+        delegate?.controller(self, showLoadingView: true)
         requester.requestIdentity(for: uuid)
     }
 
     private func presentError(_ error: LocalizedError) {
         delegate?.controller(self, presentAlert: .companyLoginError(error.localizedDescription))
+    }
+
+    /// Attempt to login using the requester specified in `init`
+    /// - returns: `true` when the application is offline and an alert was presented, `false` otherwise.
+    private func presentOfflineAlertIfNeeded() -> Bool {
+        guard AppDelegate.isOffline else { return false }
+        delegate?.controller(self, presentAlert: .noInternetError())
+        return true
     }
 
     // MARK: - Flow
