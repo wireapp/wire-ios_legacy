@@ -111,6 +111,17 @@ private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
 
+fileprivate extension CGFloat {
+    enum fakeCursor {
+        static let width: CGFloat = 2
+        static let height: CGFloat = 20
+    }
+}
+
+fileprivate let fakeCursorWidth = CGFloat(2)
+fileprivate let fakeCursorHeight = CGFloat(20)
+
+
 @objcMembers public final class InputBar: UIView {
 
     private let inputBarVerticalInset: CGFloat = 34
@@ -158,7 +169,13 @@ private struct InputBarConstants {
     
     // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()
-    fileprivate let fakeCursor = UIView()
+
+    fileprivate let fakeCursor: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = fakeCursorWidth / 2
+        return view
+    }()
+
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
     fileprivate let notificationCenter = NotificationCenter.default
@@ -315,11 +332,11 @@ private struct InputBarConstants {
             innerContainer.trailing == container.trailing
             self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
         }
-        
+
         constrain(fakeCursor) { fakeCursor in
-            fakeCursor.width == 2
-            fakeCursor.height == 23
-            fakeCursor.centerY == fakeCursor.superview!.centerY
+            fakeCursor.width == fakeCursorWidth
+            fakeCursor.height == fakeCursorHeight
+            fakeCursor.centerY == fakeCursor.superview!.centerY - 5
             fakeCursor.leading == fakeCursor.superview!.leading
         }
     }
