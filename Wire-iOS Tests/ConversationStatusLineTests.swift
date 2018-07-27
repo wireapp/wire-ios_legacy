@@ -32,7 +32,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "@" + otherUser.handle)
+        XCTAssertEqual(status.string, "@" + otherUser.handle!)
     }
     
     func testStatusForNotActiveConversationGroup() {
@@ -187,7 +187,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added you")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName) added you")
     }
     
     func testNoStatusForSystemMessageIAddedSomeone() {
@@ -261,7 +261,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added \(anotherUser.displayName!)")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName) added \(anotherUser.displayName)")
     }
     
     func testStatusForSystemMessageSomeoneJoined() {
@@ -278,7 +278,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) joined")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName) joined")
     }
     
     func testStatusForSystemMessageIWasRemoved() {
@@ -330,7 +330,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) started a conversation")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName) started a conversation")
     }
     
     func testNoStatusForSelfConversationStarted() {

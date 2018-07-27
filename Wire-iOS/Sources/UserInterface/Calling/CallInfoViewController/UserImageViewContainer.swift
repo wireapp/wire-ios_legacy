@@ -23,7 +23,7 @@ final class UserImageViewContainer: UIView {
     private let maxSize: CGFloat
     private let yOffset: CGFloat
     
-    var user: ZMBareUser? {
+    var user: UserType? {
         didSet {
             userImageView.user = user
         }

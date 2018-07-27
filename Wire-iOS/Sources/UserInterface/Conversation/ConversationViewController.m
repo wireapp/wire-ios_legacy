@@ -276,7 +276,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         BOOL containsGuests = NO;
         
         for (ZMUser *user in self.conversation.activeParticipants) {
-            if ([user isGuestInConversation:self.conversation]) {
+            if ([user isGuestIn:self.conversation]) {
                 containsGuests = YES;
                 break;
             }

@@ -97,7 +97,7 @@ import Cartography
         self.createConstraints()
     }
     
-    fileprivate func updateHandleLabel(user: ZMBareUser) {
+    fileprivate func updateHandleLabel(user: UserType) {
         if let handle = user.handle, !handle.isEmpty {
             handleLabel.text = "@" + handle
             handleLabel.accessibilityValue = handleLabel.text

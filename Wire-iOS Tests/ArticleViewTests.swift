@@ -25,6 +25,13 @@ class ArticleViewTests: ZMSnapshotTestCase {
     
     var sut: ArticleView!
         
+    override func tearDown() {
+        
+        defaultImageCache.cache.removeAllObjects()
+        
+        super.tearDown()
+    }
+        
     /// MARK - Fixture
     
     func articleWithoutPicture() -> MockTextMessageData {
@@ -41,23 +48,6 @@ class ArticleViewTests: ZMSnapshotTestCase {
         return textMessageData
     }
     
-    func articleWithNilPicture() -> MockTextMessageData {
-        let article = Article(originalURLString: "https://www.example.com/article/1",
-                              permanentURLString: "https://www.example.com/article/1",
-                              resolvedURLString: "https://www.example.com/article/1",
-                              offset: 0)
-        
-        article.title = "Title with some words in it"
-        article.summary = "Summary summary summary summary summary summary summary summary summary summary summary summary summary summary summary"
-        
-        let textMessageData = MockTextMessageData()
-        textMessageData.linkPreview = article
-        textMessageData.imageDataIdentifier = "image-id-2"
-        textMessageData.imageData = Data()
-        textMessageData.hasImageData = true
-        return textMessageData
-    }
-    
     func articleWithPicture(imageNamed: String = "unsplash_matterhorn.jpg") -> MockTextMessageData {
         let article = Article(originalURLString: "https://www.example.com/article/1",
                               permanentURLString: "https://www.example.com/article/1",
@@ -69,9 +59,9 @@ class ArticleViewTests: ZMSnapshotTestCase {
         
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
-        textMessageData.imageDataIdentifier = "image-id-\(imageNamed)"
+        textMessageData.linkPreviewImageCacheKey = "image-id-\(imageNamed)"
         textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: imageNamed), 0.9)
-        textMessageData.hasImageData = true
+        textMessageData.linkPreviewHasImage = true
         
         return textMessageData
     }
@@ -87,9 +77,9 @@ class ArticleViewTests: ZMSnapshotTestCase {
         
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
-        textMessageData.imageDataIdentifier = "image-id"
+        textMessageData.linkPreviewImageCacheKey = "image-id"
         textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
-        textMessageData.hasImageData = true
+        textMessageData.linkPreviewHasImage = true
         
         return textMessageData
     }
@@ -118,6 +108,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -127,34 +118,11 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
         sut.layoutIfNeeded()
-
-        let expectation = self.expectation(description: "Wait for image to load")
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            expectation.fulfill()
-            self.verifyInAllPhoneWidths(view: self.sut)
-        }
-        
-        self.waitForExpectations(timeout: 2, handler: nil)
+        self.verifyInAllPhoneWidths(view: self.sut)
     }
-    
-    func testArticleWithNilPicture() {
-        sut = ArticleView(withImagePlaceholder: true)
-        sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.configure(withTextMessageData: articleWithNilPicture(), obfuscated: false)
-        sut.layoutIfNeeded()
         
-        
-        let expectation = self.expectation(description: "Wait for image to load")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            expectation.fulfill()
-            self.verifyInAllPhoneWidths(view: self.sut)
-        }
-        
-        self.waitForExpectations(timeout: 2, handler: nil)
-    }
-    
     func testArticleViewWithPictureStillDownloading() {
         
         sut = ArticleView(withImagePlaceholder: true)
@@ -165,6 +133,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         textMessageData.imageData = .none
         sut.configure(withTextMessageData: textMessageData, obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -174,15 +143,9 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
-        let expectation = self.expectation(description: "Wait for image to load")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            expectation.fulfill()
-            self.verifyInAllPhoneWidths(view: self.sut)
-        }
-        
-        self.waitForExpectations(timeout: 2, handler: nil)
+        self.verifyInAllPhoneWidths(view: self.sut)
     }
     
     func testArticleViewWithTwitterStatusWithoutPicture() {
@@ -190,6 +153,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: twitterStatusWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -200,6 +164,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: true)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
 
         verifyInAllPhoneWidths(view: sut)
     }
@@ -227,14 +192,8 @@ class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(imageNamed: named), obfuscated: false)
         sut.layoutIfNeeded()
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
-        let expectation = self.expectation(description: "Wait for image to load")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            expectation.fulfill()
-            self.verifyInAllPhoneWidths(view: self.sut)
-        }
-        
-        self.waitForExpectations(timeout: 2, handler: nil)
+        self.verifyInAllPhoneWidths(view: self.sut)
     }
 }

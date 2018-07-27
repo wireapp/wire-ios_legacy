@@ -43,13 +43,13 @@ extension ZMUserSession: ZMUserSessionInterface {
 }
 
 protocol ValidatorType {
-    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>!) throws
+    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>?) throws
 }
 
 extension ZMUser: ValidatorType {
 }
 
-typealias SettingsSelfUser = ValidatorType & ZMEditableUser & ZMBareUser
+typealias SettingsSelfUser = ValidatorType & ZMEditableUser & UserType
 
 enum SettingsPropertyError: Error {
     case WrongValue(String)

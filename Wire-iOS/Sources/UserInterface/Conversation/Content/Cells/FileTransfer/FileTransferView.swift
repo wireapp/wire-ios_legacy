@@ -151,13 +151,14 @@ import Classy
         let fileSize = ByteCountFormatter.string(fromByteCount: Int64(filesize), countStyle: .binary)
         let fileSizeAttributed = fileSize && labelFont && labelTextBlendedColor
         
-        if let previewData = fileMessageData.previewData {
-            self.fileTypeIconView.contentMode = .scaleAspectFit
-            self.fileTypeIconView.image = UIImage(data: previewData)
-        }
-        else {
-            self.fileTypeIconView.contentMode = .center
-            self.fileTypeIconView.image = UIImage(for: .document, iconSize: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        fileTypeIconView.contentMode = .center
+        fileTypeIconView.image = UIImage(for: .document, iconSize: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        
+        fileMessageData.fetchPreviewImage { [weak self] (image) in
+            guard let image = image else { return }
+            
+            self?.fileTypeIconView.contentMode = .scaleAspectFit
+            self?.fileTypeIconView.image = image
         }
         
         self.actionButton.isUserInteractionEnabled = true

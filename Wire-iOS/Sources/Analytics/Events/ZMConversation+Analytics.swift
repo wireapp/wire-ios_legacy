@@ -66,17 +66,17 @@ extension ZMConversation {
     
     /// Whether the conversation includes at least 1 service user.
     @objc public var includesServiceUser: Bool {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return false }
+        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return false }
         return participants.any { $0.isServiceUser }
     }
     
-    @objc public var sortedServiceUsers: [ZMBareUser] {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return [] }
+    @objc public var sortedServiceUsers: [UserType] {
+        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
         return participants.filter { $0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
     
-    @objc public var sortedOtherParticipants: [ZMBareUser] {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return [] }
+    @objc public var sortedOtherParticipants: [UserType] {
+        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
         return participants.filter { !$0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
 

@@ -42,7 +42,7 @@
     
     NSArray *matchingUsers = [@"some text @K" usersMatchingLastMention:self.users];
     
-    XCTAssertTrue(matchingUsers.count >0 , @"No matches returned. Expecting some matches");
+    XCTAssertTrue(matchingUsers.count > 0 , @"No matches returned. Expecting some matches");
 }
 
 - (void)testThatAFullMentionDoesNotReturnMatches

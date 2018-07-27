@@ -205,7 +205,7 @@ final class ServiceDetailViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        self.title = self.service.serviceUser.name.localizedUppercase
+        self.title = self.service.serviceUser.name?.localizedUppercase
     }
 
     required init?(coder aDecoder: NSCoder) {

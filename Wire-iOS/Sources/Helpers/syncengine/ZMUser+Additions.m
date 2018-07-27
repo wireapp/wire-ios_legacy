@@ -70,7 +70,7 @@ ZMUser *BareUserToUser(id bareUser) {
 
 
 /**
- Return self's User object (a subclass of ZMBareUser)
+ Return self's User object
 
  @return a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
  */
@@ -78,7 +78,7 @@ ZMUser *BareUserToUser(id bareUser) {
 {
     Class mockUserClass = NSClassFromString(@"MockUser");
     if (mockUserClass != nil) {
-        return [mockUserClass selfUserInUserSession:nil];
+        return [mockUserClass selfUserInUserSession:[ZMUserSession sharedSession]];
     }
     else {
         return [ZMUser selfUserInUserSession:[ZMUserSession sharedSession]];

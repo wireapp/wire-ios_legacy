@@ -26,7 +26,7 @@ class UserNameDetailViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
     }
 
-    func createSutWithHeadStyle(user: ZMBareUser? = nil,
+    func createSutWithHeadStyle(user: UserType? = nil,
                                 addressBookName: String? = nil,
                                 fallbackName: String = "Jose Luis") -> UserNameDetailView {
         let model = UserNameDetailViewModel(user: user, fallbackName: fallbackName, addressBookName: addressBookName)

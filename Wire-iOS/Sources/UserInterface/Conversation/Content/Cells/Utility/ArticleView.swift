@@ -159,14 +159,6 @@ import Classy
         }
     }
     
-    private static var imageCache : ImageCache  = {
-        let cache = ImageCache(name: "ArticleView.imageCache")
-        cache.maxConcurrentOperationCount = 4;
-        cache.totalCostLimit = UInt(1024 * 1024 * 10); // 10 MB
-        cache.qualityOfService = .utility;
-        return cache
-    }()
-    
     func configure(withTextMessageData textMessageData: ZMTextMessageData, obfuscated: Bool) {
         guard let linkPreview = textMessageData.linkPreview else {
             return
@@ -183,26 +175,18 @@ import Classy
         }
 
         obfuscationView.isHidden = !obfuscated
-
-        if let imageData = textMessageData.imageData,
-            let imageDataIdentifier = textMessageData.imageDataIdentifier {
-
-            if obfuscated {
-                ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
-                imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
-                setContentMode(isObfuscated: true)
-            } else {
-                imageView.image = nil
-                imageView.contentMode = .scaleAspectFill
-                loadingView?.isHidden = true
-                ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any? in
-                    return UIImage.deviceOptimizedImage(from: data)
-                    }, completion: { [weak self] (image, _) in
-                        if let image = image as? UIImage {
-                            self?.imageView.image = image
-                            self?.setContentMode(isObfuscated: false)
-                        }
-                    })
+        
+        if obfuscated {
+            imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
+            setContentMode(isObfuscated: true)
+        } else {
+            imageView.image = nil
+            imageView.contentMode = .scaleAspectFill
+            
+            textMessageData.fetchLinkPreviewImage { [weak self] (image) in
+                self?.loadingView?.isHidden = image != nil
+                self?.imageView.image = image
+                self?.setContentMode(isObfuscated: false)
             }
         }
     }

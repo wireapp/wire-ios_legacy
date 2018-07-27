@@ -23,7 +23,7 @@ protocol GroupDetailsUserDetailPresenter: class {
 }
 
 protocol GroupDetailsSectionControllerDelegate: GroupDetailsUserDetailPresenter {
-    func presentFullParticipantsList(for users: [ZMBareUser], in conversation: ZMConversation)
+    func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation)
 }
 
 class GroupDetailsSectionController: NSObject, CollectionViewSectionController {

@@ -26,6 +26,7 @@
 
 @interface ProfileSelfPictureViewController : BottomOverlayViewController
 
-@property (strong, nonatomic) ZMUser *user;
+@property (nonatomic) ZMUser *user;
+@property (nonatomic, readonly) UIImageView *selfUserImageView;
 
 @end

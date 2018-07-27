@@ -1,4 +1,4 @@
-////
+//
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,10 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface StartUIViewController ()
+import Foundation
 
-@property (nonatomic) UserSelection *userSelection;
-
-- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath;
-
-@end
+extension ProfileSelfPictureViewController: ZMUserObserver {
+    
+    public func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.imageMediumDataChanged else { return }
+        
+        changeInfo.user.fetchProfileImage(size: .complete) { (image) in
+            self.selfUserImageView.image = image
+        }
+    }
+    
+}

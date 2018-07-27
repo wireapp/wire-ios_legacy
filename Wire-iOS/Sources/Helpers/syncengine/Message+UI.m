@@ -99,8 +99,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 + (BOOL)canBePrefetched:(id<ZMConversationMessage>)message
 {
-    return [Message isFileTransferMessage:message] ||
-           [Message isImageMessage:message] ||
+    return [Message isImageMessage:message] ||
+           [Message isFileTransferMessage:message] ||
            [Message isTextMessage:message];
 }
 

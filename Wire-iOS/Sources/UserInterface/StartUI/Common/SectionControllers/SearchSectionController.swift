@@ -20,7 +20,7 @@ import Foundation
 
 protocol SearchSectionControllerDelegate: class {
     
-    func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectUser user: ZMBareUser, at indexPath: IndexPath)
+    func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectUser user: UserType, at indexPath: IndexPath)
     
     func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectConversation conversation: ZMConversation, at indexPath: IndexPath)
     

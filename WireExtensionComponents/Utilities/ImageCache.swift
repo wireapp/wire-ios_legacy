@@ -18,12 +18,14 @@
 
 import Foundation
 
-extension MockUser: ZMSearchableUser {
-    public func requestMediumProfileImage(in userSession: ZMUserSession!) {
-        // no-op
+public class ImageCache<T : NSObjectProtocol> {
+    
+    public init() {
+        
     }
-
-    public func requestSmallProfileImage(in userSession: ZMUserSession!) {
-        // no-op
-    }
+    
+    public var cache: NSCache<NSString, T> = NSCache()
+    public var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
+    public var dispatchGroup: DispatchGroup = DispatchGroup()
+    
 }

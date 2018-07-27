@@ -24,55 +24,21 @@ import WireExtensionComponents
 private let zmLog = ZMSLog(tag: "UI")
 
 final public class CollectionImageCell: CollectionCell {
-    public static var imageCache: ImageCache = {
-        let cache = ImageCache(name: "CollectionImageCell.imageCache")
-        cache.maxConcurrentOperationCount = 4
-        cache.totalCostLimit = UInt(1024 * 1024 * 20) // 20 MB
-        cache.qualityOfService = .utility
-    
-        return cache
-    }()
-    
-    public static func loadImageThumbnail(for message: ZMConversationMessage, completion: ((_ image: Any?, _ cacheKey: String)->())?) {
-        
-        // If medium image is present, use the medium image
-        if let imageMessageData = message.imageMessageData, let imageData = imageMessageData.imageData, imageData.count > 0 {
-            
-            let isAnimatedGIF = imageMessageData.isAnimatedGIF
-            
-            self.imageCache.image(for: imageData, cacheKey: Message.nonNilImageDataIdentifier(message), creationBlock: { (data: Data) -> Any in
-                var image: AnyObject? = .none
-                
-                if (isAnimatedGIF) {
-                    image = FLAnimatedImage(animatedGIFData: data)
-                } else {
-                    image = UIImage(from: data, withShorterSideLength: CollectionImageCell.maxCellSize * UIScreen.main.scale)
-                }
-                
-                guard let finalImage = image else {
-                    fatal("Invalid image data cannot be loaded")
-                }
-                
-                return finalImage
-                
-            }, completion: completion)
-        }
-    }
     
     static let maxCellSize: CGFloat = 100
 
     override var message: ZMConversationMessage? {
         didSet {
-            guard let message = self.message, let _ = message.imageMessageData else {
-                self.imageView.image = .none
-                return
-            }
-            message.requestImageDownload()
+            loadImage()
         }
     }
         
     private let imageView = FLAnimatedImageView()
     private let loadingView = ThreeDotsLoadingView()
+    
+    /// This token is changes everytime the cell is re-used. Useful when performing
+    /// asynchronous tasks where the cell might have been re-used in the mean time.
+    private var reuseToken = UUID()
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -106,6 +72,7 @@ final public class CollectionImageCell: CollectionCell {
         super.prepareForReuse()
         self.message = .none
         self.isHeightCalculated = false
+        self.reuseToken = UUID()
     }
 
     override var obfuscationIcon: ZetaIconType {
@@ -115,15 +82,9 @@ final public class CollectionImageCell: CollectionCell {
     override func updateForMessage(changeInfo: MessageChangeInfo?) {
         super.updateForMessage(changeInfo: changeInfo)
         
-        guard let changeInfo = changeInfo else {
-            self.loadImage()
-            return
-        }
-
-        if changeInfo.imageChanged && message?.imageMessageData != nil {
-            self.loadImage()
-        }
-
+        guard let changeInfo = changeInfo, changeInfo.imageChanged else { return }
+        
+        loadImage()
     }
     
     override func menuConfigurationProperties() -> MenuConfigurationProperties? {
@@ -175,25 +136,17 @@ final public class CollectionImageCell: CollectionCell {
             return
         }
         
-        self.imageView.isHidden = true
-        self.loadingView.isHidden = false
-
-        type(of: self).loadImageThumbnail(for: message) { (image, cacheKey) in
-            // Double check that our cell's current image is still the same one
-            if let _ = self.message, cacheKey == Message.nonNilImageDataIdentifier(self.message) {
-                self.imageView.isHidden = false
-                self.loadingView.isHidden = true
-                
-                if let image = image as? UIImage {
-                    self.imageView.image = image
-                }
-                if let image = image as? FLAnimatedImage {
-                    self.imageView.animatedImage = image
-                }
-            }
-            else {
-                zmLog.info("finished loading image but cell is no longer on screen.")
-            }
+        imageView.isHidden = true
+        loadingView.isHidden = false
+        
+        let token = reuseToken
+        
+        message.fetchImage(sizeLimit: .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)) { [weak self] (image) in
+            guard token == self?.reuseToken else { return }
+            
+            self?.imageView.setMediaAsset(image)
+            self?.imageView.isHidden = false
+            self?.loadingView.isHidden = true
         }
     }
 }

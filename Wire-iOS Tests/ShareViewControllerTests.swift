@@ -68,15 +68,15 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
             return
         }
         
-        if let preview = message.previewView() as? ImageMessageCell {
-            _ = preview.prepareForSnapshot(img.size, image: img)
-        }
-        
         let sut = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message,
             destinations: [groupConversation, oneToOneConversation],
             showPreview: true
         )
+        
+        _ = sut.view // make sure view is loaded
+        
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultMediaAssetCache.dispatchGroup]))
         
         self.verifyInAllDeviceSizes(view: sut.view)
     }

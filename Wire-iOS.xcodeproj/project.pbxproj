@@ -11,6 +11,8 @@
 		160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */; };
 		160C311F1E4C78480012E4BC /* UnknownMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */; };
 		160C31211E4C7E770012E4BC /* UnknownMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */; };
+		160FD05221085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */; };
+		160FD05421085F3900C517B5 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FD05321085F3900C517B5 /* ImageCache.swift */; };
 		1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */; };
 		1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */; };
 		161285DF1DD1E81E004728E9 /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* NSString+URL.swift */; };
@@ -43,6 +45,10 @@
 		1648EEEF20498F8900CC6B37 /* ContactsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEEE20498F8900CC6B37 /* ContactsSectionController.swift */; };
 		1648EEF12049A69800CC6B37 /* GroupConversationSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEF02049A69800CC6B37 /* GroupConversationSectionController.swift */; };
 		1648EEF32049A6F800CC6B37 /* DirectorySectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEF22049A6F800CC6B37 /* DirectorySectionController.swift */; };
+		164A55AD20ECFD7400AE62A6 /* UserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55AC20ECFD7400AE62A6 /* UserImageView.swift */; };
+		164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* ZMUser+Images.swift */; };
+		164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */; };
+		164A55DC20F60A5700AE62A6 /* ZMTextMessageData+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55DB20F60A5700AE62A6 /* ZMTextMessageData+Images.swift */; };
 		164B533C20A0A5E800EC8265 /* CallInfoConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164B533B20A0A5E800EC8265 /* CallInfoConfigurationTests.swift */; };
 		164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */; };
 		164C29AD1ED446660026562A /* UserSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AC1ED446660026562A /* UserSelection.swift */; };
@@ -82,6 +88,8 @@
 		1682AEC120483FA5003A052A /* GroupDetailsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */; };
 		1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */; };
 		1682AEC520484B9B003A052A /* Themeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC420484B9B003A052A /* Themeable.swift */; };
+		1687ABA620EB774C0007C240 /* ZMImageMessageData+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA520EB774C0007C240 /* ZMImageMessageData+Images.swift */; };
+		1687ABA820EBB5F30007C240 /* ImageMessageCell+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */; };
 		168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */; };
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
 		168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -318,7 +326,6 @@
 		8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */; };
 		8708C6821F50860100845C7D /* AccountSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8708C6801F50860100845C7D /* AccountSelectorView.swift */; };
 		8708C6831F50860100845C7D /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8708C6811F50860100845C7D /* AccountView.swift */; };
-		870916DC1E2CFFC500D10FA3 /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870916DA1E2CFFC100D10FA3 /* ImageCacheTests.swift */; };
 		870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870A8C6A1CF719C400874B16 /* RecordingDotView.swift */; };
 		870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */; };
 		870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C92681E8CE5E500A10995 /* ConversationAvatarView.swift */; };
@@ -596,8 +603,6 @@
 		87B7DAB51E696F64005F5140 /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
 		87B7DAB81E6973B0005F5140 /* UserImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 87B7DAB61E6973B0005F5140 /* UserImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87B7DAB91E6973B0005F5140 /* UserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B7DAB71E6973B0005F5140 /* UserImageView.m */; };
-		87B7DABC1E6976C1005F5140 /* ImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 87B7DABA1E6976C1005F5140 /* ImageCache.h */; };
-		87B7DABD1E6976C1005F5140 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 87B7DABB1E6976C1005F5140 /* ImageCache.m */; };
 		87B7DAEB1E697C11005F5140 /* AccentColorProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87B8C33F1DF9788B0015EC89 /* BrowserOpening.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B8C33B1DF9788B0015EC89 /* BrowserOpening.swift */; };
 		87B8C3401DF9788B0015EC89 /* LinkOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B8C33C1DF9788B0015EC89 /* LinkOpener.swift */; };
@@ -1109,7 +1114,6 @@
 		EF27CD9E20C161500077FE55 /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9B20C161500077FE55 /* ProfileViewControllerTests.swift */; };
 		EF27CD9F20C161500077FE55 /* ProfileClientViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9C20C161500077FE55 /* ProfileClientViewControllerTests.swift */; };
 		EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */; };
-		EF29431320C91D57000C16F3 /* MockUser+ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29431220C91D57000C16F3 /* MockUser+ProfileImage.swift */; };
 		EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
 		EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */; };
@@ -1299,6 +1303,8 @@
 		1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsShareDatabaseCellDescriptor.swift; sourceTree = "<group>"; };
 		160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCell.swift; sourceTree = "<group>"; };
 		160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCellTests.swift; sourceTree = "<group>"; };
+		160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileSelfPictureViewController+UserObserver.swift"; sourceTree = "<group>"; };
+		160FD05321085F3900C517B5 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelfProfileViewController+NewDeviceAlert.swift"; sourceTree = "<group>"; };
 		1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRootViewController+Appearance.swift"; sourceTree = "<group>"; };
 		161285DD1DD1DA85004728E9 /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
@@ -1338,6 +1344,9 @@
 		1648EEEE20498F8900CC6B37 /* ContactsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSectionController.swift; sourceTree = "<group>"; };
 		1648EEF02049A69800CC6B37 /* GroupConversationSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupConversationSectionController.swift; sourceTree = "<group>"; };
 		1648EEF22049A6F800CC6B37 /* DirectorySectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectorySectionController.swift; sourceTree = "<group>"; };
+		164A55AC20ECFD7400AE62A6 /* UserImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageView.swift; sourceTree = "<group>"; };
+		164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Decoding.swift"; sourceTree = "<group>"; };
+		164A55DB20F60A5700AE62A6 /* ZMTextMessageData+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMTextMessageData+Images.swift"; sourceTree = "<group>"; };
 		164B533B20A0A5E800EC8265 /* CallInfoConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoConfigurationTests.swift; sourceTree = "<group>"; };
 		164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		164C29AC1ED446660026562A /* UserSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSelection.swift; sourceTree = "<group>"; };
@@ -1374,6 +1383,9 @@
 		1682AEC020483FA5003A052A /* GroupDetailsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsSectionController.swift; sourceTree = "<group>"; };
 		1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCollectionViewController.swift; sourceTree = "<group>"; };
 		1682AEC420484B9B003A052A /* Themeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themeable.swift; sourceTree = "<group>"; };
+		1687ABA520EB774C0007C240 /* ZMImageMessageData+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMImageMessageData+Images.swift"; sourceTree = "<group>"; };
+		1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+Configure.swift"; sourceTree = "<group>"; };
+		1687ABA920EBCED80007C240 /* ZMUser+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Images.swift"; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
 		168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewController.swift; sourceTree = "<group>"; };
@@ -1641,7 +1653,6 @@
 		8708B8321DDDFF0D00310A53 /* UserConnectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserConnectionView.swift; sourceTree = "<group>"; };
 		8708C6801F50860100845C7D /* AccountSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSelectorView.swift; sourceTree = "<group>"; };
 		8708C6811F50860100845C7D /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		870916DA1E2CFFC100D10FA3 /* ImageCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		870A8C6A1CF719C400874B16 /* RecordingDotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingDotView.swift; sourceTree = "<group>"; };
 		870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomGeneratorFromDataTests.swift; sourceTree = "<group>"; };
 		870C92681E8CE5E500A10995 /* ConversationAvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationAvatarView.swift; sourceTree = "<group>"; };
@@ -2034,8 +2045,6 @@
 		87B7DAAC1E696E4E005F5140 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		87B7DAB61E6973B0005F5140 /* UserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserImageView.h; sourceTree = "<group>"; };
 		87B7DAB71E6973B0005F5140 /* UserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserImageView.m; sourceTree = "<group>"; };
-		87B7DABA1E6976C1005F5140 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
-		87B7DABB1E6976C1005F5140 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
 		87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccentColorProvider.h; sourceTree = "<group>"; };
 		87B8C33B1DF9788B0015EC89 /* BrowserOpening.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowserOpening.swift; sourceTree = "<group>"; };
 		87B8C33C1DF9788B0015EC89 /* LinkOpener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkOpener.swift; sourceTree = "<group>"; };
@@ -2750,7 +2759,6 @@
 		EF27CD9B20C161500077FE55 /* ProfileViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		EF27CD9C20C161500077FE55 /* ProfileClientViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileClientViewControllerTests.swift; sourceTree = "<group>"; };
 		EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListViewControllerTests.swift; sourceTree = "<group>"; };
-		EF29431220C91D57000C16F3 /* MockUser+ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+ProfileImage.swift"; sourceTree = "<group>"; };
 		EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
 		EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+BurstTimestamp.swift"; sourceTree = "<group>"; };
@@ -3211,6 +3219,7 @@
 			children = (
 				5E52376320E7ECDF00649241 /* Animations */,
 				8778AAEC1F6BC6AD0022F53F /* AppLock.swift */,
+				160FD05321085F3900C517B5 /* ImageCache.swift */,
 				7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */,
 				544F73581E8D3A1800EADAF6 /* DeveloperMenuState.h */,
 				544F73591E8D3A1800EADAF6 /* DeveloperMenuState.m */,
@@ -3249,8 +3258,6 @@
 				CE8E4FC31DF17CFE0009F437 /* NSString+TextTransform.h */,
 				CE8E4FC41DF17CFE0009F437 /* NSString+TextTransform.m */,
 				8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */,
-				87B7DABA1E6976C1005F5140 /* ImageCache.h */,
-				87B7DABB1E6976C1005F5140 /* ImageCache.m */,
 				87B7DAEA1E697C11005F5140 /* AccentColorProvider.h */,
 				87831A981E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.h */,
 				87831A991E69B6D000DDF3C3 /* UIColor+WR_ColorScheme.m */,
@@ -3318,6 +3325,7 @@
 				1E3FA0521B78B22100A9743D /* AvatarImageView.m */,
 				87B7DAB61E6973B0005F5140 /* UserImageView.h */,
 				87B7DAB71E6973B0005F5140 /* UserImageView.m */,
+				164A55AC20ECFD7400AE62A6 /* UserImageView.swift */,
 				1EE9DCA81B5F9A6D00E347DF /* TextView.h */,
 				1EE9DCA91B5F9A6D00E347DF /* TextView.m */,
 				870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */,
@@ -3836,6 +3844,7 @@
 				871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */,
 				163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */,
 				871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */,
+				164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */,
 				BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */,
 				871BC2031D34F8F800DF0793 /* UIImage+Transform.h */,
 				871BC2041D34F8F800DF0793 /* UIImage+Transform.m */,
@@ -4181,7 +4190,6 @@
 				EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */,
 				EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */,
 				EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */,
-				EF29431220C91D57000C16F3 /* MockUser+ProfileImage.swift */,
 				87BEB0DE1C734DA60094BFE9 /* MockLoader.h */,
 				87BEB0DF1C734DA60094BFE9 /* MockLoader.m */,
 				87BEB0E11C734DB60094BFE9 /* MockMessage.swift */,
@@ -4660,6 +4668,9 @@
 				161B75C720B6BCB50002B0F7 /* ZMUserSession+Calling.swift */,
 				8762BE141D8978F70040E4A5 /* ZMAccentColor+Additions.swift */,
 				87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */,
+				1687ABA520EB774C0007C240 /* ZMImageMessageData+Images.swift */,
+				164A55DB20F60A5700AE62A6 /* ZMTextMessageData+Images.swift */,
+				1687ABA920EBCED80007C240 /* ZMUser+Images.swift */,
 				8787D1831EA74F5B00254D02 /* ZMUser+Additions.swift */,
 				D50892FA2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift */,
 				871DD79C2080C4F6006B1C56 /* Conversation+Participants.swift */,
@@ -4821,6 +4832,7 @@
 				16E311D61A6024F400FF2C9E /* ImageMessageCell.h */,
 				BFE57B451D51FDE800CB0806 /* ImageMessageCell+Internal.h */,
 				16E311D71A6024F400FF2C9E /* ImageMessageCell.m */,
+				1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */,
 				EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */,
 				8F0DEDD31A693F58003F0ACC /* PingCell.h */,
 				8F0DEDD41A693F58003F0ACC /* PingCell.m */,
@@ -4998,6 +5010,7 @@
 				BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */,
 				8784B6251D89448700AB71BD /* ProfileSelfPictureViewController.h */,
 				8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */,
+				160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */,
 				8784B6271D89448700AB71BD /* UIAlertController+NewSelfClients.h */,
 				8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */,
 				87D21AD61D8A98620075AB7A /* AccentColorPickerController.swift */,
@@ -5166,7 +5179,6 @@
 				87CA886F1DE30AD0004101B6 /* UserConnectionViewTests.swift */,
 				BF7ED2DB1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift */,
 				874941CC1DE458DF006CF32B /* CombinationTest.swift */,
-				870916DA1E2CFFC100D10FA3 /* ImageCacheTests.swift */,
 				87AAE4201E42441B00E1D13A /* FontSchemeTests.swift */,
 				BF5DF5C920F4C7C2002BCB67 /* GroupParticipantsDetailViewControllerTests.swift */,
 				8742C2ED1E533AA200329FB6 /* NSAttributedStringHighlightTests.swift */,
@@ -5834,7 +5846,6 @@
 				1EE85C551B5F96FC008E084B /* WireExtensionComponents.h in Headers */,
 				1EE9DCC11B5F9A6D00E347DF /* TextView.h in Headers */,
 				1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */,
-				87B7DABC1E6976C1005F5140 /* ImageCache.h in Headers */,
 				D5168F43200F6F2300F8222A /* CABasicAnimation+Rotation.h in Headers */,
 				1E5E0CFD1B6B8EDB003B0CAC /* ZetaIconTypes.h in Headers */,
 				87E7C9651BF5E4E2001C5485 /* WireStyleKit.h in Headers */,
@@ -6406,17 +6417,19 @@
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
 				87B7DAB91E6973B0005F5140 /* UserImageView.m in Sources */,
 				8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */,
+				164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */,
 				54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */,
 				1E5E0D031B6B8EDB003B0CAC /* UIColor+Mixing.m in Sources */,
 				7CE71D8E1FC454AA00C43E19 /* AppLock.swift in Sources */,
 				1E5E0D071B6B8EDB003B0CAC /* UIImage+ImageUtilities.m in Sources */,
-				87B7DABD1E6976C1005F5140 /* ImageCache.m in Sources */,
 				CE06C9411DF5C3D900497685 /* AVAsset+VideoConvert.swift in Sources */,
+				160FD05421085F3900C517B5 /* ImageCache.swift in Sources */,
 				87831A971E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift in Sources */,
 				EFF6EA3E2020CF4100A7023B /* Button+ServiceButton.swift in Sources */,
 				5ED26CD620E7D08E00EB9ED4 /* VerticalColumnCollectionViewController.swift in Sources */,
 				CE8E4FC61DF17CFE0009F437 /* NSString+TextTransform.m in Sources */,
 				BF6EC9061EB1FC3D009D9A69 /* URL+Backup.swift in Sources */,
+				164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */,
 				8795A5A91D34CF7A0024101B /* NSLayoutConstraint+Helpers.m in Sources */,
 				7CCBE24D1FC72FE500CBD55D /* SharedConstants.swift in Sources */,
 				5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */,
@@ -6427,6 +6440,7 @@
 				5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */,
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
 				1E5E0CB31B6B83C6003B0CAC /* IconButton.m in Sources */,
+				164A55AD20ECFD7400AE62A6 /* UserImageView.swift in Sources */,
 				87E7C9641BF5E43C001C5485 /* WireStyleKit.m in Sources */,
 				7CE71D8D1FC453E300C43E19 /* SettingsPropertyName.swift in Sources */,
 				1E3FA0541B78B22100A9743D /* AvatarImageView.m in Sources */,
@@ -6558,6 +6572,7 @@
 				1671D6D1200CDC380022D289 /* InviteTeamMemberCell.swift in Sources */,
 				D5D65A11207509F300D7F3C3 /* BackupPasswordViewController.swift in Sources */,
 				87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */,
+				1687ABA820EBB5F30007C240 /* ImageMessageCell+Configure.swift in Sources */,
 				87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */,
 				8FC85451199245770008B66B /* ConversationContentViewController+Scrolling.m in Sources */,
 				D5168F2A2008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift in Sources */,
@@ -6607,6 +6622,7 @@
 				871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */,
 				8F89140D1A9F287E0056AB0C /* ConnectRequestsCell.m in Sources */,
 				162836142016574D0027082D /* ProcessInfo+Tests.swift in Sources */,
+				160FD05221085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift in Sources */,
 				8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */,
 				EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */,
 				871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */,
@@ -7070,6 +7086,7 @@
 				AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */,
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
 				8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */,
+				164A55DC20F60A5700AE62A6 /* ZMTextMessageData+Images.swift in Sources */,
 				8759E2C11FC828ED008E17C9 /* CAAnimation+Cursor.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
@@ -7134,6 +7151,7 @@
 				EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */,
 				BF5DF5C320F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift in Sources */,
 				87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */,
+				1687ABA620EB774C0007C240 /* ZMImageMessageData+Images.swift in Sources */,
 				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
 				BF8ECC331E5AED6C0015177D /* UIMenuItem+MessageActions.swift in Sources */,
@@ -7353,7 +7371,6 @@
 				7C9E291A2074F3F100827819 /* EmailVerificationStepViewControllerTests.swift in Sources */,
 				EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */,
 				AF65A25C1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift in Sources */,
-				EF29431320C91D57000C16F3 /* MockUser+ProfileImage.swift in Sources */,
 				EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */,
 				EF68856D20F63D260074CA0F /* UIView+Snapshot.swift in Sources */,
 				BFE2542720BE9EA200F62041 /* CallHapticsControllerTests.swift in Sources */,
@@ -7412,7 +7429,6 @@
 				BF808B591DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift in Sources */,
 				BFBAE9E31E041FB7003FCE49 /* ReactionsCellTests.swift in Sources */,
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
-				870916DC1E2CFFC500D10FA3 /* ImageCacheTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,
 				EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */,
 				5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */,
