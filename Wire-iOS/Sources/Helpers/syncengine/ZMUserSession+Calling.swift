@@ -26,4 +26,33 @@ extension ZMUserSession {
         return !callCenter.activeCallConversations(in: self).isEmpty
     }
     
+    @objc var ongoingCallConversation: ZMConversation? {
+        guard let callCenter = self.callCenter else { return nil }
+        
+        return callCenter.nonIdleCallConversations(in: self).first { (conversation) -> Bool in
+            guard let callState = conversation.voiceChannel?.state else { return false }
+            
+            switch callState {
+            case .answered, .established, .establishedDataChannel, .outgoing:
+                return true
+            default:
+                return false
+            }
+        }
+    }
+    
+    @objc var ringingCallConversation: ZMConversation? {
+        guard let callCenter = self.callCenter else { return nil }
+        
+        return callCenter.nonIdleCallConversations(in: self).first { (conversation) -> Bool in
+            guard let callState = conversation.voiceChannel?.state else { return false }
+            
+            switch callState {
+            case .incoming, .outgoing:
+                return true
+            default:
+                return false
+            }
+        }
+    }
 }

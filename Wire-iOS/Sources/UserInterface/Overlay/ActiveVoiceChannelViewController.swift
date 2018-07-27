@@ -212,19 +212,7 @@ class ActiveVoiceChannelViewController : UIViewController {
     
     
     var ongoingCallConversation : ZMConversation? {
-        guard let userSession = ZMUserSession.shared(), let callCenter = userSession.callCenter else { return nil }
-        
-        return callCenter.nonIdleCallConversations(in: userSession).first { (conversation) -> Bool in
-            guard let callState = conversation.voiceChannel?.state else { return false }
-            
-            switch callState {
-            case .answered, .established, .establishedDataChannel, .outgoing:
-                return true
-            default:
-                return false
-            }
-        }
-        
+        return ZMUserSession.shared()?.ongoingCallConversation
     }
     
 }
