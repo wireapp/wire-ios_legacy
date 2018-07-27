@@ -20,6 +20,7 @@ import Foundation
 
 class UpsideDownTableView: UITableView {
 
+    /// The view that allow pan gesture to scroll the tableview
     @objc weak var pannableView: UIView?
 
     override init(frame: CGRect, style: UITableViewStyle) {
@@ -68,6 +69,8 @@ class UpsideDownTableView: UITableView {
         }
 
         set {
+
+            /// do not set contentOffset if the user is panning on the bottom edge of pannableView (with 10 pt threshold)
             if let pannableView = pannableView,
                self.panGestureRecognizer.location(in: self.superview).y >= pannableView.frame.maxY - 10 {
                 return
