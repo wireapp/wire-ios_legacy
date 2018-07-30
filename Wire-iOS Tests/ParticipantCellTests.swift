@@ -135,7 +135,7 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshots())
     }
     
-    func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallWithManyGuests() {
+    func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests() {
         let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .some, allTeamUsers: true, numberOfGuests: 10)
         verify(view: sut.prepareForSnapshots())
     }
