@@ -53,6 +53,12 @@ import TTTAttributedLabel
             updateLineBaseLineConstraint()
         }
     }
+    
+    /// TTTAttributedLabel needs to be shifted an extra 2pt down so the
+    /// line view aligns with the center of the first line.
+    private var lineMedianYOffset: CGFloat {
+        return 2
+    }
 
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -151,15 +157,14 @@ import TTTAttributedLabel
     
     private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
-            // TODO: Fix line vertical offset (probably caused by using TTTAttributedLabel instead of UILabel for the link support here)
-            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median
+            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - lineMedianYOffset
             icon.centerY == lineView.centerY
         }
     }
     
     private func updateLineBaseLineConstraint() {
         guard let font = labelFont else { return }
-        lineBaseLineConstraint?.constant = font.median
+        lineBaseLineConstraint?.constant = font.median - lineMedianYOffset
     }
     
     open override var canResignFirstResponder: Bool {
