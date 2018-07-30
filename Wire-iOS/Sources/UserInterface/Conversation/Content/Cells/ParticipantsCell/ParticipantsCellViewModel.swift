@@ -21,10 +21,20 @@ enum ConversationActionType {
 
     case none, started(withName: String?), added(herself: Bool), removed, left, teamMemberLeave
     
+    /// Some actions only involve the sender, others involve other users too.
     var involvesUsersOtherThanSender: Bool {
         switch self {
         case .left, .teamMemberLeave, .added(herself: true): return false
         default:                                             return true
+        }
+    }
+    
+    var allowsCollapsing: Bool {
+        // Don't collapse when removing participants, since the collapsed
+        // link is only used for participants in the conversation.
+        switch self {
+        case .removed:  return false
+        default:        return true
         }
     }
 
@@ -83,7 +93,7 @@ struct ParticipantsCellViewModel {
     /// but only 15 when there are more than 15 users and we collapse them.
     var shownUsers: [ZMUser] {
         let users = sortedUsersWithoutSelf()
-        let boundary = users.count <= maxShownUsers ? users.count : maxShownUsersWhenCollapsed
+        let boundary = users.count > maxShownUsers && action.allowsCollapsing ? maxShownUsersWhenCollapsed : users.count
         let result = users[..<boundary]
         return result + (isSelfIncludedInUsers ? [.selfUser()] : [])
     }
@@ -92,7 +102,7 @@ struct ParticipantsCellViewModel {
     /// E.g. `and 5 others`.
     private var collapsedUsers: [ZMUser] {
         let users = sortedUsersWithoutSelf()
-        guard users.count > maxShownUsers else { return [] }
+        guard users.count > maxShownUsers, action.allowsCollapsing else { return [] }
         return Array(users.dropFirst(maxShownUsersWhenCollapsed))
     }
     

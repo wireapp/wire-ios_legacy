@@ -95,6 +95,11 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         let sut = cell(for: .teamMemberLeave, fromSelf: false)
         verify(view: sut.prepareForSnapshots())
     }
+    
+    func testThatItRendersParticipantsCellRemovedWithOverflow() {
+        let sut = cell(for: .participantsRemoved, fromSelf: false, fillUsers: .overflow)
+        verify(view: sut.prepareForSnapshots())
+    }
 
     // MARK: - Left Users
 
