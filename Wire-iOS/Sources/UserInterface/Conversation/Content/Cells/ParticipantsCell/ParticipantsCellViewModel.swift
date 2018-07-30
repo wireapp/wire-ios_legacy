@@ -96,11 +96,10 @@ struct ParticipantsCellViewModel {
         return Array(users.dropFirst(maxShownUsersWhenCollapsed))
     }
     
-    /// The users represented by the collapsed link after being added to the
-    /// conversation.
+    /// The users to display when opening the participants details screen.
     var selectedUsers: [ZMUser] {
         switch action {
-        case .added: return collapsedUsers
+        case .added: return sortedUsers()
         default: return []
         }
     }
