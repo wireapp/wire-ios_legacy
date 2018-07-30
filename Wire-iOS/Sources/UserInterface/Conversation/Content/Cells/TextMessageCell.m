@@ -211,7 +211,7 @@
     }
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
-        BOOL showImage = textMesssageData.hasImageData;
+        BOOL showImage = textMesssageData.linkPreviewHasImage;
         
         ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:showImage];
 

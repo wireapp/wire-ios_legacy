@@ -76,5 +76,28 @@ extension UIAlertController {
         controller.addAction(.ok())
         return controller
     }
+
+    /// Creates an `UIAlertController` warning about no network connection.
+    static func noInternetError() -> UIAlertController {
+        let controller = UIAlertController(
+            title: "team.invite.error.no_internet".localized,
+            message: "login.sso.error.offline.alert.message".localized,
+            preferredStyle: .alert
+        )
+
+        controller.addAction(.ok())
+        return controller
+    }
+
+    static func invalidCodeError() -> UIAlertController {
+        let controller = UIAlertController(
+            title: "login.sso.error.alert.invalid_code.title".localized,
+            message: "login.sso.error.alert.invalid_code.message".localized,
+            preferredStyle: .alert
+        )
+
+        controller.addAction(.ok())
+        return controller
+    }
     
 }

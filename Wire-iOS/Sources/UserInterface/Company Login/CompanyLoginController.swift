@@ -24,6 +24,10 @@ import Foundation
     /// always ask its delegate to handle the actual presentation of the alerts.
     func controller(_ controller: CompanyLoginController, presentAlert: UIAlertController)
 
+    /// Called when the company login controller asks the presenter to show the login spinner
+    /// when performing a required task.
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool)
+
 }
 
 ///
@@ -158,15 +162,50 @@ import Foundation
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
     private func attemptLogin(using code: String) {
+        guard !presentOfflineAlertIfNeeded() else { return }
+
         guard let uuid = CompanyLoginRequestDetector.requestCode(in: code) else {
             return requireInternalFailure("Should never try to login with invalid code.")
         }
 
-        requester.requestIdentity(for: uuid)
+        delegate?.controller(self, showLoadingView: true)
+
+        requester.validate(token: uuid) {
+            self.delegate?.controller(self, showLoadingView: false)
+            guard !self.handleValidationErrorIfNeeded($0) else { return }
+            self.requester.requestIdentity(for: uuid)
+        }
     }
 
     private func presentError(_ error: LocalizedError) {
-        delegate?.controller(self, presentAlert: .companyLoginError(error.localizedDescription))
+
+    }
+
+    private func handleValidationErrorIfNeeded(_ error: ValidationError?) -> Bool {
+        guard let error = error else { return false }
+
+        switch error {
+        case .invalidCode:
+            delegate?.controller(self, presentAlert: .invalidCodeError())
+
+        case .invalidStatus(let status):
+            let message = "login.sso.error.alert.invalid_status.message".localized(args: String(status))
+            delegate?.controller(self, presentAlert: .companyLoginError(message))
+
+        case .unknown:
+            let message = "login.sso.error.alert.unknown.message".localized
+            delegate?.controller(self, presentAlert: .companyLoginError(message))
+        }
+
+        return true
+    }
+
+    /// Attempt to login using the requester specified in `init`
+    /// - returns: `true` when the application is offline and an alert was presented, `false` otherwise.
+    private func presentOfflineAlertIfNeeded() -> Bool {
+        guard AppDelegate.isOffline else { return false }
+        delegate?.controller(self, presentAlert: .noInternetError())
+        return true
     }
 
     // MARK: - Flow

@@ -44,7 +44,7 @@ struct ChangeEmailState {
         return email != currentEmail
     }
     
-    init(currentEmail: String = ZMUser.selfUser().emailAddress) {
+    init(currentEmail: String = ZMUser.selfUser().emailAddress!) {
         self.currentEmail = currentEmail
     }
 

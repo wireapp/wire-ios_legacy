@@ -21,9 +21,6 @@
 @import WireExtensionComponents;
 #import "ProfileViewController.h"
 
-
-@protocol ZMBareUser;
-
 @class ZMConversation;
 @class ProfileDetailsViewController;
 @class ConversationCreationController;
@@ -41,7 +38,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, weak) id<ProfileDetailsViewControllerDelegate> delegate;
 @property (nonatomic, weak) id<ViewControllerDismisser> viewControllerDismisser;

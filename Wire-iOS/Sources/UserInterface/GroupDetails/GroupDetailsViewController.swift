@@ -177,7 +177,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentFullParticipantsList(for users: [ZMBareUser], in conversation: ZMConversation) {
+    func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation) {
         let detailsViewController = GroupParticipantsDetailViewController(participants: users, conversation: conversation)
         detailsViewController.delegate = self
         navigationController?.pushViewController(detailsViewController, animated: true)

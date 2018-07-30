@@ -26,17 +26,17 @@ fileprivate extension String {
 
 class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate {
 
-    private let internalParticipants: [ZMBareUser]
+    private let internalParticipants: [UserType]
     private var filterQuery: String?
     
     let conversation: ZMConversation
     var participantsDidChange: (() -> Void)? = nil
     
-    var participants = [ZMBareUser]() {
+    var participants = [UserType]() {
         didSet { participantsDidChange?() }
     }
     
-    init(participants: [ZMBareUser], conversation: ZMConversation) {
+    init(participants: [UserType], conversation: ZMConversation) {
         internalParticipants = participants
         self.conversation = conversation
         super.init()
@@ -45,7 +45,7 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
     
     private func computeVisibleParticipants() {
         guard let query = filterQuery, query.isValidQuery else { return participants = internalParticipants }
-        participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [ZMBareUser]
+        participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [UserType]
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {

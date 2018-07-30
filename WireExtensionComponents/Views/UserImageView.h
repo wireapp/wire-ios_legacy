@@ -34,6 +34,8 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 
 @class UserImageView, ZMUserSession, Team;
 
+@protocol UserType;
+
 @protocol UserImageViewDelegate <NSObject>
 @optional
 - (void)userImageViewTouchUpInside:(UserImageView *)userImageView;
@@ -41,7 +43,7 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 
 @interface UserImageView : AvatarImageView <ZMUserObserver>
 
-@property (nonatomic, nullable) id<ZMBareUser> user;
+@property (nonatomic, nullable) id<UserType> user;
 @property (nonatomic, nullable, weak) ZMUserSession *userSession;
 @property (nonatomic) BOOL shouldDesaturate;
 @property (nonatomic) BOOL indicatorEnabled;
@@ -50,6 +52,7 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 @property (nonatomic, weak, nullable) id<UserImageViewDelegate> delegate;
 
 - (instancetype)initWithSize:(UserImageViewSize)size;
+- (void)setUserImage:(UIImage *)userImage;
 
 @end
 

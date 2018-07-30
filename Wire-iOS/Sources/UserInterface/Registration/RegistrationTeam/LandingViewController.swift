@@ -166,11 +166,15 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         updateStackViewAxis()
         updateConstraintsForIPad()
         updateBarButtonItem()
+        disableTrackingIfNeeded()
 
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
-            queue: nil) { _ in self.updateBarButtonItem()  }
+            queue: nil) { _ in
+                self.updateBarButtonItem()
+                self.disableTrackingIfNeeded()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -292,6 +296,12 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
             navigationBar.topItem?.rightBarButtonItem = cancelItem
         }
     }
+    
+    private func disableTrackingIfNeeded() {
+        if SessionManager.shared?.firstAuthenticatedAccount == nil {
+            TrackingManager.shared.disableCrashAndAnalyticsSharing = true
+        }
+    }
 
     // MARK: - Accessibility
 
@@ -360,7 +370,11 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
         present(alert, animated: true)
     }
-    
+
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
+        self.showLoadingView = showLoadingView
+    }
+
     // MARK: - PreLoginAuthenticationObserver
     
     func authenticationReadyToImportBackup(existingAccount: Bool) {

@@ -277,7 +277,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self presentViewController:inviteContactsViewController animated:YES completion:nil];
 }
 
-- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
+- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath
 {
     [self.searchHeaderViewController.tokenField resignFirstResponder];
 

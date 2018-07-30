@@ -75,7 +75,7 @@ import WireDataModel
         var title = ""
         
         if self.style == .header {
-            title = user.name
+            title = user.name ?? ""
         } else if user == ZMUser.selfUser() && availability == .none {
             title = "availability.message.set_status".localized.uppercased()
         } else if availability != .none {

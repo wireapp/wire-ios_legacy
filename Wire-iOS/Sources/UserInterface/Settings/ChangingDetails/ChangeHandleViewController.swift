@@ -362,13 +362,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
 fileprivate extension String {
 
     var isEqualToUnicodeName: Bool {
-        if #available(iOS 9, *) {
-            return applyingTransform(.toUnicodeName, reverse: false) == self
-        } else {
-            let ref = NSMutableString(string: self) as CFMutableString
-            CFStringTransform(ref, nil, kCFStringTransformToUnicodeName, false)
-            return ref as String == self
-        }
+        return applyingTransform(.toUnicodeName, reverse: false) == self
     }
     
 }

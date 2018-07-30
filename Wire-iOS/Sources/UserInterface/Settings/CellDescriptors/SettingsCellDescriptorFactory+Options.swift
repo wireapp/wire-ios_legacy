@@ -179,15 +179,13 @@ extension SettingsCellDescriptorFactory {
         
         cellDescriptors.append(byPopularDemandSection)
         
-        if #available(iOS 9.0, *) {
-            let context: LAContext = LAContext()
-            var error: NSError?
-            
-            if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-                let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-                let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: appLockSectionSubtitle)
-                cellDescriptors.append(section)
-            }
+        let context: LAContext = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
+            let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
+            let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], header: .none, footer: appLockSectionSubtitle)
+            cellDescriptors.append(section)
         }
         
         let linkPreviewDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableLinkPreviews), inverse: true)

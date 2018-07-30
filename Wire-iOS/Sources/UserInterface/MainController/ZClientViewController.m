@@ -426,7 +426,7 @@
 
 - (void)dismissAllModalControllersWithCallback:(dispatch_block_t)callback
 {
-    [self minimizeCallOverlayWithCompletion:^{
+    dispatch_block_t dismissAction = ^{
         if (self.splitViewController.rightViewController.presentedViewController != nil) {
             [self.splitViewController.rightViewController dismissViewControllerAnimated:NO completion:callback];
         }
@@ -450,7 +450,18 @@
         else if (callback) {
             callback();
         }
-    }];
+    };
+
+    ZMConversation *ringingCallConversation = [[ZMUserSession sharedSession] ringingCallConversation];
+    
+    if (ringingCallConversation != nil) {
+        dismissAction();
+    }
+    else {
+        [self minimizeCallOverlayWithCompletion:^{
+            dismissAction();
+        }];
+    }
 }
 
 #pragma mark - Getters/Setters

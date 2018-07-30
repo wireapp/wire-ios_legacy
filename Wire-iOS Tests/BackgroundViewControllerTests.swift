@@ -32,6 +32,8 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         // GIVEN
         selfUser.imageMediumData = .none
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+        
         // WHEN & THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
@@ -40,6 +42,9 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         // GIVEN
         selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
+        _ = sut.view // make sure view is loaded
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+        
         // WHEN & THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
@@ -78,6 +83,8 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         // WHEN
         selfUser.accentColorValue = .brightOrange
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: true)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
+        
         // THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
@@ -90,6 +97,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         // WHEN
         selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_burger.jpg"))
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: false)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         // THEN
         self.verifyInIPhoneSize(view: sut.view)
     }
@@ -102,6 +110,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         // WHEN
         selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_burger.jpg"))
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: false)
+        XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         // THEN
         self.verifyInIPhoneSize(view: sut.view)
     }

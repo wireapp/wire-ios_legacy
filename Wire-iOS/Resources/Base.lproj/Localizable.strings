@@ -1138,7 +1138,12 @@
 "login.sso.alert.text_field.placeholder" = "SSO access code";
 
 "login.sso.error.alert.title" = "Something went wrong";
+"login.sso.error.alert.invalid_code.title" = "Invalid code.";
+"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
+"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
+"login.sso.error.alert.unknown.message" = "Please try again later.";
+"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";

@@ -24,7 +24,7 @@ final public class CollectionLinkCell: CollectionCell {
     private var headerView = CollectionCellHeader()
     
     func createArticleView(with textMessageData: ZMTextMessageData) {
-        let articleView = ArticleView(withImagePlaceholder: textMessageData.hasImageData)
+        let articleView = ArticleView(withImagePlaceholder: textMessageData.linkPreviewHasImage)
         articleView.isUserInteractionEnabled = false
         articleView.imageHeight = 0
         articleView.messageLabel.numberOfLines = 1

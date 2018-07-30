@@ -46,25 +46,7 @@ class DecodeImageOperation: Operation {
             return
         }
 
-        guard let rawImage = UIImage(data: imageData)?.cgImage else {
-            return
-        }
-
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-
-        guard let context = CGContext(data: nil, width: rawImage.width, height: rawImage.height, bitsPerComponent: 8, bytesPerRow: rawImage.width * 4, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
-            return
-        }
-
-        let imageBounds = CGRect(x: 0, y: 0, width: rawImage.width, height: rawImage.height)
-        context.draw(rawImage, in: imageBounds)
-
-        guard let rawDecodedImage = context.makeImage() else {
-            return
-        }
-
-        decodedImage = UIImage(cgImage: rawDecodedImage)
-
+        decodedImage = UIImage(data: imageData)?.decoded
     }
 
 }

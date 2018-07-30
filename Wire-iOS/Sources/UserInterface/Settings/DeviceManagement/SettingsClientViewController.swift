@@ -305,7 +305,7 @@ enum ClientSection: Int {
                 let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Either<String, NSError>) -> () in
                     switch result {
                     case .left(let passwordString):
-                        let newCredentials = ZMEmailCredentials(email: ZMUser.selfUser().emailAddress, password: passwordString)
+                        let newCredentials = ZMEmailCredentials(email: ZMUser.selfUser().emailAddress!, password: passwordString)
                         self.credentials = newCredentials
                         ZMUserSession.shared()?.delete([self.userClient], with: newCredentials)
                         if let navigationController = self.navigationController {
