@@ -23,6 +23,9 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     private let collectionView = UICollectionView(forUserList: ())
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
     private let viewModel: GroupParticipantsDetailViewModel
+    
+    // used for scrolling and fading selected cells
+    private var firstLayout = true
     private var firstLoad = true
     
     weak var delegate: GroupDetailsUserDetailPresenter?
@@ -54,15 +57,20 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         super.viewDidLoad()
         setupViews()
         createConstraints()
-        self.collectionView.allowsMultipleSelection = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if firstLayout {
+            firstLayout = false
+            scrollToFirstHighlightedUser()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if firstLoad {
-            firstLoad = false
-            scrollToFirstHighlightedUser()
-        }
+        firstLoad = false
     }
     
     private func setupViews() {
@@ -96,7 +104,7 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     private func scrollToFirstHighlightedUser() {
         if let idx = viewModel.indexOfFirstSelectedParticipant {
             let indexPath = IndexPath(row: idx, section: 0)
-            collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+            collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
         }
     }
     
