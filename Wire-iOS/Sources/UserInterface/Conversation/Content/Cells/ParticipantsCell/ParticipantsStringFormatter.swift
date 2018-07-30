@@ -79,6 +79,10 @@ class ParticipantsStringFormatter {
         let names: [String]
         let collapsed: Int
         let selfIncluded: Bool
+        
+        var totalUsers: Int {
+            return names.count + collapsed
+        }
     }
     
     private let kYouStartedTheConversation = "content.system.conversation.with_name.title-you"
@@ -167,8 +171,8 @@ class ParticipantsStringFormatter {
         guard !nameList.names.isEmpty else { preconditionFailure() }
         let result = FormatSequence()
         
-        // all team users added
-        if let linkText = linkTextForWholeTeam() {
+        // all team users added?
+        if let linkText = linkTextForWholeTeam(nameList) {
             result.append(linkText, with: linkAttributes)
             return result
         }
@@ -209,13 +213,17 @@ class ParticipantsStringFormatter {
         return result
     }
     
-    private func linkTextForWholeTeam() -> String? {
+    private func linkTextForWholeTeam(_ nameList: NameList) -> String? {
         guard
             let systemMessage = message as? ZMSystemMessage,
             systemMessage.allTeamUsersAdded,
             message.conversation?.canManageAccess ?? false
             else { return nil }
         
+        // we only collapse whole team if there are more than 10 participants
+        guard nameList.totalUsers + Int(systemMessage.numberOfGuestsAdded) > 10 else {
+            return nil
+        }
         
         if systemMessage.numberOfGuestsAdded > 0 {
             return kCompleteTeamWithGuests.localized(args: String(systemMessage.numberOfGuestsAdded))
