@@ -145,7 +145,7 @@ import Cartography
     }
     
     @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:)
-    func presentParticipantsDetails(with users: [ZMBareUser], selectedUsers: [ZMBareUser], animated: Bool) {
+    func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
         let detailsViewController = GroupParticipantsDetailViewController(
             participants: users,
             selectedParticipants: selectedUsers,
@@ -188,7 +188,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         navigationController?.pushViewController(viewController, animated: true)
     }
     
-    func presentFullParticipantsList(for users: [ZMBareUser], in conversation: ZMConversation) {
+    func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation) {
         presentParticipantsDetails(with: users, selectedUsers: [], animated: true)
     }
     

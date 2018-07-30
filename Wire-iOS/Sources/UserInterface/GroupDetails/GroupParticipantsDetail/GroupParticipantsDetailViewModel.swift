@@ -37,7 +37,7 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
     private let internalParticipants: [UserType]
     private var filterQuery: String?
     
-    let selectedParticipants: [ZMBareUser]
+    let selectedParticipants: [UserType]
     let conversation: ZMConversation
     var participantsDidChange: (() -> Void)? = nil
 
@@ -48,11 +48,11 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
         }
     }
     
-    var participants = [ZMBareUser]() {
+    var participants = [UserType]() {
         didSet { participantsDidChange?() }
     }
 
-    init(participants: [ZMBareUser], selectedParticipants: [ZMBareUser], conversation: ZMConversation) {
+    init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
         internalParticipants = participants
         self.conversation = conversation
         self.selectedParticipants = selectedParticipants.sorted { $0.displayName < $1.displayName }
@@ -61,7 +61,7 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
         computeVisibleParticipants()
     }
     
-    func isUserSelected(_ user: ZMBareUser) -> Bool {
+    func isUserSelected(_ user: UserType) -> Bool {
         guard let id = (user as? ZMUser)?.remoteIdentifier else { return false }
         return selectedParticipants.contains { ($0 as? ZMUser)?.remoteIdentifier == id}
     }
