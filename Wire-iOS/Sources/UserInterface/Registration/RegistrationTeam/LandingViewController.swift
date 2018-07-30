@@ -285,6 +285,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     private func updateBarButtonItem() {
         if SessionManager.shared?.firstAuthenticatedAccount == nil {
             navigationBar.topItem?.rightBarButtonItem = nil
+            TrackingManager.shared.disableCrashAndAnalyticsSharing = true
         } else {
             let cancelItem = UIBarButtonItem(icon: .cancel, target: self, action: #selector(cancelButtonTapped))
             cancelItem.accessibilityIdentifier = "CancelButton"

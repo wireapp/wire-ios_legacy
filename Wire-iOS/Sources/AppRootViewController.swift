@@ -240,7 +240,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
-                TrackingManager.shared.disableCrashAndAnalyticsSharing = true
                 
                 let navigationController = NavigationController(rootViewController: landingViewController)
                 navigationController.backButtonEnabled = false
