@@ -111,13 +111,6 @@ private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
 
-fileprivate extension CGFloat {
-    enum fakeCursor {
-        static let width: CGFloat = 2
-        static let height: CGFloat = 21
-    }
-}
-
 @objcMembers public final class InputBar: UIView {
 
     private let inputBarVerticalInset: CGFloat = 34
@@ -165,12 +158,6 @@ fileprivate extension CGFloat {
     
     // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()
-
-    fileprivate let fakeCursor: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = CGFloat.fakeCursor.width / 2
-        return view
-    }()
 
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
@@ -221,7 +208,6 @@ fileprivate extension CGFloat {
             textView.isScrollEnabled = false
             textView.isScrollEnabled = true
         }
-        startCursorBlinkAnimation()
     }
     
     deinit {
@@ -242,7 +228,6 @@ fileprivate extension CGFloat {
         [leftAccessoryView, textView, rightAccessoryStackView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
-        textView.addSubview(fakeCursor)
         CASStyler.default().styleItem(self)
 
         setupViews()
@@ -252,7 +237,6 @@ fileprivate extension CGFloat {
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -328,13 +312,6 @@ fileprivate extension CGFloat {
             innerContainer.trailing == container.trailing
             self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
         }
-
-        constrain(fakeCursor) { fakeCursor in
-            fakeCursor.width == CGFloat.fakeCursor.width
-            fakeCursor.height == CGFloat.fakeCursor.height
-            fakeCursor.centerY == fakeCursor.superview!.centerY - 1.5
-            fakeCursor.leading == fakeCursor.superview!.leading
-        }
     }
     
     @objc fileprivate func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
@@ -342,12 +319,6 @@ fileprivate extension CGFloat {
         buttonsView.showRow(0, animated: true)
     }
     
-    fileprivate func startCursorBlinkAnimation() {
-        if fakeCursor.layer.animation(forKey: "blinkAnimation") == nil {
-            fakeCursor.layer.add(.cursorBlinkAnimation(), forKey: "blinkAnimation")
-        }
-    }
-
     public func updateReturnKey() {
         textView.returnKeyType = isMarkingDown ? .default : Settings.shared().returnKeyType
         textView.reloadInputViews()
@@ -376,10 +347,6 @@ fileprivate extension CGFloat {
         }
     }
     
-    func updateFakeCursorVisibility(_ firstResponder: UIResponder? = nil) {
-        fakeCursor.isHidden = textView.isFirstResponder || textView.text.count != 0 || firstResponder != nil
-    }
-
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard
     
     override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -475,7 +442,6 @@ fileprivate extension CGFloat {
 
         updatePlaceholderColors()
 
-        fakeCursor.backgroundColor = .accent()
         textView.tintColor = .accent()
         textView.updateTextColor(base: textColor)
 
@@ -526,24 +492,15 @@ fileprivate extension CGFloat {
 extension InputBar {
 
     @objc func textViewTextDidChange(_ notification: Notification) {
-        updateFakeCursorVisibility()
         updateEditViewState()
     }
     
     @objc func textViewDidBeginEditing(_ notification: Notification) {
-        updateFakeCursorVisibility(notification.object as? UIResponder)
         updateEditViewState()
     }
     
     @objc func textViewDidEndEditing(_ notification: Notification) {
-        updateFakeCursorVisibility()
         updateEditViewState()
     }
 
-}
-
-extension InputBar {
-    @objc func applicationDidBecomeActive(_ notification: Notification) {
-        startCursorBlinkAnimation()
-    }
 }
