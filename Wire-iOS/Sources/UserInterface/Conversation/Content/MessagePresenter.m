@@ -70,7 +70,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         if (message.fileMessageData.fileURL == nil) {
             self.waitingForFileDownload = YES;
             [[ZMUserSession sharedSession] performChanges:^{
-                [message requestFileDownload];
+                [message.fileMessageData requestFileDownload];
             }];
         }
         else {

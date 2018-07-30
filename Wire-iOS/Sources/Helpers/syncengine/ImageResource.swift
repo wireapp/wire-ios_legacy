@@ -58,7 +58,7 @@ struct LinkPreviewImageResourceAdaptor: ImageResource {
     }
     
     func requestImageDownload() {
-        (textMessageData as? ZMConversationMessage)?.requestImageDownload()
+        textMessageData.requestLinkPreviewImageDownload()
     }
     
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
@@ -80,7 +80,7 @@ struct FileMessageImageResourceAdaptor: ImageResource {
     }
     
     func requestImageDownload() {
-        (fileMesssageData as? ZMConversationMessage)?.requestImageDownload()
+        fileMesssageData.requestImagePreviewDownload()
     }
     
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
@@ -102,7 +102,7 @@ struct ImageMessageImageResourceAdaptor: ImageResource {
     }
     
     func requestImageDownload() {
-        (imageMessageData as? ZMConversationMessage)?.requestImageDownload()
+        imageMessageData.requestImageDownload()
     }
     
     func fetchImageData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {

@@ -136,7 +136,6 @@ import Classy
         }
         
         configureVisibleViews(with: message, isInitial: isInitial)
-        message.requestImageDownload()
         
         let filepath = (fileMessageData.filename ?? "") as NSString
         let filesize: UInt64 = fileMessageData.size

@@ -816,15 +816,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if (latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth > (int)self.messageWindow.messages.count) {
         [self expandMessageWindowUp];
     }
-    
-    for (NSIndexPath *upcomingIndexPath in indexPaths) {
-        if (upcomingIndexPath.row < (int)self.messageWindow.messages.count) {
-            id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:upcomingIndexPath.row];
-            if ([Message canBePrefetched:message]) {
-                [message requestImageDownload];
-            }
-        }
-    }
 }
 
 - (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
