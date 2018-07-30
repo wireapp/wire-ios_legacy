@@ -148,6 +148,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self createInputBarController];
     [self createContentViewController];
+
+    self.contentViewController.tableView.pannableView = self.inputBarController.view;
+
     [self createConversationBarController];
     [self createMediaBarViewController];
     [self createGuestsBarController];
@@ -276,7 +279,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         BOOL containsGuests = NO;
         
         for (ZMUser *user in self.conversation.activeParticipants) {
-            if ([user isGuestInConversation:self.conversation]) {
+            if ([user isGuestIn:self.conversation]) {
                 containsGuests = YES;
                 break;
             }

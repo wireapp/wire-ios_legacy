@@ -402,4 +402,8 @@ extension TeamCreationStepController: CompanyLoginControllerDelegate {
     func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
         present(alert, animated: true)
     }
+
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
+        self.showLoadingView = showLoadingView
+    }
 }

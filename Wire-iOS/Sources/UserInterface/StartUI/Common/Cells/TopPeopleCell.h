@@ -19,12 +19,11 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ZMBareUser;
-@protocol ZMSearchableUser;
+@protocol UserType;
 @class ZMConversation;
 
 @interface TopPeopleCell : UICollectionViewCell
-@property (nonatomic, strong) id<ZMBareUser, ZMSearchableUser> user;
+@property (nonatomic, strong) id<UserType> user;
 @property (nonatomic, strong) ZMConversation *conversation;
 
 @property (nonatomic, copy)   NSString *displayName;

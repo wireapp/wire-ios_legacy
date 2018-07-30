@@ -76,7 +76,7 @@
     [super updateConstraints];
 }
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
+- (void)setUser:(id<UserType, AccentColorProvider>)user
 {
     [super setUser:user];
     

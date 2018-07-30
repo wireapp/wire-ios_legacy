@@ -105,7 +105,7 @@ fileprivate struct ChangePhoneNumberState {
         }
     }
     
-    init(currentPhoneNumber: String = ZMUser.selfUser().phoneNumber) {
+    init(currentPhoneNumber: String = ZMUser.selfUser().phoneNumber!) {
         self.currentNumber = PhoneNumber(fullNumber: currentPhoneNumber)
     }
     

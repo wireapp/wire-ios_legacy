@@ -21,10 +21,10 @@ import Foundation
 class ServicesSectionController: GroupDetailsSectionController {
     
     private weak var delegate: GroupDetailsSectionControllerDelegate?
-    private let serviceUsers: [ZMBareUser]
+    private let serviceUsers: [UserType]
     private let conversation: ZMConversation
     
-    init(serviceUsers: [ZMBareUser], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
+    init(serviceUsers: [UserType], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
         self.serviceUsers = serviceUsers
         self.conversation = conversation
         self.delegate = delegate

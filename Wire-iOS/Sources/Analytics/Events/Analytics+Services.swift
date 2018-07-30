@@ -19,8 +19,8 @@
 import Foundation
 
 fileprivate extension ZMConversation {
-    var otherNonServiceParticipants: [ZMBareUser] {
-        guard let users = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return [] }
+    var otherNonServiceParticipants: [UserType] {
+        guard let users = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
         return users.filter { !$0.isServiceUser }
     }
 }

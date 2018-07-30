@@ -60,30 +60,27 @@ class MessagePreviewViewTests: ZMSnapshotTestCase {
         article.title = "You won't believe what happened next!"
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
-        textMessageData.imageDataIdentifier = "image-id-unsplash_matterhorn.jpg"
+        textMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
         textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
-        textMessageData.hasImageData = true
+        textMessageData.linkPreviewHasImage = true
         message.backingTextMessageData = textMessageData
-
-        let expectation = self.expectation(description: "Wait for image to load")
-
-        if let previewView = message.previewView() {
-            sut = previewView
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.verify(view: self.sut)
-                expectation.fulfill()
-            }
-
-            self.waitForExpectations(timeout: 2, handler: nil)
-        }
+        
+        let previewView = message.previewView()!
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        
+        verify(view: previewView)
     }
     
     func testThatItRendersVideoMessagePreview() {
         let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
-        message.backingFileMessageData.previewData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
-        verify(view: message.previewView()!)
+        message.backingFileMessageData.imagePreviewData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
+        
+        let previewView = message.previewView()!
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        
+        verify(view: previewView)
     }
     
 }

@@ -24,18 +24,18 @@
 
 @class MockConversation;
 
-@interface MockUser : NSObject<ZMBareUser, ZMBareUserConnection, Mockable>
+@interface MockUser : NSObject<UserType, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockUserFor:(ZMUser *)user;
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
 
-+ (void)setMockSelfUser:(id<ZMBareUser>)newMockUser;
++ (void)setMockSelfUser:(id<UserType>)newMockUser;
 
-@property (nonatomic, readwrite) NSString *name;
+@property (nonatomic, readwrite, copy) NSString *name;
 @property (nonatomic, readwrite) NSString *emailAddress;
 @property (nonatomic, readwrite) NSString *phoneNumber;
-@property (nonatomic, readwrite) NSString *handle;
+@property (nonatomic, readwrite, copy) NSString *handle;
 @property (nonatomic) ZMAccentColor accentColorValue;
 @property (nonatomic, readwrite) BOOL isBlocked;
 @property (nonatomic, readwrite) BOOL isIgnored;

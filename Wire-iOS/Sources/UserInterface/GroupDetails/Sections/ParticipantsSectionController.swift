@@ -23,10 +23,10 @@ protocol ParticipantsCellConfigurable: Reusable {
 }
 
 enum ParticipantsRowType {
-    case user(ZMBareUser)
+    case user(UserType)
     case showAll(Int)
     
-    init(_ user: ZMBareUser) {
+    init(_ user: UserType) {
         self = .user(user)
     }
     
@@ -41,7 +41,7 @@ enum ParticipantsRowType {
 private struct ParticipantsSectionViewModel {
     static private let maxParticipants = 7
     let rows: [ParticipantsRowType]
-    let participants: [ZMBareUser]
+    let participants: [UserType]
     
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
     
@@ -49,12 +49,12 @@ private struct ParticipantsSectionViewModel {
         return "participants.section.participants".localized(args: participants.count).uppercased()
     }
 
-    init(participants: [ZMBareUser]) {
+    init(participants: [UserType]) {
         self.participants = participants
         rows = ParticipantsSectionViewModel.computeRows(participants)
     }
     
-    static func computeRows(_ participants: [ZMBareUser]) -> [ParticipantsRowType] {
+    static func computeRows(_ participants: [UserType]) -> [ParticipantsRowType] {
         guard participants.count > maxParticipants else { return participants.map(ParticipantsRowType.init) }
         return participants[0..<5].map(ParticipantsRowType.init) + [.showAll(participants.count)]
     }
@@ -78,12 +78,12 @@ class ParticipantsSectionController: GroupDetailsSectionController {
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    init(participants: [ZMBareUser], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
+    init(participants: [UserType], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
         viewModel = .init(participants: participants)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
-        token = UserChangeInfo.add(observer: self, for: nil, userSession: ZMUserSession.shared()!)
+        token = UserChangeInfo.add(userObserver: self, for: nil, userSession: ZMUserSession.shared()!)
     }
     
     override func prepareForUse(in collectionView : UICollectionView?) {

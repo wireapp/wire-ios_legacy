@@ -23,6 +23,9 @@ import WireSyncEngine
 import WireExtensionComponents
 
 final public class BackgroundViewController: UIViewController {
+    
+    internal var dispatchGroup: DispatchGroup = DispatchGroup()
+    
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
     private let darkenOverlay = UIView()
@@ -30,7 +33,7 @@ final public class BackgroundViewController: UIViewController {
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
     private var statusBarBlurViewHeightConstraint: NSLayoutConstraint!
-    private let user: ZMBareUser
+    private let user: UserType
     private let userSession: ZMUserSession?
     
     public var darkMode: Bool = false {
@@ -43,13 +46,13 @@ final public class BackgroundViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc public init(user: ZMBareUser, userSession: ZMUserSession?) {
+    @objc public init(user: UserType, userSession: ZMUserSession?) {
         self.user = user
         self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
         
         if let userSession = userSession {
-            self.userObserverToken = UserChangeInfo.add(observer: self, forBareUser: self.user, userSession: userSession)
+            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
         }
         
         NotificationCenter.default.addObserver(self,
@@ -154,15 +157,27 @@ final public class BackgroundViewController: UIViewController {
             return
         }
         
-        if let imageData = user.imageMediumData {
-            self.setBackground(imageData: imageData)
-        } else {
-            if let searchUser = user as? ZMSearchUser, let userSession = self.userSession {
-                searchUser.requestMediumProfileImage(in: userSession)
+        updateForUserImage()
+        updateForAccentColor()
+    }
+
+    private func updateForUserImage() {
+        dispatchGroup.enter()
+        user.imageData(for: .complete, queue: DispatchQueue.global(qos: .background)) { [weak self] (imageData) in
+            var image: UIImage? = nil
+            if let imageData = imageData {
+                image = BackgroundViewController.blurredAppBackground(with: imageData)
             }
             
-            self.setBackground(color: user.accentColorValue.color)
+            DispatchQueue.main.async {
+                self?.imageView.image = image
+                self?.dispatchGroup.leave()
+            }
         }
+    }
+    
+    private func updateForAccentColor() {
+        setBackground(color: user.accentColorValue.color)
     }
     
     private func updateForColorScheme() {
@@ -174,12 +189,12 @@ final public class BackgroundViewController: UIViewController {
             return
         }
         
-        if let data = user.imageMediumData {
-            if imageMediumDataChanged {
-                self.setBackground(imageData: data)
-            }
-        } else if accentColorValueChanged {
-            self.setBackground(color: user.accentColorValue.color)
+        if imageMediumDataChanged {
+            updateForUserImage()
+        }
+        
+        if accentColorValueChanged {
+            updateForAccentColor()
         }
     }
     
@@ -198,7 +213,6 @@ final public class BackgroundViewController: UIViewController {
     }
     
     fileprivate func setBackground(color: UIColor) {
-        self.imageView.image = .none
         self.imageView.backgroundColor = color
     }
     

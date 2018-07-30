@@ -73,26 +73,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         imageView.tintColor = UIColor.Team.textColor
         return imageView
     }()
-
-    let headline: UILabel = {
-        let label = UILabel()
-        label.text = "landing.title".localized
-        label.font = LandingViewController.regularFont
-        label.textColor = UIColor.Team.subtitleColor
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return label
-    }()
-
-    let headlineStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .center
-        stackView.spacing = 16
-        stackView.axis = .vertical
-
-        return stackView
-    }()
-
+    
     let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -167,8 +148,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         Analytics.shared().tagOpenedLandingScreen(context: "email")
 
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
-        [logoView, headline].forEach(headlineStackView.addArrangedSubview)
-        headerContainerView.addSubview(headlineStackView)
+        headerContainerView.addSubview(logoView)
         
         [createAccountButton, createTeamButton].forEach { button in
             buttonStackView.addArrangedSubview(button)
@@ -186,11 +166,15 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         updateStackViewAxis()
         updateConstraintsForIPad()
         updateBarButtonItem()
+        disableTrackingIfNeeded()
 
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
-            queue: nil) { _ in self.updateBarButtonItem()  }
+            queue: nil) { _ in
+                self.updateBarButtonItem()
+                self.disableTrackingIfNeeded()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -222,21 +206,17 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
             navigationBar.right == selfView.right
         }
 
-        constrain(headlineStackView, logoView, headline, headerContainerView) {
-            headlineStackView, logoView, headline, headerContainerView in
+        constrain(logoView, headerContainerView) { logoView, headerContainerView in
 
-            ///reserver space for status bar(20pt)
-            headlineStackView.top >= headerContainerView.top + 36
-            logoAlignTop = headlineStackView.top == headerContainerView.top + 72 ~ 500.0
-            headlineStackView.centerX == headerContainerView.centerX
+            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ 500.0
+            logoView.centerX == headerContainerView.centerX
             logoView.width == 96
             logoView.height == 31
 
-            headline.height >= 18
-            headlineStackView.bottom <= headerContainerView.bottom - 16
+            logoView.bottom <= headerContainerView.bottom - 16
 
             if UIDevice.current.userInterfaceIdiom == .pad {
-                headlineAlignBottom = headlineStackView.bottom == headerContainerView.bottom - 80
+                headlineAlignBottom = logoView.bottom == headerContainerView.bottom - 80
             }
         }
 
@@ -244,13 +224,14 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
 
             headerContainerView.width == selfView.width
             headerContainerView.centerX == selfView.centerX
-            headerContainerView.top == selfView.top
 
             buttonStackView.centerX == selfView.centerX
             buttonStackView.centerY == selfView.centerY
 
             headerContainerView.bottom == buttonStackView.top
         }
+        
+        headerContainerView.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
 
         constrain(self.view, buttonStackView, loginHintsLabel, loginButton) {
             selfView, buttonStackView, loginHintsLabel, loginButton in
@@ -315,19 +296,22 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
             navigationBar.topItem?.rightBarButtonItem = cancelItem
         }
     }
+    
+    private func disableTrackingIfNeeded() {
+        if SessionManager.shared?.firstAuthenticatedAccount == nil {
+            TrackingManager.shared.disableCrashAndAnalyticsSharing = true
+        }
+    }
 
     // MARK: - Accessibility
 
     private func configureAccessibilityElements() {
         logoView.isAccessibilityElement = false
-        headline.isAccessibilityElement = false
 
-        headlineStackView.isAccessibilityElement = true
-        headlineStackView.accessibilityLabel = "landing.app_name".localized + "\n" + "landing.title".localized
-        headlineStackView.accessibilityTraits = UIAccessibilityTraitHeader
-        headlineStackView.shouldGroupAccessibilityChildren = true
-
-        headerContainerView.accessibilityElements = [headlineStackView]
+        headerContainerView.isAccessibilityElement = true
+        headerContainerView.accessibilityLabel = "landing.app_name".localized + " " + "landing.title".localized
+        headerContainerView.accessibilityTraits = UIAccessibilityTraitHeader
+        headerContainerView.shouldGroupAccessibilityChildren = true
     }
 
     private static let createAccountButtonTitle: NSAttributedString = {
@@ -386,7 +370,11 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
         present(alert, animated: true)
     }
-    
+
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
+        self.showLoadingView = showLoadingView
+    }
+
     // MARK: - PreLoginAuthenticationObserver
     
     func authenticationReadyToImportBackup(existingAccount: Bool) {

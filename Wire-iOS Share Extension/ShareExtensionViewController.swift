@@ -421,6 +421,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
 private func titleForMissingClients(users: Set<ZMUser>) -> String {
     let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
-    let allUsers = (users.map { $0.displayName ?? "" } as NSArray).componentsJoined(by: ", ") as NSString
+    
+    let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
     return NSString(format: template.localized as NSString, allUsers) as String
 }

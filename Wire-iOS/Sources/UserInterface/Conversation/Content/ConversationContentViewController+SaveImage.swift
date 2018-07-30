@@ -21,7 +21,11 @@ import Foundation
 extension ConversationContentViewController {
     @objc(saveImageFromMessage:cell:)
     func saveImage(from message: ZMConversationMessage, cell: ImageMessageCell?) {
-        if let cell = cell, let savableImage = cell.savableImage {
+        guard let imageMessageData = message.imageMessageData, let imageData = imageMessageData.imageData else { return }
+        
+        let savableImage = SavableImage(data: imageData, isGIF: imageMessageData.isAnimatedGIF)
+        
+        if let cell = cell {
             let snapshot = cell.fullImageView.snapshotView(afterScreenUpdates: true)
             let sourceRect = self.view.convert(cell.fullImageView.frame, from: cell.fullImageView.superview)
             savableImage.saveToLibrary { success in
@@ -29,8 +33,7 @@ extension ConversationContentViewController {
                 snapshot?.translatesAutoresizingMaskIntoConstraints = true
                 self.delegate.conversationContentViewController(self, performImageSaveAnimation: snapshot, sourceRect: sourceRect)
             }
-        } else if let imageMessageData = message.imageMessageData {
-            let savableImage = SavableImage(data: imageMessageData.imageData, isGIF: imageMessageData.isAnimatedGIF)
+        } else {
             savableImage.saveToLibrary()
         }
     }

@@ -34,13 +34,13 @@ fileprivate extension ZMUser {
 
 class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate {
 
-    private let internalParticipants: [ZMBareUser]
+    private let internalParticipants: [UserType]
     private var filterQuery: String?
     
     let selectedParticipants: [ZMBareUser]
     let conversation: ZMConversation
     var participantsDidChange: (() -> Void)? = nil
-    
+
     var indexOfFirstSelectedParticipant: Int? {
         guard let first = selectedParticipants.first as? ZMUser else { return nil }
         return internalParticipants.index {
@@ -68,7 +68,7 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
     
     private func computeVisibleParticipants() {
         guard let query = filterQuery, query.isValidQuery else { return participants = internalParticipants }
-        participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [ZMBareUser]
+        participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [UserType]
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {

@@ -106,7 +106,7 @@ extension Mode {
         self.init(users: conversation.lastServerSyncedActiveParticipants.array as! [ZMUser])
     }
     
-    fileprivate init(users: [ZMBareUser]) {
+    fileprivate init(users: [UserType]) {
         switch (users.count) {
         case 0: self = .none
         case 1: self = .one(serviceUser: users[0].isServiceUser)

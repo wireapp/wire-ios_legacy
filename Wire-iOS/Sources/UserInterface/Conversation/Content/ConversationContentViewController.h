@@ -20,12 +20,11 @@
 #import <UIKit/UIKit.h>
 #import "ConversationContentViewControllerDelegate.h"
 #import "Constants.h"
-#import "UpsideDownTableView.h"
 
 
 @class ZMConversation;
 @class ConversationMediaController;
-
+@class UpsideDownTableView;
 
 /// The main conversation view controller
 @interface ConversationContentViewController : UIViewController
