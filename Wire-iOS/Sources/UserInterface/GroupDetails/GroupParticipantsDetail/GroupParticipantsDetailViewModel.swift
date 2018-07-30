@@ -41,6 +41,13 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
     let conversation: ZMConversation
     var participantsDidChange: (() -> Void)? = nil
     
+    var indexOfFirstSelectedParticipant: Int? {
+        guard let first = selectedParticipants.first as? ZMUser else { return nil }
+        return internalParticipants.index {
+            ($0 as? ZMUser)?.remoteIdentifier == first.remoteIdentifier
+        }
+    }
+    
     var participants = [ZMBareUser]() {
         didSet { participantsDidChange?() }
     }
@@ -52,6 +59,11 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
         
         super.init()
         computeVisibleParticipants()
+    }
+    
+    func isUserSelected(_ user: ZMBareUser) -> Bool {
+        guard let id = (user as? ZMUser)?.remoteIdentifier else { return false }
+        return selectedParticipants.contains { ($0 as? ZMUser)?.remoteIdentifier == id}
     }
     
     private func computeVisibleParticipants() {

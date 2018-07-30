@@ -23,6 +23,7 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     private let collectionView = UICollectionView(forUserList: ())
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
     private let viewModel: GroupParticipantsDetailViewModel
+    private var firstLoad = true
     
     weak var delegate: GroupDetailsUserDetailPresenter?
     
@@ -53,6 +54,15 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         super.viewDidLoad()
         setupViews()
         createConstraints()
+        self.collectionView.allowsMultipleSelection = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if firstLoad {
+            firstLoad = false
+            scrollToFirstHighlightedUser()
+        }
     }
     
     private func setupViews() {
@@ -64,7 +74,8 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         view.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
+        collectionView.register(SelectedUserCell.self, forCellWithReuseIdentifier: SelectedUserCell.reuseIdentifier)
+        collectionView.allowsMultipleSelection = true
         title = "participants.all.title".localized.uppercased()
         view.backgroundColor = UIColor(scheme: .contentBackground)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
@@ -82,6 +93,13 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         ])
     }
     
+    private func scrollToFirstHighlightedUser() {
+        if let idx = viewModel.indexOfFirstSelectedParticipant {
+            let indexPath = IndexPath(row: idx, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+        }
+    }
+    
     // MARK: - UICollectionViewDelegateFlowLayout & UICollectionViewDataSource
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -93,7 +111,7 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectedUserCell.reuseIdentifier, for: indexPath) as! SelectedUserCell
         let user = viewModel.participants[indexPath.row]
         
         cell.configure(
@@ -102,8 +120,8 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
             showSeparator: viewModel.participants.count - 1 != indexPath.row
         )
         
-        // TODO: select selected users cells and scroll to first visible cell
-//        let preSelected = viewModel.selectedParticipants.contains { user.handle == $0.handle }
+        cell.configureContentBackground(preselected: viewModel.isUserSelected(user), animated: firstLoad)
+
         return cell
     }
     
@@ -111,8 +129,31 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         guard let user = viewModel.participants[indexPath.row] as? ZMUser else { return }
         delegate?.presentDetails(for: user)
     }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.bounds.size.width, height: 56)
     }
+}
 
+private class SelectedUserCell: UserCell {
+
+    func configureContentBackground(preselected: Bool, animated: Bool) {
+        contentView.backgroundColor = .clear
+        guard preselected else { return }
+        
+        let changes: () -> () = {
+            self.contentView.backgroundColor = UIColor(scheme: .cellSeparator)
+        }
+        
+        if animated {
+            UIView.animate(
+                withDuration: 0.3,
+                delay: 0.5,
+                options: .curveLinear,
+                animations: changes
+            )
+        } else {
+            changes()
+        }
+    }
 }
