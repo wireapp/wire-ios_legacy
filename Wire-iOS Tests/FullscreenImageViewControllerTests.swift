@@ -49,7 +49,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         UIView.setAnimationsEnabled(false)
 
-        // The image is 1280 * 854 W/H = ~1.5
+        // The image is 1280 * 854 W:H = 3:2
         let data = self.data(forResource: "unsplash_matterhorn", extension: "jpg")!
         image = UIImage(data: data)
 

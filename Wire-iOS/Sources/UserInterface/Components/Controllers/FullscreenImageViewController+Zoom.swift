@@ -32,6 +32,25 @@ extension CGSize {
 
         return minZoom
     }
+
+
+    /// returns the longest length among width and height
+    var longestLength: CGFloat {
+        return width > height ? width : height
+    }
+
+    /// returns true if both with and height are longer than otherSize
+    ///
+    /// - Parameter otherSize: other CGSize to compare
+    /// - Returns: true if both with and height are longer than otherSize
+    func contains(_ otherSize: CGSize) -> Bool {
+        if otherSize.width < width &&
+           otherSize.height < height {
+            return true
+        }
+
+        return false
+    }
 }
 
 extension FullscreenImageViewController {
@@ -66,12 +85,22 @@ extension FullscreenImageViewController {
 
         UIMenuController.shared.isMenuVisible = false
         let scaleDiff: CGFloat = scrollView.zoomScale - scrollView.minimumZoomScale
+
         // image view in minimum zoom scale, zoom in to a 50 x 50 rect
         if scaleDiff < kZoomScaleDelta {
             // image is smaller than screen bound and zoom sclae is max(1), do not zoom in
-            if (image.size.width < self.view.bounds.width &&
-                image.size.height < self.view.bounds.height &&
-                scrollView.zoomScale == 1) == false {
+            if self.view.bounds.size.contains(image.size) &&
+                scrollView.zoomScale == 1 { ///small image case
+                let point = doubleTapper.location(in: doubleTapper.view)
+                ///TODO: zoom rect should smaller than the image
+
+                let zoomLength = image.size.longestLength < 50 ? image.size.longestLength : 50
+
+                let zoomRect = CGRect(x: (point.x) - zoomLength/2, y: (point.y) - zoomLength/2, width: zoomLength, height: zoomLength)
+                let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
+
+                scrollView.zoom(to: finalRect ?? .zero, animated: true)
+            } else {
                 let point = doubleTapper.location(in: doubleTapper.view)
                 let zoomRect = CGRect(x: (point.x) - 25, y: (point.y) - 25, width: 50, height: 50)
                 let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
@@ -85,8 +114,15 @@ extension FullscreenImageViewController {
 
     // MARK: - Zoom scale
 
+    ///TODO: rename
     func updateScrollViewMinimumZoomScale(viewSize: CGSize, imageSize: CGSize) {
         self.scrollView.minimumZoomScale = viewSize.minZoom(imageSize: imageSize)
+
+        if viewSize.contains(imageSize) {
+            self.scrollView.maximumZoomScale = max(viewSize.height / imageSize.height, viewSize.width / imageSize.width)
+        } else {
+            self.scrollView.maximumZoomScale = 1
+        }
     }
 
     @objc func updateZoom() {
