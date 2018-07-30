@@ -31,6 +31,10 @@ import WireLinkPreview
     func fetchLinkPreviewImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
         completionHandler(imageData)
     }
+    
+    func requestLinkPreviewImageDownload() {
+        // no-op
+    }
 }
 
 @objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {
@@ -94,6 +98,10 @@ import WireLinkPreview
     func fetchImagePreviewData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
         completionHandler(imagePreviewData)
     }
+    
+    func requestImagePreviewDownload() {
+        // no-op
+    }
 }
 
 @objcMembers class MockKnockMessageData: NSObject, ZMKnockMessageData {
@@ -120,6 +128,10 @@ import WireLinkPreview
     
     func fetchImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
         completionHandler(imageData)
+    }
+    
+    func requestImageDownload() {
+        // no-op
     }
 }
 
@@ -177,14 +189,6 @@ import WireLinkPreview
 
     func startSelfDestructionIfNeeded() -> Bool {
         return true
-    }
-    
-    func requestFileDownload() {
-        // no-op
-    }
-    
-    func requestImageDownload() {
-        // no-op
     }
     
     func resend() {
