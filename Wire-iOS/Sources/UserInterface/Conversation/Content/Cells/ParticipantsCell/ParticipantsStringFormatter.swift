@@ -188,7 +188,7 @@ class ParticipantsStringFormatter {
             result.append(names.last!, with: attrsForLastName)
         case 2:
             // "x and y"
-            let part = Key.andX.localized(args: names)
+            let part = Key.xAndY.localized(args: names.first!, names.last!)
             result.append(part, with: normalAttributes)
             result.define(boldAttributes, forComponent: names.first!)
             result.define(attrsForLastName, forComponent: names.last!)
