@@ -574,7 +574,7 @@
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Paramètres";
 "participants.footer.add_title" = "Ajouter des contacts";
-"participants.section.name.footer" = "Les conversations de groupe peuvent contenir jusqu'à 256 personnes. Les appels vidéos fonctionnent avec jusqu'à trois destinataires.";
+"participants.section.name.footer" = "Les conversations de groupe peuvent contenir jusqu'à 300 personnes. Les appels vidéos fonctionnent avec jusqu'à trois destinataires.";
 
 // Meta Menu
 "meta.menu.rename" = "Renommer";
