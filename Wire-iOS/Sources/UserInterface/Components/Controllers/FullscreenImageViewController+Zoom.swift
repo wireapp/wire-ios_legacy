@@ -44,12 +44,8 @@ extension CGSize {
     /// - Parameter otherSize: other CGSize to compare
     /// - Returns: true if both with and height are longer than otherSize
     func contains(_ otherSize: CGSize) -> Bool {
-        if otherSize.width < width &&
-           otherSize.height < height {
-            return true
-        }
-
-        return false
+        return otherSize.width < width &&
+               otherSize.height < height
     }
 }
 
@@ -59,7 +55,7 @@ extension FullscreenImageViewController {
         guard let imageSize = imageView?.image?.size else { return }
 
         let isImageZoomed = fabs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
-        updateScrollViewMinimumZoomScale(viewSize: size, imageSize: imageSize)
+        updateScrollViewZoomScale(viewSize: size, imageSize: imageSize)
 
         let animationBlock: () -> Void = { 
             if isImageZoomed == false {
@@ -89,24 +85,14 @@ extension FullscreenImageViewController {
         // image view in minimum zoom scale, zoom in to a 50 x 50 rect
         if scaleDiff < kZoomScaleDelta {
             // image is smaller than screen bound and zoom sclae is max(1), do not zoom in
-            if self.view.bounds.size.contains(image.size) &&
-                scrollView.zoomScale == 1 { ///small image case
-                let point = doubleTapper.location(in: doubleTapper.view)
-                ///TODO: zoom rect should smaller than the image
+            let point = doubleTapper.location(in: doubleTapper.view)
 
-                let zoomLength = image.size.longestLength < 50 ? image.size.longestLength : 50
+            let zoomLength = image.size.longestLength < 50 ? image.size.longestLength : 50
 
-                let zoomRect = CGRect(x: (point.x) - zoomLength/2, y: (point.y) - zoomLength/2, width: zoomLength, height: zoomLength)
-                let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
-
-                scrollView.zoom(to: finalRect ?? .zero, animated: true)
-            } else {
-                let point = doubleTapper.location(in: doubleTapper.view)
-                let zoomRect = CGRect(x: (point.x) - 25, y: (point.y) - 25, width: 50, height: 50)
-                let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
-
-                scrollView.zoom(to: finalRect ?? .zero, animated: true)
-            }
+            let zoomRect = CGRect(x: point.x - zoomLength / 2, y: point.y - zoomLength / 2, width: zoomLength, height: zoomLength)
+            let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
+            ///TODO: allow to zoom to screenfill?
+            scrollView.zoom(to: finalRect ?? .zero, animated: true) ///po scrollView.maximumZoomScale 40.6 is correct
         } else {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         }
@@ -114,12 +100,12 @@ extension FullscreenImageViewController {
 
     // MARK: - Zoom scale
 
-    ///TODO: rename
-    func updateScrollViewMinimumZoomScale(viewSize: CGSize, imageSize: CGSize) {
+    @objc func updateScrollViewZoomScale(viewSize: CGSize, imageSize: CGSize) {
         self.scrollView.minimumZoomScale = viewSize.minZoom(imageSize: imageSize)
 
+        // if the image is small than the screen size, max zoom level is "zoom to fit screen"
         if viewSize.contains(imageSize) {
-            self.scrollView.maximumZoomScale = max(viewSize.height / imageSize.height, viewSize.width / imageSize.width)
+            self.scrollView.maximumZoomScale = min(viewSize.height / imageSize.height, viewSize.width / imageSize.width)
         } else {
             self.scrollView.maximumZoomScale = 1
         }
@@ -160,7 +146,7 @@ extension FullscreenImageViewController {
         scrollView.addSubview(imageView)
         scrollView.contentSize = imageView.image?.size ?? CGSize.zero
 
-        updateScrollViewMinimumZoomScale(viewSize: parentSize, imageSize: image.size)
+        updateScrollViewZoomScale(viewSize: parentSize, imageSize: image.size)
         updateZoom(withSize: parentSize)
 
         centerScrollViewContent()
