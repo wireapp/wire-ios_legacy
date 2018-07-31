@@ -110,6 +110,16 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     
     // MARK: - New Conversation
     
+    func testThatItRendersNewConversationCellWithOneParticipantAndName() {
+        let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .justYou)
+        verify(view: sut.prepareForSnapshots())
+    }
+    
+    func testThatItRendersNewConversationCellWithTwoParticipantsAndName() {
+        let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother)
+        verify(view: sut.prepareForSnapshots())
+    }
+    
     func testThatItRendersNewConversationCellWithParticipantsAndName() {
         let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many)
         verify(view: sut.prepareForSnapshots())
@@ -194,6 +204,8 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
             switch fillUsers {
             case .none: return []
             case .sender: return [message.sender!]
+            case .justYou: return Set([selfUser])
+            case .youAndAnother: return Set(users[0..<1] + [selfUser])
             case .one: return Set(users[0...1] + additionalUsers)
             case .some: return Set(users[0...4] + additionalUsers)
             case .many: return Set(users[0..<11] + additionalUsers)
@@ -224,7 +236,7 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
 }
 
 private enum Users {
-    case none, sender, one, some, many, overflow
+    case none, sender, one, some, many, justYou, youAndAnother, overflow
 }
 
 
