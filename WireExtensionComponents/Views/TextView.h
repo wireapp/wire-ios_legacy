@@ -28,10 +28,10 @@ Adds placeholder support to @c UITextView. The position of the placeholder is au
 IB_DESIGNABLE
 @interface TextView : UITextView
 
-@property (nonatomic, copy) IBInspectable NSString *placeholder;
-@property (nonatomic, copy) IBInspectable NSAttributedString *attributedPlaceholder;
-@property (nonatomic) IBInspectable UIColor  *placeholderTextColor;
-@property (nonatomic) IBInspectable UIFont   *placeholderFont;
+@property (nonatomic, copy, nullable) IBInspectable NSString *placeholder;
+@property (nonatomic, copy, nullable) IBInspectable NSAttributedString *attributedPlaceholder;
+@property (nonatomic, nullable) IBInspectable UIColor  *placeholderTextColor;
+@property (nonatomic, nullable) IBInspectable UIFont   *placeholderFont;
 @property (nonatomic) TextTransform placeholderTextTransform;
 @property (nonatomic) CGFloat lineFragmentPadding;
 @property (nonatomic) UIEdgeInsets placeholderTextContainerInset;
@@ -48,9 +48,9 @@ IB_DESIGNABLE
 @protocol TextViewProtocol <NSObject>
 
 @required
-- (void)textView:(UITextView *)textView hasImageToPaste:(id<MediaAsset>)image;
+- (void)textView:(UITextView * _Nonnull)textView hasImageToPaste:(id<MediaAsset> _Nonnull)image;
 
 @optional
-- (void)textView:(UITextView *)textView firstResponderChanged:(NSNumber *)resigned;
+- (void)textView:(UITextView * _Nonnull)textView firstResponderChanged:(NSNumber * _Nonnull)resigned;
 
 @end
