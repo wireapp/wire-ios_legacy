@@ -76,7 +76,12 @@ extension ZMConversation {
                     onGranted(granted)
                 }
             } else {
-                onGranted(granted)
+                // Hack: For known reason, when the app is first run and the user permited microphone access,
+                // CXCallController's request method returns CXErrorCodeRequestTransactionErrorMaximumCallGroupsReached
+                // even maximumCallGroups is set already. Dalay for a short moment solves the issue.
+                delay(0.1) {
+                    onGranted(granted)
+                }
             }
         }
         
