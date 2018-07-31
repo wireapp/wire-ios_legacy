@@ -23,27 +23,12 @@ import XCTest
 final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: FullscreenImageViewController!
-    var image: UIImage!
 
     override func setUp() {
         super.setUp()
         UIView.setAnimationsEnabled(false)
 
-        // The image is 70 * 70
-        let data = self.data(forResource: "unsplash_matterhorn_small_size", extension: "jpg")!
-        image = UIImage(data: data)
-
-        // The image is 1280 * 854 W:H = 3:2
-//        let data = self.data(forResource: "unsplash_matterhorn", extension: "jpg")!
-//        image = UIImage(data: data)
-
-        let message = MockMessageFactory.imageMessage(with: image)!
-
-        sut = FullscreenImageViewController(message: message)
-        sut.setBoundsSizeAsIPhone4_7Inch()
-        sut.viewDidLoad()
-
-        sut.setupImageView(image: image, parentSize: sut.view.bounds.size)
+        sut = setupSut(imageName: "unsplash_matterhorn_small_size")
 
         recordMode = true
     }
@@ -51,25 +36,22 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        UIView.setAnimationsEnabled(true)
         super.tearDown()
     }
 
 
-
-    /// Example checker method which can be reused in different tests
-//    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-//        XCTAssert(true, file: file, line: line)
-//    }
-
-    func testSmallImageIsCenteredInTheScreen(){
-        // GIVEN
-
-        // WHEN
-
-        // THEN
-//        checkerExample()
+    func testThatSmallImageIsCenteredInTheScreen(){
         verify(view: sut.view)
     }
 
-    ///TODO: snapshot after double tapped
+    func testThatSmallImageIsScaledToFitTheScreenAfterDoubleTapped(){
+        // GIVEN
+
+        // WHEN
+        doubleTap(fullscreenImageViewController: sut)
+
+        // THEN
+        verify(view: sut.view)
+    }
 }

@@ -39,26 +39,23 @@ final class MockTapGestureRecognizer: UITapGestureRecognizer {
     }
 }
 
-final class FullscreenImageViewControllerTests: XCTestCase {
-    
-    var sut: FullscreenImageViewController!
-    var image: UIImage!
+extension XCTestCase {
+    func doubleTap(fullscreenImageViewController: FullscreenImageViewController) {
+        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: fullscreenImageViewController.view.bounds.size.width / 2, y: fullscreenImageViewController.view.bounds.size.height / 2), state: .ended)
 
-    override func setUp() {
-        super.setUp()
-
-        UIView.setAnimationsEnabled(false)
-
+        fullscreenImageViewController.handleDoubleTap(mockTapGestureRecognizer)
+        fullscreenImageViewController.view.layoutIfNeeded()
     }
 
-    func setupSut(imageName: String) {
+    ///TODO: rename
+    func setupSut(imageName: String) -> FullscreenImageViewController {
         // The image is 1280 * 854 W:H = 3:2
         let data = self.data(forResource: imageName, extension: "jpg")!
-        image = UIImage(data: data)
+        let image = UIImage(data: data)!
 
         let message = MockMessageFactory.imageMessage(with: image)!
 
-        sut = FullscreenImageViewController(message: message)
+        let sut = FullscreenImageViewController(message: message)
         sut.setBoundsSizeAsIPhone4_7Inch()
         sut.viewDidLoad()
 
@@ -67,27 +64,33 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         sut.updateScrollViewZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
         sut.updateZoom(withSize: sut.view.bounds.size)
         sut.view.layoutIfNeeded()
+
+        return sut
     }
+}
+
+final class FullscreenImageViewControllerTests: XCTestCase {
     
+    var sut: FullscreenImageViewController!
+
+    override func setUp() {
+        super.setUp()
+
+        UIView.setAnimationsEnabled(false)
+    }
+
     override func tearDown() {
         sut = nil
-        image = nil
 
         UIView.setAnimationsEnabled(true)
 
         super.tearDown()
     }
 
-    func doubleTap() {
-        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
-
-        sut.handleDoubleTap(mockTapGestureRecognizer)
-        sut.view.layoutIfNeeded()
-    }
-
     func testThatScrollViewMinimumZoomScaleAndZoomScaleAreSet() {
         // GIVEN & WHEN
-        setupSut(imageName: "unsplash_matterhorn")
+        sut = setupSut(imageName: "unsplash_matterhorn")
+        let image: UIImage = sut.imageView!.image!
         sut.updateScrollViewZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
 
         // THEN
@@ -99,7 +102,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
     func testThatDoubleTapZoomToScreenFitWhenTheImageIsSmallerThanTheView() {
         // GIVEN
         // The image is 70 * 70
-        setupSut(imageName: "unsplash_matterhorn_small_size")
+        sut = setupSut(imageName: "unsplash_matterhorn_small_size")
 
         let maxZoomScale = sut.scrollView.maximumZoomScale
 
@@ -108,7 +111,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - 1), kZoomScaleDelta)
 
         // WHEN
-        doubleTap()
+        doubleTap(fullscreenImageViewController: sut)
 
         // THEN
         XCTAssertEqual(sut.scrollView.zoomScale, maxZoomScale)
@@ -116,12 +119,12 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatDoubleTapZoomInTheImage() {
         // GIVEN
-        setupSut(imageName: "unsplash_matterhorn")
+        sut = setupSut(imageName: "unsplash_matterhorn")
 
         XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
 
         // WHEN
-        doubleTap()
+        doubleTap(fullscreenImageViewController: sut)
 
         // THEN
         XCTAssertEqual(sut.scrollView.zoomScale, 1)
@@ -129,7 +132,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatRotateScreenResetsZoomScaleToMinZoomScale() {
         // GIVEN
-        setupSut(imageName: "unsplash_matterhorn")
+        sut = setupSut(imageName: "unsplash_matterhorn")
 
         // WHEN
         let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
@@ -138,15 +141,16 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.scrollView.zoomScale)
+        let image: UIImage = sut.imageView!.image!
         XCTAssertEqual(sut.view.bounds.size.height / image.size.height, sut.scrollView.minimumZoomScale)
     }
 
     func testThatRotateScreenReserveZoomScaleIfDoubleTapped() {
         // GIVEN
-        setupSut(imageName: "unsplash_matterhorn")
+        sut = setupSut(imageName: "unsplash_matterhorn")
 
         // WHEN
-        doubleTap()
+        doubleTap(fullscreenImageViewController: sut)
 
         // THEN
         XCTAssertEqual(1, sut.scrollView.zoomScale)
