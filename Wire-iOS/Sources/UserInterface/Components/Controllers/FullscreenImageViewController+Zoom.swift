@@ -91,8 +91,8 @@ extension FullscreenImageViewController {
 
             let zoomRect = CGRect(x: point.x - zoomLength / 2, y: point.y - zoomLength / 2, width: zoomLength, height: zoomLength)
             let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
-            ///TODO: allow to zoom to screenfill?
-            scrollView.zoom(to: finalRect ?? .zero, animated: true) ///po scrollView.maximumZoomScale 40.6 is correct
+
+            scrollView.zoom(to: finalRect ?? .zero, animated: true)
         } else {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         }

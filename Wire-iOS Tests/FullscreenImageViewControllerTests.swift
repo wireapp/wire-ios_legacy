@@ -49,8 +49,11 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         UIView.setAnimationsEnabled(false)
 
+    }
+
+    func setupSut(imageName: String) {
         // The image is 1280 * 854 W:H = 3:2
-        let data = self.data(forResource: "unsplash_matterhorn", extension: "jpg")!
+        let data = self.data(forResource: imageName, extension: "jpg")!
         image = UIImage(data: data)
 
         let message = MockMessageFactory.imageMessage(with: image)!
@@ -60,6 +63,10 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         sut.viewDidLoad()
 
         sut.setupImageView(image: image, parentSize: sut.view.bounds.size)
+
+        sut.updateScrollViewZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
+        sut.updateZoom(withSize: sut.view.bounds.size)
+        sut.view.layoutIfNeeded()
     }
     
     override func tearDown() {
@@ -80,7 +87,8 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatScrollViewMinimumZoomScaleAndZoomScaleAreSet() {
         // GIVEN & WHEN
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
+        setupSut(imageName: "unsplash_matterhorn")
+        sut.updateScrollViewZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
 
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.view.bounds.size.width / image.size.width)
@@ -88,30 +96,27 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
     }
 
-    func testThatDoubleTapDoesNotZoomInTheImageWhichSmallerThanTheView() {
+    func testThatDoubleTapZoomToScreenFitWhenTheImageIsSmallerThanTheView() {
         // GIVEN
         // The image is 70 * 70
-        let data = self.data(forResource: "unsplash_matterhorn_small_size", extension: "jpg")!
-        image = UIImage(data: data)
+        setupSut(imageName: "unsplash_matterhorn_small_size")
 
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
+        let maxZoomScale = sut.scrollView.maximumZoomScale
 
-        XCTAssertEqual(sut.scrollView.zoomScale, 1)
+        XCTAssertEqual(maxZoomScale, sut.view.frame.width / 70.0)
+
+        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - 1), kZoomScaleDelta)
 
         // WHEN
         doubleTap()
 
         // THEN
-        XCTAssertEqual(sut.scrollView.zoomScale, 1)
+        XCTAssertEqual(sut.scrollView.zoomScale, maxZoomScale)
     }
 
     func testThatDoubleTapZoomInTheImage() {
         // GIVEN
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
+        setupSut(imageName: "unsplash_matterhorn")
 
         XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
 
@@ -124,9 +129,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatRotateScreenResetsZoomScaleToMinZoomScale() {
         // GIVEN
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
+        setupSut(imageName: "unsplash_matterhorn")
 
         // WHEN
         let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
@@ -140,9 +143,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatRotateScreenReserveZoomScaleIfDoubleTapped() {
         // GIVEN
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
+        setupSut(imageName: "unsplash_matterhorn")
 
         // WHEN
         doubleTap()
