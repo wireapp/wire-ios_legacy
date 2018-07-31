@@ -51,6 +51,8 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
     
 - (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView;
 
+- (void)conversationContentViewController:(ConversationContentViewController *)controller presentParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
+
 @optional
 
 - (void)didTapOnUserAvatar:(ZMUser *)user view:(UIView *)view;

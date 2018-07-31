@@ -24,11 +24,12 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
     func testThatItRendersALotOfUsers() {
         // given
         let users = (0..<20).map { createUser(name: "User #\($0)") }
+        let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
         conversation.internalAddParticipants(Set(users))
         
         // when
-        let sut = GroupParticipantsDetailViewController(participants: users, conversation: conversation)
+        let sut = GroupParticipantsDetailViewController(participants: users, selectedParticipants: selected, conversation: conversation)
         
         // then
         let wrapped = sut.wrapInNavigationController()
@@ -39,16 +40,16 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         // given
         ColorScheme.default.variant = .dark
         let users = (0..<20).map { createUser(name: "User #\($0)") }
+        let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
         conversation.internalAddParticipants(Set(users))
         
         // when
-        let sut = GroupParticipantsDetailViewController(participants: users, conversation: conversation)
+        let sut = GroupParticipantsDetailViewController(participants: users, selectedParticipants: selected, conversation: conversation)
         
         // then
         let wrapped = sut.wrapInNavigationController()
         verify(view: wrapped.view)
         ColorScheme.default.variant = .light
     }
-    
 }

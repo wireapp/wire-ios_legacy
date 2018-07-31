@@ -672,6 +672,20 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self presentParticipantsViewController:navigationController fromView:sourceView];
 }
 
+- (void)conversationContentViewController:(ConversationContentViewController *)controller presentParticipantsDetailsWithSelectedUsers:(NSArray<ZMUser *> *)selectedUsers fromView:(UIView *)sourceView
+{
+    UIViewController *participantsController = self.participantsController;
+    if ([participantsController isKindOfClass:UINavigationController.class]) {
+        UINavigationController *navigationController = (UINavigationController *)participantsController;
+        if ([navigationController.topViewController isKindOfClass:GroupDetailsViewController.class]) {
+            [(GroupDetailsViewController *)navigationController.topViewController presentParticipantsDetailsWithUsers:self.conversation.sortedOtherParticipants
+                                                                                        selectedUsers:selectedUsers
+                                                                                             animated:NO];
+        }
+    }
+    [self presentParticipantsViewController:participantsController fromView:sourceView];
+}
+
 @end
 
 

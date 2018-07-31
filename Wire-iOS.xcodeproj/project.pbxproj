@@ -777,7 +777,6 @@
 		BF4D99BF1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */; };
 		BF4D99CC1E79AAD400A7B08F /* ParticipantsCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99C91E79AAD400A7B08F /* ParticipantsCells.swift */; };
 		BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99CA1E79AAD400A7B08F /* ParticipantsCellViewModel.swift */; };
-		BF4D99CE1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99CB1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift */; };
 		BF4D99D01E79AF8100A7B08F /* ParticipantCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4D99CF1E79AF8100A7B08F /* ParticipantCellTests.swift */; };
 		BF5127161CC9119400F23DEA /* ZMSnapshotTestCase+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */; };
 		BF515F941D9D1C1900C786FB /* EmojiSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF515F931D9D1C1900C786FB /* EmojiSectionViewController.swift */; };
@@ -1030,6 +1029,7 @@
 		EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4332481F1A67E500096D90 /* PopUpIconButton.swift */; };
 		EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
+		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
 		EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */; };
 		EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E926D2024F085000F4752 /* MarkdownTextView.swift */; };
 		EEA747A81FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */; };
@@ -2369,7 +2369,6 @@
 		BF4D99BE1E78555700A7B08F /* ZMConversationMessageWindow+DaySeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessageWindow+DaySeparator.swift"; sourceTree = "<group>"; };
 		BF4D99C91E79AAD400A7B08F /* ParticipantsCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsCells.swift; sourceTree = "<group>"; };
 		BF4D99CA1E79AAD400A7B08F /* ParticipantsCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsCellViewModel.swift; sourceTree = "<group>"; };
-		BF4D99CB1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsCollectionViewController.swift; sourceTree = "<group>"; };
 		BF4D99CF1E79AF8100A7B08F /* ParticipantCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantCellTests.swift; sourceTree = "<group>"; };
 		BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+Swift.swift"; sourceTree = "<group>"; };
 		BF515F931D9D1C1900C786FB /* EmojiSectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmojiSectionViewController.swift; path = Emoji/EmojiSectionViewController.swift; sourceTree = "<group>"; };
@@ -2636,6 +2635,7 @@
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
 		EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButtonView.swift; sourceTree = "<group>"; };
 		EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorageTests.swift; sourceTree = "<group>"; };
+		EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStringFormatter.swift; sourceTree = "<group>"; };
 		EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Down.swift"; sourceTree = "<group>"; };
 		EE8E926D2024F085000F4752 /* MarkdownTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
 		EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsMixpanelProviderTests.swift; sourceTree = "<group>"; };
@@ -5278,7 +5278,7 @@
 			children = (
 				BF4D99C91E79AAD400A7B08F /* ParticipantsCells.swift */,
 				BF4D99CA1E79AAD400A7B08F /* ParticipantsCellViewModel.swift */,
-				BF4D99CB1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift */,
+				EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */,
 			);
 			path = ParticipantsCell;
 			sourceTree = "<group>";
@@ -6625,7 +6625,6 @@
 				BFF8076420BC072A0063E5D4 /* CallHapticsGenerator.swift in Sources */,
 				F1199D411FC849450070FAC3 /* TextFieldDescription.swift in Sources */,
 				D58192002091CEBF003BA7EC /* UIStackView+Helper.swift in Sources */,
-				BF4D99CE1E79AAD400A7B08F /* ParticipantsCollectionViewController.swift in Sources */,
 				EFFF9E851FBF335700491F9A /* UIColor+TeamCreation.swift in Sources */,
 				871BC2851D34F8F800DF0793 /* UIColor+WAZExtensions.m in Sources */,
 				870C926F1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift in Sources */,
@@ -6851,6 +6850,7 @@
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
+				EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */,
 				16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */,
 				5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */,
 				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,

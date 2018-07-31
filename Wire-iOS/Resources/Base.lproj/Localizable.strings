@@ -314,9 +314,14 @@
 // System messages
 "content.system.you_nominative" = "you";
 "content.system.you_dative" = "you";
+"content.system.and_you_dative" = "and you";
 "content.system.you_accusative" = "you";
 
 "content.system.continued_conversation" = "Start a conversation with %@";
+"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people.others" = "%@ others";
+"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
 
 "content.system.other_started_conversation" = "%@ started a conversation with %@";
 "content.system.you_started_conversation" = "You started a conversation with %@";
@@ -381,7 +386,7 @@
 "content.system.conversation.with_name.title" = "%@ started the conversation";
 "content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
-"content.system.conversation.with_name.participants" = "with %@";
+"content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ set the message timer to %@";
 "content.system.message_timer_changes.you" = "You set the message timer to %@";
