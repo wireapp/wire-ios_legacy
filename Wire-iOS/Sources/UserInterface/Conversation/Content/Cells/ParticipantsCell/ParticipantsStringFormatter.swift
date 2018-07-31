@@ -74,6 +74,17 @@ private class FormatSequence {
 }
 
 class ParticipantsStringFormatter {
+
+    private struct Key {
+        static let youStartedTheConversation = "content.system.conversation.with_name.title-you"
+        static let xStartedTheConversation = "content.system.conversation.with_name.title"
+        static let xOthers = "content.system.started_conversation.truncated_people.others"
+        static let andX = "content.system.started_conversation.truncated_people"
+        static let with = "content.system.conversation.with_name.participants"
+        static let xAndY = "content.system.participants_1_other"
+        static let completeTeam = "content.system.started_conversation.complete_team"
+        static let completeTeamWithGuests = "content.system.started_conversation.complete_team.guests"
+    }
     
     struct NameList {
         let names: [String]
@@ -84,16 +95,7 @@ class ParticipantsStringFormatter {
             return names.count + collapsed
         }
     }
-    
-    private let kYouStartedTheConversation = "content.system.conversation.with_name.title-you"
-    private let kXStartedTheConversation = "content.system.conversation.with_name.title"
-    private let kXOthers = "content.system.started_conversation.truncated_people.others"
-    private let kAndX = "content.system.started_conversation.truncated_people"
-    private let kWith = "content.system.conversation.with_name.participants"
-    private let kXAndY = "content.system.participants_1_other"
-    private let kCompleteTeam = "content.system.started_conversation.complete_team"
-    private let kCompleteTeamWithGuests = "content.system.started_conversation.complete_team.guests"
-    
+
     private let message: ZMConversationMessage
     private let font, boldFont, largeFont: UIFont
     private let textColor: UIColor
@@ -125,7 +127,7 @@ class ParticipantsStringFormatter {
     /// This is only used when a conversation (with a name) is started.
     func heading(senderName: String, senderIsSelf: Bool, convName: String) -> NSAttributedString {
         // "You/Bob started the conversation"
-        let key = senderIsSelf ? kYouStartedTheConversation : kXStartedTheConversation
+        let key = senderIsSelf ? Key.youStartedTheConversation : Key.xStartedTheConversation
         var text = key.localized(args: senderName) && font
         text = senderIsSelf ? text : text.adding(font: boldFont, to: senderName)
         // "Italy Trip"
@@ -156,7 +158,7 @@ class ParticipantsStringFormatter {
             if !senderIsSelf { result = result.adding(font: boldFont, to: senderName) }
             
         case .started(withName: .some):
-            result = "\(kWith.localized) \(nameSequence.string)" && font && textColor
+            result = "\(Key.with.localized) \(nameSequence.string)" && font && textColor
             
         default: return nil
         }
@@ -186,7 +188,7 @@ class ParticipantsStringFormatter {
             result.append(names.last!, with: attrsForLastName)
         case 2:
             // "x and y"
-            let part = kAndX.localized(args: names)
+            let part = Key.andX.localized(args: names)
             result.append(part, with: normalAttributes)
             result.define(boldAttributes, forComponent: names.first!)
             result.define(attrsForLastName, forComponent: names.last!)
@@ -198,13 +200,13 @@ class ParticipantsStringFormatter {
                 // "you/z, "
                 result.append(names.last! + ", ", with: attrsForLastName)
                 // "and X others
-                let linkText = kXOthers.localized(args: "\(nameList.collapsed)")
-                let linkPart = kAndX.localized(args: linkText)
+                let linkText = Key.xOthers.localized(args: "\(nameList.collapsed)")
+                let linkPart = Key.andX.localized(args: linkText)
                 result.append(linkPart, with: normalAttributes)
                 result.define(linkAttributes, forComponent: linkText)
             } else {
                 // "and you/z"
-                let lastPart = kAndX.localized(args: names.last!)
+                let lastPart = Key.andX.localized(args: names.last!)
                 result.append(lastPart, with: normalAttributes)
                 result.define(attrsForLastName, forComponent: names.last!)
             }
@@ -226,9 +228,9 @@ class ParticipantsStringFormatter {
         }
         
         if systemMessage.numberOfGuestsAdded > 0 {
-            return kCompleteTeamWithGuests.localized(args: String(systemMessage.numberOfGuestsAdded))
+            return Key.completeTeamWithGuests.localized(args: String(systemMessage.numberOfGuestsAdded))
         } else {
-            return kCompleteTeam.localized
+            return Key.completeTeam.localized
         }
     }
 }
