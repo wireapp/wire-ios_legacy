@@ -17,132 +17,123 @@
 //
 
 
-private func localizationKey(with pathComponent: String, senderIsSelfUser: Bool) -> String {
-    let senderPath = senderIsSelfUser ? "you" : "other"
-    return "content.system.conversation.\(senderPath).\(pathComponent)"
-}
-
-
-private enum ConversationActionType {
+enum ConversationActionType {
 
     case none, started(withName: String?), added(herself: Bool), removed, left, teamMemberLeave
-
-    func formatKey(senderIsSelfUser: Bool) -> String {
+    
+    /// Some actions only involve the sender, others involve other users too.
+    var involvesUsersOtherThanSender: Bool {
         switch self {
-        case .left: return localizationKey(with: "left", senderIsSelfUser: senderIsSelfUser)
-        case .added(herself: true): return "content.system.conversation.guest.joined"
-        case .added(herself: false): return localizationKey(with: "added", senderIsSelfUser: senderIsSelfUser)
-        case .removed: return localizationKey(with: "removed", senderIsSelfUser: senderIsSelfUser)
-        case .started(withName: .none), .none: return localizationKey(with: "started", senderIsSelfUser: senderIsSelfUser)
-        case .started(withName: .some): return "content.system.conversation.with_name.participants"
-        case .teamMemberLeave: return "content.system.conversation.team.member-leave"
+        case .left, .teamMemberLeave, .added(herself: true): return false
+        default:                                             return true
         }
+    }
+    
+    var allowsCollapsing: Bool {
+        // Don't collapse when removing participants, since the collapsed
+        // link is only used for participants in the conversation.
+        switch self {
+        case .removed:  return false
+        default:        return true
+        }
+    }
+
+    func image(with color: UIColor?) -> UIImage? {
+        let icon: ZetaIconType
+        switch self {
+        case .started, .none:                   icon = .conversation
+        case .added:                            icon = .plus
+        case .removed, .left, .teamMemberLeave: icon = .minus
+        }
+        
+        return UIImage(for: icon, iconSize: .tiny, color: color)
     }
 }
 
-
-private extension ZMConversationMessage {
+extension ZMConversationMessage {
     var actionType: ConversationActionType {
         guard let systemMessage = systemMessageData else { return .none }
         switch systemMessage.systemMessageType {
-        case .participantsRemoved where systemMessage.userIsTheSender: return .left
-        case .participantsRemoved where !systemMessage.userIsTheSender: return .removed
-        case .participantsAdded: return .added(herself: systemMessage.userIsTheSender)
-        case .newConversation: return .started(withName: systemMessage.text)
-        case .teamMemberLeave: return .teamMemberLeave
-        default: return .none
+        case .participantsRemoved:  return systemMessage.userIsTheSender ? .left : .removed
+        case .participantsAdded:    return .added(herself: systemMessage.userIsTheSender)
+        case .newConversation:      return .started(withName: systemMessage.text)
+        case .teamMemberLeave:      return .teamMemberLeave
+        default:                    return .none
         }
     }
 }
 
-
 struct ParticipantsCellViewModel {
-
+    
+    private typealias NameList = ParticipantsStringFormatter.NameList
+    static let showMoreLinkURL = NSURL(string: "action://show-all")!
+    
     let font, boldFont, largeFont: UIFont?
     let textColor: UIColor?
     let message: ZMConversationMessage
-
-    func image() -> UIImage? {
-        return UIImage(for: iconType(for: message), iconSize: .tiny, color: textColor)
+    
+    private var action: ConversationActionType {
+        return message.actionType
     }
-
-    func sortedUsers() -> [ZMUser] {
-        guard let sender = message.sender else { return [] }
-
-        switch message.actionType {
-        case .left,
-             .added(herself: true),
-             .teamMemberLeave:
-            return [sender]
-        default:
-            guard let systemMessage = message.systemMessageData else { return [] }
-            return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
-        }
+    
+    private var maxShownUsers: Int {
+        return isSelfIncludedInUsers ? 16 : 17
     }
-
-    private func iconType(for message: ZMConversationMessage) -> ZetaIconType {
-        switch message.actionType {
-        case .started, .none: return .conversation
-        case .added: return .plus
-        case .removed, .left, .teamMemberLeave: return .minus
-        }
-    }
-
-    func attributedHeading() -> NSAttributedString? {
-        guard let sender = message.sender, let font = font, let largeFont = largeFont, let textColor = textColor else { return nil }
-        guard case let .started(withName: conversationName?) = message.actionType else { return nil }
-        
-        let senderName = sender.isSelfUser ? "content.system.you_nominative".localized.capitalized : name(for: sender)
-        let text = "content.system.conversation.with_name.title".localized(pov: sender.pov, args: senderName) && font && textColor
-        let title = conversationName.attributedString && largeFont && textColor
-        return [text, title].joined(separator: "\n".attributedString) && .lineSpacing(4)
+    
+    private var maxShownUsersWhenCollapsed: Int {
+        return isSelfIncludedInUsers ? 14 : 15
     }
     
     var showInviteButton: Bool {
-        guard case .started = message.actionType,
-                let conversation = message.conversation else { return false }
+        guard case .started = action, let conversation = message.conversation else { return false }
         return conversation.canManageAccess && conversation.allowGuests
     }
-
-    func attributedTitle() -> NSAttributedString? {
-        guard let sender = message.sender,
-            let labelFont = font,
-            let labelBoldFont = boldFont,
-            let labelTextColor = textColor else { return nil }
-
-        let senderName = sender.isSelfUser ? "content.system.you_nominative".localized.capitalized : name(for: sender)
-        let formatKey = message.actionType.formatKey
-
-        switch message.actionType {
-        case .left, .teamMemberLeave:
-            let title = formatKey(sender.isSelfUser).localized(args: senderName) && labelFont && labelTextColor
-            return title.adding(font: labelBoldFont, to: senderName)
-        case .removed, .added, .started(withName: .none):
-            let title = formatKey(sender.isSelfUser).localized(args: senderName, names) && labelFont && labelTextColor
-            return title.adding(font: labelBoldFont, to: senderName).adding(font: labelBoldFont, to: names)
-        case .started(withName: .some):
-            let title = formatKey(sender.isSelfUser).localized(args: names) && labelFont && labelTextColor
-            let withBold = title.adding(font: labelBoldFont, to: names)
-            return withBold
-        case .none: return nil
+    
+    /// Users displayed in the system message, up to 17 when not collapsed
+    /// but only 15 when there are more than 15 users and we collapse them.
+    var shownUsers: [ZMUser] {
+        let users = sortedUsersWithoutSelf()
+        let boundary = users.count > maxShownUsers && action.allowsCollapsing ? maxShownUsersWhenCollapsed : users.count
+        let result = users[..<boundary]
+        return result + (isSelfIncludedInUsers ? [.selfUser()] : [])
+    }
+    
+    /// Users not displayed in the system message but collapsed into a link.
+    /// E.g. `and 5 others`.
+    private var collapsedUsers: [ZMUser] {
+        let users = sortedUsersWithoutSelf()
+        guard users.count > maxShownUsers, action.allowsCollapsing else { return [] }
+        return Array(users.dropFirst(maxShownUsersWhenCollapsed))
+    }
+    
+    /// The users to display when opening the participants details screen.
+    var selectedUsers: [ZMUser] {
+        switch action {
+        case .added: return sortedUsers()
+        default: return []
         }
     }
+    
+    var isSelfIncludedInUsers: Bool {
+        return sortedUsers().any { $0.isSelfUser }
+    }
+    
+    /// The users involved in the conversation action sorted alphabetically by
+    /// name.
+    func sortedUsers() -> [ZMUser] {
+        guard let sender = message.sender else { return [] }
+        guard action.involvesUsersOtherThanSender else { return [sender] }
+        guard let systemMessage = message.systemMessageData else { return [] }
+        return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
+    }
 
-    private var names: String {
-        return sortedUsers().map{
-            if $0.isSelfUser {
-                if case .started = message.actionType {
-                    return "content.system.you_dative".localized
-                }
-                return "content.system.you_accusative".localized
-            }
-            return name(for: $0)
-            }.joined(separator: ", ")
+    func sortedUsersWithoutSelf() -> [ZMUser] {
+        return sortedUsers().filter { !$0.isSelfUser }
     }
 
     private func name(for user: ZMUser) -> String {
         if user.isSelfUser {
-            return "content.system.you_nominative".localized
+            return "content.system.you_\(grammaticalCase(for: user))".localized
         }
         if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
             return user.displayName(in: conversation)
@@ -150,5 +141,62 @@ struct ParticipantsCellViewModel {
             return user.displayName
         }
     }
+    
+    private var nameList: NameList {
+        let userNames = shownUsers.map { self.name(for: $0) }
+        return NameList(names: userNames, collapsed: collapsedUsers.count, selfIncluded: isSelfIncludedInUsers)
+    }
+    
+    /// The user will, depending on the context, be in a specific case within the
+    /// sentence. This is important for localization of "you".
+    private func grammaticalCase(for user: ZMUser) -> String {
+        // user is always the subject
+        if user == message.sender { return "nominative" }
+        // "started with ... user"
+        if case .started = action { return "dative" }
+        return "accusative"
+    }
+    
+    // ------------------------------------------------------------
+    
+    func image() -> UIImage? {
+        return action.image(with: textColor)
+    }
+    
+    func attributedHeading() -> NSAttributedString? {
+        guard
+            case let .started(withName: conversationName?) = action,
+            let sender = message.sender,
+            let formatter = formatter(for: message)
+            else { return nil }
+        
+        let senderName = name(for: sender).capitalized
+        return formatter.heading(senderName: senderName, senderIsSelf: sender.isSelfUser, convName: conversationName)
+    }
 
+    func attributedTitle() -> NSAttributedString? {
+        guard
+            let sender = message.sender,
+            let formatter = formatter(for: message)
+            else { return nil }
+        
+        let senderName = name(for: sender).capitalized
+        
+        if action.involvesUsersOtherThanSender {
+            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)
+        } else {
+            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser)
+        }
+    }
+    
+    private func formatter(for message: ZMConversationMessage) -> ParticipantsStringFormatter? {
+        guard let font = font, let boldFont = boldFont,
+            let largeFont = largeFont, let textColor = textColor
+            else { return nil }
+        
+        return ParticipantsStringFormatter(
+            message: message, font: font, boldFont: boldFont,
+            largeFont: largeFont, textColor: textColor
+        )
+    }
 }

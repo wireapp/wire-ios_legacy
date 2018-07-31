@@ -112,9 +112,7 @@ import Classy
         guard let fileMessage = self.fileMessage,
               let fileMessageData = fileMessage.fileMessageData,
               let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
-        
-        fileMessage.requestImageDownload()
-        
+                
         self.state = state
         self.previewImageView.image = nil
         

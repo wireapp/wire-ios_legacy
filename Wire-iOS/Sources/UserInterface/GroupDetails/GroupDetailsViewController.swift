@@ -144,6 +144,23 @@ import Cartography
         }
     }
     
+    @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:hideBackButton:)
+    func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool, hideBackButton: Bool = false) {
+        let detailsViewController = GroupParticipantsDetailViewController(
+            participants: users,
+            selectedParticipants: selectedUsers,
+            conversation: conversation
+        )
+
+        // we sometimes present this vc directly from the conversation (when tapping
+        // on system message links). In this case we it doesn't make sense to navigate
+        // "back" to the group details vc.
+        detailsViewController.navigationItem.hidesBackButton = hideBackButton
+
+        detailsViewController.delegate = self
+        navigationController?.pushViewController(detailsViewController, animated: animated)
+    }
+    
     func dismissButtonTapped() {
         dismiss(animated: true)
     }
@@ -165,7 +182,7 @@ extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewContro
 }
 
 extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {
-    
+
     func presentDetails(for user: ZMUser) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
             user: user,
@@ -178,9 +195,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
     }
     
     func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation) {
-        let detailsViewController = GroupParticipantsDetailViewController(participants: users, conversation: conversation)
-        detailsViewController.delegate = self
-        navigationController?.pushViewController(detailsViewController, animated: true)
+        presentParticipantsDetails(with: users, selectedUsers: [], animated: true)
     }
     
     @objc(presentGuestOptionsAnimated:)
@@ -190,8 +205,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
     }
 
     func presentTimeoutOptions(animated: Bool) {
-        let menu = ConversationTimeoutOptionsViewController(conversation: conversation,
-                                                            userSession: ZMUserSession.shared()!)
+        let menu = ConversationTimeoutOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
         menu.dismisser = self
         navigationController?.pushViewController(menu, animated: animated)
     }

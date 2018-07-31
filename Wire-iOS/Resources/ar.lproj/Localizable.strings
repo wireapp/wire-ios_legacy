@@ -574,7 +574,7 @@
 "participants.section.services" = "خدمات (%d)";
 "participants.section.settings" = "الإعدادات";
 "participants.footer.add_title" = "إضافة مشاركين";
-"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "Up to 300 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "إعادة التّسمية";

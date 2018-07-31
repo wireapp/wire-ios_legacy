@@ -157,6 +157,8 @@ final internal class SelfProfileViewController: UIViewController {
             accountSelectorControllerView.height == 44
         }
 
+        // Sometimes (i.e. after coming from background) the cells are not loaded yet. Reloading to calculate correct height.
+        settingsController.tableView.reloadData()
         let height = CGFloat(56 * settingsController.tableView.numberOfRows(inSection: 0))
         
         constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in

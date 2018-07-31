@@ -32,7 +32,12 @@ extension UserImageView {
             profileImageSize = .complete
         }
         
-        user?.fetchProfileImage(size: profileImageSize, completion: { (image) in
+        var desaturate = false
+        if shouldDesaturate, let user = user {
+            desaturate = !user.isConnected && !user.isSelfUser && !user.isTeamMember || user.isServiceUser
+        }
+        
+        user?.fetchProfileImage(desaturate: desaturate, size: profileImageSize, completion: { (image) in
             guard let image = image else { return }
             self.setUserImage(image)
         })
