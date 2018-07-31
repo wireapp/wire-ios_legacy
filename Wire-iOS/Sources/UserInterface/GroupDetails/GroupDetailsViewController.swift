@@ -144,13 +144,19 @@ import Cartography
         }
     }
     
-    @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:)
-    func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
+    @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:hideBackButton:)
+    func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool, hideBackButton: Bool = false) {
         let detailsViewController = GroupParticipantsDetailViewController(
             participants: users,
             selectedParticipants: selectedUsers,
             conversation: conversation
         )
+
+        // we sometimes present this vc directly from the conversation (when tapping
+        // on system message links). In this case we it doesn't make sense to navigate
+        // "back" to the group details vc.
+        detailsViewController.navigationItem.hidesBackButton = hideBackButton
+
         detailsViewController.delegate = self
         navigationController?.pushViewController(detailsViewController, animated: animated)
     }
