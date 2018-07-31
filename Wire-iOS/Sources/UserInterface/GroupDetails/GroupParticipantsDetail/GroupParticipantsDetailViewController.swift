@@ -83,7 +83,6 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SelectedUserCell.self, forCellWithReuseIdentifier: SelectedUserCell.reuseIdentifier)
-        collectionView.allowsMultipleSelection = true
         title = "participants.all.title".localized.uppercased()
         view.backgroundColor = UIColor(scheme: .contentBackground)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
