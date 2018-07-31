@@ -228,7 +228,9 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     private func updateUrlAttachments() {
         let urlDetector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-        let matches = urlDetector.matches(in: contentText, options: [], range: NSMakeRange(0, contentText.count))
+        let matches = urlDetector.matches(in: contentText,
+                                          options: [],
+                                          range: NSMakeRange(0, (contentText as NSString).length))
         
         var attachments = self.allAttachments.filter{ !$0.hasURL }
         attachments.append(contentsOf: matches.compactMap { NSItemProvider(contentsOf: $0.url) })
