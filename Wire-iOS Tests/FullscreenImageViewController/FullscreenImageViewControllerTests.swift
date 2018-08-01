@@ -133,4 +133,25 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(1, sut.scrollView.zoomScale)
     }
+
+    func testThatRotateScreenUpdatesMaxZoomScaleIfASmallImageIsZoomedIn() {
+        // GIVEN
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn_very_small_size_40x20", fileExtension: "jpg")
+
+        // WHEN
+        doubleTap(fullscreenImageViewController: sut)
+
+        // THEN
+        let maxZoomScale = sut.scrollView.maximumZoomScale
+        XCTAssertEqual(maxZoomScale, sut.view.frame.width / 40.0)
+
+        // WHEN
+        let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
+        sut.view.bounds.size = landscapeSize
+        sut.viewWillTransition(to: landscapeSize, with: nil)
+
+        // THEN
+        let landscapeMaxZoomScale = sut.scrollView.maximumZoomScale
+        XCTAssertNotEqual(maxZoomScale, landscapeMaxZoomScale)
+    }
 }
