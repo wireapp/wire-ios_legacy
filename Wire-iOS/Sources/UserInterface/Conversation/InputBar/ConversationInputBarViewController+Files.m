@@ -76,49 +76,22 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             [self uploadFileAtURL:destLocation];
         }];
     }];
-    [docController addOptionWithTitle:NSLocalizedString(@"Big file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:@"BigFile.bin"];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            NSData *randomData = [NSData secureRandomDataOfLength:(NSUInteger)[[ZMUserSession sharedSession] maxUploadFileSize] + 1];
-            [randomData writeToURL:destLocation atomically:YES];
-            
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];
-    [docController addOptionWithTitle:NSLocalizedString(@"20 MB file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:@"20MBFile.bin"];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            NSData *randomData = [NSData secureRandomDataOfLength:20*1024*1024];
-            [randomData writeToURL:destLocation atomically:YES];
-            
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];
-    [docController addOptionWithTitle:NSLocalizedString(@"40 MB file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:@"40MBFile.bin"];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            NSData *randomData = [NSData secureRandomDataOfLength:40*1024*1024];
-            [randomData writeToURL:destLocation atomically:YES];
-            
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];
+    
+    [self appendUploadTestOptionTo:docController
+                              size:(NSUInteger)[[ZMUserSession sharedSession] maxUploadFileSize] + 1
+                             title:NSLocalizedString(@"Big file", nil)
+                          fileName:@"BigFile.bin"];
+    
+    [self appendUploadTestOptionTo:docController size:20*1024*1024 title:NSLocalizedString(@"20 MB file", nil) fileName:@"20MBFile.bin"];
+    [self appendUploadTestOptionTo:docController size:40*1024*1024 title:NSLocalizedString(@"40 MB file", nil) fileName:@"40MBFile.bin"];
+    
+    if([[ZMUser selfUser] hasTeam]) {
+        [self appendUploadTestOptionTo:docController size:80*1024*1024 title:NSLocalizedString(@"80 MB file", nil) fileName:@"80MBFile.bin"];
+        [self appendUploadTestOptionTo:docController size:120*1024*1024 title:NSLocalizedString(@"120 MB file", nil) fileName:@"120MBFile.bin"];
+    }
+    
 #endif
+    
     [docController addOptionWithTitle:NSLocalizedString(@"content.file.upload_video", @"")
                                 image:[UIImage imageForIcon:ZetaIconTypeMovie iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
@@ -140,6 +113,26 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
 
     [self.parentViewController presentViewController:docController animated:YES completion:^() {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
+    }];
+}
+
+- (void)appendUploadTestOptionTo:(UIDocumentMenuViewController*)controller
+                            size:(NSUInteger)size
+                           title:(NSString*)title
+                        fileName:(NSString*)fileName {
+    [controller addOptionWithTitle:title image:nil order:UIDocumentMenuOrderFirst handler:^{
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *basePath = paths.firstObject;
+            NSString *destLocationString = [basePath stringByAppendingPathComponent:fileName];
+            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
+            
+            NSData *randomData = [NSData secureRandomDataOfLength:size];
+            [randomData writeToURL:destLocation atomically:YES];
+            
+            [self uploadFileAtURL:destLocation];
+        }];
     }];
 }
 
