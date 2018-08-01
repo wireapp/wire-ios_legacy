@@ -574,7 +574,7 @@
 "participants.section.services" = "Servizi (%d)";
 "participants.section.settings" = "Impostazioni";
 "participants.footer.add_title" = "Aggiungi partecipanti";
-"participants.section.name.footer" = "Fino a 256 persone possono partecipare a una conversazione di gruppo. Le videochiamate funzionano con altre 3 persone oltre a te.";
+"participants.section.name.footer" = "Fino a 300 persone possono partecipare a una conversazione di gruppo. Le videochiamate funzionano con altre 3 persone oltre a te.";
 
 // Meta Menu
 "meta.menu.rename" = "Rinomina";

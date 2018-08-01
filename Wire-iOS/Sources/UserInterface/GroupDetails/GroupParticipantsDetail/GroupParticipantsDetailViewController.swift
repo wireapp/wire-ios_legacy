@@ -24,6 +24,10 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
     private let viewModel: GroupParticipantsDetailViewModel
     
+    // used for scrolling and fading selected cells
+    private var firstLayout = true
+    private var firstLoad = true
+    
     weak var delegate: GroupDetailsUserDetailPresenter?
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -34,9 +38,10 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         return ColorScheme.default.statusBarStyle
     }
     
-    init(participants: [UserType], conversation: ZMConversation) {
+    init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
         viewModel = GroupParticipantsDetailViewModel(
             participants: participants,
+            selectedParticipants: selectedParticipants,
             conversation: conversation
         )
 
@@ -54,6 +59,20 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         createConstraints()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if firstLayout {
+            firstLayout = false
+            scrollToFirstHighlightedUser()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        firstLoad = false
+    }
+    
     private func setupViews() {
         addToSelf(searchViewController)
         searchViewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +82,7 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         view.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
+        collectionView.register(SelectedUserCell.self, forCellWithReuseIdentifier: SelectedUserCell.reuseIdentifier)
         title = "participants.all.title".localized.uppercased()
         view.backgroundColor = UIColor(scheme: .contentBackground)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
@@ -81,6 +100,13 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         ])
     }
     
+    private func scrollToFirstHighlightedUser() {
+        if let idx = viewModel.indexOfFirstSelectedParticipant {
+            let indexPath = IndexPath(row: idx, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
+        }
+    }
+    
     // MARK: - UICollectionViewDelegateFlowLayout & UICollectionViewDataSource
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -92,12 +118,17 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectedUserCell.reuseIdentifier, for: indexPath) as! SelectedUserCell
+        let user = viewModel.participants[indexPath.row]
+        
         cell.configure(
-            with: .user(viewModel.participants[indexPath.row]),
+            with: .user(user),
             conversation: viewModel.conversation,
             showSeparator: viewModel.participants.count - 1 != indexPath.row
         )
+        
+        cell.configureContentBackground(preselected: viewModel.isUserSelected(user), animated: firstLoad)
+
         return cell
     }
     
@@ -105,10 +136,31 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         guard let user = viewModel.participants[indexPath.row] as? ZMUser else { return }
         delegate?.presentDetails(for: user)
     }
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.bounds.size.width, height: 56)
     }
+}
 
+private class SelectedUserCell: UserCell {
+
+    func configureContentBackground(preselected: Bool, animated: Bool) {
+        contentView.backgroundColor = .clear
+        guard preselected else { return }
+        
+        let changes: () -> () = {
+            self.contentView.backgroundColor = UIColor(scheme: .cellSeparator)
+        }
+        
+        if animated {
+            UIView.animate(
+                withDuration: 0.3,
+                delay: 0.5,
+                options: .curveLinear,
+                animations: changes
+            )
+        } else {
+            changes()
+        }
+    }
 }

@@ -24,23 +24,46 @@ fileprivate extension String {
     }
 }
 
+fileprivate extension ZMUser {
+    private func name(in conversation: ZMConversation) -> String {
+        return conversation.activeParticipants.contains(self)
+            ? displayName(in: conversation)
+            : displayName
+    }
+}
+
 class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate {
 
     private let internalParticipants: [UserType]
     private var filterQuery: String?
     
+    let selectedParticipants: [UserType]
     let conversation: ZMConversation
     var participantsDidChange: (() -> Void)? = nil
+
+    var indexOfFirstSelectedParticipant: Int? {
+        guard let first = selectedParticipants.first as? ZMUser else { return nil }
+        return internalParticipants.index {
+            ($0 as? ZMUser)?.remoteIdentifier == first.remoteIdentifier
+        }
+    }
     
     var participants = [UserType]() {
         didSet { participantsDidChange?() }
     }
-    
-    init(participants: [UserType], conversation: ZMConversation) {
+
+    init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
         internalParticipants = participants
         self.conversation = conversation
+        self.selectedParticipants = selectedParticipants.sorted { $0.displayName < $1.displayName }
+        
         super.init()
         computeVisibleParticipants()
+    }
+    
+    func isUserSelected(_ user: UserType) -> Bool {
+        guard let id = (user as? ZMUser)?.remoteIdentifier else { return false }
+        return selectedParticipants.contains { ($0 as? ZMUser)?.remoteIdentifier == id}
     }
     
     private func computeVisibleParticipants() {

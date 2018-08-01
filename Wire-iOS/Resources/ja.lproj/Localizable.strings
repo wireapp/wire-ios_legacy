@@ -574,7 +574,7 @@
 "participants.section.services" = "サービス (%d)";
 "participants.section.settings" = "設定";
 "participants.footer.add_title" = "参加者を追加";
-"participants.section.name.footer" = "Up to 256 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "Up to 300 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "名前の変更";

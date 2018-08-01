@@ -24,6 +24,8 @@ extension UserImageView {
     @objc
     func updateUserImage() {
         
+        guard let user = user else { return }
+        
         var profileImageSize: ProfileImageSize
         switch size {
         case .small, .normal, .first:
@@ -32,9 +34,15 @@ extension UserImageView {
             profileImageSize = .complete
         }
         
-        user?.fetchProfileImage(size: profileImageSize, completion: { (image) in
-            guard let image = image else { return }
-            self.setUserImage(image)
+        var desaturate = false
+        if shouldDesaturate {
+            desaturate = !user.isConnected && !user.isSelfUser && !user.isTeamMember || user.isServiceUser
+        }
+        
+        user.fetchProfileImage(desaturate: desaturate, size: profileImageSize, completion: { [weak self] (image) in
+            // Don't set image if nil or if user has changed during fetch
+            guard let image = image, user.isEqual(self?.user) else { return }
+            self?.setUserImage(image)
         })
         
     }

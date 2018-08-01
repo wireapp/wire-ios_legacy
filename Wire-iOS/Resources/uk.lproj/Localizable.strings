@@ -574,7 +574,7 @@
 "participants.section.services" = "Сервіси (%d)";
 "participants.section.settings" = "Налаштування";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "До цієї розмови може прєднатись не більше 256 учасників. Відеодзвінки будуть працювати тільки в розмовах. що містять до чотирьох учасників.";
+"participants.section.name.footer" = "До цієї розмови може прєднатись не більше 300 учасників. Відеодзвінки будуть працювати тільки в розмовах. що містять до чотирьох учасників.";
 
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";

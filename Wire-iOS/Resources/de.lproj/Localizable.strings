@@ -574,7 +574,7 @@
 "participants.section.services" = "Dienste (%d)";
 "participants.section.settings" = "Einstellungen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
-"participants.section.name.footer" = "Bis zu 256 Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu 3 anderen Personen und dir.";
+"participants.section.name.footer" = "Bis zu 300 Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu 3 anderen Personen und dir.";
 
 // Meta Menu
 "meta.menu.rename" = "Umbenennen";

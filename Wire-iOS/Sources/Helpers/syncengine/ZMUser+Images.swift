@@ -38,10 +38,8 @@ extension UserType {
         
     }
     
-    public func fetchProfileImage(cache: ImageCache<UIImage> = defaultUserImageCache, size: ProfileImageSize, completion: @escaping (_ image: UIImage?) -> Void ) -> Void {
-        
-        let desaturate =  !isConnected && !isSelfUser && !isTeamMember || isServiceUser
-    
+    public func fetchProfileImage(cache: ImageCache<UIImage> = defaultUserImageCache, desaturate: Bool = false, size: ProfileImageSize, completion: @escaping (_ image: UIImage?) -> Void ) -> Void {
+            
         guard let cacheKey = cacheKey(for: size, desaturate: desaturate) as NSString? else {
             return completion(nil)
         }

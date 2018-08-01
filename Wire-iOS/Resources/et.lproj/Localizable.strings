@@ -574,7 +574,7 @@
 "participants.section.services" = "Teenused (%d)";
 "participants.section.settings" = "Seaded";
 "participants.footer.add_title" = "Lisa osalejaid";
-"participants.section.name.footer" = "Grupivestlusega saavad liituda kuni 256 inimest. Videokõned töötavad kuni 3 inimesega, pluss sina.";
+"participants.section.name.footer" = "Grupivestlusega saavad liituda kuni 300 inimest. Videokõned töötavad kuni 3 inimesega, pluss sina.";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeta ümber";
