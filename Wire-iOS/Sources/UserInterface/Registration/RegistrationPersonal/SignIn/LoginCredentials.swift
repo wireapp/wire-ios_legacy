@@ -23,23 +23,26 @@ import Foundation
 public class LoginCredentials : NSObject {
     
     let emailAddress : String?
-    let phoneNumber : String?
     let password : String?
+    let phoneNumber : String?
+    let usesCompanyLogin: Bool
     
-    init(emailAddress : String?, phoneNumber : String?, password: String? = nil) {
+    init(emailAddress : String? = nil, phoneNumber : String? = nil, password: String? = nil, usesCompanyLogin: Bool) {
         self.emailAddress = emailAddress
         self.phoneNumber = phoneNumber
         self.password = password
+        self.usesCompanyLogin = usesCompanyLogin
     }
     
     convenience init?(error : NSError?) {
         
         let emailAddress = error?.userInfo[ZMEmailCredentialKey] as? String
-        let phoneNumber = error?.userInfo[ZMPhoneCredentialKey] as? String
         let password = error?.userInfo[ZMPasswordCredentialKey] as? String
+        let phoneNumber = error?.userInfo[ZMPhoneCredentialKey] as? String
+        let usesCompanyLogin = error?.userInfo[ZMUserUsesCompanyLoginCredentialKey] as? Bool ?? false
         
         if emailAddress != nil || phoneNumber != nil {
-            self.init(emailAddress: emailAddress, phoneNumber: phoneNumber, password: password)
+            self.init(emailAddress: emailAddress, phoneNumber: phoneNumber, password: password, usesCompanyLogin: usesCompanyLogin)
         } else {
             return nil
         }

@@ -186,7 +186,8 @@
         LoginCredentials *credentials = [[LoginCredentials alloc]
                                          initWithEmailAddress:self.unregisteredUser.emailAddress
                                          phoneNumber:nil
-                                         password:self.unregisteredUser.password];
+                                         password:self.unregisteredUser.password
+                                         usesCompanyLogin:NO];
         
         [self.emailStepViewController reset];
         [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:credentials];

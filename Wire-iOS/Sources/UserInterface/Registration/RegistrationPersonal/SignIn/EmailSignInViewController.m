@@ -54,6 +54,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 /// After a login try we set this property to @c YES to reset both field accessories after a field change on any of those
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
 
+@property (nonatomic, readonly) BOOL canStartCompanyLoginFlow;
+
 @end
 
 
@@ -73,7 +75,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createEmailField];
     [self createPasswordField];
     [self createForgotPasswordButton];
-    if (CompanyLoginController.companyLoginEnabled) {
+    if (self.canStartCompanyLoginFlow) {
         [self createCompanyLoginButton];
     }
 
@@ -221,7 +223,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.passwordField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
     [self.passwordField autoSetDimension:ALDimensionHeight toSize:40];
     
-    if (CompanyLoginController.companyLoginEnabled) {
+    if (self.canStartCompanyLoginFlow) {
         [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
         [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
         [self.forgotPasswordButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view withOffset:28];
@@ -239,6 +241,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     return [ZMEmailCredentials credentialsWithEmail:self.emailField.text
                                            password:self.passwordField.text];
+}
+
+- (BOOL)canStartCompanyLoginFlow
+{
+    return (CompanyLoginController.companyLoginEnabled == YES) && (self.loginCredentials.usesCompanyLogin == NO) && (self.loginCredentials.emailAddress == nil);
 }
 
 - (void)takeFirstResponder
@@ -294,7 +301,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)companyLoginButtonTapped:(ButtonWithLargerHitArea *)button
 {
-    [self.delegate emailSignInViewControllerDidTapCompanyLoginButton:self];
+    if (self.canStartCompanyLoginFlow) {
+        [self.delegate emailSignInViewControllerDidTapCompanyLoginButton:self];
+    }
 }
 
 - (IBAction)open1PasswordExtension:(id)sender

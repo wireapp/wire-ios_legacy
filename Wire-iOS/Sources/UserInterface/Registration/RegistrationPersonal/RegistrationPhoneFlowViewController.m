@@ -318,7 +318,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.navigationController.showLoadingView = NO;
     
     if(error.code == ZMUserSessionPhoneNumberIsAlreadyRegistered) {
-        LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber password:nil];
+        LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber password:nil usesCompanyLogin:NO];
         [self.phoneNumberStepViewController reset];
         [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:credentials];
     }
