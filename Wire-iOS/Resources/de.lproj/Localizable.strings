@@ -30,6 +30,7 @@
 "general.skip" = "Nicht jetzt";
 "general.accept" = "Annehmen";
 "general.decline" = "Nein, danke";
+"general.failure" = "Ein Fehler ist aufgetreten";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -313,9 +314,14 @@
 // System messages
 "content.system.you_nominative" = "du";
 "content.system.you_dative" = "dir";
+"content.system.and_you_dative" = "und dir";
 "content.system.you_accusative" = "dich";
 
 "content.system.continued_conversation" = "Beginne eine Unterhaltung mit %@";
+"content.system.started_conversation.truncated_people" = "und %@";
+"content.system.started_conversation.truncated_people.others" = "%@ weitere Personen";
+"content.system.started_conversation.complete_team" = "alle Team-Mitglieder";
+"content.system.started_conversation.complete_team.guests" = "alle Team-Mitglieder und %@ Gäste";
 
 "content.system.other_started_conversation" = "%@ hat eine Unterhaltung mit %@ begonnen";
 "content.system.you_started_conversation" = "Du hast eine Unterhaltung mit %@ begonnen";
@@ -380,7 +386,7 @@
 "content.system.conversation.with_name.title" = "%@ hat die Unterhaltung begonnen";
 "content.system.conversation.with_name.title-you" = "%@ hast die Unterhaltung begonnen";
 
-"content.system.conversation.with_name.participants" = "mit %@";
+"content.system.conversation.with_name.participants" = "mit";
 
 "content.system.message_timer_changes" = "%@ hat temporäre Nachrichten auf %@ gestellt";
 "content.system.message_timer_changes.you" = "Du hast temporäre Nachrichten auf %@ gestellt";
@@ -537,9 +543,12 @@
 "call.degraded.alert.message.unknown" = "Jemand verwendet ein neues Gerät.";
 "call.degraded.alert.action.continue" = "Trotzdem anrufen";
 
-"call.alert.ongoing.start.title" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nEin Anruf hier beendet den anderen.";
+"call.alert.ongoing.start.alert_title" = "Anrufen?";
+"call.alert.ongoing.join.alert_title" = "Anruf beitreten?";
+
+"call.alert.ongoing.start.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nEin Anruf hier beendet den anderen.";
+"call.alert.ongoing.join.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nDiesen Anruf anzunehmen, beendet den anderen.";
 "call.alert.ongoing.start.button" = "Trotzdem anrufen";
-"call.alert.ongoing.join.title" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nDiesen Anruf anzunehmen, beendet den anderen.";
 "call.alert.ongoing.join.button" = "Trotzdem beitreten";
 
 // Call Actions (accessibility)
@@ -572,7 +581,7 @@
 "participants.all.title" = "Kontakte";
 "participants.section.participants" = "Personen (%d)";
 "participants.section.services" = "Dienste (%d)";
-"participants.section.settings" = "Einstellungen";
+"participants.section.settings" = "Optionen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
 "participants.section.name.footer" = "Bis zu 300 Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu 3 anderen Personen und dir.";
 
@@ -993,7 +1002,6 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.title" = "Sicherer Messenger für alle.";
 "landing.create_account.title" = "Für die private Nutzung";
 "landing.create_account.subtitle" = "Konto erstellen";
 "landing.create_team.title" = "Für Organisationen";
@@ -1128,6 +1136,20 @@
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Inkompatibles Backup";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Diese Backup-Datei wurde von einer anderen Version von Wire erstellt und kann deshalb nicht wiederhergestellt werden.";
 
+// SSO – Company Login
+"login.sso.alert.title" = "Login für Unternehmen";
+"login.sso.alert.message" = "SSO-Zugangscode des Unternehmens eingeben.";
+"login.sso.alert.action" = "Login";
+"login.sso.alert.text_field.placeholder" = "SSO Zugangscode";
+
+"login.sso.error.alert.title" = "Ein Fehler ist aufgetreten";
+"login.sso.error.alert.invalid_code.title" = "Ungültiger Code.";
+"login.sso.error.alert.invalid_code.message" = "Bitte den SSO-Zugangscode des Unternehmens überprüfen und erneut versuchen.";
+"login.sso.error.offline.alert.message" = "Bitte Internetverbindung überprüfen und nochmal versuchen.";
+"login.sso.error.alert.message" = "Bitte für Details an den Team-Administrator wenden (Fehler %@).";
+"login.sso.error.alert.unknown.message" = "Bitte später nochmal versuchen.";
+"login.sso.error.alert.invalid_status.message" = "Bitte später nochmal versuchen (Fehler %@).";
+
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Wiederherstellen…";
 "registration.no_history.restore_backup.completed" = "Wiederhergestellt";
@@ -1201,6 +1223,7 @@
 "signin.use_one_password.label" = "Mit 1Password anmelden";
 "signin.use_one_password.hint" = "Doppelt antippen, um Ihr Passwort mit 1Passwort einzugeben.";
 "signin.confirm" = "Einloggen";
+"signin.company_idp.button.title" = "Für Unternehmen";
 
 "registration.phone_country" = "Land";
 "registration.phone_code" = "Landesvorwahl";
