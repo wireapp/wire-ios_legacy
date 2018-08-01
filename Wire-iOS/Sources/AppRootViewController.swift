@@ -651,7 +651,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             alert.addAction(.ok { callback(false) })
 
             let presentAlert = {
-                self.present(alert, animated: true, completion: nil)
+                self.present(alert, animated: true)
             }
 
             if let topmostViewController = UIApplication.shared.wr_topmostController() as? SFSafariViewController {
