@@ -135,11 +135,7 @@ struct ParticipantsCellViewModel {
         if user.isSelfUser {
             return "content.system.you_\(grammaticalCase(for: user))".localized
         }
-        if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
-            return user.displayName(in: conversation)
-        } else {
-            return user.displayName
-        }
+        return user.displayName
     }
     
     private var nameList: NameList {
