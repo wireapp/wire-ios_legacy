@@ -54,11 +54,15 @@ extension FullscreenImageViewController {
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
         guard let imageSize = imageView?.image?.size else { return }
 
+        let isImageZoomedToMax = scrollView.zoomScale == scrollView.maximumZoomScale
+
         let isImageZoomed = fabs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
         updateScrollViewZoomScale(viewSize: size, imageSize: imageSize)
 
-        let animationBlock: () -> Void = { 
-            if isImageZoomed == false {
+        let animationBlock: () -> Void = {
+            if isImageZoomedToMax {
+                self.scrollView.zoomScale = self.scrollView.maximumZoomScale
+            } else if isImageZoomed == false {
                 self.scrollView.zoomScale = self.scrollView.minimumZoomScale
             }
         }
