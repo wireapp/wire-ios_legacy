@@ -30,6 +30,7 @@
 "general.skip" = "Не сейчас";
 "general.accept" = "Принять";
 "general.decline" = "Нет, спасибо";
+"general.failure" = "Что-то пошло не так";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -313,9 +314,14 @@
 // System messages
 "content.system.you_nominative" = "вы";
 "content.system.you_dative" = "вы";
+"content.system.and_you_dative" = "и вы";
 "content.system.you_accusative" = "вас";
 
 "content.system.continued_conversation" = "Начать разговор с %@";
+"content.system.started_conversation.truncated_people" = "и %@";
+"content.system.started_conversation.truncated_people.others" = "%@ остальных";
+"content.system.started_conversation.complete_team" = "все члены команды";
+"content.system.started_conversation.complete_team.guests" = "все члены команды и %@ гостей";
 
 "content.system.other_started_conversation" = "%@ начал разговор с %@";
 "content.system.you_started_conversation" = "Вы начали разговор с %@";
@@ -380,7 +386,7 @@
 "content.system.conversation.with_name.title" = "%@ начал разговор";
 "content.system.conversation.with_name.title-you" = "%@ начал разговор";
 
-"content.system.conversation.with_name.participants" = "с %@";
+"content.system.conversation.with_name.participants" = "с";
 
 "content.system.message_timer_changes" = "%@ установил таймер сообщения на %@";
 "content.system.message_timer_changes.you" = "Вы установили таймер сообщения на %@";
@@ -537,9 +543,12 @@
 "call.degraded.alert.message.unknown" = "Используется новое устройство.";
 "call.degraded.alert.action.continue" = "Все равно позвонить";
 
-"call.alert.ongoing.start.title" = "Уже есть активный вызов в другой беседе.\nВызов в этой беседе прервет его.";
+"call.alert.ongoing.start.alert_title" = "Начать вызов?";
+"call.alert.ongoing.join.alert_title" = "Присоединиться к вызову?";
+
+"call.alert.ongoing.start.message" = "Уже есть активный вызов в другой беседе.\nВызов в этой беседе прервет его.";
+"call.alert.ongoing.join.message" = "Уже есть активный вызов в другой беседе.\nОн будет прерван в случае начала нового вызова.";
 "call.alert.ongoing.start.button" = "Все равно позвонить";
-"call.alert.ongoing.join.title" = "Уже есть активный вызов в другой беседе.\nОн будет прерван в случае начала нового вызова.";
 "call.alert.ongoing.join.button" = "Начать в любом случае";
 
 // Call Actions (accessibility)
@@ -629,8 +638,8 @@
 // Delete message dialog
 "message.delete_dialog.message" = "Это не может быть отменено.";
 "message.delete_dialog.action.cancel" = "Отменить";
-"message.delete_dialog.action.hide" = "Удалить для меня";
-"message.delete_dialog.action.delete" = "Удалить для всех";
+"message.delete_dialog.action.hide" = "Удалить у меня";
+"message.delete_dialog.action.delete" = "Удалить у всех";
 
 // Edit message
 "message.menu.edit.title" = "Редактировать";
@@ -993,7 +1002,6 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.title" = "Безопасный обмен сообщениями для всех.";
 "landing.create_account.title" = "Для личного пользования";
 "landing.create_account.subtitle" = "создать учетную запись";
 "landing.create_team.title" = "Для организаций";
@@ -1128,6 +1136,20 @@
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Несовместимая резервная копия";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Эта резервная копия была создана в более новой или устаревшей версии Wire и не может быть восстановлена.";
 
+// SSO – Company Login
+"login.sso.alert.title" = "Вход для компаний";
+"login.sso.alert.message" = "Введите код доступа SSO вашей компании.";
+"login.sso.alert.action" = "Войти";
+"login.sso.alert.text_field.placeholder" = "Код доступа SSO";
+
+"login.sso.error.alert.title" = "Что-то пошло не так";
+"login.sso.error.alert.invalid_code.title" = "Неверный код.";
+"login.sso.error.alert.invalid_code.message" = "Проверьте код доступа SSO вашей компании и повторите попытку.";
+"login.sso.error.offline.alert.message" = "Пожалуйста, проверьте подключение к интернету и повторите попытку.";
+"login.sso.error.alert.message" = "Пожалуйста, свяжитесь с администратором вашей команды. (ошибка %@).";
+"login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
+"login.sso.error.alert.invalid_status.message" = "Пожалуйста, повторите попытку позже (ошибка %@).";
+
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Восстановление…";
 "registration.no_history.restore_backup.completed" = "Завершено";
@@ -1201,6 +1223,7 @@
 "signin.use_one_password.label" = "Войти с 1Password";
 "signin.use_one_password.hint" = "Дважды кликните, чтобы заполнить ваш пароль из 1Password";
 "signin.confirm" = "Войти";
+"signin.company_idp.button.title" = "Для компаний";
 
 "registration.phone_country" = "Страна";
 "registration.phone_code" = "Код страны";

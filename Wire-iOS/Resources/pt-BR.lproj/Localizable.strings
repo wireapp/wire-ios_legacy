@@ -30,6 +30,7 @@
 "general.skip" = "Agora não";
 "general.accept" = "Aceitar";
 "general.decline" = "Não, obrigado";
+"general.failure" = "Algo deu errado";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -313,9 +314,14 @@
 // System messages
 "content.system.you_nominative" = "você";
 "content.system.you_dative" = "você";
+"content.system.and_you_dative" = "and you";
 "content.system.you_accusative" = "você";
 
 "content.system.continued_conversation" = "Iniciar uma conversa com %@";
+"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people.others" = "%@ others";
+"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
 
 "content.system.other_started_conversation" = "%@ iniciou uma conversa com %@";
 "content.system.you_started_conversation" = "Você iniciou uma conversa com %@";
@@ -380,7 +386,7 @@
 "content.system.conversation.with_name.title" = "%@ iniciou a conversa";
 "content.system.conversation.with_name.title-you" = "%@ iniciou a conversa";
 
-"content.system.conversation.with_name.participants" = "com %@";
+"content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ definiu o tempo da mensagem para %@";
 "content.system.message_timer_changes.you" = "Você definiu o tempo da mensagem para %@";
@@ -537,9 +543,12 @@
 "call.degraded.alert.message.unknown" = "Alguém começou a usar um novo dispositivo.";
 "call.degraded.alert.action.continue" = "Chame de qualquer maneira";
 
-"call.alert.ongoing.start.title" = "Uma chamada está ativa em outra conversa. \nChamar aqui irá desligar a outra chamada.";
+"call.alert.ongoing.start.alert_title" = "Iniciar Chamada?";
+"call.alert.ongoing.join.alert_title" = "Juntar-se à chamada?";
+
+"call.alert.ongoing.start.message" = "Uma chamada está ativa em outra conversa. \nChamar aqui irá desligar a outra chamada.";
+"call.alert.ongoing.join.message" = "Uma chamada está ativa em outra conversa.\nJuntar-se a esta chamada irá desligar a outra.";
 "call.alert.ongoing.start.button" = "Chamar assim mesmo";
-"call.alert.ongoing.join.title" = "Uma chamada está ativa em outra conversa.\nJuntar-se a esta chamada irá desligar a outra.";
 "call.alert.ongoing.join.button" = "Junte-se de qualquer maneira";
 
 // Call Actions (accessibility)
@@ -572,9 +581,9 @@
 "participants.all.title" = "Pessoas";
 "participants.section.participants" = "Pessoas (%d)";
 "participants.section.services" = "Serviços (%d)";
-"participants.section.settings" = "Ajustes";
+"participants.section.settings" = "Opções";
 "participants.footer.add_title" = "Adicionar Participantes";
-"participants.section.name.footer" = "Até 300 pessoas podem participar de uma conversa de grupo. As vídeo chamadas funcionam com até 3 outras pessoas e você.";
+"participants.section.name.footer" = "Up to 300 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Renomear";
@@ -993,7 +1002,6 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.title" = "Mensagens seguras para todos.";
 "landing.create_account.title" = "Para uso pessoal";
 "landing.create_account.subtitle" = "criar uma conta";
 "landing.create_team.title" = "Para organizações";
@@ -1128,6 +1136,20 @@
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Backup Incompatível";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Este backup foi criado por uma versão mais recente ou desatualizada do Wire e não pode ser restaurado aqui.";
 
+// SSO – Company Login
+"login.sso.alert.title" = "Entrar como Empresa";
+"login.sso.alert.message" = "Digite o código de acesso SSO da empresa.";
+"login.sso.alert.action" = "Iniciar sessão";
+"login.sso.alert.text_field.placeholder" = "Código de acesso SSO";
+
+"login.sso.error.alert.title" = "Algo deu errado";
+"login.sso.error.alert.invalid_code.title" = "Código inválido.";
+"login.sso.error.alert.invalid_code.message" = "Por favor, verifique se o seu código de acesso SSO da empresa e tente novamente.";
+"login.sso.error.offline.alert.message" = "Por favor, verifique sua conexão de Internet e tente novamente.";
+"login.sso.error.alert.message" = "Por favor, contate o administrador de equipe para detalhes (erro %@).";
+"login.sso.error.alert.unknown.message" = "Por favor, tente novamente mais tarde.";
+"login.sso.error.alert.invalid_status.message" = "Por favor, tente novamente mais tarde (erro %@).";
+
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restaurando…";
 "registration.no_history.restore_backup.completed" = "Concluído";
@@ -1201,6 +1223,7 @@
 "signin.use_one_password.label" = "Fazer login com o 1Password";
 "signin.use_one_password.hint" = "Toque duas vezes para preencher sua senha com 1Password";
 "signin.confirm" = "Entrar";
+"signin.company_idp.button.title" = "Para Empresas";
 
 "registration.phone_country" = "País";
 "registration.phone_code" = "Código do país";
