@@ -46,9 +46,7 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testThatSmallImageIsScaledToFitTheScreenAfterDoubleTapped(){
-        // GIVEN
-
-        // WHEN
+        // GIVEN & WHEN
         doubleTap(fullscreenImageViewController: sut)
 
         // THEN

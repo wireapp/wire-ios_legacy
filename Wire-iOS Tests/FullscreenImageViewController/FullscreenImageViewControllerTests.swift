@@ -39,36 +39,6 @@ final class MockTapGestureRecognizer: UITapGestureRecognizer {
     }
 }
 
-extension XCTestCase {
-    func doubleTap(fullscreenImageViewController: FullscreenImageViewController) {
-        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: fullscreenImageViewController.view.bounds.size.width / 2, y: fullscreenImageViewController.view.bounds.size.height / 2), state: .ended)
-
-        fullscreenImageViewController.handleDoubleTap(mockTapGestureRecognizer)
-        fullscreenImageViewController.view.layoutIfNeeded()
-    }
-
-    ///TODO: rename
-    func setupSut(imageName: String) -> FullscreenImageViewController {
-        // The image is 1280 * 854 W:H = 3:2
-        let data = self.data(forResource: imageName, extension: "jpg")!
-        let image = UIImage(data: data)!
-
-        let message = MockMessageFactory.imageMessage(with: image)!
-
-        let sut = FullscreenImageViewController(message: message)
-        sut.setBoundsSizeAsIPhone4_7Inch()
-        sut.viewDidLoad()
-
-        sut.setupImageView(image: image, parentSize: sut.view.bounds.size)
-
-        sut.updateScrollViewZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
-
-        return sut
-    }
-}
-
 final class FullscreenImageViewControllerTests: XCTestCase {
     
     var sut: FullscreenImageViewController!

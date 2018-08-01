@@ -1154,6 +1154,7 @@
 		EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */; };
 		EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */; };
 		EF7E53C7209765E900EA8357 /* TextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCA91B5F9A6D00E347DF /* TextView.m */; };
+		EF7ECE1B211111B4003786C6 /* XCTestCase+FullscreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ECE1A211111B2003786C6 /* XCTestCase+FullscreenImageViewController.swift */; };
 		EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */; };
 		EF80461E20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */; };
 		EF80462020CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80461F20CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift */; };
@@ -2802,6 +2803,7 @@
 		EF71BFD720EBD0DC00894A7C /* UIPopoverPresentationController+config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+config.swift"; sourceTree = "<group>"; };
 		EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+PointOfView.swift"; sourceTree = "<group>"; };
 		EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNativeBoundsSize.swift; sourceTree = "<group>"; };
+		EF7ECE1A211111B2003786C6 /* XCTestCase+FullscreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FullscreenImageViewController.swift"; sourceTree = "<group>"; };
 		EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAdresssValidatorTests.swift; sourceTree = "<group>"; };
 		EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+TableHeader.swift"; sourceTree = "<group>"; };
 		EF80461F20CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfilePictureStepViewController+ImagePicker.swift"; sourceTree = "<group>"; };
@@ -5074,6 +5076,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EF7ECE1D211111DE003786C6 /* FullscreenImageViewController */,
 				5EBC343F20EE5E9900AFB6DF /* ImageCache */,
 				EF2BEF2D20E3B5A200D056B0 /* ConversationCell */,
 				EF27CD9A20C161500077FE55 /* DeviceManagement */,
@@ -5185,8 +5188,6 @@
 				870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */,
 				876041531F5451B3003CB161 /* AccountViewTests.swift */,
 				EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */,
-				EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */,
-				EF4172AE210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift */,
 				87B0ACA91FA20D7C001B2B9D /* AnalyticsTests.swift */,
 				87656FD01FB5FF0300D5286C /* FilePreviewGeneratorTests.swift */,
 				87FC0AE91FC719E80036E029 /* CharacterInputFieldTests.swift */,
@@ -5739,6 +5740,16 @@
 				EF7F74021FCC01140059C13F /* EmailAdresssValidatorTests.swift */,
 			);
 			path = AccessoryTextField;
+			sourceTree = "<group>";
+		};
+		EF7ECE1D211111DE003786C6 /* FullscreenImageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EF7ECE1A211111B2003786C6 /* XCTestCase+FullscreenImageViewController.swift */,
+				EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */,
+				EF4172AE210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift */,
+			);
+			path = FullscreenImageViewController;
 			sourceTree = "<group>";
 		};
 		F10F46D02028857C00261449 /* Create */ = {
@@ -7394,6 +7405,7 @@
 				879489E71E5464CF0071B2C1 /* SearchResultLabelTests.swift in Sources */,
 				16A2026A1B66A0040095BBD1 /* SoundcloudAudioTrackTests.m in Sources */,
 				870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */,
+				EF7ECE1B211111B4003786C6 /* XCTestCase+FullscreenImageViewController.swift in Sources */,
 				BF4D99D01E79AF8100A7B08F /* ParticipantCellTests.swift in Sources */,
 				160C31211E4C7E770012E4BC /* UnknownMessageCellTests.swift in Sources */,
 				BF58ABED1D23F00000D5FF14 /* LocationSendViewControllerTests.swift in Sources */,
