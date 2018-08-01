@@ -216,6 +216,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [super viewWillDisappear:animated];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    for (ConversationCell *cell in self.tableView.visibleCells) {
+        if ([cell isKindOfClass:ConversationCell.class]) {
+            [cell cellDidEndBeingVisible];
+        }
+    }
+}
+
 - (void)scrollToFirstUnreadMessageIfNeeded
 {
     if (! self.hasDoneInitialLayout) {
