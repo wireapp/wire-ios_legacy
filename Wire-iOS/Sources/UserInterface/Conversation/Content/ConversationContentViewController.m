@@ -832,7 +832,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
              [Message isAudioMessage:selectedMessage] ||
              [Message isFileTransferMessage:selectedMessage])
             && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
-            if ([self wr_isVisible]) {
+            if ([self isVisible]) {
                 NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
                 
                 BOOL __block expectedMessageUpdated = NO;

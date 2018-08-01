@@ -30,6 +30,7 @@
 "general.skip" = "Ikke nu";
 "general.accept" = "Besvar";
 "general.decline" = "No, thanks";
+"general.failure" = "Noget gik galt";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -313,9 +314,14 @@
 // System messages
 "content.system.you_nominative" = "dig";
 "content.system.you_dative" = "dig";
+"content.system.and_you_dative" = "and you";
 "content.system.you_accusative" = "dig";
 
 "content.system.continued_conversation" = "Start en samtale med %@";
+"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people.others" = "%@ others";
+"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
 
 "content.system.other_started_conversation" = "%@ startede en samtale med %@";
 "content.system.you_started_conversation" = "Du startede en samtale med %@";
@@ -380,7 +386,7 @@
 "content.system.conversation.with_name.title" = "%@ started the conversation";
 "content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
-"content.system.conversation.with_name.participants" = "with %@";
+"content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ set the message timer to %@";
 "content.system.message_timer_changes.you" = "You set the message timer to %@";
@@ -537,9 +543,12 @@
 "call.degraded.alert.message.unknown" = "Nogen er begyndt at bruge en ny enhed.";
 "call.degraded.alert.action.continue" = "Ring alligevel";
 
-"call.alert.ongoing.start.title" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.start.alert_title" = "Start Call?";
+"call.alert.ongoing.join.alert_title" = "Join Call?";
+
+"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.title" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.join.button" = "Join Anyway";
 
 // Call Actions (accessibility)
@@ -572,7 +581,7 @@
 "participants.all.title" = "Personer";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
-"participants.section.settings" = "Indstillinger";
+"participants.section.settings" = "Egenskaber";
 "participants.footer.add_title" = "Add Participants";
 "participants.section.name.footer" = "Up to 300 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
@@ -993,7 +1002,6 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.title" = "Secure messaging for everyone.";
 "landing.create_account.title" = "For personal use";
 "landing.create_account.subtitle" = "create an account";
 "landing.create_team.title" = "For organizations";
@@ -1128,6 +1136,20 @@
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Ukompatibel sikkerhedskopi";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Denne sikkerhedskopi er lavet på en nyere eller uddateret version af Wire og kan ikke blive gendannet her.";
 
+// SSO – Company Login
+"login.sso.alert.title" = "Company Log In";
+"login.sso.alert.message" = "Enter the company SSO access code.";
+"login.sso.alert.action" = "Log ind";
+"login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.error.alert.title" = "Noget gik galt";
+"login.sso.error.alert.invalid_code.title" = "Invalid code.";
+"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
+"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
+"login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
+"login.sso.error.alert.unknown.message" = "Please try again later.";
+"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
 "registration.no_history.restore_backup.completed" = "Completed";
@@ -1201,6 +1223,7 @@
 "signin.use_one_password.label" = "Log in with 1Password";
 "signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
 "signin.confirm" = "Log ind";
+"signin.company_idp.button.title" = "For Companies";
 
 "registration.phone_country" = "Land";
 "registration.phone_code" = "Landekode";

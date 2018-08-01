@@ -30,6 +30,7 @@
 "general.skip" = "Не зараз";
 "general.accept" = "Прийняти";
 "general.decline" = "Ні, дякую";
+"general.failure" = "Щось пішло не так";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -239,7 +240,7 @@
 "conversation.input_bar.audio_message.too_long.title" = "Запис зупинено";
 "conversation.input_bar.audio_message.too_long.message" = "Довжина аудіоповідомлень обмежена до %@.";
 
-"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+"conversation.input_bar.audio_message.too_long_size.message" = "Розмір файлу для звукових повідомлень обмежений %@.";
 
 "conversation.input_bar.audio_message.send" = "Надіслати";
 
@@ -313,9 +314,14 @@
 // System messages
 "content.system.you_nominative" = "ви";
 "content.system.you_dative" = "вам";
+"content.system.and_you_dative" = "and you";
 "content.system.you_accusative" = "вас";
 
 "content.system.continued_conversation" = "Почати розмову з %@";
+"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people.others" = "%@ others";
+"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
 
 "content.system.other_started_conversation" = "%@ почав(-ла) розмову з %@";
 "content.system.you_started_conversation" = "Ви почали розмову з %@";
@@ -380,15 +386,15 @@
 "content.system.conversation.with_name.title" = "%@ розпочав(-ла) розмову";
 "content.system.conversation.with_name.title-you" = "%@ розпочав(-ла) розмову";
 
-"content.system.conversation.with_name.participants" = "з %@";
+"content.system.conversation.with_name.participants" = "with";
 
 "content.system.message_timer_changes" = "%@ встановив(-ла) таймер повідомлень на %@";
-"content.system.message_timer_changes.you" = "You set the message timer to %@";
+"content.system.message_timer_changes.you" = "Ви встановили таймер повідомлень на %@";
 
 "content.system.message_timer.you_part" = "Ви";
 
 "content.system.message_timer_off" = "%@ вимкнув(-ла) таймер повідомлень";
-"content.system.message_timer_off.you" = "You turned off the message timer";
+"content.system.message_timer_off.you" = "Ви вимкнули таймер повідомлень";
 
 "content.system.reactivated_device" = "Ви почали використовувати %@ знову. Повідомлення, надіслані поки ви не користувалися ним, не з'являться тут.";
 
@@ -537,9 +543,12 @@
 "call.degraded.alert.message.unknown" = "Хтось почав використовувати новий пристрій.";
 "call.degraded.alert.action.continue" = "Подзвонити все-одно";
 
-"call.alert.ongoing.start.title" = "Інша розмова має активний дзвінок.\nДзвінок у цій розмові припинить його.";
+"call.alert.ongoing.start.alert_title" = "Розпочати дзвінок?";
+"call.alert.ongoing.join.alert_title" = "Приєднатися до дзвінка?";
+
+"call.alert.ongoing.start.message" = "Інша розмова має активний дзвінок.\nДзвінок у цій розмові припинить його.";
+"call.alert.ongoing.join.message" = "Інша розмова має активний дзвінок.\nПриєднання до дзвінка у цій розмові припинить його.";
 "call.alert.ongoing.start.button" = "Подзвонити все-одно";
-"call.alert.ongoing.join.title" = "Інша розмова має активний дзвінок.\nПриєднання до дзвінка у цій розмові припинить його.";
 "call.alert.ongoing.join.button" = "Приєднатися все-одно";
 
 // Call Actions (accessibility)
@@ -574,7 +583,7 @@
 "participants.section.services" = "Сервіси (%d)";
 "participants.section.settings" = "Налаштування";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "До цієї розмови може прєднатись не більше 300 учасників. Відеодзвінки будуть працювати тільки в розмовах. що містять до чотирьох учасників.";
+"participants.section.name.footer" = "Up to 300 people can join a group conversation. Video calls work with up to 3 other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";
@@ -993,7 +1002,6 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.title" = "Безпечний обмін повідомленнями для всіх.";
 "landing.create_account.title" = "Для особистого користування";
 "landing.create_account.subtitle" = "створити акаунт";
 "landing.create_team.title" = "Для організацій";
@@ -1128,6 +1136,20 @@
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Несумісний файл резервної копії";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Цю резервну копію було створено новішою або застарілою версією Wire, тому її неможливо відновити.";
 
+// SSO – Company Login
+"login.sso.alert.title" = "Вхід для компаній";
+"login.sso.alert.message" = "Введіть код доступу для вашої компанії.";
+"login.sso.alert.action" = "Увійти";
+"login.sso.alert.text_field.placeholder" = "Код доступу SSO";
+
+"login.sso.error.alert.title" = "Щось пішло не так";
+"login.sso.error.alert.invalid_code.title" = "Невірний код.";
+"login.sso.error.alert.invalid_code.message" = "Будь ласка, упевніться, що це вірний SSO-код вашої команди, та повторіть спробу.";
+"login.sso.error.offline.alert.message" = "Перевірте підключення до Інтернету та спробуйте ще раз.";
+"login.sso.error.alert.message" = "Будь ласка, зверніться до адміністратора команди, щоб отримати детальну інформацію, (помилка %@).";
+"login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
+"login.sso.error.alert.invalid_status.message" = "Будь ласка, спробуйте ще раз пізніше (помилка %@).";
+
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Відновлення…";
 "registration.no_history.restore_backup.completed" = "Завершено";
@@ -1201,6 +1223,7 @@
 "signin.use_one_password.label" = "Увійти через 1Password";
 "signin.use_one_password.hint" = "Торкніться двічі, щоб заповнити поле паролю значенням з 1Password";
 "signin.confirm" = "Увійти";
+"signin.company_idp.button.title" = "Для компаній";
 
 "registration.phone_country" = "Країна";
 "registration.phone_code" = "Код країни";

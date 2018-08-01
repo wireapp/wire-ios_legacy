@@ -1054,7 +1054,7 @@
 "team.invite.error.already_registered" = "This email address is already in use";
 "team.invite.error.already_invited" = "This email has already been invited";
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
-"team.invite.error.no_internet" = "No internet connection";
+"team.invite.error.no_internet" = "No Internet Connection";
 
 // Guest Room
 
