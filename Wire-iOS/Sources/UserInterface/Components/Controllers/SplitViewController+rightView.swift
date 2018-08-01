@@ -20,13 +20,12 @@ import Foundation
 
 extension SplitViewController {
 
-    /// return true if right view (mostly conversation screen) is visible
-    /// for iPad regular mode the right view is always partially or fully visible
+    /// return true if right view (mostly conversation screen) is fully visible
     var isRightViewControllerRevealed: Bool {
         switch self.layoutSize {
-        case .compact:
+        case .compact, .regularPortrait:
             return !isLeftViewControllerRevealed
-        case .regularLandscape, .regularPortrait:
+        case .regularLandscape:
             return true
         }
     }
