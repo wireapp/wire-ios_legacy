@@ -134,10 +134,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.emailField.text = self.loginCredentials.emailAddress;
     }
 
-    if (self.canStartCompanyLoginFlow) {
+    if (!self.canStartCompanyLoginFlow) {
         self.emailField.enabled = NO;
+        self.emailField.alpha = 0.75;
     }
-    
+
     [self.emailField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [self.view addSubview:self.emailField];
@@ -345,7 +346,25 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return YES;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField == self.emailField) {
+        return self.canStartCompanyLoginFlow;
+    } else {
+        return YES;
+    }
+}
+
 #pragma mark - Field Validation
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.emailField && !self.canStartCompanyLoginFlow) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
 - (void)textFieldDidChange:(UITextField *)textField
 {
