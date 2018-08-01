@@ -28,7 +28,7 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         UIView.setAnimationsEnabled(false)
 
-        sut = setupSut(imageName: "unsplash_matterhorn_small_size")
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn_small_size", fileExtension: "jpg")
 
         recordMode = true
     }

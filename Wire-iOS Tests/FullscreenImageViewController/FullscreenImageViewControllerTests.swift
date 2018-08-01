@@ -59,7 +59,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatScrollViewMinimumZoomScaleAndZoomScaleAreSet() {
         // GIVEN & WHEN
-        sut = setupSut(imageName: "unsplash_matterhorn")
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn", fileExtension: "jpg")
         let image: UIImage = sut.imageView!.image!
         sut.updateScrollViewZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
 
@@ -72,7 +72,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
     func testThatDoubleTapZoomToScreenFitWhenTheImageIsSmallerThanTheView() {
         // GIVEN
         // The image is 70 * 70
-        sut = setupSut(imageName: "unsplash_matterhorn_small_size")
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn_small_size", fileExtension: "jpg")
 
         let maxZoomScale = sut.scrollView.maximumZoomScale
 
@@ -89,7 +89,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatDoubleTapZoomInTheImage() {
         // GIVEN
-        sut = setupSut(imageName: "unsplash_matterhorn")
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn", fileExtension: "jpg")
 
         XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
 
@@ -102,7 +102,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatRotateScreenResetsZoomScaleToMinZoomScale() {
         // GIVEN
-        sut = setupSut(imageName: "unsplash_matterhorn")
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn", fileExtension: "jpg")
 
         // WHEN
         let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
@@ -117,7 +117,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatRotateScreenReserveZoomScaleIfDoubleTapped() {
         // GIVEN
-        sut = setupSut(imageName: "unsplash_matterhorn")
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn", fileExtension: "jpg")
 
         // WHEN
         doubleTap(fullscreenImageViewController: sut)
