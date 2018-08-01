@@ -133,6 +133,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         // User was previously signed in so we prefill the credentials
         self.emailField.text = self.loginCredentials.emailAddress;
     }
+
+    if (self.canStartCompanyLoginFlow) {
+        self.emailField.enabled = NO;
+    }
     
     [self.emailField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
