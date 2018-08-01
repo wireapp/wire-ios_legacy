@@ -182,7 +182,7 @@ import TTTAttributedLabel
         attributedText = model.attributedTitle()
         nameLabel.attributedText = model.attributedHeading()
         topContainer.isHidden = nameLabel.attributedText == nil
-        bottomContainer.isHidden = model.sortedUsers().count == 0
+        bottomContainer.isHidden = model.sortedUsers.count == 0
         inviteView.isHidden = !model.showInviteButton
         viewModel = model
     }
