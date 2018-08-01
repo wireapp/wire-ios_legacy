@@ -139,6 +139,7 @@ final public class ConversationAvatarView: UIView {
             var index: Int = 0
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
+                $0.shouldDesaturate = false
                 $0.size = .tiny
                 if index < users.count {
                     $0.user = users[index]

@@ -110,6 +110,11 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     
     // MARK: - New Conversation
     
+    func testThatItRendersNewConversationCellWithNoParticipantsAndName() {
+        let sut = cell(for: .newConversation, text: "Italy Trip", fromSelf: true, fillUsers: .none)
+        verify(view: sut.prepareForSnapshots())
+    }
+    
     func testThatItRendersNewConversationCellWithOneParticipantAndName() {
         let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .justYou)
         verify(view: sut.prepareForSnapshots())

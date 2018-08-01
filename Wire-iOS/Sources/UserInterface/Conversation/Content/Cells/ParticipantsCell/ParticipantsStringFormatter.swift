@@ -148,6 +148,8 @@ class ParticipantsStringFormatter {
     
     /// Title when the subject (sender) performing the action on objects (names).
     func title(senderName: String, senderIsSelf: Bool, names: NameList) -> NSAttributedString? {
+        guard !names.names.isEmpty else { return nil }
+        
         var result: NSAttributedString
         let formatKey = message.actionType.formatKey
         let nameSequence = format(names)

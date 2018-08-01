@@ -52,7 +52,7 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 @property (nonatomic, weak, nullable) id<UserImageViewDelegate> delegate;
 
 - (instancetype)initWithSize:(UserImageViewSize)size;
-- (void)setUserImage:(UIImage *)userImage;
+- (void)setUserImage:(UIImage * _Nullable)userImage;
 
 @end
 
