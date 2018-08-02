@@ -54,6 +54,35 @@ extension AddParticipantsViewController.Context {
             return creationValues.allowGuests
         }
     }
+    
+    var selectionLimit: Int {
+        switch self {
+        case .add(let conversation):
+            return conversation.freeParticipantSlots
+        case .create:
+            return ZMConversation.maxParticipantsWithSelf
+        }
+    }
+    
+    var alertForSelectionOverflow: UIAlertController {
+        let message: String
+        switch self {
+        case .add(let conversation):
+            let freeSpace = String(conversation.freeParticipantSlots)
+            message = "add_participants.alert.message.existing_conversation".localized(args: freeSpace)
+        case .create(_):
+            message = "add_participants.alert.message.new_conversation".localized
+        }
+        
+        let controller = UIAlertController(
+            title: "add_participants.alert.title".localized,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        controller.addAction(.ok())
+        return controller
+    }
 }
 
 public class AddParticipantsViewController: UIViewController {
@@ -144,6 +173,11 @@ public class AddParticipantsViewController: UIViewController {
                                                                   shouldIncludeGuests: viewModel.context.includeGuests)
 
         super.init(nibName: nil, bundle: nil)
+        
+        userSelection.setLimit(context.selectionLimit) {
+            self.present(context.alertForSelectionOverflow, animated: true)
+        }
+        
         updateValues()
 
         emptyResultLabel.text = everyoneHasBeenAddedText

@@ -97,6 +97,10 @@
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 
+"add_participants.alert.title" = "Full house";
+"add_participants.alert.message.new_conversation" = "Up to 300 people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to 300 people can join a conversation. Currently there is only room for %@ more people.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Search by name";
 "contacts_ui.invite_others" = "Invite others";

@@ -63,6 +63,10 @@ class SectionCollectionViewController: NSObject {
 
 extension SectionCollectionViewController: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return visibleSections[indexPath.section].collectionView?(collectionView, shouldSelectItemAt: indexPath) ?? true
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         visibleSections[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
     }

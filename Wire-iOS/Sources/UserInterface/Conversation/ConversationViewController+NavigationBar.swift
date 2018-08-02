@@ -252,8 +252,6 @@ extension ZMConversation {
         default: return false
         }
     }
-    
-    @objc static let maxVideoCallParticipants: Int = 4
 
     var canStartVideoCall: Bool {
         guard !isCallOngoing else { return false }
