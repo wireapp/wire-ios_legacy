@@ -27,7 +27,7 @@ public protocol AssetLibraryDelegate: class {
 open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
     open weak var delegate: AssetLibraryDelegate?
     fileprivate var fetchingAssets = false
-    open let synchronous: Bool
+    public let synchronous: Bool
     
     open var count: UInt {
         guard let fetch = self.fetch else {

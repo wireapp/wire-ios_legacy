@@ -62,7 +62,7 @@ import Classy
         get { return self.audioMessageView.audioTrackPlayer }
     }
     
-    open func createConstraints() {
+    public func createConstraints() {
         constrain(self.messageContentView, self.containerView, self.audioMessageView, self.authorLabel) { messageContentView, containerView, audioMessageView, authorLabel in
             
             containerView.left == messageContentView.leftMargin
@@ -79,14 +79,14 @@ import Classy
         }        
     }
     
-    override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+    public override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
 
         super.configure(for: message, layoutProperties: layoutProperties)
         
         self.configureMessageView(with: message, isInitial: true)
     }
     
-    override public func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+    public override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
         let needsLayout = super.update(forMessage: changeInfo)
         
         if changeInfo.isObfuscatedChanged {
@@ -108,14 +108,14 @@ import Classy
         self.audioMessageView.stopProximitySensor()
     }
     
-    override open var tintColor: UIColor! {
+    public override var tintColor: UIColor! {
         didSet {
             self.audioMessageView.tintColor = self.tintColor
         }
     }
     // MARK: - Menu
 
-    open func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    public func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         
         let animation = {
             self.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0;
@@ -128,15 +128,15 @@ import Classy
         }
     }
     
-    open override var selectionRect: CGRect {
+    public override var selectionRect: CGRect {
         return audioMessageView.bounds
     }
     
-    open override var selectionView: UIView! {
+    public override var selectionView: UIView! {
         return audioMessageView
     }
     
-    override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    public override func menuConfigurationProperties() -> MenuConfigurationProperties! {
         guard let _ = message else {return nil}
 
         let properties = MenuConfigurationProperties()
@@ -161,7 +161,7 @@ import Classy
         return properties
     }
     
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(wr_saveAudio) && self.message.audioCanBeSaved() {
             return true
         }
@@ -177,7 +177,7 @@ import Classy
         return super.canPerformAction(action, withSender: sender)
     }
     
-    @objc open func wr_saveAudio() {
+    @objc public func wr_saveAudio() {
         if self.message.audioCanBeSaved() {
             self.delegate?.conversationCell?(self, didSelect: .save)
         }
