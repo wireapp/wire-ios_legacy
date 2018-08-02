@@ -161,9 +161,7 @@ extension FontSpec {
 
 extension FontSpec {
     public var hashValue: Int {
-        get {
-            return self.size.hashValue * 1000 + (self.weight?.hashValue ?? 100)
-        }
+        return self.size.hashValue * 1000 + (self.weight?.hashValue ?? 100)
     }
 }
 
