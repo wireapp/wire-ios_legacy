@@ -5901,9 +5901,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1EE85C701B5F96FC008E084B /* Build configuration list for PBXNativeTarget "WireExtensionComponents" */;
 			buildPhases = (
+				1EE85C4D1B5F96FB008E084B /* Headers */,
 				1EE85C4B1B5F96FB008E084B /* Sources */,
 				1EE85C4C1B5F96FB008E084B /* Frameworks */,
-				1EE85C4D1B5F96FB008E084B /* Headers */,
 				1EE85C4E1B5F96FB008E084B /* Resources */,
 			);
 			buildRules = (
