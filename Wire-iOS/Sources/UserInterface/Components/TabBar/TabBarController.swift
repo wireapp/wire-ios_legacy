@@ -99,6 +99,12 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.view.layoutIfNeeded()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

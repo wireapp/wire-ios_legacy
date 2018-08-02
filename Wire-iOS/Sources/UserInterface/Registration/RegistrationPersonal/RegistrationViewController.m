@@ -114,6 +114,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupNavigationController];
     
     [self updateViewConstraints];
+
+    [self.view layoutIfNeeded];
 }
 
 - (BOOL)prefersStatusBarHidden
