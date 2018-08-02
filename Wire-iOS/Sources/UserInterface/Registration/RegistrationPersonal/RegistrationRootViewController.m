@@ -54,37 +54,29 @@
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow
 {
-    self = [self initWithNibName:nil bundle:nil];
+    self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
         self.companyLoginController = [[CompanyLoginController alloc] initWithDefaultEnvironment];
         self.flowType = flow;
 
+        [self setup];
     }
 
     return self;
 }
 
-- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil
+- (void)setup
 {
-    self = [super initWithNibName:nil bundle:nil];
+    self.companyLoginController.delegate = self;
 
-    if (self) {
-        [self setUpTabBarController];
-    }
+    self.view.opaque = NO;
+    self.view.backgroundColor = [UIColor clearColor];
 
-    return self;
-
-}   
-
-
-- (void)setUpTabBarController
-{
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
     signInViewController.loginCredentials = self.loginCredentials;
     signInViewController.delegate = self;
-    self.signInViewController = signInViewController;
 
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
@@ -100,34 +92,6 @@
         flowViewController = phoneFlowViewController;
     }
 
-    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
-
-    [self addToSelf: self.registrationTabBarController];
-
-    self.registrationTabBarController.style = ColorSchemeVariantDark;
-    self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
-
-
-    [self setUpRightButtons];
-    [self.view addSubview:self.cancelButton];
-
-    [self createConstraints];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.companyLoginController.delegate = self;
-
-    self.view.opaque = NO;
-    self.view.backgroundColor = [UIColor clearColor];
-    
-    self.registrationTabBarController.interactive = NO;
-
-    if (self.showLogin) {
-        [self.registrationTabBarController selectIndex:1 animated:NO];
-    }
-
     switch (self.flowType) {
         case AuthenticationFlowRegular:
             break;
@@ -141,6 +105,30 @@
             break;
     }
 
+    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+    self.registrationTabBarController.interactive = NO;
+
+    self.signInViewController = signInViewController;
+
+    if (self.showLogin) {
+        [self.registrationTabBarController selectIndex:1 animated:NO];
+    }
+
+    self.registrationTabBarController.style = ColorSchemeVariantDark;
+    self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [self addChildViewController:self.registrationTabBarController];
+    [self.view addSubview:self.registrationTabBarController.view];
+    [self.view addSubview:self.cancelButton];
+    [self.registrationTabBarController didMoveToParentViewController:self];
+
+    [self setUpRightButtons];
+    [self createConstraints];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
