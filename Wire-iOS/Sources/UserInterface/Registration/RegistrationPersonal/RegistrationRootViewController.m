@@ -76,7 +76,7 @@
 
     return self;
 
-}
+}   
 
 
 - (void)setUpTabBarController
@@ -100,8 +100,18 @@
         flowViewController = phoneFlowViewController;
     }
 
-    ///TODO
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+
+    [self addToSelf: self.registrationTabBarController];
+
+    self.registrationTabBarController.style = ColorSchemeVariantDark;
+    self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
+
+    [self setUpRightButtons];
+    [self.view addSubview:self.cancelButton];
+
+    [self createConstraints];
 }
 
 - (void)viewDidLoad
@@ -131,16 +141,6 @@
             break;
     }
 
-    self.registrationTabBarController.style = ColorSchemeVariantDark;
-    self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self addChildViewController:self.registrationTabBarController];
-    [self.view addSubview:self.registrationTabBarController.view];
-    [self.view addSubview:self.cancelButton];
-    [self.registrationTabBarController didMoveToParentViewController:self];
-
-    [self setUpRightButtons];
-    [self createConstraints];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -20,6 +20,7 @@ import Foundation
 
 @objc extension RegistrationViewController: TabBarControllerDelegate {
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int) {
-        self.keyboardAvoidingViewController.isDisableAnimation = true
+        // TODO: change to disableAnimationOnce()
+        self.keyboardAvoidingViewController.disableAnimationOnce = true
     }
 }
