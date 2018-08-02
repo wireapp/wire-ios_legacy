@@ -97,6 +97,10 @@
 
 "add_participants.all_contacts_added" = "大家都已加入";
 
+"add_participants.alert.title" = "Full house";
+"add_participants.alert.message.new_conversation" = "Up to 300 people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to 300 people can join a conversation. Currently there is only room for %@ more people.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名稱搜尋";
 "contacts_ui.invite_others" = "邀請其他人";
