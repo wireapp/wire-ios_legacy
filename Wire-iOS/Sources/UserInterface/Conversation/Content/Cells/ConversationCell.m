@@ -225,6 +225,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.burstTimestampTimer invalidate];
     self.burstTimestampTimer = nil;
     [self tearDownCountdown];
+    [self cellDidEndBeingVisible];
 }
 
 - (void)createBaseConstraints

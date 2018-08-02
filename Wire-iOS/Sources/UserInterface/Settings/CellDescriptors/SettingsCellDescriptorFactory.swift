@@ -235,8 +235,10 @@ import SafariServices
         developerCellDescriptors.append(enableBatchCollections)
         let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: SettingsCellDescriptorFactory.sendBrokenMessage)
         developerCellDescriptors.append(sendBrokenMessageButton)
-        let findUnreadConvoButton = SettingsButtonCellDescriptor(title: "Find first unread conversation", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversation)
-        developerCellDescriptors.append(findUnreadConvoButton)
+        let findUnreadBadgeConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (badge count)", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
+        developerCellDescriptors.append(findUnreadBadgeConversationButton)
+        let findUnreadBackArrowConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (back arrow count)", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBackArrowDot)
+        developerCellDescriptors.append(findUnreadBackArrowConversationButton)
         let shareDatabase = SettingsShareDatabaseCellDescriptor()
         developerCellDescriptors.append(shareDatabase)
         let shareCryptobox = SettingsShareCryptoboxCellDescriptor()
@@ -383,7 +385,7 @@ import SafariServices
     // MARK: Actions
     
     /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
-    private static func findUnreadConversation(_ type: SettingsCellDescriptorType) {
+    private static func findUnreadConversationContributingToBadgeCount(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = ZMConversation.predicateForConversationConsideredUnread()!
         
@@ -401,6 +403,33 @@ import SafariServices
                 UIPasteboard.general.string = alert.message
             }))
 
+        } else {
+            alert.message = "No unread conversation"
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        controller.present(alert, animated: false)
+    }
+    
+    /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
+    private static func findUnreadConversationContributingToBackArrowDot(_ type: SettingsCellDescriptorType) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        let predicate = ZMConversation.predicateForConversationConsideredUnreadIncludingSilenced()!
+        
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
+        
+        if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
+            .first(where: { predicate.evaluate(with: $0) })
+        {
+            alert.message = ["Found an unread conversation:",
+                             "\(convo.displayName)",
+                "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
+                ].joined(separator: "\n")
+            alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { _ in
+                UIPasteboard.general.string = alert.message
+            }))
+            
         } else {
             alert.message = "No unread conversation"
         }

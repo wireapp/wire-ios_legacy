@@ -35,7 +35,7 @@ final class SignInViewControllerTests: XCTestCase {
 
     func testThatSignInViewControllerCanHandleTheCaseWithLoginCredentialsHasNilEmailButPhoneNumber(){
         // GIVEN
-        let credentials = LoginCredentials(emailAddress: nil, phoneNumber: "fake number", password: nil)
+        let credentials = LoginCredentials(emailAddress: nil, phoneNumber: "fake number", password: nil, usesCompanyLogin: false)
         sut.loginCredentials = credentials
         sut.viewDidLoad()
 

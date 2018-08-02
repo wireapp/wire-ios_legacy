@@ -34,6 +34,7 @@ import TTTAttributedLabel
     private var lineBaseLineConstraint: NSLayoutConstraint?
     private let inviteView = ParticipantsInvitePeopleView()
     private var viewModel: ParticipantsCellViewModel?
+    private var isVisible = true
     
     // Classy
     let lineView = UIView()
@@ -175,6 +176,20 @@ import TTTAttributedLabel
         super.configure(for: message, layoutProperties: layoutProperties)
         reloadInformation(for: message)
     }
+    
+    public override func willDisplayInTableView() {
+        super.willDisplayInTableView()
+        isVisible = true
+        reloadInformation(for: message)
+    }
+    
+    public override func cellDidEndBeingVisible() {
+        super.cellDidEndBeingVisible()
+        // this is an optimisation to avoid reloading the cell when it is not
+        // visible. Reloading in a large group conversation can be very expensive,
+        // as the set of users are sorted for each reload.
+        isVisible = false
+    }
 
     private func reloadInformation(for message: ZMConversationMessage) {
         let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, largeFont: labelLargeFont, textColor: labelTextColor, message: message)
@@ -182,7 +197,7 @@ import TTTAttributedLabel
         attributedText = model.attributedTitle()
         nameLabel.attributedText = model.attributedHeading()
         topContainer.isHidden = nameLabel.attributedText == nil
-        bottomContainer.isHidden = model.sortedUsers().count == 0
+        bottomContainer.isHidden = model.sortedUsers.count == 0
         inviteView.isHidden = !model.showInviteButton
         viewModel = model
     }
@@ -190,7 +205,7 @@ import TTTAttributedLabel
     open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
         let needsLayout = super.update(forMessage: changeInfo)
 
-        if changeInfo.usersChanged {
+        if true == changeInfo.userChangeInfo?.nameChanged, isVisible {
             reloadInformation(for: changeInfo.message)
             return true
         }

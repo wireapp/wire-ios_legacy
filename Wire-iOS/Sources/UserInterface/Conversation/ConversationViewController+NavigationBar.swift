@@ -20,16 +20,6 @@ import UIKit
 import WireSyncEngine
 import Cartography
 
-public extension ZMConversationList {
-    func hasUnreadMessages(excluding: ZMConversation) -> Bool {
-        return self.conversations().filter { $0 != excluding }.map { $0.estimatedUnreadCount }.reduce(0, +) > 0
-    }
-
-    func conversations() -> [ZMConversation] {
-        return self.compactMap { $0 as? ZMConversation }
-    }
-}
-
 // MARK: - Update left navigator bar item when size class changes
 extension ConversationViewController {
 
@@ -79,7 +69,7 @@ public extension ConversationViewController {
     }
 
     var backButton: UIBarButtonItem {
-        let hasUnreadInOtherConversations = self.hasUnreadMessagesInOtherConversations
+        let hasUnreadInOtherConversations = self.conversation.hasUnreadMessagesInOtherConversations
         let arrowIcon: ZetaIconType = hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow
         let icon: ZetaIconType = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? arrowIcon : .hamburger
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
@@ -107,13 +97,6 @@ public extension ConversationViewController {
         }
         
         return button
-    }
-
-    @objc var hasUnreadMessagesInOtherConversations: Bool {
-        guard let userSession = ZMUserSession.shared() else {
-            return false
-        }
-        return ZMConversationList.conversations(inUserSession: userSession).hasUnreadMessages(excluding: self.conversation)
     }
 
     @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {

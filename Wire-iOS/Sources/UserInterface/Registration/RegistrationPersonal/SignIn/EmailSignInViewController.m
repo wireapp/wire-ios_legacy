@@ -54,6 +54,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 /// After a login try we set this property to @c YES to reset both field accessories after a field change on any of those
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
 
+@property (nonatomic, readonly) BOOL canStartCompanyLoginFlow;
+
 @end
 
 
@@ -73,7 +75,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createEmailField];
     [self createPasswordField];
     [self createForgotPasswordButton];
-    if (CompanyLoginController.companyLoginEnabled) {
+    if (self.canStartCompanyLoginFlow) {
         [self createCompanyLoginButton];
     }
 
@@ -131,7 +133,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         // User was previously signed in so we prefill the credentials
         self.emailField.text = self.loginCredentials.emailAddress;
     }
-    
+
+    if (!self.canStartCompanyLoginFlow) {
+        self.emailField.enabled = NO;
+        self.emailField.alpha = 0.75;
+    }
+
     [self.emailField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [self.view addSubview:self.emailField];
@@ -221,7 +228,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.passwordField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
     [self.passwordField autoSetDimension:ALDimensionHeight toSize:40];
     
-    if (CompanyLoginController.companyLoginEnabled) {
+    if (self.canStartCompanyLoginFlow) {
         [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
         [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
         [self.forgotPasswordButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view withOffset:28];
@@ -239,6 +246,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     return [ZMEmailCredentials credentialsWithEmail:self.emailField.text
                                            password:self.passwordField.text];
+}
+
+- (BOOL)canStartCompanyLoginFlow
+{
+    return (CompanyLoginController.companyLoginEnabled == YES) && (self.loginCredentials.usesCompanyLogin == NO) && (self.loginCredentials.emailAddress == nil);
 }
 
 - (void)takeFirstResponder
@@ -294,7 +306,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)companyLoginButtonTapped:(ButtonWithLargerHitArea *)button
 {
-    [self.delegate emailSignInViewControllerDidTapCompanyLoginButton:self];
+    if (self.canStartCompanyLoginFlow) {
+        [self.delegate emailSignInViewControllerDidTapCompanyLoginButton:self];
+    }
 }
 
 - (IBAction)open1PasswordExtension:(id)sender
@@ -332,7 +346,25 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return YES;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField == self.emailField) {
+        return self.canStartCompanyLoginFlow;
+    } else {
+        return YES;
+    }
+}
+
 #pragma mark - Field Validation
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.emailField && !self.canStartCompanyLoginFlow) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
 - (void)textFieldDidChange:(UITextField *)textField
 {

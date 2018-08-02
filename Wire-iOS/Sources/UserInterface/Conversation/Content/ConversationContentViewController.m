@@ -216,6 +216,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [super viewWillDisappear:animated];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    for (ConversationCell *cell in self.tableView.visibleCells) {
+        if ([cell isKindOfClass:ConversationCell.class]) {
+            [cell cellDidEndBeingVisible];
+        }
+    }
+}
+
 - (void)scrollToFirstUnreadMessageIfNeeded
 {
     if (! self.hasDoneInitialLayout) {
@@ -832,7 +842,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
              [Message isAudioMessage:selectedMessage] ||
              [Message isFileTransferMessage:selectedMessage])
             && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
-            if ([self wr_isVisible]) {
+            if ([self isVisible]) {
                 NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
                 
                 BOOL __block expectedMessageUpdated = NO;

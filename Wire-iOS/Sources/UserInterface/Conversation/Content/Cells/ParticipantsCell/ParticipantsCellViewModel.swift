@@ -63,7 +63,7 @@ extension ZMConversationMessage {
     }
 }
 
-struct ParticipantsCellViewModel {
+class ParticipantsCellViewModel {
     
     private typealias NameList = ParticipantsStringFormatter.NameList
     static let showMoreLinkURL = NSURL(string: "action://show-all")!
@@ -91,55 +91,59 @@ struct ParticipantsCellViewModel {
     
     /// Users displayed in the system message, up to 17 when not collapsed
     /// but only 15 when there are more than 15 users and we collapse them.
-    var shownUsers: [ZMUser] {
-        let users = sortedUsersWithoutSelf()
+    lazy var shownUsers: [ZMUser] = {
+        let users = sortedUsersWithoutSelf
         let boundary = users.count > maxShownUsers && action.allowsCollapsing ? maxShownUsersWhenCollapsed : users.count
         let result = users[..<boundary]
         return result + (isSelfIncludedInUsers ? [.selfUser()] : [])
-    }
+    }()
     
     /// Users not displayed in the system message but collapsed into a link.
     /// E.g. `and 5 others`.
-    private var collapsedUsers: [ZMUser] {
-        let users = sortedUsersWithoutSelf()
+    private lazy var collapsedUsers: [ZMUser] = {
+        let users = sortedUsersWithoutSelf
         guard users.count > maxShownUsers, action.allowsCollapsing else { return [] }
         return Array(users.dropFirst(maxShownUsersWhenCollapsed))
-    }
+    }()
     
     /// The users to display when opening the participants details screen.
     var selectedUsers: [ZMUser] {
         switch action {
-        case .added: return sortedUsers()
+        case .added: return sortedUsers
         default: return []
         }
     }
     
-    var isSelfIncludedInUsers: Bool {
-        return sortedUsers().any { $0.isSelfUser }
-    }
+    lazy var isSelfIncludedInUsers: Bool = {
+        return sortedUsers.any { $0.isSelfUser }
+    }()
     
     /// The users involved in the conversation action sorted alphabetically by
     /// name.
-    func sortedUsers() -> [ZMUser] {
+    lazy var sortedUsers: [ZMUser] = {
         guard let sender = message.sender else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
         guard let systemMessage = message.systemMessageData else { return [] }
         return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
-    }
+    }()
 
-    func sortedUsersWithoutSelf() -> [ZMUser] {
-        return sortedUsers().filter { !$0.isSelfUser }
+    init(font: UIFont?, boldFont: UIFont?, largeFont: UIFont?, textColor: UIColor?, message: ZMConversationMessage) {
+        self.font = font
+        self.boldFont = boldFont
+        self.largeFont = largeFont
+        self.textColor = textColor
+        self.message = message
     }
+    
+    lazy var sortedUsersWithoutSelf: [ZMUser] = {
+        return sortedUsers.filter { !$0.isSelfUser }
+    }()
 
     private func name(for user: ZMUser) -> String {
         if user.isSelfUser {
             return "content.system.you_\(grammaticalCase(for: user))".localized
         }
-        if let conversation = message.conversation, conversation.activeParticipants.contains(user) {
-            return user.displayName(in: conversation)
-        } else {
-            return user.displayName
-        }
+        return user.displayName
     }
     
     private var nameList: NameList {

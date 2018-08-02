@@ -234,6 +234,12 @@ extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
     }
 
     private func displayRecordKeyboard() {
+        // do not show keyboard if conversation list is shown, 
+        guard let splitViewController = self.wr_splitViewController,
+              let rightViewController = splitViewController.rightViewController,
+              splitViewController.isRightViewControllerRevealed,
+              rightViewController.isVisible else { return }
+
         self.wasRecordingBeforeCall = false
         self.mode = .audioRecord
         self.inputBar.textView.becomeFirstResponder()

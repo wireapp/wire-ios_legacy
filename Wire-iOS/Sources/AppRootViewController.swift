@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import Classy
+import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
@@ -648,7 +649,16 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                                           preferredStyle: .alert)
 
             alert.addAction(.ok { callback(false) })
-            self.present(alert, animated: true, completion: nil)
+
+            let presentAlert = {
+                self.present(alert, animated: true)
+            }
+
+            if let topmostViewController = UIApplication.shared.wr_topmostController() as? SFSafariViewController {
+                topmostViewController.dismiss(animated: true, completion: presentAlert)
+            } else {
+                presentAlert()
+            }
 
         case .companyLoginSuccess:
             defer {
