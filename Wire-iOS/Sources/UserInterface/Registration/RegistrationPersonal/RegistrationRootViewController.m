@@ -124,6 +124,8 @@
 
     [self setUpRightButtons];
     [self createConstraints];
+
+//    [self.view layoutIfNeeded];
 }
 
 - (void)viewDidLoad
@@ -137,6 +139,8 @@
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
     self.companyLoginController.autoDetectionEnabled = YES;
     [self.companyLoginController detectLoginCode];
+
+    [self.view layoutIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

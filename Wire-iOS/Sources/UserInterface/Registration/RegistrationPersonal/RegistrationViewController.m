@@ -93,6 +93,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//
+//    [self.view layoutIfNeeded];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -114,8 +120,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupNavigationController];
     
     [self updateViewConstraints];
-
-    [self.view layoutIfNeeded];
 }
 
 - (BOOL)prefersStatusBarHidden

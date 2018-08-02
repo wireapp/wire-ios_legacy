@@ -102,7 +102,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.view.layoutIfNeeded()
+//        self.view.layoutIfNeeded()
     }
 
     override func viewDidLoad() {
