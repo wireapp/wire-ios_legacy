@@ -65,13 +65,14 @@ extension AddParticipantsViewController.Context {
     }
     
     var alertForSelectionOverflow: UIAlertController {
+        let max = ZMConversation.maxParticipants
         let message: String
         switch self {
         case .add(let conversation):
-            let freeSpace = String(conversation.freeParticipantSlots)
-            message = "add_participants.alert.message.existing_conversation".localized(args: freeSpace)
+            let freeSpace = conversation.freeParticipantSlots
+            message = "add_participants.alert.message.existing_conversation".localized(args: max, freeSpace)
         case .create(_):
-            message = "add_participants.alert.message.new_conversation".localized
+            message = "add_participants.alert.message.new_conversation".localized(args: max)
         }
         
         let controller = UIAlertController(
