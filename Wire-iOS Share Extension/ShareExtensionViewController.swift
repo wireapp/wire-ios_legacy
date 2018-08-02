@@ -24,6 +24,7 @@ import MobileCoreServices
 import WireDataModel
 import WireExtensionComponents
 import Classy
+import WireLinkPreview
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -34,6 +35,12 @@ private enum LocalAuthenticationStatus {
     case disabled
     case denied
     case granted
+}
+
+fileprivate class PreviewImageView: UIImageView {
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 70, height: 70)
+    }
 }
 
 class ShareExtensionViewController: SLComposeServiceViewController {
@@ -65,6 +72,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     fileprivate var sharingSession: SharingSession? = nil
     fileprivate var extensionActivity: ExtensionActivity? = nil
     fileprivate var currentAccount: Account? = nil
+    fileprivate var preview: UIImageView? = nil
     fileprivate var localAuthenticationStatus: LocalAuthenticationStatus = .disabled
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
@@ -95,8 +103,28 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         let activity = ExtensionActivity(attachments: allAttachments)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
-        
+        preview = previewImageView()
         NetworkStatus.add(netObserver)
+    }
+
+    private func previewImageView() -> UIImageView {
+        let imageView = PreviewImageView(image: UIImage(for: .browser, iconSize: .medium, color: UIColor.black.withAlphaComponent(0.7)))
+        imageView.layer.borderColor = UIColor.gray.cgColor
+        imageView.layer.borderWidth = UIScreen.hairline
+        imageView.clipsToBounds = true
+        imageView.contentMode = .center
+        self.fetchURLAttachments { [weak self] urls in
+            guard let firstURL = urls.first else { return }
+            self?.sharingSession?.downloadLinkPreviews(inText: firstURL.absoluteString) { [weak imageView] previews in
+                if let imageData = previews.first?.imageData.first {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(2)) {
+                        imageView?.contentMode = .scaleAspectFill
+                        imageView?.image = UIImage(data: imageData)
+                    }
+                }
+            }
+        }
+        return imageView
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -254,18 +282,20 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     
     /// Display a preview image
     override func loadPreviewView() -> UIView! {
-        if let parentView = super.loadPreviewView() {
-            return parentView
-        }
+        // Calling super.loadPreviewView() and delegating preview image creation to the system
+        // seem to cause memory warnings and immediate killing of the app. This happens when sharing from apps like Firefox,
+        // however works fine when sharing from Safari.
+
         let hasURL = self.allAttachments.contains { $0.hasURL }
         let hasEmptyText = self.textView.text.isEmpty
         let isWalletPass = self.allAttachments.contains { $0.hasWalletPass }
-        // I can not ask if it's a http:// or file://, because it's an async operation, so I rely on the fact that 
+        // I can not ask if it's a http:// or file://, because it's an async operation, so I rely on the fact that
         // if it has no image, it has a URL and it has text, it must be a file
         if (hasURL && hasEmptyText) || isWalletPass {
             return UIImageView(image: UIImage(for: .document, iconSize: .large, color: UIColor.black))
+        } else {
+            return preview
         }
-        return nil
     }
 
     /// If there is a URL attachment, copy the text of the URL attachment into the text field
