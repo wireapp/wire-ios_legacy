@@ -60,7 +60,7 @@ extension AddParticipantsViewController.Context {
         case .add(let conversation):
             return conversation.freeParticipantSlots
         case .create:
-            return ZMConversation.maxParticipantsWithSelf
+            return ZMConversation.maxParticipantsExcludingSelf
         }
     }
     
