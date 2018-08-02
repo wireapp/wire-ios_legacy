@@ -56,6 +56,7 @@
     
     if (self) {
         self.viewController = viewController;
+        self.isDisableAnimation = false;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardFrameWillChange:)
@@ -138,8 +139,13 @@
 
 - (void)keyboardFrameWillChange:(NSNotification *)notification
 {
-    [UIView animateWithKeyboardNotification:notification inView:self.view animations:^(CGRect keyboardFrameInView) {
-        CGFloat bottomOffset = -keyboardFrameInView.size.height;
+    if (self.isDisableAnimation) {
+        self.isDisableAnimation = NO;
+        return;
+    }
+
+    [UIView animateWithKeyboardNotification:notification inView:self.view animations:^(CGRect keyboardFrameInView) { ///TODO: double called?
+        CGFloat bottomOffset = -keyboardFrameInView.size.height; ///TODO: step 1: 0. step 2: -291
 
         if (self.bottomEdgeConstraint.constant != bottomOffset) {
             self.bottomEdgeConstraint.constant = bottomOffset;

@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
     AuthenticationFlowOnlyRegistration
 };
 
-@class ZMIncompleteRegistrationUser, LoginCredentials;
+@class ZMIncompleteRegistrationUser, LoginCredentials, TabBarController;
 
 @interface RegistrationRootViewController : FormFlowViewController
 
@@ -35,6 +35,9 @@ typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
 @property (nonatomic) BOOL showLogin;
 @property (nonatomic) LoginCredentials *loginCredentials;
 @property (nonatomic) BOOL shouldHideCancelButton;
+
+///TODO: internal
+@property (nonatomic) TabBarController *registrationTabBarController;
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow;
 - (void)presentLoginTab;

@@ -1123,6 +1123,7 @@
 		EF30524B2088927D00613C45 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = EF30524A2088927D00613C45 /* transparent.png */; };
 		EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */; };
 		EF32A4CD204EFD8E003632FB /* CameraCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32A4CC204EFD8E003632FB /* CameraCellTests.swift */; };
+		EF3976CC2113117A0030BE68 /* RegistrationViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CB2113117A0030BE68 /* RegistrationViewController+Delegate.swift */; };
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
 		EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */; };
 		EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */; };
@@ -2766,6 +2767,7 @@
 		EF30524A2088927D00613C45 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+iPhoneSize.swift"; sourceTree = "<group>"; };
 		EF32A4CC204EFD8E003632FB /* CameraCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCellTests.swift; sourceTree = "<group>"; };
+		EF3976CB2113117A0030BE68 /* RegistrationViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegistrationViewController+Delegate.swift"; sourceTree = "<group>"; };
 		EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Language.swift"; sourceTree = "<group>"; };
 		EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLanguageSettable.swift; sourceTree = "<group>"; };
 		EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBarConstants.swift; sourceTree = "<group>"; };
@@ -5583,7 +5585,9 @@
 				EF2126DD1FB9DFE300625A9B /* Steps */,
 				EF2126F11FB9DFE300625A9B /* NagScreen */,
 				EF2126B71FB9DFE300625A9B /* CheckmarkView.m */,
+				EF2126D31FB9DFE300625A9B /* RegistrationViewController.h */,
 				EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */,
+				EF3976CB2113117A0030BE68 /* RegistrationViewController+Delegate.swift */,
 				EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */,
 				EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */,
 				EF2126BB1FB9DFE300625A9B /* RegistrationEmailFlowViewController.m */,
@@ -5599,7 +5603,6 @@
 				EF2126C51FB9DFE300625A9B /* FormStepDelegate.h */,
 				EF2126D11FB9DFE300625A9B /* GuidanceDotView.h */,
 				EF2126D21FB9DFE300625A9B /* RegistrationTextField.h */,
-				EF2126D31FB9DFE300625A9B /* RegistrationViewController.h */,
 				EF2126D41FB9DFE300625A9B /* CheckmarkView.h */,
 				EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */,
 				EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */,
@@ -7064,6 +7067,7 @@
 				871BC27F1D34F8F800DF0793 /* NSString+Emoji.m in Sources */,
 				87AD89F71CB5179C002C6EC1 /* FileTransferCell.swift in Sources */,
 				BF0515251E390E10000D5C22 /* CopyableLabel.swift in Sources */,
+				EF3976CC2113117A0030BE68 /* RegistrationViewController+Delegate.swift in Sources */,
 				EF21270C1FB9DFE300625A9B /* Country.m in Sources */,
 				BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */,
 				D53D390E20596ED300B87DAD /* ConversationActionController+Block.swift in Sources */,

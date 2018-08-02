@@ -33,7 +33,6 @@
 
 @property (nonatomic) CompanyLoginController *companyLoginController;
 
-@property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) AuthenticationFlowType flowType;
 @property (nonatomic, weak) SignInViewController *signInViewController;
@@ -55,29 +54,38 @@
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow
 {
-    self = [super initWithNibName:nil bundle:nil];
+    self = [self initWithNibName:nil bundle:nil];
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
         self.companyLoginController = [[CompanyLoginController alloc] initWithDefaultEnvironment];
         self.flowType = flow;
+
     }
 
     return self;
 }
 
-- (void)viewDidLoad
+- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil
 {
-    [super viewDidLoad];
-    self.companyLoginController.delegate = self;
+    self = [super initWithNibName:nil bundle:nil];
 
-    self.view.opaque = NO;
-    self.view.backgroundColor = [UIColor clearColor];
-    
+    if (self) {
+        [self setUpTabBarController];
+    }
+
+    return self;
+
+}
+
+
+- (void)setUpTabBarController
+{
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
     signInViewController.loginCredentials = self.loginCredentials;
     signInViewController.delegate = self;
-    
+    self.signInViewController = signInViewController;
+
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
         RegistrationEmailFlowViewController *emailFlowViewController = [[RegistrationEmailFlowViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
@@ -92,6 +100,24 @@
         flowViewController = phoneFlowViewController;
     }
 
+    ///TODO
+    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.companyLoginController.delegate = self;
+
+    self.view.opaque = NO;
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    self.registrationTabBarController.interactive = NO;
+
+    if (self.showLogin) {
+        [self.registrationTabBarController selectIndex:1 animated:NO];
+    }
+
     switch (self.flowType) {
         case AuthenticationFlowRegular:
             break;
@@ -104,16 +130,7 @@
             [self setupBackButton];
             break;
     }
-    
-    self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
-    self.registrationTabBarController.interactive = NO;
 
-    self.signInViewController = signInViewController;
-    
-    if (self.showLogin) {
-        [self.registrationTabBarController selectIndex:1 animated:NO];
-    }
-    
     self.registrationTabBarController.style = ColorSchemeVariantDark;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
 

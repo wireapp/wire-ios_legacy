@@ -57,7 +57,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) BOOL registeredInThisSession;
 
 @property (nonatomic) RegistrationRootViewController *registrationRootViewController;
-@property (nonatomic) KeyboardAvoidingViewController *keyboardAvoidingViewController;
 @property (nonatomic) NavigationController *rootNavigationController;
 @property (nonatomic) PopTransition *popTransition;
 @property (nonatomic) PushTransition *pushTransition;
@@ -160,7 +159,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.rootNavigationController.delegate = self;
     self.rootNavigationController.navigationBarHidden = YES;
     self.rootNavigationController.logoEnabled = !IS_IPHONE_4 && (self.signInError != nil);
-    
+
+    /// TODO:
     self.keyboardAvoidingViewController = [[KeyboardAvoidingViewController alloc] initWithViewController:self.rootNavigationController];
     self.keyboardAvoidingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     
@@ -172,6 +172,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         UIViewController *alertController = [UIAlertController passwordVerificationNeededControllerWithCompletion:nil];
         [self presentViewController:alertController animated:YES completion:nil];
     }
+
+    self.registrationRootViewController.registrationTabBarController.delegate = self;
 }
 
 - (void)updateViewConstraints

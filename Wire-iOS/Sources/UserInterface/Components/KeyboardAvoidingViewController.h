@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) UIViewController *viewController;
 
 @property (nonatomic) CGFloat topInset;
+@property (nonatomic) BOOL isDisableAnimation;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle  * _Nullable)nibBundleOrNil NS_UNAVAILABLE;
