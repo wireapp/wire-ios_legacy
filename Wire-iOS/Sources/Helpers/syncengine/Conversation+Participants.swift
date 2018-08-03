@@ -24,6 +24,22 @@ extension ZMConversation {
         case offline
     }
     
+    @objc static let maxVideoCallParticipants: Int = 4
+    
+    @objc static let maxParticipants: Int = 300
+    
+    @objc static var maxParticipantsExcludingSelf: Int {
+        return maxParticipants - 1
+    }
+    
+    @objc static var maxVideoCallParticipantsExcludingSelf: Int {
+        return maxVideoCallParticipants - 1
+    }
+    
+    @objc var freeParticipantSlots: Int {
+        return type(of: self).maxParticipants - activeParticipants.count
+    }
+    
     @objc(addParticipantsOrShowError:)
     func addOrShowError(participants: Set<ZMUser>) {
         guard let session = ZMUserSession.shared(),

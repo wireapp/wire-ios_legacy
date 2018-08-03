@@ -21,10 +21,9 @@
 #import "AppDelegate.h"
 #import "Wire-Swift.h"
 
-const static unsigned long long MaxFileSize = 25 * 1024 * 1024 - 32; // 25 megabytes - 32 bytes for IV and padding
+const static unsigned long long MaxFileSize = 25 * 1024 * 1024; // 25 megabytes
 
-// Temporarily set to have the same size as non-team.
-const static unsigned long long MaxTeamFileSize = 25 * 1024 * 1024 - 32; // 25 megabytes - 32 bytes for IV and padding
+const static unsigned long long MaxTeamFileSize = 100 * 1024 * 1024; // 100 megabytes
 
 @implementation ZMUserSession (iOS)
 
