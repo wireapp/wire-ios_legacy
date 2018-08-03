@@ -33,6 +33,7 @@
 
 @property (nonatomic) CompanyLoginController *companyLoginController;
 
+@property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) AuthenticationFlowType flowType;
 @property (nonatomic, weak) SignInViewController *signInViewController;
@@ -60,24 +61,23 @@
         self.unregisteredUser = unregisteredUser;
         self.companyLoginController = [[CompanyLoginController alloc] initWithDefaultEnvironment];
         self.flowType = flow;
-
-        [self setup];
     }
 
     return self;
 }
 
-- (void)setup
+- (void)viewDidLoad
 {
+    [super viewDidLoad];
     self.companyLoginController.delegate = self;
 
     self.view.opaque = NO;
     self.view.backgroundColor = [UIColor clearColor];
-
+    
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
     signInViewController.loginCredentials = self.loginCredentials;
     signInViewController.delegate = self;
-
+    
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
         RegistrationEmailFlowViewController *emailFlowViewController = [[RegistrationEmailFlowViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
@@ -104,16 +104,16 @@
             [self setupBackButton];
             break;
     }
-
+    
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.registrationTabBarController.interactive = NO;
 
     self.signInViewController = signInViewController;
-
+    
     if (self.showLogin) {
         [self.registrationTabBarController selectIndex:1 animated:NO];
     }
-
+    
     self.registrationTabBarController.style = ColorSchemeVariantDark;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -124,13 +124,6 @@
 
     [self setUpRightButtons];
     [self createConstraints];
-
-//    [self.view layoutIfNeeded];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -139,7 +132,6 @@
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
     self.companyLoginController.autoDetectionEnabled = YES;
     [self.companyLoginController detectLoginCode];
-
     [self.view layoutIfNeeded];
 }
 

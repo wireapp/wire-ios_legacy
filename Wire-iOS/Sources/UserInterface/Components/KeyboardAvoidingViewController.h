@@ -26,11 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) UIViewController *viewController;
 
 @property (nonatomic) CGFloat topInset;
-//@property (nonatomic) BOOL disableAnimationOnce;
-
-///TODO: private
-@property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
-@property (nonatomic, nullable) UIViewPropertyAnimator *animator;
 
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

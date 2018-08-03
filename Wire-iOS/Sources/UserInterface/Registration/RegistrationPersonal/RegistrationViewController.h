@@ -24,7 +24,6 @@
 #import "WireSyncEngine+iOS.h"
 
 @class ZMEmailCredentials;
-@class KeyboardAvoidingViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -50,9 +49,6 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 @property (nonatomic, weak) __nullable id<RegistrationViewControllerDelegate> delegate;
 @property (nonatomic)  NSError * __nullable signInError;
 @property (nonatomic) BOOL shouldHideCancelButton;
-
-///TODO: private
-@property (nonatomic) KeyboardAvoidingViewController *keyboardAvoidingViewController;
 
 + (RegistrationFlow)registrationFlow;
 - (void)presentNoHistoryViewController:(ContextType)type animated:(BOOL)animated;

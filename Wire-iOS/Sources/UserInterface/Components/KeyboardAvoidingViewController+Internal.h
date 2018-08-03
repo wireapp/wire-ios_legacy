@@ -1,4 +1,4 @@
-//
+////
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,11 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+#import <UIKit/UIKit.h>
 
-@objc extension RegistrationViewController: TabBarControllerDelegate {
-    func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int) {
-        // TODO: change to disableAnimationOnce()
-//        self.keyboardAvoidingViewController.disableAnimationOnce = true
-    }
-}
+@interface KeyboardAvoidingViewController
+
+@property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
+@property (nonatomic, nullable) UIViewPropertyAnimator *animator;
+
+@end

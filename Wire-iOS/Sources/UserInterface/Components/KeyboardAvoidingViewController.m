@@ -18,6 +18,7 @@
 
 
 #import "KeyboardAvoidingViewController.h"
+#import "KeyboardAvoidingViewController+Internal.h"
 
 @import PureLayout;
 

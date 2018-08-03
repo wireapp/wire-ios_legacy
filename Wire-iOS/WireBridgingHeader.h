@@ -101,6 +101,7 @@
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+internal.h"
 #import "KeyboardAvoidingViewController.h"
+#import "KeyboardAvoidingViewController+Internal.h"
 #import "PhoneNumberViewController.h"
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
