@@ -99,7 +99,7 @@
 
 "add_participants.alert.title" = "Full house";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
-"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more people.";
+"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名稱搜尋";
