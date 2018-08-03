@@ -97,6 +97,10 @@
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 
+"add_participants.alert.title" = "Full house";
+"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more people.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "名前で検索します";
 "contacts_ui.invite_others" = "他の人を招待します";
@@ -583,7 +587,7 @@
 "participants.section.services" = "サービス (%d)";
 "participants.section.settings" = "オプション";
 "participants.footer.add_title" = "参加者を追加";
-"participants.section.name.footer" = "Up to 300 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "名前の変更";

@@ -97,6 +97,10 @@
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 
+"add_participants.alert.title" = "Full house";
+"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more people.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Iskanje po imenu";
 "contacts_ui.invite_others" = "Povabi druge";
@@ -583,7 +587,7 @@
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Možnosti";
 "participants.footer.add_title" = "Add Participants";
-"participants.section.name.footer" = "Up to 300 people can join a group conversation. Video calls work with up to 3 other people and you.";
+"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Preimenuj";

@@ -97,6 +97,10 @@
 
 "add_participants.all_contacts_added" = "Tout le monde est là.";
 
+"add_participants.alert.title" = "Full house";
+"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more people.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Cherchez par nom";
 "contacts_ui.invite_others" = "Invitez d’autres personnes";
@@ -583,7 +587,7 @@
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Options";
 "participants.footer.add_title" = "Ajouter des contacts";
-"participants.section.name.footer" = "Les conversations de groupe peuvent contenir jusqu'à 300 personnes. Les appels vidéos fonctionnent avec jusqu'à trois destinataires.";
+"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Renommer";

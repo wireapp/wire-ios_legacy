@@ -97,6 +97,10 @@
 
 "add_participants.all_contacts_added" = "Alle sind hier.";
 
+"add_participants.alert.title" = "Full house";
+"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more people.";
+
 // Contacts UI
 "contacts_ui.search_placeholder" = "Nach Namen suchen";
 "contacts_ui.invite_others" = "Andere einladen";
@@ -583,7 +587,7 @@
 "participants.section.services" = "Dienste (%d)";
 "participants.section.settings" = "Optionen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
-"participants.section.name.footer" = "Bis zu 300 Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu 3 anderen Personen und dir.";
+"participants.section.name.footer" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu %2$d anderen Personen und dir.";
 
 // Meta Menu
 "meta.menu.rename" = "Umbenennen";
