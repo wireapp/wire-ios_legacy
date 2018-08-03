@@ -37,7 +37,7 @@ extension KeyboardAvoidingViewController {
             self.bottomEdgeConstraint.constant = bottomOffset
             self.view.setNeedsLayout()
             animator = UIViewPropertyAnimator(duration: duration, curve: animationCurve, animations: {
-                    self.view.layoutIfNeeded()
+                self.view.layoutIfNeeded()
             })
 
             animator?.addCompletion { [weak self] _ in

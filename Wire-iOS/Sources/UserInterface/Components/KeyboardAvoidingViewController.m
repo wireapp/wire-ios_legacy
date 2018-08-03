@@ -55,7 +55,6 @@
     
     if (self) {
         self.viewController = viewController;
-//        self.disableAnimationOnce = false;
 
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardFrameWillChange:)
