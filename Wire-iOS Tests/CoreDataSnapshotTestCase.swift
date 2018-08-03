@@ -32,6 +32,7 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         super.setUp()
         snapshotBackgroundColor = .white
         setupTestObjects()
+        UIApplication.shared.wr_setStatusBarHidden(true, with: .none)
     }
 
     override open func tearDown() {
