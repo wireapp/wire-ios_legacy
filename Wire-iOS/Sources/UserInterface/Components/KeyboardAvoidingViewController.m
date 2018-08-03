@@ -103,15 +103,6 @@
     [self createInitialConstraints];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    CGFloat bottomOffset = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height;
-
-    self.bottomEdgeConstraint.constant = bottomOffset; ///0 
-}
-
 - (void)createInitialConstraints
 {
     [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
