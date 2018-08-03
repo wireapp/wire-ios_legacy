@@ -20,10 +20,8 @@ import Foundation
 
 extension KeyboardAvoidingViewController {
     @objc func keyboardFrameWillChange(_ notification: Notification?) {
-        print("⏱️ \(Date().timeIntervalSince1970)")
-
         if #available(iOS 10.0, *) {
-            guard let _ = notification?.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval,
+            guard let duration = notification?.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval,
                   let curveRawValue = notification?.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? Int,
                   let animationCurve = UIViewAnimationCurve(rawValue: curveRawValue) else { return }
 
@@ -34,39 +32,30 @@ extension KeyboardAvoidingViewController {
                 return
             }
 
-
-            print("⏱️ bottomOffset = \(bottomOffset)")
-
             animator?.stopAnimation(true)
-            ///TODO: duartion = 0 when first time appear? the duration is 0.35, but it shows immediately
-            animator = UIViewPropertyAnimator(duration: 0, curve: animationCurve, animations: {
-                print("⏱️ bottomOffset = \(bottomOffset)")
-                    self.bottomEdgeConstraint.constant = bottomOffset
+
+            self.bottomEdgeConstraint.constant = bottomOffset
+            self.view.setNeedsLayout()
+            animator = UIViewPropertyAnimator(duration: duration, curve: animationCurve, animations: {
                     self.view.layoutIfNeeded()
             })
 
-            animator?.addCompletion {
-                [weak self] _ in
-                print("Animation completed")
+            animator?.addCompletion { [weak self] _ in
                 self?.animator = nil
             }
             animator?.startAnimation()
 
         } else {
-
             UIView.animate(withKeyboardNotification: notification,
                            in: view,
                            animations: { keyboardFrameInView in
                             let bottomOffset: CGFloat = -keyboardFrameInView.size.height
-                            print("⏱️ bottomOffset = \(bottomOffset)")
-                            ///TODO: step 1: 0. step 2: -291
-                            // 0 => -291 first first appear
                             if self.bottomEdgeConstraint.constant != bottomOffset {
                                 self.bottomEdgeConstraint.constant = bottomOffset
                                 self.view.layoutIfNeeded()
                             }
-            }, completion: nil
-            )
+                           },
+                           completion: nil)
         }
     }
 }
