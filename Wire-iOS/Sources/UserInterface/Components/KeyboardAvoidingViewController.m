@@ -32,7 +32,6 @@
 
 @property (nonatomic, readwrite) UIViewController *viewController;
 @property (nonatomic) NSLayoutConstraint *topEdgeConstraint;
-@property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
 
 @end
 
@@ -56,8 +55,8 @@
     
     if (self) {
         self.viewController = viewController;
-        self.disableAnimationOnce = false;
-        
+//        self.disableAnimationOnce = false;
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardFrameWillChange:)
                                                      name:UIKeyboardWillChangeFrameNotification
@@ -110,7 +109,7 @@
     
     CGFloat bottomOffset = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height;
 
-    self.bottomEdgeConstraint.constant = bottomOffset;
+    self.bottomEdgeConstraint.constant = bottomOffset; ///0 
 }
 
 - (void)createInitialConstraints
@@ -133,26 +132,6 @@
 - (NSString *)title
 {
     return self.viewController.title;
-}
-
-#pragma mark - UIKeyboard notifications
-
-- (void)keyboardFrameWillChange:(NSNotification *)notification
-{
-    if (self.disableAnimationOnce) {
-        self.disableAnimationOnce = NO;
-        return;
-    }
-
-    [UIView animateWithKeyboardNotification:notification inView:self.view animations:^(CGRect keyboardFrameInView) {
-        CGFloat bottomOffset = -keyboardFrameInView.size.height; ///TODO: step 1: 0. step 2: -291
-
-        if (self.bottomEdgeConstraint.constant != bottomOffset) {
-            self.bottomEdgeConstraint.constant = bottomOffset;
-            
-            [self.view layoutIfNeeded];
-        }
-    } completion:nil];
 }
 
 @end

@@ -1124,6 +1124,7 @@
 		EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */; };
 		EF32A4CD204EFD8E003632FB /* CameraCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32A4CC204EFD8E003632FB /* CameraCellTests.swift */; };
 		EF3976CC2113117A0030BE68 /* RegistrationViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CB2113117A0030BE68 /* RegistrationViewController+Delegate.swift */; };
+		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Notification.swift */; };
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
 		EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */; };
 		EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */; };
@@ -2770,6 +2771,7 @@
 		EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+iPhoneSize.swift"; sourceTree = "<group>"; };
 		EF32A4CC204EFD8E003632FB /* CameraCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCellTests.swift; sourceTree = "<group>"; };
 		EF3976CB2113117A0030BE68 /* RegistrationViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegistrationViewController+Delegate.swift"; sourceTree = "<group>"; };
+		EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Notification.swift"; sourceTree = "<group>"; };
 		EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Language.swift"; sourceTree = "<group>"; };
 		EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLanguageSettable.swift; sourceTree = "<group>"; };
 		EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBarConstants.swift; sourceTree = "<group>"; };
@@ -3663,6 +3665,7 @@
 				871BC1511D34F8F800DF0793 /* Giphy */,
 				871BC15E1D34F8F800DF0793 /* KeyboardAvoidingViewController.h */,
 				871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */,
+				EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Notification.swift */,
 				871BC1601D34F8F800DF0793 /* KeyboardFrameObserver+iOS.h */,
 				871BC1611D34F8F800DF0793 /* KeyboardFrameObserver+iOS.m */,
 				871BC1621D34F8F800DF0793 /* KeyboardFrameObserver.h */,
@@ -6869,6 +6872,7 @@
 				5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */,
 				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
 				16D4932A203DCCCA008DDFFA /* UserCell.swift in Sources */,
+				EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Notification.swift in Sources */,
 				872CB8B819E58816006752B4 /* ProfileSendConnectionRequestFooterView.m in Sources */,
 				877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */,
 				EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */,
