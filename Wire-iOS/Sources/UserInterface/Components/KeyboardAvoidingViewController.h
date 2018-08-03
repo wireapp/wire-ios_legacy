@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) CGFloat topInset;
 
-
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle  * _Nullable)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithViewController:(UIViewController *)viewController NS_DESIGNATED_INITIALIZER;
