@@ -193,6 +193,13 @@ extension AppStateController {
 }
 
 extension AppStateController : RegistrationViewControllerDelegate {
+
+    func userAuthenticationDidComplete(registered: Bool) {
+        isLoggedIn = true
+        isLoggedOut = false
+        hasCompletedRegistration = registered
+        updateAppState()
+    }
     
     func registrationViewControllerDidSignIn() {
         isLoggedIn = true

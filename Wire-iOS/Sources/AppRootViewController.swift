@@ -48,6 +48,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     fileprivate var isClassyInitialized = false
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
+    var authenticationCoordinator: AuthenticationCoordinator?
     var flowController: TeamCreationFlowController!
 
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
@@ -202,6 +203,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
         var viewController: UIViewController? = nil
         requestToOpenViewDelegate = nil
+        authenticationCoordinator = nil
 
         switch appState {
         case .blacklisted:
@@ -216,7 +218,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
             // check if needs to reauthenticate
             var needsToReauthenticate = false
-            var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
+
             if let error = error {
                 let errorCode = (error as NSError).userSessionErrorCode
                 needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
@@ -224,35 +226,24 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                     .needsPasswordToRegisterClient,
                     .needsToRegisterEmailToRegisterClient,
                 ].contains(errorCode)
+            }
 
-                addingNewAccount = [
-                    ZMUserSessionErrorCode.addAccountRequested
-                    ].contains(errorCode)
-            }
-            
+            let navigationController = NavigationController()
+            navigationController.backButtonEnabled = false
+            navigationController.logoEnabled = false
+            navigationController.isNavigationBarHidden = true
+
+            let flowStep: AuthenticationFlowStep
+
             if needsToReauthenticate {
-                let registrationViewController = RegistrationViewController()
-                registrationViewController.delegate = appStateController
-                registrationViewController.shouldHideCancelButton = SessionManager.numberOfAccounts <= 1
-                registrationViewController.signInError = error
-                viewController = registrationViewController
+               flowStep = ReauthenticationFlowStep(signInError: error, numberOfAccounts: SessionManager.numberOfAccounts)
+            } else {
+                flowStep = AddNewAccountFlowStep()
             }
-            else if addingNewAccount {
-                // When we show the landing controller we want it to be nested in navigation controller
-                let landingViewController = LandingViewController()
-                landingViewController.delegate = self
-                
-                let navigationController = NavigationController(rootViewController: landingViewController)
-                navigationController.backButtonEnabled = false
-                navigationController.logoEnabled = false
-                navigationController.isNavigationBarHidden = true
-                
-                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
-                
-                flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
-                flowController.registrationDelegate = appStateController
-                viewController = navigationController
-            }
+
+            authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController, session: UnauthenticatedSession.sharedSession!)
+            authenticationCoordinator?.push(step: flowStep)
+            viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
             UIColor.setAccentOverride(.undefined)
