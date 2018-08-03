@@ -182,6 +182,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         companyLoginController?.isAutoDetectionEnabled = true
         companyLoginController?.detectLoginCode()
         token = PreLoginAuthenticationNotification.register(self, for: SessionManager.shared?.unauthenticatedSession)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -362,7 +363,11 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
     }
     
     // MARK: - CompanyLoginControllerDelegate
