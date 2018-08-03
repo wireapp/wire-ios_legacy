@@ -20,6 +20,7 @@ import Foundation
 
 extension KeyboardAvoidingViewController {
     @objc func keyboardFrameWillChange(_ notification: Notification?) {
+        guard let bottomEdgeConstraint = self.bottomEdgeConstraint else { return }
 
         // Using stoppable UIViewPropertyAnimator instead of UIView animation for iOS 10+. When the keyboard is dismissed and then revealed in a short time, the later earlier animation will be cancelled.
         if #available(iOS 10.0, *) {
@@ -30,13 +31,11 @@ extension KeyboardAvoidingViewController {
             let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
             let bottomOffset: CGFloat = -keyboardFrameInView.size.height
 
-            guard self.bottomEdgeConstraint.constant != bottomOffset else {
-                return
-            }
+            guard bottomEdgeConstraint.constant != bottomOffset else { return }
 
             animator?.stopAnimation(true)
 
-            self.bottomEdgeConstraint.constant = bottomOffset
+            bottomEdgeConstraint.constant = bottomOffset
             self.view.setNeedsLayout()
             animator = UIViewPropertyAnimator(duration: duration, curve: animationCurve, animations: {
                 self.view.layoutIfNeeded()
@@ -51,11 +50,11 @@ extension KeyboardAvoidingViewController {
             UIView.animate(withKeyboardNotification: notification,
                            in: view,
                            animations: { keyboardFrameInView in
-                            let bottomOffset: CGFloat = -keyboardFrameInView.size.height
-                            if self.bottomEdgeConstraint.constant != bottomOffset {
-                                self.bottomEdgeConstraint.constant = bottomOffset
-                                self.view.layoutIfNeeded()
-                            }
+                                let bottomOffset: CGFloat = -keyboardFrameInView.size.height
+                                if bottomEdgeConstraint.constant != bottomOffset {
+                                    bottomEdgeConstraint.constant = bottomOffset
+                                    self.view.layoutIfNeeded()
+                                }
                            },
                            completion: nil)
         }

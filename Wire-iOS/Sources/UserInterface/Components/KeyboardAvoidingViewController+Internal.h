@@ -18,9 +18,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KeyboardAvoidingViewController
+@interface KeyboardAvoidingViewController ()
 
-@property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *bottomEdgeConstraint;
 @property (nonatomic, nullable) UIViewPropertyAnimator *animator;
 
 @end
