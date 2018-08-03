@@ -78,6 +78,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     var isEnabled = true {
         didSet {
             tabBar?.isUserInteractionEnabled = isEnabled
+            isInteractive = isEnabled // Shouldn't be interactive when it's disabled
         }
     }
 
@@ -158,13 +159,15 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         let fromViewController = pageViewController.viewControllers?.first
 
         guard toViewController != fromViewController else { return }
-
-        delegate?.tabBarController(self, tabBarDidSelectIndex: index)
-        tabBar?.setSelectedIndex(index, animated: animated)
-
+        
         let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
         let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
-        pageViewController.setViewControllers([toViewController], direction: direction, animated: isInteractive)
+        
+        pageViewController.setViewControllers([toViewController], direction: direction, animated: isInteractive) { [delegate, tabBar] complete in
+            guard complete else { return }
+            tabBar?.setSelectedIndex(index, animated: animated)
+            delegate?.tabBarController(self, tabBarDidSelectIndex: index)
+        }
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
@@ -174,7 +177,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
             return viewControllers[index]
         }
     }
-    
+
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         return viewControllers.index(of: viewController).flatMap {
             let index = $0 - 1
@@ -183,14 +186,21 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         }
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating finished: Bool,
+        previousViewControllers: [UIViewController],
+        transitionCompleted completed: Bool
+        ) {
         guard let selected = pageViewController.viewControllers?.first else { return }
         guard let index = viewControllers.index(of: selected) else { return }
-        
-        isSwiping = false
-        delegate?.tabBarController(self, tabBarDidSelectIndex: index)
-        selectedIndex = index
-        tabBar?.setSelectedIndex(selectedIndex, animated: isInteractive)
+
+        if completed {
+            isSwiping = false
+            delegate?.tabBarController(self, tabBarDidSelectIndex: index)
+            selectedIndex = index
+            tabBar?.setSelectedIndex(selectedIndex, animated: isInteractive)
+        }
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
