@@ -177,10 +177,6 @@ import Foundation
         }
     }
 
-    private func presentError(_ error: LocalizedError) {
-
-    }
-
     private func handleValidationErrorIfNeeded(_ error: ValidationError?) -> Bool {
         guard let error = error else { return false }
 
