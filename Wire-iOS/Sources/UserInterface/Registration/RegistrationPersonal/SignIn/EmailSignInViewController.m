@@ -56,11 +56,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 
-
 @interface EmailSignInViewController (AuthenticationObserver) <PreLoginAuthenticationObserver, PostLoginAuthenticationObserver>
 
 @end
-
 
 
 @implementation EmailSignInViewController
@@ -74,6 +72,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createEmailField];
     [self createPasswordField];
     [self createForgotPasswordButton];
+
     if (self.canStartCompanyLoginFlow) {
         [self createCompanyLoginButton];
     }
@@ -102,6 +101,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.passwordField resignFirstResponder];
 }
 
+#pragma mark - Interface Configuration
+
 - (void)createEmailField
 {
     self.emailField = [[RegistrationTextField alloc] initForAutoLayout];
@@ -109,6 +110,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (@available(iOS 11, *)) {
         self.emailField.textContentType = UITextContentTypeUsername;
     }
+
     self.emailField.placeholder = NSLocalizedString(@"email.placeholder", nil);
     self.emailField.accessibilityLabel = NSLocalizedString(@"email.placeholder", nil);
     self.emailField.keyboardType = UIKeyboardTypeEmailAddress;
@@ -131,7 +133,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 
     [self.emailField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    
     [self.view addSubview:self.emailField];
 }
 
@@ -142,6 +143,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (@available(iOS 11, *)) {
         self.passwordField.textContentType = UITextContentTypePassword;
     }
+
     self.passwordField.placeholder = NSLocalizedString(@"password.placeholder", nil);
     self.passwordField.accessibilityLabel = NSLocalizedString(@"password.placeholder", nil);
     self.passwordField.secureTextEntry = YES;
@@ -232,6 +234,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.forgotPasswordButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
     }
 }
+
+#pragma mark - Properties
 
 - (ZMEmailCredentials *)credentials
 {

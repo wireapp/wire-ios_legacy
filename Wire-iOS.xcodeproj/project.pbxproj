@@ -1490,7 +1490,6 @@
 		1E8772211B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonSubstitutionConfigurationMocks.h; sourceTree = "<group>"; };
 		1E8772221B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfigurationMocks.m; sourceTree = "<group>"; };
 		1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-03.json"; sourceTree = "<group>"; };
-		1E88CC4D1BEB63020020B853 /* Cartfile.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		1E8C25361BBC279B00FC373F /* ProgressSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressSpinner.h; sourceTree = "<group>"; };
 		1E8C25371BBC279B00FC373F /* ProgressSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSpinner.m; sourceTree = "<group>"; };
 		1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+LoadingView.h"; sourceTree = "<group>"; };
@@ -3434,22 +3433,14 @@
 			path = Animations;
 			sourceTree = "<group>";
 		};
-		5E53B0CC21149D2B009C7124 /* Email */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Email;
-			sourceTree = "<group>";
-		};
 		5E766D9721144DEC005242B4 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				5E53B0CC21149D2B009C7124 /* Email */,
+				5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */,
 				5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */,
 				5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */,
 				5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */,
 				5E53B0CA211495AB009C7124 /* UserLoginFlowState.swift */,
-				5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -4473,7 +4464,6 @@
 				87775AB21D95138D000CAD4F /* avs-versions */,
 				872AC9C21B397E6A00575CF3 /* Cartfile */,
 				87A418BD1C0CAB1A006FA803 /* Cartfile.private */,
-				1E88CC4D1BEB63020020B853 /* Cartfile.resolved */,
 			);
 			sourceTree = "<group>";
 		};

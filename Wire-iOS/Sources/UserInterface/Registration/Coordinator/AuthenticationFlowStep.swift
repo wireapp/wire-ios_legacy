@@ -18,15 +18,26 @@
 
 import Foundation
 
-typealias AuthenticationStepViewController = UIViewController & AuthenticationCoordinatedViewController
+/**
+ * Steps of the authentication flow.
+ */
 
 enum AuthenticationFlowStep {
+
+    // Initial Steps
     case landingScreen
     case reauthenticate(error: Error?, numberOfAccounts: Int)
+
+    // Email Sign In
     case provideEmailCredentials
     case authenticateEmailCredentials(ZMCredentials)
+
+    // Post Sign-In
     case clientManagement(clients: [UserClient], credentials: ZMCredentials)
 
+    // MARK: - Properties
+
+    /// Whether the step can be unwinded.
     var allowsUnwind: Bool {
         switch self {
         case .landingScreen, .clientManagement: return false
@@ -34,6 +45,7 @@ enum AuthenticationFlowStep {
         }
     }
 
+    /// Whether the authentication steps generates a user interface.
     var needsInterface: Bool {
         switch self {
         case .authenticateEmailCredentials: return false
@@ -42,79 +54,3 @@ enum AuthenticationFlowStep {
     }
 
 }
-
-enum AuthenticationError {
-
-}
-
-protocol _AuthenticationFlowStep {
-    var activeCoordinator: AuthenticationCoordinator? { get set }
-    func makeViewController() -> UIViewController
-}
-
-/*class TeamCreationFlowStep: AuthenticationFlowStep {
-
-    weak var activeCoordinator: AuthenticationCoordinator?
-
-    func makeViewController() -> UIViewController {
-        //let flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
-        //flowController.registrationDelegate = appStateController
-        //viewController = navigationController
-        return UIViewController()
-    }
-
-}
-
-class ReauthenticationFlowStep: AuthenticationFlowStep {
-
-    let signInError: Error?
-    let numberOfAccounts: Int
-
-    weak var activeCoordinator: AuthenticationCoordinator?
-
-    init(signInError: Error?, numberOfAccounts: Int) {
-        self.signInError = signInError
-        self.numberOfAccounts = numberOfAccounts
-    }
-
-    func makeViewController() -> UIViewController {
-        let registrationViewController = RegistrationViewController()
-        //registrationViewController.delegate = appStateController
-        registrationViewController.shouldHideCancelButton = numberOfAccounts <= 1
-        registrationViewController.signInError = signInError
-        return registrationViewController
-    }
-
-}
-
-class AddNewAccountFlowStep: AuthenticationFlowStep {
-
-    weak var activeCoordinator: AuthenticationCoordinator?
-    weak var landingDelegate: LandingViewControllerDelegate?
-
-    init(landingDelegate: LandingViewControllerDelegate) {
-        self.landingDelegate = landingDelegate
-    }
-
-    func makeViewController() -> UIViewController {
-        let landingViewController = LandingViewController()
-        landingViewController.delegate = landingDelegate
-        return landingViewController
-    }
-
-
-}
-
-class InitiateLoginFlowStep: AuthenticationFlowStep {
-
-    weak var activeCoordinator: AuthenticationCoordinator?
-
-    func makeViewController() -> UIViewController {
-        let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-        //loginViewController.delegate = appStateController
-        loginViewController.shouldHideCancelButton = true
-        return loginViewController
-    }
-
-}
-*/

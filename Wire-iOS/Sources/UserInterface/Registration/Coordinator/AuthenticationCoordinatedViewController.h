@@ -20,13 +20,28 @@
 
 @class AuthenticationCoordinator;
 
+/**
+ * Actions that can be performed by the view controllers when authentication fails.
+ */
+
 typedef NS_ENUM(NSUInteger, AuthenticationErrorFeedbackAction) {
+    /// The view should display a guidance dot to indicate user input is invalid.
     AuthenticationErrorFeedbackActionShowGuidanceDot,
 };
 
+/**
+ * A view controller that is managed by an authentication coordinator.
+ */
+
 @protocol AuthenticationCoordinatedViewController <NSObject>
 
+/// The object that coordinates authentication.
 @property (nonatomic, weak, nullable) AuthenticationCoordinator *authenticationCoordinator;
+
+/**
+ * The view controller should execute the action to indicate authentication failure.
+ * @param feedbackAction The action to execute to provide feedback to the user.
+ */
 
 @optional
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction NS_SWIFT_NAME(executeErrorFeedbackAction(_:));
