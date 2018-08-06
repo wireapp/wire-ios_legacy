@@ -76,6 +76,7 @@ extension ZMConversation {
                     onGranted(granted)
                 }
             } else {
+                RunLoop.current.run(until: Date().addingTimeInterval(0.1))
                 onGranted(granted)
             }
         }
