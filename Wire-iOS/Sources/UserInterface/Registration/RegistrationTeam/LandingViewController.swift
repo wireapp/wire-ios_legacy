@@ -363,7 +363,13 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     }
 
     override var prefersStatusBarHidden: Bool {
-        return false
+        // FIXME: We have to hide the status bar when running tests as we are not using a test host.
+        // Some view controllers we test using snapshots requets a status bar appearance update when
+        // they appear. If that happens we will query the topmost view controller which will be the
+        // LandingViewController in tests as we are using no test host application to run tests.
+        // Unfortunately this hack is needed until we either change how we manage the status bar or
+        // start using a test host to run tests.
+        return ProcessInfo.processInfo.isRunningTests
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
