@@ -77,11 +77,10 @@ extension CollectionCell: SelectableView {
      */
     @objc public func presentDeletionAlertController(forMessage message: ZMConversationMessage?, source: SelectableView?, completion: ((Bool) -> Void)?) {
         guard let message = message, !message.hasBeenDeleted else { return }
-        let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { [weak self] (action, alert) in
+        let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
             
             // Tracking needs to be called before performing the action, since the content of the message is cleared
             if case .delete(let type) = action {
-                self?.trackDelete(message, deletionType: type)
 
                 ZMUserSession.shared()?.enqueueChanges({ 
                     switch type {
@@ -108,27 +107,12 @@ extension CollectionCell: SelectableView {
 
         sourceViewController?.present(alert, animated: true, completion: nil)
     }
-    
-    fileprivate func trackDelete(_ message: ZMConversationMessage, deletionType: AlertAction.DeletionType) {
-        let conversationType: ConversationType = (message.conversation?.conversationType == .group) ? .group : .oneToOne
-        let messageType = Message.messageType(message)
-        let timeElapsed = message.serverTimestamp?.timeIntervalSinceNow ?? 0
-        Analytics.shared().tagDeletedMessage(messageType, messageDeletionType: deletionType.analyticsType, conversationType:conversationType, timeElapsed: 0 - timeElapsed)
-    }
-
 }
 
 private enum AlertAction {
     enum DeletionType {
         case local
         case everywhere
-        
-        var analyticsType: MessageDeletionType {
-            switch self {
-            case .local: return .local
-            case .everywhere: return .everywhere
-            }
-        }
     }
     
     case delete(DeletionType), cancel

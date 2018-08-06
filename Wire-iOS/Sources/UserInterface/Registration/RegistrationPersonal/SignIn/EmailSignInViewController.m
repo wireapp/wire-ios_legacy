@@ -36,9 +36,7 @@
 #import "NSURL+WireLocale.h"
 #import "Wire-Swift.h"
 
-#import "AnalyticsTracker+Registration.h"
 #import "Analytics.h"
-#import "StopWatch.h"
 #import "NSLayoutConstraint+Helpers.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -48,12 +46,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) RegistrationTextField *emailField;
 @property (nonatomic) RegistrationTextField *passwordField;
 @property (nonatomic) ButtonWithLargerHitArea *forgotPasswordButton;
+@property (nonatomic) ButtonWithLargerHitArea *companyLoginButton;
 
 @property (nonatomic) id preLoginAuthenticationToken;
 @property (nonatomic) id postLoginAuthenticationToken;
 
 /// After a login try we set this property to @c YES to reset both field accessories after a field change on any of those
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
+
+@property (nonatomic, readonly) BOOL shouldLockPrefilledEmail;
+@property (nonatomic, readonly) BOOL hasCompanyLoginCredentials;
+@property (nonatomic, readonly) BOOL canStartCompanyLoginFlow;
 
 @end
 
@@ -74,6 +77,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createEmailField];
     [self createPasswordField];
     [self createForgotPasswordButton];
+    if (self.canStartCompanyLoginFlow) {
+        [self createCompanyLoginButton];
+    }
+
     [self createConstraints];
 }
 
@@ -128,7 +135,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         // User was previously signed in so we prefill the credentials
         self.emailField.text = self.loginCredentials.emailAddress;
     }
-    
+
+    if (self.shouldLockPrefilledEmail) {
+        self.emailField.enabled = NO;
+        self.emailField.alpha = 0.75;
+    }
+
     [self.emailField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [self.view addSubview:self.emailField];
@@ -191,6 +203,21 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addSubview:self.forgotPasswordButton];
 }
 
+- (void)createCompanyLoginButton
+{
+    self.companyLoginButton = [ButtonWithLargerHitArea buttonWithType:UIButtonTypeCustom];
+    self.companyLoginButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.companyLoginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.companyLoginButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateHighlighted];
+    self.companyLoginButton.accessibilityIdentifier = @"companyLoginButton";
+    [self.companyLoginButton setTitle:[NSLocalizedString(@"signin.company_idp.button.title", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
+    self.companyLoginButton.titleLabel.font = UIFont.smallLightFont;
+    [self.companyLoginButton addTarget:self action:@selector(companyLoginButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.companyLoginButton.accessibilityTraits |= UIAccessibilityTraitLink;
+    [self.view addSubview:self.companyLoginButton];
+}
+
 - (void)createConstraints
 {
     [self.emailField autoPinEdgeToSuperviewEdge:ALEdgeTop];
@@ -203,15 +230,43 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.passwordField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
     [self.passwordField autoSetDimension:ALDimensionHeight toSize:40];
     
-    [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
-    [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
-    [self.forgotPasswordButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    if (self.canStartCompanyLoginFlow) {
+        [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
+        [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
+        [self.forgotPasswordButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view withOffset:28];
+        [self.companyLoginButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
+        [self.companyLoginButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
+        [self.companyLoginButton autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view withOffset:-28];
+    } else {
+        [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
+        [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
+        [self.forgotPasswordButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    }
 }
 
 - (ZMEmailCredentials *)credentials
 {
     return [ZMEmailCredentials credentialsWithEmail:self.emailField.text
                                            password:self.passwordField.text];
+}
+
+- (BOOL)shouldLockPrefilledEmail
+{
+    if (CompanyLoginController.companyLoginEnabled) {
+        return self.hasCompanyLoginCredentials;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)hasCompanyLoginCredentials
+{
+    return self.loginCredentials.usesCompanyLogin && self.loginCredentials.emailAddress != nil;
+}
+
+- (BOOL)canStartCompanyLoginFlow
+{
+    return CompanyLoginController.companyLoginEnabled && !self.hasCompanyLoginCredentials;
 }
 
 - (void)takeFirstResponder
@@ -253,14 +308,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     ZMCredentials *credentials = self.credentials;
     
-    StopWatch *stopWatch = [StopWatch stopWatch];
-    [stopWatch restartEvent:@"Login"];
-    
     self.navigationController.showLoadingView = YES;
     
-    dispatch_async(dispatch_get_main_queue(), ^{        
-        [self.analyticsTracker tagRequestedEmailLogin];
-        
+    dispatch_async(dispatch_get_main_queue(), ^{                
         [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
     });
 }
@@ -268,7 +318,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (IBAction)resetPassword:(id)sender
 {
     [[UIApplication sharedApplication] openURL:[NSURL.wr_passwordResetURL wr_URLByAppendingLocaleParameter]];
-    [[Analytics shared] tagResetPassword:YES fromType:ResetFromSignIn];
+}
+
+- (void)companyLoginButtonTapped:(ButtonWithLargerHitArea *)button
+{
+    if (self.canStartCompanyLoginFlow) {
+        [self.delegate emailSignInViewControllerDidTapCompanyLoginButton:self];
+    }
 }
 
 - (IBAction)open1PasswordExtension:(id)sender
@@ -306,7 +362,25 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return YES;
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField == self.emailField) {
+        return !self.shouldLockPrefilledEmail;
+    } else {
+        return YES;
+    }
+}
+
 #pragma mark - Field Validation
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField == self.emailField) {
+        return !self.shouldLockPrefilledEmail;
+    } else {
+        return YES;
+    }
+}
 
 - (void)textFieldDidChange:(UITextField *)textField
 {
@@ -353,21 +427,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)authenticationDidSucceed
 {
-    [self.analyticsTracker tagEmailLogin];
     // Not necessary to remove the loading view, since the controller would not be used any more.
 }
 
 - (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
 {
     self.navigationController.showLoadingView = NO;
-    [self.analyticsTracker tagEmailLogin];
 }
 
 - (void)authenticationDidFail:(NSError *)error
 {
     ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
     
-    [self.analyticsTracker tagEmailLoginFailedWithError:error];
     self.navigationController.showLoadingView = NO;
     
     if (error.code != ZMUserSessionNetworkError) {

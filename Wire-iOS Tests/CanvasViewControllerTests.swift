@@ -34,7 +34,8 @@ final class CanvasViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func DISABLE_testForInitState(){
+    func testForSendButtonEnalbed(){
+        sut.sendButton.isEnabled = true
         sut.view.prepareForSnapshot()
         verify(view: sut.view)
     }

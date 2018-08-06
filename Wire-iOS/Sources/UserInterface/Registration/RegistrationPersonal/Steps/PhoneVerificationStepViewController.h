@@ -20,8 +20,6 @@
 #import "RegistrationStepViewController.h"
 
 @class ZMIncompleteRegistrationUser;
-@class AnalyticsTracker;
-
 
 @protocol PhoneVerificationStepViewControllerDelegate <NSObject>
 
@@ -37,6 +35,5 @@
 @property (nonatomic, copy) NSString *phoneNumber;
 @property (nonatomic) BOOL isLoggingIn;
 @property (nonatomic, readonly) NSString *verificationCode;
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 
 @end

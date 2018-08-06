@@ -37,8 +37,6 @@
 #import "UserImageView.h"
 #import "AppDelegate.h"
 
-#import "AnalyticsTracker.h"
-
 #import "Wire-Swift.h"
 
 @interface ProfileSelfPictureViewController ()
@@ -51,12 +49,6 @@
 @property (nonatomic) id userObserverToken;
 @end
 
-
-@interface ProfileSelfPictureViewController (ZMUserObserver) <ZMUserObserver>
-
-@end
-
-
 @implementation ProfileSelfPictureViewController
 
 - (instancetype)init
@@ -67,7 +59,7 @@
         _imagePickerConfirmationController = [[ImagePickerConfirmationController alloc] init];
         
         @weakify(self);
-        _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData, ImageMetadata *metadata) {
+        _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData) {
             @strongify(self);
             [self dismissViewControllerAnimated:YES completion:nil];
             [self setSelfImageToData:imageData];
@@ -196,7 +188,6 @@
     }
     
     [self presentViewController:imagePickerController animated:YES completion:nil];
-    [[Analytics shared] tagProfilePictureFromSource:PictureUploadPhotoLibrary];
 }
 
 - (void)cameraButtonTapped:(id)sender
@@ -220,8 +211,6 @@
     picker.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
     picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:picker animated:YES completion:nil];
-
-    [[Analytics shared] tagProfilePictureFromSource:PictureUploadCamera];
 }
 
 - (void)closeButtonTapped:(id)sender
@@ -254,13 +243,3 @@
 
 @end
 
-@implementation ProfileSelfPictureViewController (ZMUserObserver)
-
-- (void)userDidChange:(UserChangeInfo *)note
-{
-    if (note.imageMediumDataChanged) {
-        self.selfUserImageView.image = [UIImage imageWithData:note.user.imageMediumData];
-    }
-}
-
-@end

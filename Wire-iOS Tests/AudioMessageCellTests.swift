@@ -74,7 +74,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     
     func testUploadedCell_fromOtherUser_withoutPreview() {
         let cell = self.wrappedCellWithConfig({
-            $0.backingFileMessageData.previewData = nil
+            $0.backingFileMessageData.imagePreviewData = nil
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
             $0.sender = MockUser.mockUsers().first!
@@ -118,7 +118,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testUploadingCell_fromOtherUser_withoutPreview() {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploading
-            $0.backingFileMessageData.previewData = nil
+            $0.backingFileMessageData.imagePreviewData = nil
             $0.backingFileMessageData.fileURL = .none
             $0.sender = MockUser.mockUsers().first!
         })

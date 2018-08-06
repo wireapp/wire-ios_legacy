@@ -96,7 +96,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)crashManagerWillSendCrashReport:(BITCrashManager *)crashManager
 {
-    [[Analytics shared] tagAppException:@"" screen:@"" timeInSession:[[UIApplication sharedApplication] lastApplicationRunDuration]];
     [[UIApplication sharedApplication] resetRunDuration];
 }
 

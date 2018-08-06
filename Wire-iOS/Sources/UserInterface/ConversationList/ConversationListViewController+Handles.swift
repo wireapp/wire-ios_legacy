@@ -27,9 +27,9 @@ private let debugOverrideShowTakeover = false
 extension ConversationListViewController {
 
     func showUsernameTakeover(with handle: String) {
-        guard let selfUser = ZMUser.selfUser(), nil == selfUser.handle || debugOverrideShowTakeover else { return }
+        guard let name = ZMUser.selfUser().name, nil == ZMUser.selfUser().handle || debugOverrideShowTakeover else { return }
         guard nil == usernameTakeoverViewController else { return }
-        usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: selfUser.name)
+        usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: name)
         usernameTakeoverViewController.delegate = self
 
         addChildViewController(usernameTakeoverViewController)
@@ -40,8 +40,6 @@ extension ConversationListViewController {
         constrain(view, usernameTakeoverViewController.view) { view, takeover in
             takeover.edges == view.edges
         }
-
-        Analytics.shared().tag(UserNameEvent.Takeover.shown)
 
         guard traitCollection.userInterfaceIdiom == .pad else { return }
         ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)
@@ -87,7 +85,6 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
 
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction) {
 
-        tagEvent(for: action)
         perform(action)
 
         // show data usage dialog after user name take over screen
@@ -101,19 +98,6 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
         case .learnMore: URL.wr_usernameLearnMore.openInApp(above: self)
         }
     }
-
-    private func tagEvent(for action: UserNameTakeOverViewControllerAction) {
-        Analytics.shared().tag(event(for: action))
-    }
-
-    private func event(for action: UserNameTakeOverViewControllerAction) -> UserNameEvent.Takeover {
-        switch action {
-        case .chooseOwn(_): return .openedSettings
-        case .learnMore: return .openedFAQ
-        case .keepSuggestion(_): return .keepSuggested(success: true)
-        }
-    }
-
 }
 
 

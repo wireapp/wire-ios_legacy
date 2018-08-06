@@ -29,8 +29,8 @@
 #import "UserImageView.h"
 #import "AccentColorChangeHandler.h"
 #import "Analytics.h"
-#import "Analytics+ConversationEvents.h"
 #import "UIResponder+FirstResponder.h"
+#import "Wire-Swift.h"
 
 const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
@@ -225,6 +225,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.burstTimestampTimer invalidate];
     self.burstTimestampTimer = nil;
     [self tearDownCountdown];
+    [self cellDidEndBeingVisible];
 }
 
 - (void)createBaseConstraints
@@ -603,7 +604,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     self.beingEdited = YES;
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         [self.delegate conversationCell:self didSelectAction:MessageActionDelete];
-        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeDelete];
     }
 }
 

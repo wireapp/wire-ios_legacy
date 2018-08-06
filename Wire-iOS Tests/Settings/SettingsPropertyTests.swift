@@ -21,14 +21,17 @@ import XCTest
 @testable import Wire
 
 @objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
+    
     var originalProfileImageData: Data!
     
     func deleteProfileImage() {
         // no-op
     }
     
-    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>!) throws {
+    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>?) throws {
+        // no-op
     }
+    
 }
 
 class MockZMUserSession: ZMUserSessionInterface {

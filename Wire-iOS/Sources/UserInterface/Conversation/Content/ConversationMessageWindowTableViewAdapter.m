@@ -18,6 +18,7 @@
 
 
 #import "ConversationMessageWindowTableViewAdapter.h"
+#import "ConversationMessageWindowTableViewAdapter+Private.h"
 #import "ZMConversationMessageWindow+Formatting.h"
 #import "NSIndexSet+IndexPaths.h"
 #import "Analytics.h"
@@ -30,39 +31,6 @@
 #import "ConnectionRequestCell.h"
 
 #import "Wire-Swift.h"
-
-
-static NSString *const ConversationNameChangedCellId        = @"ConversationNameChangedCell";
-static NSString *const ConversationTextCellId               = @"ConversationTextCell";
-static NSString *const ConversationImageCellId              = @"ConversationImageCell";
-static NSString *const ConversationConnectionRequestCellId  = @"ConversationConnectionRequestCellId";
-static NSString *const ConversationMissedCallCellId         = @"ConversationMissedCallCell";
-static NSString *const ConversationPerformedCallCellId      = @"ConversationPerformedCallCellId";
-static NSString *const ConversationPingCellId               = @"conversationPingCellId";
-static NSString *const ConversationNewDeviceCellId          = @"ConversationNewDeviceCellId";
-static NSString *const ConversationVerifiedCellId           = @"conversationVerifiedCellId";
-static NSString *const ConversationMissingMessagesCellId    = @"conversationMissingMessagesCellId";
-static NSString *const ConversationIgnoredDeviceCellId      = @"conversationIgnoredDeviceCellId";
-static NSString *const ConversationCannotDecryptCellId      = @"conversationCannotDecryptCellId";
-static NSString *const ConversationFileTransferCellId       = @"conversationFileTransferCellId";
-static NSString *const ConversationVideoMessageCellId       = @"conversationVideoMessageCellId";
-static NSString *const ConversationAudioMessageCellId       = @"conversationAudioMessageCellId";
-static NSString *const ConversationLocationMessageCellId    = @"conversationLocationMessageCellId";
-static NSString *const ConversationMessageDeletedCellId     = @"conversationMessageDeletedCellId";
-static NSString *const ConversationUnknownMessageCellId     = @"conversationUnknownMessageCellId";
-static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMessageTimerUpdateCellId";
-
-
-@interface ConversationMessageWindowTableViewAdapter () <ZMConversationMessageWindowObserver>
-
-@property (nonatomic) UITableView *tableView;
-@property (nonatomic) ZMConversationMessageWindow *messageWindow;
-@property (nonatomic) id messageWindowObserverToken;
-@property (nonatomic) BOOL expandingWindow;
-
-@end
-
-
 
 @implementation ConversationMessageWindowTableViewAdapter
 
@@ -187,135 +155,6 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
     }
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.messageWindow.messages.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    id<ZMConversationMessage>message = [self.messageWindow.messages objectAtIndex:indexPath.row];
-    
-    NSString *cellIdentifier = ConversationUnknownMessageCellId;
-    
-    if ([Message isTextMessage:message]) {
-        cellIdentifier = ConversationTextCellId;
-    }
-    else if ([Message isVideoMessage:message]) {
-        cellIdentifier = ConversationVideoMessageCellId;
-    }
-    else if ([Message isAudioMessage:message]) {
-        cellIdentifier = ConversationAudioMessageCellId;
-    }
-    else if ([Message isLocationMessage:message]) {
-        cellIdentifier = ConversationLocationMessageCellId;
-    }
-    else if ([Message isFileTransferMessage:message]) {
-        cellIdentifier = ConversationFileTransferCellId;
-    }
-    else if ([Message isImageMessage:message]) {
-        cellIdentifier = ConversationImageCellId;
-    }
-    else if ([Message isKnockMessage:message]) {
-        cellIdentifier = ConversationPingCellId;
-    }
-    else if ([Message isSystemMessage:message]) {
-        
-        switch (message.systemMessageData.systemMessageType) {
-                
-            case ZMSystemMessageTypeConnectionRequest:
-                cellIdentifier = ConversationConnectionRequestCellId;
-                break;
-                
-            case ZMSystemMessageTypeConnectionUpdate:
-                break;
-                
-            case ZMSystemMessageTypeConversationNameChanged:
-                cellIdentifier = ConversationNameChangedCellId;
-                break;
-                
-            case ZMSystemMessageTypeMissedCall:
-                cellIdentifier = ConversationMissedCallCellId;
-                break;
-                
-            case ZMSystemMessageTypeNewClient:
-            case ZMSystemMessageTypeUsingNewDevice:
-                cellIdentifier = ConversationNewDeviceCellId;
-                break;
-                
-            case ZMSystemMessageTypeIgnoredClient:
-                cellIdentifier = ConversationIgnoredDeviceCellId;
-                break;
-                
-            case ZMSystemMessageTypeConversationIsSecure:
-                cellIdentifier = ConversationVerifiedCellId;
-                break;
-                
-            case ZMSystemMessageTypePotentialGap:
-            case ZMSystemMessageTypeReactivatedDevice:
-                cellIdentifier = ConversationMissingMessagesCellId;
-                break;
-                
-            case ZMSystemMessageTypeDecryptionFailed:
-            case ZMSystemMessageTypeDecryptionFailed_RemoteIdentityChanged:
-                cellIdentifier = ConversationCannotDecryptCellId;
-                break;
-                
-            case ZMSystemMessageTypeParticipantsAdded:
-            case ZMSystemMessageTypeParticipantsRemoved:
-            case ZMSystemMessageTypeNewConversation:
-            case ZMSystemMessageTypeTeamMemberLeave:
-                cellIdentifier = ParticipantsCell.zm_reuseIdentifier;
-                break;
-                
-            case ZMSystemMessageTypeMessageDeletedForEveryone:
-                cellIdentifier = ConversationMessageDeletedCellId;
-                break;
-
-            case ZMSystemMessageTypePerformedCall:
-                cellIdentifier = ConversationPerformedCallCellId;
-                break;
-                
-            case ZMSystemMessageTypeMessageTimerUpdate:
-                cellIdentifier = ConversationMessageTimerUpdateCellId;
-
-            default:
-                break;
-        }
-    }
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-
-    // Newly created cells will have a size of {320, 44}, which leads to layout problems when they contain `UICollectionViews`.
-    // This is needed as long as `ParticipantsCell` contains a `UICollectionView`.
-    CGRect bounds = cell.bounds;
-    bounds.size.width = self.tableView.bounds.size.width;
-    cell.bounds = bounds;
-    
-    ConversationCell *conversationCell = nil;
-    if ([cell isKindOfClass:ConversationCell.class]) {
-        conversationCell = (ConversationCell *)cell;
-    }
-    
-    conversationCell.searchQueries = self.searchQueries;
-    conversationCell.delegate = self.conversationCellDelegate;
-    conversationCell.analyticsTracker = self.analyticsTracker;
-    
-    // Configuration of the cell is not possible when `ZMUserSession` is not available. 
-    if (nil != [ZMUserSession sharedSession]) {
-        [self configureConversationCell:conversationCell withMessage:message];
-    }
-    
-    return cell;
-}
-
 - (void)configureConversationCell:(ConversationCell *)conversationCell withMessage:(nullable id<ZMConversationMessage>)message
 {
     // If a message has been deleted or nil, we don't try to configure it
@@ -326,30 +165,6 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
     conversationCell.selected = [message isEqual:self.selectedMessage];
     conversationCell.beingEdited = [message isEqual:self.editingMessage];
     [conversationCell configureForMessage:message layoutProperties:layoutProperties];
-}
-
-- (void)registerTableCellClasses
-{
-    [self.tableView registerClass:[TextMessageCell class] forCellReuseIdentifier:ConversationTextCellId];
-    [self.tableView registerClass:[ImageMessageCell class] forCellReuseIdentifier:ConversationImageCellId];
-    [self.tableView registerClass:[ConversationRenamedCell class] forCellReuseIdentifier:ConversationNameChangedCellId];
-    [self.tableView registerClass:[PingCell class] forCellReuseIdentifier:ConversationPingCellId];
-    [self.tableView registerClass:[PerformedCallCell class] forCellReuseIdentifier:ConversationPerformedCallCellId];
-    [self.tableView registerClass:[MissedCallCell class] forCellReuseIdentifier:ConversationMissedCallCellId];
-    [self.tableView registerClass:[ConnectionRequestCell class] forCellReuseIdentifier:ConversationConnectionRequestCellId];
-    [self.tableView registerClass:[ConversationNewDeviceCell class] forCellReuseIdentifier:ConversationNewDeviceCellId];
-    [self.tableView registerClass:[ConversationVerifiedCell class] forCellReuseIdentifier:ConversationVerifiedCellId];
-    [self.tableView registerClass:[MissingMessagesCell class] forCellReuseIdentifier:ConversationMissingMessagesCellId];
-    [self.tableView registerClass:[ConversationIgnoredDeviceCell class] forCellReuseIdentifier:ConversationIgnoredDeviceCellId];
-    [self.tableView registerClass:[CannotDecryptCell class] forCellReuseIdentifier:ConversationCannotDecryptCellId];
-    [self.tableView registerClass:[FileTransferCell class] forCellReuseIdentifier:ConversationFileTransferCellId];
-    [self.tableView registerClass:[VideoMessageCell class] forCellReuseIdentifier:ConversationVideoMessageCellId];
-    [self.tableView registerClass:[AudioMessageCell class] forCellReuseIdentifier:ConversationAudioMessageCellId];
-    [self.tableView registerClass:[ParticipantsCell class] forCellReuseIdentifier:ParticipantsCell.zm_reuseIdentifier];
-    [self.tableView registerClass:[LocationMessageCell class] forCellReuseIdentifier:ConversationLocationMessageCellId];
-    [self.tableView registerClass:[MessageDeletedCell class] forCellReuseIdentifier:ConversationMessageDeletedCellId];
-    [self.tableView registerClass:[UnknownMessageCell class] forCellReuseIdentifier:ConversationUnknownMessageCellId];
-    [self.tableView registerClass:[MessageTimerUpdateCell class] forCellReuseIdentifier:ConversationMessageTimerUpdateCellId];
 }
 
 - (void)expandMessageWindow

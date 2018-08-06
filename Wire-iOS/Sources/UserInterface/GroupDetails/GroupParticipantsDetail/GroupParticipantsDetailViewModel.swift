@@ -24,28 +24,51 @@ fileprivate extension String {
     }
 }
 
+fileprivate extension ZMUser {
+    private func name(in conversation: ZMConversation) -> String {
+        return conversation.activeParticipants.contains(self)
+            ? displayName(in: conversation)
+            : displayName
+    }
+}
+
 class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate {
 
-    private let internalParticipants: [ZMBareUser]
+    private let internalParticipants: [UserType]
     private var filterQuery: String?
     
+    let selectedParticipants: [UserType]
     let conversation: ZMConversation
     var participantsDidChange: (() -> Void)? = nil
-    
-    var participants = [ZMBareUser]() {
-        didSet { participantsDidChange?() }
+
+    var indexOfFirstSelectedParticipant: Int? {
+        guard let first = selectedParticipants.first as? ZMUser else { return nil }
+        return internalParticipants.index {
+            ($0 as? ZMUser)?.remoteIdentifier == first.remoteIdentifier
+        }
     }
     
-    init(participants: [ZMBareUser], conversation: ZMConversation) {
+    var participants = [UserType]() {
+        didSet { participantsDidChange?() }
+    }
+
+    init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
         internalParticipants = participants
         self.conversation = conversation
+        self.selectedParticipants = selectedParticipants.sorted { $0.displayName < $1.displayName }
+        
         super.init()
         computeVisibleParticipants()
     }
     
+    func isUserSelected(_ user: UserType) -> Bool {
+        guard let id = (user as? ZMUser)?.remoteIdentifier else { return false }
+        return selectedParticipants.contains { ($0 as? ZMUser)?.remoteIdentifier == id}
+    }
+    
     private func computeVisibleParticipants() {
         guard let query = filterQuery, query.isValidQuery else { return participants = internalParticipants }
-        participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [ZMBareUser]
+        participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [UserType]
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {

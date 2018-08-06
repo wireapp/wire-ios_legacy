@@ -20,13 +20,11 @@
 #import <UIKit/UIKit.h>
 #import "ConversationContentViewControllerDelegate.h"
 #import "Constants.h"
-#import "UpsideDownTableView.h"
 
 
 @class ZMConversation;
 @class ConversationMediaController;
-@class AnalyticsTracker;
-
+@class UpsideDownTableView;
 
 /// The main conversation view controller
 @interface ConversationContentViewController : UIViewController
@@ -37,7 +35,6 @@
 @property (nonatomic, readonly) BOOL isScrolledToBottom;
 @property (nonatomic, weak) ConversationMediaController *mediaController;
 @property (nonatomic) UpsideDownTableView *tableView;
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation NS_DESIGNATED_INITIALIZER;

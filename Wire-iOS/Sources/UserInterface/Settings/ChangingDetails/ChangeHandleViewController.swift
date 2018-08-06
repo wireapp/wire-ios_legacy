@@ -332,7 +332,6 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     func didSetHandle() {
         showLoadingView = false
         state.availability = .taken
-        Analytics.shared().tag(UserNameEvent.Settings.setUsername(withLength: state.newHandle?.count ?? 0))
         guard popOnSuccess else { return }
         _ = navigationController?.popViewController(animated: true)
     }
@@ -363,13 +362,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
 fileprivate extension String {
 
     var isEqualToUnicodeName: Bool {
-        if #available(iOS 9, *) {
-            return applyingTransform(.toUnicodeName, reverse: false) == self
-        } else {
-            let ref = NSMutableString(string: self) as CFMutableString
-            CFStringTransform(ref, nil, kCFStringTransformToUnicodeName, false)
-            return ref as String == self
-        }
+        return applyingTransform(.toUnicodeName, reverse: false) == self
     }
     
 }

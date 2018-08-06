@@ -65,9 +65,8 @@ extension ConversationActionController {
     
     func handleDeleteResult(_ result: DeleteResult, for conversation: ZMConversation) {
         guard case .delete(leave: let leave) = result else { return }
-        transitionToListAndEnqueue { [weak self] in
+        transitionToListAndEnqueue {
             conversation.clearMessageHistory()
-            self?.trackDeletion(of: conversation)
             if leave {
                 conversation.removeOrShowError(participnant: .selfUser())
             }

@@ -237,7 +237,7 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
         }
         
         ZMUserSession.shared()?.performChanges {
-            ZMUser.selfUser().accentColorValue = self.allAccentColors[colorIndex]
+            (ZMUser.editableSelf() as ZMEditableUser).accentColorValue = self.allAccentColors[colorIndex]
         }
     }
 

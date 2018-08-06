@@ -202,7 +202,7 @@ MessageToolboxView {
     clipsToBounds: true;
 }
 
-ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, UnknownMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell, MessageTimerUpdateCell {
+ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell, MessageTimerUpdateCell {
 
     burstTimestampView: @{
         label: @{
@@ -301,15 +301,6 @@ LocationMessageCell, LocationPreviewController {
 
 MessageDeletedCell {
     trashColor: $color-icon-normal;
-}
-
-UnknownMessageCell {
-    messageLabelFont: $font-small-light;
-    messageLabelTextColor: $color-text-foreground;
-    
-    messageLabel: @{
-        textTransform: upper;
-    }
 }
 
 ArticleView {

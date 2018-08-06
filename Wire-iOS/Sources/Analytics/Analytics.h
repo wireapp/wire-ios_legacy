@@ -16,21 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-#import "AnalyticsProvider.h"
-
 @import Foundation;
 @import WireSyncEngine;
 
 @class AnalyticsSessionSummaryEvent;
 @class AnalyticsRegistration;
-@class AnalyticsEvent;
-
-typedef NS_ENUM (NSUInteger, AnalyticsEventSource) {
-    AnalyticsEventSourceUnspecified,
-    AnalyticsEventSourceUI,
-    AnalyticsEventSourceMenu,
-    AnalyticsEventSourceShortcut
-};
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,9 +35,6 @@ FOUNDATION_EXPORT BOOL UseAnalytics;
 
 @property (nonatomic, readonly) AnalyticsSessionSummaryEvent *sessionSummary;
 
-/// For tagging registration events
-@property (nonatomic, assign) BOOL observingConversationList;
-
 @property (nonatomic, nullable) Team* team;
 
 + (void)loadSharedWithOptedOut:(BOOL)optedOut;
@@ -58,19 +45,10 @@ FOUNDATION_EXPORT BOOL UseAnalytics;
 
 /// Record an event with no attributes
 - (void)tagEvent:(NSString *)event;
-- (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source;
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes team:(nullable Team *)team;
 
 /// Record an event with optional attributes.
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes;
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes source:(AnalyticsEventSource)source;
-
-- (void)tagEventObject:(AnalyticsEvent *)event;
-- (void)tagEventObject:(AnalyticsEvent *)event source:(AnalyticsEventSource)source;
-
-/// Set the custom dimensions values
-- (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
-                              groupConversations:(NSUInteger)groupConv;
 
 @end
 

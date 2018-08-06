@@ -19,22 +19,12 @@
 @import WireSystem;
 
 #import "Analytics.h"
-#import "Analytics+SessionEvents.h"
-#import "AnalyticsConversationListObserver.h"
-#import "AnalyticsConversationVerifiedObserver.h"
-#import "AnalyticsDecryptionFailedObserver.h"
-
-#import "AnalyticsOptEvent.h"
-
+#import "AnalyticsProvider.h"
 #import "ZMUser+Additions.h"
-
 #import "WireSyncEngine+iOS.h"
-
 #import "ZMUser+Additions.h"
-#import "DefaultIntegerClusterizer.h"
-
+#import "AnalyticsDecryptionFailedObserver.h"
 #import <avs/AVSFlowManager.h>
-
 #import "Wire-Swift.h"
 
 
@@ -50,11 +40,9 @@ BOOL UseAnalytics = USE_ANALYTICS;
 @property (nonatomic, strong, nullable) id<AnalyticsProvider> provider;
 @property (nonatomic, strong) AnalyticsSessionSummaryEvent *sessionSummary;
 @property (nonatomic, strong) AnalyticsCallingTracker *callingTracker;
-@property (nonatomic, strong, readwrite) AnalyticsRegistration *analyticsRegistration;
-@property (nonatomic, strong) AnalyticsConversationListObserver *conversationListObserver;
-@property (nonatomic, strong) AnalyticsConversationVerifiedObserver *conversationVerifiedObserver;
 @property (nonatomic, strong) AnalyticsDecryptionFailedObserver *decryptionFailedObserver;
-@property (nonatomic, strong) AnalyticsFileTransferObserver *fileTransferObserver;
+
+@property (nonatomic, strong, readwrite) AnalyticsRegistration *analyticsRegistration;
 
 @end
 
@@ -104,16 +92,15 @@ static Analytics *sharedAnalytics = nil;
         return;
     }
     
-    AnalyticsOptEvent *optEvent = [AnalyticsOptEvent eventForAnalyticsOptedOut:isOptedOut];
     if (isOptedOut) {
-        [self tagEventObject:optEvent source:AnalyticsEventSourceUI];
+        [self tagEvent:@"settings.opted_out_tracking"];
         self.provider.isOptedOut = isOptedOut;
         self.provider = nil;
     }
     else {
         self.provider = [[AnalyticsProviderFactory shared] analyticsProvider];
         self.team = [[ZMUser selfUser] team];
-        [self tagEventObject:optEvent source:AnalyticsEventSourceUI];
+        [self tagEvent:@"settings.opted_in_tracking"];
     }
 }
 
@@ -130,31 +117,16 @@ static Analytics *sharedAnalytics = nil;
     }
 }
 
-- (void)setObservingConversationList:(BOOL)observingConversationList
-{
-    _observingConversationList = observingConversationList;
-    self.conversationListObserver.observing = observingConversationList;
-}
-
 - (void)userSessionDidBecomeAvailable:(NSNotification *)note
 {
     self.callingTracker                 = [[AnalyticsCallingTracker alloc] initWithAnalytics:self];
-    self.conversationListObserver       = [[AnalyticsConversationListObserver alloc] initWithAnalytics:self];
     self.decryptionFailedObserver       = [[AnalyticsDecryptionFailedObserver alloc] initWithAnalytics:self];
-    self.fileTransferObserver           = [[AnalyticsFileTransferObserver alloc] init];
-    self.conversationVerifiedObserver   = [[AnalyticsConversationVerifiedObserver alloc] initWithAnalytics:self];
-    
     self.team = [[ZMUser selfUser] team];
 }
 
 - (void)tagEvent:(NSString *)event
 {
     [self.provider tagEvent:event attributes:[NSDictionary dictionary]];
-}
-
-- (void)tagEvent:(NSString *)event source:(AnalyticsEventSource)source
-{
-    [self tagEvent:event attributes:[NSDictionary dictionary] source:source];
 }
 
 - (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes team:(nullable Team *)team
@@ -170,41 +142,6 @@ static Analytics *sharedAnalytics = nil;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.provider tagEvent:event attributes:attributes];
     });
-}
-
-- (void)tagEvent:(NSString *)event attributes:(NSDictionary *)attributes source:(AnalyticsEventSource)source
-{
-    if (source != AnalyticsEventSourceUnspecified) {
-        
-        NSMutableDictionary *newAttrs = nil;
-        
-        if (attributes != nil) {
-            newAttrs = [NSMutableDictionary dictionaryWithDictionary:attributes];
-        }
-        else {
-            newAttrs = [[NSMutableDictionary alloc] init];
-        }
-        
-        [newAttrs setObject:[[self class] eventSourceToString:source] forKey:@"source"];
-        attributes = newAttrs;
-    }
-    
-    [self.provider tagEvent:event attributes:attributes];
-}
-
-
-- (void)tagEventObject:(AnalyticsEvent *)event
-{
-    [self tagEventObject:event source:AnalyticsEventSourceUnspecified];
-}
-
-- (void)tagEventObject:(AnalyticsEvent *)event source:(AnalyticsEventSource)source
-{
-    NSString *tag = [event eventTag];
-    
-    NSAssert(tag != nil, @"analytics event object returned nil tag");
-    
-    [self tagEvent:tag attributes:[event attributesDump] source:source];
 }
 
 - (NSDictionary<NSString *,id> * _Nullable)persistedAttributesForEvent:(NSString * _Nonnull)event
@@ -224,46 +161,6 @@ static Analytics *sharedAnalytics = nil;
         persistedAttributes[event] = attributes;
     }
     [[NSUserDefaults standardUserDefaults] setObject:persistedAttributes forKey:PersistedAttributesKey];
-}
-
-- (void)sendCustomDimensionsWithNumberOfContacts:(NSUInteger)contacts
-                              groupConversations:(NSUInteger)groupConv
-{
-    IntRange r[] = {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 10}, {11, 20}, {21, 30}, {31, 40}, {41, 50}, {51, 60}};
-    RangeSet rSet = {r, 10};
-    
-    DefaultIntegerClusterizer *clusterizer = [DefaultIntegerClusterizer new];
-    clusterizer.rangeSet = rSet;
-    
-    [self.provider setSuperProperty:@"contacts" value:@(contacts).stringValue];
-    [self.provider setSuperProperty:@"group_conversations" value:[clusterizer clusterizeInteger:(int) groupConv]];
-}
-
-+ (NSString *)eventSourceToString:(AnalyticsEventSource) source
-{
-    
-    NSString *result = nil;
-    
-    switch (source) {
-            
-        case AnalyticsEventSourceUnspecified:
-            result = @"unspecified";
-            break;
-            
-        case AnalyticsEventSourceMenu:
-            result = @"menu";
-            break;
-            
-        case AnalyticsEventSourceShortcut:
-            result = @"shortcut";
-            break;
-            
-        case AnalyticsEventSourceUI:
-            result = @"UI";
-            break;
-    }
-    
-    return result;
 }
 
 @end

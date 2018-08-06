@@ -30,6 +30,21 @@ extension ZMConversationMessage {
     var isFirstMessage: Bool {
         return (self.conversation?.messages.count ?? 0) == 1
     }
+    
+    var isSystemMessageWithSoundNotification: Bool {
+        guard isSystem, let data = systemMessageData else {
+            return false
+        }
+        
+        switch data.systemMessageType {
+        // No sound must be played for the case when the user participated in the call.
+        case .performedCall:
+            return false
+            
+        default:
+            return true
+        }
+    }
 }
 
 class SoundEventListener : NSObject {
@@ -96,8 +111,8 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             let isSilencedConversation = message.conversation?.isSilenced ?? false
             
             provideHapticFeedback(for: message)
-            
-            guard (message.isNormal || message.isSystem) &&
+
+            guard (message.isNormal || message.isSystemMessageWithSoundNotification) &&
                   message.isRecentMessage &&
                   !message.isSentBySelfUser &&
                   !message.isFirstMessage &&
@@ -106,7 +121,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             }
             
             let isFirstUnreadMessage = message.isEqual(message.conversation?.firstUnreadMessage)
-                        
+
             if isFirstUnreadMessage {
                 playSoundIfAllowed(MediaManagerSoundFirstMessageReceivedSound)
             } else {
@@ -134,7 +149,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
 
 extension SoundEventListener : WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
         
         guard let mediaManager = AVSMediaManager.sharedInstance(),
               let userSession = userSession,
@@ -148,14 +163,6 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         previousCallStates[conversationId] = callState
         
         switch callState {
-        case .outgoing:
-            if callCenter.isVideoCall(conversationId: conversationId) {
-                playSoundIfAllowed(MediaManagerSoundRingingFromMeVideoSound)
-            } else {
-                playSoundIfAllowed(MediaManagerSoundRingingFromMeSound)
-            }
-        case .established:
-            playSoundIfAllowed(MediaManagerSoundUserJoinsVoiceChannelSound)
         case .incoming(video: _, shouldRing: true, degraded: _):
             guard let sessionManager = SessionManager.shared, !conversation.isSilenced else { return }
             
@@ -174,7 +181,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         case .terminating(reason: let reason):
             switch reason {
             case .normal, .canceled:
-                playSoundIfAllowed(MediaManagerSoundUserLeavesVoiceChannelSound)
+                break
             default:
                 playSoundIfAllowed(MediaManagerSoundCallDropped)
             }
@@ -192,8 +199,6 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
             
             mediaManager.stopSound(MediaManagerSoundRingingFromThemInCallSound)
             mediaManager.stopSound(MediaManagerSoundRingingFromThemSound)
-            mediaManager.stopSound(MediaManagerSoundRingingFromMeVideoSound)
-            mediaManager.stopSound(MediaManagerSoundRingingFromMeSound)
         }
         
     }

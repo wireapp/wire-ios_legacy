@@ -76,7 +76,6 @@
         switch action {
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
             self.conversation.isArchived = !isArchived
-            Analytics.shared().tagArchivedConversation(!isArchived)
             }
         case .markRead: self.enqueue {
             self.conversation.markAsRead()

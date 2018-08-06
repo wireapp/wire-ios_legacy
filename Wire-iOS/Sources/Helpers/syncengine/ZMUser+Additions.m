@@ -21,7 +21,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
-#import "Analytics+SearchEvents.h"
 #import "ColorScheme.h"
 
 ZMUser *BareUserToUser(id bareUser) {
@@ -54,10 +53,8 @@ ZMUser *BareUserToUser(id bareUser) {
 {
     if (self.isBlocked) {
         [self accept];
-        [[Analytics shared] tagUnblocking];
     } else {
         [self block];
-        [[Analytics shared] tagBlockingAction:BlockingTypeBlock];
     }
 }
 
@@ -73,7 +70,7 @@ ZMUser *BareUserToUser(id bareUser) {
 
 
 /**
- Return self's User object (a subclass of ZMBareUser)
+ Return self's User object
 
  @return a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
  */
@@ -81,7 +78,7 @@ ZMUser *BareUserToUser(id bareUser) {
 {
     Class mockUserClass = NSClassFromString(@"MockUser");
     if (mockUserClass != nil) {
-        return [mockUserClass selfUserInUserSession:nil];
+        return [mockUserClass selfUserInUserSession:[ZMUserSession sharedSession]];
     }
     else {
         return [ZMUser selfUserInUserSession:[ZMUserSession sharedSession]];

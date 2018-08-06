@@ -19,11 +19,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol ZMSearchableUser;
+@protocol UserType;
 
 @interface ProfilePresenter : NSObject
 @property (nonatomic, assign) BOOL profileOpenedFromPeoplePicker;
 @property (nonatomic, assign) BOOL keyboardPersistedAfterOpeningProfile;
 
-- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)user inController:(UIViewController *)controller fromRect:(CGRect)rect onDismiss:(dispatch_block_t)onDismiss arrowDirection:(UIPopoverArrowDirection)arrowDirection;
+- (void)presentProfileViewControllerForUser:(id<UserType>)user inController:(UIViewController *)controller fromRect:(CGRect)rect onDismiss:(dispatch_block_t)onDismiss arrowDirection:(UIPopoverArrowDirection)arrowDirection;
 @end

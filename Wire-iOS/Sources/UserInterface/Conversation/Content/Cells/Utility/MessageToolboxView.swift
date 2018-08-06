@@ -295,8 +295,6 @@ extension ZMSystemMessageData {
             } else if message.isAudio {
                 // do nothing, audio messages are allowed to extend the timer
                 // past the destruction date.
-            } else {
-                requireInternal(remaining > 0, "invalid negative timeout value")
             }
         }
 

@@ -114,6 +114,18 @@ class ActiveVoiceChannelViewController : UIViewController {
         }
     }
     
+    fileprivate func updateMinimisedCall(with callState: CallState,
+                                         conversation: ZMConversation) {
+        switch callState {
+        case .terminating(_):
+            if minimisedCall == conversation.remoteIdentifier! {
+                minimisedCall = nil
+            }
+        default:
+            break
+        }
+    }
+    
     private func shouldPresentCallOverlay() -> Bool {
         switch (primaryCallingConversation?.voiceChannel?.state, SessionManager.shared?.callNotificationStyle) {
         case (.incoming?, .callKit?): return false
@@ -200,28 +212,17 @@ class ActiveVoiceChannelViewController : UIViewController {
     
     
     var ongoingCallConversation : ZMConversation? {
-        guard let userSession = ZMUserSession.shared(), let callCenter = userSession.callCenter else { return nil }
-        
-        return callCenter.nonIdleCallConversations(in: userSession).first { (conversation) -> Bool in
-            guard let callState = conversation.voiceChannel?.state else { return false }
-            
-            switch callState {
-            case .answered, .established, .establishedDataChannel, .outgoing:
-                return true
-            default:
-                return false
-            }
-        }
-        
+        return ZMUserSession.shared()?.ongoingCallConversation
     }
     
 }
 
 extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?)  {
         updateVisibleVoiceChannelViewController()
-
+        updateMinimisedCall(with: callState, conversation: conversation)
+        
         let changeDate = Date()
 
         // Only show the survey in internal builds (review required)
@@ -235,10 +236,6 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
         switch callState {
         case .established:
             answeredCalls[conversation.remoteIdentifier!] = Date()
-        case .terminating(_):
-            if minimisedCall == conversation.remoteIdentifier! {
-                minimisedCall = nil
-            }
         default:
             break
         }
@@ -249,8 +246,7 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
         if case let .terminating(reason) = callState {
             
-            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!],
-                AutomationHelper.sharedHelper.useAnalytics else {
+            guard let callStartDate = answeredCalls[conversation.remoteIdentifier!] else {
                 return
             }
 
@@ -258,6 +254,11 @@ extension ActiveVoiceChannelViewController : WireCallCenterCallStateObserver {
 
             let callDuration = changeDate.timeIntervalSince(callStartDate)
 
+            guard AutomationHelper.sharedHelper.useAnalytics else {
+                CallQualityScoreProvider.shared.recordCallQualityReview(.notDisplayed(reason: .callTooShort, duration: Int(callDuration)))
+                return
+            }
+            
             guard callDuration > 10 else {
                 CallQualityScoreProvider.shared.recordCallQualityReview(.notDisplayed(reason: .callTooShort, duration: Int(callDuration)))
                 return

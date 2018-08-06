@@ -27,7 +27,6 @@
 #import "ZMConversation+Additions.h"
 #import "Message+Formatting.h"
 #import "Constants.h"
-#import "AnalyticsTracker+Media.h"
 #import "LinkAttachmentViewControllerFactory.h"
 #import "LinkAttachment.h"
 #import "Wire-Swift.h"
@@ -165,7 +164,6 @@
     }
     
     [super configureForMessage:message layoutProperties:layoutProperties];
-    [message requestImageDownload];
     
     id<ZMTextMessageData> textMesssageData = message.textMessageData;
 
@@ -212,7 +210,7 @@
     }
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
-        BOOL showImage = textMesssageData.hasImageData;
+        BOOL showImage = textMesssageData.linkPreviewHasImage;
         
         ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:showImage];
 
@@ -284,7 +282,6 @@
     if (change.imageChanged && nil != textMesssageData.linkPreview && [self.linkAttachmentView isKindOfClass:ArticleView.class]) {
         ArticleView *articleView = (ArticleView *)self.linkAttachmentView;
         [articleView configureWithTextMessageData:textMesssageData obfuscated:self.message.isObfuscated];
-        [self.message requestImageDownload];
     }
 
     return needsLayout;
@@ -326,8 +323,6 @@
 - (void)copy:(id)sender
 {
     if (self.message.textMessageData.messageText) {
-        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-        [[Analytics shared] tagMessageCopy];
         [UIPasteboard generalPasteboard].string = self.message.textMessageData.messageText;
     }
 }
@@ -337,7 +332,6 @@
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         self.beingEdited = YES;
         [self.delegate conversationCell:self didSelectAction:MessageActionEdit];
-        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeEdit];
     }
 }
 
@@ -433,16 +427,6 @@
 
 - (BOOL)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
-    LinkAttachment *linkAttachment = [self.layoutProperties.linkAttachments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.URL == %@", url]].lastObject;
-    
-    if (linkAttachment != nil) {
-        [self.analyticsTracker tagExternalLinkVisitEventForAttachmentType:linkAttachment.type
-                                                         conversationType:self.message.conversation.conversationType];
-    } else {
-        [self.analyticsTracker tagExternalLinkVisitEventForAttachmentType:LinkAttachmentTypeNone
-                                                         conversationType:self.message.conversation.conversationType];
-    }
-
     return [url open];
 }
 

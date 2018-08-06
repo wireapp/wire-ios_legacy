@@ -136,7 +136,6 @@ import Classy
         }
         
         configureVisibleViews(with: message, isInitial: isInitial)
-        message.requestImageDownload()
         
         let filepath = (fileMessageData.filename ?? "") as NSString
         let filesize: UInt64 = fileMessageData.size
@@ -151,13 +150,14 @@ import Classy
         let fileSize = ByteCountFormatter.string(fromByteCount: Int64(filesize), countStyle: .binary)
         let fileSizeAttributed = fileSize && labelFont && labelTextBlendedColor
         
-        if let previewData = fileMessageData.previewData {
-            self.fileTypeIconView.contentMode = .scaleAspectFit
-            self.fileTypeIconView.image = UIImage(data: previewData)
-        }
-        else {
-            self.fileTypeIconView.contentMode = .center
-            self.fileTypeIconView.image = UIImage(for: .document, iconSize: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        fileTypeIconView.contentMode = .center
+        fileTypeIconView.image = UIImage(for: .document, iconSize: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        
+        fileMessageData.thumbnailImage.fetchImage { [weak self] (image) in
+            guard let image = image else { return }
+            
+            self?.fileTypeIconView.contentMode = .scaleAspectFit
+            self?.fileTypeIconView.setMediaAsset(image) 
         }
         
         self.actionButton.isUserInteractionEnabled = true

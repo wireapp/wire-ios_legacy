@@ -16,13 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import "RegistrationStepViewController.h"
 
 
-
 @class ZMIncompleteRegistrationUser;
-@class AnalyticsTracker;
 
 @interface TermsOfUseStepViewController : RegistrationStepViewController
 @property (nonatomic, readonly) ZMIncompleteRegistrationUser *unregisteredUser;

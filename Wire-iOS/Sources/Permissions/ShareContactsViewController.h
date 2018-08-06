@@ -21,11 +21,8 @@
 
 #import "RegistrationStepViewController.h"
 
-@class AnalyticsTracker;
-
 @interface ShareContactsViewController : RegistrationStepViewController
 
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 @property (nonatomic) BOOL uploadAddressBookImmediately;
 @property (nonatomic) BOOL backgroundBlurDisabled;
 @property (nonatomic) BOOL notNowButtonHidden;

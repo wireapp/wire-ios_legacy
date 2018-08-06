@@ -158,7 +158,7 @@ private struct InputBarConstants {
     
     // Contains the secondaryButtonsView and buttonsView
     fileprivate let buttonInnerContainer = UIView()
-    fileprivate let fakeCursor = UIView()
+
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
     fileprivate let notificationCenter = NotificationCenter.default
@@ -202,13 +202,11 @@ private struct InputBarConstants {
         
     override public func didMoveToWindow() {
         super.didMoveToWindow()
+
         // This is a workaround for UITextView truncating long contents.
         // However, this breaks the text view on iOS 8 ¯\_(ツ)_/¯.
-        if #available(iOS 9, *) {
-            textView.isScrollEnabled = false
-            textView.isScrollEnabled = true
-        }
-        startCursorBlinkAnimation()
+        textView.isScrollEnabled = false
+        textView.isScrollEnabled = true
     }
     
     deinit {
@@ -229,7 +227,6 @@ private struct InputBarConstants {
         [leftAccessoryView, textView, rightAccessoryStackView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
-        textView.addSubview(fakeCursor)
         CASStyler.default().styleItem(self)
 
         setupViews()
@@ -239,7 +236,6 @@ private struct InputBarConstants {
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
         notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -315,13 +311,6 @@ private struct InputBarConstants {
             innerContainer.trailing == container.trailing
             self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
         }
-        
-        constrain(fakeCursor) { fakeCursor in
-            fakeCursor.width == 2
-            fakeCursor.height == 23
-            fakeCursor.centerY == fakeCursor.superview!.centerY
-            fakeCursor.leading == fakeCursor.superview!.leading
-        }
     }
     
     @objc fileprivate func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
@@ -329,12 +318,6 @@ private struct InputBarConstants {
         buttonsView.showRow(0, animated: true)
     }
     
-    fileprivate func startCursorBlinkAnimation() {
-        if fakeCursor.layer.animation(forKey: "blinkAnimation") == nil {
-            fakeCursor.layer.add(.cursorBlinkAnimation(), forKey: "blinkAnimation")
-        }
-    }
-
     public func updateReturnKey() {
         textView.returnKeyType = isMarkingDown ? .default : Settings.shared().returnKeyType
         textView.reloadInputViews()
@@ -363,10 +346,6 @@ private struct InputBarConstants {
         }
     }
     
-    func updateFakeCursorVisibility(_ firstResponder: UIResponder? = nil) {
-        fakeCursor.isHidden = textView.isFirstResponder || textView.text.count != 0 || firstResponder != nil
-    }
-
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard
     
     override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -462,7 +441,6 @@ private struct InputBarConstants {
 
         updatePlaceholderColors()
 
-        fakeCursor.backgroundColor = .accent()
         textView.tintColor = .accent()
         textView.updateTextColor(base: textColor)
 
@@ -513,24 +491,15 @@ private struct InputBarConstants {
 extension InputBar {
 
     @objc func textViewTextDidChange(_ notification: Notification) {
-        updateFakeCursorVisibility()
         updateEditViewState()
     }
     
     @objc func textViewDidBeginEditing(_ notification: Notification) {
-        updateFakeCursorVisibility(notification.object as? UIResponder)
         updateEditViewState()
     }
     
     @objc func textViewDidEndEditing(_ notification: Notification) {
-        updateFakeCursorVisibility()
         updateEditViewState()
     }
 
-}
-
-extension InputBar {
-    @objc func applicationDidBecomeActive(_ notification: Notification) {
-        startCursorBlinkAnimation()
-    }
 }

@@ -18,14 +18,43 @@
 
 import Foundation
 
+public protocol PopoverPresenter: class {
+
+    /// The presenting popover. Its frame should be updated when the orientation or screen size changes.
+    var presentedPopover: UIPopoverPresentationController? {get set}
+
+    /// The popover's arrow points to this view
+    var popoverPointToView: UIView? {get set}
+
+    func updatePopoverSourceRect()
+}
+
+extension PopoverPresenter where Self: UIViewController {
+    public func updatePopoverSourceRect() {
+        guard let presentedPopover = presentedPopover,
+            let popoverPointToView = popoverPointToView else { return }
+
+        presentedPopover.sourceRect = popoverPointToView.popoverSourceRect(from: self)
+    }
+}
+
+
 extension UIPopoverPresentationController {
-    @objc public func config(from viewController: UIViewController,
-                pointToView: UIView,
-                sourceView: UIView,
-                backgroundColor: UIColor? = nil,
-                permittedArrowDirections: UIPopoverArrowDirection = .down) {
-        sourceRect = pointToView.popoverSourceRect(from: viewController)
+    public func config(from popoverPresenter: PopoverPresenter,
+                             pointToView: UIView,
+                             sourceView: UIView,
+                             backgroundColor: UIColor? = nil,
+                             permittedArrowDirections: UIPopoverArrowDirection = .down) {
+
+        if let viewController = popoverPresenter as? UIViewController {
+            sourceRect = pointToView.popoverSourceRect(from: viewController)
+        }
+
+        popoverPresenter.presentedPopover = self
+        popoverPresenter.popoverPointToView = pointToView
+
         self.sourceView = sourceView
+        
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
         }

@@ -33,11 +33,7 @@ public extension UIView {
     }
 
     var isRightToLeft: Bool {
-        if #available(iOS 9.0, *) {
-            return UIView.userInterfaceLayoutDirection(for: semanticContentAttribute) == .rightToLeft
-        } else {
-            return UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
-        }
+        return UIView.userInterfaceLayoutDirection(for: semanticContentAttribute) == .rightToLeft
     }
     
 }

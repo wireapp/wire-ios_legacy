@@ -20,6 +20,6 @@
 
 @property (nonatomic) UserSelection *userSelection;
 
-- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath;
+- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath;
 
 @end

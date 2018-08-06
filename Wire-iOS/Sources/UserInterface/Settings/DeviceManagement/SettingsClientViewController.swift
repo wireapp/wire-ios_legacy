@@ -169,9 +169,6 @@ enum ClientSection: Int {
             }
         }, completionHandler: {
             sender.isOn = self.userClient.verified
-            
-            let verificationType : DeviceVerificationType = sender.isOn ? .verified : .unverified
-            Analytics.shared().tagChange(verificationType, deviceOwner: .self)
         })
     }
     
@@ -224,7 +221,7 @@ enum ClientSection: Int {
             
         case .info:
             if let cell = tableView.dequeueReusableCell(withIdentifier: ClientTableViewCell.zm_reuseIdentifier, for: indexPath) as? ClientTableViewCell {
-                cell.selectionStyle = .none
+                cell.selectionStyle = .default
                 cell.userClient = self.userClient
                 cell.wr_editable = false
                 cell.showVerified = false
@@ -308,7 +305,7 @@ enum ClientSection: Int {
                 let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Either<String, NSError>) -> () in
                     switch result {
                     case .left(let passwordString):
-                        let newCredentials = ZMEmailCredentials(email: ZMUser.selfUser().emailAddress, password: passwordString)
+                        let newCredentials = ZMEmailCredentials(email: ZMUser.selfUser().emailAddress!, password: passwordString)
                         self.credentials = newCredentials
                         ZMUserSession.shared()?.delete([self.userClient], with: newCredentials)
                         if let navigationController = self.navigationController {
@@ -358,7 +355,32 @@ enum ClientSection: Int {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
     }
-    
+
+    // MARK: - Copying user client info
+
+    func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == ClientSection.info.rawValue && indexPath.row == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+
+        if action == #selector(UIResponder.copy(_:)) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+        if action == #selector(UIResponder.copy(_:)) {
+            UIPasteboard.general.string = self.userClient.information
+        }
+    }
+
     // MARK: - UserClientObserver
     
     func userClientDidChange(_ changeInfo: UserClientChangeInfo) {
@@ -376,5 +398,21 @@ enum ClientSection: Int {
             self.present(alert, animated: true, completion: .none)
             self.resetSessionPending = false
         }
+    }
+}
+
+extension UserClient {
+    var information: String {
+        var lines = [String]()
+        if let model = model {
+            lines.append("Device: \(model)")
+        }
+        if let remoteIdentifier = remoteIdentifier {
+            lines.append("ID: \(remoteIdentifier)")
+        }
+        if let pushToken = pushToken {
+            lines.append("Push Token: \(pushToken.deviceTokenString)")
+        }
+        return lines.joined(separator: "\n")
     }
 }

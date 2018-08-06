@@ -19,6 +19,9 @@
 import Foundation
 import UIKit
 import Classy
+import SafariServices
+
+var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
 @objcMembers class AppRootViewController: UIViewController {
 
@@ -88,7 +91,7 @@ import Classy
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
         appStateController.delegate = self
-
+        
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
         // not possible because it has to be below the status bar.
         mainWindow.rootViewController = self
@@ -230,6 +233,7 @@ import Classy
             if needsToReauthenticate {
                 let registrationViewController = RegistrationViewController()
                 registrationViewController.delegate = appStateController
+                registrationViewController.shouldHideCancelButton = SessionManager.numberOfAccounts <= 1
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
@@ -237,7 +241,6 @@ import Classy
                 // When we show the landing controller we want it to be nested in navigation controller
                 let landingViewController = LandingViewController()
                 landingViewController.delegate = self
-                TrackingManager.shared.disableCrashAndAnalyticsSharing = true
                 
                 let navigationController = NavigationController(rootViewController: landingViewController)
                 navigationController.backButtonEnabled = false
@@ -370,19 +373,18 @@ import Classy
         colorScheme.accentColor = UIColor.accent()
         colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
 
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         CASStyler.default().cache = classyCache
         CASStyler.bootstrapClassy(withTargetWindows: windows)
         CASStyler.default().apply(colorScheme)
-        CASStyler.default().apply(fontScheme: fontScheme)
+        CASStyler.default().apply(fontScheme: defaultFontScheme)
     }
 
     @objc func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        CASStyler.default().apply(fontScheme: fontScheme)
+        defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        CASStyler.default().apply(fontScheme: defaultFontScheme)
         type(of: self).configureAppearance()
     }
 
@@ -459,7 +461,7 @@ extension AppRootViewController: ZMRequestsToOpenViewsDelegate {
         })
     }
 
-    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate)->()) {
+    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate) -> ()) {
         if let delegate = self.requestToOpenViewDelegate {
             closure(delegate)
         }
@@ -541,6 +543,18 @@ extension AppRootViewController: LandingViewControllerDelegate {
             navigationController.pushViewController(registrationViewController, animated: true)
         }
     }
+    
+    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType) {
+        if let navigationController = self.visibleViewController as? NavigationController {
+            let registrationViewController = RegistrationViewController(authenticationFlow: .regular)
+            registrationViewController.delegate = appStateController
+            registrationViewController.shouldHideCancelButton = true
+            registrationViewController.loadViewIfNeeded()
+            registrationViewController.presentNoHistoryViewController(context, animated: false)
+            navigationController.pushViewController(registrationViewController, animated: true)
+        }
+    }
+    
 }
 
 // MARK: - Ask user if they want want switch account if there's an ongoing call
@@ -557,10 +571,8 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
             self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
             completion(true)
         }))
-        alert.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (action) in
-            completion(false)
-        }))
-        
+        alert.addAction(.cancel { completion(false) })
+
         topmostController.present(alert, animated: true, completion: nil)
     }
     
@@ -584,11 +596,16 @@ public extension SessionManager {
         
         return nil
     }
+
+    @objc static var numberOfAccounts: Int {
+        return SessionManager.shared?.accountManager.accounts.count ?? 0
+    }
+
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
-    func sessionManagerShouldExecute(URLAction: RawURLAction, callback: @escaping (Bool) -> (Void)) {
-        switch URLAction {
+    func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
+        switch action {
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
                 callback(false)
@@ -614,6 +631,54 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             alert.addAction(cancelAction)
             
             self.present(alert, animated: true, completion: nil)
+
+        case .companyLoginFailure(let error):
+            defer {
+                notifyCompanyLoginCompletion()
+            }
+            
+            guard case .unauthenticated = appStateController.appState else {
+                callback(false)
+                return
+            }
+
+            let message = "login.sso.error.alert.message".localized(args: error.displayCode)
+
+            let alert = UIAlertController(title: "general.failure".localized,
+                                          message: message,
+                                          preferredStyle: .alert)
+
+            alert.addAction(.ok { callback(false) })
+
+            let presentAlert = {
+                self.present(alert, animated: true)
+            }
+
+            if let topmostViewController = UIApplication.shared.wr_topmostController() as? SFSafariViewController {
+                topmostViewController.dismiss(animated: true, completion: presentAlert)
+            } else {
+                presentAlert()
+            }
+
+        case .companyLoginSuccess:
+            defer {
+                notifyCompanyLoginCompletion()
+            }
+
+            guard case .unauthenticated = appStateController.appState else {
+                callback(false)
+                return
+            }
+
+            callback(true)
         }
     }
+
+    private func notifyCompanyLoginCompletion() {
+        NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
+    }
+}
+
+extension Notification.Name {
+    static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
 }

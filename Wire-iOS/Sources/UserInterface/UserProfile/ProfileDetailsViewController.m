@@ -39,8 +39,6 @@
 #import "Button.h"
 #import "ContactsDataSource.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
-#import "AnalyticsTracker+Invitations.h"
 #import "Wire-Swift.h"
 
 #import "ZClientViewController.h"
@@ -76,7 +74,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @interface ProfileDetailsViewController ()
 
 @property (nonatomic) ProfileViewControllerContext context;
-@property (nonatomic) id<ZMBareUser, ZMSearchableUser, AccentColorProvider> bareUser;
+@property (nonatomic) id<UserType, AccentColorProvider> bareUser;
 @property (nonatomic) ZMConversation *conversation;
 @property (nonatomic) ConversationActionController *actionsController;
 
@@ -93,7 +91,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 @implementation ProfileDetailsViewController
 
-- (instancetype)initWithUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
+- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     self = [super initWithNibName:nil bundle:nil];
     
@@ -101,7 +99,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         _context = context;
         _bareUser = user;
         _conversation = conversation;
-        _showGuestLabel = [user isGuestInConversation:conversation];
+        _showGuestLabel = [user isGuestIn:conversation];
         _availabilityView = [[AvailabilityTitleView alloc] initWithUser:[self fullUser] style:AvailabilityTitleViewStyleOtherProfile];
     }
     return self;
@@ -462,7 +460,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         [self presentViewController:presentedViewController
                            animated:YES
                          completion:^{
-            [Analytics.shared tagOpenedPeoplePickerGroupAction];
             [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
         }];
     }
@@ -499,8 +496,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 {
     [[ZMUserSession sharedSession] enqueueChanges:^{
         [[self fullUser] accept];
-    } completionHandler:^{
-        [[Analytics shared] tagUnblocking];
     }];
     
     [self openOneToOneConversation];
@@ -546,24 +541,9 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
     [self dismissViewControllerWithCompletion:^{
         @strongify(self);
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.bareUser connectWithMessageText:message completionHandler:nil];
-        } completionHandler:^{
-            AnalyticsConnectionRequestMethod method = [self connectionRequestMethodForContext:self.context];
-            [Analytics.shared tagEventObject:[AnalyticsConnectionRequestEvent eventForAddContactMethod:method connectRequestCount:self.bareUser.totalCommonConnections]];
+            [self.bareUser connectWithMessage:message];
         }];
     }];
-}
-
-- (AnalyticsConnectionRequestMethod)connectionRequestMethodForContext:(ProfileViewControllerContext)context
-{
-    switch (context) {
-        case ProfileViewControllerContextGroupConversation:
-            return AnalyticsConnectionRequestMethodParticipants;
-        case ProfileViewControllerContextSearch:
-            return AnalyticsConnectionRequestMethodUserSearch;
-        default:
-            return AnalyticsConnectionRequestMethodUnknown;
-    }
 }
 
 - (void)openOneToOneConversation

@@ -21,18 +21,7 @@ import Foundation
 class StartUIView : UIView { }
 
 extension StartUIViewController: SearchResultsViewControllerDelegate {
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
-        
-        if let user = user as? AnalyticsConnectionStateProvider {
-            Analytics.shared().tagSelectedUnconnectedUser(with: user, context: .startUI)
-        }
-        
-        switch section {
-        case .topPeople: Analytics.shared().tagSelectedTopContact()
-        case .contacts: Analytics.shared().tagSelectedSearchResultUser(with: UInt(indexPath.row))
-        case .directory: Analytics.shared().tagSelectedSuggestedUser(with: UInt(indexPath.row))
-        default: break
-        }
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
         
         if !user.isConnected && !user.isTeamMember {
             self.presentProfileViewController(for: user, at: indexPath)
@@ -41,7 +30,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath) {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath) {
     
         guard let unboxedUser = BareUserToUser(user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
             return

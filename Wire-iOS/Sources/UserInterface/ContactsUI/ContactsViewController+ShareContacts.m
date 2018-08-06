@@ -30,7 +30,6 @@
 {
     ShareContactsViewController *shareContactsViewController = [[ShareContactsViewController alloc] init];
     shareContactsViewController.formStepDelegate = self;
-    shareContactsViewController.analyticsTracker = self.analyticsTracker;
     
     [self presentChildViewcontroller:shareContactsViewController];
 }

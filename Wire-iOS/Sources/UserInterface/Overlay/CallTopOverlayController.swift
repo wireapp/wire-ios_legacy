@@ -204,7 +204,7 @@ final class CallTopOverlayController: UIViewController {
 }
 
 extension CallTopOverlayController: WireCallCenterCallStateObserver {
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
         updateCallDurationTimer(for: callState)
     }
 }

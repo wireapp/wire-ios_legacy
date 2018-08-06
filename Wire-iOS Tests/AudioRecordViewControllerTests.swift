@@ -31,7 +31,7 @@ import Cartography
     
     @objc func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {}
 
-    @objc func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {}
+    @objc func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType) {}
 }
 
 class AudioRecordViewControllerTests: ZMSnapshotTestCase {

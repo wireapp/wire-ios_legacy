@@ -28,12 +28,6 @@
 #import "Application+runDuration.h"
 #import "ZClientViewController.h"
 #import "Analytics.h"
-#import "AnalyticsTracker+Registration.h"
-#import "AnalyticsTracker+Permissions.h"
-
-// Performance Measurement
-#import "StopWatch.h"
-
 
 NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";
 
@@ -44,7 +38,6 @@ static AppDelegate *sharedAppDelegate = nil;
 @interface AppDelegate ()
 
 @property (nonatomic) AppRootViewController *rootViewController;
-@property (nonatomic, assign) BOOL trackedResumeEvent;
 @property (nonatomic, assign, readwrite) ApplicationLaunchType launchType;
 @property (nonatomic, copy) NSDictionary *launchOptions;
 
@@ -136,7 +129,7 @@ static AppDelegate *sharedAppDelegate = nil;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application;
 {
-    ZMLogInfo(@"applicationDidBecomeActive START (applicationState = %ld)", (long)application.applicationState);
+    ZMLogInfo(@"applicationDidBecomeActive (applicationState = %ld)", (long)application.applicationState);
     
     switch (self.launchType) {
         case ApplicationLaunchURL:
@@ -146,14 +139,6 @@ static AppDelegate *sharedAppDelegate = nil;
             self.launchType = ApplicationLaunchDirect;
             break;
     }
-    
-    if (! self.trackedResumeEvent) {
-        [[Analytics shared] tagAppLaunchWithType:self.launchType];
-    }
-    
-    self.trackedResumeEvent = NO;
-    
-    ZMLogInfo(@"applicationDidBecomeActive END");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -209,25 +194,17 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
     [Analytics loadSharedWithOptedOut:trackingManager.disableCrashAndAnalyticsSharing];
 }
 
-- (void)trackLaunchAnalyticsWithLaunchOptions:(NSDictionary *)launchOptions
+- (void)userSessionDidBecomeAvailable:(NSNotification *)notification
 {
     self.launchType = ApplicationLaunchDirect;
-    if (launchOptions[UIApplicationLaunchOptionsURLKey] != nil) {
+    if (self.launchOptions[UIApplicationLaunchOptionsURLKey] != nil) {
         self.launchType = ApplicationLaunchURL;
     }
     
-    if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil ||
-        launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] != nil) {
+    if (self.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil ||
+        self.launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] != nil) {
         self.launchType = ApplicationLaunchPush;
     }
-    [[UIApplication sharedApplication] setupRunDurationCalculation];
-    [[Analytics shared] tagAppLaunchWithType:self.launchType];
-    self.trackedResumeEvent = YES;
-}
-
-- (void)userSessionDidBecomeAvailable:(NSNotification *)notification
-{
-    [self trackLaunchAnalyticsWithLaunchOptions:self.launchOptions];
     [self trackErrors];
 }
 
@@ -289,9 +266,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
-    BOOL userGavePermissions = (notificationSettings.types != UIUserNotificationTypeNone);
-    AnalyticsTracker *analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:nil];
-    [analyticsTracker tagPushNotificationsPermissions:userGavePermissions];
+    // no op
 }
 
 @end
@@ -301,11 +276,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
     ZMLogInfo(@"application:didReceiveRemoteNotification:fetchCompletionHandler: notification: %@", userInfo);
-    if (application.applicationState == UIApplicationStateActive) {
-        [[Analytics shared] tagAppLaunchWithType:ApplicationLaunchPush];
-        self.trackedResumeEvent = YES;
-    }
-    
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
 }
 

@@ -23,7 +23,6 @@
 #import "RegistrationRootViewController.h"
 #import "WireSyncEngine+iOS.h"
 
-@class AnalyticsTracker;
 @class ZMEmailCredentials;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -52,6 +51,7 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 @property (nonatomic) BOOL shouldHideCancelButton;
 
 + (RegistrationFlow)registrationFlow;
+- (void)presentNoHistoryViewController:(ContextType)type animated:(BOOL)animated;
 
 @end
 

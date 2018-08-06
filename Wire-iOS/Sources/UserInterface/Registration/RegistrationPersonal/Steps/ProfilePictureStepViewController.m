@@ -28,7 +28,6 @@
 #import "UIViewController+Errors.h"
 #import "Button.h"
 
-#import "AnalyticsTracker+Registration.h"
 #import "UIImagePickerController+GetImage.h"
 #import "RegistrationFormController.h"
 @import WireExtensionComponents;
@@ -235,7 +234,6 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
         NSData *imageData = UIImageJPEGRepresentation(self.defaultProfilePictureImage, 1.0f);
         dispatch_async(dispatch_get_main_queue(), ^{
             self.showLoadingView = NO;
-            self.photoSource = AnalyticsPhotoSourceUnsplash;
             [self setPictureImageData:imageData];
         });
     });

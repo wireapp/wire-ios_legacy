@@ -133,7 +133,6 @@
 
 - (void)participantsDeviceHeaderViewDidTapLearnMore:(ParticipantDeviceHeaderView *)headerView
 {
-    [[Analytics shared] tagViewedFingerprintLearnMore];
     [NSURL.wr_fingerprintLearnMoreURL openInAppAboveViewController:self];
 }
 

@@ -20,7 +20,7 @@
 #import "MockUser.h"
 #import "MockConversation.h"
 
-static id<ZMBareUser> mockSelfUser = nil;
+static id<UserType> mockSelfUser = nil;
 
 @implementation MockUser
 
@@ -33,7 +33,9 @@ static id<ZMBareUser> mockSelfUser = nil;
         _clients = [NSSet set];
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
+            if (value == NSNull.null) { continue; }
             [self setValue:value forKey:key];
+        
         }
     }
     return self;
@@ -64,7 +66,7 @@ static id<ZMBareUser> mockSelfUser = nil;
     return (MockUser *)mockSelfUser;
 }
 
-+ (void)setMockSelfUser:(id<ZMBareUser>)newMockUser
++ (void)setMockSelfUser:(id<UserType>)newMockUser
 {
     mockSelfUser = newMockUser;
 }
@@ -114,33 +116,17 @@ static id<ZMBareUser> mockSelfUser = nil;
 @synthesize isSelfUser;
 @synthesize isConnected;
 @synthesize accentColorValue;
-@synthesize imageMediumData;
-@synthesize imageSmallProfileData;
-@synthesize imageSmallProfileIdentifier;
-@synthesize imageMediumIdentifier;
-@synthesize canBeConnected;
+@synthesize previewImageData;
+@synthesize completeImageData;
 @synthesize connectionRequestMessage;
 @synthesize totalCommonConnections;
 @synthesize smallProfileImageCacheKey;
 @synthesize mediumProfileImageCacheKey;
 
 
-- (void)connectWithMessageText:(NSString *)text completionHandler:(dispatch_block_t)handler
-{
-    if (handler) {
-        handler();
-    }        
-}
-
-- (id<ZMCommonContactsSearchToken>)searchCommonContactsInUserSession:(ZMUserSession *)session
-                                                        withDelegate:(id<ZMCommonContactsSearchDelegate>)delegate
-{
-    return nil;
-}
-
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
-    if (aProtocol == @protocol(ZMBareUser)) {
+    if (aProtocol == @protocol(UserType)) {
         return YES;
     }
     else {
@@ -191,6 +177,35 @@ static id<ZMBareUser> mockSelfUser = nil;
 - (void)refreshData
 {
     // no-op
+}
+
+- (void)connectWithMessage:(NSString * _Nonnull)message {
+    
+}
+
+- (void)imageDataFor:(enum ProfileImageSize)size queue:(dispatch_queue_t _Nonnull)queue completion:(void (^ _Nonnull)(NSData * _Nullable))completion {
+    switch (size) {
+        case ProfileImageSizePreview:
+            completion(previewImageData);
+            break;
+        case ProfileImageSizeComplete:
+            completion(completeImageData);
+    }
+}
+
+
+- (BOOL)isGuestIn:(ZMConversation * _Nonnull)conversation {
+    return self.isGuestInConversation;
+}
+
+
+- (void)requestCompleteProfileImage {
+    
+}
+
+
+- (void)requestPreviewProfileImage {
+    
 }
 
 - (Team *)team

@@ -41,7 +41,6 @@ final class TeamCreationFlowController: NSObject {
     weak var registrationDelegate: RegistrationViewControllerDelegate?
     var syncToken: Any?
     var sessionManagerToken: Any?
-    let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)!
     var marketingConsent: Bool?
 
     init(navigationController: UINavigationController, registrationStatus: RegistrationStatus) {
@@ -98,7 +97,7 @@ extension TeamCreationFlowController {
         case .setTeamName:
             nextState = nil // Nothing to do
         case .setEmail:
-            tracker.tagTeamCreationAddedTeamName()
+            Analytics.shared().tagTeamCreationAddedTeamName(context: "email")
             pushNext() // Pushing email step
         case let .verifyEmail(teamName: _, email: email):
             currentController?.showLoadingView = true
@@ -115,7 +114,7 @@ extension TeamCreationFlowController {
                     self?.currentController?.showLoadingView = true
                     let teamToRegister = TeamToRegister(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAcceptableAccentColor())
                     self?.registrationStatus.create(team: teamToRegister)
-                    self?.tracker.tagTeamCreationAcceptedTerms()
+                    Analytics.shared().tagTeamCreationAcceptedTerms(context: "email")
                 }
             }
         case .inviteMembers:
@@ -237,7 +236,7 @@ extension TeamCreationFlowController: ZMInitialSyncCompletionObserver {
 extension TeamCreationFlowController: RegistrationStatusDelegate {
     public func teamRegistered() {
         sessionManagerToken = SessionManager.shared?.addSessionManagerCreatedSessionObserver(self)
-        tracker.tagTeamCreated()
+        Analytics.shared().tagTeamCreated(context: "email")
     }
 
     public func teamRegistrationFailed(with error: Error) {
@@ -266,7 +265,7 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
     public func emailActivationCodeValidated() {
         currentController?.showLoadingView = false
         pushNext()
-        tracker.tagTeamCreationEmailVerified()
+        Analytics.shared().tagTeamCreationEmailVerified(context: "email")
     }
 
     public func emailActivationCodeValidationFailed(with error: Error) {
@@ -280,7 +279,7 @@ extension TeamCreationFlowController: TeamMemberInviteViewControllerDelegate {
     
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController) {
         registrationDelegate?.registrationViewControllerDidCompleteRegistration()
-
+        
         if let marketingConsent = self.marketingConsent, let user = ZMUser.selfUser(), let userSession = ZMUserSession.shared() {
             user.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
         }

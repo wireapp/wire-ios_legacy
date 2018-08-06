@@ -71,7 +71,6 @@ final internal class SelfProfileViewController: UIViewController {
         
         settingsController.tableView.isScrollEnabled = false
         
-        NotificationCenter.default.addObserver(self, selector: #selector(SelfProfileViewController.soundIntensityChanged(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.soundAlerts.changeNotificationName), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(SelfProfileViewController.dismissNotification(_:)), name: NSNotification.Name.DismissSettings, object: nil)
     }
     
@@ -158,6 +157,8 @@ final internal class SelfProfileViewController: UIViewController {
             accountSelectorControllerView.height == 44
         }
 
+        // Sometimes (i.e. after coming from background) the cells are not loaded yet. Reloading to calculate correct height.
+        settingsController.tableView.reloadData()
         let height = CGFloat(56 * settingsController.tableView.numberOfRows(inSection: 0))
         
         constrain(view, settingsController.view, profileView, profileContainerView, settingsController.tableView) { view, settingsControllerView, profileView, profileContainerView, tableView in
@@ -177,25 +178,6 @@ final internal class SelfProfileViewController: UIViewController {
             settingsControllerView.bottom == view.bottom - UIScreen.safeArea.bottom
             
             tableView.edges == settingsControllerView.edges
-        }
-    }
-    
-}
-
-extension SelfProfileViewController {
-    
-    @objc func soundIntensityChanged(_ notification: Notification) {
-        let soundProperty = settingsCellDescriptorFactory?.settingsPropertyFactory.property(.soundAlerts)
-        
-        if let intensivityLevel = soundProperty?.rawValue() as? AVSIntensityLevel {
-            switch(intensivityLevel) {
-            case .full:
-                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeAlways)
-            case .some:
-                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeFirstOnly)
-            case .none:
-                Analytics.shared().tagSoundIntensityPreference(SoundIntensityTypeNever)
-            }
         }
     }
     

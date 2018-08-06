@@ -30,7 +30,27 @@ extension ConversationInputBarViewController {
             callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession:userSession)
         }
     }
-    
+
+    @objc func setupAppLockedObserver() {
+
+        NotificationCenter.default.addObserver(self,
+        selector: #selector(revealRecordKeyboardWhenAppLocked),
+        name: .appUnlocked,
+        object: .none)
+
+        // If the app is locked and not yet reach the time to unlock and the app became active, reveal the keyboard (it was dismissed when app resign active)
+        NotificationCenter.default.addObserver(self, selector: #selector(revealRecordKeyboardWhenAppLocked), name: .UIApplicationDidBecomeActive, object: nil)
+    }
+
+    @objc func revealRecordKeyboardWhenAppLocked() {
+        guard AppLock.isActive,
+              !AppLockViewController.isLocked,
+              mode == .audioRecord,
+              !self.inputBar.textView.isFirstResponder else { return }
+
+        displayRecordKeyboard()
+    }
+
     @objc func configureAudioButton(_ button: IconButton) {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
         longPressRecognizer.minimumPressDuration = 0.3
@@ -178,20 +198,11 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
     }
     
     @objc public func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {
-        guard let conversation = self.conversation else { return }
-        let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
-
-        if type == .minimised {
-            Analytics.shared().tagMediaAction(.audioMessage, inConversation: conversation)
-        }
-
-        Analytics.shared().tagStartedAudioMessageRecording(inConversation: conversation, type: type)
+        // no op
     }
     
-    @objc public func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, context: AudioMessageContext, filter: AVSAudioEffectType) {
-        let type: ConversationMediaRecordingType = audioRecordViewController is AudioRecordKeyboardViewController ? .keyboard : .minimised
+    @objc public func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType) {
         
-        Analytics.shared().tagSentAudioMessage(in: conversation, duration: duration, context: context, filter: filter, type: type)
         uploadFile(at: recordingURL as URL)
         
         self.hideAudioRecordViewController()
@@ -203,7 +214,7 @@ extension ConversationInputBarViewController: AudioRecordViewControllerDelegate 
 
 extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
     
-    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
         let isRecording = audioRecordKeyboardViewController?.isRecording
 
         switch (callState, isRecording, wasRecordingBeforeCall) {
@@ -223,6 +234,12 @@ extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
     }
 
     private func displayRecordKeyboard() {
+        // do not show keyboard if conversation list is shown, 
+        guard let splitViewController = self.wr_splitViewController,
+              let rightViewController = splitViewController.rightViewController,
+              splitViewController.isRightViewControllerRevealed,
+              rightViewController.isVisible else { return }
+
         self.wasRecordingBeforeCall = false
         self.mode = .audioRecord
         self.inputBar.textView.becomeFirstResponder()

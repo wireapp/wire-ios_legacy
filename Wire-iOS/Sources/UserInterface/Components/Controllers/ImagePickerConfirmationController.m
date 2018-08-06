@@ -53,14 +53,7 @@
     void (^setImageBlock)(void) = ^{
         [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
             if (imageData != nil) {
-                ImageMetadata *metadata = [[ImageMetadata alloc] init];
-                metadata.source = picker.sourceType == UIImagePickerControllerSourceTypeCamera ? ConversationMediaPictureSourceCamera : ConversationMediaPictureSourceGallery;
-                if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                    metadata.camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
-                }
-                metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
-                
-                self.imagePickedBlock(imageData, metadata);
+                self.imagePickedBlock(imageData);
             }
         }];
     };
@@ -87,12 +80,7 @@
                 @strongify(self);
                 
                 if (editedImage != nil) {
-                    ImageMetadata *metadata = [[ImageMetadata alloc] init];
-                    metadata.source = ConversationMediaPictureSourceSketch;
-                    metadata.sketchSource = ConversationMediaSketchSourceCameraGallery;
-                    metadata.method = ConversationMediaPictureTakeMethodQuickMenu;
-                    
-                    self.imagePickedBlock(UIImagePNGRepresentation(editedImage), metadata);
+                    self.imagePickedBlock(UIImagePNGRepresentation(editedImage));
                 } else {
                     setImageBlock();
                 }

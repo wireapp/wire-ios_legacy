@@ -346,10 +346,10 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
                     if let _ = $0.sender,
                         let type = StatusMessageType(message: $0),
-                        let _ = matchedTypesDescriptions[type] {
+                        let _ = matchedTypesDescriptions[type],
+                        $0.messageIsRelevantForConversationStatus {
                         return true
-                    }
-                    else {
+                    } else {
                         return false
                     }
                 }),
@@ -381,7 +381,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
-                     let _ = matchedTypesDescriptions[type] {
+                     let _ = matchedTypesDescriptions[type],
+                     $0.messageIsRelevantForConversationStatus {
                     return true
                 }
                 else {

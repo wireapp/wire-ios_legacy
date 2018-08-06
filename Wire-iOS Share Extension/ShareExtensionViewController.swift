@@ -82,7 +82,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        StorageStack.reset()
     }
     
     override func viewDidLoad() {
@@ -177,6 +177,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     @objc func appendPostTapped() {
         navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
 
+        updateUrlAttachments()
+        
         postContent?.send(text: contentText, sharingSession: sharingSession!) { [weak self] progress in
             guard let `self` = self, let postContent = self.postContent else { return }
 
@@ -222,6 +224,17 @@ class ShareExtensionViewController: SLComposeServiceViewController {
                 self.present(alert, animated: true, completion: nil)
             }
         }
+    }
+    
+    private func updateUrlAttachments() {
+        let urlDetector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let matches = urlDetector.matches(in: contentText,
+                                          options: [],
+                                          range: NSMakeRange(0, (contentText as NSString).length))
+        
+        var attachments = self.allAttachments.filter{ !$0.hasURL }
+        attachments.append(contentsOf: matches.compactMap { NSItemProvider(contentsOf: $0.url) })
+        postContent?.attachments = attachments
     }
 
     override func cancel() {
@@ -421,6 +434,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
 private func titleForMissingClients(users: Set<ZMUser>) -> String {
     let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
-    let allUsers = (users.map { $0.displayName ?? "" } as NSArray).componentsJoined(by: ", ") as NSString
+    
+    let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
     return NSString(format: template.localized as NSString, allUsers) as String
 }

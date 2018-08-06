@@ -283,8 +283,6 @@ private let zmLog = ZMSLog(tag: "UI")
 
         self.clients = remainingClients
 
-        Analytics.shared().tagDeleteDevice()
-
         self.editingList = false
     }
     
@@ -481,7 +479,7 @@ extension ClientListViewController : ZMUserObserver {
     func userDidChange(_ note: UserChangeInfo) {
         if (note.clientsChanged || note.trustLevelChanged) {
             guard let selfClient = ZMUser.selfUser().selfClient() else { return }
-            var clients = ZMUser.selfUser().clients ?? Set()
+            var clients = ZMUser.selfUser().clients
             clients.remove(selfClient)
             self.clients = Array(clients)
         }

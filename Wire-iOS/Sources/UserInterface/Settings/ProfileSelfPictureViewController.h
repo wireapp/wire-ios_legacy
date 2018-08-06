@@ -23,11 +23,10 @@
 
 
 @class ZMUser;
-@class AnalyticsTracker;
 
 @interface ProfileSelfPictureViewController : BottomOverlayViewController
 
-@property (strong, nonatomic) ZMUser *user;
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
+@property (nonatomic) ZMUser *user;
+@property (nonatomic, readonly) UIImageView *selfUserImageView;
 
 @end

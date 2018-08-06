@@ -25,15 +25,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 NSString *const MediaManagerSoundOutgoingKnockSound = @"ping_from_me";
 NSString *const MediaManagerSoundIncomingKnockSound = @"ping_from_them";
-NSString *const MediaManagerSoundUserLeavesVoiceChannelSound = @"talk_later";
 NSString *const MediaManagerSoundMessageReceivedSound = @"new_message";
 NSString *const MediaManagerSoundFirstMessageReceivedSound = @"first_message";
 NSString *const MediaManagerSoundSomeoneJoinsVoiceChannelSound = @"talk";
-NSString *const MediaManagerSoundReadyToTalkSound = @"ready_to_talk";
 NSString *const MediaManagerSoundTransferVoiceToHereSound = @"pull_voice";
-NSString *const MediaManagerSoundUserJoinsVoiceChannelSound = @"ready_to_talk";
-NSString *const MediaManagerSoundRingingFromMeSound = @"ringing_from_me";
-NSString *const MediaManagerSoundRingingFromMeVideoSound = @"ringing_from_me_video";
 NSString *const MediaManagerSoundRingingFromThemSound = @"ringing_from_them";
 NSString *const MediaManagerSoundRingingFromThemInCallSound = @"ringing_from_them_incall";
 NSString *const MediaManagerSoundCallDropped = @"call_drop";

@@ -46,6 +46,10 @@ public extension ConversationCell {
 
         messageContentView.bringSubview(toFront: countdownContainerView)
     }
+    
+    @objc func cellDidEndBeingVisible() {
+        // no-op
+    }
 
     @objc public func updateBurstTimestamp() {
         if layoutProperties.showDayBurstTimestamp {

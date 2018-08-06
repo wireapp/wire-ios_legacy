@@ -20,7 +20,6 @@
 #import "UserImageView.h"
 @import PureLayout;
 @import WireSyncEngine;
-#import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "UIImage+ZetaIconsNeue.h"
 
@@ -55,21 +54,6 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
             break;
     }
     return 0;
-}
-
-
-typedef void (^ImageCacheCompletionBlock)(id , NSString *);
-
-
-
-static CIContext *ciContext(void)
-{
-    static CIContext *context;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        context = [CIContext contextWithOptions:nil];
-    });
-    return context;
 }
 
 @interface UserImageView ()
@@ -129,12 +113,12 @@ static CIContext *ciContext(void)
     return CGSizeMake(imageSize, imageSize);
 }
 
-- (void)setUser:(id<ZMBareUser, AccentColorProvider>)user
+- (void)setUser:(id<UserType, AccentColorProvider>)user
 {    
     _user = user;
     
     if (self.userSession != nil && user != nil && ([user isKindOfClass:[ZMUser class]] || [user isKindOfClass:[ZMSearchUser class]])) {
-        self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:user userSession:self.userSession];
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:user userSession:self.userSession];
     }
     
     self.initials.textColor = UIColor.whiteColor;
@@ -147,7 +131,7 @@ static CIContext *ciContext(void)
     [self updateUserImage];
 }
 
-- (void)updateForServiceUserIfNeeded:(id <ZMBareUser>)user
+- (void)updateForServiceUserIfNeeded:(id <UserType>)user
 {
     self.shape = [self shapeForUser:user];
     self.containerView.layer.borderColor = [self borderColorForUser:user];
@@ -156,22 +140,22 @@ static CIContext *ciContext(void)
     self.shouldDesaturate |= user.isServiceUser;
 }
 
-- (AvatarImageViewShape)shapeForUser:(id <ZMBareUser>)user
+- (AvatarImageViewShape)shapeForUser:(id <UserType>)user
 {
     return user.isServiceUser ? AvatarImageViewShapeRoundedRelative : AvatarImageViewShapeCircle;
 }
 
-- (UIColor *)containerBackgroundColorForUser:(id <ZMBareUser>)user
+- (UIColor *)containerBackgroundColorForUser:(id <UserType>)user
 {
     return user.isServiceUser ? UIColor.whiteColor : UIColor.clearColor;
 }
 
-- (CGColorRef)borderColorForUser:(id <ZMBareUser>)user
+- (CGColorRef)borderColorForUser:(id <UserType>)user
 {
     return user.isServiceUser ? [UIColor.blackColor colorWithAlphaComponent:0.08].CGColor : nil;
 }
 
-- (CGFloat)borderWidthForUser:(id <ZMBareUser>)user
+- (CGFloat)borderWidthForUser:(id <UserType>)user
 {
     return user.isServiceUser ? 0.5 : 0;
 }
@@ -200,106 +184,6 @@ static CIContext *ciContext(void)
 - (void)updateIndicatorColor
 {
     self.indicator.backgroundColor = [(id)self.user accentColor];
-}
-
-- (void)updateUserImage
-{
-    // Check if user object is a zombie in terms of the core data objects.
-    if ([self.user isKindOfClass:[ZMManagedObject class]]) {
-        ZMManagedObject *userInDatabase = (ZMManagedObject *)self.user;
-        if ([userInDatabase isZombieObject]) {
-            return;
-        }
-    }
-    
-    if (self.size == UserImageViewSizeBig &&
-        self.user.imageMediumData == nil) {
-        
-        if ([self.user respondsToSelector:@selector(requestMediumProfileImageInUserSession:)] && self.userSession != nil) {
-            [(id)self.user requestMediumProfileImageInUserSession:self.userSession];
-        }
-        return;
-    }
-    
-    if (self.size != UserImageViewSizeBig &&
-        self.user.imageSmallProfileData == nil) {
-        
-        if ([self.user respondsToSelector:@selector(requestSmallProfileImageInUserSession:)] && self.userSession != nil) {
-            [(id)self.user requestSmallProfileImageInUserSession:self.userSession];
-        }
-        return;
-    }
-    
-    NSData *imageData = nil;
-    NSString *imageCacheKey = nil;
-    
-    if (self.size == UserImageViewSizeBig) {
-        imageData = self.user.imageMediumData;
-        imageCacheKey = self.user.mediumProfileImageCacheKey;
-    }
-    else {
-        imageData = self.user.imageSmallProfileData;
-        imageCacheKey = self.user.smallProfileImageCacheKey;
-    }
-    
-    BOOL userIsConnected = self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember;
-
-    if (imageData == nil || imageCacheKey == nil) {
-        return;
-    }
-
-    // cache key is not changed when user change his own image
-    if (self.user.isSelfUser) {
-        
-        UIImage *image = [UIImage imageFromData:imageData withMaxSize:PixelSizeForUserImageSize(self.size)];
-
-        [self setUserImage:image];
-        return;
-    }
-
-    @weakify(self);
-    
-    ImageCacheCompletionBlock completionBlock = ^void(id image, NSString *cacheKey){
-        
-        @strongify(self);
-        
-        NSString *updatedCacheKey = nil;
-        
-        if (self.size == UserImageViewSizeBig) {
-            updatedCacheKey = self.user.mediumProfileImageCacheKey;
-        }
-        else {
-            updatedCacheKey = self.user.smallProfileImageCacheKey;
-        }
-        
-        if ([cacheKey isEqualToString:updatedCacheKey]) {
-            [self setUserImage:image];
-        }
-    };
-    
-    if (userIsConnected || ! self.shouldDesaturate) {
-        [[UserImageView sharedFullColorImageCacheForSize:self.size] imageForData:imageData cacheKey:imageCacheKey creationBlock:^id(NSData *data) {
-            
-            UIImage *image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.size)];
-            return image;
-            
-        } completion:completionBlock];
-    }
-    else {
-        [[UserImageView sharedDesaturatedImageCacheForSize:self.size] imageForData:imageData cacheKey:imageCacheKey creationBlock:^id(NSData *data) {
-            
-            UIImage *image = [[UserImageView sharedFullColorImageCacheForSize:self.size] imageForCacheKey:imageCacheKey];
-            
-            if (! image) {
-                image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.size)];
-            }
-            image = [image desaturatedImageWithContext:ciContext()
-                                            saturation:@0];
-          
-            return image;
-            
-        } completion:completionBlock];
-    }
 }
 
 - (void)setUserImage:(UIImage *)userImage
@@ -361,50 +245,6 @@ static CIContext *ciContext(void)
     if (change.accentColorValueChanged) {
         [self updateIndicatorColor];
     }
-}
-
-#pragma mark - Class Methods
-
-+ (ImageCache *)sharedFullColorImageCacheForSize:(UserImageViewSize)size
-{
-    static NSArray *fullColorImageCaches;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableArray *fullColorImageCachesMutable = [NSMutableArray arrayWithCapacity:UserImageViewSizeLast - UserImageViewSizeFirst];
-        
-        for (UserImageViewSize s = UserImageViewSizeFirst; s <= UserImageViewSizeLast; s++) {            
-            ImageCache *fullColorImageCache = [[ImageCache alloc] initWithName:[NSString stringWithFormat:@"_UserImageView.fullColorImageCache_%d", (int)s]];
-            fullColorImageCache.maxConcurrentOperationCount = 4;
-            fullColorImageCache.countLimit = 100;
-            fullColorImageCache.totalCostLimit = 1024 * 1024 * 10;
-            fullColorImageCache.qualityOfService = NSQualityOfServiceUtility;
-            [fullColorImageCachesMutable addObject:fullColorImageCache];
-        }
-        
-        fullColorImageCaches = fullColorImageCachesMutable;
-    });
-    return fullColorImageCaches[size];
-}
-
-+ (ImageCache *)sharedDesaturatedImageCacheForSize:(UserImageViewSize)size
-{
-    static NSArray *desaturatedImageCaches;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableArray *desaturatedImageCachesMutable = [NSMutableArray arrayWithCapacity:UserImageViewSizeLast - UserImageViewSizeFirst];
-        
-        for (UserImageViewSize s = UserImageViewSizeFirst; s <= UserImageViewSizeLast; s++) {            
-            ImageCache *desaturatedImageCache = [[ImageCache alloc] initWithName:[NSString stringWithFormat:@"_UserImageView.desaturatedImageCache_%d", (int)s]];
-            desaturatedImageCache.maxConcurrentOperationCount = 4;
-            desaturatedImageCache.countLimit = 100;
-            desaturatedImageCache.totalCostLimit = 1024 * 1024 * 10;
-            desaturatedImageCache.qualityOfService = NSQualityOfServiceUtility;
-            [desaturatedImageCachesMutable addObject:desaturatedImageCache];
-        }
-        
-        desaturatedImageCaches = desaturatedImageCachesMutable;
-    });
-    return desaturatedImageCaches[size];
 }
 
 @end
