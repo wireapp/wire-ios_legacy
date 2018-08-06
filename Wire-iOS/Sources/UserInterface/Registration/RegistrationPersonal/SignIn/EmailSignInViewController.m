@@ -258,7 +258,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (IBAction)signIn:(id)sender
 {
     self.needsToResetBothFieldAccessories = YES;
-    [self.authenticationCoordinator requestLoginWithCredentials:self.credentials];
+    [self.authenticationCoordinator requestEmailLoginWithCredentials:self.credentials];
 }
 
 - (IBAction)resetPassword:(id)sender

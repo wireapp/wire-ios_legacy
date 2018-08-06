@@ -30,7 +30,9 @@ enum AuthenticationFlowStep {
 
     // Sign-In
     case provideCredentials
-    case authenticateEmailCredentials(ZMCredentials)
+    case verifyPhoneNumber(phoneNumber: String, accountExists: Bool)
+    case authenticateEmailCredentials(ZMEmailCredentials)
+    case authenticatePhoneCredentials(ZMPhoneCredentials)
 
     // Post Sign-In
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
@@ -50,6 +52,8 @@ enum AuthenticationFlowStep {
     var needsInterface: Bool {
         switch self {
         case .authenticateEmailCredentials: return false
+        case .authenticatePhoneCredentials: return false
+        case .verifyPhoneNumber(_, let accountExists): return accountExists
         default: return true
         }
     }

@@ -20,13 +20,20 @@
 #import "RegistrationStepViewController.h"
 #import "PhoneNumberViewController.h"
 
-
 @class ZMIncompleteRegistrationUser;
+
+@protocol PhoneNumberStepViewControllerDelegate
+
+- (void)phoneNumberStepDidPickPhoneNumber:(NSString *)phoneNumber;
+
+@end
 
 @interface PhoneNumberStepViewController : RegistrationStepViewController
 
 - (instancetype)initWithPhoneNumber:(NSString *)phoneNumber isEditable:(BOOL)isEditable;
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser;
+
+@property (nonatomic, weak) id<PhoneNumberStepViewControllerDelegate> delegate;
 
 @property (nonatomic, readonly) UILabel *heroLabel;
 @property (nonatomic, copy, readonly) NSString *phoneNumber;

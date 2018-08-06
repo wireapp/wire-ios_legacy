@@ -50,10 +50,17 @@ protocol AuthenticationCoordinatorDelegate: class {
     func authenticatedUserNeedsEmailCredentials() -> Bool
 
     /**
-     * The authentication coordinator required the shared user session.
+     * The authentication coordinator requested the shared user session.
      * - returns: The shared user session, if any.
      */
 
-    func authenticationCoordinatorRequiredSharedUserSession() -> ZMUserSession?
+    func authenticationCoordinatorRequestedSharedUserSession() -> ZMUserSession?
+
+    /**
+     * The authentication coordinator requested the number of accounts.
+     * - returns: The number of currently logged in accounts.
+     */
+
+    func authenticationCoordinatorRequestedNumberOfAccounts() -> Int
 
 }

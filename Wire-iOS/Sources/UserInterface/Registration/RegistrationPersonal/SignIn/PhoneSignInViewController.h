@@ -20,21 +20,21 @@
 #import <UIKit/UIKit.h>
 
 #import "FormFlowViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 @class LoginCredentials;
 
-@protocol  PhoneSignInViewControllerDelegate <NSObject>
+@protocol PhoneSignInViewControllerDelegate <NSObject>
 
 - (void)phoneSignInViewControllerNeedsPasswordFor:(LoginCredentials *)loginCredentials;
 
 @end
 
-@interface PhoneSignInViewController : FormFlowViewController
+@interface PhoneSignInViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 @property (nonatomic, weak) id<PhoneSignInViewControllerDelegate> delegate;
 @property (nonatomic) LoginCredentials *loginCredentials;
 
 - (void)takeFirstResponder;
-- (void)removeObservers;
 
 @end

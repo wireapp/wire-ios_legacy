@@ -87,8 +87,26 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         }
     }
 
-    @objc(requestLoginWithCredentials:)
-    func requestLogin(with credentials: ZMCredentials) {
+    @objc(startPhoneNumberValidationWithPhoneNumber:)
+    func startPhoneNumberValidation(_ phoneNumber: String) {
+        presenter?.showLoadingView = true
+        askVerificationCode(for: phoneNumber)
+        transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: false))
+    }
+
+    @objc func askVerificationCode(for phoneNumber: String) {
+        unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
+    }
+
+    @objc(requestPhoneLoginWithCredentials:)
+    func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
+        presenter?.showLoadingView = true
+        transition(to: .authenticatePhoneCredentials(credentials))
+        unauthenticatedSession.login(with: credentials)
+    }
+
+    @objc(requestEmailLoginWithCredentials:)
+    func requestEmailLogin(with credentials: ZMEmailCredentials) {
         presenter?.showLoadingView = true
         transition(to: .authenticateEmailCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
@@ -124,20 +142,49 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
             noHistoryViewController.authenticationCoordinator = self
             return noHistoryViewController
 
+        case .verifyPhoneNumber(let phoneNumber, _):
+            let verificationController = PhoneVerificationStepViewController()
+            verificationController.phoneNumber = phoneNumber
+            verificationController.authenticationCoordinator = self
+            verificationController.isLoggingIn = true
+            return verificationController
+
         default:
             return nil
         }
 
     }
 
-    func currentViewControllerDidAppear() {
+    /*
+
+     - (void)authenticationDidFail:(NSError *)error
+     {
+     ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
+
+     self.navigationController.showLoadingView = NO;
+
+     if (error.code == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
+     //        [self presentAddEmailPasswordViewController];
+     }
+     else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
+     [self.navigationController popToRootViewControllerAnimated:YES];
+     [self.delegate phoneSignInViewControllerNeedsPasswordFor:[[LoginCredentials alloc] initWithError:error]];
+     }
+     else {
+     [self showAlertForError:error];
+     }
+     }
+
+     */
+
+    @objc func currentViewControllerDidAppear() {
         switch currentStep {
-        case .landingScreen:
+        case .landingScreen, .provideCredentials:
             companyLoginController?.isAutoDetectionEnabled = true
             companyLoginController?.detectLoginCode()
 
         default:
-            break //
+            companyLoginController?.isAutoDetectionEnabled = false
         }
     }
 
@@ -148,6 +195,17 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
     // MARK: - Events
 
     func unwind() {
+        // [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
+        //     if (error.code != ZMUserSessionCodeRequestIsAlreadyPending) {
+//        [self showAlertForError:error];
+//    }
+//    else {
+//    if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
+//    [self proceedToCodeVerification];
+//    } else {
+//    [self showAlertForError:error];
+//    }
+//    }
 
     }
 
@@ -237,11 +295,24 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
     }
 
     func loginCodeRequestDidSucceed() {
+        self.presenter?.showLoadingView = false
 
+        guard case let .verifyPhoneNumber(phoneNumber, accountExists) = currentStep else {
+            return
+        }
+
+        if accountExists {
+            return
+        }
+
+        self.transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: true))
     }
 
     func loginCodeRequestDidFail(_ error: NSError) {
-
+        self.presenter?.showLoadingView = false
+        self.presenter?.showAlert(forError: error) { _ in
+            self.unwind()
+        }
     }
 
     func completeBackupStep() {
@@ -255,10 +326,10 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         switch self.currentStep {
         case .authenticateEmailCredentials(let credentials):
             currentCredentials = credentials
-
+        case .authenticatePhoneCredentials(let credentials):
+            currentCredentials = credentials
         case .noHistory:
             return
-
         default:
             fatalError("Cannot present history view controller without credentials.")
         }
@@ -278,7 +349,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
     }
 
     func clientRegistrationDidSucceed(accountId: UUID) {
-        guard let sharedSession = delegate?.authenticationCoordinatorRequiredSharedUserSession() else {
+        guard let sharedSession = delegate?.authenticationCoordinatorRequestedSharedUserSession() else {
             return
         }
 
@@ -287,7 +358,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
     }
 
     func sessionManagerCreated(userSession: ZMUserSession) {
-        guard let sharedSession = delegate?.authenticationCoordinatorRequiredSharedUserSession() else {
+        guard let sharedSession = delegate?.authenticationCoordinatorRequestedSharedUserSession() else {
             return
         }
 
@@ -318,6 +389,13 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
             }
 
             transition(to: nextStep)
+
+        case .needsToRegisterEmailToRegisterClient:
+            fatalError("unimplemented")
+
+        case .needsPasswordToRegisterClient:
+            let numberOfAccounts = delegate?.authenticationCoordinatorRequestedNumberOfAccounts() ?? 0
+            transition(to: .reauthenticate(error: error, numberOfAccounts: numberOfAccounts), resetStack: true)
 
         default:
             fatalError("Unhandled error: \(error)")

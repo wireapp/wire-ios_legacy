@@ -18,6 +18,7 @@
 
 
 #import "RegistrationStepViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 @class ZMIncompleteRegistrationUser;
 
@@ -27,7 +28,7 @@
 
 @end
 
-@interface PhoneVerificationStepViewController : RegistrationStepViewController
+@interface PhoneVerificationStepViewController : RegistrationStepViewController <AuthenticationCoordinatedViewController>
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser;
 

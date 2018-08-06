@@ -118,6 +118,7 @@
 #import "NoHistoryViewController.h"
 #import "TermsOfUseStepViewController.h"
 #import "TermsOfUseStepViewController+Private.h"
+#import "PhoneVerificationStepViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

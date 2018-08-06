@@ -164,7 +164,7 @@
     }
     self.unregisteredUser.phoneNumber = self.phoneNumber;
 
-    [self.formStepDelegate didCompleteFormStep:self];
+    [self.delegate phoneNumberStepDidPickPhoneNumber:self.phoneNumber];
 }
 
 @end

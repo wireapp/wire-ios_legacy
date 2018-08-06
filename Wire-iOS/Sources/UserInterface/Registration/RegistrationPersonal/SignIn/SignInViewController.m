@@ -163,11 +163,11 @@
 - (void)setupPhoneFlowViewController
 {
     PhoneSignInViewController *phoneSignInViewController = [[PhoneSignInViewController alloc] init];
-    phoneSignInViewController.formStepDelegate = self.formStepDelegate;
     phoneSignInViewController.loginCredentials = self.loginCredentials;
     phoneSignInViewController.view.frame = self.viewControllerContainer.frame;
     phoneSignInViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     phoneSignInViewController.delegate = self;
+    phoneSignInViewController.authenticationCoordinator = self.authenticationCoordinator;
     self.phoneSignInViewController = phoneSignInViewController;
     self.phoneSignInViewControllerContainer = phoneSignInViewController.registrationFormViewController;
 }
@@ -219,10 +219,6 @@
                             completion:^(BOOL finished) {
                                 [toViewController didMoveToParentViewController:self];
                                 [fromViewController removeFromParentViewController];
-                                
-                                if (fromViewController == self.phoneSignInViewController) {
-                                    [self.phoneSignInViewController removeObservers];
-                                }
                             }];
 }
 
