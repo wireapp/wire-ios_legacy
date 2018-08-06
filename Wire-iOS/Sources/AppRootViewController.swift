@@ -203,12 +203,13 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
         var viewController: UIViewController? = nil
         requestToOpenViewDelegate = nil
-        authenticationCoordinator = nil
 
         switch appState {
         case .blacklisted:
+            authenticationCoordinator = nil
             viewController = BlacklistViewController()
         case .migrating:
+            authenticationCoordinator = nil
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
             viewController = launchImageViewController
@@ -216,17 +217,31 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
 
-            let navigationController = NavigationController()
-            navigationController.backButtonEnabled = false
-            navigationController.logoEnabled = false
-            navigationController.isNavigationBarHidden = true
+            var updatedViewController: NavigationController?
 
-            authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController, session: UnauthenticatedSession.sharedSession!)
+            if authenticationCoordinator == nil {
+                let navigationController = NavigationController()
+                navigationController.backButtonEnabled = false
+                navigationController.logoEnabled = false
+                navigationController.isNavigationBarHidden = true
+
+                authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
+                                                                      unauthenticatedSession: UnauthenticatedSession.sharedSession!,
+                                                                      sessionManager: SessionManager.shared!)
+
+                authenticationCoordinator?.delegate = appStateController
+
+                updatedViewController = navigationController
+            }
 
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
-            viewController = navigationController
+
+            if let navigationController = updatedViewController {
+                viewController = navigationController
+            }
 
         case .authenticated(completedRegistration: let completedRegistration):
+            authenticationCoordinator = nil
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
@@ -243,8 +258,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
             viewController = clientViewController
         case .headless:
+            authenticationCoordinator = nil
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
+            authenticationCoordinator = nil
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
         }
 

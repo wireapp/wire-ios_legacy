@@ -19,12 +19,20 @@
 import Foundation
 import WireSyncEngine
 
+typealias AuthenticationStepViewController = UIViewController & AuthenticationCoordinatedViewController
+
+protocol ObservableSessionManager {
+    func addSessionManagerCreatedSessionObserver(_ observer: SessionManagerCreatedSessionObserver) -> Any
+}
+
+extension SessionManager: ObservableSessionManager {}
+
 /**
  * Manages the flow of authentication for the user. Decides which steps to take for login, registration
  * and team creation.
  */
 
-class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, CompanyLoginControllerDelegate, RegistrationViewControllerDelegate {
+class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, CompanyLoginControllerDelegate, RegistrationViewControllerDelegate, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
 
     weak var presenter: NavigationController?
     weak var delegate: AuthenticationCoordinatorDelegate?
@@ -33,30 +41,32 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
     private var currentViewController: AuthenticationStepViewController?
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
 
+    private var flowStack: [AuthenticationFlowStep] = []
+
     // MARK: - Initialization
 
-    private let session: UnauthenticatedSession
+    private let unauthenticatedSession: UnauthenticatedSession
     private var hasPushedPostRegistrationStep: Bool = false
     private var loginObservers: [Any] = []
 
-    init(presenter: NavigationController, session: UnauthenticatedSession) {
+    init(presenter: NavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
         self.presenter = presenter
-        self.session = session
+        self.unauthenticatedSession = unauthenticatedSession
         super.init()
 
+        companyLoginController?.delegate = self
+        flowStack = [.landingScreen]
+
         loginObservers = [
-            PreLoginAuthenticationNotification.register(self, for: session),
-            PostLoginAuthenticationNotification.addObserver(self)
+            PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
+            PostLoginAuthenticationNotification.addObserver(self),
+            sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
     }
 
     // MARK: - Authentication
 
-    func startFlow() {
-        transition(to: .landingScreen)
-    }
-
-    func transition(to step: AuthenticationFlowStep) {
+    func transition(to step: AuthenticationFlowStep, resetStack: Bool = false) {
         currentStep = step
 
         guard step.needsInterface else {
@@ -68,14 +78,20 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         }
 
         currentViewController = stepViewController
-        presenter?.pushViewController(stepViewController, animated: true)
+
+        if resetStack {
+            presenter?.setViewControllers([stepViewController], animated: true)
+        } else {
+            presenter?.backButtonEnabled = step.allowsUnwind
+            presenter?.pushViewController(stepViewController, animated: true)
+        }
     }
 
     @objc(requestLoginWithCredentials:)
     func requestLogin(with credentials: ZMCredentials) {
         presenter?.showLoadingView = true
         transition(to: .authenticateEmailCredentials(credentials))
-        session.login(with: credentials)
+        unauthenticatedSession.login(with: credentials)
     }
 
     private func makeViewController(for step: AuthenticationFlowStep) -> AuthenticationStepViewController? {
@@ -86,11 +102,27 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
             controller.authenticationCoordinator = self
             return controller
 
-        case .provideEmailCredentials:
+        case .reauthenticate(let error, let numberOfAccounts):
+            let registrationViewController = RegistrationViewController()
+            registrationViewController.authenticationCoordinator = self
+            registrationViewController.shouldHideCancelButton = numberOfAccounts <= 1
+            registrationViewController.signInError = error
+            return registrationViewController
+
+        case .provideCredentials:
             let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
             loginViewController.authenticationCoordinator = self
             loginViewController.shouldHideCancelButton = true
             return loginViewController
+
+        case .clientManagement(let clients, let credentials):
+            let emailCredentials = ZMEmailCredentials(email: credentials.email!, password: credentials.password!)
+            return ClientUnregisterFlowViewController(clientsList: clients, credentials: emailCredentials)
+
+        case .noHistory(_, let type):
+            let noHistoryViewController = NoHistoryViewController(contextType: type)
+            noHistoryViewController.authenticationCoordinator = self
+            return noHistoryViewController
 
         default:
             return nil
@@ -148,28 +180,18 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
                 }
 
             case .canNotRegisterMoreClients?:
-                guard let userClientIDs = error.userInfo[ZMClientsKey] as? [NSManagedObjectID] else {
+                guard let step = makeClientManagementStep(from: error, credentials: credentials) else {
                     fallthrough
                 }
 
-                let clients: [UserClient] = userClientIDs.compactMap {
-                    guard let session = ZMUserSession.shared() else {
-                        return nil
-                    }
-
-                    guard let object = try? session.managedObjectContext.existingObject(with: $0) else {
-                        return nil
-                    }
-
-                    return object as? UserClient
-                }
-
-                let clientManagementStep = AuthenticationFlowStep.clientManagement(clients: clients, credentials: credentials)
-                transition(to: clientManagementStep)
+                transition(to: step)
 
             default:
                 presenter?.showAlert(forError: error, handler: errorAlertHandler)
             }
+
+        case .reauthenticate:
+            break
 
         default:
             break
@@ -177,15 +199,38 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
 
     }
 
+    func makeClientManagementStep(from error: NSError?, credentials: ZMCredentials) -> AuthenticationFlowStep? {
+        guard let error = error else {
+            return nil
+        }
+
+        guard let userClientIDs = error.userInfo[ZMClientsKey] as? [NSManagedObjectID] else {
+            return nil
+        }
+
+        let clients: [UserClient] = userClientIDs.compactMap {
+            guard let session = ZMUserSession.shared() else {
+                return nil
+            }
+
+            guard let object = try? session.managedObjectContext.existingObject(with: $0) else {
+                return nil
+            }
+
+            return object as? UserClient
+        }
+
+        return .clientManagement(clients: clients, credentials: credentials)
+    }
+
     @objc func startCompanyLoginFlowIfPossible() {
         switch currentStep {
-        case .provideEmailCredentials:
+        case .provideCredentials:
             companyLoginController?.displayLoginCodePrompt()
         default:
             return
         }
     }
-
 
     func authenticationDidSucceed() {
         presenter?.showLoadingView = false
@@ -200,27 +245,32 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
     }
 
     func completeBackupStep() {
-        session.continueAfterBackupImportStep()
+        unauthenticatedSession.continueAfterBackupImportStep()
     }
 
     func authenticationReadyToImportBackup(existingAccount: Bool) {
         presenter?.showLoadingView = false
+        let currentCredentials: ZMCredentials
+
+        switch self.currentStep {
+        case .authenticateEmailCredentials(let credentials):
+            currentCredentials = credentials
+
+        case .noHistory:
+            return
+
+        default:
+            fatalError("Cannot present history view controller without credentials.")
+        }
 
         guard !self.hasAutomationFastLoginCredentials else {
-            session.continueAfterBackupImportStep()
+            unauthenticatedSession.continueAfterBackupImportStep()
             return
         }
 
         let type = existingAccount ? ContextType.loggedOut : .newDevice
-
-        guard !(self.presenter?.topViewController is NoHistoryViewController) else {
-            return
-        }
-
-        let noHistoryViewController = NoHistoryViewController(contextType: type)
-        noHistoryViewController.authenticationCoordinator = self
-        self.presenter?.backButtonEnabled = false
-        self.presenter?.pushViewController(noHistoryViewController, animated: true)
+        let flow = AuthenticationFlowStep.noHistory(credentials: currentCredentials, type: type)
+        self.transition(to: flow)
     }
 
     func authenticationInvalidated(_ error: NSError, accountId: UUID) {
@@ -228,11 +278,50 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
     }
 
     func clientRegistrationDidSucceed(accountId: UUID) {
-        
+        guard let sharedSession = delegate?.authenticationCoordinatorRequiredSharedUserSession() else {
+            return
+        }
+
+        let sessionObservationToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
+        loginObservers.append(sessionObservationToken)
+    }
+
+    func sessionManagerCreated(userSession: ZMUserSession) {
+        guard let sharedSession = delegate?.authenticationCoordinatorRequiredSharedUserSession() else {
+            return
+        }
+
+        let sessionObservationToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
+        loginObservers.append(sessionObservationToken)
     }
 
     func clientRegistrationDidFail(_ error: NSError, accountId: UUID) {
+        presenter?.showLoadingView = false
 
+        switch error.userSessionErrorCode {
+        case .canNotRegisterMoreClients:
+            let authenticationCredentials: ZMCredentials
+
+            switch self.currentStep {
+            case .noHistory(let credentials, _):
+                authenticationCredentials = credentials
+
+            case .authenticateEmailCredentials(let credentials):
+                authenticationCredentials = credentials
+
+            default:
+                fatalError("Cannot delete clients without credentials")
+            }
+
+            guard let nextStep = self.makeClientManagementStep(from: error, credentials: authenticationCredentials) else {
+                fatalError("Invalid error")
+            }
+
+            transition(to: nextStep)
+
+        default:
+            fatalError("Unhandled error: \(error)")
+        }
     }
 
     func accountDeleted(accountId: UUID) {
@@ -277,8 +366,9 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
 
     // MARK: --
 
-    func startAuthentication(with error: Error?, numberOfAccounts: Int) {
+    func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
         var needsToReauthenticate = false
+        var needsToDeleteClients = false
 
         if let error = error {
             let errorCode = (error as NSError).userSessionErrorCode
@@ -287,14 +377,30 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
                                      .needsPasswordToRegisterClient,
                                      .needsToRegisterEmailToRegisterClient,
                                      ].contains(errorCode)
+
+            needsToDeleteClients = errorCode == .canNotRegisterMoreClients
         }
 
         let flowStep: AuthenticationFlowStep
 
-        if needsToReauthenticate {
-            flowStep = .reauthenticate(error: error, numberOfAccounts: numberOfAccounts)
-        } else {
-            flowStep = .landingScreen
+        switch currentStep {
+        case .landingScreen:
+            if needsToReauthenticate {
+                flowStep = .reauthenticate(error: error, numberOfAccounts: numberOfAccounts)
+            } else {
+                flowStep = .landingScreen
+            }
+
+        case .authenticateEmailCredentials(let credentials):
+            if needsToDeleteClients {
+                presenter?.showLoadingView = false
+                flowStep = makeClientManagementStep(from: error, credentials: credentials)!
+            } else {
+                fallthrough
+            }
+
+        default:
+            return
         }
 
         self.transition(to: flowStep)
@@ -323,7 +429,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
     func landingViewControllerDidChooseLogin() {
-        self.transition(to: .provideEmailCredentials)
+        self.transition(to: .provideCredentials)
     }
 
     func landingViewControllerDidChooseCreateAccount() {

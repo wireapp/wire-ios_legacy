@@ -49,4 +49,11 @@ protocol AuthenticationCoordinatorDelegate: class {
 
     func authenticatedUserNeedsEmailCredentials() -> Bool
 
+    /**
+     * The authentication coordinator required the shared user session.
+     * - returns: The shared user session, if any.
+     */
+
+    func authenticationCoordinatorRequiredSharedUserSession() -> ZMUserSession?
+
 }

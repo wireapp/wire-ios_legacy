@@ -5671,14 +5671,14 @@
 		EF2126D51FB9DFE300625A9B /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				EF2126D71FB9DFE300625A9B /* LoginCredentials.swift */,
+				D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */,
 				EF2126DA1FB9DFE300625A9B /* SignInViewController.h */,
 				EF1EF1C420627305004DB245 /* SignInViewController+internal.h */,
 				EF2126D61FB9DFE300625A9B /* SignInViewController.m */,
-				D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */,
-				EF2126D71FB9DFE300625A9B /* LoginCredentials.swift */,
-				EF2126D81FB9DFE300625A9B /* EmailSignInViewController.h */,
-				EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */,
 				EF2126DB1FB9DFE300625A9B /* PhoneSignInViewController.h */,
+				EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */,
+				EF2126D81FB9DFE300625A9B /* EmailSignInViewController.h */,
 				EF2126DC1FB9DFE300625A9B /* EmailSignInViewController.m */,
 			);
 			path = SignIn;

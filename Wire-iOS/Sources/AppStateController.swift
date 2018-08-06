@@ -192,7 +192,19 @@ extension AppStateController {
     
 }
 
-extension AppStateController : RegistrationViewControllerDelegate {
+extension AppStateController : RegistrationViewControllerDelegate, AuthenticationCoordinatorDelegate {
+
+    func authenticatedUserWasRegisteredOnThisDevice() -> Bool {
+        return ZMUserSession.shared()?.registeredOnThisDevice == true
+    }
+
+    func authenticatedUserNeedsEmailCredentials() -> Bool {
+        return ZMUser.selfUser()?.emailAddress?.isEmpty == true
+    }
+
+    func authenticationCoordinatorRequiredSharedUserSession() -> ZMUserSession? {
+        return ZMUserSession.shared()
+    }
 
     func userAuthenticationDidComplete(registered: Bool) {
         isLoggedIn = true
@@ -214,5 +226,5 @@ extension AppStateController : RegistrationViewControllerDelegate {
         hasCompletedRegistration = true
         updateAppState()
     }
-    
+
 }

@@ -28,11 +28,12 @@ enum AuthenticationFlowStep {
     case landingScreen
     case reauthenticate(error: Error?, numberOfAccounts: Int)
 
-    // Email Sign In
-    case provideEmailCredentials
+    // Sign-In
+    case provideCredentials
     case authenticateEmailCredentials(ZMCredentials)
 
     // Post Sign-In
+    case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials)
 
     // MARK: - Properties
@@ -40,7 +41,7 @@ enum AuthenticationFlowStep {
     /// Whether the step can be unwinded.
     var allowsUnwind: Bool {
         switch self {
-        case .landingScreen, .clientManagement: return false
+        case .landingScreen, .clientManagement, .noHistory: return false
         default: return true
         }
     }

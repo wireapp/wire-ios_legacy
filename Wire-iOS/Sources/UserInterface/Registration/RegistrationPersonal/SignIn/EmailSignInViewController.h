@@ -22,9 +22,18 @@
 @class LoginCredentials, AuthenticationCoordinator;
 @protocol EmailSignInViewControllerDelegate;
 
+/**
+ * A view controller that provides a form for signing in via e-mail.
+ */
+
 @interface EmailSignInViewController : UIViewController <AuthenticationCoordinatedViewController>
 
+/// The pre-filled credentials, if any.
 @property (nonatomic, nullable) LoginCredentials *loginCredentials;
+
+/**
+ * Call this method to make the view controller become the first responder.
+ */
 
 - (void)takeFirstResponder;
 

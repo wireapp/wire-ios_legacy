@@ -16,28 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import PureLayout;
+@import WireExtensionComponents;
+@import OnePasswordExtension;
 
 #import "EmailSignInViewController.h"
 
-@import PureLayout;
-@import WireExtensionComponents;
-
-#import "WireSyncEngine+iOS.h"
-@import OnePasswordExtension;
 #import "RegistrationTextField.h"
-
-#import "GuidanceLabel.h"
-#import "WebLinkTextView.h"
-#import <WireExtensionComponents/ProgressSpinner.h>
-#import "UIImage+ImageUtilities.h"
-#import "UIColor+WAZExtensions.h"
-#import "UIViewController+Errors.h"
-#import "Constants.h"
 #import "NSURL+WireLocale.h"
 #import "Wire-Swift.h"
-
-#import "Analytics.h"
-#import "NSLayoutConstraint+Helpers.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 

@@ -67,10 +67,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) BOOL hasPushedPostRegistrationStep;
 @property (nonatomic) NSArray<UserClient *>* userClients;
-@property (nonatomic) id initialSyncObserverToken;
-@property (nonatomic) id postLoginToken;
-@property (nonatomic) id authenticationToken;
-@property (nonatomic) id sessionCreationObserverToken;
 @property (nonatomic) AuthenticationFlowType flowType;
 
 @end
@@ -108,9 +104,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     self.unregisteredUser = [ZMIncompleteRegistrationUser new];
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
-    self.postLoginToken = [PostLoginAuthenticationNotification addObserver:self];
-    self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerCreatedSessionObserver:self];
-    
+
     [self setupBackgroundViewController];
     [self setupNavigationController];
     

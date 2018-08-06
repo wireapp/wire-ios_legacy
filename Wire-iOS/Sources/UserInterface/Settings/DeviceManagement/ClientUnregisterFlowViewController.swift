@@ -21,27 +21,25 @@ import UIKit
 import Cartography
 
 @objc protocol ClientUnregisterViewControllerDelegate: NSObjectProtocol {
-    func clientDeletionSucceeded()
+    //func clientDeletionSucceeded()
 }
 
 
-@objcMembers class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate {
+@objcMembers class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate, AuthenticationCoordinatedViewController {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?
     var backgroundImageView: UIImageView?
-    weak var delegate: ClientUnregisterViewControllerDelegate?
-    var authToken: Any?
-    
+
+    var authenticationCoordinator: AuthenticationCoordinator?
+
     let clients: Array<UserClient>
     let credentials: ZMEmailCredentials?
     
-    required init(clientsList: Array<UserClient>!, delegate: ClientUnregisterViewControllerDelegate, credentials: ZMEmailCredentials?) {
+    required init(clientsList: Array<UserClient>!, credentials: ZMEmailCredentials?) {
         self.clients = clientsList
         self.credentials = credentials
-        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
-        self.authToken = PostLoginAuthenticationNotification.addObserver(self, userSession: ZMUserSession.shared()!)
     }
     
     required override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -162,7 +160,7 @@ import Cartography
 
 extension ClientUnregisterFlowViewController: PostLoginAuthenticationObserver {
     func clientRegistrationDidSucceed(accountId : UUID) {
-        self.delegate?.clientDeletionSucceeded()
+       // self.delegate?.clientDeletionSucceeded()
     }
 }
 
