@@ -19,13 +19,32 @@
 import Foundation
 
 extension ConversationTableViewDataSource {
-    @objc func isPreviousSenderSame(forMessage message: ZMConversationMessage?) -> Bool {
+    
+    func messagePrevious(to message: ZMConversationMessage, at index: Int) -> ZMConversationMessage? {
+        var previous = NSNotFound
+        
+        if index < messages.count - 1 && index != NSNotFound {
+            previous = index + 1
+        }
+        
+        if previous != NSNotFound {
+            return messages[previous]
+        }
+        
+        return nil
+    }
+    
+    func shouldShowDaySeparator(for message: ZMConversationMessage, at index: Int) -> Bool {
+        guard let previous = messagePrevious(to: message, at: index)?.serverTimestamp, let current = message.serverTimestamp else { return false }
+        return !Calendar.current.isDate(current, inSameDayAs: previous)
+    }
+
+    func isPreviousSenderSame(forMessage message: ZMConversationMessage?, at index: Int) -> Bool {
         guard let message = message,
-            let _ = messages.index(of: message as! ZMMessage),
               Message.isNormal(message),
               !Message.isKnock(message) else { return false }
 
-        guard let previousMessage = messagePrevious(to: message),
+        guard let previousMessage = messagePrevious(to: message, at: index),
               previousMessage.sender == message.sender,
               Message.isNormal(previousMessage) else { return false }
 
@@ -34,15 +53,15 @@ extension ConversationTableViewDataSource {
     
     static let burstSeparatorTimeDifference: TimeInterval = 60 * 45
     
-    public func layoutProperties(for message: ZMConversationMessage) -> ConversationCellLayoutProperties {
+    public func layoutProperties(for message: ZMConversationMessage, at index: Int) -> ConversationCellLayoutProperties {
         let layoutProperties = ConversationCellLayoutProperties()
         
-        layoutProperties.showSender       = self.shouldShowSender(for: message)
-        layoutProperties.showUnreadMarker = message.equals(to: firstUnreadMessage)
-        layoutProperties.showBurstTimestamp = self.shouldShowBurstSeparator(for: message) || layoutProperties.showUnreadMarker
-        layoutProperties.showDayBurstTimestamp = self.shouldShowDaySeparator(for: message)
-        layoutProperties.topPadding       = self.topPadding(for: message, showingSender:layoutProperties.showSender, showingTimestamp:layoutProperties.showBurstTimestamp)
-        layoutProperties.alwaysShowDeliveryState = self.shouldShowAlwaysDeliveryState(for: message)
+        layoutProperties.showSender            = shouldShowSender(for: message, at: index)
+        layoutProperties.showUnreadMarker      = message.equals(to: firstUnreadMessage)
+        layoutProperties.showBurstTimestamp    = shouldShowBurstSeparator(for: message, at: index) || layoutProperties.showUnreadMarker
+        layoutProperties.showDayBurstTimestamp = shouldShowDaySeparator(for: message, at: index)
+        layoutProperties.topPadding            = topPadding(for: message, at: index, showingSender:layoutProperties.showSender, showingTimestamp:layoutProperties.showBurstTimestamp)
+        layoutProperties.alwaysShowDeliveryState = shouldShowAlwaysDeliveryState(for: message)
         
         if let textMessageData = message.textMessageData {
             layoutProperties.linkAttachments = Message.linkAttachments(textMessageData)
@@ -62,19 +81,18 @@ extension ConversationTableViewDataSource {
         return false
     }
     
-    func shouldShowSender(for message: ZMConversationMessage) -> Bool {
+    func shouldShowSender(for message: ZMConversationMessage, at index: Int) -> Bool {
         if let systemMessageData = message.systemMessageData,
             systemMessageData.systemMessageType == .messageDeletedForEveryone {
             return true
         }
  
         if !message.isSystem {
-            if !self.isPreviousSenderSame(forMessage: message) || message.updatedAt != nil {
+            if !self.isPreviousSenderSame(forMessage: message, at: index) || message.updatedAt != nil {
                 return true
             }
             
-            
-            if let previousMessage = self.messagePrevious(to: message) {
+            if let previousMessage = self.messagePrevious(to: message, at: index) {
                 return previousMessage.isKnock
             }
         }
@@ -82,7 +100,7 @@ extension ConversationTableViewDataSource {
         return false
     }
     
-    func shouldShowBurstSeparator(for message: ZMConversationMessage) -> Bool {
+    func shouldShowBurstSeparator(for message: ZMConversationMessage, at index: Int) -> Bool {
         if let systemMessageData = message.systemMessageData {
             switch systemMessageData.systemMessageType {
             case .newClient, .conversationIsSecure, .reactivatedDevice, .newConversation, .usingNewDevice, .messageDeletedForEveryone, .missedCall, .performedCall:
@@ -100,7 +118,7 @@ extension ConversationTableViewDataSource {
             return false
         }
         
-        guard let previousMessage = self.messagePrevious(to: message),
+        guard let previousMessage = self.messagePrevious(to: message, at: index),
               let currentMessageServerTimestamp = message.serverTimestamp,
               let previousMessageServerTimestamp = previousMessage.serverTimestamp else {
             return true
@@ -109,8 +127,8 @@ extension ConversationTableViewDataSource {
         return currentMessageServerTimestamp.timeIntervalSince(previousMessageServerTimestamp) > type(of: self).burstSeparatorTimeDifference
     }
     
-    func topPadding(for message: ZMConversationMessage, showingSender: Bool, showingTimestamp: Bool) -> CGFloat {
-        guard let previousMessage = self.messagePrevious(to :message) else {
+    func topPadding(for message: ZMConversationMessage, at index: Int, showingSender: Bool, showingTimestamp: Bool) -> CGFloat {
+        guard let previousMessage = self.messagePrevious(to: message, at: index) else {
             return self.topMargin(for: message, showingSender: showingSender, showingTimestamp: showingTimestamp)
         }
     

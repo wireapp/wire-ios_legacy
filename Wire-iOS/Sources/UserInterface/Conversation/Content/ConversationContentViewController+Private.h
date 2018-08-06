@@ -39,8 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) ConversationTableViewDataSource* dataSource;
 @property (nonatomic) MessagePresenter* messagePresenter;
-@property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
-@property (nonatomic, copy, nullable) void (^onMessageShown)(ConversationCell *);
 @property (nonatomic, nullable, weak) ImageMessageCell *pinchImageCell;
 @property (nonatomic, nullable) FLAnimatedImageView *pinchImageView;
 @property (nonatomic, nullable) UIView *dimView;

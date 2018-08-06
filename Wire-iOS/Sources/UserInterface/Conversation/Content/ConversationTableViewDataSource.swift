@@ -18,27 +18,7 @@
 
 import Foundation
 import WireDataModel
-
-
-// TODO: guest star from WireDataModel
-extension ZMConversation {
-    var visibleMessagesPredicate: NSPredicate? {
-        var allPredicates: [NSPredicate] = []
-        
-        if let clearedTimeStamp = self.clearedTimeStamp {
-            // This must filter out:
-            // 1. Messages that are older than clearedTimeStamp.
-            // 2. But NOT the messages that are pending, i.e. still can be uploaded.
-            let deliveryIsPendingPredicate = NSPredicate(format: "%K == NO AND %K == NO", #keyPath(ZMMessage.isExpired), #keyPath(ZMOTRMessage.delivered))
-            let messageIsNotCleared = NSPredicate(format: "%K > %@", #keyPath(ZMMessage.serverTimestamp), clearedTimeStamp as CVarArg)
-            allPredicates.append(NSCompoundPredicate(orPredicateWithSubpredicates: [deliveryIsPendingPredicate, messageIsNotCleared]))
-        }
-        
-        allPredicates.append(NSPredicate(format: "%K == %@", #keyPath(ZMMessage.visibleInConversation), self))
-        
-        return NSCompoundPredicate(andPredicateWithSubpredicates: allPredicates)
-    }
-}
+import WireUtilities
 
 
 extension ConversationCell {
@@ -67,7 +47,14 @@ extension ConversationCell {
 }
 
 @objcMembers final class ConversationTableViewDataSource: NSObject {
-    let fetchController: NSFetchedResultsController<ZMMessage>
+    private var fetchController: NSFetchedResultsController<ZMMessage>!
+    private var currentFetchLimit: Int = 100 {
+        didSet {
+            createFetchController()
+            tableView.reloadData()
+        }
+    }
+
     let conversation: ZMConversation
     let tableView: UITableView
     
@@ -88,23 +75,46 @@ extension ConversationCell {
     }
     
     public func expandMessageWindow(by numberOfMessages: Int) {
-        moveDown(by: numberOfMessages)
+        moveUp(by: numberOfMessages)
+    }
+    
+    public func moveUp(until message: ZMMessage) {
+        guard let moc = conversation.managedObjectContext else {
+            fatal("conversation.managedObjectContext == nil")
+        }
+        
+        let fetchRequest = self.fetchRequest()
+        let totalCount = try! moc.count(for: fetchRequest)
+        
+        repeat {
+            if let _ = index(of: message) {
+                return
+            }
+
+            moveUp(by: 1000)
+        }
+        while currentFetchLimit < totalCount
     }
     
     public func moveUp(by numberOfMessages: Int) {
-        // no-op
+        currentFetchLimit = currentFetchLimit + numberOfMessages
     }
     
-    public func moveDown(by numberOfMessages: Int) {
-        // no-op
+    public func index(of message: ZMMessage) -> Int? {
+        if let indexPath = fetchController.indexPath(forObject: message) {
+            return indexPath.row
+        }
+        else {
+            return nil
+        }
     }
     
-    public func configure(_ conversationCell: ConversationCell, with message: ZMConversationMessage)
+    func configure(_ conversationCell: ConversationCell, with message: ZMConversationMessage, at index: Int)
     {
         // If a message has been deleted, we don't try to configure it
         guard !message.hasBeenDeleted else { return }
         
-        let layoutProperties = self.layoutProperties(for: message)
+        let layoutProperties = self.layoutProperties(for: message, at: index)
     
         conversationCell.isSelected = message.equals(to: self.selectedMessage)
         conversationCell.beingEdited = message.equals(to: self.editingMessage)
@@ -122,7 +132,7 @@ extension ConversationCell {
             }
             
             conversationCell.searchQueries = self.searchQueries
-            self.configure(conversationCell, with: conversationCell.message)
+            self.configure(conversationCell, with: conversationCell.message, at: indexPath.row)
         }
     }
 
@@ -136,27 +146,35 @@ extension ConversationCell {
         audioTrackPlayer.stop()
     }
     
-    init(conversation: ZMConversation, tableView: UITableView) {
-        self.conversation = conversation
-        self.tableView = tableView
-        
+    private func fetchRequest() -> NSFetchRequest<ZMMessage> {
         let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
         fetchRequest.fetchBatchSize = 30
-        fetchRequest.fetchLimit = 100
         fetchRequest.predicate = conversation.visibleMessagesPredicate
-        
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ZMMessage.serverTimestamp), ascending: false)]
+        return fetchRequest
+    }
+    
+    private func createFetchController() {
+        let fetchRequest = self.fetchRequest()
+        fetchRequest.fetchLimit = currentFetchLimit
         
         fetchController = NSFetchedResultsController<ZMMessage>(fetchRequest: fetchRequest,
                                                                 managedObjectContext: conversation.managedObjectContext!,
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
-        super.init()
-        
-        registerTableCellClasses()
         
         self.fetchController.delegate = self
         try! fetchController.performFetch()
+    }
+    
+    init(conversation: ZMConversation, tableView: UITableView) {
+        self.conversation = conversation
+        self.tableView = tableView
+        
+        super.init()
+        
+        registerTableCellClasses()
+        createFetchController()
     }
 }
 
@@ -189,7 +207,7 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
             guard let indexPathToUpdate = indexPath,
                   let message = anObject as? ZMMessage,
                   let loadedCell = tableView.cellForRow(at: indexPathToUpdate) as? ConversationCell else {
-                fatal("Missing index path or cell")
+                return
             }
             
             loadedCell.configure(for: message, layoutProperties: loadedCell.layoutProperties)
@@ -260,7 +278,7 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
         conversationCell.delegate = conversationCellDelegate
         // Configuration of the cell is not possible when `ZMUserSession` is not available.
         if let _ = ZMUserSession.shared() {
-            configure(conversationCell, with: message)
+            configure(conversationCell, with: message, at: indexPath.row)
         }
         return conversationCell
     }
