@@ -396,6 +396,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
 {
+    [self updateScrollViewZoomScaleWithViewSize: self.view.frame.size imageSize:self.imageView.image.size];
+
     [self.delegate fadeAndHideMenu:YES];
 }
 

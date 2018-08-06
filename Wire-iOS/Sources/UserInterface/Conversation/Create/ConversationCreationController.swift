@@ -152,7 +152,7 @@ final public class ConversationCreationValues {
         }
         
         toggleSubtitleLabel.text = "conversation.create.toggle.subtitle".localized
-        textFieldSubtitleLabel.text = "participants.section.name.footer".localized
+        textFieldSubtitleLabel.text = "participants.section.name.footer".localized(args: ZMConversation.maxParticipants, ZMConversation.maxVideoCallParticipantsExcludingSelf)
         
         [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
         [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)

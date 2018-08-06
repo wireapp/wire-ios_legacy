@@ -116,7 +116,6 @@ extension AvailabilityTitleView: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.availabilityChanged || changeInfo.nameChanged,
             let user = changeInfo.user as? ZMUser else { return }
-        provideHapticFeedback()
         configure(user: user)
     }
 }
@@ -141,6 +140,7 @@ extension AvailabilityTitleView {
         ZMUserSession.shared()?.performChanges { [weak self] in
             ZMUser.selfUser().availability = availability
             self?.trackChanges(with: availability)
+            self?.provideHapticFeedback()
         }
     }
     

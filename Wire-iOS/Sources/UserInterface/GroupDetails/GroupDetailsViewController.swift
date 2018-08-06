@@ -94,7 +94,7 @@ import Cartography
         
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
-        footerView.addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        footerView.update(for: conversation)
         collectionViewController.sections = computeVisibleSections()
     }
     
@@ -129,6 +129,7 @@ import Cartography
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
         guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged || changeInfo.destructionTimeoutChanged else { return }
         collectionViewController.sections = computeVisibleSections()
+        footerView.update(for: conversation)
     }
     
     func detailsView(_ view: GroupDetailsFooterView, performAction action: GroupDetailsFooterView.Action) {

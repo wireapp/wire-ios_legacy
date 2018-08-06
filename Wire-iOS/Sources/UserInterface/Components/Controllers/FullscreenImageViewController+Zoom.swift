@@ -32,6 +32,21 @@ extension CGSize {
 
         return minZoom
     }
+
+
+    /// returns the longest length among width and height
+    var longestLength: CGFloat {
+        return width > height ? width : height
+    }
+
+    /// returns true if both with and height are longer than otherSize
+    ///
+    /// - Parameter otherSize: other CGSize to compare
+    /// - Returns: true if both with and height are longer than otherSize
+    func contains(_ otherSize: CGSize) -> Bool {
+        return otherSize.width < width &&
+               otherSize.height < height
+    }
 }
 
 extension FullscreenImageViewController {
@@ -39,11 +54,15 @@ extension FullscreenImageViewController {
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
         guard let imageSize = imageView?.image?.size else { return }
 
-        let isImageZoomed = fabs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
-        updateScrollViewMinimumZoomScale(viewSize: size, imageSize: imageSize)
+        let isImageZoomedToMax = scrollView.zoomScale == scrollView.maximumZoomScale
 
-        let animationBlock: () -> Void = { 
-            if isImageZoomed == false {
+        let isImageZoomed = fabs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
+        updateScrollViewZoomScale(viewSize: size, imageSize: imageSize)
+
+        let animationBlock: () -> Void = {
+            if isImageZoomedToMax {
+                self.scrollView.zoomScale = self.scrollView.maximumZoomScale
+            } else if isImageZoomed == false {
                 self.scrollView.zoomScale = self.scrollView.minimumZoomScale
             }
         }
@@ -66,18 +85,18 @@ extension FullscreenImageViewController {
 
         UIMenuController.shared.isMenuVisible = false
         let scaleDiff: CGFloat = scrollView.zoomScale - scrollView.minimumZoomScale
+
         // image view in minimum zoom scale, zoom in to a 50 x 50 rect
         if scaleDiff < kZoomScaleDelta {
             // image is smaller than screen bound and zoom sclae is max(1), do not zoom in
-            if (image.size.width < self.view.bounds.width &&
-                image.size.height < self.view.bounds.height &&
-                scrollView.zoomScale == 1) == false {
-                let point = doubleTapper.location(in: doubleTapper.view)
-                let zoomRect = CGRect(x: (point.x) - 25, y: (point.y) - 25, width: 50, height: 50)
-                let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
+            let point = doubleTapper.location(in: doubleTapper.view)
 
-                scrollView.zoom(to: finalRect ?? .zero, animated: true)
-            }
+            let zoomLength = image.size.longestLength < 50 ? image.size.longestLength : 50
+
+            let zoomRect = CGRect(x: point.x - zoomLength / 2, y: point.y - zoomLength / 2, width: zoomLength, height: zoomLength)
+            let finalRect = imageView?.convert(zoomRect, from: doubleTapper.view)
+
+            scrollView.zoom(to: finalRect ?? .zero, animated: true)
         } else {
             scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
         }
@@ -85,8 +104,15 @@ extension FullscreenImageViewController {
 
     // MARK: - Zoom scale
 
-    func updateScrollViewMinimumZoomScale(viewSize: CGSize, imageSize: CGSize) {
+    @objc func updateScrollViewZoomScale(viewSize: CGSize, imageSize: CGSize) {
         self.scrollView.minimumZoomScale = viewSize.minZoom(imageSize: imageSize)
+
+        // if the image is small than the screen size, max zoom level is "zoom to fit screen"
+        if viewSize.contains(imageSize) {
+            self.scrollView.maximumZoomScale = min(viewSize.height / imageSize.height, viewSize.width / imageSize.width)
+        } else {
+            self.scrollView.maximumZoomScale = 1
+        }
     }
 
     @objc func updateZoom() {
@@ -124,7 +150,7 @@ extension FullscreenImageViewController {
         scrollView.addSubview(imageView)
         scrollView.contentSize = imageView.image?.size ?? CGSize.zero
 
-        updateScrollViewMinimumZoomScale(viewSize: parentSize, imageSize: image.size)
+        updateScrollViewZoomScale(viewSize: parentSize, imageSize: image.size)
         updateZoom(withSize: parentSize)
 
         centerScrollViewContent()

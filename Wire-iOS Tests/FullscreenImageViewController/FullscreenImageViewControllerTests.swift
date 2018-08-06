@@ -42,45 +42,26 @@ final class MockTapGestureRecognizer: UITapGestureRecognizer {
 final class FullscreenImageViewControllerTests: XCTestCase {
     
     var sut: FullscreenImageViewController!
-    var image: UIImage!
 
     override func setUp() {
         super.setUp()
 
         UIView.setAnimationsEnabled(false)
-
-        // The image is 1280 * 854 W/H = ~1.5
-        let data = self.data(forResource: "unsplash_matterhorn", extension: "jpg")!
-        image = UIImage(data: data)
-
-        let message = MockMessageFactory.imageMessage(with: image)!
-
-        sut = FullscreenImageViewController(message: message)
-        sut.setBoundsSizeAsIPhone4_7Inch()
-        sut.viewDidLoad()
-
-        sut.setupImageView(image: image, parentSize: sut.view.bounds.size)
     }
-    
+
     override func tearDown() {
         sut = nil
-        image = nil
 
         UIView.setAnimationsEnabled(true)
 
         super.tearDown()
     }
 
-    func doubleTap() {
-        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
-
-        sut.handleDoubleTap(mockTapGestureRecognizer)
-        sut.view.layoutIfNeeded()
-    }
-
     func testThatScrollViewMinimumZoomScaleAndZoomScaleAreSet() {
         // GIVEN & WHEN
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn", fileExtension: "jpg")
+        let image: UIImage = sut.imageView!.image!
+        sut.updateScrollViewZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
 
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.view.bounds.size.width / image.size.width)
@@ -88,35 +69,32 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
     }
 
-    func testThatDoubleTapDoesNotZoomInTheImageWhichSmallerThanTheView() {
+    func testThatDoubleTapZoomToScreenFitWhenTheImageIsSmallerThanTheView() {
         // GIVEN
         // The image is 70 * 70
-        let data = self.data(forResource: "unsplash_matterhorn_small_size", extension: "jpg")!
-        image = UIImage(data: data)
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn_small_size", fileExtension: "jpg")
 
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
+        let maxZoomScale = sut.scrollView.maximumZoomScale
 
-        XCTAssertEqual(sut.scrollView.zoomScale, 1)
+        XCTAssertEqual(maxZoomScale, sut.view.frame.width / 70.0)
+
+        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - 1), kZoomScaleDelta)
 
         // WHEN
-        doubleTap()
+        doubleTap(fullscreenImageViewController: sut)
 
         // THEN
-        XCTAssertEqual(sut.scrollView.zoomScale, 1)
+        XCTAssertEqual(sut.scrollView.zoomScale, maxZoomScale)
     }
 
     func testThatDoubleTapZoomInTheImage() {
         // GIVEN
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn", fileExtension: "jpg")
 
         XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
 
         // WHEN
-        doubleTap()
+        doubleTap(fullscreenImageViewController: sut)
 
         // THEN
         XCTAssertEqual(sut.scrollView.zoomScale, 1)
@@ -124,9 +102,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
     func testThatRotateScreenResetsZoomScaleToMinZoomScale() {
         // GIVEN
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn", fileExtension: "jpg")
 
         // WHEN
         let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
@@ -135,17 +111,16 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.scrollView.zoomScale)
+        let image: UIImage = sut.imageView!.image!
         XCTAssertEqual(sut.view.bounds.size.height / image.size.height, sut.scrollView.minimumZoomScale)
     }
 
     func testThatRotateScreenReserveZoomScaleIfDoubleTapped() {
         // GIVEN
-        sut.updateScrollViewMinimumZoomScale(viewSize: sut.view.bounds.size, imageSize: image.size)
-        sut.updateZoom(withSize: sut.view.bounds.size)
-        sut.view.layoutIfNeeded()
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn", fileExtension: "jpg")
 
         // WHEN
-        doubleTap()
+        doubleTap(fullscreenImageViewController: sut)
 
         // THEN
         XCTAssertEqual(1, sut.scrollView.zoomScale)
@@ -157,5 +132,26 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(1, sut.scrollView.zoomScale)
+    }
+
+    func testThatRotateScreenUpdatesMaxZoomScaleIfASmallImageIsZoomedIn() {
+        // GIVEN
+        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn_very_small_size_40x20", fileExtension: "jpg")
+
+        // WHEN
+        doubleTap(fullscreenImageViewController: sut)
+
+        // THEN
+        let maxZoomScale = sut.scrollView.maximumZoomScale
+        XCTAssertEqual(maxZoomScale, sut.view.frame.width / 40.0)
+
+        // WHEN
+        let landscapeSize = CGSize(width: CGSize.iPhoneSize.iPhone4_7.height, height: CGSize.iPhoneSize.iPhone4_7.width)
+        sut.view.bounds.size = landscapeSize
+        sut.viewWillTransition(to: landscapeSize, with: nil)
+
+        // THEN
+        let landscapeMaxZoomScale = sut.scrollView.maximumZoomScale
+        XCTAssertNotEqual(maxZoomScale, landscapeMaxZoomScale)
     }
 }
