@@ -35,6 +35,7 @@
 
 @interface SignInViewController () <PhoneSignInViewControllerDelegate, EmailSignInViewControllerDelegate>
 
+@property (weak, nonatomic, nullable) AuthenticationCoordinator *coordinator;
 @property (nonatomic) EmailSignInViewController *emailSignInViewController;
 @property (nonatomic) UIView *viewControllerContainer;
 @property (nonatomic) UIView *buttonContainer;
@@ -133,6 +134,12 @@
 
     self.emailSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_email.label", @"");
     self.phoneSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_phone.label", @"");
+}
+
+- (void)setCoordinator:(AuthenticationCoordinator *)coordinator
+{
+    _coordinator = coordinator;
+    self.emailSignInViewController.coordinator = coordinator;
 }
 
 - (void)takeFirstResponder

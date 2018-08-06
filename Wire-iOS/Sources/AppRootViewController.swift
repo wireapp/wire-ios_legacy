@@ -216,33 +216,14 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
 
-            // check if needs to reauthenticate
-            var needsToReauthenticate = false
-
-            if let error = error {
-                let errorCode = (error as NSError).userSessionErrorCode
-                needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
-                    .accessTokenExpired,
-                    .needsPasswordToRegisterClient,
-                    .needsToRegisterEmailToRegisterClient,
-                ].contains(errorCode)
-            }
-
             let navigationController = NavigationController()
             navigationController.backButtonEnabled = false
             navigationController.logoEnabled = false
             navigationController.isNavigationBarHidden = true
 
-            let flowStep: AuthenticationFlowStep
-
-            if needsToReauthenticate {
-               flowStep = ReauthenticationFlowStep(signInError: error, numberOfAccounts: SessionManager.numberOfAccounts)
-            } else {
-                flowStep = AddNewAccountFlowStep()
-            }
-
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController, session: UnauthenticatedSession.sharedSession!)
-            authenticationCoordinator?.push(step: flowStep)
+
+            authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
             viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
@@ -508,44 +489,6 @@ extension AppRootViewController {
     @objc func onUserGrantedAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
-}
-
-// MARK: - Transition form LandingViewController to RegistrationViewController
-
-extension AppRootViewController: LandingViewControllerDelegate {
-    func landingViewControllerDidChooseCreateTeam() {
-        flowController.startFlow()
-    }
-
-    func landingViewControllerDidChooseLogin() {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-            loginViewController.delegate = appStateController
-            loginViewController.shouldHideCancelButton = true
-            navigationController.pushViewController(loginViewController, animated: true)
-        }
-    }
-
-    func landingViewControllerDidChooseCreateAccount() {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
-            registrationViewController.delegate = appStateController
-            registrationViewController.shouldHideCancelButton = true
-            navigationController.pushViewController(registrationViewController, animated: true)
-        }
-    }
-    
-    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType) {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let registrationViewController = RegistrationViewController(authenticationFlow: .regular)
-            registrationViewController.delegate = appStateController
-            registrationViewController.shouldHideCancelButton = true
-            registrationViewController.loadViewIfNeeded()
-            registrationViewController.presentNoHistoryViewController(context, animated: false)
-            navigationController.pushViewController(registrationViewController, animated: true)
-        }
-    }
-    
 }
 
 // MARK: - Ask user if they want want switch account if there's an ongoing call

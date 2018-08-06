@@ -18,12 +18,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class LoginCredentials;
+@class LoginCredentials, AuthenticationCoordinator;
 @protocol EmailSignInViewControllerDelegate;
 
 @interface EmailSignInViewController : UIViewController
 
 @property (nonatomic) LoginCredentials *loginCredentials;
+@property (nonatomic, weak, nullable) AuthenticationCoordinator *coordinator;
 @property (nonatomic, weak) id<EmailSignInViewControllerDelegate> delegate;
 
 - (void)takeFirstResponder;

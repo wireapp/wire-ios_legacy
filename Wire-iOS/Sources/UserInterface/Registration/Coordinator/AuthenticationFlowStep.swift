@@ -18,12 +18,53 @@
 
 import Foundation
 
-protocol AuthenticationFlowStep {
+typealias AuthenticationStepViewController = UIViewController & AuthenticationCoordinatedViewController
+
+@objc protocol AuthenticationCoordinatedViewController: AuthenticationErrorFeedbackProviding {
+    var coordinator: AuthenticationCoordinator? { get set }
+}
+
+@objc protocol AuthenticationErrorFeedbackProviding {
+    func displayErrorFeedback(_ feedbackAction: AuthenticationErrorFeedbackAction)
+}
+
+@objc enum AuthenticationErrorFeedbackAction: Int {
+    case showGuidanceDot
+}
+
+enum AuthenticationFlowStep {
+    case landingScreen
+    case reauthenticate(error: Error?, numberOfAccounts: Int)
+    case provideEmailCredentials
+    case authenticateEmailCredentials(ZMCredentials)
+    case clientManagement(clients: [UserClient], credentials: ZMCredentials)
+
+    var allowsUnwind: Bool {
+        switch self {
+        case .landingScreen, .clientManagement: return false
+        default: return true
+        }
+    }
+
+    var needsInterface: Bool {
+        switch self {
+        case .authenticateEmailCredentials: return false
+        default: return true
+        }
+    }
+
+}
+
+enum AuthenticationError {
+
+}
+
+protocol _AuthenticationFlowStep {
     var activeCoordinator: AuthenticationCoordinator? { get set }
     func makeViewController() -> UIViewController
 }
 
-class TeamCreationFlowStep: AuthenticationFlowStep {
+/*class TeamCreationFlowStep: AuthenticationFlowStep {
 
     weak var activeCoordinator: AuthenticationCoordinator?
 
@@ -58,32 +99,21 @@ class ReauthenticationFlowStep: AuthenticationFlowStep {
 
 }
 
-class AddNewAccountFlowStep: AuthenticationFlowStep, LandingViewControllerDelegate {
+class AddNewAccountFlowStep: AuthenticationFlowStep {
 
     weak var activeCoordinator: AuthenticationCoordinator?
+    weak var landingDelegate: LandingViewControllerDelegate?
+
+    init(landingDelegate: LandingViewControllerDelegate) {
+        self.landingDelegate = landingDelegate
+    }
 
     func makeViewController() -> UIViewController {
         let landingViewController = LandingViewController()
-        landingViewController.delegate = self
+        landingViewController.delegate = landingDelegate
         return landingViewController
     }
 
-    func landingViewControllerDidChooseLogin() {
-        let initiateLogin = InitiateLoginFlowStep()
-        activeCoordinator?.push(step: initiateLogin)
-    }
-
-    func landingViewControllerDidChooseCreateAccount() {
-
-    }
-
-    func landingViewControllerDidChooseCreateTeam() {
-
-    }
-
-    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType) {
-        // no-op
-    }
 
 }
 
@@ -99,3 +129,4 @@ class InitiateLoginFlowStep: AuthenticationFlowStep {
     }
 
 }
+*/

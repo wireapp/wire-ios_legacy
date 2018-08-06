@@ -24,16 +24,14 @@ import Cartography
     func landingViewControllerDidChooseCreateAccount()
     func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()
-    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType)
 }
 
 /// Landing screen for choosing create team or personal account
-final class LandingViewController: UIViewController, CompanyLoginControllerDelegate, PreLoginAuthenticationObserver {
+final class LandingViewController: AuthenticationStepViewController {
+    weak var coordinator: AuthenticationCoordinator?
     weak var delegate: LandingViewControllerDelegate?
 
     fileprivate var device: DeviceProtocol
-    private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
-    private var token: Any?
 
     // MARK: - UI styles
 
@@ -158,7 +156,6 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
         navigationBar.pushItem(navigationItem, animated: false)
         navigationBar.tintColor = .black
         view.addSubview(navigationBar)
-        companyLoginController?.delegate = self
 
         self.createConstraints()
         self.configureAccessibilityElements()
@@ -179,14 +176,12 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        companyLoginController?.isAutoDetectionEnabled = true
-        companyLoginController?.detectLoginCode()
-        token = PreLoginAuthenticationNotification.register(self, for: SessionManager.shared?.unauthenticatedSession)
+        coordinator?.currentViewControllerDidAppear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        companyLoginController?.isAutoDetectionEnabled = false
+        coordinator?.currentViewControllerDidDisappear()
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -342,7 +337,6 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedUserRegistration(context: "email")
         delegate?.landingViewControllerDidChooseCreateAccount()
-        token = nil
     }
 
     @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
@@ -353,7 +347,6 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     @objc public func loginButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedLogin(context: "email")
         delegate?.landingViewControllerDidChooseLogin()
-        token = nil
     }
     
     @objc public func cancelButtonTapped() {
@@ -366,33 +359,9 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     }
     
     // MARK: - CompanyLoginControllerDelegate
-    
-    func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
-        present(alert, animated: true)
-    }
 
-    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
-        self.showLoadingView = showLoadingView
-    }
-
-    // MARK: - PreLoginAuthenticationObserver
-    
-    func authenticationReadyToImportBackup(existingAccount: Bool) {
-        guard nil == AutomationHelper.sharedHelper.automationEmailCredentials else {
-            UnauthenticatedSession.sharedSession?.continueAfterBackupImportStep()
-            return
-        }
-        
-        func presentNoHistoryViewController() {
-            let type = existingAccount ? ContextType.loggedOut : .newDevice
-            delegate?.landingViewControllerNeedsToPresentNoHistoryFlow(with: type)
-        }
-        
-        if let visibleController = UIApplication.shared.wr_topmostController() as? BrowserViewController {
-            visibleController.dismiss(animated: true, completion: presentNoHistoryViewController)
-        } else {
-            presentNoHistoryViewController()
-        }
+    func displayErrorFeedback(_ feedbackAction: AuthenticationErrorFeedbackAction) {
+        // no-op
     }
 
 }

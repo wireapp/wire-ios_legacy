@@ -50,9 +50,12 @@
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
+
+@property (nonatomic, weak, readwrite) AuthenticationCoordinator *coordinator;
+
 @end
 
-@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver, PreLoginAuthenticationObserver>
+@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver, PreLoginAuthenticationObserver, AuthenticationCoordinatedViewController>
 
 @property (nonatomic) BOOL registeredInThisSession;
 
@@ -115,6 +118,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupNavigationController];
     
     [self updateViewConstraints];
+}
+
+- (void)setCoordinator:(AuthenticationCoordinator *)coordinator
+{
+    _coordinator = coordinator;
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -309,11 +317,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-#pragma mark - ClientUnregisterViewController
+#pragma mark - AuthenticationCoordinatedViewController
 
-- (void)clientDeletionSucceeded
-{
-    // nop
+- (void)displayErrorFeedback:(enum AuthenticationErrorFeedbackAction)feedbackAction {
+    // no-op
 }
 
 @end

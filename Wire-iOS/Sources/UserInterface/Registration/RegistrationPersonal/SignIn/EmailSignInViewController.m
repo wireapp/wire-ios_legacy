@@ -41,15 +41,12 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface EmailSignInViewController () <RegistrationTextFieldDelegate, ClientUnregisterViewControllerDelegate>
+@interface EmailSignInViewController () <RegistrationTextFieldDelegate>
 
 @property (nonatomic) RegistrationTextField *emailField;
 @property (nonatomic) RegistrationTextField *passwordField;
 @property (nonatomic) ButtonWithLargerHitArea *forgotPasswordButton;
 @property (nonatomic) ButtonWithLargerHitArea *companyLoginButton;
-
-@property (nonatomic) id preLoginAuthenticationToken;
-@property (nonatomic) id postLoginAuthenticationToken;
 
 /// After a login try we set this property to @c YES to reset both field accessories after a field change on any of those
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
@@ -85,30 +82,22 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (nil == self.preLoginAuthenticationToken) {
-    
-        self.preLoginAuthenticationToken = [PreLoginAuthenticationNotification registerObserver:self
-                                                                      forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
-    }
-    
-    if (nil == self.postLoginAuthenticationToken) {
-        self.postLoginAuthenticationToken = [PostLoginAuthenticationNotification addObserver:self];
-    }
-    
+
     if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
         ZMEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
         self.emailField.text = emailCredentials.email;
         self.passwordField.text = emailCredentials.password;
         [self.passwordField.confirmButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
+
     [self takeFirstResponder];
 }
 
-- (void)removeObservers
+- (void)viewWillDisappear:(BOOL)animated
 {
-    self.preLoginAuthenticationToken = nil;
-    self.postLoginAuthenticationToken = nil;
+    [super viewWillDisappear:animated];
+    [self.emailField resignFirstResponder];
+    [self.passwordField resignFirstResponder];
 }
 
 - (void)createEmailField
@@ -271,32 +260,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)presentClientManagementForUserClientIds:(NSArray<NSManagedObjectID *> *)clientIds credentials:(ZMEmailCredentials *)credentials
-{    
-    NSArray *userClients = [clientIds mapWithBlock:^id(NSManagedObjectID *objId) {
-        return [ZMUserSession.sharedSession.managedObjectContext existingObjectWithID:objId error:NULL];
-    }];
-    
-    ClientUnregisterFlowViewController *unregisterClientFlowController = [[ClientUnregisterFlowViewController alloc] initWithClientsList:userClients delegate:self credentials:credentials];
-    
-    NavigationController *navigationController = self.wr_navigationController;
-    navigationController.logoEnabled = NO;
-    [navigationController setViewControllers:@[unregisterClientFlowController]];
-}
-
 #pragma mark - Actions
 
 - (IBAction)signIn:(id)sender
 {
     self.needsToResetBothFieldAccessories = YES;
-    
-    ZMCredentials *credentials = self.credentials;
-    
-    self.navigationController.showLoadingView = YES;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{                
-        [[UnauthenticatedSession sharedSession] loginWithCredentials:credentials];
-    });
+    [self.coordinator requestLoginWithCredentials:self.credentials];
 }
 
 - (IBAction)resetPassword:(id)sender
@@ -394,79 +363,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     else {
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
     }
-}
-
-#pragma mark - ClientUnregisterViewControllerDelegate
-
-- (void)clientDeletionSucceeded
-{
-    // nop
-}
-
-@end
-
-
-
-@implementation EmailSignInViewController (AuthenticationObserver)
-
-- (void)authenticationDidSucceed
-{
-    // Not necessary to remove the loading view, since the controller would not be used any more.
-}
-
-- (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
-{
-    self.navigationController.showLoadingView = NO;
-}
-
-- (void)authenticationDidFail:(NSError *)error
-{
-    ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
-    
-    self.navigationController.showLoadingView = NO;
-    
-    if (error.code != ZMUserSessionNetworkError) {
-        self.emailField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
-        self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
-    }
-    
-    if (error.code == ZMUserSessionUnknownError) {
-        NSString *email = self.emailField.text;
-        NSString *password = self.passwordField.text;
-        
-        if (![ZMUser validateEmailAddress:&email error:nil]) {
-            [self showAlertForError:[NSError errorWithDomain:NSError.ZMUserSessionErrorDomain code:ZMUserSessionInvalidEmail userInfo:nil]];
-        } else if (![ZMUser validatePassword:&password error:nil]) {
-            [self showAlertForError:[NSError errorWithDomain:NSError.ZMUserSessionErrorDomain code:ZMUserSessionInvalidCredentials userInfo:nil]];
-        } else {
-            [self showAlertForError:error];
-        }
-    } else if (error.code != ZMUserSessionNeedsPasswordToRegisterClient &&
-               error.code != ZMUserSessionCanNotRegisterMoreClients &&
-               error.code != ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
-
-        [self showAlertForError:error];
-    }
-    
-    if (error.code == ZMUserSessionCanNotRegisterMoreClients) {
-        [self presentClientManagementForUserClientIds:error.userInfo[ZMClientsKey] credentials:[self credentials]];
-    }
-}
-
-
-- (void)authenticationInvalidated:(NSError * _Nonnull)error accountId:(NSUUID * _Nonnull)accountId
-{
-    [self authenticationDidFail:error];
-}
-
-- (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId
-{
-    [self authenticationDidSucceed];
-}
-
-- (void)clientRegistrationDidFail:(NSError * _Nonnull)error accountId:(NSUUID * _Nonnull)accountId
-{
-    [self authenticationDidFail:error];
 }
 
 @end
