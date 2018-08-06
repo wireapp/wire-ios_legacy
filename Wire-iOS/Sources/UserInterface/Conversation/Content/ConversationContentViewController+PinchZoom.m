@@ -33,10 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id<ZMConversationMessage>)messageAtPoint:(CGPoint)point
 {
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
-    if (indexPath == nil || indexPath.row >= (NSInteger)self.messageWindow.messages.count) {
+    if (indexPath == nil || indexPath.row >= (NSInteger)self.dataSource.messages.count) {
         return nil;
     }
-    id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+    id<ZMConversationMessage> message = [self.dataSource.messages objectAtIndex:indexPath.row];
     return message;
 }
 
@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
             CGPoint locationOfTouch = [pinchGestureRecognizer locationInView:self.tableView];
             NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:locationOfTouch];
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-            id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:indexPath.row];
+            id<ZMConversationMessage> message = [self.dataSource.messages objectAtIndex:indexPath.row];
             
             if (![cell isKindOfClass:[ImageMessageCell class]]) {
                 return;

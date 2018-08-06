@@ -202,27 +202,25 @@ extension ConversationContentViewController {
         }
         
         let indexInConversation: Int = self.conversation.messages.index(of: messageToShow)
-        if !self.messageWindow.messages.contains(messageToShow) {
+        if !dataSource.messages.contains(messageToShow as! ZMMessage) {
         
-            let oldestMessageIndexInMessageWindow = self.conversation.messages.index(of: self.messageWindow.messages.firstObject!)
-            let newestMessageIndexInMessageWindow = self.conversation.messages.index(of: self.messageWindow.messages.lastObject!)
+            let oldestMessageIndexInMessageWindow = self.conversation.messages.index(of: dataSource.messages.first!)
+            let newestMessageIndexInMessageWindow = self.conversation.messages.index(of: dataSource.messages.last!)
 
             if oldestMessageIndexInMessageWindow > indexInConversation {
-                self.messageWindow.moveUp(byMessages: UInt(oldestMessageIndexInMessageWindow - indexInConversation))
+                self.dataSource.moveUp(by: oldestMessageIndexInMessageWindow - indexInConversation)
             }
             else {
-                self.messageWindow.moveDown(byMessages: UInt(indexInConversation - newestMessageIndexInMessageWindow))
+                self.dataSource.moveDown(by: indexInConversation - newestMessageIndexInMessageWindow)
             }
         }
 
-        let indexToShow = self.messageWindow.messages.index(of: messageToShow)
-
-        if indexToShow == NSNotFound {
-            self.expectedMessageToShow = messageToShow
-            self.onMessageShown = completion
+        if let indexToShow = dataSource.messages.index(of: messageToShow as! ZMMessage) {
+            self.scroll(toIndex: indexToShow, completion: completion)
         }
         else {
-            self.scroll(toIndex: indexToShow, completion: completion)
+            self.expectedMessageToShow = messageToShow
+            self.onMessageShown = completion
         }
     }
     

@@ -21,8 +21,8 @@ import UIKit
 extension ConversationContentViewController {
     var headerHeight: CGFloat {
         var height: CGFloat = 20
-        if messageWindow.messages.count == 1,
-            let message = messageWindow.messages.firstObject as? ZMConversationMessage,
+        if dataSource.messages.count == 1,
+            let message = dataSource.messages.first,
             let cell = self.cell(for:message) {
 
             height += cell.bounds.height

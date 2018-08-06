@@ -20,11 +20,13 @@
 import Foundation
 
 
-extension ZMConversationMessageWindow {
+extension ConversationTableViewDataSource {
 
     @objc(messagePreviousToMessage:)
     public func messagePrevious(to message: ZMConversationMessage) -> ZMConversationMessage? {
-        let index = messages.index(of: message)
+        guard let index = messages.index(of: message as! ZMMessage) else {
+            return nil
+        }
         var previous = NSNotFound
 
         if index < messages.count - 1 && index != NSNotFound {
@@ -32,7 +34,7 @@ extension ZMConversationMessageWindow {
         }
 
         if previous != NSNotFound {
-            return messages.object(at: previous) as? ZMConversationMessage
+            return messages[previous]
         }
 
         return nil

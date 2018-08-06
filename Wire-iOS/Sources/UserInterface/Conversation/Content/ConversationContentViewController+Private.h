@@ -20,8 +20,9 @@
 /// Private material for conversationContentViewController.
 
 #import "ConversationContentViewController.h"
-#import <WireSyncEngine/WireSyncEngine.h>
 #import "MessageAction.h"
+
+@import WireSyncEngine;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,13 +30,14 @@ NS_ASSUME_NONNULL_BEGIN
 @class MessagePresenter;
 @class FLAnimatedImageView;
 @class ImageMessageCell;
+@class ConversationTableViewDataSource;
 
 @interface ConversationContentViewController ()
 
 /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
 @property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage> messageWithExpandedTools;
 
-@property (nonatomic) ZMConversationMessageWindow *messageWindow;
+@property (nonatomic) ConversationTableViewDataSource* dataSource;
 @property (nonatomic) MessagePresenter* messagePresenter;
 @property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
 @property (nonatomic, copy, nullable) void (^onMessageShown)(ConversationCell *);
@@ -50,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface ConversationContentViewController (MessageWindow) <ZMConversationMessageWindowObserver>
+@interface ConversationContentViewController (MessageWindow)
 
 - (void)expandMessageWindowUp;
 - (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;

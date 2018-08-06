@@ -68,8 +68,6 @@
 #import "TopPeopleCell.h"
 #import "CollectionViewContainerCell.h"
 #import "PingCell.h"
-#import "ConversationMessageWindowTableViewAdapter.h"
-#import "ConversationMessageWindowTableViewAdapter+Private.h"
 #import "ConnectionRequestCell.h"
 
 // View Controllers
