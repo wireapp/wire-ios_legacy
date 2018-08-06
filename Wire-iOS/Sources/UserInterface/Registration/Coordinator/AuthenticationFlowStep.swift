@@ -20,18 +20,6 @@ import Foundation
 
 typealias AuthenticationStepViewController = UIViewController & AuthenticationCoordinatedViewController
 
-@objc protocol AuthenticationCoordinatedViewController: AuthenticationErrorFeedbackProviding {
-    var coordinator: AuthenticationCoordinator? { get set }
-}
-
-@objc protocol AuthenticationErrorFeedbackProviding {
-    func displayErrorFeedback(_ feedbackAction: AuthenticationErrorFeedbackAction)
-}
-
-@objc enum AuthenticationErrorFeedbackAction: Int {
-    case showGuidanceDot
-}
-
 enum AuthenticationFlowStep {
     case landingScreen
     case reauthenticate(error: Error?, numberOfAccounts: Int)

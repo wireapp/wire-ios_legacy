@@ -51,11 +51,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
 
-@property (nonatomic, weak, readwrite) AuthenticationCoordinator *coordinator;
-
 @end
 
-@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver, PreLoginAuthenticationObserver, AuthenticationCoordinatedViewController>
+@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver, PreLoginAuthenticationObserver>
 
 @property (nonatomic) BOOL registeredInThisSession;
 
@@ -80,6 +78,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 @implementation RegistrationViewController
+
+@synthesize authenticationCoordinator;
 
 - (instancetype)init
 {
@@ -120,11 +120,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateViewConstraints];
 }
 
-- (void)setCoordinator:(AuthenticationCoordinator *)coordinator
-{
-    _coordinator = coordinator;
-}
-
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
@@ -148,6 +143,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithUnregisteredUser:self.unregisteredUser authenticationFlow:self.flowType];
     registrationRootViewController.formStepDelegate = self;
+    registrationRootViewController.authenticationCoordinator = self.authenticationCoordinator;
     registrationRootViewController.hasSignInError = self.signInError != nil && !addingAdditionalAccount;
     registrationRootViewController.showLogin = needsToReauthenticate || addingAdditionalAccount;
     registrationRootViewController.loginCredentials = [[LoginCredentials alloc] initWithError:self.signInError];
@@ -219,7 +215,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
     
     if (isEmailRegistration) {
-        [self.delegate registrationViewControllerDidCompleteRegistration];
+//        [self.delegate registrationViewControllerDidCompleteRegistration];
     }
     else if (isNoHistoryViewController) {
         [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
@@ -287,7 +283,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.rootNavigationController.showLoadingView = NO;
     
     if (AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
-        [self.delegate registrationViewControllerDidSignIn];
+//        [self.delegate registrationViewControllerDidSignIn];
         return;
     }
     
@@ -310,17 +306,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.rootNavigationController pushViewController:addEmailPasswordViewController animated:YES];
     }
     else if (! [[ZMUserSession sharedSession] registeredOnThisDevice]) {
-        [self.delegate registrationViewControllerDidSignIn];
+//        [self.delegate registrationViewControllerDidSignIn];
     }
     else if ([self.class registrationFlow] == RegistrationFlowPhone) {
-        [self.delegate registrationViewControllerDidCompleteRegistration];
+//        [self.delegate registrationViewControllerDidCompleteRegistration];
     }
 }
 
 #pragma mark - AuthenticationCoordinatedViewController
 
-- (void)displayErrorFeedback:(enum AuthenticationErrorFeedbackAction)feedbackAction {
-    // no-op
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    [self.registrationRootViewController executeErrorFeedbackAction:feedbackAction];
 }
 
 @end

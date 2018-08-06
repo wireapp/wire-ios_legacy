@@ -83,14 +83,14 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         case .landingScreen:
             let controller = LandingViewController()
             controller.delegate = self
-            controller.coordinator = self
+            controller.authenticationCoordinator = self
             return controller
 
         case .provideEmailCredentials:
             let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-            loginViewController.delegate = self
+            loginViewController.authenticationCoordinator = self
             loginViewController.shouldHideCancelButton = true
-            return (loginViewController as! AuthenticationStepViewController)
+            return loginViewController
 
         default:
             return nil
@@ -126,7 +126,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         case .authenticateEmailCredentials(let credentials):
             // Show a guidance dot if the user caused the failure
             if error.code != ZMUserSessionErrorCode.networkError.rawValue {
-                currentViewController?.displayErrorFeedback(.showGuidanceDot)
+                currentViewController?.executeErrorFeedbackAction?(.showGuidanceDot)
             }
 
             let errorAlertHandler: (UIAlertAction?) -> Void = { _ in
@@ -175,6 +175,15 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
             break
         }
 
+    }
+
+    @objc func startCompanyLoginFlowIfPossible() {
+        switch currentStep {
+        case .provideEmailCredentials:
+            companyLoginController?.displayLoginCodePrompt()
+        default:
+            return
+        }
     }
 
 
@@ -326,15 +335,6 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
 //    func landingViewControllerDidChooseCreateTeam() {
 //        flowController.startFlow()
-//    }
-//
-//    func landingViewControllerDidChooseLogin() {
-//        if let navigationController = self.visibleViewController as? NavigationController {
-//            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-//            loginViewController.delegate = appStateController
-//            loginViewController.shouldHideCancelButton = true
-//            navigationController.pushViewController(loginViewController, animated: true)
-//        }
 //    }
 //
 //    func landingViewControllerDidChooseCreateAccount() {

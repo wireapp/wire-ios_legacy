@@ -17,21 +17,15 @@
 // 
 
 #import <UIKit/UIKit.h>
+#import "AuthenticationCoordinatedViewController.h"
 
 @class LoginCredentials, AuthenticationCoordinator;
 @protocol EmailSignInViewControllerDelegate;
 
-@interface EmailSignInViewController : UIViewController
+@interface EmailSignInViewController : UIViewController <AuthenticationCoordinatedViewController>
 
-@property (nonatomic) LoginCredentials *loginCredentials;
-@property (nonatomic, weak, nullable) AuthenticationCoordinator *coordinator;
-@property (nonatomic, weak) id<EmailSignInViewControllerDelegate> delegate;
+@property (nonatomic, nullable) LoginCredentials *loginCredentials;
 
 - (void)takeFirstResponder;
-- (void)removeObservers;
 
-@end
-
-@protocol EmailSignInViewControllerDelegate
-- (void)emailSignInViewControllerDidTapCompanyLoginButton:(EmailSignInViewController *)signInViewController;
 @end

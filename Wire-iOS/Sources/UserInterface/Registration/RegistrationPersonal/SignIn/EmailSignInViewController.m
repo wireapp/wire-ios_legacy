@@ -65,6 +65,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation EmailSignInViewController
 
+@synthesize authenticationCoordinator;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -265,7 +267,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (IBAction)signIn:(id)sender
 {
     self.needsToResetBothFieldAccessories = YES;
-    [self.coordinator requestLoginWithCredentials:self.credentials];
+    [self.authenticationCoordinator requestLoginWithCredentials:self.credentials];
 }
 
 - (IBAction)resetPassword:(id)sender
@@ -276,7 +278,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)companyLoginButtonTapped:(ButtonWithLargerHitArea *)button
 {
     if (self.canStartCompanyLoginFlow) {
-        [self.delegate emailSignInViewControllerDidTapCompanyLoginButton:self];
+        [self.authenticationCoordinator startCompanyLoginFlowIfPossible];
     }
 }
 
@@ -362,6 +364,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     else {
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
+    }
+}
+
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    if (feedbackAction == AuthenticationErrorFeedbackActionShowGuidanceDot) {
+        self.emailField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
+        self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
     }
 }
 

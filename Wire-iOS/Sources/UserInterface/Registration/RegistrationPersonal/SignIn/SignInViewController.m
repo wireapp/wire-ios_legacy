@@ -32,10 +32,8 @@
 #import "Wire-Swift.h"
 
 
+@interface SignInViewController () <PhoneSignInViewControllerDelegate>
 
-@interface SignInViewController () <PhoneSignInViewControllerDelegate, EmailSignInViewControllerDelegate>
-
-@property (weak, nonatomic, nullable) AuthenticationCoordinator *coordinator;
 @property (nonatomic) EmailSignInViewController *emailSignInViewController;
 @property (nonatomic) UIView *viewControllerContainer;
 @property (nonatomic) UIView *buttonContainer;
@@ -45,8 +43,9 @@
 @end
 
 
-
 @implementation SignInViewController
+
+@synthesize authenticationCoordinator;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -136,11 +135,7 @@
     self.phoneSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_phone.label", @"");
 }
 
-- (void)setCoordinator:(AuthenticationCoordinator *)coordinator
-{
-    _coordinator = coordinator;
-    self.emailSignInViewController.coordinator = coordinator;
-}
+
 
 - (void)takeFirstResponder
 {
@@ -157,10 +152,10 @@
 - (void)setupEmailSignInViewController
 {
     EmailSignInViewController *emailSignInViewController = [[EmailSignInViewController alloc] init];
-    emailSignInViewController.delegate = self;
     emailSignInViewController.loginCredentials = self.loginCredentials;
     emailSignInViewController.view.frame = self.viewControllerContainer.frame;
     emailSignInViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    emailSignInViewController.authenticationCoordinator = self.authenticationCoordinator;
     self.emailSignInViewController = emailSignInViewController;
     self.emailSignInViewControllerContainer = emailSignInViewController.registrationFormViewController;
 }
@@ -225,9 +220,7 @@
                                 [toViewController didMoveToParentViewController:self];
                                 [fromViewController removeFromParentViewController];
                                 
-                                if (fromViewController == self.emailSignInViewControllerContainer) {
-                                    [self.emailSignInViewController removeObservers];
-                                } else {
+                                if (fromViewController == self.phoneSignInViewController) {
                                     [self.phoneSignInViewController removeObservers];
                                 }
                             }];
@@ -305,11 +298,13 @@
     [self presentSignInViewControllerWithCredentials:loginCredentials];
 }
 
-#pragma mark - EmailSignInViewControllerDelegate
+#pragma mark - AuthenticationCoordinatedViewController
 
-- (void)emailSignInViewControllerDidTapCompanyLoginButton:(EmailSignInViewController *)signInViewController
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {
-    [self.delegate signInViewControllerDidTapCompanyLoginButton:self];
+    if (self.presentedSignInViewController == self.emailSignInViewController) {
+        [self.emailSignInViewController executeErrorFeedbackAction:feedbackAction];
+    }
 }
 
 @end

@@ -29,7 +29,7 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, CompanyLoginControllerDelegate, SignInViewControllerDelegate>
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, CompanyLoginControllerDelegate, AuthenticationCoordinatedViewController>
 
 @property (nonatomic) CompanyLoginController *companyLoginController;
 
@@ -52,6 +52,8 @@
 @end
 
 @implementation RegistrationRootViewController
+
+@synthesize authenticationCoordinator;
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow
 {
@@ -76,7 +78,6 @@
     
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
     signInViewController.loginCredentials = self.loginCredentials;
-    signInViewController.delegate = self;
     
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
@@ -109,6 +110,7 @@
     self.registrationTabBarController.interactive = NO;
 
     self.signInViewController = signInViewController;
+    self.signInViewController.authenticationCoordinator = self.authenticationCoordinator;
     
     if (self.showLogin) {
         [self.registrationTabBarController selectIndex:1 animated:NO];
@@ -264,13 +266,6 @@
     [self.signInViewController presentSignInViewControllerWithCredentials:loginCredentials];
 }
 
-#pragma mark - SignInViewControllerDelegate
-
-- (void)signInViewControllerDidTapCompanyLoginButton:(SignInViewController *)signInViewController
-{
-    [self.companyLoginController displayLoginCodePrompt];
-}
-
 #pragma mark - CompanyLoginControllerDelegate
 
 - (void)controller:(CompanyLoginController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert
@@ -281,6 +276,13 @@
 - (void)controller:(CompanyLoginController *)controller showLoadingView:(BOOL)showLoadingView
 {
     self.showLoadingView = showLoadingView;
+}
+
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    if (self.registrationTabBarController.selectedIndex == 1) {
+        [self.signInViewController executeErrorFeedbackAction:feedbackAction];
+    }
 }
 
 @end

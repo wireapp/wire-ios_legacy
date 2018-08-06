@@ -20,6 +20,7 @@
 #import <UIKit/UIKit.h>
 #import "FormFlowViewController.h"
 #import "NoHistoryViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
     AuthenticationFlowRegular,
@@ -27,17 +28,22 @@ typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
     AuthenticationFlowOnlyRegistration
 };
 
-@class ZMIncompleteRegistrationUser, LoginCredentials;
+@class ZMIncompleteRegistrationUser, LoginCredentials, AuthenticationCoordinator;
 
-@interface RegistrationRootViewController : FormFlowViewController
+NS_ASSUME_NONNULL_BEGIN
+
+@interface RegistrationRootViewController : FormFlowViewController <AuthenticationCoordinatedViewController>
 
 @property (nonatomic) BOOL hasSignInError;
 @property (nonatomic) BOOL showLogin;
-@property (nonatomic) LoginCredentials *loginCredentials;
 @property (nonatomic) BOOL shouldHideCancelButton;
+
+@property (nonatomic, nullable) LoginCredentials *loginCredentials;
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow;
 - (void)presentLoginTab;
 - (void)presentRegistrationTab;
 
 @end
+
+NS_ASSUME_NONNULL_END

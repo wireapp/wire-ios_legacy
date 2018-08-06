@@ -130,6 +130,7 @@
 #import "PassthroughTouchesView.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "URLSchemeHelper.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 // Utils
 #import "Analytics.h"

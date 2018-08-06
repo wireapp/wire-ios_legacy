@@ -22,6 +22,7 @@
 #import "FormStepDelegate.h"
 #import "RegistrationRootViewController.h"
 #import "WireSyncEngine+iOS.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 @class ZMEmailCredentials;
 
@@ -42,7 +43,7 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 
 
 
-@interface RegistrationViewController : UIViewController
+@interface RegistrationViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 - (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow;
 

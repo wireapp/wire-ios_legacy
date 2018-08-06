@@ -28,7 +28,7 @@ import Cartography
 
 /// Landing screen for choosing create team or personal account
 final class LandingViewController: AuthenticationStepViewController {
-    weak var coordinator: AuthenticationCoordinator?
+    weak var authenticationCoordinator: AuthenticationCoordinator?
     weak var delegate: LandingViewControllerDelegate?
 
     fileprivate var device: DeviceProtocol
@@ -176,12 +176,12 @@ final class LandingViewController: AuthenticationStepViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        coordinator?.currentViewControllerDidAppear()
+        authenticationCoordinator?.currentViewControllerDidAppear()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        coordinator?.currentViewControllerDidDisappear()
+        authenticationCoordinator?.currentViewControllerDidDisappear()
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -358,10 +358,4 @@ final class LandingViewController: AuthenticationStepViewController {
         return true
     }
     
-    // MARK: - CompanyLoginControllerDelegate
-
-    func displayErrorFeedback(_ feedbackAction: AuthenticationErrorFeedbackAction) {
-        // no-op
-    }
-
 }
