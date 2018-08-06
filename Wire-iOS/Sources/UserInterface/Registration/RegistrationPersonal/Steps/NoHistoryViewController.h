@@ -18,6 +18,7 @@
 
 
 #import "RegistrationStepViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +27,7 @@ typedef NS_ENUM(NSUInteger, ContextType) {
     ContextTypeLoggedOut
 };
 
-@interface NoHistoryViewController : RegistrationStepViewController
+@interface NoHistoryViewController : UIViewController <AuthenticationCoordinatedViewController>
 - (instancetype)initWithContextType:(ContextType)contextType;
 
 @property (nonatomic, readonly) ContextType contextType;

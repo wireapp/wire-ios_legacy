@@ -52,7 +52,6 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 @property (nonatomic) BOOL shouldHideCancelButton;
 
 + (RegistrationFlow)registrationFlow;
-- (void)presentNoHistoryViewController:(ContextType)type animated:(BOOL)animated;
 
 @end
 

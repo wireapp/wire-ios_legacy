@@ -40,7 +40,7 @@ extension NoHistoryViewController {
         okButton.setTitle(gotItText.localized, for: .normal)
         okButton.addCallback(for: .touchUpInside) { [unowned self] _ in
             self.showLoadingView = true
-            self.formStepDelegate.didCompleteFormStep(self)
+            self.authenticationCoordinator?.completeBackupStep()
         }
         
         okButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -109,7 +109,7 @@ extension NoHistoryViewController {
                 BackupEvent.importSucceeded.track()
                 self.spinnerView.subtitle = "registration.no_history.restore_backup.completed".localized.uppercased()
                 self.indicateLoadingSuccessRemovingCheckmark(false) {
-                    self.formStepDelegate.didCompleteFormStep(self)
+                    self.authenticationCoordinator?.completeBackupStep()
                 }
             }
         }
@@ -140,7 +140,7 @@ extension NoHistoryViewController {
         let controller = UIAlertController.restoreBackupFailed(with: error) { [unowned self] action in
             switch action {
             case .tryAgain: self.showFilePicker()
-            case .cancel: self.formStepDelegate.didCompleteFormStep(self)
+            case .cancel: self.authenticationCoordinator?.completeBackupStep()
             }
         }
         present(controller, animated: true)

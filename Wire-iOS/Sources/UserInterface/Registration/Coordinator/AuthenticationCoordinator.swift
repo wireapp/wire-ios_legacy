@@ -199,6 +199,10 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
 
     }
 
+    func completeBackupStep() {
+        session.continueAfterBackupImportStep()
+    }
+
     func authenticationReadyToImportBackup(existingAccount: Bool) {
         presenter?.showLoadingView = false
 
@@ -214,6 +218,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         }
 
         let noHistoryViewController = NoHistoryViewController(contextType: type)
+        noHistoryViewController.authenticationCoordinator = self
         self.presenter?.backButtonEnabled = false
         self.presenter?.pushViewController(noHistoryViewController, animated: true)
     }

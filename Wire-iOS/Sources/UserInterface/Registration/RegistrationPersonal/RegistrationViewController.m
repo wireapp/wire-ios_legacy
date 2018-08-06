@@ -53,7 +53,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate, ZMInitialSyncCompletionObserver, PreLoginAuthenticationObserver>
+@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate>
 
 @property (nonatomic) BOOL registeredInThisSession;
 
@@ -110,9 +110,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
     self.postLoginToken = [PostLoginAuthenticationNotification addObserver:self];
     self.sessionCreationObserverToken = [[SessionManager shared] addSessionManagerCreatedSessionObserver:self];
-    self.authenticationToken = [PreLoginAuthenticationNotification registerObserver:self
-                                                          forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
-
     
     [self setupBackgroundViewController];
     [self setupNavigationController];
@@ -195,18 +192,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return IS_IPAD ? RegistrationFlowEmail : RegistrationFlowPhone;
 }
 
-- (void)presentNoHistoryViewController:(ContextType)type animated:(BOOL)animated
-{
-    if ([self.rootNavigationController.topViewController isKindOfClass:[NoHistoryViewController class]]) {
-        return;
-    }
-    NoHistoryViewController *noHistoryViewController = [[NoHistoryViewController alloc] initWithContextType:type];
-    noHistoryViewController.formStepDelegate = self;
-
-    self.rootNavigationController.backButtonEnabled = NO;
-    [self.rootNavigationController pushViewController:noHistoryViewController animated:animated];
-}
-
 #pragma mark - FormStepProtocol
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
@@ -241,39 +226,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             break;
     }
     return transition;
-}
-
-#pragma mark - ZMIncomingPersonalInvitationObserver
-
-- (void)didNotFindPersonalInvitation
-{
-    // nop
-}
-
-- (void)willFetchPersonalInvitation
-{
-    // nop
-}
-
-- (void)didFailToFetchPersonalInvitationWithError:(NSError *)error
-{
-    ZMLogDebug(@"Failed to fetch invitation with error: %@", error);
-}
-
-#pragma mark - PreLoginAuthenticationObserver
-
-- (void)authenticationReadyToImportBackupWithExistingAccount:(BOOL)existingAccount
-{
-    self.rootNavigationController.showLoadingView = NO;
-
-    ContextType type = existingAccount ? ContextTypeLoggedOut : ContextTypeNewDevice;
-    
-    if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
-        [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
-    }
-    else {
-        [self presentNoHistoryViewController:type animated:YES];
-    }
 }
 
 #pragma mark - ZMInitialSyncCompletionObserver
@@ -318,25 +270,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {
     [self.registrationRootViewController executeErrorFeedbackAction:feedbackAction];
-}
-
-@end
-
-#pragma mark - Session observer
-
-@implementation RegistrationViewController (UserSessionObserver)
-
-- (void)sessionManagerCreatedWithUserSession:(ZMUserSession *)userSession {
-    // this method is called when a ZMUserSession is created, including background
-    // sessions. In this latter case, the active user session is not set, and may be nil.
-    if ([ZMUserSession sharedSession] != nil) {
-        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
-    }
-}
-
-- (void)clientRegistrationDidSucceedWithAccountId:(NSUUID * _Nonnull)accountId
-{
-    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
 }
 
 @end

@@ -28,9 +28,12 @@
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) UIStackView *stackView;
+@property (nonatomic) UIImageView *backgroundImageView;
 @end
 
 @implementation NoHistoryViewController
+
+@synthesize authenticationCoordinator;
 
 - (instancetype)initWithContextType:(ContextType)contextType
 {
@@ -44,6 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self createBackgroundImageView];
     [self createContentView];
     [self createHeroLabel];
     [self createSubtitleLabel];
@@ -54,6 +58,22 @@
     
     // Layout first to avoid the initial layout animation during the presentation. 
     [self.view layoutIfNeeded];
+}
+
+- (void)createBackgroundImageView
+{
+    UIImage *backgroundImage = [UIImage imageNamed:@"LaunchImage"];
+    self.backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
+    self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.backgroundImageView];
+
+    [NSLayoutConstraint activateConstraints:
+    @[
+          [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+          [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+          [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+          [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
 }
 
 - (void)createContentView
