@@ -31,8 +31,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 minutes
-
 @implementation ConversationInputBarViewController (Files)
 
 - (void)docUploadPressed:(IconButton *)sender

@@ -22,8 +22,11 @@
 #import "Wire-Swift.h"
 
 const static unsigned long long MaxFileSize = 25 * 1024 * 1024; // 25 megabytes
-
 const static unsigned long long MaxTeamFileSize = 100 * 1024 * 1024; // 100 megabytes
+const static NSTimeInterval MaxAudioLength = 25 * 60.0f; // 25 minutes
+const static NSTimeInterval MaxTeamAudioLength = 100 * 60.0f; // 100 minutes
+const static NSTimeInterval MaxVideoLength = 4.0f * 60.0f; // 4 minutes
+const static NSTimeInterval MaxTeamVideoLength = 4.0f * 60.0f; // 16 minutes
 
 @implementation ZMUserSession (iOS)
 
@@ -37,9 +40,28 @@ const static unsigned long long MaxTeamFileSize = 100 * 1024 * 1024; // 100 mega
     ZMUser *selfUser = [ZMUser selfUserInUserSession:self];
     if (selfUser.hasTeam) {
         return MaxTeamFileSize;
-    }
-    else {
+    } else {
         return MaxFileSize;
+    }
+}
+
+- (NSTimeInterval)maxAudioLength
+{
+    ZMUser *selfUser = [ZMUser selfUserInUserSession:self];
+    if (selfUser.hasTeam) {
+        return MaxTeamAudioLength;
+    } else {
+        return MaxAudioLength;
+    }
+}
+
+- (NSTimeInterval)maxVideoLength
+{
+    ZMUser *selfUser = [ZMUser selfUserInUserSession:self];
+    if (selfUser.hasTeam) {
+        return MaxTeamVideoLength;
+    } else {
+        return MaxVideoLength;
     }
 }
 
