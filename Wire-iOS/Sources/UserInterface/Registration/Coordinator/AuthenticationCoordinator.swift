@@ -219,6 +219,14 @@ extension AuthenticationCoordinator {
     }
 
     /**
+     * Call this method when the corrdinated view controller disappears.
+     */
+
+    @objc func currentViewControllerDidDisappear() {
+        companyLoginController?.isAutoDetectionEnabled = false
+    }
+
+    /**
      * Call this method to mark the backup step as completed.
      */
 
