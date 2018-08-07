@@ -57,7 +57,7 @@ class CompanyLoginFlowHandler {
     /// Opens the company login flow at the specified start URL.
     func open(authenticationURL: URL) {
         guard enableInAppBrowser else {
-            UIApplication.shared.openURL(authenticationURL)
+            UIApplication.shared.open(authenticationURL)
             return
         }
 
