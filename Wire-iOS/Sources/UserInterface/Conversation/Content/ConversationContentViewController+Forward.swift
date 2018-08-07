@@ -148,9 +148,13 @@ extension ZMConversationList {
     }
 }
 
-//extension ConversationContentViewController: PopoverPresenter { }
-
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
+    @objc func updatePopover() {
+    guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+
+    rootViewController.updatePopoverSourceRect()
+    }
+
     @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
         guard let message = message else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
@@ -180,9 +184,9 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
                 popoverPresentationController.config(from: rootViewController,
                                pointToView: cell.selectionView,
                                sourceView: rootViewController.view,
-                               backgroundColor: UIColor(white: 0, alpha: 0.5))
+                               backgroundColor: UIColor(white: 0, alpha: 0.5),
+                               permittedArrowDirections: [.up, .down])
             }
-            popoverPresentationController.permittedArrowDirections = [.up, .down]
 
             popoverPresentationController.delegate = self
         }
@@ -205,6 +209,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
     }
 }
 
+/// TODO: remove
 extension ConversationContentViewController: UIPopoverPresentationControllerDelegate {
     public func popoverPresentationController(_ popoverPresentationController: UIPopoverPresentationController, willRepositionPopoverTo rect: UnsafeMutablePointer<CGRect>, in view: AutoreleasingUnsafeMutablePointer<UIView>) {
         print("😍 rect = \(rect.pointee)")

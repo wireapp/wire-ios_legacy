@@ -23,10 +23,18 @@ extension UIView {
         let sourceView: UIView = viewController.parent?.view ?? viewController.view
 
         // We want point to text of the textView instead of the oversized frame
+        var popoverSourceRect: CGRect
         if self is UITextView {
-            return sourceView.convert(CGRect(origin: frame.origin, size: intrinsicContentSize), from: superview)
+            popoverSourceRect = sourceView.convert(CGRect(origin: frame.origin, size: intrinsicContentSize), from: superview)
         } else {
-            return sourceView.convert(frame, from: superview)
+            popoverSourceRect = sourceView.convert(frame, from: superview)
         }
+
+        // if the converted rect is out of bound, clamp x to 0, y to 50 (not overlap TODO)
+        // (provide a negative value to UIPopoverPresentationController.sourceRect may have no effect)
+        let clampedOrigin = CGPoint(x: fmax(0, popoverSourceRect.origin.x), y: fmax(00, popoverSourceRect.origin.y))
+        popoverSourceRect = CGRect(origin: clampedOrigin, size: popoverSourceRect.size)
+
+        return popoverSourceRect
     }
 }

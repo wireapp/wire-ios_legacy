@@ -118,10 +118,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardFrameDidChange(notification:)),
-                                               name: NSNotification.Name.UIKeyboardDidChangeFrame,
-                                               object: nil)
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(keyboardFrameDidChange(notification:)),
+//                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+//                                               object: nil)
 
         transition(to: .headless)
 
