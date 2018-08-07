@@ -16,8 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireSyncEngine;
 
 #import "RegistrationStepViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 @protocol EmailVerificationStepViewControllerDelegate <NSObject>
 
@@ -25,13 +27,15 @@
 
 @end
 
+NS_ASSUME_NONNULL_BEGIN
 
-@interface EmailVerificationStepViewController : RegistrationStepViewController
+@interface EmailVerificationStepViewController : UIViewController <AuthenticationCoordinatedViewController>
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithEmailAddress:(NSString *)emailAddress NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithEmailAddress:(NSString *)emailAddress;
+- (instancetype)initWithCredentials:(ZMEmailCredentials *)credentials;
 
-@property (nonatomic, weak) id<EmailVerificationStepViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<EmailVerificationStepViewControllerDelegate> delegate;
 
 @end
+
+NS_ASSUME_NONNULL_END

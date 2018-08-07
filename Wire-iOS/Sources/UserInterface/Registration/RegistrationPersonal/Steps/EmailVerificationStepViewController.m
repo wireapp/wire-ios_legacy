@@ -28,7 +28,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
-
 @interface EmailVerificationStepViewController () <UITextViewDelegate>
 
 @property (nonatomic) UIView *containerView;
@@ -48,11 +47,22 @@
 
 @implementation EmailVerificationStepViewController
 
+@synthesize authenticationCoordinator;
+
 - (instancetype)initWithEmailAddress:(NSString *)emailAddress
 {
     self = [super initWithNibName:nil bundle:nil];
     if (nil != self) {
         self.emailAddress = emailAddress;
+    }
+    return self;
+}
+
+- (instancetype)initWithCredentials:(ZMEmailCredentials *)credentials
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        self.emailAddress = credentials.email;
     }
     return self;
 }
@@ -74,17 +84,14 @@
     
     [super viewWillAppear:animated];
     
-    self.registrationNavigationController.backButtonEnabled = YES;
-    self.registrationNavigationController.wr_navigationController.logoEnabled = NO;
+    self.wr_navigationController.backButtonEnabled = YES;
+    self.wr_navigationController.logoEnabled = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
     [[UnauthenticatedSession sharedSession] cancelWaitForEmailVerification];
-    self.registrationNavigationController.backButtonEnabled = NO;
-    self.registrationNavigationController.wr_navigationController.logoEnabled = YES;
 }
 
 - (void)createContainerView
@@ -145,38 +152,32 @@
     [self.containerView addSubview:self.resendButton];
 }
 
-- (void)updateViewConstraints
+- (void)configureConstraints
 {
-    [super updateViewConstraints];
+    [self.containerView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
+    [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
 
-    if (!self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        [self.containerView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-        
-        [self.mailIconView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-        [self.mailIconView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-        
-        [self.instructionsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.mailIconView withOffset:32];
-        [self.instructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.instructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        
-        [self.resendInstructionsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.instructionsLabel withOffset:32];
-        [self.resendInstructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.resendInstructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        [self.resendInstructionsLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    
-        [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.resendInstructionsLabel withOffset:0];
-        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-        [self.resendButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    }
+    [self.mailIconView autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.mailIconView autoAlignAxisToSuperviewAxis:ALAxisVertical];
+
+    [self.instructionsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.mailIconView withOffset:32];
+    [self.instructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.instructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeRight];
+
+    [self.resendInstructionsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.instructionsLabel withOffset:32];
+    [self.resendInstructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.resendInstructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.resendInstructionsLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
+
+    [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.resendInstructionsLabel withOffset:0];
+    [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.resendButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
 }
 
 #pragma mark - Actions
 
-- (IBAction)resendVerificationEmail:(id)sender
+- (void)resendVerificationEmail
 {
     [self.delegate emailVerificationStepDidRequestVerificationEmail];
     

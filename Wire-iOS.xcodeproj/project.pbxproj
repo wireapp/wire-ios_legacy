@@ -226,6 +226,7 @@
 		5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376820E7F12B00649241 /* EasingAnimation.swift */; };
 		5E52376B20E7F99500649241 /* EasingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376A20E7F99500649241 /* EasingFunction.swift */; };
 		5E52378A20EB5B4C00649241 /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */; };
+		5E53B0DA2119F75C009C7124 /* EmailVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53B0D92119F75C009C7124 /* EmailVerificationViewController.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
 		5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */; };
 		5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */; };
@@ -1559,6 +1560,7 @@
 		5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSiriWaveformView.m; sourceTree = "<group>"; };
 		5E52378920EB5B4C00649241 /* SCSiriWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSiriWaveformView.h; sourceTree = "<group>"; };
 		5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthenticationCoordinatedViewController.h; sourceTree = "<group>"; };
+		5E53B0D92119F75C009C7124 /* EmailVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewController.swift; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlowStep.swift; sourceTree = "<group>"; };
@@ -5711,6 +5713,7 @@
 				EF24036F20A1E161002813BE /* TermsOfUseStepViewController+Private.h */,
 				EF2126ED1FB9DFE300625A9B /* TermsOfUseStepViewController.m */,
 				EF24036D20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift */,
+				5E53B0D92119F75C009C7124 /* EmailVerificationViewController.swift */,
 			);
 			path = Steps;
 			sourceTree = "<group>";
@@ -6571,6 +6574,7 @@
 				EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */,
 				EF2127081FB9DFE300625A9B /* PhoneNumberViewController.m in Sources */,
 				167961A9203F26E600B72ACC /* SectionHeader.swift in Sources */,
+				5E53B0DA2119F75C009C7124 /* EmailVerificationViewController.swift in Sources */,
 				8FC8541F199245770008B66B /* ZMUserSession+iOS.m in Sources */,
 				16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */,
 				163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */,

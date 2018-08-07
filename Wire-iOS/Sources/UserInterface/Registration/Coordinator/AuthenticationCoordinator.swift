@@ -162,12 +162,9 @@ extension AuthenticationCoordinator {
             return addEmailPasswordViewController
 
         case .verifyEmailCredentials(let credentials):
-            //            EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.credentials.email];
-            //            emailVerificationStepViewController.formStepDelegate = self;
-            //            emailVerificationStepViewController.registrationNavigationController = self.wr_navigationController;
-            //            emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            //
-            //            [self.wr_navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
+            let verificationController = EmailVerificationViewController(credentials: credentials)
+            verificationController.authenticationCoordinator = self
+            return verificationController
 
         default:
             return nil
@@ -299,6 +296,30 @@ extension AuthenticationCoordinator {
         } catch {
             fail()
         }
+    }
+
+    @discardableResult
+    private func setCredentialsWithProfile(_ profile: UserProfile, credentials: ZMEmailCredentials) -> Bool {
+        do {
+            try profile.requestSettingEmailAndPassword(credentials: credentials)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    @objc func resendEmailVerificationCode() {
+        guard case let .verifyEmailCredentials(credentials) = currentStep else {
+            return
+        }
+
+        guard let userProfile = delegate?.authenticationCoordinatorRequestedSelfUserProfile() else {
+            return
+        }
+
+        // We can assume that the validation will succeed, as it only fails when there is no
+        // email and/or password in the email credentials, which we already checked before.
+        setCredentialsWithProfile(userProfile, credentials: credentials)
     }
 
 }
@@ -559,7 +580,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         case .needsToRegisterEmailToRegisterClient:
             // If we are already registerinf
             switch currentStep {
-            case .addEmailAndPassword, .registerEmailCredentials:
+            case .addEmailAndPassword, .registerEmailCredentials, .verifyEmailCredentials:
                 return
             default:
                 presenter?.showLoadingView = false

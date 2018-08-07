@@ -143,7 +143,6 @@
         self.hasUserAcceptedTOS = YES;
         
         EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.unregisteredUser.emailAddress];
-        emailVerificationStepViewController.formStepDelegate = self;
         emailVerificationStepViewController.delegate = self;
         emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
