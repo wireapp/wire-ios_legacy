@@ -80,8 +80,10 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         currentViewController = stepViewController
 
         if resetStack {
+            flowStack = [step]
             presenter?.setViewControllers([stepViewController], animated: true)
         } else {
+            flowStack.append(step)
             presenter?.backButtonEnabled = step.allowsUnwind
             presenter?.pushViewController(stepViewController, animated: true)
         }
@@ -127,6 +129,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         case .addEmailAndPassword:
             let addEmailPasswordViewController = AddEmailPasswordViewController()
             addEmailPasswordViewController.skipButtonType = .none
+            addEmailPasswordViewController.authenticationCoordinator = self
             return addEmailPasswordViewController
 
         default:
@@ -136,7 +139,12 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
     }
 
     func unwind() {
+        guard flowStack.count >= 2 else {
+            return
+        }
 
+        flowStack.removeLast()
+        currentStep = flowStack.last!
     }
 
 }
@@ -467,8 +475,6 @@ extension AuthenticationCoordinator {
 
         self.transition(to: flowStep)
     }
-
-}
 
     /// Called when the initial sync for the new user has completed.
     func initialSyncCompleted() {

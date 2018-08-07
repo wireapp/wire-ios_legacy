@@ -18,13 +18,14 @@
 
 #import <UIKit/UIKit.h>
 #import "FormStepDelegate.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 typedef NS_ENUM(NSInteger, AddEmailPasswordViewControllerSkipButtonType) {
     AddEmailPasswordViewControllerSkipButtonTypeNone,
     AddEmailPasswordViewControllerSkipButtonTypeClose
 };
 
-@interface AddEmailPasswordViewController : UIViewController
+@interface AddEmailPasswordViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 @property (nonatomic) BOOL showsNavigationBar;
 @property (nonatomic, weak) id<FormStepDelegate> formStepDelegate;

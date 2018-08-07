@@ -56,6 +56,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation AddEmailPasswordViewController
 
+@synthesize authenticationCoordinator;
+
 - (instancetype)init
 {
     self = [super init];
