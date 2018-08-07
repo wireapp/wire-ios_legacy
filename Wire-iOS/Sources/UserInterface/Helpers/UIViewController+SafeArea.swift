@@ -51,7 +51,7 @@ extension UIView {
         }
     }
 
-    @objc var safeAreaInsetsOfFallback: UIEdgeInsets {
+    @objc var safeAreaInsetsOrFallback: UIEdgeInsets {
         if #available(iOS 11, *) {
             return safeAreaInsets
         } else {
