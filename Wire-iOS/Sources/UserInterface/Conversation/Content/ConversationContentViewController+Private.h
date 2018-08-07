@@ -44,6 +44,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) UIView *dimView;
 @property (nonatomic) CGPoint initialPinchLocation;
 
+// PopoverPresenter
+@property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
+@property (nonatomic, nullable, weak) UIView *popoverPointToView;
+
 - (void)removeHighlightsAndMenu;
 - (nullable ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message;
 

@@ -18,15 +18,4 @@
 
 import Foundation
 
-extension UIView {
-    func popoverSourceRect(from viewController: UIViewController) -> CGRect {
-        let sourceView: UIView = viewController.parent?.view ?? viewController.view
-
-        // We want point to text of the textView instead of the oversized frame
-        if self is UITextView {
-            return sourceView.convert(CGRect(origin: frame.origin, size: intrinsicContentSize), from: superview)
-        } else {
-            return sourceView.convert(frame, from: superview)
-        }
-    }
-}
+extension AppRootViewController: PopoverPresenter { }

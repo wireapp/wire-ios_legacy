@@ -148,9 +148,12 @@ extension ZMConversationList {
     }
 }
 
+extension ConversationContentViewController: PopoverPresenter { }
+
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
         guard let message = message else { return }
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
         view.window?.endEditing(true)
         
@@ -174,10 +177,14 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
             if let cell = fromCell {
-                popoverPresentationController.sourceRect = cell.selectionRect
-                popoverPresentationController.sourceView = cell.selectionView
+//                popoverPresentationController.sourceRect = cell.selectionRect
+//                popoverPresentationController.sourceView = cell.selectionView
+                popoverPresentationController.config(from: rootViewController,
+                               pointToView: cell.selectionView,
+                               sourceView: rootViewController.view,
+                               backgroundColor: UIColor(white: 0, alpha: 0.5))
             }
-            popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
+//            popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
             popoverPresentationController.permittedArrowDirections = [.up, .down]
 
             popoverPresentationController.delegate = self
@@ -191,7 +198,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             }
         }
 
-        UIApplication.shared.keyWindow?.rootViewController?.present(keyboardAvoiding, animated: true) {
+        rootViewController.present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
     }

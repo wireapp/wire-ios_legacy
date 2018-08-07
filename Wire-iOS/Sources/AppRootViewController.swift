@@ -50,6 +50,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     var flowController: TeamCreationFlowController!
 
+    weak var presentedPopover: UIPopoverPresentationController?
+    weak var popoverPointToView: UIView?
+
+
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
         didSet {
             if let delegate = requestToOpenViewDelegate {
