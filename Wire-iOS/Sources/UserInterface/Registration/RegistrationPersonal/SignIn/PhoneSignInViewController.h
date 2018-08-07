@@ -24,15 +24,8 @@
 
 @class LoginCredentials;
 
-@protocol PhoneSignInViewControllerDelegate <NSObject>
-
-- (void)phoneSignInViewControllerNeedsPasswordFor:(LoginCredentials *)loginCredentials;
-
-@end
-
 @interface PhoneSignInViewController : UIViewController <AuthenticationCoordinatedViewController>
 
-@property (nonatomic, weak) id<PhoneSignInViewControllerDelegate> delegate;
 @property (nonatomic) LoginCredentials *loginCredentials;
 
 - (void)takeFirstResponder;

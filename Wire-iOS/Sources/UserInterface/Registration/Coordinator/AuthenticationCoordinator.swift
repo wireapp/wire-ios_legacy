@@ -32,7 +32,7 @@ extension SessionManager: ObservableSessionManager {}
  * and team creation.
  */
 
-class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, CompanyLoginControllerDelegate, RegistrationViewControllerDelegate, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
+class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
 
     weak var presenter: NavigationController?
     weak var delegate: AuthenticationCoordinatorDelegate?
@@ -64,7 +64,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         ]
     }
 
-    // MARK: - Authentication
+    // MARK: - State Management
 
     func transition(to step: AuthenticationFlowStep, resetStack: Bool = false) {
         currentStep = step
@@ -85,31 +85,6 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
             presenter?.backButtonEnabled = step.allowsUnwind
             presenter?.pushViewController(stepViewController, animated: true)
         }
-    }
-
-    @objc(startPhoneNumberValidationWithPhoneNumber:)
-    func startPhoneNumberValidation(_ phoneNumber: String) {
-        presenter?.showLoadingView = true
-        askVerificationCode(for: phoneNumber)
-        transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: false))
-    }
-
-    @objc func askVerificationCode(for phoneNumber: String) {
-        unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
-    }
-
-    @objc(requestPhoneLoginWithCredentials:)
-    func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
-        presenter?.showLoadingView = true
-        transition(to: .authenticatePhoneCredentials(credentials))
-        unauthenticatedSession.login(with: credentials)
-    }
-
-    @objc(requestEmailLoginWithCredentials:)
-    func requestEmailLogin(with credentials: ZMEmailCredentials) {
-        presenter?.showLoadingView = true
-        transition(to: .authenticateEmailCredentials(credentials))
-        unauthenticatedSession.login(with: credentials)
     }
 
     private func makeViewController(for step: AuthenticationFlowStep) -> AuthenticationStepViewController? {
@@ -149,32 +124,79 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
             verificationController.isLoggingIn = true
             return verificationController
 
+        case .addEmailAndPassword:
+            let addEmailPasswordViewController = AddEmailPasswordViewController()
+            addEmailPasswordViewController.skipButtonType = .none
+            return addEmailPasswordViewController
+
         default:
             return nil
         }
 
     }
 
-    /*
+    func unwind() {
 
-     - (void)authenticationDidFail:(NSError *)error
-     {
-     ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
+    }
 
-     self.navigationController.showLoadingView = NO;
+}
 
-     if (error.code == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
-     //        [self presentAddEmailPasswordViewController];
-     }
-     else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
-     [self.navigationController popToRootViewControllerAnimated:YES];
-     [self.delegate phoneSignInViewControllerNeedsPasswordFor:[[LoginCredentials alloc] initWithError:error]];
-     }
-     else {
-     [self showAlertForError:error];
-     }
-     }
+// MARK: - Actions
 
+extension AuthenticationCoordinator {
+
+    /**
+     * Starts the phone number validation flow for the given phone number.
+     * - parameter phoneNumber: The phone number to validate for login.
+     * - parameter isSigningIn: Whether the user is signing in (`true`), or registering (`false`).
+     */
+
+    @objc(startPhoneNumberValidationWithPhoneNumber:isSigningIn:)
+    func startPhoneNumberValidation(_ phoneNumber: String, isSigningIn: Bool) {
+        presenter?.showLoadingView = true
+        askVerificationCode(for: phoneNumber, isSigningIn: isSigningIn)
+        transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: false))
+    }
+
+    /**
+     * Asks the unauthenticated session for a new phone number verification code.
+     * - parameter phoneNumber: The phone number to authenticate.
+     * - parameter isSigningIn: Whether the user is signing in (`true`), or registering (`false`).
+     */
+
+    @objc(askVerificationCodeForPhoneNumber:isSigningIn:)
+    func askVerificationCode(for phoneNumber: String, isSigningIn: Bool) {
+        if isSigningIn {
+            unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
+        } else {
+            unauthenticatedSession.requestPhoneVerificationCodeForRegistration(phoneNumber)
+        }
+    }
+
+    /**
+     * Requests a phone login for the specified credentials.
+     */
+
+    @objc(requestPhoneLoginWithCredentials:)
+    func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
+        presenter?.showLoadingView = true
+        transition(to: .authenticatePhoneCredentials(credentials))
+        unauthenticatedSession.login(with: credentials)
+    }
+
+    /**
+     * Requests an e-mail login for the specified credentials.
+     */
+
+    @objc(requestEmailLoginWithCredentials:)
+    func requestEmailLogin(with credentials: ZMEmailCredentials) {
+        presenter?.showLoadingView = true
+        transition(to: .authenticateEmailCredentials(credentials))
+        unauthenticatedSession.login(with: credentials)
+    }
+
+    /**
+     * Call this method when the corrdinated view controller appears.
      */
 
     @objc func currentViewControllerDidAppear() {
@@ -188,26 +210,43 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         }
     }
 
-    func currentViewControllerDidDisappear() {
-        companyLoginController?.isAutoDetectionEnabled = false
+    /**
+     * Call this method to mark the backup step as completed.
+     */
+
+    @objc func completeBackupStep() {
+        unauthenticatedSession.continueAfterBackupImportStep()
     }
 
-    // MARK: - Events
+}
 
-    func unwind() {
-        // [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
-        //     if (error.code != ZMUserSessionCodeRequestIsAlreadyPending) {
-//        [self showAlertForError:error];
-//    }
-//    else {
-//    if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-//    [self proceedToCodeVerification];
-//    } else {
-//    [self showAlertForError:error];
-//    }
-//    }
+// MARK: - User Session Events
 
+extension AuthenticationCoordinator {
+
+    // MARK: Phone Verification Code
+
+    func loginCodeRequestDidSucceed() {
+        self.presenter?.showLoadingView = false
+
+        guard case let .verifyPhoneNumber(phoneNumber, accountExists) = currentStep else {
+            return
+        }
+
+        if accountExists {
+            return
+        }
+
+        self.transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: true))
     }
+
+    func loginCodeRequestDidFail(_ error: NSError) {
+        self.presenter?.showLoadingView = false
+        self.presenter?.showAlert(forError: error) { _ in
+            self.unwind()
+        }
+    }
+
 
     func authenticationDidFail(_ error: NSError) {
         presenter?.showLoadingView = false
@@ -292,31 +331,6 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
 
     func authenticationDidSucceed() {
         presenter?.showLoadingView = false
-    }
-
-    func loginCodeRequestDidSucceed() {
-        self.presenter?.showLoadingView = false
-
-        guard case let .verifyPhoneNumber(phoneNumber, accountExists) = currentStep else {
-            return
-        }
-
-        if accountExists {
-            return
-        }
-
-        self.transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: true))
-    }
-
-    func loginCodeRequestDidFail(_ error: NSError) {
-        self.presenter?.showLoadingView = false
-        self.presenter?.showAlert(forError: error) { _ in
-            self.unwind()
-        }
-    }
-
-    func completeBackupStep() {
-        unauthenticatedSession.continueAfterBackupImportStep()
     }
 
     func authenticationReadyToImportBackup(existingAccount: Bool) {
@@ -406,36 +420,6 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         // no-op
     }
 
-    // MARK: - Slow Sync
-
-    func initialSyncCompleted() {
-        guard !hasAutomationFastLoginCredentials else {
-            delegate?.userAuthenticationDidComplete(registered: false)
-            return
-        }
-
-        let registered = delegate?.authenticatedUserWasRegisteredOnThisDevice() ?? false
-        let needsEmail = delegate?.authenticatedUserNeedsEmailCredentials() ?? false
-
-        guard registered && needsEmail else {
-            delegate?.userAuthenticationDidComplete(registered: registered)
-            return
-        }
-
-        guard !hasPushedPostRegistrationStep else {
-            return
-        }
-
-        hasPushedPostRegistrationStep = true
-        presenter?.logoEnabled = false
-        presenter?.backButtonEnabled = false
-
-        let addEmailPasswordViewController = AddEmailPasswordViewController()
-        addEmailPasswordViewController.skipButtonType = .none
-        presenter?.pushViewController(addEmailPasswordViewController, animated: true)
-
-    }
-
     // MARK: - Helpers
 
     private var hasAutomationFastLoginCredentials: Bool {
@@ -484,7 +468,39 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         self.transition(to: flowStep)
     }
 
-    // MARK: - CompanyLoginControllerDelegate
+}
+
+    /// Called when the initial sync for the new user has completed.
+    func initialSyncCompleted() {
+        // Skip email/password prompt for @fastLogin automation
+        guard !hasAutomationFastLoginCredentials else {
+            delegate?.userAuthenticationDidComplete(registered: false)
+            return
+        }
+
+        // Do not ask for credentials again (slow sync can be called multiple times)
+        if case .addEmailAndPassword = currentStep {
+            return
+        }
+
+        // Check if the user needs email and password
+        let registered = delegate?.authenticatedUserWasRegisteredOnThisDevice() ?? false
+        let needsEmail = delegate?.authenticatedUserNeedsEmailCredentials() ?? false
+
+        guard registered && needsEmail else {
+            delegate?.userAuthenticationDidComplete(registered: registered)
+            return
+        }
+
+        presenter?.logoEnabled = false
+        transition(to: .addEmailAndPassword, resetStack: true)
+    }
+
+}
+
+// MARK: - CompanyLoginControllerDelegate
+
+extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
 
     func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
         presenter?.present(alert, animated: true)
@@ -494,15 +510,9 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         presenter?.showLoadingView = showLoadingView
     }
 
-    func registrationViewControllerDidSignIn() {
-        delegate?.userAuthenticationDidComplete(registered: false)
-    }
-
-    func registrationViewControllerDidCompleteRegistration() {
-        delegate?.userAuthenticationDidComplete(registered: true)
-    }
-
 }
+
+// MARK: - LandingViewControllerDelegate
 
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
@@ -511,39 +521,20 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
     }
 
     func landingViewControllerDidChooseCreateAccount() {
-        // no-op
-    }
-
-    func landingViewControllerDidChooseCreateTeam() {
-        // no-op
-    }
-
-    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: Wire.ContextType) {
-        // no-op
-    }
-
-//    func landingViewControllerDidChooseCreateTeam() {
-//        flowController.startFlow()
-//    }
-//
-//    func landingViewControllerDidChooseCreateAccount() {
 //        if let navigationController = self.visibleViewController as? NavigationController {
 //            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
 //            registrationViewController.delegate = appStateController
 //            registrationViewController.shouldHideCancelButton = true
 //            navigationController.pushViewController(registrationViewController, animated: true)
 //        }
-//    }
-//
-//    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType) {
-//        if let navigationController = self.visibleViewController as? NavigationController {
-//            let registrationViewController = RegistrationViewController(authenticationFlow: .regular)
-//            registrationViewController.delegate = appStateController
-//            registrationViewController.shouldHideCancelButton = true
-//            registrationViewController.loadViewIfNeeded()
-//            registrationViewController.presentNoHistoryViewController(context, animated: false)
-//            navigationController.pushViewController(registrationViewController, animated: true)
-//        }
-//    }
+    }
+
+    func landingViewControllerDidChooseCreateTeam() {
+        // flowController.startFlow()
+    }
+
+    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: Wire.ContextType) {
+        // no-op
+    }
 
 }

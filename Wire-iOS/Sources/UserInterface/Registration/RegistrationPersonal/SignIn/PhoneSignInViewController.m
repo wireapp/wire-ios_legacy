@@ -16,25 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import "PhoneSignInViewController.h"
-
 @import PureLayout;
 @import WireSyncEngine;
 
-#import "NavigationController.h"
+#import "PhoneSignInViewController.h"
+
 #import "PhoneNumberStepViewController.h"
-#import "PhoneVerificationStepViewController.h"
-#import "AddEmailPasswordViewController.h"
 #import "RegistrationFormController.h"
 #import "FormStepDelegate.h"
-#import "WireSyncEngine+iOS.h"
-#import "UIViewController+Errors.h"
-#import <WireExtensionComponents/UIViewController+LoadingView.h>
-#import "CheckmarkViewController.h"
 #import "Wire-Swift.h"
-
-static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface PhoneSignInViewController () <PhoneNumberStepViewControllerDelegate>
 
@@ -42,6 +32,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic, copy) NSString *phoneNumber;
 
 @end
+
 
 @implementation PhoneSignInViewController
 

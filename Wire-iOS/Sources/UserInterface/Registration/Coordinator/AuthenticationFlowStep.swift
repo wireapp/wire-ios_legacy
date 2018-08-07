@@ -37,6 +37,7 @@ enum AuthenticationFlowStep {
     // Post Sign-In
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials)
+    case addEmailAndPassword
 
     // MARK: - Properties
 

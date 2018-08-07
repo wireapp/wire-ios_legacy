@@ -16,25 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import PureLayout;
 
 #import "SignInViewController.h"
 #import "SignInViewController+internal.h"
 
-@import PureLayout;
-
-#import "Constants.h"
 #import "PhoneSignInViewController.h"
 #import "EmailSignInViewController.h"
-#import "RegistrationFormController.h"
-#import "NavigationController.h"
-#import "UIResponder+FirstResponder.h"
-#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 
-@interface SignInViewController () <PhoneSignInViewControllerDelegate>
+@interface SignInViewController ()
 
 @property (nonatomic) EmailSignInViewController *emailSignInViewController;
+@property (nonatomic) PhoneSignInViewController *phoneSingInViewController;
 @property (nonatomic) UIView *viewControllerContainer;
 @property (nonatomic) UIView *buttonContainer;
 @property (nonatomic) Button *emailSignInButton;
@@ -68,27 +63,9 @@
     self.buttonContainer = [[UIView alloc] initForAutoLayout];
     [self.view addSubview:self.buttonContainer];
     
-    self.emailSignInButton = [[Button alloc] initForAutoLayout];
-    self.emailSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
-    self.emailSignInButton.titleLabel.font = UIFont.smallLightFont;
-    [self.emailSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
-    [self.emailSignInButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.emailSignInButton.circular = YES;
-    [self.emailSignInButton addTarget:self action:@selector(signInByEmail:) forControlEvents:UIControlEventTouchUpInside];
-    [self.emailSignInButton setTitle:NSLocalizedString(@"registration.signin.email_button.title", nil).uppercasedWithCurrentLocale forState:UIControlStateNormal];
-    [self.buttonContainer addSubview:self.emailSignInButton];
-    
-    self.phoneSignInButton = [[Button alloc] initForAutoLayout];
-    self.phoneSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
-    self.phoneSignInButton.titleLabel.font = UIFont.smallLightFont;
-    [self.phoneSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
-    [self.phoneSignInButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.phoneSignInButton.circular = YES;
-    [self.phoneSignInButton addTarget:self action:@selector(signInByPhone:) forControlEvents:UIControlEventTouchUpInside];
-    [self.phoneSignInButton setTitle:NSLocalizedString(@"registration.signin.phone_button.title", nil).uppercasedWithCurrentLocale forState:UIControlStateNormal];
-    [self.buttonContainer addSubview:self.phoneSignInButton];
-    
+    [self createEmailSignInButton];
     [self setupEmailSignInViewController];
+    [self createPhoneSignInButton];
     [self setupPhoneFlowViewController];
     
     BOOL hasAddedPhoneNumber = self.loginCredentials.phoneNumber.length > 0;
@@ -106,21 +83,32 @@
     [self setupAccessibilityElements];
 }
 
-- (void)setupConstraints
+#pragma mark - Interface Configuration
+
+- (void)createEmailSignInButton
 {
-    [self.buttonContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.buttonContainer autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 80 : 64];
-    [self.buttonContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    
-    [self.emailSignInButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.emailSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.emailSignInButton autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.phoneSignInButton withOffset:-16];
-    
-    [self.phoneSignInButton autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.phoneSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    
-    [self.buttonContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.viewControllerContainer];
-    [self.viewControllerContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    self.emailSignInButton = [[Button alloc] initForAutoLayout];
+    self.emailSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
+    self.emailSignInButton.titleLabel.font = UIFont.smallLightFont;
+    [self.emailSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
+    [self.emailSignInButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.emailSignInButton.circular = YES;
+    [self.emailSignInButton addTarget:self action:@selector(signInByEmail:) forControlEvents:UIControlEventTouchUpInside];
+    [self.emailSignInButton setTitle:NSLocalizedString(@"registration.signin.email_button.title", nil).uppercasedWithCurrentLocale forState:UIControlStateNormal];
+    [self.buttonContainer addSubview:self.emailSignInButton];
+}
+
+- (void)createPhoneSignInButton
+{
+    self.phoneSignInButton = [[Button alloc] initForAutoLayout];
+    self.phoneSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
+    self.phoneSignInButton.titleLabel.font = UIFont.smallLightFont;
+    [self.phoneSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
+    [self.phoneSignInButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.phoneSignInButton.circular = YES;
+    [self.phoneSignInButton addTarget:self action:@selector(signInByPhone:) forControlEvents:UIControlEventTouchUpInside];
+    [self.phoneSignInButton setTitle:NSLocalizedString(@"registration.signin.phone_button.title", nil).uppercasedWithCurrentLocale forState:UIControlStateNormal];
+    [self.buttonContainer addSubview:self.phoneSignInButton];
 }
 
 - (void)setupAccessibilityElements
@@ -133,20 +121,6 @@
 
     self.emailSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_email.label", @"");
     self.phoneSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_phone.label", @"");
-}
-
-
-
-- (void)takeFirstResponder
-{
-    if (UIAccessibilityIsVoiceOverRunning()) {
-        return;
-    }
-    if (self.presentedSignInViewController == self.emailSignInViewControllerContainer) {
-        [self.emailSignInViewController takeFirstResponder];
-    } else {
-        [self.phoneSignInViewController takeFirstResponder];
-    }
 }
 
 - (void)setupEmailSignInViewController
@@ -166,11 +140,41 @@
     phoneSignInViewController.loginCredentials = self.loginCredentials;
     phoneSignInViewController.view.frame = self.viewControllerContainer.frame;
     phoneSignInViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    phoneSignInViewController.delegate = self;
     phoneSignInViewController.authenticationCoordinator = self.authenticationCoordinator;
     self.phoneSignInViewController = phoneSignInViewController;
     self.phoneSignInViewControllerContainer = phoneSignInViewController.registrationFormViewController;
 }
+
+- (void)setupConstraints
+{
+    [self.buttonContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
+    [self.buttonContainer autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 80 : 64];
+    [self.buttonContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
+
+    [self.emailSignInButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
+    [self.emailSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    [self.emailSignInButton autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.phoneSignInButton withOffset:-16];
+
+    [self.phoneSignInButton autoPinEdgeToSuperviewEdge:ALEdgeRight];
+    [self.phoneSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+
+    [self.buttonContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.viewControllerContainer];
+    [self.viewControllerContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+}
+
+- (void)takeFirstResponder
+{
+    if (UIAccessibilityIsVoiceOverRunning()) {
+        return;
+    }
+    if (self.presentedSignInViewController == self.emailSignInViewControllerContainer) {
+        [self.emailSignInViewController takeFirstResponder];
+    } else {
+        [self.phoneSignInViewController takeFirstResponder];
+    }
+}
+
+#pragma mark - Tabs
 
 - (void)presentSignInViewController:(UIViewController *)viewController
 {
@@ -285,13 +289,6 @@
     self.wr_tabBarController.enabled = YES;
     [self setupPhoneFlowViewController];
     [self presentSignInViewController:self.phoneSignInViewControllerContainer];
-}
-
-#pragma mark - PhoneSignInViewControllerDelegate
-
-- (void)phoneSignInViewControllerNeedsPasswordFor:(LoginCredentials *)loginCredentials
-{
-    [self presentSignInViewControllerWithCredentials:loginCredentials];
 }
 
 #pragma mark - AuthenticationCoordinatedViewController

@@ -21,12 +21,9 @@
 @import OnePasswordExtension;
 
 #import "EmailSignInViewController.h"
-
 #import "RegistrationTextField.h"
 #import "NSURL+WireLocale.h"
 #import "Wire-Swift.h"
-
-static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface EmailSignInViewController () <RegistrationTextFieldDelegate>
 
@@ -39,11 +36,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
 
 @property (nonatomic, readonly) BOOL canStartCompanyLoginFlow;
-
-@end
-
-
-@interface EmailSignInViewController (AuthenticationObserver) <PreLoginAuthenticationObserver, PostLoginAuthenticationObserver>
 
 @end
 
@@ -150,21 +142,26 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
     
     if ([[OnePasswordExtension sharedExtension] isAppExtensionAvailable]) {
-        UIButton *onePasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        NSBundle *frameworkBundle = [NSBundle bundleForClass:[OnePasswordExtension class]];
-        UIImage *image = [UIImage imageNamed:@"onepassword-button" inBundle:frameworkBundle compatibleWithTraitCollection:nil];
-        UIImage *onePasswordImage = [image imageWithColor:[UIColor lightGrayColor]];
-        onePasswordButton.contentEdgeInsets = UIEdgeInsetsMake(0, 7, 0, 7);
-        [onePasswordButton setImage:onePasswordImage forState:UIControlStateNormal];
-        [onePasswordButton addTarget:self action:@selector(open1PasswordExtension:) forControlEvents:UIControlEventTouchUpInside];
-        onePasswordButton.accessibilityLabel = NSLocalizedString(@"signin.use_one_password.label", @"");
-        onePasswordButton.accessibilityHint = NSLocalizedString(@"signin.use_one_password.hint", @"");
-
-        self.passwordField.customRightView = onePasswordButton;
-        self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewCustom;
+        [self createOnePasswordButton];
     }
     
     [self.view addSubview:self.passwordField];
+}
+
+- (void)createOnePasswordButton
+{
+    UIButton *onePasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    NSBundle *frameworkBundle = [NSBundle bundleForClass:[OnePasswordExtension class]];
+    UIImage *image = [UIImage imageNamed:@"onepassword-button" inBundle:frameworkBundle compatibleWithTraitCollection:nil];
+    UIImage *onePasswordImage = [image imageWithColor:[UIColor lightGrayColor]];
+    onePasswordButton.contentEdgeInsets = UIEdgeInsetsMake(0, 7, 0, 7);
+    [onePasswordButton setImage:onePasswordImage forState:UIControlStateNormal];
+    [onePasswordButton addTarget:self action:@selector(openOnePasswordExtension:) forControlEvents:UIControlEventTouchUpInside];
+    onePasswordButton.accessibilityLabel = NSLocalizedString(@"signin.use_one_password.label", @"");
+    onePasswordButton.accessibilityHint = NSLocalizedString(@"signin.use_one_password.hint", @"");
+
+    self.passwordField.customRightView = onePasswordButton;
+    self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewCustom;
 }
 
 - (void)createForgotPasswordButton
@@ -235,6 +232,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return (CompanyLoginController.companyLoginEnabled == YES) && (self.loginCredentials.usesCompanyLogin == NO) && (self.loginCredentials.emailAddress == nil);
 }
 
+#pragma mark - User Input
+
 - (void)takeFirstResponder
 {
     if (UIAccessibilityIsVoiceOverRunning()) {
@@ -273,7 +272,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (IBAction)open1PasswordExtension:(id)sender
+- (IBAction)openOnePasswordExtension:(id)sender
 {
     @weakify(self);
     
@@ -357,6 +356,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
     }
 }
+
+#pragma mark - RegistrationTextFieldDelegate
 
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {
