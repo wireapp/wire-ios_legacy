@@ -76,7 +76,16 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
         coordinator.animate(alongsideTransition: nil, completion: { _ in
             self.updateOverlayWindowFrame()
+            self.updatePopoverSourceRect()
         })
+    }
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+
+        updatePopoverSourceRect()
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

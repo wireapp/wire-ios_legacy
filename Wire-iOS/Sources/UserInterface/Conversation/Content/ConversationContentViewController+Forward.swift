@@ -148,7 +148,7 @@ extension ZMConversationList {
     }
 }
 
-extension ConversationContentViewController: PopoverPresenter { }
+//extension ConversationContentViewController: PopoverPresenter { }
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
@@ -177,14 +177,11 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
             if let cell = fromCell {
-//                popoverPresentationController.sourceRect = cell.selectionRect
-//                popoverPresentationController.sourceView = cell.selectionView
                 popoverPresentationController.config(from: rootViewController,
                                pointToView: cell.selectionView,
                                sourceView: rootViewController.view,
                                backgroundColor: UIColor(white: 0, alpha: 0.5))
             }
-//            popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
             popoverPresentationController.permittedArrowDirections = [.up, .down]
 
             popoverPresentationController.delegate = self
