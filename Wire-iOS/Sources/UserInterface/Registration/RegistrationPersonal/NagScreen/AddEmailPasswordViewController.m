@@ -17,11 +17,11 @@
 // 
 
 
+@import PureLayout;
+
 #import "AddEmailPasswordViewController.h"
 
-@import PureLayout;
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
-
 
 #import "AddEmailStepViewController.h"
 #import "EmailVerificationStepViewController.h"
@@ -36,220 +36,117 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface AddEmailPasswordViewController () <FormStepDelegate, UINavigationControllerDelegate, EmailVerificationStepViewControllerDelegate, UserProfileUpdateObserver, ZMUserObserver>
+@interface AddEmailPasswordViewController () <AddEmailStepViewControllerDelegate>
 
-@property (nonatomic) BOOL initialConstraintsCreated;
+@property (nonatomic) IconButton *closeButton;
+@property (nonatomic) UIImageView *backgroundImageView;
 @property (nonatomic) AddEmailStepViewController *addEmailStepViewController;
-@property (nonatomic) PopTransition *popTransition;
-@property (nonatomic) PushTransition *pushTransition;
-@property (nonatomic) id userEditingToken;
-@property (nonatomic) id userObserverToken;
-@property (nonatomic) UIButton *closeButton;
-@property (nonatomic) ZMEmailCredentials *credentials;
-@property (nonatomic, weak) id<UserProfile> userProfile;
 
 @end
 
-@interface AddEmailStepViewController (RegistrationObserver) <ZMRegistrationObserver>
-@end
 
 @implementation AddEmailPasswordViewController
 
 @synthesize authenticationCoordinator;
 
-- (instancetype)init
+- (void)viewDidLoad
 {
-    self = [super init];
-    
-    if (self) {
-        self.userProfile = ZMUserSession.sharedSession.userProfile;
-        self.userEditingToken = [self.userProfile addObserver:self];
-        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
-    }
-    
-    return self;
-}
-
-- (void)viewDidLoad {
-    
     [super viewDidLoad];
-    
-    self.popTransition = [[PopTransition alloc] init];
-    self.pushTransition = [[PushTransition alloc] init];
 
-    [self createNavigationController];
+    [self createBackgroundImageView];
+    [self createEmailStepController];
     [self createCloseButton];
-    
-    if (self.skipButtonType == AddEmailPasswordViewControllerSkipButtonTypeClose) {
+
+    if (self.canSkipStep) {
         self.closeButton.hidden = NO;
     }
-    
-    [self updateViewConstraints];
-    
-    self.view.opaque = NO;
+
+    [self configureConstraints];
 }
 
-- (void)createNavigationController
+#pragma mark - Interface Configuration
+
+- (void)createBackgroundImageView
+{
+    UIImage *backgroundImage = [UIImage imageNamed:@"LaunchImage"];
+    self.backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
+    self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.backgroundImageView];
+}
+
+- (void)createEmailStepController
 {
     self.addEmailStepViewController = [[AddEmailStepViewController alloc] init];
-    self.addEmailStepViewController.formStepDelegate = self;
-    self.addEmailStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.addEmailStepViewController.delegate = self;
+    self.addEmailStepViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
 
     [self addChildViewController:self.addEmailStepViewController];
     [self.view addSubview:self.addEmailStepViewController.view];
     [self.addEmailStepViewController didMoveToParentViewController:self];
 }
 
-- (void)setShowsNavigationBar:(BOOL)showsNavigationBar
-{
-    _showsNavigationBar = showsNavigationBar;
-    self.wr_navigationController.backButtonEnabled = self.showsNavigationBar;
-    self.wr_navigationController.rightButtonEnabled = self.showsNavigationBar;
-    self.wr_navigationController.logoEnabled = self.showsNavigationBar;
-}
-
 - (void)createCloseButton
 {
-    self.closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.closeButton = [[IconButton alloc] init];
+    [self.closeButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
+    [self.closeButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
+
     self.closeButton.hidden = YES;
     self.closeButton.adjustsImageWhenHighlighted = YES;
-    [self.closeButton setImage:[UIImage imageForIcon:ZetaIconTypeX
-                                            iconSize:ZetaIconSizeSmall
-                                               color:[UIColor whiteColor]]
-                      forState:UIControlStateNormal];
-    [self.closeButton addTarget:self action:@selector(skip:) forControlEvents:UIControlEventTouchUpInside];
+    [self.closeButton addTarget:self action:@selector(skip) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.closeButton];
 }
 
-
-- (void)updateViewConstraints
+- (void)configureConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        [self.addEmailStepViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        
-        [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
-        [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-    }
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // Background image
+      [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+
+      // Add e-mail step
+      [self.addEmailStepViewController.view.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor],
+      [self.addEmailStepViewController.view.topAnchor constraintEqualToAnchor:self.safeTopAnchor],
+      [self.addEmailStepViewController.view.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor],
+      [self.addEmailStepViewController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor],
+
+      // Close button
+      [self.closeButton.topAnchor constraintEqualToAnchor:self.safeTopAnchor constant:32],
+      [self.closeButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28]
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 #pragma mark - Actions
 
-- (IBAction)skip:(id)sender
+- (void)setCanSkipStep:(BOOL)canSkipStep
 {
-    if ([self.formStepDelegate respondsToSelector:@selector(didSkipFormStep:)]) {
-        [self.formStepDelegate didSkipFormStep:self];
+    _canSkipStep = canSkipStep;
+    self.closeButton.hidden = !canSkipStep;
+}
+
+- (void)skip
+{
+    if (self.canSkipStep) {
+        [self.authenticationCoordinator skipAddEmailAndPassword];
     }
 }
 
-#pragma mark - RegistrationStepDelegate
-
-- (void)didCompleteFormStep:(UIViewController *)viewController
+- (void)addEmailStepDidFinishWithEmailCredentials:(ZMEmailCredentials *)credentials
 {
-    if ([viewController isKindOfClass:[AddEmailStepViewController class]]) {
-        AddEmailStepViewController *addEmailStepViewController = (AddEmailStepViewController *)viewController;
-        
-        self.credentials = [ZMEmailCredentials credentialsWithEmail:addEmailStepViewController.emailAddress
-                                                           password:addEmailStepViewController.password];
+    [self.authenticationCoordinator setEmailCredentialsForCurrentUser:credentials];
+}
 
-        NSError *error;
-        [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
-        BOOL result = [[SessionManager shared] updateWithCredentials:self.credentials];
-
-        if (nil != error || result == NO) {
-            ZMLogError(@"Error requesting to set email and password: %@", error);
-        } else {
-            self.showLoadingView = YES;
-        }
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    if (feedbackAction == AuthenticationErrorFeedbackActionClearInputFields) {
+        [self.addEmailStepViewController clearFields];
     }
-}
-
-#pragma mark - EmailVerificationStepViewControllerDelegate
-
-- (void)emailVerificationStepDidRequestVerificationEmail
-{
-    NSError *error;
-    [self.userProfile requestSettingEmailAndPasswordWithCredentials:self.credentials error:&error];
-
-    if (nil != error) {
-        ZMLogError(@"Error requesting to set email and password: %@", error);
-    }
-}
-
-#pragma mark ZMUserObserver
-
-- (void)userDidChange:(UserChangeInfo *)note
-{
-    if (note.profileInformationChanged && ZMUser.selfUser.emailAddress.length > 0) {
-        [self.formStepDelegate didCompleteFormStep:self];
-    }
-}
-
-#pragma mark - UserProfileUpdateObserver
-
-- (void)didSentVerificationEmail
-{
-    self.showLoadingView = NO;
-    
-    // Credentials can be nil if you requested a verification e-mail and then closed and re-opened the add-email view controller.
-    if (self.credentials != nil) {
-        EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.credentials.email];
-        emailVerificationStepViewController.formStepDelegate = self;
-        emailVerificationStepViewController.registrationNavigationController = self.wr_navigationController;
-        emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
-        [self.wr_navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
-    }
-}
-
-- (void)emailUpdateDidFail:(NSError *)error
-{
-    self.showLoadingView = NO;
-    
-    @weakify(self);
-    
-    [self showAlertForError:error handler:^(UIAlertAction *action) {
-        @strongify(self);
-        if ([error.domain isEqualToString:NSError.ZMUserSessionErrorDomain] && error.code == ZMUserSessionEmailIsAlreadyRegistered) {
-            [self.addEmailStepViewController clearFields:nil];
-        }
-    }];
-}
-
-- (void)passwordUpdateRequestDidFail
-{
-    self.showLoadingView = NO;
-    
-    [self showAlertForMessage:NSLocalizedString(@"error.updating_password", nil)];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
-#pragma mark - NavigationControllerDelegate
-
-- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-                                   animationControllerForOperation:(UINavigationControllerOperation)operation
-                                                fromViewController:(UIViewController *)fromVC
-                                                  toViewController:(UIViewController *)toVC
-{
-    id <UIViewControllerAnimatedTransitioning> transition = nil;
-    
-    switch (operation) {
-        case UINavigationControllerOperationPop:
-            transition = self.popTransition;
-            break;
-        case UINavigationControllerOperationPush:
-            transition = self.pushTransition;
-        default:
-            break;
-    }
-    return transition;
 }
 
 @end

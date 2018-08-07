@@ -21,11 +21,7 @@
 
 #import "FormStepDelegate.h"
 
-
-
 @class NavigationController;
-
-
 
 @interface RegistrationStepViewController : UIViewController
 

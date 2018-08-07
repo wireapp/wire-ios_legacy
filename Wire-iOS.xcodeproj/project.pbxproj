@@ -5718,12 +5718,12 @@
 		EF2126F11FB9DFE300625A9B /* NagScreen */ = {
 			isa = PBXGroup;
 			children = (
-				EF2126F21FB9DFE300625A9B /* AddPhoneNumberViewController.h */,
-				EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */,
-				EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */,
 				EF2126F51FB9DFE300625A9B /* AddEmailPasswordViewController.h */,
+				EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */,
 				EF2126F61FB9DFE300625A9B /* AddPhoneNumberViewController.m */,
+				EF2126F21FB9DFE300625A9B /* AddPhoneNumberViewController.h */,
 				EF2126F71FB9DFE300625A9B /* AddEmailStepViewController.h */,
+				EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */,
 			);
 			path = NagScreen;
 			sourceTree = "<group>";

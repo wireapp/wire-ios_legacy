@@ -16,10 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import PureLayout;
+@import WireExtensionComponents;
 
 #import "AddPhoneNumberViewController.h"
-
-@import PureLayout;
 
 #import "NavigationController.h"
 #import "PhoneNumberStepViewController.h"
@@ -30,12 +30,11 @@
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
 #import "UIImage+ZetaIconsNeue.h"
-@import WireExtensionComponents;
-#import "Wire-Swift.h"
 
 #import "RegistrationFormController.h"
 #import "CheckmarkViewController.h"
 
+#import "Wire-Swift.h"
 
 
 @interface AddPhoneNumberViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, UserProfileUpdateObserver, ZMUserObserver>

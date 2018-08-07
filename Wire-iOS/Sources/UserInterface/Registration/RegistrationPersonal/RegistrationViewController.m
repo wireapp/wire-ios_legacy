@@ -149,7 +149,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     if (userSessionErrorCode == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
         AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-        addEmailPasswordViewController.formStepDelegate = self;
+//        addEmailPasswordViewController.formStepDelegate = self;
         rootViewController = addEmailPasswordViewController;
     }
 

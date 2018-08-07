@@ -16,18 +16,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import <UIKit/UIKit.h>
+@import UIKit;
+@import WireSyncEngine;
 
 #import "RegistrationStepViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
+
+@protocol AddEmailStepViewControllerDelegate <NSObject>
+
+- (void)addEmailStepDidFinishWithEmailCredentials:(ZMEmailCredentials *)credentials;
+
+@end
 
 
+@interface AddEmailStepViewController : UIViewController
 
-@interface AddEmailStepViewController : RegistrationStepViewController
+@property (nonatomic, weak, nullable) id<AddEmailStepViewControllerDelegate> delegate;
 
-@property (nonatomic, readonly) NSString *emailAddress;
-@property (nonatomic, readonly) NSString *password;
-
-- (IBAction)clearFields:(id)sender;
+- (void)clearFields;
 
 @end

@@ -227,7 +227,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (error.code == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
         if (![self.navigationController.topViewController isKindOfClass:[AddEmailPasswordViewController class]]) {
             AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-            addEmailPasswordViewController.formStepDelegate = self;
+//            addEmailPasswordViewController.formStepDelegate = self;
             [self.wr_navigationController setBackButtonEnabled:NO];
             [self.navigationController pushViewController:addEmailPasswordViewController animated:YES];
         }

@@ -57,6 +57,20 @@ protocol AuthenticationCoordinatorDelegate: class {
     func authenticationCoordinatorRequestedSharedUserSession() -> ZMUserSession?
 
     /**
+     * The authentication coordinator requested the shared user profile.
+     * - returns: The shared user profile, if any.
+     */
+
+    func authenticationCoordinatorRequestedSelfUserProfile() -> UserProfile?
+
+    /**
+     * The authentication coordinator requested the shared user.
+     * - returns: The shared user, if any.
+     */
+
+    func authenticationCoordinatorRequestedSelfUser() -> ZMUser?
+
+    /**
      * The authentication coordinator requested the number of accounts.
      * - returns: The number of currently logged in accounts.
      */

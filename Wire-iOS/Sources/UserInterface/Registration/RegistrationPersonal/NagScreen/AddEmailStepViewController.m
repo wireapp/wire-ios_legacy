@@ -16,11 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import "AddEmailStepViewController.h"
-
-@import PureLayout;
-@import WireExtensionComponents;
 
 #import "EmailFormViewController.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -31,15 +27,15 @@
 #import "Constants.h"
 #import "Wire-Swift.h"
 
-
 @interface AddEmailStepViewController ()
 
-@property (nonatomic) UIImageView *backgroundImageView;
 @property (nonatomic) UILabel *heroLabel;
 @property (nonatomic) EmailFormViewController *emailFormViewController;
-@property (nonatomic, assign) BOOL initialConstraintsCreated;
+
+@property (nonatomic, readonly) ZMEmailCredentials *credentials;
 
 @end
+
 
 @implementation AddEmailStepViewController
 
@@ -49,9 +45,9 @@
 
     self.title = NSLocalizedString(@"registration.email_flow.email_step.title", nil);
 
-    [self createBackgroundImageView];
     [self createHeroLabel];
     [self createEmailFormViewController];
+    [self configureConstraints];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -61,31 +57,19 @@
     [self.emailFormViewController.emailField becomeFirstResponder];
 }
 
-- (void)createBackgroundImageView
-{
-    UIImage *backgroundImage = [UIImage imageNamed:@"LaunchImage"];
-    self.backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
-    [self.view addSubview:self.backgroundImageView];
-    self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    NSArray<NSLayoutConstraint *> *constraints =
-    @[
-      [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-      [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-      [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-      [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-      ];
-
-    [NSLayoutConstraint activateConstraints:constraints];
-}
+#pragma mark - Interface Configuration
 
 - (void)createHeroLabel
 {
-    self.heroLabel = [[UILabel alloc] initForAutoLayout];
-    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
+    self.heroLabel = [[UILabel alloc] init];
+    self.heroLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.heroLabel.font = UIFont.largeSemiboldFont;
     self.heroLabel.numberOfLines = 0;
+    self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground
+                                                        variant:ColorSchemeVariantDark];
+
     self.heroLabel.attributedText = [self attributedHeroText];
+    self.heroLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self.view addSubview:self.heroLabel];
 }
@@ -122,46 +106,43 @@
     [self.emailFormViewController didMoveToParentViewController:self];
 }
 
-- (void)updateViewConstraints
+- (void)configureConstraints
 {
-    [super updateViewConstraints];
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
+    CGFloat inset = 28.0;
 
-        CGFloat inset = 28.0;
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        
-        [self.emailFormViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-        [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:inset];
-        [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:inset];
-        [[self.emailFormViewController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-10] setActive:YES];
-    }
-}
+    NSArray<NSLayoutConstraint *> *constraints =
+  @[
+    [self.heroLabel.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor constant:inset],
+    [self.heroLabel.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor constant:-inset],
+    [self.emailFormViewController.view.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor constant:inset],
+    [self.emailFormViewController.view.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor constant:-inset],
+    [self.emailFormViewController.view.topAnchor constraintEqualToAnchor:self.heroLabel.bottomAnchor constant:24],
+    [self.emailFormViewController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-10]
+    ];
 
-- (NSString *)password
-{
-    return self.emailFormViewController.passwordField.text;
-}
-
-- (NSString *)emailAddress
-{
-    return self.emailFormViewController.emailField.text;
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 #pragma mark - Actions
 
-- (IBAction)clearFields:(id)sender
+- (ZMEmailCredentials *)credentials
+{
+    NSString *email = self.emailFormViewController.emailField.text ?: @"";
+    NSString *password = self.emailFormViewController.passwordField.text ?: @"";
+
+    return [ZMEmailCredentials credentialsWithEmail:email password:password];
+}
+
+- (void)clearFields
 {
     [self.emailFormViewController resetAllFields];
     [self.emailFormViewController.emailField becomeFirstResponder];
 }
 
-- (IBAction)verifyFieldsAndContinue:(id)sender
+- (void)verifyFieldsAndContinue:(id)sender
 {
     if ([self.emailFormViewController validateAllFields]) {
-        
-        [self.formStepDelegate didCompleteFormStep:self];
+        [self.delegate addEmailStepDidFinishWithEmailCredentials:self.credentials];
     }
 }
 

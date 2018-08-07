@@ -16,19 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import <UIKit/UIKit.h>
-#import "FormStepDelegate.h"
-#import "AuthenticationCoordinatedViewController.h"
+@import UIKit;
 
-typedef NS_ENUM(NSInteger, AddEmailPasswordViewControllerSkipButtonType) {
-    AddEmailPasswordViewControllerSkipButtonTypeNone,
-    AddEmailPasswordViewControllerSkipButtonTypeClose
-};
+#import "AuthenticationCoordinatedViewController.h"
 
 @interface AddEmailPasswordViewController : UIViewController <AuthenticationCoordinatedViewController>
 
-@property (nonatomic) BOOL showsNavigationBar;
-@property (nonatomic, weak) id<FormStepDelegate> formStepDelegate;
-@property (nonatomic) AddEmailPasswordViewControllerSkipButtonType skipButtonType;
+@property (nonatomic) BOOL canSkipStep;
 
 @end

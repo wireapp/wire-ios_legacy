@@ -206,6 +206,18 @@ extension AppStateController : RegistrationViewControllerDelegate, Authenticatio
         return ZMUserSession.shared()
     }
 
+    func authenticationCoordinatorRequestedSelfUserProfile() -> UserProfile? {
+        guard let session = ZMUserSession.shared() else {
+            return nil
+        }
+
+        return session.userProfile
+    }
+
+    func authenticationCoordinatorRequestedSelfUser() -> ZMUser? {
+        return ZMUser.selfUser()
+    }
+
     func authenticationCoordinatorRequestedNumberOfAccounts() -> Int {
         return SessionManager.numberOfAccounts
     }
