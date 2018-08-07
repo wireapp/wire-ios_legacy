@@ -34,6 +34,7 @@
 
 @interface AddEmailStepViewController ()
 
+@property (nonatomic) UIImageView *backgroundImageView;
 @property (nonatomic) UILabel *heroLabel;
 @property (nonatomic) EmailFormViewController *emailFormViewController;
 @property (nonatomic, assign) BOOL initialConstraintsCreated;
@@ -45,9 +46,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.title = NSLocalizedString(@"registration.email_flow.email_step.title", nil);
-    
+
+    [self createBackgroundImageView];
     [self createHeroLabel];
     [self createEmailFormViewController];
 }
@@ -57,6 +59,24 @@
     [super viewDidAppear:animated];
     
     [self.emailFormViewController.emailField becomeFirstResponder];
+}
+
+- (void)createBackgroundImageView
+{
+    UIImage *backgroundImage = [UIImage imageNamed:@"LaunchImage"];
+    self.backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
+    [self.view addSubview:self.backgroundImageView];
+    self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)createHeroLabel

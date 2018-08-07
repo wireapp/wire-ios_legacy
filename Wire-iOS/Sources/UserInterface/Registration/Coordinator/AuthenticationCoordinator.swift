@@ -70,6 +70,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         currentStep = step
 
         guard step.needsInterface else {
+            flowStack.append(step)
             return
         }
 
@@ -122,8 +123,8 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         case .verifyPhoneNumber(let phoneNumber, _):
             let verificationController = PhoneVerificationStepViewController()
             verificationController.phoneNumber = phoneNumber
-            verificationController.authenticationCoordinator = self
             verificationController.isLoggingIn = true
+            verificationController.authenticationCoordinator = self
             return verificationController
 
         case .addEmailAndPassword:
@@ -135,7 +136,6 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         default:
             return nil
         }
-
     }
 
     func unwind() {
@@ -263,7 +263,6 @@ extension AuthenticationCoordinator {
         }
     }
 
-
     func authenticationDidFail(_ error: NSError) {
         presenter?.showLoadingView = false
 
@@ -301,6 +300,11 @@ extension AuthenticationCoordinator {
 
             default:
                 presenter?.showAlert(forError: error, handler: errorAlertHandler)
+            }
+
+        case .authenticatePhoneCredentials:
+            presenter?.showAlert(forError: error) { _ in
+                self.unwind()
             }
 
         case .reauthenticate:
@@ -421,7 +425,11 @@ extension AuthenticationCoordinator {
             transition(to: nextStep)
 
         case .needsToRegisterEmailToRegisterClient:
-            fatalError("unimplemented")
+            if case .addEmailAndPassword = currentStep {
+                return
+            }
+
+            transition(to: .addEmailAndPassword)
 
         case .needsPasswordToRegisterClient:
             let numberOfAccounts = delegate?.authenticationCoordinatorRequestedNumberOfAccounts() ?? 0
@@ -436,6 +444,8 @@ extension AuthenticationCoordinator {
         // no-op
     }
 
+
+
     // MARK: - Helpers
 
     private var hasAutomationFastLoginCredentials: Bool {
@@ -445,6 +455,11 @@ extension AuthenticationCoordinator {
     // MARK: --
 
     func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
+        if error?.userSessionErrorCode == .needsToRegisterEmailToRegisterClient {
+            transition(to: .addEmailAndPassword)
+            return
+        }
+
         var needsToReauthenticate = false
         var needsToDeleteClients = false
 

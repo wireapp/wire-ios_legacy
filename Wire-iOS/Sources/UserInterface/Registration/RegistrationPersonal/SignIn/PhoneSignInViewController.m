@@ -82,7 +82,7 @@
 
 - (void)phoneNumberStepDidPickPhoneNumber:(NSString *)phoneNumber
 {
-    [self.authenticationCoordinator startPhoneNumberValidationWithPhoneNumber:phoneNumber];
+    [self.authenticationCoordinator startPhoneNumberValidationWithPhoneNumber:phoneNumber isSigningIn:YES];
 }
 
 @end

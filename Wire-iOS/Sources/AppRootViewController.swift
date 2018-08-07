@@ -217,7 +217,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
 
-            var updatedViewController: NavigationController?
+            var updatedViewController: UIViewController?
 
             if authenticationCoordinator == nil {
                 let navigationController = NavigationController()
@@ -230,8 +230,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                                                                       sessionManager: SessionManager.shared!)
 
                 authenticationCoordinator?.delegate = appStateController
-
-                updatedViewController = navigationController
+                updatedViewController = KeyboardAvoidingViewController(viewController: navigationController)
             }
 
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)

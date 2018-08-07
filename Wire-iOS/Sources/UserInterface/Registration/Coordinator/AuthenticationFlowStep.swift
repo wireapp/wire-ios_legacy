@@ -44,7 +44,7 @@ enum AuthenticationFlowStep {
     /// Whether the step can be unwinded.
     var allowsUnwind: Bool {
         switch self {
-        case .landingScreen, .clientManagement, .noHistory: return false
+        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword: return false
         default: return true
         }
     }

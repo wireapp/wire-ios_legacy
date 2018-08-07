@@ -40,7 +40,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) AddEmailStepViewController *addEmailStepViewController;
-@property (nonatomic) NavigationController *rootNavigationController;
 @property (nonatomic) PopTransition *popTransition;
 @property (nonatomic) PushTransition *pushTransition;
 @property (nonatomic) id userEditingToken;
@@ -77,7 +76,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     self.popTransition = [[PopTransition alloc] init];
     self.pushTransition = [[PushTransition alloc] init];
-    
+
     [self createNavigationController];
     [self createCloseButton];
     
@@ -95,27 +94,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.addEmailStepViewController = [[AddEmailStepViewController alloc] init];
     self.addEmailStepViewController.formStepDelegate = self;
     self.addEmailStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    self.rootNavigationController = [[NavigationController alloc] initWithRootViewController:self.addEmailStepViewController.registrationFormViewController];
-    self.rootNavigationController.delegate = self;
-    self.rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.rootNavigationController.backButtonEnabled = self.showsNavigationBar;
-    self.rootNavigationController.rightButtonEnabled = self.showsNavigationBar;
-    self.rootNavigationController.logoEnabled = self.showsNavigationBar;
-    
-    self.addEmailStepViewController.registrationNavigationController = self.rootNavigationController;
-        
-    [self addChildViewController:self.rootNavigationController];
-    [self.view addSubview:self.rootNavigationController.view];
-    [self.rootNavigationController didMoveToParentViewController:self];
+
+    [self addChildViewController:self.addEmailStepViewController];
+    [self.view addSubview:self.addEmailStepViewController.view];
+    [self.addEmailStepViewController didMoveToParentViewController:self];
 }
 
 - (void)setShowsNavigationBar:(BOOL)showsNavigationBar
 {
     _showsNavigationBar = showsNavigationBar;
-    self.rootNavigationController.backButtonEnabled = self.showsNavigationBar;
-    self.rootNavigationController.rightButtonEnabled = self.showsNavigationBar;
-    self.rootNavigationController.logoEnabled = self.showsNavigationBar;
+    self.wr_navigationController.backButtonEnabled = self.showsNavigationBar;
+    self.wr_navigationController.rightButtonEnabled = self.showsNavigationBar;
+    self.wr_navigationController.logoEnabled = self.showsNavigationBar;
 }
 
 - (void)createCloseButton
@@ -139,7 +129,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (! self.initialConstraintsCreated) {
         self.initialConstraintsCreated = YES;
         
-        [self.rootNavigationController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+        [self.addEmailStepViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
         
         [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:32];
         [self.closeButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
@@ -208,10 +198,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (self.credentials != nil) {
         EmailVerificationStepViewController *emailVerificationStepViewController = [[EmailVerificationStepViewController alloc] initWithEmailAddress:self.credentials.email];
         emailVerificationStepViewController.formStepDelegate = self;
-        emailVerificationStepViewController.registrationNavigationController = self.rootNavigationController;
+        emailVerificationStepViewController.registrationNavigationController = self.wr_navigationController;
         emailVerificationStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
-        [self.rootNavigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
+        [self.wr_navigationController pushViewController:emailVerificationStepViewController.registrationFormViewController animated:YES];
     }
 }
 
@@ -234,6 +224,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.showLoadingView = NO;
     
     [self showAlertForMessage:NSLocalizedString(@"error.updating_password", nil)];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
 #pragma mark - NavigationControllerDelegate
