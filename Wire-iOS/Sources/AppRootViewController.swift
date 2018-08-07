@@ -80,14 +80,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         })
     }
 
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
-
-        updatePopoverSourceRect()
-    }
-
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateController = AppStateController()
         fileBackupExcluder = FileBackupExcluder()
@@ -126,6 +118,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameDidChange(notification:)),
+                                               name: NSNotification.Name.UIKeyboardDidChangeFrame,
+                                               object: nil)
 
         transition(to: .headless)
 

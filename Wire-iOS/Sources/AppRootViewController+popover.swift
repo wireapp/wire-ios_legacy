@@ -19,3 +19,17 @@
 import Foundation
 
 extension AppRootViewController: PopoverPresenter { }
+
+extension AppRootViewController {
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+
+        updatePopoverSourceRect()
+    }
+
+    @objc func keyboardFrameDidChange(notification: Notification) {
+        updatePopoverSourceRect()
+    }
+}
