@@ -145,14 +145,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     registrationRootViewController.shouldHideCancelButton = self.shouldHideCancelButton;
     self.registrationRootViewController = registrationRootViewController;
     
-    UIViewController *rootViewController = registrationRootViewController;
-
-    if (userSessionErrorCode == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
-        AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-//        addEmailPasswordViewController.formStepDelegate = self;
-        rootViewController = addEmailPasswordViewController;
-    }
-
     [self addChildViewController:self.registrationRootViewController];
     [self.view addSubview:self.registrationRootViewController.view];
     [self.registrationRootViewController didMoveToParentViewController:self];

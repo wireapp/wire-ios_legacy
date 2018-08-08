@@ -116,11 +116,10 @@ extension SettingsCellDescriptorFactory {
                 return ChangeEmailViewController()
              } else {
                 let addEmailController = AddEmailPasswordViewController()
-//                addEmailController.canSk = false
                 let stepDelegate = DismissStepDelegate()
                 stepDelegate.strongCapture = stepDelegate
-                
-//                addEmailController.formStepDelegate = stepDelegate
+
+                // TODO: Integrate with new login controller
                 return addEmailController
             }
         },

@@ -78,9 +78,9 @@ class AuthenticationCoordinator: NSObject {
         }
 
         guard
-            let selfUser = delegate?.authenticationCoordinatorRequestedSelfUser(),
-            let session = delegate?.authenticationCoordinatorRequestedSharedUserSession(),
-            let userProfile = delegate?.authenticationCoordinatorRequestedSelfUserProfile()
+            let selfUser = delegate?.selfUser,
+            let session = delegate?.sharedUserSession,
+            let userProfile = delegate?.selfUserProfile
         else {
             return 
         }
@@ -236,14 +236,12 @@ extension AuthenticationCoordinator {
         transition(to: AuthenticationFlowStep.registerEmailCredentials(credentials))
         presenter?.showLoadingView = true
 
-        let result = setCredentialsWithProfile(profile, credentials: credentials) == true && SessionManager.shared?.update(credentials: credentials) == true
+        let result = setCredentialsWithProfile(profile, credentials: credentials) && SessionManager.shared?.update(credentials: credentials) == true
 
         if !result {
             let error = NSError(code: .invalidEmail, userInfo: nil)
             emailUpdateDidFail(error)
         }
-
-        return
     }
 
     @discardableResult
@@ -267,7 +265,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        guard let userProfile = delegate?.authenticationCoordinatorRequestedSelfUserProfile() else {
+        guard let userProfile = delegate?.selfUserProfile else {
             return
         }
 
@@ -374,7 +372,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
 
         switch currentStep {
         case .registerEmailCredentials:
-            guard let selfUser = delegate?.authenticationCoordinatorRequestedSelfUser() else {
+            guard let selfUser = delegate?.selfUser else {
                 return
             }
 
@@ -533,7 +531,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
     }
 
     func clientRegistrationDidSucceed(accountId: UUID) {
-        guard let sharedSession = delegate?.authenticationCoordinatorRequestedSharedUserSession() else {
+        guard let sharedSession = delegate?.sharedUserSession else {
             return
         }
 
@@ -542,7 +540,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
     }
 
     func sessionManagerCreated(userSession: ZMUserSession) {
-        guard let sharedSession = delegate?.authenticationCoordinatorRequestedSharedUserSession() else {
+        guard let sharedSession = delegate?.sharedUserSession else {
             return
         }
 
@@ -582,11 +580,10 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
                 presenter?.showLoadingView = false
             }
 
-            guard let user = ZMUser.selfUser() else {
-                return
-            }
-
-            guard let profile = ZMUserSession.shared()?.userProfile else {
+            guard
+                let user = ZMUser.selfUser(),
+                let profile = ZMUserSession.shared()?.userProfile
+            else {
                 return
             }
 
@@ -597,7 +594,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
 
         case .needsPasswordToRegisterClient:
             presenter?.showLoadingView = false
-            let numberOfAccounts = delegate?.authenticationCoordinatorRequestedNumberOfAccounts() ?? 0
+            let numberOfAccounts = delegate?.numberOfAccounts ?? 0
             transition(to: .reauthenticate(error: error, numberOfAccounts: numberOfAccounts), resetStack: true)
 
         default:
@@ -680,9 +677,13 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
             return
         }
 
+        guard let selfUser = delegate?.selfUser, let profile = delegate?.selfUserProfile else {
+            return
+        }
+
         // Check if the user needs email and password
-        let registered = delegate?.authenticatedUserWasRegisteredOnThisDevice() ?? false
-        let needsEmail = delegate?.authenticatedUserNeedsEmailCredentials() ?? false
+        let registered = delegate?.authenticatedUserWasRegisteredOnThisDevice ?? false
+        let needsEmail = delegate?.authenticatedUserNeedsEmailCredentials ?? false
 
         guard registered && needsEmail else {
             delegate?.userAuthenticationDidComplete(registered: registered)
@@ -690,7 +691,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         }
 
         presenter?.logoEnabled = false
-        // transition(to: .addEmailAndPassword(canSkip: false), resetStack: true)
+        transition(to: .addEmailAndPassword(user: selfUser, profile: profile, canSkip: false), resetStack: true)
     }
 
 }

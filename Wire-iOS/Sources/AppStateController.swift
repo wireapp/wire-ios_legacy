@@ -194,31 +194,27 @@ extension AppStateController {
 
 extension AppStateController : RegistrationViewControllerDelegate, AuthenticationCoordinatorDelegate {
 
-    func authenticatedUserWasRegisteredOnThisDevice() -> Bool {
+    var authenticatedUserWasRegisteredOnThisDevice: Bool {
         return ZMUserSession.shared()?.registeredOnThisDevice == true
     }
 
-    func authenticatedUserNeedsEmailCredentials() -> Bool {
+    var authenticatedUserNeedsEmailCredentials: Bool {
         return ZMUser.selfUser()?.emailAddress?.isEmpty == true
     }
 
-    func authenticationCoordinatorRequestedSharedUserSession() -> ZMUserSession? {
+    var sharedUserSession: ZMUserSession? {
         return ZMUserSession.shared()
     }
 
-    func authenticationCoordinatorRequestedSelfUserProfile() -> UserProfile? {
-        guard let session = ZMUserSession.shared() else {
-            return nil
-        }
-
-        return session.userProfile
+    var selfUserProfile: UserProfile? {
+        return sharedUserSession?.userProfile
     }
 
-    func authenticationCoordinatorRequestedSelfUser() -> ZMUser? {
+    var selfUser: ZMUser? {
         return ZMUser.selfUser()
     }
 
-    func authenticationCoordinatorRequestedNumberOfAccounts() -> Int {
+    var numberOfAccounts: Int {
         return SessionManager.numberOfAccounts
     }
 
