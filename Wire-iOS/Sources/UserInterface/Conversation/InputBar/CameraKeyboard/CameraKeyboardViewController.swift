@@ -209,7 +209,6 @@ open class CameraKeyboardViewController: UIViewController {
     fileprivate func forwardSelectedPhotoAsset(_ asset: PHAsset) {
         let manager = PHImageManager.default()
 
-        ///TODO: jpg?
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.isNetworkAccessAllowed = false
