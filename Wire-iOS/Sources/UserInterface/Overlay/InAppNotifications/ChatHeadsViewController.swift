@@ -73,7 +73,7 @@ class ChatHeadsViewController: UIViewController {
             else { return }
         
         // if notification is for active account, we only want to show the conversation name
-        let title = account.isActive ? note.userInfo?[ConversationNameStringKey] as? String : note.title
+        let title = account.isActive ? note.userInfo?.conversationName : note.title
         
         chatHeadView = ChatHeadView(
             title: title,
