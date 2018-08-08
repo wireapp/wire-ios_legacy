@@ -18,10 +18,18 @@
 
 import UIKit
 
+/**
+ * A screen that informs the user about the state of e-mail verification.
+ */
+
 class EmailVerificationViewController: AuthenticationStepViewController {
 
-    let emailAddress: String
     weak var authenticationCoordinator: AuthenticationCoordinator?
+
+    // MARK: - Initialization
+
+    /// The e-mail address that the user is registering
+    private let emailAddress: String
 
     init(credentials: ZMCredentials) {
         self.emailAddress = credentials.email!
@@ -31,6 +39,8 @@ class EmailVerificationViewController: AuthenticationStepViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    // MARK: - UI Elements
 
     private let backgroundImageView = UIImageView()
     private let mailIconView = UIImageView()
@@ -45,6 +55,11 @@ class EmailVerificationViewController: AuthenticationStepViewController {
 
         configureSubviews()
         configureConstraints()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        authenticationCoordinator?.cancelWaitForEmailVerification()
     }
 
     // MARK: - Interface Configuration

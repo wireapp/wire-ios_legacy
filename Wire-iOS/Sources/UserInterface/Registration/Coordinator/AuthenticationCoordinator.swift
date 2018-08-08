@@ -317,9 +317,15 @@ extension AuthenticationCoordinator {
             return
         }
 
+        presenter?.showLoadingView = true
+
         // We can assume that the validation will succeed, as it only fails when there is no
         // email and/or password in the email credentials, which we already checked before.
         setCredentialsWithProfile(userProfile, credentials: credentials)
+    }
+
+    @objc func cancelWaitForEmailVerification() {
+        unauthenticatedSession.cancelWaitForEmailVerification()
     }
 
 }
@@ -331,11 +337,11 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
     // MARK: Email Update
 
     func emailUpdateDidFail(_ error: Error!) {
+        presenter?.showLoadingView = false
+
         guard case .registerEmailCredentials = currentStep else {
             return
         }
-
-        presenter?.showLoadingView = false
 
         if (error as NSError).userSessionErrorCode == .emailIsAlreadyRegistered {
             currentViewController?.executeErrorFeedbackAction?(.clearInputFields)
@@ -347,23 +353,24 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
     }
 
     func passwordUpdateRequestDidFail() {
+        presenter?.showLoadingView = false
+
         guard case .registerEmailCredentials = currentStep else {
             return
         }
 
-        presenter?.showLoadingView = false
-        
         presenter?.showAlert(forMessage: "error.updating_password".localized, title: nil) { _ in
             self.unwind()
         }
     }
 
     func didSentVerificationEmail() {
+        presenter?.showLoadingView = false
+
         guard case .registerEmailCredentials(let credentials) = currentStep else {
             return
         }
 
-        presenter?.showLoadingView = false
         transition(to: .verifyEmailCredentials(credentials))
     }
 
@@ -388,10 +395,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         default:
             break
         }
-
-
-//        if changeInfo.profileInformationChanged && ZMUser.selfUser().emailAddress?.isEmpty
-//            [self.formStepDelegate didCompleteFormStep:self];
     }
 
     // MARK: Phone Verification Code
