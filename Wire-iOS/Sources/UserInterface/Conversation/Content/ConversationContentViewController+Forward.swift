@@ -183,9 +183,10 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             if let cell = fromCell {
                 popoverPresentationController.config(from: rootViewController,
                                pointToView: cell.selectionView,
-                               sourceView: rootViewController.view,
-                               backgroundColor: UIColor(white: 0, alpha: 0.5),
-                               permittedArrowDirections: [.up, .down])
+                               sourceView: rootViewController.view)
+
+                popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
+                popoverPresentationController.permittedArrowDirections = [.up, .down]
             }
         }
         

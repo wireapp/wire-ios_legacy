@@ -25,10 +25,12 @@ extension ConversationInputBarViewController {
                              delegate: UIPopoverPresentationControllerDelegate,
                              pointToView: UIView) {
 
-        let popover = docController.popoverPresentationController
+        guard let popover = docController.popoverPresentationController else { return }
 
-        popover?.delegate = delegate
-        popover?.config(from: self, pointToView: pointToView, sourceView: sourceView, backgroundColor: nil, permittedArrowDirections: .down)
+        popover.delegate = delegate
+        popover.config(from: self, pointToView: pointToView, sourceView: sourceView)
+
+        popover.permittedArrowDirections = .down
     }
 
 }
