@@ -582,6 +582,8 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
     
 }
 
+extension AppRootViewController: PopoverPresenter { }
+
 public extension SessionManager {
     
     @objc var firstAuthenticatedAccount: Account? {
