@@ -32,7 +32,7 @@ extension UIView {
 
         // if the converted rect is out of bound, clamp origin to (0,0)
         // (provide a negative value to UIPopoverPresentationController.sourceRect may have no effect)
-        let clampedOrigin = CGPoint(x: fmax(0, popoverSourceRect.origin.x), y: fmax(00, popoverSourceRect.origin.y))
+        let clampedOrigin = CGPoint(x: fmax(0, popoverSourceRect.origin.x), y: fmax(0, popoverSourceRect.origin.y))
         popoverSourceRect = CGRect(origin: clampedOrigin, size: popoverSourceRect.size)
 
         return popoverSourceRect

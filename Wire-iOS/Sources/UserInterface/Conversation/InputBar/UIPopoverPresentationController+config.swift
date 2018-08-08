@@ -18,6 +18,7 @@
 
 import Foundation
 
+
 public protocol PopoverPresenter: class {
 
     /// The presenting popover. Its frame should be updated when the orientation or screen size changes.
@@ -26,6 +27,8 @@ public protocol PopoverPresenter: class {
     /// The popover's arrow points to this view
     var popoverPointToView: UIView? {get set}
 
+
+    /// call this method when the presented popover have to update its frame, e.g. when device roated or keyboard toggled
     func updatePopoverSourceRect()
 }
 
