@@ -205,10 +205,24 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
     }
-    
+
+    fileprivate func covertHEIFToJPG(imageData: Data) -> Data?{
+        guard let inputImage = CIImage(data: imageData),
+              let colorSpace = inputImage.colorSpace else { return nil }
+
+        if #available(iOS 10.0, *) {
+            let context = CIContext(options: nil)
+            return context.jpegRepresentation(of: inputImage, colorSpace: colorSpace, options: [:])
+        } else {
+            return nil
+        }
+    }
+
+    ///TODO: new class to handle these
     fileprivate func forwardSelectedPhotoAsset(_ asset: PHAsset) {
         let manager = PHImageManager.default()
 
+        ///TODO: jpg?
         let options = PHImageRequestOptions()
         options.deliveryMode = .highQualityFormat
         options.isNetworkAccessAllowed = false
@@ -231,7 +245,8 @@ open class CameraKeyboardViewController: UIViewController {
                         zmLog.error("Failure: cannot fetch image")
                         return
                     }
-                    
+
+                    // TODO: apply below logic
                     DispatchQueue.main.async(execute: {
                         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, isFromCamera: false)
                     })
@@ -239,9 +254,19 @@ open class CameraKeyboardViewController: UIViewController {
                 
                 return
             }
+
+            var returnData: Data
+            if (uti == "public.heif") ||
+               (uti == "public.heic"),
+                let convertedJPEGData = self.covertHEIFToJPG(imageData: data) {
+                returnData = convertedJPEGData
+            } else {
+                returnData = data
+            }
+
             DispatchQueue.main.async(execute: {
                 
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, isFromCamera: false)
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: returnData, isFromCamera: false)
             })
         })
     }
