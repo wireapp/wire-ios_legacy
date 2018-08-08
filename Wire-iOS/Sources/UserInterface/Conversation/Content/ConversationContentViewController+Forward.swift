@@ -150,9 +150,9 @@ extension ZMConversationList {
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc func updatePopover() {
-    guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
-    rootViewController.updatePopoverSourceRect()
+        rootViewController.updatePopoverSourceRect()
     }
 
     @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {

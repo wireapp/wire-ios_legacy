@@ -1134,7 +1134,6 @@
 		EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
 		EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */; };
-		EF52BEC82119CAC1002044A8 /* AppRootViewController+popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF52BEC72119CAC1002044A8 /* AppRootViewController+popover.swift */; };
 		EF5741EE2102001A0041AD47 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5741ED2102001A0041AD47 /* MessageTests.swift */; };
 		EF5EF40220B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */; };
 		EF60FC412064FD400017D083 /* SplitViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */; };
@@ -2785,7 +2784,6 @@
 		EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewControllerTests.swift; sourceTree = "<group>"; };
 		EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+IsVisible.swift"; sourceTree = "<group>"; };
-		EF52BEC72119CAC1002044A8 /* AppRootViewController+popover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRootViewController+popover.swift"; sourceTree = "<group>"; };
 		EF538FE02028AB6600EA4048 /* ProfileViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileViewController+internal.h"; sourceTree = "<group>"; };
 		EF5741ED2102001A0041AD47 /* MessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
 		EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+MarketingConsent.swift"; sourceTree = "<group>"; };
@@ -4569,7 +4567,6 @@
 				162936BA1F470A9300D4F386 /* AppState.swift */,
 				162936BC1F470B4800D4F386 /* AppStateController.swift */,
 				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
-				EF52BEC72119CAC1002044A8 /* AppRootViewController+popover.swift */,
 				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
 				87582BA11C886BB90061FEB1 /* ClassyCache.swift */,
 				873337891DF5B43A006AE609 /* SwiftDependencies.swift */,
@@ -6919,7 +6916,6 @@
 				D53D390C2057F8ED00B87DAD /* TintCorrectedActivityController.swift in Sources */,
 				1607359B1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift in Sources */,
 				1682AEBF20483F73003A052A /* ParticipantsSectionController.swift in Sources */,
-				EF52BEC82119CAC1002044A8 /* AppRootViewController+popover.swift in Sources */,
 				EF2127171FB9DFE300625A9B /* NoHistoryViewController.m in Sources */,
 				BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */,
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,

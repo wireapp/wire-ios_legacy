@@ -76,7 +76,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
         coordinator.animate(alongsideTransition: nil, completion: { _ in
             self.updateOverlayWindowFrame()
-            self.updatePopoverSourceRect()
         })
     }
 
