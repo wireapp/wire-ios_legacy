@@ -115,7 +115,7 @@ extension ShareViewController {
         
         constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
 
-            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8  ///TODO
+            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8
             shareablePreviewWrapper.left == view.left + 16
             shareablePreviewWrapper.right == -16 + view.right
             shareablePreviewView.edges == shareablePreviewWrapper.edges
