@@ -22,7 +22,7 @@ import Foundation
  * Provides and asks for context when registering users.
  */
 
-protocol AuthenticationCoordinatorDelegate: AuthenticationContextProvider {
+protocol AuthenticationCoordinatorDelegate: AuthenticationStatusProvider {
 
     /**
      * The coordinator finished authenticating the user.

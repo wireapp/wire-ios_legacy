@@ -23,7 +23,7 @@ import WireSyncEngine
  * Provides context about the current authentication stack.
  */
 
-protocol AuthenticationContextProvider: class {
+protocol AuthenticationStatusProvider: class {
 
     /**
      * Whether the authenticated user was registered on this device.

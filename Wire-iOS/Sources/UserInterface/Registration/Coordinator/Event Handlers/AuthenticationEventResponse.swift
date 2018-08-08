@@ -27,11 +27,15 @@ enum AuthenticationEventResponseAction {
     case showLoadingView
     case completeLoginFlow
     case completeRegistrationFlow
+    case startPostLoginFlow
     case transition(AuthenticationFlowStep, resetStack: Bool)
 }
 
+// MARK: - Ordering
+
 extension Array where Element == AuthenticationEventResponseAction {
 
+    /// Sorts the actions in the order they need to be executed.
     var ordered: [AuthenticationEventResponseAction] {
         return self.sorted { a, b in
             switch (a, b) {

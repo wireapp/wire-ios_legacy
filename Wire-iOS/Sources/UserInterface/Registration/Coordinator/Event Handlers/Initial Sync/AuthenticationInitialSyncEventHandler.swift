@@ -20,13 +20,11 @@ import Foundation
 
 /**
  * Handles the initial sync event.
- *
- * It checks for automation environment, the current step and asks the user for e-mail and password if needed.
  */
 
 class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandler {
 
-    weak var contextProvider: AuthenticationContextProvider?
+    weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationEventResponseAction]? {
         // Skip email/password prompt for @fastLogin automation
@@ -39,20 +37,23 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
             return [.hideLoadingView, .completeLoginFlow]
         }
 
-        guard let selfUser = contextProvider?.selfUser, let profile = contextProvider?.selfUserProfile else {
+        guard let selfUser = statusProvider?.selfUser, let profile = statusProvider?.selfUserProfile else {
             return nil
         }
 
         // Check if the user needs email and password
-        let registered = contextProvider?.authenticatedUserWasRegisteredOnThisDevice ?? false
-        let needsEmail = contextProvider?.authenticatedUserNeedsEmailCredentials ?? false
+        let isRegistered = statusProvider?.authenticatedUserWasRegisteredOnThisDevice ?? false
+        let needsEmail = statusProvider?.authenticatedUserNeedsEmailCredentials ?? false
 
-        if !registered {
-            return [.hideLoadingView, .completeLoginFlow]
-        }
-
-        if !needsEmail {
+        switch (isRegistered, needsEmail) {
+        case (true, false):
             return [.hideLoadingView, .completeRegistrationFlow]
+
+        case (false, false):
+            return [.hideLoadingView, .completeLoginFlow]
+
+        default:
+            break
         }
 
         let nextStep = AuthenticationFlowStep.addEmailAndPassword(user: selfUser, profile: profile, canSkip: false)
