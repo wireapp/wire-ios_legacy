@@ -27,7 +27,7 @@ class AuthenticationNeedsReauthenticationErrorHandler: AuthenticationEventHandle
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError, UUID)) -> [AuthenticationEventResponseAction]? {
+    func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError, UUID)) -> [AuthenticationCoordinatorAction]? {
         let (error, _) = context
 
         // Only handle needsPasswordToRegisterClient errrors

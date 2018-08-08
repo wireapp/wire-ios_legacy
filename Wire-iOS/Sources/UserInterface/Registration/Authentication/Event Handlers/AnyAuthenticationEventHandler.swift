@@ -26,7 +26,7 @@ class AnyAuthenticationEventHandler<Context> {
 
     private let statusProviderGetter: () -> AuthenticationStatusProvider?
     private let statusProviderSetter: (AuthenticationStatusProvider?) -> Void
-    private let handlerBlock: (AuthenticationFlowStep, Context) -> [AuthenticationEventResponseAction]?
+    private let handlerBlock: (AuthenticationFlowStep, Context) -> [AuthenticationCoordinatorAction]?
 
     /**
      * Creates a type-erased box for the specified event handler.
@@ -45,7 +45,7 @@ class AnyAuthenticationEventHandler<Context> {
     }
 
     /// Handles the event.
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Context) -> [AuthenticationEventResponseAction]? {
+    func handleEvent(currentStep: AuthenticationFlowStep, context: Context) -> [AuthenticationCoordinatorAction]? {
         return handlerBlock(currentStep, context)
     }
 

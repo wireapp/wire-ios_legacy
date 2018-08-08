@@ -26,15 +26,15 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationEventResponseAction]? {
+    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
         // Skip email/password prompt for @fastLogin automation
         guard AutomationHelper.sharedHelper.automationEmailCredentials == nil else {
             return [.hideLoadingView, .completeLoginFlow]
         }
 
         // Do not ask for credentials again (slow sync can be called multiple times)
-        if case .addEmailAndPassword = currentStep {
-            return [.hideLoadingView, .completeLoginFlow]
+        guard case .pendingInitialSync = currentStep else {
+            return [.hideLoadingView]
         }
 
         guard let selfUser = statusProvider?.selfUser, let profile = statusProvider?.selfUserProfile else {

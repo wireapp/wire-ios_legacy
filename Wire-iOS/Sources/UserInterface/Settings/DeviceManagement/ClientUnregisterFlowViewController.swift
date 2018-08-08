@@ -20,11 +20,6 @@
 import UIKit
 import Cartography
 
-@objc protocol ClientUnregisterViewControllerDelegate: NSObjectProtocol {
-    //func clientDeletionSucceeded()
-}
-
-
 @objcMembers class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate, AuthenticationCoordinatedViewController {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
@@ -156,12 +151,6 @@ import Cartography
     }
     
 
-}
-
-extension ClientUnregisterFlowViewController: PostLoginAuthenticationObserver {
-    func clientRegistrationDidSucceed(accountId : UUID) {
-       // self.delegate?.clientDeletionSucceeded()
-    }
 }
 
 extension ClientUnregisterFlowViewController: ClientListViewControllerDelegate {

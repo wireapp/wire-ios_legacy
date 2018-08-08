@@ -51,6 +51,6 @@ protocol AuthenticationEventHandler: class {
      * valid list of actions.
      */
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Context) -> [AuthenticationEventResponseAction]?
+    func handleEvent(currentStep: AuthenticationFlowStep, context: Context) -> [AuthenticationCoordinatorAction]?
 
 }

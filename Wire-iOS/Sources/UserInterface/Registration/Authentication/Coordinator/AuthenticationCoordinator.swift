@@ -32,19 +32,22 @@ extension SessionManager: ObservableSessionManager {}
  * and team creation.
  */
 
-class AuthenticationCoordinator: NSObject {
+class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDelegate {
 
     weak var presenter: NavigationController?
     weak var delegate: AuthenticationCoordinatorDelegate?
 
-    // MARK: - Event Handlers
+    // MARK: - Event Handling Properties
 
-    var initialSyncHandlers: [AnyAuthenticationEventHandler<Void>] = []
-    var clientRegistrationErrorHandlers: [AnyAuthenticationEventHandler<(NSError, UUID)>] = []
+    let eventHandlingManager = AuthenticationEventHandlingManager()
+
+    var statusProvider: AuthenticationStatusProvider? {
+        return delegate
+    }
 
     // MARK: - State
 
-    private var currentStep: AuthenticationFlowStep = .landingScreen
+    public fileprivate(set) var currentStep: AuthenticationFlowStep = .landingScreen
     private var currentViewController: AuthenticationStepViewController?
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
     private let interfaceBuilder = AuthenticationInterfaceBuilder()
@@ -72,7 +75,7 @@ class AuthenticationCoordinator: NSObject {
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
 
-        registerDefaultEventHandlers()
+        eventHandlingManager.configure(delegate: self)
     }
 
 }
@@ -144,27 +147,6 @@ extension AuthenticationCoordinator {
 
 extension AuthenticationCoordinator {
 
-    // MARK: Configuration
-
-    /**
-     * Creates and registers the default error handlers.
-     */
-
-    fileprivate func registerDefaultEventHandlers() {
-        // initialSyncHandlers
-        registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)
-
-        // clientRegistrationErrorHandlers
-        registerHandler(AuthenticationClientLimitErrorHandler(), to: &clientRegistrationErrorHandlers)
-        registerHandler(AuthenticationNoCredentialsErrorHandler(), to: &clientRegistrationErrorHandlers)
-        registerHandler(AuthenticationNeedsReauthenticationErrorHandler(), to: &clientRegistrationErrorHandlers)
-    }
-
-    fileprivate func registerHandler<Handler: AuthenticationEventHandler>(_ handler: Handler, to handlerList: inout [AnyAuthenticationEventHandler<Handler.Context>]) {
-        let box = AnyAuthenticationEventHandler(handler)
-        handlerList.append(box)
-    }
-
     /**
      * Registers the post-login observation tokens if they were not already registered.
      */
@@ -177,51 +159,34 @@ extension AuthenticationCoordinator {
         guard
             let selfUser = delegate?.selfUser,
             let session = delegate?.sharedUserSession,
-            let userProfile = delegate?.selfUserProfile
-            else {
-                return
+            let userProfile = delegate?.selfUserProfile,
+            let sharedSession = delegate?.sharedUserSession
+        else {
+            return
         }
 
         postLoginObservers = [
             userProfile.add(observer: self),
-            UserChangeInfo.add(observer: self, for: selfUser, userSession: session)!
+            UserChangeInfo.add(observer: self, for: selfUser, userSession: session)!,
+            ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
         ]
-    }
-
-    // MARK: Handling
-
-    /**
-     * Requests the coordinator to handle the event with the specified context, using the given handlers.
-     */
-
-    func handleEvent<Context>(with handlers: [AnyAuthenticationEventHandler<Context>], context: Context) {
-        var actions: [AuthenticationEventResponseAction]?
-
-        for handler in handlers {
-            handler.statusProvider = delegate
-
-            if let responseActions = handler.handleEvent(currentStep: self.currentStep, context: context) {
-                actions = responseActions
-                break
-            }
-        }
-
-        let resolvedActions = actions ?? []
-        executeEventResponseActions(resolvedActions)
     }
 
     /**
      * Executes the actions in response to an event.
      */
 
-    private func executeEventResponseActions(_ actions: [AuthenticationEventResponseAction]) {
-        for action in actions.ordered {
+    func executeActions(_ actions: [AuthenticationCoordinatorAction]) {
+        for action in actions {
             switch action {
             case .showLoadingView:
                 presenter?.showLoadingView = true
 
             case .hideLoadingView:
                 presenter?.showLoadingView = false
+
+            case .completeBackupStep:
+                unauthenticatedSession.continueAfterBackupImportStep()
 
             case .completeLoginFlow:
                 delegate?.userAuthenticationDidComplete(registered: false)
@@ -407,7 +372,7 @@ extension AuthenticationCoordinator {
 
 // MARK: - User Session Events
 
-extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, PreLoginAuthenticationObserver, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
+extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, PreLoginAuthenticationObserver, SessionManagerCreatedSessionObserver {
 
     // MARK: Email Update
 
@@ -585,43 +550,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         presenter?.showLoadingView = false
     }
 
-    func authenticationReadyToImportBackup(existingAccount: Bool) {
-        presenter?.showLoadingView = false
-        let currentCredentials: ZMCredentials
 
-        switch self.currentStep {
-        case .authenticateEmailCredentials(let credentials):
-            currentCredentials = credentials
-        case .authenticatePhoneCredentials(let credentials):
-            currentCredentials = credentials
-        case .noHistory:
-            return
-        default:
-            fatalError("Cannot present history view controller without credentials.")
-        }
-
-        guard !self.hasAutomationFastLoginCredentials else {
-            unauthenticatedSession.continueAfterBackupImportStep()
-            return
-        }
-
-        let type = existingAccount ? ContextType.loggedOut : .newDevice
-        let flow = AuthenticationFlowStep.noHistory(credentials: currentCredentials, type: type)
-        self.transition(to: flow)
-    }
-
-    func authenticationInvalidated(_ error: NSError, accountId: UUID) {
-        authenticationDidFail(error)
-    }
-
-    func clientRegistrationDidSucceed(accountId: UUID) {
-        guard let sharedSession = delegate?.sharedUserSession else {
-            return
-        }
-
-        let sessionObservationToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
-        loginObservers.append(sessionObservationToken)
-    }
 
     func sessionManagerCreated(userSession: ZMUserSession) {
         guard let sharedSession = delegate?.sharedUserSession else {
@@ -633,9 +562,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
     }
 
 
-    func accountDeleted(accountId: UUID) {
-        // no-op
-    }
 
     // MARK: - Helpers
 
@@ -691,25 +617,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         }
 
         self.transition(to: flowStep)
-    }
-
-}
-
-extension AuthenticationCoordinator: PostLoginAuthenticationObserver {
-
-    /// Called when the client failed to register.
-    func clientRegistrationDidFail(_ error: NSError, accountId: UUID) {
-        handleEvent(with: clientRegistrationErrorHandlers, context: (error, accountId))
-    }
-
-}
-
-
-extension AuthenticationCoordinator: ZMInitialSyncCompletionObserver {
-
-    /// Called when the initial sync for the new user has completed.
-    func initialSyncCompleted() {
-        handleEvent(with: initialSyncHandlers, context: ())
     }
 
 }

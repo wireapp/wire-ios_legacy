@@ -38,6 +38,7 @@ enum AuthenticationFlowStep {
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials)
     case addEmailAndPassword(user: ZMUser, profile: UserProfile, canSkip: Bool)
+    case pendingInitialSync
 
     // Registration
     case registerEmailCredentials(ZMEmailCredentials)
@@ -59,6 +60,7 @@ enum AuthenticationFlowStep {
         case .authenticateEmailCredentials: return false
         case .authenticatePhoneCredentials: return false
         case .registerEmailCredentials: return false
+        case .pendingInitialSync: return false
         case .verifyPhoneNumber(_, let accountExists): return accountExists
         default: return true
         }
