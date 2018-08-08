@@ -40,6 +40,15 @@ extension PopoverPresenter where Self: UIViewController {
 
 
 extension UIPopoverPresentationController {
+
+    /// Config a UIPopoverPresentationController to let it can update its position correctly after its presenter's frame is updated
+    ///
+    /// - Parameters:
+    ///   - popoverPresenter: the PopoverPresenter which presents this popover
+    ///   - pointToView: the view in the presenter the popover's arrow points to
+    ///   - sourceView: the source view of the popover
+    ///   - backgroundColor: background color of the popover
+    ///   - permittedArrowDirections: permitted arrow directions
     public func config(from popoverPresenter: PopoverPresenter,
                              pointToView: UIView,
                              sourceView: UIView,

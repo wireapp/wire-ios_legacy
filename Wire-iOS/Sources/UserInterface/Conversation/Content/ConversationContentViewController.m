@@ -228,7 +228,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    ///Root to refresh popover
+
     [self updatePopover];
 }
 

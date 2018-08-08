@@ -30,7 +30,7 @@ extension UIView {
             popoverSourceRect = sourceView.convert(frame, from: superview)
         }
 
-        // if the converted rect is out of bound, clamp x to 0, y to 50 (not overlap TODO)
+        // if the converted rect is out of bound, clamp origin to (0,0)
         // (provide a negative value to UIPopoverPresentationController.sourceRect may have no effect)
         let clampedOrigin = CGPoint(x: fmax(0, popoverSourceRect.origin.x), y: fmax(00, popoverSourceRect.origin.y))
         popoverSourceRect = CGRect(origin: clampedOrigin, size: popoverSourceRect.size)

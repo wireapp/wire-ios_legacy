@@ -187,8 +187,6 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
                                backgroundColor: UIColor(white: 0, alpha: 0.5),
                                permittedArrowDirections: [.up, .down])
             }
-
-            popoverPresentationController.delegate = self
         }
         
         keyboardAvoiding.presentationController?.delegate = self
@@ -206,14 +204,6 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
     
     public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return traitCollection.horizontalSizeClass == .regular ? .popover : .overFullScreen
-    }
-}
-
-/// TODO: remove
-extension ConversationContentViewController: UIPopoverPresentationControllerDelegate {
-    public func popoverPresentationController(_ popoverPresentationController: UIPopoverPresentationController, willRepositionPopoverTo rect: UnsafeMutablePointer<CGRect>, in view: AutoreleasingUnsafeMutablePointer<UIView>) {
-        print("😍 rect = \(rect.pointee)")
-        print("😍 view = \(view.pointee)")// view.pointee.superview!.superview!.superview!.superview! is tableView
     }
 }
 
