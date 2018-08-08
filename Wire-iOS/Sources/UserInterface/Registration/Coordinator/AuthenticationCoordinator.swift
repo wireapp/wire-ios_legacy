@@ -37,6 +37,10 @@ class AuthenticationCoordinator: NSObject {
     weak var presenter: NavigationController?
     weak var delegate: AuthenticationCoordinatorDelegate?
 
+    var initialSyncHandlers: [AuthenticationInitialSyncEventHandler] = [
+        AuthenticationInitialSyncEventHandler()
+    ]
+
     // MARK: - State
 
     private var currentStep: AuthenticationFlowStep = .landingScreen
@@ -606,8 +610,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         // no-op
     }
 
-
-
     // MARK: - Helpers
 
     private var hasAutomationFastLoginCredentials: Bool {
@@ -666,32 +668,44 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
 
     /// Called when the initial sync for the new user has completed.
     func initialSyncCompleted() {
-        // Skip email/password prompt for @fastLogin automation
-        guard !hasAutomationFastLoginCredentials else {
-            delegate?.userAuthenticationDidComplete(registered: false)
-            return
+        handleEvent(with: initialSyncHandlers, context: ())
+    }
+
+    private func handleEvent<Handler: AuthenticationEventHandler>(with handlers: [Handler], context: Handler.Context) {
+        var actions: [AuthenticationEventResponseAction]?
+
+        for handler in handlers {
+            handler.contextProvider = delegate
+
+            if let responseActions = handler.handleEvent(currentStep: self.currentStep, context: context) {
+                actions = responseActions
+                break
+            }
         }
 
-        // Do not ask for credentials again (slow sync can be called multiple times)
-        if case .addEmailAndPassword = currentStep {
-            return
+        let resolvedActions = actions ?? []
+        handleResponse(resolvedActions)
+    }
+
+    func handleResponse(_ actions: [AuthenticationEventResponseAction]) {
+        for action in actions.ordered {
+            switch action {
+            case .showLoadingView:
+                presenter?.showLoadingView = true
+
+            case .hideLoadingView:
+                presenter?.showLoadingView = false
+
+            case .completeLoginFlow:
+                delegate?.userAuthenticationDidComplete(registered: false)
+
+            case .completeRegistrationFlow:
+                delegate?.userAuthenticationDidComplete(registered: true)
+
+            case .transition(let nextStep, let resetStack):
+                transition(to: nextStep, resetStack: resetStack)
+            }
         }
-
-        guard let selfUser = delegate?.selfUser, let profile = delegate?.selfUserProfile else {
-            return
-        }
-
-        // Check if the user needs email and password
-        let registered = delegate?.authenticatedUserWasRegisteredOnThisDevice ?? false
-        let needsEmail = delegate?.authenticatedUserNeedsEmailCredentials ?? false
-
-        guard registered && needsEmail else {
-            delegate?.userAuthenticationDidComplete(registered: registered)
-            return
-        }
-
-        presenter?.logoEnabled = false
-        transition(to: .addEmailAndPassword(user: selfUser, profile: profile, canSkip: false), resetStack: true)
     }
 
 }

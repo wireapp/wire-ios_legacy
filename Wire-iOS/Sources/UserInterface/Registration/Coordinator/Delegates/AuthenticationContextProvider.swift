@@ -17,12 +17,13 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 /**
- * Provides and asks for context when registering users.
+ * Provides context about the current authentication stack.
  */
 
-protocol AuthenticationCoordinatorDelegate: class {
+protocol AuthenticationContextProvider: class {
 
     /**
      * Whether the authenticated user was registered on this device.
@@ -67,16 +68,5 @@ protocol AuthenticationCoordinatorDelegate: class {
      */
 
     var numberOfAccounts: Int { get }
-
-    // MARK: - Events
-
-    /**
-     * The coordinator finished authenticating the user.
-     *
-     * - parameter registered: Whether the current user was registered (`true`),
-     * or simply logged in (`false`).
-     */
-
-    func userAuthenticationDidComplete(registered: Bool)
 
 }

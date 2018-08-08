@@ -234,6 +234,10 @@
 		5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */; };
 		5E766D9F21147697005242B4 /* AuthenticationCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */; };
 		5E7E496A20F37DAA0005C602 /* Ziphy+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7E496920F37DAA0005C602 /* Ziphy+Convenience.swift */; };
+		5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */; };
+		5E8DA74F211AEE3D00360979 /* AuthenticationEventResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74E211AEE3D00360979 /* AuthenticationEventResponse.swift */; };
+		5E8DA751211AEFC800360979 /* AuthenticationContextProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA750211AEFC800360979 /* AuthenticationContextProvider.swift */; };
+		5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA754211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
@@ -1570,6 +1574,10 @@
 		5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlowStep.swift; sourceTree = "<group>"; };
 		5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		5E7E496920F37DAA0005C602 /* Ziphy+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ziphy+Convenience.swift"; sourceTree = "<group>"; };
+		5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventHandler.swift; sourceTree = "<group>"; };
+		5E8DA74E211AEE3D00360979 /* AuthenticationEventResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventResponse.swift; sourceTree = "<group>"; };
+		5E8DA750211AEFC800360979 /* AuthenticationContextProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationContextProvider.swift; sourceTree = "<group>"; };
+		5E8DA754211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInitialSyncEventHandler.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
@@ -3442,13 +3450,49 @@
 		5E766D9721144DEC005242B4 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */,
-				5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */,
-				5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */,
-				5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */,
 				5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */,
+				5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */,
+				5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */,
+				5E8DA753211AF7BA00360979 /* Delegates */,
+				5E8DA74B211AEB8600360979 /* Actionner */,
+				5E8DA74A211AEB6C00360979 /* Event Handlers */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		5E8DA74A211AEB6C00360979 /* Event Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */,
+				5E8DA74E211AEE3D00360979 /* AuthenticationEventResponse.swift */,
+				5E8DA752211AF7A000360979 /* Initial Sync */,
+			);
+			path = "Event Handlers";
+			sourceTree = "<group>";
+		};
+		5E8DA74B211AEB8600360979 /* Actionner */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Actionner;
+			sourceTree = "<group>";
+		};
+		5E8DA752211AF7A000360979 /* Initial Sync */ = {
+			isa = PBXGroup;
+			children = (
+				5E8DA754211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift */,
+			);
+			path = "Initial Sync";
+			sourceTree = "<group>";
+		};
+		5E8DA753211AF7BA00360979 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */,
+				5E8DA750211AEFC800360979 /* AuthenticationContextProvider.swift */,
+				5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		5EA73D7A20D900A10001D106 /* Cells */ = {
@@ -6533,6 +6577,7 @@
 				BFAC71F920A1CC5C002711C4 /* CallInfoConfiguration.swift in Sources */,
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
+				5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
 				1648EEF12049A69800CC6B37 /* GroupConversationSectionController.swift in Sources */,
@@ -6750,6 +6795,7 @@
 				F1199D351FC8490A0070FAC3 /* TeamCreationFlowController.swift in Sources */,
 				EF2127161FB9DFE300625A9B /* PhoneVerificationStepViewController.m in Sources */,
 				16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */,
+				5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */,
 				1682AEC520484B9B003A052A /* Themeable.swift in Sources */,
 				5EA73D8720D901000001D106 /* SeparatorCollectionViewCell.swift in Sources */,
 				F12CDAE31E4386A100CEFCEB /* ChangeHandleViewController.swift in Sources */,
@@ -7040,6 +7086,7 @@
 				EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */,
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
 				5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */,
+				5E8DA74F211AEE3D00360979 /* AuthenticationEventResponse.swift in Sources */,
 				BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */,
 				871BC2521D34F8F800DF0793 /* MediaPreviewView.m in Sources */,
 				D58192022091E2C0003BA7EC /* IconLabelButton+CallActions.swift in Sources */,
@@ -7182,6 +7229,7 @@
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
 				871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */,
 				F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */,
+				5E8DA751211AEFC800360979 /* AuthenticationContextProvider.swift in Sources */,
 				871BC3641D34F94200DF0793 /* SoundcloudService.m in Sources */,
 				872E22201F5EA4B6007729D4 /* ProfileView.swift in Sources */,
 				87C539561E8E516400084F94 /* BoundsAwareFlowLayout.swift in Sources */,
