@@ -77,7 +77,7 @@
     [self createResendInstructions];
     [self createResendButton];
 
-    [self updateViewConstraints];
+    [self configureConstraints];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -148,7 +148,7 @@
     [self.resendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.resendButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateHighlighted];
     [self.resendButton setTitle:NSLocalizedString(@"registration.verify_email.resend.button_title", nil) forState:UIControlStateNormal];
-    [self.resendButton addTarget:self action:@selector(resendVerificationEmail:) forControlEvents:UIControlEventTouchUpInside];
+    [self.resendButton addTarget:self action:@selector(resendVerificationEmail) forControlEvents:UIControlEventTouchUpInside];
     [self.containerView addSubview:self.resendButton];
 }
 
