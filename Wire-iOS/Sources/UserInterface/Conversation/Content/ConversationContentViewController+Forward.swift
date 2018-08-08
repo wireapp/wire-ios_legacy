@@ -148,6 +148,21 @@ extension ZMConversationList {
     }
 }
 
+extension ConversationContentViewController {
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+
+
+        if let keyboardAvoidingViewController = self.presentedViewController as? KeyboardAvoidingViewController,
+           let shareViewController = keyboardAvoidingViewController.viewController as? ShareViewController<ZMConversation, ZMMessage> {
+            shareViewController.showPreview = traitCollection.horizontalSizeClass != .regular
+        }
+    }
+}
+
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc func updatePopover() {
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
