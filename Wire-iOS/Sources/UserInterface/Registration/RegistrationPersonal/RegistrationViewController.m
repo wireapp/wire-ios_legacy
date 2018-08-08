@@ -58,8 +58,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) BOOL registeredInThisSession;
 
 @property (nonatomic) RegistrationRootViewController *registrationRootViewController;
-@property (nonatomic) KeyboardAvoidingViewController *keyboardAvoidingViewController;
-@property (nonatomic) NavigationController *rootNavigationController;
 @property (nonatomic) PopTransition *popTransition;
 @property (nonatomic) PushTransition *pushTransition;
 @property (nonatomic) UIImageView *backgroundImageView;
@@ -147,27 +145,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     registrationRootViewController.shouldHideCancelButton = self.shouldHideCancelButton;
     self.registrationRootViewController = registrationRootViewController;
     
-    UIViewController *rootViewController = registrationRootViewController;
-
-    if (userSessionErrorCode == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
-        AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-        addEmailPasswordViewController.formStepDelegate = self;
-        rootViewController = addEmailPasswordViewController;
-    }
-
-    self.rootNavigationController = [[NavigationController alloc] initWithRootViewController:rootViewController];
-    self.rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.rootNavigationController.view.opaque = NO;
-    self.rootNavigationController.delegate = self;
-    self.rootNavigationController.navigationBarHidden = YES;
-    self.rootNavigationController.logoEnabled = !IS_IPHONE_4 && (self.signInError != nil);
-    
-    self.keyboardAvoidingViewController = [[KeyboardAvoidingViewController alloc] initWithViewController:self.rootNavigationController];
-    self.keyboardAvoidingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    [self addChildViewController:self.keyboardAvoidingViewController];
-    [self.view addSubview:self.keyboardAvoidingViewController.view];
-    [self.keyboardAvoidingViewController didMoveToParentViewController:self];
+    [self addChildViewController:self.registrationRootViewController];
+    [self.view addSubview:self.registrationRootViewController.view];
+    [self.registrationRootViewController didMoveToParentViewController:self];
     
     if (userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient) {
         UIViewController *alertController = [UIAlertController passwordVerificationNeededControllerWithCompletion:nil];
@@ -183,7 +163,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.initialConstraintsCreated = YES;
         
         [self.backgroundImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.keyboardAvoidingViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+        [self.registrationRootViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     }
 }
 
@@ -226,43 +206,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             break;
     }
     return transition;
-}
-
-#pragma mark - ZMInitialSyncCompletionObserver
-
-- (void)initialSyncCompleted
-{
-    self.rootNavigationController.showLoadingView = NO;
-    
-    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
-//        [self.delegate registrationViewControllerDidSignIn];
-        return;
-    }
-    
-    if (! [[ZMUserSession sharedSession] registeredOnThisDevice] && [[[ZMUser selfUser] emailAddress] length] == 0) {
-        self.rootNavigationController.logoEnabled = NO;
-        self.rootNavigationController.backButtonEnabled = NO;
-        
-        if (self.hasPushedPostRegistrationStep) {
-            // Just do nothing. We been here already and pushed the AddPhoneNumberViewController before.		
-            // This case can happen if the user jumps out of the app to get the code an comes back to the app again.
-            return;
-        } else {
-            self.hasPushedPostRegistrationStep = YES;
-        }
-        
-        AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-        addEmailPasswordViewController.formStepDelegate = self;
-        addEmailPasswordViewController.skipButtonType = AddEmailPasswordViewControllerSkipButtonTypeNone;
-        
-        [self.rootNavigationController pushViewController:addEmailPasswordViewController animated:YES];
-    }
-    else if (! [[ZMUserSession sharedSession] registeredOnThisDevice]) {
-//        [self.delegate registrationViewControllerDidSignIn];
-    }
-    else if ([self.class registrationFlow] == RegistrationFlowPhone) {
-//        [self.delegate registrationViewControllerDidCompleteRegistration];
-    }
 }
 
 #pragma mark - AuthenticationCoordinatedViewController

@@ -32,22 +32,26 @@ extension SessionManager: ObservableSessionManager {}
  * and team creation.
  */
 
-class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
+class AuthenticationCoordinator: NSObject {
 
     weak var presenter: NavigationController?
     weak var delegate: AuthenticationCoordinatorDelegate?
 
+    // MARK: - State
+
     private var currentStep: AuthenticationFlowStep = .landingScreen
     private var currentViewController: AuthenticationStepViewController?
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
-
-    private var flowStack: [AuthenticationFlowStep] = []
-
-    // MARK: - Initialization
+    private let interfaceBuilder = AuthenticationInterfaceBuilder()
 
     private let unauthenticatedSession: UnauthenticatedSession
     private var hasPushedPostRegistrationStep: Bool = false
     private var loginObservers: [Any] = []
+    private var postLoginObservers: [Any] = []
+
+    private var flowStack: [AuthenticationFlowStep] = []
+
+    // MARK: - Initialization
 
     init(presenter: NavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
         self.presenter = presenter
@@ -64,19 +68,61 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         ]
     }
 
-    // MARK: - State Management
+    /**
+     * Registers the post-login observation tokens if they were not already registered.
+     */
+
+    fileprivate func registerPostLoginObserversIfNeeded() {
+        guard postLoginObservers.isEmpty else {
+            return
+        }
+
+        guard
+            let selfUser = delegate?.selfUser,
+            let session = delegate?.sharedUserSession,
+            let userProfile = delegate?.selfUserProfile
+        else {
+            return 
+        }
+
+        postLoginObservers = [
+            userProfile.add(observer: self),
+            UserChangeInfo.add(observer: self, for: selfUser, userSession: session)!
+        ]
+    }
+
+}
+
+// MARK: - State Management
+
+extension AuthenticationCoordinator {
+
+    /**
+     * Transitions to the next step in the stack.
+     *
+     * This method changes the current step, generates a new interface if needed,
+     * and changes the stack (either appends the new step to the list of previous steps,
+     * or resets the stack if you request it).
+     *
+     * - parameter step: The step to transition to.
+     * - parameter resetStack: Whether transitioning to this step resets the previous stack
+     * of view controllers in the navigation controller. You should pass `true` if your step
+     * is at the beginning of a new "logical flow" (ex: deleting clients).
+     */
 
     func transition(to step: AuthenticationFlowStep, resetStack: Bool = false) {
         currentStep = step
 
         guard step.needsInterface else {
+            flowStack.append(step)
             return
         }
 
-        guard let stepViewController = makeViewController(for: step) else {
-            fatalError("Step \(step) requires user interface but the view controller could not be created.")
+        guard let stepViewController = interfaceBuilder.makeViewController(for: step) else {
+            fatalError("Step \(step) requires user interface, but the interface builder does not support it.")
         }
 
+        stepViewController.authenticationCoordinator = self
         currentViewController = stepViewController
 
         if resetStack {
@@ -89,54 +135,15 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         }
     }
 
-    private func makeViewController(for step: AuthenticationFlowStep) -> AuthenticationStepViewController? {
-        switch step {
-        case .landingScreen:
-            let controller = LandingViewController()
-            controller.delegate = self
-            controller.authenticationCoordinator = self
-            return controller
-
-        case .reauthenticate(let error, let numberOfAccounts):
-            let registrationViewController = RegistrationViewController()
-            registrationViewController.authenticationCoordinator = self
-            registrationViewController.shouldHideCancelButton = numberOfAccounts <= 1
-            registrationViewController.signInError = error
-            return registrationViewController
-
-        case .provideCredentials:
-            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-            loginViewController.authenticationCoordinator = self
-            loginViewController.shouldHideCancelButton = true
-            return loginViewController
-
-        case .clientManagement(let clients, let credentials):
-            let emailCredentials = ZMEmailCredentials(email: credentials.email!, password: credentials.password!)
-            return ClientUnregisterFlowViewController(clientsList: clients, credentials: emailCredentials)
-
-        case .noHistory(_, let type):
-            let noHistoryViewController = NoHistoryViewController(contextType: type)
-            noHistoryViewController.authenticationCoordinator = self
-            return noHistoryViewController
-
-        case .verifyPhoneNumber(let phoneNumber, _):
-            let verificationController = PhoneVerificationStepViewController()
-            verificationController.phoneNumber = phoneNumber
-            verificationController.authenticationCoordinator = self
-            verificationController.isLoggingIn = true
-            return verificationController
-
-        case .addEmailAndPassword:
-            let addEmailPasswordViewController = AddEmailPasswordViewController()
-            addEmailPasswordViewController.skipButtonType = .none
-            addEmailPasswordViewController.authenticationCoordinator = self
-            return addEmailPasswordViewController
-
-        default:
-            return nil
-        }
-
-    }
+    /**
+     * Unwind the state to the previous state if possible.
+     *
+     * This sets the current step back to the previous state, if we recorded it.
+     *
+     * You should call this method:
+     * - when a non-visual step fails and you need to go back to step that started it
+     * - when the navigation controller pops the current view controller
+     */
 
     func unwind() {
         guard flowStack.count >= 2 else {
@@ -152,6 +159,8 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
 // MARK: - Actions
 
 extension AuthenticationCoordinator {
+
+    // MARK: Phone Number
 
     /**
      * Starts the phone number validation flow for the given phone number.
@@ -192,6 +201,8 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
+    // MARK: E-Mail Login
+
     /**
      * Requests an e-mail login for the specified credentials.
      */
@@ -202,6 +213,88 @@ extension AuthenticationCoordinator {
         transition(to: .authenticateEmailCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
+
+    // MARK: - E-Mail Registration
+
+    /**
+     * Skips the add e-mail and password step, if possible.
+     */
+
+    @objc func skipAddEmailAndPassword() {
+        // no-op
+    }
+
+    /**
+     * Sets th e-mail and password credentials for the current user.
+     */
+
+    @objc func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
+        guard case let .addEmailAndPassword(_, profile, _) = currentStep else {
+            return
+        }
+
+        transition(to: AuthenticationFlowStep.registerEmailCredentials(credentials))
+        presenter?.showLoadingView = true
+
+        let result = setCredentialsWithProfile(profile, credentials: credentials) && SessionManager.shared?.update(credentials: credentials) == true
+
+        if !result {
+            let error = NSError(code: .invalidEmail, userInfo: nil)
+            emailUpdateDidFail(error)
+        }
+    }
+
+    @discardableResult
+    private func setCredentialsWithProfile(_ profile: UserProfile, credentials: ZMEmailCredentials) -> Bool {
+        do {
+            try profile.requestSettingEmailAndPassword(credentials: credentials)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    // MARK: - E-Mail Verification
+
+    /**
+     * This method re-sends the e-mail verification code if possible.
+     */
+
+    @objc func resendEmailVerificationCode() {
+        guard case let .verifyEmailCredentials(credentials) = currentStep else {
+            return
+        }
+
+        guard let userProfile = delegate?.selfUserProfile else {
+            return
+        }
+
+        presenter?.showLoadingView = true
+
+        // We can assume that the validation will succeed, as it only fails when there is no
+        // email and/or password in the email credentials, which we already checked before.
+        setCredentialsWithProfile(userProfile, credentials: credentials)
+    }
+
+    /**
+     * This method cancels the wait for the e-mail verification, when the view disappears.
+     */
+
+    @objc func cancelWaitForEmailVerification() {
+        unauthenticatedSession.cancelWaitForEmailVerification()
+    }
+
+    // MARK: - Backup
+
+    /**
+     * Call this method to mark the backup step as completed.
+     */
+
+    @objc func completeBackupStep() {
+        unauthenticatedSession.continueAfterBackupImportStep()
+    }
+
+    // MARK: UI Events
 
     /**
      * Call this method when the corrdinated view controller appears.
@@ -226,19 +319,74 @@ extension AuthenticationCoordinator {
         companyLoginController?.isAutoDetectionEnabled = false
     }
 
-    /**
-     * Call this method to mark the backup step as completed.
-     */
-
-    @objc func completeBackupStep() {
-        unauthenticatedSession.continueAfterBackupImportStep()
-    }
-
 }
 
 // MARK: - User Session Events
 
-extension AuthenticationCoordinator {
+extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
+
+    // MARK: Email Update
+
+    func emailUpdateDidFail(_ error: Error!) {
+        presenter?.showLoadingView = false
+
+        guard case .registerEmailCredentials = currentStep else {
+            return
+        }
+
+        if (error as NSError).userSessionErrorCode == .emailIsAlreadyRegistered {
+            currentViewController?.executeErrorFeedbackAction?(.clearInputFields)
+        }
+
+        presenter?.showAlert(forError: error) { _ in
+            self.unwind()
+        }
+    }
+
+    func passwordUpdateRequestDidFail() {
+        presenter?.showLoadingView = false
+
+        guard case .registerEmailCredentials = currentStep else {
+            return
+        }
+
+        presenter?.showAlert(forMessage: "error.updating_password".localized, title: nil) { _ in
+            self.unwind()
+        }
+    }
+
+    func didSentVerificationEmail() {
+        presenter?.showLoadingView = false
+
+        guard case .registerEmailCredentials(let credentials) = currentStep else {
+            return
+        }
+
+        transition(to: .verifyEmailCredentials(credentials))
+    }
+
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.profileInformationChanged else {
+            return
+        }
+
+        switch currentStep {
+        case .registerEmailCredentials:
+            guard let selfUser = delegate?.selfUser else {
+                return
+            }
+
+            guard selfUser.emailAddress?.isEmpty == false else {
+                return
+            }
+
+            // TODO: GDPR consent
+            delegate?.userAuthenticationDidComplete(registered: false)
+
+        default:
+            break
+        }
+    }
 
     // MARK: Phone Verification Code
 
@@ -262,7 +410,6 @@ extension AuthenticationCoordinator {
             self.unwind()
         }
     }
-
 
     func authenticationDidFail(_ error: NSError) {
         presenter?.showLoadingView = false
@@ -301,6 +448,11 @@ extension AuthenticationCoordinator {
 
             default:
                 presenter?.showAlert(forError: error, handler: errorAlertHandler)
+            }
+
+        case .authenticatePhoneCredentials:
+            presenter?.showAlert(forError: error) { _ in
+                self.unwind()
             }
 
         case .reauthenticate:
@@ -379,7 +531,7 @@ extension AuthenticationCoordinator {
     }
 
     func clientRegistrationDidSucceed(accountId: UUID) {
-        guard let sharedSession = delegate?.authenticationCoordinatorRequestedSharedUserSession() else {
+        guard let sharedSession = delegate?.sharedUserSession else {
             return
         }
 
@@ -388,7 +540,7 @@ extension AuthenticationCoordinator {
     }
 
     func sessionManagerCreated(userSession: ZMUserSession) {
-        guard let sharedSession = delegate?.authenticationCoordinatorRequestedSharedUserSession() else {
+        guard let sharedSession = delegate?.sharedUserSession else {
             return
         }
 
@@ -397,10 +549,9 @@ extension AuthenticationCoordinator {
     }
 
     func clientRegistrationDidFail(_ error: NSError, accountId: UUID) {
-        presenter?.showLoadingView = false
-
         switch error.userSessionErrorCode {
         case .canNotRegisterMoreClients:
+            presenter?.showLoadingView = false
             let authenticationCredentials: ZMCredentials
 
             switch self.currentStep {
@@ -421,10 +572,29 @@ extension AuthenticationCoordinator {
             transition(to: nextStep)
 
         case .needsToRegisterEmailToRegisterClient:
-            fatalError("unimplemented")
+            // If we are already registerinf
+            switch currentStep {
+            case .addEmailAndPassword, .registerEmailCredentials, .verifyEmailCredentials:
+                return
+            default:
+                presenter?.showLoadingView = false
+            }
+
+            guard
+                let user = ZMUser.selfUser(),
+                let profile = ZMUserSession.shared()?.userProfile
+            else {
+                return
+            }
+
+            registerPostLoginObserversIfNeeded()
+
+            transition(to: .addEmailAndPassword(user: user, profile: profile,
+                                                canSkip: user.usesCompanyLogin))
 
         case .needsPasswordToRegisterClient:
-            let numberOfAccounts = delegate?.authenticationCoordinatorRequestedNumberOfAccounts() ?? 0
+            presenter?.showLoadingView = false
+            let numberOfAccounts = delegate?.numberOfAccounts ?? 0
             transition(to: .reauthenticate(error: error, numberOfAccounts: numberOfAccounts), resetStack: true)
 
         default:
@@ -436,6 +606,8 @@ extension AuthenticationCoordinator {
         // no-op
     }
 
+
+
     // MARK: - Helpers
 
     private var hasAutomationFastLoginCredentials: Bool {
@@ -445,6 +617,14 @@ extension AuthenticationCoordinator {
     // MARK: --
 
     func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
+        if error?.userSessionErrorCode == .needsToRegisterEmailToRegisterClient {
+            let user = ZMUser.selfUser()!
+            let profile = ZMUserSession.shared()!.userProfile!
+            registerPostLoginObserversIfNeeded()
+            transition(to: .addEmailAndPassword(user: user, profile: profile, canSkip: false))
+            return
+        }
+
         var needsToReauthenticate = false
         var needsToDeleteClients = false
 
@@ -497,9 +677,13 @@ extension AuthenticationCoordinator {
             return
         }
 
+        guard let selfUser = delegate?.selfUser, let profile = delegate?.selfUserProfile else {
+            return
+        }
+
         // Check if the user needs email and password
-        let registered = delegate?.authenticatedUserWasRegisteredOnThisDevice() ?? false
-        let needsEmail = delegate?.authenticatedUserNeedsEmailCredentials() ?? false
+        let registered = delegate?.authenticatedUserWasRegisteredOnThisDevice ?? false
+        let needsEmail = delegate?.authenticatedUserNeedsEmailCredentials ?? false
 
         guard registered && needsEmail else {
             delegate?.userAuthenticationDidComplete(registered: registered)
@@ -507,7 +691,7 @@ extension AuthenticationCoordinator {
         }
 
         presenter?.logoEnabled = false
-        transition(to: .addEmailAndPassword, resetStack: true)
+        transition(to: .addEmailAndPassword(user: selfUser, profile: profile, canSkip: false), resetStack: true)
     }
 
 }

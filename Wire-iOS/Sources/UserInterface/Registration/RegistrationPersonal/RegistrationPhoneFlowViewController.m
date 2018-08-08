@@ -220,26 +220,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)authenticationDidFail:(NSError *)error
 {
+    // TODO: Remove observers
     ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
-    
     self.navigationController.showLoadingView = NO;
-    
-    if (error.code == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
-        if (![self.navigationController.topViewController isKindOfClass:[AddEmailPasswordViewController class]]) {
-            AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-            addEmailPasswordViewController.formStepDelegate = self;
-            [self.wr_navigationController setBackButtonEnabled:NO];
-            [self.navigationController pushViewController:addEmailPasswordViewController animated:YES];
-        }
-    }
-    else if (error.code == ZMUserSessionNeedsPasswordToRegisterClient) {
-        [self.navigationController popToRootViewControllerAnimated:NO];
-        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:[[LoginCredentials alloc] initWithError:error]];
-    }
-    else {
-        [self showAlertForError:error];
-    }
-
 }
 
 - (void)loginCodeRequestDidFail:(NSError *)error

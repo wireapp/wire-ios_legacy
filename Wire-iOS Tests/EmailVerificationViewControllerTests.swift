@@ -16,25 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
 import XCTest
 @testable import Wire
 
-
-final class EmailVerificationStepViewControllerTests: ZMSnapshotTestCase {
+class EmailVerificationViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
     }
-    
-    func testEmailVerificationView() {
-        let navigationController = NavigationController()
-        navigationController.pushViewController(UIViewController(), animated: false)
-        let sut = EmailVerificationStepViewController(emailAddress: "test@test.com")
-        
-        sut.view.backgroundColor = .black
-        
+
+    func testThatItCanDisplayEmailVerification() {
+        // GIVEN
+        let credentials = ZMEmailCredentials(email: "test@wire.com", password: "password")
+        let sut = EmailVerificationViewController(credentials: credentials)
+        let navigationController = UINavigationController()
+
+        // WHEN
         navigationController.pushViewController(sut, animated: false)
-        verify(view: navigationController.view)
+
+        // THEN
+        verifyInAllDeviceSizes(view: sut.view)
     }
+
 }

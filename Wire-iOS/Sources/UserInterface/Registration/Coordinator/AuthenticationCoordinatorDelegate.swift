@@ -25,21 +25,12 @@ import Foundation
 protocol AuthenticationCoordinatorDelegate: class {
 
     /**
-     * The coordinator finished authenticating the user.
-     *
-     * - parameter registered: Whether the current user was registered (`true`),
-     * or simply logged in (`false`).
-     */
-
-    func userAuthenticationDidComplete(registered: Bool)
-
-    /**
      * Whether the authenticated user was registered on this device.
      *
      * - returns: `true` if the user was registered on this device, `false` otherwise.
      */
 
-    func authenticatedUserWasRegisteredOnThisDevice() -> Bool
+    var authenticatedUserWasRegisteredOnThisDevice: Bool { get }
 
     /**
      * Whether the authenticated user needs an e-mail address to register their client.
@@ -47,20 +38,45 @@ protocol AuthenticationCoordinatorDelegate: class {
      * - returns: `true` if the user needs to add an e-mail, `false` otherwise.
      */
 
-    func authenticatedUserNeedsEmailCredentials() -> Bool
+    var authenticatedUserNeedsEmailCredentials: Bool { get }
 
     /**
      * The authentication coordinator requested the shared user session.
      * - returns: The shared user session, if any.
      */
 
-    func authenticationCoordinatorRequestedSharedUserSession() -> ZMUserSession?
+    var sharedUserSession: ZMUserSession? { get }
+
+    /**
+     * The authentication coordinator requested the shared user profile.
+     * - returns: The shared user profile, if any.
+     */
+
+    var selfUserProfile: UserProfile? { get }
+
+    /**
+     * The authentication coordinator requested the shared user.
+     * - returns: The shared user, if any.
+     */
+
+    var selfUser: ZMUser? { get }
 
     /**
      * The authentication coordinator requested the number of accounts.
      * - returns: The number of currently logged in accounts.
      */
 
-    func authenticationCoordinatorRequestedNumberOfAccounts() -> Int
+    var numberOfAccounts: Int { get }
+
+    // MARK: - Events
+
+    /**
+     * The coordinator finished authenticating the user.
+     *
+     * - parameter registered: Whether the current user was registered (`true`),
+     * or simply logged in (`false`).
+     */
+
+    func userAuthenticationDidComplete(registered: Bool)
 
 }

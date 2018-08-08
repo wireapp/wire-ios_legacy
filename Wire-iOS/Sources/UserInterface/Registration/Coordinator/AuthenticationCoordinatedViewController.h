@@ -27,6 +27,8 @@
 typedef NS_ENUM(NSUInteger, AuthenticationErrorFeedbackAction) {
     /// The view should display a guidance dot to indicate user input is invalid.
     AuthenticationErrorFeedbackActionShowGuidanceDot,
+    /// The view should clear the input fields.
+    AuthenticationErrorFeedbackActionClearInputFields
 };
 
 /**

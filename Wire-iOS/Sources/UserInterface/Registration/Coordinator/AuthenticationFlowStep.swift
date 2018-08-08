@@ -37,14 +37,18 @@ enum AuthenticationFlowStep {
     // Post Sign-In
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials)
-    case addEmailAndPassword
+    case addEmailAndPassword(user: ZMUser, profile: UserProfile, canSkip: Bool)
+
+    // Registration
+    case registerEmailCredentials(ZMEmailCredentials)
+    case verifyEmailCredentials(ZMEmailCredentials)
 
     // MARK: - Properties
 
     /// Whether the step can be unwinded.
     var allowsUnwind: Bool {
         switch self {
-        case .landingScreen, .clientManagement, .noHistory: return false
+        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword: return false
         default: return true
         }
     }
@@ -54,6 +58,7 @@ enum AuthenticationFlowStep {
         switch self {
         case .authenticateEmailCredentials: return false
         case .authenticatePhoneCredentials: return false
+        case .registerEmailCredentials: return false
         case .verifyPhoneNumber(_, let accountExists): return accountExists
         default: return true
         }
