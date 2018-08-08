@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) FLAnimatedImageView *pinchImageView;
 @property (nonatomic, nullable) UIView *dimView;
 @property (nonatomic) CGPoint initialPinchLocation;
- 
+
 - (void)removeHighlightsAndMenu;
 - (nullable ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message;
 

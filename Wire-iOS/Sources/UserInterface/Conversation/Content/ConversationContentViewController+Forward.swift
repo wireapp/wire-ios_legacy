@@ -148,6 +148,8 @@ extension ZMConversationList {
     }
 }
 
+// MARK: - popover apperance update
+
 extension ConversationContentViewController {
 
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -161,14 +163,15 @@ extension ConversationContentViewController {
             shareViewController.showPreview = traitCollection.horizontalSizeClass != .regular
         }
     }
-}
 
-extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
     @objc func updatePopover() {
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
         rootViewController.updatePopoverSourceRect()
     }
+}
+
+extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
 
     @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
         guard let message = message else { return }
@@ -199,10 +202,10 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
                 popoverPresentationController.config(from: rootViewController,
                                pointToView: cell.selectionView,
                                sourceView: rootViewController.view)
-
-                popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
-                popoverPresentationController.permittedArrowDirections = [.up, .down]
             }
+
+            popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
+            popoverPresentationController.permittedArrowDirections = [.up, .down]
         }
         
         keyboardAvoiding.presentationController?.delegate = self
