@@ -32,23 +32,26 @@ extension SessionManager: ObservableSessionManager {}
  * and team creation.
  */
 
-class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
+class AuthenticationCoordinator: NSObject {
 
     weak var presenter: NavigationController?
     weak var delegate: AuthenticationCoordinatorDelegate?
 
+    // MARK: - State
+
     private var currentStep: AuthenticationFlowStep = .landingScreen
     private var currentViewController: AuthenticationStepViewController?
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
-
-    private var flowStack: [AuthenticationFlowStep] = []
-
-    // MARK: - Initialization
+    private let interfaceBuilder = AuthenticationInterfaceBuilder()
 
     private let unauthenticatedSession: UnauthenticatedSession
     private var hasPushedPostRegistrationStep: Bool = false
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
+
+    private var flowStack: [AuthenticationFlowStep] = []
+
+    // MARK: - Initialization
 
     init(presenter: NavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
         self.presenter = presenter
@@ -61,7 +64,7 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
         loginObservers = [
             PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
             PostLoginAuthenticationNotification.addObserver(self),
-            sessionManager.addSessionManagerCreatedSessionObserver(self),
+            sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
     }
 
@@ -90,9 +93,22 @@ class AuthenticationCoordinator: NSObject, PreLoginAuthenticationObserver, PostL
 
 }
 
-    // MARK: - State Management
+// MARK: - State Management
 
 extension AuthenticationCoordinator {
+
+    /**
+     * Transitions to the next step in the stack.
+     *
+     * This method changes the current step, generates a new interface if needed,
+     * and changes the stack (either appends the new step to the list of previous steps,
+     * or resets the stack if you request it).
+     *
+     * - parameter step: The step to transition to.
+     * - parameter resetStack: Whether transitioning to this step resets the previous stack
+     * of view controllers in the navigation controller. You should pass `true` if your step
+     * is at the beginning of a new "logical flow" (ex: deleting clients).
+     */
 
     func transition(to step: AuthenticationFlowStep, resetStack: Bool = false) {
         currentStep = step
@@ -102,10 +118,11 @@ extension AuthenticationCoordinator {
             return
         }
 
-        guard let stepViewController = makeViewController(for: step) else {
-            fatalError("Step \(step) requires user interface but the view controller could not be created.")
+        guard let stepViewController = interfaceBuilder.makeViewController(for: step) else {
+            fatalError("Step \(step) requires user interface, but the interface builder does not support it.")
         }
 
+        stepViewController.authenticationCoordinator = self
         currentViewController = stepViewController
 
         if resetStack {
@@ -118,58 +135,15 @@ extension AuthenticationCoordinator {
         }
     }
 
-    private func makeViewController(for step: AuthenticationFlowStep) -> AuthenticationStepViewController? {
-        switch step {
-        case .landingScreen:
-            let controller = LandingViewController()
-            controller.delegate = self
-            controller.authenticationCoordinator = self
-            return controller
-
-        case .reauthenticate(let error, let numberOfAccounts):
-            let registrationViewController = RegistrationViewController()
-            registrationViewController.authenticationCoordinator = self
-            registrationViewController.shouldHideCancelButton = numberOfAccounts <= 1
-            registrationViewController.signInError = error
-            return registrationViewController
-
-        case .provideCredentials:
-            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-            loginViewController.authenticationCoordinator = self
-            loginViewController.shouldHideCancelButton = true
-            return loginViewController
-
-        case .clientManagement(let clients, let credentials):
-            let emailCredentials = ZMEmailCredentials(email: credentials.email!, password: credentials.password!)
-            return ClientUnregisterFlowViewController(clientsList: clients, credentials: emailCredentials)
-
-        case .noHistory(_, let type):
-            let noHistoryViewController = NoHistoryViewController(contextType: type)
-            noHistoryViewController.authenticationCoordinator = self
-            return noHistoryViewController
-
-        case .verifyPhoneNumber(let phoneNumber, _):
-            let verificationController = PhoneVerificationStepViewController()
-            verificationController.phoneNumber = phoneNumber
-            verificationController.isLoggingIn = true
-            verificationController.authenticationCoordinator = self
-            return verificationController
-
-        case .addEmailAndPassword(_, _, let canSkip):
-            let addEmailPasswordViewController = AddEmailPasswordViewController()
-            addEmailPasswordViewController.canSkipStep = canSkip
-            addEmailPasswordViewController.authenticationCoordinator = self
-            return addEmailPasswordViewController
-
-        case .verifyEmailCredentials(let credentials):
-            let verificationController = EmailVerificationViewController(credentials: credentials)
-            verificationController.authenticationCoordinator = self
-            return verificationController
-
-        default:
-            return nil
-        }
-    }
+    /**
+     * Unwind the state to the previous state if possible.
+     *
+     * This sets the current step back to the previous state, if we recorded it.
+     *
+     * You should call this method:
+     * - when a non-visual step fails and you need to go back to step that started it
+     * - when the navigation controller pops the current view controller
+     */
 
     func unwind() {
         guard flowStack.count >= 2 else {
@@ -185,6 +159,8 @@ extension AuthenticationCoordinator {
 // MARK: - Actions
 
 extension AuthenticationCoordinator {
+
+    // MARK: Phone Number
 
     /**
      * Starts the phone number validation flow for the given phone number.
@@ -225,6 +201,8 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
+    // MARK: E-Mail Login
+
     /**
      * Requests an e-mail login for the specified credentials.
      */
@@ -235,6 +213,90 @@ extension AuthenticationCoordinator {
         transition(to: .authenticateEmailCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
+
+    // MARK: - E-Mail Registration
+
+    /**
+     * Skips the add e-mail and password step, if possible.
+     */
+
+    @objc func skipAddEmailAndPassword() {
+        // no-op
+    }
+
+    /**
+     * Sets th e-mail and password credentials for the current user.
+     */
+
+    @objc func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
+        guard case let .addEmailAndPassword(_, profile, _) = currentStep else {
+            return
+        }
+
+        transition(to: AuthenticationFlowStep.registerEmailCredentials(credentials))
+        presenter?.showLoadingView = true
+
+        let result = setCredentialsWithProfile(profile, credentials: credentials) == true && SessionManager.shared?.update(credentials: credentials) == true
+
+        if !result {
+            let error = NSError(code: .invalidEmail, userInfo: nil)
+            emailUpdateDidFail(error)
+        }
+
+        return
+    }
+
+    @discardableResult
+    private func setCredentialsWithProfile(_ profile: UserProfile, credentials: ZMEmailCredentials) -> Bool {
+        do {
+            try profile.requestSettingEmailAndPassword(credentials: credentials)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    // MARK: - E-Mail Verification
+
+    /**
+     * This method re-sends the e-mail verification code if possible.
+     */
+
+    @objc func resendEmailVerificationCode() {
+        guard case let .verifyEmailCredentials(credentials) = currentStep else {
+            return
+        }
+
+        guard let userProfile = delegate?.authenticationCoordinatorRequestedSelfUserProfile() else {
+            return
+        }
+
+        presenter?.showLoadingView = true
+
+        // We can assume that the validation will succeed, as it only fails when there is no
+        // email and/or password in the email credentials, which we already checked before.
+        setCredentialsWithProfile(userProfile, credentials: credentials)
+    }
+
+    /**
+     * This method cancels the wait for the e-mail verification, when the view disappears.
+     */
+
+    @objc func cancelWaitForEmailVerification() {
+        unauthenticatedSession.cancelWaitForEmailVerification()
+    }
+
+    // MARK: - Backup
+
+    /**
+     * Call this method to mark the backup step as completed.
+     */
+
+    @objc func completeBackupStep() {
+        unauthenticatedSession.continueAfterBackupImportStep()
+    }
+
+    // MARK: UI Events
 
     /**
      * Call this method when the corrdinated view controller appears.
@@ -259,80 +321,11 @@ extension AuthenticationCoordinator {
         companyLoginController?.isAutoDetectionEnabled = false
     }
 
-    /**
-     * Call this method to mark the backup step as completed.
-     */
-
-    @objc func completeBackupStep() {
-        unauthenticatedSession.continueAfterBackupImportStep()
-    }
-
-    @objc func skipAddEmailAndPassword() {
-        // no-op
-    }
-
-    @objc func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
-        guard case let .addEmailAndPassword(_, profile, _) = currentStep else {
-            return
-        }
-
-        transition(to: AuthenticationFlowStep.registerEmailCredentials(credentials))
-
-        func fail() {
-            presenter?.showLoadingView = false
-            presenter?.showAlert(forMessage: "", title: "") { _ in
-                self.unwind()
-            }
-        }
-
-        do {
-            presenter?.showLoadingView = true
-            try profile.requestSettingEmailAndPassword(credentials: credentials)
-
-            guard SessionManager.shared?.update(credentials: credentials) == true else {
-                fail()
-                return
-            }
-        } catch {
-            fail()
-        }
-    }
-
-    @discardableResult
-    private func setCredentialsWithProfile(_ profile: UserProfile, credentials: ZMEmailCredentials) -> Bool {
-        do {
-            try profile.requestSettingEmailAndPassword(credentials: credentials)
-            return true
-        } catch {
-            return false
-        }
-    }
-
-    @objc func resendEmailVerificationCode() {
-        guard case let .verifyEmailCredentials(credentials) = currentStep else {
-            return
-        }
-
-        guard let userProfile = delegate?.authenticationCoordinatorRequestedSelfUserProfile() else {
-            return
-        }
-
-        presenter?.showLoadingView = true
-
-        // We can assume that the validation will succeed, as it only fails when there is no
-        // email and/or password in the email credentials, which we already checked before.
-        setCredentialsWithProfile(userProfile, credentials: credentials)
-    }
-
-    @objc func cancelWaitForEmailVerification() {
-        unauthenticatedSession.cancelWaitForEmailVerification()
-    }
-
 }
 
 // MARK: - User Session Events
 
-extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
+extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
 
     // MARK: Email Update
 

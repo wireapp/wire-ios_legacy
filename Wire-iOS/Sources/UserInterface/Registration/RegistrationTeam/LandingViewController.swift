@@ -29,7 +29,10 @@ import Cartography
 /// Landing screen for choosing create team or personal account
 final class LandingViewController: AuthenticationStepViewController {
     weak var authenticationCoordinator: AuthenticationCoordinator?
-    weak var delegate: LandingViewControllerDelegate?
+
+    var delegate: LandingViewControllerDelegate? {
+        return authenticationCoordinator
+    }
 
     fileprivate var device: DeviceProtocol
 
