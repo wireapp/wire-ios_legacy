@@ -46,10 +46,14 @@ extension UIImage: MediaAsset {
 extension UIImage {
     @objc func downsizedImage() -> UIImage {
         let longestLength = self.size.longestLength
-        let maxImageLength = CGFloat(4000) //5000 not work on iPhone 5s, 2500 works
+
+        /// Maximum image size that would show in a UIImageView.
+        /// Notice: the size of resized image is 2x or 3x of this constant, depends on screen scale
+        /// (Tested on iPhone 5s, maxImageLength = 3000 may crash due to memory usage)
+        let maxImageLength = CGFloat(2500)
         guard longestLength > maxImageLength else { return self }
 
         let ratio = maxImageLength / longestLength
-        return imageScaled(withFactor: ratio) ///TODO: may crashes on iPod 5G, iPhone 5s
+        return imageScaled(withFactor: ratio)
     }
 }
