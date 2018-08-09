@@ -26,6 +26,7 @@ class AnyAuthenticationEventHandler<Context> {
 
     private let statusProviderGetter: () -> AuthenticationStatusProvider?
     private let statusProviderSetter: (AuthenticationStatusProvider?) -> Void
+    private let nameGetter: () -> String
     private let handlerBlock: (AuthenticationFlowStep, Context) -> [AuthenticationCoordinatorAction]?
 
     /**
@@ -35,7 +36,13 @@ class AnyAuthenticationEventHandler<Context> {
     init<Handler: AuthenticationEventHandler>(_ handler: Handler) where Handler.Context == Context {
         statusProviderGetter = { handler.statusProvider }
         statusProviderSetter = { handler.statusProvider = $0 }
+        nameGetter = { NSStringFromClass(Handler.self) }
         handlerBlock = handler.handleEvent
+    }
+
+    /// The name of the handler.
+    var name: String {
+        return nameGetter()
     }
 
     /// The current status provider.

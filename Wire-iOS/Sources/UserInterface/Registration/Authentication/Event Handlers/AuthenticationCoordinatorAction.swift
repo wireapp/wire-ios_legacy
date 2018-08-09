@@ -25,6 +25,10 @@ import Foundation
 enum AuthenticationCoordinatorAction {
     case showLoadingView
     case hideLoadingView
+    case unwindState
+    case executeFeedbackAction(AuthenticationErrorFeedbackAction)
+    case presentAlert(AuthenticationCoordinatorAlert)
+    case presentErrorAlert(AuthenticationCoordinatorErrorAlert)
     case completeBackupStep
     case completeLoginFlow
     case completeRegistrationFlow
@@ -32,3 +36,32 @@ enum AuthenticationCoordinatorAction {
     case transition(AuthenticationFlowStep, resetStack: Bool)
 }
 
+// MARK: - Alerts
+
+/**
+ * A customizable alert to display inside the coordinator's presenter.
+ */
+
+struct AuthenticationCoordinatorAlert {
+    let title: String?
+    let message: String?
+    let actions: [AuthenticationCoordinatorAlertAction]
+}
+
+/**
+ * An action that is part of an authentication coordinator alert.
+ */
+
+struct AuthenticationCoordinatorAlertAction {
+    let title: String
+    let coordinatorActions: [AuthenticationCoordinatorAction]
+}
+
+/**
+ * A customizable alert to display inside the coordinator's presenter.
+ */
+
+struct AuthenticationCoordinatorErrorAlert {
+    let error: NSError
+    let completionActions: [AuthenticationCoordinatorAction]
+}

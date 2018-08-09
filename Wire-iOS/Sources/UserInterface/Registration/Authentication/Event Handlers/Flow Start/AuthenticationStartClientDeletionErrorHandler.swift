@@ -30,6 +30,11 @@ class AuthenticationStartClientDeletionErrorHandler: AuthenticationEventHandler 
     func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
         let (optionalError, _) = context
 
+        // If we already are in the client management step, do nothing
+        if case .clientManagement = currentStep {
+            return []
+        }
+
         // Only handle this case if the current step is authenticateEmailCredentials
         guard case let .authenticateEmailCredentials(credentials) = currentStep else {
             return nil

@@ -37,6 +37,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
     weak var presenter: NavigationController?
     weak var delegate: AuthenticationCoordinatorDelegate?
 
+    let log = ZMSLog(tag: "Auth")
+
     // MARK: - Event Handling Properties
 
     let eventHandlingManager = AuthenticationEventHandlingManager()
@@ -48,16 +50,15 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
     // MARK: - State
 
     public fileprivate(set) var currentStep: AuthenticationFlowStep = .landingScreen
+    private var flowStack: [AuthenticationFlowStep] = []
     private var currentViewController: AuthenticationStepViewController?
+
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
     private let interfaceBuilder = AuthenticationInterfaceBuilder()
 
     private let unauthenticatedSession: UnauthenticatedSession
-    private var hasPushedPostRegistrationStep: Bool = false
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
-
-    private var flowStack: [AuthenticationFlowStep] = []
 
     // MARK: - Initialization
 
@@ -145,7 +146,14 @@ extension AuthenticationCoordinator {
 
 // MARK: - Event Handling
 
-extension AuthenticationCoordinator {
+extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
+
+    func sessionManagerCreated(userSession: ZMUserSession) {
+        log.info("Session manager created session: \(userSession)")
+
+        let token = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
+        loginObservers.append(token)
+    }
 
     /**
      * Registers the post-login observation tokens if they were not already registered.
@@ -153,21 +161,28 @@ extension AuthenticationCoordinator {
 
     fileprivate func registerPostLoginObserversIfNeeded() {
         guard postLoginObservers.isEmpty else {
+            log.warn("Post login observers are already registered.")
             return
         }
 
-        guard
-            let selfUser = delegate?.selfUser,
-            let session = delegate?.sharedUserSession,
-            let userProfile = delegate?.selfUserProfile,
-            let sharedSession = delegate?.sharedUserSession
-        else {
+        guard let selfUser = delegate?.selfUser else {
+            log.warn("Post login observers were not registered because there is no self user.")
+            return
+        }
+
+        guard let sharedSession = delegate?.sharedUserSession else {
+            log.warn("Post login observers were not registered because there is no user session.")
+            return
+        }
+
+        guard let userProfile = delegate?.selfUserProfile else {
+            log.warn("Post login observers were not registered because there is no user profile.")
             return
         }
 
         postLoginObservers = [
             userProfile.add(observer: self),
-            UserChangeInfo.add(observer: self, for: selfUser, userSession: session)!,
+            UserChangeInfo.add(observer: self, for: selfUser, userSession: sharedSession)!,
             ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
         ]
     }
@@ -188,6 +203,15 @@ extension AuthenticationCoordinator {
             case .completeBackupStep:
                 unauthenticatedSession.continueAfterBackupImportStep()
 
+            case .executeFeedbackAction(let action):
+                currentViewController?.executeErrorFeedbackAction?(action)
+
+            case .presentAlert(let alertModel):
+                presentAlert(for: alertModel)
+
+            case .presentErrorAlert(let alertModel):
+                presentErrorAlert(for: alertModel)
+
             case .completeLoginFlow:
                 delegate?.userAuthenticationDidComplete(registered: false)
 
@@ -199,8 +223,31 @@ extension AuthenticationCoordinator {
 
             case .transition(let nextStep, let resetStack):
                 transition(to: nextStep, resetStack: resetStack)
+
+            case .unwindState:
+                unwind()
             }
         }
+    }
+
+    private func presentErrorAlert(for alertModel: AuthenticationCoordinatorErrorAlert) {
+        presenter?.showAlert(forError: alertModel.error) { _ in
+            self.executeActions(alertModel.completionActions)
+        }
+    }
+
+    private func presentAlert(for alertModel: AuthenticationCoordinatorAlert) {
+        let alert = UIAlertController(title: alertModel.title, message: alertModel.message, preferredStyle: .alert)
+
+        for actionModel in alertModel.actions {
+            let action = UIAlertAction(title: actionModel.title, style: .default) { _ in
+                self.executeActions(actionModel.coordinatorActions)
+            }
+
+            alert.addAction(action)
+        }
+
+        presenter?.present(alert, animated: true)
     }
 
 }
@@ -346,6 +393,19 @@ extension AuthenticationCoordinator {
     // MARK: UI Events
 
     /**
+     * Manually display the company login flow.
+     */
+
+    @objc func startCompanyLoginFlowIfPossible() {
+        switch currentStep {
+        case .provideCredentials:
+            companyLoginController?.displayLoginCodePrompt()
+        default:
+            return
+        }
+    }
+
+    /**
      * Call this method when the corrdinated view controller appears.
      */
 
@@ -372,7 +432,7 @@ extension AuthenticationCoordinator {
 
 // MARK: - User Session Events
 
-extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, PreLoginAuthenticationObserver, SessionManagerCreatedSessionObserver {
+extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
 
     // MARK: Email Update
 
@@ -435,134 +495,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         default:
             break
         }
-    }
-
-    // MARK: Phone Verification Code
-
-    func loginCodeRequestDidSucceed() {
-        self.presenter?.showLoadingView = false
-
-        guard case let .verifyPhoneNumber(phoneNumber, accountExists) = currentStep else {
-            return
-        }
-
-        if accountExists {
-            return
-        }
-
-        self.transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: true))
-    }
-
-    func loginCodeRequestDidFail(_ error: NSError) {
-        self.presenter?.showLoadingView = false
-        self.presenter?.showAlert(forError: error) { _ in
-            self.unwind()
-        }
-    }
-
-    func authenticationDidFail(_ error: NSError) {
-        presenter?.showLoadingView = false
-
-        switch currentStep {
-        case .authenticateEmailCredentials(let credentials):
-            // Show a guidance dot if the user caused the failure
-            if error.code != ZMUserSessionErrorCode.networkError.rawValue {
-                currentViewController?.executeErrorFeedbackAction?(.showGuidanceDot)
-            }
-
-            let errorAlertHandler: (UIAlertAction?) -> Void = { _ in
-                self.unwind()
-            }
-
-            switch ZMUserSessionErrorCode(rawValue: UInt(error.code)) {
-            case .unknownError?:
-                // If the error is not known, we try to validate the fields
-
-                if !ZMUser.isValidEmailAddress(credentials.email) {
-                    let validationError = NSError(domain: NSError.ZMUserSessionErrorDomain, code: Int(ZMUserSessionErrorCode.invalidEmail.rawValue), userInfo: nil)
-                    presenter?.showAlert(forError: validationError, handler: errorAlertHandler)
-                } else if !ZMUser.isValidPassword(credentials.password) {
-                    let validationError = NSError(domain: NSError.ZMUserSessionErrorDomain, code: Int(ZMUserSessionErrorCode.invalidCredentials.rawValue), userInfo: nil)
-                    presenter?.showAlert(forError: validationError, handler: errorAlertHandler)
-                } else {
-                    fallthrough
-                }
-
-            case .canNotRegisterMoreClients?:
-                guard let step = makeClientManagementStep(from: error, credentials: credentials) else {
-                    fallthrough
-                }
-
-                transition(to: step)
-
-            default:
-                presenter?.showAlert(forError: error, handler: errorAlertHandler)
-            }
-
-        case .authenticatePhoneCredentials:
-            presenter?.showAlert(forError: error) { _ in
-                self.unwind()
-            }
-
-        case .reauthenticate:
-            break
-
-        default:
-            break
-        }
-
-    }
-
-    func makeClientManagementStep(from error: NSError?, credentials: ZMCredentials) -> AuthenticationFlowStep? {
-        guard let error = error else {
-            return nil
-        }
-
-        guard let userClientIDs = error.userInfo[ZMClientsKey] as? [NSManagedObjectID] else {
-            return nil
-        }
-
-        let clients: [UserClient] = userClientIDs.compactMap {
-            guard let session = ZMUserSession.shared() else {
-                return nil
-            }
-
-            guard let object = try? session.managedObjectContext.existingObject(with: $0) else {
-                return nil
-            }
-
-            return object as? UserClient
-        }
-
-        return .clientManagement(clients: clients, credentials: credentials)
-    }
-
-    @objc func startCompanyLoginFlowIfPossible() {
-        switch currentStep {
-        case .provideCredentials:
-            companyLoginController?.displayLoginCodePrompt()
-        default:
-            return
-        }
-    }
-
-    func authenticationDidSucceed() {
-        presenter?.showLoadingView = false
-    }
-
-    func sessionManagerCreated(userSession: ZMUserSession) {
-        guard let sharedSession = delegate?.sharedUserSession else {
-            return
-        }
-
-        let sessionObservationToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
-        loginObservers.append(sessionObservationToken)
-    }
-
-    // MARK: - Helpers
-
-    private var hasAutomationFastLoginCredentials: Bool {
-        return AutomationHelper.sharedHelper.automationEmailCredentials != nil
     }
 
 }

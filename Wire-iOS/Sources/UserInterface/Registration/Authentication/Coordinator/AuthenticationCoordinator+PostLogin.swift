@@ -36,11 +36,6 @@ extension AuthenticationCoordinator: PostLoginAuthenticationObserver {
         authenticationDidFail(error)
     }
 
-    /// Called when the backup is ready to be imported.
-    func authenticationReadyToImportBackup(existingAccount: Bool) {
-        eventHandlingManager.handleEvent(ofType: .backupReady(existingAccount))
-    }
-
     /// Called when the account was deleted.
     func accountDeleted(accountId: UUID) {
         // no-op
