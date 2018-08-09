@@ -42,7 +42,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic, strong) FLAnimatedImageView *fullImageView;
 @property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
 @property (nonatomic, strong) ImageToolbarView *imageToolbarView;
-@property (nonatomic, strong) UIView *imageViewContainer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
 @property (nonatomic) UITapGestureRecognizer *imageTapRecognizer;
 
