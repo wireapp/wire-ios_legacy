@@ -138,6 +138,12 @@
 
 - (void)keyboardFrameWillChange:(NSNotification *)notification
 {
+    if (nil != self.shouldAdjustFrame && !self.shouldAdjustFrame(self)) {
+        self.bottomEdgeConstraint.constant = 0;
+        [self.view layoutIfNeeded];
+        return;
+    }
+
     [UIView animateWithKeyboardNotification:notification inView:self.view animations:^(CGRect keyboardFrameInView) {
         CGFloat bottomOffset = -keyboardFrameInView.size.height;
 

@@ -453,6 +453,7 @@
 "content.message.forward.to" = "Search…";
 "content.message.open" = "Open";
 "content.message.copy" = "Copy";
+"content.message.download" = "Download";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";

@@ -38,7 +38,7 @@ import TTTAttributedLabel
     
     // Classy
     let lineView = UIView()
-    var labelTextColor, labelTextBlendedColor: UIColor?
+    var labelTextColor, labelTextBlendedColor, iconColor: UIColor?
     var labelBoldFont, labelLargeFont: UIFont?
     
     var attributedText: NSAttributedString? {
@@ -192,7 +192,15 @@ import TTTAttributedLabel
     }
 
     private func reloadInformation(for message: ZMConversationMessage) {
-        let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, largeFont: labelLargeFont, textColor: labelTextColor, message: message)
+        let model = ParticipantsCellViewModel(
+            font: labelFont,
+            boldFont: labelBoldFont,
+            largeFont: labelLargeFont,
+            textColor: labelTextColor,
+            iconColor: UIColor(scheme: .textDimmed),
+            message: message
+        )
+
         leftIconView.image = model.image()
         attributedText = model.attributedTitle()
         nameLabel.attributedText = model.attributedHeading()

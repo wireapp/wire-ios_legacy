@@ -69,7 +69,7 @@ class ParticipantsCellViewModel {
     static let showMoreLinkURL = NSURL(string: "action://show-all")!
     
     let font, boldFont, largeFont: UIFont?
-    let textColor: UIColor?
+    let textColor, iconColor: UIColor?
     let message: ZMConversationMessage
     
     private var action: ConversationActionType {
@@ -127,11 +127,19 @@ class ParticipantsCellViewModel {
         return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
     }()
 
-    init(font: UIFont?, boldFont: UIFont?, largeFont: UIFont?, textColor: UIColor?, message: ZMConversationMessage) {
+    init(
+        font: UIFont?,
+        boldFont: UIFont?,
+        largeFont: UIFont?,
+        textColor: UIColor?,
+        iconColor: UIColor?,
+        message: ZMConversationMessage
+        ) {
         self.font = font
         self.boldFont = boldFont
         self.largeFont = largeFont
         self.textColor = textColor
+        self.iconColor = iconColor
         self.message = message
     }
     
@@ -164,7 +172,7 @@ class ParticipantsCellViewModel {
     // ------------------------------------------------------------
     
     func image() -> UIImage? {
-        return action.image(with: textColor)
+        return action.image(with: iconColor)
     }
     
     func attributedHeading() -> NSAttributedString? {

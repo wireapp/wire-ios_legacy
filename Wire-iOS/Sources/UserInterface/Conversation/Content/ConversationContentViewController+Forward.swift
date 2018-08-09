@@ -152,9 +152,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
     @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
         guard let message = message else { return }
 
-        if let window = self.view.window {
-            window.endEditing(true)
-        }
+        view.window?.endEditing(true)
         
         let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversation!)
 
@@ -165,6 +163,11 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         )
 
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
+        
+        keyboardAvoiding.shouldAdjustFrame = { controller in
+            // We do not wan't to adjust the keyboard frame when we are being presented in a popover.
+            controller.popoverPresentationController?.arrowDirection == .unknown
+        }
         
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
@@ -185,6 +188,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
+
         UIApplication.shared.keyWindow?.rootViewController?.present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
