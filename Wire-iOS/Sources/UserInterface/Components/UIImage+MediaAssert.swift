@@ -42,3 +42,14 @@ extension UIImage: MediaAsset {
         }
     }
 }
+
+extension UIImage {
+    @objc func downsizedImage() -> UIImage {
+        let longestLength = self.size.longestLength
+        let maxImageLength = CGFloat(5000)
+        guard longestLength > maxImageLength else { return self }
+
+        let ratio = maxImageLength / longestLength
+        return imageScaled(withFactor: ratio)
+    }
+}
