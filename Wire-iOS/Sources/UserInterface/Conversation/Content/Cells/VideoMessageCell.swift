@@ -150,7 +150,10 @@ private let zmLog = ZMSLog(tag: "UI")
         
         if let fileMessageData = message.fileMessageData,
             let _ = fileMessageData.fileURL {
-            additionalItems.append(.forward(with: #selector(forward)))
+            additionalItems += [
+                .forward(with: #selector(forward)),
+                .download(with: #selector(download))
+            ]
         }
         
         properties.additionalItems = additionalItems
@@ -159,17 +162,21 @@ private let zmLog = ZMSLog(tag: "UI")
     }
 
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(wr_saveVideo) {
-            if self.message.videoCanBeSavedToCameraRoll() {
+        switch action {
+        case #selector(wr_saveVideo):
+            if message.videoCanBeSavedToCameraRoll() {
                 return true
             }
-        }
-        else if action == #selector(forward(_:)) {
+        case #selector(forward(_:)):
             if let fileMessageData = message.fileMessageData,
                 let _ = fileMessageData.fileURL {
                 return true
             }
+        case #selector(download):
+            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
+        default: break
         }
+
         return super.canPerformAction(action, withSender: sender)
     }
     
@@ -192,6 +199,10 @@ private let zmLog = ZMSLog(tag: "UI")
     @objc override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         super.prepareLayoutForPreview(message: message)
         return PreviewHeightCalculator.heightForVideo()
+    }
+    
+    @objc func download(_ sender: Any) {
+        delegate?.conversationCell?(self, didSelect: .download)
     }
 }
 
