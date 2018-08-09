@@ -32,14 +32,22 @@ extension SessionManager: ObservableSessionManager {}
  * and team creation.
  */
 
-class AuthenticationCoordinator: NSObject {
+class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDelegate {
 
     weak var presenter: NavigationController?
     weak var delegate: AuthenticationCoordinatorDelegate?
 
+    // MARK: - Event Handling Properties
+
+    let eventHandlingManager = AuthenticationEventHandlingManager()
+
+    var statusProvider: AuthenticationStatusProvider? {
+        return delegate
+    }
+
     // MARK: - State
 
-    private var currentStep: AuthenticationFlowStep = .landingScreen
+    public fileprivate(set) var currentStep: AuthenticationFlowStep = .landingScreen
     private var currentViewController: AuthenticationStepViewController?
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
     private let interfaceBuilder = AuthenticationInterfaceBuilder()
@@ -66,29 +74,8 @@ class AuthenticationCoordinator: NSObject {
             PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
-    }
 
-    /**
-     * Registers the post-login observation tokens if they were not already registered.
-     */
-
-    fileprivate func registerPostLoginObserversIfNeeded() {
-        guard postLoginObservers.isEmpty else {
-            return
-        }
-
-        guard
-            let selfUser = delegate?.selfUser,
-            let session = delegate?.sharedUserSession,
-            let userProfile = delegate?.selfUserProfile
-        else {
-            return 
-        }
-
-        postLoginObservers = [
-            userProfile.add(observer: self),
-            UserChangeInfo.add(observer: self, for: selfUser, userSession: session)!
-        ]
+        eventHandlingManager.configure(delegate: self)
     }
 
 }
@@ -152,6 +139,68 @@ extension AuthenticationCoordinator {
 
         flowStack.removeLast()
         currentStep = flowStack.last!
+    }
+
+}
+
+// MARK: - Event Handling
+
+extension AuthenticationCoordinator {
+
+    /**
+     * Registers the post-login observation tokens if they were not already registered.
+     */
+
+    fileprivate func registerPostLoginObserversIfNeeded() {
+        guard postLoginObservers.isEmpty else {
+            return
+        }
+
+        guard
+            let selfUser = delegate?.selfUser,
+            let session = delegate?.sharedUserSession,
+            let userProfile = delegate?.selfUserProfile,
+            let sharedSession = delegate?.sharedUserSession
+        else {
+            return
+        }
+
+        postLoginObservers = [
+            userProfile.add(observer: self),
+            UserChangeInfo.add(observer: self, for: selfUser, userSession: session)!,
+            ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
+        ]
+    }
+
+    /**
+     * Executes the actions in response to an event.
+     */
+
+    func executeActions(_ actions: [AuthenticationCoordinatorAction]) {
+        for action in actions {
+            switch action {
+            case .showLoadingView:
+                presenter?.showLoadingView = true
+
+            case .hideLoadingView:
+                presenter?.showLoadingView = false
+
+            case .completeBackupStep:
+                unauthenticatedSession.continueAfterBackupImportStep()
+
+            case .completeLoginFlow:
+                delegate?.userAuthenticationDidComplete(registered: false)
+
+            case .completeRegistrationFlow:
+                delegate?.userAuthenticationDidComplete(registered: true)
+
+            case .startPostLoginFlow:
+                registerPostLoginObserversIfNeeded()
+
+            case .transition(let nextStep, let resetStack):
+                transition(to: nextStep, resetStack: resetStack)
+            }
+        }
     }
 
 }
@@ -323,7 +372,7 @@ extension AuthenticationCoordinator {
 
 // MARK: - User Session Events
 
-extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, PreLoginAuthenticationObserver, PostLoginAuthenticationObserver, ZMInitialSyncCompletionObserver, ClientUnregisterViewControllerDelegate, SessionManagerCreatedSessionObserver {
+extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, PreLoginAuthenticationObserver, SessionManagerCreatedSessionObserver {
 
     // MARK: Email Update
 
@@ -501,44 +550,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         presenter?.showLoadingView = false
     }
 
-    func authenticationReadyToImportBackup(existingAccount: Bool) {
-        presenter?.showLoadingView = false
-        let currentCredentials: ZMCredentials
-
-        switch self.currentStep {
-        case .authenticateEmailCredentials(let credentials):
-            currentCredentials = credentials
-        case .authenticatePhoneCredentials(let credentials):
-            currentCredentials = credentials
-        case .noHistory:
-            return
-        default:
-            fatalError("Cannot present history view controller without credentials.")
-        }
-
-        guard !self.hasAutomationFastLoginCredentials else {
-            unauthenticatedSession.continueAfterBackupImportStep()
-            return
-        }
-
-        let type = existingAccount ? ContextType.loggedOut : .newDevice
-        let flow = AuthenticationFlowStep.noHistory(credentials: currentCredentials, type: type)
-        self.transition(to: flow)
-    }
-
-    func authenticationInvalidated(_ error: NSError, accountId: UUID) {
-        authenticationDidFail(error)
-    }
-
-    func clientRegistrationDidSucceed(accountId: UUID) {
-        guard let sharedSession = delegate?.sharedUserSession else {
-            return
-        }
-
-        let sessionObservationToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
-        loginObservers.append(sessionObservationToken)
-    }
-
     func sessionManagerCreated(userSession: ZMUserSession) {
         guard let sharedSession = delegate?.sharedUserSession else {
             return
@@ -548,150 +559,28 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         loginObservers.append(sessionObservationToken)
     }
 
-    func clientRegistrationDidFail(_ error: NSError, accountId: UUID) {
-        switch error.userSessionErrorCode {
-        case .canNotRegisterMoreClients:
-            presenter?.showLoadingView = false
-            let authenticationCredentials: ZMCredentials
-
-            switch self.currentStep {
-            case .noHistory(let credentials, _):
-                authenticationCredentials = credentials
-
-            case .authenticateEmailCredentials(let credentials):
-                authenticationCredentials = credentials
-
-            default:
-                fatalError("Cannot delete clients without credentials")
-            }
-
-            guard let nextStep = self.makeClientManagementStep(from: error, credentials: authenticationCredentials) else {
-                fatalError("Invalid error")
-            }
-
-            transition(to: nextStep)
-
-        case .needsToRegisterEmailToRegisterClient:
-            // If we are already registerinf
-            switch currentStep {
-            case .addEmailAndPassword, .registerEmailCredentials, .verifyEmailCredentials:
-                return
-            default:
-                presenter?.showLoadingView = false
-            }
-
-            guard
-                let user = ZMUser.selfUser(),
-                let profile = ZMUserSession.shared()?.userProfile
-            else {
-                return
-            }
-
-            registerPostLoginObserversIfNeeded()
-
-            transition(to: .addEmailAndPassword(user: user, profile: profile,
-                                                canSkip: user.usesCompanyLogin))
-
-        case .needsPasswordToRegisterClient:
-            presenter?.showLoadingView = false
-            let numberOfAccounts = delegate?.numberOfAccounts ?? 0
-            transition(to: .reauthenticate(error: error, numberOfAccounts: numberOfAccounts), resetStack: true)
-
-        default:
-            fatalError("Unhandled error: \(error)")
-        }
-    }
-
-    func accountDeleted(accountId: UUID) {
-        // no-op
-    }
-
-
-
     // MARK: - Helpers
 
     private var hasAutomationFastLoginCredentials: Bool {
         return AutomationHelper.sharedHelper.automationEmailCredentials != nil
     }
 
-    // MARK: --
+}
+
+// MARK: - Starting the Flow
+
+extension AuthenticationCoordinator {
+
+    /**
+     * Call this method when the application becomes unauthenticated and that the user
+     * needs to authenticate.
+     *
+     * - parameter error: The error that caused the unauthenticated state, if any.
+     * - parameter numberOfAccounts: The number of accounts that are signed in with the app.
+     */
 
     func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
-        if error?.userSessionErrorCode == .needsToRegisterEmailToRegisterClient {
-            let user = ZMUser.selfUser()!
-            let profile = ZMUserSession.shared()!.userProfile!
-            registerPostLoginObserversIfNeeded()
-            transition(to: .addEmailAndPassword(user: user, profile: profile, canSkip: false))
-            return
-        }
-
-        var needsToReauthenticate = false
-        var needsToDeleteClients = false
-
-        if let error = error {
-            let errorCode = (error as NSError).userSessionErrorCode
-            needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
-                                     .accessTokenExpired,
-                                     .needsPasswordToRegisterClient,
-                                     .needsToRegisterEmailToRegisterClient,
-                                     ].contains(errorCode)
-
-            needsToDeleteClients = errorCode == .canNotRegisterMoreClients
-        }
-
-        let flowStep: AuthenticationFlowStep
-
-        switch currentStep {
-        case .landingScreen:
-            if needsToReauthenticate {
-                flowStep = .reauthenticate(error: error, numberOfAccounts: numberOfAccounts)
-            } else {
-                flowStep = .landingScreen
-            }
-
-        case .authenticateEmailCredentials(let credentials):
-            if needsToDeleteClients {
-                presenter?.showLoadingView = false
-                flowStep = makeClientManagementStep(from: error, credentials: credentials)!
-            } else {
-                fallthrough
-            }
-
-        default:
-            return
-        }
-
-        self.transition(to: flowStep)
-    }
-
-    /// Called when the initial sync for the new user has completed.
-    func initialSyncCompleted() {
-        // Skip email/password prompt for @fastLogin automation
-        guard !hasAutomationFastLoginCredentials else {
-            delegate?.userAuthenticationDidComplete(registered: false)
-            return
-        }
-
-        // Do not ask for credentials again (slow sync can be called multiple times)
-        if case .addEmailAndPassword = currentStep {
-            return
-        }
-
-        guard let selfUser = delegate?.selfUser, let profile = delegate?.selfUserProfile else {
-            return
-        }
-
-        // Check if the user needs email and password
-        let registered = delegate?.authenticatedUserWasRegisteredOnThisDevice ?? false
-        let needsEmail = delegate?.authenticatedUserNeedsEmailCredentials ?? false
-
-        guard registered && needsEmail else {
-            delegate?.userAuthenticationDidComplete(registered: registered)
-            return
-        }
-
-        presenter?.logoEnabled = false
-        transition(to: .addEmailAndPassword(user: selfUser, profile: profile, canSkip: false), resetStack: true)
+        eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
     }
 
 }

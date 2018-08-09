@@ -193,6 +193,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
         updateStackViewAxis()
         updateConstraintsForIPad()
+
     }
 
     private func createConstraints() {
