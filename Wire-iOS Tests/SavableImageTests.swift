@@ -59,7 +59,7 @@ final class SavableImageTests: XCTestCase {
         super.setUp()
         image = self.image(inTestBundleNamed: "transparent.png")
         imageData = image.data()
-        gif = self.image(inTestBundleNamed: "big.gif")
+        gif = self.image(inTestBundleNamed: "20000px.gif")
         gifData = gif.data()
     }
     

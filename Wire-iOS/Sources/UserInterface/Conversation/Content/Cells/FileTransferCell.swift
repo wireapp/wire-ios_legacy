@@ -126,14 +126,22 @@ import Classy
         
         var additionalItems = [UIMenuItem]()
         
-        if let message = message, let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
-            additionalItems.append(contentsOf: [
-                .open(with: #selector(open)),
-                .save(with: #selector(save)),
-                .forward(with: #selector(forward))
-            ])
+        if let message = message, let fileMessageData = message.fileMessageData {
+            if let _ = fileMessageData.fileURL {
+                additionalItems += [
+                    .open(with: #selector(open)),
+                    .save(with: #selector(save)),
+                    .forward(with: #selector(forward))
+                ]
+            }
+            
+            if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
+                additionalItems += [
+                    .download(with: #selector(download))
+                ]
+            }
         }
+        
 
         properties.likeItemIndex = 1 // Open should be first
         properties.additionalItems = additionalItems
@@ -148,6 +156,8 @@ import Classy
                 let _ = fileMessageData.fileURL {
                 return true
             }
+        case #selector(download):
+            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
         case #selector(open):
             return true
         default: break
@@ -163,6 +173,10 @@ import Classy
 
     @objc func save(_ sender: Any) {
         delegate?.conversationCell?(self, didSelect: .save)
+    }
+    
+    @objc func download(_ sender: Any) {
+        delegate?.conversationCell?(self, didSelect: .download)
     }
     
     override open func messageType() -> MessageType {
