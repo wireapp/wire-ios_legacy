@@ -150,7 +150,7 @@ extension FullscreenImageViewController {
         scrollView.addSubview(imageView)
         scrollView.contentSize = imageView.image?.size ?? CGSize.zero
 
-        updateScrollViewZoomScale(viewSize: parentSize, imageSize: image.size)
+        updateScrollViewZoomScale(viewSize: parentSize, imageSize: image.size) /// crash on iPhone5s with iOS10
         updateZoom(withSize: parentSize)
 
         centerScrollViewContent()
