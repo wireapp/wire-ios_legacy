@@ -39,7 +39,7 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testThatVeryLargeImageIsLoadedToImageView(){
-        sut = createFullscreenImageViewControllerForTest(imageFileName: "20000px.gif")
+        sut = createFullscreenImageViewControllerForTest(imageFileName: "20000x20000.gif")
 
         verify(view: sut.view)
     }
