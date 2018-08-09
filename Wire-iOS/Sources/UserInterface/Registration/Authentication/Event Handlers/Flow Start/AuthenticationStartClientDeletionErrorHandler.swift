@@ -17,37 +17,35 @@
 //
 
 import Foundation
-import WireSyncEngine
 
 /**
- * Handles client registration errors related to the client limit.
+ * Handles the case when the session becomes unauthenticated after the user reauthenticates
+ * and that they need to delete clients.
  */
 
-class AuthenticationClientLimitErrorHandler: AuthenticationEventHandler {
+class AuthenticationStartClientDeletionErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError, UUID)) -> [AuthenticationCoordinatorAction]? {
-        let (error, _) = context
+    func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
+        let (optionalError, _) = context
+
+        // Only handle this case if the current step is authenticateEmailCredentials
+        guard case let .authenticateEmailCredentials(credentials) = currentStep else {
+            return nil
+        }
 
         // Only handle canNotRegisterMoreClients errors
-        guard context.0.userSessionErrorCode == .canNotRegisterMoreClients else {
+        guard let error = optionalError else {
             return nil
         }
 
-        // Get the credentials to start the deletion
-        let authenticationCredentials: ZMCredentials
-
-        switch currentStep {
-        case .noHistory(let credentials, _):
-            authenticationCredentials = credentials
-        case .authenticateEmailCredentials(let credentials):
-            authenticationCredentials = credentials
-        default:
+        guard error.userSessionErrorCode == .canNotRegisterMoreClients else {
             return nil
         }
 
-        guard let nextStep = AuthenticationFlowStep.makeClientManagementStep(from: error, credentials: authenticationCredentials, statusProvider: self.statusProvider) else {
+        // Prepare the next step
+        guard let nextStep = AuthenticationFlowStep.makeClientManagementStep(from: error, credentials: credentials, statusProvider: self.statusProvider) else {
             return nil
         }
 

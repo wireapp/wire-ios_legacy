@@ -550,8 +550,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         presenter?.showLoadingView = false
     }
 
-
-
     func sessionManagerCreated(userSession: ZMUserSession) {
         guard let sharedSession = delegate?.sharedUserSession else {
             return
@@ -561,62 +559,28 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
         loginObservers.append(sessionObservationToken)
     }
 
-
-
     // MARK: - Helpers
 
     private var hasAutomationFastLoginCredentials: Bool {
         return AutomationHelper.sharedHelper.automationEmailCredentials != nil
     }
 
-    // MARK: --
+}
+
+// MARK: - Starting the Flow
+
+extension AuthenticationCoordinator {
+
+    /**
+     * Call this method when the application becomes unauthenticated and that the user
+     * needs to authenticate.
+     *
+     * - parameter error: The error that caused the unauthenticated state, if any.
+     * - parameter numberOfAccounts: The number of accounts that are signed in with the app.
+     */
 
     func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
-        if error?.userSessionErrorCode == .needsToRegisterEmailToRegisterClient {
-            let user = ZMUser.selfUser()!
-            let profile = ZMUserSession.shared()!.userProfile!
-            registerPostLoginObserversIfNeeded()
-            transition(to: .addEmailAndPassword(user: user, profile: profile, canSkip: false))
-            return
-        }
-
-        var needsToReauthenticate = false
-        var needsToDeleteClients = false
-
-        if let error = error {
-            let errorCode = (error as NSError).userSessionErrorCode
-            needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
-                                     .accessTokenExpired,
-                                     .needsPasswordToRegisterClient,
-                                     .needsToRegisterEmailToRegisterClient,
-                                     ].contains(errorCode)
-
-            needsToDeleteClients = errorCode == .canNotRegisterMoreClients
-        }
-
-        let flowStep: AuthenticationFlowStep
-
-        switch currentStep {
-        case .landingScreen:
-            if needsToReauthenticate {
-                flowStep = .reauthenticate(error: error, numberOfAccounts: numberOfAccounts)
-            } else {
-                flowStep = .landingScreen
-            }
-
-        case .authenticateEmailCredentials(let credentials):
-            if needsToDeleteClients {
-                presenter?.showLoadingView = false
-                flowStep = makeClientManagementStep(from: error, credentials: credentials)!
-            } else {
-                fallthrough
-            }
-
-        default:
-            return
-        }
-
-        self.transition(to: flowStep)
+        eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
     }
 
 }

@@ -26,7 +26,7 @@ enum AuthenticationFlowStep {
 
     // Initial Steps
     case landingScreen
-    case reauthenticate(error: Error?, numberOfAccounts: Int)
+    case reauthenticate(error: NSError, numberOfAccounts: Int)
 
     // Sign-In
     case provideCredentials

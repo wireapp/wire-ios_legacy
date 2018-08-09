@@ -28,8 +28,10 @@ class AuthenticationNoCredentialsErrorHandler: AuthenticationEventHandler {
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError, UUID)) -> [AuthenticationCoordinatorAction]? {
+        let (error, _) = context
+
         // Only handle needsToRegisterEmailToRegisterClient errors
-        guard context.0.userSessionErrorCode == .needsToRegisterEmailToRegisterClient else {
+        guard error.userSessionErrorCode == .needsToRegisterEmailToRegisterClient else {
             return nil
         }
 

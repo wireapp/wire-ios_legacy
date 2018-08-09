@@ -39,6 +39,7 @@ class AuthenticationEventHandlingManager {
      */
 
     enum EventType {
+        case flowStart(NSError?, Int)
         case initialSyncCompleted
         case backupReady(Bool)
         case clientRegistrationError(NSError, UUID)
@@ -51,6 +52,7 @@ class AuthenticationEventHandlingManager {
 
     // MARK: - Configuration
 
+    var flowStartHandlers: [AnyAuthenticationEventHandler<(NSError?, Int)>] = []
     var initialSyncHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var backupEventHandlers: [AnyAuthenticationEventHandler<Bool>] = []
     var clientRegistrationErrorHandlers: [AnyAuthenticationEventHandler<(NSError, UUID)>] = []
@@ -70,6 +72,11 @@ class AuthenticationEventHandlingManager {
      */
 
     fileprivate func registerDefaultEventHandlers() {
+        // flowStartHandlers
+        registerHandler(AuthenticationStartReauthenticateErrorHandler(), to: &flowStartHandlers)
+        registerHandler(AuthenticationStartClientDeletionErrorHandler(), to: &flowStartHandlers)
+        registerHandler(AuthenticationStartFallbackEventHandler(), to: &flowStartHandlers)
+
         // initialSyncHandlers
         registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)
 
@@ -98,6 +105,8 @@ class AuthenticationEventHandlingManager {
 
     func handleEvent(ofType eventType: EventType) {
         switch eventType {
+        case .flowStart(let error, let numberOfAccounts):
+            handleEvent(with: flowStartHandlers, context: (error, numberOfAccounts))
         case .initialSyncCompleted:
             handleEvent(with: initialSyncHandlers, context: ())
         case .backupReady(let existingAccount):
