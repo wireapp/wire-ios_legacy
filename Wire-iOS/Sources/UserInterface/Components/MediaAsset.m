@@ -101,7 +101,7 @@
             self.animatedImage = image;
         }
         else {
-            self.image = [(UIImage *)image downsizedImage]; ///TODO: can not handle 20K px image?
+            self.image = [(UIImage *)image downsizedImage];
         }
     }
 }

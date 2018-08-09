@@ -27,8 +27,6 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         UIView.setAnimationsEnabled(false)
-
-        recordMode = true
     }
     
     

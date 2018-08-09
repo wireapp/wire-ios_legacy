@@ -48,9 +48,8 @@ extension UIImage {
         let longestLength = self.size.longestLength
 
         /// Maximum image size that would show in a UIImageView.
-        /// Notice: the size of resized image is 2x or 3x of this constant, depends on screen scale
         /// (Tested on iPhone 5s, maxImageLength = 3000 may crash due to memory usage)
-        let maxImageLength = CGFloat(2500)
+        let maxImageLength = CGFloat(2500) * UIScreen.main.scale
         guard longestLength > maxImageLength else { return self }
 
         let ratio = maxImageLength / longestLength
