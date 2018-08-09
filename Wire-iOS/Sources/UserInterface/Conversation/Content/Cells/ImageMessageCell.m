@@ -314,7 +314,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
             [self.loadingView startProgressAnimation];
             self.loadingView.hidden = NO;
         }
-        self.imageViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorPlaceholderBackground variant:self.variant];
+
+        [self updateBackgroundColor];
     }
     
     [self fetchImage];
@@ -335,6 +336,9 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         [self.fullImageView setMediaAsset:nil];
         self.fullImageView.hidden = YES;
     }
+
+    [self updateBackgroundColor];
+    [self updateImageBorder];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
