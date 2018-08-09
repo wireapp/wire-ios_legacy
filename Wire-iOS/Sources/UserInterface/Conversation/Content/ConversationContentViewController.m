@@ -447,7 +447,9 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             
             case MessageActionDownload:
             {
-                [cell.message.fileMessageData requestFileDownload];
+                [ZMUserSession.sharedSession enqueueChanges:^{
+                    [cell.message.fileMessageData requestFileDownload];
+                }];
             }
                 break;
         }
