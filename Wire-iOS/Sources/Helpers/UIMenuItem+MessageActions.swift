@@ -52,7 +52,7 @@ public extension UIMenuItem {
     
     @objc(downloadItemWithAction:)
     class func download(with selector: Selector) -> UIMenuItem {
-        return UIMenuItem(title: "content.message.dowbload".localized, action: selector)
+        return UIMenuItem(title: "content.message.download".localized, action: selector)
     }
 
 }
