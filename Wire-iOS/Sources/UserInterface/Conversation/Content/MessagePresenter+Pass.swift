@@ -31,7 +31,7 @@ extension MessagePresenter {
 
         var error: NSError?
         let pass = PKPass(data: passData, error: &error)
-        guard error != nil else { return nil }
+        guard error == nil else { return nil }
 
         if PKAddPassesViewController.canAddPasses() {
             return PKAddPassesViewController(pass: pass)
@@ -55,18 +55,16 @@ extension MessagePresenter {
             })
             return
         }
-        
+
         _ = message.startSelfDestructionIfNeeded()
 
-        if let fileMessageData = message.fileMessageData, fileMessageData.isPass {
-            if let addPassesViewController = createAddPassesViewController(fileMessageData: fileMessageData) {
-                targetViewController?.present(addPassesViewController, animated: true)
-            } else {
-                /// warning for invalid file
-            }
+        if let fileMessageData = message.fileMessageData, fileMessageData.isPass,
+            let addPassesViewController = createAddPassesViewController(fileMessageData: fileMessageData) {
+            targetViewController?.present(addPassesViewController, animated: true)
+
         } else if let fileMessageData = message.fileMessageData, fileMessageData.isVideo,
-                  let fileURL = fileURL,
-                  let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
+            let fileURL = fileURL,
+            let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
             let player = AVPlayer(url: fileURL)
             let playerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
             let playerViewController = AVPlayerViewControllerWithoutStatusBar()
