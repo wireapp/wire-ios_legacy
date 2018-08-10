@@ -21,7 +21,7 @@ import Cartography
 
 extension ZMConversation {
     var botCanBeAdded: Bool {
-        return DeveloperMenuState.developerMenuEnabled() && self.conversationType != .oneOnOne && self.team != nil
+        return self.conversationType != .oneOnOne && self.team != nil && self.allowGuests
     }
 }
 

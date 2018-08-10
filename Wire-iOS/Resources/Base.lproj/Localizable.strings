@@ -43,7 +43,7 @@
 "peoplepicker.search_placeholder" = "Search by name or username";
 "peoplepicker.header.top_people" = "Top people";
 "peoplepicker.button.create_conversation" = "Create group";
-"peoplepicker.button.add_to_conversation" = "Add People to Group";
+"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
 "peoplepicker.header.conversations" = "Groups";
 "peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invite";
@@ -51,8 +51,8 @@
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
 "peoplepicker.header.directory" = "Connect";
 
-"peoplepicker.group.title.singular" = "Add People";
-"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.title.singular" = "Add Participants";
+"peoplepicker.group.title.plural" = "Add Participants (%d)";
 "peoplepicker.group.skip" = "Skip";
 "peoplepicker.group.done" = "Done";
 "peoplepicker.group.create" = "Create";
@@ -66,7 +66,7 @@
 "peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "Create group";
-"peoplepicker.title.add_to_conversation" = "Add people";
+"peoplepicker.title.add_to_conversation" = "Add participants";
 
 "peoplepicker.no_contacts_title" = "No Contacts.";
 
@@ -268,8 +268,8 @@
 "conversation.create.group_name.placeholder" = "Group name";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Too many characters";
-"conversation.create.toggle.title" = "Allow guests";
-"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+"conversation.create.toggle.title" = "Allow guests and services";
+"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Ongoing call";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
@@ -358,7 +358,7 @@
 "content.system.conversation.team.member-leave" = "%@ was removed from the team.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Invite people";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ removed the conversation name";
@@ -590,7 +590,7 @@
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Options";
 "participants.footer.add_title" = "Add Participants";
-"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Rename";
@@ -701,7 +701,7 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Guests and services";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Off";
 "group_details.timeout_options_cell.title" = "Timed messages";
@@ -1065,9 +1065,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
+"guest_room.allow_guests.title" = "Allow guests and services";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "Remove Guests";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
@@ -1297,7 +1297,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "Too many people to call";
 "error.group_call.too_many_members_in_conversation" = "Calls work in conversations with up to %d people.";
 "error.group_call.too_many_participants_in_the_call.title" = "The call is full";
-"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d people in here.";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
 "error.call.gsm_ongoing.title" = "Cellular call";
 "error.call.gsm_ongoing" = "Please cancel the cellular call before calling on Wire.";
 "error.call.general.title" = "Call error";
