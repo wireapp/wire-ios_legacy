@@ -1135,6 +1135,7 @@
 		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */; };
 		EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
+		EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */; };
 		EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF51C2BE211B2CAF0099A599 /* Data+HEIF.swift */; };
 		EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */; };
 		EF5741EE2102001A0041AD47 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5741ED2102001A0041AD47 /* MessageTests.swift */; };
@@ -1174,6 +1175,8 @@
 		EF8DD90A211C840800E970F1 /* 20000x20000.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF8DD909211C840800E970F1 /* 20000x20000.gif */; };
 		EF8DD90C211DAFE500E970F1 /* MessagePresenter+Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */; };
 		EF8DD90E211DE14300E970F1 /* MessagePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD90D211DE14300E970F1 /* MessagePresenterTests.swift */; };
+		EF8DD911211E02BE00E970F1 /* MockMessage+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD910211E02BE00E970F1 /* MockMessage+Creation.swift */; };
+		EF8DD917211E2BD200E970F1 /* sample.pkpass in Resources */ = {isa = PBXBuildFile; fileRef = EF8DD916211E2BD200E970F1 /* sample.pkpass */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
 		EF98987220C5A47A005680C5 /* SettingsClientViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */; };
 		EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */; };
@@ -2792,6 +2795,7 @@
 		EF4478502090BC1800BD9827 /* FullscreenImageViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FullscreenImageViewController+internal.h"; sourceTree = "<group>"; };
 		EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewControllerTests.swift; sourceTree = "<group>"; };
 		EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
+		EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagePresenter+OpenFile.swift"; sourceTree = "<group>"; };
 		EF51C2BE211B2CAF0099A599 /* Data+HEIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+HEIF.swift"; sourceTree = "<group>"; };
 		EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+IsVisible.swift"; sourceTree = "<group>"; };
 		EF538FE02028AB6600EA4048 /* ProfileViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileViewController+internal.h"; sourceTree = "<group>"; };
@@ -2836,6 +2840,8 @@
 		EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagePresenter+Pass.swift"; sourceTree = "<group>"; };
 		EF8DD90D211DE14300E970F1 /* MessagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePresenterTests.swift; sourceTree = "<group>"; };
 		EF8DD90F211DE70000E970F1 /* MessagePresenter+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MessagePresenter+Internal.h"; sourceTree = "<group>"; };
+		EF8DD910211E02BE00E970F1 /* MockMessage+Creation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockMessage+Creation.swift"; sourceTree = "<group>"; };
+		EF8DD916211E2BD200E970F1 /* sample.pkpass */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.pkpass; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
 		EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClientViewControllerTests.swift; sourceTree = "<group>"; };
 		EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+MockUserClient.swift"; sourceTree = "<group>"; };
@@ -4218,6 +4224,7 @@
 				87BEB0E11C734DB60094BFE9 /* MockMessage.swift */,
 				87BEB0E31C7363D30094BFE9 /* MockMessage+Creation.h */,
 				87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */,
+				EF8DD910211E02BE00E970F1 /* MockMessage+Creation.swift */,
 				87D553661C86F0450026573C /* MockUserClient.h */,
 				87D553671C86F0450026573C /* MockUserClient.m */,
 				EF01AF8320BED38300E5E5B4 /* MockUserClient+RemoteIdentifier.swift */,
@@ -4831,6 +4838,7 @@
 				EF8DD90F211DE70000E970F1 /* MessagePresenter+Internal.h */,
 				87F18BCF1E02F63700C69D9B /* MessagePresenter.m */,
 				EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */,
+				EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */,
 				87AAE4221E43234A00E1D13A /* MessagePresenter+ConversationImages.swift */,
 			);
 			path = Content;
@@ -5418,6 +5426,7 @@
 				8735AE702036C88800DCE66E /* huge.pdf */,
 				87656FCE1FB5FEDC00D5286C /* 0x0.pdf */,
 				EF8DD909211C840800E970F1 /* 20000x20000.gif */,
+				EF8DD916211E2BD200E970F1 /* sample.pkpass */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -6267,6 +6276,7 @@
 				1E2268061B3957A7003980E3 /* conversations-01.json in Resources */,
 				1E2267F81B38489F003980E3 /* people-02.json in Resources */,
 				7C37E3441FDE89520077B2E3 /* unsplash_matterhorn.jpg in Resources */,
+				EF8DD917211E2BD200E970F1 /* sample.pkpass in Resources */,
 				EF6E3C80208A262B003F6752 /* not_animated.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6696,6 +6706,7 @@
 				BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */,
 				EF2127221FB9DFE300625A9B /* FormFlowViewController.m in Sources */,
 				871BC3621D34F94200DF0793 /* Settings.m in Sources */,
+				EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */,
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
 				8712134B1FA37882008B6767 /* TrackingManager.swift in Sources */,
 				871BC3541D34F94200DF0793 /* AudioHeaderView.m in Sources */,
@@ -7473,6 +7484,7 @@
 				D59EA0C72024756B00B17CE7 /* MessagePreviewViewTests.swift in Sources */,
 				BF735D011E716816003BC61F /* CallSystemMessageTests.swift in Sources */,
 				87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */,
+				EF8DD911211E02BE00E970F1 /* MockMessage+Creation.swift in Sources */,
 				16D453C71B6F9CB000675246 /* LinkAttachmentTests.m in Sources */,
 				BF079A3620EF9E6F00B152DD /* ConversationListCellTests.swift in Sources */,
 				16A94AED20934AA8008A5718 /* CallParticipantsViewTests.swift in Sources */,

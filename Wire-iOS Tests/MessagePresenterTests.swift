@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import PassKit
 
 final class MessagePresenterTests: XCTestCase {
     
@@ -33,19 +34,25 @@ final class MessagePresenterTests: XCTestCase {
         super.tearDown()
     }
 
-
-
-    /// Example checker method which can be reused in different tests
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
-    }
-
-    func testExample(){
+    func testThatCreateAddPassesViewControllerReturnsNilForFileMessage(){
         // GIVEN
+        let message = MockMessageFactory.fileTransferMessage()!
 
         // WHEN
+        let addPassesViewController = sut.createAddPassesViewController(fileMessageData: message.fileMessageData!)
 
         // THEN
-        checkerExample()
+        XCTAssertNil(addPassesViewController)
+    }
+
+    func testThatCreateAddPassesViewControllerReturnsAViewControllerForPassFileMessage(){
+        // GIVEN
+        let message = MockMessageFactory.passFileTransferMessage()
+
+        // WHEN
+        let addPassesViewController = sut.createAddPassesViewController(fileMessageData: message.fileMessageData!)
+
+        // THEN
+        XCTAssertNotNil(addPassesViewController)
     }
 }

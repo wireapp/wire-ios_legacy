@@ -17,25 +17,13 @@
 //
 
 import Foundation
-import PassKit
 
-extension MessagePresenter {
+extension MockMessageFactory {
+    class func passFileTransferMessage() -> MockMessage {
+        let message = MockMessageFactory.messageTemplate()
+        message?.backingFileMessageData = MockPassFileMessageData()
 
-    func createAddPassesViewController(fileMessageData: ZMFileMessageData) -> PKAddPassesViewController? {
-        guard let fileURL = fileMessageData.fileURL,
-            let passData = try? Data.init(contentsOf: fileURL) else {
-                return nil
-        }
-
-        var error: NSError?
-        let pass = PKPass(data: passData, error: &error)
-        guard error == nil else { return nil }
-
-        if PKAddPassesViewController.canAddPasses() {
-            return PKAddPassesViewController(pass: pass)
-        } else {
-            return nil
-        }
+        return message!
     }
-}
 
+}
