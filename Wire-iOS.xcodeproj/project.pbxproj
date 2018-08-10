@@ -875,6 +875,8 @@
 		BFBDDBC61DB0D51C00BEED02 /* ConversationInputBarButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDDBC51DB0D51C00BEED02 /* ConversationInputBarButtonState.swift */; };
 		BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBE45761E36205F009FBF60 /* Error+Logging.swift */; };
 		BFC0673D2099DD7D00204179 /* CallInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */; };
+		BFC47D84211DAA690021B3F2 /* GuestBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC47D83211DAA690021B3F2 /* GuestBarState.swift */; };
+		BFC47D86211DAA9D0021B3F2 /* ZMConversation+GuestBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC47D85211DAA9D0021B3F2 /* ZMConversation+GuestBarState.swift */; };
 		BFC914921D1814AF001F068B /* LocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC914911D1814AF001F068B /* LocationMessageCell.swift */; };
 		BFC9149B1D181BE7001F068B /* LocationMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */; };
 		BFCCA4FE20A0A03D000A4F33 /* CallInfoRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCCA4FD20A0A03D000A4F33 /* CallInfoRootViewController.swift */; };
@@ -2485,6 +2487,8 @@
 		BFBDDBC51DB0D51C00BEED02 /* ConversationInputBarButtonState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationInputBarButtonState.swift; sourceTree = "<group>"; };
 		BFBE45761E36205F009FBF60 /* Error+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Logging.swift"; sourceTree = "<group>"; };
 		BFC0673C2099DD7D00204179 /* CallInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoViewController.swift; sourceTree = "<group>"; };
+		BFC47D83211DAA690021B3F2 /* GuestBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestBarState.swift; sourceTree = "<group>"; };
+		BFC47D85211DAA9D0021B3F2 /* ZMConversation+GuestBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversation+GuestBarState.swift"; sourceTree = "<group>"; };
 		BFC914911D1814AF001F068B /* LocationMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCell.swift; sourceTree = "<group>"; };
 		BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCellTests.swift; sourceTree = "<group>"; };
 		BFCCA4FD20A0A03D000A4F33 /* CallInfoRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoRootViewController.swift; sourceTree = "<group>"; };
@@ -4783,8 +4787,7 @@
 				87A752161E002F6C004317DB /* ConversationRootViewController.swift */,
 				BF38FAF01C9B1D0500E2ACBB /* ConversationTitleView.swift */,
 				CEEEAF061CB562BF00111759 /* PlaceholderConversationView.swift */,
-				8797A9B32046D687009865D5 /* GuestsBarController.swift */,
-				879648FF2046EE5E00F46B4B /* BarController.swift */,
+				BFC47D82211DAA030021B3F2 /* GuestBar */,
 			);
 			path = Conversation;
 			sourceTree = "<group>";
@@ -5419,6 +5422,17 @@
 				BFAD53FE1E6972CD0015C677 /* Info.plist */,
 			);
 			path = NotificationFetchComponents;
+			sourceTree = "<group>";
+		};
+		BFC47D82211DAA030021B3F2 /* GuestBar */ = {
+			isa = PBXGroup;
+			children = (
+				8797A9B32046D687009865D5 /* GuestsBarController.swift */,
+				BFC47D85211DAA9D0021B3F2 /* ZMConversation+GuestBarState.swift */,
+				BFC47D83211DAA690021B3F2 /* GuestBarState.swift */,
+				879648FF2046EE5E00F46B4B /* BarController.swift */,
+			);
+			path = GuestBar;
 			sourceTree = "<group>";
 		};
 		BFE4186B209B6E6900503C7C /* CallInfoViewController */ = {
@@ -7058,6 +7072,7 @@
 				16E2A0A21F6BEF6E005F4DB1 /* SoundEventListener.swift in Sources */,
 				AF58EC821E9FBCD800EB94CD /* ColorScheme+Helper.swift in Sources */,
 				AF36C5A31E9F681000FADECC /* DraftsRootViewController.swift in Sources */,
+				BFC47D84211DAA690021B3F2 /* GuestBarState.swift in Sources */,
 				16C02A10204E964300811912 /* GroupConversationCell.swift in Sources */,
 				7CED307C1FD97895009F0DAC /* AvailabilityStringBuilder.swift in Sources */,
 				EF80462020CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift in Sources */,
@@ -7103,6 +7118,7 @@
 				EF21270C1FB9DFE300625A9B /* Country.m in Sources */,
 				BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */,
 				D53D390E20596ED300B87DAD /* ConversationActionController+Block.swift in Sources */,
+				BFC47D86211DAA9D0021B3F2 /* ZMConversation+GuestBarState.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
