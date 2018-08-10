@@ -154,6 +154,7 @@
 #import "UIImagePickerController+GetImage.h"
 #import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
+#import "MessagePresenter+Internal.h"
 #import "WireStyleKit+Additions.h"
 #import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"

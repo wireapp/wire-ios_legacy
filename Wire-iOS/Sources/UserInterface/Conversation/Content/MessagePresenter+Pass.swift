@@ -19,28 +19,66 @@
 import Foundation
 import PassKit
 
+fileprivate let zmLog = ZMSLog(tag: "MessagePresenter")
+
 extension MessagePresenter {
 
-    @objc func showPass(fileMessageData: ZMFileMessageData, targetViewController: UIViewController?) {
-        guard let targetViewController = targetViewController else { return }
-
+    func createAddPassesViewController(fileMessageData: ZMFileMessageData) -> PKAddPassesViewController? {
         guard let fileURL = fileMessageData.fileURL,
             let passData = try? Data.init(contentsOf: fileURL) else {
-            return
+                return nil
         }
 
         var error: NSError?
         let pass = PKPass(data: passData, error: &error)
-        if error != nil {
-            ///TODO: defer
-        }
+        guard error != nil else { return nil }
 
         if PKAddPassesViewController.canAddPasses() {
-            let addPassesViewController = PKAddPassesViewController(pass: pass)
-            targetViewController.present(addPassesViewController, animated: true)
-
+            return PKAddPassesViewController(pass: pass)
         } else {
-        ///TODO: defer
+            return nil
         }
     }
+}
+
+extension MessagePresenter {
+    @objc func openFileMessage(_ message: ZMConversationMessage, targetView: UIView) {
+
+        let fileURL = message.fileMessageData?.fileURL
+
+        if fileURL == nil || fileURL?.isFileURL == nil || fileURL?.path.count == 0 {
+            assert(false, "File URL is missing: \(String(describing: fileURL)) (\(String(describing: message.fileMessageData)))")
+
+            zmLog.error("File URL is missing: \(String(describing: fileURL)) (\(String(describing: message.fileMessageData))")
+            ZMUserSession.shared()?.enqueueChanges({
+                message.fileMessageData?.requestFileDownload()
+            })
+            return
+        }
+        
+        _ = message.startSelfDestructionIfNeeded()
+
+        if let fileMessageData = message.fileMessageData, fileMessageData.isPass {
+            if let addPassesViewController = createAddPassesViewController(fileMessageData: fileMessageData) {
+                targetViewController?.present(addPassesViewController, animated: true)
+            } else {
+                /// warning for invalid file
+            }
+        } else if let fileMessageData = message.fileMessageData, fileMessageData.isVideo,
+                  let fileURL = fileURL,
+                  let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
+            let player = AVPlayer(url: fileURL)
+            let playerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
+            let playerViewController = AVPlayerViewControllerWithoutStatusBar()
+            playerViewController.player = player
+            playerViewController.wr_playerController = playerController
+            targetViewController?.present(playerViewController, animated: true) {
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                player.play()
+            }
+        } else {
+            openDocumentController(for: message, targetView: targetView, withPreview: true)
+        }
+    }
+
 }
