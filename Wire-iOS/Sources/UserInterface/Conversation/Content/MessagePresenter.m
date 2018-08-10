@@ -104,7 +104,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     (void)[message startSelfDestructionIfNeeded];
     
-    if (message.fileMessageData.isVideo) {
+    if (message.fileMessageData.isPass) {
+        [self showPassWithFileMessageData: message.fileMessageData targetViewController: self.targetViewController];
+    }
+    else if (message.fileMessageData.isVideo) {
         AVPlayer *player = [[AVPlayer alloc] initWithURL:message.fileMessageData.fileURL];
         MediaPlayerController *playerController = [[MediaPlayerController alloc]  initWithPlayer:player message:message delegate: AppDelegate.sharedAppDelegate.mediaPlaybackManager];
         

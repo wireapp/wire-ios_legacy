@@ -1169,6 +1169,7 @@
 		EF82E1C220EF6152001B5196 /* ConversationCell+CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF82E1C120EF6152001B5196 /* ConversationCell+CountDown.swift */; };
 		EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */; };
 		EF8DD906211C67DA00E970F1 /* ImageMessageCell+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD905211C67D900E970F1 /* ImageMessageCell+BackgroundColor.swift */; };
+		EF8DD90C211DAFE500E970F1 /* MessagePresenter+Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */; };
 		EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */; };
 		EF98987220C5A47A005680C5 /* SettingsClientViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */; };
 		EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */; };
@@ -2825,6 +2826,7 @@
 		EF82E1C120EF6152001B5196 /* ConversationCell+CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+CountDown.swift"; sourceTree = "<group>"; };
 		EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockConversation+TimedMessage.swift"; sourceTree = "<group>"; };
 		EF8DD905211C67D900E970F1 /* ImageMessageCell+BackgroundColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+BackgroundColor.swift"; sourceTree = "<group>"; };
+		EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagePresenter+Pass.swift"; sourceTree = "<group>"; };
 		EF91A0541FF3A04700FE2F53 /* GiphySearchViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerTests.swift; sourceTree = "<group>"; };
 		EF98987120C5A47A005680C5 /* SettingsClientViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClientViewControllerTests.swift; sourceTree = "<group>"; };
 		EF98987320C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMSnapshotTestCase+MockUserClient.swift"; sourceTree = "<group>"; };
@@ -4819,6 +4821,7 @@
 				EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift */,
 				87F18BCE1E02F63700C69D9B /* MessagePresenter.h */,
 				87F18BCF1E02F63700C69D9B /* MessagePresenter.m */,
+				EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */,
 				87AAE4221E43234A00E1D13A /* MessagePresenter+ConversationImages.swift */,
 			);
 			path = Content;
@@ -6323,7 +6326,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/WireSyncEngine.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/WireDataModel.framework",
+				"$(BUILT_PRODUCTS_DIR)/WireDataModel.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireSystem.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireUtilities.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WireTransport.framework",
@@ -6851,6 +6854,7 @@
 				EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */,
 				BAA1F7E41B610D89002402B6 /* SketchColorCollectionViewCell.m in Sources */,
 				BF5FAC0520B6C6E9004CEB45 /* ConversationCallController.swift in Sources */,
+				EF8DD90C211DAFE500E970F1 /* MessagePresenter+Pass.swift in Sources */,
 				8723342A1CD0D8F100CF8B11 /* VideoMessageCell.swift in Sources */,
 				EF21271A1FB9DFE300625A9B /* ProfilePictureStepViewController.m in Sources */,
 				7C4789852021F40E00A38442 /* AddBotError+UIHandler.swift in Sources */,
