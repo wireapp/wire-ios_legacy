@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 
 class GuestsBarController: UIViewController {
+
     private let label = UILabel()
     private let container = UIView()
     private var containerHeightConstraint: NSLayoutConstraint!
@@ -29,29 +30,60 @@ class GuestsBarController: UIViewController {
     private static let collapsedHeight: CGFloat = 2
     private static let expandedHeight: CGFloat = 20
     
-    public var isCollapsed: Bool {
+    private var _state: GuestBarState = .hidden
+    
+    var state: GuestBarState {
         get {
-            return _isCollapsed
+            return _state
         }
         set {
-            if newValue != _isCollapsed {
-                setCollapsed(newValue, animated: false)
-            }
+            guard newValue != state else { return }
+            setState(newValue, animated: false)
         }
     }
     
-    @objc public func setCollapsed(_ collapsed: Bool, animated: Bool) {
-        
-        guard self.isViewLoaded else {
-            return
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        createConstraints()
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = .clear
+        container.backgroundColor = UIColor(scheme: .lightGraphite, variant: .dark)
+        container.clipsToBounds = true
+        label.font = FontSpec(.small, .semibold).font!
+        label.textColor = .white
+        label.textAlignment = .center
+        container.addSubview(label)
+        view.addSubview(container)
+    }
+    
+    private func createConstraints() {
+        constrain(self.view, container, label) { view, container, label in
+            label.leading == view.leading
+            bottomLabelConstraint = label.bottom == view.bottom - 3
+            label.trailing == view.trailing
+            view.leading == container.leading
+            view.trailing == container.trailing
+            container.top == view.top
+            
+            heightConstraint = view.height == GuestsBarController.expandedHeight
+            containerHeightConstraint = container.height == GuestsBarController.expandedHeight
         }
+    }
+    
+    // MARK: - State Changes
+    
+    @objc(setState:animated:)
+    func setState(_ state: GuestBarState, animated: Bool) {
+        guard _state != state, isViewLoaded else { return }
         
-        if collapsed == _isCollapsed {
-            return
-        }
+        _state = state
+        label.accessibilityIdentifier = state.accessibilityIdentifier
+        label.text = state.displayString
+        let collapsed = state == .hidden
         
-        _isCollapsed = collapsed
-
         let change = {
             if (!collapsed) {
                 self.heightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
@@ -66,54 +98,22 @@ class GuestsBarController: UIViewController {
             self.view.layoutIfNeeded()
         }
         
-        let completion: (Bool)->() = { _ in
-            if (collapsed) {
-                self.containerHeightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
-            }
+        let completion: (Bool) -> Void = { _ in
+            guard collapsed else { return }
+            self.containerHeightConstraint.constant = collapsed ? GuestsBarController.collapsedHeight : GuestsBarController.expandedHeight
         }
-    
+        
         if animated {
             UIView.wr_animate(easing: collapsed ? .easeOutQuad : .easeInQuad, duration: 0.4, animations: change, completion: completion)
-        }
-        else {
+        } else {
             change()
             completion(true)
         }
     }
-    
-    private var _isCollapsed: Bool = false
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .clear
-        
-        container.backgroundColor = UIColor(scheme: .lightGraphite, variant: .dark)
-        container.clipsToBounds = true
-        
-        label.font = FontSpec(.small, .semibold).font!
-        label.textColor = .white
-        label.text = "conversation.guests_present".localized.uppercased()
-        label.textAlignment = .center
-        label.accessibilityIdentifier = "label.conversationview.hasguests"
-        
-        container.addSubview(label)
-        
-        view.addSubview(container)
-        
-        constrain(self.view, container, label) { view, container, label in
-            label.leading == view.leading
-            bottomLabelConstraint = label.bottom == view.bottom - 3
-            label.trailing == view.trailing
-            view.leading == container.leading
-            view.trailing == container.trailing
-            container.top == view.top
 
-            heightConstraint = view.height == GuestsBarController.expandedHeight
-            containerHeightConstraint = container.height == GuestsBarController.expandedHeight
-        }
-    }
 }
+
+// MARK: - Bar
 
 extension GuestsBarController: Bar {
     var weight: Float {

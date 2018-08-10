@@ -262,43 +262,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self.guestsBarController = [[GuestsBarController alloc] init];
 }
-    
-- (BOOL)guestsBarShouldBePresented
-{
-    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-        return NO;
-    }
-    
-    Team *selfUserTeam = ZMUser.selfUser.team;
-    
-    if (selfUserTeam == nil) {
-        return NO;
-    }
-    
-    if (self.conversation.team == selfUserTeam) {
-        BOOL containsGuests = NO;
-        
-        for (ZMUser *user in self.conversation.activeParticipants) {
-            if ([user isGuestIn:self.conversation]) {
-                containsGuests = YES;
-                break;
-            }
-        }
-        
-        return containsGuests;
-    }
-    else {
-        return NO;
-    }
-}
-    
+
 - (void)updateGuestsBarVisibilityAndShowIfNeeded:(BOOL)showIfNeeded
 {
-    if ([self guestsBarShouldBePresented]) {
+    GuestBarState state = self.conversation.guestBarState;
+    if (state != GuestBarStateHidden) {
         BOOL isPresented = nil != self.guestsBarController.parentViewController;
         if (!isPresented || showIfNeeded) {
             [self.conversationBarController presentBar:self.guestsBarController];
-            [self.guestsBarController setCollapsed:NO animated:NO];
+            [self.guestsBarController setState:self.conversation.guestBarState animated:NO];
         }
     }
     else {
@@ -761,8 +733,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.contentViewController scrollToBottomAnimated:YES];
     }
     
-    [self.guestsBarController setCollapsed:YES animated:YES];
-
+    [self.guestsBarController setState:GuestBarStateHidden animated:YES];
     return YES;
 }
 
