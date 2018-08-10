@@ -22,6 +22,13 @@ extension KeyboardAvoidingViewController {
     @objc func keyboardFrameWillChange(_ notification: Notification?) {
         guard let bottomEdgeConstraint = self.bottomEdgeConstraint else { return }
 
+        if let shouldAdjustFrame = shouldAdjustFrame,
+            !shouldAdjustFrame(self) {
+            bottomEdgeConstraint.constant = 0
+            view.layoutIfNeeded()
+            return
+        }
+
         // Using stoppable UIViewPropertyAnimator instead of UIView animation for iOS 10+. When the keyboard is dismissed and then revealed in a short time, the later earlier animation will be cancelled.
         if #available(iOS 10.0, *) {
             guard let duration = notification?.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval,
@@ -60,4 +67,3 @@ extension KeyboardAvoidingViewController {
         }
     }
 }
-
