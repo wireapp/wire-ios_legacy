@@ -47,8 +47,10 @@ extension ConversationCell {
 }
 
 @objcMembers final class ConversationTableViewDataSource: NSObject {
+    @objc public static let defaultBatchSize = 30 // Magic amount of messages per screen (upper bound)
+    
     private var fetchController: NSFetchedResultsController<ZMMessage>!
-    private var currentFetchLimit: Int = 100 {
+    private var currentFetchLimit: Int = defaultBatchSize * 3 {
         didSet {
             createFetchController()
             tableView.reloadData()
@@ -70,15 +72,20 @@ extension ConversationCell {
     
     public var searchQueries: [String] = []
     
-    public var messages: [ZMMessage] {
+    public var messages: [ZMConversationMessage] {
         return fetchController.fetchedObjects ?? []
     }
     
-    public func expandMessageWindow(by numberOfMessages: Int) {
-        moveUp(by: numberOfMessages)
+    public func moveUp(until message: ZMConversationMessage) {
+        repeat {
+            if let _ = index(of: message) {
+                return
+            }
+        }
+        while moveUp(by: 1000)
     }
     
-    public func moveUp(until message: ZMMessage) {
+    @discardableResult public func moveUp(by numberOfMessages: Int) -> Bool {
         guard let moc = conversation.managedObjectContext else {
             fatal("conversation.managedObjectContext == nil")
         }
@@ -86,22 +93,23 @@ extension ConversationCell {
         let fetchRequest = self.fetchRequest()
         let totalCount = try! moc.count(for: fetchRequest)
         
-        repeat {
-            if let _ = index(of: message) {
-                return
-            }
-
-            moveUp(by: 1000)
+        guard currentFetchLimit < totalCount else {
+            return false
         }
-        while currentFetchLimit < totalCount
-    }
-    
-    public func moveUp(by numberOfMessages: Int) {
+        
         currentFetchLimit = currentFetchLimit + numberOfMessages
+        return true
     }
     
-    public func index(of message: ZMMessage) -> Int? {
-        if let indexPath = fetchController.indexPath(forObject: message) {
+    @objc func indexOfMessage(_ message: ZMConversationMessage) -> Int {
+        guard let index = index(of: message) else {
+            return NSNotFound
+        }
+        return index
+    }
+    
+    public func index(of message: ZMConversationMessage) -> Int? {
+        if let indexPath = fetchController.indexPath(forObject: message as! ZMMessage) {
             return indexPath.row
         }
         else {
@@ -116,8 +124,8 @@ extension ConversationCell {
         
         let layoutProperties = self.layoutProperties(for: message, at: index)
     
-        conversationCell.isSelected = message.equals(to: self.selectedMessage)
-        conversationCell.beingEdited = message.equals(to: self.editingMessage)
+        conversationCell.isSelected = (message == self.selectedMessage)
+        conversationCell.beingEdited = (message == self.editingMessage)
         
         conversationCell.configure(for: message, layoutProperties: layoutProperties)
     }
@@ -138,7 +146,7 @@ extension ConversationCell {
 
     fileprivate func stopAudioPlayer(for indexPath: IndexPath) {
         guard let audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer,
-              let sourceMessage = audioTrackPlayer.sourceMessage as? ZMMessage,
+              let sourceMessage = audioTrackPlayer.sourceMessage,
               sourceMessage == self.messages[indexPath.row] else {
             return
         }
@@ -148,7 +156,7 @@ extension ConversationCell {
     
     private func fetchRequest() -> NSFetchRequest<ZMMessage> {
         let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
-        fetchRequest.fetchBatchSize = 30
+        fetchRequest.fetchBatchSize = type(of: self).defaultBatchSize
         fetchRequest.predicate = conversation.visibleMessagesPredicate
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ZMMessage.serverTimestamp), ascending: false)]
         return fetchRequest

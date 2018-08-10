@@ -23,11 +23,4 @@ extension ZMConversationMessage {
     func canBePrefetched() -> Bool {
         return Message.canBePrefetched(self)
     }
-
-    func equals(to message: ZMConversationMessage?) -> Bool {
-        guard let message = message else {
-            return false
-        }
-        return self as! ZMMessage == message as! ZMMessage
-    }
 }

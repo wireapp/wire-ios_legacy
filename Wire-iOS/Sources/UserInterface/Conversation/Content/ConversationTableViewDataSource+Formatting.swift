@@ -57,7 +57,7 @@ extension ConversationTableViewDataSource {
         let layoutProperties = ConversationCellLayoutProperties()
         
         layoutProperties.showSender            = shouldShowSender(for: message, at: index)
-        layoutProperties.showUnreadMarker      = message.equals(to: firstUnreadMessage)
+        layoutProperties.showUnreadMarker      = (message == firstUnreadMessage)
         layoutProperties.showBurstTimestamp    = shouldShowBurstSeparator(for: message, at: index) || layoutProperties.showUnreadMarker
         layoutProperties.showDayBurstTimestamp = shouldShowDaySeparator(for: message, at: index)
         layoutProperties.topPadding            = topPadding(for: message, at: index, showingSender:layoutProperties.showSender, showingTimestamp:layoutProperties.showBurstTimestamp)
@@ -74,8 +74,8 @@ extension ConversationTableViewDataSource {
         if let sender = message.sender, sender.isSelfUser,
             let conversation = message.conversation,
             conversation.conversationType == .oneOnOne,
-            let lastSentMessage = conversation.lastMessageSent(by: sender, limit: 10),
-            message.equals(to: lastSentMessage) {
+            let lastSentMessage = conversation.lastMessageSent(by: sender),
+            message == lastSentMessage {
             return true
         }
         return false

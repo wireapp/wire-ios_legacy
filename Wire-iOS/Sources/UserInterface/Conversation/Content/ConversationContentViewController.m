@@ -553,7 +553,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message
 {
-    NSUInteger messageIndex = [self.dataSource.messages indexOfObject:message];
+    NSUInteger messageIndex = [self.dataSource.messages indexOfObject:(id)message];
     if (messageIndex == NSNotFound) {
         return nil;
     }
@@ -565,7 +565,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (BOOL)displaysMessage:(id<ZMConversationMessage>)message
 {
-    NSInteger index = [self.dataSource.messages indexOfObject:message];
+    NSInteger index = [self.dataSource indexOfMessage:(id)message];
 
     for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
         if (indexPath.row == index) {
@@ -820,7 +820,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)expandMessageWindowUp
 {
-    [self.dataSource expandMessageWindowBy:30];
+    [self.dataSource moveUpBy:ConversationTableViewDataSource.defaultBatchSize];
 }
 
 - (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
@@ -829,7 +829,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
     NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
 
-    if (latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth > (int)self.dataSource.messages.count) {
+    if ((latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth) > (int)self.conversation.allMessages.count) {
         [self expandMessageWindowUp];
     }
 }

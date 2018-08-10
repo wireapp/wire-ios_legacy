@@ -208,7 +208,7 @@ extension ConversationContentViewController {
         
         dataSource.moveUp(until: message)
         
-        if let indexToShow = dataSource.messages.index(of: message) {
+        if let indexToShow = dataSource.index(of: message) {
             self.scroll(toIndex: indexToShow, completion: completion)
         }
     }

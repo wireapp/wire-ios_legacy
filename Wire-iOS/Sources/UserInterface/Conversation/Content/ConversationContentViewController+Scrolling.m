@@ -67,7 +67,7 @@
 
 - (BOOL)scrollToMessage:(id<ZMConversationMessage>)message animated:(BOOL)animated
 {
-    NSUInteger index = [self.dataSource.messages indexOfObject:message];
+    NSUInteger index = [self.dataSource indexOfMessage:(id)message];
     if (index != NSNotFound) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]
                               atScrollPosition:UITableViewScrollPositionTop
@@ -79,7 +79,7 @@
 
 - (BOOL)scrollMessageToBottom:(id<ZMConversationMessage>)message withOffset:(CGFloat)offset
 {
-    NSUInteger index = [self.dataSource.messages indexOfObject:message];
+    NSUInteger index = [self.dataSource indexOfMessage:(id)message];
     NSIndexPath *messageIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
 
     if (messageIndexPath) {

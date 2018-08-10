@@ -63,44 +63,6 @@
     return self;
 }
 
-- (ZMUser *)lastMessageSender
-{
-    ZMConversationType const conversationType = self.conversationType;
-    if (conversationType == ZMConversationTypeGroup) {
-        id<ZMConversationMessage>lastMessage = [self.messages lastObject];
-        ZMUser *lastMessageSender = lastMessage.sender;
-        return lastMessageSender;
-    }
-    else if (conversationType == ZMConversationTypeOneOnOne || conversationType == ZMConversationTypeConnection) {
-        ZMUser *lastMessageSender = self.connectedUser;
-        return lastMessageSender;
-    }
-    else if (conversationType == ZMConversationTypeSelf) {
-        return [ZMUser selfUser];
-    }
-    // ZMConversationTypeInvalid
-    return nil;
-}
-
-- (nullable id<ZMConversationMessage>)lastMessageSentByUser:(ZMUser *)user limit:(NSUInteger)limit
-{
-    ZMMessage *lastUserMessage = nil;
-    
-    NSUInteger index = 0;
-    for (ZMMessage *enumeratedMessage in self.messages.reverseObjectEnumerator) {
-        if (index > limit) {
-            break;
-        }
-        if (enumeratedMessage.sender == user) {
-            lastUserMessage = enumeratedMessage;
-            break;
-        }
-        index++;
-    }
-    
-    return lastUserMessage;
-}
-
 - (ZMUser *)firstActiveParticipantOtherThanSelf
 {
     ZMUser *selfUser = [ZMUser selfUser];
@@ -110,84 +72,6 @@
         }
     }
     return nil;
-}
-
-- (id<ZMConversationMessage>)firstTextMessage
-{
-    // This is used currently to find the first text message in a connection request
-    for (id<ZMConversationMessage>message in self.messages) {
-        if ([Message isTextMessage:message]) {
-            return message;
-        }
-    }
-    
-    return nil;
-}
-
-- (id<ZMConversationMessage>)lastTextMessage
-{
-    id<ZMConversationMessage> message = nil;
-    
-    // This is only used currently for the 'extras' mode where we show the last line of the conversation in the list
-    for (NSInteger i = self.messages.count - 1; i >= 0; i--) {
-        id<ZMConversationMessage>currentMessage = [self.messages objectAtIndex:i];
-        if ([Message isTextMessage:currentMessage]) {
-            message = currentMessage;
-            break;
-        }
-    }
-    
-    return message;
-}
-
-- (BOOL)shouldShowBurstSeparatorForMessage:(id<ZMConversationMessage>)message
-{
-    // Missed calls should always show timestamp
-    if ([Message isSystemMessage:message] &&
-        message.systemMessageData.systemMessageType == ZMSystemMessageTypeMissedCall) {
-        return YES;
-    }
-
-    if ([Message isKnockMessage:message]) {
-        return NO;
-    }
-
-    if (! [Message isNormalMessage:message] && ! [Message isSystemMessage:message]) {
-        return NO;
-    }
-
-    NSInteger index = [self.messages indexOfObject:message];
-    NSInteger previousIndex = self.messages.count - 1;
-    if (index != NSNotFound) {
-        previousIndex = index - 1;
-    }
-
-    id<ZMConversationMessage>previousMessage = nil;
-
-    // Find a previous message, and use it for time calculation
-    while (previousIndex > 0 && self.messages.count > 1 && previousMessage != nil && ! [Message isNormalMessage:previousMessage] && ! [Message isSystemMessage:previousMessage]) {
-        previousMessage = [self.messages objectAtIndex:previousIndex--];
-    }
-
-    if (! previousMessage) {
-        return YES;
-    }
-
-    BOOL showTimestamp = NO;
-
-    NSTimeInterval seconds = [message.serverTimestamp timeIntervalSinceDate:previousMessage.serverTimestamp];
-    NSTimeInterval referenceSeconds = 300;
-
-    if (seconds > referenceSeconds) {
-        showTimestamp = YES;
-    }
-
-    return showTimestamp;
-}
-
-- (BOOL)selfUserIsActiveParticipant
-{
-    return [self.activeParticipants containsObject:[ZMUser selfUser]];
 }
 
 @end
