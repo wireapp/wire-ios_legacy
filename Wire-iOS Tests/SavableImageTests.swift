@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import Photos
 
 final class MockPhotoLibrary: PhotoLibraryProtocol {
     func performChanges(_ changeBlock: @escaping () -> Void, completionHandler: ((Bool, Error?) -> Void)?) {
@@ -41,6 +42,20 @@ final class MockAssetChangeRequest: AssetChangeRequestProtocol {
         MockAssetChangeRequest.image = image
         return .init()
     }
+}
+
+final class MockAssetCreationRequest: AssetCreationRequestProtocol {
+    static var image: UIImage?
+
+    static func forAsset() -> MockAssetCreationRequest {
+        return MockAssetCreationRequest()
+    }
+
+    func addResource(with type: PHAssetResourceType, data: Data, options: PHAssetResourceCreationOptions?) {
+        MockAssetCreationRequest.image = UIImage(data: data)
+    }
+
+
 }
 
 final class MockOwner {
@@ -75,13 +90,18 @@ final class SavableImageTests: XCTestCase {
         super.tearDown()
     }
 
+    func setupMock(savableImage: SavableImage){
+        savableImage.assetChangeRequestType = MockAssetChangeRequest.self
+        savableImage.assetCreationRequestType = MockAssetCreationRequest.self
+        savableImage.photoLibrary = MockPhotoLibrary()
+        savableImage.applicationType = MockApplication.self
+    }
+
     func testThatSavableImageIsNotRetainedAfterSaveToLibrary() {
         autoreleasepool {
             // GIVEN
             var savableImage: SavableImage! = SavableImage(data: imageData!, isGIF: false)
-            savableImage.assetChangeRequestType = MockAssetChangeRequest.self
-            savableImage.photoLibrary = MockPhotoLibrary()
-            savableImage.applicationType = MockApplication.self
+            self.setupMock(savableImage: savableImage)
 
             sut = savableImage
 
@@ -109,9 +129,7 @@ final class SavableImageTests: XCTestCase {
             weakMockOwner = mockOwner
             let savableImage = SavableImage(data: imageData!, isGIF: false)
 
-            savableImage.assetChangeRequestType = MockAssetChangeRequest.self
-            savableImage.photoLibrary = MockPhotoLibrary()
-            savableImage.applicationType = MockApplication.self
+            self.setupMock(savableImage: savableImage)
 
             mockOwner.savableImage = savableImage
 
@@ -123,7 +141,7 @@ final class SavableImageTests: XCTestCase {
                 XCTAssert(success)
 
                 // THEN
-                XCTAssertEqual(MockAssetChangeRequest.image?.size, self.image?.size)
+                XCTAssertEqual(MockAssetCreationRequest.image?.size, self.image?.size)
 
                 expectation.fulfill()
 
