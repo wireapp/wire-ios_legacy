@@ -60,7 +60,6 @@ import WireLinkPreview
 
 
 @objcMembers class MockFileMessageData: NSObject, ZMFileMessageData {
-    
     var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
     var transferState: ZMFileTransferState = .uploaded
@@ -74,11 +73,15 @@ import WireLinkPreview
     var videoDimensions: CGSize = CGSize.zero
     var normalizedLoudness: [Float]? = []
     var previewData: Data? = nil
-    
+
+    var isPass: Bool {
+        return mimeType == "application/vnd.apple.pkpass"
+    }
+
     var isVideo: Bool {
         return mimeType == "video/mp4"
     }
-    
+
     var isAudio: Bool {
         return mimeType == "audio/x-m4a"
     }
