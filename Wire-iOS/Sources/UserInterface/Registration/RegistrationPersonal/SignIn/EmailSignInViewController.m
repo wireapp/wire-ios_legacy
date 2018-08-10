@@ -54,6 +54,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 /// After a login try we set this property to @c YES to reset both field accessories after a field change on any of those
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
 
+@property (nonatomic, readonly) BOOL shouldLockPrefilledEmail;
+@property (nonatomic, readonly) BOOL hasCompanyLoginCredentials;
 @property (nonatomic, readonly) BOOL canStartCompanyLoginFlow;
 
 @end
@@ -134,7 +136,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.emailField.text = self.loginCredentials.emailAddress;
     }
 
-    if (!self.canStartCompanyLoginFlow) {
+    if (self.shouldLockPrefilledEmail) {
         self.emailField.enabled = NO;
         self.emailField.alpha = 0.75;
     }
@@ -248,9 +250,23 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                            password:self.passwordField.text];
 }
 
+- (BOOL)shouldLockPrefilledEmail
+{
+    if (CompanyLoginController.companyLoginEnabled) {
+        return self.hasCompanyLoginCredentials;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)hasCompanyLoginCredentials
+{
+    return self.loginCredentials.usesCompanyLogin && self.loginCredentials.emailAddress != nil;
+}
+
 - (BOOL)canStartCompanyLoginFlow
 {
-    return (CompanyLoginController.companyLoginEnabled == YES) && (self.loginCredentials.usesCompanyLogin == NO) && (self.loginCredentials.emailAddress == nil);
+    return CompanyLoginController.companyLoginEnabled && !self.hasCompanyLoginCredentials;
 }
 
 - (void)takeFirstResponder
@@ -349,7 +365,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     if (textField == self.emailField) {
-        return self.canStartCompanyLoginFlow;
+        return !self.shouldLockPrefilledEmail;
     } else {
         return YES;
     }
@@ -359,8 +375,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField == self.emailField && !self.canStartCompanyLoginFlow) {
-        return NO;
+    if (textField == self.emailField) {
+        return !self.shouldLockPrefilledEmail;
     } else {
         return YES;
     }

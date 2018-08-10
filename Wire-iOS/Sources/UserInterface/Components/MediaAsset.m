@@ -60,7 +60,7 @@
         return animatedImageView;
     }
     else {
-        return [[UIImageView alloc] initWithImage:(UIImage *)image];
+        return [[UIImageView alloc] initWithImage:[(UIImage *)image downsizedImage]];
     }
 }
 
@@ -101,7 +101,7 @@
             self.animatedImage = image;
         }
         else {
-            self.image = (UIImage *)image;
+            self.image = [(UIImage *)image downsizedImage];
         }
     }
 }

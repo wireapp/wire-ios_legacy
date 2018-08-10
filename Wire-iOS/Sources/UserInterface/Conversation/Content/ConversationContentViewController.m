@@ -444,6 +444,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
             }
                 break;
+            
+            case MessageActionDownload:
+            {
+                [ZMUserSession.sharedSession enqueueChanges:^{
+                    [cell.message.fileMessageData requestFileDownload];
+                }];
+            }
+                break;
         }
     };
 

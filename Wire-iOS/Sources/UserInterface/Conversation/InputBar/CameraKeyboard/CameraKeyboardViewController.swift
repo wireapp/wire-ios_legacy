@@ -205,7 +205,7 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
     }
-    
+
     fileprivate func forwardSelectedPhotoAsset(_ asset: PHAsset) {
         let manager = PHImageManager.default()
 
@@ -214,6 +214,22 @@ open class CameraKeyboardViewController: UIViewController {
         options.isNetworkAccessAllowed = false
         options.isSynchronous = false
         manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+
+            let completeBlock = { (data: Data) in
+                let returnData: Data
+                if (uti == "public.heif") ||
+                   (uti == "public.heic"),
+                   let convertedJPEGData = data.covertHEIFToJPG() {
+                    returnData = convertedJPEGData
+                } else {
+                    returnData = data
+                }
+
+                DispatchQueue.main.async(execute: {
+                    self.delegate?.cameraKeyboardViewController(self, didSelectImageData: returnData, isFromCamera: false)
+                })
+            }
+
             guard let data = data else {
                 let options = PHImageRequestOptions()
                 options.deliveryMode = .highQualityFormat
@@ -231,18 +247,14 @@ open class CameraKeyboardViewController: UIViewController {
                         zmLog.error("Failure: cannot fetch image")
                         return
                     }
-                    
-                    DispatchQueue.main.async(execute: {
-                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, isFromCamera: false)
-                    })
+
+                    completeBlock(data)
                 })
                 
                 return
             }
-            DispatchQueue.main.async(execute: {
-                
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, isFromCamera: false)
-            })
+
+            completeBlock(data)
         })
     }
     

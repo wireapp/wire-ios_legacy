@@ -57,7 +57,7 @@ final public class CameraPicker: NSObject {
         pickerController.delegate = self
         pickerController.allowsEditing = false
         pickerController.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
-        pickerController.videoMaximumDuration = ConversationUploadMaxVideoDuration
+        pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
         pickerController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
         
         if sourceType == .camera {

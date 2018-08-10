@@ -196,7 +196,7 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         
         UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            self.bottomConstraint?.constant = keyboardHeight == 0 ? -self.safeArea.bottom : CGFloat(0)
+            self.bottomConstraint?.constant = keyboardHeight == 0 ? -self.view.safeAreaInsetsOrFallback.bottom : CGFloat(0)
             self.view.layoutIfNeeded()
         }, completion: nil)
     }

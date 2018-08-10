@@ -82,7 +82,6 @@ import Classy
     override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
 
         super.configure(for: message, layoutProperties: layoutProperties)
-        
         self.configureMessageView(with: message, isInitial: true)
     }
     
@@ -94,7 +93,6 @@ import Classy
         }
         
         self.configureMessageView(with: message, isInitial: false)
-        
         return needsLayout
     }
     
@@ -151,9 +149,14 @@ import Classy
             additionalItems.append(menuItem)
         }
         
-        if let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
-            additionalItems.append(.forward(with: #selector(forward)))
+        if let fileMessageData = message.fileMessageData {
+            if let _ = fileMessageData.fileURL {
+                additionalItems.append(.forward(with: #selector(forward)))
+            }
+            
+            if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
+                additionalItems.append(.download(with: #selector(download)))
+            }
         }
         
         properties.additionalItems = additionalItems
@@ -162,18 +165,20 @@ import Classy
     }
     
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(wr_saveAudio) && self.message.audioCanBeSaved() {
+        switch action {
+        case #selector(wr_saveAudio) where message.audioCanBeSaved():
             return true
-        }
-        else if action == #selector(forward(_:)) {
-            if let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
+        case #selector(forward(_:)):
+            if let fileMessageData = message.fileMessageData, let _ = fileMessageData.fileURL {
                 return true
-            }
-            else {
+            } else {
                 return false
             }
+        case #selector(download):
+            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
+        default: break
         }
+        
         return super.canPerformAction(action, withSender: sender)
     }
     
@@ -181,6 +186,10 @@ import Classy
         if self.message.audioCanBeSaved() {
             self.delegate?.conversationCell?(self, didSelect: .save)
         }
+    }
+    
+    @objc func download(_ sender: Any) {
+        delegate?.conversationCell?(self, didSelect: .download)
     }
     
 }

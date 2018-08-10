@@ -277,6 +277,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
+"conversation.services_present" = "Services are present";
+"conversation.guests_services_present" = "Guests and Services are present";
 "conversation.action.search" = "Search";
 
 // Image confirmation dialogue
@@ -453,6 +455,7 @@
 "content.message.forward.to" = "Search…";
 "content.message.open" = "Open";
 "content.message.copy" = "Copy";
+"content.message.download" = "Download";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
