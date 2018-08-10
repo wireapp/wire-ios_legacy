@@ -154,7 +154,7 @@ struct ServiceDetailVariant {
 final class ServiceDetailViewController: UIViewController {
 
     enum ActionType {
-        case addService, removeService
+        case addService, removeService, createConversation
     }
 
     public var service: Service {
@@ -197,6 +197,8 @@ final class ServiceDetailViewController: UIViewController {
             self.actionButton = Button.createAddServiceButton()
         case .removeService:
             self.actionButton = Button.createDestructiveServiceButton()
+        case .createConversation:
+            self.actionButton = Button.createServiceConversationButton()
         }
 
         self.variant = variant
@@ -217,7 +219,7 @@ final class ServiceDetailViewController: UIViewController {
 
         var callback: Callback<Button>?
         switch actionType {
-        case .addService:
+        case .addService, .createConversation:
             callback = createOnAddServicePressed()
         case .removeService:
             callback = createRemoveServiceCallback()
@@ -319,31 +321,16 @@ final class ServiceDetailViewController: UIViewController {
     }
 
     private func onAddServicePressed() {
+        let target: ServiceConversation
+
         if let conversation = self.destinationConversation {
-            Wire.add(service: self.service, to: ServiceConversation.existing(conversation), completion: { [weak self] result in
-                self?.completion?(result)
-            })
+            target = .existing(conversation)
         } else {
-            showConversationPicker()
-        }
-    }
-
-    private func showConversationPicker() {
-        guard let userSession = ZMUserSession.shared() else {
-            return
+            target = .new
         }
 
-        var allConversations: [ServiceConversation] = [.new]
-
-        let zmConversations = ZMConversationList.conversationsIncludingArchived(inUserSession: userSession).convesationsWhereBotCanBeAdded()
-
-        allConversations.append(contentsOf: zmConversations.map(ServiceConversation.existing))
-
-        let conversationPicker = ShareServiceViewController(shareable: self.service, destinations: allConversations, showPreview: true, allowsMultipleSelection: false)
-        conversationPicker.onServiceDismiss = { [weak self] _, completed, result in
+        Wire.add(service: self.service, to: target, completion: { [weak self] result in
             self?.completion?(result)
-        }
-        self.navigationController?.pushViewController(conversationPicker, animated: true)
+        })
     }
 }
-
