@@ -20,6 +20,10 @@ import UIKit
 
 @objcMembers public class WireApplication: UIApplication {
     
+    var shouldRegisterUserNotificationSettings: Bool {
+        return !(AutomationHelper.sharedHelper.skipFirstLoginAlerts || AutomationHelper.sharedHelper.disablePushNotificationAlert)
+    }
+    
     override public func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
         DebugAlert.showSendLogsMessage(
