@@ -246,7 +246,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         
         if conversationContainsService {
             conversation?.internalAddParticipants([createService(name: "GitHub")])
-            XCTAssert(conversation!.areServicesPresent)
         }
 
         let cell = ParticipantsCell(style: .default, reuseIdentifier: nil)
