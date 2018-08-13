@@ -47,7 +47,7 @@ import Classy
         
         super.init(frame: CGRect.zero)
         
-        [emptyResultContainer, collectionView, accessoryContainer].forEach(addSubview)
+        [collectionView, accessoryContainer, emptyResultContainer].forEach(addSubview)
         
         createConstraints()
         

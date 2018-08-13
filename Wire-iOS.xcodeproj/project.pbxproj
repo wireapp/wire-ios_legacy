@@ -489,6 +489,7 @@
 		8751BA442069455E00DF8667 /* BackupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8751BA432069455E00DF8667 /* BackupViewController.swift */; };
 		8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8756CA131D2EBE1F002E7CB7 /* LaunchImageViewController.m */; };
 		8756FE341CEB62F800EF58A6 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */; };
+		875753D1211DC61C00A80F5E /* EmptySearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875753D0211DC61C00A80F5E /* EmptySearchResultsView.swift */; };
 		87582BA21C886BB90061FEB1 /* ClassyCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87582BA11C886BB90061FEB1 /* ClassyCache.swift */; };
 		8759DB851E6B696C000A832D /* ImageMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8759DB841E6B696C000A832D /* ImageMessageViewTests.swift */; };
 		8759E2C31FC82BDF008E17C9 /* Analytics+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8759E2C21FC82BDF008E17C9 /* Analytics+Registration.swift */; };
@@ -548,6 +549,7 @@
 		878B824020A1EEEE007455CA /* HTMLString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 878B823F20A1EEEE007455CA /* HTMLString.framework */; };
 		878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* WireSyncEngine.framework */; };
 		878D7C8E1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 878D7C8D1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m */; };
+		87909076211DE898006219B4 /* EmptySearchResultsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */; };
 		8793250A1E83BB5C00190067 /* ZMConversation+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879325091E83BB5C00190067 /* ZMConversation+Status.swift */; };
 		87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */; };
 		879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879489E21E5444A20071B2C1 /* NoResultsView.swift */; };
@@ -1914,6 +1916,7 @@
 		8756CA121D2EBE1F002E7CB7 /* LaunchImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchImageViewController.h; sourceTree = "<group>"; };
 		8756CA131D2EBE1F002E7CB7 /* LaunchImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchImageViewController.m; sourceTree = "<group>"; };
 		8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
+		875753D0211DC61C00A80F5E /* EmptySearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResultsView.swift; sourceTree = "<group>"; };
 		87582BA11C886BB90061FEB1 /* ClassyCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassyCache.swift; sourceTree = "<group>"; };
 		8759DB841E6B696C000A832D /* ImageMessageViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageViewTests.swift; sourceTree = "<group>"; };
 		8759E2C21FC82BDF008E17C9 /* Analytics+Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Registration.swift"; sourceTree = "<group>"; };
@@ -1986,6 +1989,7 @@
 		878B823F20A1EEEE007455CA /* HTMLString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HTMLString.framework; path = Carthage/Build/iOS/HTMLString.framework; sourceTree = "<group>"; };
 		878D7C8C1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationContentViewController+PinchZoom.h"; sourceTree = "<group>"; };
 		878D7C8D1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationContentViewController+PinchZoom.m"; sourceTree = "<group>"; };
+		87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResultsViewTests.swift; sourceTree = "<group>"; };
 		879325091E83BB5C00190067 /* ZMConversation+Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Status.swift"; sourceTree = "<group>"; };
 		87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FingerprintTableViewCell.swift; sourceTree = "<group>"; };
 		879489E21E5444A20071B2C1 /* NoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
@@ -4321,6 +4325,7 @@
 				87DCF4BD1D34EA4500BB420F /* SectionControllers */,
 				87DCF4D21D34EA4500BB420F /* UIViewController+WR_Invite.h */,
 				87DCF4D31D34EA4500BB420F /* UIViewController+WR_Invite.m */,
+				875753D0211DC61C00A80F5E /* EmptySearchResultsView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -5251,6 +5256,7 @@
 				EF68856920F622C50074CA0F /* DraftSendInputAccessoryViewTests.swift */,
 				EF68856B20F63CFC0074CA0F /* UIView+Snapshot.swift */,
 				EF5741ED2102001A0041AD47 /* MessageTests.swift */,
+				87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7261,6 +7267,7 @@
 				D5168F552010F24C00F8222A /* TokenTextAttachment.m in Sources */,
 				EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */,
 				EF21270F1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m in Sources */,
+				875753D1211DC61C00A80F5E /* EmptySearchResultsView.swift in Sources */,
 				54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */,
 				87F18BC41E02E4C200C69D9B /* CollectionAudioCell.swift in Sources */,
 				871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */,
@@ -7455,6 +7462,7 @@
 				BF58ABED1D23F00000D5FF14 /* LocationSendViewControllerTests.swift in Sources */,
 				16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */,
 				876AE7601C159A9C00E3E743 /* NSStringFingerprintTests.m in Sources */,
+				87909076211DE898006219B4 /* EmptySearchResultsViewTests.swift in Sources */,
 				16271BC81DA5213400689486 /* TypingIndicatorViewTests.swift in Sources */,
 				16EB9B3A1CE1DBB400883FCF /* VideoMessageCellTests.swift in Sources */,
 				BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */,
