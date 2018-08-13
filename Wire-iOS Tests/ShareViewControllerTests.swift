@@ -100,4 +100,5 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         
         self.verifyInAllDeviceSizes(view: sut.view)
     }
+
 }
