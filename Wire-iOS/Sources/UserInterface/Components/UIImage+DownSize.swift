@@ -18,27 +18,23 @@
 
 import Foundation
 
-extension UIImage: MediaAsset {
-    public func data() -> Data? {
-        if isTransparent() {
-            return UIImagePNGRepresentation(self)
-        } else {
-            return UIImageJPEGRepresentation(self, 1.0)
-        }
+
+extension CGFloat {
+    enum Image {
+        static public let maxSupportedLength: CGFloat = 5000
     }
+}
 
-    public func isGIF() -> Bool {
-        return false
-    }
+extension UIImage {
+    @objc func downsizedImage() -> UIImage {
+        let longestLength = self.size.longestLength
 
-    public func isTransparent() -> Bool {
-        guard let alpha: CGImageAlphaInfo = self.cgImage?.alphaInfo else { return false }
+        /// Maximum image size that would show in a UIImageView.
+        /// Tested on iPhone 5s and found that the image size limitation is ~5000px
+        let maxImageLength = CGFloat.Image.maxSupportedLength
+        guard longestLength > maxImageLength else { return self }
 
-        switch alpha {
-        case .first, .last, .premultipliedFirst, .premultipliedLast, .alphaOnly:
-            return true
-        default:
-            return false
-        }
+        let ratio = (maxImageLength / UIScreen.main.scale) / longestLength
+        return imageScaled(withFactor: ratio)
     }
 }
