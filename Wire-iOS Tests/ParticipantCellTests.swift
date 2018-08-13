@@ -200,7 +200,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersAddedYouWithServicesPresentSystemMessage() {
-        recordMode = true
         let sut = cell(for: .participantsAdded, fillUsers: .justYou, conversationContainsService: true)
         verify(view: sut.prepareForSnapshots())
     }
