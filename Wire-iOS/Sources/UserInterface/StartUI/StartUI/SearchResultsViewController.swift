@@ -124,6 +124,7 @@ extension UIViewController {
     let directorySection = DirectorySectionController()
     let conversationsSection: GroupConversationsSectionController
     let topPeopleSection: TopPeopleSectionController
+    let addServiceSection: AddServicesSectionController
     let servicesSection: SearchServicesSectionController
     let inviteTeamMemberSection: InviteTeamMemberSection
     let createGroupSection = CreateGroupSection()
@@ -171,6 +172,7 @@ extension UIViewController {
         teamMemberAndContactsSection.allowsSelection = isAddingParticipants
         teamMemberAndContactsSection.selection = userSelection
         teamMemberAndContactsSection.title = "peoplepicker.header.contacts".localized
+        addServiceSection = AddServicesSectionController(canSelfUserManageTeam: ZMUser.selfUser().canManageTeam)
         servicesSection = SearchServicesSectionController()
         conversationsSection = GroupConversationsSectionController()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
@@ -184,6 +186,7 @@ extension UIViewController {
         directorySection.delegate = self
         topPeopleSection.delegate = self
         conversationsSection.delegate = self
+        addServiceSection.delegate = self
         servicesSection.delegate = self
         createGroupSection.delegate = self
         inviteTeamMemberSection.delegate = self
@@ -275,7 +278,7 @@ extension UIViewController {
         
         switch(self.searchGroup, isAddingParticipants) {
         case (.services, _):
-            sections = [servicesSection]
+            sections = [addServiceSection, servicesSection]
         case (.people, true):
             switch (mode, team != nil) {
             case (.search, false):
@@ -394,9 +397,13 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
 }
 
 extension SearchResultsViewController : InviteTeamMemberSectionDelegate {
-
     func inviteSectionDidRequestTeamManagement() {
         URL.manageTeam(source: .onboarding).openInApp(above: self)
     }
+}
 
+extension SearchResultsViewController : AddServicesSectionDelegate {
+    func addServicesSectionDidRequestOpenServicesAdmin() {
+        URL.manageTeam(source: .settings).openInApp(above: self)
+    }
 }

@@ -97,6 +97,7 @@
 "peoplepicker.quick-action.open-conversation" = "Open";
 "peoplepicker.quick-action.create-conversation" = "Create group";
 "peoplepicker.quick-action.create-guest-room" = "Create guest room";
+"peoplepicker.quick-action.admin-services" = "Manage Services";
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 

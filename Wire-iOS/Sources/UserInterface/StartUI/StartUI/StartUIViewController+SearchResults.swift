@@ -150,7 +150,7 @@ extension StartUIViewController: EmptySearchResultsViewDelegate {
     func execute(action: EmptySearchResultsViewAction, from: EmptySearchResultsView) {
         switch action {
         case .openManageServices:
-            URL.wr_manageTeam.open()
+            URL.manageTeam(source: .onboarding).openInApp(above: self)
         }
     }
 }

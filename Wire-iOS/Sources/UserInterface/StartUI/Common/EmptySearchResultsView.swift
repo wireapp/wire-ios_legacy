@@ -117,6 +117,7 @@ extension EmptySearchResultsViewAction {
         actionButton.titleLabel!.font = FontSpec(.small, .medium).font!
         actionButton.layer.cornerRadius = 4
         actionButton.contentEdgeInsets = .init(top: 4, left: 16, bottom: 4, right: 16)
+        actionButton.accessibilityIdentifier = "button.searchui.open-services-no-results"
         
         actionButton.addCallback(for: .touchUpInside) { [unowned self] _ in
             guard let action = self.buttonAction else {

@@ -119,3 +119,16 @@ final class CreateGuestRoomCell: StartUIIconCell  {
     }
     
 }
+
+final class OpenServicesAdminCell: StartUIIconCell  {
+    
+    override func setupViews() {
+        super.setupViews()
+        icon = .bot
+        title = "peoplepicker.quick-action.admin-services".localized
+        isAccessibilityElement = true
+        accessibilityLabel = title
+        accessibilityIdentifier = "button.searchui.open-services"
+    }
+    
+}
