@@ -19,6 +19,16 @@
 extension ZMConversation {
     @objc var guestBarState: GuestBarState {
         guard conversationType != .oneOnOne else { return .hidden }
+
+        let otherUsers = activeParticipants
+            .array
+            .compactMap { $0 as? UserType }
+            .filter { !$0.isSelfUser }
+
+        if otherUsers.count == 1, otherUsers[0].isServiceUser {
+            return .hidden
+        }
+
         switch (areGuestPresent, areServicesPresent) {
         case (false, false): return .hidden
         case (true, false): return .guestsPresent
