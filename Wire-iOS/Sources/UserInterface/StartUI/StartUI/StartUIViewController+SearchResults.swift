@@ -59,7 +59,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                             didTapOnSeviceUser user: ServiceUser) {
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  destinationConversation: nil,
-                                                 actionType: .addService,
+                                                 actionType: .createConversation,
                                                  variant: ServiceDetailVariant(colorScheme: .dark, opaque: false))
 
         detail.completion = { [weak self] result in

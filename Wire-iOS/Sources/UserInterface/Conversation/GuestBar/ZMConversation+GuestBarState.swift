@@ -27,16 +27,18 @@ extension ZMConversation {
         }
     }
     
-    fileprivate var areGuestPresent: Bool {
+    var areGuestPresent: Bool {
         // Check that we have a team and it belongs to the conversation.
         guard let selfUserTeam = ZMUser.selfUser().team, team == selfUserTeam else { return false }
         return activeParticipants
+            .lazy
             .compactMap { $0 as? UserType }
             .any { $0.isGuest(in: self) }
     }
     
-    fileprivate var areServicesPresent: Bool {
+    var areServicesPresent: Bool {
         return activeParticipants
+            .lazy
             .compactMap { $0 as? UserType }
             .any { $0.isServiceUser }
     }

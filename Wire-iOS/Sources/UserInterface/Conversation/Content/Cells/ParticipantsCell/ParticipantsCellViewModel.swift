@@ -89,6 +89,13 @@ class ParticipantsCellViewModel {
         return conversation.canManageAccess && conversation.allowGuests
     }
     
+    var showServiceUserWarning: Bool {
+        guard case .added = action, let systemMessage = message as? ZMSystemMessage, let conversation = message.conversation else { return false }
+        let selfAddedToServiceConversation = systemMessage.users.any(\.isSelfUser) && conversation.areServicesPresent
+        let serviceAdded = systemMessage.users.any(\.isServiceUser)
+        return selfAddedToServiceConversation || serviceAdded
+    }
+    
     /// Users displayed in the system message, up to 17 when not collapsed
     /// but only 15 when there are more than 15 users and we collapse them.
     lazy var shownUsers: [ZMUser] = {
@@ -115,7 +122,7 @@ class ParticipantsCellViewModel {
     }
     
     lazy var isSelfIncludedInUsers: Bool = {
-        return sortedUsers.any { $0.isSelfUser }
+        return sortedUsers.any(\.isSelfUser)
     }()
     
     /// The users involved in the conversation action sorted alphabetically by
