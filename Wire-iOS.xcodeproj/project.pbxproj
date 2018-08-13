@@ -549,6 +549,7 @@
 		878D65C71C84664A0067E3D9 /* WireSyncEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095275931B7E834400123BAF /* WireSyncEngine.framework */; };
 		878D7C8E1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 878D7C8D1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m */; };
 		87909076211DE898006219B4 /* EmptySearchResultsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */; };
+		8790907A2121A120006219B4 /* VariantsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879090792121A120006219B4 /* VariantsBuilder.swift */; };
 		8793250A1E83BB5C00190067 /* ZMConversation+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879325091E83BB5C00190067 /* ZMConversation+Status.swift */; };
 		87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */; };
 		879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879489E21E5444A20071B2C1 /* NoResultsView.swift */; };
@@ -1993,6 +1994,7 @@
 		878D7C8C1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationContentViewController+PinchZoom.h"; sourceTree = "<group>"; };
 		878D7C8D1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationContentViewController+PinchZoom.m"; sourceTree = "<group>"; };
 		87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResultsViewTests.swift; sourceTree = "<group>"; };
+		879090792121A120006219B4 /* VariantsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantsBuilder.swift; sourceTree = "<group>"; };
 		879325091E83BB5C00190067 /* ZMConversation+Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Status.swift"; sourceTree = "<group>"; };
 		87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FingerprintTableViewCell.swift; sourceTree = "<group>"; };
 		879489E21E5444A20071B2C1 /* NoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
@@ -4170,6 +4172,22 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		879090782121A109006219B4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				879090792121A120006219B4 /* VariantsBuilder.swift */,
+				EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */,
+				F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */,
+				BF29C9851C6E357100601EE7 /* ZMSnapshotTestCase.h */,
+				EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */,
+				EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */,
+				BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */,
+				BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */,
+				BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		87B7DAA61E696E4E005F5140 /* ImageNotificationExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -5115,11 +5133,11 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				879090782121A109006219B4 /* Utils */,
 				EF7ECE1D211111DE003786C6 /* FullscreenImageViewController */,
 				5EBC343F20EE5E9900AFB6DF /* ImageCache */,
 				EF2BEF2D20E3B5A200D056B0 /* ConversationCell */,
 				EF27CD9A20C161500077FE55 /* DeviceManagement */,
-				EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */,
 				7C9E29192074F3F000827819 /* EmailVerificationStepViewControllerTests.swift */,
 				EF2128EB2056D4CB00C1673B /* NetworkStatusView */,
 				EEA747A71FCEBAD1000B529E /* AnalyticsMixpanelProviderTests.swift */,
@@ -5128,14 +5146,9 @@
 				EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */,
 				EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */,
 				EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */,
-				F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */,
 				1651F9BA1D352C5300A9FAE8 /* ArticleViewTests.swift */,
 				BFAD3A1B1CD1078500F0FBED /* Resources */,
-				BF29C9851C6E357100601EE7 /* ZMSnapshotTestCase.h */,
-				EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */,
 				BF079A3520EF9E6F00B152DD /* ConversationListCellTests.swift */,
-				EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */,
-				BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */,
 				5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */,
 				5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */,
 				D58192042091F34E003BA7EC /* CallActionsViewTests.swift */,
@@ -5147,8 +5160,6 @@
 				16A94AF5209B04A5008A5718 /* GridViewTests.swift */,
 				BFE2542620BE9EA200F62041 /* CallHapticsControllerTests.swift */,
 				D50892FC2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift */,
-				BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */,
-				BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */,
 				D524BE5E207B99B800542A4E /* UIViewController+LoadingTests.swift */,
 				BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */,
 				BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */,
@@ -7457,6 +7468,7 @@
 				164B533C20A0A5E800EC8265 /* CallInfoConfigurationTests.swift in Sources */,
 				5EA73D9220D903BC0001D106 /* CheckmarkCellTests.swift in Sources */,
 				874941CB1DE34DEC006CF32B /* UserConnectionViewTests.swift in Sources */,
+				8790907A2121A120006219B4 /* VariantsBuilder.swift in Sources */,
 				EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */,
 				EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */,
 				DBB45F3B1B53F8DE0010053C /* NSString+MentionsTests.m in Sources */,

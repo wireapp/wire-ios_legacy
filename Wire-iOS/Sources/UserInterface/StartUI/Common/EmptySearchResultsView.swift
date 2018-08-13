@@ -71,9 +71,7 @@ extension EmptySearchResultsViewAction {
         switch (searchingForServices, hasFilter) {
         case (true, false):
             self.state = .noServicesEnabled
-        case (true, true):
-            fallthrough
-        case (false, true):
+        case (_, true):
             self.state = .noUsersOrServices
         case (false, false):
             self.state = .everyoneAdded
@@ -155,7 +153,7 @@ extension EmptySearchResultsViewAction {
     }
     
     private var buttonAction: EmptySearchResultsViewAction? {
-        switch (state, true) { // fixme isSelfUserAdmin
+        switch (state, isSelfUserAdmin) {
         case (.noServicesEnabled, true):
             return .openManageServices
         default:

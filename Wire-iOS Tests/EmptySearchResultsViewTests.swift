@@ -63,67 +63,9 @@ extension EmptySearchResultsViewTestState: CustomStringConvertible {
     }
 }
 
-
-struct WritableKeyPathApplicator<Type>: Hashable {
-    private let applicator: (Type, Any) -> Type
-    let keyPath: AnyKeyPath
-    init<ValueType>(_ keyPath: WritableKeyPath<Type, ValueType>) {
-        self.keyPath = keyPath
-        
-        applicator = { instance, value in
-            var variableInstance = instance
-            guard let valueOfType = value as? ValueType else {
-                fatal("Wrong type for \(instance): \(value)")
-            }
-            variableInstance[keyPath: keyPath] = valueOfType
-            
-            return variableInstance
-        }
-    }
-    
-    func apply(to object: Type, value: Any) -> Type {
-        return applicator(object, value)
-    }
-    
-    var hashValue: Int {
-        return keyPath.hashValue
-    }
-}
-
-func ==<T>(lhs: WritableKeyPathApplicator<T>, rhs: WritableKeyPathApplicator<T>) -> Bool {
-    return lhs.keyPath == rhs.keyPath
-}
-
-class VariantsBuilder<Type: Copyable> {
-    
-    let initialValue: Type
-
-    init(initialValue: Type) {
-        self.initialValue = initialValue
-    }
-    
-    func add<ValueType>(possibleValues values: [ValueType], for keyPath: WritableKeyPath<Type, ValueType>) {
-        possibleValuesForKeyPath[WritableKeyPathApplicator(keyPath)] = values
-    }
-    
-    var possibleValuesForKeyPath: [WritableKeyPathApplicator<Type>: [Any]] = [:]
-    
-    func allVariants() -> [Type] {
-        var result = [initialValue]
-        
-        possibleValuesForKeyPath.forEach { (applicator, values) in
-            let currentResults = result
-            
-            result = currentResults.flatMap { previousResult in
-                return values.map { oneValue in
-                    var new = previousResult.copyInstance()
-                    new = applicator.apply(to: new, value: oneValue)
-                    return new
-                }
-            }
-        }
-        
-        return result
+extension ColorSchemeVariant: CaseIterable {
+    static var allCases: [ColorSchemeVariant] {
+        return [.light, .dark]
     }
 }
 
@@ -137,17 +79,16 @@ final class EmptySearchResultsViewTests: ZMSnapshotTestCase {
         
         let builder = VariantsBuilder(initialValue: initialState)
         
-        builder.add(possibleValues: [ColorSchemeVariant.light, ColorSchemeVariant.dark], for: \EmptySearchResultsViewTestState.colorSchemeVariant)
-        builder.add(possibleValues: [true, false], for: \EmptySearchResultsViewTestState.isSelfUserAdmin)
-        builder.add(possibleValues: [true, false], for: \EmptySearchResultsViewTestState.searchingForServices)
-        builder.add(possibleValues: [true, false], for: \EmptySearchResultsViewTestState.hasFilter)
-        
+        builder.add(keyPath: \EmptySearchResultsViewTestState.colorSchemeVariant)
+        builder.add(keyPath: \EmptySearchResultsViewTestState.isSelfUserAdmin)
+        builder.add(keyPath: \EmptySearchResultsViewTestState.searchingForServices)
+        builder.add(keyPath: \EmptySearchResultsViewTestState.hasFilter)
         
         builder.allVariants().forEach { version in
             let sut = version.createView()
             
             sut.prepareForSnapshot()
-            
+            sut.backgroundColor = .lightGray
             sut.bounds.size = sut.systemLayoutSizeFitting(
                 CGSize(width: 375, height: 600),
                 withHorizontalFittingPriority: .required,
