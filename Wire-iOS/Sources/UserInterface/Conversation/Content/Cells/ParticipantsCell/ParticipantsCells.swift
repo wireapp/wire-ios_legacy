@@ -98,6 +98,7 @@ import TTTAttributedLabel
         serviceUserWarningLabel.numberOfLines = 0
         serviceUserWarningLabel.isAccessibilityElement = true
         serviceUserWarningLabel.textColor = UIColor(for: .vividRed)
+        serviceUserWarningLabel.text = "content.system.services.warning".localized
         serviceUserWarningLabel.font = FontSpec(.small, .regular).font
 
         stackView.axis = .vertical
@@ -229,8 +230,7 @@ import TTTAttributedLabel
         topContainer.isHidden = nameLabel.attributedText == nil
         bottomContainer.isHidden = model.sortedUsers.count == 0
         inviteView.isHidden = !model.showInviteButton
-        serviceUserWarningLabelContainer.isHidden = nil == model.serviceUserWarningType
-        serviceUserWarningLabel.text = model.serviceUserWarningType.displayString
+        serviceUserWarningLabelContainer.isHidden = !model.showServiceUserWarning
         viewModel = model
     }
 
