@@ -78,8 +78,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Please enter a valid email address";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "No results.";
-"peoplepicker.no_matching_results_services_title" = "No services enabled in the team. Please update the copy.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage services";
+"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To add them to the team ask your administrator.";
+"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Add Services";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Enter a full email address or";
 /*  */

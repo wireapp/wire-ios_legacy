@@ -133,13 +133,15 @@ extension EmptySearchResultsViewAction {
     }
     
     private var text: String {
-        switch state {
-        case .noUsersOrServices:
+        switch (state, isSelfUserAdmin) {
+        case (.noUsersOrServices, _):
             return "peoplepicker.no_matching_results_after_address_book_upload_title".localized
-        case .everyoneAdded:
+        case (.everyoneAdded, _):
             return "add_participants.all_contacts_added".localized
-        case .noServicesEnabled:
+        case (.noServicesEnabled, false):
             return "peoplepicker.no_matching_results_services_title".localized
+        case (.noServicesEnabled, true):
+            return "peoplepicker.no_matching_results_services_admin_title".localized
         }
     }
     
