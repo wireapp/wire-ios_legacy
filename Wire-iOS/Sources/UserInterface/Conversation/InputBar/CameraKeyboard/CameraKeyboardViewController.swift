@@ -241,7 +241,15 @@ open class CameraKeyboardViewController: UIViewController {
                     completeBlock(data, info?["PHImageFileUTIKey"] as? String)
                 } else {
                     options.isSynchronous = true
+                    DispatchQueue.main.async(execute: {
+                        self.showLoadingView = true
+                    })
+
                     manager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                        DispatchQueue.main.async(execute: {
+                            self.showLoadingView = false
+                        })
+
                         if let image = image {
                             let data = UIImageJPEGRepresentation(image, 0.9)
                             completeBlock(data, info?["PHImageFileUTIKey"] as? String)
