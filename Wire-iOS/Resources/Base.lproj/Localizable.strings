@@ -344,7 +344,8 @@
 "content.system.other_removed_you" = "%@ removed you";
 "content.system.you_removed_other" = "You removed %@";
 
-"content.system.services.warning" = "Services record every message in this conversation";
+"content.system.services.warning.service" = "This service records every message in this conversation";
+"content.system.services.warning.you" ="Services record every message in this conversation";
 
 // New conversation participants added / removed / started system message
 

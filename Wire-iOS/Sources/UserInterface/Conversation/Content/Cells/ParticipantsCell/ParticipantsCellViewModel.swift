@@ -17,6 +17,32 @@
 //
 
 
+enum ServiceUserWarningType: ExpressibleByNilLiteral {
+    case none, addedService, selfAddedToServiceConversation
+    
+    init(nilLiteral: ()) {
+        self = .none
+    }
+    
+    init(message: ZMSystemMessage, conversation: ZMConversation) {
+        if message.users.any(\.isSelfUser) && conversation.areServicesPresent {
+            self = .selfAddedToServiceConversation
+        } else if message.users.any(\.isServiceUser) {
+            self = .addedService
+        } else {
+            self = .none
+        }
+    }
+    
+    var displayString: String? {
+        switch self {
+        case .none: return nil
+        case .addedService: return "content.system.services.warning.service".localized
+        case .selfAddedToServiceConversation: return "content.system.services.warning.you".localized
+        }
+    }
+}
+
 enum ConversationActionType {
 
     case none, started(withName: String?), added(herself: Bool), removed, left, teamMemberLeave
@@ -88,14 +114,12 @@ class ParticipantsCellViewModel {
         guard case .started = action, let conversation = message.conversation else { return false }
         return conversation.canManageAccess && conversation.allowGuests
     }
-    
-    var showServiceUserWarning: Bool {
-        guard case .added = action, let systemMessage = message as? ZMSystemMessage, let conversation = message.conversation else { return false }
-        let selfAddedToServiceConversation = systemMessage.users.any(\.isSelfUser) && conversation.areServicesPresent
-        let serviceAdded = systemMessage.users.any(\.isServiceUser)
-        return selfAddedToServiceConversation || serviceAdded
+
+    var serviceUserWarningType: ServiceUserWarningType {
+        guard case .added = action, let systemMessage = message as? ZMSystemMessage, let conversation = message.conversation else { return nil }
+        return ServiceUserWarningType(message: systemMessage, conversation: conversation)
     }
-    
+
     /// Users displayed in the system message, up to 17 when not collapsed
     /// but only 15 when there are more than 15 users and we collapse them.
     lazy var shownUsers: [ZMUser] = {
