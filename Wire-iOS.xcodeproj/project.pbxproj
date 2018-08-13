@@ -550,7 +550,6 @@
 		878D7C8E1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 878D7C8D1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m */; };
 		87909076211DE898006219B4 /* EmptySearchResultsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */; };
 		8790907A2121A120006219B4 /* VariantsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879090792121A120006219B4 /* VariantsBuilder.swift */; };
-		8790907D2121B01B006219B4 /* AddServicesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8790907B2121AEED006219B4 /* AddServicesSectionController.swift */; };
 		8793250A1E83BB5C00190067 /* ZMConversation+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879325091E83BB5C00190067 /* ZMConversation+Status.swift */; };
 		87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */; };
 		879489E31E5444A20071B2C1 /* NoResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879489E21E5444A20071B2C1 /* NoResultsView.swift */; };
@@ -1996,7 +1995,6 @@
 		878D7C8D1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationContentViewController+PinchZoom.m"; sourceTree = "<group>"; };
 		87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptySearchResultsViewTests.swift; sourceTree = "<group>"; };
 		879090792121A120006219B4 /* VariantsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantsBuilder.swift; sourceTree = "<group>"; };
-		8790907B2121AEED006219B4 /* AddServicesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddServicesSectionController.swift; sourceTree = "<group>"; };
 		879325091E83BB5C00190067 /* ZMConversation+Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Status.swift"; sourceTree = "<group>"; };
 		87934E111C451C1100186A85 /* FingerprintTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FingerprintTableViewCell.swift; sourceTree = "<group>"; };
 		879489E21E5444A20071B2C1 /* NoResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsView.swift; sourceTree = "<group>"; };
@@ -3147,7 +3145,6 @@
 			isa = PBXGroup;
 			children = (
 				87797C0A1FF3C849009FC9A9 /* SearchServicesSectionController.swift */,
-				8790907B2121AEED006219B4 /* AddServicesSectionController.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -6954,7 +6951,6 @@
 				877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */,
 				EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */,
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
-				8790907D2121B01B006219B4 /* AddServicesSectionController.swift in Sources */,
 				F1199D421FC849450070FAC3 /* VerificationCodeFieldDescription.swift in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,

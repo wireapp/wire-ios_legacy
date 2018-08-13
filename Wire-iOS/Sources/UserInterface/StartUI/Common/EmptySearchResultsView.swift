@@ -113,7 +113,7 @@ extension EmptySearchResultsViewAction {
         statusLabel.textAlignment = .center
         
         actionButton.backgroundColor = UIColor(scheme: .tokenFieldBackground, variant: self.variant)
-        actionButton.titleLabel!.textColor = UIColor(scheme: .textForeground, variant: self.variant)
+        actionButton.setTitleColor(UIColor(scheme: .textForeground, variant: self.variant), for: .normal)
         actionButton.titleLabel!.font = FontSpec(.small, .medium).font!
         actionButton.layer.cornerRadius = 4
         actionButton.contentEdgeInsets = .init(top: 4, left: 16, bottom: 4, right: 16)
@@ -149,7 +149,7 @@ extension EmptySearchResultsViewAction {
     private var icon: UIImage? {
         switch state {
         case .noServicesEnabled:
-            return UIImage(for: .bot, iconSize: .large, color: UIColor(scheme: .tokenFieldBackground, variant: self.variant))
+            return UIImage(for: .bot, iconSize: .large, color: UIColor(scheme: .iconNormal, variant: self.variant))
         default:
             return nil
         }

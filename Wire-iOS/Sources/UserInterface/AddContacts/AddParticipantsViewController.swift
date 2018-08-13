@@ -330,7 +330,7 @@ public class AddParticipantsViewController: UIViewController {
     
     fileprivate func performSearch() {
         let searchingForServices = searchResultsViewController.searchGroup == .services
-        let hasFilter = searchHeaderViewController.tokenField.filterText.isEmpty
+        let hasFilter = !searchHeaderViewController.tokenField.filterText.isEmpty
         
         emptyResultView.updateStatus(searchingForServices: searchingForServices, hasFilter: hasFilter)
         

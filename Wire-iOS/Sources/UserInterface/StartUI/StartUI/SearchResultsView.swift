@@ -75,7 +75,7 @@ import Classy
             accessoryContainerHeightConstraint = accessoryContainer.height == 0
             accessoryViewBottomOffsetConstraint = accessoryContainer.bottom == container.bottom
             
-            emptyResultContainer.top == container.top + 64
+            emptyResultContainer.centerY == container.centerY - 64
             emptyResultContainer.centerX == container.centerX
             emptyResultContainer.leading >= container.leading
             emptyResultContainer.trailing <= container.trailing
