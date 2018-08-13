@@ -75,7 +75,7 @@
         self.image = nil;
     }
     else if (![image isGIF]) {
-        self.image = (UIImage *)image;
+        self.image = [(UIImage *)image downsizedImage];
     }
 }
 
