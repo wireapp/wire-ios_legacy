@@ -91,8 +91,8 @@ class AuthenticationInterfaceBuilder {
         case .registerCredentials:
             return nil
 
-        case .acceptTermsOfService(let user):
-            return TermsOfUseStepViewController(unregisteredUser: user)
+        case .acceptTermsOfService:
+            return TermsOfUseStepViewController()
 
         case .provideMarketingConsent:
             return nil

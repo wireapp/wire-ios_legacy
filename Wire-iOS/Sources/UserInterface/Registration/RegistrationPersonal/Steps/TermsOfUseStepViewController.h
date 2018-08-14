@@ -16,17 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-#import "RegistrationStepViewController.h"
+@import UIKit;
 #import "AuthenticationCoordinatedViewController.h"
 
 @class ZMIncompleteRegistrationUser;
 
-@interface TermsOfUseStepViewController : RegistrationStepViewController <AuthenticationCoordinatedViewController>
-
-@property (nonatomic, readonly) ZMIncompleteRegistrationUser *unregisteredUser;
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
+@interface TermsOfUseStepViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 @end

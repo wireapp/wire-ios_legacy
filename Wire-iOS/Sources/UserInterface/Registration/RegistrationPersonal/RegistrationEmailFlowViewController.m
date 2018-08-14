@@ -208,9 +208,9 @@
     // Dismiss keyboard and delay presentation for a smoother transition
     [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        TermsOfUseStepViewController *tosController = [[TermsOfUseStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-        tosController.formStepDelegate = self;
-        [self.navigationController pushViewController:tosController.registrationFormViewController animated:YES];
+//        TermsOfUseStepViewController *tosController = [[TermsOfUseStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
+//        tosController.formStepDelegate = self;
+//        [self.navigationController pushViewController:tosController.registrationFormViewController animated:YES];
     });
     
 }
