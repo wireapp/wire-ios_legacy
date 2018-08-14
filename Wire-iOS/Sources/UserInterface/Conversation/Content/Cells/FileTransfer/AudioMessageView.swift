@@ -57,10 +57,17 @@ private let zmLog = ZMSLog(tag: "UI")
     private var proximityMonitorManager: ProximityMonitorManager? {
         return ZClientViewController.shared()?.proximityMonitorManager
     }
+
+
     private var callStateObserverToken : Any?
+    /// flag for resume audio player after incoming call
+    private var isPausedForIncomingCall : Bool
 
     public required override init(frame: CGRect) {
+        isPausedForIncomingCall = false
+
         super.init(frame: frame)
+
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
@@ -379,7 +386,8 @@ private let zmLog = ZMSLog(tag: "UI")
     // MARK: - Actions
     
     @objc dynamic private func onActionButtonPressed(_ sender: UIButton) {
-        
+        isPausedForIncomingCall = false
+
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {
@@ -397,7 +405,8 @@ private let zmLog = ZMSLog(tag: "UI")
         case .uploaded, .failedDownload:
             self.expectingDownload = true
             ZMUserSession.shared()?.enqueueChanges(fileMessageData.requestFileDownload)
-        case .downloaded: playTrack()
+        case .downloaded:
+            playTrack()
         case .unavailable: return
         }
     }
@@ -470,23 +479,27 @@ private let zmLog = ZMSLog(tag: "UI")
 
 extension AudioMessageView : WireCallCenterCallStateObserver {
 
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState,
+                             conversation: ZMConversation,
+                             caller: ZMUser,
+                             timestamp: Date?,
+                             previousCallState: CallState?) {
         guard let player = audioTrackPlayer else { return }
         guard isOwnTrackPlayingInAudioPlayer() else { return }
-        
-        guard let _ = AVSMediaManager.sharedInstance(),
-            let userSession = ZMUserSession.shared(),
-            let _ = userSession.callCenter
-            else {
-                return
-        }
 
-        switch callState {
-        case .incoming(_, _, _):
+        // Pause the audio player when call is incoming to prevent the audio player is reset.
+        // Resume playing when the call is terminating (and the audio is paused by this method)
+        switch (previousCallState, callState) {
+        case (_, .incoming(_, _, _)):
             player.pause()
+            isPausedForIncomingCall = true
+        case (.incoming(_, _, _)?, .terminating(reason: _)):
+            if isPausedForIncomingCall {
+                player.play()
+            }
+            isPausedForIncomingCall = false
         default:
             break
         }
-        ///TODO: callState == terminating, resume playing from last position
     }
 }
