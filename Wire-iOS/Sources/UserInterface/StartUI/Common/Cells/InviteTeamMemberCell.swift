@@ -21,9 +21,9 @@ import Cartography
 
 class StartUIIconCell: UICollectionViewCell {
     
-    private let iconView = UIImageView()
-    private let titleLabel = UILabel()
-    private let separator = UIView()
+    fileprivate let iconView = UIImageView()
+    fileprivate let titleLabel = UILabel()
+    fileprivate let separator = UIView()
     
     fileprivate var icon: ZetaIconType? {
         didSet {
@@ -120,7 +120,39 @@ final class CreateGuestRoomCell: StartUIIconCell  {
     
 }
 
-final class OpenServicesAdminCell: StartUIIconCell  {
+final class OpenServicesAdminCell: StartUIIconCell, Themeable  {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+    
+    @objc dynamic var contentBackgroundColor: UIColor? = nil {
+        didSet {
+            guard oldValue != contentBackgroundColor else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+    
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
+        separator.backgroundColor = UIColor(scheme: .cellSeparator, variant: colorSchemeVariant)
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        iconView.image = icon.map { UIImage.init(for: $0, iconSize: .tiny, color: UIColor(scheme: .iconNormal, variant: colorSchemeVariant)) }
+    }
+    
+    func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
+        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted
+                ? UIColor(white: 0, alpha: 0.08)
+                : contentBackgroundColor(for: colorSchemeVariant)
+        }
+    }
     
     override func setupViews() {
         super.setupViews()
@@ -129,6 +161,7 @@ final class OpenServicesAdminCell: StartUIIconCell  {
         isAccessibilityElement = true
         accessibilityLabel = title
         accessibilityIdentifier = "button.searchui.open-services"
+        applyColorScheme(ColorScheme.default.variant)
     }
     
 }

@@ -233,6 +233,10 @@ public class AddParticipantsViewController: UIViewController {
         
         createConstraints()
         updateSelectionValues()
+        
+        if searchResultsViewController.isResultEmpty {
+            emptyResultView.updateStatus(searchingForServices: false, hasFilter: false)
+        }
     }
 
     func createConstraints() {

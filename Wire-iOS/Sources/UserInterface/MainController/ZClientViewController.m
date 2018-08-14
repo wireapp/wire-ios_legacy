@@ -124,6 +124,8 @@
         [[SectionHeader appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
         [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
         [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
+        [[OpenServicesAdminCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+        [[OpenServicesAdminCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
         [[UIView appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]] setTintColor:[ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground variant:ColorSchemeVariantLight]];
 
         [self setupConversationListViewController];
