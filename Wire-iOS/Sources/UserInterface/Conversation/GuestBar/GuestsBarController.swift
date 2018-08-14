@@ -80,8 +80,7 @@ class GuestsBarController: UIViewController {
         guard _state != state, isViewLoaded else { return }
         
         _state = state
-        label.accessibilityIdentifier = state.accessibilityIdentifier
-        label.text = state.displayString
+        configureTitle(with: state)
         let collapsed = state == .hidden
         
         let change = {
@@ -109,6 +108,12 @@ class GuestsBarController: UIViewController {
             change()
             completion(true)
         }
+    }
+    
+    @objc(configureTitleWithState:)
+    func configureTitle(with state: GuestBarState) {
+        label.accessibilityIdentifier = state.accessibilityIdentifier
+        label.text = state.displayString
     }
 
 }
