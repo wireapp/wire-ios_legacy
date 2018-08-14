@@ -57,7 +57,8 @@ private let zmLog = ZMSLog(tag: "UI")
     private var proximityMonitorManager: ProximityMonitorManager? {
         return ZClientViewController.shared()?.proximityMonitorManager
     }
-    
+    private var callStateObserverToken : Any?
+
     public required override init(frame: CGRect) {
         super.init(frame: frame)
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
@@ -90,6 +91,10 @@ private let zmLog = ZMSLog(tag: "UI")
         
         setNeedsLayout()
         layoutIfNeeded()
+
+        if let session = ZMUserSession.shared() {
+            callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: session)
+        }
     }
     
     deinit {
@@ -460,5 +465,28 @@ private let zmLog = ZMSLog(tag: "UI")
     
     func proximityStateDidChange(_ raisedToEar: Bool) {
         setAudioOutput(earpiece: raisedToEar)
+    }
+}
+
+extension AudioMessageView : WireCallCenterCallStateObserver {
+
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+        guard let player = audioTrackPlayer else { return }
+        guard isOwnTrackPlayingInAudioPlayer() else { return }
+        
+        guard let _ = AVSMediaManager.sharedInstance(),
+            let userSession = ZMUserSession.shared(),
+            let _ = userSession.callCenter
+            else {
+                return
+        }
+
+        switch callState {
+        case .incoming(_, _, _):
+            player.pause()
+        default:
+            break
+        }
+        ///TODO: callState == terminating, resume playing from last position
     }
 }
