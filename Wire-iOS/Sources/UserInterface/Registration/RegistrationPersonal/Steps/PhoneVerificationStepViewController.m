@@ -231,6 +231,11 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     return self.phoneVerificationField.text ?: @"";
 }
 
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    self.phoneVerificationField.text = @"";
+}
+
 #pragma mark - Actions
 
 - (void)verifyCode:(id)sender

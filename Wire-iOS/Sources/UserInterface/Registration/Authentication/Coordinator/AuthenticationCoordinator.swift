@@ -493,7 +493,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
 
     /// Called when the phone verification fails.
     func phoneVerificationDidFail(_ error: Error!) {
-        // no-op
+        eventHandlingManager.handleEvent(ofType: .authenticationFailure(error as NSError))
     }
 
     /// Called when the validation code for the registered phone number was sent.
