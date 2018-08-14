@@ -16,26 +16,36 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension MockMessageFactory {
-    class func passFileTransferMessage() -> MockMessage {
-        let message = MockMessageFactory.messageTemplate()
-        message?.backingFileMessageData = MockPassFileMessageData()
-
-        return message!
+final class AudioMessageViewTestsTests: XCTestCase {
+    
+    var sut: AudioMessageViewTests!
+    
+    override func setUp() {
+        super.setUp()
+        sut = AudioMessageViewTests()
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
-    class func audioMessage(config: ((MockMessage) -> ())?) -> MockMessage {
-        let fileMessage = MockMessageFactory.fileTransferMessage()
-        fileMessage?.backingFileMessageData.mimeType = "audio/x-m4a"
-        fileMessage?.backingFileMessageData.filename = "sound.m4a"
 
-        if let config = config {
-            config(fileMessage!)
-        }
 
-        return fileMessage!
+    /// Example checker method which can be reused in different tests
+    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
+        XCTAssert(true, file: file, line: line)
     }
 
+    func testExample(){
+        // GIVEN
+
+        // WHEN
+
+        // THEN
+        checkerExample()
+    }
 }
