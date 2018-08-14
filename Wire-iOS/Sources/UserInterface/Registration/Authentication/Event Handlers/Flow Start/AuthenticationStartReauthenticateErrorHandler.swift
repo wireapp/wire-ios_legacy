@@ -38,7 +38,8 @@ class AuthenticationStartReauthenticateErrorHandler: AuthenticationEventHandler 
         let supportedErrors: [ZMUserSessionErrorCode] = [
             .clientDeletedRemotely,
             .accessTokenExpired,
-            .needsPasswordToRegisterClient
+            .needsPasswordToRegisterClient,
+            .needsToRegisterEmailToRegisterClient
          ]
 
         guard supportedErrors.contains(error.userSessionErrorCode) else {

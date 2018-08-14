@@ -59,6 +59,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
     private let unauthenticatedSession: UnauthenticatedSession
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
+    private var initialSyncObserver: Any?
 
     // MARK: - Initialization
 
@@ -150,9 +151,7 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
     func sessionManagerCreated(userSession: ZMUserSession) {
         log.info("Session manager created session: \(userSession)")
-
-        let token = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
-        loginObservers.append(token)
+        initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
     }
 
     /**
@@ -182,8 +181,7 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
         postLoginObservers = [
             userProfile.add(observer: self),
-            UserChangeInfo.add(observer: self, for: selfUser, userSession: sharedSession)!,
-            ZMUserSession.addInitialSyncCompletionObserver(self, userSession: sharedSession)
+            UserChangeInfo.add(observer: self, for: selfUser, userSession: sharedSession)!
         ]
     }
 

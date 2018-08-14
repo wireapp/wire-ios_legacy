@@ -78,9 +78,8 @@ class AuthenticationEventHandlingManager {
 
     fileprivate func registerDefaultEventHandlers() {
         // flowStartHandlers
+        registerHandler(AuthenticationStartAddAccountEventHandler(), to: &flowStartHandlers)
         registerHandler(AuthenticationStartReauthenticateErrorHandler(), to: &flowStartHandlers)
-        registerHandler(AuthenticationStartClientDeletionErrorHandler(), to: &flowStartHandlers)
-        registerHandler(AuthenticationStartFallbackEventHandler(), to: &flowStartHandlers)
 
         // initialSyncHandlers
         registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)
@@ -143,7 +142,7 @@ class AuthenticationEventHandlingManager {
 
     private func handleEvent<Context>(with handlers: [AnyAuthenticationEventHandler<Context>], context: Context) {
         guard let delegate = self.delegate else {
-            log.info("The event will not be handled because there is no")
+            log.error("The event will not be handled because the event handling manager does not have a delegate.")
             return
         }
 

@@ -19,15 +19,27 @@
 import Foundation
 
 /**
- * Displays the landing screen when no other start event handler caught an action to execute.
- * - warning: You need to add this event last in the list of start handlers.
+ * Handles requests to add a new user account.
  */
 
-class AuthenticationStartFallbackEventHandler: AuthenticationEventHandler {
+class AuthenticationStartAddAccountEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
+        // The user is adding a new account
+        var isAddingNewAccount = context.1 == 0
+
+        // If there is a login error, check for `addAccountRequested`
+        if let error = context.0 {
+            isAddingNewAccount = error.userSessionErrorCode == .addAccountRequested
+        }
+
+        // Only handle the event if the user is adding a new account.
+        guard isAddingNewAccount else {
+            return nil
+        }
+
         return [.hideLoadingView, .transition(.landingScreen, resetStack: true)]
     }
 

@@ -36,7 +36,7 @@ class AuthenticationEmailFallbackErrorHandler: AuthenticationEventHandler {
         }
 
         // Handle the actions
-        var actions: [AuthenticationCoordinatorAction] = []
+        var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
         // Show a guidance dot if the user caused the failure
         if error.userSessionErrorCode != .networkError {
