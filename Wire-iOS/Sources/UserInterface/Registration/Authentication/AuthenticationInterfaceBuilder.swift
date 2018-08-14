@@ -51,6 +51,12 @@ class AuthenticationInterfaceBuilder {
             loginViewController.shouldHideCancelButton = true
             return loginViewController
 
+        case .createCredentials(let unregisteredUser):
+            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
+            registrationViewController.shouldHideCancelButton = true
+            registrationViewController.unregisteredUser = unregisteredUser
+            return registrationViewController
+
         case .clientManagement(let clients, let credentials):
             let emailCredentials = ZMEmailCredentials(email: credentials.email!, password: credentials.password!)
             return ClientUnregisterFlowViewController(clientsList: clients, credentials: emailCredentials)
@@ -58,10 +64,10 @@ class AuthenticationInterfaceBuilder {
         case .noHistory(_, let type):
             return NoHistoryViewController(contextType: type)
 
-        case .verifyPhoneNumber(let phoneNumber, _):
+        case .verifyPhoneNumber(let phoneNumber, let user, _):
             let verificationController = PhoneVerificationStepViewController()
             verificationController.phoneNumber = phoneNumber
-            verificationController.isLoggingIn = true
+            verificationController.isLoggingIn = user != nil
             return verificationController
 
         case .addEmailAndPassword(_, _, let canSkip):
@@ -72,6 +78,15 @@ class AuthenticationInterfaceBuilder {
         case .verifyEmailCredentials(let credentials):
             let verificationController = EmailVerificationViewController(credentials: credentials)
             return verificationController
+
+        case .reviewTermsOfUse(let user):
+            return TermsOfUseStepViewController(unregisteredUser: user)
+
+        case .setName(let user):
+            return NameStepViewController(unregisteredUser: user)
+
+        case .setProfilePicture(let user):
+            return ProfilePictureStepViewController(unregisteredUser: user)
 
         default:
             return nil

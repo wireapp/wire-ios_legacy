@@ -18,12 +18,13 @@
 
 
 #import "RegistrationStepViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 extern NSString * const UnsplashRandomImageHiQualityURL;
 
 @class ZMIncompleteRegistrationUser;
 
-@interface ProfilePictureStepViewController : RegistrationStepViewController
+@interface ProfilePictureStepViewController : RegistrationStepViewController <AuthenticationCoordinatedViewController>
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;

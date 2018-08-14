@@ -17,11 +17,12 @@
 // 
 
 #import "RegistrationStepViewController.h"
-
+#import "AuthenticationCoordinatedViewController.h"
 
 @class ZMIncompleteRegistrationUser;
 
-@interface TermsOfUseStepViewController : RegistrationStepViewController
+@interface TermsOfUseStepViewController : RegistrationStepViewController <AuthenticationCoordinatedViewController>
+
 @property (nonatomic, readonly) ZMIncompleteRegistrationUser *unregisteredUser;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

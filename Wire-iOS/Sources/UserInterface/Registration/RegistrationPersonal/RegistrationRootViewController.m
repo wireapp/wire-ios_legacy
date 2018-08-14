@@ -88,8 +88,7 @@
     }
     else {
         RegistrationPhoneFlowViewController *phoneFlowViewController = [[RegistrationPhoneFlowViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-        phoneFlowViewController.formStepDelegate = self;
-        phoneFlowViewController.registrationDelegate = self;
+        phoneFlowViewController.authenticationCoordinator = self.authenticationCoordinator;
         flowViewController = phoneFlowViewController;
     }
 

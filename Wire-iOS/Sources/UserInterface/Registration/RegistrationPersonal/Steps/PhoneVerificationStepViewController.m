@@ -248,8 +248,8 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     // Reset the code field
     self.phoneVerificationField.text = @"";
     self.phoneVerificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
-        
-    [self.delegate phoneVerificationStepDidRequestVerificationCode];
+
+    [self.authenticationCoordinator resendPhoneValidationCode];
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
 }

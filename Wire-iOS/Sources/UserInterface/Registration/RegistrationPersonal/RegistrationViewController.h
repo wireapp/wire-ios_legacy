@@ -33,23 +33,13 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
     RegistrationFlowPhone
 };
 
-
-@protocol RegistrationViewControllerDelegate <NSObject>
-
-- (void)registrationViewControllerDidCompleteRegistration;
-- (void)registrationViewControllerDidSignIn;
-
-@end
-
-
-
 @interface RegistrationViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 - (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow;
 
-@property (nonatomic, weak) __nullable id<RegistrationViewControllerDelegate> delegate;
 @property (nonatomic)  NSError * __nullable signInError;
 @property (nonatomic) BOOL shouldHideCancelButton;
+@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 + (RegistrationFlow)registrationFlow;
 

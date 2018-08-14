@@ -72,6 +72,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
         flowStack = [.landingScreen]
 
         loginObservers = [
+            unauthenticatedSession.addRegistrationObserver(self),
             PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
             PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
@@ -259,30 +260,51 @@ extension AuthenticationCoordinator {
     /**
      * Starts the phone number validation flow for the given phone number.
      * - parameter phoneNumber: The phone number to validate for login.
-     * - parameter isSigningIn: Whether the user is signing in (`true`), or registering (`false`).
      */
 
-    @objc(startPhoneNumberValidationWithPhoneNumber:isSigningIn:)
-    func startPhoneNumberValidation(_ phoneNumber: String, isSigningIn: Bool) {
+    @objc(startPhoneNumberValidationWithPhoneNumber:)
+    func startPhoneNumberValidation(_ phoneNumber: String) {
+        let user: ZMIncompleteRegistrationUser?
+
+        switch currentStep {
+        case .createCredentials(let incompleteUser):
+            user = incompleteUser
+        case .provideCredentials:
+            user = nil
+        default:
+            log.warn("Cannot start phone number validation from step: \(currentStep)")
+            return
+        }
+
         presenter?.showLoadingView = true
-        askVerificationCode(for: phoneNumber, isSigningIn: isSigningIn)
-        transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: false))
+        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
+
+        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: false)
+        transition(to: nextStep)
     }
 
-    /**
-     * Asks the unauthenticated session for a new phone number verification code.
-     * - parameter phoneNumber: The phone number to authenticate.
-     * - parameter isSigningIn: Whether the user is signing in (`true`), or registering (`false`).
-     */
+    @objc func resendPhoneValidationCode() {
+        guard case let .verifyPhoneNumber(phoneNumber, user, _) = currentStep else {
+            log.info("Ignoring request to resend phone code with step = \(currentStep).")
+            return
+        }
 
-    @objc(askVerificationCodeForPhoneNumber:isSigningIn:)
-    func askVerificationCode(for phoneNumber: String, isSigningIn: Bool) {
+        presenter?.showLoadingView = true
+        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
+
+        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: true)
+        transition(to: nextStep)
+    }
+
+    private func askVerificationCode(for phoneNumber: String, isSigningIn: Bool) {
         if isSigningIn {
             unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
         } else {
             unauthenticatedSession.requestPhoneVerificationCodeForRegistration(phoneNumber)
         }
     }
+
+    // MARK: - Login
 
     /**
      * Requests a phone login for the specified credentials.
@@ -294,8 +316,6 @@ extension AuthenticationCoordinator {
         transition(to: .authenticatePhoneCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
-
-    // MARK: E-Mail Login
 
     /**
      * Requests an e-mail login for the specified credentials.
@@ -388,6 +408,18 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.continueAfterBackupImportStep()
     }
 
+    @objc func submitMarketingConsent(_ consentValue: Bool) {
+        guard let userSession = statusProvider?.sharedUserSession else {
+            return
+        }
+
+        userSession.submitMarketingConsent(with: consentValue)
+    }
+
+    @objc func registerUser(user: ZMIncompleteRegistrationUser) {
+        unauthenticatedSession.register(user: user.complete())
+    }
+
     // MARK: UI Events
 
     /**
@@ -430,7 +462,29 @@ extension AuthenticationCoordinator {
 
 // MARK: - User Session Events
 
-extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
+extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, ZMRegistrationObserver {
+
+    // MARK: - Phone Registration
+
+    /// Called when the phone number verification succeeds.
+    func phoneVerificationDidSucceed() {
+        // no-op
+    }
+
+    /// Called when the phone verification fails.
+    func phoneVerificationDidFail(_ error: Error!) {
+        // no-op
+    }
+
+    /// Called when the validation code for the registered phone number was sent.
+    func phoneVerificationCodeRequestDidFail(_ error: Error!) {
+        // no-op
+    }
+
+    /// Called when the validation code for the registered phone number was sent.
+    func phoneVerificationCodeRequestDidSucceed() {
+        eventHandlingManager.handleEvent(ofType: .phoneLoginCodeAvailable)
+    }
 
     // MARK: Email Update
 
@@ -495,6 +549,68 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         }
     }
 
+//    - (void)registrationDidFail:(NSError *)error
+//    {
+//    self.navigationController.showLoadingView = NO;
+//    [self showAlertForError:error];
+//    }
+//
+//    - (void)proceedToCodeVerificationForLogin:(BOOL)login
+//    {
+//    self.navigationController.showLoadingView = NO;
+//
+//    PhoneVerificationStepViewController *phoneVerificationStepViewController = [[PhoneVerificationStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
+//    phoneVerificationStepViewController.formStepDelegate = self;
+//    phoneVerificationStepViewController.delegate = self;
+//    phoneVerificationStepViewController.isLoggingIn = login;
+//
+//    [self.navigationController pushViewController:phoneVerificationStepViewController.registrationFormViewController animated:YES];
+//    }
+//
+//    - (void)phoneVerificationCodeRequestDidSucceed
+//    {
+//
+//    if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
+//    [self proceedToCodeVerificationForLogin:NO];
+//    } else {
+//    [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
+//    }
+//    }
+//
+//    - (void)phoneVerificationCodeRequestDidFail:(NSError *)error
+//    {
+//    if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
+//    }
+//
+//    self.navigationController.showLoadingView = NO;
+//
+//    if(error.code == ZMUserSessionPhoneNumberIsAlreadyRegistered) {
+//    LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber password:nil usesCompanyLogin:NO];
+//    [self.phoneNumberStepViewController reset];
+//    //        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:credentials];
+//    }
+//
+//    [self showAlertForError:error];
+//    }
+//
+//    - (void)phoneVerificationDidSucceed
+//    {
+//    self.navigationController.showLoadingView = NO;
+//
+//    [UIAlertController showNewsletterSubscriptionDialogWithOver: self
+//    completionHandler: ^(BOOL marketingConsent) {
+//    self.marketingConsent = marketingConsent;
+//
+//    //        [self presentTermsOfUseStepController];
+//    }];
+//    }
+//
+//    - (void)phoneVerificationDidFail:(NSError *)error
+//    {
+//    self.navigationController.showLoadingView = NO;
+//    [self showAlertForError:error];
+//    }
+
 }
 
 // MARK: - Starting the Flow
@@ -534,24 +650,18 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
     func landingViewControllerDidChooseLogin() {
-        self.transition(to: .provideCredentials)
+        transition(to: .provideCredentials)
     }
 
     func landingViewControllerDidChooseCreateAccount() {
-//        if let navigationController = self.visibleViewController as? NavigationController {
-//            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
-//            registrationViewController.delegate = appStateController
-//            registrationViewController.shouldHideCancelButton = true
-//            navigationController.pushViewController(registrationViewController, animated: true)
-//        }
+        let unregisteredUser = ZMIncompleteRegistrationUser()
+        unregisteredUser.accentColorValue = UIColor.indexedAccentColor()
+
+        transition(to: .createCredentials(unregisteredUser))
     }
 
     func landingViewControllerDidChooseCreateTeam() {
         // flowController.startFlow()
-    }
-
-    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: Wire.ContextType) {
-        // no-op
     }
 
 }

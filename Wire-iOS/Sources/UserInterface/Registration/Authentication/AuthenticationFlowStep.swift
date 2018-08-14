@@ -28,11 +28,15 @@ enum AuthenticationFlowStep {
     case landingScreen
     case reauthenticate(error: NSError, numberOfAccounts: Int)
 
+    // Verification
+    case verifyPhoneNumber(phoneNumber: String, user: ZMIncompleteRegistrationUser?, credentialsValidated: Bool)
+    case verifyEmailCredentials(ZMEmailCredentials)
+
     // Sign-In
     case provideCredentials
-    case verifyPhoneNumber(phoneNumber: String, accountExists: Bool)
     case authenticateEmailCredentials(ZMEmailCredentials)
     case authenticatePhoneCredentials(ZMPhoneCredentials)
+    case registerEmailCredentials(ZMEmailCredentials)
 
     // Post Sign-In
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
@@ -41,8 +45,10 @@ enum AuthenticationFlowStep {
     case pendingInitialSync
 
     // Registration
-    case registerEmailCredentials(ZMEmailCredentials)
-    case verifyEmailCredentials(ZMEmailCredentials)
+    case createCredentials(ZMIncompleteRegistrationUser)
+    case reviewTermsOfUse(ZMIncompleteRegistrationUser)
+    case setName(ZMIncompleteRegistrationUser)
+    case setProfilePicture(ZMIncompleteRegistrationUser)
 
     // MARK: - Properties
 
@@ -61,7 +67,7 @@ enum AuthenticationFlowStep {
         case .authenticatePhoneCredentials: return false
         case .registerEmailCredentials: return false
         case .pendingInitialSync: return false
-        case .verifyPhoneNumber(_, let accountExists): return accountExists
+        case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
         default: return true
         }
     }

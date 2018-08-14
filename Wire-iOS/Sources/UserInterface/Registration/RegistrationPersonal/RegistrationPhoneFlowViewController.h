@@ -18,22 +18,17 @@
 
 
 #import <UIKit/UIKit.h>
-
-#import "FormFlowViewController.h"
-
-
+#import "AuthenticationCoordinatedViewController.h"
 
 @class ZMIncompleteRegistrationUser;
 @class FormFlowViewController;
 @class RegistrationPhoneFlowViewController;
 @class LoginCredentials;
 
-@interface RegistrationPhoneFlowViewController : FormFlowViewController
+@interface RegistrationPhoneFlowViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
-
-@property (nonatomic, weak) id <RegistrationFlowViewControllerDelegate> registrationDelegate;
 
 @end

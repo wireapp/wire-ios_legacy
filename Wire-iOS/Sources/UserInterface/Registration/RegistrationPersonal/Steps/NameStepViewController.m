@@ -28,7 +28,6 @@
 
 @import WireExtensionComponents;
 
-
 @interface NameStepViewController () <RegistrationTextFieldDelegate>
 
 @property (nonatomic) UILabel *heroLabel;
@@ -37,7 +36,6 @@
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 @end
-
 
 
 @implementation NameStepViewController
@@ -70,7 +68,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     [self.nameField becomeFirstResponder];
 }
 
