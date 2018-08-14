@@ -148,12 +148,12 @@ private let zmLog = ZMSLog(tag: "UI")
             additionalItems.append(.save(with: #selector(wr_saveVideo)))
         }
         
-        if let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
-            additionalItems += [
-                .forward(with: #selector(forward)),
-                .download(with: #selector(download))
-            ]
+        if let fileMessageData = message.fileMessageData {
+            if let _ = fileMessageData.fileURL {
+                additionalItems.append(.forward(with: #selector(forward)))
+            }
+            
+            additionalItems.append(.download(with: #selector(download)))
         }
         
         properties.additionalItems = additionalItems
