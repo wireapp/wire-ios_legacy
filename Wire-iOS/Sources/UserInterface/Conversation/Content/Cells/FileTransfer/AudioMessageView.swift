@@ -493,10 +493,12 @@ extension AudioMessageView : WireCallCenterCallStateObserver {
         // Resume playing when the call is terminating (and the audio is paused by this method)
         switch (previousCallState, callState) {
         case (_, .incoming(_, _, _)):
-            player.pause()
-            isPausedForIncomingCall = true
+            if player.isPlaying {
+                player.pause()
+                isPausedForIncomingCall = true
+            }
         case (.incoming(_, _, _)?, .terminating(reason: _)):
-            if isPausedForIncomingCall {
+            if isPausedForIncomingCall && !player.isPlaying {
                 player.play()
             }
             isPausedForIncomingCall = false

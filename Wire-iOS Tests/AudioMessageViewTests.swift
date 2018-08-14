@@ -19,33 +19,67 @@
 import XCTest
 @testable import Wire
 
-final class MockAudioTrack: NSObject, AudioTrack {
-    var title: String!
+extension MockMessage: AudioTrack {
+    public var artworkURL: URL! {
+        get {
+            return .none
+        }
+    }
 
-    var author: String!
+    public var title: String? {
+        get {
+            return .none
+        }
+    }
+    public var author: String? {
+        get {
+            return .none
+        }
+    }
 
-    var artwork: UIImage!
+    public var artwork: UIImage? {
+        get {
+            return .none
+        }
+    }
 
-    var duration: TimeInterval = 0.0
+    public var duration: TimeInterval {
+        get {
+            return 9999
+        }
+    }
 
-    var artworkURL: URL!
+    public var streamURL: URL? {
+        get {
+            return .none
+        }
+    }
 
-    var streamURL: URL!
+    public var previewStreamURL: URL? {
+        get {
+            return .none
+        }
+    }
 
-    var previewStreamURL: URL!
+    public var externalURL: URL? {
+        get {
+            return .none
+        }
+    }
 
-    var externalURL: URL!
+    public var failedToLoad: Bool {
+        get {
+            return false
+        }
+        set {
+            // no-op
+        }
+    }
 
-    var failedToLoad: Bool
-
-    func fetchArtwork() {
+    public func fetchArtwork() {
         // no-op
     }
 
-    override init() {
-        failedToLoad = false
-        super.init()
-    }
 }
 
 final class AudioMessageViewTests: XCTestCase {
@@ -55,22 +89,7 @@ final class AudioMessageViewTests: XCTestCase {
     override func setUp() {
         super.setUp()
         sut = AudioMessageView()
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
 
-
-
-    /// Example checker method which can be reused in different tests
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
-    }
-
-    func testExample(){
-        // GIVEN
         let url = Bundle(for: type(of: self)).url(forResource: "audio_sample", withExtension: "m4a")!
 
         let audioMessage = MockMessageFactory.audioMessage(config: {
@@ -80,20 +99,58 @@ final class AudioMessageViewTests: XCTestCase {
 
         let mediaPlayBackManager = MediaPlaybackManager(name: "conversationMedia")
         sut.audioTrackPlayer = mediaPlayBackManager?.audioTrackPlayer
-        let audioTrack = MockAudioTrack()
-        sut.audioTrackPlayer?.load(audioTrack, sourceMessage: audioMessage, completionHandler: nil)
+
+        sut.audioTrackPlayer?.load(audioMessage, sourceMessage: audioMessage, completionHandler: nil)
         sut.configure(for: audioMessage, isInitial: true)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    /// Example checker method which can be reused in different tests
+    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
+        XCTAssert(true, file: file, line: line)
+    }
+
+
+    func testThatAudioMessageIsResumedAfterIncomingCallIsTerminated() {
+        // GIVEN
 
         // WHEN
-
-//        AudioTrack
-
-//        mediaPlayBackManager.con
-
         sut.playButton.sendActions(for: .touchUpInside)
         XCTAssert((sut.audioTrackPlayer?.isPlaying)!)
 
         // THEN
-        checkerExample()
+        let incomingState = CallState.incoming(video: false, shouldRing: true, degraded: false)
+        sut.callCenterDidChange(callState: incomingState, conversation: ZMConversation(), caller: ZMUser(), timestamp: nil, previousCallState: nil)
+
+        XCTAssertFalse((sut.audioTrackPlayer?.isPlaying)!)
+
+        sut.callCenterDidChange(callState: .terminating(reason: WireSyncEngine.CallClosedReason.normal), conversation: ZMConversation(), caller: ZMUser(), timestamp: nil, previousCallState: incomingState)
+
+        XCTAssert((sut.audioTrackPlayer?.isPlaying)!)
+    }
+
+    func testThatAudioMessageIsNotResumedIfItIsPausedAfterIncomingCallIsTerminated() {
+        // GIVEN
+
+        // WHEN
+        sut.playButton.sendActions(for: .touchUpInside)
+        XCTAssert((sut.audioTrackPlayer?.isPlaying)!)
+
+        sut.playButton.sendActions(for: .touchUpInside)
+        XCTAssertFalse((sut.audioTrackPlayer?.isPlaying)!)
+
+        // THEN
+        let incomingState = CallState.incoming(video: false, shouldRing: true, degraded: false)
+        sut.callCenterDidChange(callState: incomingState, conversation: ZMConversation(), caller: ZMUser(), timestamp: nil, previousCallState: nil)
+
+        XCTAssertFalse((sut.audioTrackPlayer?.isPlaying)!)
+
+        sut.callCenterDidChange(callState: .terminating(reason: WireSyncEngine.CallClosedReason.normal), conversation: ZMConversation(), caller: ZMUser(), timestamp: nil, previousCallState: incomingState)
+
+        XCTAssertFalse((sut.audioTrackPlayer?.isPlaying)!)
     }
 }
