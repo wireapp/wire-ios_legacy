@@ -65,9 +65,8 @@ class AuthenticationInterfaceBuilder {
             return NoHistoryViewController(contextType: type)
 
         case .verifyPhoneNumber(let phoneNumber, let user, _):
-            let verificationController = PhoneVerificationStepViewController()
+            let verificationController = PhoneVerificationStepViewController(unregisteredUser: user)!
             verificationController.phoneNumber = phoneNumber
-            verificationController.isLoggingIn = user != nil
             return verificationController
 
         case .addEmailAndPassword(_, _, let canSkip):

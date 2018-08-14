@@ -16,25 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
-#import "RegistrationStepViewController.h"
 #import "AuthenticationCoordinatedViewController.h"
 
 @class ZMIncompleteRegistrationUser;
 
-@protocol PhoneVerificationStepViewControllerDelegate <NSObject>
-
-- (void)phoneVerificationStepDidRequestVerificationCode;
-
-@end
-
-@interface PhoneVerificationStepViewController : RegistrationStepViewController <AuthenticationCoordinatedViewController>
+@interface PhoneVerificationStepViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser;
 
-@property (nonatomic, weak) id<PhoneVerificationStepViewControllerDelegate> delegate;
 @property (nonatomic, copy) NSString *phoneNumber;
-@property (nonatomic) BOOL isLoggingIn;
-@property (nonatomic, readonly) NSString *verificationCode;
 
 @end

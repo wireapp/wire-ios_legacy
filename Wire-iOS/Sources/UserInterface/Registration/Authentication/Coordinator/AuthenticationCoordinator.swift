@@ -223,6 +223,9 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
             case .transition(let nextStep, let resetStack):
                 transition(to: nextStep, resetStack: resetStack)
 
+            case .performPhoneLoginFromRegistration(let phoneNumber):
+                askVerificationCode(for: phoneNumber, isSigningIn: true)
+
             case .unwindState:
                 unwind()
             }
@@ -301,6 +304,23 @@ extension AuthenticationCoordinator {
             unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
         } else {
             unauthenticatedSession.requestPhoneVerificationCodeForRegistration(phoneNumber)
+        }
+    }
+
+    @objc(validatePhoneNumberWithCode:)
+    func validatePhoneNumber(with code: String) {
+        guard case let .verifyPhoneNumber(phoneNumber, user, _) = currentStep else {
+            log.info("Ignoring request to resend phone code with step = \(currentStep).")
+            return
+        }
+
+        if let unauthenticatedUser = user {
+            presenter?.showLoadingView = true
+            unauthenticatedUser.phoneVerificationCode = code
+            unauthenticatedSession.verifyPhoneNumberForRegistration(phoneNumber, verificationCode: code)
+        } else {
+            let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
+            requestPhoneLogin(with: credentials)
         }
     }
 
@@ -478,7 +498,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
 
     /// Called when the validation code for the registered phone number was sent.
     func phoneVerificationCodeRequestDidFail(_ error: Error!) {
-        // no-op
+        eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
     }
 
     /// Called when the validation code for the registered phone number was sent.

@@ -46,6 +46,7 @@ class AuthenticationEventHandlingManager {
         case clientRegistrationSuccess
         case authenticationFailure(NSError)
         case phoneLoginCodeAvailable
+        case registrationError(NSError)
     }
 
     // MARK: - Properties
@@ -62,6 +63,7 @@ class AuthenticationEventHandlingManager {
     var clientRegistrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var loginErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
     var phoneLoginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
+    var registrationErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
 
     /**
      * Configures the object with the given delegate and registers the default observers.
@@ -102,6 +104,10 @@ class AuthenticationEventHandlingManager {
 
         // phoneLoginCodeHandlers
         registerHandler(AuthenticationLoginCodeAvailableEventHandler(), to: &phoneLoginCodeHandlers)
+
+        // registrationErrorHandlers
+        registerHandler(PhoneRegistrationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
+        registerHandler(PhoneRegistrationVerificationErrorHandler(), to: &registrationErrorHandlers)
     }
 
     fileprivate func registerHandler<Handler: AuthenticationEventHandler>(_ handler: Handler, to handlerList: inout [AnyAuthenticationEventHandler<Handler.Context>]) {
@@ -133,6 +139,8 @@ class AuthenticationEventHandlingManager {
             handleEvent(with: loginErrorHandlers, context: error)
         case .phoneLoginCodeAvailable:
             handleEvent(with: phoneLoginCodeHandlers, context: ())
+        case .registrationError(let error):
+            handleEvent(with: registrationErrorHandlers, context: error)
         }
     }
 

@@ -36,7 +36,7 @@ class AuthenticationLoginCodeAvailableEventHandler: AuthenticationEventHandler {
 
         // Do not transition to a new state if the user asked the code manually
         if !credentialsValidated {
-            let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: credentialsValidated)
+            let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: true)
             actions.append(.transition(nextStep, resetStack: false))
         }
 
