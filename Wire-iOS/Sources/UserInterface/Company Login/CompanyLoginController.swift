@@ -129,7 +129,10 @@ import Foundation
     /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
     @objc func internalDetectLoginCode(onlyNew: Bool) {
         guard isAutoDetectionEnabled else { return }
-        detector.detectCopiedRequestCode { [presentLoginAlert] result in
+        detector.detectCopiedRequestCode { [isAutoDetectionEnabled, presentLoginAlert] result in
+            // This might have changed in the meantime.
+            guard isAutoDetectionEnabled else { return }
+
             guard let result = result, !onlyNew || result.isNew else { return }
             presentLoginAlert(result.code)
         }
@@ -145,9 +148,6 @@ import Foundation
 
     /// Presents the SSO login alert with an optional prefilled code.
     private func presentLoginAlert(prefilledCode: String?) {
-        // This might have changed in the meantime.
-        guard isAutoDetectionEnabled else { return }
-        
         let alertController = UIAlertController.companyLogin(
             prefilledCode: prefilledCode,
             validator: CompanyLoginRequestDetector.isValidRequestCode,
