@@ -541,8 +541,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     NSMutableArray <UIMenuItem *> *items = [NSMutableArray array];
     
     if (!self.message.isEphemeral) {
-        [items addObjectsFromArray:menuConfigurationProperties.additionalItems];
-        
+        [items addObjectsFromArray:[menuConfigurationProperties.additionalItems mapWithBlock:^UIMenuItem *(AdditionalMenuItem *item) {
+            return item.item;
+        }]];
+
         if ([Message messageCanBeLiked:self.message]) {
             UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
             
@@ -552,6 +554,12 @@ static const CGFloat BurstContainerExpandedHeight = 40;
                 [items addObject:likeItem];
             }
         }
+    } else {
+        [items addObjectsFromArray:[[menuConfigurationProperties.additionalItems filterWithBlock:^BOOL(AdditionalMenuItem *item) {
+            return item.availableInEphemeralConversations;
+        }] mapWithBlock:^UIMenuItem *(AdditionalMenuItem *item) {
+            return item.item;
+        }]];
     }
 
     // at this point, if message is ephemeral, then this will always be true

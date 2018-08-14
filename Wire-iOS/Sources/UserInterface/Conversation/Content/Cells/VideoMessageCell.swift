@@ -142,18 +142,18 @@ private let zmLog = ZMSLog(tag: "UI")
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
 
-        var additionalItems = [UIMenuItem]()
+        var additionalItems = [AdditionalMenuItem]()
         
         if message.videoCanBeSavedToCameraRoll() {
-            additionalItems.append(.save(with: #selector(wr_saveVideo)))
+            additionalItems.append(.forbiddenInEphemeral(.save(with: #selector(wr_saveVideo))))
         }
         
         if let fileMessageData = message.fileMessageData {
             if let _ = fileMessageData.fileURL {
-                additionalItems.append(.forward(with: #selector(forward)))
+                additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
             }
             
-            additionalItems.append(.download(with: #selector(download)))
+            additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))
         }
         
         properties.additionalItems = additionalItems

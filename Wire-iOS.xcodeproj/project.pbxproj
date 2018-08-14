@@ -762,6 +762,7 @@
 		BF10B58D1E6452B800E7036E /* ZMMessage+Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF10B58C1E6452B800E7036E /* ZMMessage+Likes.swift */; };
 		BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4B1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift */; };
 		BF16FC4F1DAFCE9300FF4325 /* MockConversationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */; };
+		BF1743742123060E008851CA /* AdditionalMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1743732123060E008851CA /* AdditionalMenuItem.swift */; };
 		BF1A81281C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1A81271C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift */; };
 		BF2756DB1E38E16D00082786 /* ShareExtensionAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2756DA1E38E16D00082786 /* ShareExtensionAnalytics.swift */; };
 		BF27AE4B1E9E4CED00809A2B /* MessageDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF27AE4A1E9E4CED00809A2B /* MessageDraft.swift */; };
@@ -2356,6 +2357,7 @@
 		BF16FC4B1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EphemeralKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		BF16FC4D1DAFCE9300FF4325 /* MockConversationFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockConversationFactory.h; sourceTree = "<group>"; };
 		BF16FC4E1DAFCE9300FF4325 /* MockConversationFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockConversationFactory.m; sourceTree = "<group>"; };
+		BF1743732123060E008851CA /* AdditionalMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalMenuItem.swift; sourceTree = "<group>"; };
 		BF1A81271C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+NavigationBar.swift"; sourceTree = "<group>"; };
 		BF2756DA1E38E16D00082786 /* ShareExtensionAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareExtensionAnalytics.swift; sourceTree = "<group>"; };
 		BF27AE4A1E9E4CED00809A2B /* MessageDraft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDraft.swift; sourceTree = "<group>"; };
@@ -4877,6 +4879,7 @@
 			children = (
 				8781C94E1E2687590024F3F6 /* MessageAction.h */,
 				16E311C11A5FEA2B00FF2C9E /* ConversationCell.h */,
+				BF1743732123060E008851CA /* AdditionalMenuItem.swift */,
 				EF2CC33C1FF3C567009FFE4C /* ConversationCell+Private.h */,
 				16E311C21A5FEA2B00FF2C9E /* ConversationCell.m */,
 				D59EA0C420234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift */,
@@ -7254,6 +7257,7 @@
 				EF21271F1FB9DFE300625A9B /* AddPhoneNumberViewController.m in Sources */,
 				EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */,
 				16CB8DB91DC0F777000C5F47 /* DefaultNavigationBar.swift in Sources */,
+				BF1743742123060E008851CA /* AdditionalMenuItem.swift in Sources */,
 				F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */,
 				877A32621E892F950017DD9A /* ConversationListItemView+Update.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,

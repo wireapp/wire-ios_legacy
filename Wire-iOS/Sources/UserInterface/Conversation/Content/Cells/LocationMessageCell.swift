@@ -194,7 +194,7 @@ import Classy
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
-        properties.additionalItems = [.forward(with: #selector(forward))]
+        properties.additionalItems = [.forbiddenInEphemeral(.forward(with: #selector(forward)))]
         return properties
     }
     

@@ -29,17 +29,19 @@
 @class LikeButton;
 @class LinkAttachment;
 @class ConversationCellBurstTimestampView;
+@class AdditionalMenuItem;
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;
 
 typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
+
 @interface MenuConfigurationProperties : NSObject
 
 @property (nonatomic) CGRect targetRect;
 @property (nonatomic) UIView *targetView;
 @property (nonatomic) SelectedMenuBlock selectedMenuBlock;
-@property (nonatomic) NSArray <UIMenuItem *> *additionalItems;
+@property (nonatomic) NSArray <AdditionalMenuItem *> *additionalItems;
 @property (nonatomic) NSUInteger likeItemIndex;
 
 @end

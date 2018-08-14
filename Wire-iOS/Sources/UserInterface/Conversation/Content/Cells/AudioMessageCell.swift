@@ -142,20 +142,20 @@ import Classy
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
         
-        var additionalItems = [UIMenuItem]()
+        var additionalItems = [AdditionalMenuItem]()
         
         if message.audioCanBeSaved() {
             let menuItem = UIMenuItem(title: "content.file.save_audio".localized, action:#selector(wr_saveAudio))
-            additionalItems.append(menuItem)
+            additionalItems.append(.forbiddenInEphemeral(menuItem))
         }
         
         if let fileMessageData = message.fileMessageData {
             if let _ = fileMessageData.fileURL {
-                additionalItems.append(.forward(with: #selector(forward)))
+                additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
             }
             
             if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
-                additionalItems.append(.download(with: #selector(download)))
+                additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))
             }
         }
         

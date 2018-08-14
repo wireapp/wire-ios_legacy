@@ -124,24 +124,23 @@ import Classy
             }
         }
         
-        var additionalItems = [UIMenuItem]()
+        var additionalItems = [AdditionalMenuItem]()
         
         if let message = message, let fileMessageData = message.fileMessageData {
             if let _ = fileMessageData.fileURL {
                 additionalItems += [
-                    .open(with: #selector(open)),
-                    .save(with: #selector(save)),
-                    .forward(with: #selector(forward))
+                    .forbiddenInEphemeral(.open(with: #selector(open))),
+                    .forbiddenInEphemeral(.save(with: #selector(save))),
+                    .forbiddenInEphemeral(.forward(with: #selector(forward)))
                 ]
             }
             
             if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
                 additionalItems += [
-                    .download(with: #selector(download))
+                    .allowedInEphemeral(.download(with: #selector(download)))
                 ]
             }
         }
-        
 
         properties.likeItemIndex = 1 // Open should be first
         properties.additionalItems = additionalItems
