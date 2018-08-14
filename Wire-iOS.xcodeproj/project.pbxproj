@@ -248,9 +248,12 @@
 		5E8DA76A211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */; };
 		5E8DA76C211B2EC200360979 /* AuthenticationEventHandlingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA76B211B2EC200360979 /* AuthenticationEventHandlingManager.swift */; };
 		5E8DA76F211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA76E211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift */; };
-		5E8DA771211B441600360979 /* AuthenticationStartClientDeletionErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA770211B441600360979 /* AuthenticationStartClientDeletionErrorHandler.swift */; };
 		5E8DA774211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA773211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift */; };
-		5E8DA776211B468600360979 /* AuthenticationStartFallbackEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA775211B468600360979 /* AuthenticationStartFallbackEventHandler.swift */; };
+		5E8DA782211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA781211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift */; };
+		5E8DA784211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA783211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift */; };
+		5E8DA786211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */; };
+		5E8DA788211C499900360979 /* AuthenticationCoordinator+PreLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */; };
+		5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeRequestErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA78B211C6FF700360979 /* AuthenticationLoginCodeRequestErrorHandler.swift */; };
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
@@ -290,6 +293,7 @@
 		5ED26CD620E7D08E00EB9ED4 /* VerticalColumnCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */; };
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
 		5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */; };
+		5EE73BE62122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */; };
 		5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */; };
 		5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */; };
 		5EEFC1A720C01C85007E8A79 /* RoundedViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */; };
@@ -1601,9 +1605,12 @@
 		5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+InitialSync.swift"; sourceTree = "<group>"; };
 		5E8DA76B211B2EC200360979 /* AuthenticationEventHandlingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventHandlingManager.swift; sourceTree = "<group>"; };
 		5E8DA76E211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartReauthenticateErrorHandler.swift; sourceTree = "<group>"; };
-		5E8DA770211B441600360979 /* AuthenticationStartClientDeletionErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartClientDeletionErrorHandler.swift; sourceTree = "<group>"; };
 		5E8DA773211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationFlowStep+ClientsDeletion.swift"; sourceTree = "<group>"; };
-		5E8DA775211B468600360979 /* AuthenticationStartFallbackEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartFallbackEventHandler.swift; sourceTree = "<group>"; };
+		5E8DA781211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPhoneLoginErrorHandler.swift; sourceTree = "<group>"; };
+		5E8DA783211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailLoginUnknownErrorHandler.swift; sourceTree = "<group>"; };
+		5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEmailFallbackErrorHandler.swift; sourceTree = "<group>"; };
+		5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+PreLogin.swift"; sourceTree = "<group>"; };
+		5E8DA78B211C6FF700360979 /* AuthenticationLoginCodeRequestErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLoginCodeRequestErrorHandler.swift; sourceTree = "<group>"; };
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
@@ -1642,6 +1649,7 @@
 		5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioningContext.swift; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
 		5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCornerPinningBehavior.swift; sourceTree = "<group>"; };
+		5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartAddAccountEventHandler.swift; sourceTree = "<group>"; };
 		5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousMaskLayer.swift; sourceTree = "<group>"; };
 		5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViewProtocol.swift; sourceTree = "<group>"; };
@@ -3495,6 +3503,7 @@
 				5E8DA76B211B2EC200360979 /* AuthenticationEventHandlingManager.swift */,
 				5E8DA76D211B41FC00360979 /* Flow Start */,
 				5E8DA752211AF7A000360979 /* Initial Sync */,
+				5E8DA780211C3B7200360979 /* Pre-Login */,
 				5E8DA756211B04EA00360979 /* Post-Login */,
 			);
 			path = "Event Handlers";
@@ -3550,6 +3559,7 @@
 			isa = PBXGroup;
 			children = (
 				5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */,
+				5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */,
 				5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */,
 				5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */,
 			);
@@ -3568,8 +3578,7 @@
 			isa = PBXGroup;
 			children = (
 				5E8DA76E211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift */,
-				5E8DA770211B441600360979 /* AuthenticationStartClientDeletionErrorHandler.swift */,
-				5E8DA775211B468600360979 /* AuthenticationStartFallbackEventHandler.swift */,
+				5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */,
 			);
 			path = "Flow Start";
 			sourceTree = "<group>";
@@ -3580,6 +3589,33 @@
 				5E8DA773211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		5E8DA780211C3B7200360979 /* Pre-Login */ = {
+			isa = PBXGroup;
+			children = (
+				5E8DA78A211C6F6500360979 /* PhoneVerification */,
+				5E8DA789211C6F5A00360979 /* Credentials Verification */,
+			);
+			path = "Pre-Login";
+			sourceTree = "<group>";
+		};
+		5E8DA789211C6F5A00360979 /* Credentials Verification */ = {
+			isa = PBXGroup;
+			children = (
+				5E8DA781211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift */,
+				5E8DA783211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift */,
+				5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */,
+			);
+			path = "Credentials Verification";
+			sourceTree = "<group>";
+		};
+		5E8DA78A211C6F6500360979 /* PhoneVerification */ = {
+			isa = PBXGroup;
+			children = (
+				5E8DA78B211C6FF700360979 /* AuthenticationLoginCodeRequestErrorHandler.swift */,
+			);
+			path = PhoneVerification;
 			sourceTree = "<group>";
 		};
 		5EA73D7A20D900A10001D106 /* Cells */ = {
@@ -6665,6 +6701,7 @@
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
 				5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */,
+				5EE73BE62122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
 				5E8DA76A211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift in Sources */,
@@ -6679,6 +6716,7 @@
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
+				5E8DA788211C499900360979 /* AuthenticationCoordinator+PreLogin.swift in Sources */,
 				16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */,
 				1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */,
 				EF218AC520A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift in Sources */,
@@ -6782,7 +6820,6 @@
 				872CB8B319E58816006752B4 /* ProfileFooterView.m in Sources */,
 				8742C2F31E534ED500329FB6 /* SearchResultLabel.swift in Sources */,
 				5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */,
-				5E8DA776211B468600360979 /* AuthenticationStartFallbackEventHandler.swift in Sources */,
 				D5694B5220441EE900C84C8F /* UILabel+Convenience.swift in Sources */,
 				EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */,
 				5EA73D8120D900A10001D106 /* GroupDetailsTimeoutOptionsCell.swift in Sources */,
@@ -6937,6 +6974,7 @@
 				D5168F4D2010B61D00F8222A /* URL+Wire.swift in Sources */,
 				5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */,
 				8FC8543D199245770008B66B /* ConnectRequestsViewController.m in Sources */,
+				5E8DA786211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift in Sources */,
 				EF6777062073C6C20062F122 /* OfflineBar.swift in Sources */,
 				F16426F61FCC0FE200D2ABFC /* UIColor+Hex.swift in Sources */,
 				BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */,
@@ -7005,6 +7043,7 @@
 				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,
 				16A94AF8209B5334008A5718 /* VideoGridView.swift in Sources */,
 				16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */,
+				5E8DA782211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift in Sources */,
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
 				5EC16B9120EB8C6F00955156 /* YouTubeService.swift in Sources */,
 				8762BE151D8978F70040E4A5 /* ZMAccentColor+Additions.swift in Sources */,
@@ -7233,7 +7272,6 @@
 				BF79B0FE20A99762001BF4FE /* VideoPreviewView.swift in Sources */,
 				BFBBD1ED20D9238B00BFC4AD /* NotificationWindow.swift in Sources */,
 				87A15FDF1E08318B00AED79B /* CollectionLoadingCell.swift in Sources */,
-				5E8DA771211B441600360979 /* AuthenticationStartClientDeletionErrorHandler.swift in Sources */,
 				F19C3A8F20513532004387E4 /* DatabaseStatisticsController.swift in Sources */,
 				D50892FB2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift in Sources */,
 				870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */,
@@ -7316,6 +7354,7 @@
 				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,
 				EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,
+				5E8DA784211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift in Sources */,
 				87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */,
 				D5694B502044144500C84C8F /* ToggleView.swift in Sources */,
 				EF2127141FB9DFE300625A9B /* EmailStepViewController.m in Sources */,
@@ -7453,6 +7492,7 @@
 				D525426B2093637D001C04C1 /* IconButton+Factory.swift in Sources */,
 				EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */,
 				D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */,
+				5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeRequestErrorHandler.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,
 				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,

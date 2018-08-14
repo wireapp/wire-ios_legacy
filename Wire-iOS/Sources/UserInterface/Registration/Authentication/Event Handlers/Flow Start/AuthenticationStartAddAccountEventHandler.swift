@@ -19,36 +19,28 @@
 import Foundation
 
 /**
- * Handles reauthentication errors sent at the start of the flow.
+ * Handles requests to add a new user account.
  */
 
-class AuthenticationStartReauthenticateErrorHandler: AuthenticationEventHandler {
+class AuthenticationStartAddAccountEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
-        let (optionalError, numberOfAccounts) = context
+        // The user is adding a new account
+        var isAddingNewAccount = context.1 == 0
 
-        // If there is no error, we don't need to reauthenticate
-        guard let error = optionalError else {
+        // If there is a login error, check for `addAccountRequested`
+        if let error = context.0 {
+            isAddingNewAccount = error.userSessionErrorCode == .addAccountRequested
+        }
+
+        // Only handle the event if the user is adding a new account.
+        guard isAddingNewAccount else {
             return nil
         }
 
-        // Only handle reauthentication errors
-        let supportedErrors: [ZMUserSessionErrorCode] = [
-            .clientDeletedRemotely,
-            .accessTokenExpired,
-            .needsPasswordToRegisterClient,
-            .needsToRegisterEmailToRegisterClient
-         ]
-
-        guard supportedErrors.contains(error.userSessionErrorCode) else {
-            return nil
-        }
-
-        // Prepare the next step
-        let nextStep = AuthenticationFlowStep.reauthenticate(error: error, numberOfAccounts: numberOfAccounts)
-        return [.transition(nextStep, resetStack: true)]
+        return [.hideLoadingView, .transition(.landingScreen, resetStack: true)]
     }
 
 }

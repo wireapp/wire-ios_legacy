@@ -24,6 +24,9 @@ import Foundation
 
 class AnyAuthenticationEventHandler<Context> {
 
+    /// The name of the handler.
+    private(set) var name: String
+
     private let statusProviderGetter: () -> AuthenticationStatusProvider?
     private let statusProviderSetter: (AuthenticationStatusProvider?) -> Void
     private let handlerBlock: (AuthenticationFlowStep, Context) -> [AuthenticationCoordinatorAction]?
@@ -35,6 +38,7 @@ class AnyAuthenticationEventHandler<Context> {
     init<Handler: AuthenticationEventHandler>(_ handler: Handler) where Handler.Context == Context {
         statusProviderGetter = { handler.statusProvider }
         statusProviderSetter = { handler.statusProvider = $0 }
+        self.name = String(describing: Handler.self)
         handlerBlock = handler.handleEvent
     }
 

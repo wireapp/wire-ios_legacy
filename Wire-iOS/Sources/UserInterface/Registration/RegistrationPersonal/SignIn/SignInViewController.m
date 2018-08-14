@@ -295,8 +295,10 @@
 
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {
-    if (self.presentedSignInViewController == self.emailSignInViewController) {
+    if (self.presentedSignInViewController == self.emailSignInViewControllerContainer) {
         [self.emailSignInViewController executeErrorFeedbackAction:feedbackAction];
+    } else {
+        [self.phoneSignInViewController executeErrorFeedbackAction:feedbackAction];
     }
 }
 

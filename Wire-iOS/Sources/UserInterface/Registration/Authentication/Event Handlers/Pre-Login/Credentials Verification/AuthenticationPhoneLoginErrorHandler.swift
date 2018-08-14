@@ -19,16 +19,29 @@
 import Foundation
 
 /**
- * Displays the landing screen when no other start event handler caught an action to execute.
- * - warning: You need to add this event last in the list of start handlers.
+ * Handles login errors that happens during the phone login flow.
  */
 
-class AuthenticationStartFallbackEventHandler: AuthenticationEventHandler {
+class AuthenticationPhoneLoginErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
-        return [.hideLoadingView, .transition(.landingScreen, resetStack: true)]
+    func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
+        let error = context
+
+        // Only handle errors that happen during phone login
+        switch currentStep {
+        case .authenticatePhoneCredentials, .verifyPhoneNumber:
+            break
+        default:
+            return nil
+        }
+
+        // Prepare and return the alert
+        let errorAlert = AuthenticationCoordinatorErrorAlert(error: error,
+                                                             completionActions: [.unwindState])
+
+        return [.hideLoadingView, .presentErrorAlert(errorAlert)]
     }
 
 }

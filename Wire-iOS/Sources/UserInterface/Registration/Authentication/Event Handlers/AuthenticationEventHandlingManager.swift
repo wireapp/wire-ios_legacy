@@ -44,11 +44,14 @@ class AuthenticationEventHandlingManager {
         case backupReady(Bool)
         case clientRegistrationError(NSError, UUID)
         case clientRegistrationSuccess
+        case authenticationFailure(NSError)
+        case phoneLoginCodeAvailable
     }
 
     // MARK: - Properties
 
     weak var delegate: AuthenticationEventHandlingManagerDelegate?
+    private let log = ZMSLog(tag: "Auth")
 
     // MARK: - Configuration
 
@@ -57,6 +60,8 @@ class AuthenticationEventHandlingManager {
     var backupEventHandlers: [AnyAuthenticationEventHandler<Bool>] = []
     var clientRegistrationErrorHandlers: [AnyAuthenticationEventHandler<(NSError, UUID)>] = []
     var clientRegistrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
+    var loginErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
+    var phoneLoginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
 
     /**
      * Configures the object with the given delegate and registers the default observers.
@@ -73,9 +78,8 @@ class AuthenticationEventHandlingManager {
 
     fileprivate func registerDefaultEventHandlers() {
         // flowStartHandlers
+        registerHandler(AuthenticationStartAddAccountEventHandler(), to: &flowStartHandlers)
         registerHandler(AuthenticationStartReauthenticateErrorHandler(), to: &flowStartHandlers)
-        registerHandler(AuthenticationStartClientDeletionErrorHandler(), to: &flowStartHandlers)
-        registerHandler(AuthenticationStartFallbackEventHandler(), to: &flowStartHandlers)
 
         // initialSyncHandlers
         registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)
@@ -90,6 +94,14 @@ class AuthenticationEventHandlingManager {
 
         // clientRegistrationSuccessHandlers
         registerHandler(AuthenticationClientRegistrationSuccessHandler(), to: &clientRegistrationSuccessHandlers)
+
+        // loginErrorHandlers
+        registerHandler(AuthenticationPhoneLoginErrorHandler(), to: &loginErrorHandlers)
+        registerHandler(AuthenticationEmailLoginUnknownErrorHandler(), to: &loginErrorHandlers)
+        registerHandler(AuthenticationEmailFallbackErrorHandler(), to: &loginErrorHandlers)
+
+        // phoneLoginCodeHandlers
+        registerHandler(AuthenticationLoginCodeAvailableEventHandler(), to: &phoneLoginCodeHandlers)
     }
 
     fileprivate func registerHandler<Handler: AuthenticationEventHandler>(_ handler: Handler, to handlerList: inout [AnyAuthenticationEventHandler<Handler.Context>]) {
@@ -104,6 +116,8 @@ class AuthenticationEventHandlingManager {
      */
 
     func handleEvent(ofType eventType: EventType) {
+        log.info("Event handling manager received event: \(eventType)")
+
         switch eventType {
         case .flowStart(let error, let numberOfAccounts):
             handleEvent(with: flowStartHandlers, context: (error, numberOfAccounts))
@@ -115,6 +129,10 @@ class AuthenticationEventHandlingManager {
             handleEvent(with: clientRegistrationErrorHandlers, context: (error, accountID))
         case .clientRegistrationSuccess:
             handleEvent(with: clientRegistrationSuccessHandlers, context: ())
+        case .authenticationFailure(let error):
+            handleEvent(with: loginErrorHandlers, context: error)
+        case .phoneLoginCodeAvailable:
+            handleEvent(with: phoneLoginCodeHandlers, context: ())
         }
     }
 
@@ -124,22 +142,28 @@ class AuthenticationEventHandlingManager {
 
     private func handleEvent<Context>(with handlers: [AnyAuthenticationEventHandler<Context>], context: Context) {
         guard let delegate = self.delegate else {
+            log.error("The event will not be handled because the event handling manager does not have a delegate.")
             return
         }
 
-        var actions: [AuthenticationCoordinatorAction]?
+        var lookupResult: (String, [AuthenticationCoordinatorAction])?
 
         for handler in handlers {
             handler.statusProvider = delegate.statusProvider
 
             if let responseActions = handler.handleEvent(currentStep: delegate.currentStep, context: context) {
-                actions = responseActions
+                lookupResult = (handler.name, responseActions)
                 break
             }
         }
 
-        let resolvedActions = actions ?? []
-        delegate.executeActions(resolvedActions)
+        guard let (name, actions) = lookupResult else {
+            log.error("No handler was found to handle the event.\nStep = \(delegate.currentStep); Context = \(context)")
+            return
+        }
+
+        log.info("Handing event using \(name), and \(actions.count) actions.")
+        delegate.executeActions(actions)
     }
 
 }
