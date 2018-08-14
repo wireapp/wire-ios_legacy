@@ -109,16 +109,10 @@ final class AudioMessageViewTests: XCTestCase {
         super.tearDown()
     }
 
-    /// Example checker method which can be reused in different tests
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
-    }
-
-
     func testThatAudioMessageIsResumedAfterIncomingCallIsTerminated() {
-        // GIVEN
+        // GIVEN & WHEN
 
-        // WHEN
+        // play
         sut.playButton.sendActions(for: .touchUpInside)
         XCTAssert((sut.audioTrackPlayer?.isPlaying)!)
 
@@ -134,12 +128,13 @@ final class AudioMessageViewTests: XCTestCase {
     }
 
     func testThatAudioMessageIsNotResumedIfItIsPausedAfterIncomingCallIsTerminated() {
-        // GIVEN
+        // GIVEN & WHEN
 
-        // WHEN
+        // play
         sut.playButton.sendActions(for: .touchUpInside)
         XCTAssert((sut.audioTrackPlayer?.isPlaying)!)
 
+        // pause
         sut.playButton.sendActions(for: .touchUpInside)
         XCTAssertFalse((sut.audioTrackPlayer?.isPlaying)!)
 
