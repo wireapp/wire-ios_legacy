@@ -78,17 +78,30 @@ class AuthenticationInterfaceBuilder {
             let verificationController = EmailVerificationViewController(credentials: credentials)
             return verificationController
 
-        case .reviewTermsOfUse(let user):
-            return TermsOfUseStepViewController(unregisteredUser: user)
-
-        case .setName(let user):
-            return NameStepViewController(unregisteredUser: user)
-
-        case .setProfilePicture(let user):
-            return ProfilePictureStepViewController(unregisteredUser: user)
+        case .linearRegistration(let registrationStep):
+            return makeLinearRegistrationStepViewController(for: registrationStep)
 
         default:
             return nil
+        }
+    }
+
+    private func makeLinearRegistrationStepViewController(for step: AuthenticationLinearRegistrationStep) -> UIViewController? {
+        switch step {
+        case .registerCredentials:
+            return nil
+
+        case .acceptTermsOfService(let user):
+            return TermsOfUseStepViewController(unregisteredUser: user)
+
+        case .provideMarketingConsent:
+            return nil
+
+        case .setName(let user, _):
+            return NameStepViewController(unregisteredUser: user)
+
+        case .setProfilePicture(let user, _):
+            return ProfilePictureStepViewController(unregisteredUser: user)
         }
     }
 

@@ -297,6 +297,8 @@
 		5EE73BE82122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BE72122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift */; };
 		5EE73BEB212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEA212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift */; };
 		5EE73BED21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */; };
+		5EE73BEF212318D90032986D /* AuthenticationLinearRegistrationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEE212318D90032986D /* AuthenticationLinearRegistrationStep.swift */; };
+		5EE73BF1212319BB0032986D /* LinearRegistrationStepHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */; };
 		5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */; };
 		5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */; };
 		5EEFC1A720C01C85007E8A79 /* RoundedViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */; };
@@ -1656,6 +1658,8 @@
 		5EE73BE72122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationSuccessPhoneRegistrationEventHandler.swift; sourceTree = "<group>"; };
 		5EE73BEA212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationExistingAccountPolicyHandler.swift; sourceTree = "<group>"; };
 		5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationVerificationErrorHandler.swift; sourceTree = "<group>"; };
+		5EE73BEE212318D90032986D /* AuthenticationLinearRegistrationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLinearRegistrationStep.swift; sourceTree = "<group>"; };
+		5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearRegistrationStepHandler.swift; sourceTree = "<group>"; };
 		5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousMaskLayer.swift; sourceTree = "<group>"; };
 		5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViewProtocol.swift; sourceTree = "<group>"; };
@@ -3491,6 +3495,7 @@
 			isa = PBXGroup;
 			children = (
 				5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */,
+				5EE73BEE212318D90032986D /* AuthenticationLinearRegistrationStep.swift */,
 				5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */,
 				5E8DA763211B2CF000360979 /* Coordinator */,
 				5E8DA753211AF7BA00360979 /* Delegates */,
@@ -3719,6 +3724,7 @@
 			children = (
 				5EE73BEA212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift */,
 				5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */,
+				5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -7092,6 +7098,7 @@
 				D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */,
 				BF52C1601CB25FE70037331F /* ArchivedListViewModel.swift in Sources */,
 				871BC28C1D34F8F800DF0793 /* UIScrollView+Zeta.m in Sources */,
+				5EE73BEF212318D90032986D /* AuthenticationLinearRegistrationStep.swift in Sources */,
 				D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */,
 				D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */,
 				871BC2531D34F8F800DF0793 /* MediaThumbnail.m in Sources */,
@@ -7327,6 +7334,7 @@
 				EF21270C1FB9DFE300625A9B /* Country.m in Sources */,
 				BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */,
 				D53D390E20596ED300B87DAD /* ConversationActionController+Block.swift in Sources */,
+				5EE73BF1212319BB0032986D /* LinearRegistrationStepHandler.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,

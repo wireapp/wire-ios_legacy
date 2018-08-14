@@ -46,16 +46,14 @@ enum AuthenticationFlowStep {
 
     // Registration
     case createCredentials(ZMIncompleteRegistrationUser)
-    case reviewTermsOfUse(ZMIncompleteRegistrationUser)
-    case setName(ZMIncompleteRegistrationUser)
-    case setProfilePicture(ZMIncompleteRegistrationUser)
+    case linearRegistration(AuthenticationLinearRegistrationStep)
 
     // MARK: - Properties
 
     /// Whether the step can be unwinded.
     var allowsUnwind: Bool {
         switch self {
-        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword: return false
+        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword, .linearRegistration: return false
         default: return true
         }
     }

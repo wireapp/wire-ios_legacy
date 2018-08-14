@@ -56,6 +56,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
     private let interfaceBuilder = AuthenticationInterfaceBuilder()
 
+    private let sessionManager: ObservableSessionManager
     private let unauthenticatedSession: UnauthenticatedSession
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
@@ -65,6 +66,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
 
     init(presenter: NavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
         self.presenter = presenter
+        self.sessionManager = sessionManager
         self.unauthenticatedSession = unauthenticatedSession
         super.init()
 
@@ -225,6 +227,9 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
             case .performPhoneLoginFromRegistration(let phoneNumber):
                 askVerificationCode(for: phoneNumber, isSigningIn: true)
+
+            case .configureNotifications:
+                sessionManager.configureUserNotifications()
 
             case .unwindState:
                 unwind()
@@ -478,6 +483,22 @@ extension AuthenticationCoordinator {
         companyLoginController?.isAutoDetectionEnabled = false
     }
 
+    // MARK: - Linear Registration
+
+    @objc func acceptTermsOfService() {
+
+    }
+
+    @objc func saveMarketingConsent() {
+
+    }
+
+    @objc func setUserName(_ userName: String) {
+
+    }
+
+    @objc func
+
 }
 
 // MARK: - User Session Events
@@ -488,6 +509,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
 
     /// Called when the phone number verification succeeds.
     func phoneVerificationDidSucceed() {
+        eventHandlingManager.handleEvent(ofType: <#T##AuthenticationEventHandlingManager.EventType#>)
         // no-op
     }
 
