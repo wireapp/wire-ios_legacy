@@ -27,8 +27,6 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         UIView.setAnimationsEnabled(false)
-
-        sut = createFullscreenImageViewControllerForTest(imageName: "unsplash_matterhorn_small_size", fileExtension: "jpg")
     }
     
     
@@ -38,13 +36,23 @@ final class FullscreenImageViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
+    func testThatVeryLargeImageIsLoadedToImageView(){
+        sut = createFullscreenImageViewControllerForTest(imageFileName: "20000x20000.gif")
+
+        verify(view: sut.view)
+    }
 
     func testThatSmallImageIsCenteredInTheScreen(){
+        sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
+
         verify(view: sut.view)
     }
 
     func testThatSmallImageIsScaledToFitTheScreenAfterDoubleTapped(){
-        // GIVEN & WHEN
+        // GIVEN
+        sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn_small_size.jpg")
+
+        // WHEN
         doubleTap(fullscreenImageViewController: sut)
 
         // THEN

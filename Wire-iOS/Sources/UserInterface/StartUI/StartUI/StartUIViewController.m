@@ -51,7 +51,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) StartUIInviteActionBar *quickActionsBar;
-@property (nonatomic) UILabel *emptyResultLabel;
+@property (nonatomic) EmptySearchResultsView *emptyResultView;
 @property (nonatomic) SearchGroupSelector *groupSelector;
 
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
@@ -85,10 +85,9 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     
     self.profilePresenter = [[ProfilePresenter alloc] init];
     
-    self.emptyResultLabel = [[UILabel alloc] init];
-    self.emptyResultLabel.text = NSLocalizedString(@"peoplepicker.no_matching_results_after_address_book_upload_title", nil);
-    self.emptyResultLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
-    self.emptyResultLabel.font = UIFont.normalLightFont;
+    self.emptyResultView = [[EmptySearchResultsView alloc] initWithVariant:ColorSchemeVariantDark
+                                                           isSelfUserAdmin:[[ZMUser selfUser] canManageTeam]];
+    self.emptyResultView.delegate = self;
     
     self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark];
     self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;
@@ -127,7 +126,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self addChildViewController:self.searchResultsViewController];
     [self.view addSubview:self.searchResultsViewController.view];
     [self.searchResultsViewController didMoveToParentViewController:self];
-    self.searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultLabel;
+    self.searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultView;
     self.searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = @"search.list";
     
     self.quickActionsBar = [[StartUIInviteActionBar alloc] init];
@@ -265,6 +264,9 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     else {
         [self.searchResultsViewController searchForServicesWithQuery:searchString];
     }
+    
+    [self.emptyResultView updateStatusWithSearchingForServices:self.groupSelector.group == SearchGroupServices
+                                                     hasFilter:searchString.length != 0];
 }
 
 #pragma mark - Action bar

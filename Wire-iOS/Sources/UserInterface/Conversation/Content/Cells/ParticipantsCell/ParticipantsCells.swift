@@ -24,6 +24,7 @@ import TTTAttributedLabel
 @objcMembers public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate, TTTAttributedLabelDelegate {
 
     private let stackView = UIStackView()
+    private let bottomStackView = UIStackView()
     private let topContainer = UIView()
     private let bottomContainer = UIView()
     private let leftIconView = UIImageView()
@@ -35,6 +36,8 @@ import TTTAttributedLabel
     private let inviteView = ParticipantsInvitePeopleView()
     private var viewModel: ParticipantsCellViewModel?
     private var isVisible = true
+    private let serviceUserWarningLabel = UILabel()
+    private let serviceUserWarningLabelContainer = UIView()
     
     // Classy
     let lineView = UIView()
@@ -90,11 +93,22 @@ import TTTAttributedLabel
         
         labelView.delegate = self
         labelView.isAccessibilityElement = true
+        
+        
+        serviceUserWarningLabel.numberOfLines = 0
+        serviceUserWarningLabel.isAccessibilityElement = true
+        serviceUserWarningLabel.textColor = UIColor(for: .vividRed)
+        serviceUserWarningLabel.text = "content.system.services.warning".localized
+        serviceUserWarningLabel.font = FontSpec(.small, .regular).font
 
         stackView.axis = .vertical
         stackView.spacing = verticalInset
-        messageContentView.addSubview(stackView)
+
+        bottomStackView.axis = .vertical
+        [stackView, bottomStackView].forEach(messageContentView.addSubview)
+        serviceUserWarningLabelContainer.addSubview(serviceUserWarningLabel)
         [topContainer, bottomContainer, inviteView].forEach(stackView.addArrangedSubview)
+        bottomStackView.addArrangedSubview(serviceUserWarningLabelContainer)
         topContainer.addSubview(nameLabel)
         bottomContainer.addSubview(leftIconContainer)
         leftIconContainer.addSubview(leftIconView)
@@ -107,11 +121,14 @@ import TTTAttributedLabel
     }
     
     private func createConstraints() {
-        constrain(stackView, messageContentView) { stackView, messageContentView in
+        constrain(stackView, bottomStackView, messageContentView) { stackView, bottomStackView, messageContentView in
             stackView.top == messageContentView.top + verticalInset
             stackView.leading == messageContentView.leading
             stackView.trailing == messageContentView.trailing
-            stackView.bottom == messageContentView.bottom - verticalInset
+            stackView.bottom == bottomStackView.top
+            bottomStackView.leading == messageContentView.leading
+            bottomStackView.trailing == messageContentView.trailing
+            bottomStackView.bottom == messageContentView.bottom - verticalInset
         }
         
         constrain(leftIconContainer, leftIconView, labelView, messageContentView, authorLabel) { leftIconContainer, leftIconView, labelView, messageContentView, authorLabel in
@@ -138,6 +155,12 @@ import TTTAttributedLabel
             messageContentView.height >= 32
         }
         
+        constrain(serviceUserWarningLabelContainer, serviceUserWarningLabel, messageContentView, leftIconContainer) { serviceUserWarningLabelContainer, serviceUserWarningLabel, messageContentView, leftIconContainer in
+            serviceUserWarningLabelContainer.leading == leftIconContainer.trailing
+            serviceUserWarningLabelContainer.trailing <= messageContentView.trailing - 72
+            serviceUserWarningLabel.edges == inset(serviceUserWarningLabelContainer.edges, 4, 0, 0, 0)
+        }
+        
         constrain(nameLabel, topContainer) { nameLabel, topContainer in
             nameLabel.top == topContainer.top
             nameLabel.bottom == topContainer.bottom
@@ -149,7 +172,7 @@ import TTTAttributedLabel
     }
     
     private func createLineViewConstraints() {
-        constrain(lineView, contentView, labelView, messageContentView) { lineView, contentView, labelView, messageContentView in
+        constrain(lineView, contentView, labelView) { lineView, contentView, labelView in
             lineView.leading == labelView.trailing + 16
             lineView.height == .hairline
             lineView.trailing == contentView.trailing
@@ -207,6 +230,7 @@ import TTTAttributedLabel
         topContainer.isHidden = nameLabel.attributedText == nil
         bottomContainer.isHidden = model.sortedUsers.count == 0
         inviteView.isHidden = !model.showInviteButton
+        serviceUserWarningLabelContainer.isHidden = !model.showServiceUserWarning
         viewModel = model
     }
 

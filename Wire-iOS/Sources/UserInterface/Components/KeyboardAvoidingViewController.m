@@ -18,6 +18,7 @@
 
 
 #import "KeyboardAvoidingViewController.h"
+#import "KeyboardAvoidingViewController+Internal.h"
 
 @import PureLayout;
 
@@ -32,7 +33,6 @@
 
 @property (nonatomic, readwrite) UIViewController *viewController;
 @property (nonatomic) NSLayoutConstraint *topEdgeConstraint;
-@property (nonatomic) NSLayoutConstraint *bottomEdgeConstraint;
 
 @end
 
@@ -56,7 +56,7 @@
     
     if (self) {
         self.viewController = viewController;
-        
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardFrameWillChange:)
                                                      name:UIKeyboardWillChangeFrameNotification
@@ -103,15 +103,6 @@
     [self createInitialConstraints];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    CGFloat bottomOffset = -[[KeyboardFrameObserver sharedObserver] keyboardFrame].size.height;
-
-    self.bottomEdgeConstraint.constant = bottomOffset;
-}
-
 - (void)createInitialConstraints
 {
     [self.viewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
@@ -132,27 +123,6 @@
 - (NSString *)title
 {
     return self.viewController.title;
-}
-
-#pragma mark - UIKeyboard notifications
-
-- (void)keyboardFrameWillChange:(NSNotification *)notification
-{
-    if (nil != self.shouldAdjustFrame && !self.shouldAdjustFrame(self)) {
-        self.bottomEdgeConstraint.constant = 0;
-        [self.view layoutIfNeeded];
-        return;
-    }
-
-    [UIView animateWithKeyboardNotification:notification inView:self.view animations:^(CGRect keyboardFrameInView) {
-        CGFloat bottomOffset = -keyboardFrameInView.size.height;
-
-        if (self.bottomEdgeConstraint.constant != bottomOffset) {
-            self.bottomEdgeConstraint.constant = bottomOffset;
-            
-            [self.view layoutIfNeeded];
-        }
-    } completion:nil];
 }
 
 @end

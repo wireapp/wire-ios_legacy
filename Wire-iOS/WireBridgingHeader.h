@@ -99,6 +99,7 @@
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+internal.h"
 #import "KeyboardAvoidingViewController.h"
+#import "KeyboardAvoidingViewController+Internal.h"
 #import "PhoneNumberViewController.h"
 #import "CountryCodeTableViewController.h"
 #import "UIViewController+WR_Invite.h"
@@ -152,6 +153,7 @@
 #import "UIImagePickerController+GetImage.h"
 #import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
+#import "MessagePresenter+Internal.h"
 #import "WireStyleKit+Additions.h"
 #import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"

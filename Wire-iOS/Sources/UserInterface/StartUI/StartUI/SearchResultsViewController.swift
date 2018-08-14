@@ -171,7 +171,7 @@ extension UIViewController {
         teamMemberAndContactsSection.allowsSelection = isAddingParticipants
         teamMemberAndContactsSection.selection = userSelection
         teamMemberAndContactsSection.title = "peoplepicker.header.contacts".localized
-        servicesSection = SearchServicesSectionController()
+        servicesSection = SearchServicesSectionController(canSelfUserManageTeam: ZMUser.selfUser().canManageTeam)
         conversationsSection = GroupConversationsSectionController()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
         topPeopleSection = TopPeopleSectionController(topConversationsDirectory: ZMUserSession.shared()!.topConversationsDirectory)
@@ -394,9 +394,13 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
 }
 
 extension SearchResultsViewController : InviteTeamMemberSectionDelegate {
-
     func inviteSectionDidRequestTeamManagement() {
         URL.manageTeam(source: .onboarding).openInApp(above: self)
     }
+}
 
+extension SearchResultsViewController : SearchServicesSectionDelegate {
+    func addServicesSectionDidRequestOpenServicesAdmin() {
+        URL.manageTeam(source: .settings).openInApp(above: self)
+    }
 }

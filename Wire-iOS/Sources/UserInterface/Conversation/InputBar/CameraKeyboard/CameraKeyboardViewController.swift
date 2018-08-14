@@ -209,53 +209,89 @@ open class CameraKeyboardViewController: UIViewController {
     fileprivate func forwardSelectedPhotoAsset(_ asset: PHAsset) {
         let manager = PHImageManager.default()
 
-        let options = PHImageRequestOptions()
-        options.deliveryMode = .highQualityFormat
-        options.isNetworkAccessAllowed = false
-        options.isSynchronous = false
-        manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+        let completeBlock = { (data: Data?, uti: String?) in
+            guard let data = data else { return }
 
-            let completeBlock = { (data: Data) in
-                let returnData: Data
-                if (uti == "public.heif") ||
-                   (uti == "public.heic"),
-                   let convertedJPEGData = data.covertHEIFToJPG() {
-                    returnData = convertedJPEGData
+            let returnData: Data
+            if (uti == "public.heif") ||
+                (uti == "public.heic"),
+                let convertedJPEGData = data.covertHEIFToJPG() {
+                returnData = convertedJPEGData
+            } else {
+                returnData = data
+            }
+
+            DispatchQueue.main.async(execute: {
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: returnData, isFromCamera: false)
+            })
+        }
+
+        let limit = CGFloat.Image.maxSupportedLength
+        if CGFloat(asset.pixelWidth) > limit || CGFloat(asset.pixelHeight) > limit {
+
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .highQualityFormat
+            options.isNetworkAccessAllowed = false
+            options.resizeMode = .exact
+            options.isSynchronous = false
+
+            manager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                if let image = image {
+                    let data = UIImageJPEGRepresentation(image, 0.9)
+                    completeBlock(data, info?["PHImageFileUTIKey"] as? String)
                 } else {
-                    returnData = data
+                    options.isSynchronous = true
+                    DispatchQueue.main.async(execute: {
+                        self.showLoadingView = true
+                    })
+
+                    manager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                        DispatchQueue.main.async(execute: {
+                            self.showLoadingView = false
+                        })
+
+                        if let image = image {
+                            let data = UIImageJPEGRepresentation(image, 0.9)
+                            completeBlock(data, info?["PHImageFileUTIKey"] as? String)
+                        } else {
+                            zmLog.error("Failure: cannot fetch image")
+                        }
+                    })
                 }
 
-                DispatchQueue.main.async(execute: {
-                    self.delegate?.cameraKeyboardViewController(self, didSelectImageData: returnData, isFromCamera: false)
-                })
-            }
+            })
+        } else {
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .highQualityFormat
+            options.isNetworkAccessAllowed = false
+            options.isSynchronous = false
 
-            guard let data = data else {
-                let options = PHImageRequestOptions()
-                options.deliveryMode = .highQualityFormat
-                options.isNetworkAccessAllowed = true
-                options.isSynchronous = false
-                DispatchQueue.main.async(execute: {
-                    self.showLoadingView = true
-                })
-                
-                manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+            manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+
+                guard let data = data else {
+                    options.isNetworkAccessAllowed = true
                     DispatchQueue.main.async(execute: {
-                        self.showLoadingView = false
+                        self.showLoadingView = true
                     })
-                    guard let data = data else {
-                        zmLog.error("Failure: cannot fetch image")
-                        return
-                    }
 
-                    completeBlock(data)
-                })
-                
-                return
-            }
+                    manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+                        DispatchQueue.main.async(execute: {
+                            self.showLoadingView = false
+                        })
+                        guard let data = data else {
+                            zmLog.error("Failure: cannot fetch image")
+                            return
+                        }
 
-            completeBlock(data)
-        })
+                        completeBlock(data, uti)
+                    })
+
+                    return
+                }
+
+                completeBlock(data, uti)
+            })
+        }
     }
     
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
