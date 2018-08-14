@@ -472,9 +472,11 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (void)menuWillShow:(NSNotification *)notification
 {
     self.showsMenu = YES;
-    if (self.menuConfigurationProperties.selectedMenuBlock != nil ) {
+    if (self.menuConfigurationProperties.selectedMenuBlock != nil) {
         self.menuConfigurationProperties.selectedMenuBlock(YES, YES);
     }
+    
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIMenuControllerWillShowMenuNotification object:nil];
 }
 
 - (void)menuDidHide:(NSNotification *)notification
@@ -484,6 +486,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     if (self.menuConfigurationProperties.selectedMenuBlock != nil && !self.beingEdited) {
         self.menuConfigurationProperties.selectedMenuBlock(NO, YES);
     }
+    
+    [NSNotificationCenter.defaultCenter removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
 }
 
 - (void)setBeingEdited:(BOOL)beingEdited
