@@ -21,7 +21,7 @@ import WireSyncEngine
 
 typealias AuthenticationStepViewController = UIViewController & AuthenticationCoordinatedViewController
 
-protocol ObservableSessionManager {
+protocol ObservableSessionManager: SessionManagerType {
     func addSessionManagerCreatedSessionObserver(_ observer: SessionManagerCreatedSessionObserver) -> Any
 }
 
@@ -231,6 +231,9 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
 
+            case .completeRegistrationStep(let step):
+                eventHandlingManager.handleEvent(ofType: .registrationStepCompleted(step))
+
             case .unwindState:
                 unwind()
             }
@@ -319,14 +322,19 @@ extension AuthenticationCoordinator {
             return
         }
 
+        let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
+
         if let unauthenticatedUser = user {
-            presenter?.showLoadingView = true
-            unauthenticatedUser.phoneVerificationCode = code
-            unauthenticatedSession.verifyPhoneNumberForRegistration(phoneNumber, verificationCode: code)
+            requestPhoneRegistration(with: credentials, user: unauthenticatedUser)
         } else {
-            let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
         }
+    }
+
+    func requestPhoneRegistration(with credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser) {
+        presenter?.showLoadingView = true
+        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
+        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
     }
 
     // MARK: - Login
@@ -486,7 +494,7 @@ extension AuthenticationCoordinator {
     // MARK: - Linear Registration
 
     @objc func acceptTermsOfService() {
-
+//        eventHandlingManager.handleEvent(ofType: .registrationStepCompleted(.acceptTermsOfService(<#T##ZMIncompleteRegistrationUser#>)))
     }
 
     @objc func saveMarketingConsent() {
@@ -496,8 +504,6 @@ extension AuthenticationCoordinator {
     @objc func setUserName(_ userName: String) {
 
     }
-
-    @objc func
 
 }
 
@@ -509,8 +515,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
 
     /// Called when the phone number verification succeeds.
     func phoneVerificationDidSucceed() {
-        eventHandlingManager.handleEvent(ofType: <#T##AuthenticationEventHandlingManager.EventType#>)
-        // no-op
+        eventHandlingManager.handleEvent(ofType: .registrationIdentityVerified)
     }
 
     /// Called when the phone verification fails.

@@ -299,6 +299,7 @@
 		5EE73BED21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */; };
 		5EE73BEF212318D90032986D /* AuthenticationLinearRegistrationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEE212318D90032986D /* AuthenticationLinearRegistrationStep.swift */; };
 		5EE73BF1212319BB0032986D /* LinearRegistrationStepHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */; };
+		5EE73BF3212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF2212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift */; };
 		5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */; };
 		5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */; };
 		5EEFC1A720C01C85007E8A79 /* RoundedViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */; };
@@ -1660,6 +1661,7 @@
 		5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationVerificationErrorHandler.swift; sourceTree = "<group>"; };
 		5EE73BEE212318D90032986D /* AuthenticationLinearRegistrationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLinearRegistrationStep.swift; sourceTree = "<group>"; };
 		5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearRegistrationStepHandler.swift; sourceTree = "<group>"; };
+		5EE73BF2212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationIdentityVerifiedEventHandler.swift; sourceTree = "<group>"; };
 		5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
 		5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousMaskLayer.swift; sourceTree = "<group>"; };
 		5EEFC1A620C01C85007E8A79 /* RoundedViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedViewProtocol.swift; sourceTree = "<group>"; };
@@ -3725,6 +3727,7 @@
 				5EE73BEA212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift */,
 				5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */,
 				5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */,
+				5EE73BF2212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -7456,6 +7459,7 @@
 				DBD990531B399B58000ACF94 /* NSString+Mentions.m in Sources */,
 				7C49D0E2201A3E8400A99760 /* ShareServiceViewController.swift in Sources */,
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
+				5EE73BF3212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift in Sources */,
 				EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */,
 				EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */,
 				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,

@@ -47,6 +47,8 @@ class AuthenticationEventHandlingManager {
         case authenticationFailure(NSError)
         case phoneLoginCodeAvailable
         case registrationError(NSError)
+        case registrationStepCompleted(AuthenticationLinearRegistrationStep)
+        case registrationIdentityVerified
     }
 
     // MARK: - Properties
@@ -64,6 +66,8 @@ class AuthenticationEventHandlingManager {
     var loginErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
     var phoneLoginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var registrationErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
+    var linearRegistrationEventHandlers: [AnyAuthenticationEventHandler<AuthenticationLinearRegistrationStep>] = []
+    var registationIdentityVerificationHandlers: [AnyAuthenticationEventHandler<Void>] = []
 
     /**
      * Configures the object with the given delegate and registers the default observers.
@@ -109,6 +113,12 @@ class AuthenticationEventHandlingManager {
         registerHandler(PhoneRegistrationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
         registerHandler(AuthenticationPhoneLoginErrorHandler(), to: &registrationErrorHandlers)
         registerHandler(PhoneRegistrationVerificationErrorHandler(), to: &registrationErrorHandlers)
+
+        // linearRegistrationEventHandlers
+        registerHandler(RegistrationLinearStepCompletionHandler(), to: &linearRegistrationEventHandlers)
+
+        // registationIdentityVerificationHandlers
+        registerHandler(PhoneRegistrationIdentityVerifiedEventHandler(), to: &registationIdentityVerificationHandlers)
     }
 
     fileprivate func registerHandler<Handler: AuthenticationEventHandler>(_ handler: Handler, to handlerList: inout [AnyAuthenticationEventHandler<Handler.Context>]) {
@@ -142,6 +152,10 @@ class AuthenticationEventHandlingManager {
             handleEvent(with: phoneLoginCodeHandlers, context: ())
         case .registrationError(let error):
             handleEvent(with: registrationErrorHandlers, context: error)
+        case .registrationStepCompleted(let linearStep):
+            handleEvent(with: linearRegistrationEventHandlers, context: linearStep)
+        case .registrationIdentityVerified:
+            handleEvent(with: registationIdentityVerificationHandlers, context: ())
         }
     }
 

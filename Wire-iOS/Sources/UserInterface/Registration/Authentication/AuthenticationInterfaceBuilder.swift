@@ -86,7 +86,7 @@ class AuthenticationInterfaceBuilder {
         }
     }
 
-    private func makeLinearRegistrationStepViewController(for step: AuthenticationLinearRegistrationStep) -> UIViewController? {
+    private func makeLinearRegistrationStepViewController(for step: AuthenticationLinearRegistrationStep) -> AuthenticationStepViewController? {
         switch step {
         case .registerCredentials:
             return nil

@@ -18,28 +18,23 @@
 
 import Foundation
 
-class RegistrationLinearStepCompletionHandler: AuthenticationEventHandler {
+class PhoneRegistrationIdentityVerifiedEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: AuthenticationLinearRegistrationStep) -> [AuthenticationCoordinatorAction]? {
-        var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
-
-        switch context {
-        case .registerCredentials(let user):
-            let nextLinearStep = AuthenticationLinearRegistrationStep.acceptTermsOfService(user)
-            actions.append(.transition(.linearRegistration(nextLinearStep), resetStack: true))
-
-        case .acceptTermsOfService(_):
-
-            // TODO Marketing
-            break
-
-        default:
-            break
+    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
+        // Only handle verification requests results
+        guard case let .validatePhoneIdentity(credentials, user) = currentStep else {
+            return nil
         }
 
-        return actions
+        // Update the user
+        user.phoneNumber = credentials.phoneNumber
+        user.phoneVerificationCode = credentials.phoneNumberVerificationCode
+
+        // Move to the next linear step
+        let completedStep = AuthenticationLinearRegistrationStep.registerCredentials(user)
+        return [.hideLoadingView, .completeRegistrationStep(completedStep)]
     }
 
 }
