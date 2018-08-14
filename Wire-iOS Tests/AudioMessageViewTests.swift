@@ -19,13 +19,42 @@
 import XCTest
 @testable import Wire
 
-final class AudioMessageViewTestsTests: XCTestCase {
+final class MockAudioTrack: NSObject, AudioTrack {
+    var title: String!
+
+    var author: String!
+
+    var artwork: UIImage!
+
+    var duration: TimeInterval = 0.0
+
+    var artworkURL: URL!
+
+    var streamURL: URL!
+
+    var previewStreamURL: URL!
+
+    var externalURL: URL!
+
+    var failedToLoad: Bool
+
+    func fetchArtwork() {
+        // no-op
+    }
+
+    override init() {
+        failedToLoad = false
+        super.init()
+    }
+}
+
+final class AudioMessageViewTests: XCTestCase {
     
-    var sut: AudioMessageViewTests!
+    var sut: AudioMessageView!
     
     override func setUp() {
         super.setUp()
-        sut = AudioMessageViewTests()
+        sut = AudioMessageView()
     }
     
     override func tearDown() {
@@ -42,8 +71,27 @@ final class AudioMessageViewTestsTests: XCTestCase {
 
     func testExample(){
         // GIVEN
+        let url = Bundle(for: type(of: self)).url(forResource: "audio_sample", withExtension: "m4a")!
+
+        let audioMessage = MockMessageFactory.audioMessage(config: {
+            $0.fileMessageData?.transferState = .downloaded
+            $0.backingFileMessageData.fileURL = url
+        })
+
+        let mediaPlayBackManager = MediaPlaybackManager(name: "conversationMedia")
+        sut.audioTrackPlayer = mediaPlayBackManager?.audioTrackPlayer
+        let audioTrack = MockAudioTrack()
+        sut.audioTrackPlayer?.load(audioTrack, sourceMessage: audioMessage, completionHandler: nil)
+        sut.configure(for: audioMessage, isInitial: true)
 
         // WHEN
+
+//        AudioTrack
+
+//        mediaPlayBackManager.con
+
+        sut.playButton.sendActions(for: .touchUpInside)
+        XCTAssert((sut.audioTrackPlayer?.isPlaying)!)
 
         // THEN
         checkerExample()

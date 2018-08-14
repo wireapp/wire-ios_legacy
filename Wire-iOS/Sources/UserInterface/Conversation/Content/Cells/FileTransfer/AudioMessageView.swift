@@ -42,7 +42,7 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     private let downloadProgressView = CircularProgressView()
-    private let playButton = IconButton()
+    let playButton = IconButton()
     private let timeLabel = UILabel()
     private let playerProgressView = ProgressView()
     private let waveformProgressView = WaveformProgressView()
@@ -319,7 +319,9 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     private func playTrack() {
-        guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData, let audioTrackPlayer = self.audioTrackPlayer else {
+        guard let fileMessage = self.fileMessage,
+              let fileMessageData = fileMessage.fileMessageData,
+              let audioTrackPlayer = self.audioTrackPlayer else {
             return
         }
         
