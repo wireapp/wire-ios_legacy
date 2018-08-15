@@ -273,7 +273,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (IBAction)openInBrowser:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:self.audioTrack.externalURL];
+    [[UIApplication sharedApplication] openURL:self.audioTrack.externalURL
+                                       options:@{}
+                             completionHandler:NULL];
 }
 
 #pragma mark - KVO observer

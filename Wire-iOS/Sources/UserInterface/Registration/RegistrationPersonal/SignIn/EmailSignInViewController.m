@@ -317,7 +317,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (IBAction)resetPassword:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:[NSURL.wr_passwordResetURL wr_URLByAppendingLocaleParameter]];
+    [[UIApplication sharedApplication] openURL:[NSURL.wr_passwordResetURL wr_URLByAppendingLocaleParameter]
+                                       options:@{}
+                             completionHandler:NULL];
 }
 
 - (void)companyLoginButtonTapped:(ButtonWithLargerHitArea *)button
