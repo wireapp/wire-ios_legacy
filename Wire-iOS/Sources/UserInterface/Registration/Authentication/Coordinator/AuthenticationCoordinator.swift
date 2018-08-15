@@ -235,7 +235,7 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
                 eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(initialState))
 
             case .setMarketingConsent(let consentValue):
-                saveMarketingConsent(consentValue)
+                setMarketingConsent(consentValue)
 
             case .completeUserRegistration:
                 finishRegisteringUser()
@@ -447,34 +447,6 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.continueAfterBackupImportStep()
     }
 
-    func setMarketingConsent(_ consentValue: Bool) {
-        guard let userSession = statusProvider?.sharedUserSession else {
-            return
-        }
-
-        userSession.submitMarketingConsent(with: consentValue)
-    }
-
-    func finishRegisteringUser() {
-        guard case let .linearRegistration(status, _) = currentStep else {
-            return
-        }
-
-        transition(to: .finalizeRegistration(status))
-        unauthenticatedSession.register(user: status.unregisteredUser.complete())
-    }
-
-    /**
-     * Notifies the registration state observers that the user accepted the
-     * terms of service.
-     */
-
-    func saveMarketingConsent(_ consentValue: Bool) {
-        updateRegistrationState {
-            $0.marketingConsent = consentValue
-        }
-    }
-
     // MARK: UI Events
 
     /**
@@ -558,6 +530,24 @@ extension AuthenticationCoordinator {
 
         updateBlock(registrationState)
         eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(registrationState))
+    }
+
+    private func finishRegisteringUser() {
+        guard case let .linearRegistration(status, _) = currentStep else {
+            return
+        }
+
+        transition(to: .finalizeRegistration(status))
+        unauthenticatedSession.register(user: status.unregisteredUser.complete())
+    }
+
+    private func setMarketingConsent(_ consentValue: Bool) {
+        guard let userSession = statusProvider?.sharedUserSession else {
+            log.warn("Could not save the marking consent, as there is no user session for the user.")
+            return
+        }
+
+        userSession.submitMarketingConsent(with: consentValue)
     }
 
 }
