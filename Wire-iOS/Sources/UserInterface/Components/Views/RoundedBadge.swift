@@ -21,6 +21,8 @@ import Cartography
 
 public class RoundedBadge: UIView {
     public let containedView: UIView
+    public var trailingConstraint: NSLayoutConstraint!
+
     init(view: UIView, contentInset: UIEdgeInsets = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)) {
         containedView = view
         super.init(frame: .zero)
@@ -29,7 +31,7 @@ public class RoundedBadge: UIView {
         
         constrain(self, containedView) { selfView, containedView in
             containedView.leading == selfView.leading + contentInset.left
-            containedView.trailing == selfView.trailing - contentInset.right
+            self.trailingConstraint = containedView.trailing == selfView.trailing - contentInset.right
             containedView.top == selfView.top + contentInset.top
             containedView.bottom == selfView.bottom - contentInset.bottom
             
