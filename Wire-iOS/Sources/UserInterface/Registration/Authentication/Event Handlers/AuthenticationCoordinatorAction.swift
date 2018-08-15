@@ -36,7 +36,8 @@ enum AuthenticationCoordinatorAction {
     case transition(AuthenticationFlowStep, resetStack: Bool)
     case performPhoneLoginFromRegistration(phoneNumber: String)
     case configureNotifications
-    case completeRegistrationStep(AuthenticationLinearRegistrationStep)
+    case startLinearRegistration(RegistrationState)
+    case setMarketingConsent(Bool)
 }
 
 // MARK: - Alerts

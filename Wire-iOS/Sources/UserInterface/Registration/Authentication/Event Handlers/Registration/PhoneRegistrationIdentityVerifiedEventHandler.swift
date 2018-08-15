@@ -32,9 +32,10 @@ class PhoneRegistrationIdentityVerifiedEventHandler: AuthenticationEventHandler 
         user.phoneNumber = credentials.phoneNumber
         user.phoneVerificationCode = credentials.phoneNumberVerificationCode
 
+        let flowState = RegistrationState(unregisteredUser: user)
+
         // Move to the next linear step
-        let completedStep = AuthenticationLinearRegistrationStep.registerCredentials(user)
-        return [.hideLoadingView, .completeRegistrationStep(completedStep)]
+        return [.hideLoadingView, .startLinearRegistration(flowState)]
     }
 
 }

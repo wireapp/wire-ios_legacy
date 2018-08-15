@@ -47,7 +47,7 @@ class AuthenticationEventHandlingManager {
         case authenticationFailure(NSError)
         case phoneLoginCodeAvailable
         case registrationError(NSError)
-        case registrationStepCompleted(AuthenticationLinearRegistrationStep)
+        case registrationStateUpdated(RegistrationState)
         case registrationIdentityVerified
     }
 
@@ -66,7 +66,7 @@ class AuthenticationEventHandlingManager {
     var loginErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
     var phoneLoginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var registrationErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
-    var linearRegistrationEventHandlers: [AnyAuthenticationEventHandler<AuthenticationLinearRegistrationStep>] = []
+    var linearRegistrationEventHandlers: [AnyAuthenticationEventHandler<RegistrationState>] = []
     var registationIdentityVerificationHandlers: [AnyAuthenticationEventHandler<Void>] = []
 
     /**
@@ -152,8 +152,8 @@ class AuthenticationEventHandlingManager {
             handleEvent(with: phoneLoginCodeHandlers, context: ())
         case .registrationError(let error):
             handleEvent(with: registrationErrorHandlers, context: error)
-        case .registrationStepCompleted(let linearStep):
-            handleEvent(with: linearRegistrationEventHandlers, context: linearStep)
+        case .registrationStateUpdated(let state):
+            handleEvent(with: linearRegistrationEventHandlers, context: state)
         case .registrationIdentityVerified:
             handleEvent(with: registationIdentityVerificationHandlers, context: ())
         }

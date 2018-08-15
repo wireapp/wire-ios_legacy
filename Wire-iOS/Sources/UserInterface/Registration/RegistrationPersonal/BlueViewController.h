@@ -16,18 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+#import <UIKit/UIKit.h>
 
-/**
- * The steps the users have to follow when registering with the app.
- */
+@interface BlueViewController : UIViewController
 
-enum AuthenticationLinearRegistrationStep {
-
-    case registerCredentials(ZMIncompleteRegistrationUser)
-    case acceptTermsOfService(ZMIncompleteRegistrationUser)
-    case provideMarketingConsent(ZMIncompleteRegistrationUser, Bool)
-    case setName(ZMIncompleteRegistrationUser, Bool)
-    case setProfilePicture(ZMIncompleteRegistrationUser, Bool)
-
-}
+@end

@@ -22,24 +22,54 @@ class RegistrationLinearStepCompletionHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: AuthenticationLinearRegistrationStep) -> [AuthenticationCoordinatorAction]? {
-        var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
+    func handleEvent(currentStep: AuthenticationFlowStep, context: RegistrationState) -> [AuthenticationCoordinatorAction]? {
+        let registrationState = context
+        
+        // Check for missing requirements before allowing the user to register.
 
-        switch context {
-        case .registerCredentials(let user):
-            let nextLinearStep = AuthenticationLinearRegistrationStep.acceptTermsOfService(user)
-            actions.append(.transition(.linearRegistration(nextLinearStep), resetStack: true))
+        if registrationState.acceptedTermsOfService == false {
+            return requestIntermediateStep(.reviewTermsOfService, with: registrationState)
 
-        case .acceptTermsOfService(_):
+        } else if registrationState.marketingConsent == nil {
+            return handleMissingMarketingConsent(with: registrationState)
 
-            // TODO Marketing
-            break
+        } else if registrationState.unregisteredUser.name == nil {
+            return requestIntermediateStep(.setName, with: registrationState)
 
-        default:
-            break
+        } else if registrationState.unregisteredUser.profileImageData == nil {
+            return requestIntermediateStep(.setProfilePicture, with: registrationState)
+
+        } else {
+            return handleRegistrationCompletion(with: registrationState)
         }
+    }
 
-        return actions
+    // MARK: - Specific Flow Handlers
+
+    private func requestIntermediateStep(_ step: IntermediateRegistrationStep, with state: RegistrationState) -> [AuthenticationCoordinatorAction] {
+        let flowStep = AuthenticationFlowStep.linearRegistration(state, step)
+        return [.hideLoadingView, .transition(flowStep, resetStack: true)]
+    }
+
+    private func handleMissingMarketingConsent(with state: RegistrationState) -> [AuthenticationCoordinatorAction] {
+
+        // Alert Actions
+
+        let privacyPolicyAction = AuthenticationCoordinatorAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized, coordinatorActions: [])
+
+        let declineAction = AuthenticationCoordinatorAlertAction(title: "general.decline".localized, coordinatorActions: [.setMarketingConsent(false)])
+
+        let acceptAction = AuthenticationCoordinatorAlertAction(title: "general.accept".localized, coordinatorActions: [.setMarketingConsent(true)])
+
+        // Alert
+
+        let alert = AuthenticationCoordinatorAlert(title: "news_offers.consent.title".localized, message: "news_offers.consent.message".localized, actions: [privacyPolicyAction, declineAction, acceptAction])
+
+        return [.hideLoadingView, .presentAlert(alert)]
+    }
+
+    private func handleRegistrationCompletion(with state: RegistrationState) -> [AuthenticationCoordinatorAction]? {
+        return nil
     }
 
 }

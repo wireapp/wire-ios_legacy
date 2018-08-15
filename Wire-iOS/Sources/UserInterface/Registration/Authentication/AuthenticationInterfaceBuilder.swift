@@ -78,7 +78,7 @@ class AuthenticationInterfaceBuilder {
             let verificationController = EmailVerificationViewController(credentials: credentials)
             return verificationController
 
-        case .linearRegistration(let registrationStep):
+        case .linearRegistration(_, let registrationStep):
             return makeLinearRegistrationStepViewController(for: registrationStep)
 
         default:
@@ -86,22 +86,16 @@ class AuthenticationInterfaceBuilder {
         }
     }
 
-    private func makeLinearRegistrationStepViewController(for step: AuthenticationLinearRegistrationStep) -> AuthenticationStepViewController? {
+    private func makeLinearRegistrationStepViewController(for step: IntermediateRegistrationStep) -> AuthenticationStepViewController? {
         switch step {
-        case .registerCredentials:
-            return nil
-
-        case .acceptTermsOfService:
+        case .reviewTermsOfService:
             return TermsOfUseStepViewController()
-
         case .provideMarketingConsent:
             return nil
-
-        case .setName(let user, _):
-            return NameStepViewController(unregisteredUser: user)
-
-        case .setProfilePicture(let user, _):
-            return ProfilePictureStepViewController(unregisteredUser: user)
+        case .setName:
+            return NameStepViewController()
+        case .setProfilePicture:
+            return ProfilePictureStepViewController()
         }
     }
 

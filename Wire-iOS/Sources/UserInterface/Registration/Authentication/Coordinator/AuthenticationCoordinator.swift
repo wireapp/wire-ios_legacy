@@ -231,8 +231,11 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
 
-            case .completeRegistrationStep(let step):
-                eventHandlingManager.handleEvent(ofType: .registrationStepCompleted(step))
+            case .startLinearRegistration(let initialState):
+                eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(initialState))
+
+            case .setMarketingConsent(let consentValue):
+                saveMarketingConsent(consentValue)
 
             case .unwindState:
                 unwind()
@@ -332,9 +335,13 @@ extension AuthenticationCoordinator {
     }
 
     func requestPhoneRegistration(with credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser) {
-        presenter?.showLoadingView = true
-        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
-        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
+        user.phoneNumber = credentials.phoneNumber
+        user.phoneVerificationCode = credentials.phoneNumberVerificationCode
+        let initialState = RegistrationState(unregisteredUser: user)
+        executeActions([.startLinearRegistration(initialState)])
+//        presenter?.showLoadingView = true
+//        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
+//        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
     }
 
     // MARK: - Login
@@ -494,15 +501,41 @@ extension AuthenticationCoordinator {
     // MARK: - Linear Registration
 
     @objc func acceptTermsOfService() {
-//        eventHandlingManager.handleEvent(ofType: .registrationStepCompleted(.acceptTermsOfService(<#T##ZMIncompleteRegistrationUser#>)))
+        updateRegistrationState {
+            $0.acceptedTermsOfService = true
+        }
     }
 
-    @objc func saveMarketingConsent() {
-
+    func saveMarketingConsent(_ consentValue: Bool) {
+        updateRegistrationState {
+            $0.marketingConsent = consentValue
+        }
     }
 
-    @objc func setUserName(_ userName: String) {
+    @objc(setUserName:)
+    func setUserName(_ userName: String) {
+        updateRegistrationState {
+            $0.unregisteredUser.name = userName
+        }
+    }
 
+    @objc(setProfilePictureWithData:)
+    func setProfilePicture(_ data: Data) {
+        unauthenticatedSession.setProfileImage(imageData: data)
+
+        updateRegistrationState {
+            $0.unregisteredUser.profileImageData = data
+        }
+    }
+
+    private func updateRegistrationState(_ updateBlock: (RegistrationState) -> Void) {
+        guard case let .linearRegistration(registrationState, _) = currentStep else {
+            log.warn("Cannot update registration state outide of registration flow")
+            return
+        }
+
+        updateBlock(registrationState)
+        eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(registrationState))
     }
 
 }
@@ -510,28 +543,6 @@ extension AuthenticationCoordinator {
 // MARK: - User Session Events
 
 extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, ZMRegistrationObserver {
-
-    // MARK: - Phone Registration
-
-    /// Called when the phone number verification succeeds.
-    func phoneVerificationDidSucceed() {
-        eventHandlingManager.handleEvent(ofType: .registrationIdentityVerified)
-    }
-
-    /// Called when the phone verification fails.
-    func phoneVerificationDidFail(_ error: Error!) {
-        eventHandlingManager.handleEvent(ofType: .authenticationFailure(error as NSError))
-    }
-
-    /// Called when the validation code for the registered phone number was sent.
-    func phoneVerificationCodeRequestDidFail(_ error: Error!) {
-        eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
-    }
-
-    /// Called when the validation code for the registered phone number was sent.
-    func phoneVerificationCodeRequestDidSucceed() {
-        eventHandlingManager.handleEvent(ofType: .phoneLoginCodeAvailable)
-    }
 
     // MARK: Email Update
 

@@ -117,8 +117,7 @@
 
 - (void)presentProfilePictureStep
 {
-    ProfilePictureStepViewController *pictureStepViewController = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-    pictureStepViewController.formStepDelegate = self;
+    ProfilePictureStepViewController *pictureStepViewController = [[ProfilePictureStepViewController alloc] init];
     
     self.wr_navigationController.backButtonEnabled = NO;
     [self.navigationController pushViewController:pictureStepViewController animated:YES];

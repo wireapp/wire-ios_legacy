@@ -47,7 +47,7 @@ enum AuthenticationFlowStep {
     // Registration
     case createCredentials(ZMIncompleteRegistrationUser)
     case validatePhoneIdentity(credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser)
-    case linearRegistration(AuthenticationLinearRegistrationStep)
+    case linearRegistration(RegistrationState, IntermediateRegistrationStep)
 
     // MARK: - Properties
 
@@ -68,8 +68,26 @@ enum AuthenticationFlowStep {
         case .pendingInitialSync: return false
         case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
         case .validatePhoneIdentity: return false
+        case .linearRegistration(_, let intermediateStep): return intermediateStep.needsInterface
         default: return true
         }
     }
 
+}
+
+// MARK: - Intermediate Steps
+
+/**
+ * Intermediate steps rquired for user registration.
+ */
+
+enum IntermediateRegistrationStep {
+    case reviewTermsOfService, provideMarketingConsent, setName, setProfilePicture
+
+    var needsInterface: Bool {
+        switch self {
+        case .provideMarketingConsent: return false
+        default : return true
+        }
+    }
 }
