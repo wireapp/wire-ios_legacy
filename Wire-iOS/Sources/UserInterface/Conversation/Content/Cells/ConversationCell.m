@@ -469,27 +469,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     return MessageTypeSystem;
 }
 
-- (void)menuWillShow:(NSNotification *)notification
-{
-    self.showsMenu = YES;
-    if (self.menuConfigurationProperties.selectedMenuBlock != nil) {
-        self.menuConfigurationProperties.selectedMenuBlock(YES, YES);
-    }
-    
-    [NSNotificationCenter.defaultCenter removeObserver:self name:UIMenuControllerWillShowMenuNotification object:nil];
-}
-
-- (void)menuDidHide:(NSNotification *)notification
-{
-    self.showsMenu = NO;
-    
-    if (self.menuConfigurationProperties.selectedMenuBlock != nil && !self.beingEdited) {
-        self.menuConfigurationProperties.selectedMenuBlock(NO, YES);
-    }
-    
-    [NSNotificationCenter.defaultCenter removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
-}
-
 - (void)setBeingEdited:(BOOL)beingEdited
 {
     if (_beingEdited == beingEdited) {
@@ -500,84 +479,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     
     if (self.menuConfigurationProperties.selectedMenuBlock != nil) {
         self.menuConfigurationProperties.selectedMenuBlock(beingEdited, YES);
-    }
-}
-
-- (void)showMenu;
-{
-    // ephemeral message's only possibility is to be deleted
-    if (self.message.isEphemeral && !self.message.canBeDeleted) {
-        return;
-    }
-
-    BOOL shouldBecomeFirstResponder = YES;
-    if ([self.delegate respondsToSelector:@selector(conversationCell:shouldBecomeFirstResponderWhenShowMenuWithCellType:)]) {
-        shouldBecomeFirstResponder = [self.delegate conversationCell:self shouldBecomeFirstResponderWhenShowMenuWithCellType:[self messageType]];
-    }
-    
-    MenuConfigurationProperties *menuConfigurationProperties = [self menuConfigurationProperties];
-    if (!menuConfigurationProperties) {
-        return;
-    }
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(menuWillShow:)
-                                                 name:UIMenuControllerWillShowMenuNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(menuDidHide:)
-                                                 name:UIMenuControllerDidHideMenuNotification object:nil];
-    
-    /**
-     *  The reason why we are touching the window here is to workaround a bug where,
-     *  After dismissing the webplayer, the window would fail to become the first responder, 
-     *  preventing us to show the menu at all. 
-     *  We now force the window to be the key window and to be the first responder to ensure that we can 
-     *  show the menu controller.
-     */
-    [self.window makeKeyWindow];
-    [self.window becomeFirstResponder];
-
-    if (shouldBecomeFirstResponder) {
-        [self becomeFirstResponder];
-    }
-    
-    UIMenuController *menuController = UIMenuController.sharedMenuController;
-    
-    NSMutableArray <UIMenuItem *> *items = [NSMutableArray array];
-    
-    if (!self.message.isEphemeral) {
-        [items addObjectsFromArray:[menuConfigurationProperties.additionalItems mapWithBlock:^UIMenuItem *(AdditionalMenuItem *item) {
-            return item.item;
-        }]];
-
-        if ([Message messageCanBeLiked:self.message]) {
-            UIMenuItem *likeItem = [UIMenuItem likeItemForMessage:self.message action:@selector(likeMessage:)];
-            
-            if (items.count > 0) {
-                [items insertObject:likeItem atIndex:menuConfigurationProperties.likeItemIndex];
-            } else {
-                [items addObject:likeItem];
-            }
-        }
-    } else {
-        [items addObjectsFromArray:[[menuConfigurationProperties.additionalItems filterWithBlock:^BOOL(AdditionalMenuItem *item) {
-            return item.availableInEphemeralConversations;
-        }] mapWithBlock:^UIMenuItem *(AdditionalMenuItem *item) {
-            return item.item;
-        }]];
-    }
-
-    // at this point, if message is ephemeral, then this will always be true
-    if (self.message.canBeDeleted) {
-        UIMenuItem *deleteItem = [UIMenuItem deleteItemWithAction:@selector(deleteMessage:)];
-        [items addObject:deleteItem];
-    }
-
-    menuController.menuItems = items;
-    [menuController setTargetRect:menuConfigurationProperties.targetRect inView:menuConfigurationProperties.targetView];
-    [menuController setMenuVisible:YES animated:YES];
-
-    if ([self.delegate respondsToSelector:@selector(conversationCell:didOpenMenuForCellType:)]) {
-        [self.delegate conversationCell:self didOpenMenuForCellType:[self messageType]];
     }
 }
 
@@ -609,14 +510,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     }
     
     return [super canPerformAction:action withSender:sender];
-}
-
-- (void)deleteMessage:(id)sender;
-{
-    self.beingEdited = YES;
-    if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
-        [self.delegate conversationCell:self didSelectAction:MessageActionDelete];
-    }
 }
 
 - (void)forward:(id)sender
