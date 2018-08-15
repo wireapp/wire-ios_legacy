@@ -37,8 +37,7 @@
     [super setUp];
     self.accentColor = ZMAccentColorStrongBlue;
     
-    ZMIncompleteRegistrationUser *user = [[ZMIncompleteRegistrationUser alloc] init];
-    self.sut = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:user];
+    self.sut = [[ProfilePictureStepViewController alloc] init];
 
     __weak typeof(self)weakSelf = self;
     self.configurationBlock = ^(__unused UIView *view) {
