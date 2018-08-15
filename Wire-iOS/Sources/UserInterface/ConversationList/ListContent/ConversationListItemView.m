@@ -162,7 +162,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     }];
 
     [NSLayoutConstraint autoCreateConstraintsWithoutInstalling:^{
-        self.titleTwoLineConstraint = [self.labelsContainer autoAlignAxisToSuperviewAxis:ALAxisHorizontal]; ///TODO: doubled?
+        self.titleTwoLineConstraint = [self.labelsContainer autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     }];
 }
 
