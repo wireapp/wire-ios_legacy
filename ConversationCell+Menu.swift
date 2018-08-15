@@ -60,11 +60,8 @@ public extension ConversationCell {
             items += properties.additionalItems.map(\.item)
             
             if message.canBeLiked {
-                if items.count > 0 {
-                    items.insert(.like(for: message, with: #selector(likeMessage)), at: properties.likeItemIndex)
-                } else {
-                    items.append(.like(for: message, with: #selector(likeMessage)))
-                }
+                let index = items.count > 0 ? properties.likeItemIndex : 0
+                items.insert(.like(for: message, with: #selector(likeMessage)), at: index)
             }
         }
         
