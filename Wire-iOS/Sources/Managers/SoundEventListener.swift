@@ -82,10 +82,6 @@ class SoundEventListener : NSObject {
     }
     
     func provideHapticFeedback(for message: ZMConversationMessage) {
-        guard #available(iOS 10, *) else {
-            return
-        }
-
         if message.isNormal,
             message.isRecentMessage,
             message.isSentBySelfUser,
