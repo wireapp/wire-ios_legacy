@@ -201,8 +201,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
         self.launchType = ApplicationLaunchURL;
     }
     
-    if (self.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil ||
-        self.launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] != nil) {
+    if (self.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
         self.launchType = ApplicationLaunchPush;
     }
     [self trackErrors];
