@@ -44,7 +44,21 @@ extension KeyboardAvoidingViewController {
 
             bottomEdgeConstraint.constant = bottomOffset
             self.view.setNeedsLayout()
-            animator = UIViewPropertyAnimator(duration: duration, curve: animationCurve, animations: {
+
+            var fixedAnimationCurve: UIViewAnimationCurve
+            fixedAnimationCurve = animationCurve
+            if #available(iOS 11.0, *) {
+            } else {
+                // iOS returns an undocument type 7 animation curve raw value, which caursing crash on iOS 10 if use as an argument in UIViewPropertyAnimator init method. Workaround: assign a fallback value.
+                if animationCurve != .easeInOut &&
+                    animationCurve != .easeIn &&
+                    animationCurve != .easeOut &&
+                    animationCurve != .linear {
+                    fixedAnimationCurve = .easeIn
+                }
+            }
+
+            animator = UIViewPropertyAnimator(duration: duration, curve: fixedAnimationCurve, animations: {
                 self.view.layoutIfNeeded()
             })
 
