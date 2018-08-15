@@ -338,13 +338,9 @@ extension AuthenticationCoordinator {
     }
 
     func requestPhoneRegistration(with credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser) {
-        user.phoneNumber = credentials.phoneNumber
-        user.phoneVerificationCode = credentials.phoneNumberVerificationCode
-        let initialState = RegistrationState(unregisteredUser: user)
-        executeActions([.startLinearRegistration(initialState)])
-//        presenter?.showLoadingView = true
-//        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
-//        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
+        presenter?.showLoadingView = true
+        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
+        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
     }
 
     // MARK: - Login
@@ -468,6 +464,17 @@ extension AuthenticationCoordinator {
         
     }
 
+    /**
+     * Notifies the registration state observers that the user accepted the
+     * terms of service.
+     */
+
+    func saveMarketingConsent(_ consentValue: Bool) {
+        updateRegistrationState {
+            $0.marketingConsent = consentValue
+        }
+    }
+
     // MARK: UI Events
 
     /**
@@ -506,7 +513,12 @@ extension AuthenticationCoordinator {
         companyLoginController?.isAutoDetectionEnabled = false
     }
 
-    // MARK: - Linear Registration
+    // MARK: Linear Registration
+
+    /**
+     * Notifies the registration state observers that the user accepted the
+     * terms of service.
+     */
 
     @objc func acceptTermsOfService() {
         updateRegistrationState {
@@ -514,11 +526,9 @@ extension AuthenticationCoordinator {
         }
     }
 
-    func saveMarketingConsent(_ consentValue: Bool) {
-        updateRegistrationState {
-            $0.marketingConsent = consentValue
-        }
-    }
+    /**
+     * Notifies the registration state observers that the user set an account name.
+     */
 
     @objc(setUserName:)
     func setUserName(_ userName: String) {
@@ -526,6 +536,10 @@ extension AuthenticationCoordinator {
             $0.unregisteredUser.name = userName
         }
     }
+
+    /**
+     * Notifies the registration state observers that the user set a profile picture.
+     */
 
     @objc(setProfilePictureWithData:)
     func setProfilePicture(_ data: Data) {

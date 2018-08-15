@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import "TermsOfUseStepViewController.h"
 
 @import PureLayout;
-@import SafariServices;
 
 #import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
@@ -34,26 +32,14 @@
 
 @end
 
-
 @implementation TermsOfUseStepViewController
 
 @synthesize authenticationCoordinator;
 
-- (instancetype)init
-{
-    self = [super initWithNibName:nil bundle:nil];
-
-    if (self) {
-        self.device = UIDevice.currentDevice;
-    }
-
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self createContainerView];
     [self createTitleLabel];
     [self createTermsOfUseText];

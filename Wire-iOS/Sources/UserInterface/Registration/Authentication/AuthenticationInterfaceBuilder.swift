@@ -79,14 +79,23 @@ class AuthenticationInterfaceBuilder {
             return verificationController
 
         case .linearRegistration(_, let registrationStep):
-            return makeLinearRegistrationStepViewController(for: registrationStep)
+            return makeRegistrationStepViewController(for: registrationStep)
 
         default:
             return nil
         }
     }
 
-    private func makeLinearRegistrationStepViewController(for step: IntermediateRegistrationStep) -> AuthenticationStepViewController? {
+    /**
+     * Returns the view controller that displays the interface for the given intermediate
+     * registration step.
+     *
+     * - parameter step: The step to create an interface for.
+     * - returns: The view controller to use for this step, or `nil` if the interface builder
+     * does not support this step.
+     */
+
+    private func makeRegistrationStepViewController(for step: IntermediateRegistrationStep) -> AuthenticationStepViewController? {
         switch step {
         case .reviewTermsOfService:
             return TermsOfUseStepViewController()
