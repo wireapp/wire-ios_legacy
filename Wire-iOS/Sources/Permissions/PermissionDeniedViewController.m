@@ -166,8 +166,10 @@
 #pragma mark - Actions
 
 - (IBAction)openSettings:(id)sender
-{   
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+                                       options:@{}
+                             completionHandler:NULL];
 }
 
 - (IBAction)continueWithoutAccess:(id)sender
