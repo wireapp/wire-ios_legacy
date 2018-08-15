@@ -84,7 +84,7 @@ extension EmptySearchResultsViewAction {
     private let stackView: UIStackView
     private let iconView     = UIImageView()
     private let statusLabel  = UILabel()
-    private let actionButton = UIButton()
+    private let actionButton = InviteButton()
     
     @objc public weak var delegate: EmptySearchResultsViewDelegate?
     
@@ -93,6 +93,8 @@ extension EmptySearchResultsViewAction {
         self.isSelfUserAdmin = isSelfUserAdmin
         stackView = UIStackView()
         super.init(frame: .zero)
+        
+        iconView.alpha = 0.24
         
         stackView.alignment = .center
         stackView.spacing = 16
@@ -109,14 +111,9 @@ extension EmptySearchResultsViewAction {
         statusLabel.numberOfLines = 0
         statusLabel.preferredMaxLayoutWidth = 200
         statusLabel.textColor = UIColor(scheme: .textForeground, variant: self.variant)
-        statusLabel.font = FontSpec(.small, .medium).font!
+        statusLabel.font = FontSpec(.medium, .semibold).font!
         statusLabel.textAlignment = .center
         
-        actionButton.backgroundColor = UIColor(scheme: .tokenFieldBackground, variant: self.variant)
-        actionButton.setTitleColor(UIColor(scheme: .textForeground, variant: self.variant), for: .normal)
-        actionButton.titleLabel!.font = FontSpec(.small, .medium).font!
-        actionButton.layer.cornerRadius = 4
-        actionButton.contentEdgeInsets = .init(top: 4, left: 16, bottom: 4, right: 16)
         actionButton.accessibilityIdentifier = "button.searchui.open-services-no-results"
         
         actionButton.addCallback(for: .touchUpInside) { [unowned self] _ in
