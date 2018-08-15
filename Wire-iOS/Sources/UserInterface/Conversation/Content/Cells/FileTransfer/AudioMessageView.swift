@@ -42,7 +42,7 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     private let downloadProgressView = CircularProgressView()
-    private let playButton = IconButton()
+    let playButton = IconButton()
     private let timeLabel = UILabel()
     private let playerProgressView = ProgressView()
     private let waveformProgressView = WaveformProgressView()
@@ -57,9 +57,17 @@ private let zmLog = ZMSLog(tag: "UI")
     private var proximityMonitorManager: ProximityMonitorManager? {
         return ZClientViewController.shared()?.proximityMonitorManager
     }
-    
+
+
+    private var callStateObserverToken : Any?
+    /// flag for resume audio player after incoming call
+    private var isPausedForIncomingCall : Bool
+
     public required override init(frame: CGRect) {
+        isPausedForIncomingCall = false
+
         super.init(frame: frame)
+
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
@@ -90,6 +98,10 @@ private let zmLog = ZMSLog(tag: "UI")
         
         setNeedsLayout()
         layoutIfNeeded()
+
+        if let session = ZMUserSession.shared() {
+            callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: session)
+        }
     }
     
     deinit {
@@ -307,7 +319,9 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     private func playTrack() {
-        guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData, let audioTrackPlayer = self.audioTrackPlayer else {
+        guard let fileMessage = self.fileMessage,
+              let fileMessageData = fileMessage.fileMessageData,
+              let audioTrackPlayer = self.audioTrackPlayer else {
             return
         }
         
@@ -374,7 +388,8 @@ private let zmLog = ZMSLog(tag: "UI")
     // MARK: - Actions
     
     @objc dynamic private func onActionButtonPressed(_ sender: UIButton) {
-        
+        isPausedForIncomingCall = false
+
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {
@@ -392,7 +407,8 @@ private let zmLog = ZMSLog(tag: "UI")
         case .uploaded, .failedDownload:
             self.expectingDownload = true
             ZMUserSession.shared()?.enqueueChanges(fileMessageData.requestFileDownload)
-        case .downloaded: playTrack()
+        case .downloaded:
+            playTrack()
         case .unavailable: return
         }
     }
@@ -460,5 +476,34 @@ private let zmLog = ZMSLog(tag: "UI")
     
     func proximityStateDidChange(_ raisedToEar: Bool) {
         setAudioOutput(earpiece: raisedToEar)
+    }
+}
+
+extension AudioMessageView : WireCallCenterCallStateObserver {
+
+    func callCenterDidChange(callState: CallState,
+                             conversation: ZMConversation,
+                             caller: ZMUser,
+                             timestamp: Date?,
+                             previousCallState: CallState?) {
+        guard let player = audioTrackPlayer else { return }
+        guard isOwnTrackPlayingInAudioPlayer() else { return }
+
+        // Pause the audio player when call is incoming to prevent the audio player is reset.
+        // Resume playing when the call is terminating (and the audio is paused by this method)
+        switch (previousCallState, callState) {
+        case (_, .incoming):
+            if player.isPlaying {
+                player.pause()
+                isPausedForIncomingCall = true
+            }
+        case (.incoming?, .terminating):
+            if isPausedForIncomingCall && !player.isPlaying {
+                player.play()
+            }
+            isPausedForIncomingCall = false
+        default:
+            break
+        }
     }
 }

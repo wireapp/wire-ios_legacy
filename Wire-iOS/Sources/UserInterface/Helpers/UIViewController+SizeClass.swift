@@ -19,8 +19,12 @@
 import Foundation
 
 extension UIViewController {
+    @objc var isHorizontalSizeClassRegular: Bool {
+        return traitCollection.horizontalSizeClass == .regular
+    }
+
     func isIPadRegular(device: DeviceProtocol = UIDevice.current) -> Bool {
-        return device.userInterfaceIdiom == .pad && self.traitCollection.horizontalSizeClass == .regular
+        return device.userInterfaceIdiom == .pad && isHorizontalSizeClassRegular
     }
 
     func isIPadRegularPortrait(device: DeviceProtocol, application: ApplicationProtocol) -> Bool {

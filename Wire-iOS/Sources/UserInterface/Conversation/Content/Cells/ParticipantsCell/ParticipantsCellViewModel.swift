@@ -69,7 +69,7 @@ class ParticipantsCellViewModel {
     static let showMoreLinkURL = NSURL(string: "action://show-all")!
     
     let font, boldFont, largeFont: UIFont?
-    let textColor: UIColor?
+    let textColor, iconColor: UIColor?
     let message: ZMConversationMessage
     
     private var action: ConversationActionType {
@@ -87,6 +87,13 @@ class ParticipantsCellViewModel {
     var showInviteButton: Bool {
         guard case .started = action, let conversation = message.conversation else { return false }
         return conversation.canManageAccess && conversation.allowGuests
+    }
+    
+    var showServiceUserWarning: Bool {
+        guard case .added = action, let systemMessage = message as? ZMSystemMessage, let conversation = message.conversation else { return false }
+        let selfAddedToServiceConversation = systemMessage.users.any(\.isSelfUser) && conversation.areServicesPresent
+        let serviceAdded = systemMessage.users.any(\.isServiceUser)
+        return selfAddedToServiceConversation || serviceAdded
     }
     
     /// Users displayed in the system message, up to 17 when not collapsed
@@ -115,7 +122,7 @@ class ParticipantsCellViewModel {
     }
     
     lazy var isSelfIncludedInUsers: Bool = {
-        return sortedUsers.any { $0.isSelfUser }
+        return sortedUsers.any(\.isSelfUser)
     }()
     
     /// The users involved in the conversation action sorted alphabetically by
@@ -127,11 +134,19 @@ class ParticipantsCellViewModel {
         return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
     }()
 
-    init(font: UIFont?, boldFont: UIFont?, largeFont: UIFont?, textColor: UIColor?, message: ZMConversationMessage) {
+    init(
+        font: UIFont?,
+        boldFont: UIFont?,
+        largeFont: UIFont?,
+        textColor: UIColor?,
+        iconColor: UIColor?,
+        message: ZMConversationMessage
+        ) {
         self.font = font
         self.boldFont = boldFont
         self.largeFont = largeFont
         self.textColor = textColor
+        self.iconColor = iconColor
         self.message = message
     }
     
@@ -164,7 +179,7 @@ class ParticipantsCellViewModel {
     // ------------------------------------------------------------
     
     func image() -> UIImage? {
-        return action.image(with: textColor)
+        return action.image(with: iconColor)
     }
     
     func attributedHeading() -> NSAttributedString? {

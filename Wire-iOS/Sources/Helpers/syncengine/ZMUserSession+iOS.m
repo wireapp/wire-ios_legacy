@@ -26,7 +26,7 @@ const static unsigned long long MaxTeamFileSize = 100 * 1024 * 1024; // 100 mega
 const static NSTimeInterval MaxAudioLength = 25 * 60.0f; // 25 minutes
 const static NSTimeInterval MaxTeamAudioLength = 100 * 60.0f; // 100 minutes
 const static NSTimeInterval MaxVideoLength = 4.0f * 60.0f; // 4 minutes
-const static NSTimeInterval MaxTeamVideoLength = 4.0f * 60.0f; // 16 minutes
+const static NSTimeInterval MaxTeamVideoLength = 16.0f * 60.0f; // 16 minutes
 
 @implementation ZMUserSession (iOS)
 
