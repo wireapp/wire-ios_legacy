@@ -296,7 +296,6 @@
 		7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5836651FD5ABFE001CC843 /* TitleView.swift */; };
 		7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DF2CB1FD7DEAD00B793B6 /* AvailabilityExtensions.swift */; };
 		7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */; };
-		7C69ECFB20582A6700203F33 /* UIPasteboard+Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C69ECFA20582A6700203F33 /* UIPasteboard+Compatibility.m */; };
 		7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */; };
 		7C72F03D200E0D03001231D3 /* PhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03C200E0D03001231D3 /* PhotoPermissionsController.swift */; };
 		7C9E291A2074F3F100827819 /* EmailVerificationStepViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9E29192074F3F000827819 /* EmailVerificationStepViewControllerTests.swift */; };
@@ -1640,8 +1639,6 @@
 		7C5836651FD5ABFE001CC843 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		7C5DF2CB1FD7DEAD00B793B6 /* AvailabilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityExtensions.swift; sourceTree = "<group>"; };
 		7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+SearchResults.swift"; sourceTree = "<group>"; };
-		7C69ECF920582A6700203F33 /* UIPasteboard+Compatibility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIPasteboard+Compatibility.h"; sourceTree = "<group>"; };
-		7C69ECFA20582A6700203F33 /* UIPasteboard+Compatibility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIPasteboard+Compatibility.m"; sourceTree = "<group>"; };
 		7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityLabelTests.swift; sourceTree = "<group>"; };
 		7C72F03C200E0D03001231D3 /* PhotoPermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPermissionsController.swift; sourceTree = "<group>"; };
 		7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoPermissionsController.swift; sourceTree = "<group>"; };
@@ -4691,8 +4688,6 @@
 				1682AEC420484B9B003A052A /* Themeable.swift */,
 				163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */,
 				BFB5972220E62EB6008720ED /* CancelableItem.swift */,
-				7C69ECF920582A6700203F33 /* UIPasteboard+Compatibility.h */,
-				7C69ECFA20582A6700203F33 /* UIPasteboard+Compatibility.m */,
 				5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */,
 			);
 			path = Helpers;
@@ -6869,7 +6864,6 @@
 				5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */,
 				EF2C59ED20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift in Sources */,
 				8742C2EA1E5309FC00329FB6 /* NSAttributedString+Highlight.swift in Sources */,
-				7C69ECFB20582A6700203F33 /* UIPasteboard+Compatibility.m in Sources */,
 				876113E41DD1DD6B007F5969 /* SketchToolbar.swift in Sources */,
 				D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */,
 				EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */,
