@@ -59,8 +59,76 @@ import WireLinkPreview
 }
 
 
+@objc protocol MockFileMessageDataType: ZMFileMessageData {
+    var mimeType: String? { get set }
+    var filename: String? { get set }
+    var fileURL: URL? { get set }
+    var imagePreviewData: Data? { get set }
+    var durationMilliseconds: UInt64 { get set }
+    var normalizedLoudness: [Float]? { get set }
+}
+
+extension MockPassFileMessageData: MockFileMessageDataType { }
+extension MockFileMessageData: MockFileMessageDataType { }
+
+@objcMembers class MockPassFileMessageData: NSObject, ZMFileMessageData {
+    var mimeType: String? = "application/vnd.apple.pkpass"
+    var size: UInt64 = 1024 * 1024 * 2
+    var transferState: ZMFileTransferState = .uploaded
+    var filename: String? = "ticket.pkpass"
+    var progress: Float = 0
+    var fileURL: URL? {
+        get {
+            let path = Bundle(for: type(of: self)).path(forResource: "sample", ofType: "pkpass")!
+            return URL(fileURLWithPath: path)
+        }
+
+        set {
+
+        }
+    }
+    var imagePreviewData: Data? = nil
+    var thumbnailAssetID : String? = ""
+    var imagePreviewDataIdentifier: String? = "preview-identifier-123"
+    var durationMilliseconds: UInt64 = 0
+    var videoDimensions: CGSize = CGSize.zero
+    var normalizedLoudness: [Float]? = []
+    var previewData: Data? = nil
+
+    var isPass: Bool {
+        return mimeType == "application/vnd.apple.pkpass"
+    }
+
+    var isVideo: Bool {
+        return mimeType == "video/mp4"
+    }
+
+    var isAudio: Bool {
+        return mimeType == "audio/x-m4a"
+    }
+
+    var v3_isImage: Bool {
+        return false
+    }
+
+    func requestFileDownload() {
+        // no-op
+    }
+
+    func cancelTransfer() {
+        // no-op
+    }
+
+    func fetchImagePreviewData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        completionHandler(imagePreviewData)
+    }
+
+    func requestImagePreviewDownload() {
+        // no-op
+    }
+}
+
 @objcMembers class MockFileMessageData: NSObject, ZMFileMessageData {
-    
     var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
     var transferState: ZMFileTransferState = .uploaded
@@ -74,11 +142,15 @@ import WireLinkPreview
     var videoDimensions: CGSize = CGSize.zero
     var normalizedLoudness: [Float]? = []
     var previewData: Data? = nil
-    
+
+    var isPass: Bool {
+        return mimeType == "application/vnd.apple.pkpass"
+    }
+
     var isVideo: Bool {
         return mimeType == "video/mp4"
     }
-    
+
     var isAudio: Bool {
         return mimeType == "audio/x-m4a"
     }
@@ -178,7 +250,7 @@ import WireLinkPreview
     
     var backingUsersReaction: UsersByReaction! = [:]
     var backingTextMessageData: MockTextMessageData! = .none
-    var backingFileMessageData: MockFileMessageData! = .none
+    var backingFileMessageData: MockFileMessageDataType! = .none
     var backingLocationMessageData: MockLocationMessageData! = .none
 
     var isEphemeral: Bool = false

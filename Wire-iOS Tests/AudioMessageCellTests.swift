@@ -26,14 +26,9 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         
         
         let mediaPlayBackManager = MediaPlaybackManager(name: "conversationMedia")
-        let fileMessage = MockMessageFactory.fileTransferMessage()
-        fileMessage?.backingFileMessageData.mimeType = "audio/x-m4a"
-        fileMessage?.backingFileMessageData.filename = "sound.m4a"
-        
-        if let config = config {
-            config(fileMessage!)
-        }
-        
+
+        let fileMessage = MockMessageFactory.audioMessage(config: config)
+
         let cell = AudioMessageCell(style: .default, reuseIdentifier: "test")
         
         let layoutProperties = ConversationCellLayoutProperties()

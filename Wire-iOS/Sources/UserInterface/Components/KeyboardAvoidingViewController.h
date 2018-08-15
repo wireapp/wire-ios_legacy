@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) UIViewController *viewController;
 
+@property (nonatomic, copy, nullable) BOOL (^shouldAdjustFrame)(UIViewController *);
 @property (nonatomic) CGFloat topInset;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

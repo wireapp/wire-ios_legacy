@@ -79,7 +79,7 @@ struct CallCellViewModel {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
             icon: .missedCall,
-            iconColor: labelTextColor,
+            iconColor: UIColor(scheme: .textDimmed),
             systemMessageType: .missedCall,
             font: labelFont,
             boldFont: labelBoldFont,

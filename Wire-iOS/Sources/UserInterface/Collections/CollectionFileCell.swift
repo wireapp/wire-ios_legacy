@@ -27,7 +27,7 @@ open class CollectionForwardableSaveableFileCell: CollectionCell {
         guard let properties = super.menuConfigurationProperties() else { return nil }
         if message?.isFileDownloaded() == true {
             var mutableItems = properties.additionalItems ?? []
-            mutableItems.append(.save(with: #selector(save)))
+            mutableItems.append(.forbiddenInEphemeral(.save(with: #selector(save))))
             properties.additionalItems = mutableItems
         }
         return properties

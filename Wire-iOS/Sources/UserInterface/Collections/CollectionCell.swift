@@ -162,7 +162,9 @@ open class CollectionCell: UICollectionViewCell {
         properties.targetRect = self.contentView.bounds
         properties.targetView = self.contentView
         if message?.canBeLiked == true {
-            properties.additionalItems = [.like(for: message, with: #selector(like))]
+            properties.additionalItems = [.forbiddenInEphemeral(.like(for: message, with: #selector(like)))]
+        } else {
+            properties.additionalItems = []
         }
 
         return properties
@@ -189,7 +191,12 @@ open class CollectionCell: UICollectionViewCell {
             .delete(with: #selector(deleteMessage)),
             .reveal(with: #selector(showInConversation)),
         ]
-        menuController.menuItems = menuConfigurationProperties.additionalItems + menuItems
+        
+        let existingItems = menuConfigurationProperties.additionalItems
+            .filter { $0.isAvailableInEphemeralConversations }
+            .map { $0.item }
+
+        menuController.menuItems = existingItems + menuItems
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
     }

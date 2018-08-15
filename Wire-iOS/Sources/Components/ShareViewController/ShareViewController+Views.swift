@@ -102,8 +102,8 @@ extension ShareViewController {
     internal func createConstraints() {
         constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
             blurView.edges == view.edges
-            containerView.top == view.top + safeArea.top
-            self.bottomConstraint = containerView.bottom == view.bottom - safeArea.bottom
+            containerView.top == view.topMargin
+            self.bottomConstraint = containerView.bottom == view.bottomMargin
             containerView.leading == view.leading
             containerView.trailing == view.trailing
         }
@@ -114,16 +114,14 @@ extension ShareViewController {
                 shareablePreviewWrapper.top == view.topMargin + 8
                 shareablePreviewWrapper.left == view.left + 16
                 shareablePreviewWrapper.right == -16 + view.right
-                
                 shareablePreviewView.edges == shareablePreviewWrapper.edges
-                
+
                 tokenField.top == shareablePreviewWrapper.bottom + 16
-                
             }
         }
         else {
             constrain(self.containerView, self.tokenField) { view, tokenField in
-                tokenField.top == view.top + 28
+                tokenField.top == view.top + 8
             }
         }
         
@@ -180,13 +178,5 @@ extension ShareViewController {
             }
         }
     }
-    
-    
-    var safeArea: UIEdgeInsets {
-        let size = UIScreen.main.bounds.size
-        if size.width == 375 && size.height == 812 {
-            return UIEdgeInsets(top: 44.0, left: 0, bottom: 34.0, right: 0)
-        }
-        return UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0)
-    }
+
 }

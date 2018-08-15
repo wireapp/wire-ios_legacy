@@ -157,16 +157,23 @@
     return message;
 }
 
-+ (MockMessage *)fileTransferMessage
++ (MockMessage *)messageTemplate
 {
     MockMessage *message = [[MockMessage alloc] init];
-    
+
     MockConversation *conversation = [MockLoader mockObjectsOfClass:[MockConversation class] fromFile:@"conversations-01.json"][0];
     message.conversation = (ZMConversation *)conversation;
     message.serverTimestamp = [NSDate dateWithTimeIntervalSince1970:0];
-    
+
     message.sender = (id)[MockUser mockSelfUser];
     conversation.activeParticipants = [[NSOrderedSet alloc] initWithObjects:message.sender, nil];
+
+    return message;
+}
+
++ (MockMessage *)fileTransferMessage
+{
+    MockMessage *message = [MockMessageFactory messageTemplate];
 
     message.backingFileMessageData = [[MockFileMessageData alloc] init];
     return message;

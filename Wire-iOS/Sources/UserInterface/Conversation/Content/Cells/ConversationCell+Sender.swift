@@ -53,16 +53,21 @@ public extension ConversationCell {
 
         var attributedString: NSAttributedString
         if sender.isServiceUser {
-            let bot = attributedName(for: .botSuffix, string: "BOT")
+            let attachment = NSTextAttachment()
+            let botIcon = UIImage(for: .bot, iconSize: .like, color: UIColor(scheme: .iconGuest, variant: ColorScheme.default.variant))!
+            attachment.image = botIcon
+            attachment.bounds = CGRect(x: 0.0, y: TextKind.botName.font.descender + 1, width: botIcon.size.width, height: botIcon.size.height)
+            attachment.accessibilityLabel = "general.service".localized
+            let bot = NSAttributedString(attachment: attachment)
             let name = attributedName(for: .botName, string: name)
-            attributedString = name + " ".attributedString + bot
+            attributedString = name + "  ".attributedString + bot
         } else {
             let accentColor = ColorScheme.default.nameAccent(for: sender.accentColorValue, variant: ColorScheme.default.variant)
             attributedString = attributedName(for: .userName(accent: accentColor), string: name)
         }
 
-        self.authorLabel.attributedText = attributedString
-        self.authorImageView.user = sender
+        authorLabel.attributedText = attributedString
+        authorImageView.user = sender
     }
 
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
