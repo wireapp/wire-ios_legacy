@@ -37,7 +37,7 @@ public extension ConversationCell {
             becomeFirstResponder()
         }
         
-        UIMenuController.shared.menuItems = items(for: message, with: properties)
+        UIMenuController.shared.menuItems = ConversationCell.items(for: message, with: properties)
         UIMenuController.shared.setTargetRect(properties.targetRect, in: properties.targetView)
         UIMenuController.shared.setMenuVisible(true, animated: true)
         
@@ -51,7 +51,7 @@ public extension ConversationCell {
         NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide), name: .UIMenuControllerDidHideMenu, object: nil)
     }
     
-    private func items(for message: ZMConversationMessage, with properties: MenuConfigurationProperties) -> [UIMenuItem] {
+    private static func items(for message: ZMConversationMessage, with properties: MenuConfigurationProperties) -> [UIMenuItem] {
         var items = [UIMenuItem]()
         
         if message.isEphemeral {
