@@ -68,8 +68,8 @@ class RegistrationLinearStepCompletionHandler: AuthenticationEventHandler {
         return [.hideLoadingView, .presentAlert(alert)]
     }
 
-    private func handleRegistrationCompletion(with state: RegistrationState) -> [AuthenticationCoordinatorAction]? {
-        return nil
+    private func handleRegistrationCompletion(with state: RegistrationState) -> [AuthenticationCoordinatorAction] {
+        return [.showLoadingView, .completeUserRegistration]
     }
 
 }

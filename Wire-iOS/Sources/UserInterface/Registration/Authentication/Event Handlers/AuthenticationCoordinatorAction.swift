@@ -38,6 +38,7 @@ enum AuthenticationCoordinatorAction {
     case configureNotifications
     case startLinearRegistration(RegistrationState)
     case setMarketingConsent(Bool)
+    case completeUserRegistration
 }
 
 // MARK: - Alerts

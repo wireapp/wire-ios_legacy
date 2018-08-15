@@ -16,11 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@import UIKit;
+#import "BlueViewController.h"
 #import "AuthenticationCoordinatedViewController.h"
 
 extern NSString * const UnsplashRandomImageHiQualityURL;
 
-@interface ProfilePictureStepViewController : UIViewController <AuthenticationCoordinatedViewController>
+@interface ProfilePictureStepViewController : BlueViewController <AuthenticationCoordinatedViewController>
 
 @end

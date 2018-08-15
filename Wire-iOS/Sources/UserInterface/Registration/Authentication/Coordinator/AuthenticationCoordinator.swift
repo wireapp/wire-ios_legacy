@@ -237,6 +237,9 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
             case .setMarketingConsent(let consentValue):
                 saveMarketingConsent(consentValue)
 
+            case .completeUserRegistration:
+                finishRegisteringUser()
+
             case .unwindState:
                 unwind()
             }
@@ -448,7 +451,7 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.continueAfterBackupImportStep()
     }
 
-    @objc func submitMarketingConsent(_ consentValue: Bool) {
+    func setMarketingConsent(_ consentValue: Bool) {
         guard let userSession = statusProvider?.sharedUserSession else {
             return
         }
@@ -456,8 +459,13 @@ extension AuthenticationCoordinator {
         userSession.submitMarketingConsent(with: consentValue)
     }
 
-    @objc func registerUser(user: ZMIncompleteRegistrationUser) {
-        unauthenticatedSession.register(user: user.complete())
+    func finishRegisteringUser() {
+        guard case let .linearRegistration(status, _) = currentStep else {
+            return
+        }
+
+        unauthenticatedSession.register(user: status.unregisteredUser.complete())
+        
     }
 
     // MARK: UI Events
@@ -544,6 +552,10 @@ extension AuthenticationCoordinator {
 
 extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, ZMRegistrationObserver {
 
+    func registrationDidFail(_ error: Error!) {
+        // TODO: handle failure
+    }
+
     // MARK: Email Update
 
     func emailUpdateDidFail(_ error: Error!) {
@@ -606,68 +618,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, 
             break
         }
     }
-
-//    - (void)registrationDidFail:(NSError *)error
-//    {
-//    self.navigationController.showLoadingView = NO;
-//    [self showAlertForError:error];
-//    }
-//
-//    - (void)proceedToCodeVerificationForLogin:(BOOL)login
-//    {
-//    self.navigationController.showLoadingView = NO;
-//
-//    PhoneVerificationStepViewController *phoneVerificationStepViewController = [[PhoneVerificationStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-//    phoneVerificationStepViewController.formStepDelegate = self;
-//    phoneVerificationStepViewController.delegate = self;
-//    phoneVerificationStepViewController.isLoggingIn = login;
-//
-//    [self.navigationController pushViewController:phoneVerificationStepViewController.registrationFormViewController animated:YES];
-//    }
-//
-//    - (void)phoneVerificationCodeRequestDidSucceed
-//    {
-//
-//    if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-//    [self proceedToCodeVerificationForLogin:NO];
-//    } else {
-//    [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
-//    }
-//    }
-//
-//    - (void)phoneVerificationCodeRequestDidFail:(NSError *)error
-//    {
-//    if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-//    }
-//
-//    self.navigationController.showLoadingView = NO;
-//
-//    if(error.code == ZMUserSessionPhoneNumberIsAlreadyRegistered) {
-//    LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber password:nil usesCompanyLogin:NO];
-//    [self.phoneNumberStepViewController reset];
-//    //        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:credentials];
-//    }
-//
-//    [self showAlertForError:error];
-//    }
-//
-//    - (void)phoneVerificationDidSucceed
-//    {
-//    self.navigationController.showLoadingView = NO;
-//
-//    [UIAlertController showNewsletterSubscriptionDialogWithOver: self
-//    completionHandler: ^(BOOL marketingConsent) {
-//    self.marketingConsent = marketingConsent;
-//
-//    //        [self presentTermsOfUseStepController];
-//    }];
-//    }
-//
-//    - (void)phoneVerificationDidFail:(NSError *)error
-//    {
-//    self.navigationController.showLoadingView = NO;
-//    [self showAlertForError:error];
-//    }
 
 }
 

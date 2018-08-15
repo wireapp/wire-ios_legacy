@@ -52,6 +52,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     [self createContainerView];
     [self createTitleLabel];
     [self createTermsOfUseText];
