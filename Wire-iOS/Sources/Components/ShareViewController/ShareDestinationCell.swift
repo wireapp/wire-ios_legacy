@@ -67,7 +67,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             self.avatarView?.removeFromSuperview()
             self.guestUserIcon.isHidden = true
             self.shieldView.isHidden = true
-            self.checkImageView.isHidden
+            self.checkImageView.isHidden = true
         }
     }
 
