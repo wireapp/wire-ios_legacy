@@ -91,5 +91,4 @@ public extension ConversationCell {
         delegate?.conversationCell?(self, didSelect: .delete)
     }
 
-    
 }
