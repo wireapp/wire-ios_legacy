@@ -60,7 +60,6 @@ static AppDelegate *sharedAppDelegate = nil;
     self = [super init];
     if (self) {
         sharedAppDelegate = self;
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
     }
     return self;
 }
