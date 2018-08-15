@@ -132,6 +132,7 @@
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
     self.companyLoginController.autoDetectionEnabled = YES;
     [self.companyLoginController detectLoginCode];
+    [self.view layoutIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -188,7 +189,7 @@
 - (void)createConstraints
 {
     self.contentWidthConstraint = [self.registrationTabBarController.view.widthAnchor constraintEqualToConstant:self.maximumFormSize.width];
-    self.contentHeightConstraint = [self.registrationTabBarController.view.heightAnchor constraintEqualToConstant:0];
+    self.contentHeightConstraint = [self.registrationTabBarController.view.heightAnchor constraintEqualToConstant:[self contentHeightConstraintConstant: self.isHorizontalSizeClassRegular]];
     self.contentLeadingConstraint = [self.registrationTabBarController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
     self.contentTrailingConstraint = [self.registrationTabBarController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor];
     self.contentCenterConstraint = [self.registrationTabBarController.view.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor];
@@ -211,10 +212,15 @@
     }
 }
 
+
+- (CGFloat)contentHeightConstraintConstant:(BOOL)isRegular {
+    return isRegular ? 262 : 244;
+}
+
 - (void)updateConstraintsForRegularLayout:(BOOL)isRegular
 {
     self.contentWidthConstraint.active = isRegular;
-    self.contentHeightConstraint.constant = isRegular ? 262 : 244;
+    self.contentHeightConstraint.constant = [self contentHeightConstraintConstant: isRegular];
     self.contentCenterConstraint.active = isRegular;
 
     self.contentLeadingConstraint.active = !isRegular;

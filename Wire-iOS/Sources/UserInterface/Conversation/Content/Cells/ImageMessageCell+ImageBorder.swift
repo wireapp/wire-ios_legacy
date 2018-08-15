@@ -20,7 +20,15 @@ import Foundation
 
 extension ImageMessageCell {
     @objc func updateImageBorder() {
-        let showBorder = !imageSmallerThanMinimumSize()
+
+        var isTransparent = false
+
+        if let image = fullImageView?.image {
+            isTransparent = image.isTransparent()
+        }
+
+        let showBorder = !imageSmallerThanMinimumSize() && !isTransparent
+
         fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0
 
         switch self.variant {

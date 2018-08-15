@@ -29,18 +29,20 @@
 @class LikeButton;
 @class LinkAttachment;
 @class ConversationCellBurstTimestampView;
+@class AdditionalMenuItem;
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;
 
 typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
+
 @interface MenuConfigurationProperties : NSObject
 
 @property (nonatomic) CGRect targetRect;
 @property (nonatomic) UIView *targetView;
 @property (nonatomic) SelectedMenuBlock selectedMenuBlock;
-@property (nonatomic) NSArray <UIMenuItem *> *additionalItems;
-@property (nonatomic) NSUInteger likeItemIndex;
+@property (nonatomic) NSArray <AdditionalMenuItem *> *additionalItems;
+@property (nonatomic) NSInteger likeItemIndex;
 
 @end
 
@@ -114,7 +116,6 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 #pragma mark - For deleted menu, meant to be implmented by subclass
 
 - (MenuConfigurationProperties *)menuConfigurationProperties;
-- (void)showMenu;
 
 // This is used for tracking. Every subclass give which type of cell it is, to figure what kind of message it is.
 - (MessageType)messageType;

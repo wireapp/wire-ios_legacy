@@ -23,7 +23,7 @@ class MessageTimerUpdateCell: IconSystemCell {
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
-        leftIconView.image = UIImage(for: .hourglass, fontSize: 16, color: labelTextColor)
+        leftIconView.image = UIImage(for: .hourglass, fontSize: 16, color: UIColor(scheme: .textDimmed))
         updateLabel()
     }
     

@@ -80,5 +80,12 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         user.remoteIdentifier = UUID()
         return user
     }
+    
+    func createService(name: String) -> ZMUser {
+        let user = createUser(name: name)
+        user.serviceIdentifier = UUID.create().transportString()
+        user.providerIdentifier = UUID.create().transportString()
+        return user
+    }
 
 }

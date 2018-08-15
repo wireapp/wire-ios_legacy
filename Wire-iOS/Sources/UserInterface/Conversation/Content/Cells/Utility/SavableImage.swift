@@ -30,7 +30,15 @@ protocol AssetChangeRequestProtocol: class {
     @discardableResult static func creationRequestForAssetFromImage(atFileURL fileURL: URL) -> Self?
 }
 
+protocol AssetCreationRequestProtocol: class {
+    static func forAsset() -> Self
+    func addResource(with type: PHAssetResourceType,
+                     data: Data,
+                     options: PHAssetResourceCreationOptions?)
+}
+
 extension PHAssetChangeRequest: AssetChangeRequestProtocol {}
+extension PHAssetCreationRequest: AssetCreationRequestProtocol {}
 
 private let log = ZMSLog(tag: "SavableImage")
 
@@ -44,6 +52,7 @@ private let log = ZMSLog(tag: "SavableImage")
     /// Protocols used to inject mock photo services in tests
     var photoLibrary: PhotoLibraryProtocol = PHPhotoLibrary.shared()
     var assetChangeRequestType: AssetChangeRequestProtocol.Type = PHAssetChangeRequest.self
+    var assetCreationRequestType: AssetCreationRequestProtocol.Type = PHAssetCreationRequest.self
     var applicationType: ApplicationProtocol.Type = UIApplication.self
 
     public typealias ImageSaveCompletion = (Bool) -> Void
@@ -108,8 +117,7 @@ private let log = ZMSLog(tag: "SavableImage")
         case .gif(let url):
             _ = assetChangeRequestType.creationRequestForAssetFromImage(atFileURL: url)
         case .image(let data):
-            guard let image = UIImage(data: data) else { return log.error("failed to create image from data") }
-            assetChangeRequestType.creationRequestForAsset(from: image)
+            assetCreationRequestType.forAsset().addResource(with: .photo, data: data, options: PHAssetResourceCreationOptions())
         }
     }
 
