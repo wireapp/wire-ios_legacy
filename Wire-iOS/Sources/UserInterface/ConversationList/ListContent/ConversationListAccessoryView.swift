@@ -133,18 +133,18 @@ import Cartography
         }
     }
 
-    func updateCollapseConstraints(collapseSelf: Bool) {
-        if collapseSelf {
+    func updateCollapseConstraints(isCollapsed: Bool) {
+        if isCollapsed {
             expandWidthConstraint.isActive = false
             expandTypingViewWidthConstraint.isActive = false
-            badgeView.trailingConstraint.isActive = false
             collapseWidthConstraint.isActive = true
         } else {
             collapseWidthConstraint.isActive = false
-            badgeView.trailingConstraint.isActive = true
             expandWidthConstraint.isActive = true
             expandTypingViewWidthConstraint.isActive = true
         }
+
+        badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
     }
     
     public func updateForIcon() {
@@ -161,7 +161,7 @@ import Cartography
             self.badgeView.isHidden = true
             self.typingView.isHidden = true
 
-            updateCollapseConstraints(collapseSelf: true)
+            updateCollapseConstraints(isCollapsed: true)
 
             return
         case .activeCall(_):
@@ -187,7 +187,7 @@ import Cartography
             self.typingView.image = .none
         }
         
-        updateCollapseConstraints(collapseSelf: false)
+        updateCollapseConstraints(isCollapsed: false)
 
         if let view = self.viewForState {
             self.badgeView.containedView.addSubview(view)
