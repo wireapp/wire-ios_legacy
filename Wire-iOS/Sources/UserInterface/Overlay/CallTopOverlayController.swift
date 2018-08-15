@@ -159,7 +159,7 @@ final class CallTopOverlayController: UIViewController {
     private func startCallDurationTimer() {
         stopCallDurationTimer()
         
-        callDurationTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 0.1, repeats: true) {
+        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) {
             [weak self] _ in
             self?.updateCallDuration()
         }
