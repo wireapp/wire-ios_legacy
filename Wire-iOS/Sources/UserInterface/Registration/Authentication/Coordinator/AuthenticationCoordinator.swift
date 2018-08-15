@@ -460,8 +460,8 @@ extension AuthenticationCoordinator {
             return
         }
 
+        transition(to: .finalizeRegistration(status))
         unauthenticatedSession.register(user: status.unregisteredUser.complete())
-        
     }
 
     /**
@@ -564,11 +564,7 @@ extension AuthenticationCoordinator {
 
 // MARK: - User Session Events
 
-extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver, ZMRegistrationObserver {
-
-    func registrationDidFail(_ error: Error!) {
-        // TODO: handle failure
-    }
+extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
 
     // MARK: Email Update
 

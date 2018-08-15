@@ -18,7 +18,12 @@
 
 import Foundation
 
-extension AuthenticationCoordinator {
+extension AuthenticationCoordinator: ZMRegistrationObserver {
+
+    /// Called when registration fails.
+    func registrationDidFail(_ error: Error!) {
+        eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
+    }
 
     /// Called when the validation code for the registered phone number was sent.
     func phoneVerificationCodeRequestDidSucceed() {

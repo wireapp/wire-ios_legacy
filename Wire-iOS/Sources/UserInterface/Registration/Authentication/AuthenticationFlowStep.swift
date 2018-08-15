@@ -48,6 +48,7 @@ enum AuthenticationFlowStep {
     case createCredentials(ZMIncompleteRegistrationUser)
     case validatePhoneIdentity(credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser)
     case linearRegistration(RegistrationState, IntermediateRegistrationStep)
+    case finalizeRegistration(RegistrationState)
 
     // MARK: - Properties
 
@@ -69,6 +70,7 @@ enum AuthenticationFlowStep {
         case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
         case .validatePhoneIdentity: return false
         case .linearRegistration(_, let intermediateStep): return intermediateStep.needsInterface
+        case .finalizeRegistration: return false
         default: return true
         }
     }

@@ -113,6 +113,7 @@ class AuthenticationEventHandlingManager {
         registerHandler(PhoneRegistrationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
         registerHandler(AuthenticationPhoneLoginErrorHandler(), to: &registrationErrorHandlers)
         registerHandler(PhoneRegistrationVerificationErrorHandler(), to: &registrationErrorHandlers)
+        registerHandler(RegistrationFinalErrorHandler(), to: &registrationErrorHandlers)
 
         // linearRegistrationEventHandlers
         registerHandler(RegistrationLinearStepCompletionHandler(), to: &linearRegistrationEventHandlers)
