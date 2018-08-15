@@ -49,7 +49,7 @@ extension KeyboardAvoidingViewController {
             fixedAnimationCurve = animationCurve
             if #available(iOS 11.0, *) {
             } else {
-                // iOS returns an undocument type 7 animation curve raw value, which caursing crash on iOS 10 if use as an argument in UIViewPropertyAnimator init method. Workaround: assign a fallback value.
+                // iOS returns an undocumented type 7 animation curve raw value, which causes crashes on iOS 10 if it is used as an argument in UIViewPropertyAnimator init method. Workaround: assign a fallback value.
                 if animationCurve != .easeInOut &&
                     animationCurve != .easeIn &&
                     animationCurve != .easeOut &&
