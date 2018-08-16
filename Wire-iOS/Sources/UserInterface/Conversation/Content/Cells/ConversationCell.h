@@ -42,7 +42,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic) UIView *targetView;
 @property (nonatomic) SelectedMenuBlock selectedMenuBlock;
 @property (nonatomic) NSArray <AdditionalMenuItem *> *additionalItems;
-@property (nonatomic) NSUInteger likeItemIndex;
+@property (nonatomic) NSInteger likeItemIndex;
 
 @end
 
@@ -116,7 +116,6 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 #pragma mark - For deleted menu, meant to be implmented by subclass
 
 - (MenuConfigurationProperties *)menuConfigurationProperties;
-- (void)showMenu;
 
 // This is used for tracking. Every subclass give which type of cell it is, to figure what kind of message it is.
 - (MessageType)messageType;

@@ -62,7 +62,7 @@ open class CameraKeyboardViewController: UIViewController {
     internal let goBackButton = IconButton()
     internal let cameraRollButton = IconButton()
     
-    open let splitLayoutObservable: SplitLayoutObservable
+    public let splitLayoutObservable: SplitLayoutObservable
     open weak var delegate: CameraKeyboardViewControllerDelegate?
 
     deinit {

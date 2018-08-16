@@ -56,7 +56,7 @@ public extension ConversationCell {
             let attachment = NSTextAttachment()
             let botIcon = UIImage(for: .bot, iconSize: .like, color: UIColor(scheme: .iconGuest, variant: ColorScheme.default.variant))!
             attachment.image = botIcon
-            attachment.bounds = CGRect(x: 0.0, y: TextKind.botName.font.descender + 1, width: botIcon.size.width, height: botIcon.size.height)
+            attachment.bounds = CGRect(x: 0.0, y: -1.5, width: botIcon.size.width, height: botIcon.size.height)
             attachment.accessibilityLabel = "general.service".localized
             let bot = NSAttributedString(attachment: attachment)
             let name = attributedName(for: .botName, string: name)

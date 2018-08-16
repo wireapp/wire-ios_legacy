@@ -31,12 +31,12 @@ import UIKit
         fatalError("init(coder:) has not been implemented")
     }
     
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.cornerRadius = self.bounds.width / 2
     }
     
-    open var animating: Bool = false {
+    public var animating: Bool = false {
         didSet {
             if oldValue == animating {
                 return

@@ -55,8 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL inRotation;
 
 // PopoverPresenter
-@property (nonatomic, nullable) UIPopoverPresentationController *presentedPopover;
-@property (nonatomic, nullable) UIView *popoverPointToView;
+@property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
+@property (nonatomic, nullable, weak) UIView *popoverPointToView;
 
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;

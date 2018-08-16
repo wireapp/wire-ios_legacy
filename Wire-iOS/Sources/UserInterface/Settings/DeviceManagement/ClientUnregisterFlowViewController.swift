@@ -148,15 +148,14 @@ import Cartography
     
     override func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if viewController is ClientListViewController {
-            UIApplication.shared.isStatusBarHidden = !UIScreen.hasNotch
+            UIApplication.shared.wr_setStatusBarHidden(!UIScreen.hasNotch, with: animated ? .fade : .none)
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
         else {
-            UIApplication.shared.isStatusBarHidden = true
+            UIApplication.shared.wr_setStatusBarHidden(true, with: animated ? .fade : .none)
             navigationController.setNavigationBarHidden(true, animated: animated)
         }
     }
-    
 
 }
 

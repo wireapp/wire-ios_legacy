@@ -31,6 +31,7 @@
 "general.accept" = "接聽";
 "general.decline" = "不了，謝謝";
 "general.failure" = "出了點問題";
+"general.service" = "服務";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -43,7 +44,7 @@
 "peoplepicker.search_placeholder" = "搜尋使用者名稱或名字";
 "peoplepicker.header.top_people" = "常用連絡人";
 "peoplepicker.button.create_conversation" = "建立群組";
-"peoplepicker.button.add_to_conversation" = "邀請連絡人加入群組";
+"peoplepicker.button.add_to_conversation" = "將參與者加入到群組中";
 "peoplepicker.header.conversations" = "群組";
 "peoplepicker.header.team_conversations" = "%@群組";
 "peoplepicker.header.send_invitation" = "邀請";
@@ -51,8 +52,8 @@
 "peoplepicker.header.contacts_personal" = "聯絡人";
 "peoplepicker.header.directory" = "加為連絡人";
 
-"peoplepicker.group.title.singular" = "加入連絡人";
-"peoplepicker.group.title.plural" = "添加連絡人(%d)";
+"peoplepicker.group.title.singular" = "加入參與者";
+"peoplepicker.group.title.plural" = "加入參與者（%d）";
 "peoplepicker.group.skip" = "略過";
 "peoplepicker.group.done" = "完成";
 "peoplepicker.group.create" = "建立";
@@ -66,7 +67,7 @@
 "peoplepicker.services.add_service.error.full" = "對話人數已達上限";
 
 "peoplepicker.title.create_conversation" = "建立群組";
-"peoplepicker.title.add_to_conversation" = "邀請連絡人";
+"peoplepicker.title.add_to_conversation" = "加入參與者";
 
 "peoplepicker.no_contacts_title" = "沒有連絡人。";
 
@@ -78,6 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "請輸入有效電子郵件信箱";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "沒有符合結果。";
+"peoplepicker.no_matching_results_services_title" = "服務可改善你的工作流程。要啟用它們, 請詢問您的管理員。";
+"peoplepicker.no_matching_results_services_admin_title" = "服務可改善你的工作流程。";
+"peoplepicker.no_matching_results_services_manage_services_title" = "管理服務";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "請輸入完整的電子郵件地址或";
 /*  */
@@ -94,12 +98,13 @@
 "peoplepicker.quick-action.open-conversation" = "開啟";
 "peoplepicker.quick-action.create-conversation" = "建立群組";
 "peoplepicker.quick-action.create-guest-room" = "建立訪客聊天室";
+"peoplepicker.quick-action.admin-services" = "管理服務";
 
 "add_participants.all_contacts_added" = "大家都已加入";
 
-"add_participants.alert.title" = "Full house";
-"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
-"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
+"add_participants.alert.title" = "名額已滿";
+"add_participants.alert.message.new_conversation" = "最多%d人可以加入對話。";
+"add_participants.alert.message.existing_conversation" = "最多%1$d人可以加入對話。當前還可加入%2$d人。";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "按名稱搜尋";
@@ -152,7 +157,7 @@
 "conversation_list.voiceover.unread_messages.hint" = "您有未讀訊息。";
 
 // Archived List
-"archived_list.title" = "封存";
+"archived_list.title" = "檔案";
 
 // Add contact tool tip
 "tool_tip.contacts.title" = "從這裡開始對話";
@@ -268,8 +273,8 @@
 "conversation.create.group_name.placeholder" = "群組名稱";
 "conversation.create.guidance.empty" = "至少1個字元";
 "conversation.create.guidance.toolong" = "字數過多";
-"conversation.create.toggle.title" = "允許訪客";
-"conversation.create.toggle.subtitle" = "對團隊以外的人公開此對話。您以後可隨時更改。";
+"conversation.create.toggle.title" = "允許訪客和服務";
+"conversation.create.toggle.subtitle" = "對團隊以外的人和服務公開此對話。您以後可隨時更改。";
 
 "conversation.input_bar.ongoing_call_alert.title" = "通話中";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "在通話時不能錄製語音訊息。";
@@ -277,6 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "在通話時不能拍攝相片。";
 
 "conversation.guests_present" = "訪客在對話中";
+"conversation.services_present" = "有服務可供使用";
+"conversation.guests_services_present" = "對話中有訪客和服務";
 "conversation.action.search" = "搜索";
 
 // Image confirmation dialogue
@@ -318,14 +325,14 @@
 // System messages
 "content.system.you_nominative" = "您";
 "content.system.you_dative" = "您";
-"content.system.and_you_dative" = "and you";
+"content.system.and_you_dative" = "和你";
 "content.system.you_accusative" = "您";
 
 "content.system.continued_conversation" = "開始與%@對話";
-"content.system.started_conversation.truncated_people" = "and %@";
-"content.system.started_conversation.truncated_people.others" = "%@ others";
-"content.system.started_conversation.complete_team" = "all team members";
-"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
+"content.system.started_conversation.truncated_people" = "和%@";
+"content.system.started_conversation.truncated_people.others" = "%@其他連絡人";
+"content.system.started_conversation.complete_team" = "所有團隊成員";
+"content.system.started_conversation.complete_team.guests" = "所有團隊成員和%@訪客";
 
 "content.system.other_started_conversation" = "%@開始與%@對話";
 "content.system.you_started_conversation" = "您與%@開始對話";
@@ -342,6 +349,8 @@
 "content.system.other_removed_you" = "%@移除了您";
 "content.system.you_removed_other" = "您移除了%@";
 
+"content.system.services.warning" = "服務可以存取對話內容";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@和%@開始對話";
@@ -356,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "%@從團隊中被移除了";
 "content.system.conversation.guest.joined" = "%@已加入";
 
-"content.system.conversation.invite.title" = "你的團隊以外的訪客可以參加這個對話。";
+"content.system.conversation.invite.title" = "你的團隊以外的訪客和服務可以參加這個對話。";
 "content.system.conversation.invite.button" = "邀請朋友加入";
 
 "content.system.other_renamed_conv_to_nothing" = "%@刪除了聊天室名稱";
@@ -390,7 +399,7 @@
 "content.system.conversation.with_name.title" = "%@開啓了聊天室";
 "content.system.conversation.with_name.title-you" = "%@開啓了聊天室";
 
-"content.system.conversation.with_name.participants" = "with";
+"content.system.conversation.with_name.participants" = "和";
 
 "content.system.message_timer_changes" = "%@將訊息時限設置為%@";
 "content.system.message_timer_changes.you" = "你將訊息時限設置為%@";
@@ -453,6 +462,7 @@
 "content.message.forward.to" = "搜索...";
 "content.message.open" = "開啟";
 "content.message.copy" = "複製";
+"content.message.download" = "下載";
 
 "content.message.open_link_alert.title" = "瀏覽連結";
 "content.message.open_link_alert.message" = "這會帶你去\n%@";
@@ -587,7 +597,7 @@
 "participants.section.services" = "服務 (%d)";
 "participants.section.settings" = "選項";
 "participants.footer.add_title" = "加入參與者";
-"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "最多%1$d參與者可以加入群組對話。視像通話可用以你與另外%2$d人。";
 
 // Meta Menu
 "meta.menu.rename" = "重新命名";
@@ -698,7 +708,7 @@
 "participants.services.remove_integration.button" = "移除服務";
 
 // Group details
-"group_details.guest_options_cell.title" = "訪客";
+"group_details.guest_options_cell.title" = "訪客和服務";
 "group_details.guest_options_cell.enabled" = "開啟";
 "group_details.guest_options_cell.disabled" = "關閉";
 "group_details.timeout_options_cell.title" = "限時訊息";
@@ -1062,10 +1072,10 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "允許訪客";
-"guest_room.allow_guests.subtitle" = "開放這個對話與團隊以外的訪客。";
-"guest_room.remove_guests.message" = "將移除對話中的訪客。 將不能加入新訪客。";
-"guest_room.remove_guests.action" = "移除訪客";
+"guest_room.allow_guests.title" = "允許訪客和服務";
+"guest_room.allow_guests.subtitle" = "對團隊以外的人和服務公開此對話。您以後可隨時更改。";
+"guest_room.remove_guests.message" = "將移除對話中的訪客和服務。 將不能加入新訪客。";
+"guest_room.remove_guests.action" = "移除";
 "guest_room.revoke_link.message" = "新訪客將無法加入此連結。 目前訪客仍可使用。";
 "guest_room.revoke_link.action" = "撤銷連結";
 
@@ -1147,12 +1157,12 @@
 "login.sso.alert.text_field.placeholder" = "單一登入(SSO)存取碼";
 
 "login.sso.error.alert.title" = "出了點問題";
-"login.sso.error.alert.invalid_code.title" = "Invalid code.";
-"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
-"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
+"login.sso.error.alert.invalid_code.title" = "驗證碼無效。";
+"login.sso.error.alert.invalid_code.message" = "請核對您的公司單一登錄(SSO)存取碼，然後重試。";
+"login.sso.error.offline.alert.message" = "請檢查您的網路連線，然後重試。";
 "login.sso.error.alert.message" = "請與工作組管理員聯繫(錯誤 %@)。";
-"login.sso.error.alert.unknown.message" = "Please try again later.";
-"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.unknown.message" = "請稍後再重試。";
+"login.sso.error.alert.invalid_status.message" = "請稍後重試 (錯誤：%@)。";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "回復中...";
@@ -1294,7 +1304,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "已超過群組通話限定人數";
 "error.group_call.too_many_members_in_conversation" = "群組通話功能最多支援%d 人";
 "error.group_call.too_many_participants_in_the_call.title" = "此通話參與者已達上限";
-"error.group_call.too_many_participants_in_the_call" = "只能再容納%d人。";
+"error.group_call.too_many_participants_in_the_call" = "只能再容納%d參與者。";
 "error.call.gsm_ongoing.title" = "撥打手機";
 "error.call.gsm_ongoing" = "在使用 Wire 之前請取消手機通話";
 "error.call.general.title" = "撥打錯誤";
