@@ -283,7 +283,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     if (imageData != nil) {
         // iOS11 uses HEIF image format, but BE expects JPEG
         NSData *jpegData = imageData.isJPEG ? imageData : UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
-        [self.authenticationCoordinator setProfilePictureWithData:imageData];
+        [self.authenticationCoordinator setProfilePictureWithData:jpegData];
     }
 }
 

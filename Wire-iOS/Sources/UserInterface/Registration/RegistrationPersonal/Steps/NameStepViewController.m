@@ -121,7 +121,7 @@
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
     NSError *error = nil;
-    BOOL valid = YES; // [self.unregisteredUser validateValue:&newString forKey:@"name" error:&error];
+    BOOL valid = [ZMUser validateName:&newString error:&error];
     
     if (error.code == ZMObjectValidationErrorCodeStringTooLong) {
         return NO;
