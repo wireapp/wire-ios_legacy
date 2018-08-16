@@ -117,13 +117,15 @@ extension AuthenticationCoordinator {
         stepViewController.authenticationCoordinator = self
         currentViewController = stepViewController
 
+        let containerViewController = KeyboardAvoidingViewController(viewController: stepViewController)
+
         if resetStack {
             flowStack = [step]
-            presenter?.setViewControllers([stepViewController], animated: true)
+            presenter?.setViewControllers([containerViewController], animated: true)
         } else {
             flowStack.append(step)
             presenter?.backButtonEnabled = step.allowsUnwind
-            presenter?.pushViewController(stepViewController, animated: true)
+            presenter?.pushViewController(containerViewController, animated: true)
         }
     }
 
