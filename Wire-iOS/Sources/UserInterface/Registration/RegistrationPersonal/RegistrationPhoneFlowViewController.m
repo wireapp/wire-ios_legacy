@@ -39,33 +39,23 @@
 #import "AddEmailPasswordViewController.h"
 #import "Wire-Swift.h"
 
+
 @import WireExtensionComponents;
 @import WireSyncEngine;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface RegistrationPhoneFlowViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, ZMRegistrationObserver, PreLoginAuthenticationObserver>
+@interface RegistrationPhoneFlowViewController () <PhoneNumberStepViewControllerDelegate>
 
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
-@property (nonatomic) id authToken;
-@property (nonatomic) id<ZMRegistrationObserverToken> registrationToken;
 @property (nonatomic) BOOL marketingConsent;
 
 @end
 
 @implementation RegistrationPhoneFlowViewController
 
-- (void)dealloc
-{
-    [self removeObservers];
-}
-
-- (void)removeObservers
-{
-    self.authToken = nil;
-    self.registrationToken = nil;
-}
+@synthesize authenticationCoordinator;
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
@@ -77,19 +67,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 
     return self;
-}
-
-- (void)didMoveToParentViewController:(UIViewController *)parent
-{
-    [super didMoveToParentViewController:parent];
-    
-    if (parent && self.authToken == nil && self.registrationToken == nil) {
-        self.authToken = [PreLoginAuthenticationNotification registerObserver:self
-                                                    forUnauthenticatedSession:[SessionManager shared].unauthenticatedSession];
-        self.registrationToken = [[UnauthenticatedSession sharedSession] addRegistrationObserver:self];
-    } else {
-        [self removeObservers];
-    }
 }
 
 - (void)viewDidLoad
@@ -113,10 +90,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createNavigationController
 {
     PhoneNumberStepViewController *phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-    phoneNumberStepViewController.formStepDelegate = self;
-    phoneNumberStepViewController.invitationButtonDisplayed = NO;
     phoneNumberStepViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
+    phoneNumberStepViewController.delegate = self;
+
     [self addChildViewController:phoneNumberStepViewController];
     [self.view addSubview:phoneNumberStepViewController.view];
     [phoneNumberStepViewController didMoveToParentViewController:self];
@@ -125,206 +101,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.phoneNumberStepViewController = phoneNumberStepViewController;
 }
 
-- (void)presentTermsOfUseStepController
+#pragma mark - PhoneNumberStepViewControllerDelegate
+
+- (void)phoneNumberStepDidPickPhoneNumber:(NSString *)phoneNumber
 {
-    // Dismiss keyboard and delay presentation for a smoother transition
-    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        TermsOfUseStepViewController * termsOfUseViewController = [[TermsOfUseStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-        termsOfUseViewController.formStepDelegate = self;
-        [self.navigationController pushViewController:[[RegistrationFormController alloc] initWithViewController:termsOfUseViewController] animated:YES];
-    });
-}
-
-- (void)presentNameStepController
-{
-    NameStepViewController *nameStepViewController = [[NameStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-    nameStepViewController.formStepDelegate = self;
-    
-    [self.navigationController pushViewController:nameStepViewController animated:YES];
-}
-
-- (void)presentPictureStepController
-{
-    // Dismiss keyboard and delay presentation for a smoother transition
-    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        ProfilePictureStepViewController *profilePictureStepViewController = [[ProfilePictureStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-        profilePictureStepViewController.formStepDelegate = self;
-        
-        [self.navigationController pushViewController:profilePictureStepViewController animated:YES];
-    });
-}
-
-#pragma mark - FormStepProtocol
-
-- (void)didCompleteFormStep:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[PhoneNumberStepViewController class]]) {
-        self.navigationController.showLoadingView = YES;
-        
-        [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
-        
-    }
-    else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-        
-        PhoneVerificationStepViewController *phoneVerificationStepViewController = (PhoneVerificationStepViewController *)viewController;
-        
-        self.unregisteredUser.phoneVerificationCode = phoneVerificationStepViewController.verificationCode;
-        
-        self.navigationController.showLoadingView = YES;
-
-        [[UnauthenticatedSession sharedSession] verifyPhoneNumberForRegistration:phoneVerificationStepViewController.phoneNumber
-                                                       verificationCode:phoneVerificationStepViewController.verificationCode];
-    }
-    else if ([viewController isKindOfClass:[TermsOfUseStepViewController class]]) {
-        [self presentNameStepController];
-    }
-    else if ([viewController isKindOfClass:[NameStepViewController class]]) {
-        [self presentPictureStepController];
-        [[SessionManager shared] configureUserNotifications];
-    }
-    else if ([viewController isKindOfClass:[ProfilePictureStepViewController class]]) {
-        ZMCompleteRegistrationUser *completeUser = [self.unregisteredUser completeRegistrationUser];
-        [[UnauthenticatedSession sharedSession] registerUser:completeUser];
-        
-        self.navigationController.showLoadingView = YES;
-        [[ZMUserSession sharedSession] submitMarketingConsentWith:self.marketingConsent];
-    }
-    else {
-        [self.formStepDelegate didCompleteFormStep:self];
-    }
-}
-
-- (void)didSkipFormStep:(UIViewController *)viewController
-{
-    [self.formStepDelegate didCompleteFormStep:self];
-}
-
-#pragma mark - PhoneVerificationStepViewControllerDelegate
-
-- (void)phoneVerificationStepDidRequestVerificationCode
-{
-    [[UnauthenticatedSession sharedSession] requestPhoneVerificationCodeForRegistration:self.unregisteredUser.phoneNumber];
-}
-
-#pragma mark - ZMAuthenticationObserver
-
-- (void)authenticationDidSucceed
-{
-    self.showLoadingView = NO;
-    [[Analytics shared] tagRegistrationSuccededWithContext:@"phone"];
-
-    [self.formStepDelegate didCompleteFormStep:self];
-}
-
-- (void)authenticationDidFail:(NSError *)error
-{
-    // TODO: Remove observers
-    ZMLogDebug(@"authenticationDidFail: error.code = %li", (long)error.code);
-    self.navigationController.showLoadingView = NO;
-}
-
-- (void)loginCodeRequestDidFail:(NSError *)error
-{
-    if (self.navigationController.view.window) {
-        
-        self.navigationController.showLoadingView = NO;
-        
-        if (error.code != ZMUserSessionCodeRequestIsAlreadyPending) {
-            
-            [self showAlertForError:error];
-        }
-        else {
-            
-            if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-                
-                [self proceedToCodeVerificationForLogin:YES];
-            }
-            else {
-                
-                [self showAlertForError:error];
-            }
-        }
-        
-    }
-}
-
-- (void)loginCodeRequestDidSucceed
-{
-    if (self.navigationController.view.window) {
-        
-        if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-            [self proceedToCodeVerificationForLogin:YES];
-        }
-        else {
-            [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
-        }
-    }
-}
-
-#pragma mark - ZMRegistrationObserver
-
-- (void)registrationDidFail:(NSError *)error
-{
-    self.navigationController.showLoadingView = NO;
-    [self showAlertForError:error];
-}
-
-- (void)proceedToCodeVerificationForLogin:(BOOL)login
-{
-    self.navigationController.showLoadingView = NO;
-    
-    PhoneVerificationStepViewController *phoneVerificationStepViewController = [[PhoneVerificationStepViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-    phoneVerificationStepViewController.formStepDelegate = self;
-    phoneVerificationStepViewController.delegate = self;
-    phoneVerificationStepViewController.isLoggingIn = login;
-    
-    [self.navigationController pushViewController:phoneVerificationStepViewController.registrationFormViewController animated:YES];
-}
-
-- (void)phoneVerificationCodeRequestDidSucceed
-{
-    
-    if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-        [self proceedToCodeVerificationForLogin:NO];
-    } else {
-        [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
-    }
-}
-
-- (void)phoneVerificationCodeRequestDidFail:(NSError *)error
-{
-    if (! [self.navigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-    }
-    
-    self.navigationController.showLoadingView = NO;
-    
-    if(error.code == ZMUserSessionPhoneNumberIsAlreadyRegistered) {
-        LoginCredentials *credentials = [[LoginCredentials alloc] initWithEmailAddress:nil phoneNumber:self.unregisteredUser.phoneNumber password:nil usesCompanyLogin:NO];
-        [self.phoneNumberStepViewController reset];
-        [self.registrationDelegate registrationFlowViewController:self needsToSignInWith:credentials];
-    }
-    
-    [self showAlertForError:error];
-}
-
-- (void)phoneVerificationDidSucceed
-{
-    self.navigationController.showLoadingView = NO;
-
-    [UIAlertController showNewsletterSubscriptionDialogWithOver: self
-                                              completionHandler: ^(BOOL marketingConsent) {
-        self.marketingConsent = marketingConsent;
-
-        [self presentTermsOfUseStepController];
-    }];
-}
-
-- (void)phoneVerificationDidFail:(NSError *)error
-{
-    self.navigationController.showLoadingView = NO;
-    [self showAlertForError:error];
+    [self.authenticationCoordinator startPhoneNumberValidationWithPhoneNumber:phoneNumber];
 }
 
 @end

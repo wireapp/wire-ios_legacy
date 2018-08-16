@@ -63,7 +63,7 @@
 
 - (void)createPhoneNumberStepViewController
 {
-    PhoneNumberStepViewController *phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] initWithPhoneNumber:self.loginCredentials.phoneNumber isEditable:YES];
+    PhoneNumberStepViewController *phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
     phoneNumberStepViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     phoneNumberStepViewController.delegate = self;
 
@@ -88,7 +88,7 @@
 
 - (void)phoneNumberStepDidPickPhoneNumber:(NSString *)phoneNumber
 {
-    [self.authenticationCoordinator startPhoneNumberValidationWithPhoneNumber:phoneNumber isSigningIn:YES];
+    [self.authenticationCoordinator startPhoneNumberValidationWithPhoneNumber:phoneNumber];
 }
 
 @end

@@ -38,41 +38,17 @@
 @property (nonatomic) UILabel *heroLabel;
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
-@property (nonatomic, readonly) BOOL phoneNumberIsEditable;
 
 @end
 
 @implementation PhoneNumberStepViewController
 
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self) {
-        _phoneNumberIsEditable = YES;
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithPhoneNumber:(NSString *)phoneNumber isEditable:(BOOL)isEditable
-{
-    self = [super init];
-    
-    if (self) {
-        _phoneNumberIsEditable = isEditable;
-        self.phoneNumber = phoneNumber;
-    }
-    
-    return self;
-}
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
     self = [super init];
 
     if (self) {
-        _phoneNumberIsEditable = YES;
         self.unregisteredUser = unregisteredUser;
     }
 
@@ -119,8 +95,6 @@
     [self.phoneNumberViewController.phoneNumberField.confirmButton addTarget:self action:@selector(validatePhoneNumber:) forControlEvents:UIControlEventTouchUpInside];
     
     self.phoneNumberViewController.phoneNumber = self.phoneNumber;
-    
-    self.phoneNumberViewController.editable = self.phoneNumberIsEditable;
 }
 
 - (void)updateViewConstraints
@@ -159,9 +133,7 @@
 
 - (IBAction)validatePhoneNumber:(id)sender
 {
-    if (self.phoneNumberIsEditable) {
-        self.phoneNumber = [NSString phoneNumberStringWithE164:self.phoneNumberViewController.country.e164 number:self.phoneNumberViewController.phoneNumberField.text];
-    }
+    self.phoneNumber = [NSString phoneNumberStringWithE164:self.phoneNumberViewController.country.e164 number:self.phoneNumberViewController.phoneNumberField.text];
     self.unregisteredUser.phoneNumber = self.phoneNumber;
 
     [self.delegate phoneNumberStepDidPickPhoneNumber:self.phoneNumber];

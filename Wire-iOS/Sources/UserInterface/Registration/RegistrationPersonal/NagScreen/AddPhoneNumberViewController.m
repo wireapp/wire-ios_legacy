@@ -37,7 +37,7 @@
 #import "Wire-Swift.h"
 
 
-@interface AddPhoneNumberViewController () <UINavigationControllerDelegate, FormStepDelegate, PhoneVerificationStepViewControllerDelegate, UserProfileUpdateObserver, ZMUserObserver>
+@interface AddPhoneNumberViewController () <UINavigationControllerDelegate, FormStepDelegate, UserProfileUpdateObserver, ZMUserObserver>
 
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) NavigationController *rootNavigationController;
@@ -221,7 +221,7 @@
     else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
         PhoneVerificationStepViewController *phoneVerificationStepViewController = (PhoneVerificationStepViewController *)viewController;
         ZMPhoneCredentials *credentials = [ZMPhoneCredentials credentialsWithPhoneNumber:phoneVerificationStepViewController.phoneNumber
-                                                                        verificationCode:phoneVerificationStepViewController.verificationCode];
+                                                                        verificationCode:@""];
         
         self.showLoadingView = YES;
         [self.userProfile requestPhoneNumberChangeWithCredentials:credentials];
@@ -286,10 +286,7 @@
 {
     PhoneVerificationStepViewController *phoneVerificationStepViewController = [[PhoneVerificationStepViewController alloc] init];
     phoneVerificationStepViewController.phoneNumber = self.phoneNumberStepViewController.phoneNumber;
-    phoneVerificationStepViewController.formStepDelegate = self;
-    phoneVerificationStepViewController.delegate = self;
-    phoneVerificationStepViewController.isLoggingIn = NO;
-    
+
     [self.rootNavigationController pushViewController:phoneVerificationStepViewController.registrationFormViewController animated:YES];
 }
 

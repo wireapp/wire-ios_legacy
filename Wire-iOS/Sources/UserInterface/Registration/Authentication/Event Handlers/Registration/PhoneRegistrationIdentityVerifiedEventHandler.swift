@@ -18,16 +18,24 @@
 
 import Foundation
 
-/**
- * Handles the notification informing the user that backups are ready to be imported.
- */
-
-class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler {
+class PhoneRegistrationIdentityVerifiedEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [.hideLoadingView, .submitMarketingConsent, .transition(.pendingInitialSync, resetStack: false)]
+        // Only handle verification requests results
+        guard case let .validatePhoneIdentity(credentials, user) = currentStep else {
+            return nil
+        }
+
+        // Update the user
+        user.phoneNumber = credentials.phoneNumber
+        user.phoneVerificationCode = credentials.phoneNumberVerificationCode
+
+        let flowState = RegistrationState(unregisteredUser: user)
+
+        // Move to the next linear step
+        return [.hideLoadingView, .startLinearRegistration(flowState)]
     }
 
 }

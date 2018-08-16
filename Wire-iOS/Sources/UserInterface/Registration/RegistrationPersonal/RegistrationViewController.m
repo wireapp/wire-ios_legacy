@@ -61,7 +61,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) PopTransition *popTransition;
 @property (nonatomic) PushTransition *pushTransition;
 @property (nonatomic) UIImageView *backgroundImageView;
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) BOOL hasPushedPostRegistrationStep;
 @property (nonatomic) NSArray<UserClient *>* userClients;
@@ -99,9 +98,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     self.popTransition = [[PopTransition alloc] init];
     self.pushTransition = [[PushTransition alloc] init];
-
-    self.unregisteredUser = [ZMIncompleteRegistrationUser new];
-    self.unregisteredUser.accentColorValue = [UIColor indexedAccentColor];
 
     [self setupBackgroundViewController];
     [self setupNavigationController];

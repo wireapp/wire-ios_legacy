@@ -89,7 +89,7 @@ extension TermsOfUseStepViewController {
         }
     }
 
-    var isiPad: Bool{
+    var isiPad: Bool {
         guard let device = (self.device as? DeviceProtocol) else { return false }
 
         return device.userInterfaceIdiom == .pad

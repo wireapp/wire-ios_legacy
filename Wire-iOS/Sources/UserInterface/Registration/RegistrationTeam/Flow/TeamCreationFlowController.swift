@@ -38,7 +38,7 @@ final class TeamCreationFlowController: NSObject {
     let registrationStatus: RegistrationStatus
     var nextState: TeamCreationState?
     var currentController: TeamCreationStepController?
-    weak var registrationDelegate: RegistrationViewControllerDelegate?
+
     var syncToken: Any?
     var sessionManagerToken: Any?
     var marketingConsent: Bool?
@@ -278,7 +278,7 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
 extension TeamCreationFlowController: TeamMemberInviteViewControllerDelegate {
     
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController) {
-        registrationDelegate?.registrationViewControllerDidCompleteRegistration()
+        // registrationDelegate?.registrationViewControllerDidCompleteRegistration()
         
         if let marketingConsent = self.marketingConsent, let user = ZMUser.selfUser(), let userSession = ZMUserSession.shared() {
             user.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })

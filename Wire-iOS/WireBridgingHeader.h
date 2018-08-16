@@ -120,6 +120,7 @@
 #import "TermsOfUseStepViewController+Private.h"
 #import "PhoneVerificationStepViewController.h"
 #import "EmailVerificationStepViewController.h"
+#import "NameStepViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

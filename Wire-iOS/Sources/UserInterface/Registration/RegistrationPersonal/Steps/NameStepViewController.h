@@ -16,15 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+#import "BlueViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
 
-#import "RegistrationStepViewController.h"
-
-@class ZMIncompleteRegistrationUser;
-
-@interface NameStepViewController : RegistrationStepViewController
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
+@interface NameStepViewController : BlueViewController <AuthenticationCoordinatedViewController>
 
 @end

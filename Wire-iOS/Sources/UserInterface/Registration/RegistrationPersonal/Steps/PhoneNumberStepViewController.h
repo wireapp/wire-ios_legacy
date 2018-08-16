@@ -30,14 +30,12 @@
 
 @interface PhoneNumberStepViewController : RegistrationStepViewController
 
-- (instancetype)initWithPhoneNumber:(NSString *)phoneNumber isEditable:(BOOL)isEditable;
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser;
 
 @property (nonatomic, weak) id<PhoneNumberStepViewControllerDelegate> delegate;
 
 @property (nonatomic, readonly) UILabel *heroLabel;
 @property (nonatomic, copy, readonly) NSString *phoneNumber;
-@property (nonatomic) BOOL invitationButtonDisplayed;
 @property (nonatomic) PhoneNumberViewController *phoneNumberViewController;
 
 - (void)takeFirstResponder;

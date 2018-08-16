@@ -19,15 +19,22 @@
 import Foundation
 
 /**
- * Handles the notification informing the user that backups are ready to be imported.
+ * Create an event handler for registration success.
  */
 
-class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler {
+class RegistrationSuccessEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [.hideLoadingView, .submitMarketingConsent, .transition(.pendingInitialSync, resetStack: false)]
+        // Only handle registration success
+        guard case let .finalizeRegistration(state) = currentStep else {
+            return nil
+        }
+
+        // Send the marketing consent value.
+        let marketingConsentValue = state.marketingConsent ?? false
+        return [.hideLoadingView, .setMarketingConsent(marketingConsentValue)]
     }
 
 }

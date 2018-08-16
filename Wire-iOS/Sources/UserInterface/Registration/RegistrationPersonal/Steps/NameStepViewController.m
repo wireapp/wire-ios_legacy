@@ -28,26 +28,23 @@
 
 @import WireExtensionComponents;
 
-
 @interface NameStepViewController () <RegistrationTextFieldDelegate>
 
 @property (nonatomic) UILabel *heroLabel;
 @property (nonatomic) RegistrationTextField *nameField;
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 @end
 
 
-
 @implementation NameStepViewController
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
+@synthesize authenticationCoordinator;
+
+- (instancetype)init
 {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        self.unregisteredUser = unregisteredUser;
         self.title = NSLocalizedString(@"registration.enter_name.title", nil);
     }
     
@@ -64,13 +61,12 @@
     [self createHeroLabel];
     [self createNameField];
     
-    [self updateViewConstraints];
+    [self configureConstraints];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     [self.nameField becomeFirstResponder];
 }
 
@@ -97,31 +93,25 @@
     [self.view addSubview:self.nameField];
 }
 
-- (void)updateViewConstraints
+- (void)configureConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        CGFloat inset = 28.0;
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        
-        [self.nameField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-        [self.nameField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.nameField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [[self.nameField.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset] setActive:YES];
-        [self.nameField autoSetDimension:ALDimensionHeight toSize:40];
-    }
+    CGFloat inset = 28.0;
+    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+
+    [self.nameField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
+    [self.nameField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+    [self.nameField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+    [[self.nameField.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset] setActive:YES];
+    [self.nameField autoSetDimension:ALDimensionHeight toSize:40];
 }
 
 #pragma mark - Actions
 
-- (IBAction)confirmName:(id)sender
+- (void)confirmName:(id)sender
 {
-    self.unregisteredUser.name = [self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    [self.formStepDelegate didCompleteFormStep:self];
+    NSString *name = [self.nameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [self.authenticationCoordinator setUserName:name];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -131,7 +121,7 @@
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
     NSError *error = nil;
-    BOOL valid = [self.unregisteredUser validateValue:&newString forKey:@"name" error:&error];
+    BOOL valid = [ZMUser validateName:&newString error:&error];
     
     if (error.code == ZMObjectValidationErrorCodeStringTooLong) {
         return NO;

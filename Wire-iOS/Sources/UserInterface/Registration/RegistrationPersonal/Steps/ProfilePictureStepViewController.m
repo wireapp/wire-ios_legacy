@@ -55,10 +55,9 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 @end
 
-
-
-
 @implementation ProfilePictureStepViewController
+
+@synthesize authenticationCoordinator;
 
 - (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
 {
@@ -178,7 +177,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 #pragma mark - Actions
 
-- (IBAction)selectPicture:(id)sender
+- (void)selectPicture:(id)sender
 {
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil
                                                                          message:nil
@@ -208,7 +207,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     [self showController:actionSheet inPopoverFromView:sender];
 }
 
-- (IBAction)showCameraController:(id)sender
+- (void)showCameraController:(id)sender
 {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] ||
         ![UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
@@ -227,14 +226,14 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     [self presentViewController:picker animated:YES completion:nil];
 }
 
-- (IBAction)keepPicture:(id)sender
+- (void)keepPicture:(id)sender
 {
     self.showLoadingView = YES;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *imageData = UIImageJPEGRepresentation(self.defaultProfilePictureImage, 1.0f);
         dispatch_async(dispatch_get_main_queue(), ^{
             self.showLoadingView = NO;
-            [self setPictureImageData:imageData];
+            [self.authenticationCoordinator setProfilePictureWithData:imageData];
         });
     });
 }
@@ -284,8 +283,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     if (imageData != nil) {
         // iOS11 uses HEIF image format, but BE expects JPEG
         NSData *jpegData = imageData.isJPEG ? imageData : UIImageJPEGRepresentation([UIImage imageWithData:imageData], 1.0);
-        [[UnauthenticatedSession sharedSession] setProfileImage:jpegData];
-        [self.formStepDelegate didCompleteFormStep:self];
+        [self.authenticationCoordinator setProfilePictureWithData:jpegData];
     }
 }
 

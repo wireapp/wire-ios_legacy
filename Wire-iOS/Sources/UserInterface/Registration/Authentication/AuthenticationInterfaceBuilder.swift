@@ -51,6 +51,12 @@ class AuthenticationInterfaceBuilder {
             loginViewController.shouldHideCancelButton = true
             return loginViewController
 
+        case .createCredentials(let unregisteredUser):
+            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
+            registrationViewController.shouldHideCancelButton = true
+            registrationViewController.unregisteredUser = unregisteredUser
+            return registrationViewController
+
         case .clientManagement(let clients, let credentials):
             let emailCredentials = ZMEmailCredentials(email: credentials.email!, password: credentials.password!)
             return ClientUnregisterFlowViewController(clientsList: clients, credentials: emailCredentials)
@@ -58,10 +64,9 @@ class AuthenticationInterfaceBuilder {
         case .noHistory(_, let type):
             return NoHistoryViewController(contextType: type)
 
-        case .verifyPhoneNumber(let phoneNumber, _):
-            let verificationController = PhoneVerificationStepViewController()
+        case .verifyPhoneNumber(let phoneNumber, let user, _):
+            let verificationController = PhoneVerificationStepViewController(unregisteredUser: user)!
             verificationController.phoneNumber = phoneNumber
-            verificationController.isLoggingIn = true
             return verificationController
 
         case .addEmailAndPassword(_, _, let canSkip):
@@ -73,8 +78,33 @@ class AuthenticationInterfaceBuilder {
             let verificationController = EmailVerificationViewController(credentials: credentials)
             return verificationController
 
+        case .linearRegistration(_, let registrationStep):
+            return makeRegistrationStepViewController(for: registrationStep)
+
         default:
             return nil
+        }
+    }
+
+    /**
+     * Returns the view controller that displays the interface for the given intermediate
+     * registration step.
+     *
+     * - parameter step: The step to create an interface for.
+     * - returns: The view controller to use for this step, or `nil` if the interface builder
+     * does not support this step.
+     */
+
+    private func makeRegistrationStepViewController(for step: IntermediateRegistrationStep) -> AuthenticationStepViewController? {
+        switch step {
+        case .reviewTermsOfService:
+            return TermsOfUseStepViewController()
+        case .provideMarketingConsent:
+            return nil
+        case .setName:
+            return NameStepViewController()
+        case .setProfilePicture:
+            return ProfilePictureStepViewController()
         }
     }
 

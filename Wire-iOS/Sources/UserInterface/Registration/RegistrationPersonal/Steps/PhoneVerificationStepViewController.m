@@ -35,6 +35,7 @@
 
 const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 
+
 @interface PhoneVerificationStepViewController () <RegistrationTextFieldDelegate, ZMTimerClient>
 
 @property (nonatomic) BOOL initialConstraintsCreated;
@@ -47,8 +48,8 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 
 @property (nonatomic) NSDate *lastSentDate;
 @property (nonatomic) ZMTimer *timer;
-@end
 
+@end
 
 
 @implementation PhoneVerificationStepViewController
@@ -210,7 +211,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 {
     NSTimeInterval timeSinceLastResend = [self.lastSentDate timeIntervalSinceNow];
     
-    if (fabs(timeSinceLastResend) > PhoneVerificationResendInterval || self.isLoggingIn) {
+    if (fabs(timeSinceLastResend) > PhoneVerificationResendInterval) {
         self.resendLabel.hidden = YES;
         self.resendButton.hidden = NO;
     }
@@ -230,26 +231,25 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     return self.phoneVerificationField.text ?: @"";
 }
 
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    self.phoneVerificationField.text = @"";
+}
+
 #pragma mark - Actions
 
-- (ZMPhoneCredentials *)credentials
+- (void)verifyCode:(id)sender
 {
-    return [ZMPhoneCredentials credentialsWithPhoneNumber:self.phoneNumber
-                                         verificationCode:self.verificationCode];
+    [self.authenticationCoordinator validatePhoneNumberWithCode:self.verificationCode];
 }
 
-- (IBAction)verifyCode:(id)sender
-{
-    [self.authenticationCoordinator requestPhoneLoginWithCredentials:self.credentials];
-}
-
-- (IBAction)requestCode:(id)sender
+- (void)requestCode:(id)sender
 {
     // Reset the code field
     self.phoneVerificationField.text = @"";
     self.phoneVerificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
-        
-    [self.delegate phoneVerificationStepDidRequestVerificationCode];
+
+    [self.authenticationCoordinator resendPhoneValidationCode];
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
 }

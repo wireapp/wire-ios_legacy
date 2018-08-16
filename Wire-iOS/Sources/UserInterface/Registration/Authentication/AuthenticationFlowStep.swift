@@ -28,11 +28,15 @@ enum AuthenticationFlowStep {
     case landingScreen
     case reauthenticate(error: NSError, numberOfAccounts: Int)
 
+    // Verification
+    case verifyPhoneNumber(phoneNumber: String, user: ZMIncompleteRegistrationUser?, credentialsValidated: Bool)
+    case verifyEmailCredentials(ZMEmailCredentials)
+
     // Sign-In
     case provideCredentials
-    case verifyPhoneNumber(phoneNumber: String, accountExists: Bool)
     case authenticateEmailCredentials(ZMEmailCredentials)
     case authenticatePhoneCredentials(ZMPhoneCredentials)
+    case registerEmailCredentials(ZMEmailCredentials)
 
     // Post Sign-In
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
@@ -41,15 +45,18 @@ enum AuthenticationFlowStep {
     case pendingInitialSync
 
     // Registration
-    case registerEmailCredentials(ZMEmailCredentials)
-    case verifyEmailCredentials(ZMEmailCredentials)
+    case createCredentials(ZMIncompleteRegistrationUser)
+    case validatePhoneIdentity(credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser)
+    case linearRegistration(RegistrationState, IntermediateRegistrationStep)
+    case finalizeRegistration(RegistrationState)
 
     // MARK: - Properties
 
     /// Whether the step can be unwinded.
     var allowsUnwind: Bool {
         switch self {
-        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword: return false
+        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword, .linearRegistration: return false
+        case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
         default: return true
         }
     }
@@ -61,9 +68,29 @@ enum AuthenticationFlowStep {
         case .authenticatePhoneCredentials: return false
         case .registerEmailCredentials: return false
         case .pendingInitialSync: return false
-        case .verifyPhoneNumber(_, let accountExists): return accountExists
+        case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
+        case .validatePhoneIdentity: return false
+        case .linearRegistration(_, let intermediateStep): return intermediateStep.needsInterface
+        case .finalizeRegistration: return false
         default: return true
         }
     }
 
+}
+
+// MARK: - Intermediate Steps
+
+/**
+ * Intermediate steps required for user registration.
+ */
+
+enum IntermediateRegistrationStep {
+    case reviewTermsOfService, provideMarketingConsent, setName, setProfilePicture
+
+    var needsInterface: Bool {
+        switch self {
+        case .provideMarketingConsent: return false
+        default : return true
+        }
+    }
 }

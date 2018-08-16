@@ -18,16 +18,21 @@
 
 import Foundation
 
-/**
- * Handles the notification informing the user that backups are ready to be imported.
- */
-
-class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler {
+class PhoneRegistrationVerificationErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [.hideLoadingView, .submitMarketingConsent, .transition(.pendingInitialSync, resetStack: false)]
+    func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
+        let error = context
+
+        // Only handle errors during verification requests
+        guard case .verifyPhoneNumber = currentStep else {
+            return nil
+        }
+
+        // Show the alert
+        let errorAlert = AuthenticationCoordinatorErrorAlert(error: error, completionActions: [.unwindState])
+        return [.hideLoadingView, .presentErrorAlert(errorAlert)]
     }
 
 }

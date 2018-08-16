@@ -19,15 +19,24 @@
 import Foundation
 
 /**
- * Handles the notification informing the user that backups are ready to be imported.
+ * Handles errors in the final state of registration.
  */
 
-class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler {
+class RegistrationFinalErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [.hideLoadingView, .submitMarketingConsent, .transition(.pendingInitialSync, resetStack: false)]
+    func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
+        let error = context
+
+        // Only handle final registration errors
+        guard case .finalizeRegistration = currentStep else {
+            return nil
+        }
+
+        // Present alert
+        let alert = AuthenticationCoordinatorErrorAlert(error: error, completionActions: [.unwindState])
+        return [.hideLoadingView, .presentErrorAlert(alert)]
     }
 
 }

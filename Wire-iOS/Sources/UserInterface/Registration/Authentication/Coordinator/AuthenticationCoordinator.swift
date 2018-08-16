@@ -21,7 +21,7 @@ import WireSyncEngine
 
 typealias AuthenticationStepViewController = UIViewController & AuthenticationCoordinatedViewController
 
-protocol ObservableSessionManager {
+protocol ObservableSessionManager: SessionManagerType {
     func addSessionManagerCreatedSessionObserver(_ observer: SessionManagerCreatedSessionObserver) -> Any
 }
 
@@ -56,6 +56,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
     private let interfaceBuilder = AuthenticationInterfaceBuilder()
 
+    private let sessionManager: ObservableSessionManager
     private let unauthenticatedSession: UnauthenticatedSession
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
@@ -65,6 +66,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
 
     init(presenter: NavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
         self.presenter = presenter
+        self.sessionManager = sessionManager
         self.unauthenticatedSession = unauthenticatedSession
         super.init()
 
@@ -72,11 +74,13 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
         flowStack = [.landingScreen]
 
         loginObservers = [
+            unauthenticatedSession.addRegistrationObserver(self),
             PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
             PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
 
+        presenter.delegate = self
         eventHandlingManager.configure(delegate: self)
     }
 
@@ -103,7 +107,6 @@ extension AuthenticationCoordinator {
         currentStep = step
 
         guard step.needsInterface else {
-            flowStack.append(step)
             return
         }
 
@@ -114,13 +117,22 @@ extension AuthenticationCoordinator {
         stepViewController.authenticationCoordinator = self
         currentViewController = stepViewController
 
+        let containerViewController = KeyboardAvoidingViewController(viewController: stepViewController)
+
         if resetStack {
-            flowStack = [step]
-            presenter?.setViewControllers([stepViewController], animated: true)
-        } else {
-            flowStack.append(step)
+            if step.allowsUnwind {
+                flowStack = [step]
+            }
+
             presenter?.backButtonEnabled = step.allowsUnwind
-            presenter?.pushViewController(stepViewController, animated: true)
+            presenter?.setViewControllers([containerViewController], animated: true)
+        } else {
+            if step.allowsUnwind {
+                flowStack.append(step)
+            }
+
+            presenter?.backButtonEnabled = step.allowsUnwind
+            presenter?.pushViewController(containerViewController, animated: true)
         }
     }
 
@@ -222,6 +234,26 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
             case .transition(let nextStep, let resetStack):
                 transition(to: nextStep, resetStack: resetStack)
 
+            case .performPhoneLoginFromRegistration(let phoneNumber):
+                askVerificationCode(for: phoneNumber, isSigningIn: true)
+
+            case .configureNotifications:
+                sessionManager.configureUserNotifications()
+
+            case .startLinearRegistration(let initialState):
+                eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(initialState))
+
+            case .setMarketingConsent(let consentValue):
+                updateRegistrationState {
+                    $0.marketingConsent = consentValue
+                }
+
+            case .submitMarketingConsent:
+                submitMarketingConsent()
+
+            case .completeUserRegistration:
+                finishRegisteringUser()
+
             case .unwindState:
                 unwind()
             }
@@ -259,30 +291,73 @@ extension AuthenticationCoordinator {
     /**
      * Starts the phone number validation flow for the given phone number.
      * - parameter phoneNumber: The phone number to validate for login.
-     * - parameter isSigningIn: Whether the user is signing in (`true`), or registering (`false`).
      */
 
-    @objc(startPhoneNumberValidationWithPhoneNumber:isSigningIn:)
-    func startPhoneNumberValidation(_ phoneNumber: String, isSigningIn: Bool) {
+    @objc(startPhoneNumberValidationWithPhoneNumber:)
+    func startPhoneNumberValidation(_ phoneNumber: String) {
+        let user: ZMIncompleteRegistrationUser?
+
+        switch currentStep {
+        case .createCredentials(let incompleteUser):
+            user = incompleteUser
+        case .provideCredentials:
+            user = nil
+        default:
+            log.warn("Cannot start phone number validation from step: \(currentStep)")
+            return
+        }
+
         presenter?.showLoadingView = true
-        askVerificationCode(for: phoneNumber, isSigningIn: isSigningIn)
-        transition(to: .verifyPhoneNumber(phoneNumber: phoneNumber, accountExists: false))
+        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
+
+        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: false)
+        transition(to: nextStep)
     }
 
-    /**
-     * Asks the unauthenticated session for a new phone number verification code.
-     * - parameter phoneNumber: The phone number to authenticate.
-     * - parameter isSigningIn: Whether the user is signing in (`true`), or registering (`false`).
-     */
+    @objc func resendPhoneValidationCode() {
+        guard case let .verifyPhoneNumber(phoneNumber, user, _) = currentStep else {
+            log.info("Ignoring request to resend phone code with step = \(currentStep).")
+            return
+        }
 
-    @objc(askVerificationCodeForPhoneNumber:isSigningIn:)
-    func askVerificationCode(for phoneNumber: String, isSigningIn: Bool) {
+        presenter?.showLoadingView = true
+        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
+
+        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: true)
+        transition(to: nextStep)
+    }
+
+    private func askVerificationCode(for phoneNumber: String, isSigningIn: Bool) {
         if isSigningIn {
             unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
         } else {
             unauthenticatedSession.requestPhoneVerificationCodeForRegistration(phoneNumber)
         }
     }
+
+    @objc(validatePhoneNumberWithCode:)
+    func validatePhoneNumber(with code: String) {
+        guard case let .verifyPhoneNumber(phoneNumber, user, _) = currentStep else {
+            log.info("Ignoring request to resend phone code with step = \(currentStep).")
+            return
+        }
+
+        let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
+
+        if let unauthenticatedUser = user {
+            requestPhoneRegistration(with: credentials, user: unauthenticatedUser)
+        } else {
+            requestPhoneLogin(with: credentials)
+        }
+    }
+
+    func requestPhoneRegistration(with credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser) {
+        presenter?.showLoadingView = true
+        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
+        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
+    }
+
+    // MARK: - Login
 
     /**
      * Requests a phone login for the specified credentials.
@@ -294,8 +369,6 @@ extension AuthenticationCoordinator {
         transition(to: .authenticatePhoneCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
-
-    // MARK: E-Mail Login
 
     /**
      * Requests an e-mail login for the specified credentials.
@@ -426,6 +499,78 @@ extension AuthenticationCoordinator {
         companyLoginController?.isAutoDetectionEnabled = false
     }
 
+    // MARK: Linear Registration
+
+    /**
+     * Notifies the registration state observers that the user accepted the
+     * terms of service.
+     */
+
+    @objc func acceptTermsOfService() {
+        updateRegistrationState {
+            $0.acceptedTermsOfService = true
+        }
+    }
+
+    /**
+     * Notifies the registration state observers that the user set an account name.
+     */
+
+    @objc(setUserName:)
+    func setUserName(_ userName: String) {
+        updateRegistrationState {
+            $0.unregisteredUser.name = userName
+        }
+    }
+
+    /**
+     * Notifies the registration state observers that the user set a profile picture.
+     */
+
+    @objc(setProfilePictureWithData:)
+    func setProfilePicture(_ data: Data) {
+        unauthenticatedSession.setProfileImage(imageData: data)
+
+        updateRegistrationState {
+            $0.unregisteredUser.profileImageData = data
+        }
+    }
+
+    private func updateRegistrationState(_ updateBlock: (RegistrationState) -> Void) {
+        guard case let .linearRegistration(registrationState, _) = currentStep else {
+            log.warn("Cannot update registration state outide of registration flow")
+            return
+        }
+
+        updateBlock(registrationState)
+        eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(registrationState))
+    }
+
+    private func finishRegisteringUser() {
+        guard case let .linearRegistration(status, _) = currentStep else {
+            return
+        }
+
+        transition(to: .finalizeRegistration(status))
+        unauthenticatedSession.register(user: status.unregisteredUser.complete())
+    }
+
+    private func submitMarketingConsent() {
+        guard case let .finalizeRegistration(registrationState) = currentStep else {
+            log.info("No need to submit the marketing consent outside of the registration state.")
+            return
+        }
+
+        guard let userSession = statusProvider?.sharedUserSession else {
+            log.warn("Could not save the marking consent, as there is no user session for the user.")
+            return
+        }
+
+        let consentValue = registrationState.marketingConsent ?? false
+        UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
+        userSession.submitMarketingConsent(with: consentValue)
+    }
+
 }
 
 // MARK: - User Session Events
@@ -534,24 +679,46 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
     func landingViewControllerDidChooseLogin() {
-        self.transition(to: .provideCredentials)
+        transition(to: .provideCredentials)
     }
 
     func landingViewControllerDidChooseCreateAccount() {
-//        if let navigationController = self.visibleViewController as? NavigationController {
-//            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
-//            registrationViewController.delegate = appStateController
-//            registrationViewController.shouldHideCancelButton = true
-//            navigationController.pushViewController(registrationViewController, animated: true)
-//        }
+        let unregisteredUser = ZMIncompleteRegistrationUser()
+        unregisteredUser.accentColorValue = UIColor.indexedAccentColor()
+
+        transition(to: .createCredentials(unregisteredUser))
     }
 
     func landingViewControllerDidChooseCreateTeam() {
         // flowController.startFlow()
     }
 
-    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: Wire.ContextType) {
-        // no-op
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension AuthenticationCoordinator: UINavigationControllerDelegate {
+
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        guard let currentViewController = self.currentViewController else {
+            return
+        }
+
+        guard let keyboardViewController = viewController as? KeyboardAvoidingViewController else {
+            return
+        }
+
+        guard let authenticationViewController = keyboardViewController.viewController as? AuthenticationStepViewController else {
+            return
+        }
+
+        guard authenticationViewController.isEqual(currentViewController) == false else {
+            return
+        }
+
+        self.currentViewController = authenticationViewController
+        unwind()
     }
+
 
 }

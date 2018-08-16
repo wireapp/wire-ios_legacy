@@ -30,23 +30,21 @@
 #import "NSURL+WireLocale.h"
 #import "Button.h"
 
-
 @interface TermsOfUseStepViewController () <UITextViewDelegate>
-
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 @end
 
+
 @implementation TermsOfUseStepViewController
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
+@synthesize authenticationCoordinator;
+
+- (instancetype)init
 {
     self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
         self.device = UIDevice.currentDevice;
-
-        self.unregisteredUser = unregisteredUser;
 
         [self createContainerView];
         [self createTitleLabel];
@@ -54,7 +52,6 @@
         [self createAgreeButton];
 
         [self updateViewConstraints];
-
         [self updateConstraintsForSizeClass];
     }
 
@@ -136,7 +133,7 @@
 
 - (void)agreeToTerms:(id)sender
 {
-    [self.formStepDelegate didCompleteFormStep:self];
+    [self.authenticationCoordinator acceptTermsOfService];
 }
 
 #pragma mark - UITextViewDelegate
