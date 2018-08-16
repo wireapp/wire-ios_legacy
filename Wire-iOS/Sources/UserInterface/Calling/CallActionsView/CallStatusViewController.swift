@@ -83,7 +83,7 @@ final class CallStatusViewController: UIViewController {
     
     private func startCallDurationTimer() {
         stopCallDurationTimer()
-        callDurationTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 0.1, repeats: true) { [statusView, configuration] _ in
+        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [statusView, configuration] _ in
             statusView.configuration = configuration
         }
     }
