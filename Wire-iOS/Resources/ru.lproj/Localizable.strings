@@ -53,7 +53,7 @@
 "peoplepicker.header.directory" = "Связаться";
 
 "peoplepicker.group.title.singular" = "Добавить участников";
-"peoplepicker.group.title.plural" = "Добавить участнииков (%d)";
+"peoplepicker.group.title.plural" = "Добавить участников (%d)";
 "peoplepicker.group.skip" = "Пропустить";
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Создать";
