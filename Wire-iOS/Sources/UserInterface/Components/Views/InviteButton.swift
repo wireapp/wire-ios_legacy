@@ -20,10 +20,10 @@ import Foundation
 import UIKit
 
 final class InviteButton: IconButton {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
+        super.init(frame: .zero)
         
-        setTitleColor(UIColor(scheme: .textForeground), for: .normal)
+        setTitleColor(UIColor(scheme: .textForeground, variant: variant), for: .normal)
         adjustsTitleWhenHighlighted = true
         setBackgroundImageColor(.init(red: 0.612, green: 0.655, blue: 0.686, alpha: 0.2), for: .normal)
         clipsToBounds = true

@@ -137,7 +137,9 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
     self.containerView.layer.borderColor = [self borderColorForUser:user];
     self.containerView.layer.borderWidth = [self borderWidthForUser:user];
     self.imageView.backgroundColor = [self containerBackgroundColorForUser:user];
-    self.shouldDesaturate |= user.isServiceUser;
+    if (user.isServiceUser) {
+        self.shouldDesaturate = false;
+    }
 }
 
 - (AvatarImageViewShape)shapeForUser:(id <UserType>)user

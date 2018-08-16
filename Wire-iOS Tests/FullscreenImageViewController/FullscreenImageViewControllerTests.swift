@@ -35,7 +35,10 @@ final class MockTapGestureRecognizer: UITapGestureRecognizer {
     }
 
     override var state: UIGestureRecognizerState {
-        return mockState
+        get {
+            return mockState
+        }
+        set {}
     }
 }
 

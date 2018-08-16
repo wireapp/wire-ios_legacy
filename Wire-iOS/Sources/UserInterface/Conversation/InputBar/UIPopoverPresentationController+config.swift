@@ -18,6 +18,7 @@
 
 import Foundation
 
+
 public protocol PopoverPresenter: class {
 
     /// The presenting popover. Its frame should be updated when the orientation or screen size changes.
@@ -26,6 +27,8 @@ public protocol PopoverPresenter: class {
     /// The popover's arrow points to this view
     var popoverPointToView: UIView? {get set}
 
+
+    /// call this method when the presented popover have to update its frame, e.g. when device roated or keyboard toggled
     func updatePopoverSourceRect()
 }
 
@@ -40,11 +43,16 @@ extension PopoverPresenter where Self: UIViewController {
 
 
 extension UIPopoverPresentationController {
+
+    /// Config a UIPopoverPresentationController to let it can update its position correctly after its presenter's frame is updated
+    ///
+    /// - Parameters:
+    ///   - popoverPresenter: the PopoverPresenter which presents this popover
+    ///   - pointToView: the view in the presenter the popover's arrow points to
+    ///   - sourceView: the source view of the popover
     public func config(from popoverPresenter: PopoverPresenter,
                              pointToView: UIView,
-                             sourceView: UIView,
-                             backgroundColor: UIColor? = nil,
-                             permittedArrowDirections: UIPopoverArrowDirection = .down) {
+                             sourceView: UIView) {
 
         if let viewController = popoverPresenter as? UIViewController {
             sourceRect = pointToView.popoverSourceRect(from: viewController)
@@ -54,10 +62,5 @@ extension UIPopoverPresentationController {
         popoverPresenter.popoverPointToView = pointToView
 
         self.sourceView = sourceView
-        
-        if let backgroundColor = backgroundColor {
-            self.backgroundColor = backgroundColor
-        }
-        self.permittedArrowDirections = permittedArrowDirections
     }
 }

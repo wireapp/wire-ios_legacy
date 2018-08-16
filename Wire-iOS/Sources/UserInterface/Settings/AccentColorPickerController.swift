@@ -28,16 +28,16 @@ public protocol ColorPickerControllerDelegate {
 }
 
 @objcMembers open class ColorPickerController: UIViewController {
-    open let overlayView = UIView()
-    open let contentView = UIView()
-    open let tableView = UITableView()
-    open let headerView = UIView()
-    open let titleLabel = UILabel()
-    open let closeButton = IconButton()
+    public let overlayView = UIView()
+    public let contentView = UIView()
+    public let tableView = UITableView()
+    public let headerView = UIView()
+    public let titleLabel = UILabel()
+    public let closeButton = IconButton()
 
     static fileprivate let rowHeight: CGFloat = 44
     
-    open let colors: [UIColor]
+    public let colors: [UIColor]
     open var currentColor: UIColor?
     open var delegate: ColorPickerControllerDelegate?
     
@@ -220,7 +220,7 @@ final class AccentColorPickerController: ColorPickerController {
         self.delegate = self
     }
     
-    open override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.isScrollEnabled = false
     }

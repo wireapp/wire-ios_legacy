@@ -31,6 +31,7 @@
 "general.accept" = "Annehmen";
 "general.decline" = "Nein, danke";
 "general.failure" = "Ein Fehler ist aufgetreten";
+"general.service" = "Dienst";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -51,8 +52,8 @@
 "peoplepicker.header.contacts_personal" = "Persönliche Kontakte";
 "peoplepicker.header.directory" = "Vorschläge";
 
-"peoplepicker.group.title.singular" = "Personen hinzufügen";
-"peoplepicker.group.title.plural" = "Personen Hinzufügen (%d)";
+"peoplepicker.group.title.singular" = "Teilnehmer hinzufügen";
+"peoplepicker.group.title.plural" = "Personen hinzufügen (%d)";
 "peoplepicker.group.skip" = "Überspringen";
 "peoplepicker.group.done" = "Fertig";
 "peoplepicker.group.create" = "Erstellen";
@@ -66,7 +67,7 @@
 "peoplepicker.services.add_service.error.full" = "Die Unterhaltung ist voll";
 
 "peoplepicker.title.create_conversation" = "Gruppe erstellen";
-"peoplepicker.title.add_to_conversation" = "Kontakte hinzufügen";
+"peoplepicker.title.add_to_conversation" = "Personen hinzufügen";
 
 "peoplepicker.no_contacts_title" = "Keine Kontakte";
 
@@ -78,6 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Bitte gib eine gültige \nE-Mail-Adresse ein";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Kein Ergebnis";
+"peoplepicker.no_matching_results_services_title" = "Dienste sind Helfer, die den Workflow verbessern können. Bitte an den Administrator wenden, um diese zu aktivieren.";
+"peoplepicker.no_matching_results_services_admin_title" = "Dienste sind Helfer, die den Workflow verbessern können.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Dienste verwalten";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Gib eine vollständige E-Mail-Adresse ein oder";
 /*  */
@@ -94,12 +98,13 @@
 "peoplepicker.quick-action.open-conversation" = "Öffnen";
 "peoplepicker.quick-action.create-conversation" = "Gruppe erstellen";
 "peoplepicker.quick-action.create-guest-room" = "Gästebereich erstellen";
+"peoplepicker.quick-action.admin-services" = "Dienste verwalten";
 
 "add_participants.all_contacts_added" = "Alle sind hier.";
 
-"add_participants.alert.title" = "Full house";
-"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
-"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
+"add_participants.alert.title" = "Volles Haus";
+"add_participants.alert.message.new_conversation" = "Bis zu %d Personen können an einer Unterhaltung teilnehmen.";
+"add_participants.alert.message.existing_conversation" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Jetzt ist noch Platz für %2$d weitere.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Nach Namen suchen";
@@ -268,8 +273,8 @@
 "conversation.create.group_name.placeholder" = "Gruppenname";
 "conversation.create.guidance.empty" = "Mindestens 1 Zeichen";
 "conversation.create.guidance.toolong" = "Zu viele Zeichen";
-"conversation.create.toggle.title" = "Gäste zulassen";
-"conversation.create.toggle.subtitle" = "Öffne diese Unterhaltung für Personen außerhalb des Teams. Diese Einstellung kann später jederzeit geändert werden.";
+"conversation.create.toggle.title" = "Gäste und Dienstleistungen zulassen";
+"conversation.create.toggle.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams. Diese Einstellung kann später jederzeit geändert werden.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Aktiver Anruf";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Audionachrichten können während eines Anrufs nicht aufgenommen werden.";
@@ -277,6 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Bilder können während eines Anrufs nicht aufgenommen werden.";
 
 "conversation.guests_present" = "Gäste anwesend";
+"conversation.services_present" = "Dienste anwesend";
+"conversation.guests_services_present" = "Gäste und Dienste anwesend";
 "conversation.action.search" = "Suche";
 
 // Image confirmation dialogue
@@ -342,6 +349,8 @@
 "content.system.other_removed_you" = "%@ hat dich entfernt";
 "content.system.you_removed_other" = "Du hast %@ entfernt";
 
+"content.system.services.warning" = "Dienste haben Zugriff auf den Inhalt der Unterhaltung";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ hat ein Gespräch mit %@ begonnen";
@@ -356,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "%@ wurde aus dem Team entfernt.";
 "content.system.conversation.guest.joined" = "%@ ist beigetreten";
 
-"content.system.conversation.invite.title" = "Personen außerhalb des Teams können an dieser Unterhaltung teilnehmen.";
+"content.system.conversation.invite.title" = "Dienste und Personen außerhalb des Teams können an dieser Unterhaltung teilnehmen.";
 "content.system.conversation.invite.button" = "Personen einladen";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ hat den Namen der Unterhaltung entfernt";
@@ -453,6 +462,7 @@
 "content.message.forward.to" = "Suche…";
 "content.message.open" = "Öffnen";
 "content.message.copy" = "Kopieren";
+"content.message.download" = "Download";
 
 "content.message.open_link_alert.title" = "Link öffnen";
 "content.message.open_link_alert.message" = "Dieser Link öffnet\n%@";
@@ -698,7 +708,7 @@
 "participants.services.remove_integration.button" = "Integration entfernen";
 
 // Group details
-"group_details.guest_options_cell.title" = "Gäste";
+"group_details.guest_options_cell.title" = "Gäste und Dienste";
 "group_details.guest_options_cell.enabled" = "An";
 "group_details.guest_options_cell.disabled" = "Aus";
 "group_details.timeout_options_cell.title" = "Temporäre Nachrichten";
@@ -1062,10 +1072,10 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Gäste zulassen";
-"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Personen außerhalb des Teams.";
-"guest_room.remove_guests.message" = "Aktuelle Gäste werden aus der Unterhaltung entfernt. Neue Gäste können nicht hinzugefügt werden.";
-"guest_room.remove_guests.action" = "Gäste entfernen";
+"guest_room.allow_guests.title" = "Gäste und Dienste zulassen";
+"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams. Diese Einstellung kann später jederzeit geändert werden.";
+"guest_room.remove_guests.message" = "Aktuelle Gäste und Dienste werden aus der Unterhaltung entfernt. Neue Gäste und Dienste sind nicht erlaubt.";
+"guest_room.remove_guests.action" = "Entfernen";
 "guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zum Gästebereich.";
 "guest_room.revoke_link.action" = "Link widerrufen";
 
@@ -1294,7 +1304,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "Zu viele Teilnehmer";
 "error.group_call.too_many_members_in_conversation" = "Anrufe sind nur in Unterhaltungen mit bis zu %d Teilnehmern möglich.";
 "error.group_call.too_many_participants_in_the_call.title" = "Die maximale Teilnehmerzahl ist erreicht";
-"error.group_call.too_many_participants_in_the_call" = "Die maximale Teilnehmerzahl beträgt %d";
+"error.group_call.too_many_participants_in_the_call" = "Die maximale Teilnehmerzahl beträgt %d Personen.";
 "error.call.gsm_ongoing.title" = "Mobilfunkanruf";
 "error.call.gsm_ongoing" = "Bitte beende den Mobilfunkanruf vor deinem Wire Anruf.";
 "error.call.general.title" = "Anruf fehlgeschlagen";
