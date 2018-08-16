@@ -237,7 +237,12 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
                 eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(initialState))
 
             case .setMarketingConsent(let consentValue):
-                setMarketingConsent(consentValue)
+                updateRegistrationState {
+                    $0.marketingConsent = consentValue
+                }
+
+            case .submitMarketingConsent:
+                submitMarketingConsent()
 
             case .completeUserRegistration:
                 finishRegisteringUser()
@@ -543,12 +548,19 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.register(user: status.unregisteredUser.complete())
     }
 
-    private func setMarketingConsent(_ consentValue: Bool) {
+    private func submitMarketingConsent() {
+        guard case let .finalizeRegistration(registrationState) = currentStep else {
+            log.info("No need to submit the marketing consent outside of the registration state.")
+            return
+        }
+
         guard let userSession = statusProvider?.sharedUserSession else {
             log.warn("Could not save the marking consent, as there is no user session for the user.")
             return
         }
 
+        let consentValue = registrationState.marketingConsent ?? false
+        UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
         userSession.submitMarketingConsent(with: consentValue)
     }
 
