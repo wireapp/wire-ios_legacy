@@ -248,7 +248,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
         return backingTextMessageData
     }
     
-    var backingUsersReaction: UsersByReaction! = [:]
+    var backingUsersReaction: UsersByReaction = [:]
     var backingTextMessageData: MockTextMessageData! = .none
     var backingFileMessageData: MockFileMessageDataType! = .none
     var backingLocationMessageData: MockLocationMessageData! = .none

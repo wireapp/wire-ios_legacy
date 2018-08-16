@@ -235,20 +235,20 @@ import Classy
         self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
     }
     
-    override open var tintColor: UIColor! {
+    public override var tintColor: UIColor! {
         didSet {
             self.progressView.tintColor = self.tintColor
         }
     }
     
-    override open func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         self.actionButton.layer.cornerRadius = self.actionButton.bounds.size.width / 2.0
     }
     
     // MARK: - Actions
     
-    @objc open func onActionButtonPressed(_ sender: UIButton) {
+    @objc public func onActionButtonPressed(_ sender: UIButton) {
         guard let message = self.fileMessage, let fileMessageData = message.fileMessageData else {
             return
         }

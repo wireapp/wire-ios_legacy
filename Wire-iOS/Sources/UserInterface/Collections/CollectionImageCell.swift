@@ -101,7 +101,7 @@ final public class CollectionImageCell: CollectionCell {
         return properties
     }
     
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(CollectionImageCell.save(_:)): fallthrough
         case #selector(copy(_:)):

@@ -383,16 +383,18 @@
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     
     BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent);
-    NSMutableArray *additionalItems = [NSMutableArray array];
+    NSMutableArray <AdditionalMenuItem *>* additionalItems = [NSMutableArray array];
+    
     if (isEditableMessage) {
-         [additionalItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
+        UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)];
+        [additionalItems addObject:[AdditionalMenuItem forbiddenInEphemeral:item]];
     }
 
     UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
-    [additionalItems addObject:forwardItem];
+    [additionalItems addObject:[AdditionalMenuItem forbiddenInEphemeral:forwardItem]];
     
     properties.additionalItems = additionalItems;
-    
+
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {

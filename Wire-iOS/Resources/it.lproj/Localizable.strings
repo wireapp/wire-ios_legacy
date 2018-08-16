@@ -31,6 +31,7 @@
 "general.accept" = "Accetta";
 "general.decline" = "No, grazie";
 "general.failure" = "Qualcosa è andato storto";
+"general.service" = "Service";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -43,7 +44,7 @@
 "peoplepicker.search_placeholder" = "Ricerca per nome o username";
 "peoplepicker.header.top_people" = "Più contattati";
 "peoplepicker.button.create_conversation" = "Crea gruppo";
-"peoplepicker.button.add_to_conversation" = "Aggiungi persone al gruppo";
+"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
 "peoplepicker.header.conversations" = "Gruppi";
 "peoplepicker.header.team_conversations" = "%@ Gruppi";
 "peoplepicker.header.send_invitation" = "Invita";
@@ -51,8 +52,8 @@
 "peoplepicker.header.contacts_personal" = "Contatti personali";
 "peoplepicker.header.directory" = "Connetti";
 
-"peoplepicker.group.title.singular" = "Aggiungi persone";
-"peoplepicker.group.title.plural" = "Aggiungi persone (%d)";
+"peoplepicker.group.title.singular" = "Aggiungi partecipanti";
+"peoplepicker.group.title.plural" = "Add Participants (%d)";
 "peoplepicker.group.skip" = "Salta";
 "peoplepicker.group.done" = "Fatto";
 "peoplepicker.group.create" = "Creare";
@@ -66,7 +67,7 @@
 "peoplepicker.services.add_service.error.full" = "La conversazione è piena";
 
 "peoplepicker.title.create_conversation" = "Crea gruppo";
-"peoplepicker.title.add_to_conversation" = "Aggiungi persone";
+"peoplepicker.title.add_to_conversation" = "Add participants";
 
 "peoplepicker.no_contacts_title" = "Nessun contatto.";
 
@@ -78,6 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Inserisci un indirizzo email valido";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Nessun risultato.";
+"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Metti un indirizzo email completo o";
 /*  */
@@ -94,6 +98,7 @@
 "peoplepicker.quick-action.open-conversation" = "Apri";
 "peoplepicker.quick-action.create-conversation" = "Crea gruppo";
 "peoplepicker.quick-action.create-guest-room" = "Crea stanza degli ospiti";
+"peoplepicker.quick-action.admin-services" = "Manage Services";
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 
@@ -268,8 +273,8 @@
 "conversation.create.group_name.placeholder" = "Nome del gruppo";
 "conversation.create.guidance.empty" = "Almeno 1 carattere";
 "conversation.create.guidance.toolong" = "Troppi caratteri";
-"conversation.create.toggle.title" = "Consenti ospiti";
-"conversation.create.toggle.subtitle" = "Apri questa conversazione a persone fuori dal tuo team. Puoi sempre cambiare questa impostazione più tardi.";
+"conversation.create.toggle.title" = "Allow guests and services";
+"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Chiamata in corso";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Non è possibile registrare un messaggio vocale durante una chiamata.";
@@ -277,6 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Non è possibile scattare una foto durante una chiamata.";
 
 "conversation.guests_present" = "Sono presenti ospiti";
+"conversation.services_present" = "Services are present";
+"conversation.guests_services_present" = "Guests and Services are present";
 "conversation.action.search" = "Cerca";
 
 // Image confirmation dialogue
@@ -342,6 +349,8 @@
 "content.system.other_removed_you" = "%@ sei stato rimosso";
 "content.system.you_removed_other" = "Sei stato rimosso %@";
 
+"content.system.services.warning" = "Services have access to the content of the conversation";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ ha iniziato una conversazione con %@";
@@ -356,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "%@ è stato rimosso dal team.";
 "content.system.conversation.guest.joined" = "%@ è entrato";
 
-"content.system.conversation.invite.title" = "Le persone esterne al tuo team possono unirsi a questa conversazione.";
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Invita persone";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ ha rimosso il nome della conversazione";
@@ -453,6 +462,7 @@
 "content.message.forward.to" = "Ricerca…";
 "content.message.open" = "Apri";
 "content.message.copy" = "Copia";
+"content.message.download" = "Download";
 
 "content.message.open_link_alert.title" = "Apri Link";
 "content.message.open_link_alert.message" = "Ti porterà su %@";
@@ -587,7 +597,7 @@
 "participants.section.services" = "Servizi (%d)";
 "participants.section.settings" = "Opzioni";
 "participants.footer.add_title" = "Aggiungi partecipanti";
-"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Rinomina";
@@ -698,7 +708,7 @@
 "participants.services.remove_integration.button" = "rimuovi integrazione";
 
 // Group details
-"group_details.guest_options_cell.title" = "Ospiti";
+"group_details.guest_options_cell.title" = "Guests and services";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Disattivo";
 "group_details.timeout_options_cell.title" = "Messaggi a tempo";
@@ -1058,14 +1068,14 @@
 "team.invite.error.already_registered" = "Questo indirizzo e-mail è già in uso";
 "team.invite.error.already_invited" = "Questa email è già stata invitata";
 "team.invite.error.too_many_invitations" = "Hai raggiunto il numero massimo di inviti da inviare";
-"team.invite.error.no_internet" = "Nessuna connessione ad internet";
+"team.invite.error.no_internet" = "Nessuna connessione internet";
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Consenti ospiti";
-"guest_room.allow_guests.subtitle" = "Apri questa conversazione a persone esterne al tuo team.";
-"guest_room.remove_guests.message" = "Gli ospiti attuali verranno rimossi dalla conversazione. Non saranno accettati nuovi ospiti.";
-"guest_room.remove_guests.action" = "Rimuovi ospiti";
+"guest_room.allow_guests.title" = "Allow guests and services";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.remove_guests.action" = "Rimuovi";
 "guest_room.revoke_link.message" = "I nuovi ospiti non saranno in grado di partecipare con questo link. Gli ospiti attuali avranno ancora accesso.";
 "guest_room.revoke_link.action" = "Revoca il link";
 
@@ -1294,7 +1304,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "Troppe persone da chiamare";
 "error.group_call.too_many_members_in_conversation" = "Le chiamate funzionano in conversazioni fino a %d persone.";
 "error.group_call.too_many_participants_in_the_call.title" = "La chiamata è piena";
-"error.group_call.too_many_participants_in_the_call" = "C'è spazio solo per %d persone qui.";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
 "error.call.gsm_ongoing.title" = "Chiamata cellulare";
 "error.call.gsm_ongoing" = "Per favore annulla la chiamata cellulare prima di chiamare con Wire.";
 "error.call.general.title" = "Errore chiamata";

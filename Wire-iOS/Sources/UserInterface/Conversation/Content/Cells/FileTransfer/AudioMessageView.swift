@@ -153,7 +153,7 @@ private let zmLog = ZMSLog(tag: "UI")
         
     }
     
-    override open var tintColor: UIColor! {
+    public override var tintColor: UIColor! {
         didSet {
             self.downloadProgressView.tintColor = self.tintColor
         }
@@ -308,7 +308,7 @@ private let zmLog = ZMSLog(tag: "UI")
         self.waveformProgressView.setProgress(progress, animated: animated)
     }
     
-    override open func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }

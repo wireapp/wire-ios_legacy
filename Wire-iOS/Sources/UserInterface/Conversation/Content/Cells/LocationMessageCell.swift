@@ -145,7 +145,7 @@ import Classy
         }
     }
     
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         guard let locationData = message.locationMessageData else { return }
         // The zoomLevel calculation depends on the frame of the mapView, so we need to call this here again
@@ -156,23 +156,23 @@ import Classy
         message?.locationMessageData?.openInMaps(with: mapView.region.span)
     }
     
-    open override func messageType() -> MessageType {
+    public override func messageType() -> MessageType {
         return .location
     }
     
     // MARK: - Selection
     
-    open override var selectionRect: CGRect {
+    public override var selectionRect: CGRect {
         return containerView.bounds
     }
     
-    open override var selectionView: UIView! {
+    public override var selectionView: UIView! {
         return containerView
     }
     
     // MARK: - Selection, Copy & Delete
     
-    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(cut), #selector(paste(_:)), #selector(select(_:)), #selector(selectAll(_:)):
             return false
@@ -183,13 +183,13 @@ import Classy
         }
     }
     
-    open override func copy(_ sender: Any?) {
+    public override func copy(_ sender: Any?) {
         guard let locationMessageData = message.locationMessageData else { return }
         let coordinates = "\(locationMessageData.latitude), \(locationMessageData.longitude)"
         UIPasteboard.general.string = message.locationMessageData?.name ?? coordinates
     }
     
-    open override func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    public override func menuConfigurationProperties() -> MenuConfigurationProperties! {
         let properties = MenuConfigurationProperties()
         properties.targetRect = selectionRect
         properties.targetView = selectionView

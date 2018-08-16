@@ -40,7 +40,30 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         }
     }
     
-    public let showPreview: Bool
+    var tokenFieldTopConstraint: NSLayoutConstraint?
+    var tokenFieldShareablePreviewSpacingConstraint: NSLayoutConstraint?
+    var shareablePreviewTopConstraint: NSLayoutConstraint?
+
+    public var showPreview: Bool {
+        didSet {
+            shareablePreviewWrapper?.isHidden = !showPreview
+
+            updateShareablePreviewConstraint()
+        }
+    }
+
+    func updateShareablePreviewConstraint() {
+        if showPreview {
+            tokenFieldTopConstraint?.isActive = false
+            shareablePreviewTopConstraint?.isActive = true
+            tokenFieldShareablePreviewSpacingConstraint?.isActive = true
+        } else {
+            shareablePreviewTopConstraint?.isActive = false
+            tokenFieldShareablePreviewSpacingConstraint?.isActive = false
+            tokenFieldTopConstraint?.isActive = true
+        }
+    }
+
     public let allowsMultipleSelection: Bool
     public var onDismiss: ((ShareViewController, Bool)->())?
     internal var bottomConstraint: NSLayoutConstraint?

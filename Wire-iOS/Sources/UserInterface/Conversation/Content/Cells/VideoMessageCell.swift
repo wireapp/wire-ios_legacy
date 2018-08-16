@@ -74,7 +74,7 @@ private let zmLog = ZMSLog(tag: "UI")
         videoMessageView.layer.cornerRadius = 4
     }
     
-    open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+    public override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
         let needsLayout = super.update(forMessage: changeInfo)
         self.obfuscationView.isHidden = !message.isObfuscated
 
@@ -85,7 +85,7 @@ private let zmLog = ZMSLog(tag: "UI")
         return needsLayout
     }
     
-    override open func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+    override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         self.obfuscationView.isHidden = !message.isObfuscated
 
@@ -93,7 +93,7 @@ private let zmLog = ZMSLog(tag: "UI")
             self.configureForVideoMessage(fileMessageData, isInitial: true)
         }
         else {
-            fatalError("Wrong message type: \(type(of: message)): \(message)")
+            fatalError("Wrong message type: \(type(of: message)): \(String(describing: message))")
         }
     }
     
@@ -103,7 +103,7 @@ private let zmLog = ZMSLog(tag: "UI")
         topMargin?.constant = layoutProperties.showSender ? 12 : 0
     }
     
-    override open var tintColor: UIColor! {
+    override public var tintColor: UIColor! {
         didSet {
             self.videoMessageView.tintColor = self.tintColor
         }
@@ -111,17 +111,17 @@ private let zmLog = ZMSLog(tag: "UI")
     
     // MARK: - Selection
     
-    open override var selectionView: UIView! {
+    public override var selectionView: UIView! {
         return videoMessageView
     }
     
-    open override var selectionRect: CGRect {
+    public override var selectionRect: CGRect {
         return videoMessageView.bounds
     }
     
     // MARK: - Menu
     
-    open func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    public func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         
         let animation = {
             self.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0;
@@ -134,7 +134,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
         guard let _ = message else {return nil}
 
         let properties = MenuConfigurationProperties()
@@ -161,7 +161,7 @@ private let zmLog = ZMSLog(tag: "UI")
         return properties
     }
 
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(wr_saveVideo):
             if message.videoCanBeSavedToCameraRoll() {
@@ -180,7 +180,7 @@ private let zmLog = ZMSLog(tag: "UI")
         return super.canPerformAction(action, withSender: sender)
     }
     
-    @objc open func wr_saveVideo() {
+    @objc public func wr_saveVideo() {
         if let fileMessageData = self.message.fileMessageData,
             let fileURL = fileMessageData.fileURL,
             self.message.videoCanBeSavedToCameraRoll() {
