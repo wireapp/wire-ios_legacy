@@ -27,7 +27,7 @@ class ChatHeadView: UIView {
     private let body: String
     private let userID: UUID
     private let sender: ZMUser?
-    private let userInfo: [AnyHashable : Any]?
+    private let userInfo: NotificationUserInfo?
     private let isEphemeral: Bool
     
     private var userImageView: ContrastUserImageView?
@@ -60,7 +60,7 @@ class ChatHeadView: UIView {
         return CGSize(width: UIViewNoIntrinsicMetric, height: height)
     }
 
-    init(title: String?, body: String, userID: UUID, sender: ZMUser?, userInfo: [AnyHashable : Any]? = nil, isEphemeral: Bool = false) {
+    init(title: String?, body: String, userID: UUID, sender: ZMUser?, userInfo: NotificationUserInfo? = nil, isEphemeral: Bool = false) {
         self.title = title
         self.body = body
         self.userID = userID
@@ -188,11 +188,11 @@ class ChatHeadView: UIView {
         
         // title contains at conversation name and/or team name, and these
         // components should be rendered in medium font
-        if let conversationName = userInfo?[ConversationNameStringKey] as? String {
+        if let conversationName = userInfo?.conversationName {
             ranges.append((title as NSString).range(of: conversationName))
         }
         
-        if let teamName = userInfo?[TeamNameStringKey] as? String {
+        if let teamName = userInfo?.teamName {
             ranges.append((title as NSString).range(of: teamName))
         }
         
