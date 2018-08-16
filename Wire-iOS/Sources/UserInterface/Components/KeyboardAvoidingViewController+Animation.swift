@@ -18,25 +18,21 @@
 
 import Foundation
 
-extension Int {
-    var toAnimationCurve: UIViewAnimationCurve {
-        let animationCurve = UIViewAnimationCurve(rawValue: self)
+extension UIViewAnimationCurve {
+    init(rawValue: Int, fallbackValue: UIViewAnimationCurve) {
+        self = UIViewAnimationCurve(rawValue: rawValue) ?? fallbackValue
 
         if #available(iOS 11.0, *) {
-            return animationCurve ?? .easeIn
         } else {
             // iOS returns an undocumented type 7 animation curve raw value, which causes crashes on iOS 10 if it is used as an argument in UIViewPropertyAnimator init method. Workaround: assign a fallback value.
 
-            if animationCurve != .easeInOut &&
-                animationCurve != .easeIn &&
-                animationCurve != .easeOut &&
-                animationCurve != .linear {
-                return .easeIn
-            } else {
-                return animationCurve ?? .easeIn
+            if self != .easeInOut &&
+                self != .easeIn &&
+                self != .easeOut &&
+                self != .linear {
+                self = fallbackValue
             }
         }
-
     }
 }
 
@@ -67,7 +63,7 @@ extension KeyboardAvoidingViewController {
             self.view.setNeedsLayout()
 
 
-            animator = UIViewPropertyAnimator(duration: duration, curve: curveRawValue.toAnimationCurve, animations: {
+            animator = UIViewPropertyAnimator(duration: duration, curve: UIViewAnimationCurve(rawValue: curveRawValue, fallbackValue: .easeIn), animations: {
                 self.view.layoutIfNeeded()
             })
 
