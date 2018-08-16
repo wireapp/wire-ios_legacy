@@ -109,7 +109,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationInputBarViewController ()
 
 @property (nonatomic) IconButton *audioButton;
-@property (nonatomic) IconButton *videoButton;
 @property (nonatomic) IconButton *photoButton;
 @property (nonatomic) IconButton *uploadFileButton;
 @property (nonatomic) IconButton *sketchButton;
@@ -897,7 +896,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         return;
     }
     
-    [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
+    [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera
+                                mediaTypes:@[(id)kUTTypeMovie]
+                             allowsEditing:false
+                              senderButton:self.videoButton];
 }
 
 #pragma mark - Video save callback

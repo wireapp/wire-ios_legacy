@@ -20,10 +20,11 @@ import Foundation
 
 extension ConversationInputBarViewController {
 
-    @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:)
+    @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:senderButton:)
     func presentImagePicker(with sourceType: UIImagePickerControllerSourceType,
                             mediaTypes: [String],
-                            allowsEditing: Bool) {
+                            allowsEditing: Bool,
+                            senderButton: IconButton) {
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
             if UIDevice.isSimulator {
                 let testFilePath = "/var/tmp/video.mp4"
@@ -40,7 +41,7 @@ extension ConversationInputBarViewController {
             let sourceView: UIView = self.parent?.view ?? self.view
 
             if let parentViewConvtoller = self.parent {
-                let context = ImagePickerPopoverPresentationContext(sourceRect: self.photoButton.popoverSourceRect(from: self),
+                let context = ImagePickerPopoverPresentationContext(sourceRect: senderButton.popoverSourceRect(from: self),
                                                                     sourceView: sourceView,
                                                                     presentViewController: parentViewConvtoller,
                                                                     sourceType: sourceType)
@@ -51,7 +52,7 @@ extension ConversationInputBarViewController {
                 pickerController.mediaTypes = mediaTypes
                 pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
 
-                if let popover = pickerController.popoverPresentationController, let imageView = self.photoButton.imageView {
+                if let popover = pickerController.popoverPresentationController, let imageView = senderButton.imageView {
                     popover.config(from: self,
                                    pointToView: imageView,
                                    sourceView: parentViewConvtoller.view)

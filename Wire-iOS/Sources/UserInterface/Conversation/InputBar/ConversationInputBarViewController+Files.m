@@ -94,14 +94,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                 image:[UIImage imageForIcon:ZetaIconTypeMovie iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
                               handler:^{
-                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeMovie] allowsEditing:true];
+                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeMovie] allowsEditing:true senderButton:self.videoButton];
                               }];
     
     [docController addOptionWithTitle:NSLocalizedString(@"content.file.take_video", @"")
                                 image:[UIImage imageForIcon:ZetaIconTypeCameraShutter iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
                               handler:^{
-                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
+                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false senderButton:self.videoButton];
                               }];
 
     [self configPopoverWithDocController:docController
