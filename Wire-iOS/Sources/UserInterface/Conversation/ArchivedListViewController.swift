@@ -61,6 +61,11 @@ import Cartography
             registerForPreviewing(with: self, sourceView: collectionView)
         }
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
     
     func createViews() {
         let flowLayout = UICollectionViewFlowLayout()

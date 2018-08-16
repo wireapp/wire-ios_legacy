@@ -62,7 +62,13 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        avatarView?.removeFromSuperview()
+
+        UIView.performWithoutAnimation {
+            self.avatarView?.removeFromSuperview()
+            self.guestUserIcon.isHidden = true
+            self.shieldView.isHidden = true
+            self.checkImageView.isHidden = true
+        }
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

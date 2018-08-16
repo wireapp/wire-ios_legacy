@@ -142,7 +142,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
         self.hasCreatedInitialConstraints = YES;
         [self.itemView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
 
-        [self.menuDotsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+        [self.menuDotsView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeLeading];
         
         [self.menuDotsView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMarginConvList];
     }

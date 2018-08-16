@@ -4490,7 +4490,6 @@
 		8F42C52F199244A700288E4D = {
 			isa = PBXGroup;
 			children = (
-				BF17437A212422EC008851CA /* ConversationCell+Menu.swift */,
 				87C8D7FB1BA8261C00B0530B /* Entitlements-Dev.entitlements */,
 				87C8D7FC1BA8261C00B0530B /* Entitlements-Prod.entitlements */,
 				8FC85543199246EF0008B66B /* ConfigurationSets */,
@@ -4893,6 +4892,7 @@
 				D59EA0C420234EE300B17CE7 /* ConversationCellLayoutProperties+Preview.swift */,
 				EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */,
 				BF989D071E896D210052BF8F /* ConversationCellBurstTimestampView.swift */,
+				BF17437A212422EC008851CA /* ConversationCell+Menu.swift */,
 				87CB36BB1D7480F6007AB4E5 /* ConversationCell+Like.swift */,
 				F187D6C720162A4300A2DA8F /* ConversationCell+Sender.swift */,
 				EF82E1C120EF6152001B5196 /* ConversationCell+CountDown.swift */,
