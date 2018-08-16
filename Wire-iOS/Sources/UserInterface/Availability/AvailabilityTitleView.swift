@@ -92,10 +92,6 @@ import WireDataModel
     }
     
     func provideHapticFeedback() {
-        guard #available(iOS 10, *) else {
-            return
-        }
-        
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 }

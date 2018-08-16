@@ -18,7 +18,6 @@
 
 
 #import <UIKit/UIKit.h>
-#import "UIPasteboard+Compatibility.h"
 
 @import FLAnimatedImage;
 

@@ -19,15 +19,11 @@
 import Foundation
 
 extension Data {
-    func covertHEIFToJPG() -> Data?{
+    func convertHEIFToJPG() -> Data? {
         guard let inputImage = CIImage(data: self),
               let colorSpace = inputImage.colorSpace else { return nil }
 
-        if #available(iOS 10.0, *) {
-            let context = CIContext(options: nil)
-            return context.jpegRepresentation(of: inputImage, colorSpace: colorSpace, options: [:])
-        } else {
-            return nil
-        }
+        let context = CIContext(options: nil)
+        return context.jpegRepresentation(of: inputImage, colorSpace: colorSpace, options: [:])
     }
 }

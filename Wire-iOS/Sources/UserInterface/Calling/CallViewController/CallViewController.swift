@@ -402,7 +402,7 @@ extension CallViewController {
     
     func startOverlayTimer() {
         stopOverlayTimer()
-        overlayTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 4, repeats: false) { [weak self] _ in
+        overlayTimer = .scheduledTimer(withTimeInterval: 4, repeats: false) { [weak self] _ in
             self?.animateOverlay(show: false)
         }
     }
