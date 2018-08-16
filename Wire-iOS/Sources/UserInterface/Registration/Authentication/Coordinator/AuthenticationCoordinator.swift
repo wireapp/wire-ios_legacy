@@ -80,6 +80,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
             sessionManager.addSessionManagerCreatedSessionObserver(self)
         ]
 
+        presenter.delegate = self
         eventHandlingManager.configure(delegate: self)
     }
 
@@ -106,7 +107,6 @@ extension AuthenticationCoordinator {
         currentStep = step
 
         guard step.needsInterface else {
-            flowStack.append(step)
             return
         }
 
@@ -120,10 +120,17 @@ extension AuthenticationCoordinator {
         let containerViewController = KeyboardAvoidingViewController(viewController: stepViewController)
 
         if resetStack {
-            flowStack = [step]
+            if step.allowsUnwind {
+                flowStack = [step]
+            }
+
+            presenter?.backButtonEnabled = step.allowsUnwind
             presenter?.setViewControllers([containerViewController], animated: true)
         } else {
-            flowStack.append(step)
+            if step.allowsUnwind {
+                flowStack.append(step)
+            }
+
             presenter?.backButtonEnabled = step.allowsUnwind
             presenter?.pushViewController(containerViewController, animated: true)
         }
@@ -685,5 +692,33 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateTeam() {
         // flowController.startFlow()
     }
+
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension AuthenticationCoordinator: UINavigationControllerDelegate {
+
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        guard let currentViewController = self.currentViewController else {
+            return
+        }
+
+        guard let keyboardViewController = viewController as? KeyboardAvoidingViewController else {
+            return
+        }
+
+        guard let authenticationViewController = keyboardViewController.viewController as? AuthenticationStepViewController else {
+            return
+        }
+
+        guard authenticationViewController.isEqual(currentViewController) == false else {
+            return
+        }
+
+        self.currentViewController = authenticationViewController
+        unwind()
+    }
+
 
 }

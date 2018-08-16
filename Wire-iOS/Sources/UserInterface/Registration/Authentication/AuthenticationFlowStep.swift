@@ -56,6 +56,7 @@ enum AuthenticationFlowStep {
     var allowsUnwind: Bool {
         switch self {
         case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword, .linearRegistration: return false
+        case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
         default: return true
         }
     }
