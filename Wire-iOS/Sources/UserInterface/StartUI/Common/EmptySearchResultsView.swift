@@ -84,7 +84,7 @@ extension EmptySearchResultsViewAction {
     private let stackView: UIStackView
     private let iconView     = UIImageView()
     private let statusLabel  = UILabel()
-    private let actionButton = InviteButton()
+    private let actionButton: InviteButton
     
     @objc public weak var delegate: EmptySearchResultsViewDelegate?
     
@@ -92,6 +92,7 @@ extension EmptySearchResultsViewAction {
         self.variant = variant
         self.isSelfUserAdmin = isSelfUserAdmin
         stackView = UIStackView()
+        actionButton = InviteButton(variant: variant)
         super.init(frame: .zero)
         
         iconView.alpha = 0.24

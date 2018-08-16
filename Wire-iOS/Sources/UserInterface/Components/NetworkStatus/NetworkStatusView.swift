@@ -64,7 +64,13 @@ class NetworkStatusView: UIView {
     private let offlineView: OfflineBar
     private var _state: NetworkStatusViewState = .online
 
-    private lazy var topMargin = UIScreen.hasNotch ? CGFloat(0) : CGFloat.NetworkStatusBar.topMargin
+    private lazy var topMargin: CGFloat = {
+        if UIScreen.hasNotch {
+            return 0
+        } else {
+            return CGFloat.NetworkStatusBar.topMargin
+        }
+    }()
 
     public weak var delegate: NetworkStatusViewDelegate?
 

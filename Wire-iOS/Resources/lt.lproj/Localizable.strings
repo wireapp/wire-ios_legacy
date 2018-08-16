@@ -31,6 +31,7 @@
 "general.accept" = "Priimti";
 "general.decline" = "Ne, dėkui";
 "general.failure" = "Kažkas atsitiko";
+"general.service" = "Service";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -43,7 +44,7 @@
 "peoplepicker.search_placeholder" = "Ieškokite pagal vardą ar naudotojo vardą";
 "peoplepicker.header.top_people" = "Mėgstami žmonės";
 "peoplepicker.button.create_conversation" = "Sukurti grupę";
-"peoplepicker.button.add_to_conversation" = "Pridėti žmonių į grupę";
+"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
 "peoplepicker.header.conversations" = "Grupės";
 "peoplepicker.header.team_conversations" = "%@ grupės";
 "peoplepicker.header.send_invitation" = "Pakviesti";
@@ -51,8 +52,8 @@
 "peoplepicker.header.contacts_personal" = "Asmeniniai kontaktai";
 "peoplepicker.header.directory" = "Užmegzti kontaktą";
 
-"peoplepicker.group.title.singular" = "Pridėti žmones";
-"peoplepicker.group.title.plural" = "Pridėti žmonių (%d)";
+"peoplepicker.group.title.singular" = "Pridėti dalyvių";
+"peoplepicker.group.title.plural" = "Add Participants (%d)";
 "peoplepicker.group.skip" = "Praleisti";
 "peoplepicker.group.done" = "Baigta";
 "peoplepicker.group.create" = "Kurti";
@@ -66,7 +67,7 @@
 "peoplepicker.services.add_service.error.full" = "Susirašinėjimas pilnas";
 
 "peoplepicker.title.create_conversation" = "Sukurti grupę";
-"peoplepicker.title.add_to_conversation" = "Pridėti žmones";
+"peoplepicker.title.add_to_conversation" = "Add participants";
 
 "peoplepicker.no_contacts_title" = "Nėra kontaktų.";
 
@@ -78,6 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Iveskite teisingą el. pašto adresą";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Rezultatų nėra.";
+"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Įveskite pilną el. pašto adresą arba";
 /*  */
@@ -94,6 +98,7 @@
 "peoplepicker.quick-action.open-conversation" = "Atverti";
 "peoplepicker.quick-action.create-conversation" = "Sukurti grupę";
 "peoplepicker.quick-action.create-guest-room" = "Kurti kambarį svečiams";
+"peoplepicker.quick-action.admin-services" = "Manage Services";
 
 "add_participants.all_contacts_added" = "Visi jau čia.";
 
@@ -268,8 +273,8 @@
 "conversation.create.group_name.placeholder" = "Grupės pavadinimas";
 "conversation.create.guidance.empty" = "Bent 1 simbolis";
 "conversation.create.guidance.toolong" = "Per daug simbolių";
-"conversation.create.toggle.title" = "Leisti svečius";
-"conversation.create.toggle.subtitle" = "Atverti šį pokalbį žmonėms ne iš jūsų komandos. Vėliau, visada galite tai pakeisti.";
+"conversation.create.toggle.title" = "Allow guests and services";
+"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Vykstantis skambutis";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Kol kalbate, garso pranešimo įrašyti negalite.";
@@ -277,6 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Kol kalbate, fotografuoti negalite.";
 
 "conversation.guests_present" = "Yra svečių";
+"conversation.services_present" = "Services are present";
+"conversation.guests_services_present" = "Guests and Services are present";
 "conversation.action.search" = "Ieškoti";
 
 // Image confirmation dialogue
@@ -342,6 +349,8 @@
 "content.system.other_removed_you" = "%@ jus pašalino";
 "content.system.you_removed_other" = "Jūs pašalinote pašnekovą %@";
 
+"content.system.services.warning" = "Services have access to the content of the conversation";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ pradėjo susirašinėjimą su %@";
@@ -356,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "%@ buvo pašalintas iš komandos.";
 "content.system.conversation.guest.joined" = "%@ prisijungė";
 
-"content.system.conversation.invite.title" = "Žmonės nesantys jūsų komandoje gali prisijungti prie susirašinėjimo.";
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Pakviesti žmones";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ ištrynė susirašinėjimo pavadinimą";
@@ -453,6 +462,7 @@
 "content.message.forward.to" = "Ieškoti…";
 "content.message.open" = "Atverti";
 "content.message.copy" = "Kopijuoti";
+"content.message.download" = "Download";
 
 "content.message.open_link_alert.title" = "Atverti nuorodą";
 "content.message.open_link_alert.message" = "Nueisite į \n%@";
@@ -587,7 +597,7 @@
 "participants.section.services" = "Paslaugos (%d)";
 "participants.section.settings" = "Parinktys";
 "participants.footer.add_title" = "Pridėti dalyvių";
-"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Pervadinti";
@@ -698,7 +708,7 @@
 "participants.services.remove_integration.button" = "pašalinti integraciją";
 
 // Group details
-"group_details.guest_options_cell.title" = "Svečių";
+"group_details.guest_options_cell.title" = "Guests and services";
 "group_details.guest_options_cell.enabled" = "Įjungta";
 "group_details.guest_options_cell.disabled" = "Išjungta";
 "group_details.timeout_options_cell.title" = "Laikinos žinutės";
@@ -1062,10 +1072,10 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Leisti svečius";
-"guest_room.allow_guests.subtitle" = "Leiskite matyti šį susirašinėjimą žmonėms nesantiems komandoje.";
-"guest_room.remove_guests.message" = "Dabartiniai svečiai bus pašalinti iš susirašinėjimo. Nauji svečiai prisijungi negalės.";
-"guest_room.remove_guests.action" = "Pašalinti svečius";
+"guest_room.allow_guests.title" = "Allow guests and services";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.remove_guests.action" = "Šalinti";
 "guest_room.revoke_link.message" = "Nauji svečiai negalės prisijungti spustelėję nuorodą. Dabartiniai svečiai liks prisijungę.";
 "guest_room.revoke_link.action" = "Atšaukti nuorodą";
 
@@ -1294,7 +1304,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "Per daug žmonių, norint skambinti";
 "error.group_call.too_many_members_in_conversation" = "Skambinti galima pokalbiuose tik iki %d žmonių.";
 "error.group_call.too_many_participants_in_the_call.title" = "Pasiektas didžiausias pašnekovų skaičius";
-"error.group_call.too_many_participants_in_the_call" = "Čia vietos užteks dar %d žmonėms.";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
 "error.call.gsm_ongoing.title" = "Mobiliojo ryšio skambutis";
 "error.call.gsm_ongoing" = "Baikite skambutį mobiliuoju ryšiu ir tada skambinkite per „Wire“.";
 "error.call.general.title" = "Skambučio klaida";
