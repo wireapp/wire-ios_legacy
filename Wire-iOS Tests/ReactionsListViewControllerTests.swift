@@ -46,7 +46,7 @@ class ReactionsListViewControllerTests: ZMSnapshotTestCase {
         let message = MockMessageFactory.textMessage(withText: "Hello")
         message?.deliveryState = .sent
         
-        let users = MockUser.mockUsers().map { $0 }
+        let users = MockUser.mockUsers().compactMap { $0 }
         message?.backingUsersReaction = [
             MessageReaction.like.unicodeValue: users
         ]
