@@ -262,43 +262,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self.guestsBarController = [[GuestsBarController alloc] init];
 }
-    
-- (BOOL)guestsBarShouldBePresented
-{
-    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-        return NO;
-    }
-    
-    Team *selfUserTeam = ZMUser.selfUser.team;
-    
-    if (selfUserTeam == nil) {
-        return NO;
-    }
-    
-    if (self.conversation.team == selfUserTeam) {
-        BOOL containsGuests = NO;
-        
-        for (ZMUser *user in self.conversation.activeParticipants) {
-            if ([user isGuestIn:self.conversation]) {
-                containsGuests = YES;
-                break;
-            }
-        }
-        
-        return containsGuests;
-    }
-    else {
-        return NO;
-    }
-}
-    
+
 - (void)updateGuestsBarVisibilityAndShowIfNeeded:(BOOL)showIfNeeded
 {
-    if ([self guestsBarShouldBePresented]) {
+    GuestBarState state = self.conversation.guestBarState;
+    if (state != GuestBarStateHidden) {
         BOOL isPresented = nil != self.guestsBarController.parentViewController;
         if (!isPresented || showIfNeeded) {
             [self.conversationBarController presentBar:self.guestsBarController];
-            [self.guestsBarController setCollapsed:NO animated:NO];
+            [self.guestsBarController setState:state animated:NO];
         }
     }
     else {
@@ -680,8 +652,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         if ([navigationController.topViewController isKindOfClass:GroupDetailsViewController.class]) {
             [(GroupDetailsViewController *)navigationController.topViewController presentParticipantsDetailsWithUsers:self.conversation.sortedOtherParticipants
                                                                                                         selectedUsers:selectedUsers
-                                                                                                             animated:NO
-                                                                                                       hideBackButton:YES];
+                                                                                                             animated:NO];
         }
     }
     [self presentParticipantsViewController:participantsController fromView:sourceView];
@@ -762,8 +733,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.contentViewController scrollToBottomAnimated:YES];
     }
     
-    [self.guestsBarController setCollapsed:YES animated:YES];
-
+    [self.guestsBarController setState:GuestBarStateHidden animated:YES];
     return YES;
 }
 
@@ -857,6 +827,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
         [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
+    } else {
+        [self.guestsBarController configureTitleWithState: self.conversation.guestBarState];
     }
     
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {

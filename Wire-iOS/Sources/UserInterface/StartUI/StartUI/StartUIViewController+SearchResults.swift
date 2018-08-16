@@ -21,7 +21,10 @@ import Foundation
 class StartUIView : UIView { }
 
 extension StartUIViewController: SearchResultsViewControllerDelegate {
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+                                            didTapOnUser user: UserType,
+                                            indexPath: IndexPath,
+                                            section: SearchResultsViewControllerSection) {
         
         if !user.isConnected && !user.isTeamMember {
             self.presentProfileViewController(for: user, at: indexPath)
@@ -30,7 +33,9 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath) {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+                                            didDoubleTapOnUser user: UserType,
+                                            indexPath: IndexPath) {
     
         guard let unboxedUser = BareUserToUser(user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
             return
@@ -43,16 +48,18 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         self.delegate.startUI(self, didSelect: [unboxedUser])
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+                                            didTapOnConversation conversation: ZMConversation) {
         if conversation.conversationType == .group || conversation.conversationType == .oneOnOne {
             self.delegate.startUI?(self, didSelect: conversation)
         }
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+                                            didTapOnSeviceUser user: ServiceUser) {
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  destinationConversation: nil,
-                                                 actionType: .addService,
+                                                 actionType: .createConversation,
                                                  variant: ServiceDetailVariant(colorScheme: .dark, opaque: false))
 
         detail.completion = { [weak self] result in
@@ -72,7 +79,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         self.navigationController?.pushViewController(detail, animated: true)
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
+    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+                                            wantsToPerformAction action: SearchResultsViewControllerAction) {
         switch action {
         case .createGroup:
             openCreateGroupController()
@@ -128,9 +136,21 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
         }
     }
     
-    func conversationCreationController(_ controller: ConversationCreationController, didSelectName name: String, participants: Set<ZMUser>, allowGuests: Bool) {
+    func conversationCreationController(_ controller: ConversationCreationController,
+                                        didSelectName name: String,
+                                        participants: Set<ZMUser>,
+                                        allowGuests: Bool) {
         dismiss(controller: controller)
         delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests)
     }
     
+}
+
+extension StartUIViewController: EmptySearchResultsViewDelegate {
+    func execute(action: EmptySearchResultsViewAction, from: EmptySearchResultsView) {
+        switch action {
+        case .openManageServices:
+            URL.manageTeam(source: .onboarding).openInApp(above: self)
+        }
+    }
 }

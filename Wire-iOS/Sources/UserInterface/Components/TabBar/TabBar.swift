@@ -121,7 +121,7 @@ class TabBar: UIView {
             UIView.animate(
                 withDuration: 0.35,
                 delay: 0,
-                options: .curveEaseInOut,
+                options: [.curveEaseInOut, .beginFromCurrentState],
                 animations: layoutIfNeeded
             )
         } else {
@@ -185,14 +185,20 @@ class TabBar: UIView {
     }
 
     func setSelectedIndex( _ index: Int, animated: Bool) {
+        let changes = { [weak self] in
+            self?.selectedIndex = index
+            self?.layoutIfNeeded()
+        }
+        
         if (animated) {
-            UIView.transition(with: self, duration: 0.35, options: [.transitionCrossDissolve, .allowUserInteraction], animations: {
-                self.selectedIndex = index
-                self.layoutIfNeeded()
-            })
+            UIView.transition(
+                with: self,
+                duration: 0.3,
+                options: [.transitionCrossDissolve, .allowUserInteraction, .beginFromCurrentState],
+                animations: changes
+            )
         } else {
-            self.selectedIndex = index
-            self.layoutIfNeeded()
+            changes()
         }
         
         updateLinePosition(animated: animated)

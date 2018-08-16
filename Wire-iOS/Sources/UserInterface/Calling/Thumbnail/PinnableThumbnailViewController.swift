@@ -116,7 +116,7 @@ import UIKit
 
         // Calculate the new size of the container
 
-        let insets = view.safeAreaInsetsOfFallback
+        let insets = view.safeAreaInsetsOrFallback
 
         let safeSize = CGSize(width: size.width - insets.left - insets.right,
                               height: size.height - insets.top - insets.bottom)

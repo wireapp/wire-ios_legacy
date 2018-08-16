@@ -28,7 +28,7 @@ protocol ParticipantsInvitePeopleViewDelegate: class {
     
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
-    let inviteButton = IconButton()
+    let inviteButton = InviteButton()
     
     init() {
         super.init(frame: .zero)
@@ -50,15 +50,9 @@ protocol ParticipantsInvitePeopleViewDelegate: class {
         titleLabel.text = "content.system.conversation.invite.title".localized
         titleLabel.textColor = UIColor(scheme: .textForeground)
         titleLabel.font = FontSpec(.medium, .none).font
+        
         inviteButton.setTitle("content.system.conversation.invite.button".localized, for: .normal)
-        inviteButton.setTitleColor(UIColor(scheme: .textForeground), for: .normal)
-        inviteButton.adjustsTitleWhenHighlighted = true
-        inviteButton.setBackgroundImageColor(.init(red: 0.612, green: 0.655, blue: 0.686, alpha: 0.2), for: .normal)
-        inviteButton.clipsToBounds = true
-        inviteButton.titleLabel?.font = FontSpec(.normal, .semibold).font
         inviteButton.addTarget(self, action: #selector(inviteButtonTapped), for: .touchUpInside)
-        inviteButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        inviteButton.layer.cornerRadius = 4
     }
     
     private func createConstraints() {

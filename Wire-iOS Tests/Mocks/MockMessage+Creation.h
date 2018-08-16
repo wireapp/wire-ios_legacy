@@ -40,4 +40,6 @@
 + (MockMessage *)expiredAudioMessage;
 + (MockMessage *)expiredFileMessage;
 + (MockMessage *)expiredLinkMessage;
+
++ (MockMessage *)messageTemplate;
 @end

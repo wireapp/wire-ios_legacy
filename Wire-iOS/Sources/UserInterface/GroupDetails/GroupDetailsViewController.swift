@@ -94,7 +94,7 @@ import Cartography
         
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
-        footerView.addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        footerView.update(for: conversation)
         collectionViewController.sections = computeVisibleSections()
     }
     
@@ -129,6 +129,7 @@ import Cartography
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
         guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged || changeInfo.destructionTimeoutChanged else { return }
         collectionViewController.sections = computeVisibleSections()
+        footerView.update(for: conversation)
     }
     
     func detailsView(_ view: GroupDetailsFooterView, performAction action: GroupDetailsFooterView.Action) {
@@ -144,18 +145,13 @@ import Cartography
         }
     }
     
-    @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:hideBackButton:)
-    func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool, hideBackButton: Bool = false) {
+    @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:)
+    func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
         let detailsViewController = GroupParticipantsDetailViewController(
             participants: users,
             selectedParticipants: selectedUsers,
             conversation: conversation
         )
-
-        // we sometimes present this vc directly from the conversation (when tapping
-        // on system message links). In this case we it doesn't make sense to navigate
-        // "back" to the group details vc.
-        detailsViewController.navigationItem.hidesBackButton = hideBackButton
 
         detailsViewController.delegate = self
         navigationController?.pushViewController(detailsViewController, animated: animated)

@@ -95,7 +95,7 @@ final public class CollectionImageCell: CollectionCell {
         var mutableItems = properties.additionalItems ?? []
         
         let saveItem = UIMenuItem(title: "content.image.save_image".localized, action: #selector(CollectionImageCell.save(_:)))
-        mutableItems.append(saveItem)
+        mutableItems.append(.forbiddenInEphemeral(saveItem))
         
         properties.additionalItems = mutableItems
         return properties

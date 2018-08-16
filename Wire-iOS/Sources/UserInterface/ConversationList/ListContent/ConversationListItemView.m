@@ -149,9 +149,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
         [self.labelsContainer autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self withOffset:leftMargin];
         [self.labelsContainer autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.rightAccessory withOffset:-8.0];
         [self.labelsContainer autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:8 relation:NSLayoutRelationGreaterThanOrEqual];
-        
-        self.titleTwoLineConstraint = [self.labelsContainer autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        self.titleTwoLineConstraint.active = NO;
+
         self.titleOneLineConstraint = [self.titleField autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self];
         
         [self.rightAccessory autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
@@ -161,6 +159,10 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
         [self.lineView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
         [self.lineView autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:self withOffset:0.0];
         [self.lineView autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.titleField];
+    }];
+
+    [NSLayoutConstraint autoCreateConstraintsWithoutInstalling:^{
+        self.titleTwoLineConstraint = [self.labelsContainer autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     }];
 }
 

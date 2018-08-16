@@ -54,6 +54,36 @@ extension AddParticipantsViewController.Context {
             return creationValues.allowGuests
         }
     }
+    
+    var selectionLimit: Int {
+        switch self {
+        case .add(let conversation):
+            return conversation.freeParticipantSlots
+        case .create:
+            return ZMConversation.maxParticipantsExcludingSelf
+        }
+    }
+    
+    var alertForSelectionOverflow: UIAlertController {
+        let max = ZMConversation.maxParticipants
+        let message: String
+        switch self {
+        case .add(let conversation):
+            let freeSpace = conversation.freeParticipantSlots
+            message = "add_participants.alert.message.existing_conversation".localized(args: max, freeSpace)
+        case .create(_):
+            message = "add_participants.alert.message.new_conversation".localized(args: max)
+        }
+        
+        let controller = UIAlertController(
+            title: "add_participants.alert.title".localized,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        controller.addAction(.ok())
+        return controller
+    }
 }
 
 public class AddParticipantsViewController: UIViewController {
@@ -78,7 +108,7 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate let bottomContainer = UIView()
     fileprivate let confirmButtonHeight: CGFloat = 46.0
     fileprivate let confirmButton : IconButton
-    fileprivate let emptyResultLabel = UILabel()
+    fileprivate let emptyResultView: EmptySearchResultsView
     fileprivate var bottomConstraint: NSLayoutConstraint?
     fileprivate let backButtonDescriptor = BackButtonDescription()
     
@@ -143,13 +173,17 @@ public class AddParticipantsViewController: UIViewController {
                                                                   isAddingParticipants: true,
                                                                   shouldIncludeGuests: viewModel.context.includeGuests)
 
+        emptyResultView = EmptySearchResultsView(variant: self.variant, isSelfUserAdmin: ZMUser.selfUser().canManageTeam)
         super.init(nibName: nil, bundle: nil)
+        
+        emptyResultView.delegate = self
+
+        userSelection.setLimit(context.selectionLimit) {
+            self.present(context.alertForSelectionOverflow, animated: true)
+        }
+        
         updateValues()
 
-        emptyResultLabel.text = everyoneHasBeenAddedText
-        emptyResultLabel.textColor = UIColor(scheme: .textForeground, variant: self.variant)
-        emptyResultLabel.font = FontSpec(.normal, .none).font!
-        
         confirmButton.addTarget(self, action: #selector(searchHeaderViewControllerDidConfirmAction(_:)), for: .touchUpInside)
         
         searchResultsViewController.filterConversation = viewModel.filterConversation
@@ -191,7 +225,7 @@ public class AddParticipantsViewController: UIViewController {
         addChildViewController(searchResultsViewController)
         view.addSubview(searchResultsViewController.view)
         searchResultsViewController.didMove(toParentViewController: self)
-        searchResultsViewController.searchResultsView?.emptyResultView = emptyResultLabel
+        searchResultsViewController.searchResultsView?.emptyResultView = emptyResultView
         searchResultsViewController.searchResultsView?.backgroundColor = UIColor(scheme: .contentBackground, variant: self.variant)
         searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "add_participants.list"
         
@@ -199,6 +233,10 @@ public class AddParticipantsViewController: UIViewController {
         
         createConstraints()
         updateSelectionValues()
+        
+        if searchResultsViewController.isResultEmpty {
+            emptyResultView.updateStatus(searchingForServices: false, hasFilter: false)
+        }
     }
 
     func createConstraints() {
@@ -274,14 +312,6 @@ public class AddParticipantsViewController: UIViewController {
         }()
     }
     
-    var emptySearchResultText : String {
-        return "peoplepicker.no_matching_results_after_address_book_upload_title".localized
-    }
-    
-    var everyoneHasBeenAddedText : String {
-        return "add_participants.all_contacts_added".localized
-    }
-    
     @objc private func rightNavigationItemTapped(_ sender: Any!) {
         switch viewModel.context {
         case .add: navigationController?.dismiss(animated: true, completion: nil)
@@ -303,17 +333,19 @@ public class AddParticipantsViewController: UIViewController {
     }
     
     fileprivate func performSearch() {
-        switch (searchResultsViewController.searchGroup, searchHeaderViewController.tokenField.filterText.isEmpty) {
+        let searchingForServices = searchResultsViewController.searchGroup == .services
+        let hasFilter = !searchHeaderViewController.tokenField.filterText.isEmpty
+        
+        emptyResultView.updateStatus(searchingForServices: searchingForServices, hasFilter: hasFilter)
+        
+        switch (searchResultsViewController.searchGroup, hasFilter) {
         case (.services, _):
-            emptyResultLabel.text = emptySearchResultText
             searchResultsViewController.mode = .search
             searchResultsViewController.searchForServices(withQuery: searchHeaderViewController.tokenField.filterText)
-        case (.people, true):
-            emptyResultLabel.text = everyoneHasBeenAddedText
+        case (.people, false):
             searchResultsViewController.mode = .list
             searchResultsViewController.searchContactList()
-        case (.people, false):
-            emptyResultLabel.text = emptySearchResultText
+        case (.people, true):
             searchResultsViewController.mode = .search
             searchResultsViewController.searchForLocalUsers(withQuery: searchHeaderViewController.tokenField.filterText)
         }
@@ -412,3 +444,11 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
     
 }
 
+extension AddParticipantsViewController: EmptySearchResultsViewDelegate {
+    func execute(action: EmptySearchResultsViewAction, from: EmptySearchResultsView) {
+        switch action {
+        case .openManageServices:
+            URL.manageTeam(source: .onboarding).openInApp(above: self)
+        }
+    }
+}

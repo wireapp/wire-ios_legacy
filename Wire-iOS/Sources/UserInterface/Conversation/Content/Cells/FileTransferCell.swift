@@ -72,14 +72,14 @@ import Classy
         }
     }
     
-    public override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+    open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
         let needsLayout = super.update(forMessage: changeInfo)
         self.configureForFileTransferMessage(self.message, initialConfiguration: false)
 
         return needsLayout
     }
     
-    override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+    override open func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         
         if message.isFile {
@@ -96,7 +96,7 @@ import Classy
         return self.fileTransferView.actionButton
     }
     
-    override public var tintColor: UIColor! {
+    override open var tintColor: UIColor! {
         didSet {
             self.fileTransferView.tintColor = self.tintColor
         }
@@ -104,17 +104,17 @@ import Classy
     
     // MARK: - Selection
     
-    public override var selectionView: UIView! {
+    open override var selectionView: UIView! {
         return fileTransferView
     }
     
-    public override var selectionRect: CGRect {
+    open override var selectionRect: CGRect {
         return fileTransferView.bounds
     }
     
     // MARK: - Delete
     
-    override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
         let properties = MenuConfigurationProperties()
         properties.targetRect = selectionRect
         properties.targetView = selectionView
@@ -124,15 +124,22 @@ import Classy
             }
         }
         
-        var additionalItems = [UIMenuItem]()
+        var additionalItems = [AdditionalMenuItem]()
         
-        if let message = message, let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
-            additionalItems.append(contentsOf: [
-                .open(with: #selector(open)),
-                .save(with: #selector(save)),
-                .forward(with: #selector(forward))
-            ])
+        if let message = message, let fileMessageData = message.fileMessageData {
+            if let _ = fileMessageData.fileURL {
+                additionalItems += [
+                    .forbiddenInEphemeral(.open(with: #selector(open))),
+                    .forbiddenInEphemeral(.save(with: #selector(save))),
+                    .forbiddenInEphemeral(.forward(with: #selector(forward)))
+                ]
+            }
+            
+            if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
+                additionalItems += [
+                    .allowedInEphemeral(.download(with: #selector(download)))
+                ]
+            }
         }
 
         properties.likeItemIndex = 1 // Open should be first
@@ -141,13 +148,15 @@ import Classy
         return properties
     }
     
-    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(forward), #selector(save):
             if let fileMessageData = message.fileMessageData,
                 let _ = fileMessageData.fileURL {
                 return true
             }
+        case #selector(download):
+            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
         case #selector(open):
             return true
         default: break
@@ -165,7 +174,11 @@ import Classy
         delegate?.conversationCell?(self, didSelect: .save)
     }
     
-    override public func messageType() -> MessageType {
+    @objc func download(_ sender: Any) {
+        delegate?.conversationCell?(self, didSelect: .download)
+    }
+    
+    override open func messageType() -> MessageType {
         return .file
     }
 }

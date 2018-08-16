@@ -32,14 +32,16 @@ fileprivate extension ZMUser {
     }
 }
 
-class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate {
+class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate, ZMConversationObserver {
 
-    private let internalParticipants: [UserType]
+    private var internalParticipants: [UserType]
     private var filterQuery: String?
     
     let selectedParticipants: [UserType]
     let conversation: ZMConversation
     var participantsDidChange: (() -> Void)? = nil
+    
+    fileprivate var token: NSObjectProtocol?
 
     var indexOfFirstSelectedParticipant: Int? {
         guard let first = selectedParticipants.first as? ZMUser else { return nil }
@@ -58,6 +60,7 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
         self.selectedParticipants = selectedParticipants.sorted { $0.displayName < $1.displayName }
         
         super.init()
+        token = ConversationChangeInfo.add(observer: self, for: conversation)
         computeVisibleParticipants()
     }
     
@@ -82,6 +85,12 @@ class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDele
         }
         
         return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+    }
+    
+    func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+        guard changeInfo.participantsChanged else { return }
+        internalParticipants = conversation.sortedOtherParticipants
+        computeVisibleParticipants()
     }
     
     // MARK: - SearchHeaderViewControllerDelegate
