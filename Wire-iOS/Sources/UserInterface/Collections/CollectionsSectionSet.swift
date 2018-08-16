@@ -44,12 +44,4 @@ public struct CollectionsSectionSet: OptionSet, Hashable {
     
     /// Returns visible sections in the display order
     public static let visible: [CollectionsSectionSet] = [images, videos, links, filesAndAudio, loading]
-    
-    public var hashValue: Int {
-        return Int(self.rawValue)
-    }
-}
-
-public func ==(lhs: CollectionsSectionSet, rhs: CollectionsSectionSet) -> Bool {
-    return lhs.rawValue == rhs.rawValue
 }

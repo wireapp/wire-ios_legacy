@@ -25,7 +25,7 @@ extension ZMConversation {
     }
 }
 
-public enum ServiceConversation {
+public enum ServiceConversation: Hashable {
     case existing(ZMConversation)
     case new
 }
@@ -41,22 +41,6 @@ extension Service {
         self.serviceUser = serviceUser
         self.serviceUserDetails = nil
         self.provider = nil
-    }
-}
-
-extension ServiceConversation: Hashable {
-
-    public static func ==(lhs: ServiceConversation, rhs: ServiceConversation) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
-
-    public var hashValue: Int {
-        switch self {
-        case .new:
-            return 0
-        case .existing(let conversation):
-            return conversation.hashValue
-        }
     }
 }
 

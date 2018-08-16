@@ -18,7 +18,7 @@
 
 import Foundation
 
-struct ParticipantVideoState {
+struct ParticipantVideoState: Equatable {
     let stream: UUID
     let isPaused: Bool
 }
@@ -27,14 +27,6 @@ protocol VideoGridConfiguration {
     var floatingVideoStream: ParticipantVideoState? { get }
     var videoStreams: [ParticipantVideoState] { get }
     var isMuted: Bool { get }
-}
-
-extension ParticipantVideoState: Equatable {
-    
-    static func ==(lhs: ParticipantVideoState, rhs: ParticipantVideoState) -> Bool {
-        return lhs.isPaused == rhs.isPaused && lhs.stream == rhs.stream
-    }
-    
 }
 
 // Workaround to make the protocol equatable, it might be possible to conform VideoGridConfiguration
