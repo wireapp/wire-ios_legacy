@@ -888,6 +888,7 @@
 		BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */; };
 		BFCF31D71DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31D61DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift */; };
 		BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF31DC1DA52ECE0039B3DC /* KeyboardHeight.swift */; };
+		BFD37A0F2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD37A0E2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift */; };
 		BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */; };
 		BFE08C1E1D5B6F34002367F6 /* MessageDeletedCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE08C1D1D5B6F34002367F6 /* MessageDeletedCellTests.swift */; };
 		BFE2542720BE9EA200F62041 /* CallHapticsControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE2542620BE9EA200F62041 /* CallHapticsControllerTests.swift */; };
@@ -2514,6 +2515,7 @@
 		BFCF31D41D9E91880039B3DC /* RecentlyUsedEmojis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecentlyUsedEmojis.swift; path = Emoji/RecentlyUsedEmojis.swift; sourceTree = "<group>"; };
 		BFCF31D61DA3A9350039B3DC /* SettingsCellDescriptorFactory+Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+Options.swift"; sourceTree = "<group>"; };
 		BFCF31DC1DA52ECE0039B3DC /* KeyboardHeight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHeight.swift; sourceTree = "<group>"; };
+		BFD37A0E2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cartography+SafeAreaHelper.swift"; sourceTree = "<group>"; };
 		BFE08C1B1D5B5CFA002367F6 /* MessageDeletedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDeletedCell.swift; sourceTree = "<group>"; };
 		BFE08C1D1D5B6F34002367F6 /* MessageDeletedCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDeletedCellTests.swift; sourceTree = "<group>"; };
 		BFE2542620BE9EA200F62041 /* CallHapticsControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHapticsControllerTests.swift; sourceTree = "<group>"; };
@@ -4668,6 +4670,7 @@
 				BFAF4CB81CEDE82400780537 /* NumberHelper.swift */,
 				8719FD661C88802C005FBEC0 /* Delay.swift */,
 				8719FD681C888044005FBEC0 /* NSData+MD5.swift */,
+				BFD37A0E2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift */,
 				EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */,
 				7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */,
 				F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */,
@@ -6753,6 +6756,7 @@
 				8FC85459199245770008B66B /* InvisibleInputAccessoryView.m in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
 				AF36C5A51E9F6C4F00FADECC /* DraftMessageCell.swift in Sources */,
+				BFD37A0F2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift in Sources */,
 				AF58EC881E9FCDE700EB94CD /* CoreDataTableViewController.swift in Sources */,
 				BF3A3DCA1EA642AB005477F8 /* MessageDraftStorage.swift in Sources */,
 				87DCF4F11D34EA4500BB420F /* UIViewController+WR_Invite.m in Sources */,

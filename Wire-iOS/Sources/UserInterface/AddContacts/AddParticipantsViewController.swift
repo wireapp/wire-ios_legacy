@@ -105,12 +105,13 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate let userSelection : UserSelection = UserSelection()
     fileprivate let collectionView : UICollectionView
     fileprivate let collectionViewLayout : UICollectionViewFlowLayout
-    fileprivate let bottomContainer = UIView()
     fileprivate let confirmButtonHeight: CGFloat = 46.0
     fileprivate let confirmButton : IconButton
     fileprivate let emptyResultView: EmptySearchResultsView
     fileprivate var bottomConstraint: NSLayoutConstraint?
     fileprivate let backButtonDescriptor = BackButtonDescription()
+    private let bottomMargin: CGFloat = UIScreen.hasNotch ? 8 : 16
+
     
     public weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
     
@@ -130,6 +131,11 @@ public class AddParticipantsViewController: UIViewController {
     
     convenience public init(conversation: ZMConversation) {
         self.init(context: .add(conversation))
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchHeaderViewController.tokenField.resignFirstResponder()
     }
         
     public init(context: Context, variant: ColorSchemeVariant = ColorScheme.default.variant) {
@@ -159,11 +165,9 @@ public class AddParticipantsViewController: UIViewController {
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .left
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
-        confirmButton.roundCorners = UIScreen.hasNotch
+        confirmButton.roundCorners = true
         
         
-        bottomContainer.backgroundColor = UIColor.clear
-        bottomContainer.addSubview(confirmButton)
 
         searchHeaderViewController = SearchHeaderViewController(userSelection: userSelection, variant: self.variant)
         
@@ -177,7 +181,7 @@ public class AddParticipantsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         emptyResultView.delegate = self
-
+        
         userSelection.setLimit(context.selectionLimit) {
             self.present(context.alertForSelectionOverflow, animated: true)
         }
@@ -230,6 +234,7 @@ public class AddParticipantsViewController: UIViewController {
         searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "add_participants.list"
         
         view.backgroundColor = UIColor(scheme: .contentBackground, variant: self.variant)
+        view.addSubview(confirmButton)
         
         createConstraints()
         updateSelectionValues()
@@ -240,10 +245,10 @@ public class AddParticipantsViewController: UIViewController {
     }
 
     func createConstraints() {
-        let margin = UIScreen.hasNotch ? (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin : 0
+        let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
 
-        constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton, bottomContainer) {
-            container, searchHeaderView, searchResultsView, confirmButton, bottomContainer in
+        constrain(view, searchHeaderViewController.view, searchResultsViewController.view, confirmButton) {
+            container, searchHeaderView, searchResultsView, confirmButton in
             
             searchHeaderView.top == container.top
             searchHeaderView.left == container.left
@@ -254,10 +259,10 @@ public class AddParticipantsViewController: UIViewController {
             searchResultsView.bottom == container.bottom
             
             confirmButton.height == self.confirmButtonHeight
-            confirmButton.top == bottomContainer.top
-            confirmButton.left == bottomContainer.left + margin
-            confirmButton.right == bottomContainer.right - margin
-            self.bottomConstraint = confirmButton.bottom == bottomContainer.bottom - UIScreen.safeArea.bottom
+            confirmButton.left == container.left + margin
+            confirmButton.right == container.right - margin
+
+            self.bottomConstraint = confirmButton.bottom == container.safeAreaLayoutGuideOrFallback.bottom - bottomMargin
         }
         
         if viewModel.botCanBeAdded {
@@ -290,12 +295,10 @@ public class AddParticipantsViewController: UIViewController {
             viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
         }
 
-        // Update confirm button visibility
-        if userSelection.users.isEmpty || !viewModel.showsConfirmButton {
-            searchResultsViewController.searchResultsView?.accessoryView = nil
-        } else {
-            searchResultsViewController.searchResultsView?.accessoryView = bottomContainer
-        }
+        // Update confirm button visibility & collection view content inset
+        confirmButton.isHidden = userSelection.users.isEmpty || !viewModel.showsConfirmButton
+        let bottomInset = confirmButton.isHidden ? bottomMargin : confirmButtonHeight + 16 + bottomMargin
+        searchResultsViewController.searchResultsView?.collectionView.contentInset.bottom = bottomInset
         
         updateTitle()
         
@@ -320,14 +323,22 @@ public class AddParticipantsViewController: UIViewController {
     }
     
     @objc func keyboardFrameWillChange(notification: Notification) {
+        // Don't adjust the frame when being presented in a popover.
+        if let arrowDirection = popoverPresentationController?.arrowDirection, arrowDirection == .unknown {
+            return
+        }
+        
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
-        let margin = (searchResultsViewController.view as! SearchResultsView).accessoryViewMargin
-        let bottomMargin = UIScreen.hasNotch ? margin : CGFloat(0)
-
+        
         UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            self.bottomConstraint?.constant = -(keyboardHeight == 0 ? UIScreen.safeArea.bottom : bottomMargin)
+            let margin: CGFloat = {
+                guard UIScreen.hasNotch, keyboardHeight > 0 else { return self.bottomMargin }
+                return -self.bottomMargin
+            }()
+            
+            self.bottomConstraint?.constant = -(keyboardHeight + margin)
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
