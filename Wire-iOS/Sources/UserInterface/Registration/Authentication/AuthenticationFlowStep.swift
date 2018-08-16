@@ -81,7 +81,7 @@ enum AuthenticationFlowStep {
 // MARK: - Intermediate Steps
 
 /**
- * Intermediate steps rquired for user registration.
+ * Intermediate steps required for user registration.
  */
 
 enum IntermediateRegistrationStep {
