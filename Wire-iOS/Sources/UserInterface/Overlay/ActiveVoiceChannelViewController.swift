@@ -142,55 +142,18 @@ class ActiveVoiceChannelViewController : UIViewController {
         
         if let toViewController = to, let fromViewController = from {
             let modalVC = ModalPresentationViewController(viewController: toViewController)
-            modalVC.view.alpha = 0
+            fromViewController.dismiss(animated: false, completion: nil)
             present(modalVC, animated: false)
-            
-            _ = fromViewController
-            
-            UIView.animate(withDuration: 0.35) {
-                modalVC.view.alpha = 1
-            }
-            
-//            transition(from: fromViewController,
-//                       to: toViewController,
-//                       duration: 0.35,
-//                       options: .transitionCrossDissolve,
-//                       animations: nil,
-//                       completion:
-//                { (finished) in
-//                    toViewController.didMove(toParentViewController: self)
-//                    fromViewController.removeFromParentViewController()
-//                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-//            })
+            // TODO: Right now there is now animation inbetween the two view controllers.
+            // The fade we had before should be re-implemented. We still have to use classic view controller
+            // presentation to present the view controllers though. I was thinking of using a container view controller
+            // during the transition, snapshotting the old view and adding it as subview and then presenting the new one
+            // with its view slpha set to 0 without animation ontop and then animating the alpha.
         } else if let toViewController = to {
             let modalVC = ModalPresentationViewController(viewController: toViewController)
             present(modalVC, animated: true)
-            
-//            addChildViewController(toViewController)
-//
-//            toViewController.view.frame = view.bounds
-//            toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//            view.addSubview(toViewController.view)
-//
-//            toViewController.view.alpha = 0
-//
-//            UIView.animate(withDuration: 0.35, animations: {
-//                toViewController.view.alpha = 1
-//            }, completion: { (finished) in
-//                toViewController.didMove(toParentViewController: self)
-//                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-//            })
         } else if let fromViewController = from {
             fromViewController.dismiss(animated: true)
-//            fromViewController.willMove(toParentViewController: nil)
-//
-//            UIView.animate(withDuration: 0.35, animations: {
-//                fromViewController.view.alpha = 0
-//            }, completion: { (finished) in
-//                fromViewController.view.removeFromSuperview()
-//                fromViewController.removeFromParentViewController()
-//                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-//            })
         }
     }
     
