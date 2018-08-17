@@ -64,7 +64,7 @@ import Cartography
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.reloadData()
     }
     
     func createViews() {
