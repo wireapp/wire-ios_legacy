@@ -27,35 +27,6 @@
 
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
-CGFloat PixelSizeForUserImageSize(UserImageViewSize size);
-CGFloat PointSizeForUserImageSize(UserImageViewSize size);
-
-CGFloat PixelSizeForUserImageSize(UserImageViewSize size)
-{
-    return PointSizeForUserImageSize(size) * [UIScreen mainScreen].scale;
-}
-
-CGFloat PointSizeForUserImageSize(UserImageViewSize size)
-{
-    switch (size) {
-        case UserImageViewSizeTiny:
-            return 36.0f;
-            break;
-        case UserImageViewSizeSmall:
-            return 56.0f;
-            break;
-        case UserImageViewSizeNormal:
-            return 64.0f;
-            break;
-        case UserImageViewSizeBig:
-            return 320.0f;
-            break;
-        default:
-            break;
-    }
-    return 0;
-}
-
 @interface UserImageView ()
 
 @property (nonatomic) id userObserverToken;
@@ -99,7 +70,7 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
 - (void)setupBasicProperties
 {
     _shouldDesaturate = YES;
-    _size = UserImageViewSizeNormal;
+    _size = UserImageViewSizeSmall;
 
     self.accessibilityElementsHidden = YES;
     
@@ -109,7 +80,7 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat imageSize = PointSizeForUserImageSize(self.size);
+    CGFloat imageSize = self.size;
     return CGSizeMake(imageSize, imageSize);
 }
 
