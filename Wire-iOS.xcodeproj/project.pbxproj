@@ -1122,6 +1122,7 @@
 		EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */; };
 		EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */; };
 		EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */; };
+		EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
 		EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */; };
 		EF2C18A21FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C18A11FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift */; };
@@ -2789,6 +2790,7 @@
 		EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageViewTests.swift; sourceTree = "<group>"; };
+		EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
 		EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+BurstTimestamp.swift"; sourceTree = "<group>"; };
 		EF2C18A11FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+AllVersionCompatibleScheduledTimer.swift"; sourceTree = "<group>"; };
@@ -5304,6 +5306,7 @@
 				87909075211DE898006219B4 /* EmptySearchResultsViewTests.swift */,
 				EF8DD90D211DE14300E970F1 /* MessagePresenterTests.swift */,
 				EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */,
+				EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7439,6 +7442,7 @@
 				EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */,
 				D50892FD2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift in Sources */,
 				D524BE5F207B99B800542A4E /* UIViewController+LoadingTests.swift in Sources */,
+				EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */,
 				87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */,
