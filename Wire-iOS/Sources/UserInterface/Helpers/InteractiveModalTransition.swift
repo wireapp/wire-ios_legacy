@@ -24,6 +24,12 @@ struct ModalPresentationConfiguration {
     let duration: TimeInterval
 }
 
+fileprivate extension UIViewControllerContextTransitioning {
+    func complete(_ success: Bool) -> Void {
+        completeTransition(!transitionWasCancelled)
+    }
+}
+
 final private class ModalPresentationTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
     private let configuration: ModalPresentationConfiguration
@@ -47,17 +53,18 @@ final private class ModalPresentationTransition: NSObject, UIViewControllerAnima
             toVC.viewController.view.transform  = .identity
         }
         
-        let completion: (Bool) -> Void = { _ in
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        }
-        
         if !transitionContext.isAnimated {
-            animations()
-            return completion(true)
+            return transitionContext.complete(true)
         }
         
         toVC.viewController.view.transform = CGAffineTransform(translationX: 0, y: toVC.viewController.view.bounds.height)
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: animations, completion: completion)
+        UIView.animate(
+            withDuration: transitionDuration(using: transitionContext),
+            delay: 0,
+            options: .curveEaseInOut,
+            animations: animations,
+            completion: transitionContext.complete
+        )
     }
     
 }
@@ -85,13 +92,9 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
             fromVC.dimView.backgroundColor = .clear
         }
         
-        let completion: (Bool) -> Void = { _ in
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        }
-        
         if !transitionContext.isAnimated {
             animations()
-            return completion(true)
+            return transitionContext.complete(true)
         }
         
         UIView.animate(
@@ -99,7 +102,7 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
             delay: 0,
             options: [.curveLinear, .allowUserInteraction],
             animations: animations,
-            completion: completion
+            completion: transitionContext.complete
         )
     }
     
