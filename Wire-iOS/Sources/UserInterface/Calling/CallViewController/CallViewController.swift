@@ -36,6 +36,7 @@ final class CallViewController: UIViewController {
     private var videoConfiguration: VideoConfiguration
     private let videoGridViewController: VideoGridViewController
     private var cameraType: CaptureDevice = .front
+    private var isInteractiveTransition = true
 
     var conversation: ZMConversation? {
         return voiceChannel.conversation
@@ -106,10 +107,14 @@ final class CallViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         UIApplication.shared.isIdleTimerDisabled = false
+        if isInteractiveTransition {
+            dismisser?.dismiss(viewController: self, completion: nil)
+        }
     }
 
     override func accessibilityPerformEscape() -> Bool {
         guard let dismisser = self.dismisser else { return false }
+        isInteractiveTransition = false
         dismisser.dismiss(viewController: self, completion: nil)
         return true
     }
@@ -144,6 +149,7 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func minimizeOverlay() {
+        isInteractiveTransition = false
         dismisser?.dismiss(viewController: self, completion: nil)
     }
 

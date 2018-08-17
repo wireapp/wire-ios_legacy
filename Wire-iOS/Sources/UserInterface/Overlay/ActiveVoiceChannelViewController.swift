@@ -141,47 +141,56 @@ class ActiveVoiceChannelViewController : UIViewController {
         UIApplication.shared.keyWindow?.endEditing(true)
         
         if let toViewController = to, let fromViewController = from {
+            let modalVC = ModalPresentationViewController(viewController: toViewController)
+            modalVC.view.alpha = 0
+            present(modalVC, animated: false)
             
-            toViewController.view.frame = view.bounds
-            toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-            addChildViewController(toViewController)
+            _ = fromViewController
             
-            transition(from: fromViewController,
-                       to: toViewController,
-                       duration: 0.35,
-                       options: .transitionCrossDissolve,
-                       animations: nil,
-                       completion:
-                { (finished) in
-                    toViewController.didMove(toParentViewController: self)
-                    fromViewController.removeFromParentViewController()
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-            })
+            UIView.animate(withDuration: 0.35) {
+                modalVC.view.alpha = 1
+            }
+            
+//            transition(from: fromViewController,
+//                       to: toViewController,
+//                       duration: 0.35,
+//                       options: .transitionCrossDissolve,
+//                       animations: nil,
+//                       completion:
+//                { (finished) in
+//                    toViewController.didMove(toParentViewController: self)
+//                    fromViewController.removeFromParentViewController()
+//                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+//            })
         } else if let toViewController = to {
-            addChildViewController(toViewController)
+            let modalVC = ModalPresentationViewController(viewController: toViewController)
+            present(modalVC, animated: true)
             
-            toViewController.view.frame = view.bounds
-            toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-            view.addSubview(toViewController.view)
-            
-            toViewController.view.alpha = 0
-            
-            UIView.animate(withDuration: 0.35, animations: {
-                toViewController.view.alpha = 1
-            }, completion: { (finished) in
-                toViewController.didMove(toParentViewController: self)
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-            })
+//            addChildViewController(toViewController)
+//
+//            toViewController.view.frame = view.bounds
+//            toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//            view.addSubview(toViewController.view)
+//
+//            toViewController.view.alpha = 0
+//
+//            UIView.animate(withDuration: 0.35, animations: {
+//                toViewController.view.alpha = 1
+//            }, completion: { (finished) in
+//                toViewController.didMove(toParentViewController: self)
+//                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+//            })
         } else if let fromViewController = from {
-            fromViewController.willMove(toParentViewController: nil)
-            
-            UIView.animate(withDuration: 0.35, animations: {
-                fromViewController.view.alpha = 0
-            }, completion: { (finished) in
-                fromViewController.view.removeFromSuperview()
-                fromViewController.removeFromParentViewController()
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-            })
+            fromViewController.dismiss(animated: true)
+//            fromViewController.willMove(toParentViewController: nil)
+//
+//            UIView.animate(withDuration: 0.35, animations: {
+//                fromViewController.view.alpha = 0
+//            }, completion: { (finished) in
+//                fromViewController.view.removeFromSuperview()
+//                fromViewController.removeFromParentViewController()
+//                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+//            })
         }
     }
     

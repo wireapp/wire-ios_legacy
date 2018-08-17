@@ -910,6 +910,7 @@
 		BFF655741E81235900D48337 /* ConversationAvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */; };
 		BFF8076420BC072A0063E5D4 /* CallHapticsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8076320BC072A0063E5D4 /* CallHapticsGenerator.swift */; };
 		BFF8076620BC275D0063E5D4 /* CallHapticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8076520BC275D0063E5D4 /* CallHapticsController.swift */; };
+		BFF8CBE02126E98900DB0330 /* InteractiveModalTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8CBDB2126E98300DB0330 /* InteractiveModalTransition.swift */; };
 		BFF9446C20F6480C00531BC3 /* ThumbnailCreationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF9446B20F6480C00531BC3 /* ThumbnailCreationTests.swift */; };
 		BFF9447020F64B4200531BC3 /* unsplash_pano.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFF9446D20F64B4100531BC3 /* unsplash_pano.jpg */; };
 		BFF9447120F64B4200531BC3 /* unsplash_square.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BFF9446E20F64B4200531BC3 /* unsplash_square.jpg */; };
@@ -2538,6 +2539,7 @@
 		BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationAvatarViewTests.swift; sourceTree = "<group>"; };
 		BFF8076320BC072A0063E5D4 /* CallHapticsGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHapticsGenerator.swift; sourceTree = "<group>"; };
 		BFF8076520BC275D0063E5D4 /* CallHapticsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHapticsController.swift; sourceTree = "<group>"; };
+		BFF8CBDB2126E98300DB0330 /* InteractiveModalTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveModalTransition.swift; sourceTree = "<group>"; };
 		BFF9446B20F6480C00531BC3 /* ThumbnailCreationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCreationTests.swift; sourceTree = "<group>"; };
 		BFF9446D20F64B4100531BC3 /* unsplash_pano.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_pano.jpg; sourceTree = "<group>"; };
 		BFF9446E20F64B4200531BC3 /* unsplash_square.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_square.jpg; sourceTree = "<group>"; };
@@ -3942,6 +3944,7 @@
 				5E4B1386204FE7DA00ED5DF1 /* SystemAnimationCurves.swift */,
 				87C39A89206947A1008DA100 /* UIView+Constraints.swift */,
 				87B48EBD20A050AA00DBAD9D /* ViewControllerDismisser.swift */,
+				BFF8CBDB2126E98300DB0330 /* InteractiveModalTransition.swift */,
 				5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */,
 			);
 			path = Helpers;
@@ -6781,6 +6784,7 @@
 				875F89121D6DCD2C00D8748E /* MessageToolboxView.swift in Sources */,
 				8787D1841EA74F5B00254D02 /* ZMUser+Additions.swift in Sources */,
 				5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */,
+				BFF8CBE02126E98900DB0330 /* InteractiveModalTransition.swift in Sources */,
 				162936BD1F470B4800D4F386 /* AppStateController.swift in Sources */,
 				BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */,
 				877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */,
