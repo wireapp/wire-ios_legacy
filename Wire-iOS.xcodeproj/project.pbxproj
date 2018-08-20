@@ -11,6 +11,8 @@
 		160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1613C76D1C3D2E7400B1FB8A /* ProfileDetailsViewController.m */; };
 		160C311F1E4C78480012E4BC /* UnknownMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */; };
 		160C31211E4C7E770012E4BC /* UnknownMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */; };
+		160D691C212AC94100096EAD /* ImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55DB20F60A5700AE62A6 /* ImageResource.swift */; };
+		160D691D212AC95A00096EAD /* ImageResourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160D6915212AB95100096EAD /* ImageResourceView.swift */; };
 		160FD05221085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */; };
 		160FD05421085F3900C517B5 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FD05321085F3900C517B5 /* ImageCache.swift */; };
 		1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */; };
@@ -48,7 +50,6 @@
 		164A55AD20ECFD7400AE62A6 /* UserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55AC20ECFD7400AE62A6 /* UserImageView.swift */; };
 		164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA920EBCED80007C240 /* ZMUser+Images.swift */; };
 		164A55D120EFBD4500AE62A6 /* UIImage+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */; };
-		164A55DC20F60A5700AE62A6 /* ImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55DB20F60A5700AE62A6 /* ImageResource.swift */; };
 		164B533C20A0A5E800EC8265 /* CallInfoConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164B533B20A0A5E800EC8265 /* CallInfoConfigurationTests.swift */; };
 		164C29AB1ED33A5F0026562A /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */; };
 		164C29AD1ED446660026562A /* UserSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C29AC1ED446660026562A /* UserSelection.swift */; };
@@ -1327,6 +1328,7 @@
 		1607359A1EB2393000528965 /* SettingsShareDatabaseCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsShareDatabaseCellDescriptor.swift; sourceTree = "<group>"; };
 		160C311E1E4C78480012E4BC /* UnknownMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCell.swift; sourceTree = "<group>"; };
 		160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownMessageCellTests.swift; sourceTree = "<group>"; };
+		160D6915212AB95100096EAD /* ImageResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceView.swift; sourceTree = "<group>"; };
 		160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileSelfPictureViewController+UserObserver.swift"; sourceTree = "<group>"; };
 		160FD05321085F3900C517B5 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelfProfileViewController+NewDeviceAlert.swift"; sourceTree = "<group>"; };
@@ -3978,6 +3980,7 @@
 				7C3A82CA20B6E6B800313B4F /* CameraAccess.swift */,
 				5EBC343820EE448B00AFB6DF /* ImageCache */,
 				5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */,
+				160D6915212AB95100096EAD /* ImageResourceView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -6697,6 +6700,7 @@
 				1648EEF32049A6F800CC6B37 /* DirectorySectionController.swift in Sources */,
 				BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */,
 				16A94AEF2099DFEC008A5718 /* CallParticipantsViewController.swift in Sources */,
+				160D691C212AC94100096EAD /* ImageResource.swift in Sources */,
 				54F7C27F1D74367E004D8087 /* AddressBookHelper.swift in Sources */,
 				BFAAB2431DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift in Sources */,
 				8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */,
@@ -7199,7 +7203,6 @@
 				AF36C59F1E9F67B600FADECC /* DraftListViewController.swift in Sources */,
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
 				8733378A1DF5B43A006AE609 /* SwiftDependencies.swift in Sources */,
-				164A55DC20F60A5700AE62A6 /* ImageResource.swift in Sources */,
 				1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */,
 				167961AF20445FB400B72ACC /* ProfileTitleView.swift in Sources */,
 				16FB2F6C20C0389800582137 /* Dictionary+Merge.swift in Sources */,
@@ -7358,6 +7361,7 @@
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,
 				87C39A8A206947A1008DA100 /* UIView+Constraints.swift in Sources */,
 				87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */,
+				160D691D212AC95A00096EAD /* ImageResourceView.swift in Sources */,
 				EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */,
 				F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */,
 				8FC853FF199245770008B66B /* AppDelegate.m in Sources */,

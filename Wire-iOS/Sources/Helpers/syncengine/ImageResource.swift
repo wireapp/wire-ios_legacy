@@ -147,7 +147,7 @@ extension ImageSizeLimit {
 extension ImageResource {
     
     /// Fetch image data and calls the completion handler when it is available on the main queue.
-    func fetchImage(cache: ImageCache<MediaAsset> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: MediaAsset?) -> Void) {
+    func fetchImage(cache: ImageCache<MediaAsset> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: MediaAsset?, _ cacheHit: Bool) -> Void) {
         
         guard let cacheIdentifier = self.cacheIdentifier else { return }
         
@@ -162,7 +162,7 @@ extension ImageResource {
         let cacheKey = "\(cacheIdentifier)_\(sizeLimit.cacheKeyExtension)" as NSString
         
         if let image = cache.cache.object(forKey: cacheKey) {
-            return completion(image)
+            return completion(image, true)
         }
         
         ZMUserSession.shared()?.enqueueChanges {
@@ -176,7 +176,7 @@ extension ImageResource {
             
             defer {
                 DispatchQueue.main.async {
-                    completion(image)
+                    completion(image, false)
                     cache.dispatchGroup.leave()
                 }
             }

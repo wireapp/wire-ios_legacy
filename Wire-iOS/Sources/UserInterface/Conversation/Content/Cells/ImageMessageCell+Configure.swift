@@ -22,9 +22,10 @@ extension ImageMessageCell {
     
     @objc
     func fetchImage() {
-        message.imageMessageData?.image.fetchImage(sizeLimit: .deviceOptimized, completion: { (image) in
-            self.setImage(image)
-        })
+        fullImageView.setImageResource(message.imageMessageData?.image) { [weak self] in
+            self?.updateBackgroundColor()
+            self?.updateImageBorder()
+        }
     }
     
 }
