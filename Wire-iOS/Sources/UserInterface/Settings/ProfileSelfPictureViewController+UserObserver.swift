@@ -23,7 +23,7 @@ extension ProfileSelfPictureViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.imageMediumDataChanged else { return }
         
-        changeInfo.user.fetchProfileImage { (image) in
+        changeInfo.user.fetchProfileImage { (image, _) in
             self.selfUserImageView.image = image
         }
     }
