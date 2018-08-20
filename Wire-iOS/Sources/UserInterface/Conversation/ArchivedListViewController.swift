@@ -65,6 +65,7 @@ import Cartography
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func createViews() {
@@ -151,6 +152,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
     internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
         applyChangesClosure()
         collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
