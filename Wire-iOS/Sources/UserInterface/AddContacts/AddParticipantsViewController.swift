@@ -156,7 +156,7 @@ public class AddParticipantsViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
 
         confirmButton = IconButton()
-        confirmButton.setIcon(ZetaIconType.convMetaAddPerson, with: .tiny, for: .normal)
+        confirmButton.setIcon(ZetaIconType.plus, with: .tiny, for: .normal)
         confirmButton.setIconColor(UIColor(scheme: .iconNormal, variant: .dark), for: .normal)
         confirmButton.setIconColor(UIColor(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
         confirmButton.setTitleColor(UIColor(scheme: .iconNormal, variant: .dark), for: .normal)
