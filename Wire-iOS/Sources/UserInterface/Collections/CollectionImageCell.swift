@@ -95,13 +95,13 @@ final public class CollectionImageCell: CollectionCell {
         var mutableItems = properties.additionalItems ?? []
         
         let saveItem = UIMenuItem(title: "content.image.save_image".localized, action: #selector(CollectionImageCell.save(_:)))
-        mutableItems.append(saveItem)
+        mutableItems.append(.forbiddenInEphemeral(saveItem))
         
         properties.additionalItems = mutableItems
         return properties
     }
     
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(CollectionImageCell.save(_:)): fallthrough
         case #selector(copy(_:)):

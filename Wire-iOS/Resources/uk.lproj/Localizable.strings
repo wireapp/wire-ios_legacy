@@ -31,6 +31,7 @@
 "general.accept" = "Прийняти";
 "general.decline" = "Ні, дякую";
 "general.failure" = "Щось пішло не так";
+"general.service" = "Service";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -43,7 +44,7 @@
 "peoplepicker.search_placeholder" = "Пошук за іменем або ніком";
 "peoplepicker.header.top_people" = "Топ-контакти";
 "peoplepicker.button.create_conversation" = "Створити групу";
-"peoplepicker.button.add_to_conversation" = "Додати учасників до групи";
+"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
 "peoplepicker.header.conversations" = "Групи";
 "peoplepicker.header.team_conversations" = "Групи %@";
 "peoplepicker.header.send_invitation" = "Запросити";
@@ -52,7 +53,7 @@
 "peoplepicker.header.directory" = "Додати до контактів";
 
 "peoplepicker.group.title.singular" = "Додати учасників";
-"peoplepicker.group.title.plural" = "Додати учасників (%d)";
+"peoplepicker.group.title.plural" = "Add Participants (%d)";
 "peoplepicker.group.skip" = "Пропустити";
 "peoplepicker.group.done" = "Готово";
 "peoplepicker.group.create" = "Створити";
@@ -66,7 +67,7 @@
 "peoplepicker.services.add_service.error.full" = "Розмова переповнена";
 
 "peoplepicker.title.create_conversation" = "Створити групу";
-"peoplepicker.title.add_to_conversation" = "Додати учасників";
+"peoplepicker.title.add_to_conversation" = "Add participants";
 
 "peoplepicker.no_contacts_title" = "Контактів немає.";
 
@@ -78,6 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Будь ласка, введіть актуальну адресу електронної пошти";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Нікого не знайдено.";
+"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введіть адресу електронної пошти або";
 /*  */
@@ -94,11 +98,12 @@
 "peoplepicker.quick-action.open-conversation" = "Вiдкрити";
 "peoplepicker.quick-action.create-conversation" = "Створити групу";
 "peoplepicker.quick-action.create-guest-room" = "Створити гостьову кімнату";
+"peoplepicker.quick-action.admin-services" = "Manage Services";
 
 "add_participants.all_contacts_added" = "Всі вже тут.";
 
-"add_participants.alert.title" = "Full house";
-"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.title" = "Розмова переповнена";
+"add_participants.alert.message.new_conversation" = "До розмови може приєднатися до %d учасників.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
 // Contacts UI
@@ -268,8 +273,8 @@
 "conversation.create.group_name.placeholder" = "Ім'я групи";
 "conversation.create.guidance.empty" = "Не менше 1 символу";
 "conversation.create.guidance.toolong" = "Занадто багато символів";
-"conversation.create.toggle.title" = "Дозволити присутність гостей";
-"conversation.create.toggle.subtitle" = "Зробити розмову доступною для людей поза межами вашої команди. Це налаштування завжди можна змінити пізніше.";
+"conversation.create.toggle.title" = "Allow guests and services";
+"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Активний дзвінок";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Ви не можете записувати аудіо під час дзвінка.";
@@ -277,6 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Ви не можете фотографувати під час дзвінка.";
 
 "conversation.guests_present" = "Присутні гості";
+"conversation.services_present" = "Services are present";
+"conversation.guests_services_present" = "Guests and Services are present";
 "conversation.action.search" = "Пошук";
 
 // Image confirmation dialogue
@@ -318,14 +325,14 @@
 // System messages
 "content.system.you_nominative" = "ви";
 "content.system.you_dative" = "вам";
-"content.system.and_you_dative" = "and you";
+"content.system.and_you_dative" = "та ви";
 "content.system.you_accusative" = "вас";
 
 "content.system.continued_conversation" = "Почати розмову з %@";
-"content.system.started_conversation.truncated_people" = "and %@";
-"content.system.started_conversation.truncated_people.others" = "%@ others";
-"content.system.started_conversation.complete_team" = "all team members";
-"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
+"content.system.started_conversation.truncated_people" = "та %@";
+"content.system.started_conversation.truncated_people.others" = "%@ інших";
+"content.system.started_conversation.complete_team" = "всі учасники команди";
+"content.system.started_conversation.complete_team.guests" = "всі учасники команди та %@ гостей";
 
 "content.system.other_started_conversation" = "%@ почав(-ла) розмову з %@";
 "content.system.you_started_conversation" = "Ви почали розмову з %@";
@@ -342,6 +349,8 @@
 "content.system.other_removed_you" = "%@ видалив(-ла) вас";
 "content.system.you_removed_other" = "Ви видалили %@";
 
+"content.system.services.warning" = "Services have access to the content of the conversation";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ почав(-ла) розмову з %@";
@@ -356,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "%@ був(-ла) видалений(-а) з команди.";
 "content.system.conversation.guest.joined" = "%@ приєднався(-лася)";
 
-"content.system.conversation.invite.title" = "Люди за межами вашої команди можуть приєднатися до цієї розмови.";
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "Запросити людей";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ видалив(-ла) ім'я розмови";
@@ -390,7 +399,7 @@
 "content.system.conversation.with_name.title" = "%@ розпочав(-ла) розмову";
 "content.system.conversation.with_name.title-you" = "%@ розпочав(-ла) розмову";
 
-"content.system.conversation.with_name.participants" = "with";
+"content.system.conversation.with_name.participants" = "з";
 
 "content.system.message_timer_changes" = "%@ встановив(-ла) таймер повідомлень на %@";
 "content.system.message_timer_changes.you" = "Ви встановили таймер повідомлень на %@";
@@ -453,6 +462,7 @@
 "content.message.forward.to" = "Пошук…";
 "content.message.open" = "Вiдкрити";
 "content.message.copy" = "Скопіювати";
+"content.message.download" = "Download";
 
 "content.message.open_link_alert.title" = "Перейдіть за лінком";
 "content.message.open_link_alert.message" = "Це перенаправить вас на\n%@";
@@ -587,7 +597,7 @@
 "participants.section.services" = "Сервіси (%d)";
 "participants.section.settings" = "Налаштування";
 "participants.footer.add_title" = "Додати учасників";
-"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Перейменувати";
@@ -698,7 +708,7 @@
 "participants.services.remove_integration.button" = "видалити інтеграцію";
 
 // Group details
-"group_details.guest_options_cell.title" = "Гості";
+"group_details.guest_options_cell.title" = "Guests and services";
 "group_details.guest_options_cell.enabled" = "Увімк.";
 "group_details.guest_options_cell.disabled" = "Вимкнений";
 "group_details.timeout_options_cell.title" = "Тимчасові повідомлення";
@@ -1058,14 +1068,14 @@
 "team.invite.error.already_registered" = "Ця адреса електронної пошти вже використовується";
 "team.invite.error.already_invited" = "Ця адреса вже зареєстрована";
 "team.invite.error.too_many_invitations" = "Вже було надіслано максимальну кількість запрошень";
-"team.invite.error.no_internet" = "Відсутнє підключення до Інтернету";
+"team.invite.error.no_internet" = "Немає з'єднання з Інтернетом";
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Дозволити присутність гостей";
-"guest_room.allow_guests.subtitle" = "Зробити цю розмову доступною для людей поза межами вашої команди.";
-"guest_room.remove_guests.message" = "Поточні гості будуть вилучені з розмови. Нові гості не матимуть доступу до неї.";
-"guest_room.remove_guests.action" = "Видалити гостей";
+"guest_room.allow_guests.title" = "Allow guests and services";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.remove_guests.action" = "Видалити";
 "guest_room.revoke_link.message" = "Нові гості не зможуть приєднатися з цим лінком. Поточні гості все ще матимуть доступ.";
 "guest_room.revoke_link.action" = "Відкликати лінк";
 
@@ -1294,7 +1304,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "Забагато учасників для здійснення дзвінка";
 "error.group_call.too_many_members_in_conversation" = "Дзвінки можливі в розмовах до %d людей.";
 "error.group_call.too_many_participants_in_the_call.title" = "Забагато людей в дзвінку";
-"error.group_call.too_many_participants_in_the_call" = "Тут залишилось місце тільки для %d учасників.";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
 "error.call.gsm_ongoing.title" = "Стільниковий дзвінок";
 "error.call.gsm_ongoing" = "Будь ласка, завершіть стільниковий дзвінок перед тим, як дзвонити з Wire.";
 "error.call.general.title" = "Помилка дзвінка";

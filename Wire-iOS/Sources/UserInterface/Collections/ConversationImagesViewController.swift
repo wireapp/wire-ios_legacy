@@ -90,7 +90,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
-    override open var prefersStatusBarHidden: Bool {
+    public override var prefersStatusBarHidden: Bool {
         return false
     }
     

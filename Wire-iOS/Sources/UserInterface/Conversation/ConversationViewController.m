@@ -270,7 +270,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         BOOL isPresented = nil != self.guestsBarController.parentViewController;
         if (!isPresented || showIfNeeded) {
             [self.conversationBarController presentBar:self.guestsBarController];
-            [self.guestsBarController setState:self.conversation.guestBarState animated:NO];
+            [self.guestsBarController setState:state animated:NO];
         }
     }
     else {
@@ -827,6 +827,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
         [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
+    } else {
+        [self.guestsBarController configureTitleWithState: self.conversation.guestBarState];
     }
     
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {

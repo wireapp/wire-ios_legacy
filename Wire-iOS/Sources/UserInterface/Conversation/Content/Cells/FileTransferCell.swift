@@ -72,14 +72,14 @@ import Classy
         }
     }
     
-    open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+    public override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
         let needsLayout = super.update(forMessage: changeInfo)
         self.configureForFileTransferMessage(self.message, initialConfiguration: false)
 
         return needsLayout
     }
     
-    override open func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+    override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         
         if message.isFile {
@@ -96,7 +96,7 @@ import Classy
         return self.fileTransferView.actionButton
     }
     
-    override open var tintColor: UIColor! {
+    override public var tintColor: UIColor! {
         didSet {
             self.fileTransferView.tintColor = self.tintColor
         }
@@ -104,17 +104,17 @@ import Classy
     
     // MARK: - Selection
     
-    open override var selectionView: UIView! {
+    public override var selectionView: UIView! {
         return fileTransferView
     }
     
-    open override var selectionRect: CGRect {
+    public override var selectionRect: CGRect {
         return fileTransferView.bounds
     }
     
     // MARK: - Delete
     
-    override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
         let properties = MenuConfigurationProperties()
         properties.targetRect = selectionRect
         properties.targetView = selectionView
@@ -124,24 +124,23 @@ import Classy
             }
         }
         
-        var additionalItems = [UIMenuItem]()
+        var additionalItems = [AdditionalMenuItem]()
         
         if let message = message, let fileMessageData = message.fileMessageData {
             if let _ = fileMessageData.fileURL {
                 additionalItems += [
-                    .open(with: #selector(open)),
-                    .save(with: #selector(save)),
-                    .forward(with: #selector(forward))
+                    .forbiddenInEphemeral(.open(with: #selector(open))),
+                    .forbiddenInEphemeral(.save(with: #selector(save))),
+                    .forbiddenInEphemeral(.forward(with: #selector(forward)))
                 ]
             }
             
             if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
                 additionalItems += [
-                    .download(with: #selector(download))
+                    .allowedInEphemeral(.download(with: #selector(download)))
                 ]
             }
         }
-        
 
         properties.likeItemIndex = 1 // Open should be first
         properties.additionalItems = additionalItems
@@ -149,7 +148,7 @@ import Classy
         return properties
     }
     
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(forward), #selector(save):
             if let fileMessageData = message.fileMessageData,
@@ -179,7 +178,7 @@ import Classy
         delegate?.conversationCell?(self, didSelect: .download)
     }
     
-    override open func messageType() -> MessageType {
+    override public func messageType() -> MessageType {
         return .file
     }
 }

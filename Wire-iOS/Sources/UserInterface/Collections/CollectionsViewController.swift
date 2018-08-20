@@ -49,7 +49,7 @@ public protocol CollectionsViewControllerDelegate: class {
     }
     
     fileprivate var contentView: CollectionsView! {
-        return self.view as! CollectionsView
+        return self.view as? CollectionsView
     }
     fileprivate let messagePresenter = MessagePresenter()
     fileprivate weak var selectedMessage: ZMConversationMessage? = .none
@@ -255,7 +255,7 @@ public protocol CollectionsViewControllerDelegate: class {
         return false
     }
     
-    open override var preferredStatusBarStyle : UIStatusBarStyle {
+    public override var preferredStatusBarStyle : UIStatusBarStyle {
         return ColorScheme.default.variant == .dark ? .lightContent : .default
     }
     

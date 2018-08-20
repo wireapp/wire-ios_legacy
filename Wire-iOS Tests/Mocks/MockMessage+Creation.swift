@@ -26,4 +26,16 @@ extension MockMessageFactory {
         return message!
     }
 
+    class func audioMessage(config: ((MockMessage) -> ())?) -> MockMessage {
+        let fileMessage = MockMessageFactory.fileTransferMessage()
+        fileMessage?.backingFileMessageData.mimeType = "audio/x-m4a"
+        fileMessage?.backingFileMessageData.filename = "sound.m4a"
+
+        if let config = config {
+            config(fileMessage!)
+        }
+
+        return fileMessage!
+    }
+
 }

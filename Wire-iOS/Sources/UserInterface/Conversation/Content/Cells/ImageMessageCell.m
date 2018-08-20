@@ -484,7 +484,10 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     properties.targetView = self.selectionView;
     UIMenuItem *saveItem = [UIMenuItem saveItemWithAction:@selector(saveImage)];
     UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
-    properties.additionalItems = @[saveItem, forwardItem];
+    properties.additionalItems = @[
+                                   [AdditionalMenuItem forbiddenInEphemeral:saveItem],
+                                   [AdditionalMenuItem forbiddenInEphemeral:forwardItem]
+                                   ];
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };

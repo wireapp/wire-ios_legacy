@@ -86,8 +86,8 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 
 @objcMembers open class AggregateFilePreviewGenerator: NSObject, FilePreviewGenerator {
     @objc let subGenerators: [FilePreviewGenerator]
-    open let thumbnailSize: CGSize
-    open let callbackQueue: OperationQueue
+    public let thumbnailSize: CGSize
+    public let callbackQueue: OperationQueue
     
     @objc init(subGenerators: [FilePreviewGenerator], callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.callbackQueue = callbackQueue
@@ -117,8 +117,8 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 
 @objcMembers open class ImageFilePreviewGenerator: NSObject, FilePreviewGenerator {
     
-    open let thumbnailSize: CGSize
-    open let callbackQueue: OperationQueue
+    public let thumbnailSize: CGSize
+    public let callbackQueue: OperationQueue
     
     @objc init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
@@ -160,8 +160,8 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 
 @objcMembers open class MovieFilePreviewGenerator: NSObject, FilePreviewGenerator {
    
-    open let thumbnailSize: CGSize
-    open let callbackQueue: OperationQueue
+    public let thumbnailSize: CGSize
+    public let callbackQueue: OperationQueue
     
     @objc init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
@@ -229,8 +229,8 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 
 @objcMembers open class PDFFilePreviewGenerator: NSObject, FilePreviewGenerator {
     
-    open let thumbnailSize: CGSize
-    open let callbackQueue: OperationQueue
+    public let thumbnailSize: CGSize
+    public let callbackQueue: OperationQueue
     
     @objc public init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize

@@ -83,7 +83,7 @@ import Classy
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func createConstraints() {
+    public func createConstraints() {
         constrain(self, self.previewImageView, self.progressView, self.playButton, self.bottomGradientView) { selfView, previewImageView, progressView, playButton, bottomGradientView in
             (selfView.width == selfView.height * (4.0 / 3.0)) ~ 750
             previewImageView.edges == selfView.edges
@@ -191,7 +191,7 @@ import Classy
         updateVisibleViews(allViews, visibleViews: visibleViews(for: state), animated: !self.loadingView.isHidden)
     }
     
-    override open var tintColor: UIColor! {
+    override public var tintColor: UIColor! {
         didSet {
             self.progressView.tintColor = self.tintColor
         }
@@ -204,7 +204,7 @@ import Classy
     
     // MARK: - Actions
     
-    @objc open func onActionButtonPressed(_ sender: UIButton) {
+    @objc public func onActionButtonPressed(_ sender: UIButton) {
         guard let fileMessageData = self.fileMessage?.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {

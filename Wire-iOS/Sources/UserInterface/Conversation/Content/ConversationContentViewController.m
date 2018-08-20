@@ -219,6 +219,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    [self updatePopover];
+}
+
 - (void)scrollToFirstUnreadMessageIfNeeded
 {
     if (! self.hasDoneInitialLayout) {

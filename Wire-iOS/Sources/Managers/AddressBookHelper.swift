@@ -27,7 +27,7 @@ import Contacts
     let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h
     
     /// Singleton
-    open static let sharedHelper : AddressBookHelper = AddressBookHelper()
+    public static let sharedHelper : AddressBookHelper = AddressBookHelper()
     
     /// Configuration override (used for testing)
     open var configuration : AddressBookHelperConfiguration!

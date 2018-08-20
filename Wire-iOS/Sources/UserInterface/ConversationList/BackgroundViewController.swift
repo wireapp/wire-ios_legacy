@@ -80,11 +80,11 @@ final public class BackgroundViewController: UIViewController {
         self.updateForColorScheme()
     }
     
-    override open var prefersStatusBarHidden: Bool {
+    public override var prefersStatusBarHidden: Bool {
         return false
     }
 
-    open override var preferredStatusBarStyle : UIStatusBarStyle {
+    public override var preferredStatusBarStyle : UIStatusBarStyle {
         if let child = childViewControllers.first {
             return child.preferredStatusBarStyle
         }

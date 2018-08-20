@@ -217,7 +217,8 @@ extension UIViewController {
     
     private func performSearch(query: String, options: SearchOptions) {
         pendingSearchTask?.cancel()
-        
+        searchResultsView?.emptyResultContainer.isHidden = true
+
         let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
         let task = searchDirectory.perform(request)
         

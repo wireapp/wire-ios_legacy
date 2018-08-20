@@ -43,7 +43,7 @@ extension CallStatusViewInputType {
     }
 }
 
-enum CallStatusViewState {
+enum CallStatusViewState: Equatable {
     case none
     case connecting
     case ringingIncoming(name: String?) // Caller name + call type "XYZ is calling..."
@@ -51,23 +51,6 @@ enum CallStatusViewState {
     case established(duration: TimeInterval) // Call duration in seconds "04:18"
     case reconnecting // "Reconnecting..."
     case terminating // "Ending call..."
-}
-
-extension CallStatusViewState: Equatable {
-    
-    static func ==(lhs: CallStatusViewState, rhs: CallStatusViewState) -> Bool {
-        switch (lhs, rhs) {
-        case (.none, .none), (.connecting, .connecting), (.reconnecting, .reconnecting), (.terminating, .terminating), (.ringingOutgoing, .ringingOutgoing):
-            return true
-        case (.ringingIncoming(let lhsName), .ringingIncoming(let rhsName)):
-            return lhsName == rhsName
-        case (.established(let lhsDuration), .established(let rhsDuration)):
-            return lhsDuration == rhsDuration
-        default:
-            return false
-        }
-    }
-    
 }
 
 final class CallStatusView: UIView {
