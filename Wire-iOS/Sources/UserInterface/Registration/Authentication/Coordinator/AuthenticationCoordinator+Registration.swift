@@ -47,7 +47,7 @@ extension AuthenticationCoordinator: RegistrationStatusDelegate {
 
     /// Called when the phone verification fails.
     func activationCodeValidationFailed(with error: Error) {
-        eventHandlingManager.handleEvent(ofType: .authenticationFailure(error as NSError))
+        eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
     }
 
     func teamRegistered() {

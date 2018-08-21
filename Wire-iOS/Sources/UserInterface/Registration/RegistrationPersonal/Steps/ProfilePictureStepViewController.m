@@ -48,7 +48,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 @property (nonatomic) UILabel *subtitleLabel;
 @property (nonatomic) Button *selectOwnPictureButton;
 @property (nonatomic) Button *keepDefaultPictureButton;
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
+@property (nonatomic, copy) NSString *displayName;
 @property (nonatomic) UIImage *defaultProfilePictureImage;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) UIView *overlayView;
@@ -59,12 +59,12 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 @synthesize authenticationCoordinator;
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
+- (instancetype)initWithDisplayName:(NSString *)displayName
 {
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        self.unregisteredUser = unregisteredUser;
+        self.displayName = displayName;
     }
     
     return self;
@@ -117,7 +117,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     self.subtitleLabel.font = UIFont.largeLightFont;
     self.subtitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.subtitleLabel.numberOfLines = 0;
-//    self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.unregisteredUser.name];
+    self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.displayName];
 
     [self.contentView addSubview:self.subtitleLabel];
 }

@@ -23,4 +23,6 @@ extern NSString * const UnsplashRandomImageHiQualityURL;
 
 @interface ProfilePictureStepViewController : BlueViewController <AuthenticationCoordinatedViewController>
 
+- (instancetype)initWithDisplayName:(NSString *)displayName;
+
 @end

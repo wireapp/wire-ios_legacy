@@ -85,8 +85,8 @@ class AuthenticationInterfaceBuilder {
                 return VerificationCodeStepViewController(emailAddress: emailAddress)
             }
 
-        case .incrementalUserCreation(_, let registrationStep):
-            return makeRegistrationStepViewController(for: registrationStep)
+        case .incrementalUserCreation(let user, let registrationStep):
+            return makeRegistrationStepViewController(for: registrationStep, user: user)
 
         default:
             return nil
@@ -98,11 +98,12 @@ class AuthenticationInterfaceBuilder {
      * registration step.
      *
      * - parameter step: The step to create an interface for.
+     * - parameter user: The unregistered user that is being created.
      * - returns: The view controller to use for this step, or `nil` if the interface builder
      * does not support this step.
      */
 
-    private func makeRegistrationStepViewController(for step: IntermediateRegistrationStep) -> AuthenticationStepViewController? {
+    private func makeRegistrationStepViewController(for step: IntermediateRegistrationStep, user: UnregisteredUser) -> AuthenticationStepViewController? {
         switch step {
         case .start:
             return nil
@@ -113,7 +114,7 @@ class AuthenticationInterfaceBuilder {
         case .setName:
             return NameStepViewController()
         case .setProfilePicture:
-            return ProfilePictureStepViewController()
+            return ProfilePictureStepViewController(displayName: user.name)
         }
     }
 
