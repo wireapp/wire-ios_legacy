@@ -270,7 +270,7 @@ class CameraController {
 
 private extension AVCaptureVideoOrientation {
     
-    /// The video orientation mmatches against first the device orientation,
+    /// The video orientation matches against first the device orientation,
     /// then the interface orientation. Must be called on the main thread.
     static var current: AVCaptureVideoOrientation {
         let device = DeviceOrientationObserver.sharedInstance().deviceOrientation
