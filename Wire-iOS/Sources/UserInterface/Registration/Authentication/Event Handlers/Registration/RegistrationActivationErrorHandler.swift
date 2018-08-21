@@ -18,24 +18,28 @@
 
 import Foundation
 
-class PhoneRegistrationIdentityVerifiedEventHandler: AuthenticationEventHandler {
+/**
+ * Handles errors during registration activation.
+ */
+
+class RegistrationActivationErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        // Only handle verification requests results
-        guard case let .validatePhoneIdentity(credentials, user) = currentStep else {
+    func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
+        let error = context
+
+        // Only handle errors during authentication requests
+        switch currentStep {
+        case .sendActivationCode, .activateCredentials:
+            break
+        default:
             return nil
         }
 
-        // Update the user
-        user.phoneNumber = credentials.phoneNumber
-        user.phoneVerificationCode = credentials.phoneNumberVerificationCode
-
-        let flowState = RegistrationState(unregisteredUser: user)
-
-        // Move to the next linear step
-        return [.hideLoadingView, .startLinearRegistration(flowState)]
+        // Show the alert
+        let errorAlert = AuthenticationCoordinatorErrorAlert(error: error, completionActions: [.unwindState])
+        return [.hideLoadingView, .presentErrorAlert(errorAlert)]
     }
 
 }

@@ -29,7 +29,7 @@ enum AuthenticationFlowStep {
     case reauthenticate(error: NSError, numberOfAccounts: Int)
 
     // Verification
-    case verifyPhoneNumber(phoneNumber: String, user: ZMIncompleteRegistrationUser?, credentialsValidated: Bool)
+    case verifyPhoneNumber(phoneNumber: String, user: UnregisteredUser?, credentialsValidated: Bool)
     case verifyEmailCredentials(ZMEmailCredentials)
 
     // Sign-In
@@ -45,17 +45,19 @@ enum AuthenticationFlowStep {
     case pendingInitialSync
 
     // Registration
-    case createCredentials(ZMIncompleteRegistrationUser)
-    case validatePhoneIdentity(credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser)
-    case linearRegistration(RegistrationState, IntermediateRegistrationStep)
-    case finalizeRegistration(RegistrationState)
+    case createCredentials(UnregisteredUser)
+    case sendActivationCode(UnverifiedCredential, user: UnregisteredUser, isResend: Bool)
+    case enterActivationCode(UnverifiedCredential, user: UnregisteredUser)
+    case activateCredentials(UnverifiedCredential, user: UnregisteredUser, code: String)
+    case incrementalUserCreation(UnregisteredUser, IntermediateRegistrationStep)
+    case createUser(UnregisteredUser)
 
     // MARK: - Properties
 
     /// Whether the step can be unwinded.
     var allowsUnwind: Bool {
         switch self {
-        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword, .linearRegistration: return false
+        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword, .incrementalUserCreation: return false
         case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
         default: return true
         }
@@ -64,14 +66,21 @@ enum AuthenticationFlowStep {
     /// Whether the authentication steps generates a user interface.
     var needsInterface: Bool {
         switch self {
+        // Initial Steps
+        case .landingScreen: return true
+
         case .authenticateEmailCredentials: return false
         case .authenticatePhoneCredentials: return false
         case .registerEmailCredentials: return false
         case .pendingInitialSync: return false
         case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
-        case .validatePhoneIdentity: return false
-        case .linearRegistration(_, let intermediateStep): return intermediateStep.needsInterface
-        case .finalizeRegistration: return false
+
+        // Registration
+        case .sendActivationCode: return false
+        case .enterActivationCode: return true
+        case .activateCredentials: return false
+        case .incrementalUserCreation(_, let intermediateStep): return intermediateStep.needsInterface
+        case .createUser: return false
         default: return true
         }
     }
@@ -85,10 +94,11 @@ enum AuthenticationFlowStep {
  */
 
 enum IntermediateRegistrationStep {
-    case reviewTermsOfService, provideMarketingConsent, setName, setProfilePicture
+    case start, reviewTermsOfService, provideMarketingConsent, setName, setProfilePicture
 
     var needsInterface: Bool {
         switch self {
+        case .start: return false
         case .provideMarketingConsent: return false
         default : return true
         }

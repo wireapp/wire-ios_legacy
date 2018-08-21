@@ -226,7 +226,6 @@
 		5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376820E7F12B00649241 /* EasingAnimation.swift */; };
 		5E52376B20E7F99500649241 /* EasingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376A20E7F99500649241 /* EasingFunction.swift */; };
 		5E52378A20EB5B4C00649241 /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */; };
-		5E53B0DA2119F75C009C7124 /* EmailVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53B0D92119F75C009C7124 /* EmailVerificationViewController.swift */; };
 		5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */; };
 		5E53B0DF211ADE36009C7124 /* EmailVerificationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53B0DD211ADE22009C7124 /* EmailVerificationViewControllerTests.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
@@ -295,12 +294,11 @@
 		5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */; };
 		5EE73BE62122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */; };
 		5EE73BE82122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BE72122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift */; };
-		5EE73BEB212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEA212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift */; };
-		5EE73BED21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */; };
-		5EE73BEF212318D90032986D /* RegistrationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEE212318D90032986D /* RegistrationState.swift */; };
-		5EE73BF1212319BB0032986D /* LinearRegistrationStepHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */; };
-		5EE73BF3212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF2212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift */; };
-		5EE73BF5212419ED0032986D /* AuthenticationCoordinator+Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Phone.swift */; };
+		5EE73BEB212307D10032986D /* RegistrationActivationExistingAccountPolicyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEA212307D10032986D /* RegistrationActivationExistingAccountPolicyHandler.swift */; };
+		5EE73BED21230BF30032986D /* RegistrationActivationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEC21230BF30032986D /* RegistrationActivationErrorHandler.swift */; };
+		5EE73BF1212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF0212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift */; };
+		5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF2212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift */; };
+		5EE73BF5212419ED0032986D /* AuthenticationCoordinator+Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */; };
 		5EE73BF821242F0D0032986D /* BlueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF721242F0D0032986D /* BlueViewController.m */; };
 		5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */; };
 		5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC1A420C01C64007E8A79 /* ContinuousMaskLayer.swift */; };
@@ -314,6 +312,7 @@
 		5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C01212468E8007932A6 /* RegistrationSuccessEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */; };
+		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
 		7C0BB6E61FE682A200386A19 /* AccountSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */; };
 		7C17ECA51F74F4540056600C /* ConversationCell+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */; };
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
@@ -1117,10 +1116,9 @@
 		EF2127131FB9DFE300625A9B /* EmailSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126DC1FB9DFE300625A9B /* EmailSignInViewController.m */; };
 		EF2127141FB9DFE300625A9B /* EmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */; };
 		EF2127151FB9DFE300625A9B /* NameStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E51FB9DFE300625A9B /* NameStepViewController.m */; };
-		EF2127161FB9DFE300625A9B /* PhoneVerificationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E61FB9DFE300625A9B /* PhoneVerificationStepViewController.m */; };
+		EF2127161FB9DFE300625A9B /* VerificationCodeStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E61FB9DFE300625A9B /* VerificationCodeStepViewController.m */; };
 		EF2127171FB9DFE300625A9B /* NoHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */; };
 		EF2127181FB9DFE300625A9B /* PhoneNumberStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */; };
-		EF2127191FB9DFE300625A9B /* EmailVerificationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126EB1FB9DFE300625A9B /* EmailVerificationStepViewController.m */; };
 		EF21271A1FB9DFE300625A9B /* ProfilePictureStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126EC1FB9DFE300625A9B /* ProfilePictureStepViewController.m */; };
 		EF21271B1FB9DFE300625A9B /* TermsOfUseStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126ED1FB9DFE300625A9B /* TermsOfUseStepViewController.m */; };
 		EF21271C1FB9DFE300625A9B /* RegistrationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126EE1FB9DFE300625A9B /* RegistrationStepViewController.m */; };
@@ -1593,7 +1591,6 @@
 		5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSiriWaveformView.m; sourceTree = "<group>"; };
 		5E52378920EB5B4C00649241 /* SCSiriWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSiriWaveformView.h; sourceTree = "<group>"; };
 		5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthenticationCoordinatedViewController.h; sourceTree = "<group>"; };
-		5E53B0D92119F75C009C7124 /* EmailVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewController.swift; sourceTree = "<group>"; };
 		5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterfaceBuilder.swift; sourceTree = "<group>"; };
 		5E53B0DD211ADE22009C7124 /* EmailVerificationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailVerificationViewControllerTests.swift; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
@@ -1661,12 +1658,11 @@
 		5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCornerPinningBehavior.swift; sourceTree = "<group>"; };
 		5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartAddAccountEventHandler.swift; sourceTree = "<group>"; };
 		5EE73BE72122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationSuccessPhoneRegistrationEventHandler.swift; sourceTree = "<group>"; };
-		5EE73BEA212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationExistingAccountPolicyHandler.swift; sourceTree = "<group>"; };
-		5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationVerificationErrorHandler.swift; sourceTree = "<group>"; };
-		5EE73BEE212318D90032986D /* RegistrationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationState.swift; sourceTree = "<group>"; };
-		5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearRegistrationStepHandler.swift; sourceTree = "<group>"; };
-		5EE73BF2212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationIdentityVerifiedEventHandler.swift; sourceTree = "<group>"; };
-		5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Phone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Phone.swift"; sourceTree = "<group>"; };
+		5EE73BEA212307D10032986D /* RegistrationActivationExistingAccountPolicyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationExistingAccountPolicyHandler.swift; sourceTree = "<group>"; };
+		5EE73BEC21230BF30032986D /* RegistrationActivationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationErrorHandler.swift; sourceTree = "<group>"; };
+		5EE73BF0212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationIncrementalUserDataChangeHandler.swift; sourceTree = "<group>"; };
+		5EE73BF2212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationCredentialsVerifiedEventHandler.swift; sourceTree = "<group>"; };
+		5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Registration.swift"; sourceTree = "<group>"; };
 		5EE73BF621242F0D0032986D /* BlueViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlueViewController.h; sourceTree = "<group>"; };
 		5EE73BF721242F0D0032986D /* BlueViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlueViewController.m; sourceTree = "<group>"; };
 		5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
@@ -1681,6 +1677,7 @@
 		5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSuccessEventHandler.swift; sourceTree = "<group>"; };
+		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
 		7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectionViewController.swift; sourceTree = "<group>"; };
 		7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Preview.swift"; sourceTree = "<group>"; };
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
@@ -2787,20 +2784,18 @@
 		EF2126DF1FB9DFE300625A9B /* NoHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoHistoryViewController.h; sourceTree = "<group>"; };
 		EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailStepViewController.m; sourceTree = "<group>"; };
 		EF2126E11FB9DFE300625A9B /* ProfilePictureStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureStepViewController.h; sourceTree = "<group>"; };
-		EF2126E21FB9DFE300625A9B /* EmailVerificationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailVerificationStepViewController.h; sourceTree = "<group>"; };
 		EF2126E31FB9DFE300625A9B /* RegistrationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationStepViewController.h; sourceTree = "<group>"; };
 		EF2126E41FB9DFE300625A9B /* TermsOfUseStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsOfUseStepViewController.h; sourceTree = "<group>"; };
 		EF2126E51FB9DFE300625A9B /* NameStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameStepViewController.m; sourceTree = "<group>"; };
-		EF2126E61FB9DFE300625A9B /* PhoneVerificationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneVerificationStepViewController.m; sourceTree = "<group>"; };
+		EF2126E61FB9DFE300625A9B /* VerificationCodeStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationCodeStepViewController.m; sourceTree = "<group>"; };
 		EF2126E71FB9DFE300625A9B /* EmailStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailStepViewController.h; sourceTree = "<group>"; };
 		EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoHistoryViewController.m; sourceTree = "<group>"; };
 		EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberStepViewController.m; sourceTree = "<group>"; };
 		EF2126EA1FB9DFE300625A9B /* ProfilePictureStepViewController+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProfilePictureStepViewController+Testing.h"; sourceTree = "<group>"; };
-		EF2126EB1FB9DFE300625A9B /* EmailVerificationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailVerificationStepViewController.m; sourceTree = "<group>"; };
 		EF2126EC1FB9DFE300625A9B /* ProfilePictureStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureStepViewController.m; sourceTree = "<group>"; };
 		EF2126ED1FB9DFE300625A9B /* TermsOfUseStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsOfUseStepViewController.m; sourceTree = "<group>"; };
 		EF2126EE1FB9DFE300625A9B /* RegistrationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationStepViewController.m; sourceTree = "<group>"; };
-		EF2126EF1FB9DFE300625A9B /* PhoneVerificationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneVerificationStepViewController.h; sourceTree = "<group>"; };
+		EF2126EF1FB9DFE300625A9B /* VerificationCodeStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationCodeStepViewController.h; sourceTree = "<group>"; };
 		EF2126F01FB9DFE300625A9B /* NameStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameStepViewController.h; sourceTree = "<group>"; };
 		EF2126F21FB9DFE300625A9B /* AddPhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPhoneNumberViewController.h; sourceTree = "<group>"; };
 		EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEmailPasswordViewController.m; sourceTree = "<group>"; };
@@ -3506,7 +3501,6 @@
 			isa = PBXGroup;
 			children = (
 				5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */,
-				5EE73BEE212318D90032986D /* RegistrationState.swift */,
 				5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */,
 				5E8DA763211B2CF000360979 /* Coordinator */,
 				5E8DA753211AF7BA00360979 /* Delegates */,
@@ -3582,7 +3576,7 @@
 			isa = PBXGroup;
 			children = (
 				5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */,
-				5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Phone.swift */,
+				5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */,
 				5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */,
 				5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */,
 				5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */,
@@ -3734,10 +3728,11 @@
 		5EE73BE92123078B0032986D /* Registration */ = {
 			isa = PBXGroup;
 			children = (
-				5EE73BEA212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift */,
-				5EE73BEC21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift */,
-				5EE73BF2212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift */,
-				5EE73BF0212319BB0032986D /* LinearRegistrationStepHandler.swift */,
+				5EE73BEA212307D10032986D /* RegistrationActivationExistingAccountPolicyHandler.swift */,
+				5EE73BEC21230BF30032986D /* RegistrationActivationErrorHandler.swift */,
+				5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */,
+				5EE73BF2212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift */,
+				5EE73BF0212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift */,
 				5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */,
 				5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */,
 			);
@@ -5916,8 +5911,8 @@
 			isa = PBXGroup;
 			children = (
 				5EE73BF92124308D0032986D /* Linear */,
-				EF2126EF1FB9DFE300625A9B /* PhoneVerificationStepViewController.h */,
-				EF2126E61FB9DFE300625A9B /* PhoneVerificationStepViewController.m */,
+				EF2126EF1FB9DFE300625A9B /* VerificationCodeStepViewController.h */,
+				EF2126E61FB9DFE300625A9B /* VerificationCodeStepViewController.m */,
 				EF2126DF1FB9DFE300625A9B /* NoHistoryViewController.h */,
 				EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */,
 				87C39A8B206BCD26008DA100 /* NoHistoryViewController.swift */,
@@ -5930,11 +5925,8 @@
 				EF2126EE1FB9DFE300625A9B /* RegistrationStepViewController.m */,
 				EF2126DE1FB9DFE300625A9B /* PhoneNumberStepViewController.h */,
 				EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */,
-				EF2126E21FB9DFE300625A9B /* EmailVerificationStepViewController.h */,
-				EF2126EB1FB9DFE300625A9B /* EmailVerificationStepViewController.m */,
 				EF80461F20CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift */,
 				EF24036D20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift */,
-				5E53B0D92119F75C009C7124 /* EmailVerificationViewController.swift */,
 			);
 			path = Steps;
 			sourceTree = "<group>";
@@ -6801,7 +6793,6 @@
 				EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */,
 				EF2127081FB9DFE300625A9B /* PhoneNumberViewController.m in Sources */,
 				167961A9203F26E600B72ACC /* SectionHeader.swift in Sources */,
-				5E53B0DA2119F75C009C7124 /* EmailVerificationViewController.swift in Sources */,
 				8FC8541F199245770008B66B /* ZMUserSession+iOS.m in Sources */,
 				16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */,
 				163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */,
@@ -6972,7 +6963,7 @@
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
 				F1199D351FC8490A0070FAC3 /* TeamCreationFlowController.swift in Sources */,
-				EF2127161FB9DFE300625A9B /* PhoneVerificationStepViewController.m in Sources */,
+				EF2127161FB9DFE300625A9B /* VerificationCodeStepViewController.m in Sources */,
 				16E311C31A5FEA2B00FF2C9E /* ConversationCell.m in Sources */,
 				5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */,
 				1682AEC520484B9B003A052A /* Themeable.swift in Sources */,
@@ -6982,7 +6973,7 @@
 				8F8914121A9F287E0056AB0C /* ConversationListContentController.m in Sources */,
 				87B8C3401DF9788B0015EC89 /* LinkOpener.swift in Sources */,
 				1E80A3651B0DF6120049A809 /* MediaPlaybackManager.m in Sources */,
-				5EE73BED21230BF30032986D /* PhoneRegistrationVerificationErrorHandler.swift in Sources */,
+				5EE73BED21230BF30032986D /* RegistrationActivationErrorHandler.swift in Sources */,
 				871BC3551D34F94200DF0793 /* AudioPlaylistCell.m in Sources */,
 				7C4918A11F8BB1A20038AF4B /* UIScreen+SafeArea.swift in Sources */,
 				8775BF1C2007C6B900A8AD93 /* SearchGroupSelector.swift in Sources */,
@@ -7065,7 +7056,7 @@
 				87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */,
 				87F18BBA1E01551600C69D9B /* VideoMessageView.swift in Sources */,
 				EF82E1C220EF6152001B5196 /* ConversationCell+CountDown.swift in Sources */,
-				5EE73BEB212307D10032986D /* PhoneRegistrationExistingAccountPolicyHandler.swift in Sources */,
+				5EE73BEB212307D10032986D /* RegistrationActivationExistingAccountPolicyHandler.swift in Sources */,
 				BF3A3DD41EAA09C6005477F8 /* UIAlertController+DraftDeletion.swift in Sources */,
 				8FC8549D199245770008B66B /* NotificationWindowRootViewController.m in Sources */,
 				871BC3531D34F94200DF0793 /* AudioErrorView.m in Sources */,
@@ -7124,7 +7115,6 @@
 				D5F8BFF42007AC84008F8C3D /* UIView+TableViewHeaderFooterSizing.swift in Sources */,
 				BF52C1601CB25FE70037331F /* ArchivedListViewModel.swift in Sources */,
 				871BC28C1D34F8F800DF0793 /* UIScrollView+Zeta.m in Sources */,
-				5EE73BEF212318D90032986D /* RegistrationState.swift in Sources */,
 				D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */,
 				D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */,
 				871BC2531D34F8F800DF0793 /* MediaThumbnail.m in Sources */,
@@ -7137,7 +7127,7 @@
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,
-				5EE73BF5212419ED0032986D /* AuthenticationCoordinator+Phone.swift in Sources */,
+				5EE73BF5212419ED0032986D /* AuthenticationCoordinator+Registration.swift in Sources */,
 				EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */,
 				16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */,
 				5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */,
@@ -7224,7 +7214,6 @@
 				D52F2C1E205BCA1D00E067C0 /* UIAlertController+ConnectionRequest.swift in Sources */,
 				5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */,
 				F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
-				EF2127191FB9DFE300625A9B /* EmailVerificationStepViewController.m in Sources */,
 				D550F57920445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift in Sources */,
 				871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */,
 				BFA2F03B20CAACF900EBE97C /* CallParticipantTimestamps.swift in Sources */,
@@ -7324,6 +7313,7 @@
 				1682AEBD20483DA5003A052A /* ServicesSectionController.swift in Sources */,
 				7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */,
 				D5D65A0F2074CFBB00D7F3C3 /* AuthenticationType.swift in Sources */,
+				5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */,
 				BF79B0FE20A99762001BF4FE /* VideoPreviewView.swift in Sources */,
 				BFBBD1ED20D9238B00BFC4AD /* NotificationWindow.swift in Sources */,
 				87A15FDF1E08318B00AED79B /* CollectionLoadingCell.swift in Sources */,
@@ -7362,7 +7352,7 @@
 				EF21270C1FB9DFE300625A9B /* Country.m in Sources */,
 				BFE08C1C1D5B5CFA002367F6 /* MessageDeletedCell.swift in Sources */,
 				D53D390E20596ED300B87DAD /* ConversationActionController+Block.swift in Sources */,
-				5EE73BF1212319BB0032986D /* LinearRegistrationStepHandler.swift in Sources */,
+				5EE73BF1212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift in Sources */,
 				BF52C1571CAEB9E10037331F /* ArchivedListViewController.swift in Sources */,
 				87CB36BC1D7480F6007AB4E5 /* ConversationCell+Like.swift in Sources */,
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
@@ -7484,7 +7474,7 @@
 				DBD990531B399B58000ACF94 /* NSString+Mentions.m in Sources */,
 				7C49D0E2201A3E8400A99760 /* ShareServiceViewController.swift in Sources */,
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
-				5EE73BF3212323C70032986D /* PhoneRegistrationIdentityVerifiedEventHandler.swift in Sources */,
+				5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */,
 				EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */,
 				EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */,
 				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,

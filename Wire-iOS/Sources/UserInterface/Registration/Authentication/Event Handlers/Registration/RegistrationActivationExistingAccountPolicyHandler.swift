@@ -18,26 +18,41 @@
 
 import Foundation
 
-class PhoneRegistrationExistingAccountPolicyHandler: AuthenticationEventHandler {
+/**
+ * Handles the case that the user tries to register an account with a phone/e-mail that is already registered.
+ */
+
+class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
         let error = context
 
-        // Only handle errors during verification requests
-        guard case let .verifyPhoneNumber(phoneNumber, _, _) = currentStep else {
+        // Only handle errors during activation requests
+        guard case .sendActivationCode = currentStep else {
             return nil
         }
 
-        // Only handle phoneNumberIsAlreadyRegistered errors
-        guard error.userSessionErrorCode == .phoneNumberIsAlreadyRegistered else {
+        // Only handle phoneNumberIsAlreadyRegistered and emailIsAlreadyRegistered errors
+        switch error.userSessionErrorCode {
+        case .phoneNumberIsAlreadyRegistered, .emailIsAlreadyRegistered:
+            break
+        default:
             return nil
         }
 
         // Request a login code instead of a registration code
-        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: nil, credentialsValidated: false)
-        return [.showLoadingView, .transition(nextStep, resetStack: false), .performPhoneLoginFromRegistration(phoneNumber: phoneNumber)]
+//        switch user.credentials! {
+//        case .email(let address, let password):
+//            break
+//
+//        case .phone(number: let number):
+//            break
+//        }
+
+        //let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: nil, credentialsValidated: false)
+        return [.showLoadingView, /*.transition(nextStep, resetStack: false),*/ /*.performPhoneLoginFromRegistration(phoneNumber: phoneNumber)*/]
     }
 
 }

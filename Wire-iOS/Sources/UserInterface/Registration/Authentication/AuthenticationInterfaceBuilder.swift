@@ -51,10 +51,9 @@ class AuthenticationInterfaceBuilder {
             loginViewController.shouldHideCancelButton = true
             return loginViewController
 
-        case .createCredentials(let unregisteredUser):
+        case .createCredentials:
             let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
             registrationViewController.shouldHideCancelButton = true
-            registrationViewController.unregisteredUser = unregisteredUser
             return registrationViewController
 
         case .clientManagement(let clients, let credentials):
@@ -64,21 +63,29 @@ class AuthenticationInterfaceBuilder {
         case .noHistory(_, let type):
             return NoHistoryViewController(contextType: type)
 
-        case .verifyPhoneNumber(let phoneNumber, let user, _):
-            let verificationController = PhoneVerificationStepViewController(unregisteredUser: user)!
-            verificationController.phoneNumber = phoneNumber
-            return verificationController
+//        case .verifyPhoneNumber(let phoneNumber, _, _):
+//            let verificationController = PhoneVerificationStepViewController()
+//            verificationController.phoneNumber = phoneNumber
+//            return verificationController
 
         case .addEmailAndPassword(_, _, let canSkip):
             let addEmailPasswordViewController = AddEmailPasswordViewController()
             addEmailPasswordViewController.canSkipStep = canSkip
             return addEmailPasswordViewController
 
-        case .verifyEmailCredentials(let credentials):
-            let verificationController = EmailVerificationViewController(credentials: credentials)
-            return verificationController
+//        case .verifyEmailCredentials(let credentials):
+//            let verificationController = EmailVerificationViewController(credentials: credentials)
+//            return verificationController
 
-        case .linearRegistration(_, let registrationStep):
+        case .enterActivationCode(let credentials, _):
+            switch credentials {
+            case .phone(let phoneNumber):
+                return VerificationCodeStepViewController(phoneNumber: phoneNumber)
+            case .email(let emailAddress):
+                return VerificationCodeStepViewController(emailAddress: emailAddress)
+            }
+
+        case .incrementalUserCreation(_, let registrationStep):
             return makeRegistrationStepViewController(for: registrationStep)
 
         default:
