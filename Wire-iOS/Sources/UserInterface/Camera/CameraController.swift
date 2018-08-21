@@ -205,10 +205,11 @@ class CameraController {
         
         // For iPad split/slide over mode, the session is not running.
         guard session.isRunning else { return }
+        let currentOrientation = AVCaptureVideoOrientation.current
         
         sessionQueue.async {
             guard let connection = self.photoOutput.connection(with: .video) else { return }
-            connection.videoOrientation = self.previewLayer.connection?.videoOrientation ?? .portrait
+            connection.videoOrientation = currentOrientation
             connection.automaticallyAdjustsVideoMirroring = false
             connection.isVideoMirrored = false
             
@@ -276,16 +277,16 @@ private extension AVCaptureVideoOrientation {
     /// The video orientation mmatches against first the device orientation,
     /// then the interface orientation. Must be called on the main thread.
     static var current: AVCaptureVideoOrientation {
-        let device = UIDevice.current.orientation
+        let device = DeviceOrientationObserver.sharedInstance().deviceOrientation
         let ui = UIApplication.shared.statusBarOrientation
         return self.init(deviceOrientation: device) ?? self.init(uiOrientation: ui) ?? .portrait
     }
 
     init?(deviceOrientation: UIDeviceOrientation) {
         switch deviceOrientation {
-        case .landscapeLeft:        self = .landscapeLeft
+        case .landscapeLeft:        self = .landscapeRight
         case .portrait:             self = .portrait
-        case .landscapeRight:       self = .landscapeRight
+        case .landscapeRight:       self = .landscapeLeft
         case .portraitUpsideDown:   self = .portraitUpsideDown
         default:                    return nil
         }
