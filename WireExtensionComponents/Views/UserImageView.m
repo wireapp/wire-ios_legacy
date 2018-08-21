@@ -27,35 +27,6 @@
 
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
-CGFloat PixelSizeForUserImageSize(UserImageViewSize size);
-CGFloat PointSizeForUserImageSize(UserImageViewSize size);
-
-CGFloat PixelSizeForUserImageSize(UserImageViewSize size)
-{
-    return PointSizeForUserImageSize(size) * [UIScreen mainScreen].scale;
-}
-
-CGFloat PointSizeForUserImageSize(UserImageViewSize size)
-{
-    switch (size) {
-        case UserImageViewSizeTiny:
-            return 36.0f;
-            break;
-        case UserImageViewSizeSmall:
-            return 56.0f;
-            break;
-        case UserImageViewSizeNormal:
-            return 64.0f;
-            break;
-        case UserImageViewSizeBig:
-            return 320.0f;
-            break;
-        default:
-            break;
-    }
-    return 0;
-}
-
 @interface UserImageView ()
 
 @property (nonatomic) id userObserverToken;
@@ -99,7 +70,7 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
 - (void)setupBasicProperties
 {
     _shouldDesaturate = YES;
-    _size = UserImageViewSizeNormal;
+    _size = UserImageViewSizeSmall;
 
     self.accessibilityElementsHidden = YES;
     
@@ -109,7 +80,7 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat imageSize = PointSizeForUserImageSize(self.size);
+    CGFloat imageSize = self.size;
     return CGSizeMake(imageSize, imageSize);
 }
 
@@ -126,7 +97,7 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
     
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self updateForServiceUserIfNeeded:user];
-    [self setUserImage:nil];
+    [self setUserImage:nil animated:NO];
     [self updateIndicatorColor];
     [self updateUserImage];
 }
@@ -188,26 +159,34 @@ CGFloat PointSizeForUserImageSize(UserImageViewSize size)
     self.indicator.backgroundColor = [(id)self.user accentColor];
 }
 
-- (void)setUserImage:(UIImage *)userImage
+- (void)setUserImage:(UIImage *)userImage animated:(BOOL)animated
 {
-    self.initials.hidden = userImage != nil;
-    self.imageView.hidden = userImage == nil;
-    self.imageView.image = userImage;
+    dispatch_block_t imageUpdate = ^{
+        self.initials.hidden = userImage != nil;
+        self.imageView.hidden = userImage == nil;
+        self.imageView.image = userImage;
+        
+        BOOL isWireless = NO;
+        if ([self.user respondsToSelector:@selector(isWirelessUser)]) {
+            isWireless = [(id)self.user isWirelessUser];
+        }
+        
+        if (userImage) {
+            self.containerView.backgroundColor = [self containerBackgroundColorForUser:self.user];
+        }
+        else if ([self.user respondsToSelector:@selector(accentColor)] &&
+                 (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember || isWireless)) {
+            self.containerView.backgroundColor = [(id)self.user accentColor];
+        }
+        else {
+            self.containerView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+        }
+    };
     
-    BOOL isWireless = NO;
-    if ([self.user respondsToSelector:@selector(isWirelessUser)]) {
-        isWireless = [(id)self.user isWirelessUser];
-    }
-    
-    if (userImage) {
-        self.containerView.backgroundColor = [self containerBackgroundColorForUser:self.user];
-    }
-    else if ([self.user respondsToSelector:@selector(accentColor)] &&
-             (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember || isWireless)) {
-        self.containerView.backgroundColor = [(id)self.user accentColor];
-    }
-    else {
-        self.containerView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+    if (animated) {
+        [UIView transitionWithView:self duration:0.15 options:UIViewAnimationOptionTransitionCrossDissolve animations:imageUpdate completion:NULL];
+    } else {
+        imageUpdate();
     }
 }
 

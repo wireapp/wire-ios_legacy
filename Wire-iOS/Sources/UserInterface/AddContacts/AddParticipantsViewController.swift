@@ -156,14 +156,13 @@ public class AddParticipantsViewController: UIViewController {
         collectionView.alwaysBounceVertical = true
 
         confirmButton = IconButton()
-        confirmButton.setIcon(ZetaIconType.convMetaAddPerson, with: .tiny, for: .normal)
         confirmButton.setIconColor(UIColor(scheme: .iconNormal, variant: .dark), for: .normal)
         confirmButton.setIconColor(UIColor(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
         confirmButton.setTitleColor(UIColor(scheme: .iconNormal, variant: .dark), for: .normal)
         confirmButton.setTitleColor(UIColor(scheme: .iconHighlighted, variant: .dark), for: .highlighted)
         confirmButton.titleLabel?.font = FontSpec(.small, .medium).font!
         confirmButton.backgroundColor = UIColor.accent()
-        confirmButton.contentHorizontalAlignment = .left
+        confirmButton.contentHorizontalAlignment = .center
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
         confirmButton.roundCorners = true
         
