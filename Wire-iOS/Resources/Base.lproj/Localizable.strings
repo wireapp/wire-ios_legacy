@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "People";
 "peoplepicker.header.services" = "Services";
-"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.create_conversation.item" = "Create conversation";
 "peoplepicker.services.add_service.button" = "Add service";
 "peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Search";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ removed you";
 "content.system.you_removed_other" = "You removed %@";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
