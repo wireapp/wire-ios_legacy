@@ -36,24 +36,12 @@
 
 @property (nonatomic, copy, readwrite) NSString *phoneNumber;
 @property (nonatomic) UILabel *heroLabel;
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 @end
 
 @implementation PhoneNumberStepViewController
 
-
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
-{
-    self = [super init];
-
-    if (self) {
-        self.unregisteredUser = unregisteredUser;
-    }
-
-    return self;
-}
+@synthesize authenticationCoordinator;
 
 - (void)viewDidLoad
 {
@@ -65,7 +53,7 @@
     [self createHeroLabel];
     [self createPhoneNumberViewController];
     
-    [self updateViewConstraints];
+    [self configureConstraints];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -92,28 +80,23 @@
     [self addChildViewController:self.phoneNumberViewController];
     
     self.phoneNumberViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.phoneNumberViewController.phoneNumberField.confirmButton addTarget:self action:@selector(validatePhoneNumber:) forControlEvents:UIControlEventTouchUpInside];
+    [self.phoneNumberViewController.phoneNumberField.confirmButton addTarget:self action:@selector(validatePhoneNumberAndContinue) forControlEvents:UIControlEventTouchUpInside];
     
     self.phoneNumberViewController.phoneNumber = self.phoneNumber;
 }
 
-- (void)updateViewConstraints
+- (void)configureConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{            
-            [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:75 relation:NSLayoutRelationGreaterThanOrEqual];
-        }];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
-        
-        [self.phoneNumberViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
-        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
-        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:51];
-    }
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
+        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:75 relation:NSLayoutRelationGreaterThanOrEqual];
+    }];
+    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
+    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
+
+    [self.phoneNumberViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
+    [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
+    [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
+    [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:51];
 }
 
 - (void)takeFirstResponder
@@ -131,12 +114,10 @@
 
 #pragma mark - Actions
 
-- (IBAction)validatePhoneNumber:(id)sender
+- (void)validatePhoneNumberAndContinue
 {
     self.phoneNumber = [NSString phoneNumberStringWithE164:self.phoneNumberViewController.country.e164 number:self.phoneNumberViewController.phoneNumberField.text];
-    self.unregisteredUser.phoneNumber = self.phoneNumber;
-
-    [self.delegate phoneNumberStepDidPickPhoneNumber:self.phoneNumber];
+    [self.delegate phoneNumberStepViewControllerDidPickPhoneNumber:self.phoneNumber];
 }
 
 @end

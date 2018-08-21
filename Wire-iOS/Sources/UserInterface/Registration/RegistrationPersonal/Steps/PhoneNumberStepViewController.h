@@ -16,23 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import "RegistrationStepViewController.h"
+#import "BlueViewController.h"
 #import "PhoneNumberViewController.h"
+#import "AuthenticationCoordinatedViewController.h"
 
-@class ZMIncompleteRegistrationUser;
+@protocol PhoneNumberStepViewControllerDelegate <NSObject>
 
-@protocol PhoneNumberStepViewControllerDelegate
-
-- (void)phoneNumberStepDidPickPhoneNumber:(NSString *)phoneNumber;
+- (void)phoneNumberStepViewControllerDidPickPhoneNumber:(NSString *)phoneNumber;
 
 @end
 
-@interface PhoneNumberStepViewController : RegistrationStepViewController
+@interface PhoneNumberStepViewController : BlueViewController <AuthenticationCoordinatedViewController>
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser;
-
-@property (nonatomic, weak) id<PhoneNumberStepViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<PhoneNumberStepViewControllerDelegate> delegate;
 
 @property (nonatomic, readonly) UILabel *heroLabel;
 @property (nonatomic, copy, readonly) NSString *phoneNumber;

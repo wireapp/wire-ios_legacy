@@ -29,28 +29,23 @@
 #import "WireSyncEngine+iOS.h"
 #import "CheckmarkViewController.h"
 
+#import "Wire-Swift.h"
+
+@implementation EmailStepViewControllerInput
+
+@end
 
 
 @interface EmailStepViewController ()
 
 @property (nonatomic) EmailFormViewController *emailFormViewController;
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 @end
 
 
-
 @implementation EmailStepViewController
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
-{
-    self = [super initWithNibName:nil bundle:nil];
-    
-    if (nil != self) {
-        self.unregisteredUser = unregisteredUser;
-    }
-    return self;
-}
+@synthesize authenticationCoordinator;
 
 - (void)viewDidLoad
 {
@@ -81,7 +76,7 @@
 {
     self.emailFormViewController = [[EmailFormViewController alloc] initWithNameFieldEnabled:YES];
     self.emailFormViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.emailFormViewController.passwordField.confirmButton addTarget:self action:@selector(verifyFieldsAndContinue:) forControlEvents:UIControlEventTouchUpInside];
+    [self.emailFormViewController.passwordField.confirmButton addTarget:self action:@selector(verifyFieldsAndContinue) forControlEvents:UIControlEventTouchUpInside];
     [self addChildViewController:self.emailFormViewController];
     [self.view addSubview:self.emailFormViewController.view];
     [self.emailFormViewController didMoveToParentViewController:self];
@@ -100,13 +95,25 @@
 
 #pragma mark - Actions
 
-- (IBAction)verifyFieldsAndContinue:(id)sender
+- (void)verifyFieldsAndContinue
 {    
     if ([self.emailFormViewController validateAllFields]) {
-        self.unregisteredUser.emailAddress = self.emailFormViewController.emailField.text;
-        self.unregisteredUser.name = self.emailFormViewController.nameField.text;
-        self.unregisteredUser.password = self.emailFormViewController.passwordField.text;
-        [self.formStepDelegate didCompleteFormStep:self];
+        EmailStepViewControllerInput *input = [EmailStepViewControllerInput new];
+        input.name = self.emailFormViewController.nameField.text;
+        input.emailAddress = self.emailFormViewController.emailField.text;
+        input.password = self.emailFormViewController.passwordField.text;
+        [self.delegate emailStepViewControllerDidFinishWithInput:input];
+    }
+}
+
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    if (feedbackAction == AuthenticationErrorFeedbackActionClearInputFields) {
+        [self reset];
+    } else if (feedbackAction == AuthenticationErrorFeedbackActionShowGuidanceDot) {
+        self.emailFormViewController.nameField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
+        self.emailFormViewController.emailField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
+        self.emailFormViewController.passwordField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
     }
 }
 

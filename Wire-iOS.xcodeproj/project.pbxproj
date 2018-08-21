@@ -1110,7 +1110,6 @@
 		EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */; };
 		EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */; };
 		EF2127061FB9DFE300625A9B /* GuidanceDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */; };
-		EF2127071FB9DFE300625A9B /* RegistrationEmailFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126BB1FB9DFE300625A9B /* RegistrationEmailFlowViewController.m */; };
 		EF2127081FB9DFE300625A9B /* PhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */; };
 		EF2127091FB9DFE300625A9B /* EmailFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126BE1FB9DFE300625A9B /* EmailFormViewController.m */; };
 		EF21270A1FB9DFE300625A9B /* CheckmarkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126C41FB9DFE300625A9B /* CheckmarkViewController.m */; };
@@ -1139,7 +1138,6 @@
 		EF2127221FB9DFE300625A9B /* FormFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FC1FB9DFE300625A9B /* FormFlowViewController.m */; };
 		EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */; };
 		EF2127241FB9DFE300625A9B /* CountryCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */; };
-		EF2127251FB9DFE300625A9B /* RegistrationPhoneFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2127001FB9DFE300625A9B /* RegistrationPhoneFlowViewController.m */; };
 		EF2127261FB9DFE300625A9B /* RegistrationRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */; };
 		EF2127281FB9E06300625A9B /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2127271FB9E06300625A9B /* LandingViewController.swift */; };
 		EF2128EE2056D55400C1673B /* NetworkStatusViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2128EC2056D51600C1673B /* NetworkStatusViewControllerTests.swift */; };
@@ -2778,13 +2776,11 @@
 		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTextField.m; sourceTree = "<group>"; };
 		EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceDotView.m; sourceTree = "<group>"; };
-		EF2126BB1FB9DFE300625A9B /* RegistrationEmailFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationEmailFlowViewController.m; sourceTree = "<group>"; };
 		EF2126BC1FB9DFE300625A9B /* FormFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormFlowViewController.h; sourceTree = "<group>"; };
 		EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberViewController.m; sourceTree = "<group>"; };
 		EF2126BE1FB9DFE300625A9B /* EmailFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailFormViewController.m; sourceTree = "<group>"; };
 		EF2126BF1FB9DFE300625A9B /* GuidanceLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceLabel.h; sourceTree = "<group>"; };
 		EF2126C01FB9DFE300625A9B /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
-		EF2126C11FB9DFE300625A9B /* RegistrationPhoneFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationPhoneFlowViewController.h; sourceTree = "<group>"; };
 		EF2126C21FB9DFE300625A9B /* CountryCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCodeView.h; sourceTree = "<group>"; };
 		EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationFormController.h; sourceTree = "<group>"; };
 		EF2126C41FB9DFE300625A9B /* CheckmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkViewController.m; sourceTree = "<group>"; };
@@ -2838,10 +2834,8 @@
 		EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailFormViewController.h; sourceTree = "<group>"; };
 		EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberViewController.h; sourceTree = "<group>"; };
 		EF2126FC1FB9DFE300625A9B /* FormFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormFlowViewController.m; sourceTree = "<group>"; };
-		EF2126FD1FB9DFE300625A9B /* RegistrationEmailFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationEmailFlowViewController.h; sourceTree = "<group>"; };
 		EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationFormController.m; sourceTree = "<group>"; };
 		EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCodeView.m; sourceTree = "<group>"; };
-		EF2127001FB9DFE300625A9B /* RegistrationPhoneFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationPhoneFlowViewController.m; sourceTree = "<group>"; };
 		EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationRootViewController.m; sourceTree = "<group>"; };
 		EF2127021FB9DFE300625A9B /* CheckmarkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckmarkViewController.h; sourceTree = "<group>"; };
 		EF2127271FB9E06300625A9B /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
@@ -5927,13 +5921,11 @@
 				EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */,
 				EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */,
 				EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */,
-				EF2126BB1FB9DFE300625A9B /* RegistrationEmailFlowViewController.m */,
 				EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */,
 				EF2126BC1FB9DFE300625A9B /* FormFlowViewController.h */,
 				EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */,
 				EF2126BE1FB9DFE300625A9B /* EmailFormViewController.m */,
 				EF2126BF1FB9DFE300625A9B /* GuidanceLabel.h */,
-				EF2126C11FB9DFE300625A9B /* RegistrationPhoneFlowViewController.h */,
 				EF2126C21FB9DFE300625A9B /* CountryCodeView.h */,
 				EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */,
 				EF2126C41FB9DFE300625A9B /* CheckmarkViewController.m */,
@@ -5945,10 +5937,8 @@
 				EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */,
 				EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */,
 				EF2126FC1FB9DFE300625A9B /* FormFlowViewController.m */,
-				EF2126FD1FB9DFE300625A9B /* RegistrationEmailFlowViewController.h */,
 				EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */,
 				EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */,
-				EF2127001FB9DFE300625A9B /* RegistrationPhoneFlowViewController.m */,
 				EF2126C61FB9DFE300625A9B /* RegistrationRootViewController.h */,
 				EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */,
 				EF2127021FB9DFE300625A9B /* CheckmarkViewController.h */,
@@ -7122,7 +7112,6 @@
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
 				BF0BDF6D1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift in Sources */,
 				F12CDADF1E43868200CEFCEB /* ChangePhoneViewController.swift in Sources */,
-				EF2127251FB9DFE300625A9B /* RegistrationPhoneFlowViewController.m in Sources */,
 				871BC2931D34F8F800DF0793 /* UIView+WR_Snapshot.m in Sources */,
 				8751A6CB1FF6573D00804A58 /* QuickActionsManager.swift in Sources */,
 				87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */,
@@ -7213,7 +7202,6 @@
 				EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */,
 				D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
-				EF2127071FB9DFE300625A9B /* RegistrationEmailFlowViewController.m in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,
 				873151111D75D0C000284C1F /* ReactionCell.swift in Sources */,
 				877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */,

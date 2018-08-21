@@ -94,12 +94,12 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
     [self createBackgroundImageView];
     [self createInstructionLabel];
-    [self createPhoneVerificationField];
+    [self createVerificationField];
     [self createResendButton];
     [self createResendLabel];
 
     self.view.opaque = NO;
-    [self updateViewConstraints];
+    [self configureConstraints];
     
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
@@ -127,7 +127,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     self.instructionLabel = [[UILabel alloc] init];
     self.instructionLabel.font = UIFont.largeThinFont;
     self.instructionLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
-    self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber];
+    self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber ?: self.emailAddress];
     self.instructionLabel.numberOfLines = 0;
     self.instructionLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
 
@@ -157,7 +157,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     [self.view addSubview:self.resendButton];
 }
 
-- (void)createPhoneVerificationField
+- (void)createVerificationField
 {
     self.verificationField = [[RegistrationTextField alloc] initForAutoLayout];
     self.verificationField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewNone;
@@ -224,19 +224,19 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
 - (NSString *)verificationCode
 {
-    return self.phoneVerificationField.text ?: @"";
+    return self.verificationField.text ?: @"";
 }
 
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {
-    self.phoneVerificationField.text = @"";
+    self.verificationField.text = @"";
 }
 
 #pragma mark - Actions
 
 - (void)verifyCode:(id)sender
 {
-    [self.authenticationCoordinator validatePhoneNumberWithCode:self.verificationCode];
+    [self.authenticationCoordinator activateCredentialsWithCode:self.verificationCode];
 }
 
 - (void)requestCode:(id)sender
@@ -245,7 +245,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     self.verificationField.text = @"";
     self.verificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
 
-    [self.authenticationCoordinator resendPhoneValidationCode];
+    [self.authenticationCoordinator resendActivationCode];
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
 }

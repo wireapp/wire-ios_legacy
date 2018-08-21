@@ -103,7 +103,7 @@
 }
 
 - (void)onBackButtonPressed:(UIButton*)sender {
-    [[UnauthenticatedSession sharedSession] cancelWaitForEmailVerification];
+//    [[UnauthenticatedSession sharedSession] cancelWaitForEmailVerification];
 }
 
 - (void)createAgreeButton

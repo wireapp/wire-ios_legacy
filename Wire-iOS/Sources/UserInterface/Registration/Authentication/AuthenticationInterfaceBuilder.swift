@@ -104,6 +104,8 @@ class AuthenticationInterfaceBuilder {
 
     private func makeRegistrationStepViewController(for step: IntermediateRegistrationStep) -> AuthenticationStepViewController? {
         switch step {
+        case .start:
+            return nil
         case .reviewTermsOfService:
             return TermsOfUseStepViewController()
         case .provideMarketingConsent:

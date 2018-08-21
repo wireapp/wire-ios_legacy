@@ -117,7 +117,7 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     self.subtitleLabel.font = UIFont.largeLightFont;
     self.subtitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.subtitleLabel.numberOfLines = 0;
-    self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.unregisteredUser.name];
+//    self.subtitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.select_picture.subtitle", nil), self.unregisteredUser.name];
 
     [self.contentView addSubview:self.subtitleLabel];
 }

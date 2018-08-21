@@ -16,16 +16,27 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import UIKit;
+#import "AuthenticationCoordinatedViewController.h"
 
-#import "RegistrationStepViewController.h"
+@interface EmailStepViewControllerInput : NSObject
 
-@class ZMIncompleteRegistrationUser;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *emailAddress;
+@property (nonatomic, copy) NSString *password;
 
-@interface EmailStepViewController : RegistrationStepViewController
+@end
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser NS_DESIGNATED_INITIALIZER;
+@protocol EmailStepViewControllerDelegate <NSObject>
+
+- (void)emailStepViewControllerDidFinishWithInput:(EmailStepViewControllerInput *)input;
+
+@end
+
+@interface EmailStepViewController : UIViewController <AuthenticationCoordinatedViewController>
+
+@property (nonatomic, weak, nullable) id<EmailStepViewControllerDelegate> delegate;
+
 - (void)takeFirstResponder;
 - (void)reset;
 

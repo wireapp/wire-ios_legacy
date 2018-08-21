@@ -26,7 +26,7 @@
 #import "FormStepDelegate.h"
 #import "Wire-Swift.h"
 
-@interface PhoneSignInViewController () <PhoneNumberStepViewControllerDelegate>
+@interface PhoneSignInViewController ()
 
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
 @property (nonatomic, copy) NSString *phoneNumber;
@@ -65,7 +65,7 @@
 {
     PhoneNumberStepViewController *phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
     phoneNumberStepViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    phoneNumberStepViewController.delegate = self;
+    // phoneNumberStepViewController.delegate = self;
 
     self.phoneNumberStepViewController = phoneNumberStepViewController;
     self.phoneNumberStepViewController.phoneNumberViewController.phoneNumberField.confirmButton.accessibilityLabel = NSLocalizedString(@"signin.confirm", @"");

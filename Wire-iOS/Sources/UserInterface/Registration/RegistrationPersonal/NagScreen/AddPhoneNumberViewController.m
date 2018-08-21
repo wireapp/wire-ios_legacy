@@ -23,7 +23,7 @@
 
 #import "NavigationController.h"
 #import "PhoneNumberStepViewController.h"
-#import "PhoneVerificationStepViewController.h"
+#import "VerificationCodeStepViewController.h"
 #import "PopTransition.h"
 #import "PushTransition.h"
 #import "RegistrationFormController.h"
@@ -117,7 +117,6 @@
 - (void)createNavigationController
 {
     self.phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
-    self.phoneNumberStepViewController.formStepDelegate = self;
     self.phoneNumberStepViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.phoneNumberStepViewController.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.phoneNumberStepViewController.heroLabel.font = UIFont.largeSemiboldFont;
@@ -212,27 +211,12 @@
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
-    if ([viewController isKindOfClass:[PhoneNumberStepViewController class]]) {
-        
-        self.showLoadingView = YES;
-
-        [self.userProfile requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
-    }
-    else if ([viewController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-        PhoneVerificationStepViewController *phoneVerificationStepViewController = (PhoneVerificationStepViewController *)viewController;
-        ZMPhoneCredentials *credentials = [ZMPhoneCredentials credentialsWithPhoneNumber:phoneVerificationStepViewController.phoneNumber
-                                                                        verificationCode:@""];
-        
-        self.showLoadingView = YES;
-        [self.userProfile requestPhoneNumberChangeWithCredentials:credentials];
-    }
 }
 
 #pragma mark - PhoneVerificationStepViewControllerDelegate
 
 - (void)phoneVerificationStepDidRequestVerificationCode
 {
-    [self.userProfile requestPhoneVerificationCodeWithPhoneNumber:self.phoneNumberStepViewController.phoneNumber];
 }
 
 #pragma mark - NavigationControllerDelegate
@@ -272,38 +256,18 @@
 
 - (void)phoneNumberVerificationCodeRequestDidSucceed
 {
-    self.showLoadingView = NO;
-    
-    if (! [self.rootNavigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-        [self proceedToCodeVerification];
-    }
-    else {
-        [self presentViewController:[[CheckmarkViewController alloc] init] animated:YES completion:nil];
-    }
 }
 
 - (void)proceedToCodeVerification
 {
-    PhoneVerificationStepViewController *phoneVerificationStepViewController = [[PhoneVerificationStepViewController alloc] init];
-    phoneVerificationStepViewController.phoneNumber = self.phoneNumberStepViewController.phoneNumber;
-
-    [self.rootNavigationController pushViewController:phoneVerificationStepViewController.registrationFormViewController animated:YES];
 }
 
 - (void)phoneNumberVerificationCodeRequestDidFail:(NSError *)error
 {
-    self.showLoadingView = NO;
-    
-    if (! [self.rootNavigationController.topViewController.registrationFormUnwrappedController isKindOfClass:[PhoneVerificationStepViewController class]]) {
-    }
-    
-    [self showAlertForError:error];
 }
 
 - (void)phoneNumberChangeDidFail:(NSError *)error
 {
-    self.showLoadingView = NO;
-    [self showAlertForError:error];
 }
 
 @end

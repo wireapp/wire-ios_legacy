@@ -306,8 +306,8 @@ extension AuthenticationCoordinator {
         registrationStatus.sendActivationCode(to: unverifiedCredential)
     }
 
-    @objc(startRegistrationWithEmail:password:)
-    func startRegistration(email: String, password: String) {
+    @objc(startRegistrationWithName:email:password:)
+    func startRegistration(name: String, email: String, password: String) {
         guard case let .createCredentials(unregisteredUser) = currentStep else {
             log.error("Cannot start email registration outside of registration flow.")
             return
@@ -315,10 +315,34 @@ extension AuthenticationCoordinator {
 
         let unverifiedCredential = UnverifiedCredential.email(email)
         unregisteredUser.credentials = .email(address: email, password: password)
+        unregisteredUser.name = name
 
         presenter?.showLoadingView = true
         transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: false))
         registrationStatus.sendActivationCode(to: unverifiedCredential)
+    }
+
+    @objc func resendActivationCode() {
+        guard case let .enterActivationCode(unverifiedCredential, unregisteredUser) = currentStep else {
+            log.error("Cannot resend activation code outside of code input.")
+            return
+        }
+
+        presenter?.showLoadingView = true
+        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: true))
+        registrationStatus.sendActivationCode(to: unverifiedCredential)
+    }
+
+    @objc(activateCredentialsWithCode:)
+    func activateCredentials(code: String) {
+        guard case let .enterActivationCode(unverifiedCredential, unregisteredUser) = currentStep else {
+            log.error("Cannot activate credentials outside of code input.")
+            return
+        }
+
+        presenter?.showLoadingView = true
+        transition(to: .activateCredentials(unverifiedCredential, user: unregisteredUser, code: code))
+        registrationStatus.checkActivationCode(credential: unverifiedCredential, code: code)
     }
 
     // MARK: Phone Number
