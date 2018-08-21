@@ -62,7 +62,7 @@ class ImageResourceView: FLAnimatedImageView {
                 completion?()
             }
             
-            if cacheHit {
+            if cacheHit || ProcessInfo.processInfo.isRunningTests {
                 update()
             } else {
                 UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: update)

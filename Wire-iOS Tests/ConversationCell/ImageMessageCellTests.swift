@@ -32,6 +32,8 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
     }
 
     override func tearDown() {
+        defaultImageCache.cache.removeAllObjects()
+        
         super.tearDown()
     }
 
@@ -39,115 +41,110 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = UIColor.black
         sut.variant = .dark
     }
-
-    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSetInDarkTheme() {
-        setToDarkTheme()
-
-        verify(view: sut.prepareForSnapshot(CGSize(width: 450, height: 600)))
-    }
-
-    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSet() {
-        verify(view: sut.prepareForSnapshot(CGSize(width: 450, height: 600)))
-    }
-
-    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSet_LandscapeImage() {
-        verify(view: sut.prepareForSnapshot(CGSize(width: 650, height: 200)))
-    }
-
-    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSet_SmallImage() {
-        verify(view: sut.prepareForSnapshot(CGSize(width: 200, height: 200)))
-    }
-
-    func testThatItRendersImageMessageWhenTransparentPNGImageIsSet() {
-        let image = self.image(inTestBundleNamed: "transparent.png")
-        let wrap = sut.prepareForSnapshot(image.size, image: image)
-        verify(view: wrap)
-    }
-
-    func testThatItRendersImageMessageWhenTransparentPNGImageIsSetInDarkTheme() {
-        let image = self.image(inTestBundleNamed: "transparent.png")
-        setToDarkTheme()
-        let wrap = sut.prepareForSnapshot(image.size, image: image)
-        verify(view: wrap)
-    }
-
-    func testThatItRendersImageMessageWhenImageIsSet() {
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let wrap = sut.prepareForSnapshot(image.size, image: image)
-        verify(view: wrap)
-    }
-
-    func testThatItRendersImageMessageWhenImageIsSet_SmallImage() {
-        let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
-        let wrap = sut.prepareForSnapshot(image.size, image: image)
-        verify(view: wrap)
-    }
-
-    func testThatItRendersImageMessageWithResendButton() {
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let wrap = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
-        verify(view: wrap)
-    }
     
-    func testThatItRendersImageMessageWithResendButton_SmallImage() {
-        let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
-        let wrap = sut.prepareForSnapshot(image.size, image: image, failedToSend: true)
-        verify(view: wrap)
-    }
-
-    func testThatItRendersImageMessageObfuscated() {
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let wrap = sut.prepareForSnapshot(image.size, image: image, obfuscated: true)
-        verify(view: wrap)
-    }
-    
-    func testThatItRendersImageWhenSelected() {
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let wrap = sut.prepareForSnapshot(image.size, image: image, selected: true)
-        verify(view: wrap)
-    }
-    
-    func testThatItRendersImageWhenSelected_SmallImage() {
-        let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
-        let wrap = sut.prepareForSnapshot(image.size, image: image, selected: true)
-        verify(view: wrap)
-    }
-    
-    func testThatItRendersImageWhenSelected_Ephemeral() {
-        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        let wrap = sut.prepareForSnapshot(image.size, image: image, selected: true, ephemeral: true)
-        verify(view: wrap)
-    }
-}
-
-internal extension ImageMessageCell {
-
-    func prepareForSnapshot(_ imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false, obfuscated: Bool = false, selected: Bool = false, ephemeral: Bool = false) -> UITableView {
+    func prepareForSnapshot(_ cell: ImageMessageCell, imageSize: CGSize, image: UIImage? = nil, failedToSend: Bool = false, obfuscated: Bool = false, selected: Bool = false, ephemeral: Bool = false) -> UITableView {
         let layoutProperties = ConversationCellLayoutProperties()
         layoutProperties.showSender = true
         layoutProperties.showBurstTimestamp = false
         layoutProperties.showUnreadMarker = false
         layoutProperties.alwaysShowDeliveryState = failedToSend
         
-        let message = MockMessageFactory.imageMessage()
+        let message = MockMessageFactory.imageMessage(with: image)
         message?.deliveryState = failedToSend ? .failedToSend : .delivered
         message?.isObfuscated = obfuscated
         message?.isEphemeral = ephemeral
         let imageMessageData = message?.imageMessageData as! MockImageMessageData
         imageMessageData.mockOriginalSize = imageSize
-
-        prepareForReuse()
-        configure(for: message, layoutProperties: layoutProperties)
-        setSelected(selected, animated: false)
-        layoutIfNeeded()
         
-        if let image = image {
-            setImage(image)
-        }
-
-        prepareForSnapshot()
-
-        return self.wrapInTableView()
+        cell.prepareForReuse()
+        cell.configure(for: message, layoutProperties: layoutProperties)
+        
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        
+        cell.setSelected(selected, animated: false)
+        cell.layoutIfNeeded()
+        cell.prepareForSnapshot()
+        
+        return cell.wrapInTableView()
     }
 
+    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSetInDarkTheme() {
+        setToDarkTheme()
+
+        verify(view: prepareForSnapshot(sut, imageSize: CGSize(width: 450, height: 600)))
+    }
+
+    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSet() {
+        verify(view: prepareForSnapshot(sut, imageSize: CGSize(width: 450, height: 600)))
+    }
+
+    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSet_LandscapeImage() {
+        verify(view: prepareForSnapshot(sut, imageSize: CGSize(width: 650, height: 200)))
+    }
+
+    func testThatItRendersImageMessagePlaceholderWhenNoImageIsSet_SmallImage() {
+        verify(view: prepareForSnapshot(sut, imageSize: CGSize(width: 200, height: 200)))
+    }
+
+    func testThatItRendersImageMessageWhenTransparentPNGImageIsSet() {
+        let image = self.image(inTestBundleNamed: "transparent.png")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image)
+        verify(view: wrap)
+    }
+
+    func testThatItRendersImageMessageWhenTransparentPNGImageIsSetInDarkTheme() {
+        let image = self.image(inTestBundleNamed: "transparent.png")
+        setToDarkTheme()
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image)
+        verify(view: wrap)
+    }
+
+    func testThatItRendersImageMessageWhenImageIsSet() {
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image)
+        verify(view: wrap)
+    }
+
+    func testThatItRendersImageMessageWhenImageIsSet_SmallImage() {
+        let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image)
+        verify(view: wrap)
+    }
+
+    func testThatItRendersImageMessageWithResendButton() {
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image, failedToSend: true)
+        verify(view: wrap)
+    }
+    
+    func testThatItRendersImageMessageWithResendButton_SmallImage() {
+        let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image, failedToSend: true)
+        verify(view: wrap)
+    }
+
+    func testThatItRendersImageMessageObfuscated() {
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image, obfuscated: true)
+        verify(view: wrap)
+    }
+    
+    func testThatItRendersImageWhenSelected() {
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image, selected: true)
+        verify(view: wrap)
+    }
+    
+    func testThatItRendersImageWhenSelected_SmallImage() {
+        let image = self.image(inTestBundleNamed: "unsplash_small.jpg")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image, selected: true)
+        verify(view: wrap)
+    }
+    
+    func testThatItRendersImageWhenSelected_Ephemeral() {
+        let image = self.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        let wrap = prepareForSnapshot(sut, imageSize: image.size, image: image, selected: true, ephemeral: true)
+        verify(view: wrap)
+    }
 }
+

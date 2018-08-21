@@ -121,6 +121,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.obfuscationView.hidden = YES;
     self.imageToolbarView.hidden = NO;
     self.image = nil;
+    
+    [self setImageResource:nil];
 
     if (self.imageAspectConstraint) {
         [self.imageViewContainer removeConstraint:self.imageAspectConstraint];
@@ -303,7 +305,7 @@ static const CGFloat ImageToolbarMinimumSize = 192;
         [self updateBackgroundColor];
     }
     
-    [self fetchImage];
+    [self setImageResource:self.message.imageMessageData];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

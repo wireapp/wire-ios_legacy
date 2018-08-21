@@ -19,10 +19,10 @@
 import Foundation
 
 extension ImageMessageCell {
-    
+        
     @objc
-    func fetchImage() {
-        fullImageView.setImageResource(message.imageMessageData?.image) { [weak self] in
+    func setImageResource(_ imageMessageData: ZMImageMessageData?) {
+        fullImageView.setImageResource(imageMessageData?.image) { [weak self] in
             self?.updateBackgroundColor()
             self?.updateImageBorder()
         }
