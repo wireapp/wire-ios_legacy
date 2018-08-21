@@ -28,7 +28,6 @@ class CameraController {
 
     private enum SetupResult { case success, notAuthorized, failed }
     private var setupResult: SetupResult = .success
-    private var setupDone = false
     
     private var session = AVCaptureSession()
     private let sessionQueue = DispatchQueue(label: "com.wire.camera_controller_session")
@@ -72,10 +71,7 @@ class CameraController {
         
         session.beginConfiguration()
         
-        defer {
-            session.commitConfiguration()
-            setupDone = true
-        }
+        defer { session.commitConfiguration() }
         
         session.sessionPreset = .photo
         
