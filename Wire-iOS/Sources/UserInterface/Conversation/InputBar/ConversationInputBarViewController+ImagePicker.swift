@@ -20,11 +20,11 @@ import Foundation
 
 extension ConversationInputBarViewController {
 
-    @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:senderButton:)
+    @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:pointToView:)
     func presentImagePicker(with sourceType: UIImagePickerControllerSourceType,
                             mediaTypes: [String],
                             allowsEditing: Bool,
-                            senderButton: IconButton) {
+                            pointToView: UIView?) {
 
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
@@ -51,7 +51,7 @@ extension ConversationInputBarViewController {
             pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
 
             if let popover = pickerController.popoverPresentationController,
-               let imageView = senderButton.imageView {
+               let imageView = pointToView {
                 popover.config(from: rootViewController,
                                pointToView: imageView,
                                sourceView: rootViewController.view)

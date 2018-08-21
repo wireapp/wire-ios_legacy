@@ -899,7 +899,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera
                                 mediaTypes:@[(id)kUTTypeMovie]
                              allowsEditing:false
-                              senderButton:self.videoButton];
+                               pointToView:self.videoButton.imageView];
 }
 
 #pragma mark - Video save callback
