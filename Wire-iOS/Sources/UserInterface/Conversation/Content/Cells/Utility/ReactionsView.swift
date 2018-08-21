@@ -51,11 +51,13 @@ import Cartography
         
         elipsis = UIImageView(image: UIImage(for: .ellipsis, iconSize: .like, color:UIColor(scheme: .textForeground)))
         elipsis.contentMode = .center
+        elipsis.isHidden = true
         
         avatars = (1...3).map({ index in
             let userImage = UserImageView(size: .tiny)
             userImage.userSession = ZMUserSession.shared()
             userImage.initials.font = UIFont.systemFont(ofSize: 8, weight: UIFont.Weight.light)
+            userImage.isHidden = true
             
             constrain(userImage) { userImage in
                 userImage.width == userImage.height
@@ -65,7 +67,7 @@ import Cartography
             return userImage
         })
         
-        avatarStackView = UIStackView(arrangedSubviews: [elipsis, avatars[0], avatars[1], avatars[2]])
+        avatarStackView = UIStackView(arrangedSubviews: [avatars[0], avatars[1], avatars[2], elipsis])
         
         super.init(frame: frame)
         
