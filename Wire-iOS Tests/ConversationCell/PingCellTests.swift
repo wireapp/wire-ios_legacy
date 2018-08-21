@@ -29,6 +29,18 @@ final class PingCellTests: ZMSnapshotTestCase {
 
         sut = PingCell()
 
+        let layoutProperties = ConversationCellLayoutProperties()
+        layoutProperties.showSender = true
+        layoutProperties.showBurstTimestamp = false
+        layoutProperties.showUnreadMarker = false
+
+        sut.prepareForReuse()
+        sut.bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
+        sut.contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
+        sut.layoutMargins = UIView.directionAwareConversationLayoutMargins
+
+        sut.configure(for: MockMessageFactory.pingMessage(), layoutProperties: layoutProperties)
+
         recordMode = true
     }
 
