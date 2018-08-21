@@ -28,7 +28,7 @@ extension ProfilePictureStepViewController {
 
         picker.sourceType = .photoLibrary
         picker.delegate = self
-        show(picker, inPopoverFrom: sender as! UIView)
+        show(picker, inPopoverFrom: sender as? UIView)
     }
 }
 

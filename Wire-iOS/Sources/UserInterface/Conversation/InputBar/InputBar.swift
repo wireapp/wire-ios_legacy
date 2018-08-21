@@ -99,14 +99,6 @@ public enum InputBarState: Equatable {
     }
 }
 
-public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
-    switch (lhs, rhs) {
-    case (.writing, .writing): return true
-    case (.editing(let lhsText), .editing(let rhsText)): return lhsText == rhsText
-    default: return false
-    }
-}
-
 private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
@@ -348,7 +340,7 @@ private struct InputBarConstants {
     
     // MARK: - Disable interactions on the lower part to not to interfere with the keyboard
     
-    override open func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if self.textView.isFirstResponder {
             if super.point(inside: point, with: event) {
                 let locationInButtonRow = buttonInnerContainer.convert(point, from: self)
@@ -460,14 +452,14 @@ private struct InputBarConstants {
 
     // MARK: – Editing View State
 
-    open func setInputBarText(_ text: String) {
+    public func setInputBarText(_ text: String) {
         textView.text = text
         textView.setContentOffset(.zero, animated: false)
         textView.undoManager?.removeAllActions()
         updateEditViewState()
     }
 
-    open func undo() {
+    public func undo() {
         guard inputBarState.isEditing else { return }
         guard let undoManager = textView.undoManager , undoManager.canUndo else { return }
         undoManager.undo()

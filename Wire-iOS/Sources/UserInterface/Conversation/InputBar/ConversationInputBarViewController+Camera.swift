@@ -62,11 +62,11 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     
     public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo videoURL: URL, duration: TimeInterval) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
-        if duration > ConversationUploadMaxVideoDuration {
+        if duration > ZMUserSession.shared()!.maxVideoLength() {
             let videoEditor = StatusBarVideoEditorController()
             videoEditor.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             videoEditor.delegate = self
-            videoEditor.videoMaximumDuration = ConversationUploadMaxVideoDuration
+            videoEditor.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
             videoEditor.videoPath = videoURL.path
             videoEditor.videoQuality = UIImagePickerControllerQualityType.typeMedium
 
@@ -133,14 +133,20 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
-            self.presentImagePicker(with: .camera, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
+            self.presentImagePicker(with: .camera,
+                                    mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
+                                    allowsEditing: false,
+                                    pointToView:self.photoButton.imageView)
         }
     }
     
     public func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
-            self.presentImagePicker(with: .photoLibrary, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
+            self.presentImagePicker(with: .photoLibrary,
+                                    mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
+                                    allowsEditing: false,
+                                    pointToView:self.photoButton.imageView)
         }
     }
     

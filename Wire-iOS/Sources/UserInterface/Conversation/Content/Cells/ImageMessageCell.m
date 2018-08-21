@@ -39,10 +39,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ImageMessageCell ()
 
-@property (nonatomic, strong) FLAnimatedImageView *fullImageView;
-@property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
+@property (nonatomic, strong) ImageResourceView *fullImageView;
 @property (nonatomic, strong) ImageToolbarView *imageToolbarView;
-@property (nonatomic, strong) UIView *imageViewContainer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
 @property (nonatomic) UITapGestureRecognizer *imageTapRecognizer;
 
@@ -123,6 +121,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.obfuscationView.hidden = YES;
     self.imageToolbarView.hidden = NO;
     self.image = nil;
+    
+    [self setImageResource:nil];
 
     if (self.imageAspectConstraint) {
         [self.imageViewContainer removeConstraint:self.imageAspectConstraint];
@@ -144,15 +144,11 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.imageViewContainer.accessibilityTraits = UIAccessibilityTraitImage;
     [self.messageContentView addSubview:self.imageViewContainer];
         
-    self.fullImageView = [[FLAnimatedImageView alloc] init];
+    self.fullImageView = [[ImageResourceView alloc] init];
     self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.fullImageView.clipsToBounds = YES;
-    self.fullImageView.hidden = YES;
     [self.imageViewContainer addSubview:self.fullImageView];
-
-    self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
-    [self.imageViewContainer addSubview:self.loadingView];
 
     self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
     [self.imageViewContainer addSubview:self.obfuscationView];
@@ -163,7 +159,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.obfuscationView.hidden = YES;
   
     self.accessibilityIdentifier = @"ImageCell";
-    self.loadingView.hidden = NO;
     
     self.imageToolbarView = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationCell];
     self.imageToolbarView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -177,7 +172,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (void)createConstraints
 {
     [self.fullImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.loadingView autoCenterInSuperview];
 
     self.imageTopInsetConstraint = [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     
@@ -304,37 +298,14 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [self updateImageMessageConstraintConstants];
     
     if (convMessage.isObfuscated) {
-        self.loadingView.hidden = YES;
         self.obfuscationView.hidden = NO;
         self.imageToolbarView.hidden = YES;
         self.imageViewContainer.backgroundColor = [UIColor clearColor];
     } else {
-        // We did not download the medium image yet, start the progress animation
-        if (self.image == nil) {
-            [self.loadingView startProgressAnimation];
-            self.loadingView.hidden = NO;
-        }
-        self.imageViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorPlaceholderBackground variant:self.variant];
+        [self updateBackgroundColor];
     }
     
-    [self fetchImage];
-}
-
-- (void)setImage:(id<MediaAsset>)image
-{
-    if (_image == image) {
-        return;
-    }
-    _image = image;
-    if (image != nil) {
-        self.loadingView.hidden = YES;
-        [self.loadingView stopProgressAnimation];
-        self.fullImageView.hidden = NO;
-        [self.fullImageView setMediaAsset:image];
-    } else {
-        [self.fullImageView setMediaAsset:nil];
-        self.fullImageView.hidden = YES;
-    }
+    [self setImageResource:self.message.imageMessageData];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -481,7 +452,10 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     properties.targetView = self.selectionView;
     UIMenuItem *saveItem = [UIMenuItem saveItemWithAction:@selector(saveImage)];
     UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
-    properties.additionalItems = @[saveItem, forwardItem];
+    properties.additionalItems = @[
+                                   [AdditionalMenuItem forbiddenInEphemeral:saveItem],
+                                   [AdditionalMenuItem forbiddenInEphemeral:forwardItem]
+                                   ];
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };

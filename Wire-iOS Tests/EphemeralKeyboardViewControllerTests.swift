@@ -31,7 +31,7 @@ class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         super.setUp()
         conversation = self.createGroupConversation()
         conversation.messageDestructionTimeout = .local(MessageDestructionTimeoutValue.fiveMinutes)
-        sut = EphemeralKeyboardViewController(conversation: conversation as Any as! ZMConversation)
+        sut = EphemeralKeyboardViewController(conversation: conversation)
     }
 
     func testThatItRendersCorrectInitially() {

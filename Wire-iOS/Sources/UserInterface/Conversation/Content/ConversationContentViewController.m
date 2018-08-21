@@ -226,6 +226,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    [self updatePopover];
+}
+
 - (void)scrollToFirstUnreadMessageIfNeeded
 {
     if (! self.hasDoneInitialLayout) {
@@ -442,6 +448,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             {
                 NSData *imageData = cell.message.imageMessageData.imageData;
                 [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+            }
+                break;
+            
+            case MessageActionDownload:
+            {
+                [ZMUserSession.sharedSession enqueueChanges:^{
+                    [cell.message.fileMessageData requestFileDownload];
+                }];
             }
                 break;
         }

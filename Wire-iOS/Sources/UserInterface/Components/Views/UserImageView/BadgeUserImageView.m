@@ -45,9 +45,6 @@
         _badgeColor = UIColor.whiteColor;
 
         [self createBadgeShadow];
-        
-        self.layer.shouldRasterize = YES;
-        self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     }
     
     return self;

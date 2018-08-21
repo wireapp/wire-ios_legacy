@@ -132,7 +132,7 @@ extension UIFont {
     }
 }
 
-public struct FontSpec {
+public struct FontSpec: Hashable {
     public let size: FontSize
     public let weight: FontWeight?
     public let fontTextStyle: FontTextStyle?
@@ -157,13 +157,15 @@ extension FontSpec {
     }
 }
 
-extension FontSpec: Hashable {
+#if !swift(>=4.2)
+
+extension FontSpec {
     public var hashValue: Int {
-        get {
-            return self.size.hashValue * 1000 + (self.weight?.hashValue ?? 100)
-        }
+        return self.size.hashValue &* 1000 &+ (self.weight?.hashValue ?? 100)
     }
 }
+
+#endif
 
 extension FontSpec: CustomStringConvertible {
     public var description: String {

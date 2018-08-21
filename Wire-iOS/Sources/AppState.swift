@@ -26,26 +26,4 @@ enum AppState : Equatable {
     case blacklisted
     case migrating
     case loading(account: Account, from: Account?)
-
-    public static func ==(lhs: AppState, rhs: AppState) -> Bool {
-        
-        switch (lhs, rhs) {
-        case let (.unauthenticated(lhs_error), .unauthenticated(rhs_error)):
-            return lhs_error == rhs_error
-        
-        case let (.authenticated(lhs), .authenticated(rhs)):
-            return lhs == rhs
-            
-        case let (.loading(account: lhs1, from: lhs2), .loading(account: rhs1, from: rhs2)):
-            return lhs1 == rhs1 && lhs2 == rhs2
-            
-        case (.headless, .headless),
-             (.blacklisted, .blacklisted),
-             (.migrating, .migrating):
-            return true
-        default:
-            return false
-        }   
-    }
-    
 }

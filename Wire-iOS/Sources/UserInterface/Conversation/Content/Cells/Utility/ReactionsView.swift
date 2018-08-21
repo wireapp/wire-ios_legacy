@@ -21,57 +21,72 @@ import WireSyncEngine
 import Cartography
 
 @objcMembers open class ReactionsView: UIView {
-    let avatarStack = StackView()
-    static let maxAvatarsDisplayed = 2
+    let avatarStackView: UIStackView
+    let avatars: [UserImageView]
+    let elipsis: UIImageView
     
     var likers: [ZMUser] = [] {
         didSet {
-            self.avatarStack.subviews.forEach { $0.removeFromSuperview() }
+            let maxAvatarsDisplayed = 3
+            let visibleLikers: [ZMUser]
             
-            let likersToDisplay: [ZMUser]
-            let shouldDisplayEllipsis: Bool
-            
-            if likers.count > type(of: self).maxAvatarsDisplayed + 1 {
-                likersToDisplay = Array<ZMUser>(likers.prefix(type(of: self).maxAvatarsDisplayed))
-                shouldDisplayEllipsis = true
-            }
-            else {
-                likersToDisplay = likers
-                shouldDisplayEllipsis = false
+            if likers.count > maxAvatarsDisplayed {
+                elipsis.isHidden = false
+                visibleLikers = Array(likers.prefix(maxAvatarsDisplayed - 1))
+            } else {
+                elipsis.isHidden = true
+                visibleLikers = likers
             }
             
-            for user in likersToDisplay {
-                let userImage = UserImageView(size: .tiny)
-                userImage.userSession = ZMUserSession.shared()
-                userImage.initials.font = UIFont.systemFont(ofSize: 8, weight: UIFont.Weight.light)
+            avatars.forEach({ $0.isHidden = true })
+            
+            for (user, userImage) in zip(visibleLikers, avatars) {
                 userImage.user = user
-                constrain(userImage) { userImage in
-                    userImage.width == userImage.height
-                    userImage.width == 16
-                }
-                self.avatarStack.addSubview(userImage)
-            }
-            
-            if shouldDisplayEllipsis {
-                let iconColor = UIColor(scheme: .textForeground)
-                let imageView = UIImageView(image: UIImage(for: .ellipsis, iconSize: .like, color:iconColor))
-                imageView.contentMode = .center
-                constrain(imageView) { imageView in
-                    imageView.width == imageView.height
-                    imageView.width == 16
-                }
-                self.avatarStack.addSubview(imageView)
+                userImage.isHidden = false
             }
         }
     }
     
     public override init(frame: CGRect) {
+        
+        elipsis = UIImageView(image: UIImage(for: .ellipsis, iconSize: .like, color:UIColor(scheme: .textForeground)))
+        elipsis.contentMode = .center
+        elipsis.isHidden = true
+        
+        avatars = (1...3).map({ index in
+            let userImage = UserImageView(size: .tiny)
+            userImage.userSession = ZMUserSession.shared()
+            userImage.initials.font = UIFont.systemFont(ofSize: 8, weight: UIFont.Weight.light)
+            userImage.isHidden = true
+            
+            constrain(userImage) { userImage in
+                userImage.width == userImage.height
+                userImage.width == 16
+            }
+            
+            return userImage
+        })
+        
+        avatarStackView = UIStackView(arrangedSubviews: [avatars[0], avatars[1], avatars[2], elipsis])
+        
         super.init(frame: frame)
-        self.avatarStack.direction = .horizontal
-        self.avatarStack.spacing = 4
-        self.addSubview(self.avatarStack)
-        constrain(self, self.avatarStack) { selfView, avatarStack in
-            avatarStack.edges == selfView.edges
+        
+        avatarStackView.axis = .horizontal
+        avatarStackView.spacing = 4
+        avatarStackView.distribution = .fill
+        avatarStackView.alignment = .center
+        avatarStackView.translatesAutoresizingMaskIntoConstraints = false
+        avatarStackView.setContentHuggingPriority(.required, for: .horizontal)
+        
+        addSubview(avatarStackView)
+        
+        constrain(self, avatarStackView) { selfView, avatarStackView in
+            avatarStackView.edges == selfView.edges
+        }
+        
+        constrain(elipsis) { elipsis in
+            elipsis.width == elipsis.height
+            elipsis.width == 16
         }
     }
     

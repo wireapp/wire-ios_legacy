@@ -64,7 +64,9 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     @objc convenience init() {
-        self.init(audioRecorder: AudioRecorder(format: .wav, maxRecordingDuration: 25.0 * 60.0, maxFileSize: ZMUserSession.shared()?.maxUploadFileSize() )!)
+        self.init(audioRecorder: AudioRecorder(format: .wav,
+                                               maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() ,
+                                               maxFileSize: ZMUserSession.shared()?.maxUploadFileSize() )!)
     }
     
     init(audioRecorder: AudioRecorderType) {

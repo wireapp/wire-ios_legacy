@@ -129,6 +129,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public var fileURL: URL?
     public var maxFileSize: UInt64?
     
+    private var token: Any?
+    
     fileprivate var recordingStartTime: TimeInterval?
     
     override init() {
@@ -140,10 +142,21 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         self.format = format
         self.maxFileSize = maxFileSize
         super.init()
+        setupDidEnterBackgroundObserver()
     }
     
     deinit {
+        token.apply(NotificationCenter.default.removeObserver)
         removeDisplayLink()
+    }
+    
+    private func setupDidEnterBackgroundObserver() {
+        token = NotificationCenter.default.addObserver(
+            forName: .UIApplicationDidEnterBackground,
+            object: nil,
+            queue: .main,
+            using: { _ in UIApplication.shared.isIdleTimerDisabled = false }
+        )
     }
     
     // MARK: Audio Session Interruption handling
@@ -165,7 +178,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         guard let audioRecorder = self.audioRecorder else { return }
 
         AVSMediaManager.sharedInstance().startRecording {
-                
+            UIApplication.shared.isIdleTimerDisabled = true
+            
             self.state = .recording
             self.recordTimerCallback?(0)
             self.setupDisplayLink()
@@ -187,6 +201,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     }
     
     @discardableResult public func stopRecording() -> Bool {
+        UIApplication.shared.isIdleTimerDisabled = false
         audioRecorder?.stop()
         return postRecordingProcessing()
     }

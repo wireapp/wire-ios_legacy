@@ -62,7 +62,7 @@ import Classy
         get { return self.audioMessageView.audioTrackPlayer }
     }
     
-    open func createConstraints() {
+    public func createConstraints() {
         constrain(self.messageContentView, self.containerView, self.audioMessageView, self.authorLabel) { messageContentView, containerView, audioMessageView, authorLabel in
             
             containerView.left == messageContentView.leftMargin
@@ -82,7 +82,6 @@ import Classy
     override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
 
         super.configure(for: message, layoutProperties: layoutProperties)
-        
         self.configureMessageView(with: message, isInitial: true)
     }
     
@@ -94,7 +93,6 @@ import Classy
         }
         
         self.configureMessageView(with: message, isInitial: false)
-        
         return needsLayout
     }
     
@@ -108,14 +106,14 @@ import Classy
         self.audioMessageView.stopProximitySensor()
     }
     
-    override open var tintColor: UIColor! {
+    override public var tintColor: UIColor! {
         didSet {
             self.audioMessageView.tintColor = self.tintColor
         }
     }
     // MARK: - Menu
 
-    open func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    public func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         
         let animation = {
             self.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0;
@@ -128,15 +126,15 @@ import Classy
         }
     }
     
-    open override var selectionRect: CGRect {
+    public override var selectionRect: CGRect {
         return audioMessageView.bounds
     }
     
-    open override var selectionView: UIView! {
+    public override var selectionView: UIView! {
         return audioMessageView
     }
     
-    override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
         guard let _ = message else {return nil}
 
         let properties = MenuConfigurationProperties()
@@ -144,16 +142,21 @@ import Classy
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
         
-        var additionalItems = [UIMenuItem]()
+        var additionalItems = [AdditionalMenuItem]()
         
         if message.audioCanBeSaved() {
             let menuItem = UIMenuItem(title: "content.file.save_audio".localized, action:#selector(wr_saveAudio))
-            additionalItems.append(menuItem)
+            additionalItems.append(.forbiddenInEphemeral(menuItem))
         }
         
-        if let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
-            additionalItems.append(.forward(with: #selector(forward)))
+        if let fileMessageData = message.fileMessageData {
+            if let _ = fileMessageData.fileURL {
+                additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
+            }
+            
+            if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
+                additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))
+            }
         }
         
         properties.additionalItems = additionalItems
@@ -161,26 +164,32 @@ import Classy
         return properties
     }
     
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(wr_saveAudio) && self.message.audioCanBeSaved() {
+    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        switch action {
+        case #selector(wr_saveAudio) where message.audioCanBeSaved():
             return true
-        }
-        else if action == #selector(forward(_:)) {
-            if let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
+        case #selector(forward(_:)):
+            if let fileMessageData = message.fileMessageData, let _ = fileMessageData.fileURL {
                 return true
-            }
-            else {
+            } else {
                 return false
             }
+        case #selector(download):
+            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
+        default: break
         }
+        
         return super.canPerformAction(action, withSender: sender)
     }
     
-    @objc open func wr_saveAudio() {
+    @objc public func wr_saveAudio() {
         if self.message.audioCanBeSaved() {
             self.delegate?.conversationCell?(self, didSelect: .save)
         }
+    }
+    
+    @objc func download(_ sender: Any) {
+        delegate?.conversationCell?(self, didSelect: .download)
     }
     
 }

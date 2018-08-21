@@ -273,7 +273,7 @@ private let zmLog = ZMSLog(tag: "UI")
     func failedToFetchClientsWithError(_ error: Error!) {
         self.showLoadingView = false
         
-        zmLog.error("Clients request failed: \(error)")
+        zmLog.error("Clients request failed: \(error?.localizedDescription ?? "nil")")
         
         self.displayError(NSLocalizedString("error.user.unkown_error", comment: ""))
     }

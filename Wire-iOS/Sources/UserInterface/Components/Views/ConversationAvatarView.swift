@@ -86,7 +86,7 @@ extension ZMConversation {
 }
 
 
-fileprivate enum Mode {
+fileprivate enum Mode: Equatable {
     /// 0 participants in conversation:
     /// /    \
     /// \    /
@@ -140,7 +140,7 @@ final public class ConversationAvatarView: UIView {
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
                 $0.shouldDesaturate = false
-                $0.size = .tiny
+                $0.size = mode == .four ? .tiny : .small
                 if index < users.count {
                     $0.user = users[index]
                 }
