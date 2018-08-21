@@ -19,7 +19,6 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#import "CameraController.h"
 
 @import WireSyncEngine;
 
@@ -36,6 +35,11 @@ typedef NS_ENUM (NSUInteger, SettingsLastScreen) {
     SettingsLastScreenNone = 0,
     SettingsLastScreenList,
     SettingsLastScreenConversation
+};
+
+typedef NS_ENUM (NSUInteger, SettingsCamera) {
+    SettingsCameraFront,
+    SettingsCameraBack
 };
 
 extern NSString * const SettingsColorSchemeChangedNotification;
@@ -91,7 +95,7 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 @property (nonatomic) NSDate *lastPushAlertDate;
 
 @property (nonatomic) SettingsLastScreen lastViewedScreen;
-@property (nonatomic) CameraControllerCamera preferredCamera;
+@property (nonatomic) SettingsCamera preferredCamera;
 @property (nonatomic) SettingsColorScheme colorScheme;
 @property (nonatomic, readonly) NSTimeInterval blacklistDownloadInterval;
 @property (nonatomic) ZMLocationData *lastUserLocation;
