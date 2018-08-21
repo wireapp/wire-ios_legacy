@@ -244,35 +244,3 @@ class CameraController {
         }
     }
 }
-
-
-private extension AVCaptureVideoOrientation {
-    
-    /// The video orientation mmatches against first the device orientation,
-    /// then the interface orientation. Must be called on the main thread.
-    static var current: AVCaptureVideoOrientation {
-        let device = UIDevice.current.orientation
-        let ui = UIApplication.shared.statusBarOrientation
-        return self.init(deviceOrientation: device) ?? self.init(uiOrientation: ui) ?? .portrait
-    }
-
-    init?(deviceOrientation: UIDeviceOrientation) {
-        switch deviceOrientation {
-        case .landscapeLeft:        self = .landscapeLeft
-        case .portrait:             self = .portrait
-        case .landscapeRight:       self = .landscapeRight
-        case .portraitUpsideDown:   self = .portraitUpsideDown
-        default:                    return nil
-        }
-    }
-    
-    init?(uiOrientation: UIInterfaceOrientation) {
-        switch uiOrientation {
-        case .landscapeLeft:        self = .landscapeLeft
-        case .portrait:             self = .portrait
-        case .landscapeRight:       self = .landscapeRight
-        case .portraitUpsideDown:   self = .portraitUpsideDown
-        default:                    return nil
-        }
-    }
-}
