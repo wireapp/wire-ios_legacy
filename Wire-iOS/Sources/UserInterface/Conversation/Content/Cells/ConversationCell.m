@@ -91,6 +91,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        [self setupFont];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;

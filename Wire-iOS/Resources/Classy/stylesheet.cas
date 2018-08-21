@@ -202,24 +202,6 @@ MessageToolboxView {
     clipsToBounds: true;
 }
 
-ConversationCell, IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, ImageMessageCell, AudioMessageCell, VideoMessageCell, TextMessageCell, PingCell, MessageDeletedCell, LocationMessageCell, FileTransferCell, ConnectionRequestCell, MessageTimerUpdateCell {
-
-    burstTimestampView: @{
-        label: @{
-            textColor: $color-text-foreground;
-        }
-    }
-
-    burstNormalFont: $font-small-light;
-    burstBoldFont: $font-small-semibold;
-}
-
-
-ConversationCellBurstTimestampView {
-    separatorColor: $color-separator;
-    separatorColorExpanded: $color-separator-pale;
-}
-
 
 IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, MessageTimerUpdateCell {
     lineView: @{
