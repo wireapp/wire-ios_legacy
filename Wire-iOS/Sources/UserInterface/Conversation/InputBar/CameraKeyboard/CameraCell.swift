@@ -41,13 +41,12 @@ open class CameraCell: UICollectionViewCell {
     }
 
     override init(frame: CGRect) {
-        self.cameraController = CameraController()
+        self.cameraController = CameraController(camera: Settings.shared().preferredCamera)
 
         super.init(frame: frame)
         
         if let cameraController = self.cameraController {
             cameraController.previewLayer.frame = self.contentView.bounds
-            cameraController.currentCamera = Settings.shared().preferredCamera
             cameraController.previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
             self.contentView.layer.addSublayer(cameraController.previewLayer)
         }
@@ -202,8 +201,10 @@ open class CameraCell: UICollectionViewCell {
         }
 
         let newCamera = cameraController.currentCamera == .front ? SettingsCamera.back : .front
-        cameraController.currentCamera = newCamera
-        Settings.shared().preferredCamera = newCamera
+        
+        cameraController.changeCamera(to: newCamera) { success in
+            Settings.shared().preferredCamera = newCamera
+        }
     }
 }
 

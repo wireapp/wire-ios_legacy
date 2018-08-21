@@ -22,26 +22,27 @@ fileprivate let zmLog = ZMSLog(tag: "UI")
 
 class CameraController {
     
-    var currentCamera = SettingsCamera.front {
-        willSet { switchInput(to: newValue) }
-    }
+    private(set) var currentCamera: SettingsCamera
     
     var previewLayer: AVCaptureVideoPreviewLayer!
 
     private enum SetupResult { case success, notAuthorized, failed }
     private var setupResult: SetupResult = .success
+    private var setupDone = false
     
     private var session = AVCaptureSession()
     private let sessionQueue = DispatchQueue(label: "com.wire.camera_controller_session")
     
     private var frontCameraDeviceInput: AVCaptureDeviceInput?
     private var backCameraDeviceInput: AVCaptureDeviceInput?
+    private var canSwitchInputs: Bool = false
     
     private let photoOutput = AVCapturePhotoOutput()
     private var captureDelegates = [Int64 : PhotoCaptureDelegate]()
     
-    init?() {
+    init?(camera: SettingsCamera) {
         guard !UIDevice.isSimulator else { return nil }
+        currentCamera = camera
         setupSession()
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
     }
@@ -70,7 +71,11 @@ class CameraController {
         guard setupResult == .success else { return }
         
         session.beginConfiguration()
-        defer { session.commitConfiguration() }
+        
+        defer {
+            session.commitConfiguration()
+            setupDone = true
+        }
         
         session.sessionPreset = .photo
         
@@ -89,6 +94,8 @@ class CameraController {
             canAddBackInput = session.canAddInput(input)
         }
         
+        canSwitchInputs = canAddFrontInput && canAddBackInput
+        
         // we need at least one functional input
         guard canAddFrontInput || canAddBackInput else {
             zmLog.error("CameraController could not add any inputs.")
@@ -96,7 +103,12 @@ class CameraController {
             return
         }
         
-        // TODO: Connect current input or first available.
+        // try to connect the preferred camera
+        switch currentCamera {
+        case .front: if !canAddFrontInput { currentCamera = .back }
+        case .back:  if !canAddBackInput  { currentCamera = .front }
+        }
+        
         connectInput(for: currentCamera)
         
         // SETUP OUTPUTS
@@ -136,34 +148,47 @@ class CameraController {
         case .back:     return backCameraDeviceInput
         }
     }
-    
+
     /**
      * Connects the input for the given camera, if it is available.
      */
     private func connectInput(for camera: SettingsCamera) {
-        guard let input = input(for: camera) else { return }
+        guard
+            let input = input(for: camera),
+            session.canAddInput(input)
+            else { return }
+        
         sessionQueue.async {
             self.session.beginConfiguration()
             self.session.addInput(input)
+            self.currentCamera = camera
             self.session.commitConfiguration()
         }
     }
     
     /**
      * Disconnects the current camera and connects the given camera, but only
-     * if both camera inputs are available.
+     * if both camera inputs are available. The completion callback is passed
+     * a boolean value indicating whether the change was successful.
      */
-    private func switchInput(to camera: SettingsCamera) {
-        guard currentCamera != camera,
-            let inputToRemove = input(for: currentCamera),
-            let inputToAdd = input(for: camera)
-            else { return }
+    func changeCamera(to newCamera: SettingsCamera, completion: @escaping (_ success: Bool) -> Void) {
+        guard
+            canSwitchInputs,
+            currentCamera != newCamera,
+            let frontInput = frontCameraDeviceInput,
+            let backInput = backCameraDeviceInput
+            else { return completion(false) }
+        
+        let toRemove = currentCamera == .front ? frontInput : backInput
+        let toAdd = newCamera == .front ? frontInput : backInput
         
         sessionQueue.async {
             self.session.beginConfiguration()
-            self.session.removeInput(inputToRemove)
-            self.session.addInput(inputToAdd)
+            self.session.removeInput(toRemove)
+            self.session.addInput(toAdd)
+            self.currentCamera = newCamera
             self.session.commitConfiguration()
+            DispatchQueue.main.async { completion(true) }
         }
     }
     
