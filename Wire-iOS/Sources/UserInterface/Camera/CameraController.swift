@@ -70,39 +70,38 @@ class CameraController {
         guard setupResult == .success else { return }
         
         session.beginConfiguration()
-        
         defer { session.commitConfiguration() }
         
         session.sessionPreset = .photo
         
         // SETUP INPUTS
         
-        var canAddFrontInput = false
-        var canAddBackInput = false
+        let availableInputs = [AVCaptureDevice.Position.front, .back]
+            .compactMap { cameraDevice(for: $0) }
+            .compactMap { try? AVCaptureDeviceInput(device: $0) }
+            .filter { session.canAddInput($0) }
         
-        if let device = cameraDevice(for: .front), let input = try? AVCaptureDeviceInput(device: device) {
-            frontCameraDeviceInput = input
-            canAddFrontInput = session.canAddInput(input)
-        }
-        
-        if let device = cameraDevice(for: .back), let input = try? AVCaptureDeviceInput(device: device) {
-            backCameraDeviceInput = input
-            canAddBackInput = session.canAddInput(input)
-        }
-        
-        canSwitchInputs = canAddFrontInput && canAddBackInput
-        
-        // we need at least one functional input
-        guard canAddFrontInput || canAddBackInput else {
+        switch availableInputs.count {
+        case 1:
+            let input = availableInputs.first!
+            
+            if input.device.position == .front {
+                currentCamera = .front
+                frontCameraDeviceInput = input
+            } else {
+                currentCamera = .back
+                backCameraDeviceInput = input
+            }
+            
+        case 2:
+            frontCameraDeviceInput = availableInputs.first!
+            backCameraDeviceInput = availableInputs.last!
+            canSwitchInputs = true
+            
+        default:
             zmLog.error("CameraController could not add any inputs.")
             setupResult = .failed
             return
-        }
-        
-        // try to connect the preferred camera
-        switch currentCamera {
-        case .front: if !canAddFrontInput { currentCamera = .back }
-        case .back:  if !canAddBackInput  { currentCamera = .front }
         }
         
         connectInput(for: currentCamera)
