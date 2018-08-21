@@ -128,7 +128,7 @@ class ChatHeadsViewController: UIViewController {
         }
         
         // Always show the notification when the call overlay is shown
-        if true == AppDelegate.shared().callWindowRootViewController?.voiceChannelController?.voiceChannelIsActive {
+        if let callWindowRootViewController = AppDelegate.shared().callWindowRootViewController, callWindowRootViewController.isDisplayingCallOverlay {
             return true
         }
         

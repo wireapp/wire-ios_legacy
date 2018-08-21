@@ -151,7 +151,9 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func minimizeOverlay() {
-        dismisser?.dismiss(viewController: self, completion: nil)
+        dismiss(animated: true, completion: {
+            self.dismisser?.dismiss(viewController: self, completion: nil)
+        })
     }
 
     fileprivate func acceptDegradedCall() {
