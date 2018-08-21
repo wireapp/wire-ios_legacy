@@ -18,28 +18,11 @@
 
 import Foundation
 
-enum CallDegradationState {
+enum CallDegradationState: Equatable {
     
     case none
     case incoming(degradedUser: ZMUser?)
     case outgoing(degradedUser: ZMUser?)
-    
-}
-
-extension CallDegradationState: Equatable {
-    
-    static func ==(lhs: CallDegradationState, rhs: CallDegradationState) -> Bool {
-        switch (lhs, rhs) {
-        case (.none, .none):
-            return true
-        case (.incoming(degradedUser: let lhsDegradedUser), .incoming(degradedUser: let rhsDegradedUser)):
-            return lhsDegradedUser == rhsDegradedUser
-        case (.outgoing(degradedUser: let lhsDegradedUser), .outgoing(degradedUser: let rhsDegradedUser)):
-            return lhsDegradedUser == rhsDegradedUser
-        default:
-            return false
-        }
-    }
     
 }
 

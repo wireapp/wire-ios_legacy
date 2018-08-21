@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,14 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import Cartography
 
-enum AppState : Equatable {
+extension ViewProxy {
     
-    case headless
-    case authenticated(completedRegistration: Bool)
-    case unauthenticated(error : NSError?)
-    case blacklisted
-    case migrating
-    case loading(account: Account, from: Account?)
+    public var safeAreaLayoutGuideOrFallback: LayoutGuideProxy {
+        if #available(iOS 11.0, *) {
+            return safeAreaLayoutGuide
+        } else {
+            return layoutMarginsGuide
+        }
+    }
+
 }

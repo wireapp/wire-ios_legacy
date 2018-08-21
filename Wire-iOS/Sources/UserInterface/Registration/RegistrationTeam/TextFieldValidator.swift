@@ -28,22 +28,6 @@ class TextFieldValidator {
         case invalidEmail
         case custom(String)
         case none
-
-
-        static func ==(lhs: ValidationError, rhs: ValidationError) -> Bool {
-            switch (lhs, rhs) {
-            case let (.tooShort(l), .tooShort(r)),
-                 let (.tooLong(l), .tooLong(r)):
-                return l == r
-            case (.invalidEmail, .invalidEmail),
-                 (.none, .none):
-                return true
-            case (.custom(let lhs), .custom(let rhs)):
-                return lhs == rhs
-            default:
-                return false
-            }
-        }
     }
 
     func validate(text: String?, kind: AccessoryTextField.Kind) -> TextFieldValidator.ValidationError {

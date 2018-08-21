@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-enum CallInfoViewControllerAccessoryType {
+enum CallInfoViewControllerAccessoryType: Equatable {
     case none
     case avatar(ZMUser)
     case participantsList(CallParticipantsList)
@@ -43,23 +43,6 @@ enum CallInfoViewControllerAccessoryType {
             return participants
         default:
             return []
-        }
-    }
-    
-}
-
-extension CallInfoViewControllerAccessoryType: Equatable {
-    
-    static func ==(lhs: CallInfoViewControllerAccessoryType, rhs: CallInfoViewControllerAccessoryType) -> Bool {
-        switch (lhs, rhs) {
-        case (.none, .none):
-            return true
-        case (.avatar(let lhsUser), .avatar(let rhsUser)):
-            return lhsUser == rhsUser
-        case (.participantsList(let lhsParticipants), .participantsList(let rhsParticipants)):
-            return lhsParticipants == rhsParticipants
-        default:
-            return false
         }
     }
     

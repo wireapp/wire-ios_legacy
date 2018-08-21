@@ -22,8 +22,8 @@ protocol CallActionsViewDelegate: class {
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction)
 }
 
-enum MediaState {
-    struct SpeakerState {
+enum MediaState: Equatable {
+    struct SpeakerState: Equatable {
         let isEnabled: Bool
         let canBeToggled: Bool
     }
@@ -48,21 +48,6 @@ enum MediaState {
         guard case .notSendingVideo(let state) = self else { return false }
         return state.canBeToggled
     }
-}
-
-extension MediaState: Equatable {
-    
-    static func ==(lhs: MediaState, rhs: MediaState) -> Bool {
-        switch (lhs, rhs) {
-        case (.sendingVideo, .sendingVideo):
-            return true
-        case (.notSendingVideo(let lhsState), .notSendingVideo(let rhsState)):
-            return (lhsState.isEnabled, lhsState.canBeToggled) == (rhsState.isEnabled, rhsState.canBeToggled)
-        default:
-            return false
-        }
-    }
-    
 }
 
 // This protocol describes the input for a `CallActionsView`.
