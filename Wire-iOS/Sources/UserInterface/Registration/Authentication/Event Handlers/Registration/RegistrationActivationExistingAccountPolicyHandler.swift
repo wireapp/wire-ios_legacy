@@ -30,7 +30,7 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
         let error = context
 
         // Only handle errors during activation requests
-        guard case .sendActivationCode = currentStep else {
+        guard case let .sendActivationCode(_, user, _) = currentStep else {
             return nil
         }
 
@@ -42,17 +42,24 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
             return nil
         }
 
-        // Request a login code instead of a registration code
-//        switch user.credentials! {
-//        case .email(let address, let password):
-//            break
-//
-//        case .phone(number: let number):
-//            break
-//        }
+        // Create the actions
+        var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
-        //let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: nil, credentialsValidated: false)
-        return [.showLoadingView, /*.transition(nextStep, resetStack: false),*/ /*.performPhoneLoginFromRegistration(phoneNumber: phoneNumber)*/]
+        switch user.credentials! {
+        case .email:
+            let changeEmailAction = AuthenticationCoordinatorAlertAction(title: "Change E-mail", coordinatorActions: [.unwindState, .executeFeedbackAction(.clearInputFields)])
+            let loginAction = AuthenticationCoordinatorAlertAction(title: "Sign In", coordinatorActions: [])
+            let alert = AuthenticationCoordinatorAlert(title: "Account Exists", message: "The e-mail address you chose to register is already in use. Use another e-mail address, or try to log in if you own this account.", actions: [changeEmailAction, loginAction])
+            actions.append(.presentAlert(alert))
+
+        case .phone(let number):
+            let changePhoneAction = AuthenticationCoordinatorAlertAction(title: "Change Phone Number", coordinatorActions: [.unwindState, .executeFeedbackAction(.clearInputFields)])
+            let loginAction = AuthenticationCoordinatorAlertAction(title: "Sign In", coordinatorActions: [.showLoadingView, .performPhoneLoginFromRegistration(phoneNumber: number)])
+            let alert = AuthenticationCoordinatorAlert(title: "Account Exists", message: "The phone number you chose to register is already in use. Use another phone number, or try to log in if you own this account.", actions: [changePhoneAction, loginAction])
+            actions.append(.presentAlert(alert))
+        }
+
+        return actions
     }
 
 }

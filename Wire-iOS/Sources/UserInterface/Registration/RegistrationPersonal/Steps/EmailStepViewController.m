@@ -50,9 +50,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.title = NSLocalizedString(@"registration.email_flow.email_step.title", nil);
-    
+        
     [self createEmailFormViewController];
     [self createInitialConstraints];
 }

@@ -108,7 +108,7 @@ class AuthenticationEventHandlingManager {
         registerHandler(AuthenticationLoginCodeAvailableEventHandler(), to: &phoneLoginCodeHandlers)
 
         // registrationErrorHandlers
-        registerHandler(RegistrationActivationErrorHandler(), to: &registrationErrorHandlers)
+        registerHandler(RegistrationActivationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
         registerHandler(RegistrationActivationErrorHandler(), to: &registrationErrorHandlers)
         registerHandler(RegistrationFinalErrorHandler(), to: &registrationErrorHandlers)
 

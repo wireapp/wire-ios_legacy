@@ -48,7 +48,6 @@
     [super viewDidLoad];
  
     self.view.opaque = NO;
-    self.title = NSLocalizedString(@"registration.enter_phone_number.title", nil);
     
     [self createHeroLabel];
     [self createPhoneNumberViewController];
@@ -118,6 +117,15 @@
 {
     self.phoneNumber = [NSString phoneNumberStringWithE164:self.phoneNumberViewController.country.e164 number:self.phoneNumberViewController.phoneNumberField.text];
     [self.delegate phoneNumberStepViewControllerDidPickPhoneNumber:self.phoneNumber];
+}
+
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    if (feedbackAction == AuthenticationErrorFeedbackActionShowGuidanceDot) {
+        self.phoneNumberViewController.phoneNumberField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewGuidanceDot;
+    } else if (feedbackAction == AuthenticationErrorFeedbackActionClearInputFields) {
+        self.phoneNumberViewController.phoneNumberField.text = @"";
+    }
 }
 
 @end

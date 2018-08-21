@@ -108,6 +108,14 @@ extension AuthenticationCoordinator {
     func transition(to step: AuthenticationFlowStep, resetStack: Bool = false) {
         currentStep = step
 
+        defer {
+            if resetStack {
+                flowStack = [step]
+            } else {
+                flowStack.append(step)
+            }
+        }
+
         guard step.needsInterface else {
             return
         }
@@ -122,17 +130,9 @@ extension AuthenticationCoordinator {
         let containerViewController = KeyboardAvoidingViewController(viewController: stepViewController)
 
         if resetStack {
-            if step.allowsUnwind {
-                flowStack = [step]
-            }
-
-            presenter?.backButtonEnabled = step.allowsUnwind
+            presenter?.backButtonEnabled = false
             presenter?.setViewControllers([containerViewController], animated: true)
         } else {
-            if step.allowsUnwind {
-                flowStack.append(step)
-            }
-
             presenter?.backButtonEnabled = step.allowsUnwind
             presenter?.pushViewController(containerViewController, animated: true)
         }
@@ -148,13 +148,15 @@ extension AuthenticationCoordinator {
      * - when the navigation controller pops the current view controller
      */
 
-    func unwind() {
+    func unwind(requireInterfaceStep: Bool = false) {
         guard flowStack.count >= 2 else {
             return
         }
 
-        flowStack.removeLast()
-        currentStep = flowStack.last!
+        repeat {
+            flowStack.removeLast()
+            currentStep = flowStack.last!
+        } while !currentStep.needsInterface
     }
 
 }
@@ -768,7 +770,7 @@ extension AuthenticationCoordinator: UINavigationControllerDelegate {
         }
 
         self.currentViewController = authenticationViewController
-        unwind()
+        unwind(requireInterfaceStep: true)
     }
 
 

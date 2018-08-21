@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-#import "BlueViewController.h"
+@import UIKit;
 #import "PhoneNumberViewController.h"
 #import "AuthenticationCoordinatedViewController.h"
 
@@ -26,7 +26,7 @@
 
 @end
 
-@interface PhoneNumberStepViewController : BlueViewController <AuthenticationCoordinatedViewController>
+@interface PhoneNumberStepViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 @property (nonatomic, weak, nullable) id<PhoneNumberStepViewControllerDelegate> delegate;
 

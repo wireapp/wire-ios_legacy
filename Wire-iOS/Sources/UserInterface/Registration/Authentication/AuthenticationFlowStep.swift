@@ -59,6 +59,8 @@ enum AuthenticationFlowStep {
         switch self {
         case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword, .incrementalUserCreation: return false
         case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
+        case .createCredentials: return true
+        case .enterActivationCode: return true
         default: return true
         }
     }
