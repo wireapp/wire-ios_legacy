@@ -19,22 +19,7 @@
 import XCTest
 @testable import Wire
 
-extension String {
-
-    func localized(forLanguage language: String = Locale.preferredLanguages.first!.components(separatedBy: "-").first!) -> String {
-
-        guard let path = Bundle.main.path(forResource: language == "en" ? "Base" : language, ofType: "lproj") else {
-
-            let basePath = Bundle.main.path(forResource: "Base", ofType: "lproj")!
-
-            return Bundle(path: basePath)!.localizedString(forKey: self, value: "", table: nil)
-        }
-
-        return Bundle(path: path)!.localizedString(forKey: self, value: "", table: nil)
-    }
-}
-
-final class PingCellTests: XCTestCase {
+final class PingCellTests: ZMSnapshotTestCase {
 
     var sut: PingCell!
 
@@ -42,44 +27,19 @@ final class PingCellTests: XCTestCase {
 
         super.setUp()
 
-        XCTAssertEqual(UserDefaults.standard.stringArray(forKey: "AppleLanguages")!, ["de"])
-
         sut = PingCell()
+
+        recordMode = true
     }
 
     override func tearDown() {
         sut = nil
 
         super.tearDown()
-
-        XCTAssertEqual(UserDefaults.standard.stringArray(forKey: "AppleLanguages")!, ["en"])
     }
 
-    func testYouPingedInGerman() {
-        // GIVEN
-
-        let senderText = "Du"
-        MockUser.currentPointOfView = .secondPerson
-        sut.configure(for: MockMessageFactory.pingMessage(), layoutProperties: nil)
-
-        // WHEN
-        let pingMessage = sut.pingMessage(senderText: senderText)
-
-        // THEN
-        XCTAssertEqual(pingMessage, "Du hast gepingt", "pointOfViewString is \(String(describing: pingMessage))")
-    }
-
-    func testSomeonePingedInGerman() {
-        // GIVEN
-        let senderText = "Bill"
-        MockUser.currentPointOfView = .thirdPerson
-        sut.configure(for: MockMessageFactory.pingMessage(), layoutProperties: nil)
-
-        // WHEN
-        let pingMessage = sut.pingMessage(senderText: senderText)
-
-        // THEN
-        XCTAssertEqual(pingMessage, "Bill hat gepingt", "pointOfViewString is \(String(describing: pingMessage))")
+    func test() {
+        verify(view: sut.tableViewForSnapshot())
     }
 }
 

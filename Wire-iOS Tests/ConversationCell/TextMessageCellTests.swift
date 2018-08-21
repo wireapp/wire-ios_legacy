@@ -57,68 +57,68 @@ class TextMessageCellTests: ZMSnapshotTestCase {
     func testThatItRendersATextMessage_Sent() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_Obfuscated() {
         sut.configure(for: mockMessage(state: .sent, obfuscated: true), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_Delivered() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .delivered), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_Expired() {
         sut.configure(for: mockMessage(state: .failedToSend), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_Selected() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_Pending_Selected() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .pending), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LongText() {
         let text = "".padding(toLength: 71, withPad: "Hello ", startingAt: 0)
         sut.configure(for: mockMessage(text), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersEditedTimestampCorrectly_Selected() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(edited: true), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText() {
         let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(text, edited: true), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersEditedTimestampCorrectly_Selected_LongText_Pending() {
         let text = "".padding(toLength: 70, withPad: "Hello ", startingAt: 0)
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(text, edited: true, state: .pending), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatRenderLastSentMessageWithoutLikeIcon() {
         let layoutProperties = self.layoutProperties
         layoutProperties.alwaysShowDeliveryState = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatRenderLastSentMessageWithLikeIcon_whenSelected() {
@@ -126,21 +126,21 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         layoutProperties.alwaysShowDeliveryState = true
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedReceiver() {
         let message = mockMessage(state: .sent)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [otherUsers.first!]]
         sut.configure(for: message, layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedSender() {
         let message = mockMessage(state: .sent)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
         sut.configure(for: message, layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedSelected() {
@@ -148,41 +148,41 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser]]
         sut.setSelected(true, animated: false)
         sut.configure(for: message, layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedByTwoPeople() {
         let message = mockMessage(state: .sent)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(otherUsers[0..<2])]
         sut.configure(for: message, layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedByTwoPeopleIncludingSelf() {
         let message = mockMessage(state: .sent)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser] + [otherUsers.first!]]
         sut.configure(for: message, layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedByALotOfPeople() {
         let message = mockMessage(state: .sent)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: [selfUser] + otherUsers]
         sut.configure(for: message, layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikeTooltipNotShownForSelf() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersMessageWithBurstTimestamp() {
         let props = layoutProperties
         props.showBurstTimestamp = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersMessageWithBurstTimestamp_Unread() {
@@ -190,14 +190,14 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         props.showBurstTimestamp = true
         props.showUnreadMarker = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersMessageWithDayTimestamp() {
         let props = layoutProperties
         props.showDayBurstTimestamp = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersMessageWithDayTimestamp_Unread() {
@@ -205,7 +205,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         props.showDayBurstTimestamp = true
         props.showUnreadMarker = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersMessageWithDayTimestampWithDELocale() {
@@ -214,7 +214,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         let props = layoutProperties
         props.showDayBurstTimestamp = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersMessageWithDayTimestampWithHKLocale() {
@@ -223,14 +223,14 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         let props = layoutProperties
         props.showDayBurstTimestamp = true
         sut.configure(for: mockMessage(state: .sent), layoutProperties: props)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
 
     func testThatItRendersMessageWithEphemeralTimer() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage("This is a message with three lines of text content which might need a better placeholder", state: .sent, isEphemeral: true), layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     // MARK: - Helper
@@ -277,7 +277,7 @@ extension TextMessageCellTests {
         sut.needsUpdateConstraints()
         sut.setNeedsLayout()
 
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
     }
 
     func testThatItRendersATextMessage_LikedSender_ForiPadPro12Inch() {
@@ -293,21 +293,9 @@ extension TextMessageCellTests {
         bot.isServiceUser = true
         message.sender = ((bot as AnyObject) as! ZMUser)
         sut.configure(for: message, layoutProperties: layoutProperties)
-        verify(view: sut.prepareForSnapshot())
+        verify(view: sut.tableViewForSnapshot())
         bot.isServiceUser = false
     }
-}
-
-
-// MARK: - Helpers
-
-private extension TextMessageCell {
-
-    func prepareForSnapshot() -> UIView {
-        self.backgroundColor = .clear
-        return self.wrapInTableView()
-    }
-
 }
 
 extension Date {

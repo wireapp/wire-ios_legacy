@@ -363,15 +363,6 @@ TypingIndicatorView {
     }
 }
 
-PingCell {
-    pingFont: $font-medium;
-    authorFont: $font-medium-semibold;
-
-    pingLabel: @{
-        textColor: $color-text-foreground;
-    }
-}
-
 /* Image confirmer */
 
 ConfirmAssetViewController {

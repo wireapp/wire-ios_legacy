@@ -23,6 +23,11 @@
 
 @interface PingCell : ConversationCell
 
+///TODO: internal
+@property (nonatomic, strong) UIFont *pingFont;
+@property (nonatomic, strong) UIFont *authorFont;
+@property (nonatomic, strong) UILabel *pingLabel;
+
 @end
 
 @interface PingCell (Animation)

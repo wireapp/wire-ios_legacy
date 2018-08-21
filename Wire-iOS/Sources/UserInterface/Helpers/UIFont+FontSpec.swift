@@ -42,19 +42,29 @@ extension UIFont {
     
 
     // MARK: - Normal
-    
+
     class var normalLightFont: UIFont {
         return FontSpec(.normal, .light).font!
     }
-    
+
     class var normalRegularFont: UIFont {
         return FontSpec(.normal, .regular).font!
     }
-    
+
     class var normalMediumFont: UIFont {
         return FontSpec(.normal, .medium).font!
     }
-    
+
+    // MARK: - Medium
+
+    class var mediumFont: UIFont {
+        return FontSpec(.medium, .none).font!
+    }
+
+    class var mediumSemiboldFont: UIFont {
+        return FontSpec(.medium, .semibold).font!
+    }
+
     // MARK: - Large
     
     class var largeThinFont: UIFont {

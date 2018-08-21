@@ -18,14 +18,10 @@
 
 import Foundation
 
-// MARK: - Helpers
-
-extension ConversationCell {
-
-    func tableViewForSnapshot() -> UIView {
-        self.backgroundColor = .clear
-        self.prepareForSnapshot()
-        return self.wrapInTableView()
+extension PingCell {
+    @objc func setupStyle() {
+        pingFont = .mediumFont
+        authorFont = .mediumSemiboldFont
+        pingLabel.textColor = UIColor(scheme: .textForeground)
     }
-
 }
