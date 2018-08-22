@@ -34,6 +34,8 @@ class CameraController {
     
     private var frontCameraDeviceInput: AVCaptureDeviceInput?
     private var backCameraDeviceInput: AVCaptureDeviceInput?
+    
+    private var isSwitching = false
     private var canSwitchInputs: Bool = false
     
     private let photoOutput = AVCapturePhotoOutput()
@@ -166,16 +168,16 @@ class CameraController {
      * if both camera inputs are available. The completion callback is passed
      * a boolean value indicating whether the change was successful.
      */
-    func changeCamera(to newCamera: SettingsCamera, completion: @escaping (_ success: Bool) -> Void) {
-        guard
-            canSwitchInputs,
-            currentCamera != newCamera,
-            let frontInput = frontCameraDeviceInput,
-            let backInput = backCameraDeviceInput
-            else { return completion(false) }
+    func switchCamera(completion: @escaping (_ currentCamera: SettingsCamera) -> Void) {
+        let newCamera = currentCamera == .front ? SettingsCamera.back : .front
         
-        let toRemove = currentCamera == .front ? frontInput : backInput
-        let toAdd = newCamera == .front ? frontInput : backInput
+        guard
+            !isSwitching, canSwitchInputs,
+            let toRemove = input(for: currentCamera),
+            let toAdd = input(for: newCamera)
+            else { return completion(currentCamera) }
+        
+        isSwitching = true
         
         sessionQueue.async {
             self.session.beginConfiguration()
@@ -183,7 +185,10 @@ class CameraController {
             self.session.addInput(toAdd)
             self.currentCamera = newCamera
             self.session.commitConfiguration()
-            DispatchQueue.main.async { completion(true) }
+            DispatchQueue.main.async {
+                completion(newCamera)
+                self.isSwitching = false
+            }
         }
     }
     

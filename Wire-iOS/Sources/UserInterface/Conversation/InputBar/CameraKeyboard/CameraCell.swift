@@ -196,14 +196,8 @@ open class CameraCell: UICollectionViewCell {
     }
     
     @objc func changeCameraPressed(_ sender: AnyObject) {
-        guard let cameraController = self.cameraController else {
-            return
-        }
-
-        let newCamera = cameraController.currentCamera == .front ? SettingsCamera.back : .front
-        
-        cameraController.changeCamera(to: newCamera) { success in
-            Settings.shared().preferredCamera = newCamera
+        cameraController?.switchCamera { currentCamera in
+            Settings.shared().preferredCamera = currentCamera
         }
     }
 }
