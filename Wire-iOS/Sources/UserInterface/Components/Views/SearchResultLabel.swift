@@ -63,7 +63,7 @@ import Foundation
         fatal("init?(coder:) is not implemented")
     }
     
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         guard !self.bounds.equalTo(self.previousLayoutBounds) else {
             return

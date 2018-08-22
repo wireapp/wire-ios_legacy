@@ -31,6 +31,7 @@
 "general.accept" = "قبول";
 "general.decline" = "لا، شكرًا";
 "general.failure" = "حدث خطأ";
+"general.service" = "Service";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -43,7 +44,7 @@
 "peoplepicker.search_placeholder" = "ابحث باستخدام الاسم أو المعرّف";
 "peoplepicker.header.top_people" = "الأشخاص المفضلين";
 "peoplepicker.button.create_conversation" = "إنشاء مجموعة";
-"peoplepicker.button.add_to_conversation" = "إضافة أشخاص للمجموعة";
+"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
 "peoplepicker.header.conversations" = "المجموعات";
 "peoplepicker.header.team_conversations" = "%@ مجموعات";
 "peoplepicker.header.send_invitation" = "قم بدعوة";
@@ -51,8 +52,8 @@
 "peoplepicker.header.contacts_personal" = "جهات الاتصال شخصية";
 "peoplepicker.header.directory" = "تواصل";
 
-"peoplepicker.group.title.singular" = "إضافة أشخاص";
-"peoplepicker.group.title.plural" = "إضافة أشخاص (%d)";
+"peoplepicker.group.title.singular" = "إضافة مشاركين";
+"peoplepicker.group.title.plural" = "Add Participants (%d)";
 "peoplepicker.group.skip" = "تخطٍ";
 "peoplepicker.group.done" = "تـم";
 "peoplepicker.group.create" = "إنشاء";
@@ -66,7 +67,7 @@
 "peoplepicker.services.add_service.error.full" = "المحادثة مكتملة العدد";
 
 "peoplepicker.title.create_conversation" = "إنشاء مجموعة";
-"peoplepicker.title.add_to_conversation" = "إضافة أشخاص";
+"peoplepicker.title.add_to_conversation" = "Add participants";
 
 "peoplepicker.no_contacts_title" = "لا توجد جهات اتصال.";
 
@@ -78,6 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "الرجاء إدخال عنوان بريد إلكتروني صالح.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "لا توجد نتائج.";
+"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "أدخل عنوان البريد الإلكتروني أو";
 /*  */
@@ -94,6 +98,7 @@
 "peoplepicker.quick-action.open-conversation" = "افتح";
 "peoplepicker.quick-action.create-conversation" = "إنشاء مجموعة";
 "peoplepicker.quick-action.create-guest-room" = "أنشئ غرفة ضيوف";
+"peoplepicker.quick-action.admin-services" = "Manage Services";
 
 "add_participants.all_contacts_added" = "الجميع حاضرون.";
 
@@ -268,8 +273,8 @@
 "conversation.create.group_name.placeholder" = "اسم المجموعة";
 "conversation.create.guidance.empty" = "على الأقل حرف واحد";
 "conversation.create.guidance.toolong" = "حروف كثيرة عن الحد";
-"conversation.create.toggle.title" = "اسمح بالضيوف";
-"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+"conversation.create.toggle.title" = "Allow guests and services";
+"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "مكالمة جارية";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
@@ -277,6 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "يتواجد ضيوف";
+"conversation.services_present" = "Services are present";
+"conversation.guests_services_present" = "Guests and Services are present";
 "conversation.action.search" = "ابحث";
 
 // Image confirmation dialogue
@@ -342,6 +349,8 @@
 "content.system.other_removed_you" = "قام %@ بإزالتك";
 "content.system.you_removed_other" = "قمت بإزالة %@";
 
+"content.system.services.warning" = "Services have access to the content of the conversation";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ بدأ مُحادثة مع %@";
@@ -356,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "حُذِف %@ من الفريق.";
 "content.system.conversation.guest.joined" = "انضم %@";
 
-"content.system.conversation.invite.title" = "الأشخاص خارج فريقك يمكنهم دخول هذه المحادثة.";
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "دعوة أُناس";
 
 "content.system.other_renamed_conv_to_nothing" = "حذف %@ اسم المُحادثة";
@@ -453,6 +462,7 @@
 "content.message.forward.to" = "بحث…";
 "content.message.open" = "افتح";
 "content.message.copy" = "نسخ";
+"content.message.download" = "Download";
 
 "content.message.open_link_alert.title" = "فتح الرابط";
 "content.message.open_link_alert.message" = "سيأخذك هذا إلى\n%@";
@@ -587,7 +597,7 @@
 "participants.section.services" = "خدمات (%d)";
 "participants.section.settings" = "الخيارات";
 "participants.footer.add_title" = "إضافة مشاركين";
-"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "إعادة التّسمية";
@@ -698,7 +708,7 @@
 "participants.services.remove_integration.button" = "إلغاء التكامل";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests";
+"group_details.guest_options_cell.title" = "Guests and services";
 "group_details.guest_options_cell.enabled" = "مفعل";
 "group_details.guest_options_cell.disabled" = "غير مفعل";
 "group_details.timeout_options_cell.title" = "رسال مؤقّتة";
@@ -1058,14 +1068,14 @@
 "team.invite.error.already_registered" = "This email address is already in use";
 "team.invite.error.already_invited" = "البريد الإلكتروني هذا قد دُعي بالفعل";
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
-"team.invite.error.no_internet" = "لا اتصال بالإنترنت";
+"team.invite.error.no_internet" = "لا يوجد اتصال بالإنترنت";
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "السماح بالضيوف";
-"guest_room.allow_guests.subtitle" = "إتاحة هذه المحادثة لأشخاص خارج فريقك.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
-"guest_room.remove_guests.action" = "إزالة الزوار";
+"guest_room.allow_guests.title" = "Allow guests and services";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.remove_guests.action" = "إزالة";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
@@ -1294,7 +1304,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "هناك أشخاص أكثر مما يجب في هذه المكالمة";
 "error.group_call.too_many_members_in_conversation" = "تستطيع إجراء مكالمات لحد %d أشخاص.";
 "error.group_call.too_many_participants_in_the_call.title" = "المكالمة ممتلئة";
-"error.group_call.too_many_participants_in_the_call" = "لا يوجد متسع لغير %d أشخاص.";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
 "error.call.gsm_ongoing.title" = "مُكالمة خلوية";
 "error.call.gsm_ongoing" = "من فضلك أنهِ المكالمة الخلوية قبل التّحدث باستخدام Wire.";
 "error.call.general.title" = "خطأ في المكالمة";

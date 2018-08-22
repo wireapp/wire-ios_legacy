@@ -58,7 +58,7 @@ final class GroupDetailsFooterView: UIView {
         }
         
         moreButton.setIcon(.ellipsis, with: .tiny, for: .normal)
-        addButton.setIcon(.convMetaAddPerson, with: .tiny, for: .normal)
+        addButton.setIcon(.plus, with: .tiny, for: .normal)
         addButton.setTitle("participants.footer.add_title".localized.uppercased(), for: .normal)
         addButton.titleImageSpacing = 16
         addButton.titleLabel?.font = FontSpec(.small, .regular).font

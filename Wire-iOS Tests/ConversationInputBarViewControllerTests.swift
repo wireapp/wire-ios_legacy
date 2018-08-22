@@ -35,7 +35,10 @@ final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
     }
 
     override var state: UIGestureRecognizerState {
-        return mockState
+        get {
+            return mockState
+        }
+        set {}
     }
 }
 

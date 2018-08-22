@@ -72,8 +72,10 @@ extension ConversationInputBarViewController {
             let pointToView = ephemeralIndicatorButton.isHidden ? hourglassButton : ephemeralIndicatorButton {
             popover.config(from: self,
                            pointToView: pointToView,
-                           sourceView: presentInView,
-                           backgroundColor: backgroundColor)
+                           sourceView: presentInView)
+
+            popover.backgroundColor = backgroundColor
+            popover.permittedArrowDirections = .down
         }
 
         guard let controller = ephemeralKeyboardViewController else { return }

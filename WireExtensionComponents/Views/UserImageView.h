@@ -23,13 +23,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, UserImageViewSize) {
-    UserImageViewSizeFirst,
-    UserImageViewSizeTiny = UserImageViewSizeFirst,
-    UserImageViewSizeSmall,
-    UserImageViewSizeNormal,
-    UserImageViewSizeBig,
-    UserImageViewSizeGiant,
-    UserImageViewSizeLast = UserImageViewSizeGiant
+    UserImageViewSizeTiny = 16,
+    UserImageViewSizeSmall = 32,
+    UserImageViewSizeNormal = 64,
+    UserImageViewSizeBig = 320
 };
 
 @class UserImageView, ZMUserSession, Team;
@@ -52,7 +49,7 @@ typedef NS_ENUM(NSUInteger, UserImageViewSize) {
 @property (nonatomic, weak, nullable) id<UserImageViewDelegate> delegate;
 
 - (instancetype)initWithSize:(UserImageViewSize)size;
-- (void)setUserImage:(UIImage * _Nullable)userImage;
+- (void)setUserImage:(UIImage * _Nullable)userImage animated:(BOOL)animated;
 
 @end
 

@@ -22,13 +22,13 @@ import Cartography
 import Classy
 
 @objcMembers open class ReactionsListViewController: UIViewController {
-    open let message: ZMConversationMessage
-    open let reactionsUsers: [ZMUser]
+    public let message: ZMConversationMessage
+    public let reactionsUsers: [ZMUser]
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
     fileprivate let topBar: ModalTopBar
-    open let dismissButton = IconButton.iconButtonDefault()
-    open let titleLabel = UILabel()
+    public let dismissButton = IconButton.iconButtonDefault()
+    public let titleLabel = UILabel()
     
     public init(message: ZMConversationMessage, showsStatusBar: Bool) {
         self.message = message

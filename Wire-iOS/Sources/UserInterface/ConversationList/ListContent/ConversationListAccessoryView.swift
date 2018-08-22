@@ -33,7 +33,9 @@ import Cartography
     let textLabel = UILabel()
     let iconView = UIImageView()
     var collapseWidthConstraint: NSLayoutConstraint!
-    
+    var expandWidthConstraint: NSLayoutConstraint!
+    var expandTypingViewWidthConstraint: NSLayoutConstraint!
+
     @objc init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
@@ -69,9 +71,9 @@ import Cartography
             typingView.trailing == selfView.trailing ~ 999.0
             typingView.top == selfView.top
             typingView.bottom == selfView.bottom
-            typingView.width >= 28
+            self.expandTypingViewWidthConstraint = typingView.width >= 28
             
-            selfView.width >= 28
+            self.expandWidthConstraint = selfView.width >= 28
             self.collapseWidthConstraint = selfView.width == 0
         }
         self.collapseWidthConstraint.isActive = false
@@ -130,6 +132,20 @@ import Cartography
             return .none
         }
     }
+
+    func updateCollapseConstraints(isCollapsed: Bool) {
+        if isCollapsed {
+            expandWidthConstraint.isActive = false
+            expandTypingViewWidthConstraint.isActive = false
+            collapseWidthConstraint.isActive = true
+        } else {
+            collapseWidthConstraint.isActive = false
+            expandWidthConstraint.isActive = true
+            expandTypingViewWidthConstraint.isActive = true
+        }
+
+        badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
+    }
     
     public func updateForIcon() {
         self.badgeView.containedView.subviews.forEach { $0.removeFromSuperview() }
@@ -140,13 +156,12 @@ import Cartography
         
         self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         
-        self.collapseWidthConstraint.isActive = false
-        
         switch self.icon {
         case .none:
             self.badgeView.isHidden = true
             self.typingView.isHidden = true
-            self.collapseWidthConstraint.isActive = true
+
+            updateCollapseConstraints(isCollapsed: true)
 
             return
         case .activeCall(_):
@@ -172,6 +187,8 @@ import Cartography
             self.typingView.image = .none
         }
         
+        updateCollapseConstraints(isCollapsed: false)
+
         if let view = self.viewForState {
             self.badgeView.containedView.addSubview(view)
             

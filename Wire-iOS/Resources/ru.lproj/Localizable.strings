@@ -31,6 +31,7 @@
 "general.accept" = "Принять";
 "general.decline" = "Нет, спасибо";
 "general.failure" = "Что-то пошло не так";
+"general.service" = "Сервис";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -43,7 +44,7 @@
 "peoplepicker.search_placeholder" = "Поиск по имени или нику";
 "peoplepicker.header.top_people" = "Топ-контакты";
 "peoplepicker.button.create_conversation" = "Создать группу";
-"peoplepicker.button.add_to_conversation" = "Добавить пользователей в группу";
+"peoplepicker.button.add_to_conversation" = "Добавить участников в группу";
 "peoplepicker.header.conversations" = "Группы";
 "peoplepicker.header.team_conversations" = "%@ групп";
 "peoplepicker.header.send_invitation" = "Пригласить";
@@ -78,6 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Пожалуйста, введите правильный email";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ничего не найдено.";
+"peoplepicker.no_matching_results_services_title" = "Сервисы - это помощники, которые могут улучшить ваш рабочий процесс. Чтобы включить их, обратитесь к администратору.";
+"peoplepicker.no_matching_results_services_admin_title" = "Сервисы - это помощники, которые могут улучшить ваш рабочий процесс.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Управление сервисами";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введите полный адрес электронной почты или";
 /*  */
@@ -94,12 +98,13 @@
 "peoplepicker.quick-action.open-conversation" = "Открыть";
 "peoplepicker.quick-action.create-conversation" = "Создать группу";
 "peoplepicker.quick-action.create-guest-room" = "Создать гостевую комнату";
+"peoplepicker.quick-action.admin-services" = "Управление сервисами";
 
 "add_participants.all_contacts_added" = "Все пользователи добавлены.";
 
-"add_participants.alert.title" = "Full house";
-"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
-"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
+"add_participants.alert.title" = "Перегрузка";
+"add_participants.alert.message.new_conversation" = "К разговору могут присоединиться до %d человек.";
+"add_participants.alert.message.existing_conversation" = "К разговору может присоединиться до %1$d человек. На текущий момент в комнате есть места еще для %2$d.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Поиск по имени";
@@ -268,8 +273,8 @@
 "conversation.create.group_name.placeholder" = "Имя группы";
 "conversation.create.guidance.empty" = "Не менее 1 символа";
 "conversation.create.guidance.toolong" = "Слишком много символов";
-"conversation.create.toggle.title" = "Разрешить гостям";
-"conversation.create.toggle.subtitle" = "Открыть этот разговор для людей не из вашей команды. Вы всегда сможете изменить это позже.";
+"conversation.create.toggle.title" = "Разрешить гостей и сервисы";
+"conversation.create.toggle.subtitle" = "Открыть этот разговор для сервисов и пользователей не из вашей команды. Вы всегда сможете изменить это позже.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Исходящий звонок";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Во время разговора вы не можете записать аудиосообщение.";
@@ -277,6 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Во время разговора вы не можете сделать снимок.";
 
 "conversation.guests_present" = "Присутствуют гости";
+"conversation.services_present" = "Services are present";
+"conversation.guests_services_present" = "Guests and Services are present";
 "conversation.action.search" = "Поиск";
 
 // Image confirmation dialogue
@@ -342,6 +349,8 @@
 "content.system.other_removed_you" = "%@ удалил вас";
 "content.system.you_removed_other" = "Вы удалили %@";
 
+"content.system.services.warning" = "Сервисы имеют доступ к содержимому разговора";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ начал беседу с %@";
@@ -356,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "%@ был удален из команды.";
 "content.system.conversation.guest.joined" = "%@ присоединился";
 
-"content.system.conversation.invite.title" = "Участники не из вашей команды смогут присоединиться к этому разговору.";
+"content.system.conversation.invite.title" = "Сервисы и люди не из вашей команды могут присоединиться к этой беседе.";
 "content.system.conversation.invite.button" = "Пригласить людей";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
@@ -453,6 +462,7 @@
 "content.message.forward.to" = "Поиск…";
 "content.message.open" = "Открыть";
 "content.message.copy" = "Копировать";
+"content.message.download" = "Скачать";
 
 "content.message.open_link_alert.title" = "Перейти по ссылке";
 "content.message.open_link_alert.message" = "Это приведет вас к\n%@";
@@ -587,7 +597,7 @@
 "participants.section.services" = "Сервисов (%d)";
 "participants.section.settings" = "Настройки";
 "participants.footer.add_title" = "Добавить участников";
-"participants.section.name.footer" = "Up to %1$d people can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "К групповому разговору может присоединиться до %1$d участников. Видеозвонки возможны между вами и еще %2$d участниками.";
 
 // Meta Menu
 "meta.menu.rename" = "Переименовать";
@@ -698,7 +708,7 @@
 "participants.services.remove_integration.button" = "удалить интеграцию";
 
 // Group details
-"group_details.guest_options_cell.title" = "Гости";
+"group_details.guest_options_cell.title" = "Гости и сервисы";
 "group_details.guest_options_cell.enabled" = "Вкл.";
 "group_details.guest_options_cell.disabled" = "Выключен";
 "group_details.timeout_options_cell.title" = "Временные сообщения";
@@ -1058,14 +1068,14 @@
 "team.invite.error.already_registered" = "Этот адрес электронной почты уже используется";
 "team.invite.error.already_invited" = "Этот email уже был приглашен ранее";
 "team.invite.error.too_many_invitations" = "Было отправлено максимальное количество приглашений";
-"team.invite.error.no_internet" = "Нет соединения с интернетом";
+"team.invite.error.no_internet" = "Отсутствует подключение к интернету";
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Разрешить гостям";
-"guest_room.allow_guests.subtitle" = "Открыть этот разговор для людей не из вашей команды.";
-"guest_room.remove_guests.message" = "Текущие гости будут удалены из разговора. Новые гости допущены не будут.";
-"guest_room.remove_guests.action" = "Удалить гостей";
+"guest_room.allow_guests.title" = "Разрешить гостей и сервисы";
+"guest_room.allow_guests.subtitle" = "Открыть этот разговор для сервисов и пользователей не из вашей команды. Вы всегда сможете изменить это позже.";
+"guest_room.remove_guests.message" = "Все гости и сервисы будут удалены из разговора. Новые гости и сервисы допущены не будут.";
+"guest_room.remove_guests.action" = "Удалить";
 "guest_room.revoke_link.message" = "Новые гости не смогут присоединиться по этой ссылке. На доступ текущих гостей это не повлияет.";
 "guest_room.revoke_link.action" = "Отменить ссылку";
 
@@ -1294,7 +1304,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "Вы выбрали слишком много людей для звонка";
 "error.group_call.too_many_members_in_conversation" = "Звонки работают в группах до %d человек.";
 "error.group_call.too_many_participants_in_the_call.title" = "Слишком много людей на звонке";
-"error.group_call.too_many_participants_in_the_call" = "Здесь есть место только для %d участников.";
+"error.group_call.too_many_participants_in_the_call" = "Здесь хватит места только для %d участников.";
 "error.call.gsm_ongoing.title" = "Сотовый звонок";
 "error.call.gsm_ongoing" = "Пожалуйста, отмените сотовый вызов, прежде чем звонить в Wire.";
 "error.call.general.title" = "Ошибка вызова";

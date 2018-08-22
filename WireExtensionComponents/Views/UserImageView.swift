@@ -26,23 +26,15 @@ extension UserImageView {
         
         guard let user = user else { return }
         
-        var profileImageSize: ProfileImageSize
-        switch size {
-        case .small, .normal, .first:
-            profileImageSize = .preview
-        default:
-            profileImageSize = .complete
-        }
-        
         var desaturate = false
         if shouldDesaturate {
             desaturate = !user.isConnected && !user.isSelfUser && !user.isTeamMember || user.isServiceUser
         }
         
-        user.fetchProfileImage(desaturate: desaturate, size: profileImageSize, completion: { [weak self] (image) in
+        user.fetchProfileImage(sizeLimit: Int(size.rawValue), desaturate: desaturate, completion: { [weak self] (image, cacheHit) in
             // Don't set image if nil or if user has changed during fetch
             guard let image = image, user.isEqual(self?.user) else { return }
-            self?.setUserImage(image)
+            self?.setUserImage(image, animated: !cacheHit)
         })
         
     }

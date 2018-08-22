@@ -414,13 +414,13 @@ import SafariServices
     /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
     private static func findUnreadConversationContributingToBackArrowDot(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
-        let predicate = ZMConversation.predicateForConversationConsideredUnreadIncludingSilenced()!
+        let predicate = ZMConversation.predicateForConversationConsideredUnreadExcludingSilenced()!
         
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
         
         if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
-            .first(where: { predicate.evaluate(with: $0) })
+            .first(where: predicate.evaluate)
         {
             alert.message = ["Found an unread conversation:",
                              "\(convo.displayName)",

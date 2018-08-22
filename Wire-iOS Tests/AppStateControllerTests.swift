@@ -42,11 +42,6 @@ final class AppStateControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    /// Example checker method which can be reused in different tests
-    fileprivate func checkerExample(file: StaticString = #file, line: UInt = #line) {
-        XCTAssert(true, file: file, line: line)
-    }
-
     // MARK: - tests for .unauthenticated state handling
 
     func testThatErrorIsIgnoredWhenTheAppFrashInstalled() {

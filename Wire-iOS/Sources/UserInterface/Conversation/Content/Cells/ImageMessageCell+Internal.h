@@ -22,7 +22,6 @@
 
 @interface ImageMessageCell (Interal)
 
-- (void)setImage:(id<MediaAsset>)image;
 - (BOOL)imageSmallerThanMinimumSize;
 
 @end
@@ -30,4 +29,5 @@
 @interface ImageMessageCell ()
 @property (nonatomic) BOOL autoStretchVertically;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
+@property (nonatomic, strong) UIView *imageViewContainer;
 @end

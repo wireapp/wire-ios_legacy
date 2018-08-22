@@ -51,6 +51,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     var authenticationCoordinator: AuthenticationCoordinator?
     var flowController: TeamCreationFlowController!
 
+    weak var presentedPopover: UIPopoverPresentationController?
+    weak var popoverPointToView: UIView?
+
+
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
         didSet {
             if let delegate = requestToOpenViewDelegate {
@@ -527,6 +531,8 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
     }
     
 }
+
+extension AppRootViewController: PopoverPresenter { }
 
 public extension SessionManager {
     

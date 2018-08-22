@@ -49,29 +49,6 @@ enum CallParticipantsCellConfiguration: Hashable {
             collectionView.register($0, forCellWithReuseIdentifier: $0.reuseIdentifier)
         }
     }
-    
-    var hashValue: Int {
-        switch self {
-        case let .callParticipant(user: user, sendsVideo: sendsVideo): return user.hashValue ^ sendsVideo.hashValue
-        case let .showAll(totalCount: count): return count.hashValue
-        }
-    }
-
-}
-
-extension CallParticipantsCellConfiguration: Equatable {
-    
-    static func ==(lhs: CallParticipantsCellConfiguration, rhs: CallParticipantsCellConfiguration) -> Bool {
-        switch (lhs, rhs) {
-        case (.showAll(let lhsCount), .showAll(let rhsCount)):
-            return lhsCount == rhsCount
-        case (.callParticipant(let lhsUser), .callParticipant(let rhsUser)):
-            return lhsUser == rhsUser
-        default:
-            return false
-        }
-    }
-    
 }
 
 class CallParticipantsView: UICollectionView, Themeable {
