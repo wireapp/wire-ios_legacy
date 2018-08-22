@@ -47,6 +47,7 @@ final private class ModalPresentationTransition: NSObject, UIViewControllerAnima
         guard let toVC = transitionContext.viewController(forKey: .to) as? ModalPresentationViewController else { preconditionFailure("No ModalPresentationViewController") }
         
         transitionContext.containerView.addSubview(toVC.view)
+        toVC.view.layoutIfNeeded()
         
         let animations = { [configuration] in
             toVC.dimView.backgroundColor = .init(white: 0, alpha: configuration.alpha)

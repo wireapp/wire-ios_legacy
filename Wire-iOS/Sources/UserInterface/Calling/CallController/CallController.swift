@@ -23,6 +23,20 @@ class CallController: NSObject {
     weak var targetViewController: UIViewController? = nil
     private(set) weak var activeCallViewController: ActiveCallViewController?
     fileprivate var token: Any?
+    fileprivate var minimizedCall: ZMConversation? = nil
+    fileprivate var topOverlayCall: ZMConversation? = nil {
+        didSet {
+            guard  topOverlayCall != oldValue else { return }
+            
+            if let conversation = topOverlayCall {
+                let callTopOverlayController = CallTopOverlayController(conversation: conversation)
+                callTopOverlayController.delegate = self
+                ZClientViewController.shared()?.setTopOverlay(to: callTopOverlayController)
+            } else {
+                ZClientViewController.shared()?.setTopOverlay(to: nil)
+            }
+        }
+    }
     
     override init() {
         super.init()
@@ -37,62 +51,50 @@ class CallController: NSObject {
 extension CallController: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+        guard let userSession = ZMUserSession.shared() else { return }
         
-        if let callingConversation = callingConversation {
-            presentCall(in: callingConversation)
+        if let priorityCallConversation = userSession.priorityCallConversation {
+            topOverlayCall = priorityCallConversation
+            
+            if priorityCallConversation == minimizedCall {
+                minimizeCall(in: priorityCallConversation)
+            } else {
+                presentCall(in: priorityCallConversation, animated: SessionManager.shared?.callNotificationStyle != .callKit)
+            }
         } else {
             dismissCall()
         }
     }
     
     func minimizeCall(completion: (() -> Void)?) {
-        guard let activeCallViewController = activeCallViewController else { return completion?() }
-        
+        guard let activeCallViewController = activeCallViewController else { completion?(); return }
+    
         activeCallViewController.dismiss(animated: true, completion: completion)
     }
     
-    fileprivate var callingConversation : ZMConversation? {
-        guard let userSession = ZMUserSession.shared(), let callCenter = userSession.callCenter else { return nil }
-        
-        let conversationsWithIncomingCall = callCenter.nonIdleCallConversations(in: userSession).filter({ conversation -> Bool in
-            guard let callState = conversation.voiceChannel?.state else { return false }
-            
-            switch callState {
-            case .incoming(video: _, shouldRing: true, degraded: _):
-                return !conversation.isSilenced
-            default:
-                return false
-            }
-        })
-        
-        if conversationsWithIncomingCall.count > 0 {
-            return conversationsWithIncomingCall.last
-        }
-        
-        return ZMUserSession.shared()?.ongoingCallConversation
-    }
-    
     fileprivate func minimizeCall(in conversation: ZMConversation) {
-        let callTopOverlayController = CallTopOverlayController(conversation: conversation)
-        callTopOverlayController.delegate = self
-        ZClientViewController.shared()?.setTopOverlay(to: callTopOverlayController)
+        activeCallViewController?.dismiss(animated: true)
     }
     
-    fileprivate  func presentCall(in conversation: ZMConversation) {
+    fileprivate  func presentCall(in conversation: ZMConversation, animated: Bool = true) {
         guard activeCallViewController == nil else { return }
         guard let voiceChannel = conversation.voiceChannel else { return }
+        
+        if minimizedCall == conversation {
+            minimizedCall = nil
+        }
         
         let viewController = ActiveCallViewController(voiceChannel: voiceChannel)
         viewController.dismisser = self
         activeCallViewController = viewController
         
         let modalVC = ModalPresentationViewController(viewController: viewController)
-        ZClientViewController.shared()?.setTopOverlay(to: nil)
         targetViewController?.present(modalVC, animated: true)
     }
     
     fileprivate func dismissCall() {
-        ZClientViewController.shared()?.setTopOverlay(to: nil, animated: true)
+        minimizedCall = nil
+        topOverlayCall = nil
         activeCallViewController?.dismiss(animated: true)
     }
 }
@@ -102,7 +104,10 @@ extension CallController: ViewControllerDismisser {
     func dismiss(viewController: UIViewController, completion: (() -> ())?) {
         guard let callViewController = viewController as? CallViewController, let conversation = callViewController.conversation else { return }
         
-        minimizeCall(in: conversation)
+        minimizedCall = conversation
+        activeCallViewController = nil
+        
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
 }
@@ -111,7 +116,6 @@ extension CallController: CallTopOverlayControllerDelegate {
     
     func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController) {
         presentCall(in: controller.conversation)
-        ZClientViewController.shared()?.setTopOverlay(to: nil, animated: false)
     }
     
 }

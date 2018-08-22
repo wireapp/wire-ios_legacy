@@ -42,6 +42,8 @@ class ActiveCallViewController : UIViewController {
         visibleVoiceChannelViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         view.addSubview(visibleVoiceChannelViewController.view)
         visibleVoiceChannelViewController.didMove(toParentViewController: self)
+        
+        zmLog.debug(String(format: "Presenting CallViewController: %p", visibleVoiceChannelViewController))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -84,7 +86,7 @@ class ActiveCallViewController : UIViewController {
     }
     
     func updateVisibleVoiceChannelViewController() {
-        guard let conversation = primaryCallingConversation, visibleVoiceChannelViewController.conversation != conversation,
+        guard let conversation = ZMUserSession.shared()?.priorityCallConversation, visibleVoiceChannelViewController.conversation != conversation,
               let voiceChannel = conversation.voiceChannel else {
             return
         }
@@ -96,7 +98,7 @@ class ActiveCallViewController : UIViewController {
     func transition(to toViewController: UIViewController, from fromViewController: UIViewController) {
         guard toViewController != fromViewController else { return }
         
-        zmLog.debug(String(format: "transitioning to CallViewController: %p from: %p", toViewController, fromViewController))
+        zmLog.debug(String(format: "Transitioning to CallViewController: %p from: %p", toViewController, fromViewController))
         
         toViewController.view.frame = view.bounds
         toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -114,28 +116,6 @@ class ActiveCallViewController : UIViewController {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
     }
-    
-    var primaryCallingConversation : ZMConversation? {
-        guard let userSession = ZMUserSession.shared(), let callCenter = userSession.callCenter else { return nil }
-        
-        let conversationsWithIncomingCall = callCenter.nonIdleCallConversations(in: userSession).filter({ conversation -> Bool in
-            guard let callState = conversation.voiceChannel?.state, SessionManager.shared?.callNotificationStyle != .callKit else { return false }
-            
-            switch callState {
-            case .incoming(video: _, shouldRing: true, degraded: _):
-                return !conversation.isSilenced
-            default:
-                return false
-            }
-        })
-        
-        if conversationsWithIncomingCall.count > 0 {
-            return conversationsWithIncomingCall.last
-        }
-        
-        return ongoingCallConversation
-    }
-    
     
     var ongoingCallConversation : ZMConversation? {
         return ZMUserSession.shared()?.ongoingCallConversation
