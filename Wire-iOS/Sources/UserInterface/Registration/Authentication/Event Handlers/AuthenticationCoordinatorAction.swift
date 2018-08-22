@@ -38,7 +38,7 @@ enum AuthenticationCoordinatorAction {
     case configureNotifications
     case startIncrementalUserCreation(UnregisteredUser)
     case setMarketingConsent(Bool)
-    case submitMarketingConsent
+    case sendPostRegistrationFields(UnregisteredUser)
     case completeUserRegistration
 }
 

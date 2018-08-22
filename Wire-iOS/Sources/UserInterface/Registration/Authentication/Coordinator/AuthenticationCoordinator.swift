@@ -253,11 +253,11 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
                     $0.marketingConsent = consentValue
                 }
 
-            case .submitMarketingConsent:
-                submitMarketingConsent()
-
             case .completeUserRegistration:
                 finishRegisteringUser()
+
+            case .sendPostRegistrationFields(let unregisteredUser):
+                sendPostRegistrationFields(for: unregisteredUser)
 
             case .unwindState:
                 unwind()
@@ -608,20 +608,17 @@ extension AuthenticationCoordinator {
         registrationStatus.create(user: unregisteredUser)
     }
 
-    private func submitMarketingConsent() {
-        guard case let .createUser(user) = currentStep else {
-            log.info("No need to submit the marketing consent outside of the registration state.")
-            return
-        }
-
+    private func sendPostRegistrationFields(for unregisteredUser: UnregisteredUser) {
         guard let userSession = statusProvider?.sharedUserSession else {
-            log.warn("Could not save the marking consent, as there is no user session for the user.")
+            log.error("Could not save the marketing consent and , as there is no user session for the user.")
             return
         }
 
-        let consentValue = user.marketingConsent ?? false
+        let consentValue = unregisteredUser.marketingConsent ?? false
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
+
         userSession.submitMarketingConsent(with: consentValue)
+        userSession.profileUpdate.updateImage(imageData: unregisteredUser.profileImageData!)
     }
 
 }

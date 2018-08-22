@@ -97,6 +97,7 @@ class AuthenticationEventHandlingManager {
         registerHandler(AuthenticationBackupReadyEventHandler(), to: &backupEventHandlers)
 
         // clientRegistrationSuccessHandlers
+        registerHandler(RegistrationSessionAvailableEventHandler(), to: &clientRegistrationSuccessHandlers)
         registerHandler(AuthenticationClientRegistrationSuccessHandler(), to: &clientRegistrationSuccessHandlers)
 
         // loginErrorHandlers

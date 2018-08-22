@@ -19,15 +19,21 @@
 import Foundation
 
 /**
- * Handles the notification informing that the client has been registered after the client signed in.
+ * Handles the notification informing that the user session has been created after the user registered.
  */
 
-class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler {
+class RegistrationSessionAvailableEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [.hideLoadingView, .transition(.pendingInitialSync, resetStack: false)]
+        // Only handle createUser step
+        guard case let .createUser(unregisteredUser) = currentStep else {
+            return nil
+        }
+
+        // Send the post-registration fields and wait for initial sync
+        return [.hideLoadingView, .sendPostRegistrationFields(unregisteredUser), .transition(.pendingInitialSync, resetStack: false)]
     }
 
 }
