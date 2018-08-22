@@ -28,8 +28,8 @@ import Cartography
         return label
     }()
 
-    public let separatorColor = UIColor(scheme: .separator)
-    public let separatorColorExpanded = UIColor(scheme: .paleSeparator)
+    public var separatorColor = UIColor(scheme: .separator)
+    public var separatorColorExpanded = UIColor(scheme: .paleSeparator)
 
     private let unreadDotContainer = UIView()
     private let leftSeparator = UIView()
@@ -128,4 +128,9 @@ import Cartography
         }
     }
 
+    func prepareForReuse() {
+        label.textColor = UIColor(scheme: .textForeground)
+        separatorColor = UIColor(scheme: .separator)
+        separatorColorExpanded = UIColor(scheme: .paleSeparator)
+    }
 }

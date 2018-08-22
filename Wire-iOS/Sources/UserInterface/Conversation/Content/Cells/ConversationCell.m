@@ -212,6 +212,8 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 {
     self.message = nil;
     [self.toolboxView prepareForReuse];
+    [self.burstTimestampView prepareForReuse];
+
     
     [super prepareForReuse];
     
