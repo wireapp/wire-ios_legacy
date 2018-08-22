@@ -99,11 +99,6 @@
     UITapGestureRecognizer *openURLGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                                action:@selector(openTOS:)];
     [self.termsOfUseText addGestureRecognizer:openURLGestureRecognizer];
-    [self.wr_navigationController.backButton addTarget:self action:@selector(onBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)onBackButtonPressed:(UIButton*)sender {
-    [[UnauthenticatedSession sharedSession] cancelWaitForEmailVerification];
 }
 
 - (void)createAgreeButton

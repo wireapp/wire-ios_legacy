@@ -119,8 +119,7 @@
 #import "NoHistoryViewController.h"
 #import "TermsOfUseStepViewController.h"
 #import "TermsOfUseStepViewController+Private.h"
-#import "PhoneVerificationStepViewController.h"
-#import "EmailVerificationStepViewController.h"
+#import "VerificationCodeStepViewController.h"
 #import "NameStepViewController.h"
 
 // Helper objects

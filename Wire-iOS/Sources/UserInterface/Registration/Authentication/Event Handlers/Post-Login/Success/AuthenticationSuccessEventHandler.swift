@@ -19,7 +19,7 @@
 import Foundation
 
 /**
- * Handles the notification informing the user that backups are ready to be imported.
+ * Handles the notification informing that the client has been registered after the client signed in.
  */
 
 class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler {
@@ -27,7 +27,7 @@ class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [.hideLoadingView, .submitMarketingConsent, .transition(.pendingInitialSync, resetStack: false)]
+        return [.hideLoadingView, .transition(.pendingInitialSync, resetStack: false)]
     }
 
 }

@@ -16,10 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import "PhoneVerificationStepViewController.h"
-
 @import PureLayout;
+@import WireExtensionComponents;
+@import WireUtilities;
+
+#import "VerificationCodeStepViewController.h"
 
 #import "RegistrationTextField.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -29,22 +30,19 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "UIViewController+Errors.h"
-@import WireExtensionComponents;
-@import WireUtilities;
 
+const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
-const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
+@interface VerificationCodeStepViewController () <RegistrationTextFieldDelegate, ZMTimerClient>
 
+@property (nonatomic, copy) NSString *phoneNumber;
+@property (nonatomic, copy) NSString *emailAddress;
 
-@interface PhoneVerificationStepViewController () <RegistrationTextFieldDelegate, ZMTimerClient>
-
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) RegistrationTextField *phoneVerificationField;
+@property (nonatomic) RegistrationTextField *verificationField;
 @property (nonatomic) UILabel *instructionLabel;
 @property (nonatomic) UILabel *resendLabel;
 @property (nonatomic) UIButton *resendButton;
 @property (nonatomic) UIImageView *backgroundImageView;
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 @property (nonatomic) NSDate *lastSentDate;
 @property (nonatomic) ZMTimer *timer;
@@ -52,7 +50,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 @end
 
 
-@implementation PhoneVerificationStepViewController
+@implementation VerificationCodeStepViewController
 
 @synthesize authenticationCoordinator;
 
@@ -72,13 +70,21 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     return self;
 }
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser
+- (instancetype)initWithPhoneNumber:(NSString *)phoneNumber
 {
-    self = [self init];
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
-        self.unregisteredUser = unregisteredUser;
+        self.phoneNumber = phoneNumber;
     }
+    return self;
+}
 
+- (instancetype)initWithEmailAddress:(NSString *)emailAddress
+{
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        self.emailAddress = emailAddress;
+    }
     return self;
 }
 
@@ -86,18 +92,14 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 {
     [super viewDidLoad];
 
-    if (self.unregisteredUser != nil) {
-        self.phoneNumber = self.unregisteredUser.phoneNumber;
-    }
-
     [self createBackgroundImageView];
     [self createInstructionLabel];
-    [self createPhoneVerificationField];
+    [self createVerificationField];
     [self createResendButton];
     [self createResendLabel];
 
     self.view.opaque = NO;
-    [self updateViewConstraints];
+    [self configureConstraints];
     
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
@@ -108,7 +110,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     [super viewDidAppear:animated];
 
     if (!UIAccessibilityIsVoiceOverRunning()) {
-        [self.phoneVerificationField becomeFirstResponder];
+        [self.verificationField becomeFirstResponder];
     }
 }
 
@@ -125,7 +127,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     self.instructionLabel = [[UILabel alloc] init];
     self.instructionLabel.font = UIFont.largeThinFont;
     self.instructionLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
-    self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber];
+    self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber ?: self.emailAddress];
     self.instructionLabel.numberOfLines = 0;
     self.instructionLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
 
@@ -155,63 +157,57 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     [self.view addSubview:self.resendButton];
 }
 
-- (void)createPhoneVerificationField
+- (void)createVerificationField
 {
-    self.phoneVerificationField = [[RegistrationTextField alloc] initForAutoLayout];
-    self.phoneVerificationField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewNone;
-    self.phoneVerificationField.textAlignment = NSTextAlignmentCenter;
-    self.phoneVerificationField.accessibilityIdentifier = @"verificationField";
-    self.phoneVerificationField.keyboardType = UIKeyboardTypeNumberPad;
-    self.phoneVerificationField.delegate = self;
-    [self.phoneVerificationField.confirmButton addTarget:self action:@selector(verifyCode:) forControlEvents:UIControlEventTouchUpInside];
-    self.phoneVerificationField.confirmButton.accessibilityLabel = NSLocalizedString(@"registration.phone.verify.label", @"");
-    self.phoneVerificationField.accessibilityLabel = NSLocalizedString(@"registration.phone.verify_field.label", @"");
+    self.verificationField = [[RegistrationTextField alloc] initForAutoLayout];
+    self.verificationField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewNone;
+    self.verificationField.textAlignment = NSTextAlignmentCenter;
+    self.verificationField.accessibilityIdentifier = @"verificationField";
+    self.verificationField.keyboardType = UIKeyboardTypeNumberPad;
+    self.verificationField.delegate = self;
+    [self.verificationField.confirmButton addTarget:self action:@selector(verifyCode:) forControlEvents:UIControlEventTouchUpInside];
+    self.verificationField.confirmButton.accessibilityLabel = NSLocalizedString(@"registration.phone.verify.label", @"");
+    self.verificationField.accessibilityLabel = NSLocalizedString(@"registration.phone.verify_field.label", @"");
 
-    [self.view addSubview:self.phoneVerificationField];
+    [self.view addSubview:self.verificationField];
 }
 
-- (void)updateViewConstraints
+- (void)configureConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        CGFloat inset = 28.0;
-        [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        
-        [self.phoneVerificationField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.instructionLabel withOffset:24];
-        [self.phoneVerificationField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.phoneVerificationField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [self.phoneVerificationField autoSetDimension:ALDimensionHeight toSize:40];
-        
-        [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.phoneVerificationField withOffset:24];
-        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [[self.resendButton.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
-        
-        
-        [self.resendLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.phoneVerificationField withOffset:24];
-        [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [[self.resendLabel.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
+    CGFloat inset = 28.0;
+    [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+    [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
 
-        [NSLayoutConstraint activateConstraints:
-        @[
-              [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-              [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-              [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-              [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-          ]];
-    }
+    [self.verificationField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.instructionLabel withOffset:24];
+    [self.verificationField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+    [self.verificationField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+    [self.verificationField autoSetDimension:ALDimensionHeight toSize:40];
+
+    [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.verificationField withOffset:24];
+    [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+    [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+    [[self.resendButton.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
+
+
+    [self.resendLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.verificationField withOffset:24];
+    [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
+    [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+    [[self.resendLabel.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
+
+    [NSLayoutConstraint activateConstraints:
+     @[
+       [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+       [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+       [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+       [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+       ]];
 }
 
 - (void)updateResendArea
 {
     NSTimeInterval timeSinceLastResend = [self.lastSentDate timeIntervalSinceNow];
     
-    if (fabs(timeSinceLastResend) > PhoneVerificationResendInterval) {
+    if (fabs(timeSinceLastResend) > VerificationCodeResendInterval) {
         self.resendLabel.hidden = YES;
         self.resendButton.hidden = NO;
     }
@@ -219,7 +215,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
         self.resendLabel.hidden = NO;
         self.resendButton.hidden = YES;
 
-        self.resendLabel.text = [[NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.resend_placeholder", @""), PhoneVerificationResendInterval - fabs(timeSinceLastResend)] uppercaseString];
+        self.resendLabel.text = [[NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.resend_placeholder", @""), VerificationCodeResendInterval - fabs(timeSinceLastResend)] uppercaseString];
         
         self.timer = [ZMTimer timerWithTarget:self operationQueue:[NSOperationQueue mainQueue]];
         [self.timer fireAfterTimeInterval:1.0f];
@@ -228,28 +224,28 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 
 - (NSString *)verificationCode
 {
-    return self.phoneVerificationField.text ?: @"";
+    return self.verificationField.text ?: @"";
 }
 
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {
-    self.phoneVerificationField.text = @"";
+    self.verificationField.text = @"";
 }
 
 #pragma mark - Actions
 
 - (void)verifyCode:(id)sender
 {
-    [self.authenticationCoordinator validatePhoneNumberWithCode:self.verificationCode];
+    [self.authenticationCoordinator activateCredentialsWithCode:self.verificationCode];
 }
 
 - (void)requestCode:(id)sender
 {
     // Reset the code field
-    self.phoneVerificationField.text = @"";
-    self.phoneVerificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
+    self.verificationField.text = @"";
+    self.verificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
 
-    [self.authenticationCoordinator resendPhoneValidationCode];
+    [self.authenticationCoordinator resendActivationCode];
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
 }
@@ -268,9 +264,9 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     }
     
     if (valid) {
-        self.phoneVerificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewConfirmButton;
+        self.verificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewConfirmButton;
     } else {
-        self.phoneVerificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
+        self.verificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
     }
     
     return YES;
@@ -289,8 +285,8 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     BOOL valid = [ZMUser validatePhoneVerificationCode:&verficationCode error:nil];
     
     if (valid) {
-        self.phoneVerificationField.text = verficationCode;
-        self.phoneVerificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewConfirmButton;
+        self.verificationField.text = verficationCode;
+        self.verificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewConfirmButton;
         [self verifyCode:nil];
     }
 }

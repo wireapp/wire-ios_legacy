@@ -18,24 +18,22 @@
 
 import Foundation
 
-class PhoneRegistrationIdentityVerifiedEventHandler: AuthenticationEventHandler {
+/**
+ * Handles the notification informing that the user session has been created after the user registered.
+ */
+
+class RegistrationSessionAvailableEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        // Only handle verification requests results
-        guard case let .validatePhoneIdentity(credentials, user) = currentStep else {
+        // Only handle createUser step
+        guard case let .createUser(unregisteredUser) = currentStep else {
             return nil
         }
 
-        // Update the user
-        user.phoneNumber = credentials.phoneNumber
-        user.phoneVerificationCode = credentials.phoneNumberVerificationCode
-
-        let flowState = RegistrationState(unregisteredUser: user)
-
-        // Move to the next linear step
-        return [.hideLoadingView, .startLinearRegistration(flowState)]
+        // Send the post-registration fields and wait for initial sync
+        return [.hideLoadingView, .sendPostRegistrationFields(unregisteredUser), .transition(.pendingInitialSync, resetStack: false)]
     }
 
 }

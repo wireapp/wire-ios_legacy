@@ -19,24 +19,24 @@
 import Foundation
 
 /**
- * The state of linear registration.
+ * Handles the success of credentials verification.
  */
 
-class RegistrationState {
+class RegistrationCredentialsVerifiedEventHandler: AuthenticationEventHandler {
 
-    /// The object holding the credentials and metadata for the future user.
-    let unregisteredUser: ZMIncompleteRegistrationUser
+    weak var statusProvider: AuthenticationStatusProvider?
 
-    /// Whether the user accepted the terms of service.
-    var acceptedTermsOfService: Bool = false
+    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
+        // Only handle verification requests results
+        guard case let .activateCredentials(_, user, code) = currentStep else {
+            return nil
+        }
 
-    /// Whether the user will allow Wire to send marketing updates.
-    var marketingConsent: Bool?
+        // Update the user
+        user.verificationCode = code
 
-    // MARK: - Initialization
-
-    init(unregisteredUser: ZMIncompleteRegistrationUser) {
-        self.unregisteredUser = unregisteredUser
+        // Move to the next linear step
+        return [.hideLoadingView, .startIncrementalUserCreation(user)]
     }
 
 }

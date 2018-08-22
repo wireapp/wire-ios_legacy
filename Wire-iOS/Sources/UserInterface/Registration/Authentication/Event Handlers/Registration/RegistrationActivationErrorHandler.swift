@@ -18,15 +18,22 @@
 
 import Foundation
 
-class PhoneRegistrationVerificationErrorHandler: AuthenticationEventHandler {
+/**
+ * Handles errors during registration activation.
+ */
+
+class RegistrationActivationErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
         let error = context
 
-        // Only handle errors during verification requests
-        guard case .verifyPhoneNumber = currentStep else {
+        // Only handle errors during authentication requests
+        switch currentStep {
+        case .sendActivationCode, .activateCredentials:
+            break
+        default:
             return nil
         }
 

@@ -58,6 +58,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
 
     private let sessionManager: ObservableSessionManager
     private let unauthenticatedSession: UnauthenticatedSession
+    private let registrationStatus: RegistrationStatus
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
@@ -68,13 +69,14 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
         self.presenter = presenter
         self.sessionManager = sessionManager
         self.unauthenticatedSession = unauthenticatedSession
+        self.registrationStatus = unauthenticatedSession.registrationStatus
         super.init()
 
+        registrationStatus.delegate = self
         companyLoginController?.delegate = self
         flowStack = [.landingScreen]
 
         loginObservers = [
-            unauthenticatedSession.addRegistrationObserver(self),
             PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
             PostLoginAuthenticationNotification.addObserver(self),
             sessionManager.addSessionManagerCreatedSessionObserver(self)
@@ -106,6 +108,14 @@ extension AuthenticationCoordinator {
     func transition(to step: AuthenticationFlowStep, resetStack: Bool = false) {
         currentStep = step
 
+        defer {
+            if resetStack {
+                flowStack = [step]
+            } else {
+                flowStack.append(step)
+            }
+        }
+
         guard step.needsInterface else {
             return
         }
@@ -120,17 +130,9 @@ extension AuthenticationCoordinator {
         let containerViewController = KeyboardAvoidingViewController(viewController: stepViewController)
 
         if resetStack {
-            if step.allowsUnwind {
-                flowStack = [step]
-            }
-
-            presenter?.backButtonEnabled = step.allowsUnwind
+            presenter?.backButtonEnabled = false
             presenter?.setViewControllers([containerViewController], animated: true)
         } else {
-            if step.allowsUnwind {
-                flowStack.append(step)
-            }
-
             presenter?.backButtonEnabled = step.allowsUnwind
             presenter?.pushViewController(containerViewController, animated: true)
         }
@@ -146,13 +148,15 @@ extension AuthenticationCoordinator {
      * - when the navigation controller pops the current view controller
      */
 
-    func unwind() {
+    func unwind(requireInterfaceStep: Bool = false) {
         guard flowStack.count >= 2 else {
             return
         }
 
-        flowStack.removeLast()
-        currentStep = flowStack.last!
+        repeat {
+            flowStack.removeLast()
+            currentStep = flowStack.last!
+        } while requireInterfaceStep ? !currentStep.needsInterface : false
     }
 
 }
@@ -240,19 +244,20 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
 
-            case .startLinearRegistration(let initialState):
-                eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(initialState))
+            case .startIncrementalUserCreation(let unregisteredUser):
+                transition(to: .incrementalUserCreation(unregisteredUser, .start))
+                eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
 
             case .setMarketingConsent(let consentValue):
-                updateRegistrationState {
+                updateUnregisteredUser {
                     $0.marketingConsent = consentValue
                 }
 
-            case .submitMarketingConsent:
-                submitMarketingConsent()
-
             case .completeUserRegistration:
                 finishRegisteringUser()
+
+            case .sendPostRegistrationFields(let unregisteredUser):
+                sendPostRegistrationFields(for: unregisteredUser)
 
             case .unwindState:
                 unwind()
@@ -286,6 +291,62 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
 extension AuthenticationCoordinator {
 
+    // MARK: - Registration
+
+    @objc(startRegistrationWithPhoneNumber:)
+    func startRegistration(phoneNumber: String) {
+        guard case let .createCredentials(unregisteredUser) = currentStep else {
+            log.error("Cannot start phone outside of registration flow.")
+            return
+        }
+
+        let unverifiedCredential = UnverifiedCredential.phone(phoneNumber)
+        unregisteredUser.credentials = .phone(number: phoneNumber)
+
+        presenter?.showLoadingView = true
+        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: false))
+        registrationStatus.sendActivationCode(to: unverifiedCredential)
+    }
+
+    @objc(startRegistrationWithName:email:password:)
+    func startRegistration(name: String, email: String, password: String) {
+        guard case let .createCredentials(unregisteredUser) = currentStep else {
+            log.error("Cannot start email registration outside of registration flow.")
+            return
+        }
+
+        let unverifiedCredential = UnverifiedCredential.email(email)
+        unregisteredUser.credentials = .email(address: email, password: password)
+        unregisteredUser.name = name
+
+        presenter?.showLoadingView = true
+        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: false))
+        registrationStatus.sendActivationCode(to: unverifiedCredential)
+    }
+
+    @objc func resendActivationCode() {
+        guard case let .enterActivationCode(unverifiedCredential, unregisteredUser) = currentStep else {
+            log.error("Cannot resend activation code outside of code input.")
+            return
+        }
+
+        presenter?.showLoadingView = true
+        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: true))
+        registrationStatus.sendActivationCode(to: unverifiedCredential)
+    }
+
+    @objc(activateCredentialsWithCode:)
+    func activateCredentials(code: String) {
+        guard case let .enterActivationCode(unverifiedCredential, unregisteredUser) = currentStep else {
+            log.error("Cannot activate credentials outside of code input.")
+            return
+        }
+
+        presenter?.showLoadingView = true
+        transition(to: .activateCredentials(unverifiedCredential, user: unregisteredUser, code: code))
+        registrationStatus.checkActivationCode(credential: unverifiedCredential, code: code)
+    }
+
     // MARK: Phone Number
 
     /**
@@ -295,7 +356,7 @@ extension AuthenticationCoordinator {
 
     @objc(startPhoneNumberValidationWithPhoneNumber:)
     func startPhoneNumberValidation(_ phoneNumber: String) {
-        let user: ZMIncompleteRegistrationUser?
+        let user: UnregisteredUser?
 
         switch currentStep {
         case .createCredentials(let incompleteUser):
@@ -308,7 +369,7 @@ extension AuthenticationCoordinator {
         }
 
         presenter?.showLoadingView = true
-        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
+
 
         let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: false)
         transition(to: nextStep)
@@ -331,7 +392,7 @@ extension AuthenticationCoordinator {
         if isSigningIn {
             unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
         } else {
-            unauthenticatedSession.requestPhoneVerificationCodeForRegistration(phoneNumber)
+            registrationStatus.sendActivationCode(to: .phone(phoneNumber))
         }
     }
 
@@ -351,10 +412,10 @@ extension AuthenticationCoordinator {
         }
     }
 
-    func requestPhoneRegistration(with credentials: ZMPhoneCredentials, user: ZMIncompleteRegistrationUser) {
+    func requestPhoneRegistration(with credentials: ZMPhoneCredentials, user: UnregisteredUser) {
         presenter?.showLoadingView = true
-        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
-        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
+//        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
+//        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
     }
 
     // MARK: - Login
@@ -443,14 +504,6 @@ extension AuthenticationCoordinator {
         setCredentialsWithProfile(userProfile, credentials: credentials)
     }
 
-    /**
-     * This method cancels the wait for the e-mail verification, when the view disappears.
-     */
-
-    @objc func cancelWaitForEmailVerification() {
-        unauthenticatedSession.cancelWaitForEmailVerification()
-    }
-
     // MARK: - Backup
 
     /**
@@ -507,7 +560,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func acceptTermsOfService() {
-        updateRegistrationState {
+        updateUnregisteredUser {
             $0.acceptedTermsOfService = true
         }
     }
@@ -518,8 +571,8 @@ extension AuthenticationCoordinator {
 
     @objc(setUserName:)
     func setUserName(_ userName: String) {
-        updateRegistrationState {
-            $0.unregisteredUser.name = userName
+        updateUnregisteredUser {
+            $0.name = userName
         }
     }
 
@@ -529,46 +582,43 @@ extension AuthenticationCoordinator {
 
     @objc(setProfilePictureWithData:)
     func setProfilePicture(_ data: Data) {
-        unauthenticatedSession.setProfileImage(imageData: data)
+        // unauthenticatedSession.setProfileImage(imageData: data)
 
-        updateRegistrationState {
-            $0.unregisteredUser.profileImageData = data
+        updateUnregisteredUser {
+            $0.profileImageData = data
         }
     }
 
-    private func updateRegistrationState(_ updateBlock: (RegistrationState) -> Void) {
-        guard case let .linearRegistration(registrationState, _) = currentStep else {
-            log.warn("Cannot update registration state outide of registration flow")
+    private func updateUnregisteredUser(_ updateBlock: (UnregisteredUser) -> Void) {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
+            log.warn("Cannot update unregistered user outide of the incremental user creation flow")
             return
         }
 
-        updateBlock(registrationState)
-        eventHandlingManager.handleEvent(ofType: .registrationStateUpdated(registrationState))
+        updateBlock(unregisteredUser)
+        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
     }
 
     private func finishRegisteringUser() {
-        guard case let .linearRegistration(status, _) = currentStep else {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
             return
         }
 
-        transition(to: .finalizeRegistration(status))
-        unauthenticatedSession.register(user: status.unregisteredUser.complete())
+        transition(to: .createUser(unregisteredUser))
+        registrationStatus.create(user: unregisteredUser)
     }
 
-    private func submitMarketingConsent() {
-        guard case let .finalizeRegistration(registrationState) = currentStep else {
-            log.info("No need to submit the marketing consent outside of the registration state.")
-            return
-        }
-
+    private func sendPostRegistrationFields(for unregisteredUser: UnregisteredUser) {
         guard let userSession = statusProvider?.sharedUserSession else {
-            log.warn("Could not save the marking consent, as there is no user session for the user.")
+            log.error("Could not save the marketing consent and , as there is no user session for the user.")
             return
         }
 
-        let consentValue = registrationState.marketingConsent ?? false
+        let consentValue = unregisteredUser.marketingConsent ?? false
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
+
         userSession.submitMarketingConsent(with: consentValue)
+        userSession.profileUpdate.updateImage(imageData: unregisteredUser.profileImageData!)
     }
 
 }
@@ -683,7 +733,7 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
     }
 
     func landingViewControllerDidChooseCreateAccount() {
-        let unregisteredUser = ZMIncompleteRegistrationUser()
+        let unregisteredUser = UnregisteredUser()
         unregisteredUser.accentColorValue = UIColor.indexedAccentColor()
 
         transition(to: .createCredentials(unregisteredUser))
@@ -717,7 +767,7 @@ extension AuthenticationCoordinator: UINavigationControllerDelegate {
         }
 
         self.currentViewController = authenticationViewController
-        unwind()
+        unwind(requireInterfaceStep: true)
     }
 
 

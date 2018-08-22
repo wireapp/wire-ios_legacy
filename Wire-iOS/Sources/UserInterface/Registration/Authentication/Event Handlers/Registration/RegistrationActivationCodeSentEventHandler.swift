@@ -19,22 +19,30 @@
 import Foundation
 
 /**
- * Create an event handler for registration success.
+ * Handles the success of the send activation code request.
  */
 
-class RegistrationSuccessEventHandler: AuthenticationEventHandler {
+class RegistrationActivationCodeSentEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        // Only handle registration success
-        guard case let .createUser(unregisteredUser) = currentStep else {
+        // Only handle
+        guard case let .sendActivationCode(credentials, user, isResend) = currentStep else {
             return nil
         }
 
-        // Send the marketing consent value.
-        let marketingConsentValue = unregisteredUser.marketingConsent ?? false
-        return [.hideLoadingView, .setMarketingConsent(marketingConsentValue)]
+        // Create the list of actions
+        var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
+
+        if (!isResend) {
+            let nextStep = AuthenticationFlowStep.enterActivationCode(credentials, user: user)
+            actions.append(AuthenticationCoordinatorAction.transition(nextStep, resetStack: false))
+        } else {
+            actions.append(.unwindState)
+        }
+
+        return actions
     }
 
 }

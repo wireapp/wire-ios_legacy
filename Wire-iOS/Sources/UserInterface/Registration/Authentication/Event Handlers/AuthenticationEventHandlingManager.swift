@@ -47,8 +47,7 @@ class AuthenticationEventHandlingManager {
         case authenticationFailure(NSError)
         case phoneLoginCodeAvailable
         case registrationError(NSError)
-        case registrationStateUpdated(RegistrationState)
-        case registrationIdentityVerified
+        case registrationStepSuccess
     }
 
     // MARK: - Properties
@@ -66,8 +65,7 @@ class AuthenticationEventHandlingManager {
     var loginErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
     var phoneLoginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var registrationErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
-    var linearRegistrationEventHandlers: [AnyAuthenticationEventHandler<RegistrationState>] = []
-    var registationIdentityVerificationHandlers: [AnyAuthenticationEventHandler<Void>] = []
+    var registrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
 
     /**
      * Configures the object with the given delegate and registers the default observers.
@@ -99,6 +97,7 @@ class AuthenticationEventHandlingManager {
         registerHandler(AuthenticationBackupReadyEventHandler(), to: &backupEventHandlers)
 
         // clientRegistrationSuccessHandlers
+        registerHandler(RegistrationSessionAvailableEventHandler(), to: &clientRegistrationSuccessHandlers)
         registerHandler(AuthenticationClientRegistrationSuccessHandler(), to: &clientRegistrationSuccessHandlers)
 
         // loginErrorHandlers
@@ -110,16 +109,14 @@ class AuthenticationEventHandlingManager {
         registerHandler(AuthenticationLoginCodeAvailableEventHandler(), to: &phoneLoginCodeHandlers)
 
         // registrationErrorHandlers
-        registerHandler(PhoneRegistrationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
-        registerHandler(AuthenticationPhoneLoginErrorHandler(), to: &registrationErrorHandlers)
-        registerHandler(PhoneRegistrationVerificationErrorHandler(), to: &registrationErrorHandlers)
+        registerHandler(RegistrationActivationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
+        registerHandler(RegistrationActivationErrorHandler(), to: &registrationErrorHandlers)
         registerHandler(RegistrationFinalErrorHandler(), to: &registrationErrorHandlers)
 
-        // linearRegistrationEventHandlers
-        registerHandler(RegistrationLinearStepCompletionHandler(), to: &linearRegistrationEventHandlers)
-
-        // registationIdentityVerificationHandlers
-        registerHandler(PhoneRegistrationIdentityVerifiedEventHandler(), to: &registationIdentityVerificationHandlers)
+        // registrationSuccessHandlers
+        registerHandler(RegistrationActivationCodeSentEventHandler(), to: &registrationSuccessHandlers)
+        registerHandler(RegistrationCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
+        registerHandler(RegistrationIncrementalUserDataChangeHandler(), to: &registrationSuccessHandlers)
     }
 
     fileprivate func registerHandler<Handler: AuthenticationEventHandler>(_ handler: Handler, to handlerList: inout [AnyAuthenticationEventHandler<Handler.Context>]) {
@@ -153,10 +150,8 @@ class AuthenticationEventHandlingManager {
             handleEvent(with: phoneLoginCodeHandlers, context: ())
         case .registrationError(let error):
             handleEvent(with: registrationErrorHandlers, context: error)
-        case .registrationStateUpdated(let state):
-            handleEvent(with: linearRegistrationEventHandlers, context: state)
-        case .registrationIdentityVerified:
-            handleEvent(with: registationIdentityVerificationHandlers, context: ())
+        case .registrationStepSuccess:
+            handleEvent(with: registrationSuccessHandlers, context: ())
         }
     }
 

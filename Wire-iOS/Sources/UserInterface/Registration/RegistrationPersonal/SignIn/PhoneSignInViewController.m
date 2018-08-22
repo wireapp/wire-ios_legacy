@@ -86,7 +86,7 @@
 
 #pragma mark - PhoneNumberStepViewControllerDelegate
 
-- (void)phoneNumberStepDidPickPhoneNumber:(NSString *)phoneNumber
+- (void)phoneNumberStepViewControllerDidPickPhoneNumber:(NSString *)phoneNumber
 {
     [self.authenticationCoordinator startPhoneNumberValidationWithPhoneNumber:phoneNumber];
 }

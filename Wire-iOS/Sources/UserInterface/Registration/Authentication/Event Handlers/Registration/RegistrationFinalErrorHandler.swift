@@ -29,8 +29,8 @@ class RegistrationFinalErrorHandler: AuthenticationEventHandler {
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
         let error = context
 
-        // Only handle final registration errors
-        guard case .finalizeRegistration = currentStep else {
+        // Only handle user creation errors
+        guard case .createUser = currentStep else {
             return nil
         }
 

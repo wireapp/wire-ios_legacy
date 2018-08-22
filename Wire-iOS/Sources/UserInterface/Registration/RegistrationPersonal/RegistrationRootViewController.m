@@ -20,23 +20,23 @@
 @import PureLayout;
 
 #import "RegistrationRootViewController.h"
-#import "RegistrationPhoneFlowViewController.h"
-#import "RegistrationEmailFlowViewController.h"
 #import "RegistrationViewController.h"
 #import "RegistrationFormController.h"
 #import "SignInViewController.h"
 #import "Constants.h"
+#import "EmailStepViewController.h"
+#import "PhoneNumberStepViewController.h"
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, CompanyLoginControllerDelegate, AuthenticationCoordinatedViewController>
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, CompanyLoginControllerDelegate, AuthenticationCoordinatedViewController, PhoneNumberStepViewControllerDelegate, EmailStepViewControllerDelegate>
 
 @property (nonatomic) CompanyLoginController *companyLoginController;
 
 @property (nonatomic) TabBarController *registrationTabBarController;
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) AuthenticationFlowType flowType;
 @property (nonatomic, weak) SignInViewController *signInViewController;
+@property (nonatomic, weak) UIViewController<AuthenticationCoordinatedViewController> *flowViewController;
 
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) IconButton *backButton;
@@ -55,12 +55,11 @@
 
 @synthesize authenticationCoordinator;
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow
+- (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow
 {
     self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
-        self.unregisteredUser = unregisteredUser;
         self.companyLoginController = [[CompanyLoginController alloc] initWithDefaultEnvironment];
         self.flowType = flow;
     }
@@ -78,19 +77,19 @@
     
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
     signInViewController.loginCredentials = self.loginCredentials;
-    
-    UIViewController *flowViewController = nil;
+
+    UIViewController<AuthenticationCoordinatedViewController> *flowViewController;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
-        RegistrationEmailFlowViewController *emailFlowViewController = [[RegistrationEmailFlowViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-        emailFlowViewController.formStepDelegate = self;
-        emailFlowViewController.registrationDelegate = self;
-        flowViewController = emailFlowViewController;
+        EmailStepViewController *emailStepViewController = [[EmailStepViewController alloc] init];
+        emailStepViewController.delegate = self;
+        flowViewController = emailStepViewController;
+    } else {
+        PhoneNumberStepViewController *phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] init];
+        phoneNumberStepViewController.delegate = self;
+        flowViewController = phoneNumberStepViewController;
     }
-    else {
-        RegistrationPhoneFlowViewController *phoneFlowViewController = [[RegistrationPhoneFlowViewController alloc] initWithUnregisteredUser:self.unregisteredUser];
-        phoneFlowViewController.authenticationCoordinator = self.authenticationCoordinator;
-        flowViewController = phoneFlowViewController;
-    }
+
+    flowViewController.title = NSLocalizedString(@"registration.title", @"");
 
     switch (self.flowType) {
         case AuthenticationFlowRegular:
@@ -109,8 +108,10 @@
     self.registrationTabBarController.interactive = NO;
 
     self.signInViewController = signInViewController;
+    self.flowViewController = flowViewController;
     self.signInViewController.authenticationCoordinator = self.authenticationCoordinator;
-    
+    self.flowViewController.authenticationCoordinator = self.authenticationCoordinator;
+
     if (self.showLogin) {
         [self.registrationTabBarController selectIndex:1 animated:NO];
     }
@@ -285,8 +286,28 @@
 
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
 {
-    if (self.registrationTabBarController.selectedIndex == 1) {
+    if (self.registrationTabBarController.selectedIndex == 0) {
+        [self.flowViewController executeErrorFeedbackAction:feedbackAction];
+    } else if (self.registrationTabBarController.selectedIndex == 1) {
         [self.signInViewController executeErrorFeedbackAction:feedbackAction];
+    }
+}
+
+#pragma mark - PhoneNumberStepViewControllerDelegate
+
+- (void)phoneNumberStepViewControllerDidPickPhoneNumber:(NSString *)phoneNumber
+{
+    if (self.flowType == AuthenticationFlowOnlyRegistration) {
+        [self.authenticationCoordinator startRegistrationWithPhoneNumber:phoneNumber];
+    }
+}
+
+#pragma mark - EmailStepViewControllerDelegate
+
+- (void)emailStepViewControllerDidFinishWithInput:(EmailStepViewControllerInput *)input
+{
+    if (self.flowType == AuthenticationFlowOnlyRegistration) {
+        [self.authenticationCoordinator startRegistrationWithName:input.name email:input.emailAddress password:input.password];
     }
 }
 

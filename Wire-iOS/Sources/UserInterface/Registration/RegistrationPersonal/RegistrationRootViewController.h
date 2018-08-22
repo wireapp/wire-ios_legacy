@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable) LoginCredentials *loginCredentials;
 
-- (instancetype)initWithUnregisteredUser:(ZMIncompleteRegistrationUser *)unregisteredUser authenticationFlow:(AuthenticationFlowType)flow;
+- (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow;
 - (void)presentLoginTab;
 - (void)presentRegistrationTab;
 

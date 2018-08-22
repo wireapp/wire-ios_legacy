@@ -18,31 +18,44 @@
 
 import Foundation
 
-extension AuthenticationCoordinator: ZMRegistrationObserver {
+extension AuthenticationCoordinator: RegistrationStatusDelegate {
+
+    /// Called when the user is registered.
+    func userRegistered() {
+        // no-op
+    }
 
     /// Called when registration fails.
-    func registrationDidFail(_ error: Error!) {
+    func userRegistrationFailed(with error: Error) {
         eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
     }
 
-    /// Called when the validation code for the registered phone number was sent.
-    func phoneVerificationCodeRequestDidSucceed() {
-        eventHandlingManager.handleEvent(ofType: .phoneLoginCodeAvailable)
+    /// Called when the validation code for the registered credential was sent.
+    func activationCodeSent() {
+        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
     }
 
     /// Called when the validation code for the registered phone number was sent.
-    func phoneVerificationCodeRequestDidFail(_ error: Error!) {
+    func activationCodeSendingFailed(with error: Error) {
         eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
     }
 
     /// Called when the phone number verification succeeds.
-    func phoneVerificationDidSucceed() {
-        eventHandlingManager.handleEvent(ofType: .registrationIdentityVerified)
+    func activationCodeValidated() {
+        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
     }
 
     /// Called when the phone verification fails.
-    func phoneVerificationDidFail(_ error: Error!) {
-        eventHandlingManager.handleEvent(ofType: .authenticationFailure(error as NSError))
+    func activationCodeValidationFailed(with error: Error) {
+        eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
+    }
+
+    func teamRegistered() {
+        // no-op
+    }
+
+    func teamRegistrationFailed(with error: Error) {
+        // no-op
     }
 
 }

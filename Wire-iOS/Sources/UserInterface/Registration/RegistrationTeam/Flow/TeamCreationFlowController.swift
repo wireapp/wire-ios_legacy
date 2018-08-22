@@ -101,10 +101,10 @@ extension TeamCreationFlowController {
             pushNext() // Pushing email step
         case let .verifyEmail(teamName: _, email: email):
             currentController?.showLoadingView = true
-            registrationStatus.sendActivationCode(to: email) // Sending activation code to email
+            registrationStatus.sendActivationCode(to: .email(email)) // Sending activation code to email
         case let .setFullName(teamName: _, email: email, activationCode: activationCode):
             currentController?.showLoadingView = true
-            registrationStatus.checkActivationCode(email: email, code: activationCode)
+            registrationStatus.checkActivationCode(credential: .email(email), code: activationCode)
         case .setPassword:
             pushNext()
         case let .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName, password: password):
@@ -112,7 +112,7 @@ extension TeamCreationFlowController {
                 if accepted {
                     self?.currentState = next
                     self?.currentController?.showLoadingView = true
-                    let teamToRegister = TeamToRegister(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAcceptableAccentColor())
+                    let teamToRegister = UnregisteredTeam(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAcceptableAccentColor())
                     self?.registrationStatus.create(team: teamToRegister)
                     Analytics.shared().tagTeamCreationAcceptedTerms(context: "email")
                 }
@@ -202,7 +202,7 @@ extension TeamCreationFlowController {
 extension TeamCreationFlowController: VerifyEmailStepDescriptionDelegate {
     func resendActivationCode(to email: String) {
         currentController?.showLoadingView = true
-        registrationStatus.sendActivationCode(to: email)
+        registrationStatus.sendActivationCode(to: .email(email))
     }
 
     func changeEmail() {
@@ -213,11 +213,10 @@ extension TeamCreationFlowController: VerifyEmailStepDescriptionDelegate {
 extension TeamCreationFlowController: SessionManagerCreatedSessionObserver {
     func sessionManagerCreated(userSession : ZMUserSession) {
         syncToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
-        let unauthenticatedSession = SessionManager.shared?.unauthenticatedSession
         URLSession.shared.dataTask(with: URL(string: UnsplashRandomImageHiQualityURL)!) { (data, _, error) in
             if let data = data, error == nil {
                 DispatchQueue.main.async {
-                    unauthenticatedSession?.setProfileImage(imageData: data)
+                    userSession.profileUpdate.updateImage(imageData: data)
                 }
             }
         }.resume()
@@ -244,7 +243,7 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
         currentController?.displayError(error)
     }
 
-    public func emailActivationCodeSent() {
+    public func activationCodeSent() {
         currentController?.showLoadingView = false
 
         switch currentState {
@@ -257,20 +256,28 @@ extension TeamCreationFlowController: RegistrationStatusDelegate {
         }
     }
 
-    public func emailActivationCodeSendingFailed(with error: Error) {
+    public func activationCodeSendingFailed(with error: Error) {
         currentController?.showLoadingView = false
         currentController?.displayError(error)
     }
 
-    public func emailActivationCodeValidated() {
+    public func activationCodeValidated() {
         currentController?.showLoadingView = false
         pushNext()
         Analytics.shared().tagTeamCreationEmailVerified(context: "email")
     }
 
-    public func emailActivationCodeValidationFailed(with error: Error) {
+    public func activationCodeValidationFailed(with error: Error) {
         currentController?.showLoadingView = false
         currentController?.displayError(error)
+    }
+
+    func userRegistered() {
+        // no-op
+    }
+
+    func userRegistrationFailed(with error: Error) {
+        // no-op
     }
 
 }

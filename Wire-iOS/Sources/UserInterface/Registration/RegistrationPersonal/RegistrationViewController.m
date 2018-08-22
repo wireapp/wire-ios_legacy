@@ -24,10 +24,8 @@
 
 #import "WireSyncEngine+iOS.h"
 #import "RegistrationStepViewController.h"
-#import "RegistrationPhoneFlowViewController.h"
 #import "AddEmailPasswordViewController.h"
 #import "AddPhoneNumberViewController.h"
-#import "RegistrationEmailFlowViewController.h"
 #import "RegistrationRootViewController.h"
 #import "NoHistoryViewController.h"
 #import "PopTransition.h"
@@ -132,7 +130,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                  userSessionErrorCode == ZMUserSessionAccessTokenExpired ||
                                 userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient;
 
-    RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithUnregisteredUser:self.unregisteredUser authenticationFlow:self.flowType];
+    RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithAuthenticationFlow:self.flowType];
     registrationRootViewController.formStepDelegate = self;
     registrationRootViewController.authenticationCoordinator = self.authenticationCoordinator;
     registrationRootViewController.hasSignInError = self.signInError != nil && !addingAdditionalAccount;
@@ -172,15 +170,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
-    BOOL isNoHistoryViewController = [viewController isKindOfClass:[NoHistoryViewController class]];
-    BOOL isEmailRegistration = [viewController isKindOfClass:[RegistrationEmailFlowViewController class]];
-    
-    if (isEmailRegistration) {
-//        [self.delegate registrationViewControllerDidCompleteRegistration];
-    }
-    else if (isNoHistoryViewController) {
-        [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
-    }
 }
 
 #pragma mark - NavigationControllerDelegate
