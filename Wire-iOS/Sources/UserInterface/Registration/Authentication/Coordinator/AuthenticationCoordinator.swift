@@ -156,7 +156,7 @@ extension AuthenticationCoordinator {
         repeat {
             flowStack.removeLast()
             currentStep = flowStack.last!
-        } while !currentStep.needsInterface
+        } while requireInterfaceStep ? !currentStep.needsInterface : false
     }
 
 }
