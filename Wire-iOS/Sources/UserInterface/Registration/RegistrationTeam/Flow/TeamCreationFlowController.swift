@@ -213,13 +213,12 @@ extension TeamCreationFlowController: VerifyEmailStepDescriptionDelegate {
 extension TeamCreationFlowController: SessionManagerCreatedSessionObserver {
     func sessionManagerCreated(userSession : ZMUserSession) {
         syncToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
-        //let unauthenticatedSession = SessionManager.shared?.unauthenticatedSession
         URLSession.shared.dataTask(with: URL(string: UnsplashRandomImageHiQualityURL)!) { (data, _, error) in
-          //  if let data = data, error == nil {
+            if let data = data, error == nil {
                 DispatchQueue.main.async {
-                    // unauthenticatedSession?.setProfileImage(imageData: data)
+                    userSession.profileUpdate.updateImage(imageData: data)
                 }
-           // }
+            }
         }.resume()
         sessionManagerToken = nil
     }
