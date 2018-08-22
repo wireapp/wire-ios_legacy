@@ -24,12 +24,11 @@ import Cartography
     public let unreadDot = UIView()
     public let label: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(scheme: .textForeground)
         return label
     }()
 
-    public var separatorColor = UIColor(scheme: .separator)
-    public var separatorColorExpanded = UIColor(scheme: .paleSeparator)
+    public var separatorColor: UIColor?
+    public var separatorColorExpanded: UIColor?
 
     private let unreadDotContainer = UIView()
     private let leftSeparator = UIView()
@@ -73,13 +72,14 @@ import Cartography
 
     init() {
         super.init(frame: .zero)
-        CASStyler.default().styleItem(self)
         setupViews()
         createConstraints()
 
         accentColorObserver = AccentColorChangeHandler.addObserver(self) { [weak self] (color, _) in
             self?.unreadDot.backgroundColor = color
         }
+
+        prepareForReuse()
     }
     
     required public init?(coder aDecoder: NSCoder) {
