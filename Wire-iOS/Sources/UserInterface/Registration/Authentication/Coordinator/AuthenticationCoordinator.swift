@@ -291,7 +291,16 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
 extension AuthenticationCoordinator {
 
-    // MARK: - Registration
+    // MARK: - Registration Code
+
+    /**
+     * Starts the registration flow with the specified phone number.
+     *
+     * This step will ask the registration status to send the activation code
+     * by text message. It will advance the state to `.sendActivationCode`.
+     *
+     * - parameter phoneNumber: The phone number to activate and register with.
+     */
 
     @objc(startRegistrationWithPhoneNumber:)
     func startRegistration(phoneNumber: String) {
@@ -303,10 +312,19 @@ extension AuthenticationCoordinator {
         let unverifiedCredential = UnverifiedCredential.phone(phoneNumber)
         unregisteredUser.credentials = .phone(number: phoneNumber)
 
-        presenter?.showLoadingView = true
-        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: false))
-        registrationStatus.sendActivationCode(to: unverifiedCredential)
+        sendActivationCode(unverifiedCredential, unregisteredUser, isResend: false)
     }
+
+    /**
+     * Starts the registration flow with the specified e-mail and password.
+     *
+     * This step will ask the registration status to send the activation code
+     * by e-mail. It will advance the state to `.sendActivationCode`.
+     *
+     * - parameter name: The display name of the user.
+     * - parameter email: The email address to activate and register with.
+     * - parameter password: The password to link with the e-mail.
+     */
 
     @objc(startRegistrationWithName:email:password:)
     func startRegistration(name: String, email: String, password: String) {
@@ -319,80 +337,36 @@ extension AuthenticationCoordinator {
         unregisteredUser.credentials = .email(address: email, password: password)
         unregisteredUser.name = name
 
-        presenter?.showLoadingView = true
-        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: false))
-        registrationStatus.sendActivationCode(to: unverifiedCredential)
+        sendActivationCode(unverifiedCredential, unregisteredUser, isResend: false)
     }
 
-    @objc func resendActivationCode() {
-        guard case let .enterActivationCode(unverifiedCredential, unregisteredUser) = currentStep else {
-            log.error("Cannot resend activation code outside of code input.")
-            return
-        }
-
+    /// Sends the registration activation code.
+    private func sendActivationCode(_ credential: UnverifiedCredential, _ user: UnregisteredUser, isResend: Bool) {
         presenter?.showLoadingView = true
-        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: true))
-        registrationStatus.sendActivationCode(to: unverifiedCredential)
+        transition(to: .sendActivationCode(credential, user: user, isResend: isResend))
+        registrationStatus.sendActivationCode(to: credential)
     }
 
+    /// Asks the registration
     private func activateCredentials(credential: UnverifiedCredential, user: UnregisteredUser, code: String) {
         presenter?.showLoadingView = true
         transition(to: .activateCredentials(credential, user: user, code: code))
         registrationStatus.checkActivationCode(credential: credential, code: code)
     }
 
-    // MARK: Phone Number
+    // MARK: - Login
 
     /**
      * Starts the phone number validation flow for the given phone number.
      * - parameter phoneNumber: The phone number to validate for login.
      */
 
-    @objc(startPhoneNumberValidationWithPhoneNumber:)
-    func startPhoneNumberValidation(_ phoneNumber: String) {
+    @objc(startLoginWithPhoneNumber:)
+    func startLogin(phoneNumber: String) {
         presenter?.showLoadingView = true
         let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: false)
         transition(to: nextStep)
-    }
-
-    @objc func resendPhoneValidationCode() {
-        guard case .enterLoginCode = currentStep else {
-            log.info("Ignoring request to resend phone code with step = \(currentStep).")
-            return
-        }
-
-        presenter?.showLoadingView = true
-//        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
-
-//        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: true)
-//        transition(to: nextStep)
-    }
-
-    @objc(continueFlowWithUserCode:)
-    func continueFlow(withUserCode code: String) {
-        switch currentStep {
-        case .enterLoginCode(let phoneNumber):
-            let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
-            requestPhoneLogin(with: credentials)
-
-        case .enterActivationCode(let unverifiedCredential, let user):
-            activateCredentials(credential: unverifiedCredential, user: user, code: code)
-
-        default:
-            log.error("Cannot continue flow with user code in the current state (\(currentStep)")
-        }
-    }
-
-    // MARK: - Login
-
-    /**
-     * Requests a phone login for the specified credentials.
-     */
-
-    private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
-        presenter?.showLoadingView = true
-        transition(to: .authenticatePhoneCredentials(credentials))
-        unauthenticatedSession.login(with: credentials)
+        sendLoginCode(phoneNumber: phoneNumber, isResend: false)
     }
 
     /**
@@ -404,6 +378,60 @@ extension AuthenticationCoordinator {
         presenter?.showLoadingView = true
         transition(to: .authenticateEmailCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
+    }
+
+    /// Sends the login verification code.
+    private func sendLoginCode(phoneNumber: String, isResend: Bool) {
+        presenter?.showLoadingView = true
+        let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
+        transition(to: nextStep)
+        unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
+    }
+
+    /**
+     * Requests a phone login for the specified credentials.
+     */
+
+    private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
+        presenter?.showLoadingView = true
+        transition(to: .authenticatePhoneCredentials(credentials))
+        unauthenticatedSession.login(with: credentials)
+    }
+
+    // MARK: - Generic Verification
+
+    /**
+     * Resends the verification code to the user, if allowed by the current state.
+     */
+
+    @objc func resendVerificationCode() {
+        switch currentStep {
+        case .enterLoginCode(let phoneNumber):
+            sendLoginCode(phoneNumber: phoneNumber, isResend: true)
+        case .enterActivationCode(let credential, let user):
+            sendActivationCode(credential, user, isResend: true)
+        default:
+            log.error("Cannot send verification code in the current state (\(currentStep)")
+        }
+    }
+
+    /**
+     * Checks the verification code provided by the user, and continues to the next appropriate step.
+     */
+
+    @objc(continueFlowWithVerificationCode:)
+    func continueFlow(withVerificationCode code: String) {
+        switch currentStep {
+        case .enterLoginCode(let phoneNumber):
+            let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
+            requestPhoneLogin(with: credentials)
+
+        case .enterActivationCode(let unverifiedCredential, let user):
+            activateCredentials(credential: unverifiedCredential, user: user, code: code)
+
+        default:
+            log.error("Cannot continue flow with user code in the current state (\(currentStep)")
+        }
     }
 
     // MARK: - E-Mail Registration

@@ -88,7 +88,7 @@
 
 - (void)phoneNumberStepViewControllerDidPickPhoneNumber:(NSString *)phoneNumber
 {
-    [self.authenticationCoordinator startPhoneNumberValidationWithPhoneNumber:phoneNumber];
+    [self.authenticationCoordinator startLoginWithPhoneNumber:phoneNumber];
 }
 
 @end

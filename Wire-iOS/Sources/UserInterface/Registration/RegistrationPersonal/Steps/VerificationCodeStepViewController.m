@@ -131,7 +131,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     [self.resendButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantDark] forState:UIControlStateHighlighted];
     [self.resendButton setTitle:[NSLocalizedString(@"registration.verify_phone_number.resend", nil) uppercasedWithCurrentLocale] forState:UIControlStateNormal];
 
-    [self.resendButton addTarget:self action:@selector(requestCode:) forControlEvents:UIControlEventTouchUpInside];
+    [self.resendButton addTarget:self action:@selector(requestCode) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.resendButton];
 }
@@ -144,7 +144,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     self.verificationField.accessibilityIdentifier = @"verificationField";
     self.verificationField.keyboardType = UIKeyboardTypeNumberPad;
     self.verificationField.delegate = self;
-    [self.verificationField.confirmButton addTarget:self action:@selector(verifyCode:) forControlEvents:UIControlEventTouchUpInside];
+    [self.verificationField.confirmButton addTarget:self action:@selector(verifyCode) forControlEvents:UIControlEventTouchUpInside];
     self.verificationField.confirmButton.accessibilityLabel = NSLocalizedString(@"registration.phone.verify.label", @"");
     self.verificationField.accessibilityLabel = NSLocalizedString(@"registration.phone.verify_field.label", @"");
 
@@ -213,18 +213,18 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
 #pragma mark - Actions
 
-- (void)verifyCode:(id)sender
+- (void)verifyCode
 {
-    [self.authenticationCoordinator continueFlowWithUserCode:self.verificationCode];
+    [self.authenticationCoordinator continueFlowWithVerificationCode:self.verificationCode];
 }
 
-- (void)requestCode:(id)sender
+- (void)requestCode
 {
     // Reset the code field
     self.verificationField.text = @"";
     self.verificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewNone;
 
-    [self.authenticationCoordinator resendActivationCode];
+    [self.authenticationCoordinator resendVerificationCode];
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
 }
@@ -266,7 +266,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     if (valid) {
         self.verificationField.text = verficationCode;
         self.verificationField.rightAccessoryView = RegistrationTextFieldRightAccessoryViewConfirmButton;
-        [self verifyCode:nil];
+        [self verifyCode];
     }
 }
 
