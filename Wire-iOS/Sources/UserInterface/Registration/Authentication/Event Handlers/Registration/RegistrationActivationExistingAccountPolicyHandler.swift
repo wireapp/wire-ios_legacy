@@ -47,15 +47,23 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
 
         switch user.credentials! {
         case .email:
-            let changeEmailAction = AuthenticationCoordinatorAlertAction(title: "Change E-mail", coordinatorActions: [.unwindState, .executeFeedbackAction(.clearInputFields)])
-            let loginAction = AuthenticationCoordinatorAlertAction(title: "Sign In", coordinatorActions: [])
-            let alert = AuthenticationCoordinatorAlert(title: "Account Exists", message: "The e-mail address you chose to register is already in use. Use another e-mail address, or try to log in if you own this account.", actions: [changeEmailAction, loginAction])
+            let changeEmailAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_email_action".localized, coordinatorActions: [.unwindState, .executeFeedbackAction(.clearInputFields)])
+            let loginAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_signin_action".localized, coordinatorActions: [])
+
+            let alert = AuthenticationCoordinatorAlert(title: "registration.alert.account_exists.title".localized,
+                                                       message: "registration.alert.account_exists.message_email".localized,
+                                                       actions: [changeEmailAction, loginAction])
+
             actions.append(.presentAlert(alert))
 
         case .phone(let number):
-            let changePhoneAction = AuthenticationCoordinatorAlertAction(title: "Change Phone Number", coordinatorActions: [.unwindState, .executeFeedbackAction(.clearInputFields)])
-            let loginAction = AuthenticationCoordinatorAlertAction(title: "Sign In", coordinatorActions: [.showLoadingView, .performPhoneLoginFromRegistration(phoneNumber: number)])
-            let alert = AuthenticationCoordinatorAlert(title: "Account Exists", message: "The phone number you chose to register is already in use. Use another phone number, or try to log in if you own this account.", actions: [changePhoneAction, loginAction])
+            let changePhoneAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_phone_action".localized, coordinatorActions: [.unwindState, .executeFeedbackAction(.clearInputFields)])
+            let loginAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_signin_action".localized, coordinatorActions: [.showLoadingView, .performPhoneLoginFromRegistration(phoneNumber: number)])
+
+            let alert = AuthenticationCoordinatorAlert(title: "registration.alert.account_exists.title".localized,
+                                                       message: "registration.alert.account_exists.message_phone".localized,
+                                                       actions: [changePhoneAction, loginAction])
+            
             actions.append(.presentAlert(alert))
         }
 
