@@ -34,8 +34,6 @@ open class CameraCell: UICollectionViewCell {
     
     weak var delegate: CameraCellDelegate?
     
-    fileprivate var device: DeviceProtocol = UIDevice.current
-
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -166,16 +164,5 @@ open class CameraCell: UICollectionViewCell {
         cameraController?.switchCamera { currentCamera in
             Settings.shared().preferredCamera = currentCamera
         }
-    }
-}
-
-extension CameraCell {
-    /// init method with a param for injecting mock device
-    ///
-    /// - Parameters:
-    ///   - device: Provide this param for testing only
-    convenience init(device: DeviceProtocol) {
-        self.init(frame: .zero)
-        self.device = device
     }
 }
