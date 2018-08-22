@@ -16,10 +16,6 @@
 *  along with this program. If not, see http://www.gnu.org/licenses/.
 */ 
 
-$color-accent-blue      = rgb( 36, 146, 211);
-$color-accent-green     = rgb(  0, 200,   0);
-$color-accent-yellow    = rgb(254, 191,   2);
-$color-accent-red       = rgb(255, 39,    0);
 $color-accent-orange    = rgb(255, 137,   0);
 $color-accent-pink      = rgb(254,  94, 189);
 $color-accent-magenta   = rgb(157,   0, 255);

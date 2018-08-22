@@ -137,7 +137,7 @@ private struct InputBarConstants {
     public let markdownView = MarkdownBarView()
     
     
-    public var editingBackgroundColor: UIColor?
+    public var editingBackgroundColor = UIColor(for: .brightYellow)
     public var barBackgroundColor: UIColor?
     public var writingSeparatorColor: UIColor?
     public var ephemeralColor: UIColor {

@@ -40,7 +40,6 @@ Button.dialogue-button-full {
 }
 
 Button.dialogue-button-full-destructive {
-    backgroundImageColor[state:normal]: $color-accent-red;
     titleColor[state:normal]: white;
     titleColor[state:highlighted]: $color-text-dimmed;
 }
