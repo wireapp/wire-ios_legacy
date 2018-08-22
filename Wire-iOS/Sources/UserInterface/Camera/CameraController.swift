@@ -192,6 +192,19 @@ class CameraController {
         }
     }
     
+    /**
+     * Updates the orientation of the video preview layer to best fit the
+     * device/ui orientation.
+     */
+    func updatePreviewOrientation() {
+        guard
+            let connection = previewLayer.connection,
+            connection.isVideoOrientationSupported
+            else { return }
+        
+        connection.videoOrientation = AVCaptureVideoOrientation.current
+    }
+    
     // MARK: - Image Capture
     
     typealias PhotoResult = (data: Data?, error: Error?)
