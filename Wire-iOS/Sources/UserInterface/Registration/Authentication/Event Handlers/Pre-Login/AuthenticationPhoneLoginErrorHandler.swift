@@ -31,7 +31,7 @@ class AuthenticationPhoneLoginErrorHandler: AuthenticationEventHandler {
 
         // Only handle errors that happen during phone login
         switch currentStep {
-        case .authenticatePhoneCredentials, .sendLoginCode:
+        case .sendLoginCode, .authenticatePhoneCredentials:
             break
         default:
             return nil
