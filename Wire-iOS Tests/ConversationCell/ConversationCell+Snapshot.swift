@@ -24,8 +24,14 @@ extension ConversationCell {
 
     func tableViewForSnapshot() -> UIView {
         self.backgroundColor = .clear
-        self.prepareForSnapshot()
-        return self.wrapInTableView()
+
+        prepareForReuse()
+        bounds = CGRect(x: 0.0, y: 0.0, width: 320.0, height: 9999)
+        contentView.bounds = CGRect(x: 0.0, y: 0.0, width: 320, height: 9999)
+        layoutMargins = UIView.directionAwareConversationLayoutMargins
+
+        prepareForSnapshot()
+        return wrapInTableView()
     }
 
 }
