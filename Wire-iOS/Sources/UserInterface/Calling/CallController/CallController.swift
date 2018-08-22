@@ -89,7 +89,7 @@ extension CallController: WireCallCenterCallStateObserver {
         activeCallViewController = viewController
         
         let modalVC = ModalPresentationViewController(viewController: viewController)
-        targetViewController?.present(modalVC, animated: true)
+        targetViewController?.present(modalVC, animated: animated)
     }
     
     fileprivate func dismissCall() {
