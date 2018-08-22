@@ -100,7 +100,7 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
         
         UIView.animate(
             withDuration: transitionDuration(using: transitionContext),
-            delay: 0,
+            delay: transitionContext.isInteractive ? configuration.duration : 0,
             options: [.curveLinear, .allowUserInteraction],
             animations: animations,
             completion: transitionContext.complete
