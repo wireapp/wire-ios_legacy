@@ -16,9 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@import UIKit;
 #import "AuthenticationCoordinatedViewController.h"
 
-@class ZMIncompleteRegistrationUser;
+NS_ASSUME_NONNULL_BEGIN
 
 @interface VerificationCodeStepViewController : UIViewController <AuthenticationCoordinatedViewController>
 
@@ -26,3 +27,5 @@
 - (instancetype)initWithEmailAddress:(NSString *)emailAddress;
 
 @end
+
+NS_ASSUME_NONNULL_END
