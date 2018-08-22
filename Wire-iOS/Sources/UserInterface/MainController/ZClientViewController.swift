@@ -26,13 +26,15 @@ extension ZClientViewController {
         
         if let previousViewController = topOverlayViewController, let viewController = viewController {
             addChildViewController(viewController)
+            viewController.view.frame = topOverlayContainer.bounds
+            viewController.view.translatesAutoresizingMaskIntoConstraints = false
             
             if animated {
                 transition(from: previousViewController,
                            to: viewController,
                            duration: 0.5,
                            options: .transitionCrossDissolve,
-                           animations: nil,
+                           animations: { viewController.view.fitInSuperview() },
                            completion: { (finished) in
                             viewController.didMove(toParentViewController: self)
                             previousViewController.removeFromParentViewController()
@@ -41,8 +43,6 @@ extension ZClientViewController {
                             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 })
             } else {
-                viewController.view.frame = topOverlayContainer.bounds
-                viewController.view.translatesAutoresizingMaskIntoConstraints = false
                 topOverlayContainer.addSubview(viewController.view)
                 viewController.view.fitInSuperview()
                 viewController.didMove(toParentViewController: self)
