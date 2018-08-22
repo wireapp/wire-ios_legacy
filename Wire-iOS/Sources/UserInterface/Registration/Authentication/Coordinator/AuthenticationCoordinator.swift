@@ -50,8 +50,8 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
     // MARK: - State
 
     public fileprivate(set) var currentStep: AuthenticationFlowStep = .landingScreen
-    private var flowStack: [AuthenticationFlowStep] = []
-    private var currentViewController: AuthenticationStepViewController?
+    var flowStack: [AuthenticationFlowStep] = []
+    var currentViewController: AuthenticationStepViewController?
 
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
     private let interfaceBuilder = AuthenticationInterfaceBuilder()
@@ -238,8 +238,8 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
             case .transition(let nextStep, let resetStack):
                 transition(to: nextStep, resetStack: resetStack)
 
-            case .performPhoneLoginFromRegistration:
-                break // askVerificationCode(for: phoneNumber, isSigningIn: true)
+            case .performPhoneLoginFromRegistration(let phoneNumber):
+                sendLoginCode(phoneNumber: phoneNumber, isResend: false)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -290,6 +290,20 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 // MARK: - Actions
 
 extension AuthenticationCoordinator {
+
+    // MARK: - Starting the Flow
+
+    /**
+     * Call this method when the application becomes unauthenticated and that the user
+     * needs to authenticate.
+     *
+     * - parameter error: The error that caused the unauthenticated state, if any.
+     * - parameter numberOfAccounts: The number of accounts that are signed in with the app.
+     */
+
+    func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
+        eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
+    }
 
     // MARK: - Registration Code
 
@@ -357,7 +371,7 @@ extension AuthenticationCoordinator {
     // MARK: - Login
 
     /**
-     * Starts the phone number validation flow for the given phone number.
+     * Starts the phone number login flow for the given phone number.
      * - parameter phoneNumber: The phone number to validate for login.
      */
 
@@ -371,6 +385,7 @@ extension AuthenticationCoordinator {
 
     /**
      * Requests an e-mail login for the specified credentials.
+     * - parameter credentials: The e-mail credentials to sign in with.
      */
 
     @objc(requestEmailLoginWithCredentials:)
@@ -380,7 +395,7 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
-    /// Sends the login verification code.
+    /// Sends the login verification code to the phone number.
     private func sendLoginCode(phoneNumber: String, isResend: Bool) {
         presenter?.showLoadingView = true
         let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
@@ -388,10 +403,7 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
     }
 
-    /**
-     * Requests a phone login for the specified credentials.
-     */
-
+    /// Requests a phone login for the specified credentials.
     private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
         presenter?.showLoadingView = true
         transition(to: .authenticatePhoneCredentials(credentials))
@@ -684,24 +696,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
 
 }
 
-// MARK: - Starting the Flow
-
-extension AuthenticationCoordinator {
-
-    /**
-     * Call this method when the application becomes unauthenticated and that the user
-     * needs to authenticate.
-     *
-     * - parameter error: The error that caused the unauthenticated state, if any.
-     * - parameter numberOfAccounts: The number of accounts that are signed in with the app.
-     */
-
-    func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
-        eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
-    }
-
-}
-
 // MARK: - CompanyLoginControllerDelegate
 
 extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
@@ -712,54 +706,6 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
 
     func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
         presenter?.showLoadingView = showLoadingView
-    }
-
-}
-
-// MARK: - LandingViewControllerDelegate
-
-extension AuthenticationCoordinator: LandingViewControllerDelegate {
-
-    func landingViewControllerDidChooseLogin() {
-        transition(to: .provideCredentials)
-    }
-
-    func landingViewControllerDidChooseCreateAccount() {
-        let unregisteredUser = UnregisteredUser()
-        unregisteredUser.accentColorValue = UIColor.indexedAccentColor()
-
-        transition(to: .createCredentials(unregisteredUser))
-    }
-
-    func landingViewControllerDidChooseCreateTeam() {
-        // flowController.startFlow()
-    }
-
-}
-
-// MARK: - UINavigationControllerDelegate
-
-extension AuthenticationCoordinator: UINavigationControllerDelegate {
-
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        guard let currentViewController = self.currentViewController else {
-            return
-        }
-
-        guard let keyboardViewController = viewController as? KeyboardAvoidingViewController else {
-            return
-        }
-
-        guard let authenticationViewController = keyboardViewController.viewController as? AuthenticationStepViewController else {
-            return
-        }
-
-        guard authenticationViewController.isEqual(currentViewController) == false else {
-            return
-        }
-
-        self.currentViewController = authenticationViewController
-        unwind(requireInterfaceStep: true)
     }
 
 }
