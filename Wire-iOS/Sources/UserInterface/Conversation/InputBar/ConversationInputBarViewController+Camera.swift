@@ -133,14 +133,20 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
-            self.presentImagePicker(with: .camera, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
+            self.presentImagePicker(with: .camera,
+                                    mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
+                                    allowsEditing: false,
+                                    pointToView:self.photoButton.imageView)
         }
     }
     
     public func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
-            self.presentImagePicker(with: .photoLibrary, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
+            self.presentImagePicker(with: .photoLibrary,
+                                    mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
+                                    allowsEditing: false,
+                                    pointToView:self.photoButton.imageView)
         }
     }
     

@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) IconButton *sendButton;
 @property (nonatomic) IconButton *hourglassButton;
+@property (nonatomic) IconButton *videoButton;
 
 @property (nonatomic) BOOL inRotation;
 
