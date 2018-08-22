@@ -59,7 +59,18 @@ extension CallController: WireCallCenterCallStateObserver {
             if priorityCallConversation == minimizedCall {
                 minimizeCall(in: priorityCallConversation)
             } else {
-                presentCall(in: priorityCallConversation, animated: SessionManager.shared?.callNotificationStyle != .callKit)
+                let animated: Bool
+                if SessionManager.shared?.callNotificationStyle == .callKit {
+                    switch priorityCallConversation.voiceChannel?.state {
+                    case .outgoing?:
+                        animated = true
+                    default:
+                        animated = false // We don't want animate when transition from CallKit screen
+                    }
+                } else {
+                    animated =  true
+                }
+                presentCall(in: priorityCallConversation, animated: animated)
             }
         } else {
             dismissCall()
