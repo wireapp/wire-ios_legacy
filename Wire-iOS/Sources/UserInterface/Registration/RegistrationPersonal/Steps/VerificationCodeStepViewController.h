@@ -23,8 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface VerificationCodeStepViewController : UIViewController <AuthenticationCoordinatedViewController>
 
-- (instancetype)initWithPhoneNumber:(NSString *)phoneNumber;
-- (instancetype)initWithEmailAddress:(NSString *)emailAddress;
+- (instancetype)initWithCredential:(NSString *)credential;
 
 @end
 

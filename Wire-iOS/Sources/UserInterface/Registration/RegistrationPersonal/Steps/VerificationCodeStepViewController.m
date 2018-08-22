@@ -35,8 +35,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
 @interface VerificationCodeStepViewController () <RegistrationTextFieldDelegate, ZMTimerClient>
 
-@property (nonatomic, copy) NSString *phoneNumber;
-@property (nonatomic, copy) NSString *emailAddress;
+@property (nonatomic, copy) NSString *credential;
 
 @property (nonatomic) RegistrationTextField *verificationField;
 @property (nonatomic) UILabel *instructionLabel;
@@ -59,31 +58,11 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     [self.timer cancel];
 }
 
-- (instancetype)init
-{
-    self = [super init];
-    
+- (instancetype)initWithCredential:(NSString *)credential{
+    self = [super initWithNibName:nil bundle:nil];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationLaunchedWithPhoneVerificationCode:) name:ZMLaunchedWithPhoneVerificationCodeNotificationName object:nil];
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithPhoneNumber:(NSString *)phoneNumber
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        self.phoneNumber = phoneNumber;
-    }
-    return self;
-}
-
-- (instancetype)initWithEmailAddress:(NSString *)emailAddress
-{
-    self = [super initWithNibName:nil bundle:nil];
-    if (self) {
-        self.emailAddress = emailAddress;
+        self.credential = credential;
     }
     return self;
 }
@@ -127,7 +106,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     self.instructionLabel = [[UILabel alloc] init];
     self.instructionLabel.font = UIFont.largeThinFont;
     self.instructionLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
-    self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber ?: self.emailAddress];
+    self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.credential];
     self.instructionLabel.numberOfLines = 0;
     self.instructionLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
 
@@ -236,7 +215,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
 - (void)verifyCode:(id)sender
 {
-    [self.authenticationCoordinator activateCredentialsWithCode:self.verificationCode];
+    [self.authenticationCoordinator continueFlowWithUserCode:self.verificationCode];
 }
 
 - (void)requestCode:(id)sender

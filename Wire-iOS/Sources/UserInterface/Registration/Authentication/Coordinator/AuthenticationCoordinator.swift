@@ -238,8 +238,8 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
             case .transition(let nextStep, let resetStack):
                 transition(to: nextStep, resetStack: resetStack)
 
-            case .performPhoneLoginFromRegistration(let phoneNumber):
-                askVerificationCode(for: phoneNumber, isSigningIn: true)
+            case .performPhoneLoginFromRegistration:
+                break // askVerificationCode(for: phoneNumber, isSigningIn: true)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -335,16 +335,10 @@ extension AuthenticationCoordinator {
         registrationStatus.sendActivationCode(to: unverifiedCredential)
     }
 
-    @objc(activateCredentialsWithCode:)
-    func activateCredentials(code: String) {
-        guard case let .enterActivationCode(unverifiedCredential, unregisteredUser) = currentStep else {
-            log.error("Cannot activate credentials outside of code input.")
-            return
-        }
-
+    private func activateCredentials(credential: UnverifiedCredential, user: UnregisteredUser, code: String) {
         presenter?.showLoadingView = true
-        transition(to: .activateCredentials(unverifiedCredential, user: unregisteredUser, code: code))
-        registrationStatus.checkActivationCode(credential: unverifiedCredential, code: code)
+        transition(to: .activateCredentials(credential, user: user, code: code))
+        registrationStatus.checkActivationCode(credential: credential, code: code)
     }
 
     // MARK: Phone Number
@@ -356,66 +350,37 @@ extension AuthenticationCoordinator {
 
     @objc(startPhoneNumberValidationWithPhoneNumber:)
     func startPhoneNumberValidation(_ phoneNumber: String) {
-        let user: UnregisteredUser?
-
-        switch currentStep {
-        case .createCredentials(let incompleteUser):
-            user = incompleteUser
-        case .provideCredentials:
-            user = nil
-        default:
-            log.warn("Cannot start phone number validation from step: \(currentStep)")
-            return
-        }
-
         presenter?.showLoadingView = true
-
-
-        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: false)
+        let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: false)
         transition(to: nextStep)
     }
 
     @objc func resendPhoneValidationCode() {
-        guard case let .verifyPhoneNumber(phoneNumber, user, _) = currentStep else {
+        guard case .enterLoginCode = currentStep else {
             log.info("Ignoring request to resend phone code with step = \(currentStep).")
             return
         }
 
         presenter?.showLoadingView = true
-        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
+//        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
 
-        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: true)
-        transition(to: nextStep)
+//        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: true)
+//        transition(to: nextStep)
     }
 
-    private func askVerificationCode(for phoneNumber: String, isSigningIn: Bool) {
-        if isSigningIn {
-            unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
-        } else {
-            registrationStatus.sendActivationCode(to: .phone(phoneNumber))
-        }
-    }
-
-    @objc(validatePhoneNumberWithCode:)
-    func validatePhoneNumber(with code: String) {
-        guard case let .verifyPhoneNumber(phoneNumber, user, _) = currentStep else {
-            log.info("Ignoring request to resend phone code with step = \(currentStep).")
-            return
-        }
-
-        let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
-
-        if let unauthenticatedUser = user {
-            requestPhoneRegistration(with: credentials, user: unauthenticatedUser)
-        } else {
+    @objc(continueFlowWithUserCode:)
+    func continueFlow(withUserCode code: String) {
+        switch currentStep {
+        case .enterLoginCode(let phoneNumber):
+            let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
-        }
-    }
 
-    func requestPhoneRegistration(with credentials: ZMPhoneCredentials, user: UnregisteredUser) {
-        presenter?.showLoadingView = true
-//        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
-//        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
+        case .enterActivationCode(let unverifiedCredential, let user):
+            activateCredentials(credential: unverifiedCredential, user: user, code: code)
+
+        default:
+            log.error("Cannot continue flow with user code in the current state (\(currentStep)")
+        }
     }
 
     // MARK: - Login
@@ -424,8 +389,7 @@ extension AuthenticationCoordinator {
      * Requests a phone login for the specified credentials.
      */
 
-    @objc(requestPhoneLoginWithCredentials:)
-    func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
+    private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
         presenter?.showLoadingView = true
         transition(to: .authenticatePhoneCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
@@ -489,19 +453,19 @@ extension AuthenticationCoordinator {
      */
 
     @objc func resendEmailVerificationCode() {
-        guard case let .verifyEmailCredentials(credentials) = currentStep else {
-            return
-        }
-
-        guard let userProfile = delegate?.selfUserProfile else {
-            return
-        }
-
-        presenter?.showLoadingView = true
-
-        // We can assume that the validation will succeed, as it only fails when there is no
-        // email and/or password in the email credentials, which we already checked before.
-        setCredentialsWithProfile(userProfile, credentials: credentials)
+//        guard case let .verifyEmailCredentials(credentials) = currentStep else {
+//            return
+//        }
+//
+//        guard let userProfile = delegate?.selfUserProfile else {
+//            return
+//        }
+//
+//        presenter?.showLoadingView = true
+//
+//        // We can assume that the validation will succeed, as it only fails when there is no
+//        // email and/or password in the email credentials, which we already checked before.
+//        setCredentialsWithProfile(userProfile, credentials: credentials)
     }
 
     // MARK: - Backup
@@ -660,11 +624,11 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
     func didSentVerificationEmail() {
         presenter?.showLoadingView = false
 
-        guard case .registerEmailCredentials(let credentials) = currentStep else {
-            return
-        }
-
-        transition(to: .verifyEmailCredentials(credentials))
+//        guard case .registerEmailCredentials(let credentials) = currentStep else {
+//            return
+//        }
+//
+//        transition(to: .verifyEmailCredentials(credentials))
     }
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
@@ -769,6 +733,5 @@ extension AuthenticationCoordinator: UINavigationControllerDelegate {
         self.currentViewController = authenticationViewController
         unwind(requireInterfaceStep: true)
     }
-
 
 }
