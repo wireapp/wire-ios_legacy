@@ -58,7 +58,6 @@ open class CameraCell: UICollectionViewCell {
         }
         
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange(_:)), name: NSNotification.Name.UIDeviceOrientationDidChange, object: .none)
         
         self.expandButton.setIcon(.fullScreen, with: .tiny, for: UIControlState())
@@ -81,7 +80,6 @@ open class CameraCell: UICollectionViewCell {
         self.changeCameraButton.addTarget(self, action: #selector(changeCameraPressed(_:)), for: .touchUpInside)
         self.changeCameraButton.accessibilityIdentifier = "changeCameraButton"
         self.contentView.addSubview(self.changeCameraButton)
-        
         
         [self.takePictureButton, self.expandButton, self.changeCameraButton].forEach { button in
             button.layer.shadowColor = UIColor.black.cgColor
@@ -115,25 +113,13 @@ open class CameraCell: UICollectionViewCell {
 
     override open func didMoveToWindow() {
         super.didMoveToWindow()
-        
-        guard let cameraController = self.cameraController else {
-            return
-        }
-        
-        if self.window == .none {
-            cameraController.stopRunning()
-        }
-        else {
-            cameraController.startRunning()
-        }
+        if self.window == .none { cameraController?.stopRunning() }
+        else { cameraController?.startRunning() }
     }
     
     override open func layoutSubviews() {
         super.layoutSubviews()
-        guard let cameraController = self.cameraController else {
-            return
-        }
-        cameraController.previewLayer.frame = self.contentView.bounds
+        cameraController?.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()
     }
 
