@@ -17,17 +17,19 @@
 //
 
 
-import Classy
 import Cartography
-
 
 @objcMembers final public class ConversationCellBurstTimestampView: UIView {
 
     public let unreadDot = UIView()
-    public let label = UILabel()
+    public let label: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(scheme: .textForeground)
+        return label
+    }()
 
-    public var separatorColor: UIColor?
-    public var separatorColorExpanded: UIColor?
+    public let separatorColor = UIColor(scheme: .separator)
+    public let separatorColorExpanded = UIColor(scheme: .paleSeparator)
 
     private let unreadDotContainer = UIView()
     private let leftSeparator = UIView()
