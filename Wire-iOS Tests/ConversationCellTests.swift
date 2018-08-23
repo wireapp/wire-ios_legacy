@@ -34,15 +34,18 @@ final class ConversationCellTests: XCTestCase {
         ColorScheme.default.variant = .light
     }
 
-    func testThatBurstTimestampViewColorVariantIsUpdateAfterTheCellIsRecycled() {
-        // GIVEN
+    func testThatBurstTimestampViewColorIsCorrectInLightTheme() {
+        // GIVEN & WHEN
         let sut = ConversationCell(style: .default, reuseIdentifier: nil)
-        sut.prepareForReuse()
-        XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor(scheme: .textForeground, variant:.light))
 
-        // WHEN
+        // THEN
+        XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor(scheme: .textForeground, variant:.light))
+    }
+
+    func testThatBurstTimestampViewColorIsCorrectInDarkTheme() {
+        // GIVEN & WHEN
         ColorScheme.default.variant = .dark
-        sut.prepareForReuse()
+        let sut = ConversationCell(style: .default, reuseIdentifier: nil)
 
         // THEN
         XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor(scheme: .textForeground, variant:.dark))

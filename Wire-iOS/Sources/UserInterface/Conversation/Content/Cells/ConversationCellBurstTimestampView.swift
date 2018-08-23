@@ -79,7 +79,7 @@ import Cartography
             self?.unreadDot.backgroundColor = color
         }
 
-        prepareForReuse()
+        setupStyle()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -128,7 +128,7 @@ import Cartography
         }
     }
 
-    func prepareForReuse() {
+    func setupStyle() {
         label.textColor = UIColor(scheme: .textForeground)
         separatorColor = UIColor(scheme: .separator)
         separatorColorExpanded = UIColor(scheme: .paleSeparator)
