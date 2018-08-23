@@ -146,34 +146,3 @@ IconButton.ephemeral {
     iconColor[state:highlighted]: $color-icon-normal;
 }
 
-Button.tab, Button.tab-light, Button.tab-dark, Button.tab-monochrome {
-    titleLabel: @{
-        font: $font-small-semibold;
-    };
-    textTransform: upper;
-    titleEdgeInsets: 0, 0, 4, 0;
-}
-
-Button.tab {
-    titleColor[state:normal]: $color-tab-normal;
-    titleColor[state:highlighted]: $color-tab-highlighted;
-    titleColor[state:selected]: $color-tab-selected;
-}
-
-Button.tab-light {
-    titleColor[state:normal]: $color-tab-normal-light;
-    titleColor[state:highlighted]: $color-tab-highlighted-light;
-    titleColor[state:selected]: $color-tab-selected-light;
-}
-
-Button.tab-dark {
-    titleColor[state:normal]: $color-tab-normal-dark;
-    titleColor[state:highlighted]: $color-tab-highlighted-dark;
-    titleColor[state:selected]: $color-tab-selected-dark;
-}
-
-Button.tab-monochrome {
-    titleColor[state:normal]: rgb(255, 255, 255, 0.56);
-    titleColor[state:highlighted]: rgb(255, 255, 255, 0.56);
-    titleColor[state:selected]: white;
-}

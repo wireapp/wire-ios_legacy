@@ -150,7 +150,6 @@ class TabBar: UIView {
         tab.textTransform = .upper
         tab.setTitle(item.title, for: .normal)
         tab.addTarget(self, action: #selector(TabBar.itemSelected(_:)), for: .touchUpInside)
-        tab.cas_styleClass = styleClass()
         return tab
     }
 
@@ -158,18 +157,8 @@ class TabBar: UIView {
 
     fileprivate func updateTabStyle(_ tab: Tab) {
         tab.colorSchemeVariant = style
-        tab.cas_styleClass = styleClass()
     }
     
-    fileprivate func styleClass() -> String {
-        switch (style) {
-        case .light:
-            return "tab-light"
-        case .dark:
-            return "tab-dark"
-        }
-    }
-
     // MARK: - Actions
     
     @objc func itemSelected(_ sender: AnyObject) {
