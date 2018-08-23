@@ -20,6 +20,17 @@ import UIKit
 
 extension AuthenticationCoordinator: UINavigationControllerDelegate {
 
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        switch operation {
+        case .pop:
+            return popTransition
+        case .push:
+            return pushTransition
+        case .none:
+            return nil
+        }
+    }
+
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         guard let currentViewController = self.currentViewController else {
             return

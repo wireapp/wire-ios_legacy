@@ -63,6 +63,9 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
 
+    private(set) lazy var popTransition = PopTransition()
+    private(set) lazy var pushTransition = PushTransition()
+
     // MARK: - Initialization
 
     init(presenter: NavigationController, unauthenticatedSession: UnauthenticatedSession, sessionManager: ObservableSessionManager) {
@@ -532,7 +535,7 @@ extension AuthenticationCoordinator {
         transition(to: .registerEmailCredentials(credentials, isResend: false))
         presenter?.showLoadingView = true
 
-        let result = setCredentialsWithProfile(profile, credentials: credentials) && SessionManager.shared?.update(credentials: credentials) == true
+        let result = setCredentialsWithProfile(profile, credentials: credentials) && sessionManager.update(credentials: credentials) == true
 
         if !result {
             let error = NSError(code: .invalidEmail, userInfo: nil)
@@ -654,7 +657,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         }
     }
 
-    func didSentVerificationEmail() {
+    func didSendVerificationEmail() {
         presenter?.showLoadingView = false
 
         guard case .registerEmailCredentials(let credentials, _) = currentStep else {

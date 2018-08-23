@@ -42,7 +42,7 @@ class AuthenticationInterfaceBuilder {
 
         case .reauthenticate(let error, let numberOfAccounts):
             let registrationViewController = RegistrationViewController()
-            registrationViewController.shouldHideCancelButton = numberOfAccounts <= 1
+            registrationViewController.shouldHideCancelButton = numberOfAccounts < 2
             registrationViewController.signInError = error
             return registrationViewController
 
