@@ -20,10 +20,14 @@ import Foundation
 
 extension ConversationInputBarViewController {
 
-    @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:)
+    @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:pointToView:)
     func presentImagePicker(with sourceType: UIImagePickerControllerSourceType,
                             mediaTypes: [String],
-                            allowsEditing: Bool) {
+                            allowsEditing: Bool,
+                            pointToView: UIView?) {
+
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
             if UIDevice.isSimulator {
                 let testFilePath = "/var/tmp/video.mp4"
@@ -37,40 +41,35 @@ extension ConversationInputBarViewController {
 
         let presentController = {() -> Void in
 
-            let sourceView: UIView = self.parent?.view ?? self.view
+            let context = ImagePickerPopoverPresentationContext(presentViewController: rootViewController,
+                                                                sourceType: sourceType)
 
-            if let parentViewConvtoller = self.parent {
-                let context = ImagePickerPopoverPresentationContext(sourceRect: self.photoButton.popoverSourceRect(from: self),
-                                                                    sourceView: sourceView,
-                                                                    presentViewController: parentViewConvtoller,
-                                                                    sourceType: sourceType)
+            let pickerController = UIImagePickerController.popoverForIPadRegular(with: context)
+            pickerController.delegate = self
+            pickerController.allowsEditing = allowsEditing
+            pickerController.mediaTypes = mediaTypes
+            pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
 
-                let pickerController = UIImagePickerController.popoverForIPadRegular(with: context)
-                pickerController.delegate = self
-                pickerController.allowsEditing = allowsEditing
-                pickerController.mediaTypes = mediaTypes
-                pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
+            if let popover = pickerController.popoverPresentationController,
+               let imageView = pointToView {
+                popover.config(from: rootViewController,
+                               pointToView: imageView,
+                               sourceView: rootViewController.view)
 
-                if let popover = pickerController.popoverPresentationController, let imageView = self.photoButton.imageView {
-                    popover.config(from: self,
-                                   pointToView: imageView,
-                                   sourceView: parentViewConvtoller.view)
-
-                    popover.backgroundColor = .white
-                    popover.permittedArrowDirections = .down
-                }
-
-                if sourceType == .camera {
-                    switch Settings.shared().preferredCamera {
-                    case .back:
-                        pickerController.cameraDevice = .rear
-                    case .front:
-                        pickerController.cameraDevice = .front
-                    }
-                }
-
-                parentViewConvtoller.present(pickerController, animated: true)
+                popover.backgroundColor = .white
+                popover.permittedArrowDirections = .down
             }
+
+            if sourceType == .camera {
+                switch Settings.shared().preferredCamera {
+                case .back:
+                    pickerController.cameraDevice = .rear
+                case .front:
+                    pickerController.cameraDevice = .front
+                }
+            }
+
+            rootViewController.present(pickerController, animated: true)
         }
 
         if sourceType == .camera {

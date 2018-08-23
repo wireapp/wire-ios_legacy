@@ -19,8 +19,6 @@
 import Foundation
 
 struct ImagePickerPopoverPresentationContext {
-    let sourceRect: CGRect
-    let sourceView: UIView
     let presentViewController: UIViewController
     let sourceType: UIImagePickerControllerSourceType
 }

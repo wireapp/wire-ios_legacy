@@ -21,7 +21,7 @@ import WireExtensionComponents
 enum SettingsPropertyValue: Equatable {
     case bool(value: Bool)
     case number(value: NSNumber)
-    case string(value: Swift.String)
+    case string(value: String)
     case none
 
     init(_ bool: Bool) {
@@ -68,15 +68,6 @@ enum SettingsPropertyValue: Equatable {
         case .none:
             return .none
         }
-    }
-}
-
-func ==(a: SettingsPropertyValue, b: SettingsPropertyValue) -> Bool {
-    switch (a, b) {
-    case (.string(let a), .string(let b)): return a == b
-    case (.number(let a), .number(let b)): return a == b
-    case (.none, .none): return true
-    default: return false
     }
 }
 

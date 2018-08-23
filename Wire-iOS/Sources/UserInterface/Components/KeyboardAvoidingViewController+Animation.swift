@@ -18,6 +18,25 @@
 
 import Foundation
 
+extension UIViewAnimationCurve {
+    init(rawValue: Int, fallbackValue: UIViewAnimationCurve) {
+        self = UIViewAnimationCurve(rawValue: rawValue) ?? fallbackValue
+
+        if #available(iOS 11.0, *) {
+        } else {
+            // iOS returns an undocumented type 7 animation curve raw value,
+            // which causes crashes on iOS 10 if it is used as an argument in
+            // UIViewPropertyAnimator init method. Workaround: assign a fallback value.
+            if self != .easeInOut &&
+                self != .easeIn &&
+                self != .easeOut &&
+                self != .linear {
+                self = fallbackValue
+            }
+        }
+    }
+}
+
 extension KeyboardAvoidingViewController {
     
     @objc func keyboardFrameWillChange(_ notification: Notification?) {
@@ -32,8 +51,7 @@ extension KeyboardAvoidingViewController {
         guard
             let userInfo = notification?.userInfo,
             let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval,
-            let curveRawValue = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? Int,
-            let animationCurve = UIViewAnimationCurve(rawValue: curveRawValue)
+            let curveRawValue = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? Int
             else { return }
         
         let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
@@ -47,6 +65,8 @@ extension KeyboardAvoidingViewController {
         
         bottomEdgeConstraint.constant = bottomOffset
         self.view.setNeedsLayout()
+        
+        let animationCurve = UIViewAnimationCurve(rawValue: curveRawValue, fallbackValue: .easeIn)
         
         animator = UIViewPropertyAnimator(duration: duration,
                                           curve: animationCurve,

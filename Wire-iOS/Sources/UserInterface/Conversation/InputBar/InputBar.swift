@@ -99,14 +99,6 @@ public enum InputBarState: Equatable {
     }
 }
 
-public func ==(lhs: InputBarState, rhs: InputBarState) -> Bool {
-    switch (lhs, rhs) {
-    case (.writing, .writing): return true
-    case (.editing(let lhsText), .editing(let rhsText)): return lhsText == rhsText
-    default: return false
-    }
-}
-
 private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }

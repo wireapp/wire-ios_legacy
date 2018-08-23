@@ -30,7 +30,7 @@ protocol TextFieldValidationDelegate: class {
 }
 
 class AccessoryTextField: UITextField {
-    enum Kind {
+    enum Kind: Equatable {
         case email
         case name
         case password

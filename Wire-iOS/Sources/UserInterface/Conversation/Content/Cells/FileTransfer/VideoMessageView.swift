@@ -120,7 +120,7 @@ import Classy
             updateTimeLabel(withFileMessageData: fileMessageData)
             self.timeLabel.textColor = UIColor(scheme: .textForeground)
             
-            fileMessageData.thumbnailImage.fetchImage { [weak self] (image) in
+            fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
                 guard let image = image else { return }
                 self?.updatePreviewImage(image)
             }

@@ -48,8 +48,7 @@ import Classy
     /// MARK - Views
     let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
     let authorLabel = UILabel()
-    let imageView = UIImageView()
-    var loadingView: ThreeDotsLoadingView?
+    let imageView = ImageResourceView()
     var linkPreview: LinkPreview?
     private let obfuscationView = ObfuscationView(icon: .link)
     private let ephemeralColor = UIColor(scheme: .accent)
@@ -61,11 +60,8 @@ import Classy
         [messageLabel, authorLabel, imageView, obfuscationView].forEach(addSubview)
         
         if (imagePlaceholder) {
-            let loadingView = ThreeDotsLoadingView()
-            imageView.addSubview(loadingView)
             imageView.isAccessibilityElement = true
             imageView.accessibilityIdentifier = "linkPreviewImage"
-            self.loadingView = loadingView
         }
         
         CASStyler.default().styleItem(self)
@@ -136,12 +132,6 @@ import Classy
 
             obfuscationView.edges == imageView.edges
         }
-        
-        if let loadingView = self.loadingView {
-            constrain(imageView, loadingView) { imageView, loadingView in
-                loadingView.center == imageView.center
-            }
-        }
     }
     
     private var authorHighlightAttributes : [NSAttributedStringKey: AnyObject] {
@@ -178,26 +168,23 @@ import Classy
         
         if obfuscated {
             imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
-            setContentMode(isObfuscated: true)
+            imageView.contentMode = .center
         } else {
             imageView.image = nil
             imageView.contentMode = .scaleAspectFill
-            
-            textMessageData.linkPreviewImage.fetchImage { [weak self] (image) in
-                self?.loadingView?.isHidden = image != nil
-                self?.imageView.setMediaAsset(image)
-                self?.setContentMode(isObfuscated: false)
+            imageView.setImageResource(textMessageData.linkPreviewImage) { [weak self] in
+                self?.updateContentMode()
             }
         }
     }
     
-    func setContentMode(isObfuscated: Bool) {
+    func updateContentMode() {
         
         guard let image = self.imageView.image else { return }
         let width = image.size.width * image.scale
         let height = image.size.height * image.scale
         
-        if isObfuscated || width < 480.0 || height < 160.0 {
+        if width < 480.0 || height < 160.0 {
             self.imageView.contentMode = .center
         } else {
             self.imageView.contentMode = .scaleAspectFill
