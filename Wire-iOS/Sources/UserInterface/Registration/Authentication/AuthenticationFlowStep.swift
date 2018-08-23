@@ -25,6 +25,7 @@ import Foundation
 enum AuthenticationFlowStep {
 
     // Initial Steps
+    case start
     case landingScreen
     case reauthenticate(error: NSError, numberOfAccounts: Int)
 
@@ -69,6 +70,7 @@ enum AuthenticationFlowStep {
     var needsInterface: Bool {
         switch self {
         // Initial Steps
+        case .start: return false
         case .landingScreen: return true
         case .reauthenticate: return true
 

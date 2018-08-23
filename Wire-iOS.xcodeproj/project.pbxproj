@@ -237,6 +237,7 @@
 		5E8C38AA212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38A9212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift */; };
 		5E8C38AE212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */; };
 		5E8C38B0212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */; };
+		5E8C38B2212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B1212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift */; };
 		5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */; };
 		5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74E211AEE3D00360979 /* AuthenticationCoordinatorAction.swift */; };
 		5E8DA751211AEFC800360979 /* AuthenticationStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA750211AEFC800360979 /* AuthenticationStatusProvider.swift */; };
@@ -1623,6 +1624,7 @@
 		5E8C38A9212D7003002AE12B /* VerificationCodeStepViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeStepViewControllerTests.swift; sourceTree = "<group>"; };
 		5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Navigation.swift"; sourceTree = "<group>"; };
 		5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+LandingScreen.swift"; sourceTree = "<group>"; };
+		5E8C38B1212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartMissingCredentialsErrorHandler.swift; sourceTree = "<group>"; };
 		5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventHandler.swift; sourceTree = "<group>"; };
 		5E8DA74E211AEE3D00360979 /* AuthenticationCoordinatorAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatorAction.swift; sourceTree = "<group>"; };
 		5E8DA750211AEFC800360979 /* AuthenticationStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStatusProvider.swift; sourceTree = "<group>"; };
@@ -3640,6 +3642,7 @@
 		5E8DA76D211B41FC00360979 /* Flow Start */ = {
 			isa = PBXGroup;
 			children = (
+				5E8C38B1212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift */,
 				5E8DA76E211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift */,
 				5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */,
 			);
@@ -6910,6 +6913,7 @@
 				164C29AD1ED446660026562A /* UserSelection.swift in Sources */,
 				8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */,
 				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
+				5E8C38B2212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,
 				16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */,

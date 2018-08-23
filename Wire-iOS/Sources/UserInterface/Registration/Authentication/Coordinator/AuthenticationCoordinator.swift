@@ -49,7 +49,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
 
     // MARK: - State
 
-    public fileprivate(set) var currentStep: AuthenticationFlowStep = .landingScreen
+    public fileprivate(set) var currentStep: AuthenticationFlowStep = .start
     var flowStack: [AuthenticationFlowStep] = []
     var currentViewController: AuthenticationStepViewController?
 
@@ -291,7 +291,7 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
 extension AuthenticationCoordinator {
 
-    // MARK: - Starting the Flow
+    // MARK: Starting the Flow
 
     /**
      * Call this method when the application becomes unauthenticated and that the user
@@ -305,7 +305,7 @@ extension AuthenticationCoordinator {
         eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
     }
 
-    // MARK: - Registration Code
+    // MARK: Registration Code
 
     /**
      * Starts the registration flow with the specified phone number.
@@ -319,14 +319,12 @@ extension AuthenticationCoordinator {
     @objc(startRegistrationWithPhoneNumber:)
     func startRegistration(phoneNumber: String) {
         guard case let .createCredentials(unregisteredUser) = currentStep else {
-            log.error("Cannot start phone outside of registration flow.")
+            log.error("Cannot start phone registration outside of registration flow.")
             return
         }
 
-        let unverifiedCredential = UnverifiedCredential.phone(phoneNumber)
         unregisteredUser.credentials = .phone(number: phoneNumber)
-
-        sendActivationCode(unverifiedCredential, unregisteredUser, isResend: false)
+        sendActivationCode(.phone(phoneNumber), unregisteredUser, isResend: false)
     }
 
     /**
@@ -347,11 +345,10 @@ extension AuthenticationCoordinator {
             return
         }
 
-        let unverifiedCredential = UnverifiedCredential.email(email)
         unregisteredUser.credentials = .email(address: email, password: password)
         unregisteredUser.name = name
 
-        sendActivationCode(unverifiedCredential, unregisteredUser, isResend: false)
+        sendActivationCode(.email(email), unregisteredUser, isResend: false)
     }
 
     /// Sends the registration activation code.
@@ -368,7 +365,77 @@ extension AuthenticationCoordinator {
         registrationStatus.checkActivationCode(credential: credential, code: code)
     }
 
-    // MARK: - Login
+    // MARK: Linear Registration
+
+    /**
+     * Notifies the registration state observers that the user accepted the
+     * terms of service.
+     */
+
+    @objc func acceptTermsOfService() {
+        updateUnregisteredUser {
+            $0.acceptedTermsOfService = true
+        }
+    }
+
+    /**
+     * Notifies the registration state observers that the user set a display name.
+     */
+
+    @objc(setUserName:)
+    func setUserName(_ userName: String) {
+        updateUnregisteredUser {
+            $0.name = userName
+        }
+    }
+
+    /**
+     * Notifies the registration state observers that the user set a profile picture.
+     */
+
+    @objc(setProfilePictureWithData:)
+    func setProfilePicture(_ data: Data) {
+        updateUnregisteredUser {
+            $0.profileImageData = data
+        }
+    }
+
+    /// Updates the fields of the unregistered user, and advances the state.
+    private func updateUnregisteredUser(_ updateBlock: (UnregisteredUser) -> Void) {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
+            log.error("Cannot update unregistered user outide of the incremental user creation flow")
+            return
+        }
+
+        updateBlock(unregisteredUser)
+        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
+    }
+
+    /// Creates the user on the backend and advances the state.
+    private func finishRegisteringUser() {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
+            return
+        }
+
+        transition(to: .createUser(unregisteredUser))
+        registrationStatus.create(user: unregisteredUser)
+    }
+
+    /// Sends the fields provided during registration that requires a registered user session.
+    private func sendPostRegistrationFields(for unregisteredUser: UnregisteredUser) {
+        guard let userSession = statusProvider?.sharedUserSession else {
+            log.error("Could not save the marketing consent and , as there is no user session for the user.")
+            return
+        }
+
+        let consentValue = unregisteredUser.marketingConsent ?? false
+        UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
+
+        userSession.submitMarketingConsent(with: consentValue)
+        userSession.profileUpdate.updateImage(imageData: unregisteredUser.profileImageData!)
+    }
+
+    // MARK: Login
 
     /**
      * Starts the phone number login flow for the given phone number.
@@ -377,9 +444,6 @@ extension AuthenticationCoordinator {
 
     @objc(startLoginWithPhoneNumber:)
     func startLogin(phoneNumber: String) {
-        presenter?.showLoadingView = true
-        let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: false)
-        transition(to: nextStep)
         sendLoginCode(phoneNumber: phoneNumber, isResend: false)
     }
 
@@ -410,7 +474,7 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
-    // MARK: - Generic Verification
+    // MARK: Generic Verification
 
     /**
      * Resends the verification code to the user, if allowed by the current state.
@@ -429,6 +493,7 @@ extension AuthenticationCoordinator {
 
     /**
      * Checks the verification code provided by the user, and continues to the next appropriate step.
+     * - parameter code: The verification code provided by the user.
      */
 
     @objc(continueFlowWithVerificationCode:)
@@ -437,10 +502,8 @@ extension AuthenticationCoordinator {
         case .enterLoginCode(let phoneNumber):
             let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
-
         case .enterActivationCode(let unverifiedCredential, let user):
             activateCredentials(credential: unverifiedCredential, user: user, code: code)
-
         default:
             log.error("Cannot continue flow with user code in the current state (\(currentStep)")
         }
@@ -554,75 +617,6 @@ extension AuthenticationCoordinator {
 
     @objc func currentViewControllerDidDisappear() {
         companyLoginController?.isAutoDetectionEnabled = false
-    }
-
-    // MARK: Linear Registration
-
-    /**
-     * Notifies the registration state observers that the user accepted the
-     * terms of service.
-     */
-
-    @objc func acceptTermsOfService() {
-        updateUnregisteredUser {
-            $0.acceptedTermsOfService = true
-        }
-    }
-
-    /**
-     * Notifies the registration state observers that the user set an account name.
-     */
-
-    @objc(setUserName:)
-    func setUserName(_ userName: String) {
-        updateUnregisteredUser {
-            $0.name = userName
-        }
-    }
-
-    /**
-     * Notifies the registration state observers that the user set a profile picture.
-     */
-
-    @objc(setProfilePictureWithData:)
-    func setProfilePicture(_ data: Data) {
-        // unauthenticatedSession.setProfileImage(imageData: data)
-
-        updateUnregisteredUser {
-            $0.profileImageData = data
-        }
-    }
-
-    private func updateUnregisteredUser(_ updateBlock: (UnregisteredUser) -> Void) {
-        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
-            log.warn("Cannot update unregistered user outide of the incremental user creation flow")
-            return
-        }
-
-        updateBlock(unregisteredUser)
-        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
-    }
-
-    private func finishRegisteringUser() {
-        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
-            return
-        }
-
-        transition(to: .createUser(unregisteredUser))
-        registrationStatus.create(user: unregisteredUser)
-    }
-
-    private func sendPostRegistrationFields(for unregisteredUser: UnregisteredUser) {
-        guard let userSession = statusProvider?.sharedUserSession else {
-            log.error("Could not save the marketing consent and , as there is no user session for the user.")
-            return
-        }
-
-        let consentValue = unregisteredUser.marketingConsent ?? false
-        UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
-
-        userSession.submitMarketingConsent(with: consentValue)
-        userSession.profileUpdate.updateImage(imageData: unregisteredUser.profileImageData!)
     }
 
 }

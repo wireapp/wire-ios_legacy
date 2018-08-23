@@ -221,27 +221,24 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
 
-            var updatedViewController: UIViewController?
-
-            if authenticationCoordinator == nil {
-                let navigationController = NavigationController()
-                navigationController.backButtonEnabled = false
-                navigationController.logoEnabled = false
-                navigationController.isNavigationBarHidden = true
-
-                authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
-                                                                      unauthenticatedSession: UnauthenticatedSession.sharedSession!,
-                                                                      sessionManager: SessionManager.shared!)
-
-                authenticationCoordinator?.delegate = appStateController
-                updatedViewController = KeyboardAvoidingViewController(viewController: navigationController)
+            // Only execute handle events if there is no current flow
+            guard authenticationCoordinator == nil else {
+                break
             }
 
+            let navigationController = NavigationController()
+            navigationController.backButtonEnabled = false
+            navigationController.logoEnabled = false
+            navigationController.isNavigationBarHidden = true
+
+            authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
+                                                                  unauthenticatedSession: UnauthenticatedSession.sharedSession!,
+                                                                  sessionManager: SessionManager.shared!)
+
+            authenticationCoordinator!.delegate = appStateController
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
 
-            if let navigationController = updatedViewController {
-                viewController = navigationController
-            }
+            viewController = KeyboardAvoidingViewController(viewController: navigationController)
 
         case .authenticated(completedRegistration: let completedRegistration):
             authenticationCoordinator = nil
