@@ -238,7 +238,9 @@ extension ConversationInputBarViewController: WireCallCenterCallStateObserver {
         guard let splitViewController = self.wr_splitViewController,
               let rightViewController = splitViewController.rightViewController,
               splitViewController.isRightViewControllerRevealed,
-              rightViewController.isVisible else { return }
+              rightViewController.isVisible,
+              UIApplication.shared.topMostVisibleWindow == AppDelegate.shared().window
+            else { return }
 
         self.wasRecordingBeforeCall = false
         self.mode = .audioRecord

@@ -67,7 +67,7 @@ extension ZMSystemMessageData {
 
     private static let ephemeralTimeFormatter = EphemeralTimeoutFormatter()
 
-    open let statusLabel: TTTAttributedLabel = {
+    public let statusLabel: TTTAttributedLabel = {
         let attributedLabel = TTTAttributedLabel(frame: CGRect.zero)
         attributedLabel.font = UIFont.smallSemiboldFont
         attributedLabel.backgroundColor = .clear
@@ -77,7 +77,7 @@ extension ZMSystemMessageData {
         return attributedLabel
     }()
 
-    open let reactionsView = ReactionsView()
+    public let reactionsView = ReactionsView()
     fileprivate let labelClipView = UIView()
     fileprivate var tapGestureRecogniser: UITapGestureRecognizer!
     

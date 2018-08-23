@@ -49,5 +49,10 @@ public extension UIMenuItem {
     class func open(with selector: Selector) -> UIMenuItem {
         return UIMenuItem(title: "content.message.open".localized, action: selector)
     }
+    
+    @objc(downloadItemWithAction:)
+    class func download(with selector: Selector) -> UIMenuItem {
+        return UIMenuItem(title: "content.message.download".localized, action: selector)
+    }
 
 }

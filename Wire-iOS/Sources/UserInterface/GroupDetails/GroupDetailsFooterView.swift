@@ -50,13 +50,15 @@ final class GroupDetailsFooterView: UIView {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
             $0.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
+            $0.setIconColor(UIColor(scheme: .buttonFaded), for: .disabled)
             $0.setTitleColor(UIColor(scheme: .iconNormal), for: .normal)
             $0.setTitleColor(UIColor(scheme: .textDimmed), for: .highlighted)
+            $0.setTitleColor(UIColor(scheme: .buttonFaded), for: .disabled)
             $0.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
         
         moreButton.setIcon(.ellipsis, with: .tiny, for: .normal)
-        addButton.setIcon(.convMetaAddPerson, with: .tiny, for: .normal)
+        addButton.setIcon(.plus, with: .tiny, for: .normal)
         addButton.setTitle("participants.footer.add_title".localized.uppercased(), for: .normal)
         addButton.titleImageSpacing = 16
         addButton.titleLabel?.font = FontSpec(.small, .regular).font
@@ -88,5 +90,10 @@ final class GroupDetailsFooterView: UIView {
         case addButton: return .invite
         default: return nil
         }
+    }
+    
+    func update(for conversation: ZMConversation) {
+        addButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        addButton.isEnabled = conversation.freeParticipantSlots > 0
     }
 }

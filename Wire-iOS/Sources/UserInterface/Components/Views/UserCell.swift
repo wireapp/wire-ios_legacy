@@ -114,7 +114,7 @@ class UserCell: SeparatorCollectionViewCell {
         
         avatar.userSession = ZMUserSession.shared()
         avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: .light)
-        avatar.size = .tiny
+        avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
         avatarSpacer.addSubview(avatar)

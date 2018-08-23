@@ -62,11 +62,11 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     
     public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo videoURL: URL, duration: TimeInterval) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
-        if duration > ConversationUploadMaxVideoDuration {
+        if duration > ZMUserSession.shared()!.maxVideoLength() {
             let videoEditor = StatusBarVideoEditorController()
             videoEditor.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
             videoEditor.delegate = self
-            videoEditor.videoMaximumDuration = ConversationUploadMaxVideoDuration
+            videoEditor.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
             videoEditor.videoPath = videoURL.path
             videoEditor.videoQuality = UIImagePickerControllerQualityType.typeMedium
 

@@ -21,7 +21,7 @@ import Cartography
 import WireUtilities
 import WireSyncEngine
 
-fileprivate struct PhoneNumber {
+fileprivate struct PhoneNumber: Equatable {
     enum ValidationResult {
         case valid
         case tooLong
@@ -81,12 +81,6 @@ fileprivate struct PhoneNumber {
     }
 }
 
-extension PhoneNumber: Equatable {
-    static func ==(lhs: PhoneNumber, rhs: PhoneNumber) -> Bool {
-        return lhs.fullNumber == rhs.fullNumber
-    }
-}
-
 fileprivate struct ChangePhoneNumberState {
     let currentNumber: PhoneNumber?
     var newNumber: PhoneNumber?
@@ -99,7 +93,9 @@ fileprivate struct ChangePhoneNumberState {
         guard let phoneNumber = visibleNumber else { return false }
         switch phoneNumber.validate() {
         case .valid:
-            return phoneNumber != currentNumber
+            // No current number -> it's a valid change
+            guard let current = currentNumber else { return true }
+            return phoneNumber != current
         default:
             return false
         }

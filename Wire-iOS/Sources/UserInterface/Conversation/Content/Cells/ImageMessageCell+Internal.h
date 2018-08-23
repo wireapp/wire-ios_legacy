@@ -30,4 +30,5 @@
 @interface ImageMessageCell ()
 @property (nonatomic) BOOL autoStretchVertically;
 @property (nonatomic) UIEdgeInsets defaultLayoutMargins;
+@property (nonatomic, strong) UIView *imageViewContainer;
 @end

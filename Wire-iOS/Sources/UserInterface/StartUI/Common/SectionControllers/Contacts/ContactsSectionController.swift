@@ -80,6 +80,10 @@ class ContactsSectionController : SearchSectionController {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return !(selection?.hasReachedLimit ?? false)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let user = contacts[indexPath.row]
         selection?.add(user)

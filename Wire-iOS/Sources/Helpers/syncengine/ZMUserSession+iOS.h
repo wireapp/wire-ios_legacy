@@ -25,5 +25,7 @@ extern NSString * __nonnull const UserSessionDidRequestAuthenticationNotificatio
 
 + (instancetype __nullable)sharedSession;
 - (unsigned long long)maxUploadFileSize;
+- (NSTimeInterval)maxAudioLength;
+- (NSTimeInterval)maxVideoLength;
 
 @end

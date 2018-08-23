@@ -5559,6 +5559,35 @@ static UIImage* _imageOfShieldnotverified = nil;
     [bezierPath fill];
 }
 
++ (void)drawIcon_0x758_32ptWithColor: (UIColor*)color
+{
+
+    //// Brwoser Drawing
+    UIBezierPath* brwoserPath = [UIBezierPath bezierPath];
+    [brwoserPath moveToPoint: CGPointMake(32, 0)];
+    [brwoserPath addCurveToPoint: CGPointMake(64, 32) controlPoint1: CGPointMake(49.65, 0) controlPoint2: CGPointMake(64, 14.35)];
+    [brwoserPath addCurveToPoint: CGPointMake(32, 64) controlPoint1: CGPointMake(64, 49.64) controlPoint2: CGPointMake(49.65, 64)];
+    [brwoserPath addCurveToPoint: CGPointMake(0, 32) controlPoint1: CGPointMake(14.36, 64) controlPoint2: CGPointMake(0, 49.64)];
+    [brwoserPath addCurveToPoint: CGPointMake(32, 0) controlPoint1: CGPointMake(0, 14.35) controlPoint2: CGPointMake(14.36, 0)];
+    [brwoserPath closePath];
+    [brwoserPath moveToPoint: CGPointMake(46.97, 14.28)];
+    [brwoserPath addLineToPoint: CGPointMake(26.96, 26.27)];
+    [brwoserPath addCurveToPoint: CGPointMake(26.27, 26.96) controlPoint1: CGPointMake(26.67, 26.44) controlPoint2: CGPointMake(26.44, 26.67)];
+    [brwoserPath addLineToPoint: CGPointMake(14.28, 46.97)];
+    [brwoserPath addCurveToPoint: CGPointMake(14.59, 49.41) controlPoint1: CGPointMake(13.81, 47.76) controlPoint2: CGPointMake(13.94, 48.77)];
+    [brwoserPath addCurveToPoint: CGPointMake(16, 50) controlPoint1: CGPointMake(14.97, 49.8) controlPoint2: CGPointMake(15.48, 50)];
+    [brwoserPath addCurveToPoint: CGPointMake(17.03, 49.72) controlPoint1: CGPointMake(16.35, 50) controlPoint2: CGPointMake(16.71, 49.91)];
+    [brwoserPath addLineToPoint: CGPointMake(37.04, 37.73)];
+    [brwoserPath addCurveToPoint: CGPointMake(37.73, 37.04) controlPoint1: CGPointMake(37.33, 37.56) controlPoint2: CGPointMake(37.56, 37.33)];
+    [brwoserPath addLineToPoint: CGPointMake(49.72, 17.03)];
+    [brwoserPath addCurveToPoint: CGPointMake(49.41, 14.59) controlPoint1: CGPointMake(50.19, 16.24) controlPoint2: CGPointMake(50.06, 15.23)];
+    [brwoserPath addCurveToPoint: CGPointMake(46.97, 14.28) controlPoint1: CGPointMake(48.77, 13.94) controlPoint2: CGPointMake(47.76, 13.81)];
+    [brwoserPath closePath];
+    brwoserPath.usesEvenOddFillRule = YES;
+    [color setFill];
+    [brwoserPath fill];
+}
+
 + (void)drawMissedcallWithAccent: (UIColor*)accent
 {
     //// Color Declarations
@@ -9248,6 +9277,17 @@ static UIImage* _imageOfShieldnotverified = nil;
     UIGraphicsEndImageContext();
     
     return imageOfYear;
+}
+
++ (UIImage*)imageOfIcon_0x758_32ptWithColor: (UIColor*)color
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(64, 64), NO, 0);
+    [WireStyleKit drawIcon_0x758_32ptWithColor: color];
+
+    UIImage* imageOfIcon_0x758_32pt = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfIcon_0x758_32pt;
 }
 
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent
