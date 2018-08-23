@@ -557,19 +557,17 @@ extension AuthenticationCoordinator {
      */
 
     @objc func resendEmailVerificationCode() {
-//        guard case let .verifyEmailCredentials(credentials) = currentStep else {
-//            return
-//        }
-//
-//        guard let userProfile = delegate?.selfUserProfile else {
-//            return
-//        }
-//
-//        presenter?.showLoadingView = true
-//
-//        // We can assume that the validation will succeed, as it only fails when there is no
-//        // email and/or password in the email credentials, which we already checked before.
-//        setCredentialsWithProfile(userProfile, credentials: credentials)
+        guard case let .enterEmailChangeCode(credentials) = currentStep else {
+            return
+        }
+
+        guard let userProfile = delegate?.selfUserProfile else {
+            return
+        }
+
+        presenter?.showLoadingView = true
+        transition(to: .registerEmailCredentials(credentials, isResend: true))
+        setCredentialsWithProfile(userProfile, credentials: credentials)
     }
 
     // MARK: - Backup
