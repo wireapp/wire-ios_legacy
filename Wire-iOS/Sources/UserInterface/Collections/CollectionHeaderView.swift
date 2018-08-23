@@ -58,7 +58,7 @@ import Cartography
     public let titleLabel = UILabel()
     public let actionButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(for: .strongBlue)!, for: .normal)
+        button.setTitleColor(.strongBlue, for: .normal)
 
         return button
     }()

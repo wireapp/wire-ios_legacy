@@ -34,7 +34,7 @@ extension Button {
         let button = Button.createButton(styleClass: "dialogue-button-full-destructive",
                                    title: "participants.services.remove_integration.button".localized)
 
-        button.setBackgroundImageColor(UIColor(for: .vividRed)!, for: .normal)
+        button.setBackgroundImageColor(.vividRed, for: .normal)
         return button
     }
 
