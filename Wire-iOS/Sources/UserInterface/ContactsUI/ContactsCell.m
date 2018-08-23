@@ -18,10 +18,10 @@
 
 
 #import "ContactsCell.h"
+#import "Button.h"
 #import "BadgeUserImageView.h"
 @import PureLayout;
 #import "WireSyncEngine+iOS.h"
-@import WireExtensionComponents;
 
 
 

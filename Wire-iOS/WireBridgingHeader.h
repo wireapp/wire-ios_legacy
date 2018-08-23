@@ -72,6 +72,9 @@
 #import "ConversationMessageWindowTableViewAdapter.h"
 #import "ConversationMessageWindowTableViewAdapter+Private.h"
 #import "ConnectionRequestCell.h"
+#import "IconButton.h"
+#import "Button.h"
+#import "ButtonWithLargerHitArea.h"
 
 // View Controllers
 #import "ZClientViewController.h"

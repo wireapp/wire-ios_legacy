@@ -31,9 +31,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/AvatarImageView.h>
 #import <WireExtensionComponents/UserImageView.h>
 #import <WireExtensionComponents/TextView.h>
-#import <WireExtensionComponents/IconButton.h>
-#import <WireExtensionComponents/Button.h>
-#import <WireExtensionComponents/ButtonWithLargerHitArea.h>
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
 #import <WireExtensionComponents/DeveloperMenuState.h>
