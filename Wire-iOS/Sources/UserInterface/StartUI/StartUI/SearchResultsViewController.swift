@@ -198,7 +198,13 @@ extension UIViewController {
         searchResultsView?.isContainedInPopover = isContainedInPopover()
         view = searchResultsView
     }
-    
+
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        sectionController.collectionView?.reloadData()
+        sectionController.collectionView?.collectionViewLayout.invalidateLayout()
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         

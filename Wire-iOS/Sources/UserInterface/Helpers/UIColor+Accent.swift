@@ -23,3 +23,19 @@ extension UIColor {
         return self.accent().mix(.black, amount: 0.32)
     }
 }
+
+extension UIColor {
+    static var strongBlue: UIColor  {
+        return UIColor(for: .strongBlue)!
+    }
+
+    static var brightYellow: UIColor  {
+        return UIColor(for: .brightYellow)!
+    }
+
+    static var vividRed: UIColor  {
+        return UIColor(for: .vividRed)!
+    }
+}
+
+

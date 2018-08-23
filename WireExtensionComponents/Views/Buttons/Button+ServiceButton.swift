@@ -31,8 +31,11 @@ extension Button {
     }
 
     @objc public static func createDestructiveServiceButton() -> Button {
-        return Button.createButton(styleClass: "dialogue-button-full-destructive",
+        let button = Button.createButton(styleClass: "dialogue-button-full-destructive",
                                    title: "participants.services.remove_integration.button".localized)
+
+        button.setBackgroundImageColor(.vividRed, for: .normal)
+        return button
     }
 
     private static func createButton(styleClass:String, title:String) -> Button {

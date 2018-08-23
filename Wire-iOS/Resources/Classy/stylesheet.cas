@@ -17,7 +17,6 @@
 */ 
 
 
-@import "colors.cas";
 @import "common-controls.cas";
 
 
@@ -307,7 +306,6 @@ UILabel.conversationVerifiedLabel {
 
 InputBar: {
     barBackgroundColor: $color-bar-background;
-    editingBackgroundColor: $color-accent-yellow;
     writingSeparatorColor: $color-separator;
     placeholderColor: $color-text-placeholder;
     textColor: $color-text-foreground;
@@ -831,10 +829,9 @@ CollectionHeaderView {
     }
 
     actionButton: @{
-        titleLabel: @{
+        titleLabel: @{  
             font: $font-small-semibold;
         }
-        titleColor[state:normal]: $color-accent-blue;
     }
 }
 
