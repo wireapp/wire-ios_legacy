@@ -19,19 +19,18 @@
 import XCTest
 @testable import Wire
 
-class VerificationCodeStepViewControllerTests: ZMSnapshotTestCase {
+class EmailLinkVerificationViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
     }
 
-    func testThatItRendersInstructionsWithPhoneNumber() {
-        let sut = VerificationCodeStepViewController(credential: "+4912345678900")
-        verifyInAllDeviceSizes(view: sut.view)
-    }
-
     func testThatItRendersInstructionsWithEmailAddress() {
-        let sut = VerificationCodeStepViewController(credential: "test@wire.com")
+        // GIVEN
+        let credentials = ZMEmailCredentials(email: "test@example.com", password: "testest")
+        let sut = EmailLinkVerificationViewController(credentials: credentials)
+
+        // THEN
         verifyInAllDeviceSizes(view: sut.view)
     }
 
