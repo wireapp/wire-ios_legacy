@@ -18,7 +18,7 @@
 
 import UIKit
 
-class EmailLinkVerificationViewController: AuthenticationStepViewController {
+class EmailLinkVerificationViewController: BlueViewController, AuthenticationCoordinatedViewController {
 
     weak var authenticationCoordinator: AuthenticationCoordinator?
 
@@ -38,7 +38,6 @@ class EmailLinkVerificationViewController: AuthenticationStepViewController {
 
     // MARK: - UI Elements
 
-    private let backgroundImageView = UIImageView()
     private let mailIconView = UIImageView()
     private let instructionsLabel = UILabel()
     private let resendInstructionsLabel = UILabel()
@@ -48,23 +47,13 @@ class EmailLinkVerificationViewController: AuthenticationStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         configureSubviews()
         configureConstraints()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        authenticationCoordinator?.cancelWaitForEmailVerification()
     }
 
     // MARK: - Interface Configuration
 
     private func configureSubviews() {
-        backgroundImageView.image = UIImage(named: "LaunchImage")!
-        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backgroundImageView)
-
         mailIconView.image = UIImage(for: .envelope, iconSize: .large, color: .white)
         mailIconView.contentMode = .center
         mailIconView.translatesAutoresizingMaskIntoConstraints = false
@@ -112,12 +101,6 @@ class EmailLinkVerificationViewController: AuthenticationStepViewController {
         let offset: CGFloat = 28
 
         let constraints = [
-            // Background Image
-            backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            backgroundImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
             // Container
             container.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor, constant: offset),
             container.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor, constant: -offset),

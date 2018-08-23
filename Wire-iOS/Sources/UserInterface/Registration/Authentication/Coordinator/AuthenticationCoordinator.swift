@@ -670,7 +670,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         }
 
         switch currentStep {
-        case .registerEmailCredentials:
+        case .enterEmailChangeCode:
             guard let selfUser = delegate?.selfUser else {
                 return
             }

@@ -41,7 +41,7 @@ class AuthenticationStartMissingCredentialsErrorHandler: AuthenticationEventHand
 
         // Prepare the next step
         let nextStep = AuthenticationFlowStep.addEmailAndPassword(user: user, profile: profile, canSkip: false)
-        return [.transition(nextStep, resetStack: true)]
+        return [.startPostLoginFlow, .transition(nextStep, resetStack: true)]
     }
 
 }

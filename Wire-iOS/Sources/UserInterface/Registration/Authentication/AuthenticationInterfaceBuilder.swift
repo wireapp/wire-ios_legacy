@@ -75,7 +75,7 @@ class AuthenticationInterfaceBuilder {
             return VerificationCodeStepViewController(credential: credentials.rawValue)
 
         case .enterEmailChangeCode(let emailCredentials):
-            return VerificationCodeStepViewController(credential: emailCredentials.email!)
+            return EmailLinkVerificationViewController(credentials: emailCredentials)
 
         case .incrementalUserCreation(let user, let registrationStep):
             return makeRegistrationStepViewController(for: registrationStep, user: user)
