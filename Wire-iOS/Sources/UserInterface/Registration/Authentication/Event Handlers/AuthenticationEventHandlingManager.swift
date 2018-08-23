@@ -171,6 +171,10 @@ class AuthenticationEventHandlingManager {
         for handler in handlers {
             handler.statusProvider = delegate.statusProvider
 
+            defer {
+                handler.statusProvider = nil
+            }
+
             if let responseActions = handler.handleEvent(currentStep: delegate.currentStep, context: context) {
                 lookupResult = (handler.name, responseActions)
                 break

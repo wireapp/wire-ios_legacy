@@ -35,13 +35,15 @@ enum AuthenticationFlowStep {
     case enterLoginCode(phoneNumber: String)
     case authenticateEmailCredentials(ZMEmailCredentials)
     case authenticatePhoneCredentials(ZMPhoneCredentials)
-    case registerEmailCredentials(ZMEmailCredentials)
 
     // Post Sign-In
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials)
     case removeClient
     case addEmailAndPassword(user: ZMUser, profile: UserProfile, canSkip: Bool)
+    case registerEmailCredentials(ZMEmailCredentials, isResend: Bool)
+    case enterEmailChangeCode(ZMEmailCredentials)
+    case verifyEmailChangeCode(ZMEmailCredentials)
     case pendingInitialSync
 
     // Registration
@@ -88,6 +90,8 @@ enum AuthenticationFlowStep {
         case .removeClient: return false
         case .addEmailAndPassword: return true
         case .pendingInitialSync: return false
+        case .enterEmailChangeCode: return true
+        case .verifyEmailChangeCode: return false
 
         // Registration
         case .createCredentials: return true

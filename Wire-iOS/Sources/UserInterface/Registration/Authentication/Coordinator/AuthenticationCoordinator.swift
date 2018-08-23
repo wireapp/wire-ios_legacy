@@ -509,7 +509,7 @@ extension AuthenticationCoordinator {
         }
     }
 
-    // MARK: - E-Mail Registration
+    // MARK: - Add Email And Password
 
     /**
      * Skips the add e-mail and password step, if possible.
@@ -525,10 +525,11 @@ extension AuthenticationCoordinator {
 
     @objc func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
         guard case let .addEmailAndPassword(_, profile, _) = currentStep else {
+            log.error("Cannot save e-mail and password outside of designated step.")
             return
         }
 
-        transition(to: AuthenticationFlowStep.registerEmailCredentials(credentials))
+        transition(to: .registerEmailCredentials(credentials, isResend: false))
         presenter?.showLoadingView = true
 
         let result = setCredentialsWithProfile(profile, credentials: credentials) && SessionManager.shared?.update(credentials: credentials) == true
@@ -658,11 +659,11 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
     func didSentVerificationEmail() {
         presenter?.showLoadingView = false
 
-//        guard case .registerEmailCredentials(let credentials) = currentStep else {
-//            return
-//        }
-//
-//        transition(to: .verifyEmailCredentials(credentials))
+        guard case .registerEmailCredentials(let credentials, _) = currentStep else {
+            return
+        }
+
+        transition(to: .enterEmailChangeCode(credentials))
     }
 
     func userDidChange(_ changeInfo: UserChangeInfo) {

@@ -26,6 +26,7 @@ class AuthenticationStartMissingCredentialsErrorHandler: AuthenticationEventHand
         let error = context.0
 
         // Only handle errors on start
+        print(currentStep)
         guard case .start = currentStep else {
             return nil
         }
