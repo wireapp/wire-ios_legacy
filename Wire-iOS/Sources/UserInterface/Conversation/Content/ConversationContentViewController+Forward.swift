@@ -205,7 +205,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             }
 
             popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
-            popoverPresentationController.permittedArrowDirections = [.up, .down]
+            popoverPresentationController.permittedArrowDirections = [.left, .right]
         }
         
         keyboardAvoiding.presentationController?.delegate = self
