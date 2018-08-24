@@ -1182,6 +1182,7 @@
 		EF82E1C220EF6152001B5196 /* ConversationCell+CountDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF82E1C120EF6152001B5196 /* ConversationCell+CountDown.swift */; };
 		EF84DF442130332200033702 /* ParticipantDeviceCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF84DF432130332100033702 /* ParticipantDeviceCellTests.swift */; };
 		EF84DF482130373D00033702 /* IconSystemCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF84DF472130373D00033702 /* IconSystemCellTests.swift */; };
+		EF84DF4A21303D3800033702 /* ConversationListBottomBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF84DF4921303D3800033702 /* ConversationListBottomBarControllerTests.swift */; };
 		EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */; };
 		EF8DD906211C67DA00E970F1 /* ImageMessageCell+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD905211C67D900E970F1 /* ImageMessageCell+BackgroundColor.swift */; };
 		EF8DD90A211C840800E970F1 /* 20000x20000.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF8DD909211C840800E970F1 /* 20000x20000.gif */; };
@@ -2862,6 +2863,7 @@
 		EF82E1C120EF6152001B5196 /* ConversationCell+CountDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+CountDown.swift"; sourceTree = "<group>"; };
 		EF84DF432130332100033702 /* ParticipantDeviceCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceCellTests.swift; sourceTree = "<group>"; };
 		EF84DF472130373D00033702 /* IconSystemCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconSystemCellTests.swift; sourceTree = "<group>"; };
+		EF84DF4921303D3800033702 /* ConversationListBottomBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListBottomBarControllerTests.swift; sourceTree = "<group>"; };
 		EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockConversation+TimedMessage.swift"; sourceTree = "<group>"; };
 		EF8DD905211C67D900E970F1 /* ImageMessageCell+BackgroundColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+BackgroundColor.swift"; sourceTree = "<group>"; };
 		EF8DD909211C840800E970F1 /* 20000x20000.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 20000x20000.gif; sourceTree = "<group>"; };
@@ -5213,6 +5215,7 @@
 				D50892FC2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift */,
 				D524BE5E207B99B800542A4E /* UIViewController+LoadingTests.swift */,
 				BF606D721CAA9EEE002BAC94 /* ConversationListBottomBarTests.m */,
+				EF84DF4921303D3800033702 /* ConversationListBottomBarControllerTests.swift */,
 				BFAD3A181CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m */,
 				BFAD3A161CD0F14800F0FBED /* ConversationTitleViewTests.m */,
 				7CFDC2801FD9A98100285047 /* AvailabilityTitleViewTests.swift */,
@@ -7542,6 +7545,7 @@
 				EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */,
 				DBB45F3B1B53F8DE0010053C /* NSString+MentionsTests.m in Sources */,
 				8740205C1BF4CF7E001F2D4C /* AVSStub.m in Sources */,
+				EF84DF4A21303D3800033702 /* ConversationListBottomBarControllerTests.swift in Sources */,
 				1658C19C20A1F07800148F6D /* MockCallInfoViewControllerInput.swift in Sources */,
 				87FC0AEB1FC71C020036E029 /* CharacterInputFieldTests.swift in Sources */,
 				EF1EF1C320627075004DB245 /* SignInViewControllerTests.swift in Sources */,
