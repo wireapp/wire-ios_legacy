@@ -19,15 +19,31 @@
 import XCTest
 @testable import Wire
 
+class MockAuthenticationStateControllerDelegate: AuthenticationStateControllerDelegate {
+
+    var lastKnownStep: AuthenticationFlowStep?
+    var lastKnownReset: Bool?
+
+    func stateDidChange(_ newState: AuthenticationFlowStep, withReset resetStack: Bool) {
+        lastKnownStep = newState
+        lastKnownReset = resetStack
+    }
+
+}
+
 class AuthenticationStateControllerTests: XCTestCase {
 
     var stateController: AuthenticationStateController!
+    var delegate: MockAuthenticationStateControllerDelegate!
 
     override func setUp() {
+        delegate = MockAuthenticationStateControllerDelegate()
         stateController = AuthenticationStateController()
+        stateController.delegate = delegate
     }
 
     override func tearDown() {
+        delegate = nil
         stateController = nil
     }
 
@@ -43,6 +59,8 @@ class AuthenticationStateControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(stateController.currentStep, .landingScreen)
         XCTAssertEqual(stateController.stack, [.start, .landingScreen])
+        XCTAssertEqual(delegate.lastKnownReset, false)
+        XCTAssertEqual(delegate.lastKnownStep, .landingScreen)
     }
 
     func testThatItAdvancesStateWithNonUIStep() {
@@ -56,6 +74,9 @@ class AuthenticationStateControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(stateController.currentStep, emailStep)
         XCTAssertEqual(stateController.stack, [.start, emailStep])
+        XCTAssertEqual(delegate.lastKnownReset, false)
+        XCTAssertEqual(delegate.lastKnownStep, emailStep)
+
     }
 
     func testThatItAdvancesStateWithReset() {
@@ -65,6 +86,8 @@ class AuthenticationStateControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(stateController.currentStep, .landingScreen)
         XCTAssertEqual(stateController.stack, [.landingScreen])
+        XCTAssertEqual(delegate.lastKnownReset, true)
+        XCTAssertEqual(delegate.lastKnownStep, .landingScreen)
     }
 
     func testThatItDoesNotUnwindFromInitialState() {
