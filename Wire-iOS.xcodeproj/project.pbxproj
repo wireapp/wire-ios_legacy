@@ -619,7 +619,6 @@
 		87BEB0DD1C734D710094BFE9 /* MockUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0DB1C734D710094BFE9 /* MockUser.m */; };
 		87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0DF1C734DA60094BFE9 /* MockLoader.m */; };
 		87BEB0E21C734DB60094BFE9 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E11C734DB60094BFE9 /* MockMessage.swift */; };
-		87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */; };
 		87C1A7BC1D8FDFD8002630BB /* VersionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */; };
 		87C39A8A206947A1008DA100 /* UIView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C39A89206947A1008DA100 /* UIView+Constraints.swift */; };
 		87C39A8C206BCD26008DA100 /* NoHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C39A8B206BCD26008DA100 /* NoHistoryViewController.swift */; };
@@ -2093,8 +2092,6 @@
 		87BEB0DE1C734DA60094BFE9 /* MockLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockLoader.h; sourceTree = "<group>"; };
 		87BEB0DF1C734DA60094BFE9 /* MockLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockLoader.m; sourceTree = "<group>"; };
 		87BEB0E11C734DB60094BFE9 /* MockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
-		87BEB0E31C7363D30094BFE9 /* MockMessage+Creation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MockMessage+Creation.h"; sourceTree = "<group>"; };
-		87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MockMessage+Creation.m"; sourceTree = "<group>"; };
 		87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionInfoViewController.h; sourceTree = "<group>"; };
 		87C1A7BB1D8FDFD8002630BB /* VersionInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionInfoViewController.m; sourceTree = "<group>"; };
 		87C39A89206947A1008DA100 /* UIView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Constraints.swift"; sourceTree = "<group>"; };
@@ -4292,8 +4289,6 @@
 				87BEB0DE1C734DA60094BFE9 /* MockLoader.h */,
 				87BEB0DF1C734DA60094BFE9 /* MockLoader.m */,
 				87BEB0E11C734DB60094BFE9 /* MockMessage.swift */,
-				87BEB0E31C7363D30094BFE9 /* MockMessage+Creation.h */,
-				87BEB0E41C7363D30094BFE9 /* MockMessage+Creation.m */,
 				EF8DD910211E02BE00E970F1 /* MockMessage+Creation.swift */,
 				87D553661C86F0450026573C /* MockUserClient.h */,
 				87D553671C86F0450026573C /* MockUserClient.m */,
@@ -7460,7 +7455,6 @@
 				16D4932C203DD480008DDFFA /* UserCellTests.swift in Sources */,
 				7CD0747620D94BC500BC0A26 /* MessageTimerSystemMessageTests.swift in Sources */,
 				EF98987420C5A589005680C5 /* ZMSnapshotTestCase+MockUserClient.swift in Sources */,
-				87BEB0E51C7363D30094BFE9 /* MockMessage+Creation.m in Sources */,
 				BFAD3A191CD1011100F0FBED /* ProfilePictureStepViewControllerTests.m in Sources */,
 				1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */,
 				162E8C631CF5D68A004B4F45 /* AudioProcessingTests.swift in Sources */,
