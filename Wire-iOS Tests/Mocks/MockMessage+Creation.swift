@@ -20,6 +20,7 @@ import Foundation
 @testable import Wire
 import WireLinkPreview
 
+@objcMembers
 final class MockMessageFactory {
 
 
@@ -119,8 +120,8 @@ final class MockMessageFactory {
         return message
     }
 
-    class func textMessage(withText text: String) -> MockMessage? {
-        return self.textMessage(withText: text)
+    class func textMessage(withText text: String?) -> MockMessage? {
+        return MockMessageFactory.textMessage(withText: text)
     }
 
     class func textMessage(withText text: String?, includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
