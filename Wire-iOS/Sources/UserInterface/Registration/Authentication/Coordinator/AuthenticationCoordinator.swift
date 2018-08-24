@@ -273,11 +273,7 @@ extension AuthenticationCoordinator {
      */
 
     func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
-<<<<<<< HEAD
         eventResponderChain.handleEvent(ofType: .flowStart(error, numberOfAccounts))
-=======
-        eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
->>>>>>> feature/modular-authentication-flows
     }
 
     // MARK: Registration Code
@@ -329,22 +325,14 @@ extension AuthenticationCoordinator {
     /// Sends the registration activation code.
     private func sendActivationCode(_ credential: UnverifiedCredential, _ user: UnregisteredUser, isResend: Bool) {
         presenter?.showLoadingView = true
-<<<<<<< HEAD
         stateController.transition(to: .sendActivationCode(credential, user: user, isResend: isResend))
-=======
-        transition(to: .sendActivationCode(credential, user: user, isResend: isResend))
->>>>>>> feature/modular-authentication-flows
         registrationStatus.sendActivationCode(to: credential)
     }
 
     /// Asks the registration
     private func activateCredentials(credential: UnverifiedCredential, user: UnregisteredUser, code: String) {
         presenter?.showLoadingView = true
-<<<<<<< HEAD
         stateController.transition(to: .activateCredentials(credential, user: user, code: code))
-=======
-        transition(to: .activateCredentials(credential, user: user, code: code))
->>>>>>> feature/modular-authentication-flows
         registrationStatus.checkActivationCode(credential: credential, code: code)
     }
 
@@ -371,19 +359,11 @@ extension AuthenticationCoordinator {
             $0.name = userName
         }
     }
-<<<<<<< HEAD
 
     /**
      * Notifies the registration state observers that the user set a profile picture.
      */
 
-=======
-
-    /**
-     * Notifies the registration state observers that the user set a profile picture.
-     */
-
->>>>>>> feature/modular-authentication-flows
     @objc(setProfilePictureWithData:)
     func setProfilePicture(_ data: Data) {
         updateUnregisteredUser {
@@ -399,11 +379,7 @@ extension AuthenticationCoordinator {
         }
 
         updateBlock(unregisteredUser)
-<<<<<<< HEAD
         eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
-=======
-        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
->>>>>>> feature/modular-authentication-flows
     }
 
     /// Creates the user on the backend and advances the state.
@@ -412,11 +388,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-<<<<<<< HEAD
         stateController.transition(to: .createUser(unregisteredUser))
-=======
-        transition(to: .createUser(unregisteredUser))
->>>>>>> feature/modular-authentication-flows
         registrationStatus.create(user: unregisteredUser)
     }
 
@@ -473,24 +445,6 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
-<<<<<<< HEAD
-=======
-    /// Sends the login verification code to the phone number.
-    private func sendLoginCode(phoneNumber: String, isResend: Bool) {
-        presenter?.showLoadingView = true
-        let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
-        transition(to: nextStep)
-        unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
-    }
-
-    /// Requests a phone login for the specified credentials.
-    private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
-        presenter?.showLoadingView = true
-        transition(to: .authenticatePhoneCredentials(credentials))
-        unauthenticatedSession.login(with: credentials)
-    }
-
->>>>>>> feature/modular-authentication-flows
     // MARK: Generic Verification
 
     /**
@@ -546,11 +500,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-<<<<<<< HEAD
         stateController.transition(to: .registerEmailCredentials(credentials, isResend: false))
-=======
-        transition(to: .registerEmailCredentials(credentials, isResend: false))
->>>>>>> feature/modular-authentication-flows
         presenter?.showLoadingView = true
 
         let result = setCredentialsWithProfile(profile, credentials: credentials) && sessionManager.update(credentials: credentials) == true
@@ -587,11 +537,7 @@ extension AuthenticationCoordinator {
         }
 
         presenter?.showLoadingView = true
-<<<<<<< HEAD
         stateController.transition(to: .registerEmailCredentials(credentials, isResend: true))
-=======
-        transition(to: .registerEmailCredentials(credentials, isResend: true))
->>>>>>> feature/modular-authentication-flows
         setCredentialsWithProfile(userProfile, credentials: credentials)
     }
 
@@ -686,11 +632,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
             return
         }
 
-<<<<<<< HEAD
         stateController.transition(to: .enterEmailChangeCode(credentials))
-=======
-        transition(to: .enterEmailChangeCode(credentials))
->>>>>>> feature/modular-authentication-flows
     }
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
