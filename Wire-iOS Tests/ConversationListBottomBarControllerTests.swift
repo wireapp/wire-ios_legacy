@@ -53,8 +53,6 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         UIView.performWithoutAnimation({
             self.sut = ConversationListBottomBarController(delegate: self.mockDelegate)
         })
-
-        recordMode = true
     }
     
     override func tearDown() {
