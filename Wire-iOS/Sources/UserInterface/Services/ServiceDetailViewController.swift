@@ -19,6 +19,28 @@
 import Foundation
 import Cartography
 
+fileprivate extension Button {
+    
+    static func createAddServiceButton() -> Button {
+        return Button(style: .full, title: "peoplepicker.services.add_service.button".localized)
+    }
+    
+    static func createServiceConversationButton() -> Button {
+        return Button(style: .full, title: "peoplepicker.services.create_conversation.item".localized)
+    }
+    
+    static func createDestructiveServiceButton() -> Button {
+        let button = Button(style: .full, title: "participants.services.remove_integration.button".localized)
+        button.setBackgroundImageColor(.vividRed, for: .normal)
+        return button
+    }
+    
+    convenience init(style: ButtonStyle, title:String) {
+        self.init(style: style)
+        setTitle(title, for: .normal)
+    }
+}
+
 extension ZMConversation {
     var botCanBeAdded: Bool {
         return self.conversationType != .oneOnOne && self.team != nil && self.allowGuests

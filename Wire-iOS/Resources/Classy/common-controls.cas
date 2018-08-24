@@ -18,74 +18,6 @@
 
 /*  All custom classes refered here should be stored in WireExtensionComponents binary */
 
-Button.dialogue-button-full, Button.dialogue-button-empty, Button.dialogue-button-empty-light, Button.dialogue-button-empty-dark, Button.dialogue-button-empty-monochrome, Button.dialogue-button-full-monochrome, Button.dialogue-button-full-destructive {
-    textTransform: upper;
-    titleLabel: @{
-        font: $font-small-light;
-    };
-
-    layer: @{
-        cornerRadius: 4;
-    }
-
-    contentEdgeInsets: 4, 16; /* top=bottom=4, left=right=8 */
-}
-
-Button.dialogue-button-full {
-    backgroundImageColor[state:normal]: $color-accent-current;
-    titleColor[state:normal]: white;
-    titleColor[state:highlighted]: $color-text-dimmed;
-}
-
-Button.dialogue-button-full-destructive {
-    titleColor[state:normal]: white;
-    titleColor[state:highlighted]: $color-text-dimmed;
-}
-
-Button.dialogue-button-full-monochrome {
-    backgroundImageColor[state:normal]: white;
-    titleColor[state:normal]: $color-text-foreground-light;
-}
-
-Button.dialogue-button-empty, Button.dialogue-button-empty-light, Button.dialogue-button-empty-dark, Button.dialogue-button-empty-monochrome {
-    layer: @{
-        borderWidth: 1;
-    };
-}
-
-Button.dialogue-button-empty, Button.dialogue-button-empty-light, Button.dialogue-button-empty-dark {
-    titleColor[state:normal]: $color-button-empty-text;
-    titleColor[state:highlighted]: $color-text-dimmed;
-    titleColor[state:disabled]: $color-text-dimmed;
-    borderColor[state:normal]: $color-accent-current;
-    borderColor[state:highlighted]: $color-accent-current-darken;
-    borderColor[state:disabled]: $color-text-dimmed;
-}
-
-Button.dialogue-button-empty-light {
-    titleColor[state:normal]: $color-button-empty-text-light;
-}
-
-Button.dialogue-button-empty-dark {
-    titleColor[state:normal]: $color-button-empty-text-dark;
-}
-
-Button.dialogue-button-empty-monochrome {
-    titleColor[state:normal]: white;
-    titleColor[state:highlighted]: $color-text-dimmed;
-    borderColor[state:normal]: rgb(255, 255, 255, 0.32);
-    borderColor[state:highlighted]: rgb(255, 255, 255, 0.16);
-}
-
-IconButton.actionBarButton {
-    layer: @{
-        borderWidth: 0;
-    };
-    backgroundColor: $color-accent-current;
-    iconColor: white;
-    iconColor[state:selected]: white;
-}
-
 IconButton.default, IconButton.circular {
     iconColor: $color-icon-normal;
     iconColor[state:selected]: $color-icon-selected;
@@ -136,10 +68,5 @@ IconButton.navigation {
     borderWidth: 0.0
     circular: false;
     contentHorizontalAlignment: left;
-}
-
-IconButton.ephemeral {
-    iconColor[state:normal]: $color-accent-current;
-    iconColor[state:highlighted]: $color-icon-normal;
 }
 

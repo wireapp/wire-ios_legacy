@@ -95,7 +95,7 @@
 
 - (void)setupRightButton
 {
-    self.rightTitledButton = [Button buttonWithStyleClass:@"dialogue-button-empty-monochrome"];
+    self.rightTitledButton = [Button buttonWithStyle:ButtonStyleEmptyMonochrome];
     self.rightTitledButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.rightTitledButton.alpha = 0;
     self.rightTitledButton.accessibilityIdentifier = @"RegistrationRightButton";
