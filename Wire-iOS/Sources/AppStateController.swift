@@ -206,8 +206,8 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
         return ZMUserSession.shared()
     }
 
-    var selfUserProfile: UserProfile? {
-        return sharedUserSession?.userProfile
+    var selfUserProfile: UserProfileUpdateStatus? {
+        return sharedUserSession?.userProfile as? UserProfileUpdateStatus
     }
 
     var selfUser: ZMUser? {
