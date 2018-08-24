@@ -49,9 +49,9 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
 
     // MARK: - State
 
-    public fileprivate(set) var currentStep: AuthenticationFlowStep = .landingScreen
-    private var flowStack: [AuthenticationFlowStep] = []
-    private var currentViewController: AuthenticationStepViewController?
+    public fileprivate(set) var currentStep: AuthenticationFlowStep = .start
+    var flowStack: [AuthenticationFlowStep] = []
+    var currentViewController: AuthenticationStepViewController?
 
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
     private let interfaceBuilder = AuthenticationInterfaceBuilder()
@@ -62,6 +62,9 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
+
+    private(set) lazy var popTransition = PopTransition()
+    private(set) lazy var pushTransition = PushTransition()
 
     // MARK: - Initialization
 
@@ -239,7 +242,7 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
                 transition(to: nextStep, resetStack: resetStack)
 
             case .performPhoneLoginFromRegistration(let phoneNumber):
-                askVerificationCode(for: phoneNumber, isSigningIn: true)
+                sendLoginCode(phoneNumber: phoneNumber, isResend: false)
 
             case .configureNotifications:
                 sessionManager.configureUserNotifications()
@@ -291,22 +294,52 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
 extension AuthenticationCoordinator {
 
-    // MARK: - Registration
+    // MARK: Starting the Flow
+
+    /**
+     * Call this method when the application becomes unauthenticated and that the user
+     * needs to authenticate.
+     *
+     * - parameter error: The error that caused the unauthenticated state, if any.
+     * - parameter numberOfAccounts: The number of accounts that are signed in with the app.
+     */
+
+    func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
+        eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
+    }
+
+    // MARK: Registration Code
+
+    /**
+     * Starts the registration flow with the specified phone number.
+     *
+     * This step will ask the registration status to send the activation code
+     * by text message. It will advance the state to `.sendActivationCode`.
+     *
+     * - parameter phoneNumber: The phone number to activate and register with.
+     */
 
     @objc(startRegistrationWithPhoneNumber:)
     func startRegistration(phoneNumber: String) {
         guard case let .createCredentials(unregisteredUser) = currentStep else {
-            log.error("Cannot start phone outside of registration flow.")
+            log.error("Cannot start phone registration outside of registration flow.")
             return
         }
 
-        let unverifiedCredential = UnverifiedCredential.phone(phoneNumber)
         unregisteredUser.credentials = .phone(number: phoneNumber)
-
-        presenter?.showLoadingView = true
-        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: false))
-        registrationStatus.sendActivationCode(to: unverifiedCredential)
+        sendActivationCode(.phone(phoneNumber), unregisteredUser, isResend: false)
     }
+
+    /**
+     * Starts the registration flow with the specified e-mail and password.
+     *
+     * This step will ask the registration status to send the activation code
+     * by e-mail. It will advance the state to `.sendActivationCode`.
+     *
+     * - parameter name: The display name of the user.
+     * - parameter email: The email address to activate and register with.
+     * - parameter password: The password to link with the e-mail.
+     */
 
     @objc(startRegistrationWithName:email:password:)
     func startRegistration(name: String, email: String, password: String) {
@@ -315,124 +348,111 @@ extension AuthenticationCoordinator {
             return
         }
 
-        let unverifiedCredential = UnverifiedCredential.email(email)
         unregisteredUser.credentials = .email(address: email, password: password)
         unregisteredUser.name = name
 
-        presenter?.showLoadingView = true
-        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: false))
-        registrationStatus.sendActivationCode(to: unverifiedCredential)
+        sendActivationCode(.email(email), unregisteredUser, isResend: false)
     }
 
-    @objc func resendActivationCode() {
-        guard case let .enterActivationCode(unverifiedCredential, unregisteredUser) = currentStep else {
-            log.error("Cannot resend activation code outside of code input.")
-            return
-        }
-
+    /// Sends the registration activation code.
+    private func sendActivationCode(_ credential: UnverifiedCredential, _ user: UnregisteredUser, isResend: Bool) {
         presenter?.showLoadingView = true
-        transition(to: .sendActivationCode(unverifiedCredential, user: unregisteredUser, isResend: true))
-        registrationStatus.sendActivationCode(to: unverifiedCredential)
+        transition(to: .sendActivationCode(credential, user: user, isResend: isResend))
+        registrationStatus.sendActivationCode(to: credential)
     }
 
-    @objc(activateCredentialsWithCode:)
-    func activateCredentials(code: String) {
-        guard case let .enterActivationCode(unverifiedCredential, unregisteredUser) = currentStep else {
-            log.error("Cannot activate credentials outside of code input.")
-            return
-        }
-
+    /// Asks the registration
+    private func activateCredentials(credential: UnverifiedCredential, user: UnregisteredUser, code: String) {
         presenter?.showLoadingView = true
-        transition(to: .activateCredentials(unverifiedCredential, user: unregisteredUser, code: code))
-        registrationStatus.checkActivationCode(credential: unverifiedCredential, code: code)
+        transition(to: .activateCredentials(credential, user: user, code: code))
+        registrationStatus.checkActivationCode(credential: credential, code: code)
     }
 
-    // MARK: Phone Number
+    // MARK: Linear Registration
 
     /**
-     * Starts the phone number validation flow for the given phone number.
+     * Notifies the registration state observers that the user accepted the
+     * terms of service.
+     */
+
+    @objc func acceptTermsOfService() {
+        updateUnregisteredUser {
+            $0.acceptedTermsOfService = true
+        }
+    }
+
+    /**
+     * Notifies the registration state observers that the user set a display name.
+     */
+
+    @objc(setUserName:)
+    func setUserName(_ userName: String) {
+        updateUnregisteredUser {
+            $0.name = userName
+        }
+    }
+
+    /**
+     * Notifies the registration state observers that the user set a profile picture.
+     */
+
+    @objc(setProfilePictureWithData:)
+    func setProfilePicture(_ data: Data) {
+        updateUnregisteredUser {
+            $0.profileImageData = data
+        }
+    }
+
+    /// Updates the fields of the unregistered user, and advances the state.
+    private func updateUnregisteredUser(_ updateBlock: (UnregisteredUser) -> Void) {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
+            log.error("Cannot update unregistered user outide of the incremental user creation flow")
+            return
+        }
+
+        updateBlock(unregisteredUser)
+        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
+    }
+
+    /// Creates the user on the backend and advances the state.
+    private func finishRegisteringUser() {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
+            return
+        }
+
+        transition(to: .createUser(unregisteredUser))
+        registrationStatus.create(user: unregisteredUser)
+    }
+
+    /// Sends the fields provided during registration that requires a registered user session.
+    private func sendPostRegistrationFields(for unregisteredUser: UnregisteredUser) {
+        guard let userSession = statusProvider?.sharedUserSession else {
+            log.error("Could not save the marketing consent and , as there is no user session for the user.")
+            return
+        }
+
+        let consentValue = unregisteredUser.marketingConsent ?? false
+        UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
+
+        userSession.submitMarketingConsent(with: consentValue)
+        userSession.profileUpdate.updateImage(imageData: unregisteredUser.profileImageData!)
+    }
+
+    // MARK: Login
+
+    /**
+     * Starts the phone number login flow for the given phone number.
      * - parameter phoneNumber: The phone number to validate for login.
      */
 
-    @objc(startPhoneNumberValidationWithPhoneNumber:)
-    func startPhoneNumberValidation(_ phoneNumber: String) {
-        let user: UnregisteredUser?
-
-        switch currentStep {
-        case .createCredentials(let incompleteUser):
-            user = incompleteUser
-        case .provideCredentials:
-            user = nil
-        default:
-            log.warn("Cannot start phone number validation from step: \(currentStep)")
-            return
-        }
-
-        presenter?.showLoadingView = true
-
-
-        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: false)
-        transition(to: nextStep)
-    }
-
-    @objc func resendPhoneValidationCode() {
-        guard case let .verifyPhoneNumber(phoneNumber, user, _) = currentStep else {
-            log.info("Ignoring request to resend phone code with step = \(currentStep).")
-            return
-        }
-
-        presenter?.showLoadingView = true
-        askVerificationCode(for: phoneNumber, isSigningIn: user == nil)
-
-        let nextStep = AuthenticationFlowStep.verifyPhoneNumber(phoneNumber: phoneNumber, user: user, credentialsValidated: true)
-        transition(to: nextStep)
-    }
-
-    private func askVerificationCode(for phoneNumber: String, isSigningIn: Bool) {
-        if isSigningIn {
-            unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
-        } else {
-            registrationStatus.sendActivationCode(to: .phone(phoneNumber))
-        }
-    }
-
-    @objc(validatePhoneNumberWithCode:)
-    func validatePhoneNumber(with code: String) {
-        guard case let .verifyPhoneNumber(phoneNumber, user, _) = currentStep else {
-            log.info("Ignoring request to resend phone code with step = \(currentStep).")
-            return
-        }
-
-        let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
-
-        if let unauthenticatedUser = user {
-            requestPhoneRegistration(with: credentials, user: unauthenticatedUser)
-        } else {
-            requestPhoneLogin(with: credentials)
-        }
-    }
-
-    func requestPhoneRegistration(with credentials: ZMPhoneCredentials, user: UnregisteredUser) {
-        presenter?.showLoadingView = true
-//        transition(to: .validatePhoneIdentity(credentials: credentials, user: user))
-//        unauthenticatedSession.verifyPhoneNumberForRegistration(credentials.phoneNumber!, verificationCode: credentials.phoneNumberVerificationCode!)
-    }
-
-    // MARK: - Login
-
-    /**
-     * Requests a phone login for the specified credentials.
-     */
-
-    @objc(requestPhoneLoginWithCredentials:)
-    func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
-        presenter?.showLoadingView = true
-        transition(to: .authenticatePhoneCredentials(credentials))
-        unauthenticatedSession.login(with: credentials)
+    @objc(startLoginWithPhoneNumber:)
+    func startLogin(phoneNumber: String) {
+        sendLoginCode(phoneNumber: phoneNumber, isResend: false)
     }
 
     /**
      * Requests an e-mail login for the specified credentials.
+     * - parameter credentials: The e-mail credentials to sign in with.
      */
 
     @objc(requestEmailLoginWithCredentials:)
@@ -442,7 +462,57 @@ extension AuthenticationCoordinator {
         unauthenticatedSession.login(with: credentials)
     }
 
-    // MARK: - E-Mail Registration
+    /// Sends the login verification code to the phone number.
+    private func sendLoginCode(phoneNumber: String, isResend: Bool) {
+        presenter?.showLoadingView = true
+        let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
+        transition(to: nextStep)
+        unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
+    }
+
+    /// Requests a phone login for the specified credentials.
+    private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
+        presenter?.showLoadingView = true
+        transition(to: .authenticatePhoneCredentials(credentials))
+        unauthenticatedSession.login(with: credentials)
+    }
+
+    // MARK: Generic Verification
+
+    /**
+     * Resends the verification code to the user, if allowed by the current state.
+     */
+
+    @objc func resendVerificationCode() {
+        switch currentStep {
+        case .enterLoginCode(let phoneNumber):
+            sendLoginCode(phoneNumber: phoneNumber, isResend: true)
+        case .enterActivationCode(let credential, let user):
+            sendActivationCode(credential, user, isResend: true)
+        default:
+            log.error("Cannot send verification code in the current state (\(currentStep)")
+        }
+    }
+
+    /**
+     * Checks the verification code provided by the user, and continues to the next appropriate step.
+     * - parameter code: The verification code provided by the user.
+     */
+
+    @objc(continueFlowWithVerificationCode:)
+    func continueFlow(withVerificationCode code: String) {
+        switch currentStep {
+        case .enterLoginCode(let phoneNumber):
+            let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
+            requestPhoneLogin(with: credentials)
+        case .enterActivationCode(let unverifiedCredential, let user):
+            activateCredentials(credential: unverifiedCredential, user: user, code: code)
+        default:
+            log.error("Cannot continue flow with user code in the current state (\(currentStep)")
+        }
+    }
+
+    // MARK: - Add Email And Password
 
     /**
      * Skips the add e-mail and password step, if possible.
@@ -458,13 +528,14 @@ extension AuthenticationCoordinator {
 
     @objc func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
         guard case let .addEmailAndPassword(_, profile, _) = currentStep else {
+            log.error("Cannot save e-mail and password outside of designated step.")
             return
         }
 
-        transition(to: AuthenticationFlowStep.registerEmailCredentials(credentials))
+        transition(to: .registerEmailCredentials(credentials, isResend: false))
         presenter?.showLoadingView = true
 
-        let result = setCredentialsWithProfile(profile, credentials: credentials) && SessionManager.shared?.update(credentials: credentials) == true
+        let result = setCredentialsWithProfile(profile, credentials: credentials) && sessionManager.update(credentials: credentials) == true
 
         if !result {
             let error = NSError(code: .invalidEmail, userInfo: nil)
@@ -489,7 +560,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func resendEmailVerificationCode() {
-        guard case let .verifyEmailCredentials(credentials) = currentStep else {
+        guard case let .enterEmailChangeCode(credentials) = currentStep else {
             return
         }
 
@@ -498,9 +569,7 @@ extension AuthenticationCoordinator {
         }
 
         presenter?.showLoadingView = true
-
-        // We can assume that the validation will succeed, as it only fails when there is no
-        // email and/or password in the email credentials, which we already checked before.
+        transition(to: .registerEmailCredentials(credentials, isResend: true))
         setCredentialsWithProfile(userProfile, credentials: credentials)
     }
 
@@ -552,75 +621,6 @@ extension AuthenticationCoordinator {
         companyLoginController?.isAutoDetectionEnabled = false
     }
 
-    // MARK: Linear Registration
-
-    /**
-     * Notifies the registration state observers that the user accepted the
-     * terms of service.
-     */
-
-    @objc func acceptTermsOfService() {
-        updateUnregisteredUser {
-            $0.acceptedTermsOfService = true
-        }
-    }
-
-    /**
-     * Notifies the registration state observers that the user set an account name.
-     */
-
-    @objc(setUserName:)
-    func setUserName(_ userName: String) {
-        updateUnregisteredUser {
-            $0.name = userName
-        }
-    }
-
-    /**
-     * Notifies the registration state observers that the user set a profile picture.
-     */
-
-    @objc(setProfilePictureWithData:)
-    func setProfilePicture(_ data: Data) {
-        // unauthenticatedSession.setProfileImage(imageData: data)
-
-        updateUnregisteredUser {
-            $0.profileImageData = data
-        }
-    }
-
-    private func updateUnregisteredUser(_ updateBlock: (UnregisteredUser) -> Void) {
-        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
-            log.warn("Cannot update unregistered user outide of the incremental user creation flow")
-            return
-        }
-
-        updateBlock(unregisteredUser)
-        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
-    }
-
-    private func finishRegisteringUser() {
-        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
-            return
-        }
-
-        transition(to: .createUser(unregisteredUser))
-        registrationStatus.create(user: unregisteredUser)
-    }
-
-    private func sendPostRegistrationFields(for unregisteredUser: UnregisteredUser) {
-        guard let userSession = statusProvider?.sharedUserSession else {
-            log.error("Could not save the marketing consent and , as there is no user session for the user.")
-            return
-        }
-
-        let consentValue = unregisteredUser.marketingConsent ?? false
-        UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
-
-        userSession.submitMarketingConsent(with: consentValue)
-        userSession.profileUpdate.updateImage(imageData: unregisteredUser.profileImageData!)
-    }
-
 }
 
 // MARK: - User Session Events
@@ -657,14 +657,14 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         }
     }
 
-    func didSentVerificationEmail() {
+    func didSendVerificationEmail() {
         presenter?.showLoadingView = false
 
-        guard case .registerEmailCredentials(let credentials) = currentStep else {
+        guard case .registerEmailCredentials(let credentials, _) = currentStep else {
             return
         }
 
-        transition(to: .verifyEmailCredentials(credentials))
+        transition(to: .enterEmailChangeCode(credentials))
     }
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
@@ -673,7 +673,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         }
 
         switch currentStep {
-        case .registerEmailCredentials:
+        case .enterEmailChangeCode:
             guard let selfUser = delegate?.selfUser else {
                 return
             }
@@ -692,24 +692,6 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
 
 }
 
-// MARK: - Starting the Flow
-
-extension AuthenticationCoordinator {
-
-    /**
-     * Call this method when the application becomes unauthenticated and that the user
-     * needs to authenticate.
-     *
-     * - parameter error: The error that caused the unauthenticated state, if any.
-     * - parameter numberOfAccounts: The number of accounts that are signed in with the app.
-     */
-
-    func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
-        eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
-    }
-
-}
-
 // MARK: - CompanyLoginControllerDelegate
 
 extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
@@ -721,54 +703,5 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
     func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
         presenter?.showLoadingView = showLoadingView
     }
-
-}
-
-// MARK: - LandingViewControllerDelegate
-
-extension AuthenticationCoordinator: LandingViewControllerDelegate {
-
-    func landingViewControllerDidChooseLogin() {
-        transition(to: .provideCredentials)
-    }
-
-    func landingViewControllerDidChooseCreateAccount() {
-        let unregisteredUser = UnregisteredUser()
-        unregisteredUser.accentColorValue = UIColor.indexedAccentColor()
-
-        transition(to: .createCredentials(unregisteredUser))
-    }
-
-    func landingViewControllerDidChooseCreateTeam() {
-        // flowController.startFlow()
-    }
-
-}
-
-// MARK: - UINavigationControllerDelegate
-
-extension AuthenticationCoordinator: UINavigationControllerDelegate {
-
-    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        guard let currentViewController = self.currentViewController else {
-            return
-        }
-
-        guard let keyboardViewController = viewController as? KeyboardAvoidingViewController else {
-            return
-        }
-
-        guard let authenticationViewController = keyboardViewController.viewController as? AuthenticationStepViewController else {
-            return
-        }
-
-        guard authenticationViewController.isEqual(currentViewController) == false else {
-            return
-        }
-
-        self.currentViewController = authenticationViewController
-        unwind(requireInterfaceStep: true)
-    }
-
 
 }

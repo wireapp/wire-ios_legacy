@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,15 +16,23 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import UIKit;
-#import "AuthenticationCoordinatedViewController.h"
+import Foundation
 
-NS_ASSUME_NONNULL_BEGIN
+extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
-@interface VerificationCodeStepViewController : UIViewController <AuthenticationCoordinatedViewController>
+    func landingViewControllerDidChooseLogin() {
+        transition(to: .provideCredentials)
+    }
 
-- (instancetype)initWithCredential:(NSString *)credential;
+    func landingViewControllerDidChooseCreateAccount() {
+        let unregisteredUser = UnregisteredUser()
+        unregisteredUser.accentColorValue = UIColor.indexedAccentColor()
 
-@end
+        transition(to: .createCredentials(unregisteredUser))
+    }
 
-NS_ASSUME_NONNULL_END
+    func landingViewControllerDidChooseCreateTeam() {
+        // flowController.startFlow()
+    }
+
+}

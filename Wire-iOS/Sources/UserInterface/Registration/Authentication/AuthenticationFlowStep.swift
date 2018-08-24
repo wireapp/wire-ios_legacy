@@ -25,23 +25,25 @@ import Foundation
 enum AuthenticationFlowStep {
 
     // Initial Steps
+    case start
     case landingScreen
     case reauthenticate(error: NSError, numberOfAccounts: Int)
 
-    // Verification
-    case verifyPhoneNumber(phoneNumber: String, user: UnregisteredUser?, credentialsValidated: Bool)
-    case verifyEmailCredentials(ZMEmailCredentials)
-
     // Sign-In
     case provideCredentials
+    case sendLoginCode(phoneNumber: String, isResend: Bool)
+    case enterLoginCode(phoneNumber: String)
     case authenticateEmailCredentials(ZMEmailCredentials)
     case authenticatePhoneCredentials(ZMPhoneCredentials)
-    case registerEmailCredentials(ZMEmailCredentials)
 
     // Post Sign-In
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials)
+    case removeClient
     case addEmailAndPassword(user: ZMUser, profile: UserProfile, canSkip: Bool)
+    case registerEmailCredentials(ZMEmailCredentials, isResend: Bool)
+    case enterEmailChangeCode(ZMEmailCredentials)
+    case verifyEmailChangeCode(ZMEmailCredentials)
     case pendingInitialSync
 
     // Registration
@@ -58,9 +60,10 @@ enum AuthenticationFlowStep {
     var allowsUnwind: Bool {
         switch self {
         case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword, .incrementalUserCreation: return false
-        case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
+        case .enterLoginCode: return true
         case .createCredentials: return true
         case .enterActivationCode: return true
+        case .provideCredentials: return true
         default: return true
         }
     }
@@ -69,21 +72,34 @@ enum AuthenticationFlowStep {
     var needsInterface: Bool {
         switch self {
         // Initial Steps
+        case .start: return false
         case .landingScreen: return true
+        case .reauthenticate: return true
 
+        // Sign-In
+        case .provideCredentials: return true
+        case .sendLoginCode: return false
+        case .enterLoginCode: return true
         case .authenticateEmailCredentials: return false
         case .authenticatePhoneCredentials: return false
         case .registerEmailCredentials: return false
+
+        // Post Sign-In
+        case .noHistory: return true
+        case .clientManagement: return true
+        case .removeClient: return false
+        case .addEmailAndPassword: return true
         case .pendingInitialSync: return false
-        case .verifyPhoneNumber(_, _, let credentialsValidated): return credentialsValidated
+        case .enterEmailChangeCode: return true
+        case .verifyEmailChangeCode: return false
 
         // Registration
+        case .createCredentials: return true
         case .sendActivationCode: return false
         case .enterActivationCode: return true
         case .activateCredentials: return false
         case .incrementalUserCreation(_, let intermediateStep): return intermediateStep.needsInterface
         case .createUser: return false
-        default: return true
         }
     }
 

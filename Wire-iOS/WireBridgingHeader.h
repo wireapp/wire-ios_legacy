@@ -121,6 +121,7 @@
 #import "TermsOfUseStepViewController+Private.h"
 #import "VerificationCodeStepViewController.h"
 #import "NameStepViewController.h"
+#import "BlueViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

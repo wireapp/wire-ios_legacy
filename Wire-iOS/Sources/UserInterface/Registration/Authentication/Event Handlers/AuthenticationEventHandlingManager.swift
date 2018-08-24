@@ -82,6 +82,7 @@ class AuthenticationEventHandlingManager {
 
     fileprivate func registerDefaultEventHandlers() {
         // flowStartHandlers
+        registerHandler(AuthenticationStartMissingCredentialsErrorHandler(), to: &flowStartHandlers)
         registerHandler(AuthenticationStartAddAccountEventHandler(), to: &flowStartHandlers)
         registerHandler(AuthenticationStartReauthenticateErrorHandler(), to: &flowStartHandlers)
 
@@ -169,6 +170,10 @@ class AuthenticationEventHandlingManager {
 
         for handler in handlers {
             handler.statusProvider = delegate.statusProvider
+
+            defer {
+                handler.statusProvider = nil
+            }
 
             if let responseActions = handler.handleEvent(currentStep: delegate.currentStep, context: context) {
                 lookupResult = (handler.name, responseActions)

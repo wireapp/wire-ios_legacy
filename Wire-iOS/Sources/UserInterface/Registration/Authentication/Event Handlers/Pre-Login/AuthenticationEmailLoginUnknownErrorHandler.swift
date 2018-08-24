@@ -55,9 +55,7 @@ class AuthenticationEmailLoginUnknownErrorHandler: AuthenticationEventHandler {
         let alert = AuthenticationCoordinatorErrorAlert(error: detectedError,
                                                         completionActions: [.unwindState])
 
-        let showGuidanceDot = AuthenticationErrorFeedbackAction.showGuidanceDot
-
-        return [.hideLoadingView, .executeFeedbackAction(showGuidanceDot), .presentErrorAlert(alert)]
+        return [.hideLoadingView, .executeFeedbackAction(.showGuidanceDot), .presentErrorAlert(alert)]
     }
 
 }

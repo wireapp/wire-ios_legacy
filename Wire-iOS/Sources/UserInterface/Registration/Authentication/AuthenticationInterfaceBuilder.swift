@@ -42,7 +42,7 @@ class AuthenticationInterfaceBuilder {
 
         case .reauthenticate(let error, let numberOfAccounts):
             let registrationViewController = RegistrationViewController()
-            registrationViewController.shouldHideCancelButton = numberOfAccounts <= 1
+            registrationViewController.shouldHideCancelButton = numberOfAccounts < 2
             registrationViewController.signInError = error
             return registrationViewController
 
@@ -63,27 +63,19 @@ class AuthenticationInterfaceBuilder {
         case .noHistory(_, let type):
             return NoHistoryViewController(contextType: type)
 
-//        case .verifyPhoneNumber(let phoneNumber, _, _):
-//            let verificationController = PhoneVerificationStepViewController()
-//            verificationController.phoneNumber = phoneNumber
-//            return verificationController
+        case .enterLoginCode(let phoneNumber):
+            return VerificationCodeStepViewController(credential: phoneNumber)
 
         case .addEmailAndPassword(_, _, let canSkip):
             let addEmailPasswordViewController = AddEmailPasswordViewController()
             addEmailPasswordViewController.canSkipStep = canSkip
             return addEmailPasswordViewController
 
-//        case .verifyEmailCredentials(let credentials):
-//            let verificationController = EmailVerificationViewController(credentials: credentials)
-//            return verificationController
-
         case .enterActivationCode(let credentials, _):
-            switch credentials {
-            case .phone(let phoneNumber):
-                return VerificationCodeStepViewController(phoneNumber: phoneNumber)
-            case .email(let emailAddress):
-                return VerificationCodeStepViewController(emailAddress: emailAddress)
-            }
+            return VerificationCodeStepViewController(credential: credentials.rawValue)
+
+        case .enterEmailChangeCode(let emailCredentials):
+            return EmailLinkVerificationViewController(credentials: emailCredentials)
 
         case .incrementalUserCreation(let user, let registrationStep):
             return makeRegistrationStepViewController(for: registrationStep, user: user)

@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,15 +16,22 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import UIKit;
-#import "AuthenticationCoordinatedViewController.h"
+import XCTest
+@testable import Wire
 
-NS_ASSUME_NONNULL_BEGIN
+class EmailLinkVerificationViewControllerTests: ZMSnapshotTestCase {
 
-@interface VerificationCodeStepViewController : UIViewController <AuthenticationCoordinatedViewController>
+    override func setUp() {
+        super.setUp()
+    }
 
-- (instancetype)initWithCredential:(NSString *)credential;
+    func testThatItRendersInstructionsWithEmailAddress() {
+        // GIVEN
+        let credentials = ZMEmailCredentials(email: "test@example.com", password: "testest")
+        let sut = EmailLinkVerificationViewController(credentials: credentials)
 
-@end
+        // THEN
+        verifyInAllDeviceSizes(view: sut.view)
+    }
 
-NS_ASSUME_NONNULL_END
+}

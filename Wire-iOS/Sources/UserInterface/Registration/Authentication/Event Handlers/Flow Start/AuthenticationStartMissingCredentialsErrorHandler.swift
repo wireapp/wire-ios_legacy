@@ -18,41 +18,30 @@
 
 import Foundation
 
-/**
- * Handles reauthentication errors sent at the start of the flow.
- */
-
-class AuthenticationStartReauthenticateErrorHandler: AuthenticationEventHandler {
+class AuthenticationStartMissingCredentialsErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: (NSError?, Int)) -> [AuthenticationCoordinatorAction]? {
-        let (optionalError, numberOfAccounts) = context
+        let error = context.0
 
-        // Only handle errors on launch
+        // Only handle errors on start
         guard case .start = currentStep else {
             return nil
         }
 
-        // If there is no error, we don't need to reauthenticate
-        guard let error = optionalError else {
+        // Only handle missing credentials error
+        guard error?.userSessionErrorCode == .needsToRegisterEmailToRegisterClient else {
             return nil
         }
 
-        // Only handle reauthentication errors
-        let supportedErrors: [ZMUserSessionErrorCode] = [
-            .clientDeletedRemotely,
-            .accessTokenExpired,
-            .needsPasswordToRegisterClient
-         ]
-
-        guard supportedErrors.contains(error.userSessionErrorCode) else {
+        guard let user = statusProvider?.selfUser, let profile = statusProvider?.selfUserProfile else {
             return nil
         }
 
         // Prepare the next step
-        let nextStep = AuthenticationFlowStep.reauthenticate(error: error, numberOfAccounts: numberOfAccounts)
-        return [.transition(nextStep, resetStack: true)]
+        let nextStep = AuthenticationFlowStep.addEmailAndPassword(user: user, profile: profile, canSkip: false)
+        return [.startPostLoginFlow, .transition(nextStep, resetStack: true)]
     }
 
 }

@@ -26,12 +26,12 @@ class VerificationCodeStepViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersInstructionsWithPhoneNumber() {
-        let sut = VerificationCodeStepViewController(phoneNumber: "+4912345678900")
+        let sut = VerificationCodeStepViewController(credential: "+4912345678900")
         verifyInAllDeviceSizes(view: sut.view)
     }
 
     func testThatItRendersInstructionsWithEmailAddress() {
-        let sut = VerificationCodeStepViewController(emailAddress: "test@wire.com")
+        let sut = VerificationCodeStepViewController(credential: "test@wire.com")
         verifyInAllDeviceSizes(view: sut.view)
     }
 

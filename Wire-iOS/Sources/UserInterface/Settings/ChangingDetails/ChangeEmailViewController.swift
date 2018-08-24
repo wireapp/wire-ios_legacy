@@ -138,7 +138,7 @@ extension ChangeEmailViewController: UserProfileUpdateObserver {
         showAlert(forError: error)
     }
     
-    func didSentVerificationEmail() {
+    func didSendVerificationEmail() {
         showLoadingView = false
         updateSaveButtonState()
         if let newEmail = state.newEmail {
