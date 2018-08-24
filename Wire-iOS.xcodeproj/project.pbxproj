@@ -178,7 +178,6 @@
 		1E8C253D1BBC279B00FC373F /* UIViewController+LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */; };
 		1E98C81B1BD1719500C7A7A2 /* ContactsDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */; };
 		1EB9BF411BC7F796002EF0F3 /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
-		1EBA8C681B70C15D0089CC44 /* common-controls.cas in Resources */ = {isa = PBXBuildFile; fileRef = 1EBA8C671B70C15D0089CC44 /* common-controls.cas */; };
 		1ED28CD71A94E26D00B96189 /* group-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ED28CD41A94E26D00B96189 /* group-icon.png */; };
 		1ED28CD81A94E26D00B96189 /* group-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ED28CD51A94E26D00B96189 /* group-icon@2x.png */; };
 		1ED28CD91A94E26D00B96189 /* group-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1ED28CD61A94E26D00B96189 /* group-icon@3x.png */; };
@@ -1518,8 +1517,6 @@
 		1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+LoadingView.h"; sourceTree = "<group>"; };
 		1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+LoadingView.m"; sourceTree = "<group>"; };
 		1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDataSourceTests.m; sourceTree = "<group>"; };
-		1EBA8C671B70C15D0089CC44 /* common-controls.cas */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "common-controls.cas"; path = "Classy/common-controls.cas"; sourceTree = "<group>"; };
-		1EBA8C6C1B70CCB10089CC44 /* stylesheet-share-ext.cas */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "stylesheet-share-ext.cas"; path = "Classy/stylesheet-share-ext.cas"; sourceTree = "<group>"; };
 		1EBA8C721B74EAB10089CC44 /* WireUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireUtilities.framework; path = Carthage/Build/iOS/WireUtilities.framework; sourceTree = "<group>"; };
 		1EC719F71B67B59A00700A14 /* Classy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Classy.framework; path = Carthage/Build/iOS/Classy.framework; sourceTree = "<group>"; };
 		1EC71A271B6A1B9200700A14 /* WireImages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireImages.framework; path = Carthage/Build/iOS/WireImages.framework; sourceTree = "<group>"; };
@@ -3427,8 +3424,6 @@
 			isa = PBXGroup;
 			children = (
 				1EF42D401B1889B300A3145D /* stylesheet.cas */,
-				1EBA8C671B70C15D0089CC44 /* common-controls.cas */,
-				1EBA8C6C1B70CCB10089CC44 /* stylesheet-share-ext.cas */,
 			);
 			name = Classy;
 			sourceTree = "<group>";
@@ -6281,7 +6276,6 @@
 				BF732A771D9C14C7003077DB /* emoji_objects.plist in Resources */,
 				87D482AF1B8C7DBC004ED174 /* soundcloud@3x.png in Resources */,
 				BF732A791D9C14C7003077DB /* emoji_symbols.plist in Resources */,
-				1EBA8C681B70C15D0089CC44 /* common-controls.cas in Resources */,
 				8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */,
 				EF21270B1FB9DFE300625A9B /* CountryCodes.plist in Resources */,
 				1ED28CD91A94E26D00B96189 /* group-icon@3x.png in Resources */,
