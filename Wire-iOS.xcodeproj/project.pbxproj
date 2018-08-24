@@ -3565,6 +3565,21 @@
 			path = UserChange;
 			sourceTree = "<group>";
 		};
+		5E65A7A8213054B1008BFCC0 /* Coordinator+Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */,
+				5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */,
+				5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */,
+				5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */,
+				5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */,
+				5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */,
+				5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */,
+				5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */,
+			);
+			path = "Coordinator+Delegates";
+			sourceTree = "<group>";
+		};
 		5E766D9721144DEC005242B4 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -3645,14 +3660,7 @@
 			isa = PBXGroup;
 			children = (
 				5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */,
-				5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */,
-				5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */,
-				5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */,
-				5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */,
-				5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */,
-				5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */,
-				5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */,
-				5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */,
+				5E65A7A8213054B1008BFCC0 /* Coordinator+Delegates */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
