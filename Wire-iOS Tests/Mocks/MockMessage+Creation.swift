@@ -84,7 +84,11 @@ final class MockMessageFactory: NSObject {
         message.serverTimestamp = Date(timeIntervalSince1970: 12345678564)
 
 
-        mockSystemMessageData.users = Set(MockUser.mockUsers()[0...numUsers])
+        if numUsers > 0 {
+            mockSystemMessageData.users = Set(MockUser.mockUsers()[0...numUsers - 1])
+        } else {
+            mockSystemMessageData.users = Set()
+        }
 
         var userClients: [AnyHashable] = []
 
@@ -98,7 +102,6 @@ final class MockMessageFactory: NSObject {
 
         message.systemMessageData = mockSystemMessageData
         return message
-
     }
 
     class func locationMessage() -> MockMessage? {
