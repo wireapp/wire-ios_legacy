@@ -25,6 +25,7 @@
 #import "UIColor+Mixing.h"
 #import "UIControl+Wire.h"
 #import "UIColor+WR_ColorScheme.h"
+#import "Wire-Swift.h"
 
 @interface IconDefinition : NSObject
 
@@ -125,6 +126,13 @@
             self.borderWidth = 0;
             self.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
             self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+            break;
+        case IconButtonStyleNavigation:
+            self.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, -5);
+            self.titleLabel.font = UIFont.smallLightFont;
+            self.adjustsImageWhenDisabled = NO;
+            self.borderWidth = 0;
+            self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
             break;
     }
     

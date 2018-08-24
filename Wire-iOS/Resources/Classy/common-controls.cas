@@ -18,16 +18,4 @@
 
 /*  All custom classes refered here should be stored in WireExtensionComponents binary */
 
-IconButton.navigation {
-    iconColor: $color-icon-normal-dark;
-    iconColor[state:selected]: $color-icon-selected-dark;
-    iconColor[state:highlighted]: $color-icon-highlighted-dark;
-    titleEdgeInsets: 0, 5, 0, -5;
-    titleLabel: @{
-        font: $font-small-light;
-    }
-    adjustsImageWhenHighlighted: NO;
-    borderWidth: 0.0
-    circular: false;
-    contentHorizontalAlignment: left;
-}
+
