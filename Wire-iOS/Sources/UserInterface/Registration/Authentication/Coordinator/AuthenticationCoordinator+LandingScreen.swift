@@ -21,14 +21,14 @@ import Foundation
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
     func landingViewControllerDidChooseLogin() {
-        transition(to: .provideCredentials)
+        stateController.transition(to: .provideCredentials)
     }
 
     func landingViewControllerDidChooseCreateAccount() {
         let unregisteredUser = UnregisteredUser()
         unregisteredUser.accentColorValue = UIColor.indexedAccentColor()
 
-        transition(to: .createCredentials(unregisteredUser))
+        stateController.transition(to: .createCredentials(unregisteredUser))
     }
 
     func landingViewControllerDidChooseCreateTeam() {

@@ -28,22 +28,22 @@ extension AuthenticationCoordinator: PreLoginAuthenticationObserver {
 
     /// Called when the credentials could not be authenticated.
     func authenticationDidFail(_ error: NSError) {
-        eventHandlingManager.handleEvent(ofType: .authenticationFailure(error))
+        eventResponderChain.handleEvent(ofType: .authenticationFailure(error))
     }
 
     /// Called when the backup is ready to be imported.
     func authenticationReadyToImportBackup(existingAccount: Bool) {
-        eventHandlingManager.handleEvent(ofType: .backupReady(existingAccount))
+        eventResponderChain.handleEvent(ofType: .backupReady(existingAccount))
     }
 
     /// Called when the phone login called became available.
     func loginCodeRequestDidSucceed() {
-        eventHandlingManager.handleEvent(ofType: .phoneLoginCodeAvailable)
+        eventResponderChain.handleEvent(ofType: .phoneLoginCodeAvailable)
     }
 
     /// Called when the phone login code couldn't be requested manually.
     func loginCodeRequestDidFail(_ error: NSError) {
-        eventHandlingManager.handleEvent(ofType: .authenticationFailure(error))
+        eventResponderChain.handleEvent(ofType: .authenticationFailure(error))
     }
 
 }

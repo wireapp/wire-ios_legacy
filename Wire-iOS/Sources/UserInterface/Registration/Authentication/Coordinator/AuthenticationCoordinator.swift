@@ -37,24 +37,38 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
 
     // MARK: - Event Handling Properties
 
-    let eventHandlingManager = AuthenticationEventHandlingManager()
+    /**
+     * The object responsible for handling events.
+     *
+     * You use this object to tag events as they happen. It then iterates over the internal
+     * event handlers in the chain, to decide what actions to take.
+     *
+     * The authentication coordinator is the delegate of the event responder chain, as it is
+     * responsible for executing the actions provided by the selected event handler.
+     */
 
+    let eventResponderChain = AuthenticationEventResponderChain()
+
+    /// Shortcut for accessing the authentication status provider (returns the delegate).
     var statusProvider: AuthenticationStatusProvider? {
         return delegate
     }
 
     // MARK: - State
 
-    public fileprivate(set) var currentStep: AuthenticationFlowStep = .start
+    var currentStep: AuthenticationFlowStep = .start
     var flowStack: [AuthenticationFlowStep] = []
     var currentViewController: AuthenticationStepViewController?
+
+    let stateController: AuthenticationStateController
+    let registrationStatus: RegistrationStatus
 
     private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
     private let interfaceBuilder = AuthenticationInterfaceBuilder()
 
     private let sessionManager: ObservableSessionManager
     private let unauthenticatedSession: UnauthenticatedSession
-    private let registrationStatus: RegistrationStatus
+
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
     private var initialSyncObserver: Any?
@@ -69,11 +83,12 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
         self.sessionManager = sessionManager
         self.unauthenticatedSession = unauthenticatedSession
         self.registrationStatus = unauthenticatedSession.registrationStatus
+        self.stateController = AuthenticationStateController()
         super.init()
 
         registrationStatus.delegate = self
         companyLoginController?.delegate = self
-        flowStack = [.landingScreen]
+        flowStack = [.start]
 
         loginObservers = [
             PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
@@ -82,45 +97,23 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
         ]
 
         presenter.delegate = self
-        eventHandlingManager.configure(delegate: self)
+        stateController.delegate = self
+        eventResponderChain.configure(delegate: self)
     }
 
 }
 
 // MARK: - State Management
 
-extension AuthenticationCoordinator {
+extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
 
-    /**
-     * Transitions to the next step in the stack.
-     *
-     * This method changes the current step, generates a new interface if needed,
-     * and changes the stack (either appends the new step to the list of previous steps,
-     * or resets the stack if you request it).
-     *
-     * - parameter step: The step to transition to.
-     * - parameter resetStack: Whether transitioning to this step resets the previous stack
-     * of view controllers in the navigation controller. You should pass `true` if your step
-     * is at the beginning of a new "logical flow" (ex: deleting clients).
-     */
-
-    func transition(to step: AuthenticationFlowStep, resetStack: Bool = false) {
-        currentStep = step
-
-        defer {
-            if resetStack {
-                flowStack = [step]
-            } else {
-                flowStack.append(step)
-            }
-        }
-
-        guard step.needsInterface else {
+    func stateDidChange(_ newState: AuthenticationFlowStep, withReset resetStack: Bool) {
+        guard newState.needsInterface else {
             return
         }
 
-        guard let stepViewController = interfaceBuilder.makeViewController(for: step) else {
-            fatalError("Step \(step) requires user interface, but the interface builder does not support it.")
+        guard let stepViewController = interfaceBuilder.makeViewController(for: newState) else {
+            fatalError("Step \(newState) requires user interface, but the interface builder does not support it.")
         }
 
         stepViewController.authenticationCoordinator = self
@@ -132,30 +125,9 @@ extension AuthenticationCoordinator {
             presenter?.backButtonEnabled = false
             presenter?.setViewControllers([containerViewController], animated: true)
         } else {
-            presenter?.backButtonEnabled = step.allowsUnwind
+            presenter?.backButtonEnabled = newState.allowsUnwind
             presenter?.pushViewController(containerViewController, animated: true)
         }
-    }
-
-    /**
-     * Unwind the state to the previous state if possible.
-     *
-     * This sets the current step back to the previous state, if we recorded it.
-     *
-     * You should call this method:
-     * - when a non-visual step fails and you need to go back to step that started it
-     * - when the navigation controller pops the current view controller
-     */
-
-    func unwind(requireInterfaceStep: Bool = false) {
-        guard flowStack.count >= 2 else {
-            return
-        }
-
-        repeat {
-            flowStack.removeLast()
-            currentStep = flowStack.last!
-        } while requireInterfaceStep ? !currentStep.needsInterface : false
     }
 
 }
@@ -235,7 +207,7 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
                 registerPostLoginObserversIfNeeded()
 
             case .transition(let nextStep, let resetStack):
-                transition(to: nextStep, resetStack: resetStack)
+                stateController.transition(to: nextStep, resetStack: resetStack)
 
             case .performPhoneLoginFromRegistration(let phoneNumber):
                 sendLoginCode(phoneNumber: phoneNumber, isResend: false)
@@ -244,8 +216,8 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
                 sessionManager.configureUserNotifications()
 
             case .startIncrementalUserCreation(let unregisteredUser):
-                transition(to: .incrementalUserCreation(unregisteredUser, .start))
-                eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
+                stateController.transition(to: .incrementalUserCreation(unregisteredUser, .start))
+                eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
 
             case .setMarketingConsent(let consentValue):
                 updateUnregisteredUser {
@@ -259,7 +231,7 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
                 sendPostRegistrationFields(for: unregisteredUser)
 
             case .unwindState:
-                unwind()
+                stateController.unwindState()
             }
         }
     }
@@ -301,7 +273,7 @@ extension AuthenticationCoordinator {
      */
 
     func startAuthentication(with error: NSError?, numberOfAccounts: Int) {
-        eventHandlingManager.handleEvent(ofType: .flowStart(error, numberOfAccounts))
+        eventResponderChain.handleEvent(ofType: .flowStart(error, numberOfAccounts))
     }
 
     // MARK: Registration Code
@@ -353,14 +325,14 @@ extension AuthenticationCoordinator {
     /// Sends the registration activation code.
     private func sendActivationCode(_ credential: UnverifiedCredential, _ user: UnregisteredUser, isResend: Bool) {
         presenter?.showLoadingView = true
-        transition(to: .sendActivationCode(credential, user: user, isResend: isResend))
+        stateController.transition(to: .sendActivationCode(credential, user: user, isResend: isResend))
         registrationStatus.sendActivationCode(to: credential)
     }
 
     /// Asks the registration
     private func activateCredentials(credential: UnverifiedCredential, user: UnregisteredUser, code: String) {
         presenter?.showLoadingView = true
-        transition(to: .activateCredentials(credential, user: user, code: code))
+        stateController.transition(to: .activateCredentials(credential, user: user, code: code))
         registrationStatus.checkActivationCode(credential: credential, code: code)
     }
 
@@ -407,7 +379,7 @@ extension AuthenticationCoordinator {
         }
 
         updateBlock(unregisteredUser)
-        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
+        eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
     }
 
     /// Creates the user on the backend and advances the state.
@@ -416,7 +388,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        transition(to: .createUser(unregisteredUser))
+        stateController.transition(to: .createUser(unregisteredUser))
         registrationStatus.create(user: unregisteredUser)
     }
 
@@ -454,7 +426,7 @@ extension AuthenticationCoordinator {
     @objc(requestEmailLoginWithCredentials:)
     func requestEmailLogin(with credentials: ZMEmailCredentials) {
         presenter?.showLoadingView = true
-        transition(to: .authenticateEmailCredentials(credentials))
+        stateController.transition(to: .authenticateEmailCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
 
@@ -462,14 +434,14 @@ extension AuthenticationCoordinator {
     private func sendLoginCode(phoneNumber: String, isResend: Bool) {
         presenter?.showLoadingView = true
         let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
-        transition(to: nextStep)
+        stateController.transition(to: nextStep)
         unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
     }
 
     /// Requests a phone login for the specified credentials.
     private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
         presenter?.showLoadingView = true
-        transition(to: .authenticatePhoneCredentials(credentials))
+        stateController.transition(to: .authenticatePhoneCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
 
@@ -528,7 +500,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        transition(to: .registerEmailCredentials(credentials, isResend: false))
+        stateController.transition(to: .registerEmailCredentials(credentials, isResend: false))
         presenter?.showLoadingView = true
 
         let result = setCredentialsWithProfile(profile, credentials: credentials) && sessionManager.update(credentials: credentials) == true
@@ -565,7 +537,7 @@ extension AuthenticationCoordinator {
         }
 
         presenter?.showLoadingView = true
-        transition(to: .registerEmailCredentials(credentials, isResend: true))
+        stateController.transition(to: .registerEmailCredentials(credentials, isResend: true))
         setCredentialsWithProfile(userProfile, credentials: credentials)
     }
 
@@ -637,7 +609,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         }
 
         presenter?.showAlert(forError: error) { _ in
-            self.unwind()
+            self.stateController.unwindState()
         }
     }
 
@@ -649,7 +621,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
         }
 
         presenter?.showAlert(forMessage: "error.updating_password".localized, title: nil) { _ in
-            self.unwind()
+            self.stateController.unwindState()
         }
     }
 
@@ -660,7 +632,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
             return
         }
 
-        transition(to: .enterEmailChangeCode(credentials))
+        stateController.transition(to: .enterEmailChangeCode(credentials))
     }
 
     func userDidChange(_ changeInfo: UserChangeInfo) {

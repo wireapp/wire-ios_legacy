@@ -32,7 +32,7 @@ protocol AuthenticationEventHandlingManagerDelegate: class {
  * Manages the event handlers for authentication.
  */
 
-class AuthenticationEventHandlingManager {
+class AuthenticationEventResponderChain {
 
     /**
      * The supported event types.

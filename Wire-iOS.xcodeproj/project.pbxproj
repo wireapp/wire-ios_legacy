@@ -241,6 +241,7 @@
 		5E8C38B4212EE622002AE12B /* EmailLinkVerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B3212EE622002AE12B /* EmailLinkVerificationViewController.swift */; };
 		5E8C38B6212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B5212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift */; };
 		5E8C38B8212FDD68002AE12B /* ObservableSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B7212FDD68002AE12B /* ObservableSessionManager.swift */; };
+		5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8C38B9212FE106002AE12B /* AuthenticationStateController.swift */; };
 		5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */; };
 		5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA74E211AEE3D00360979 /* AuthenticationCoordinatorAction.swift */; };
 		5E8DA751211AEFC800360979 /* AuthenticationStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA750211AEFC800360979 /* AuthenticationStatusProvider.swift */; };
@@ -253,7 +254,7 @@
 		5E8DA765211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */; };
 		5E8DA768211B2D9A00360979 /* AuthenticationSuccessEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA767211B2D9A00360979 /* AuthenticationSuccessEventHandler.swift */; };
 		5E8DA76A211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */; };
-		5E8DA76C211B2EC200360979 /* AuthenticationEventHandlingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA76B211B2EC200360979 /* AuthenticationEventHandlingManager.swift */; };
+		5E8DA76C211B2EC200360979 /* AuthenticationEventResponderChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA76B211B2EC200360979 /* AuthenticationEventResponderChain.swift */; };
 		5E8DA76F211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA76E211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift */; };
 		5E8DA774211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA773211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift */; };
 		5E8DA782211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8DA781211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift */; };
@@ -1631,6 +1632,7 @@
 		5E8C38B3212EE622002AE12B /* EmailLinkVerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLinkVerificationViewController.swift; sourceTree = "<group>"; };
 		5E8C38B5212F136A002AE12B /* EmailLinkVerificationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLinkVerificationViewControllerTests.swift; sourceTree = "<group>"; };
 		5E8C38B7212FDD68002AE12B /* ObservableSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableSessionManager.swift; sourceTree = "<group>"; };
+		5E8C38B9212FE106002AE12B /* AuthenticationStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStateController.swift; sourceTree = "<group>"; };
 		5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventHandler.swift; sourceTree = "<group>"; };
 		5E8DA74E211AEE3D00360979 /* AuthenticationCoordinatorAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatorAction.swift; sourceTree = "<group>"; };
 		5E8DA750211AEFC800360979 /* AuthenticationStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStatusProvider.swift; sourceTree = "<group>"; };
@@ -1643,7 +1645,7 @@
 		5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+PostLogin.swift"; sourceTree = "<group>"; };
 		5E8DA767211B2D9A00360979 /* AuthenticationSuccessEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationSuccessEventHandler.swift; sourceTree = "<group>"; };
 		5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+InitialSync.swift"; sourceTree = "<group>"; };
-		5E8DA76B211B2EC200360979 /* AuthenticationEventHandlingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventHandlingManager.swift; sourceTree = "<group>"; };
+		5E8DA76B211B2EC200360979 /* AuthenticationEventResponderChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationEventResponderChain.swift; sourceTree = "<group>"; };
 		5E8DA76E211B422D00360979 /* AuthenticationStartReauthenticateErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartReauthenticateErrorHandler.swift; sourceTree = "<group>"; };
 		5E8DA773211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationFlowStep+ClientsDeletion.swift"; sourceTree = "<group>"; };
 		5E8DA781211C3BF300360979 /* AuthenticationPhoneLoginErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPhoneLoginErrorHandler.swift; sourceTree = "<group>"; };
@@ -3566,7 +3568,7 @@
 				5E8DA74C211AEB9E00360979 /* AuthenticationEventHandler.swift */,
 				5E8DA75B211B085A00360979 /* AnyAuthenticationEventHandler.swift */,
 				5E8DA74E211AEE3D00360979 /* AuthenticationCoordinatorAction.swift */,
-				5E8DA76B211B2EC200360979 /* AuthenticationEventHandlingManager.swift */,
+				5E8DA76B211B2EC200360979 /* AuthenticationEventResponderChain.swift */,
 				5EE73BE92123078B0032986D /* Registration */,
 				5E8DA76D211B41FC00360979 /* Flow Start */,
 				5E8DA752211AF7A000360979 /* Initial Sync */,
@@ -3626,6 +3628,7 @@
 			isa = PBXGroup;
 			children = (
 				5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */,
+				5E8C38B9212FE106002AE12B /* AuthenticationStateController.swift */,
 				5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */,
 				5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */,
 				5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */,
@@ -6983,6 +6986,7 @@
 				16D49328203DCC88008DDFFA /* GroupDetailsViewController.swift in Sources */,
 				BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */,
 				EF2127221FB9DFE300625A9B /* FormFlowViewController.m in Sources */,
+				5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */,
 				871BC3621D34F94200DF0793 /* Settings.m in Sources */,
 				EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */,
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
@@ -7540,7 +7544,7 @@
 				870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */,
 				EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */,
 				EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */,
-				5E8DA76C211B2EC200360979 /* AuthenticationEventHandlingManager.swift in Sources */,
+				5E8DA76C211B2EC200360979 /* AuthenticationEventResponderChain.swift in Sources */,
 				5EC16B9220EB8C6F00955156 /* MediaPreviewViewController.m in Sources */,
 				5E8DA758211B055100360979 /* AuthenticationClientLimitErrorHandler.swift in Sources */,
 				AFD4E72A1E449925002A4732 /* Analytics+StorableTrackingEvent.swift in Sources */,
