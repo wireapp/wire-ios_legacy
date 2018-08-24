@@ -56,18 +56,15 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
 
     // MARK: - State
 
-    var currentStep: AuthenticationFlowStep = .start
-    var flowStack: [AuthenticationFlowStep] = []
     var currentViewController: AuthenticationStepViewController?
 
     let stateController: AuthenticationStateController
     let registrationStatus: RegistrationStatus
 
-    private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
-    private let interfaceBuilder = AuthenticationInterfaceBuilder()
-
-    private let sessionManager: ObservableSessionManager
-    private let unauthenticatedSession: UnauthenticatedSession
+    let sessionManager: ObservableSessionManager
+    let unauthenticatedSession: UnauthenticatedSession
+    let interfaceBuilder = AuthenticationInterfaceBuilder()
+    let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
 
     private var loginObservers: [Any] = []
     private var postLoginObservers: [Any] = []
@@ -88,7 +85,6 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDel
 
         registrationStatus.delegate = self
         companyLoginController?.delegate = self
-        flowStack = [.start]
 
         loginObservers = [
             PreLoginAuthenticationNotification.register(self, for: unauthenticatedSession),
@@ -289,7 +285,7 @@ extension AuthenticationCoordinator {
 
     @objc(startRegistrationWithPhoneNumber:)
     func startRegistration(phoneNumber: String) {
-        guard case let .createCredentials(unregisteredUser) = currentStep else {
+        guard case let .createCredentials(unregisteredUser) = stateController.currentStep else {
             log.error("Cannot start phone registration outside of registration flow.")
             return
         }
@@ -311,7 +307,7 @@ extension AuthenticationCoordinator {
 
     @objc(startRegistrationWithName:email:password:)
     func startRegistration(name: String, email: String, password: String) {
-        guard case let .createCredentials(unregisteredUser) = currentStep else {
+        guard case let .createCredentials(unregisteredUser) = stateController.currentStep else {
             log.error("Cannot start email registration outside of registration flow.")
             return
         }
@@ -373,7 +369,7 @@ extension AuthenticationCoordinator {
 
     /// Updates the fields of the unregistered user, and advances the state.
     private func updateUnregisteredUser(_ updateBlock: (UnregisteredUser) -> Void) {
-        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = stateController.currentStep else {
             log.error("Cannot update unregistered user outide of the incremental user creation flow")
             return
         }
@@ -384,7 +380,7 @@ extension AuthenticationCoordinator {
 
     /// Creates the user on the backend and advances the state.
     private func finishRegisteringUser() {
-        guard case let .incrementalUserCreation(unregisteredUser, _) = currentStep else {
+        guard case let .incrementalUserCreation(unregisteredUser, _) = stateController.currentStep else {
             return
         }
 
@@ -452,13 +448,13 @@ extension AuthenticationCoordinator {
      */
 
     @objc func resendVerificationCode() {
-        switch currentStep {
+        switch stateController.currentStep {
         case .enterLoginCode(let phoneNumber):
             sendLoginCode(phoneNumber: phoneNumber, isResend: true)
         case .enterActivationCode(let credential, let user):
             sendActivationCode(credential, user, isResend: true)
         default:
-            log.error("Cannot send verification code in the current state (\(currentStep)")
+            log.error("Cannot send verification code in the current state (\(stateController.currentStep)")
         }
     }
 
@@ -469,14 +465,14 @@ extension AuthenticationCoordinator {
 
     @objc(continueFlowWithVerificationCode:)
     func continueFlow(withVerificationCode code: String) {
-        switch currentStep {
+        switch stateController.currentStep {
         case .enterLoginCode(let phoneNumber):
             let credentials = ZMPhoneCredentials(phoneNumber: phoneNumber, verificationCode: code)
             requestPhoneLogin(with: credentials)
         case .enterActivationCode(let unverifiedCredential, let user):
             activateCredentials(credential: unverifiedCredential, user: user, code: code)
         default:
-            log.error("Cannot continue flow with user code in the current state (\(currentStep)")
+            log.error("Cannot continue flow with user code in the current state (\(stateController.currentStep)")
         }
     }
 
@@ -495,7 +491,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func setEmailCredentialsForCurrentUser(_ credentials: ZMEmailCredentials) {
-        guard case let .addEmailAndPassword(_, profile, _) = currentStep else {
+        guard case let .addEmailAndPassword(_, profile, _) = stateController.currentStep else {
             log.error("Cannot save e-mail and password outside of designated step.")
             return
         }
@@ -528,7 +524,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func resendEmailVerificationCode() {
-        guard case let .enterEmailChangeCode(credentials) = currentStep else {
+        guard case let .enterEmailChangeCode(credentials) = stateController.currentStep else {
             return
         }
 
@@ -558,7 +554,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func startCompanyLoginFlowIfPossible() {
-        switch currentStep {
+        switch stateController.currentStep {
         case .provideCredentials:
             companyLoginController?.displayLoginCodePrompt()
         default:
@@ -571,7 +567,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func currentViewControllerDidAppear() {
-        switch currentStep {
+        switch stateController.currentStep {
         case .landingScreen, .provideCredentials:
             companyLoginController?.isAutoDetectionEnabled = true
             companyLoginController?.detectLoginCode()
@@ -600,7 +596,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
     func emailUpdateDidFail(_ error: Error!) {
         presenter?.showLoadingView = false
 
-        guard case .registerEmailCredentials = currentStep else {
+        guard case .registerEmailCredentials = stateController.currentStep else {
             return
         }
 
@@ -616,7 +612,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
     func passwordUpdateRequestDidFail() {
         presenter?.showLoadingView = false
 
-        guard case .registerEmailCredentials = currentStep else {
+        guard case .registerEmailCredentials = stateController.currentStep else {
             return
         }
 
@@ -628,7 +624,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
     func didSendVerificationEmail() {
         presenter?.showLoadingView = false
 
-        guard case .registerEmailCredentials(let credentials, _) = currentStep else {
+        guard case .registerEmailCredentials(let credentials, _) = stateController.currentStep else {
             return
         }
 
@@ -640,7 +636,7 @@ extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
             return
         }
 
-        switch currentStep {
+        switch stateController.currentStep {
         case .enterEmailChangeCode:
             guard let selfUser = delegate?.selfUser else {
                 return

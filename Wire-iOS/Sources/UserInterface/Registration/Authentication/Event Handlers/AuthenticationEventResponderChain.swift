@@ -24,7 +24,7 @@ import Foundation
 
 protocol AuthenticationEventHandlingManagerDelegate: class {
     var statusProvider: AuthenticationStatusProvider? { get }
-    var currentStep: AuthenticationFlowStep { get }
+    var stateController: AuthenticationStateController { get }
     func executeActions(_ actions: [AuthenticationCoordinatorAction])
 }
 
@@ -175,14 +175,14 @@ class AuthenticationEventResponderChain {
                 handler.statusProvider = nil
             }
 
-            if let responseActions = handler.handleEvent(currentStep: delegate.currentStep, context: context) {
+            if let responseActions = handler.handleEvent(currentStep: delegate.stateController.currentStep, context: context) {
                 lookupResult = (handler.name, responseActions)
                 break
             }
         }
 
         guard let (name, actions) = lookupResult else {
-            log.error("No handler was found to handle the event.\nStep = \(delegate.currentStep); Context = \(context)")
+            log.error("No handler was found to handle the event.\nStep = \(delegate.stateController.currentStep); Context = \(context)")
             return
         }
 
