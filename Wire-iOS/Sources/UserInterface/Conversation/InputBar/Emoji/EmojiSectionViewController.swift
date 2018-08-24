@@ -73,7 +73,7 @@ class EmojiSectionViewController: UIViewController {
     }
     
     private func createSectionButton(for type: EmojiSectionType) -> IconButton {
-        let button = IconButton.iconButtonDefault()
+        let button = IconButton(style: .default)
         button.setIcon(type.icon, with: .tiny, for: .normal)
         button.cas_styleClass = "emoji-category"
         button.addTarget(self, action: #selector(didTappButton), for: .touchUpInside)

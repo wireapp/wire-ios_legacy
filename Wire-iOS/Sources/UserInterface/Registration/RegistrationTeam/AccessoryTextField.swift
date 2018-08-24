@@ -65,8 +65,7 @@ class AccessoryTextField: UITextField {
     }
 
     let confirmButton: IconButton = {
-        let iconButton = IconButton.iconButtonCircularLight()
-        iconButton.circular = true
+        let iconButton = IconButton(style: .circular, variant: .dark)
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
         iconButton.isEnabled = false
         return iconButton

@@ -299,7 +299,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addSubview:self.obfuscationView];
 
     // Close button
-    self.closeButton = [IconButton iconButtonCircular];
+    self.closeButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
     self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.closeButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.topOverlay addSubview:self.closeButton];

@@ -102,7 +102,7 @@
 
     [self.view addSubview:self.rightTitledButton];
     
-    self.rightIconedButton = [IconButton iconButtonCircular];
+    self.rightIconedButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
     self.rightIconedButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.rightIconedButton.alpha = 0;
     self.rightIconedButton.accessibilityIdentifier = @"RightButton";
