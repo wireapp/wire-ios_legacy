@@ -23,12 +23,12 @@ extension AuthenticationCoordinator: PostLoginAuthenticationObserver {
 
     /// Called when the client is registered.
     func clientRegistrationDidSucceed(accountId: UUID) {
-        eventHandlingManager.handleEvent(ofType: .clientRegistrationSuccess)
+        eventResponderChain.handleEvent(ofType: .clientRegistrationSuccess)
     }
 
     /// Called when the client failed to register.
     func clientRegistrationDidFail(_ error: NSError, accountId: UUID) {
-        eventHandlingManager.handleEvent(ofType: .clientRegistrationError(error, accountId))
+        eventResponderChain.handleEvent(ofType: .clientRegistrationError(error, accountId))
     }
 
     /// Called when the access token of the user is invalidated.

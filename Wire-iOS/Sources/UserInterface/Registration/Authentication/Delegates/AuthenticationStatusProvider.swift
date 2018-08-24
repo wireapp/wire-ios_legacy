@@ -53,7 +53,7 @@ protocol AuthenticationStatusProvider: class {
      * - returns: The shared user profile, if any.
      */
 
-    var selfUserProfile: UserProfile? { get }
+    var selfUserProfile: UserProfileUpdateStatus? { get }
 
     /**
      * The authentication coordinator requested the shared user.

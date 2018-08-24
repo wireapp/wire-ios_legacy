@@ -22,7 +22,7 @@ import Foundation
  * Steps of the authentication flow.
  */
 
-enum AuthenticationFlowStep {
+enum AuthenticationFlowStep: Equatable {
 
     // Initial Steps
     case start
@@ -40,7 +40,7 @@ enum AuthenticationFlowStep {
     case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
     case clientManagement(clients: [UserClient], credentials: ZMCredentials)
     case removeClient
-    case addEmailAndPassword(user: ZMUser, profile: UserProfile, canSkip: Bool)
+    case addEmailAndPassword(user: ZMUser, profile: UserProfileUpdateStatus, canSkip: Bool)
     case registerEmailCredentials(ZMEmailCredentials, isResend: Bool)
     case pendingEmailLinkVerification(ZMEmailCredentials)
     case verifyEmailChangeCode(ZMEmailCredentials)
@@ -111,7 +111,7 @@ enum AuthenticationFlowStep {
  * Intermediate steps required for user registration.
  */
 
-enum IntermediateRegistrationStep {
+enum IntermediateRegistrationStep: Equatable {
     case start, reviewTermsOfService, provideMarketingConsent, setName, setProfilePicture
 
     var needsInterface: Bool {

@@ -23,7 +23,7 @@ extension AuthenticationCoordinator: ZMInitialSyncCompletionObserver {
 
     /// Called when the initial sync for the new user has completed.
     func initialSyncCompleted() {
-        eventHandlingManager.handleEvent(ofType: .initialSyncCompleted)
+        eventResponderChain.handleEvent(ofType: .initialSyncCompleted)
     }
 
 }
