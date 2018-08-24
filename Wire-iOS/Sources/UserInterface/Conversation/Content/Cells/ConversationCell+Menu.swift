@@ -86,7 +86,7 @@ public extension ConversationCell {
         NotificationCenter.default.removeObserver(self, name: .UIMenuControllerDidHideMenu, object: nil)
     }
     
-    @objc private func deleteMessage(_ sender: Any) {
+    @objc func deleteMessage(_ sender: Any) {
         beingEdited = true
         delegate?.conversationCell?(self, didSelect: .delete)
     }
