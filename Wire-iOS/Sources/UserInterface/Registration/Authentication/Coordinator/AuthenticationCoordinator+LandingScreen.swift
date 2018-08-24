@@ -27,7 +27,6 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount() {
         let unregisteredUser = UnregisteredUser()
         unregisteredUser.accentColorValue = UIColor.indexedAccentColor()
-
         stateController.transition(to: .createCredentials(unregisteredUser))
     }
 
