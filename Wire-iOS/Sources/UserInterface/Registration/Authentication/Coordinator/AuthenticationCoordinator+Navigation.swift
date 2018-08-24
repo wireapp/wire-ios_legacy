@@ -49,7 +49,7 @@ extension AuthenticationCoordinator: UINavigationControllerDelegate {
         }
 
         self.currentViewController = authenticationViewController
-        unwind(requireInterfaceStep: true)
+        stateController.unwindState()
     }
 
 }

@@ -27,27 +27,27 @@ extension AuthenticationCoordinator: RegistrationStatusDelegate {
 
     /// Called when registration fails.
     func userRegistrationFailed(with error: Error) {
-        eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
+        eventResponderChain.handleEvent(ofType: .registrationError(error as NSError))
     }
 
     /// Called when the validation code for the registered credential was sent.
     func activationCodeSent() {
-        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
+        eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
     }
 
     /// Called when the validation code for the registered phone number was sent.
     func activationCodeSendingFailed(with error: Error) {
-        eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
+        eventResponderChain.handleEvent(ofType: .registrationError(error as NSError))
     }
 
     /// Called when the phone number verification succeeds.
     func activationCodeValidated() {
-        eventHandlingManager.handleEvent(ofType: .registrationStepSuccess)
+        eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
     }
 
     /// Called when the phone verification fails.
     func activationCodeValidationFailed(with error: Error) {
-        eventHandlingManager.handleEvent(ofType: .registrationError(error as NSError))
+        eventResponderChain.handleEvent(ofType: .registrationError(error as NSError))
     }
 
     func teamRegistered() {
