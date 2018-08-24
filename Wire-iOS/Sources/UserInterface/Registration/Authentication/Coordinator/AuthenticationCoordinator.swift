@@ -560,7 +560,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func resendEmailVerificationCode() {
-        guard case let .enterEmailChangeCode(credentials) = currentStep else {
+        guard case let .pendingEmailLinkVerification(credentials) = currentStep else {
             return
         }
 
@@ -604,7 +604,7 @@ extension AuthenticationCoordinator {
 
     @objc func currentViewControllerDidAppear() {
         switch currentStep {
-        case .landingScreen, .provideCredentials:
+        case .landingScreen, .provideCredentials, .createCredentials:
             companyLoginController?.isAutoDetectionEnabled = true
             companyLoginController?.detectLoginCode()
 
@@ -619,89 +619,6 @@ extension AuthenticationCoordinator {
 
     @objc func currentViewControllerDidDisappear() {
         companyLoginController?.isAutoDetectionEnabled = false
-    }
-
-}
-
-// MARK: - User Session Events
-
-extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
-
-    // MARK: Email Update
-
-    func emailUpdateDidFail(_ error: Error!) {
-        presenter?.showLoadingView = false
-
-        guard case .registerEmailCredentials = currentStep else {
-            return
-        }
-
-        if (error as NSError).userSessionErrorCode == .emailIsAlreadyRegistered {
-            currentViewController?.executeErrorFeedbackAction?(.clearInputFields)
-        }
-
-        presenter?.showAlert(forError: error) { _ in
-            self.unwind()
-        }
-    }
-
-    func passwordUpdateRequestDidFail() {
-        presenter?.showLoadingView = false
-
-        guard case .registerEmailCredentials = currentStep else {
-            return
-        }
-
-        presenter?.showAlert(forMessage: "error.updating_password".localized, title: nil) { _ in
-            self.unwind()
-        }
-    }
-
-    func didSendVerificationEmail() {
-        presenter?.showLoadingView = false
-
-        guard case .registerEmailCredentials(let credentials, _) = currentStep else {
-            return
-        }
-
-        transition(to: .enterEmailChangeCode(credentials))
-    }
-
-    func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.profileInformationChanged else {
-            return
-        }
-
-        switch currentStep {
-        case .enterEmailChangeCode:
-            guard let selfUser = delegate?.selfUser else {
-                return
-            }
-
-            guard selfUser.emailAddress?.isEmpty == false else {
-                return
-            }
-
-            // TODO: GDPR consent
-            delegate?.userAuthenticationDidComplete(registered: false)
-
-        default:
-            break
-        }
-    }
-
-}
-
-// MARK: - CompanyLoginControllerDelegate
-
-extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
-
-    func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
-        presenter?.present(alert, animated: true)
-    }
-
-    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
-        presenter?.showLoadingView = showLoadingView
     }
 
 }

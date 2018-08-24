@@ -37,7 +37,7 @@ class AuthenticationNoCredentialsErrorHandler: AuthenticationEventHandler {
 
         // If we are already registering the credentials, do not handle the error
         switch currentStep {
-        case .addEmailAndPassword, .registerEmailCredentials, .enterEmailChangeCode:
+        case .addEmailAndPassword, .registerEmailCredentials, .pendingEmailLinkVerification:
             return nil
         default:
             break

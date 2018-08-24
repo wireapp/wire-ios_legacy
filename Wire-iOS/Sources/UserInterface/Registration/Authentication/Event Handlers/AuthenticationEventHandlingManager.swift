@@ -45,9 +45,10 @@ class AuthenticationEventHandlingManager {
         case clientRegistrationError(NSError, UUID)
         case clientRegistrationSuccess
         case authenticationFailure(NSError)
-        case phoneLoginCodeAvailable
+        case loginCodeAvailable
         case registrationError(NSError)
         case registrationStepSuccess
+        case userProfileChange(UserChangeInfo)
     }
 
     // MARK: - Properties
@@ -63,9 +64,10 @@ class AuthenticationEventHandlingManager {
     var clientRegistrationErrorHandlers: [AnyAuthenticationEventHandler<(NSError, UUID)>] = []
     var clientRegistrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var loginErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
-    var phoneLoginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
+    var loginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var registrationErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
     var registrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
+    var userProfileChangeObservers: [AnyAuthenticationEventHandler<UserChangeInfo>] = []
 
     /**
      * Configures the object with the given delegate and registers the default observers.
@@ -105,9 +107,11 @@ class AuthenticationEventHandlingManager {
         registerHandler(AuthenticationPhoneLoginErrorHandler(), to: &loginErrorHandlers)
         registerHandler(AuthenticationEmailLoginUnknownErrorHandler(), to: &loginErrorHandlers)
         registerHandler(AuthenticationEmailFallbackErrorHandler(), to: &loginErrorHandlers)
+        registerHandler(UserEmailUpdateFailureErrorHandler(), to: &loginErrorHandlers)
 
-        // phoneLoginCodeHandlers
-        registerHandler(AuthenticationLoginCodeAvailableEventHandler(), to: &phoneLoginCodeHandlers)
+        // loginCodeHandlers
+        registerHandler(AuthenticationLoginCodeAvailableEventHandler(), to: &loginCodeHandlers)
+        registerHandler(UserEmailUpdateCodeSentEventHandler(), to: &loginCodeHandlers)
 
         // registrationErrorHandlers
         registerHandler(RegistrationActivationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
@@ -118,6 +122,9 @@ class AuthenticationEventHandlingManager {
         registerHandler(RegistrationActivationCodeSentEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationIncrementalUserDataChangeHandler(), to: &registrationSuccessHandlers)
+
+        // userProfileChangeObservers
+        registerHandler(UserEmailChangeEventHandler(), to: &userProfileChangeObservers)
     }
 
     fileprivate func registerHandler<Handler: AuthenticationEventHandler>(_ handler: Handler, to handlerList: inout [AnyAuthenticationEventHandler<Handler.Context>]) {
@@ -147,12 +154,14 @@ class AuthenticationEventHandlingManager {
             handleEvent(with: clientRegistrationSuccessHandlers, context: ())
         case .authenticationFailure(let error):
             handleEvent(with: loginErrorHandlers, context: error)
-        case .phoneLoginCodeAvailable:
-            handleEvent(with: phoneLoginCodeHandlers, context: ())
+        case .loginCodeAvailable:
+            handleEvent(with: loginCodeHandlers, context: ())
         case .registrationError(let error):
             handleEvent(with: registrationErrorHandlers, context: error)
         case .registrationStepSuccess:
             handleEvent(with: registrationSuccessHandlers, context: ())
+        case .userProfileChange(let changeInfo):
+            handleEvent(with: userProfileChangeObservers, context: changeInfo)
         }
     }
 

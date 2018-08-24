@@ -42,7 +42,7 @@ enum AuthenticationFlowStep {
     case removeClient
     case addEmailAndPassword(user: ZMUser, profile: UserProfile, canSkip: Bool)
     case registerEmailCredentials(ZMEmailCredentials, isResend: Bool)
-    case enterEmailChangeCode(ZMEmailCredentials)
+    case pendingEmailLinkVerification(ZMEmailCredentials)
     case verifyEmailChangeCode(ZMEmailCredentials)
     case pendingInitialSync
 
@@ -90,7 +90,7 @@ enum AuthenticationFlowStep {
         case .removeClient: return false
         case .addEmailAndPassword: return true
         case .pendingInitialSync: return false
-        case .enterEmailChangeCode: return true
+        case .pendingEmailLinkVerification: return true
         case .verifyEmailChangeCode: return false
 
         // Registration
