@@ -125,7 +125,7 @@ final class MockMessageFactory: NSObject {
     }
 
     class func textMessage(withText text: String?) -> MockMessage? {
-        return MockMessageFactory.textMessage(withText: text)
+        return MockMessageFactory.textMessage(withText: text, includingRichMedia: false)
     }
 
     class func textMessage(withText text: String?, includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
