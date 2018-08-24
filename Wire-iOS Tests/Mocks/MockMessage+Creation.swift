@@ -21,8 +21,7 @@ import Foundation
 import WireLinkPreview
 
 @objcMembers
-final class MockMessageFactory {
-
+final class MockMessageFactory: NSObject {
 
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
     ///
@@ -76,6 +75,7 @@ final class MockMessageFactory {
         return message
     }
 
+    @objc(systemMessageWithType:users:clients:)
     class func systemMessage(with systemMessageType: ZMSystemMessageType, users numUsers: Int, clients numClients: Int) -> MockMessage? {
         let message = MockMessageFactory.messageTemplate()
 
@@ -118,6 +118,10 @@ final class MockMessageFactory {
         let message: MockMessage? = self.fileTransferMessage()
         message?.backingFileMessageData.mimeType = "audio/x-m4a"
         return message
+    }
+
+    class func textMessage(includingRichMedia shouldIncludeRichMedia: Bool) -> MockMessage? {
+        return self.textMessage(withText: "Just a random text message", includingRichMedia: shouldIncludeRichMedia)
     }
 
     class func textMessage(withText text: String?) -> MockMessage? {
