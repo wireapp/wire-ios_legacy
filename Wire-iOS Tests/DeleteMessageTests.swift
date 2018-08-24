@@ -86,7 +86,7 @@ final class DeleteMessageTests: XCTestCase {
         }
 
         cell.configure(for: message(for: conversationType), layoutProperties: nil)
-        cell.autoSetDimension(.height, toSize: 60) ///TODO:
+        cell.autoSetDimension(.height, toSize: 60)
 
         return cell
     }

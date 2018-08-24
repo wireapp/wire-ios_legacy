@@ -22,7 +22,7 @@ import XCTest
 final class ProfilePictureStepViewControllerTests: ZMSnapshotTestCase {
     
     var sut: ProfilePictureStepViewController!
-    var configurationBlock: ((UIView) -> Void)?
+    var configurationBlock: ((UIView, Bool) -> Void)!
 
     override func setUp() {
         super.setUp()
@@ -32,7 +32,7 @@ final class ProfilePictureStepViewControllerTests: ZMSnapshotTestCase {
         let user = ZMIncompleteRegistrationUser()
         sut = ProfilePictureStepViewController(unregisteredUser: user)
 
-        configurationBlock = {[weak self] view in
+        configurationBlock = {[weak self] _, _ in
             guard let weakSelf = self else { return }
 
             weakSelf.sut.loadViewIfNeeded()
@@ -48,6 +48,7 @@ final class ProfilePictureStepViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersTheViewControllerCorrectlyInAllDeviceSizes() {
-        verifyView(inAllPhoneSizes: sut.view, extraLayoutPass: false, file: #file, line: #line, configurationBlock: configurationBlock)
+        verifyInAllDeviceSizes(view: sut.view, configuration: configurationBlock!)
+
     }
 }

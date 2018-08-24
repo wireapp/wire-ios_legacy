@@ -65,7 +65,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         XCTAssertFalse(sut.showSeparator)
 
         // then
-        verifyView(inAllPhoneWidths: sut.view, extraLayoutPass:false, file: #file, line: #line)
+        verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testThatTheSeparatorIsNotHiddenWhen_ShowSeparator_IsSetToYes() {
@@ -74,7 +74,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
 
         // then
         XCTAssertFalse(sut.separator.isHidden)
-        verifyView(inAllPhoneWidths: sut.view, extraLayoutPass:false, file: #file, line: #line)
+        verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testThatItHidesTheContactsTitleAndShowsArchivedButtonWhen_ShowArchived_IsSetToYes() {
@@ -82,7 +82,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         sut.showArchived = true
 
         // then
-        verifyView(inAllPhoneWidths: sut.view, extraLayoutPass:false, file: #file, line: #line)
+        verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testThatItShowsTheContactsTitleAndHidesTheArchivedButtonWhen_ShowArchived_WasSetToYesAndIsSetToNo() {
@@ -94,7 +94,7 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         sut.showArchived = false
 
         // then
-        verifyView(inAllPhoneWidths: sut.view, extraLayoutPass:false, file: #file, line: #line)
+        verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testThatItCallsTheDelegateWhenTheContactsButtonIsTapped() {
