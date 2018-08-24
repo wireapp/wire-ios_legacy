@@ -44,11 +44,11 @@ typedef NS_ENUM(NSUInteger, ConversationCellType) {
 };
 
 
-@interface DeleteMessageTests : XCTestCase
+@interface DeleteMessageTests2 : XCTestCase
 @property (nonatomic) ConversationCell *sut;
 @end
 
-@implementation DeleteMessageTests
+@implementation DeleteMessageTests2
 
 #pragma mark - Helpers
 
