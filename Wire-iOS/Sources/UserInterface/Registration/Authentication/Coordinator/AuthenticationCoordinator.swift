@@ -19,14 +19,6 @@
 import Foundation
 import WireSyncEngine
 
-typealias AuthenticationStepViewController = UIViewController & AuthenticationCoordinatedViewController
-
-protocol ObservableSessionManager: SessionManagerType {
-    func addSessionManagerCreatedSessionObserver(_ observer: SessionManagerCreatedSessionObserver) -> Any
-}
-
-extension SessionManager: ObservableSessionManager {}
-
 /**
  * Manages the flow of authentication for the user. Decides which steps to take for login, registration
  * and team creation.
@@ -34,10 +26,14 @@ extension SessionManager: ObservableSessionManager {}
 
 class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDelegate {
 
-    weak var presenter: NavigationController?
-    weak var delegate: AuthenticationCoordinatorDelegate?
+    /// The handle to the OS log for authentication events.
+    let log = ZMSLog(tag: "Authentication")
 
-    let log = ZMSLog(tag: "Auth")
+    /// The navigation controller that presents the authentication interface.
+    weak var presenter: NavigationController?
+
+    /// The object receiving updates from the authentication state and providing state.
+    weak var delegate: AuthenticationCoordinatorDelegate?
 
     // MARK: - Event Handling Properties
 

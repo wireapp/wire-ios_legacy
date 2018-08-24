@@ -53,7 +53,7 @@ class AuthenticationEventHandlingManager {
     // MARK: - Properties
 
     weak var delegate: AuthenticationEventHandlingManagerDelegate?
-    private let log = ZMSLog(tag: "Auth")
+    private let log = ZMSLog(tag: "Authentication")
 
     // MARK: - Configuration
 

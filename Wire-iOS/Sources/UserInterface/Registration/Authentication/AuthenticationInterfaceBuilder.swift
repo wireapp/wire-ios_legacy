@@ -19,6 +19,12 @@
 import UIKit
 
 /**
+ * A type of view controller that can be managed by an authentication coordinator.
+ */
+
+typealias AuthenticationStepViewController = UIViewController & AuthenticationCoordinatedViewController
+
+/**
  * An object that builds view controllers for authentication steps.
  */
 
