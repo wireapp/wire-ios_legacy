@@ -16,11 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 #import "ButtonWithLargerHitArea.h"
 #import "ZetaIconTypes.h"
+#import "ColorScheme.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+typedef NS_ENUM(NSUInteger, IconButtonStyle) {
+    IconButtonStyleDefault,
+    IconButtonStyleCircular,
+    IconButtonStyleNavigation
+};
 
 @interface IconButton : ButtonWithLargerHitArea
 
@@ -32,13 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL adjustBackgroundImageWhenHighlighted;
 @property (nonatomic) CGFloat titleImageSpacing;
 
-
-+ (instancetype)iconButtonDefault;
-+ (instancetype)iconButtonDefaultLight;
-+ (instancetype)iconButtonDefaultDark;
-+ (instancetype)iconButtonCircularLight;
-+ (instancetype)iconButtonCircularDark;
-+ (instancetype)iconButtonCircular;
+- (instancetype)initWithStyle:(IconButtonStyle)style variant:(ColorSchemeVariant)variant;
+- (instancetype)initWithStyle:(IconButtonStyle)style;
 
 /// Default rendering mode is @c UIImageRenderingModeAlwaysTemplate
 - (void)setIcon:(ZetaIconType)icon withSize:(ZetaIconSize)iconSize forState:(UIControlState)state;

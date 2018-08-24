@@ -18,10 +18,10 @@
 
 
 #import "ContactsCell.h"
+#import "Button.h"
 #import "BadgeUserImageView.h"
 @import PureLayout;
 #import "WireSyncEngine+iOS.h"
-@import WireExtensionComponents;
 
 
 
@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_END
     self.userSubtitleLabel = [[UILabel alloc] initForAutoLayout];
     [self.userNameContainerView addSubview:self.userSubtitleLabel];
     
-    self.actionButton = [Button buttonWithStyleClass:@"dialogue-button-full"];
+    self.actionButton = [[Button alloc] initWithStyle:ButtonStyleFull];
     [self.actionButton setTitle:NSLocalizedString(@"contacts_ui.action_button.invite", @"") forState:UIControlStateNormal];
     [self.actionButton addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.actionButton];

@@ -24,6 +24,8 @@
 #import "UIImage+ImageUtilities.h"
 #import "UIColor+Mixing.h"
 #import "UIControl+Wire.h"
+#import "UIColor+WR_ColorScheme.h"
+#import "Wire-Swift.h"
 
 @interface IconDefinition : NSObject
 
@@ -82,66 +84,59 @@
 
 @implementation IconButton
 
-+ (instancetype)iconButtonDefault
-{
-    IconButton *iconButton = [[self alloc] init];
-    iconButton.cas_styleClass = @"default";
-    return iconButton;
-}
-
-+ (instancetype)iconButtonDefaultLight
-{
-    IconButton *iconButton = [[self alloc] init];
-    iconButton.cas_styleClass = @"default-light";
-    return iconButton;
-}
-
-+ (instancetype)iconButtonDefaultDark
-{
-    IconButton *iconButton = [[self alloc] init];
-    iconButton.cas_styleClass = @"default-dark";
-    return iconButton;
-}
-
-+ (instancetype)iconButtonCircularLight
-{
-    IconButton *iconButton = [[self alloc] init];
-    iconButton.cas_styleClass = @"circular-light";
-    return iconButton;
-}
-
-+ (instancetype)iconButtonCircularDark
-{
-    IconButton *iconButton = [[self alloc] init];
-    iconButton.cas_styleClass = @"circular-dark";
-    return iconButton;
-}
-
-+ (instancetype)iconButtonCircular
-{
-    IconButton *iconButton = [[self alloc] init];
-    iconButton.cas_styleClass = @"circular";
-    return iconButton;
-}
-
 + (void)initialize
 {
     if (self == [IconButton self]) {
         CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self.class];
-        
+
         CASArgumentDescriptor *colorArg = [CASArgumentDescriptor argWithClass:UIColor.class];
-        
+
         NSDictionary *controlStateMap = @{ @"normal"       : @(UIControlStateNormal),
                                            @"highlighted"  : @(UIControlStateHighlighted),
                                            @"disabled"     : @(UIControlStateDisabled),
                                            @"selected"     : @(UIControlStateSelected) };
-        
+
         CASArgumentDescriptor *stateArg = [CASArgumentDescriptor argWithName:@"state" valuesByName:controlStateMap];
-        
+
         [classDescriptor setArgumentDescriptors:@[colorArg, stateArg] setter:@selector(setIconColor:forState:) forPropertyKey:@"iconColor"];
         [classDescriptor setArgumentDescriptors:@[colorArg, stateArg] setter:@selector(setBackgroundImageColor:forState:) forPropertyKey:@"backgroundImageColor"];
         [classDescriptor setArgumentDescriptors:@[colorArg, stateArg] setter:@selector(setBorderColor:forState:) forPropertyKey:@"borderColor"];
     }
+}
+
+- (instancetype)initWithStyle:(IconButtonStyle)style
+{
+    return [self initWithStyle:style variant:ColorScheme.defaultColorScheme.variant];
+}
+
+- (instancetype)initWithStyle:(IconButtonStyle)style variant:(ColorSchemeVariant)variant
+{
+    self = [self init];
+    
+    [self setIconColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorIconNormal variant:variant] forState:UIControlStateNormal];
+    [self setIconColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorIconSelected variant:variant] forState:UIControlStateSelected];
+    [self setIconColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorIconHighlighted variant:variant] forState:UIControlStateHighlighted];
+    [self setBackgroundImageColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorIconBackgroundSelected variant:variant] forState:UIControlStateSelected];
+    
+    switch (style) {
+        case IconButtonStyleDefault:
+            break;
+        case IconButtonStyleCircular:
+            self.circular = YES;
+            self.borderWidth = 0;
+            self.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+            self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+            break;
+        case IconButtonStyleNavigation:
+            self.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, -5);
+            self.titleLabel.font = UIFont.smallLightFont;
+            self.adjustsImageWhenDisabled = NO;
+            self.borderWidth = 0;
+            self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            break;
+    }
+    
+    return self;
 }
 
 - (instancetype)init

@@ -50,7 +50,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
     public init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
         self.colorSchemeVariant = variant
-        self.clearButton = variant == .dark ? IconButton.iconButtonDefaultLight() : IconButton.iconButtonDefaultDark()
+        self.clearButton = IconButton(style: .default, variant: variant)
         
         super.init(nibName: nil, bundle: nil)
         

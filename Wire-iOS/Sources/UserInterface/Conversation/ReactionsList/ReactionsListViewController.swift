@@ -27,7 +27,7 @@ import Classy
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
     fileprivate let topBar: ModalTopBar
-    public let dismissButton = IconButton.iconButtonDefault()
+    public let dismissButton = IconButton(style: .default)
     public let titleLabel = UILabel()
     
     public init(message: ZMConversationMessage, showsStatusBar: Bool) {

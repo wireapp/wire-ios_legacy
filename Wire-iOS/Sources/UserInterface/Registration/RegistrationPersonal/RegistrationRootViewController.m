@@ -143,8 +143,8 @@
 
 - (void)setupBackButton
 {
-    self.backButton = [[IconButton alloc] initForAutoLayout];
-    self.backButton.cas_styleClass = @"navigation";
+    self.backButton = [[IconButton alloc] initWithStyle:IconButtonStyleNavigation variant:ColorSchemeVariantDark];
+    self.backButton.translatesAutoresizingMaskIntoConstraints = NO;
 
     ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronLeft : ZetaIconTypeChevronRight;
 

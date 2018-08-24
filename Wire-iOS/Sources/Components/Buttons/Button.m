@@ -25,10 +25,9 @@
 #import "UIControl+Wire.h"
 #import "UIImage+ImageUtilities.h"
 #import "NSString+TextTransform.h"
+#import "Wire-Swift.h"
 
 @import QuartzCore;
-@import Classy;
-
 
 @interface Button ()
 
@@ -66,48 +65,63 @@
 
 + (instancetype)buttonWithStyle:(ButtonStyle)style
 {
-    return [Button buttonWithStyleClass:[Button styleClassForStyle:style]];
+    return [[Button alloc] initWithStyle:style];
 }
 
 + (instancetype)buttonWithStyle:(ButtonStyle)style variant:(ColorSchemeVariant)variant
 {
-    NSString *styleClass = [Button styleClassForStyle:style];
-    NSString *suffix = variant == ColorSchemeVariantLight ? @"-light" : @"-dark";
-    
-    return [Button buttonWithStyleClass:[styleClass stringByAppendingString:suffix]];
+    return [[Button alloc] initWithStyle:style variant:variant];
 }
 
-+ (NSString *)styleClassForStyle:(ButtonStyle)style
+- (instancetype)initWithStyle:(ButtonStyle)style
 {
-    NSString *styleClass = nil;
+    return [self initWithStyle:style variant:ColorScheme.defaultColorScheme.variant];
+}
+
+- (instancetype)initWithStyle:(ButtonStyle)style variant:(ColorSchemeVariant)variant
+{
+    self = [self init];
+    
+    self.textTransform = TextTransformUpper;
+    self.titleLabel.font = UIFont.smallLightFont;
+    self.layer.cornerRadius = 4;
+    self.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
     
     switch (style) {
         case ButtonStyleFull:
-            styleClass = @"dialogue-button-full";
+            [self setBackgroundImageColor:UIColor.accentColor forState:UIControlStateNormal];
+            [self setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateHighlighted];
             break;
-            
         case ButtonStyleFullMonochrome:
-            styleClass = @"dialogue-button-full-monochrome";
+            [self setBackgroundImageColor:UIColor.whiteColor forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantLight] forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantLight] forState:UIControlStateHighlighted];
             break;
-            
         case ButtonStyleEmpty:
-            styleClass = @"dialogue-button-empty";
-            break;
+            self.layer.borderWidth = 1;
             
+            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonEmptyText variant:variant] forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateHighlighted];
+            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateDisabled];
+            
+            [self setBorderColor:UIColor.accentColor forState:UIControlStateNormal];
+            [self setBorderColor:UIColor.accentDarken forState:UIControlStateHighlighted];
+            [self setBorderColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed  variant:variant] forState:UIControlStateDisabled];
+            break;
         case ButtonStyleEmptyMonochrome:
-            styleClass = @"dialogue-button-empty-monochrome";
+            self.layer.borderWidth = 1;
+            
+            [self setBackgroundImageColor:UIColor.clearColor forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantLight] forState:UIControlStateHighlighted];
+            
+            [self setBorderColor:[UIColor colorWithWhite:1.0 alpha:0.32] forState:UIControlStateNormal];
+            [self setBorderColor:[UIColor colorWithWhite:1.0 alpha:0.16] forState:UIControlStateHighlighted];
             break;
     }
     
-    return styleClass;
-}
-
-+ (instancetype)buttonWithStyleClass:(NSString *)styleClass
-{
-    Button *button = [[self alloc] init];
-    button.textTransform = TextTransformNone;
-    button.cas_styleClass = styleClass;
-    return button;
+    return self;
 }
 
 - (instancetype)init

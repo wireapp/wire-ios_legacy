@@ -37,9 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL circular;
 @property (nonatomic) TextTransform textTransform;
 
-+ (instancetype)buttonWithStyleClass:(NSString * _Nullable)styleClass;
 + (instancetype)buttonWithStyle:(ButtonStyle)style;
 + (instancetype)buttonWithStyle:(ButtonStyle)style variant:(ColorSchemeVariant)variant;
+
+- (instancetype)initWithStyle:(ButtonStyle)style;
+- (instancetype)initWithStyle:(ButtonStyle)style variant:(ColorSchemeVariant)variant;
 
 - (UIColor *)borderColorForState:(UIControlState)state;
 - (void)setBorderColor:(UIColor *)color forState:(UIControlState)state;
