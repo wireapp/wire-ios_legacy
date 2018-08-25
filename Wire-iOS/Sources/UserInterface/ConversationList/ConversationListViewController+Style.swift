@@ -18,16 +18,8 @@
 
 import Foundation
 
-extension UIColor {
-    static var textForeground: UIColor {
-        return UIColor(scheme: .textForeground)
-    }
-
-    static var background: UIColor {
-        return UIColor(scheme: .background)
-    }
-
-    static var placeholderBackground: UIColor {
-        return UIColor(scheme: .placeholderBackground)
+extension ConversationListViewController {
+    @objc func setupStyle() {
+        noConversationLabel.backgroundColor = .clear
     }
 }

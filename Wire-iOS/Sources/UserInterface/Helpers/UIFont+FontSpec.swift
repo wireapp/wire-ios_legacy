@@ -43,6 +43,10 @@ extension UIFont {
 
     // MARK: - Normal
 
+    class var normalFont: UIFont {
+        return FontSpec(.normal, .none).font!
+    }
+
     class var normalLightFont: UIFont {
         return FontSpec(.normal, .light).font!
     }

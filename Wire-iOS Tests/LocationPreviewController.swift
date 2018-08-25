@@ -16,18 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension UIColor {
-    static var textForeground: UIColor {
-        return UIColor(scheme: .textForeground)
+final class LocationPreviewControllerTests: ZMSnapshotTestCase {
+    
+    var sut: LocationPreviewController!
+    
+    override func setUp() {
+        super.setUp()
+        let mockMessage = MockMessageFactory.locationMessage()
+        sut = LocationPreviewController(message: mockMessage!)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
-    static var background: UIColor {
-        return UIColor(scheme: .background)
-    }
+    func testForInitState(){
+        // GIVEN
 
-    static var placeholderBackground: UIColor {
-        return UIColor(scheme: .placeholderBackground)
+        // WHEN
+
+        // THEN
+        verify(view: sut.view)
     }
 }

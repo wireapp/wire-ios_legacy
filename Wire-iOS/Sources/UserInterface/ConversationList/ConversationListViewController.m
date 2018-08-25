@@ -101,7 +101,6 @@
 
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
-@property (nonatomic) UILabel *noConversationLabel;
 @property (nonatomic) ConversationListOnboardingHint *onboardingHint;
 @property (nonatomic) ConversationActionController *actionsController;
 
@@ -181,6 +180,8 @@
     
     [self updateObserverTokensForActiveTeam];
     [self showPushPermissionDeniedDialogIfNeeded];
+
+    [self setupStyle];
 }
 
 - (void)updateObserverTokensForActiveTeam
