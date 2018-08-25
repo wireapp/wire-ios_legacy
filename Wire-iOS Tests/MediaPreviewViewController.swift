@@ -28,9 +28,6 @@ final class MediaPreviewViewControllerTests: ZMSnapshotTestCase {
         sut = MediaPreviewViewController()
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width:320, height:240))
         sut.viewDidLoad()
-
-        // REMOVE this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
