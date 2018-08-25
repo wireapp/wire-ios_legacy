@@ -368,13 +368,13 @@ ContactsSectionHeaderView {
 
 /* Invite Contacts */
 
-InviteContactsViewController ContactsEmptyResultView  {
+ContactsEmptyResultView  {
     messageLabel: @{
         textColor: $color-text-foreground-dark;
     }
 }
 
-InviteContactsViewController ContactsCell {
+ContactsCell {
     userNameLabel: @{
         textColor: $color-text-foreground-dark;
     }
@@ -383,7 +383,7 @@ InviteContactsViewController ContactsCell {
     }
 }
 
-InviteContactsViewController ContactsSectionHeaderView {
+ContactsSectionHeaderView {
     titleLabel: @{
         textColor: $color-text-foreground-dark;
     }

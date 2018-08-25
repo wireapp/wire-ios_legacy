@@ -26,6 +26,7 @@
 #import "ZClientViewController.h"
 #import "ContactsCell.h"
 #import "WireSyncEngine+iOS.h"
+#import "Wire-Swift.h"
 
 @interface InviteContactsViewController () <ContactsViewControllerDelegate, ContactsViewControllerContentDelegate>
 @end

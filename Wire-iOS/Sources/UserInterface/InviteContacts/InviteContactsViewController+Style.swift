@@ -29,5 +29,7 @@ extension InviteContactsViewController {
 
         bottomContainerSeparatorView.backgroundColor = UIColor(scheme: .separator, variant: .dark)
         bottomContainerView.backgroundColor = UIColor(scheme: .background, variant: .dark)
+
+        titleLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }
 }
