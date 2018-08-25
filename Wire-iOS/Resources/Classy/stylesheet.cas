@@ -415,30 +415,7 @@ PickerView {
 }
 
 
-ProfileDetailsViewController {
-    teamsGuestLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-normal-light;
-    }
-    
-    remainingTimeLabel: @{
-        textColor: $color-text-dimmed;
-        font: $font-medium-semibold;
-    }
-}
-
 /* Profile Devices */
-
-ProfileDevicesViewController {
-    tableView: @{
-        separatorColor: $color-separator;
-    }
-    
-    view: @{
-        backgroundColor: $color-content-background;
-    }
-
-}
 
 ParticipantDeviceCell {
     boldFingerprintFont: $font-small-semibold;
@@ -581,12 +558,6 @@ UIView.status-bar-overlay {
 }
 
 /* Reactions list */
-
-ReactionsListViewController {
-    view: @{
-        backgroundColor: $color-text-background;
-    }
-}
 
 ReactionCell {
     contentView: @{

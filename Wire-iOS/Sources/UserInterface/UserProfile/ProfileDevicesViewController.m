@@ -18,6 +18,7 @@
 
 
 #import "ProfileDevicesViewController.h"
+#import "ProfileDevicesViewController+Internal.h"
 
 #import "ParticipantsDeviceHeaderView.h"
 #import "ParticipantDeviceCell.h"
@@ -65,6 +66,8 @@
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 32, 0);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 56, 0, 0);
     [self setupTableHeaderView];
+
+    [self setupStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated

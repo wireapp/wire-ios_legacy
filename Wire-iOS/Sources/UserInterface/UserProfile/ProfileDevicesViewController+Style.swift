@@ -18,25 +18,10 @@
 
 import Foundation
 
-extension UIColor {
+extension ProfileDevicesViewController {
+    @objc func setupStyle() {
+        tableView.separatorColor = .separator
 
-    static var textDimmed: UIColor {
-        return UIColor(scheme: .textDimmed)
-    }
-
-    static var textForeground: UIColor {
-        return UIColor(scheme: .textForeground)
-    }
-
-    static var background: UIColor {
-        return UIColor(scheme: .background)
-    }
-
-    static var placeholderBackground: UIColor {
-        return UIColor(scheme: .placeholderBackground)
-    }
-
-    static var separator: UIColor {
-        return UIColor(scheme: .separator)
+        view.backgroundColor = UIColor(scheme: .contentBackground)
     }
 }
