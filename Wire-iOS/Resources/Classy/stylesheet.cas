@@ -16,10 +16,6 @@
 *  along with this program. If not, see http://www.gnu.org/licenses/.
 */ 
 
-UIView.separator {
-    backgroundColor: $color-separator;
-}
-
 IconButton.back-button {
     borderWidth: 0.5;
     borderColor[state: normal]: $color-separator;
@@ -354,31 +350,6 @@ TypingIndicatorView {
     nameLabel: @{
         font: $font-small-light;
         textColor: $color-text-placeholder;
-    }
-}
-
-/* Image confirmer */
-
-ConfirmAssetViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-    
-    topPanel: @{
-        backgroundColor: $color-background;
-    }
-    
-    titleLabel: @{
-        font: $font-medium-semibold;
-        textColor: $color-text-foreground;
-    }
-    
-    editButton: @{
-        backgroundImageColor[state:normal]: $color-accent-current;
-        backgroundImageColor[state:highlighted]: $color-accent-current-darken;
-        titleLabel: @{
-            font: $font-small;
-        }
     }
 }
 

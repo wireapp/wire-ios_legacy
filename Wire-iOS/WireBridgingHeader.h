@@ -95,6 +95,7 @@
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
+#import "ConfirmAssetViewController+Internal.h"
 #import "ProfileSelfPictureViewController.h"
 #import "AddEmailPasswordViewController.h"
 #import "AddPhoneNumberViewController.h"
