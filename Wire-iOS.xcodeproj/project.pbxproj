@@ -1158,6 +1158,7 @@
 		EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF68E71A20BD5B5A003F3594 /* IPadPopoverConstants.swift */; };
 		EF6ACA7A213169540064047B /* ConfirmAssetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ACA79213169540064047B /* ConfirmAssetViewController.swift */; };
 		EF6ACA7D21316E7D0064047B /* UIColor+Scheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ACA7C21316E7D0064047B /* UIColor+Scheme.swift */; };
+		EF6ACA7F21318A640064047B /* FullscreenImageViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ACA7E21318A640064047B /* FullscreenImageViewController+Style.swift */; };
 		EF6E3C7A2089F232003F6752 /* animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF6E3C792089F231003F6752 /* animated.gif */; };
 		EF6E3C7C208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E3C7B208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift */; };
 		EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */; };
@@ -2837,6 +2838,7 @@
 		EF6ACA79213169540064047B /* ConfirmAssetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmAssetViewController.swift; sourceTree = "<group>"; };
 		EF6ACA7B21316A500064047B /* ConfirmAssetViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConfirmAssetViewController+Internal.h"; sourceTree = "<group>"; };
 		EF6ACA7C21316E7D0064047B /* UIColor+Scheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Scheme.swift"; sourceTree = "<group>"; };
+		EF6ACA7E21318A640064047B /* FullscreenImageViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+Style.swift"; sourceTree = "<group>"; };
 		EF6E3C792089F231003F6752 /* animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animated.gif; sourceTree = "<group>"; };
 		EF6E3C7B208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphySearchViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockConversation+factory.swift"; sourceTree = "<group>"; };
@@ -3763,12 +3765,13 @@
 				871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */,
 				EF6ACA7B21316A500064047B /* ConfirmAssetViewController+Internal.h */,
 				EF6ACA79213169540064047B /* ConfirmAssetViewController.swift */,
-				871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */,
-				871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */,
 				871BC1401D34F8F800DF0793 /* FullscreenImageViewController.h */,
 				EF4478502090BC1800BD9827 /* FullscreenImageViewController+internal.h */,
+				871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */,
+				871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */,
 				871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */,
 				EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */,
+				EF6ACA7E21318A640064047B /* FullscreenImageViewController+Style.swift */,
 				871BC1421D34F8F800DF0793 /* ImagePickerConfirmationController.h */,
 				871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */,
 				871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */,
@@ -7200,6 +7203,7 @@
 				EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */,
 				87F18BC01E017B7F00C69D9B /* UIView+VisibleViews.swift in Sources */,
 				878A720C1E55D7D3008072B9 /* TextSearchResultFooter.swift in Sources */,
+				EF6ACA7F21318A640064047B /* FullscreenImageViewController+Style.swift in Sources */,
 				874448831C22FC4000E7B947 /* ConversationNewDeviceCell.swift in Sources */,
 				EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */,
 				8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */,

@@ -100,29 +100,6 @@ MediaPreviewViewController {
     }
 }
 
-/* Fullscreen image view */
-
-FullscreenImageViewController {
-    @device ipad {
-        minimumDismissMagnitude: 2500
-    }
-
-    @device iphone {
-        minimumDismissMagnitude: 250
-    }
-
-    view: @{
-        backgroundColor: $color-background;
-    }
-    
-    topOverlay: @{
-        backgroundColor: $color-background;
-    }
-    bottomOverlay: @{
-        backgroundColor: $color-background;
-    }
-}
-
 /* Conv list */
 
 ConversationListViewController {

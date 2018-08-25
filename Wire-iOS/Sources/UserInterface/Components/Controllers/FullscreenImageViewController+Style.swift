@@ -1,4 +1,4 @@
-////
+//
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,16 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-static CGFloat const kZoomScaleDelta = 0.0003;
+import Foundation
 
-@interface FullscreenImageViewController ()
+extension FullscreenImageViewController {
+    @objc func setupStyle() {
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            minimumDismissMagnitude = 2500
+        default:
+            minimumDismissMagnitude = 250
+        }
 
-@property (nonatomic) CGFloat lastZoomScale;
-@property (nullable, nonatomic, readwrite) UIImageView *imageView;
-@property (nonatomic) CGFloat minimumDismissMagnitude;
-@property (nonatomic, nullable) UIView *topOverlay;
-
-- (void)centerScrollViewContent;
-- (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated;
-
-@end
+        view.backgroundColor = .background
+        topOverlay?.backgroundColor = .background
+    }
+}
