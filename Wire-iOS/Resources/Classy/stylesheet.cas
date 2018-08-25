@@ -410,30 +410,6 @@ TokenField {
     }
 }
 
-StartUIViewController SearchHeaderViewController {
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-}
-
-/* Ephemeral Keyboard */
-
-EphemeralKeyboardViewController {
-
-    pickerFont: $font-normal-semibold;
-    pickerColor: $color-text-foreground-dark;
-    separatorColor: $color-separator-light;
-
-    view: @{
-        backgroundColor: $color-text-foreground-light;
-    }
-
-    titleLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small-semibold;
-    }
-}
-
 PickerView {
     backgroundColor: clear;
 }
