@@ -30,4 +30,8 @@ extension UIColor {
     static var placeholderBackground: UIColor {
         return UIColor(scheme: .placeholderBackground)
     }
+
+    static var separator: UIColor {
+        return UIColor(scheme: .separator)
+    }
 }

@@ -329,28 +329,6 @@ ModalTopBar {
     }
 }
 
-LocationSendViewController {
-    separatorView: @{
-        backgroundColor: $color-separator;
-    }
-    
-    addressLabel: @{
-        font: $font-normal;
-        textColor: $color-text-foreground;
-    }
-    
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
-
-/* Giphy */
-
-GiphyConfirmationViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
 
 /* Common label styling */
 
