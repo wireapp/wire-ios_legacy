@@ -836,12 +836,6 @@ TwoLineTitleView {
     }
 }
 
-ConversationImagesViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
-
 AppLockView {
     authenticateLabel: @{
         font: $font-large-thin;
