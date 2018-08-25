@@ -35,7 +35,7 @@ final class MediaPreviewViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testExample(){
+    func testForInitState(){
         // GIVEN
 
         // WHEN
