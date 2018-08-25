@@ -366,30 +366,7 @@ ContactsSectionHeaderView {
     }
 }
 
-/* Add Participants */
-
-AddParticipantsViewController SearchHeaderViewController {
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-    closeButton: @{
-        iconColor[state:normal]: $color-icon-normal;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-    }
-}
-
 /* Invite Contacts */
-
-ContactsViewController, InviteContactsViewController {
-    titleLabel: @{
-        textAlignment: center;
-        font: $font-small-light;
-        textTransform: upper;
-    }
-    bottomContainerView: @{
-        backgroundColor: $color-background;
-    }
-}
 
 InviteContactsViewController {
     tableView: @{
