@@ -368,32 +368,6 @@ ContactsSectionHeaderView {
 
 /* Invite Contacts */
 
-InviteContactsViewController {
-    tableView: @{
-        backgroundColor: clear;
-        separatorStyle: mone;
-        sectionIndexBackgroundColor: clear;
-        sectionIndexColor: $color-accent-current;
-    }
-    cancelButton: @{
-        iconColor[state:normal]: $color-icon-normal-dark;
-        iconColor[state:highlighted]: $color-icon-highlighted-dark;
-    }
-    separatorView: @{
-        backgroundColor: $color-accent-current;
-    }
-    bottomContainerSeparatorView: @{
-        backgroundColor: $color-separator-dark;
-    }
-    noContactsLabel: @{
-        font: $font-normal-light;
-        textColor: $color-text-foreground-dark;
-    }
-    bottomContainerView: @{
-        backgroundColor: $color-background-dark;
-    }
-}
-
 InviteContactsViewController ContactsEmptyResultView  {
     messageLabel: @{
         textColor: $color-text-foreground-dark;

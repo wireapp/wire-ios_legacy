@@ -16,11 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface ContactsViewController ()
+import Foundation
 
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UIView *bottomContainerView;
-@property (nonatomic) UIView *bottomContainerSeparatorView;
-@property (nonatomic) UILabel *noContactsLabel;
+extension InviteContactsViewController {
+    @objc override func setupStyle() {
+        super.setupStyle()
 
-@end
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.sectionIndexBackgroundColor = .clear
+        tableView.sectionIndexColor = .accent()
+
+        bottomContainerSeparatorView.backgroundColor = UIColor(scheme: .separator, variant: .dark)
+        bottomContainerView.backgroundColor = UIColor(scheme: .background, variant: .dark)
+    }
+}

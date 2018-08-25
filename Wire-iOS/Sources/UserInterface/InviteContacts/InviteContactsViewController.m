@@ -20,6 +20,7 @@
 @import WireExtensionComponents;
 
 #import "InviteContactsViewController.h"
+#import "InviteContactsViewController+Internal.h"
 #import "ContactsViewController+Private.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"

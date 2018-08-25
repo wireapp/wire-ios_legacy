@@ -16,11 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface ContactsViewController ()
-
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UIView *bottomContainerView;
-@property (nonatomic) UIView *bottomContainerSeparatorView;
-@property (nonatomic) UILabel *noContactsLabel;
+@interface InviteContactsViewController ()
 
 @end

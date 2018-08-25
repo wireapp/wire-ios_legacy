@@ -77,8 +77,11 @@
 #import "ButtonWithLargerHitArea.h"
 
 // View Controllers
+#import "InviteContactsViewController.h"
+#import "InviteContactsViewController+Internal.h"
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
+#import "ContactsViewController+Private.h"
 #import "MediaPreviewViewController.h"
 #import "MediaPreviewViewController+Internal.h"
 #import "ZClientViewController.h"
