@@ -279,22 +279,6 @@ IconButton.hourglass {
     backgroundImageColor[state:selected]: clear;
 }
 
-ConversationInputBarViewController {
-
-    ephemeralIndicatorButton: @{
-        borderWidth: 0.0;
-        titleLabel: @{
-            font: $font-small-semibold;
-        }
-    }
-
-    audioRecorderTooltip: @{
-        font: $font-small;
-        textColor: $color-text-dimmed;
-        backgroundColor: $color-text-background;
-    }
-}
-
 TypingIndicatorView {
     container: @{
         backgroundColor: $color-background

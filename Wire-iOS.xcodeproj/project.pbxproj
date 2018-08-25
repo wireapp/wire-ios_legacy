@@ -1121,6 +1121,7 @@
 		EF297DD42131F39F0002983A /* MediaPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD32131F39F0002983A /* MediaPreviewViewController.swift */; };
 		EF297DD62131F8880002983A /* ConversationListViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD52131F8880002983A /* ConversationListViewController+Style.swift */; };
 		EF297DD82131FABE0002983A /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD72131FABE0002983A /* LocationPreviewController.swift */; };
+		EF297DDA2131FF310002983A /* ConversationInputBarViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD92131FF310002983A /* ConversationInputBarViewController+Style.swift */; };
 		EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */; };
 		EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
@@ -2799,6 +2800,7 @@
 		EF297DD32131F39F0002983A /* MediaPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPreviewViewController.swift; sourceTree = "<group>"; };
 		EF297DD52131F8880002983A /* ConversationListViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Style.swift"; sourceTree = "<group>"; };
 		EF297DD72131FABE0002983A /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
+		EF297DD92131FF310002983A /* ConversationInputBarViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Style.swift"; sourceTree = "<group>"; };
 		EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageViewTests.swift; sourceTree = "<group>"; };
 		EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
@@ -4985,6 +4987,7 @@
 				8FC851B8199245760008B66B /* ConversationInputBarViewController.h */,
 				87DE06AF1D252B3D0009411F /* ConversationInputBarViewController+Private.h */,
 				8FC851B9199245760008B66B /* ConversationInputBarViewController.m */,
+				EF297DD92131FF310002983A /* ConversationInputBarViewController+Style.swift */,
 				EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */,
 				EF2C59EC20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift */,
 				EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */,
@@ -6899,6 +6902,7 @@
 				BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */,
 				872B3283209B208D005AC615 /* CallTopOverlayController.swift in Sources */,
 				871BC2511D34F8F800DF0793 /* MediaPreviewData.m in Sources */,
+				EF297DDA2131FF310002983A /* ConversationInputBarViewController+Style.swift in Sources */,
 				5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */,
 				16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */,
 				D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */,
