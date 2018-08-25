@@ -88,18 +88,6 @@ ArchivedNavigationBar {
     }
 }
 
-/* MediaPreviewViewController */
-
-MediaPreviewViewController {
-    @device ipad {
-        viewHeight: 240
-    }
-
-    @device iphone {
-        viewHeight: 160
-    }
-}
-
 /* Conv list */
 
 ConversationListViewController {

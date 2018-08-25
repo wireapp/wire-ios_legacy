@@ -1117,6 +1117,8 @@
 		EF27CD9F20C161500077FE55 /* ProfileClientViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9C20C161500077FE55 /* ProfileClientViewControllerTests.swift */; };
 		EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */; };
 		EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */; };
+		EF297DD22131F2C20002983A /* MediaPreviewViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD02131F2C20002983A /* MediaPreviewViewController+Extension.swift */; };
+		EF297DD42131F39F0002983A /* MediaPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD32131F39F0002983A /* MediaPreviewViewController.swift */; };
 		EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */; };
 		EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
@@ -2790,6 +2792,9 @@
 		EF27CD9C20C161500077FE55 /* ProfileClientViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileClientViewControllerTests.swift; sourceTree = "<group>"; };
 		EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfProfileViewControllerTests.swift; sourceTree = "<group>"; };
+		EF297DD02131F2C20002983A /* MediaPreviewViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaPreviewViewController+Extension.swift"; sourceTree = "<group>"; };
+		EF297DD12131F2C20002983A /* MediaPreviewViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MediaPreviewViewController+Internal.h"; sourceTree = "<group>"; };
+		EF297DD32131F39F0002983A /* MediaPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPreviewViewController.swift; sourceTree = "<group>"; };
 		EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageViewTests.swift; sourceTree = "<group>"; };
 		EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
@@ -3803,6 +3808,8 @@
 				871BC1901D34F8F800DF0793 /* MediaPlayer.h */,
 				5EC16B8C20EB8C6F00955156 /* MediaPreviewViewController.h */,
 				5EC16B8F20EB8C6F00955156 /* MediaPreviewViewController.m */,
+				EF297DD12131F2C20002983A /* MediaPreviewViewController+Internal.h */,
+				EF297DD02131F2C20002983A /* MediaPreviewViewController+Extension.swift */,
 				871BC1911D34F8F800DF0793 /* MediaPreviewData.h */,
 				871BC1921D34F8F800DF0793 /* MediaPreviewData.m */,
 				871BC1931D34F8F800DF0793 /* MediaPreviewView.h */,
@@ -5225,6 +5232,7 @@
 				BF808B581DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift */,
 				BFAAB23E1DED95B100CBC096 /* UserNameDetailViewTests.swift */,
 				BF52C15D1CAEC1430037331F /* ArchivedNavigationBarTests.m */,
+				EF297DD32131F39F0002983A /* MediaPreviewViewController.swift */,
 				87BEB0D71C734D550094BFE9 /* Mocks */,
 				1E12C04D1BFA6346001A8A26 /* TestCategories */,
 				DBD990471B39927A000ACF94 /* InputBar */,
@@ -7224,6 +7232,7 @@
 				87071CC01CB68BDA0039388A /* ProgressView.swift in Sources */,
 				8FC85422199245770008B66B /* ZMConversation+Validation.m in Sources */,
 				EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */,
+				EF297DD22131F2C20002983A /* MediaPreviewViewController+Extension.swift in Sources */,
 				BFA25DC91D9A8D0B0086DEBD /* EmojiKeyboardViewController.swift in Sources */,
 				EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */,
 				BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */,
@@ -7585,6 +7594,7 @@
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,
 				EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */,
+				EF297DD42131F39F0002983A /* MediaPreviewViewController.swift in Sources */,
 				5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */,
 				EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */,
 				EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */,

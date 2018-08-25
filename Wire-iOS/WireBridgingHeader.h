@@ -77,6 +77,8 @@
 #import "ButtonWithLargerHitArea.h"
 
 // View Controllers
+#import "MediaPreviewViewController.h"
+#import "MediaPreviewViewController+Internal.h"
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
 #import "RegistrationViewController.h"
