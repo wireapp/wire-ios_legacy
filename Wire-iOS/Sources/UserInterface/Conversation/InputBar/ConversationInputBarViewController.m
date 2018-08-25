@@ -409,7 +409,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.hourglassButton setIcon:ZetaIconTypeHourglass withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
 
     self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
-    self.hourglassButton.cas_styleClass = @"hourglass"; ///TODO
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
 
     [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];

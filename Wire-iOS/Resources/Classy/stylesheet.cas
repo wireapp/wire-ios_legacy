@@ -273,12 +273,6 @@ InputBarEditView: {
     }
 }
 
-IconButton.hourglass {
-    iconColor: $color-icon-normal;
-    iconColor[state:highlighted]: $color-icon-highlighted;
-    backgroundImageColor[state:selected]: clear;
-}
-
 TypingIndicatorView {
     container: @{
         backgroundColor: $color-background
