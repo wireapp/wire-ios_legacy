@@ -469,15 +469,6 @@ ChangeHandleTableViewCell {
     }
 }
 
-FingerprintTableViewCell{
-    fingerprintLabelFont: $font-normal-light;
-    fingerprintLabelBoldFont: $font-normal-semibold;
-    
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-}
-
 /* Registration */
 
 UIView.status-bar-overlay {
