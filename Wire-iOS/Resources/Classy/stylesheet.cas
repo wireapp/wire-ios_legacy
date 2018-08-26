@@ -431,54 +431,6 @@ ParticipantDeviceCell {
     }
 }
 
-SettingsClientViewController.conversation {
-    view: @{
-        backgroundColor: $color-background
-    }
-    
-    tableView: @{
-        separatorColor: $color-separator
-    }
-    navigationController: @{
-        navigationBar: @{
-            titleTextAttributes :@{
-                foregroundColor: $color-text-foreground
-            }
-        }
-    }
-    
-    ClientTableViewCell.conversation  {
-        nameLabel: @{
-            font: $font-normal-semibold;
-            textColor: $color-text-foreground;
-        }
-        labelLabel: @{
-            font: $font-small-semibold;
-            textColor: $color-text-foreground;
-        }
-        activationLabel: @{
-            font: $font-small-light;
-            textColor: $color-text-foreground;
-        }
-        verifiedLabel: @{
-            font: $font-small;
-        }
-        fingerprintLabelFont: $font-small-light;
-        fingerprintLabelBoldFont: $font-small-semibold;
-        fingerprintTextColor: $color-text-foreground
-        
-    }
-    
-    FingerprintTableViewCell.conversation  {
-        fingerprintLabelFont: $font-normal-light;
-        fingerprintLabelBoldFont: $font-normal-semibold;
-        
-        titleLabel: @{
-            font: $font-small-semibold;
-        }
-    }
-}
-
 SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
     cellNameLabel: @{
         font: $font-normal-light;
@@ -524,24 +476,6 @@ FingerprintTableViewCell{
     titleLabel: @{
         font: $font-small-semibold;
     }
-}
-
-
-ClientTableViewCell {
-    nameLabel: @{
-        font: $font-normal-semibold;
-    }
-    labelLabel: @{
-        font: $font-small-semibold;
-    }
-    activationLabel: @{
-        font: $font-small-light;
-    }
-    verifiedLabel: @{
-        font: $font-small;
-    }
-    fingerprintLabelFont: $font-small-light;
-    fingerprintLabelBoldFont: $font-small-semibold;
 }
 
 /* Registration */
