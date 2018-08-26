@@ -19,15 +19,14 @@
 import XCTest
 @testable import Wire
 
-final class MediaPreviewViewControllerTests: ZMSnapshotTestCase {
+final class LocationPreviewControllerTests: ZMSnapshotTestCase {
     
-    var sut: MediaPreviewViewController!
+    var sut: LocationPreviewController!
     
     override func setUp() {
         super.setUp()
-        sut = MediaPreviewViewController()
-        sut.view.frame = CGRect(origin: .zero, size: CGSize(width:320, height:240))
-        sut.viewDidLoad()
+        let mockMessage = MockMessageFactory.locationMessage()
+        sut = LocationPreviewController(message: mockMessage!)
     }
     
     override func tearDown() {
@@ -36,11 +35,6 @@ final class MediaPreviewViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        // GIVEN
-
-        // WHEN
-
-        // THEN
         verify(view: sut.view)
     }
 }
