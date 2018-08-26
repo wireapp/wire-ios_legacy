@@ -77,6 +77,8 @@
 #import "ButtonWithLargerHitArea.h"
 
 // View Controllers
+#import "ProfileDevicesViewController.h"
+#import "ProfileDevicesViewController+Internal.h"
 #import "InviteContactsViewController.h"
 #import "InviteContactsViewController+Internal.h"
 #import "ContactsViewController.h"
@@ -119,6 +121,7 @@
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
 #import "ProfileDetailsViewController.h"
+#import "ProfileDetailsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "BadgeUserImageView.h"
 #import "LaunchImageViewController.h"

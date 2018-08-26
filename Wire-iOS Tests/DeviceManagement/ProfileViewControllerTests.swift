@@ -26,10 +26,13 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+        accentColor = .strongBlue
 
         let user = MockUser.mockUsers()[0]
         mockUser = MockUser(for: user)
         mockUser.feature(withUserClients: 6)
+
+        recordMode = true
     }
     
     override func tearDown() {
