@@ -786,7 +786,7 @@
 		BF52C1601CB25FE70037331F /* ArchivedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF52C15F1CB25FE70037331F /* ArchivedListViewModel.swift */; };
 		BF58ABED1D23F00000D5FF14 /* LocationSendViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF58ABEC1D23F00000D5FF14 /* LocationSendViewControllerTests.swift */; };
 		BF58ABEF1D23F3CD00D5FF14 /* ModalTopBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF58ABEE1D23F3CD00D5FF14 /* ModalTopBarTests.swift */; };
-		BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5C37971C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m */; };
+		BF5C37981C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5C37971C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m */; };
 		BF5C379B1C0E0E8700EA11E3 /* ParticipantDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5C379A1C0E0E8700EA11E3 /* ParticipantDeviceCell.m */; };
 		BF5DF5C320F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DF5C220F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift */; };
 		BF5DF5C520F4B0B8002BCB67 /* UICollectionView+UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5DF5C420F4B0B8002BCB67 /* UICollectionView+UserList.swift */; };
@@ -1126,6 +1126,7 @@
 		EF297DE321320AC20002983A /* InviteContactsViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DE121320AC20002983A /* InviteContactsViewController+Style.swift */; };
 		EF297DE6213213A60002983A /* ProfileDetailsViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DE4213213A60002983A /* ProfileDetailsViewController+Style.swift */; };
 		EF297DE9213215210002983A /* ProfileDevicesViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DE7213215210002983A /* ProfileDevicesViewController+Style.swift */; };
+		EF297DEC213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DEA213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift */; };
 		EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */; };
 		EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
@@ -2417,8 +2418,8 @@
 		BF52C15F1CB25FE70037331F /* ArchivedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedListViewModel.swift; sourceTree = "<group>"; };
 		BF58ABEC1D23F00000D5FF14 /* LocationSendViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSendViewControllerTests.swift; sourceTree = "<group>"; };
 		BF58ABEE1D23F3CD00D5FF14 /* ModalTopBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalTopBarTests.swift; sourceTree = "<group>"; };
-		BF5C37961C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantsDeviceHeaderView.h; sourceTree = "<group>"; };
-		BF5C37971C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantsDeviceHeaderView.m; sourceTree = "<group>"; };
+		BF5C37961C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantDeviceHeaderView.h; sourceTree = "<group>"; };
+		BF5C37971C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantDeviceHeaderView.m; sourceTree = "<group>"; };
 		BF5C37991C0E0E8700EA11E3 /* ParticipantDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticipantDeviceCell.h; sourceTree = "<group>"; };
 		BF5C379A1C0E0E8700EA11E3 /* ParticipantDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticipantDeviceCell.m; sourceTree = "<group>"; };
 		BF5DF5C220F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupParticipantsDetailViewController.swift; sourceTree = "<group>"; };
@@ -2813,6 +2814,8 @@
 		EF297DE5213213A60002983A /* ProfileDetailsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileDetailsViewController+Internal.h"; sourceTree = "<group>"; };
 		EF297DE7213215210002983A /* ProfileDevicesViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileDevicesViewController+Style.swift"; sourceTree = "<group>"; };
 		EF297DE8213215210002983A /* ProfileDevicesViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileDevicesViewController+Internal.h"; sourceTree = "<group>"; };
+		EF297DEA213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantDeviceHeaderView+Style.swift"; sourceTree = "<group>"; };
+		EF297DEB213340CF0002983A /* ParticipantDeviceHeaderView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantDeviceHeaderView+Internal.h"; sourceTree = "<group>"; };
 		EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageViewTests.swift; sourceTree = "<group>"; };
 		EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
@@ -4091,8 +4094,10 @@
 				872CB8A419E58816006752B4 /* ProfileFooterView.m */,
 				167961AE20445FB400B72ACC /* ProfileTitleView.swift */,
 				BF7ED2D51DF18724003A4397 /* UserNameDetailView.swift */,
-				BF5C37961C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.h */,
-				BF5C37971C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m */,
+				BF5C37961C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.h */,
+				EF297DEB213340CF0002983A /* ParticipantDeviceHeaderView+Internal.h */,
+				BF5C37971C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m */,
+				EF297DEA213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift */,
 				BF5C37991C0E0E8700EA11E3 /* ParticipantDeviceCell.h */,
 				BF5C379A1C0E0E8700EA11E3 /* ParticipantDeviceCell.m */,
 				872CB8A719E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.h */,
@@ -7054,6 +7059,7 @@
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
 				8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */,
 				EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */,
+				EF297DEC213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift in Sources */,
 				EF218AC720A9DDEF004977BF /* ConversationListViewController+DataUsagePermissions.swift in Sources */,
 				160A9CA81C3D62CD00B644AA /* ProfileDetailsViewController.m in Sources */,
 				871BC0291D34F5D200DF0793 /* NSString+EmoticonSubstitution.m in Sources */,
@@ -7144,7 +7150,7 @@
 				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
-				BF5C37981C0E0D9C00EA11E3 /* ParticipantsDeviceHeaderView.m in Sources */,
+				BF5C37981C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m in Sources */,
 				5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */,
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
 				EF71BFD420EBC39000894A7C /* ConversationInputBarViewController+Location.swift in Sources */,

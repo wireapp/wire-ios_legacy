@@ -431,13 +431,6 @@ ParticipantDeviceCell {
     }
 }
 
-ParticipantDeviceHeaderView {
-    textColor: $color-text-foreground;
-    linkAttributeColor: $color-accent-current;
-    font: $font-normal-light;
-}
-
-
 SettingsClientViewController.conversation {
     view: @{
         backgroundColor: $color-background

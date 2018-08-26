@@ -20,7 +20,7 @@
 #import "ProfileDevicesViewController.h"
 #import "ProfileDevicesViewController+Internal.h"
 
-#import "ParticipantsDeviceHeaderView.h"
+#import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceCell.h"
 
 #import "Analytics.h"

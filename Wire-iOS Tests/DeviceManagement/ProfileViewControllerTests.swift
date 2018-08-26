@@ -31,8 +31,6 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         mockUser = MockUser(for: user)
         mockUser.feature(withUserClients: 6)
-
-        recordMode = true
     }
     
     override func tearDown() {

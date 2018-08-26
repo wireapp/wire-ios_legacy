@@ -17,21 +17,17 @@
 // 
 
 
-#import "ParticipantsDeviceHeaderView.h"
+#import "ParticipantDeviceHeaderView.h"
+#import "ParticipantDeviceHeaderView+Internal.h"
 @import PureLayout;
 #import "WebLinkTextView.h"
 #import "WireExtensionComponents.h"
 #import "NSAttributedString+Wire.h"
 #import "Wire-Swift.h"
 
-@import Classy;
-
 @interface ParticipantDeviceHeaderView () <UITextViewDelegate>
 @property (strong, nonatomic) UITextView *textView;
 @property (strong, nonatomic, readwrite) NSString *userName;
-@property (strong, nonatomic) UIFont *font;
-@property (strong, nonatomic) UIColor *textColor;
-@property (strong, nonatomic) UIColor *linkAttributeColor;
 @end
 
 
@@ -52,9 +48,10 @@
 - (void)setup
 {
     self.backgroundColor = UIColor.clearColor;
-    [[CASStyler defaultStyler] styleItem:self];
     [self createViews];
     [self setupConstraints];
+
+    [self setupStyle];
 }
 
 - (void)createViews
