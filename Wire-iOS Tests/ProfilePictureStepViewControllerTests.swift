@@ -22,7 +22,6 @@ import XCTest
 final class ProfilePictureStepViewControllerTests: ZMSnapshotTestCase {
     
     var sut: ProfilePictureStepViewController!
-    var configurationBlock: ((UIView) -> Void)!
 
     override func setUp() {
         super.setUp()
@@ -31,15 +30,6 @@ final class ProfilePictureStepViewControllerTests: ZMSnapshotTestCase {
 
         let user = ZMIncompleteRegistrationUser()
         sut = ProfilePictureStepViewController(unregisteredUser: user)
-
-        configurationBlock = {[weak self] _ in
-            guard let weakSelf = self else { return }
-
-            weakSelf.sut.loadViewIfNeeded()
-            weakSelf.sut.viewWillAppear(false)
-            weakSelf.sut.showLoadingView = false
-            weakSelf.sut.profilePictureImageView.image = weakSelf.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        }
     }
     
     override func tearDown() {
@@ -48,6 +38,15 @@ final class ProfilePictureStepViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersTheViewControllerCorrectlyInAllDeviceSizes() {
+        let configurationBlock = {[weak self] _ in
+            guard let weakSelf = self else { return }
+
+            weakSelf.sut.loadViewIfNeeded()
+            weakSelf.sut.viewWillAppear(false)
+            weakSelf.sut.showLoadingView = false
+            weakSelf.sut.profilePictureImageView.image = weakSelf.image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        }
+
         verifyInAllIPhoneSizes(view: sut.view, configurationBlock: configurationBlock)
     }
 }

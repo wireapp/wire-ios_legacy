@@ -35,6 +35,8 @@ final class ConversationTitleViewTests: ZMSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        conversation = nil
+
         super.tearDown()
     }
 

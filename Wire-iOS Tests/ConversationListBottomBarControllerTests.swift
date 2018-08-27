@@ -57,6 +57,8 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        mockDelegate = nil
+        
         super.tearDown()
     }
 
