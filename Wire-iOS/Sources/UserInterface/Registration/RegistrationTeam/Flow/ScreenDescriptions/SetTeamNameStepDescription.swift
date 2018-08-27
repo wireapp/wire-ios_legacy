@@ -20,36 +20,32 @@ import Foundation
 import SafariServices
 
 class SetTeamNameStepSecondaryView: SecondaryViewDescription {
-    let controller: UIViewController
     let views: [ViewDescriptor]
     
-    init(controller: UIViewController) {
-        self.controller = controller
+    init() {
         let whatIsWire = ButtonDescription(title: "team.name.whatiswireforteams".localized, accessibilityIdentifier: "wire_for_teams_button")
-        whatIsWire.buttonTapped = { [weak controller] in
-            let webview = BrowserViewController(url: URL.wr_createTeamFeatures.appendingLocaleParameter)
-            controller?.present(webview, animated: true, completion: nil)
-        }
+//        whatIsWire.buttonTapped = { [weak controller] in
+//            let webview = BrowserViewController(url: URL.wr_createTeamFeatures.appendingLocaleParameter)
+//            controller?.present(webview, animated: true, completion: nil)
+//        }
         views = [whatIsWire]
     }
 }
 
 final class SetTeamNameStepDescription: TeamCreationStepDescription {
 
-    let controller: UIViewController
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
     let secondaryView: SecondaryViewDescription?
 
-    init(controller: UIViewController) {
-        self.controller = controller
+    init() {
         backButton = BackButtonDescription()
         mainView = TextFieldDescription(placeholder: "team.name.textfield.placeholder".localized, actionDescription: "team.name.textfield.accessibility".localized, kind: .name)
         headline = "team.name.headline".localized
         subtext = "team.name.subheadline".localized
-        secondaryView = SetTeamNameStepSecondaryView(controller: controller)
+        secondaryView = SetTeamNameStepSecondaryView()
     }
 }
 

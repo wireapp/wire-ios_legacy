@@ -19,7 +19,9 @@
 import UIKit
 import Cartography
 
-final class TeamCreationStepController: UIViewController {
+final class TeamCreationStepController: AuthenticationStepViewController {
+
+    weak var authenticationCoordinator: AuthenticationCoordinator?
 
     /// headline font size is fixed and not affected by dynamic type setting,
     static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
@@ -356,6 +358,15 @@ final class TeamCreationStepController: UIViewController {
         errorLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
 
         updateMainViewWidthConstraint()
+    }
+
+    func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
+        switch feedbackAction {
+        case .clearInputFields:
+            (mainView as? UITextField)?.text = nil
+        case .showGuidanceDot:
+            break
+        }
     }
 }
 

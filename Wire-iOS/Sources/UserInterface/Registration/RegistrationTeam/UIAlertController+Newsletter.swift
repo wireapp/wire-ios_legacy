@@ -71,3 +71,16 @@ extension UIAlertController {
         showNewsletterSubscriptionDialog(over: presentViewController, completionHandler: completionHandler)
     }
 }
+
+extension AuthenticationCoordinatorAlert {
+
+    static func makeMarketingConsentAlert() -> AuthenticationCoordinatorAlert {
+        // Alert Actions
+        let privacyPolicyAction = AuthenticationCoordinatorAlertAction(title: "news_offers.consent.button.privacy_policy.title".localized, coordinatorActions: [.showLoadingView, .openURL(URL.wr_privacyPolicy.appendingLocaleParameter)])
+        let declineAction = AuthenticationCoordinatorAlertAction(title: "general.decline".localized, coordinatorActions: [.setMarketingConsent(false)])
+        let acceptAction = AuthenticationCoordinatorAlertAction(title: "general.accept".localized, coordinatorActions: [.setMarketingConsent(true)])
+
+        return AuthenticationCoordinatorAlert(title: "news_offers.consent.title".localized, message: "news_offers.consent.message".localized, actions: [privacyPolicyAction, declineAction, acceptAction])
+    }
+
+}

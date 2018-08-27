@@ -86,6 +86,9 @@ class AuthenticationInterfaceBuilder {
         case .incrementalUserCreation(let user, let registrationStep):
             return makeRegistrationStepViewController(for: registrationStep, user: user)
 
+        case .teamCreation(let state):
+            return makeTeamCreationStepViewController(for: state)
+
         default:
             return nil
         }
@@ -115,5 +118,66 @@ class AuthenticationInterfaceBuilder {
             return ProfilePictureStepViewController(displayName: user.name)
         }
     }
+
+    /**
+     * Returns the view controller that displays the interface for the given team creation step.
+     *
+     * - parameter step: The step to create an interface for.
+     * - returns: The view controller to use for this step, or `nil` if the interface builder
+     * does not support this step.
+     */
+
+    private func makeTeamCreationStepViewController(for state: TeamCreationState) -> AuthenticationStepViewController? {
+        var stepDescription: TeamCreationStepDescription
+
+        switch state {
+        case .setTeamName:
+            stepDescription = SetTeamNameStepDescription()
+        case .setEmail:
+            stepDescription = SetEmailStepDescription()
+        case let .verifyEmail(teamName: _, email: email):
+            stepDescription = VerifyEmailStepDescription(email: email)
+        case .setFullName:
+            stepDescription = SetFullNameStepDescription()
+        case .setPassword:
+            stepDescription = SetPasswordStepDescription()
+        case .createTeam:
+            fatal("No controller should be pushed, we have already registered a team!")
+        case .inviteMembers:
+            let teamMemberInviteViewController = TeamMemberInviteViewController()
+//            teamMemberInviteViewController.delegate = self
+            return teamMemberInviteViewController
+        }
+
+        return createViewController(for: stepDescription)
+    }
+
+    /// Creates the view controller for team description.
+    private func createViewController(for description: TeamCreationStepDescription) -> TeamCreationStepController {
+//        let mainView = description.mainView
+//        mainView.valueSubmitted = { [weak self] (value: String) in
+////            self?.advanceState(with: value)
+//        }
+
+//        mainView.valueValidated = { [weak self] (error: TextFieldValidator.ValidationError) in
+//            switch error {
+//            case .none:
+//                break
+////                self?.currentController?.clearError()
+//            default:
+//                break
+////                self?.currentController?.displayError(error)
+//            }
+//        }
+
+//        let backButton = description.backButton
+//        backButton?.buttonTapped = { [weak self] in
+//            self?.rewindState()
+//        }
+
+        let controller = TeamCreationStepController(description: description)
+        return controller
+    }
+
 
 }

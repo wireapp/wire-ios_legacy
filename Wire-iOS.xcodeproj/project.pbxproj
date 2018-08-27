@@ -234,6 +234,7 @@
 		5E65A7A32130412E008BFCC0 /* UserEmailChangeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7A22130412E008BFCC0 /* UserEmailChangeEventHandler.swift */; };
 		5E65A7A5213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7A4213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift */; };
 		5E65A7A721304B6B008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7A621304B6A008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift */; };
+		5E65A7AC21342453008BFCC0 /* TeamCreationAdvancementEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7AB21342453008BFCC0 /* TeamCreationAdvancementEventHandler.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
 		5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */; };
 		5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */; };
@@ -1631,6 +1632,7 @@
 		5E65A7A22130412E008BFCC0 /* UserEmailChangeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmailChangeEventHandler.swift; sourceTree = "<group>"; };
 		5E65A7A4213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmailUpdateFailureErrorHandler.swift; sourceTree = "<group>"; };
 		5E65A7A621304B6A008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmailUpdateCodeSentEventHandler.swift; sourceTree = "<group>"; };
+		5E65A7AB21342453008BFCC0 /* TeamCreationAdvancementEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCreationAdvancementEventHandler.swift; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlowStep.swift; sourceTree = "<group>"; };
@@ -3818,6 +3820,7 @@
 				5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */,
 				5E8C38A7212D5AF7002AE12B /* RegistrationSessionAvailableEventHandler.swift */,
 				5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */,
+				5E65A7AB21342453008BFCC0 /* TeamCreationAdvancementEventHandler.swift */,
 			);
 			path = Registration;
 			sourceTree = "<group>";
@@ -7252,6 +7255,7 @@
 				871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */,
 				871BC2951D34F8F800DF0793 /* UIViewController+Errors.m in Sources */,
 				EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */,
+				5E65A7AC21342453008BFCC0 /* TeamCreationAdvancementEventHandler.swift in Sources */,
 				D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
 				BFAF4CB31CECA68200780537 /* AudioRecorder.swift in Sources */,

@@ -31,7 +31,7 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
     }
 
     func landingViewControllerDidChooseCreateTeam() {
-        // flowController.startFlow()
+        stateController.transition(to: .teamCreation(.setTeamName))
     }
 
 }

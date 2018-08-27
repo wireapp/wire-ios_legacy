@@ -23,9 +23,11 @@ protocol TeamMemberInviteViewControllerDelegate: class {
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController)
 }
 
-final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDelegate {
-    
+final class TeamMemberInviteViewController: AuthenticationStepViewController, TeamInviteTopbarDelegate {
+
+    weak var authenticationCoordinator: AuthenticationCoordinator?
     weak var delegate: TeamMemberInviteViewControllerDelegate?
+    
     private let topBarSpacerView = UIView()
     private let topBar = TeamInviteTopBar()
     private let tableView = UpsideDownTableView() // So the insertion animation pushes content to the top.

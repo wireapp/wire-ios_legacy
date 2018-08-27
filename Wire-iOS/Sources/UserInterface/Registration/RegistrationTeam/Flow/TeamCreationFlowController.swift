@@ -136,11 +136,11 @@ extension TeamCreationFlowController {
 
         switch state {
         case .setTeamName:
-            stepDescription = SetTeamNameStepDescription(controller: navigationController)
+            stepDescription = SetTeamNameStepDescription()
         case .setEmail:
-            stepDescription = SetEmailStepDescription(controller: navigationController)
+            stepDescription = SetEmailStepDescription()
         case let .verifyEmail(teamName: _, email: email):
-            stepDescription = VerifyEmailStepDescription(email: email, delegate: self)
+            stepDescription = VerifyEmailStepDescription(email: email)
         case .setFullName:
             stepDescription = SetFullNameStepDescription()
             needsToShowMarketingConsentDialog = true

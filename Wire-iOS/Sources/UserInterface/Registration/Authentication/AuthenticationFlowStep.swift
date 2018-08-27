@@ -48,6 +48,7 @@ enum AuthenticationFlowStep: Equatable {
     case pendingInitialSync
 
     // Registration
+    case teamCreation(TeamCreationState)
     case createCredentials(UnregisteredUser)
     case sendActivationCode(UnverifiedCredential, user: UnregisteredUser, isResend: Bool)
     case enterActivationCode(UnverifiedCredential, user: UnregisteredUser)
@@ -77,6 +78,7 @@ enum AuthenticationFlowStep: Equatable {
         case .start: return false
         case .landingScreen: return true
         case .reauthenticate: return true
+        case .teamCreation: return true
 
         // Sign-In
         case .provideCredentials: return true

@@ -27,36 +27,34 @@ class VerifyEmailStepSecondaryView: SecondaryViewDescription {
 
     let views: [ViewDescriptor]
 
-    init(email: String, delegate: VerifyEmailStepDescriptionDelegate) {
+    init(email: String) {
         let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
-        resendCode.buttonTapped = { [weak delegate] in
-            delegate?.resendActivationCode(to: email)
-        }
+//        resendCode.buttonTapped = { [weak delegate] in
+//            delegate?.resendActivationCode(to: email)
+//        }
         let changeEmail = ButtonDescription(title: "team.activation_code.button.change_email".localized, accessibilityIdentifier: "change_email_button")
-        changeEmail.buttonTapped = { [weak delegate] in
-            delegate?.changeEmail()
-        }
+//        changeEmail.buttonTapped = { [weak delegate] in
+//            delegate?.changeEmail()
+//        }
         views = [resendCode, changeEmail]
     }
 }
 
 final class VerifyEmailStepDescription: TeamCreationStepDescription {
     let email: String
-    weak var delegate: VerifyEmailStepDescriptionDelegate?
     let backButton: BackButtonDescription?
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
     let secondaryView: SecondaryViewDescription?
 
-    init(email: String, delegate: VerifyEmailStepDescriptionDelegate) {
+    init(email: String) {
         self.email = email
-        self.delegate = delegate
         backButton = nil
         mainView = VerificationCodeFieldDescription()
         headline = "team.activation_code.headline".localized
         subtext = "team.activation_code.subheadline".localized(args: email)
-        secondaryView = VerifyEmailStepSecondaryView(email: email, delegate: delegate)
+        secondaryView = VerifyEmailStepSecondaryView(email: email)
     }
 
     func shouldSkipFromNavigation() -> Bool {

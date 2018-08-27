@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum TeamCreationState {
+enum TeamCreationState: Equatable {
     case setTeamName
     case setEmail(teamName: String)
     case verifyEmail(teamName: String, email: String)

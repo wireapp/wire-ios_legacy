@@ -40,6 +40,16 @@ enum AuthenticationCoordinatorAction {
     case setMarketingConsent(Bool)
     case sendPostRegistrationFields(UnregisteredUser)
     case completeUserRegistration
+    case openURL(URL)
+
+    var retainsModal: Bool {
+        switch self {
+        case .openURL:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 // MARK: - Alerts

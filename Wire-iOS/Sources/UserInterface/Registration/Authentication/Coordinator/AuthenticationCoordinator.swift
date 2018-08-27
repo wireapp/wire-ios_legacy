@@ -72,6 +72,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
 
     private(set) lazy var popTransition = PopTransition()
     private(set) lazy var pushTransition = PushTransition()
+    private var pendingAlert: AuthenticationCoordinatorAlert?
 
     // MARK: - Initialization
 
@@ -228,6 +229,18 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
             case .unwindState:
                 stateController.unwindState()
+
+            case .openURL(let url):
+                let browser = BrowserViewController(url: url)
+                browser.onDismiss = {
+                    if let alertModel = self.pendingAlert {
+                        self.presenter?.showLoadingView = false
+                        self.presentAlert(for: alertModel)
+                        self.pendingAlert = nil
+                    }
+                }
+
+                self.presenter?.present(browser, animated: true, completion: nil)
             }
         }
     }
@@ -243,6 +256,10 @@ extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
 
         for actionModel in alertModel.actions {
             let action = UIAlertAction(title: actionModel.title, style: .default) { _ in
+                if actionModel.coordinatorActions.contains(where: { $0.retainsModal }) {
+                    self.pendingAlert = alertModel
+                }
+
                 self.executeActions(actionModel.coordinatorActions)
             }
 
@@ -589,6 +606,17 @@ extension AuthenticationCoordinator {
         }
 
         stateController.unwindState()
+    }
+
+    // MARK: - Team Input
+
+    /**
+     * Advances the team creation state with the user input.
+     * - parameter value: The value provided by the user.
+     */
+
+    func advanceTeamCreation(value: String) {
+        
     }
 
 }
