@@ -18,6 +18,7 @@
 
 
 #import "ConversationListViewController.h"
+@import WireSyncEngine;
 
 NS_ASSUME_NONNULL_BEGIN
 
