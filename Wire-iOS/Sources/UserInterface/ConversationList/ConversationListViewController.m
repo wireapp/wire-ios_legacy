@@ -18,6 +18,7 @@
 
 
 #import "ConversationListViewController.h"
+#import "ConversationListViewController+Private.h"
 #import "ConversationListViewController+StartUI.h"
 
 @import PureLayout;
