@@ -18,6 +18,7 @@
 
 
 #import <UIKit/UIKit.h>
+@import WireDataModel;
 
 @class ConversationListViewController;
 @class ConversationListContentController;
@@ -42,6 +43,7 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 @property (nonatomic) BOOL needToShowDataUsagePermissionDialog;
 @property (nonatomic, readonly) UIView *contentContainer;
 @property (nonatomic) id startCallToken;
+@property (nonatomic) Account *account;
 
 @property (nonatomic, readonly) ConversationListState state;
 

@@ -267,6 +267,8 @@
 - (void)setupConversationListViewController
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
+    self.conversationListViewController.account = SessionManager.shared.accountManager.selectedAccount;
+
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
 }

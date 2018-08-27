@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,28 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
+@testable import Wire
 
-import Foundation
-import WireDataModel
-
-
-extension ConversationListViewModel {
-
-    @objc public func subscribeToTeamsUpdates() {
-        if let session = ZMUserSession.shared() {
-            self.selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: session)
-        }
+final class ConversationListViewControllerTests: ZMSnapshotTestCase {
+    
+    var sut: ConversationListViewController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = ConversationListViewController()
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
+        sut.account = account
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
-}
-
-
-extension ConversationListViewModel: ZMUserObserver {
-
-    public func userDidChange(_ note: UserChangeInfo) {
-        if note.teamsChanged {
-            updateConversationListAnimated()
-        }
+    func testForNoConversations(){
+        verify(view: sut.view)
     }
-
 }
