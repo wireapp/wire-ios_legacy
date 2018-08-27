@@ -383,41 +383,10 @@ DescriptionHeaderView {
     }
 }
 
-ChangeHandleTableViewCell {
-    backgroundColor: clear;
-
-    prefixLabel: @{
-        font: $font-normal-semibold;
-        textColor: $color-text-dimmed-dark;
-    }
-
-    handleTextField: @{
-        font: $font-normal;
-        textColor: $color-text-foreground-dark;
-    }
-}
-
 /* Registration */
 
 UIView.status-bar-overlay {
     backgroundColor: $color-background;
-}
-
-/* Reactions list */
-
-ReactionCell {
-    contentView: @{
-        backgroundColor: $color-text-background;
-    }
-    userDisplayNameLabel: @{
-        font: $font-normal;
-        textColor: $color-text-foreground;
-    }
-
-    usernameLabel: @{
-        font: $font-small-semibold;
-        textColor: $color-text-dimmed;
-    }
 }
 
 /* Collections */
