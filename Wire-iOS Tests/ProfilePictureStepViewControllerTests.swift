@@ -38,7 +38,7 @@ final class ProfilePictureStepViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersTheViewControllerCorrectlyInAllDeviceSizes() {
-        let configurationBlock = {[weak self] _ in
+        let configurationBlock: ((UIView) -> Void)! = {[weak self] _ in
             guard let weakSelf = self else { return }
 
             weakSelf.sut.loadViewIfNeeded()
