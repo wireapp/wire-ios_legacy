@@ -26,6 +26,7 @@ final class RegistrationViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = RegistrationViewController()
+        sut.resignFirstResponder()
     }
     
     override func tearDown() {
