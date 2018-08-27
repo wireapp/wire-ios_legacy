@@ -34,7 +34,6 @@ extension ConversationListViewController: NetworkStatusBarDelegate {
 extension ConversationListViewController {
     
     func currentAccountView() -> BaseAccountView {
-        ///TODO: inject account
         guard let currentAccount = self.account else {
             fatal("No account available")
         }
