@@ -28,6 +28,8 @@ final class ConversationListViewControllerTests: ZMSnapshotTestCase {
         sut = ConversationListViewController()
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
         sut.account = account
+
+        sut.view.backgroundColor = .black
     }
     
     override func tearDown() {
