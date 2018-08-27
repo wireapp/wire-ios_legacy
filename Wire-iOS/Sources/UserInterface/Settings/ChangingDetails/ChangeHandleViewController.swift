@@ -48,13 +48,13 @@ protocol ChangeHandleTableViewCellDelegate: class {
     let prefixLabel: UILabel = {
         let label = UILabel()
         label.font = .normalSemiboldFont
-        label.textColor = .textForegroundDark
+        label.textColor = UIColor(scheme: .textDimmed, variant: .dark)
 
         return label
     }()
     let handleTextField: UITextField = {
         let textField = UITextField()
-        textField.font = .normalSemiboldFont
+        textField.font = .normalFont
         textField.textColor = .textForegroundDark
 
         return textField
