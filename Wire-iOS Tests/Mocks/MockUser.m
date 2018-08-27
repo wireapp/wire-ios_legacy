@@ -247,6 +247,11 @@ static id<UserType> mockSelfUser = nil;
     
 }
 
+- (NSSet<UserClient *> *)clientsRequiringUserAttention
+{
+    return [NSSet new];
+}
+
 #pragma mark - ZMBareUserConnection
 
 @synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;
