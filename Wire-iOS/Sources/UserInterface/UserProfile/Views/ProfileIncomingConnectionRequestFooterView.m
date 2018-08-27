@@ -40,11 +40,11 @@
 
 - (void)createViews
 {
-    self.acceptButton = [Button buttonWithStyleClass:@"dialogue-button-full"];
+    self.acceptButton = [Button buttonWithStyle:ButtonStyleFull];
     [self.acceptButton setTitle:NSLocalizedString(@"inbox.connection_request.connect_button_title", @"").localizedUppercaseString forState:UIControlStateNormal];
     [self addSubview:self.acceptButton];
     
-    self.ignoreButton = [Button buttonWithStyleClass:@"dialogue-button-empty"];;
+    self.ignoreButton = [Button buttonWithStyle:ButtonStyleEmpty];
     [self.ignoreButton setTitle:NSLocalizedString(@"inbox.connection_request.ignore_button_title", @"").localizedUppercaseString forState:UIControlStateNormal];
     [self addSubview:self.ignoreButton];
 }

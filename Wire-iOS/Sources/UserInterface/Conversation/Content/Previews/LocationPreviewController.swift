@@ -31,8 +31,9 @@ class LocationPreviewController: TintColorCorrectedViewController {
     private let addressContainerView = UIView()
     private let addressLabel = UILabel()
 
-    var labelFont: UIFont?
-    var labelTextColor, containerColor: UIColor?
+    let labelFont = UIFont.normalFont
+    let labelTextColor = UIColor.textForeground
+    let containerColor = UIColor.placeholderBackground
 
     // MARK: - Initialization
 
@@ -41,7 +42,6 @@ class LocationPreviewController: TintColorCorrectedViewController {
         super.init(nibName: nil, bundle: nil)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.cas_styleClass = "container-view"
-        CASStyler.default().styleItem(self)
         configureViews()
         createConstraints()
     }
@@ -82,9 +82,8 @@ class LocationPreviewController: TintColorCorrectedViewController {
         annotation.coordinate = locationData.coordinate
         mapView.addAnnotation(annotation)
 
-        guard let font = labelFont, let color = labelTextColor, let containerColor = containerColor else { return }
-        addressLabel.font = font
-        addressLabel.textColor = color
+        addressLabel.font = labelFont
+        addressLabel.textColor = labelTextColor
         addressContainerView.backgroundColor = containerColor
     }
 

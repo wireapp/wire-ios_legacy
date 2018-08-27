@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
+@property (nonatomic) UILabel *noConversationLabel;
 
 - (void)removeUserProfileObserver;
 - (void)presentSettings;

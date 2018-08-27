@@ -21,11 +21,6 @@ import Foundation
 import Cartography
 
 @objcMembers final class SearchGroupSelector: UIView, TabBarDelegate {
-
-    @objc static var shouldShowBotResults: Bool {
-        return DeveloperMenuState.developerMenuEnabled() && ZMUser.selfUser().team != nil
-    }
-
     @objc public var onGroupSelected: ((SearchGroup)->())? = nil
 
     @objc public var group: SearchGroup = .people {

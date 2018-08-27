@@ -35,7 +35,7 @@ final class CallQualityScoreProvider: NSObject, AnalyticsType {
         nextProvider?.tagEvent(type(of: self).callingEventName, attributes: attributes)
     }
 
-    private static let callingEventName = "calling.avs_metrics_ended_call"
+    private static let callingEventName = "calling.call_quality_review"
     
     public var nextProvider: AnalyticsType? = nil
     

@@ -18,6 +18,13 @@
 
 import Foundation
 
+extension ConversationCell {
+    @objc func setupFont() {
+        burstNormalFont = UIFont.smallLightFont
+        burstBoldFont = UIFont.smallSemiboldFont
+    }
+}
+
 public extension ConversationCell {
 
     @objc func scheduledTimerForUpdateBurstTimestamp() {

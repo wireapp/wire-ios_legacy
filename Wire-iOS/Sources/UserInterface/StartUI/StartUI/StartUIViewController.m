@@ -114,7 +114,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         [self performSearch];
     };
 
-    if (SearchGroupSelector.shouldShowBotResults) {
+    if ([[ZMUser selfUser] canSeeServices]) {
         [self.view addSubview:self.groupSelector];
     }
 
@@ -169,7 +169,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 
-    if (SearchGroupSelector.shouldShowBotResults) {
+    if ([[ZMUser selfUser] canSeeServices]) {
         [self.groupSelector autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
         [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeLeading];
         [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeTrailing];

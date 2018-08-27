@@ -20,6 +20,7 @@
 @import PureLayout;
 
 #import "MediaPreviewViewController.h"
+#import "MediaPreviewViewController+Internal.h"
 #import "MediaPreviewView.h"
 @import WireExtensionComponents;
 #import "MediaPreviewData.h"
@@ -27,14 +28,12 @@
 #import "WireStyleKit.h"
 #import "LinkAttachment.h"
 #import "LinkAttachmentCache.h"
-#import <Classy/Classy.h>
 #import "Wire-Swift.h"
 
 
 @interface MediaPreviewViewController ()
 
 @property (nonatomic, readonly) MediaPreviewView *mediaPreviewView;
-@property (nonatomic) CGFloat viewHeight;
 
 @end
 
@@ -53,8 +52,9 @@
 
     [self.mediaPreviewView.playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
 
-    [CASStyler.defaultStyler styleItem:self];
     [self.view autoSetDimension:ALDimensionHeight toSize:self.viewHeight relation:NSLayoutRelationEqual];
+
+    [self setupStyle];
 }
 
 - (void)tearDown;

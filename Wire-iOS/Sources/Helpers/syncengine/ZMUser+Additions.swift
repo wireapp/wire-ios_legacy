@@ -31,4 +31,8 @@ extension ZMUser {
     @objc var hasUntrustedClients: Bool {
         return nil != self.clients.first { !$0.verified }
     }
+    
+    @objc var canSeeServices: Bool {
+        return self.hasTeam
+    }
 }

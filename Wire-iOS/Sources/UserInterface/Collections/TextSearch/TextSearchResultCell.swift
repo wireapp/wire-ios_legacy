@@ -24,7 +24,11 @@ import Cartography
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
     fileprivate let userImageView = UserImageView()
-    fileprivate let separatorView = UIView()
+    fileprivate let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator)
+        return view
+    }()
     fileprivate var observerToken: Any?
     public let resultCountView = RoundedTextBadge()
     
@@ -49,7 +53,6 @@ import Cartography
         
         contentView.addSubview(userImageViewContainer)
         
-        separatorView.cas_styleClass = "separator"
         contentView.addSubview(separatorView)
         
         resultCountView.textLabel.accessibilityIdentifier = "count of matches"

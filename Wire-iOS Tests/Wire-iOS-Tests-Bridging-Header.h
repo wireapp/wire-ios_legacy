@@ -23,11 +23,10 @@
 @import WireSyncEngine;
 
 #import "Analytics.h"
-#import "Analytics.h"
+#import "ParticipantDeviceCell.h"
 #import "NSString+Fingerprint.h"
 #import "ZMSnapshotTestCase.h"
 #import "MockUser.h"
-#import "MockMessage+Creation.h"
 #import "SplitViewController.h"
 #import <avs/AVSAudioEffect.h>
 #import "ImageMessageCell.h"

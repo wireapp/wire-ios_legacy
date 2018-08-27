@@ -36,6 +36,8 @@ final class CallViewController: UIViewController {
     private var videoConfiguration: VideoConfiguration
     private let videoGridViewController: VideoGridViewController
     private var cameraType: CaptureDevice = .front
+    
+    private var isInteractiveDismissal = false
 
     var conversation: ZMConversation? {
         return voiceChannel.conversation
@@ -101,11 +103,16 @@ final class CallViewController: UIViewController {
         proximityMonitorManager?.stopListening()
         pauseVideoIfNeeded()
         NotificationCenter.default.removeObserver(self)
+        isInteractiveDismissal = transitionCoordinator?.isInteractive == true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         UIApplication.shared.isIdleTimerDisabled = false
+        
+        if isInteractiveDismissal {
+            dismisser?.dismiss(viewController: self, completion: nil)
+        }
     }
 
     override func accessibilityPerformEscape() -> Bool {
@@ -144,7 +151,9 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func minimizeOverlay() {
-        dismisser?.dismiss(viewController: self, completion: nil)
+        dismiss(animated: true, completion: {
+            self.dismisser?.dismiss(viewController: self, completion: nil)
+        })
     }
 
     fileprivate func acceptDegradedCall() {

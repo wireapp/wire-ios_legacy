@@ -33,7 +33,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     fileprivate var emojiDataSource: EmojiDataSource!
     fileprivate let collectionView = EmojiCollectionView()
     fileprivate let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
-    private let backspaceButton = IconButton.iconButtonDefault()
+    private let backspaceButton = IconButton(style: .default)
     private var deleting = false
 
     var backspaceEnabled = false {

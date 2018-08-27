@@ -27,7 +27,7 @@ class LandingButton: ButtonWithLargerHitArea {
 
     public init() {
         super.init(frame: CGRect.zero)
-        iconButton = IconButton.iconButtonCircularLight()
+        iconButton = IconButton(style: .circular, variant: .dark)
         iconButton.isUserInteractionEnabled = false
         addSubview(iconButton)
 

@@ -84,8 +84,6 @@ extension ShareViewController {
         self.sendButton.circular = true
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
-        self.bottomSeparatorLine.cas_styleClass = "separator"
-        
         if self.allowsMultipleSelection {
             self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
         }

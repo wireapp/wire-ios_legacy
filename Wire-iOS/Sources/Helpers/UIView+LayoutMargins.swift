@@ -40,7 +40,7 @@ extension UIView {
         return UIEdgeInsets(top: 0, left: left, bottom: 0, right: right)
     }
     
-    @objc class var directionAwareConversationLayoutMargins: UIEdgeInsets {
+    @objc public class var directionAwareConversationLayoutMargins: UIEdgeInsets {
         let margins = conversationLayoutMargins
         
         if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {

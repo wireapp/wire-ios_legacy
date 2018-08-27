@@ -18,21 +18,28 @@
 
 import Foundation
 
+
 final class CallWindowRootViewController: UIViewController {
     
-    private(set) var voiceChannelController: ActiveVoiceChannelViewController?
+    private var callQualityController: CallQualityController?
+    private var callController: CallController?
     
     @objc func minimizeOverlay(completion: @escaping () -> Void) {
-        guard let controller = voiceChannelController else { return completion() }
-        (controller as ViewControllerDismisser).dismiss(viewController: controller, completion: completion)
+        guard let callController = callController else { return completion() }
+        
+        callController.minimizeCall(completion: completion)
+    }
+    
+    @objc var isDisplayingCallOverlay: Bool {
+        return callController?.activeCallViewController != nil
     }
     
     override var prefersStatusBarHidden: Bool {
-        return voiceChannelController?.prefersStatusBarHidden ?? false
+        return callController?.activeCallViewController?.prefersStatusBarHidden ?? false
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return voiceChannelController?.preferredStatusBarStyle ?? .default
+        return callController?.activeCallViewController?.preferredStatusBarStyle ?? .default
     }
     
     override var shouldAutorotate: Bool {
@@ -48,11 +55,11 @@ final class CallWindowRootViewController: UIViewController {
     }
     
     func transitionToLoggedInSession() {
-        let controller = ActiveVoiceChannelViewController()
-        controller.view.translatesAutoresizingMaskIntoConstraints = false
-        addToSelf(controller)
-        controller.view.fitInSuperview()
-        voiceChannelController = controller
+        callQualityController = CallQualityController()
+        callQualityController?.targetViewController = self
+        
+        callController = CallController()
+        callController?.targetViewController = self
     }
     
     private func topmostViewController() -> UIViewController? {
@@ -62,4 +69,3 @@ final class CallWindowRootViewController: UIViewController {
     }
     
 }
-

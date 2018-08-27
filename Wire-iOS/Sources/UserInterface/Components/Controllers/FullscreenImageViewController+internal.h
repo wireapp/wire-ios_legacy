@@ -22,6 +22,8 @@ static CGFloat const kZoomScaleDelta = 0.0003;
 
 @property (nonatomic) CGFloat lastZoomScale;
 @property (nullable, nonatomic, readwrite) UIImageView *imageView;
+@property (nonatomic) CGFloat minimumDismissMagnitude;
+@property (nonatomic, nullable) UIView *topOverlay;
 
 - (void)centerScrollViewContent;
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated;

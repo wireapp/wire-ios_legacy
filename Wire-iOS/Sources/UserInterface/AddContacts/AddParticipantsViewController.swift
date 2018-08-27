@@ -434,18 +434,16 @@ extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
         guard case let .add(conversation) = viewModel.context else { return }
         let detail = ServiceDetailViewController(
             serviceUser: user,
-            destinationConversation: conversation,
-            actionType: .addService,
+            actionType: .addService(conversation),
             variant: .init(colorScheme: self.variant, opaque: true)
-        )
-
-        detail.completion = { [weak self] result in
+        ) { [weak self] result in
             guard let `self` = self, let result = result else { return }
             switch result {
             case .success:
                 self.dismiss(animated: true)
             case .failure(let error):
-                error.displayAddBotError(in: detail)
+                guard let controller = self.navigationController?.topViewController else { return }
+                error.displayAddBotError(in: controller)
             }
         }
         

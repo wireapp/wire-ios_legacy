@@ -26,7 +26,7 @@ import Classy
 
     let userClient: UserClient
     let contentView = UIView()
-    let backButton = IconButton.iconButtonCircular()
+    let backButton = IconButton(style: .circular)
     let showMyDeviceButton = ButtonWithLargerHitArea()
     let descriptionTextView = UITextView()
     let separatorLineView = UIView()

@@ -94,10 +94,14 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     let searchIcon = UIImageView()
     let topSeparatorView = OverflowSeparatorView()
     let destinationsTableView = UITableView()
-    let closeButton = IconButton.iconButtonDefaultLight()
-    let sendButton = IconButton.iconButtonDefaultDark()
+    let closeButton = IconButton(style: .default, variant: .dark)
+    let sendButton = IconButton(style: .default, variant: .light)
     let tokenField = TokenField()
-    let bottomSeparatorLine = UIView()
+    let bottomSeparatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator)
+        return view
+    }()
     
     override public func viewDidLoad() {
         super.viewDidLoad()
