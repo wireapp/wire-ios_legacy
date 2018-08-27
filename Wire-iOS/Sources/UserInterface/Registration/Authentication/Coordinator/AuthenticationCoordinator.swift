@@ -24,7 +24,7 @@ import WireSyncEngine
  * and team creation.
  */
 
-class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDelegate {
+class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDelegate {
 
     /// The handle to the OS log for authentication events.
     let log = ZMSLog(tag: "Authentication")
