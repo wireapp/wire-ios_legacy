@@ -56,7 +56,6 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         super.init(nibName: nil, bundle: nil)
         
         callDegradationController.targetViewController = self
-        callDegradationController.state = configuration.degradationState
     }
     
     required init?(coder aDecoder: NSCoder) {
