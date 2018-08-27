@@ -64,7 +64,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.authenticationCoordinator currentViewControllerDidAppear];
 
     if (AutomationHelper.sharedHelper.automationEmailCredentials != nil) {
         ZMEmailCredentials *emailCredentials = AutomationHelper.sharedHelper.automationEmailCredentials;
@@ -81,7 +80,6 @@
     [super viewWillDisappear:animated];
     [self.emailField resignFirstResponder];
     [self.passwordField resignFirstResponder];
-    [self.authenticationCoordinator currentViewControllerDidDisappear];
 }
 
 #pragma mark - Interface Configuration

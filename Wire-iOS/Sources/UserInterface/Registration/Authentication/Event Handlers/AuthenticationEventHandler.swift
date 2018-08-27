@@ -45,7 +45,8 @@ protocol AuthenticationEventHandler: class {
      * Called by the authentication coordinator when it detects an event supported by this object.
      *
      * Using the current step and the context object, use this method to determine if you can handle the event.
-     * If you can handle the event, return the actions to execute. If you can't, return `nil`.
+     * If you can handle the event, return the actions to execute. If you can't, return `nil`. Do not return an
+     * empty array.
      *
      * When a handler cannot handle an event, the coordinator will try to use the next handler, until one provides a
      * valid list of actions.

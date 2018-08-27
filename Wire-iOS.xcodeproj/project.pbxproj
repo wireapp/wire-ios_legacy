@@ -229,6 +229,11 @@
 		5E52378A20EB5B4C00649241 /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */; };
 		5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */; };
 		5E65A79A212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */; };
+		5E65A79E21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */; };
+		5E65A7A021303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */; };
+		5E65A7A32130412E008BFCC0 /* UserEmailChangeEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7A22130412E008BFCC0 /* UserEmailChangeEventHandler.swift */; };
+		5E65A7A5213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7A4213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift */; };
+		5E65A7A721304B6B008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E65A7A621304B6A008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
 		5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */; };
 		5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */; };
@@ -1621,6 +1626,11 @@
 		5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthenticationCoordinatedViewController.h; sourceTree = "<group>"; };
 		5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterfaceBuilder.swift; sourceTree = "<group>"; };
 		5E65A799212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStateControllerTests.swift; sourceTree = "<group>"; };
+		5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+UserChange.swift"; sourceTree = "<group>"; };
+		5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+CompanyLogin.swift"; sourceTree = "<group>"; };
+		5E65A7A22130412E008BFCC0 /* UserEmailChangeEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmailChangeEventHandler.swift; sourceTree = "<group>"; };
+		5E65A7A4213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmailUpdateFailureErrorHandler.swift; sourceTree = "<group>"; };
+		5E65A7A621304B6A008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmailUpdateCodeSentEventHandler.swift; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlowStep.swift; sourceTree = "<group>"; };
@@ -3559,6 +3569,31 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		5E65A7A121304120008BFCC0 /* UserChange */ = {
+			isa = PBXGroup;
+			children = (
+				5E65A7A22130412E008BFCC0 /* UserEmailChangeEventHandler.swift */,
+				5E65A7A621304B6A008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift */,
+				5E65A7A4213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift */,
+			);
+			path = UserChange;
+			sourceTree = "<group>";
+		};
+		5E65A7A8213054B1008BFCC0 /* Coordinator+Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */,
+				5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */,
+				5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */,
+				5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */,
+				5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */,
+				5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */,
+				5E65A79D21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift */,
+				5E65A79F21303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift */,
+			);
+			path = "Coordinator+Delegates";
+			sourceTree = "<group>";
+		};
 		5E766D9721144DEC005242B4 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -3609,6 +3644,7 @@
 		5E8DA756211B04EA00360979 /* Post-Login */ = {
 			isa = PBXGroup;
 			children = (
+				5E65A7A121304120008BFCC0 /* UserChange */,
 				5E8DA766211B2D8300360979 /* Success */,
 				5E8DA760211B285500360979 /* Backup */,
 				5E8DA75F211B139500360979 /* Registration Error */,
@@ -3639,12 +3675,7 @@
 			children = (
 				5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */,
 				5E8C38B9212FE106002AE12B /* AuthenticationStateController.swift */,
-				5EE73BF4212419ED0032986D /* AuthenticationCoordinator+Registration.swift */,
-				5E8DA787211C499900360979 /* AuthenticationCoordinator+PreLogin.swift */,
-				5E8DA764211B2D0400360979 /* AuthenticationCoordinator+PostLogin.swift */,
-				5E8DA769211B2E8700360979 /* AuthenticationCoordinator+InitialSync.swift */,
-				5E8C38AD212DC44E002AE12B /* AuthenticationCoordinator+Navigation.swift */,
-				5E8C38AF212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift */,
+				5E65A7A8213054B1008BFCC0 /* Coordinator+Delegates */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -7190,11 +7221,13 @@
 				BAA1F7E41B610D89002402B6 /* SketchColorCollectionViewCell.m in Sources */,
 				BF5FAC0520B6C6E9004CEB45 /* ConversationCallController.swift in Sources */,
 				EF8DD90C211DAFE500E970F1 /* MessagePresenter+Pass.swift in Sources */,
+				5E65A7A021303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift in Sources */,
 				8723342A1CD0D8F100CF8B11 /* VideoMessageCell.swift in Sources */,
 				5E8C38B0212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift in Sources */,
 				EF21271A1FB9DFE300625A9B /* ProfilePictureStepViewController.m in Sources */,
 				7C4789852021F40E00A38442 /* AddBotError+UIHandler.swift in Sources */,
 				EF2127131FB9DFE300625A9B /* EmailSignInViewController.m in Sources */,
+				5E65A79E21303F97008BFCC0 /* AuthenticationCoordinator+UserChange.swift in Sources */,
 				871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */,
 				BF52C1591CAEBD8D0037331F /* ArchivedNavigationBar.swift in Sources */,
 				F12CDAE71E43880100CEFCEB /* RegistrationTextViewCell.swift in Sources */,
@@ -7280,6 +7313,7 @@
 				D51894792050490E00C095C1 /* ActionCell.swift in Sources */,
 				87DCF4941D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift in Sources */,
 				87AAE4231E43234A00E1D13A /* MessagePresenter+ConversationImages.swift in Sources */,
+				5E65A7A5213048AB008BFCC0 /* UserEmailUpdateFailureErrorHandler.swift in Sources */,
 				16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */,
 				EF21270A1FB9DFE300625A9B /* CheckmarkViewController.m in Sources */,
 				5E8DA762211B286900360979 /* AuthenticationBackupReadyEventHandler.swift in Sources */,
@@ -7504,6 +7538,7 @@
 				BFAAB2391DEC6B2800CBC096 /* ConversationListViewController+Handles.swift in Sources */,
 				EF2127051FB9DFE300625A9B /* RegistrationTextField.m in Sources */,
 				BF0BDF801DAB8923003C61DE /* EphemeralKeyboardViewController.swift in Sources */,
+				5E65A7A32130412E008BFCC0 /* UserEmailChangeEventHandler.swift in Sources */,
 				5E8DA784211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift in Sources */,
 				87AAD74C1CF2E312002760FF /* ConversationInputBarViewController+Files.m in Sources */,
 				D5694B502044144500C84C8F /* ToggleView.swift in Sources */,
@@ -7588,6 +7623,7 @@
 				EF66110F2121D00B00BDF57A /* UIImage+DownSize.swift in Sources */,
 				7CC085461F7AA30F0010F96B /* DotView.swift in Sources */,
 				16A94AFB209C553A008A5718 /* CallViewController.swift in Sources */,
+				5E65A7A721304B6B008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift in Sources */,
 				87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */,
 				7CED30721FD97748009F0DAC /* IconStringsBuilder.swift in Sources */,
 				EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */,

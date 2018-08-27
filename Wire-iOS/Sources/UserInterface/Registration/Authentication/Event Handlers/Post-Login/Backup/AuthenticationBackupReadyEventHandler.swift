@@ -35,13 +35,15 @@ class AuthenticationBackupReadyEventHandler: AuthenticationEventHandler {
         }
 
         // Get the signed-in user credentials
-        let authenticationCredentials: ZMCredentials
+        let authenticationCredentials: ZMCredentials?
 
         switch currentStep {
         case .authenticateEmailCredentials(let credentials):
             authenticationCredentials = credentials
         case .authenticatePhoneCredentials(let credentials):
             authenticationCredentials = credentials
+        case .companyLogin:
+            authenticationCredentials = nil
         case .noHistory:
             return [.hideLoadingView]
         default:

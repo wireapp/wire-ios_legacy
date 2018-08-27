@@ -587,6 +587,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
         case .companyLoginFailure(let error):
             defer {
+                authenticationCoordinator?.cancelCompanyLogin()
                 notifyCompanyLoginCompletion()
             }
             

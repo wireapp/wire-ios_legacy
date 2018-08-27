@@ -24,7 +24,7 @@ import WireSyncEngine
  * and team creation.
  */
 
-class AuthenticationCoordinator: NSObject, AuthenticationEventHandlingManagerDelegate {
+class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDelegate {
 
     /// The handle to the OS log for authentication events.
     let log = ZMSLog(tag: "Authentication")
@@ -524,7 +524,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func resendEmailVerificationCode() {
-        guard case let .enterEmailChangeCode(credentials) = stateController.currentStep else {
+        guard case let .pendingEmailLinkVerification(credentials) = stateController.currentStep else {
             return
         }
 
@@ -555,7 +555,7 @@ extension AuthenticationCoordinator {
 
     @objc func startCompanyLoginFlowIfPossible() {
         switch stateController.currentStep {
-        case .provideCredentials:
+        case .provideCredentials, .createCredentials:
             companyLoginController?.displayLoginCodePrompt()
         default:
             return
@@ -563,109 +563,32 @@ extension AuthenticationCoordinator {
     }
 
     /**
-     * Call this method when the corrdinated view controller appears.
+     * Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
      */
 
-    @objc func currentViewControllerDidAppear() {
+    func detectLoginCodeIfPossible() {
         switch stateController.currentStep {
-        case .landingScreen, .provideCredentials:
+        case .landingScreen, .provideCredentials, .createCredentials:
             companyLoginController?.isAutoDetectionEnabled = true
             companyLoginController?.detectLoginCode()
 
         default:
             companyLoginController?.isAutoDetectionEnabled = false
         }
+
     }
 
     /**
-     * Call this method when the corrdinated view controller disappears.
+     * Call this method when company login fails.
      */
 
-    @objc func currentViewControllerDidDisappear() {
-        companyLoginController?.isAutoDetectionEnabled = false
-    }
-
-}
-
-// MARK: - User Session Events
-
-extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
-
-    // MARK: Email Update
-
-    func emailUpdateDidFail(_ error: Error!) {
-        presenter?.showLoadingView = false
-
-        guard case .registerEmailCredentials = stateController.currentStep else {
+    func cancelCompanyLogin() {
+        guard case .companyLogin = stateController.currentStep else {
+            log.error("Cannot cancel company login outside of the dedicated flow.")
             return
         }
 
-        if (error as NSError).userSessionErrorCode == .emailIsAlreadyRegistered {
-            currentViewController?.executeErrorFeedbackAction?(.clearInputFields)
-        }
-
-        presenter?.showAlert(forError: error) { _ in
-            self.stateController.unwindState()
-        }
-    }
-
-    func passwordUpdateRequestDidFail() {
-        presenter?.showLoadingView = false
-
-        guard case .registerEmailCredentials = stateController.currentStep else {
-            return
-        }
-
-        presenter?.showAlert(forMessage: "error.updating_password".localized, title: nil) { _ in
-            self.stateController.unwindState()
-        }
-    }
-
-    func didSendVerificationEmail() {
-        presenter?.showLoadingView = false
-
-        guard case .registerEmailCredentials(let credentials, _) = stateController.currentStep else {
-            return
-        }
-
-        stateController.transition(to: .enterEmailChangeCode(credentials))
-    }
-
-    func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.profileInformationChanged else {
-            return
-        }
-
-        switch stateController.currentStep {
-        case .enterEmailChangeCode:
-            guard let selfUser = delegate?.selfUser else {
-                return
-            }
-
-            guard selfUser.emailAddress?.isEmpty == false else {
-                return
-            }
-
-            // TODO: GDPR consent
-            delegate?.userAuthenticationDidComplete(registered: false)
-
-        default:
-            break
-        }
-    }
-
-}
-
-// MARK: - CompanyLoginControllerDelegate
-
-extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
-
-    func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
-        presenter?.present(alert, animated: true)
-    }
-
-    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
-        presenter?.showLoadingView = showLoadingView
+        stateController.unwindState()
     }
 
 }

@@ -35,14 +35,15 @@ enum AuthenticationFlowStep: Equatable {
     case enterLoginCode(phoneNumber: String)
     case authenticateEmailCredentials(ZMEmailCredentials)
     case authenticatePhoneCredentials(ZMPhoneCredentials)
+    case companyLogin
 
     // Post Sign-In
-    case noHistory(credentials: ZMCredentials, type: Wire.ContextType)
-    case clientManagement(clients: [UserClient], credentials: ZMCredentials)
+    case noHistory(credentials: ZMCredentials?, type: Wire.ContextType)
+    case clientManagement(clients: [UserClient], credentials: ZMCredentials?)
     case removeClient
     case addEmailAndPassword(user: ZMUser, profile: UserProfileUpdateStatus, canSkip: Bool)
     case registerEmailCredentials(ZMEmailCredentials, isResend: Bool)
-    case enterEmailChangeCode(ZMEmailCredentials)
+    case pendingEmailLinkVerification(ZMEmailCredentials)
     case verifyEmailChangeCode(ZMEmailCredentials)
     case pendingInitialSync
 
@@ -64,6 +65,7 @@ enum AuthenticationFlowStep: Equatable {
         case .createCredentials: return true
         case .enterActivationCode: return true
         case .provideCredentials: return true
+        case .companyLogin: return true
         default: return true
         }
     }
@@ -83,6 +85,7 @@ enum AuthenticationFlowStep: Equatable {
         case .authenticateEmailCredentials: return false
         case .authenticatePhoneCredentials: return false
         case .registerEmailCredentials: return false
+        case .companyLogin: return false
 
         // Post Sign-In
         case .noHistory: return true
@@ -90,7 +93,7 @@ enum AuthenticationFlowStep: Equatable {
         case .removeClient: return false
         case .addEmailAndPassword: return true
         case .pendingInitialSync: return false
-        case .enterEmailChangeCode: return true
+        case .pendingEmailLinkVerification: return true
         case .verifyEmailChangeCode: return false
 
         // Registration

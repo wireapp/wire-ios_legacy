@@ -19,17 +19,32 @@
 import Foundation
 
 /**
- * Provides information to the event handling manager and executes actions.
+ * Provides information to the event responder chain and executes actions.
  */
 
-protocol AuthenticationEventHandlingManagerDelegate: class {
+protocol AuthenticationEventResponderChainDelegate: class {
+
+    /// The object providing authentication status info.
     var statusProvider: AuthenticationStatusProvider? { get }
+
+    /// The object providing the current authentication state.
     var stateController: AuthenticationStateController { get }
+
+    /**
+     * Executes the specified actions.
+     * - parameter actions: The actions to execute.
+     */
+
     func executeActions(_ actions: [AuthenticationCoordinatorAction])
+
 }
 
 /**
- * Manages the event handlers for authentication.
+ * The authentication responder chain is responsible for dispatching events to supported
+ * handlers, and determining what actions to execute in response.
+ *
+ * You configure the responder chain with a delegate, that will be responsible for providing
+ * state and who will be responsible from
  */
 
 class AuthenticationEventResponderChain {
@@ -45,15 +60,19 @@ class AuthenticationEventResponderChain {
         case clientRegistrationError(NSError, UUID)
         case clientRegistrationSuccess
         case authenticationFailure(NSError)
-        case phoneLoginCodeAvailable
+        case loginCodeAvailable
         case registrationError(NSError)
         case registrationStepSuccess
+        case userProfileChange(UserChangeInfo)
     }
 
     // MARK: - Properties
 
-    weak var delegate: AuthenticationEventHandlingManagerDelegate?
+    /// The handle to the OS log for authentication events.
     private let log = ZMSLog(tag: "Authentication")
+
+    /// The object assisting the responder chain.
+    weak var delegate: AuthenticationEventResponderChainDelegate?
 
     // MARK: - Configuration
 
@@ -63,15 +82,17 @@ class AuthenticationEventResponderChain {
     var clientRegistrationErrorHandlers: [AnyAuthenticationEventHandler<(NSError, UUID)>] = []
     var clientRegistrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var loginErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
-    var phoneLoginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
+    var loginCodeHandlers: [AnyAuthenticationEventHandler<Void>] = []
     var registrationErrorHandlers: [AnyAuthenticationEventHandler<NSError>] = []
     var registrationSuccessHandlers: [AnyAuthenticationEventHandler<Void>] = []
+    var userProfileChangeObservers: [AnyAuthenticationEventHandler<UserChangeInfo>] = []
 
     /**
      * Configures the object with the given delegate and registers the default observers.
+     * - parameter delegate: The object assisting the responder chain.
      */
 
-    func configure(delegate: AuthenticationEventHandlingManagerDelegate) {
+    func configure(delegate: AuthenticationEventResponderChainDelegate) {
         self.delegate = delegate
         self.registerDefaultEventHandlers()
     }
@@ -105,9 +126,11 @@ class AuthenticationEventResponderChain {
         registerHandler(AuthenticationPhoneLoginErrorHandler(), to: &loginErrorHandlers)
         registerHandler(AuthenticationEmailLoginUnknownErrorHandler(), to: &loginErrorHandlers)
         registerHandler(AuthenticationEmailFallbackErrorHandler(), to: &loginErrorHandlers)
+        registerHandler(UserEmailUpdateFailureErrorHandler(), to: &loginErrorHandlers)
 
-        // phoneLoginCodeHandlers
-        registerHandler(AuthenticationLoginCodeAvailableEventHandler(), to: &phoneLoginCodeHandlers)
+        // loginCodeHandlers
+        registerHandler(AuthenticationLoginCodeAvailableEventHandler(), to: &loginCodeHandlers)
+        registerHandler(UserEmailUpdateCodeSentEventHandler(), to: &loginCodeHandlers)
 
         // registrationErrorHandlers
         registerHandler(RegistrationActivationExistingAccountPolicyHandler(), to: &registrationErrorHandlers)
@@ -118,8 +141,12 @@ class AuthenticationEventResponderChain {
         registerHandler(RegistrationActivationCodeSentEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationIncrementalUserDataChangeHandler(), to: &registrationSuccessHandlers)
+
+        // userProfileChangeObservers
+        registerHandler(UserEmailChangeEventHandler(), to: &userProfileChangeObservers)
     }
 
+    /// Registers a handler inside the specified type erased array.
     fileprivate func registerHandler<Handler: AuthenticationEventHandler>(_ handler: Handler, to handlerList: inout [AnyAuthenticationEventHandler<Handler.Context>]) {
         let box = AnyAuthenticationEventHandler(handler)
         handlerList.append(box)
@@ -128,7 +155,8 @@ class AuthenticationEventResponderChain {
     // MARK: - Event Handling
 
     /**
-     * Handles the event using the current delegate.
+     * Call this method to notify the responder chain that a supported event occured.
+     * - parameter eventType: The type of event that occured, and any required context.
      */
 
     func handleEvent(ofType eventType: EventType) {
@@ -147,22 +175,21 @@ class AuthenticationEventResponderChain {
             handleEvent(with: clientRegistrationSuccessHandlers, context: ())
         case .authenticationFailure(let error):
             handleEvent(with: loginErrorHandlers, context: error)
-        case .phoneLoginCodeAvailable:
-            handleEvent(with: phoneLoginCodeHandlers, context: ())
+        case .loginCodeAvailable:
+            handleEvent(with: loginCodeHandlers, context: ())
         case .registrationError(let error):
             handleEvent(with: registrationErrorHandlers, context: error)
         case .registrationStepSuccess:
             handleEvent(with: registrationSuccessHandlers, context: ())
+        case .userProfileChange(let changeInfo):
+            handleEvent(with: userProfileChangeObservers, context: changeInfo)
         }
     }
 
-    /**
-     * Requests the coordinator to handle the event with the specified context, using the given handlers.
-     */
-
+    /// Start handling the event with the specified context, using the given handlers and delegate.
     private func handleEvent<Context>(with handlers: [AnyAuthenticationEventHandler<Context>], context: Context) {
         guard let delegate = self.delegate else {
-            log.error("The event will not be handled because the event handling manager does not have a delegate.")
+            log.error("The event will not be handled because the responder chain does not have a delegate.")
             return
         }
 
@@ -182,7 +209,7 @@ class AuthenticationEventResponderChain {
         }
 
         guard let (name, actions) = lookupResult else {
-            log.error("No handler was found to handle the event.\nStep = \(delegate.stateController.currentStep); Context = \(context)")
+            log.error("No handler was found to handle the event.\nCurrentStep = \(delegate.stateController.currentStep)")
             return
         }
 

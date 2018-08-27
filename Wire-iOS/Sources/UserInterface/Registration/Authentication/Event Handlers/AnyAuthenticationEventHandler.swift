@@ -33,6 +33,7 @@ class AnyAuthenticationEventHandler<Context> {
 
     /**
      * Creates a type-erased box for the specified event handler.
+     * - parameter handler: The typed handler to wrap in this object.
      */
 
     init<Handler: AuthenticationEventHandler>(_ handler: Handler) where Handler.Context == Context {

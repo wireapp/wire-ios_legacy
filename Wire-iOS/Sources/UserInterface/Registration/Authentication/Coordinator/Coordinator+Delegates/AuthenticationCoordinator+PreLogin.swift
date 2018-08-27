@@ -38,7 +38,7 @@ extension AuthenticationCoordinator: PreLoginAuthenticationObserver {
 
     /// Called when the phone login called became available.
     func loginCodeRequestDidSucceed() {
-        eventResponderChain.handleEvent(ofType: .phoneLoginCodeAvailable)
+        eventResponderChain.handleEvent(ofType: .loginCodeAvailable)
     }
 
     /// Called when the phone login code couldn't be requested manually.
