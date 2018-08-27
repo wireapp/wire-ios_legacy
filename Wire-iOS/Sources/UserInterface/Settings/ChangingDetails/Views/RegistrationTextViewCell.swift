@@ -23,9 +23,17 @@ protocol RegistrationTextFieldCellDelegate: class {
     func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String)
 }
 
-@objcMembers final class RegistrationTextFieldCell: UITableViewCell {
+final class RegistrationTextFieldCell: UITableViewCell {
     
-    let textField = RegistrationTextField()
+    let textField: RegistrationTextField = {
+        let textField = RegistrationTextField()
+
+        textField.font = .normalFont
+        textField.textColor = .textForegroundDark
+        textField.backgroundColor = .clear
+
+        return textField
+    }()
     weak var delegate: RegistrationTextFieldCellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -33,6 +41,8 @@ protocol RegistrationTextFieldCellDelegate: class {
         selectionStyle = .none
         setupViews()
         createConstraints()
+
+        backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) {

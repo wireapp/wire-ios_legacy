@@ -365,12 +365,6 @@ PickerView {
 
 /* Profile Devices */
 
-SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
-    cellNameLabel: @{
-        font: $font-normal-light;
-    }
-}
-
 RegistrationTextFieldCell {
     backgroundColor: clear;
     

@@ -28,6 +28,10 @@ extension UIColor {
         return UIColor(scheme: .textForeground)
     }
 
+    static var textForegroundDark: UIColor {
+        return UIColor(scheme: .textForeground, variant: .dark)
+    }
+
     static var background: UIColor {
         return UIColor(scheme: .background)
     }
