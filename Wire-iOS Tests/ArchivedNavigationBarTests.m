@@ -39,6 +39,11 @@
     [[NSRunLoop currentRunLoop] runUntilDate:[[NSDate date] dateByAddingTimeInterval:0.5]];
 }
 
+- (void)tearDown {
+    self.sut = nil;
+    [super tearDown];
+}
+
 - (void)testThatItRendersTheNavigationBarCorrectInitially {
     ZMVerifyViewInAllIPhoneWidths(self.sut);
 }

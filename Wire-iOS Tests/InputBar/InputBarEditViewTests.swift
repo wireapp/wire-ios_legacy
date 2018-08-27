@@ -32,6 +32,11 @@ class InputBarEditViewTests: ZMSnapshotTestCase {
         CASStyler.default().styleItem(sut)
     }
 
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
     func testThatItRendersTheEditViewCorrectly() {
         verifyInAllPhoneWidths(view: sut)
     }

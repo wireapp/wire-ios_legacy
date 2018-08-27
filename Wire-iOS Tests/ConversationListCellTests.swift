@@ -33,8 +33,8 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
         sut = nil
+        super.tearDown()
     }
     
     // MARK: - Helper

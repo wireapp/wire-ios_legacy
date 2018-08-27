@@ -39,6 +39,13 @@
     self.snapshotBackgroundColor = UIColor.whiteColor;
 }
 
+- (void)tearDown
+{
+    self.conversation = nil;
+    self.sut = nil;
+    [super tearDown];
+}
+
 - (void)testThatItRendersTheConversationDisplayNameCorrectly
 {
     ZMVerifyView(self.sut);

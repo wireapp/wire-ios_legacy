@@ -51,10 +51,10 @@ final class CharacterInputFieldTests: XCTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
         sut.removeFromSuperview()
         sut = nil
         delegate = nil
+        super.tearDown()
     }
     
     func testThatItCanBecomeFirstResponder() {
@@ -213,9 +213,9 @@ final class CharacterInputFieldScreenshotTests: ZMSnapshotTestCase {
     }
     
     override func tearDown() {
-        super.tearDown()
         sut.removeFromSuperview()
         sut = nil
+        super.tearDown()
     }
     
     func testDefaultState() {

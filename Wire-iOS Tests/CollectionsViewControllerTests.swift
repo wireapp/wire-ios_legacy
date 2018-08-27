@@ -61,6 +61,22 @@ class CollectionsViewControllerTests: ZMSnapshotTestCase {
         expiredLinkMessage = MockMessageFactory.expiredLinkMessage()
         expiredAudioMessage = MockMessageFactory.expiredAudioMessage()
     }
+
+    override func tearDown() {
+        emptyCollection = nil
+        imageMessage = nil
+        videoMessage = nil
+        audioMessage = nil
+        fileMessage = nil
+        linkMessage = nil
+
+        expiredImageMessage = nil
+        expiredVideoMessage = nil
+        expiredAudioMessage = nil
+        expiredFileMessage = nil
+        expiredLinkMessage = nil
+        super.tearDown()
+    }
     
     func testThatNoElementStateIsShownWhenCollectionIsEmpty() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: true)

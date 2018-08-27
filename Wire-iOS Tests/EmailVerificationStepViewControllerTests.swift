@@ -23,10 +23,6 @@ import XCTest
 
 final class EmailVerificationStepViewControllerTests: ZMSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-    
     func testEmailVerificationView() {
         
         let navigationController = NavigationController()

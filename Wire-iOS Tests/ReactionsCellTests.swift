@@ -33,6 +33,11 @@ class ReactionsCellTests: ZMSnapshotTestCase {
         sut = ReactionCell(frame: .zero)
     }
 
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
     func testThatItRendersReactionCellWithoutUsername() {
         sut.user = MockUser.mockUsers().first
         verifyInAllPhoneWidths(view: sut.snapshotView())

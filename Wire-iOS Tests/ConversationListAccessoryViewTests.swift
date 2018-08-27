@@ -21,11 +21,17 @@ import XCTest
 @testable import Wire
 
 class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
-    let sut = ConversationListAccessoryView(mediaPlaybackManager: MediaPlaybackManager(name: "test"))
+    var sut: ConversationListAccessoryView!
     
     override func setUp() {
         super.setUp()
+        self.sut = ConversationListAccessoryView(mediaPlaybackManager: MediaPlaybackManager(name: "test"))
         accentColor = .violet
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
     func testThatItIsEmptyForNoStatus() {

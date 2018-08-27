@@ -30,6 +30,12 @@ class CheckmarkCellTests: ZMSnapshotTestCase {
         conversation = MockConversation.groupConversation()
     }
 
+    override func tearDown() {
+        cell = nil
+        conversation = nil
+        super.tearDown()
+    }
+
     func testCheckmarkCell_NoCheckmark_Light() {
         cell.title = "Option A"
         cell.showCheckmark = false

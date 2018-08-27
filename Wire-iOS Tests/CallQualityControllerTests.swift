@@ -23,6 +23,11 @@ class CallQualityControllerTests: ZMSnapshotTestCase {
 
     var qualityController: CallQualityViewController?
 
+    override func tearDown() {
+        qualityController = nil
+        super.tearDown()
+    }
+
     func testSurveyRequestValidation() {
 
         // When the survey was never presented, it is possible to request it

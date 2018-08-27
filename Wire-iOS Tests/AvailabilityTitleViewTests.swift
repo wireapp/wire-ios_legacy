@@ -24,13 +24,21 @@ import Cartography
 class AvailabilityTitleViewTests: ZMSnapshotTestCase {
 
     var sut: AvailabilityTitleView?
-    var selfUser: ZMUser = ZMUser.selfUser()
+    var selfUser: ZMUser!
     var otherUser: ZMUser?
     
     override func setUp() {
         super.setUp()
         otherUser = ZMUser.insertNewObject(in: self.uiMOC)
         otherUser?.name = "Giovanni"
+        selfUser = ZMUser.selfUser()
+    }
+
+    override func tearDown() {
+        sut = nil
+        selfUser = nil
+        otherUser = nil
+        super.tearDown()
     }
     
     // MARK: - Self profile

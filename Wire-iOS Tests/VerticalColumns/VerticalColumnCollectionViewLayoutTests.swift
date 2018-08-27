@@ -21,7 +21,7 @@ import XCTest
 
 class VerticalColumnCollectionViewLayoutTests: ZMSnapshotTestCase {
 
-    let tiles: [ColorTile] = [
+    var tiles: [ColorTile]! = [
         // square, downscale
         ColorTile(color: .vividRed, size: CGSize(width: 1000, height: 1000)),
         // square, upscale
@@ -41,8 +41,9 @@ class VerticalColumnCollectionViewLayoutTests: ZMSnapshotTestCase {
         ColorTile(color: .brightYellow, size: CGSize(width: 1000, height: 1500)),
     ]
 
-    override func setUp() {
-        super.setUp()
+    override func tearDown() {
+        tiles = nil
+        super.tearDown()
     }
 
     func testThatVerticalLayoutAdaptsToDeviceSize() {

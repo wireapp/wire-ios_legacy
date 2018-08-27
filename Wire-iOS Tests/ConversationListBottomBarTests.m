@@ -79,6 +79,13 @@
     }];
  }
 
+- (void)tearDown
+{
+    self.sut = nil;
+    self.mockDelegate = nil;
+    [super tearDown];
+}
+
 - (void)testThatItRendersTheBottomBarCorrectlyInInitialState
 {
     // when

@@ -41,6 +41,12 @@ class ConversationImagesViewControllerTests: CoreDataSnapshotTestCase {
         let assetWrapper = AssetCollectionWrapper(conversation: otherUserConversation, assetCollection: collection, assetCollectionDelegate: delegate, matchingCategories: [imagesCategoryMatch])
         sut = ConversationImagesViewController(collection: assetWrapper, initialMessage: initialMessage, inverse: true)
     }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
     
     func testThatItDisplaysCorrectToolbarForImage_Normal() {
         sut.setBoundsSizeAsIPhone4_7Inch()

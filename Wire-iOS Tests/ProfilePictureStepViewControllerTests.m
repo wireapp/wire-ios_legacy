@@ -49,6 +49,12 @@
     };
 }
 
+- (void)tearDown {
+    self.sut = nil;
+    self.configurationBlock = nil;
+    [super tearDown];
+}
+
 - (void)testThatItRendersTheViewControllerCorrectlyInAllDeviceSizes {
     ZMVerifyViewInAllIPhoneSizesWithBlock(self.sut.view, self.configurationBlock);
 }

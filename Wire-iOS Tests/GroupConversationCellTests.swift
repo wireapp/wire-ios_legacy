@@ -20,15 +20,7 @@ import XCTest
 @testable import Wire
 
 class GroupConversationCellTests: CoreDataSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
+        
     func cell(_ configuration : (GroupConversationCell) -> Void) -> GroupConversationCell {
         let cell = GroupConversationCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
         configuration(cell)

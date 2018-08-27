@@ -30,6 +30,12 @@ class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
         conversation = self.createGroupConversation()
     }
 
+    override func tearDown() {
+        cell = nil
+        conversation = nil
+        super.tearDown()
+    }
+
     func testThatItDisplaysCell_WithoutTimeout_Light() {
         updateTimeout(0)
         cell.colorSchemeVariant = .light
