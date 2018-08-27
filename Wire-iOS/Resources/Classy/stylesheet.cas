@@ -365,20 +365,6 @@ PickerView {
 
 /* Profile Devices */
 
-ParticipantDeviceCell {
-    boldFingerprintFont: $font-small-semibold;
-    fingerprintFont: $font-small;
-    
-    nameLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-small-semibold;
-    }
-    
-    identifierLabel: @{
-        textColor: $color-text-foreground;
-    }
-}
-
 SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
     cellNameLabel: @{
         font: $font-normal-light;
