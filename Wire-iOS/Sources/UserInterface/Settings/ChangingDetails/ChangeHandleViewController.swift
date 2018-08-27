@@ -169,7 +169,7 @@ struct HandleChangeState {
 
 @objcMembers final class ChangeHandleViewController: SettingsBaseTableViewController {
 
-    public var footerFont: UIFont?
+    public var footerFont: UIFont = .smallFont
     var state: HandleChangeState
     private var footerLabel = UILabel()
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile

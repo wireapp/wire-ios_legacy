@@ -16,10 +16,6 @@
 *  along with this program. If not, see http://www.gnu.org/licenses/.
 */ 
 
-UIView.separator {
-    backgroundColor: $color-separator;
-}
-
 IconButton.back-button {
     borderWidth: 0.5;
     borderColor[state: normal]: $color-separator;
@@ -89,49 +85,6 @@ ArchivedNavigationBar {
     
     dismissButton: @{
         iconColor: $color-text-foreground-dark;
-    }
-}
-
-/* MediaPreviewViewController */
-
-MediaPreviewViewController {
-    @device ipad {
-        viewHeight: 240
-    }
-
-    @device iphone {
-        viewHeight: 160
-    }
-}
-
-/* Fullscreen image view */
-
-FullscreenImageViewController {
-    @device ipad {
-        minimumDismissMagnitude: 2500
-    }
-
-    @device iphone {
-        minimumDismissMagnitude: 250
-    }
-
-    view: @{
-        backgroundColor: $color-background;
-    }
-    
-    topOverlay: @{
-        backgroundColor: $color-background;
-    }
-    bottomOverlay: @{
-        backgroundColor: $color-background;
-    }
-}
-
-/* Conv list */
-
-ConversationListViewController {
-    noConversationLabel: @{
-        backgroundColor:clear;
     }
 }
 
@@ -270,7 +223,7 @@ AudioMessageView {
     }
 }
 
-LocationMessageCell, LocationPreviewController {
+LocationMessageCell {
     labelTextColor: $color-text-foreground;
     labelFont: $font-normal;
     containerColor: $color-placeholder-background;
@@ -320,28 +273,6 @@ InputBarEditView: {
     }
 }
 
-IconButton.hourglass {
-    iconColor: $color-icon-normal;
-    iconColor[state:highlighted]: $color-icon-highlighted;
-    backgroundImageColor[state:selected]: clear;
-}
-
-ConversationInputBarViewController {
-
-    ephemeralIndicatorButton: @{
-        borderWidth: 0.0;
-        titleLabel: @{
-            font: $font-small-semibold;
-        }
-    }
-
-    audioRecorderTooltip: @{
-        font: $font-small;
-        textColor: $color-text-dimmed;
-        backgroundColor: $color-text-background;
-    }
-}
-
 TypingIndicatorView {
     container: @{
         backgroundColor: $color-background
@@ -354,31 +285,6 @@ TypingIndicatorView {
     nameLabel: @{
         font: $font-small-light;
         textColor: $color-text-placeholder;
-    }
-}
-
-/* Image confirmer */
-
-ConfirmAssetViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-    
-    topPanel: @{
-        backgroundColor: $color-background;
-    }
-    
-    titleLabel: @{
-        font: $font-medium-semibold;
-        textColor: $color-text-foreground;
-    }
-    
-    editButton: @{
-        backgroundImageColor[state:normal]: $color-accent-current;
-        backgroundImageColor[state:highlighted]: $color-accent-current-darken;
-        titleLabel: @{
-            font: $font-small;
-        }
     }
 }
 
@@ -396,12 +302,6 @@ ImageToolbarView.on-background {
         iconColor[state:highlighted]: $color-icon-highlighted;
         iconColor[state:selected]: $color-accent-current;
     }
-}
-
-/* Change Handle */
-
-ChangeHandleViewController {
-    footerFont: $font-small;
 }
 
 /* Location */
@@ -423,28 +323,6 @@ ModalTopBar {
     }
 }
 
-LocationSendViewController {
-    separatorView: @{
-        backgroundColor: $color-separator;
-    }
-    
-    addressLabel: @{
-        font: $font-normal;
-        textColor: $color-text-foreground;
-    }
-    
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
-
-/* Giphy */
-
-GiphyConfirmationViewController {
-    view: @{
-        backgroundColor: $color-background;
-    }
-}
 
 /* Common label styling */
 
@@ -488,64 +366,15 @@ ContactsSectionHeaderView {
     }
 }
 
-/* Add Participants */
-
-AddParticipantsViewController SearchHeaderViewController {
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-    closeButton: @{
-        iconColor[state:normal]: $color-icon-normal;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-    }
-}
-
 /* Invite Contacts */
 
-ContactsViewController, InviteContactsViewController {
-    titleLabel: @{
-        textAlignment: center;
-        font: $font-small-light;
-        textTransform: upper;
-    }
-    bottomContainerView: @{
-        backgroundColor: $color-background;
-    }
-}
-
-InviteContactsViewController {
-    tableView: @{
-        backgroundColor: clear;
-        separatorStyle: mone;
-        sectionIndexBackgroundColor: clear;
-        sectionIndexColor: $color-accent-current;
-    }
-    cancelButton: @{
-        iconColor[state:normal]: $color-icon-normal-dark;
-        iconColor[state:highlighted]: $color-icon-highlighted-dark;
-    }
-    separatorView: @{
-        backgroundColor: $color-accent-current;
-    }
-    bottomContainerSeparatorView: @{
-        backgroundColor: $color-separator-dark;
-    }
-    noContactsLabel: @{
-        font: $font-normal-light;
-        textColor: $color-text-foreground-dark;
-    }
-    bottomContainerView: @{
-        backgroundColor: $color-background-dark;
-    }
-}
-
-InviteContactsViewController ContactsEmptyResultView  {
+ContactsEmptyResultView  {
     messageLabel: @{
         textColor: $color-text-foreground-dark;
     }
 }
 
-InviteContactsViewController ContactsCell {
+ContactsCell {
     userNameLabel: @{
         textColor: $color-text-foreground-dark;
     }
@@ -554,7 +383,7 @@ InviteContactsViewController ContactsCell {
     }
 }
 
-InviteContactsViewController ContactsSectionHeaderView {
+ContactsSectionHeaderView {
     titleLabel: @{
         textColor: $color-text-foreground-dark;
     }
@@ -581,59 +410,12 @@ TokenField {
     }
 }
 
-StartUIViewController SearchHeaderViewController {
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-}
-
-/* Ephemeral Keyboard */
-
-EphemeralKeyboardViewController {
-
-    pickerFont: $font-normal-semibold;
-    pickerColor: $color-text-foreground-dark;
-    separatorColor: $color-separator-light;
-
-    view: @{
-        backgroundColor: $color-text-foreground-light;
-    }
-
-    titleLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-small-semibold;
-    }
-}
-
 PickerView {
     backgroundColor: clear;
 }
 
 
-ProfileDetailsViewController {
-    teamsGuestLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-normal-light;
-    }
-    
-    remainingTimeLabel: @{
-        textColor: $color-text-dimmed;
-        font: $font-medium-semibold;
-    }
-}
-
 /* Profile Devices */
-
-ProfileDevicesViewController {
-    tableView: @{
-        separatorColor: $color-separator;
-    }
-    
-    view: @{
-        backgroundColor: $color-content-background;
-    }
-
-}
 
 ParticipantDeviceCell {
     boldFingerprintFont: $font-small-semibold;
@@ -646,61 +428,6 @@ ParticipantDeviceCell {
     
     identifierLabel: @{
         textColor: $color-text-foreground;
-    }
-}
-
-ParticipantDeviceHeaderView {
-    textColor: $color-text-foreground;
-    linkAttributeColor: $color-accent-current;
-    font: $font-normal-light;
-}
-
-
-SettingsClientViewController.conversation {
-    view: @{
-        backgroundColor: $color-background
-    }
-    
-    tableView: @{
-        separatorColor: $color-separator
-    }
-    navigationController: @{
-        navigationBar: @{
-            titleTextAttributes :@{
-                foregroundColor: $color-text-foreground
-            }
-        }
-    }
-    
-    ClientTableViewCell.conversation  {
-        nameLabel: @{
-            font: $font-normal-semibold;
-            textColor: $color-text-foreground;
-        }
-        labelLabel: @{
-            font: $font-small-semibold;
-            textColor: $color-text-foreground;
-        }
-        activationLabel: @{
-            font: $font-small-light;
-            textColor: $color-text-foreground;
-        }
-        verifiedLabel: @{
-            font: $font-small;
-        }
-        fingerprintLabelFont: $font-small-light;
-        fingerprintLabelBoldFont: $font-small-semibold;
-        fingerprintTextColor: $color-text-foreground
-        
-    }
-    
-    FingerprintTableViewCell.conversation  {
-        fingerprintLabelFont: $font-normal-light;
-        fingerprintLabelBoldFont: $font-normal-semibold;
-        
-        titleLabel: @{
-            font: $font-small-semibold;
-        }
     }
 }
 
@@ -742,33 +469,6 @@ ChangeHandleTableViewCell {
     }
 }
 
-FingerprintTableViewCell{
-    fingerprintLabelFont: $font-normal-light;
-    fingerprintLabelBoldFont: $font-normal-semibold;
-    
-    titleLabel: @{
-        font: $font-small-semibold;
-    }
-}
-
-
-ClientTableViewCell {
-    nameLabel: @{
-        font: $font-normal-semibold;
-    }
-    labelLabel: @{
-        font: $font-small-semibold;
-    }
-    activationLabel: @{
-        font: $font-small-light;
-    }
-    verifiedLabel: @{
-        font: $font-small;
-    }
-    fingerprintLabelFont: $font-small-light;
-    fingerprintLabelBoldFont: $font-small-semibold;
-}
-
 /* Registration */
 
 UIView.status-bar-overlay {
@@ -776,12 +476,6 @@ UIView.status-bar-overlay {
 }
 
 /* Reactions list */
-
-ReactionsListViewController {
-    view: @{
-        backgroundColor: $color-text-background;
-    }
-}
 
 ReactionCell {
     contentView: @{
@@ -862,12 +556,6 @@ TwoLineTitleView {
     subtitleLabel: @{
         font: $font-small-light;
         textColor: $color-text-foreground;
-    }
-}
-
-ConversationImagesViewController {
-    view: @{
-        backgroundColor: $color-background;
     }
 }
 

@@ -77,7 +77,7 @@ import Classy
             collectionView.top == topBar.bottom
         }
 
-        CASStyler.default().styleItem(self)
+        view.backgroundColor = UIColor(scheme: .textBackground)
     }
     
     override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {

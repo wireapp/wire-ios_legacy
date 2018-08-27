@@ -77,7 +77,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic, readwrite) UIScrollView *scrollView;
 
-@property (nonatomic) UIView *topOverlay;
 @property (nonatomic) CALayer *highlightLayer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
 
@@ -154,6 +153,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
+
+    [self setupStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated

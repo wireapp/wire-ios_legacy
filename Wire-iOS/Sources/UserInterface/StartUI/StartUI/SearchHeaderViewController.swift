@@ -69,7 +69,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.alpha = 0.4
         clearButton.isHidden = true
-        
+
         tokenField.layer.cornerRadius = 4
         tokenField.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         tokenField.tokenTitleColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)

@@ -29,6 +29,8 @@
 
 // UI
 @import WireExtensionComponents;
+#import "ParticipantDeviceHeaderView.h"
+#import "ParticipantDeviceHeaderView+Internal.h"
 #import "ConversationCell.h"
 #import "ConversationCell+Private.h"
 #import "TextMessageCell.h"
@@ -77,6 +79,15 @@
 #import "ButtonWithLargerHitArea.h"
 
 // View Controllers
+#import "ProfileDevicesViewController.h"
+#import "ProfileDevicesViewController+Internal.h"
+#import "InviteContactsViewController.h"
+#import "InviteContactsViewController+Internal.h"
+#import "ContactsViewController.h"
+#import "ContactsViewController+Internal.h"
+#import "ContactsViewController+Private.h"
+#import "MediaPreviewViewController.h"
+#import "MediaPreviewViewController+Internal.h"
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
 #import "RegistrationViewController.h"
@@ -95,6 +106,7 @@
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
+#import "ConfirmAssetViewController+Internal.h"
 #import "ProfileSelfPictureViewController.h"
 #import "AddEmailPasswordViewController.h"
 #import "AddPhoneNumberViewController.h"
@@ -102,6 +114,7 @@
 #import "SketchColorPickerController.h"
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
+#import "ConversationListViewController+Internal.h"
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+internal.h"
 #import "KeyboardAvoidingViewController.h"
@@ -111,6 +124,7 @@
 #import "UIViewController+WR_Invite.h"
 #import "UIActivityViewController+Invite.h"
 #import "ProfileDetailsViewController.h"
+#import "ProfileDetailsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "BadgeUserImageView.h"
 #import "LaunchImageViewController.h"

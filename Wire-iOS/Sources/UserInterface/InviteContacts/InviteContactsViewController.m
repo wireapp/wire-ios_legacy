@@ -20,11 +20,13 @@
 @import WireExtensionComponents;
 
 #import "InviteContactsViewController.h"
+#import "InviteContactsViewController+Internal.h"
 #import "ContactsViewController+Private.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"
 #import "ContactsCell.h"
 #import "WireSyncEngine+iOS.h"
+#import "Wire-Swift.h"
 
 @interface InviteContactsViewController () <ContactsViewControllerDelegate, ContactsViewControllerContentDelegate>
 @end
@@ -43,6 +45,8 @@
         self.dataSource.searchQuery = @"";
         
         self.title = NSLocalizedString(@"contacts_ui.title", @"");
+
+        [self setupStyle];
     }
     
     return self;

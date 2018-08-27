@@ -110,9 +110,9 @@ extension UIAlertController {
     fileprivate let timeouts: [MessageDestructionTimeoutValue?]
 
     public let titleLabel = UILabel()
-    public var pickerFont: UIFont?
-    public var pickerColor: UIColor?
-    public var separatorColor: UIColor?
+    public var pickerFont: UIFont? = .normalSemiboldFont
+    public var pickerColor: UIColor? = UIColor(scheme: .textForeground, variant: .dark)
+    public var separatorColor: UIColor? = UIColor(scheme: .separator, variant: .light)
 
     private let conversation: ZMConversation!
     private let picker = PickerView()
@@ -140,6 +140,8 @@ extension UIAlertController {
         super.viewDidLoad()
         setupViews()
         createConstraints()
+
+        view.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -159,6 +161,9 @@ extension UIAlertController {
         picker.didTapViewClosure = dismissKeyboardIfNeeded
 
         titleLabel.textAlignment = .center
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        titleLabel.font = .smallSemiboldFont
+
         titleLabel.text = "input.ephemeral.title".localized.uppercased()
         titleLabel.numberOfLines = 0
         [titleLabel, picker].forEach(view.addSubview)

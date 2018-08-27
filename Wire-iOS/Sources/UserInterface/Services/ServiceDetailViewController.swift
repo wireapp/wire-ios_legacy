@@ -20,7 +20,11 @@ import Foundation
 import Cartography
 
 fileprivate extension Button {
-    
+
+    static func openServiceConversationButton() -> Button {
+        return Button(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
+    }
+
     static func createAddServiceButton() -> Button {
         return Button(style: .full, title: "peoplepicker.services.add_service.button".localized)
     }
@@ -47,11 +51,6 @@ extension ZMConversation {
     }
 }
 
-public enum ServiceConversation: Hashable {
-    case existing(ZMConversation)
-    case new
-}
-
 public struct Service {
     let serviceUser: ServiceUser
     var serviceUserDetails: ServiceDetails?
@@ -66,92 +65,6 @@ extension Service {
     }
 }
 
-private func add(service: Service, to conversation: Any, completion: ((AddBotResult) -> Void)? = nil) {
-    guard let userSession = ZMUserSession.shared(),
-        let serviceConversation = conversation as? ServiceConversation else {
-            return
-    }
-
-    func tagAdded(user: ServiceUser, to conversation: ZMConversation) {
-        Analytics.shared().tag(ServiceAddedEvent(service: user, conversation: conversation, context: .startUI))
-    }
-
-    switch serviceConversation {
-    case .new:
-        userSession.startConversation(with: service.serviceUser) { result in
-            switch result {
-            case .success(let conversation): tagAdded(user: service.serviceUser, to: conversation)
-            default: break
-            }
-
-            completion?(result)
-        }
-    case .existing(let conversation):
-        conversation.add(serviceUser: service.serviceUser, in: userSession) { error in
-            if let error = error {
-                completion?(AddBotResult.failure(error: error))
-            } else {
-                tagAdded(user: service.serviceUser, to: conversation)
-                completion?(AddBotResult.success(conversation: conversation))
-            }
-        }
-    }
-}
-
-extension Service: Shareable {
-    public typealias I = ServiceConversation
-
-    public func share<ServiceConversation>(to: [ServiceConversation]) {
-        guard let serviceConversation = to.first else { return }
-        add(service: self, to: serviceConversation)
-    }
-
-    public func share<ServiceConversation>(to: [ServiceConversation], completion: @escaping (AddBotResult) -> Void) {
-        guard let serviceConversation = to.first else { return }
-        add(service: self, to: serviceConversation, completion: completion)
-    }
-
-    public func previewView() -> UIView? {
-        return ServiceView(service: self, variant: .dark)
-    }
-}
-
-extension ServiceConversation: ShareDestination {
-    public var showsGuestIcon: Bool {
-        return false
-    }
-    
-    public var displayName: String {
-        switch self {
-        case .new:
-            return "peoplepicker.services.create_conversation.item".localized
-        case .existing(let conversation):
-            return conversation.displayName
-        }
-    }
-
-    public var securityLevel: ZMConversationSecurityLevel {
-        switch self {
-        case .new:
-            return ZMConversationSecurityLevel.notSecure
-        case .existing(let conversation):
-            return conversation.securityLevel
-        }
-    }
-
-    public var avatarView: UIView? {
-        switch self {
-        case .new:
-            let imageView = UIImageView()
-            imageView.contentMode = .center
-            imageView.image = UIImage(for: .plus, iconSize: .tiny, color: .white)
-            return imageView
-        case .existing(let conversation):
-            return conversation.avatarView
-        }
-    }
-}
-
 struct ServiceDetailVariant {
     let colorScheme: ColorSchemeVariant
     let opaque: Bool
@@ -159,8 +72,10 @@ struct ServiceDetailVariant {
 
 final class ServiceDetailViewController: UIViewController {
 
+    typealias Completion = (AddBotResult?) -> Void
+
     enum ActionType {
-        case addService, removeService, createConversation
+        case addService(ZMConversation), removeService(ZMConversation), openConversation
     }
 
     public var service: Service {
@@ -173,9 +88,7 @@ final class ServiceDetailViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    public var completion: ((AddBotResult?)->Void)?
-    let destinationConversation: ZMConversation?
-
+    public let completion: Completion?
     public let variant: ServiceDetailVariant
     public weak var viewControllerDismisser: ViewControllerDismisser?
 
@@ -191,25 +104,26 @@ final class ServiceDetailViewController: UIViewController {
     ///   - actionType: Enum ActionType to choose the actiion add or remove the service user
     ///   - variant: color variant
     init(serviceUser: ServiceUser,
-         destinationConversation: ZMConversation?,
          actionType: ActionType,
-         variant: ServiceDetailVariant) {
+         variant: ServiceDetailVariant,
+         completion: Completion?) {
         self.service = Service(serviceUser: serviceUser)
-        self.destinationConversation = destinationConversation
+        self.completion = completion
         self.detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
 
         switch actionType {
-        case .addService:
-            self.actionButton = Button.createAddServiceButton()
-        case .removeService:
-            self.actionButton = Button.createDestructiveServiceButton()
-        case .createConversation:
-            self.actionButton = Button.createServiceConversationButton()
+        case let .addService(conversation):
+            actionButton = Button.createAddServiceButton()
+            actionButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        case let .removeService(conversation):
+            actionButton = Button.createDestructiveServiceButton()
+            actionButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+        case .openConversation:
+            actionButton = Button.openServiceConversationButton()
         }
 
         self.variant = variant
         self.actionType = actionType
-        actionButton.isHidden = destinationConversation.map(ZMUser.selfUser().isGuest) ?? false
 
         super.init(nibName: nil, bundle: nil)
 
@@ -223,23 +137,11 @@ final class ServiceDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var callback: Callback<Button>?
-        switch actionType {
-        case .addService, .createConversation:
-            callback = createOnAddServicePressed()
-        case .removeService:
-            callback = createRemoveServiceCallback()
-        }
-
-        if let callback = callback {
-            self.actionButton.addCallback(for: .touchUpInside, callback: callback)
-        }
+        self.actionButton.addCallback(for: .touchUpInside, callback: callback(for: actionType, completion: self.completion))
 
         if self.variant.opaque {
-            view.backgroundColor = UIColor(scheme: .background,
-                                                             variant: self.variant.colorScheme)
-        }
-        else {
+            view.backgroundColor = UIColor(scheme: .background, variant: self.variant.colorScheme)
+        } else {
             view.backgroundColor = .clear
         }
 
@@ -302,41 +204,37 @@ final class ServiceDetailViewController: UIViewController {
         })
     }
 
-    // MARK: - action button callback - remove service
-
-    func createRemoveServiceCallback() -> Callback<Button> {
-        let buttonCallback: Callback<Button> = { [weak self] _ in
-            guard let `self` = self,
-                  let user = self.service.serviceUser as? ZMUser,
-                  let conversation = self.destinationConversation else { return }
-
-            self.presentRemoveDialogue(for: user,
-                                       from: conversation,
-                                       dismisser: self.viewControllerDismisser)
-        }
-
-        return buttonCallback
-    }
-
-    // MARK: - action button callback - add service
-
-    func createOnAddServicePressed() -> Callback<Button> {
+    func callback(for type: ActionType, completion: Completion?) -> Callback<Button> {
         return { [weak self] _ in
-            self?.onAddServicePressed()
+            guard let `self` = self, let userSession = ZMUserSession.shared() else {
+                return
+            }
+            let serviceUser = self.service.serviceUser
+            switch type {
+            case let .addService(conversation):
+                conversation.add(serviceUser: serviceUser, in: userSession) { error in
+                    if let error = error {
+                        completion?(.failure(error: error))
+                    } else {
+                        Analytics.shared().tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
+                        completion?(.success(conversation: conversation))
+                    }
+                }
+            case let .removeService(conversation):
+                guard let user = serviceUser as? ZMUser else { return }
+                self.presentRemoveDialogue(for: user, from: conversation, dismisser: self.viewControllerDismisser)
+            case .openConversation:
+                if let existingConversation = ZMConversation.existingConversation(in: userSession.managedObjectContext, service: serviceUser, team: ZMUser.selfUser().team) {
+                    completion?(.success(conversation: existingConversation))
+                } else {
+                    userSession.startConversation(with: serviceUser) { result in
+                        if case let .success(conversation) = result {
+                            Analytics.shared().tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
+                        }
+                        completion?(result)
+                    }
+                }
+            }
         }
-    }
-
-    private func onAddServicePressed() {
-        let target: ServiceConversation
-
-        if let conversation = self.destinationConversation {
-            target = .existing(conversation)
-        } else {
-            target = .new
-        }
-
-        Wire.add(service: self.service, to: target, completion: { [weak self] result in
-            self?.completion?(result)
-        })
     }
 }

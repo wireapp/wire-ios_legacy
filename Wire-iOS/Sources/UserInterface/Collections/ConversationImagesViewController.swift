@@ -50,7 +50,11 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton(style: .default)
     let overlay = FeedbackOverlayView()
-    let separator = UIView()
+    let separator: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator)
+        return view
+    }()
     fileprivate let likeButton = IconButton(style: .default)
     
     internal let inverse: Bool
@@ -108,8 +112,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         self.collection.assetCollectionDelegate.add(self)
         
         self.createNavigationTitle()
-
-        separator.cas_styleClass = "separator"
     }
     
     deinit {
@@ -169,6 +171,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
 
         updateBarsForPreview()
+
+        view.backgroundColor = .background
     }
     
     private func createPageController() {

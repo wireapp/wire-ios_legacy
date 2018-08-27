@@ -19,9 +19,8 @@
 
 import Foundation
 import Cartography
-import Classy
 
-@objcMembers class FingerprintTableViewCell: UITableViewCell {
+class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -87,14 +86,22 @@ import Classy
             spinner.bottom <= contentView.bottom - 16
         }
         
-        CASStyler.default().styleItem(self)
         self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
+
+        setupStyle()
     }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setupStyle() {
+        fingerprintLabelFont = .normalLightFont
+        fingerprintLabelBoldFont = .normalSemiboldFont
+
+        titleLabel.font = .smallSemiboldFont
     }
 
     func updateFingerprint() {

@@ -60,27 +60,23 @@ class CallDegradationController: UIViewController {
             })
         }
         
-        if let alertViewController = visisibleAlertController {
-            Log.calling.debug("Presenting alert about degraded call")
-            present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
-        }
+        presentAlertIfNeeded()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.isUserInteractionEnabled = false
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    private func presentAlertIfNeeded() {
+        guard
+            let alertViewController = visisibleAlertController,
+            !alertViewController.isBeingPresented
+            else { return }
         
-        if let alertViewController = visisibleAlertController, !alertViewController.isBeingPresented {
-            present(alertViewController, animated: true)
-        }
+        Log.calling.debug("Presenting alert about degraded call")
+        targetViewController?.present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
     }
-    
-    
     
 }
 
