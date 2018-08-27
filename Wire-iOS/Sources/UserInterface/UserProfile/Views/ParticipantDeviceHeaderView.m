@@ -59,6 +59,7 @@
     self.textView = [[WebLinkTextView alloc] init];
     self.textView.textContainer.maximumNumberOfLines = 0;
     self.textView.delegate = self;
+    self.textView.linkTextAttributes = @{};
     
     [self addSubview:self.textView];
 }
