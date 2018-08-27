@@ -114,6 +114,7 @@
 #import "SketchColorPickerController.h"
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
+#import "ConversationListViewController+Internal.h"
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+internal.h"
 #import "KeyboardAvoidingViewController.h"
