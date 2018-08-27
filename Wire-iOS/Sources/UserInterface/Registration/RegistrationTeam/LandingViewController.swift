@@ -179,13 +179,7 @@ final class LandingViewController: AuthenticationStepViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        authenticationCoordinator?.currentViewControllerDidAppear()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        authenticationCoordinator?.currentViewControllerDidDisappear()
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

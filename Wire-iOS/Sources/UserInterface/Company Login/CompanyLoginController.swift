@@ -28,6 +28,12 @@ import Foundation
     /// when performing a required task.
     func controller(_ controller: CompanyLoginController, showLoadingView: Bool)
 
+    /// Called when the company login controller starts the company login flow.
+    func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController)
+
+    /// Called when the company login controller cancels the company login flow.
+    func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController)
+
 }
 
 ///
@@ -38,7 +44,7 @@ import Foundation
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
 /// `SharedIdentitySessionRequestDetector` can be provided.
 ///
-@objc public final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
+@objc public final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, CompanyLoginFlowHandlerDelegate {
 
     @objc weak var delegate: CompanyLoginControllerDelegate?
 
@@ -87,6 +93,7 @@ import Foundation
         super.init()
         setupObservers()
         flowHandler.enableInAppBrowser = true
+        flowHandler.delegate = self
     }
 
     deinit {
@@ -207,7 +214,12 @@ import Foundation
     // MARK: - Flow
 
     public func companyLoginRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {
+        delegate?.controllerDidStartCompanyLoginFlow(self)
         flowHandler.open(authenticationURL: url)
+    }
+
+    func userDidCancelCompanyLoginFlow() {
+        delegate?.controllerDidCancelCompanyLoginFlow(self)
     }
 
 }

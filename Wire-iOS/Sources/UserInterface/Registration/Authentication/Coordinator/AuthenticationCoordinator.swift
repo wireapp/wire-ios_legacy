@@ -524,7 +524,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func resendEmailVerificationCode() {
-        guard case let .pendingEmailLinkVerification(credentials) = currentStep else {
+        guard case let .pendingEmailLinkVerification(credentials) = stateController.currentStep else {
             return
         }
 
@@ -555,7 +555,7 @@ extension AuthenticationCoordinator {
 
     @objc func startCompanyLoginFlowIfPossible() {
         switch stateController.currentStep {
-        case .provideCredentials:
+        case .provideCredentials, .createCredentials:
             companyLoginController?.displayLoginCodePrompt()
         default:
             return
@@ -563,11 +563,11 @@ extension AuthenticationCoordinator {
     }
 
     /**
-     * Call this method when the corrdinated view controller appears.
+     * Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
      */
 
-    @objc func currentViewControllerDidAppear() {
-        switch currentStep {
+    func detectLoginCodeIfPossible() {
+        switch stateController.currentStep {
         case .landingScreen, .provideCredentials, .createCredentials:
             companyLoginController?.isAutoDetectionEnabled = true
             companyLoginController?.detectLoginCode()
@@ -575,14 +575,20 @@ extension AuthenticationCoordinator {
         default:
             companyLoginController?.isAutoDetectionEnabled = false
         }
+
     }
 
     /**
-     * Call this method when the corrdinated view controller disappears.
+     * Call this method when company login fails.
      */
 
-    @objc func currentViewControllerDidDisappear() {
-        companyLoginController?.isAutoDetectionEnabled = false
+    func cancelCompanyLogin() {
+        guard case .companyLogin = stateController.currentStep else {
+            log.error("Cannot cancel company login outside of the dedicated flow.")
+            return
+        }
+
+        stateController.unwindState()
     }
 
 }

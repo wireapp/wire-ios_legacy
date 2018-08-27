@@ -20,7 +20,7 @@ import Foundation
 
 extension AuthenticationFlowStep {
 
-    static func makeClientManagementStep(from error: NSError, credentials: ZMCredentials, statusProvider: AuthenticationStatusProvider?) -> AuthenticationFlowStep? {
+    static func makeClientManagementStep(from error: NSError, credentials: ZMCredentials?, statusProvider: AuthenticationStatusProvider?) -> AuthenticationFlowStep? {
         guard let userClientIDs = error.userInfo[ZMClientsKey] as? [NSManagedObjectID] else {
             return nil
         }

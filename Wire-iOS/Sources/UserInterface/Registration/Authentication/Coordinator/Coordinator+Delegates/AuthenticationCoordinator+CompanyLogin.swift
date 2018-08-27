@@ -28,4 +28,12 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
         presenter?.showLoadingView = showLoadingView
     }
 
+    func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController) {
+        stateController.transition(to: .companyLogin)
+    }
+
+    func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController) {
+        cancelCompanyLogin()
+    }
+
 }

@@ -47,18 +47,6 @@
     self.title = NSLocalizedString(@"registration.title", @"");
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self.authenticationCoordinator currentViewControllerDidAppear];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [self.authenticationCoordinator currentViewControllerDidDisappear];
-}
-
 #pragma mark - Interface Configuration
 
 - (void)createPhoneNumberStepViewController

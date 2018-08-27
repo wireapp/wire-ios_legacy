@@ -29,9 +29,7 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, CompanyLoginControllerDelegate, AuthenticationCoordinatedViewController, PhoneNumberStepViewControllerDelegate, EmailStepViewControllerDelegate>
-
-@property (nonatomic) CompanyLoginController *companyLoginController;
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, AuthenticationCoordinatedViewController, PhoneNumberStepViewControllerDelegate, EmailStepViewControllerDelegate>
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) AuthenticationFlowType flowType;
@@ -59,7 +57,6 @@
     self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
-        self.companyLoginController = [[CompanyLoginController alloc] initWithDefaultEnvironment];
         self.flowType = flow;
     }
 
@@ -69,7 +66,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.companyLoginController.delegate = self;
 
     self.view.opaque = NO;
     self.view.backgroundColor = [UIColor clearColor];
@@ -129,15 +125,12 @@
 {
     [super viewWillAppear:animated];
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
-    self.companyLoginController.autoDetectionEnabled = YES;
-    [self.companyLoginController detectLoginCode];
     [self.view layoutIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    self.companyLoginController.autoDetectionEnabled = NO;
 }
 
 - (void)setUpRightButtons

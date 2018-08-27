@@ -63,7 +63,7 @@ class AuthenticationInterfaceBuilder {
             return registrationViewController
 
         case .clientManagement(let clients, let credentials):
-            let emailCredentials = ZMEmailCredentials(email: credentials.email!, password: credentials.password!)
+            let emailCredentials = credentials.map { ZMEmailCredentials(email: $0.email!, password: $0.password!) }
             return ClientUnregisterFlowViewController(clientsList: clients, credentials: emailCredentials)
 
         case .noHistory(_, let type):

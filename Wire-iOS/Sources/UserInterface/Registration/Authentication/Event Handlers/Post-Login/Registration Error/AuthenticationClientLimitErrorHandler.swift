@@ -36,7 +36,7 @@ class AuthenticationClientLimitErrorHandler: AuthenticationEventHandler {
         }
 
         // Get the credentials to start the deletion
-        let authenticationCredentials: ZMCredentials
+        let authenticationCredentials: ZMCredentials?
 
         switch currentStep {
         case .noHistory(let credentials, _):

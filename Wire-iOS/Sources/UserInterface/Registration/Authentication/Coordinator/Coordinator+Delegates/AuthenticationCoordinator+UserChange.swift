@@ -21,15 +21,15 @@ import Foundation
 extension AuthenticationCoordinator: UserProfileUpdateObserver, ZMUserObserver {
 
     func emailUpdateDidFail(_ error: Error!) {
-        eventHandlingManager.handleEvent(ofType: .authenticationFailure(error as NSError))
+        eventResponderChain.handleEvent(ofType: .authenticationFailure(error as NSError))
     }
 
     func didSendVerificationEmail() {
-        eventHandlingManager.handleEvent(ofType: .loginCodeAvailable)
+        eventResponderChain.handleEvent(ofType: .loginCodeAvailable)
     }
 
     func userDidChange(_ changeInfo: UserChangeInfo) {
-        eventHandlingManager.handleEvent(ofType: .userProfileChange(changeInfo))
+        eventResponderChain.handleEvent(ofType: .userProfileChange(changeInfo))
     }
 
 }
