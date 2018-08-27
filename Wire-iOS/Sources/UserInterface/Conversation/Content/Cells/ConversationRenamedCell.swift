@@ -23,7 +23,7 @@ import Cartography
 
 @objcMembers final class ConversationRenamedCell: IconSystemCell {
 
-    var nameLabelFont: UIFont?
+    var nameLabelFont: UIFont? = .normalSemiboldFont
     private let nameLabel = UILabel()
 
     public required init(style: UITableViewCellStyle, reuseIdentifier: String?) {

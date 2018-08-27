@@ -32,8 +32,9 @@ import Classy
     private let addressLabel = UILabel()
     private var recognizer: UITapGestureRecognizer?
     private weak var locationAnnotation: MKPointAnnotation? = nil
-    var labelFont: UIFont?
-    var labelTextColor, containerColor: UIColor?
+    var labelFont: UIFont? = .normalFont
+    var labelTextColor: UIColor? = .textForeground
+    var containerColor: UIColor? = .placeholderBackground
     var containerHeightConstraint: NSLayoutConstraint!
     
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {

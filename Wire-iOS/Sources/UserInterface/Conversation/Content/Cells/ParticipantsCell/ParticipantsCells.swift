@@ -42,7 +42,8 @@ import TTTAttributedLabel
     // Classy
     let lineView = UIView()
     var labelTextColor, labelTextBlendedColor, iconColor: UIColor?
-    var labelBoldFont, labelLargeFont: UIFont?
+    var labelBoldFont: UIFont?
+    var labelLargeFont: UIFont? = .largeSemiboldFont
     
     var attributedText: NSAttributedString? {
         didSet {

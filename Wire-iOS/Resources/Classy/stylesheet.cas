@@ -99,16 +99,6 @@ ConversationListItemView {
     }
 }
 
-VideoMessageCell {
-    @device ipad {
-        videoViewHeight: 240
-    }
-
-    @device iphone {
-        videoViewHeight: 160
-    }
-}
-
 /* Account views */
 
 BaseAccountView, PersonalAccountView, TeamAccountView {
@@ -165,14 +155,6 @@ IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, Ca
     labelTextBlendedColor: $color-text-dimmed;
 }
 
-ParticipantsCell {
-    labelLargeFont: $font-large-semibold;
-}
-
-ConversationRenamedCell {
-    nameLabelFont: $font-normal-semibold;
-}
-
 FileTransferView {
     backgroundColor: $color-placeholder-background;
 
@@ -221,16 +203,6 @@ AudioMessageView {
         textColor: $color-text-foreground;
         font: $font-small-semibold;
     }
-}
-
-LocationMessageCell {
-    labelTextColor: $color-text-foreground;
-    labelFont: $font-normal;
-    containerColor: $color-placeholder-background;
-}
-
-MessageDeletedCell {
-    trashColor: $color-icon-normal;
 }
 
 ArticleView {
@@ -338,21 +310,6 @@ UILabel.normal-light {
 
 /* Contacts */
 
-ContactsCell {
-    contentView: @{
-        backgroundColor: clear;
-    };
-    backgroundColor: clear;
-    userNameLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-normal-light;
-    }
-    userSubtitleLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-small;
-    }
-}
-
 ContactsSectionHeaderView {
     titleLabel: @{
         textColor: $color-text-foreground;
@@ -370,15 +327,6 @@ ContactsSectionHeaderView {
 
 ContactsEmptyResultView  {
     messageLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-}
-
-ContactsCell {
-    userNameLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-    userSubtitleLabel: @{
         textColor: $color-text-foreground-dark;
     }
 }

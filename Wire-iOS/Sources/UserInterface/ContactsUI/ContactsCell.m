@@ -18,18 +18,17 @@
 
 
 #import "ContactsCell.h"
+#import "ContactsCell+Internal.h"
 #import "Button.h"
 #import "BadgeUserImageView.h"
 @import PureLayout;
 #import "WireSyncEngine+iOS.h"
-
+#import "Wire-Swift.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 @interface ContactsCell ()
 @property (nonatomic) BadgeUserImageView *userImageView;
-@property (nonatomic) UILabel *userNameLabel;
-@property (nonatomic) UILabel *userSubtitleLabel;
 @property (nonatomic) UIView *userNameContainerView;
 @property (nonatomic, readwrite) Button *actionButton;
 @property (nonatomic) CGFloat actionButtonWidth;
@@ -78,6 +77,7 @@ NS_ASSUME_NONNULL_END
     _actionButtonWidth = 50;    // default value
     [self setupSubviews];
     [self setupConstraints];
+    [self setupStyle];
 }
 
 - (void)setupSubviews
