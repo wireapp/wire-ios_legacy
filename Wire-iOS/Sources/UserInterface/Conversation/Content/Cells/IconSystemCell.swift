@@ -20,13 +20,12 @@
 import Foundation
 import Cartography
 import TTTAttributedLabel
-import Classy
 
 // Class for the new system message that is having a following design with icon, text and separator line:
 // <Icon> Lorem ipsum system message ----
 //        by user A, B, C
 
-@objcMembers open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
+open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     let leftIconView = UIImageView(frame: .zero)
     let leftIconContainer = UIView(frame: .zero)
     let lineView = UIView(frame: .zero)
@@ -66,7 +65,6 @@ import Classy
         labelView = type(of: self).userRegularLabel ? UILabel(frame: .zero) : TTTAttributedLabel(frame: .zero)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        CASStyler.default().styleItem(self)
         createConstraints()
     }
 

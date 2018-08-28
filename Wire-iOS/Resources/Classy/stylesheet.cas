@@ -140,11 +140,6 @@ MessageToolboxView {
     clipsToBounds: true;
 }
 
-
-IconSystemCell {
-    labelFont: $font-medium;
-}
-
 FileTransferView {
     backgroundColor: $color-placeholder-background;
 
