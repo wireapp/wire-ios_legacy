@@ -67,6 +67,7 @@ enum AuthenticationFlowStep: Equatable {
         case .enterActivationCode: return true
         case .provideCredentials: return true
         case .companyLogin: return true
+        case .teamCreation(let teamState): return teamState.allowsUnwind
         default: return true
         }
     }
@@ -78,7 +79,6 @@ enum AuthenticationFlowStep: Equatable {
         case .start: return false
         case .landingScreen: return true
         case .reauthenticate: return true
-        case .teamCreation: return true
 
         // Sign-In
         case .provideCredentials: return true
@@ -99,6 +99,7 @@ enum AuthenticationFlowStep: Equatable {
         case .verifyEmailChangeCode: return false
 
         // Registration
+        case .teamCreation(let teamState): return teamState.needsInterface
         case .createCredentials: return true
         case .sendActivationCode: return false
         case .enterActivationCode: return true

@@ -45,8 +45,6 @@ final class TeamCreationStepController: AuthenticationStepViewController {
     private var topSpacer: UIView!
     private var bottomSpacer: UIView!
 
-    private var backButton: UIView?
-
     /// mainView is a textField or CharacterInputField in team creation screens
     private var mainView: UIView!
     private var secondaryViews: [UIView] = []
@@ -87,12 +85,11 @@ final class TeamCreationStepController: AuthenticationStepViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        observeKeyboard()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
-
-        updateKeyboardOffset(keyboardFrame: KeyboardFrameObserver.shared().keyboardFrame())
     }
+
+
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -106,62 +103,6 @@ final class TeamCreationStepController: AuthenticationStepViewController {
         updateHeadlineLabelFont()
     }
 
-    // MARK: - Keyboard shown/hide
-
-    private func observeKeyboard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-    }
-
-    func updateKeyboardOffset(keyboardFrame: CGRect) {
-        let keyboardHeight = keyboardFrame.height
-
-        spacerEqualHeight.constant = self.view.frame.size.height - keyboardFrame.origin.y
-        bottomSpacerHeight.constant = 24 + keyboardHeight
-
-        UIView.performWithoutAnimation {
-            self.view.setNeedsLayout()
-        }
-    }
-
-    @objc dynamic func keyboardWillShow(_ notification: Notification) {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            break
-        default:
-            spacerEqualHeight.isActive = false
-            topSpacerHeight.isActive = true
-            bottomSpacerHeight.isActive = true
-        }
-
-        animateViewsToAccomodateKeyboard(with: notification)
-    }
-
-    @objc dynamic func keyboardWillHide(_ notification: Notification) {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            break
-        default:
-            topSpacerHeight.isActive = false
-            bottomSpacerHeight.isActive = false
-            spacerEqualHeight.isActive = true
-        }
-
-        animateViewsToAccomodateKeyboard(with: notification)
-    }
-
-    @objc dynamic func keyboardWillChangeFrame(_ notification: Notification) {
-        animateViewsToAccomodateKeyboard(with: notification)
-    }
-
-    func animateViewsToAccomodateKeyboard(with notification: Notification) {
-        if let userInfo = notification.userInfo, let keyboardFrame = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-
-            updateKeyboardOffset(keyboardFrame: keyboardFrame.cgRectValue)
-        }
-    }
-
     // MARK: - View creation
 
     fileprivate func updateHeadlineLabelFont() {
@@ -169,8 +110,6 @@ final class TeamCreationStepController: AuthenticationStepViewController {
     }
 
     private func createViews() {
-        backButton = stepDescription.backButton?.create()
-
         headlineLabel = UILabel()
         headlineLabel.textAlignment = .center
         headlineLabel.textColor = UIColor.Team.textColor
@@ -221,7 +160,6 @@ final class TeamCreationStepController: AuthenticationStepViewController {
 
         [topSpacer,
          bottomSpacer,
-         backButton,
          headlineLabel,
          subtextLabel,
          mainViewContainer,
@@ -245,34 +183,11 @@ final class TeamCreationStepController: AuthenticationStepViewController {
     }
 
     private func createConstraints() {
-        if let backButton = backButton {
-
-            var backButtonTopMargin: CGFloat
-            if #available(iOS 11.0, *) {
-                backButtonTopMargin = 12
-            } else {
-                backButtonTopMargin = 32
-            }
-
-            let backButtonSize = UIImage.size(for: .tiny)
-
-            constrain(view, backButton, headlineLabel) { view, backButton, headlineLabel in
-                backButton.leading == view.leading + 16
-                backButton.top == view.topMargin + backButtonTopMargin
-                backButton.height == backButtonSize
-                backButton.height == backButton.width
-
-                headlineLabel.top >= backButton.bottomMargin + 20
-            }
-        }
-
-        let keyboardHeight = KeyboardFrameObserver.shared().keyboardFrame().height
-
         constrain(view, topSpacer, bottomSpacer) { view, topSpacer, bottomSpacer in
-            spacerEqualHeight = bottomSpacer.height == topSpacer.height + keyboardHeight
+            spacerEqualHeight = bottomSpacer.height == topSpacer.height
 
             topSpacerHeight = topSpacer.height >= 24
-            bottomSpacerHeight = bottomSpacer.height == 24 + keyboardHeight
+            bottomSpacerHeight = bottomSpacer.height == 24
 
             topSpacer.centerX == view.centerX
             bottomSpacer.centerX == view.centerX
@@ -367,6 +282,10 @@ final class TeamCreationStepController: AuthenticationStepViewController {
         case .showGuidanceDot:
             break
         }
+    }
+
+    func valueSubmitted(_ value: String) {
+        authenticationCoordinator?.advanceTeamCreation(value: value)
     }
 }
 

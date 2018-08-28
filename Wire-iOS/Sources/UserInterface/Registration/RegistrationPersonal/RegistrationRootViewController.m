@@ -153,6 +153,11 @@
     [self.view addSubview:self.rightButtonsStack];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 /**
  Setter of showLogin. When this is set to true, switch to login tab animatied. Else animates to register tab
 

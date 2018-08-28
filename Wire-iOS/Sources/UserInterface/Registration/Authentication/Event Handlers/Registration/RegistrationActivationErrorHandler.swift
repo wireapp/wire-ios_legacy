@@ -33,6 +33,11 @@ class RegistrationActivationErrorHandler: AuthenticationEventHandler {
         switch currentStep {
         case .sendActivationCode, .activateCredentials:
             break
+        case .teamCreation(let teamCreationState):
+            guard case .sendEmailCode = teamCreationState else {
+                fallthrough
+            }
+            
         default:
             return nil
         }

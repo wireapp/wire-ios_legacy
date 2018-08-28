@@ -141,12 +141,10 @@ class AuthenticationInterfaceBuilder {
             stepDescription = SetFullNameStepDescription()
         case .setPassword:
             stepDescription = SetPasswordStepDescription()
-        case .createTeam:
-            fatal("No controller should be pushed, we have already registered a team!")
         case .inviteMembers:
-            let teamMemberInviteViewController = TeamMemberInviteViewController()
-//            teamMemberInviteViewController.delegate = self
-            return teamMemberInviteViewController
+            return TeamMemberInviteViewController()
+        default:
+            return nil
         }
 
         return createViewController(for: stepDescription)
@@ -154,28 +152,20 @@ class AuthenticationInterfaceBuilder {
 
     /// Creates the view controller for team description.
     private func createViewController(for description: TeamCreationStepDescription) -> TeamCreationStepController {
-//        let mainView = description.mainView
-//        mainView.valueSubmitted = { [weak self] (value: String) in
-////            self?.advanceState(with: value)
-//        }
-
-//        mainView.valueValidated = { [weak self] (error: TextFieldValidator.ValidationError) in
-//            switch error {
-//            case .none:
-//                break
-////                self?.currentController?.clearError()
-//            default:
-//                break
-////                self?.currentController?.displayError(error)
-//            }
-//        }
-
-//        let backButton = description.backButton
-//        backButton?.buttonTapped = { [weak self] in
-//            self?.rewindState()
-//        }
-
         let controller = TeamCreationStepController(description: description)
+
+        let mainView = description.mainView
+        mainView.valueSubmitted = controller.valueSubmitted
+
+        mainView.valueValidated = { (error: TextFieldValidator.ValidationError) in
+            switch error {
+            case .none:
+                controller.clearError()
+            default:
+                controller.displayError(error)
+            }
+        }
+
         return controller
     }
 

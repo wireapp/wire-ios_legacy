@@ -122,6 +122,7 @@ class LandingButton: ButtonWithLargerHitArea {
     }
 
     func updateForNewState() {
+        
     }
 
 }

@@ -19,32 +19,29 @@
 import Foundation
 
 /**
- * Handles changes in the team creation state.
+ * Handles error occurring during e-mail verification.
  */
 
-class TeamCreationAdvancementEventHandler: AuthenticationEventHandler {
+class TeamEmailVerificationErrorHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: String) -> [AuthenticationCoordinatorAction]? {
-        // Only handle events during team creation
+    func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
+        // Only handle team creation errors
         guard case let .teamCreation(state) = currentStep else {
             return nil
         }
 
-        guard let nextState = state.nextState(with: context) else {
+        switch state {
+        case .setEmail, .verifyEmail:
+            break
+        default:
             return nil
         }
 
-        switch nextState {
-        case .createTeam:
-            return [.showLoadingView]
-        case .setFullName:
-            let alert = AuthenticationCoordinatorAlert.makeMarketingConsentAlert()
-            return [.hideLoadingView, .presentAlert(alert), .transition(.teamCreation(nextState), resetStack: false)]
-        default:
-            return [.hideLoadingView, .transition(.teamCreation(nextState), resetStack: false)]
-        }
+        // Display the error
+        let alert = AuthenticationCoordinatorErrorAlert(error: context, completionActions: [.executeFeedbackAction(.clearInputFields)])
+        return [.hideLoadingView, .presentErrorAlert(alert)]
     }
 
 }

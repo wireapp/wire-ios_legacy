@@ -19,25 +19,30 @@
 import Foundation
 
 /**
- * Handles the success of the send activation code request.
+ * Handles the availability of the team verification code.
  */
 
-class RegistrationActivationCodeSentEventHandler: AuthenticationEventHandler {
+class TeamEmailVerificationCodeAvailableEventHandler: AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        // Only handle email activation success
-        guard case let .sendActivationCode(credentials, user, isResend) = currentStep else {
+        // Only handle team related codes
+        guard case let .teamCreation(teamState) = currentStep else {
             return nil
         }
 
-        // Create the list of actions
+        guard case let .sendEmailCode(teamName, email, isResend) = teamState else {
+            return nil
+        }
+
+        // Push verification screen if needed
         var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
         if (!isResend) {
-            let nextStep = AuthenticationFlowStep.enterActivationCode(credentials, user: user)
-            actions.append(AuthenticationCoordinatorAction.transition(nextStep, resetStack: false))
+            let nextState: TeamCreationState = .verifyEmail(teamName: teamName, email: email)
+            let nextStep: AuthenticationFlowStep = .teamCreation(nextState)
+            actions.append(.transition(nextStep, resetStack: false))
         } else {
             actions.append(.unwindState)
         }

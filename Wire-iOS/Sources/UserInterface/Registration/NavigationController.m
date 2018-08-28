@@ -246,6 +246,12 @@
         BOOL shouldHideBackButton = self.viewControllers.count <= 1 || ! self.backButtonEnabled;
         self.backButton.alpha = shouldHideBackButton ? 0 : 1;
         [self.backButton setTitle:title.uppercasedWithCurrentLocale forState:UIControlStateNormal];
+
+        if (UIApplication.sharedApplication.statusBarStyle == UIStatusBarStyleDefault) {
+            self.backButton.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorGraphite];
+        } else {
+            self.backButton.tintColor = [UIColor whiteColor];
+        }
     };
     
     if (animated && self.transitionCoordinator) {
@@ -345,6 +351,7 @@
 {
     [self popViewControllerAnimated:YES];
 }
+
 
 @end
 

@@ -616,7 +616,55 @@ extension AuthenticationCoordinator {
      */
 
     func advanceTeamCreation(value: String) {
-        
+        guard case .teamCreation(let state) = stateController.currentStep else {
+            log.error("Cannot advance team creation outside of the dedicated flow.")
+            return
+        }
+
+        guard let nextState = state.nextState(with: value) else {
+            log.error("The state \(state) cannot be advanced.")
+            return
+        }
+
+        stateController.transition(to: .teamCreation(nextState))
+
+        switch nextState {
+        case let .sendEmailCode(_, emailAddress, _):
+            presenter?.showLoadingView = true
+            registrationStatus.sendActivationCode(to: .email(emailAddress))
+
+        case let .verifyActivationCode(_, emailAddress, activationCode):
+            presenter?.showLoadingView = true
+            registrationStatus.checkActivationCode(credential: .email(emailAddress), code: activationCode)
+
+        case .setFullName:
+            let marketingConsentAlertModel = AuthenticationCoordinatorAlert.makeMarketingConsentAlert()
+            presentAlert(for: marketingConsentAlertModel)
+
+        case let .createTeam(teamName, email, activationCode, fullName, password):
+            presenter?.showLoadingView = true
+            let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
+            registrationStatus.create(team: unregisteredTeam)
+        default:
+            break
+        }
+
+    }
+
+    func resendTeamEmailCode() {
+        guard case let .teamCreation(teamState) = stateController.currentStep else {
+            return
+        }
+
+        guard case let .verifyEmail(teamName, emailAddress) = teamState else {
+            return
+        }
+
+        presenter?.showLoadingView = true
+        let nextTeamState: TeamCreationState = .sendEmailCode(teamName: teamName, email: emailAddress, isResend: true)
+        stateController.transition(to: .teamCreation(nextTeamState))
+
+        registrationStatus.sendActivationCode(to: .email(emailAddress))
     }
 
 }

@@ -93,33 +93,6 @@ extension TeamCreationFlowController {
     }
 
     fileprivate func advanceIfNeeded(to next: TeamCreationState) {
-        switch next {
-        case .setTeamName:
-            nextState = nil // Nothing to do
-        case .setEmail:
-            Analytics.shared().tagTeamCreationAddedTeamName(context: "email")
-            pushNext() // Pushing email step
-        case let .verifyEmail(teamName: _, email: email):
-            currentController?.showLoadingView = true
-            registrationStatus.sendActivationCode(to: .email(email)) // Sending activation code to email
-        case let .setFullName(teamName: _, email: email, activationCode: activationCode):
-            currentController?.showLoadingView = true
-            registrationStatus.checkActivationCode(credential: .email(email), code: activationCode)
-        case .setPassword:
-            pushNext()
-        case let .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName, password: password):
-            UIAlertController.requestTOSApproval(over: navigationController) { [weak self] accepted in
-                if accepted {
-                    self?.currentState = next
-                    self?.currentController?.showLoadingView = true
-                    let teamToRegister = UnregisteredTeam(teamName: teamName, email: email, emailCode:activationCode, fullName: fullName, password: password, accentColor: ZMUser.pickRandomAcceptableAccentColor())
-                    self?.registrationStatus.create(team: teamToRegister)
-                    Analytics.shared().tagTeamCreationAcceptedTerms(context: "email")
-                }
-            }
-        case .inviteMembers:
-            pushNext()
-        }
     }
 
     fileprivate func showMarketingConsentDialog(presentViewController: UIViewController) {
@@ -131,29 +104,8 @@ extension TeamCreationFlowController {
 
     fileprivate func pushController(for state: TeamCreationState) {
 
-        var stepDescription: TeamCreationStepDescription?
-        var needsToShowMarketingConsentDialog = false
-
-        switch state {
-        case .setTeamName:
-            stepDescription = SetTeamNameStepDescription()
-        case .setEmail:
-            stepDescription = SetEmailStepDescription()
-        case let .verifyEmail(teamName: _, email: email):
-            stepDescription = VerifyEmailStepDescription(email: email)
-        case .setFullName:
-            stepDescription = SetFullNameStepDescription()
-            needsToShowMarketingConsentDialog = true
-        case .setPassword:
-            stepDescription = SetPasswordStepDescription()
-        case .createTeam:
-            fatal("No controller should be pushed, we have already registered a team!")
-        case .inviteMembers:
-            let teamMemberInviteViewController = TeamMemberInviteViewController()
-            teamMemberInviteViewController.delegate = self
-            navigationController.pushViewController(teamMemberInviteViewController, animated: true)
-            return
-        }
+        let stepDescription: TeamCreationStepDescription? = nil
+        let needsToShowMarketingConsentDialog = false
 
         if let description = stepDescription {
             let controller = createViewController(for: description)
@@ -185,17 +137,6 @@ extension TeamCreationFlowController {
     }
 
     fileprivate func rewindState() {
-        if let nextState = currentState.previousState {
-            currentState = nextState
-            self.nextState = nil
-            self.navigationController.popViewController(animated: true)
-            self.currentController = navigationController.viewControllers.last as? TeamCreationStepController
-        } else {
-            currentState = .setTeamName
-            self.nextState = nil
-            self.currentController = nil
-            self.navigationController.popToRootViewController(animated: true)
-        }
     }
 }
 
