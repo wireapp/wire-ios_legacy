@@ -28,6 +28,7 @@ final class CallViewController: UIViewController {
     fileprivate var callInfoConfiguration: CallInfoConfiguration
     fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
     fileprivate let callInfoRootViewController: CallInfoRootViewController
+    fileprivate let muteIndicatorViewController: MuteIndicatorViewController
     fileprivate weak var overlayTimer: Timer?
     fileprivate let hapticsController = CallHapticsController()
     fileprivate let participantsTimestamps = CallParticipantTimestamps()
@@ -142,7 +143,7 @@ final class CallViewController: UIViewController {
     }
 
     private func setupViews() {
-        [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
+        [videoGridViewController, callInfoRootViewController].forEach(addToSelf) ///TODO: one more VC
     }
 
     private func createConstraints() {
@@ -389,7 +390,7 @@ extension CallViewController {
         }
         
         let animations = { [callInfoRootViewController, updateConfiguration] in
-            callInfoRootViewController.view.alpha = show ? 1 : 0
+            callInfoRootViewController.view.alpha = show ? 1 : 0 ///TODO: mute layer
             // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
             updateConfiguration()
         }
