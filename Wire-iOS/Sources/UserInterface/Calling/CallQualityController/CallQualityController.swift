@@ -45,6 +45,9 @@ class CallQualityController: NSObject {
 
     // MARK: - Configuration
 
+    /// Whether we use a maxmimum budget for call surveying per user.
+    var usesCallSurveyBudget: Bool = false
+
     /// The range of scores where we consider the call quality is not satisfying.
     let callQualityRejectionRange = 1 ... 2
 
@@ -105,13 +108,15 @@ class CallQualityController: NSObject {
             return
         }
 
-        guard let qualityController = CallQualityViewController.requestSurveyController(callDuration: callDuration) else {
+        guard self.canRequestSurvey(at: callEndDate) else {
             Analytics.shared().tagCallQualityReview(.notDisplayed(reason: .muted, duration: Int(callDuration)))
             return
         }
 
+        let qualityController = CallQualityViewController.configureSurveyController(callDuration: callDuration)
         qualityController.delegate = self
         qualityController.transitioningDelegate = self
+
         delegate?.callQualityControllerDidScheduleSurvey(with: qualityController)
     }
 

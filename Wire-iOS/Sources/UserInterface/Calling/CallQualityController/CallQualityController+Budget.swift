@@ -23,9 +23,6 @@ let CallSurveyMuteInterval: TimeInterval = Calendar.secondsInDays(10)
 
 extension CallQualityController {
 
-    /// Whether we use a maxmimum budget for call surveying per user.
-    private(set) static var usesCallSurveyBudget: Bool = false
-
     /// Updates the date when the survey was last shown.
     static func updateLastSurveyDate(_ date: Date) {
         UserDefaults.standard.set(date.timeIntervalSinceReferenceDate, forKey: UserDefaultLastCallSurveyDate)
@@ -37,8 +34,8 @@ extension CallQualityController {
     }
 
     /// Returns whether new call quality surveys can be requested, or if the user budget is exceeded.
-    static func canRequestSurvey(at date: Date, muteInterval: TimeInterval = CallSurveyMuteInterval) -> Bool {
-        guard usesCallSurveyBudget else {
+    func canRequestSurvey(at date: Date, muteInterval: TimeInterval = CallSurveyMuteInterval) -> Bool {
+        guard self.usesCallSurveyBudget else {
             return true
         }
 
