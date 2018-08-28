@@ -51,7 +51,7 @@ import Classy
             updateLineBaseLineConstraint()
         }
     }
-    var labelBoldFont: UIFont? = .mediumSemiboldFont
+    let labelBoldFont: UIFont = .mediumSemiboldFont
 
     var verticalInset: CGFloat {
         return 16

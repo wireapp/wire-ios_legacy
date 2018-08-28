@@ -29,7 +29,11 @@ import TTTAttributedLabel
     private let bottomContainer = UIView()
     private let leftIconView = UIImageView()
     private let leftIconContainer = UIView()
-    private let labelView = TTTAttributedLabel(frame: .zero)
+    private let labelView: TTTAttributedLabel = {
+        let label = TTTAttributedLabel(frame: .zero)
+        label.backgroundColor = .clear
+        return label
+    }()
     private let nameLabel = UILabel()
     private let verticalInset: CGFloat = 16
     private var lineBaseLineConstraint: NSLayoutConstraint?
@@ -40,9 +44,16 @@ import TTTAttributedLabel
     private let serviceUserWarningLabelContainer = UIView()
     
     // Classy
-    let lineView = UIView()
-    var labelTextColor, labelTextBlendedColor, iconColor: UIColor?
-    var labelBoldFont: UIFont?
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .separator
+        return view
+    }()
+    var labelTextColor: UIColor? = .textForeground
+    var labelTextBlendedColor: UIColor? = .textDimmed
+    var iconColor: UIColor?
+
+    var labelBoldFont: UIFont? = .mediumSemiboldFont
     var labelLargeFont: UIFont? = .largeSemiboldFont
     
     var attributedText: NSAttributedString? {
@@ -67,6 +78,8 @@ import TTTAttributedLabel
 
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        labelFont = .mediumFont
+
         setupViews()
         createConstraints()
         CASStyler.default().styleItem(self)
