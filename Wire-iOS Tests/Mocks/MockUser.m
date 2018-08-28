@@ -108,6 +108,12 @@ static id<UserType> mockSelfUser = nil;
     return @"+123456789";
 }
 
+
+- (NSString *)expirationDisplayString
+{
+    return @"";
+}
+
 #pragma mark - ZMBareUser
 
 @synthesize name;

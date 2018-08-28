@@ -39,6 +39,11 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
+    func testForContextOneToOneConversation(){
+        sut = ProfileViewController(user: mockUser!, context: .oneToOneConversation)
+        self.verify(view: sut.view)
+    }
+
     func testForDeviceListContext(){
         sut = ProfileViewController(user: mockUser!, context: .deviceList)
         self.verify(view: sut.view)
