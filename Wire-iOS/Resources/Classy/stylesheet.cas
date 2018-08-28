@@ -141,7 +141,11 @@ MessageToolboxView {
 }
 
 
-IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, MessageTimerUpdateCell {
+IconSystemCell {
+    labelFont: $font-medium;
+}
+
+ParticipantsCell {
     labelFont: $font-medium;
 }
 

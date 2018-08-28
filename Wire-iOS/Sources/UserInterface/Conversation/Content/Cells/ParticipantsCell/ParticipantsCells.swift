@@ -17,7 +17,6 @@
 //
 
 
-import Classy
 import Cartography
 import TTTAttributedLabel
 
@@ -43,7 +42,6 @@ import TTTAttributedLabel
     private let serviceUserWarningLabel = UILabel()
     private let serviceUserWarningLabelContainer = UIView()
     
-    // Classy
     let lineView: UIView = {
         let view = UIView()
         view.backgroundColor = .separator
@@ -78,11 +76,10 @@ import TTTAttributedLabel
 
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        labelFont = .mediumFont
 
         setupViews()
         createConstraints()
-        CASStyler.default().styleItem(self)
+        labelFont = .mediumFont
     }
 
     public required init?(coder aDecoder: NSCoder) {
