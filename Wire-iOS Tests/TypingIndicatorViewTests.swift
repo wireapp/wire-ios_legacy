@@ -34,6 +34,11 @@ class TypingIndicatorViewTests: ZMSnapshotTestCase {
 
         CASStyler.default().styleItem(sut)
     }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
     
     func testOneTypingUser() {
         sut.typingUsers = Array(MockUser.mockUsers().prefix(1))

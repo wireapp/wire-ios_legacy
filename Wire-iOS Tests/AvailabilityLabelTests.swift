@@ -22,11 +22,7 @@ import Cartography
 @testable import Wire
 
 class AvailabilityLabelTests: ZMSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
+        
     // MARK: - List labels
     
     func testThatItRendersCorrectly_List_NoneAvailability() {

@@ -20,11 +20,7 @@ import XCTest
 @testable import Wire
 
 class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
+
     // MARK: - OneToOne Audio
     
     func testOneToOneIncomingAudioRinging() {
