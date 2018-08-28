@@ -32,18 +32,18 @@ class CallQualityControllerTests: ZMSnapshotTestCase {
 
         // When the survey was never presented, it is possible to request it
         let initialDate = Date()
-        CallQualityScoreProvider.resetSurveyMuteFilter()
-        XCTAssertTrue(CallQualityScoreProvider.canRequestSurvey(at: initialDate))
+        CallQualityController.resetSurveyMuteFilter()
+        XCTAssertTrue(CallQualityController.canRequestSurvey(at: initialDate))
 
-        CallQualityScoreProvider.updateLastSurveyDate(initialDate)
+        CallQualityController.updateLastSurveyDate(initialDate)
 
         // During the mute time interval, it is not possible to request it
         let mutedRequestDate = Date()
-        XCTAssertFalse(CallQualityScoreProvider.canRequestSurvey(at: mutedRequestDate))
+        XCTAssertFalse(CallQualityController.canRequestSurvey(at: mutedRequestDate, muteInterval: Calendar.secondsInDays(10)))
 
         // After the mute time interval, it is not possible to request it
         let postMuteDate = mutedRequestDate.addingTimeInterval(2)
-        XCTAssertTrue(CallQualityScoreProvider.canRequestSurvey(at: postMuteDate, muteInterval: 1))
+        XCTAssertTrue(CallQualityController.canRequestSurvey(at: postMuteDate, muteInterval: 1))
 
     }
 
@@ -53,7 +53,7 @@ class CallQualityControllerTests: ZMSnapshotTestCase {
     }
 
     func testSurveyInterface() {
-        CallQualityScoreProvider.resetSurveyMuteFilter()
+        CallQualityController.resetSurveyMuteFilter()
         let qualityController = CallQualityViewController.requestSurveyController(callDuration: 10)!
         self.qualityController = qualityController
         verifyInAllDeviceSizes(view: qualityController.view, configuration: configure)
