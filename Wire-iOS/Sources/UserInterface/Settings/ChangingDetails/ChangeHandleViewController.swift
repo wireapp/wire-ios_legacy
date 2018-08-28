@@ -45,14 +45,33 @@ protocol ChangeHandleTableViewCellDelegate: class {
 @objcMembers final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     weak var delegate: ChangeHandleTableViewCellDelegate?
-    let prefixLabel = UILabel()
-    let handleTextField = UITextField()
+    let prefixLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalSemiboldFont
+        label.textColor = UIColor(scheme: .textDimmed, variant: .dark)
+
+        return label
+    }()
+    let handleTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = .normalFont
+        textField.textColor = .textForegroundDark
+
+        return textField
+    }()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
+
+        setupStyle()
     }
+
+    func setupStyle() {
+        backgroundColor = .clear
+    }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

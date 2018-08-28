@@ -39,7 +39,11 @@ protocol SettingsCellType: class {
 
 @objcMembers class SettingsTableCell: UITableViewCell, SettingsCellType {
     let iconImageView = UIImageView()
-    public let cellNameLabel = UILabel()
+    public let cellNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalLightFont
+        return label
+    }()
     let valueLabel = UILabel()
     let badge = RoundedBadge(view: UIView())
     var badgeLabel = UILabel()

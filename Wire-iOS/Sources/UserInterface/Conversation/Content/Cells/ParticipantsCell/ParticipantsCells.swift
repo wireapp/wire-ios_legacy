@@ -17,7 +17,6 @@
 //
 
 
-import Classy
 import Cartography
 import TTTAttributedLabel
 
@@ -29,7 +28,11 @@ import TTTAttributedLabel
     private let bottomContainer = UIView()
     private let leftIconView = UIImageView()
     private let leftIconContainer = UIView()
-    private let labelView = TTTAttributedLabel(frame: .zero)
+    private let labelView: TTTAttributedLabel = {
+        let label = TTTAttributedLabel(frame: .zero)
+        label.backgroundColor = .clear
+        return label
+    }()
     private let nameLabel = UILabel()
     private let verticalInset: CGFloat = 16
     private var lineBaseLineConstraint: NSLayoutConstraint?
@@ -39,10 +42,17 @@ import TTTAttributedLabel
     private let serviceUserWarningLabel = UILabel()
     private let serviceUserWarningLabelContainer = UIView()
     
-    // Classy
-    let lineView = UIView()
-    var labelTextColor, labelTextBlendedColor, iconColor: UIColor?
-    var labelBoldFont, labelLargeFont: UIFont?
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .separator
+        return view
+    }()
+    var labelTextColor: UIColor? = .textForeground
+    var labelTextBlendedColor: UIColor? = .textDimmed
+    var iconColor: UIColor?
+
+    var labelBoldFont: UIFont? = .mediumSemiboldFont
+    var labelLargeFont: UIFont? = .largeSemiboldFont
     
     var attributedText: NSAttributedString? {
         didSet {
@@ -52,11 +62,7 @@ import TTTAttributedLabel
         }
     }
     
-    var labelFont: UIFont? {
-        didSet {
-            updateLineBaseLineConstraint()
-        }
-    }
+    let labelFont: UIFont = .mediumFont
     
     /// TTTAttributedLabel needs to be shifted an extra 2pt down so the
     /// line view aligns with the center of the first line.
@@ -66,9 +72,9 @@ import TTTAttributedLabel
 
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         setupViews()
         createConstraints()
-        CASStyler.default().styleItem(self)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -167,8 +173,8 @@ import TTTAttributedLabel
         }
         
         createLineViewConstraints()
-        updateLineBaseLineConstraint()
         createBaselineConstraint()
+        updateLineBaseLineConstraint()
     }
     
     private func createLineViewConstraints() {
@@ -181,14 +187,15 @@ import TTTAttributedLabel
     
     private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
-            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - lineMedianYOffset
+            lineBaseLineConstraint = lineView.centerY == labelView.top
             icon.centerY == lineView.centerY
         }
     }
     
     private func updateLineBaseLineConstraint() {
-        guard let font = labelFont else { return }
-        lineBaseLineConstraint?.constant = font.median - lineMedianYOffset
+        lineBaseLineConstraint?.constant = labelFont.median - lineMedianYOffset
+
+        self.layoutIfNeeded()
     }
     
     open override var canResignFirstResponder: Bool {

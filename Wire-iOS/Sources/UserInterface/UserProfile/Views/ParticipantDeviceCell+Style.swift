@@ -18,33 +18,14 @@
 
 import Foundation
 
-extension UIColor {
+extension ParticipantDeviceCell {
+    @objc func setupStyle() {
+        boldFingerprintFont = .smallSemiboldFont
+        fingerprintFont = .smallFont
 
-    static var textDimmed: UIColor {
-        return UIColor(scheme: .textDimmed)
-    }
+        nameLabel.textColor = .textForeground
+        nameLabel.font = .smallSemiboldFont
 
-    static var textForeground: UIColor {
-        return UIColor(scheme: .textForeground)
-    }
-
-    static var textForegroundDark: UIColor {
-        return UIColor(scheme: .textForeground, variant: .dark)
-    }
-
-    static var textBackground: UIColor {
-        return UIColor(scheme: .textBackground)
-    }
-
-    static var background: UIColor {
-        return UIColor(scheme: .background)
-    }
-
-    static var placeholderBackground: UIColor {
-        return UIColor(scheme: .placeholderBackground)
-    }
-
-    static var separator: UIColor {
-        return UIColor(scheme: .separator)
+        identifierLabel.textColor = .textForeground
     }
 }

@@ -31,8 +31,6 @@ class MessageTimerUpdateCell: IconSystemCell {
         guard let systemMessageData = message.systemMessageData,
             systemMessageData.systemMessageType == .messageTimerUpdate,
             let timer = systemMessageData.messageTimer,
-            let labelFont = labelFont,
-            let labelBoldFont = labelBoldFont,
             let labelTextColor = labelTextColor,
             let sender = systemMessageData.users.first else { return }
 
