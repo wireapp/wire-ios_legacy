@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,29 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Cartography
+import XCTest
 @testable import Wire
-import Classy
 
-class InputBarEditViewTests: ZMSnapshotTestCase {
-
-    var sut: InputBarEditView!
+final class ConversationListViewControllerTests: ZMSnapshotTestCase {
+    
+    var sut: ConversationListViewController!
     
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = UIColor.white
-        sut = InputBarEditView()
-        constrain(sut) { $0.height == 56 }
-        CASStyler.default().styleItem(sut)
-    }
+        sut = ConversationListViewController()
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
+        sut.account = account
 
+        sut.view.backgroundColor = .black
+    }
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testThatItRendersTheEditViewCorrectly() {
-        verifyInAllPhoneWidths(view: sut)
+    func testForNoConversations(){
+        verify(view: sut.view)
     }
-
 }

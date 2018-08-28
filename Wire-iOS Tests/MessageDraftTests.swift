@@ -23,8 +23,8 @@ import XCTest
 
 class MessageDraftTests: XCTestCase {
 
-    let fileManager = FileManager.default
-    let url = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    var fileManager: FileManager! = FileManager.default
+    var url: URL! = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
     override func setUp() {
         super.setUp()
@@ -32,8 +32,10 @@ class MessageDraftTests: XCTestCase {
     }
 
     override func tearDown() {
-        super.tearDown()
         removeDraftDatabase()
+        fileManager = nil
+        url = nil
+        super.tearDown()
     }
 
     private func removeDraftDatabase() {

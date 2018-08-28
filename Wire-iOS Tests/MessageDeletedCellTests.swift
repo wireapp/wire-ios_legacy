@@ -30,6 +30,11 @@ class MessageDeletedCellTests: ZMSnapshotTestCase {
         sut = MessageDeletedCell(style: .default, reuseIdentifier: nil)
     }
 
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
     func testThatItRendersMessageDeletedCellCorrect() {
         configure(cell: sut)
         verify(view: sut)

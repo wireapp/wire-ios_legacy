@@ -43,23 +43,6 @@
 + (void)initialize
 {
     if (self == [Button self]) {
-        CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self.class];
-        
-        // Set mapping for property key
-        [classDescriptor setArgumentDescriptors:@[[CASArgumentDescriptor argWithValuesByName:TextTransformTable()]]
-                                 forPropertyKey:@cas_propertykey(Button, textTransform)];
-        
-        CASArgumentDescriptor *colorArg = [CASArgumentDescriptor argWithClass:UIColor.class];
-        
-        NSDictionary *controlStateMap = @{ @"normal"       : @(UIControlStateNormal),
-                                           @"highlighted"  : @(UIControlStateHighlighted),
-                                           @"disabled"     : @(UIControlStateDisabled),
-                                           @"selected"     : @(UIControlStateSelected) };
-        
-        CASArgumentDescriptor *stateArg = [CASArgumentDescriptor argWithName:@"state" valuesByName:controlStateMap];
-        
-        [classDescriptor setArgumentDescriptors:@[colorArg, stateArg] setter:@selector(setBackgroundImageColor:forState:) forPropertyKey:@"backgroundImageColor"];
-        [classDescriptor setArgumentDescriptors:@[colorArg, stateArg] setter:@selector(setBorderColor:forState:) forPropertyKey:@"borderColor"];
     }
 }
 

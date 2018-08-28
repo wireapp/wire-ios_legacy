@@ -156,7 +156,10 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
-    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    if ([ZMUserSession sharedSession] != nil) {
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    }
     
     self.onboardingHint = [[ConversationListOnboardingHint alloc] init];
     [self.contentContainer addSubview:self.onboardingHint];
@@ -164,8 +167,6 @@
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
-
-    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
 
     [self createNoConversationLabel];
     [self createListContentController];
@@ -188,13 +189,14 @@
 
 - (void)updateObserverTokensForActiveTeam
 {
-    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
-                                                                     userSession:[ZMUserSession sharedSession]];
-    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                           forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                       userSession:[ZMUserSession sharedSession]];
-
+    if ([ZMUserSession sharedSession] != nil) {
+        self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
+                                                                         userSession:[ZMUserSession sharedSession]];
+        self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                               forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                           userSession:[ZMUserSession sharedSession]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
