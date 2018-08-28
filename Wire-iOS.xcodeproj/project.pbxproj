@@ -203,7 +203,7 @@
 		54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A15D11D4900930051E8BA /* AutomationHelper.swift */; };
 		54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */; };
 		54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF9E271E813BA500323D2E /* DebugAlert.swift */; };
-		55A42A701FC872600056752F /* CallQualityScoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */; };
+		55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */; };
 		55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityViewController.swift */; };
 		5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
@@ -1119,7 +1119,7 @@
 		EF297DD62131F8880002983A /* ConversationListViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD52131F8880002983A /* ConversationListViewController+Style.swift */; };
 		EF297DD82131FABE0002983A /* LocationPreviewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD72131FABE0002983A /* LocationPreviewControllerTests.swift */; };
 		EF297DDA2131FF310002983A /* ConversationInputBarViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD92131FF310002983A /* ConversationInputBarViewController+Style.swift */; };
-		EF297DDD213209220002983A /* ContactsViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DDB213209220002983A /* ContactsViewController+Extension.swift */; };
+		EF297DDD213209220002983A /* ContactsViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DDB213209220002983A /* ContactsViewController+Style.swift */; };
 		EF297DE321320AC20002983A /* InviteContactsViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DE121320AC20002983A /* InviteContactsViewController+Style.swift */; };
 		EF297DE6213213A60002983A /* ProfileDetailsViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DE4213213A60002983A /* ProfileDetailsViewController+Style.swift */; };
 		EF297DE9213215210002983A /* ProfileDevicesViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DE7213215210002983A /* ProfileDevicesViewController+Style.swift */; };
@@ -1209,6 +1209,8 @@
 		EFABC922202085A6001F9866 /* UserDetailViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */; };
 		EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */; };
 		EFAFCA822133FB59002B31A6 /* ArchivedNavigationBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAFCA812133FB59002B31A6 /* ArchivedNavigationBarTests.swift */; };
+		EFAFCA8521340CCC002B31A6 /* ContactsCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAFCA8321340CCC002B31A6 /* ContactsCell+Style.swift */; };
+		EFAFCA88213417F0002B31A6 /* ParticipantDeviceCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAFCA86213417F0002B31A6 /* ParticipantDeviceCell+Style.swift */; };
 		EFAFCA8D213433D7002B31A6 /* ConversationListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */; };
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
@@ -1568,7 +1570,7 @@
 		54F7C27E1D74367E004D8087 /* AddressBookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookHelper.swift; sourceTree = "<group>"; };
 		54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddressBookHelper+Automation.swift"; sourceTree = "<group>"; };
 		54FF9E271E813BA500323D2E /* DebugAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAlert.swift; sourceTree = "<group>"; };
-		55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityScoreProvider.swift; sourceTree = "<group>"; };
+		55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallQualityController+Budget.swift"; sourceTree = "<group>"; };
 		55DD5C331FA236F60082170C /* CallQualityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityViewController.swift; sourceTree = "<group>"; };
 		5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginFlowOpener.swift; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
@@ -2804,7 +2806,7 @@
 		EF297DD52131F8880002983A /* ConversationListViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Style.swift"; sourceTree = "<group>"; };
 		EF297DD72131FABE0002983A /* LocationPreviewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewControllerTests.swift; sourceTree = "<group>"; };
 		EF297DD92131FF310002983A /* ConversationInputBarViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Style.swift"; sourceTree = "<group>"; };
-		EF297DDB213209220002983A /* ContactsViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Extension.swift"; sourceTree = "<group>"; };
+		EF297DDB213209220002983A /* ContactsViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Style.swift"; sourceTree = "<group>"; };
 		EF297DDC213209220002983A /* ContactsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ContactsViewController+Internal.h"; sourceTree = "<group>"; };
 		EF297DE121320AC20002983A /* InviteContactsViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InviteContactsViewController+Style.swift"; sourceTree = "<group>"; };
 		EF297DE221320AC20002983A /* InviteContactsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InviteContactsViewController+Internal.h"; sourceTree = "<group>"; };
@@ -2909,6 +2911,10 @@
 		EFABC921202085A6001F9866 /* UserDetailViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewControllerFactory.swift; sourceTree = "<group>"; };
 		EFABC92320208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+removeUserConfirmationUI.swift"; sourceTree = "<group>"; };
 		EFAFCA812133FB59002B31A6 /* ArchivedNavigationBarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchivedNavigationBarTests.swift; sourceTree = "<group>"; };
+		EFAFCA8321340CCC002B31A6 /* ContactsCell+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsCell+Style.swift"; sourceTree = "<group>"; };
+		EFAFCA8421340CCC002B31A6 /* ContactsCell+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ContactsCell+Internal.h"; sourceTree = "<group>"; };
+		EFAFCA86213417F0002B31A6 /* ParticipantDeviceCell+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantDeviceCell+Style.swift"; sourceTree = "<group>"; };
+		EFAFCA87213417F0002B31A6 /* ParticipantDeviceCell+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantDeviceCell+Internal.h"; sourceTree = "<group>"; };
 		EFAFCA8B21342A1E002B31A6 /* ConversationListViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+Internal.h"; sourceTree = "<group>"; };
 		EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerTests.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3067,6 +3073,7 @@
 			isa = PBXGroup;
 			children = (
 				160D691F212C78E800096EAD /* CallQualityController.swift */,
+				55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */,
 			);
 			path = CallQualityController;
 			sourceTree = "<group>";
@@ -3714,7 +3721,6 @@
 				CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */,
 				8715F22C1F86758E006F3935 /* AnalyticsMixpanelProvider.swift */,
 				5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */,
-				55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */,
 				AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */,
 				8701221A20F66933001E6342 /* MessageType.h */,
 				871BBFC31D34F56300DF0793 /* Events */,
@@ -4102,7 +4108,9 @@
 				BF5C37971C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m */,
 				EF297DEA213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift */,
 				BF5C37991C0E0E8700EA11E3 /* ParticipantDeviceCell.h */,
+				EFAFCA87213417F0002B31A6 /* ParticipantDeviceCell+Internal.h */,
 				BF5C379A1C0E0E8700EA11E3 /* ParticipantDeviceCell.m */,
+				EFAFCA86213417F0002B31A6 /* ParticipantDeviceCell+Style.swift */,
 				872CB8A719E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.h */,
 				872CB8A819E58816006752B4 /* ProfileIncomingConnectionRequestFooterView.m */,
 				872CB8AD19E58816006752B4 /* ProfileSendConnectionRequestFooterView.h */,
@@ -4383,6 +4391,8 @@
 			children = (
 				87DCF47C1D34E9BA00BB420F /* ContactsCell.h */,
 				87DCF47D1D34E9BA00BB420F /* ContactsCell.m */,
+				EFAFCA8421340CCC002B31A6 /* ContactsCell+Internal.h */,
+				EFAFCA8321340CCC002B31A6 /* ContactsCell+Style.swift */,
 				87DCF47E1D34E9BA00BB420F /* ContactsDataSource+Private.h */,
 				87DCF47F1D34E9BA00BB420F /* ContactsDataSource.h */,
 				87DCF4801D34E9BA00BB420F /* ContactsDataSource.m */,
@@ -4397,7 +4407,7 @@
 				87DCF48A1D34E9BA00BB420F /* ContactsViewController.h */,
 				EF297DDC213209220002983A /* ContactsViewController+Internal.h */,
 				87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */,
-				EF297DDB213209220002983A /* ContactsViewController+Extension.swift */,
+				EF297DDB213209220002983A /* ContactsViewController+Style.swift */,
 				87DCF48C1D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift */,
 			);
 			path = ContactsUI;
@@ -6944,6 +6954,7 @@
 				871BC2511D34F8F800DF0793 /* MediaPreviewData.m in Sources */,
 				EF297DDA2131FF310002983A /* ConversationInputBarViewController+Style.swift in Sources */,
 				5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */,
+				EFAFCA88213417F0002B31A6 /* ParticipantDeviceCell+Style.swift in Sources */,
 				16F6BB0E1EDD7B23009EA803 /* SearchHeaderViewController.swift in Sources */,
 				D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */,
 				EF24036C20A1A2EF002813BE /* ConversationInputBarViewController+ImagePicker.swift in Sources */,
@@ -7146,7 +7157,7 @@
 				1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */,
 				879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */,
 				877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */,
-				EF297DDD213209220002983A /* ContactsViewController+Extension.swift in Sources */,
+				EF297DDD213209220002983A /* ContactsViewController+Style.swift in Sources */,
 				872CB8B919E58816006752B4 /* ProfileUnblockFooterView.m in Sources */,
 				BFFE943A1E782FD70025AD75 /* ConversationRenamedCell.swift in Sources */,
 				DB3A47E01B4AD96C00391B5C /* MentionsCollectionViewCell.m in Sources */,
@@ -7216,7 +7227,7 @@
 				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
 				5EBC343720EE434700AFB6DF /* ImageDownloadCache.swift in Sources */,
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
-				55A42A701FC872600056752F /* CallQualityScoreProvider.swift in Sources */,
+				55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */,
 				87E56EDA1E4E10CA0097D489 /* TextSearchViewController.swift in Sources */,
 				5EF4A6E420F3C4BD00A9EF22 /* GiphyNavigationController.swift in Sources */,
 				1633875B1F065A960015034C /* SessionManager+Shared.swift in Sources */,
@@ -7343,6 +7354,7 @@
 				87C539561E8E516400084F94 /* BoundsAwareFlowLayout.swift in Sources */,
 				87CFDAB42044710400FD140D /* GuestIndicator.swift in Sources */,
 				EF6ACA7D21316E7D0064047B /* UIColor+Scheme.swift in Sources */,
+				EFAFCA8521340CCC002B31A6 /* ContactsCell+Style.swift in Sources */,
 				D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */,
 				8FC85498199245770008B66B /* MediaBar.m in Sources */,
 				F1B5EAC72029AB9A0081D402 /* SimpleTextField.swift in Sources */,

@@ -99,16 +99,6 @@ ConversationListItemView {
     }
 }
 
-VideoMessageCell {
-    @device ipad {
-        videoViewHeight: 240
-    }
-
-    @device iphone {
-        videoViewHeight: 160
-    }
-}
-
 /* Account views */
 
 BaseAccountView, PersonalAccountView, TeamAccountView {
@@ -148,29 +138,6 @@ PersonalAccountView {
 MessageToolboxView {
     backgroundColor: clear;
     clipsToBounds: true;
-}
-
-
-IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, MessageTimerUpdateCell {
-    lineView: @{
-        backgroundColor: $color-separator;
-    }
-    labelView: @{
-        textContainerInset: 0, 0, 0, 0;
-        backgroundColor: clear;
-    }
-    labelTextColor: $color-text-foreground;
-    labelFont: $font-medium;
-    labelBoldFont: $font-medium-semibold;
-    labelTextBlendedColor: $color-text-dimmed;
-}
-
-ParticipantsCell {
-    labelLargeFont: $font-large-semibold;
-}
-
-ConversationRenamedCell {
-    nameLabelFont: $font-normal-semibold;
 }
 
 FileTransferView {
@@ -221,16 +188,6 @@ AudioMessageView {
         textColor: $color-text-foreground;
         font: $font-small-semibold;
     }
-}
-
-LocationMessageCell {
-    labelTextColor: $color-text-foreground;
-    labelFont: $font-normal;
-    containerColor: $color-placeholder-background;
-}
-
-MessageDeletedCell {
-    trashColor: $color-icon-normal;
 }
 
 ArticleView {
@@ -338,21 +295,6 @@ UILabel.normal-light {
 
 /* Contacts */
 
-ContactsCell {
-    contentView: @{
-        backgroundColor: clear;
-    };
-    backgroundColor: clear;
-    userNameLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-normal-light;
-    }
-    userSubtitleLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-small;
-    }
-}
-
 ContactsSectionHeaderView {
     titleLabel: @{
         textColor: $color-text-foreground;
@@ -370,15 +312,6 @@ ContactsSectionHeaderView {
 
 ContactsEmptyResultView  {
     messageLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-}
-
-ContactsCell {
-    userNameLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-    userSubtitleLabel: @{
         textColor: $color-text-foreground-dark;
     }
 }
@@ -417,36 +350,6 @@ PickerView {
 
 /* Profile Devices */
 
-ParticipantDeviceCell {
-    boldFingerprintFont: $font-small-semibold;
-    fingerprintFont: $font-small;
-    
-    nameLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-small-semibold;
-    }
-    
-    identifierLabel: @{
-        textColor: $color-text-foreground;
-    }
-}
-
-SettingsTableCell, SettingsButtonCell, SettingsGroupCell, SettingsToggleCell, SettingsTextCell, SettingsValueCell {
-    cellNameLabel: @{
-        font: $font-normal-light;
-    }
-}
-
-RegistrationTextFieldCell {
-    backgroundColor: clear;
-    
-    textField: @{
-        font: $font-normal;
-        textColor: $color-text-foreground-dark;
-        backgroundColor: clear
-    }
-}
-
 DescriptionHeaderView {
     backgroundColor: clear;
     descriptionLabel: @{
@@ -455,41 +358,10 @@ DescriptionHeaderView {
     }
 }
 
-ChangeHandleTableViewCell {
-    backgroundColor: clear;
-
-    prefixLabel: @{
-        font: $font-normal-semibold;
-        textColor: $color-text-dimmed-dark;
-    }
-
-    handleTextField: @{
-        font: $font-normal;
-        textColor: $color-text-foreground-dark;
-    }
-}
-
 /* Registration */
 
 UIView.status-bar-overlay {
     backgroundColor: $color-background;
-}
-
-/* Reactions list */
-
-ReactionCell {
-    contentView: @{
-        backgroundColor: $color-text-background;
-    }
-    userDisplayNameLabel: @{
-        font: $font-normal;
-        textColor: $color-text-foreground;
-    }
-
-    usernameLabel: @{
-        font: $font-small-semibold;
-        textColor: $color-text-dimmed;
-    }
 }
 
 /* Collections */
@@ -522,17 +394,6 @@ CollectionHeaderView {
         titleLabel: @{  
             font: $font-small-semibold;
         }
-    }
-}
-
-CollectionCellHeader {
-    nameLabel: @{
-        font: $font-small-semibold;
-    }
-    
-    dateLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
     }
 }
 
@@ -583,24 +444,8 @@ TextSearchResultsView {
     backgroundColor: $color-content-background;
 }
 
-TextSearchResultCell {
-    contentView: @{
-        backgroundColor: $color-content-background;
-    }
-    resultCountView: @{
-        backgroundColor: $color-graphite-light;
-    }
-}
-
 SearchResultLabel {
     font: $font-normal;
     textColor: $color-text-foreground;
-}
-
-TextSearchResultCell RoundedTextBadge {
-    textLabel: @{
-        textColor: $color-background;
-        font: $font-small-semibold;
-    }
 }
 

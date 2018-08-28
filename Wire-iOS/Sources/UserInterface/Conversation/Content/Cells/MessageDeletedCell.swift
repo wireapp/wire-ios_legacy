@@ -19,13 +19,12 @@
 
 import UIKit
 import Cartography
-import Classy
 
-@objcMembers class MessageDeletedCell: ConversationCell {
+class MessageDeletedCell: ConversationCell {
     
     let trashImageView = UIImageView()
     
-    var trashColor: UIColor?
+    var trashColor: UIColor? = UIColor(scheme: .iconNormal)
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
