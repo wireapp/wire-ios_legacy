@@ -28,6 +28,11 @@ class LocationSendViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
         sut = LocationSendViewController()
     }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
     
     func testThatItRendersSendControllerCorrectly_ShortAddress() {
         sut.address = "Hackescher Markt"

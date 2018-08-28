@@ -57,7 +57,18 @@ class ZMMockTracking: TrackingInterface {
 }
 
 class SettingsPropertyTests: XCTestCase {
-    let userDefaults: UserDefaults = UserDefaults.standard
+    var userDefaults: UserDefaults!
+
+    override func setUp() {
+        super.setUp()
+        userDefaults = .standard
+    }
+
+    override func tearDown() {
+        userDefaults = nil
+        super.tearDown()
+    }
+
     
     func saveAndCheck<T>(_ property: SettingsProperty, value: T, file: String = #file, line: UInt = #line) throws where T: Equatable {
         var property = property

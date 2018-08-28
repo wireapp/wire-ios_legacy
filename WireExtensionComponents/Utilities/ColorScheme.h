@@ -41,6 +41,7 @@ extern ColorSchemeColor ColorSchemeColorIconBackgroundSelectedNoAccent;
 extern ColorSchemeColor ColorSchemeColorIconShadow;
 extern ColorSchemeColor ColorSchemeColorIconHighlight;
 extern ColorSchemeColor ColorSchemeColorIconGuest;
+extern ColorSchemeColor ColorSchemeColorTabMonochromeNormalState;
 
 extern ColorSchemeColor ColorSchemeColorPopUpButtonOverlayShadow;
 

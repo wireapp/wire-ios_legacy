@@ -45,6 +45,7 @@ NSString * const ColorSchemeColorIconHighlighted = @"icon-highlighted";
 NSString * const ColorSchemeColorIconBackgroundSelected = @"icon-background-selected";
 NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent = @"icon-background-selected-no-accent";
 NSString * const ColorSchemeColorIconGuest = @"icon-guest";
+NSString * const ColorSchemeColorTabMonochromeNormalState = @"tab-monochrome-normal-state";
 
 NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
 
@@ -225,6 +226,7 @@ static NSString* light(NSString *colorString) {
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
+    UIColor *whiteAlpha56 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.56)"];
     UIColor *whiteAlpha80 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.80)"];
     UIColor *black = [UIColor blackColor];
     UIColor *blackAlpha4 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.04)"];
@@ -297,6 +299,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorCellSeparator: graphiteAlpha8,
                                    ColorSchemeColorSearchBarBackground: white,
                                    ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
+                                   ColorSchemeColorTabMonochromeNormalState: whiteAlpha56
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -356,6 +359,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorCellSeparator: whiteAlpha8,
                                   ColorSchemeColorSearchBarBackground: whiteAlpha8,
                                   ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64],
+                                  ColorSchemeColorTabMonochromeNormalState: whiteAlpha56
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

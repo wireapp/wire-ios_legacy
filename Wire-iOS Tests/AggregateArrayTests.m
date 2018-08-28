@@ -42,10 +42,10 @@
 
 - (void)tearDown
 {
-    [super tearDown];
-    
     self.sections = nil;
     self.aggregateArray = nil;
+    
+    [super tearDown];
 }
 
 - (void)testThatItemCountsAreEqual
