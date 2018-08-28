@@ -142,10 +142,8 @@ MessageToolboxView {
 
 
 IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, MessageTimerUpdateCell {
-    labelTextColor: $color-text-foreground;
     labelFont: $font-medium;
     labelBoldFont: $font-medium-semibold;
-    labelTextBlendedColor: $color-text-dimmed;
 }
 
 FileTransferView {

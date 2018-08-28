@@ -33,8 +33,8 @@ import Classy
 
     let labelView: UILabel
     
-    var labelTextColor: UIColor?
-    var labelTextBlendedColor: UIColor?
+    var labelTextColor: UIColor? = .textForeground
+    var labelTextBlendedColor: UIColor? = .textDimmed
 
     var lineBaseLineConstraint: NSLayoutConstraint?
 
