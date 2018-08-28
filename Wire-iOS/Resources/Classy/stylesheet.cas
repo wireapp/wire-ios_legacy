@@ -142,13 +142,6 @@ MessageToolboxView {
 
 
 IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, MessageTimerUpdateCell {
-    lineView: @{
-        backgroundColor: $color-separator;
-    }
-    labelView: @{
-        textContainerInset: 0, 0, 0, 0;
-        backgroundColor: clear;
-    }
     labelTextColor: $color-text-foreground;
     labelFont: $font-medium;
     labelBoldFont: $font-medium-semibold;

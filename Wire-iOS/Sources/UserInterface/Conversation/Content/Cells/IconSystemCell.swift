@@ -84,6 +84,7 @@ import Classy
 
         self.labelView.numberOfLines = 0
         self.labelView.isAccessibilityElement = true
+        labelView.backgroundColor = .clear
 
         if let label = labelView as? TTTAttributedLabel {
             label.extendsLinkTouchArea = true
@@ -99,6 +100,7 @@ import Classy
         self.leftIconContainer.addSubview(self.leftIconView)
         self.messageContentView.addSubview(self.labelView)
         self.contentView.addSubview(self.lineView)
+        lineView.backgroundColor = .separator
 
         var accessibilityElements = self.accessibilityElements ?? []
         accessibilityElements.append(contentsOf: [self.labelView, self.leftIconView])
