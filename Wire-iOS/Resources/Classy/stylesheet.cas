@@ -143,6 +143,7 @@ MessageToolboxView {
 
 IconSystemCell, ConversationNewDeviceCell, MissedCallCell, PerformedCallCell, CannotDecryptCell, ConversationIgnoredDeviceCell, ConversationNewDeviceCell, ConversationRenamedCell, ConversationVerifiedCell, MissingMessagesCell, ParticipantsCell, MessageTimerUpdateCell {
     labelFont: $font-medium;
+    labelBoldFont: $font-medium-semibold;
 }
 
 FileTransferView {

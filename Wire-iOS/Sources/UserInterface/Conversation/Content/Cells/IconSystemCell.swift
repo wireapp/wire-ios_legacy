@@ -26,7 +26,7 @@ import Classy
 // <Icon> Lorem ipsum system message ----
 //        by user A, B, C
 
-open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
+@objcMembers open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     let leftIconView = UIImageView(frame: .zero)
     let leftIconContainer = UIView(frame: .zero)
     let lineView = UIView(frame: .zero)
@@ -51,7 +51,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
             updateLineBaseLineConstraint()
         }
     }
-    var labelBoldFont: UIFont? = .mediumSemiboldFont
+    var labelBoldFont: UIFont?
 
     var verticalInset: CGFloat {
         return 16
