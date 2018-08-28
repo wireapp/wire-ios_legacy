@@ -32,9 +32,9 @@ class MessageDraftTests: XCTestCase {
     }
 
     override func tearDown() {
+        removeDraftDatabase()
         fileManager = nil
         url = nil
-        removeDraftDatabase()
         super.tearDown()
     }
 
