@@ -248,7 +248,7 @@ import SafariServices
         let appendManyMessages = SettingsButtonCellDescriptor(title: "Append N messages to the top conv (not sending)", isDestructive: true) { _ in
             
             self.requestNumber() { count in
-                self.appendMessages(count: count)
+                self.appendMessagesInBatches(count: count)
             }
         }
         developerCellDescriptors.append(appendManyMessages)
@@ -286,6 +286,20 @@ import SafariServices
         controller.addAction(.cancel { })
         controller.addAction(okAction)
         controllerToPresentOver.present(controller, animated: true, completion: nil)
+    }
+    
+    func appendMessagesInBatches(count: Int) {
+        var left = count
+        let step = 10_000
+        
+        repeat {
+            let toAppendInThisStep = left < step ? left : step
+            
+            left = left - toAppendInThisStep
+            
+            appendMessages(count: toAppendInThisStep)
+        }
+        while(left > 0)
     }
     
     func appendMessages(count: Int) {
