@@ -26,7 +26,12 @@ final class RegistrationViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = RegistrationViewController()
-        UIApplication.shared.keyWindow?.endEditing(true)
+
+        ///make sure KeyboardAvoidingViewController is dismissed.
+        NotificationCenter.default.post(name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                        object: nil,
+                                        userInfo: [UIKeyboardAnimationDurationUserInfoKey: 0,
+                                                   UIKeyboardAnimationCurveUserInfoKey: 7])
     }
     
     override func tearDown() {
