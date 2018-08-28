@@ -107,6 +107,7 @@ extension CallController: WireCallCenterCallStateObserver {
         minimizedCall = nil
         topOverlayCall = nil
         activeCallViewController?.dismiss(animated: true)
+        activeCallViewController = nil
     }
 }
 
