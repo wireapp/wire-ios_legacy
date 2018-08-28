@@ -365,16 +365,6 @@ PickerView {
 
 /* Profile Devices */
 
-RegistrationTextFieldCell {
-    backgroundColor: clear;
-    
-    textField: @{
-        font: $font-normal;
-        textColor: $color-text-foreground-dark;
-        backgroundColor: clear
-    }
-}
-
 DescriptionHeaderView {
     backgroundColor: clear;
     descriptionLabel: @{
@@ -419,17 +409,6 @@ CollectionHeaderView {
         titleLabel: @{  
             font: $font-small-semibold;
         }
-    }
-}
-
-CollectionCellHeader {
-    nameLabel: @{
-        font: $font-small-semibold;
-    }
-    
-    dateLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-dimmed;
     }
 }
 
@@ -480,24 +459,8 @@ TextSearchResultsView {
     backgroundColor: $color-content-background;
 }
 
-TextSearchResultCell {
-    contentView: @{
-        backgroundColor: $color-content-background;
-    }
-    resultCountView: @{
-        backgroundColor: $color-graphite-light;
-    }
-}
-
 SearchResultLabel {
     font: $font-normal;
     textColor: $color-text-foreground;
-}
-
-TextSearchResultCell RoundedTextBadge {
-    textLabel: @{
-        textColor: $color-background;
-        font: $font-small-semibold;
-    }
 }
 
