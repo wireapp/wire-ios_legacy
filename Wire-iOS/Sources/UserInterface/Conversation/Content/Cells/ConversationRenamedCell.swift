@@ -69,8 +69,7 @@ import Cartography
     }
 
     private func attributedTitle(for message: ZMConversationMessage) -> NSAttributedString? {
-        guard let labelFont = labelFont,
-            let labelTextColor = labelTextColor,
+        guard let labelTextColor = labelTextColor,
             let sender = message.sender,
             let senderString = self.sender(for: message) else { return nil }
 

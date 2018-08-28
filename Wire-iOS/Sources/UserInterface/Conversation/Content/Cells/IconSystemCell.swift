@@ -46,11 +46,8 @@ import Classy
         }
     }
 
-    var labelFont: UIFont? {
-        didSet {
-            updateLineBaseLineConstraint()
-        }
-    }
+    let labelFont: UIFont = .mediumFont
+
     let labelBoldFont: UIFont = .mediumSemiboldFont
 
     var verticalInset: CGFloat {
@@ -126,8 +123,8 @@ import Classy
         }
 
         createLineViewConstraints()
-        updateLineBaseLineConstraint()
         createBaselineConstraint()
+        updateLineBaseLineConstraint()
     }
     
     private func createLineViewConstraints() {
@@ -140,14 +137,13 @@ import Classy
     
     private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
-            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - lineMedianYOffset
+            lineBaseLineConstraint = lineView.centerY == labelView.top
             icon.centerY == lineView.centerY
         }
     }
 
     private func updateLineBaseLineConstraint() {
-        guard let font = labelFont else { return }
-        lineBaseLineConstraint?.constant = font.median - lineMedianYOffset
+        lineBaseLineConstraint?.constant = labelFont.median - lineMedianYOffset
     }
 
     open override var canResignFirstResponder: Bool {

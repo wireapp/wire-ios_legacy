@@ -30,7 +30,6 @@ import Foundation
     
     func updateLabel() {
         if let systemMessageData = message.systemMessageData,
-            let labelFont = self.labelFont,
             let labelTextColor = self.labelTextColor,
             systemMessageData.systemMessageType == ZMSystemMessageType.conversationIsSecure {
                 

@@ -46,7 +46,6 @@ import TTTAttributedLabel
     func updateLabel() {
         guard let systemMessageData = message.systemMessageData,
             let clients = message.systemMessageData?.clients.compactMap ({ $0 as? UserClientType }),
-            let labelFont = self.labelFont,
             let labelTextColor = self.labelTextColor,
             (systemMessageData.users.count > 0 || systemMessageData.addedUsers.count > 0) && (systemMessageData.systemMessageType == .newClient || systemMessageData.systemMessageType == .usingNewDevice)
             else { return }
