@@ -146,6 +146,12 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         if DeveloperMenuState.developerMenuEnabled(),
             let uuidString = mixpanelInstance?.distinctId {
             zmLog.error("Mixpanel distinctId = `\(uuidString)`")
+            
+            #if targetEnvironment(simulator)
+            let tempFilePath = URL(fileURLWithPath: "/var/tmp/mixpanel_id.txt")
+            try? FileManager.default.removeItem(at: tempFilePath)
+            try! uuidString.data(using: .utf8)?.write(to: tempFilePath)
+            #endif
         }
         
         self.setSuperProperty("app", stringValue: "ios")
