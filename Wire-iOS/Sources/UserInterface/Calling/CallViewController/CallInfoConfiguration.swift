@@ -21,9 +21,9 @@ import Foundation
 fileprivate extension VoiceChannel {
     var degradationState: CallDegradationState {
         switch state {
-        case .incoming(video: _, shouldRing: _, degraded: true), .answered(degraded: true):
+        case .incoming(video: _, shouldRing: _, degraded: true):
             return .incoming(degradedUser: firstDegradedUser)
-        case .outgoing(degraded: true):
+        case .answered(degraded: true), .outgoing(degraded: true):
             return .outgoing(degradedUser: firstDegradedUser)
         default:
             return .none
