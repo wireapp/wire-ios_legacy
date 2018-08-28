@@ -40,9 +40,6 @@ import Cartography
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.nameLabel.accessibilityLabel = "sender name"
-        self.dateLabel.accessibilityLabel = "sent on"
-        
         self.addSubview(self.nameLabel)
         self.addSubview(self.dateLabel)
         
@@ -56,6 +53,20 @@ import Cartography
         }
     }
     
-    public var nameLabel = UILabel()
-    public var dateLabel = UILabel()
+    public var nameLabel: UILabel = {
+        let label = UILabel()
+        label.accessibilityLabel = "sender name"
+        label.font = .smallSemiboldFont
+
+        return label
+    }()
+
+    public var dateLabel: UILabel = {
+        let label = UILabel()
+        label.accessibilityLabel = "sent on"
+        label.font = .smallLightFont
+        label.textColor = .textDimmed
+
+        return label
+    }()
 }

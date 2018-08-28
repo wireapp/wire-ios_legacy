@@ -19,12 +19,11 @@
 
 import Foundation
 import Cartography
-import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
 /// Displays the video message@objc  with different states
-@objcMembers public final class VideoMessageCell: ConversationCell {
+public final class VideoMessageCell: ConversationCell {
     
     private let videoMessageView = VideoMessageView()
     private let obfuscationView = ObfuscationView(icon: .videoMessage)

@@ -29,6 +29,10 @@
 
 // UI
 @import WireExtensionComponents;
+#import "ParticipantDeviceCell.h"
+#import "ParticipantDeviceCell+Internal.h"
+#import "ContactsCell.h"
+#import "ContactsCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "ConversationCell.h"
