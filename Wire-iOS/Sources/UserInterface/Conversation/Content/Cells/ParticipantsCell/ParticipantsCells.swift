@@ -62,11 +62,7 @@ import TTTAttributedLabel
         }
     }
     
-    var labelFont: UIFont? {
-        didSet {
-            updateLineBaseLineConstraint()
-        }
-    }
+    let labelFont: UIFont = .mediumFont
     
     /// TTTAttributedLabel needs to be shifted an extra 2pt down so the
     /// line view aligns with the center of the first line.
@@ -79,7 +75,6 @@ import TTTAttributedLabel
 
         setupViews()
         createConstraints()
-        labelFont = .mediumFont
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -178,8 +173,8 @@ import TTTAttributedLabel
         }
         
         createLineViewConstraints()
-        updateLineBaseLineConstraint()
         createBaselineConstraint()
+        updateLineBaseLineConstraint()
     }
     
     private func createLineViewConstraints() {
@@ -192,14 +187,15 @@ import TTTAttributedLabel
     
     private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
-            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - lineMedianYOffset
+            lineBaseLineConstraint = lineView.centerY == labelView.top
             icon.centerY == lineView.centerY
         }
     }
     
     private func updateLineBaseLineConstraint() {
-        guard let font = labelFont else { return }
-        lineBaseLineConstraint?.constant = font.median - lineMedianYOffset
+        lineBaseLineConstraint?.constant = labelFont.median - lineMedianYOffset
+
+        self.layoutIfNeeded()
     }
     
     open override var canResignFirstResponder: Bool {

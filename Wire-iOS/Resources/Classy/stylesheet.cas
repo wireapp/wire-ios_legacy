@@ -145,10 +145,6 @@ IconSystemCell {
     labelFont: $font-medium;
 }
 
-ParticipantsCell {
-    labelFont: $font-medium;
-}
-
 FileTransferView {
     backgroundColor: $color-placeholder-background;
 
