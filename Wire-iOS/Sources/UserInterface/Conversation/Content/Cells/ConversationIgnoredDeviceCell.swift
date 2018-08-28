@@ -33,8 +33,6 @@ import TTTAttributedLabel
     
     func updateLabel() {
         if let systemMessageData = message.systemMessageData,
-            let labelFont = self.labelFont,
-            let labelBoldFont = self.labelBoldFont,
             let labelTextColor = self.labelTextColor
             , systemMessageData.systemMessageType == ZMSystemMessageType.ignoredClient && systemMessageData.users.count > 0 {
                 

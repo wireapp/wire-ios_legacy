@@ -34,8 +34,6 @@ import TTTAttributedLabel
     
     func updateLabel() {
         guard let systemMessageData = message.systemMessageData,
-            let labelFont = labelFont,
-            let labelBoldFont = labelBoldFont,
             let labelTextColor = labelTextColor
         else { return }
         
