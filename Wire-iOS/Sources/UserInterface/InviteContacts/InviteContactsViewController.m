@@ -45,11 +45,15 @@
         self.dataSource.searchQuery = @"";
         
         self.title = NSLocalizedString(@"contacts_ui.title", @"");
-
-        [self setupStyle];
     }
     
     return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self setupStyle];
 }
 
 - (BOOL)sharingContactsRequired
