@@ -203,7 +203,7 @@
 		54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A15D11D4900930051E8BA /* AutomationHelper.swift */; };
 		54F7C2851D746F3F004D8087 /* AddressBookHelper+Automation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */; };
 		54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FF9E271E813BA500323D2E /* DebugAlert.swift */; };
-		55A42A701FC872600056752F /* CallQualityScoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */; };
+		55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */; };
 		55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityViewController.swift */; };
 		5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
@@ -1568,7 +1568,7 @@
 		54F7C27E1D74367E004D8087 /* AddressBookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressBookHelper.swift; sourceTree = "<group>"; };
 		54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AddressBookHelper+Automation.swift"; sourceTree = "<group>"; };
 		54FF9E271E813BA500323D2E /* DebugAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugAlert.swift; sourceTree = "<group>"; };
-		55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityScoreProvider.swift; sourceTree = "<group>"; };
+		55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallQualityController+Budget.swift"; sourceTree = "<group>"; };
 		55DD5C331FA236F60082170C /* CallQualityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityViewController.swift; sourceTree = "<group>"; };
 		5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginFlowOpener.swift; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
@@ -3067,6 +3067,7 @@
 			isa = PBXGroup;
 			children = (
 				160D691F212C78E800096EAD /* CallQualityController.swift */,
+				55A42A6F1FC872600056752F /* CallQualityController+Budget.swift */,
 			);
 			path = CallQualityController;
 			sourceTree = "<group>";
@@ -3714,7 +3715,6 @@
 				CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */,
 				8715F22C1F86758E006F3935 /* AnalyticsMixpanelProvider.swift */,
 				5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */,
-				55A42A6F1FC872600056752F /* CallQualityScoreProvider.swift */,
 				AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */,
 				8701221A20F66933001E6342 /* MessageType.h */,
 				871BBFC31D34F56300DF0793 /* Events */,
@@ -7216,7 +7216,7 @@
 				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
 				5EBC343720EE434700AFB6DF /* ImageDownloadCache.swift in Sources */,
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
-				55A42A701FC872600056752F /* CallQualityScoreProvider.swift in Sources */,
+				55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */,
 				87E56EDA1E4E10CA0097D489 /* TextSearchViewController.swift in Sources */,
 				5EF4A6E420F3C4BD00A9EF22 /* GiphyNavigationController.swift in Sources */,
 				1633875B1F065A960015034C /* SessionManager+Shared.swift in Sources */,

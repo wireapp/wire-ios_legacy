@@ -138,16 +138,13 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-        let sessionManagerAnalytics: AnalyticsType
-        
-        CallQualityScoreProvider.shared.nextProvider = analytics
-        sessionManagerAnalytics = CallQualityScoreProvider.shared
+
         SessionManager.clearPreviousBackups()
 
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
-            analytics: sessionManagerAnalytics,
+            analytics: analytics,
             delegate: appStateController,
             application: UIApplication.shared,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in

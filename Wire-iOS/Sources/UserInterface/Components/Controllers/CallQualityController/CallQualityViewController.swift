@@ -59,7 +59,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         
         let requestDate = Date()
 
-        guard CallQualityScoreProvider.canRequestSurvey(at: requestDate) else {
+        guard CallQualityController.canRequestSurvey(at: requestDate) else {
             return nil
         }
                 

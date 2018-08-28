@@ -16,77 +16,38 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
-
-final class CallQualityScoreProvider: NSObject, AnalyticsType {
-    public static let shared = CallQualityScoreProvider()
-    
-    private var lastCallingEvent: [String: NSObject] = [:]
-
-    func recordCallQualityReview(_ review: CallQualitySurveyReview) {
-
-        var attributes = lastCallingEvent
-        attributes["action"] = review.label
-        attributes["score"] = review.score
-        attributes["duration"] = review.callDuration
-        attributes["reason"] = review.reason
-
-        nextProvider?.tagEvent(type(of: self).callingEventName, attributes: attributes)
-    }
-
-    private static let callingEventName = "calling.call_quality_review"
-    
-    public var nextProvider: AnalyticsType? = nil
-    
-    public func tagEvent(_ event: String) {
-        self.tagEvent(event, attributes: [:])
-    }
-    
-    public func tagEvent(_ event: String, attributes: [String : NSObject]) {
-        DispatchQueue.main.async {
-            if event == type(of: self).callingEventName {
-                self.lastCallingEvent = attributes
-            }
-            else {
-                self.nextProvider?.tagEvent(event, attributes: attributes)
-            }
-        }
-    }
-
-    func setPersistedAttributes(_ attributes: [String : NSObject]?, for event: String) {
-        nextProvider?.setPersistedAttributes(attributes, for: event)
-    }
-
-    func persistedAttributes(for event: String) -> [String : NSObject]? {
-        return nextProvider?.persistedAttributes(for: event)
-    }
-}
-
-// MARK: - Survey Mute Filter
 
 let UserDefaultLastCallSurveyDate = "LastCallSurveyDate"
 let CallSurveyMuteInterval: TimeInterval = Calendar.secondsInDays(10)
 
-extension CallQualityScoreProvider {
+extension CallQualityController {
 
+    /// Whether we use a maxmimum budget for call surveying per user.
+    private(set) static var usesCallSurveyBudget: Bool = false
+
+    /// Updates the date when the survey was last shown.
     static func updateLastSurveyDate(_ date: Date) {
         UserDefaults.standard.set(date.timeIntervalSinceReferenceDate, forKey: UserDefaultLastCallSurveyDate)
     }
 
+    /// Manually resets the mute survey filter.
     static func resetSurveyMuteFilter() {
         UserDefaults.standard.removeObject(forKey: UserDefaultLastCallSurveyDate)
     }
-    
+
+    /// Returns whether new call quality surveys can be requested, or if the user budget is exceeded.
     static func canRequestSurvey(at date: Date, muteInterval: TimeInterval = CallSurveyMuteInterval) -> Bool {
-        
+        guard usesCallSurveyBudget else {
+            return true
+        }
+
         let lastSurveyTimestamp = UserDefaults.standard.double(forKey: UserDefaultLastCallSurveyDate)
         let lastSurveyDate = Date(timeIntervalSinceReferenceDate: lastSurveyTimestamp)
         let nextPossibleDate = lastSurveyDate.addingTimeInterval(muteInterval)
                 
         // Allow the survey if the mute period is finished
         return (date >= nextPossibleDate)
-        
     }
     
 }
