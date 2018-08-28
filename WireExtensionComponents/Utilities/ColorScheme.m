@@ -299,7 +299,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorCellSeparator: graphiteAlpha8,
                                    ColorSchemeColorSearchBarBackground: white,
                                    ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
-                                   ColorSchemeColorTabMonochromeNormalState: whiteAlpha56
+                                   ColorSchemeColorTabMonochromeNormalState: blackAlpha48
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
