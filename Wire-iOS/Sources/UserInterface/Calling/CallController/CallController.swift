@@ -19,9 +19,13 @@
 import Foundation
 
 class CallController: NSObject {
-    
+
     weak var targetViewController: UIViewController? = nil
     private(set) weak var activeCallViewController: ActiveCallViewController?
+
+    fileprivate let callQualityController = CallQualityController()
+
+    fileprivate var scheduledQualitySurvey: CallQualityViewController?
     fileprivate var token: Any?
     fileprivate var minimizedCall: ZMConversation? = nil
     fileprivate var topOverlayCall: ZMConversation? = nil {
@@ -40,11 +44,11 @@ class CallController: NSObject {
     
     override init() {
         super.init()
-        
+        callQualityController.delegate = self
+
         if let userSession = ZMUserSession.shared() {
             token = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         }
-        
     }
 }
 
@@ -106,7 +110,13 @@ extension CallController: WireCallCenterCallStateObserver {
     fileprivate func dismissCall() {
         minimizedCall = nil
         topOverlayCall = nil
-        activeCallViewController?.dismiss(animated: true)
+
+        activeCallViewController?.dismiss(animated: true) {
+            if let survey = self.scheduledQualitySurvey {
+                self.targetViewController?.present(survey, animated: true, completion: nil)
+                self.scheduledQualitySurvey = nil
+            }
+        }
     }
 }
 
@@ -129,4 +139,22 @@ extension CallController: CallTopOverlayControllerDelegate {
         presentCall(in: controller.conversation)
     }
     
+}
+
+extension CallController: CallQualityControllerDelegate {
+
+    func dismissCurrentSurveyIfNeeded() {
+        if let survey = targetViewController?.presentedViewController as? CallQualityViewController {
+            survey.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    func callQualityControllerDidScheduleSurvey(with controller: CallQualityViewController) {
+        if self.topOverlayCall == nil {
+            self.targetViewController?.present(controller, animated: true, completion: nil)
+        } else {
+            self.scheduledQualitySurvey = controller
+        }
+    }
+
 }

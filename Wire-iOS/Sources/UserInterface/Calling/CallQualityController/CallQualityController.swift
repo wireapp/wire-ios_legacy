@@ -19,13 +19,18 @@
 import Foundation
 import WireSyncEngine
 
+protocol CallQualityControllerDelegate: class {
+    func dismissCurrentSurveyIfNeeded()
+    func callQualityControllerDidScheduleSurvey(with controller: CallQualityViewController)
+}
+
 /**
  * Observes call state to prompt the user for call quality feedback when appropriate.
  */
 
 class CallQualityController: NSObject {
     
-    weak var targetViewController: UIViewController? = nil
+    weak var delegate: CallQualityControllerDelegate? = nil
 
     fileprivate var answeredCalls: [UUID: Date] = [:]
     fileprivate var token: Any?
@@ -57,16 +62,6 @@ class CallQualityController: NSObject {
     }
 
     // MARK: - Events
-
-    /**
-     * Dismisses the current call survey if one is presented.
-     */
-
-    func dismissCurrentSurveyIfNeeded(completion: (() -> Void)? = nil) {
-        if let presentedController = targetViewController?.presentedViewController as? CallQualityViewController {
-            presentedController.dismiss(animated: true, completion: completion)
-        }
-    }
 
     /**
      * Handles the start of the call in the specified conversation. Call this method when the call
@@ -117,8 +112,7 @@ class CallQualityController: NSObject {
 
         qualityController.delegate = self
         qualityController.transitioningDelegate = self
-
-        UIApplication.shared.wr_topmostController()?.present(qualityController, animated: true, completion: nil)
+        delegate?.callQualityControllerDidScheduleSurvey(with: qualityController)
     }
 
     /// Presents the debug log prompt after a call failure.
@@ -148,7 +142,7 @@ extension CallQualityController: WireCallCenterCallStateObserver {
             handleCallCompletion(in: conversation, reason: terminationReason, eventDate: eventDate)
         case .incoming(_, let shouldRing, _):
             if shouldRing {
-                dismissCurrentSurveyIfNeeded()
+                delegate?.dismissCurrentSurveyIfNeeded()
             }
         default:
             return
