@@ -112,16 +112,6 @@ FileTransferView {
     }
 }
 
-VideoMessageView {
-    IconButton {
-        iconColor: white;
-    }
-    
-    UILabel {
-        font: $font-small-light;
-    }
-}
-
 AudioMessageView {
     backgroundColor: $color-placeholder-background;
 
