@@ -112,28 +112,6 @@ FileTransferView {
     }
 }
 
-AudioMessageView {
-    backgroundColor: $color-placeholder-background;
-
-    ProgressView {
-        backgroundColor: $color-separator;
-        tintColor: $color-accent-current;
-    }
-    
-    WaveformProgressView {
-        backgroundColor: $color-placeholder-background;
-    }
-    
-    IconButton {
-        iconColor: white;
-    }
-    
-    UILabel {
-        textColor: $color-text-foreground;
-        font: $font-small-semibold;
-    }
-}
-
 ArticleView {
     containerColor: $color-placeholder-background;
     titleTextColor: $color-text-foreground;
