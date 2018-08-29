@@ -195,7 +195,6 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         verifyInAllIPhoneSizes(view: sut.view)
     }
 
-    ///TODO: test for muted indicator
     func testGroupVideoEstablished() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
