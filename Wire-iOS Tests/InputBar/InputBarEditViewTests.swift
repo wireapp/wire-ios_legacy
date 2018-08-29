@@ -18,7 +18,6 @@
 
 import Cartography
 @testable import Wire
-import Classy
 
 class InputBarEditViewTests: ZMSnapshotTestCase {
 
@@ -29,7 +28,6 @@ class InputBarEditViewTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = UIColor.white
         sut = InputBarEditView()
         constrain(sut) { $0.height == 56 }
-        CASStyler.default().styleItem(sut)
     }
 
     override func tearDown() {
