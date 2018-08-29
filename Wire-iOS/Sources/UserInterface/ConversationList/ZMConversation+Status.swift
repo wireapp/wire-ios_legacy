@@ -364,22 +364,19 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 messageDescription = (localizationRootPath + ".ephemeral").localized
             }
             else {
-                
                 var format = localizationRootPath + "." + localizationKey
+                
                 if status.isGroup && type == .missedCall {
                     format += ".groups"
+                    return format.localized(args: sender.displayName(in: conversation)) && Swift.type(of: self).regularStyle
                 }
                 
                 messageDescription = String(format: format.localized, message.textMessageData?.messageText ?? "")
             }
             
             if status.isGroup {
-                if type == .missedCall {
-                    return (messageDescription + " " + sender.displayName(in: conversation)) && Swift.type(of: self).regularStyle
-                } else {
-                    return ((sender.displayName(in: conversation) + ": ") && Swift.type(of: self).emphasisStyle) +
+                return ((sender.displayName(in: conversation) + ": ") && Swift.type(of: self).emphasisStyle) +
                         (messageDescription && Swift.type(of: self).regularStyle)
-                }
             }
             else {
                 return messageDescription && Swift.type(of: self).regularStyle

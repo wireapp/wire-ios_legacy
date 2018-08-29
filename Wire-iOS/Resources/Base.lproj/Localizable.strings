@@ -207,7 +207,7 @@
 "conversation.status.message.file" = "Shared a file";
 "conversation.status.message.knock" = "Pinged";
 "conversation.status.message.missedcall" = "Missed call";
-"conversation.status.message.missedcall.groups" = "Missed call from";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Timed message";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
