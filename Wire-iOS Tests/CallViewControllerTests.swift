@@ -39,7 +39,7 @@ extension XCTestCase {
 }
 
 extension XCTestCase {
-    static func CallViewControllerWithMocks(mediaManager: ZMMockAVSMediaManager) -> CallViewController{
+    static func CreateCallViewController(mediaManager: ZMMockAVSMediaManager) -> CallViewController{
         ZMUser.selfUser().remoteIdentifier = UUID()
 
         let conversation = (MockConversation.oneOnOneConversation() as Any) as! ZMConversation
@@ -60,7 +60,7 @@ final class CallViewControllerTests: XCTestCase {
         // when & then
         verifyDeallocation { () -> CallViewController in
             // given
-            let callController = XCTestCase.CallViewControllerWithMocks(mediaManager: ZMMockAVSMediaManager())
+            let callController = XCTestCase.CreateCallViewController(mediaManager: ZMMockAVSMediaManager())
             // Simulate user click
             callController.startOverlayTimer()
             return callController
@@ -78,7 +78,7 @@ final class CallViewControllerOverlayTests: XCTestCase {
         UIView.setAnimationsEnabled(false)
 
         mediaManager = ZMMockAVSMediaManager()
-        sut = XCTestCase.CallViewControllerWithMocks(mediaManager: mediaManager)
+        sut = XCTestCase.CreateCallViewController(mediaManager: mediaManager)
     }
 
     override func tearDown() {
@@ -118,6 +118,6 @@ final class CallViewControllerOverlayTests: XCTestCase {
         XCTAssertFalse(sut.isOverlayVisible)
 
         // THEN
-        XCTAssertTrue(sut.muteIndicatorViewController.view.isHidden)
+        XCTAssert(sut.muteIndicatorViewController.view.isHidden)
     }
 }
