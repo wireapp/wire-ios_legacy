@@ -16,15 +16,6 @@
 *  along with this program. If not, see http://www.gnu.org/licenses/.
 */ 
 
-IconButton.back-button {
-    borderWidth: 0.5;
-    borderColor[state: normal]: $color-separator;
-    circular: true;
-    backgroundColor $color-background;
-    iconColor[state:normal] $color-icon-normal;
-    iconColor[state:highlighted] $color-icon-highlighted;
-}
-
 IconButton.resend-button {
     circular: false;
     iconColor: $color-text-dimmed;

@@ -47,4 +47,12 @@ extension UIColor {
     static var separator: UIColor {
         return UIColor(scheme: .separator)
     }
+
+    static var iconNormal: UIColor {
+        return UIColor(scheme: .iconNormal)
+    }
+
+    static var iconHighlighted: UIColor {
+        return UIColor(scheme: .iconHighlighted)
+    }
 }
