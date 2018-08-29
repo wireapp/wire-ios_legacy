@@ -61,7 +61,7 @@ class CallQualityController: NSObject {
      */
 
     var canPresentCallQualitySurvey: Bool {
-        return DeveloperMenuState.developerMenuEnabled()
+        return DeveloperMenuState.developerMenuEnabled() && !AutomationHelper.sharedHelper.disableCallQualitySurvey
     }
 
     // MARK: - Events
@@ -72,7 +72,7 @@ class CallQualityController: NSObject {
      * - parameter conversation: The conversation where the call is ongoing.
      */
 
-    func handleCallStart(in conversation: ZMConversation) {
+    private func handleCallStart(in conversation: ZMConversation) {
         answeredCalls[conversation.remoteIdentifier!] = Date()
     }
 
@@ -83,7 +83,7 @@ class CallQualityController: NSObject {
      * - parameter eventDate: The date when the call ended.
      */
 
-    func handleCallCompletion(in conversation: ZMConversation, reason: CallClosedReason, eventDate: Date) {
+    private func handleCallCompletion(in conversation: ZMConversation, reason: CallClosedReason, eventDate: Date) {
         // Check for the call start date (do not show feedback for unanswered calls)
         guard let callStartDate = answeredCalls[conversation.remoteIdentifier!] else {
             return
@@ -126,7 +126,7 @@ class CallQualityController: NSObject {
     }
 
     /// Presents the debug log prompt after a user quality rejection.
-    func handleCallQualityRejection() {
+    private func handleCallQualityRejection() {
         DebugAlert.showSendLogsMessage(message: "Sending the debug logs can help us improve the quality of calls.")
     }
 
