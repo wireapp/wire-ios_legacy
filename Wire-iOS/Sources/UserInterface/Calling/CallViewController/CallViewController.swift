@@ -144,12 +144,13 @@ final class CallViewController: UIViewController {
     }
 
     private func setupViews() {
-        [videoGridViewController, callInfoRootViewController].forEach(addToSelf) ///TODO: one more VC
+        [videoGridViewController, muteIndicatorViewController, callInfoRootViewController].forEach(addToSelf)
+
+        muteIndicatorViewController.view.isHidden = true
     }
 
     private func createConstraints() {
-        callInfoRootViewController.view.fitInSuperview()
-        videoGridViewController.view.fitInSuperview()
+        [videoGridViewController, muteIndicatorViewController, callInfoRootViewController].forEach{ $0.view.fitInSuperview() }
     }
     
     fileprivate func minimizeOverlay() {
@@ -390,8 +391,16 @@ extension CallViewController {
             stopOverlayTimer()
         }
         
-        let animations = { [callInfoRootViewController, updateConfiguration] in
-            callInfoRootViewController.view.alpha = show ? 1 : 0 ///TODO: mute layer
+        let animations = { [callInfoRootViewController, muteIndicatorViewController, updateConfiguration] in
+            callInfoRootViewController.view.alpha = show ? 1 : 0
+
+            if AVSMediaManager.sharedInstance().isMicrophoneMuted {
+                muteIndicatorViewController.view.isHidden = false
+                muteIndicatorViewController.view.alpha = show ? 0 : 1
+            } else
+            {
+                muteIndicatorViewController.view.isHidden = true
+            }
             // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
             updateConfiguration()
         }

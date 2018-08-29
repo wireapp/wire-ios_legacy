@@ -38,23 +38,53 @@ extension XCTestCase {
     }
 }
 
+extension XCTestCase {
+    static func CallViewControllerWithMocks() -> CallViewController{
+        ZMUser.selfUser().remoteIdentifier = UUID()
+
+        let conversation = (MockConversation.oneOnOneConversation() as Any) as! ZMConversation
+        let voiceChannel = MockVoiceChannel(conversation: conversation)
+        voiceChannel.mockVideoState = VideoState.started
+        voiceChannel.mockIsVideoCall = true
+        voiceChannel.mockCallState = CallState.established
+        let proximityManager = ProximityMonitorManager()
+        let callController = CallViewController(voiceChannel: voiceChannel, proximityMonitorManager: proximityManager)
+
+        return callController
+    }
+}
+
 final class CallViewControllerTests: XCTestCase {
+
     func testThatItDeallocates() {
         // when & then
         verifyDeallocation { () -> CallViewController in
             // given
-            ZMUser.selfUser().remoteIdentifier = UUID()
-            
-            let conversation = (MockConversation.oneOnOneConversation() as Any) as! ZMConversation
-            let voiceChannel = MockVoiceChannel(conversation: conversation)
-            voiceChannel.mockVideoState = VideoState.started
-            voiceChannel.mockIsVideoCall = true
-            voiceChannel.mockCallState = CallState.established
-            let proximityManager = ProximityMonitorManager()
-            let callController = CallViewController(voiceChannel: voiceChannel, proximityMonitorManager: proximityManager)
+            let callController = XCTestCase.CallViewControllerWithMocks()
             // Simulate user click
             callController.startOverlayTimer()
             return callController
         }
+    }
+}
+
+
+final class CallViewControllerStateTests: XCTestCase {
+    var sut: CallViewController!
+
+    override func setUp() {
+        super.setUp()
+        sut = XCTestCase.CallViewControllerWithMocks()
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testThatMuteIndicatorIsShownAfterTapOnCallInfoScreen() {
+        XCTAssertFalse(sut.isOverlayVisible)
+
+        sut.touchesBegan(<#T##touches: Set<UITouch>##Set<UITouch>#>, with: <#T##UIEvent?#>)
     }
 }
