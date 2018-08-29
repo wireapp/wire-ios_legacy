@@ -117,6 +117,8 @@ extension CallController: WireCallCenterCallStateObserver {
                 self.scheduledQualitySurvey = nil
             }
         }
+        
+        activeCallViewController = nil
     }
 }
 

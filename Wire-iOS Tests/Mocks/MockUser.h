@@ -52,6 +52,7 @@
 @property (nonatomic, assign) BOOL isGuestInConversation;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
+@property (nonatomic, readwrite) NSString *expirationDisplayString;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 @property (nonatomic) ZMConnection *connection;
