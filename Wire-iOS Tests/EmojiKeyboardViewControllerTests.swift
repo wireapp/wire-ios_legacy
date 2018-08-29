@@ -20,20 +20,21 @@ import XCTest
 @testable import Wire
 
 final class EmojiKeyboardViewControllerTests: ZMSnapshotTestCase {
-    
+
     var sut: EmojiKeyboardViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = EmojiKeyboardViewController()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForBottomBarIconButtons(){
+    func testForBottomBarIconButtons() {
+        sut.sectionViewController.didSelectSection(.recent)
         verify(view: sut.view)
     }
 }

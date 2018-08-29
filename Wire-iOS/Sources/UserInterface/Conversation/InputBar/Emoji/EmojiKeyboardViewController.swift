@@ -32,7 +32,7 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     weak var delegate: EmojiKeyboardViewControllerDelegate?
     fileprivate var emojiDataSource: EmojiDataSource!
     fileprivate let collectionView = EmojiCollectionView()
-    fileprivate let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
+    let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
     private let backspaceButton: IconButton = {
         let button = IconButton(style: .default)
         button.setIconColor(.textForegroundDark, for: .normal)
@@ -60,15 +60,20 @@ protocol EmojiKeyboardViewControllerDelegate: class {
             backspaceButton.isHidden = backspaceHidden
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+
         emojiDataSource = EmojiDataSource(provider: cellForEmoji)
         collectionView.dataSource = emojiDataSource
         collectionView.delegate = self
         sectionViewController.sectionDelegate = self
         setupViews()
         createConstraints()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewWillAppear(_ animated: Bool) {

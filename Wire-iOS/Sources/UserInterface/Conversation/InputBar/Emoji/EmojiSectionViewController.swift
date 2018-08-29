@@ -47,18 +47,15 @@ class EmojiSectionViewController: UIViewController {
     init(types: [EmojiSectionType]) {
         super.init(nibName: nil, bundle: nil)
         createButtons(types)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
         setupViews()
         createConstraints()
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
         selectedType = typesByButton.values.first
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func createButtons(_ types: [EmojiSectionType]) {
