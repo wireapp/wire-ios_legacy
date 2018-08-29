@@ -27,9 +27,6 @@ final class MuteIndicatorViewControllerTests: ZMSnapshotTestCase {
         super.setUp()
         sut = MuteIndicatorViewController()
         sut.view.backgroundColor = .darkGray
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
