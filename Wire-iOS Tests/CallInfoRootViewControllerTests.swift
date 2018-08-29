@@ -194,7 +194,7 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         // then
         verifyInAllIPhoneSizes(view: sut.view)
     }
-    
+
     func testGroupVideoEstablished() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)

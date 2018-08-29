@@ -1204,6 +1204,8 @@
 		EF9B950420BEBD89000D4CA1 /* MockUser+AccentColorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */; };
 		EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */; };
 		EFA10F0020F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift */; };
+		EFA385C8213583FC00E5CFD0 /* MuteIndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA385C7213583FC00E5CFD0 /* MuteIndicatorViewController.swift */; };
+		EFA385CC2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */; };
 		EFA385CE21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
@@ -2907,6 +2909,10 @@
 		EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralTimeoutFormatterTests.swift; sourceTree = "<group>"; };
 		EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationMessageWindowTableViewAdapter+DataSource.swift"; sourceTree = "<group>"; };
 		EFA10F0120F4AE2800863B72 /* ConversationMessageWindowTableViewAdapter+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationMessageWindowTableViewAdapter+Private.h"; sourceTree = "<group>"; };
+
+
+		EFA385C7213583FC00E5CFD0 /* MuteIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteIndicatorViewController.swift; sourceTree = "<group>"; };
+		EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteIndicatorViewControllerTests.swift; sourceTree = "<group>"; };
 		EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SizeClass.swift"; sourceTree = "<group>"; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
@@ -5392,6 +5398,8 @@
 				EF297DD72131FABE0002983A /* LocationPreviewControllerTests.swift */,
 				EFAFCA812133FB59002B31A6 /* ArchivedNavigationBarTests.swift */,
 				EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */,
+
+				EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */,
 				EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
@@ -5592,6 +5600,7 @@
 				BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */,
 				BFE4186C209B6FFA00503C7C /* CallAction.swift */,
 				5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */,
+				EFA385C7213583FC00E5CFD0 /* MuteIndicatorViewController.swift */,
 			);
 			path = CallInfoViewController;
 			sourceTree = "<group>";
@@ -6779,6 +6788,7 @@
 				87F18BBE1E015BBB00C69D9B /* TransferView.swift in Sources */,
 				164C29AD1ED446660026562A /* UserSelection.swift in Sources */,
 				8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */,
+				EFA385C8213583FC00E5CFD0 /* MuteIndicatorViewController.swift in Sources */,
 				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,
@@ -7577,6 +7587,7 @@
 				87C39A8E206BE83C008DA100 /* NoHistoryViewControllerTests.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */,
+				EFA385CC2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift in Sources */,
 				EF84DF4C213052E600033702 /* ProfilePictureStepViewControllerTests.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
 				5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */,

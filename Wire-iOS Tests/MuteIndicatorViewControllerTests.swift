@@ -19,22 +19,22 @@
 import XCTest
 @testable import Wire
 
-final class EmojiKeyboardViewControllerTests: ZMSnapshotTestCase {
-
-    var sut: EmojiKeyboardViewController!
-
+final class MuteIndicatorViewControllerTests: ZMSnapshotTestCase {
+    
+    var sut: MuteIndicatorViewController!
+    
     override func setUp() {
         super.setUp()
-        sut = EmojiKeyboardViewController()
+        sut = MuteIndicatorViewController()
+        sut.view.backgroundColor = .darkGray
     }
-
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func DISABLE_testForBottomBarIconButtons() {
-        sut.sectionViewController.didSelectSection(.recent)
+    func testForVisibleState(){
         verify(view: sut.view)
     }
 }
