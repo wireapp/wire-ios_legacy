@@ -23,10 +23,6 @@ import XCTest
 
 class CallSystemMessageTests: CoreDataSnapshotTestCase {
 
-    
-    override func setUp() {
-        super.setUp()
-    }
     // MARK: - Missed Call
 
     func testThatItRendersMissedCallFromSelfUser() {
