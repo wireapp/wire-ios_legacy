@@ -45,7 +45,6 @@ NSString * const ColorSchemeColorIconHighlighted = @"icon-highlighted";
 NSString * const ColorSchemeColorIconBackgroundSelected = @"icon-background-selected";
 NSString * const ColorSchemeColorIconBackgroundSelectedNoAccent = @"icon-background-selected-no-accent";
 NSString * const ColorSchemeColorIconGuest = @"icon-guest";
-NSString * const ColorSchemeColorTabMonochromeNormalState = @"tab-monochrome-normal-state";
 
 NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
 
@@ -298,8 +297,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite,
                                    ColorSchemeColorCellSeparator: graphiteAlpha8,
                                    ColorSchemeColorSearchBarBackground: white,
-                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
-                                   ColorSchemeColorTabMonochromeNormalState: whiteAlpha56
+                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4]
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -335,7 +333,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorButtonHighlighted: blackAlpha24,
                                   ColorSchemeColorButtonEmptyText: white,
                                   ColorSchemeColorButtonFaded: whiteAlpha40,
-                                  ColorSchemeColorTabNormal: lightGraphite,
+                                  ColorSchemeColorTabNormal: whiteAlpha56,
                                   ColorSchemeColorTabSelected: white,
                                   ColorSchemeColorTabHighlighted: lightGraphiteAlpha48,
                                   ColorSchemeColorCallBarBackground: black,
@@ -358,8 +356,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40,
                                   ColorSchemeColorCellSeparator: whiteAlpha8,
                                   ColorSchemeColorSearchBarBackground: whiteAlpha8,
-                                  ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64],
-                                  ColorSchemeColorTabMonochromeNormalState: whiteAlpha56
+                                  ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64]
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

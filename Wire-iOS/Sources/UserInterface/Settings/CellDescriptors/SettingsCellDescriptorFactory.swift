@@ -467,7 +467,7 @@ import SafariServices
     private static func resetCallQualitySurveyMuteFilter(_ type: SettingsCellDescriptorType) {
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
 
-        CallQualityScoreProvider.resetSurveyMuteFilter()
+        CallQualityController.resetSurveyMuteFilter()
 
         let alert = UIAlertController(title: "Success",
                                       message: "The call quality survey will be displayed after the next call.",

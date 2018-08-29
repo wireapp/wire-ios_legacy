@@ -21,7 +21,6 @@ import Foundation
 
 final class CallWindowRootViewController: UIViewController {
     
-    private var callQualityController: CallQualityController?
     private var callController: CallController?
     
     @objc func minimizeOverlay(completion: @escaping () -> Void) {
@@ -55,9 +54,6 @@ final class CallWindowRootViewController: UIViewController {
     }
     
     func transitionToLoggedInSession() {
-        callQualityController = CallQualityController()
-        callQualityController?.targetViewController = self
-        
         callController = CallController()
         callController?.targetViewController = self
     }
