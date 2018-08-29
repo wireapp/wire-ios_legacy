@@ -33,7 +33,20 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     fileprivate var emojiDataSource: EmojiDataSource!
     fileprivate let collectionView = EmojiCollectionView()
     fileprivate let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
-    private let backspaceButton = IconButton(style: .default)
+    private let backspaceButton: IconButton = {
+        let button = IconButton(style: .default)
+        button.setIconColor(.textForegroundDark, for: .normal)
+        button.setIconColor(.iconHighlightedDark, for: .highlighted)
+        button.setBackgroundImageColor(.clear, for: .selected)
+        button.setBorderColor(.clear, for: .normal)
+        button.circular = false
+        button.borderWidth = 0
+
+        button.setIcon(.backspace, with: .small, for: .normal)
+
+        return button
+    }()
+
     private var deleting = false
 
     var backspaceEnabled = false {
@@ -78,8 +91,6 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         view.addSubview(sectionViewController.view)
         sectionViewController.didMove(toParentViewController: self)
 
-        backspaceButton.setIcon(.backspace, with: .small, for: .normal)
-        backspaceButton.cas_styleClass = "emoji-backspace"
         backspaceButton.addTarget(self, action: #selector(backspaceTapped), for: .touchUpInside)
         backspaceButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(backspaceLongPressed)))
         backspaceButton.isHidden = backspaceHidden

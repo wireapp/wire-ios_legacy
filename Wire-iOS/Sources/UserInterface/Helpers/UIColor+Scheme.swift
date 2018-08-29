@@ -55,4 +55,8 @@ extension UIColor {
     static var iconHighlighted: UIColor {
         return UIColor(scheme: .iconHighlighted)
     }
+
+    static var iconHighlightedDark: UIColor {
+        return UIColor(scheme: .iconHighlighted, variant: .dark)
+    }
 }
