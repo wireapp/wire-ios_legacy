@@ -47,6 +47,8 @@ class MockZMUserSession: ZMUserSessionInterface {
 }
 
 class ZMMockAVSMediaManager: AVSMediaManagerInterface {
+    var isMicrophoneMuted: Bool = false
+
     var intensityLevel : AVSIntensityLevel = .none
     
     func playMediaByName(_ name: String!) { }
