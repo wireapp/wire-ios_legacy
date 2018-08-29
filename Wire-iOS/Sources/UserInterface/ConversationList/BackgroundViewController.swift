@@ -29,10 +29,8 @@ final public class BackgroundViewController: UIViewController {
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
     private let darkenOverlay = UIView()
-    private var statusBarBlurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     private var blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     private var userObserverToken: NSObjectProtocol! = .none
-    private var statusBarBlurViewHeightConstraint: NSLayoutConstraint!
     private let user: UserType
     private let userSession: ZMUserSession?
     
@@ -54,11 +52,6 @@ final public class BackgroundViewController: UIViewController {
         if let userSession = userSession {
             self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
         }
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(statusBarStyleChanged(_:)),
-                                               name: UIApplication.wr_statusBarStyleChangeNotification,
-                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(colorSchemeChanged(_:)),
@@ -98,60 +91,53 @@ final public class BackgroundViewController: UIViewController {
     }
     
     private func configureViews() {
+        let factor = BackgroundViewController.backgroundScaleFactor
         imageView.contentMode = .scaleAspectFill
+        imageView.transform = CGAffineTransform(scaleX: factor, y: factor)
+
         cropView.clipsToBounds = true
         darkenOverlay.backgroundColor = UIColor(white: 0, alpha: 0.16)
         
-        [imageView, blurView, statusBarBlurView, darkenOverlay].forEach(self.cropView.addSubview)
+        [imageView, blurView, darkenOverlay].forEach(self.cropView.addSubview)
         
         self.view.addSubview(self.cropView)
     }
     
     private func createConstraints() {
-        constrain(self.view, self.imageView, self.blurView, self.statusBarBlurView, self.cropView) { selfView, imageView, blurView, statusBarBlurView, cropView in
-            cropView.top == selfView.top
-            cropView.bottom == selfView.bottom
-            cropView.leading == selfView.leading - 100
-            cropView.trailing == selfView.trailing + 100
+        cropView.translatesAutoresizingMaskIntoConstraints = false
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        darkenOverlay.translatesAutoresizingMaskIntoConstraints = false
 
-            self.statusBarBlurViewHeightConstraint = statusBarBlurView.height == 0
-            statusBarBlurView.top == cropView.top
-            statusBarBlurView.leading == cropView.leading
-            statusBarBlurView.trailing == cropView.trailing
-            
-            blurView.top == statusBarBlurView.bottom
-            
-            blurView.leading == cropView.leading
-            blurView.trailing == cropView.trailing
-            blurView.bottom == cropView.bottom
-            imageView.edges == cropView.edges
-        }
-        
-        constrain(self.cropView, self.darkenOverlay) { cropView, darkenOverlay in
-            darkenOverlay.edges == cropView.edges
-        }
-        
-        self.updateStatusBarBlurStyle()
-        
-        let factor = BackgroundViewController.backgroundScaleFactor
-        self.imageView.transform = CGAffineTransform(scaleX: factor, y: factor)
+        let constraints = [
+            // Crop view
+            cropView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -100),
+            cropView.topAnchor.constraint(equalTo: view.topAnchor),
+            cropView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 100),
+            cropView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            // Blur view
+            blurView.leadingAnchor.constraint(equalTo: cropView.leadingAnchor),
+            blurView.topAnchor.constraint(equalTo: cropView.topAnchor),
+            blurView.trailingAnchor.constraint(equalTo: cropView.trailingAnchor),
+            blurView.bottomAnchor.constraint(equalTo: cropView.bottomAnchor),
+
+            // Image view
+            imageView.leadingAnchor.constraint(equalTo: cropView.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: cropView.topAnchor),
+            imageView.trailingAnchor.constraint(equalTo: cropView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: cropView.bottomAnchor),
+
+            // Darken overlay
+            darkenOverlay.leadingAnchor.constraint(equalTo: cropView.leadingAnchor),
+            darkenOverlay.topAnchor.constraint(equalTo: cropView.topAnchor),
+            darkenOverlay.trailingAnchor.constraint(equalTo: cropView.trailingAnchor),
+            darkenOverlay.bottomAnchor.constraint(equalTo: cropView.bottomAnchor),
+        ]
+
+        NSLayoutConstraint.activate(constraints)
     }
-    
-    private func updateStatusBarBlurStyle() {
-        guard let splitViewController = self.wr_splitViewController else {
-            return
-        }
-        
-        UIView.performWithoutAnimation {
-            let shouldShowStatusWhite = splitViewController.layoutSize != .compact &&
-                                        !UIApplication.shared.isStatusBarHidden &&
-                                        UIApplication.shared.statusBarStyle == .default
-            self.statusBarBlurViewHeightConstraint.constant = shouldShowStatusWhite ? 20 : 0
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
-        }
-    }
-    
+
     private func updateForUser() {
         guard self.isViewLoaded else {
             return
@@ -215,11 +201,7 @@ final public class BackgroundViewController: UIViewController {
     fileprivate func setBackground(color: UIColor) {
         self.imageView.backgroundColor = color
     }
-    
-    @objc public func statusBarStyleChanged(_ object: AnyObject!) {
-        self.updateStatusBarBlurStyle()
-    }
-    
+
     @objc public func colorSchemeChanged(_ object: AnyObject!) {
         self.updateForColorScheme()
     }
