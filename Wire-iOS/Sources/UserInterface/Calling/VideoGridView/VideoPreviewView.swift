@@ -27,6 +27,17 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
             updateState(animated: true)
         }
     }
+//    var shouldFill: Bool? {
+//        get {
+//            return previewView?.shouldFill
+//        }
+//
+//        set {
+//            if let previewView = previewView {
+//                previewView.shouldFill = !previewView.shouldFill
+//            }
+//        }
+//    }
 
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -70,7 +81,7 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
     private func createPreviewView() {
         let preview = AVSVideoView()
         preview.userid = identifier
-        preview.shouldFill = true
+        preview.shouldFill = true ///TODO: double tap to change
         preview.translatesAutoresizingMaskIntoConstraints = false
         if let snapshotView = snapshotView {
             insertSubview(preview, belowSubview: snapshotView)
@@ -78,8 +89,20 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
             addSubview(preview)
         }
         preview.fitInSuperview()
+
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapOnPreview))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        preview.addGestureRecognizer(doubleTapRecognizer)
+
         previewView = preview
     }
+
+    @objc func didDoubleTapOnPreview(sender: UIGestureRecognizer) {
+        guard let previewView = previewView else { return }
+
+        previewView.shouldFill = !previewView.shouldFill
+    }
+
     
     private func createSnapshotView() {
         guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
