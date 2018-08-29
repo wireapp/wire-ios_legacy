@@ -47,18 +47,15 @@ class EmojiSectionViewController: UIViewController {
     init(types: [EmojiSectionType]) {
         super.init(nibName: nil, bundle: nil)
         createButtons(types)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
         setupViews()
         createConstraints()
         view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
         selectedType = typesByButton.values.first
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func createButtons(_ types: [EmojiSectionType]) {
@@ -73,9 +70,22 @@ class EmojiSectionViewController: UIViewController {
     }
     
     private func createSectionButton(for type: EmojiSectionType) -> IconButton {
-        let button = IconButton(style: .default)
-        button.setIcon(type.icon, with: .tiny, for: .normal)
-        button.cas_styleClass = "emoji-category"
+
+        let button: IconButton = {
+            let button = IconButton(style: .default)
+            button.setIconColor(UIColor(scheme: .textDimmed, variant: .dark), for: .normal)
+            button.setIconColor(.textForegroundDark, for: .selected)
+            button.setIconColor(.iconHighlightedDark, for: .highlighted)
+            button.setBackgroundImageColor(.clear, for: .selected)
+            button.setBorderColor(.clear, for: .normal)
+            button.circular = false
+            button.borderWidth = 0
+
+            button.setIcon(type.icon, with: .tiny, for: .normal)
+
+            return button
+        }()
+
         button.addTarget(self, action: #selector(didTappButton), for: .touchUpInside)
         return button
     }
