@@ -34,11 +34,6 @@ final class EmojiKeyboardViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testForBottomBarIconButtons(){
-        // GIVEN
-
-        // WHEN
-
-        // THEN
         verify(view: sut.view)
     }
 }
