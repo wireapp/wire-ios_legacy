@@ -150,7 +150,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             #if targetEnvironment(simulator)
             let tempFilePath = URL(fileURLWithPath: "/var/tmp/mixpanel_id.txt")
             try? FileManager.default.removeItem(at: tempFilePath)
-            try! uuidString.data(using: .utf8)?.write(to: tempFilePath)
+            try! Data(uuidString.utf8).write(to: tempFilePath)
             #endif
         }
         
