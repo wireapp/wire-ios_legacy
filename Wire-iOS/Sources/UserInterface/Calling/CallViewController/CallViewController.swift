@@ -94,7 +94,6 @@ final class CallViewController: UIViewController {
     }
 
     @objc func didTapOnView(sender: UIGestureRecognizer) {
-        print("🐛 tap")
         guard canHideOverlay else { return }
 
 
@@ -108,7 +107,6 @@ final class CallViewController: UIViewController {
     }
 
     @objc func didDoubleTapOnView(sender: UIGestureRecognizer) {
-        print("❤ double tap")
         videoGridViewController.switchFillMode()
     }
 
