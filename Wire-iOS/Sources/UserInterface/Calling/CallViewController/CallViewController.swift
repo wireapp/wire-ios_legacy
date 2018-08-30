@@ -22,7 +22,8 @@ import AVFoundation
 final class CallViewController: UIViewController {
     
     weak var dismisser: ViewControllerDismisser? = nil
-
+    fileprivate var tapRecognizer: UITapGestureRecognizer!
+    fileprivate var doubleTapRecognizer: UITapGestureRecognizer!
     fileprivate let mediaManager: AVSMediaManagerInterface
     fileprivate let voiceChannel: VoiceChannel
     fileprivate var callInfoConfiguration: CallInfoConfiguration
@@ -79,14 +80,23 @@ final class CallViewController: UIViewController {
         createConstraints()
         updateConfiguration()
 
-        view.isUserInteractionEnabled = true
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnView))
-        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnView))
+                tapRecognizer.numberOfTapsRequired = 1
+//        tapRecognizer.delegate = self
+
         view.addGestureRecognizer(tapRecognizer)
+
+        doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapOnView))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+//        doubleTapRecognizer.delegate = self
+        tapRecognizer.require(toFail: doubleTapRecognizer)
+
+        view.addGestureRecognizer(doubleTapRecognizer)
 
     }
 
     @objc func didTapOnView(sender: UIGestureRecognizer) {
+        print("🐛 tap")
         guard canHideOverlay else { return }
 
 
@@ -97,6 +107,11 @@ final class CallViewController: UIViewController {
         }
 
         toggleOverlayVisibility()
+    }
+
+    @objc func didDoubleTapOnView(sender: UIGestureRecognizer) {
+        print("❤ double tap")
+        videoGridViewController.switchFillMode()
     }
 
     deinit {
@@ -481,3 +496,17 @@ extension CallViewController {
     }
 
 }
+
+//extension CallViewController: UIGestureRecognizerDelegate {
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+////        return touch.view?.isDescendant(of: contentView) == false
+//        return /*touch.tapCount == 1 &&*/ gestureRecognizer == self.tapRecognizer
+//    }
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        if otherGestureRecognizer == videoGridViewController.tapRecognizer() {
+//            return true
+//        }
+//
+//        return false
+//    }
+//}

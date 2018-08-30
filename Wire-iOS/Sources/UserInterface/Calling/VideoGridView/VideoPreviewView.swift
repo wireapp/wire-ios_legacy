@@ -57,6 +57,11 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         setupViews()
         createConstraints()
         updateState()
+
+//        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapOnPreview))
+//        doubleTapRecognizer.numberOfTapsRequired = 2
+//        self.addGestureRecognizer(doubleTapRecognizer)
+
     }
 
     @available(*, unavailable)
@@ -78,10 +83,10 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
-    private func createPreviewView() {
+    private func createPreviewView(shouldFill: Bool = true) {
         let preview = AVSVideoView()
         preview.userid = identifier
-        preview.shouldFill = true ///TODO: double tap to change
+        preview.shouldFill = shouldFill
         preview.translatesAutoresizingMaskIntoConstraints = false
         if let snapshotView = snapshotView {
             insertSubview(preview, belowSubview: snapshotView)
@@ -90,18 +95,25 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         }
         preview.fitInSuperview()
 
-        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapOnPreview))
-        doubleTapRecognizer.numberOfTapsRequired = 2
-        preview.addGestureRecognizer(doubleTapRecognizer)
+//        preview.isUserInteractionEnabled = true
 
         previewView = preview
     }
 
-    @objc func didDoubleTapOnPreview(sender: UIGestureRecognizer) {
+    public func switchFillMode() {
         guard let previewView = previewView else { return }
+        let oldShouldFill = previewView.shouldFill
 
-        previewView.shouldFill = !previewView.shouldFill
+        previewView.removeFromSuperview()
+        self.previewView = nil
+//        previewView.shouldFill = !previewView.shouldFill
+        createPreviewView(shouldFill: !oldShouldFill) ///TODO: effect?
     }
+
+//    @objc func didDoubleTapOnPreview(sender: UIGestureRecognizer) {
+//        guard let previewView = previewView else { return }
+//
+//    }
 
     
     private func createSnapshotView() {
