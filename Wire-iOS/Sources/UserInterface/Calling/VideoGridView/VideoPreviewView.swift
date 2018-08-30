@@ -27,17 +27,6 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
             updateState(animated: true)
         }
     }
-//    var shouldFill: Bool? {
-//        get {
-//            return previewView?.shouldFill
-//        }
-//
-//        set {
-//            if let previewView = previewView {
-//                previewView.shouldFill = !previewView.shouldFill
-//            }
-//        }
-//    }
 
     private var previewView: AVSVideoView?
     private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -78,10 +67,10 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         pausedLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
-    private func createPreviewView(shouldFill: Bool = true) {
+    private func createPreviewView() {
         let preview = AVSVideoView()
         preview.userid = identifier
-        preview.shouldFill = shouldFill
+        preview.shouldFill = true
         preview.translatesAutoresizingMaskIntoConstraints = false
         if let snapshotView = snapshotView {
             insertSubview(preview, belowSubview: snapshotView)
