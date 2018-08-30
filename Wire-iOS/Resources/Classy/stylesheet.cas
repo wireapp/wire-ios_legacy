@@ -42,11 +42,6 @@ ArchivedNavigationBar {
     }
 }
 
-ConversationListContentController UILabel.empty-list-message {
-    font: $font-normal-light;
-    textColor: $color-text-foreground-dark;
-}
-
 ConversationListItemView {
     titleField: @{
         textColor: $color-text-foreground-dark;
@@ -124,12 +119,6 @@ ArticleView {
 
 UIView.container-view {
     backgroundColor: $color-placeholder-background;
-}
-
-UILabel.conversationVerifiedLabel {
-    textColor: $color-text-foreground;
-    font: $font-small-semibold;
-    textTransform: upper;
 }
 
 InputBar: {
