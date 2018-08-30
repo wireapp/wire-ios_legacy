@@ -22,6 +22,12 @@ import MessageUI
 /// Presents debug alerts
 @objcMembers public class DebugAlert: NSObject {
     
+    private struct Action {
+        let text: String
+        let type: UIAlertActionStyle
+        let action: (() -> Void)?
+    }
+    
     private static var isShown = false
     
     /// Presents an alert, if in developer mode, otherwise do nothing
@@ -31,11 +37,17 @@ import MessageUI
     
     /// Presents an alert to send logs, if in developer mode, otherwise do nothing
     static func showSendLogsMessage(message: String) {
+        let action1 = Action(text: "Send to Devs", type: .destructive) {
+            DebugLogSender.sendLogsByEmail(message: message)
+        }
+        
+        let action2 = Action(text: "Send to Devs & AVS", type: .destructive) {
+            DebugLogSender.sendLogsByEmail(message: message, shareWithAVS: true)
+        }
+        
         self.show(
             message: message,
-            okText: "Send",
-            okAction: { DebugLogSender.sendLogsByEmail(message: message) },
-            okType: .destructive,
+            actions: [action1, action2],
             title: "Send debug logs"
         )
     }
@@ -44,9 +56,7 @@ import MessageUI
     /// If not in developer mode, does nothing.
     private static func show(
         message: String,
-        okText: String = "OK",
-        okAction: (() -> Void)? = nil,
-        okType: UIAlertActionStyle = .default,
+        actions: [Action] = [Action(text: "OK", type: .default, action: nil)],
         title: String = "DEBUG MESSAGE",
         cancelText: String? = "Cancel"
         ) {
@@ -56,12 +66,16 @@ import MessageUI
         isShown = true
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAlertAction = UIAlertAction(title: okText, style: okType) { _ in
-            isShown = false
-            okAction?()
+        
+        for action in actions {
+            let alertAction = UIAlertAction(title: action.text, style: action.type, handler: { _ in
+                isShown = false
+                action.action?()
+            })
+            
+            alert.addAction(alertAction)
         }
-        alert.addAction(okAlertAction)
-
+        
         if let cancelText = cancelText {
             let cancelAction = UIAlertAction(title: cancelText, style: .cancel) { _ in
                 isShown = false
@@ -92,7 +106,7 @@ import MessageUI
     static private var senderInstance: DebugLogSender? = nil
 
     /// Sends recorded logs by email
-    static func sendLogsByEmail(message: String) {
+    static func sendLogsByEmail(message: String, shareWithAVS: Bool = false) {
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
         guard self.senderInstance == nil else { return }
         
@@ -110,7 +124,7 @@ import MessageUI
         let device = UIDevice.current.name
         let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"
         let message = "Logs for: \(message)\n\n"
-        let mail = "calling-ios@wire.com"
+        let mail = "\(shareWithAVS ? "calling-" : "")ios@wire.com"
         
         guard MFMailComposeViewController.canSendMail() else {
             DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mail, from: controller)
