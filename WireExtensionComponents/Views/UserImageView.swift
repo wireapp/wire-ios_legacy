@@ -22,7 +22,7 @@ import Foundation
 extension UserImageView {
 
     @objc func setupStyle() {
-        ///TODO: use font spec after
+        ///TODO: use font spec after this class is removed form share extension
         initials.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .large, weight: .semibold)
         initials.textColor = UIColor(scheme: .listAvatarInitials)
     }
