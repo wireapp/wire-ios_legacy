@@ -103,16 +103,12 @@ class VideoGridViewController: UIViewController {
     }
 
     public func switchFillMode() {
+        ///TODO: input location and pick matched form the array
         if let videoPreviewView = gridView.gridSubviews.first as? VideoPreviewView {
             videoPreviewView.switchFillMode()
         }
     }
 
-    public func tapRecognizer() -> UIGestureRecognizer? {
-        ///TODO: input location and pick matched form the array
-        return gridView.gridSubviews.first?.gestureRecognizers?.first
-    }
-    
     func updateState() {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
         

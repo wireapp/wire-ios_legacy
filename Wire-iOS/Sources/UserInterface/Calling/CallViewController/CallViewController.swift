@@ -82,13 +82,11 @@ final class CallViewController: UIViewController {
 
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnView))
                 tapRecognizer.numberOfTapsRequired = 1
-//        tapRecognizer.delegate = self
 
         view.addGestureRecognizer(tapRecognizer)
 
         doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapOnView))
         doubleTapRecognizer.numberOfTapsRequired = 2
-//        doubleTapRecognizer.delegate = self
         tapRecognizer.require(toFail: doubleTapRecognizer)
 
         view.addGestureRecognizer(doubleTapRecognizer)
@@ -226,23 +224,6 @@ final class CallViewController: UIViewController {
         view.backgroundColor = UIColor(scheme: .background, variant: callInfoConfiguration.variant)
     }
 
-    /*
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first,
-            touch.tapCount == 1 else { return }
-
-            super.touchesBegan(touches, with: event)
-        guard canHideOverlay else { return }
-
-        if let overlay = videoGridViewController.previewOverlay,
-            overlay.point(inside: touch.location(in: overlay), with: event), !isOverlayVisible {
-            return
-        }
-
-        toggleOverlayVisibility()
-    }
- */
-    
     fileprivate func alertVideoUnavailable() {
         if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
             showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
@@ -496,17 +477,3 @@ extension CallViewController {
     }
 
 }
-
-//extension CallViewController: UIGestureRecognizerDelegate {
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-////        return touch.view?.isDescendant(of: contentView) == false
-//        return /*touch.tapCount == 1 &&*/ gestureRecognizer == self.tapRecognizer
-//    }
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        if otherGestureRecognizer == videoGridViewController.tapRecognizer() {
-//            return true
-//        }
-//
-//        return false
-//    }
-//}

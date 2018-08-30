@@ -57,11 +57,6 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         setupViews()
         createConstraints()
         updateState()
-
-//        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapOnPreview))
-//        doubleTapRecognizer.numberOfTapsRequired = 2
-//        self.addGestureRecognizer(doubleTapRecognizer)
-
     }
 
     @available(*, unavailable)
@@ -95,8 +90,6 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         }
         preview.fitInSuperview()
 
-//        preview.isUserInteractionEnabled = true
-
         previewView = preview
     }
 
@@ -106,15 +99,8 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
 
         previewView.removeFromSuperview()
         self.previewView = nil
-//        previewView.shouldFill = !previewView.shouldFill
         createPreviewView(shouldFill: !oldShouldFill) ///TODO: effect?
     }
-
-//    @objc func didDoubleTapOnPreview(sender: UIGestureRecognizer) {
-//        guard let previewView = previewView else { return }
-//
-//    }
-
     
     private func createSnapshotView() {
         guard let snapshotView = previewView?.snapshotView(afterScreenUpdates: true) else { return }
