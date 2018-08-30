@@ -95,15 +95,15 @@ final class CallViewControllerOverlayTests: XCTestCase {
         // WHEN
         // call overlay is visible at the beginning
         XCTAssert(sut.isOverlayVisible)
-        XCTAssert(sut.muteIndicatorViewController.view.isHidden)
+        XCTAssert(sut.videoGridViewController.muteIndicatorViewController.view.isHidden)
 
         // call overlay is invisible after touch
         sut.touchesBegan(Set(), with: nil)
         XCTAssertFalse(sut.isOverlayVisible)
 
         // THEN
-        XCTAssertFalse(sut.muteIndicatorViewController.view.isHidden)
-        XCTAssertEqual(sut.muteIndicatorViewController.view.alpha, 1)
+        XCTAssertFalse(sut.videoGridViewController.muteIndicatorViewController.view.isHidden)
+        XCTAssertEqual(sut.videoGridViewController.muteIndicatorViewController.view.alpha, 1)
     }
 
     func testThatMuteIndicatorIsNotShownAfterTapOnCallInfoScreenAndNotMuted() {
@@ -118,6 +118,6 @@ final class CallViewControllerOverlayTests: XCTestCase {
         XCTAssertFalse(sut.isOverlayVisible)
 
         // THEN
-        XCTAssert(sut.muteIndicatorViewController.view.isHidden)
+        XCTAssert(sut.videoGridViewController.muteIndicatorViewController.view.isHidden)
     }
 }

@@ -31,22 +31,13 @@ extension AVSVideoView: AVSIdentifierProvider {
 final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     
     private let previewView = AVSVideoPreview()
-    private let mutedOverlayView = UIView()
     let identifier: String
-    
-    var isMuted = false {
-        didSet {
-            guard oldValue != isMuted else { return }
-            updateState(animated: true)
-        }
-    }
     
     init(identifier: String) {
         self.identifier = identifier
         super.init(frame: .zero)
         setupViews()
         createConstraints()
-        updateState()
     }
     
     @available(*, unavailable)
@@ -67,16 +58,8 @@ final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     
     private func createConstraints() {
         previewView.fitInSuperview()
-        mutedOverlayView.fitInSuperview()
     }
-    
-    private func updateState(animated: Bool = false) {
-        let duration: TimeInterval = animated ? 0.2 : 0
-        UIView.animate(withDuration: duration) { [mutedOverlayView, isMuted] in
-            mutedOverlayView.alpha = isMuted ? 1 : 0
-        }
-    }
-    
+
     override func didMoveToWindow() {
         super.didMoveToWindow()
         
