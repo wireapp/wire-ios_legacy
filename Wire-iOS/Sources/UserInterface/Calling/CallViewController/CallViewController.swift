@@ -107,7 +107,8 @@ final class CallViewController: UIViewController {
     }
 
     @objc func didDoubleTapOnView(sender: UIGestureRecognizer) {
-        videoGridViewController.switchFillMode()
+        let location = sender.location(ofTouch: 0 , in: videoGridViewController.view)
+        videoGridViewController.switchFillMode(location: location)
     }
 
     deinit {

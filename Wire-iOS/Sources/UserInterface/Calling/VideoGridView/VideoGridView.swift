@@ -102,10 +102,15 @@ class VideoGridViewController: UIViewController {
         thumbnailViewController.view.fitInSuperview()
     }
 
-    public func switchFillMode() {
-        ///TODO: input location and pick matched form the array
-        if let videoPreviewView = gridView.gridSubviews.first as? VideoPreviewView {
-            videoPreviewView.switchFillMode()
+    public func switchFillMode(location: CGPoint) {
+        for view in gridView.gridSubviews {
+
+            let convertedRect = self.view.convert(view.frame, from: view.superview)
+
+            if let videoPreviewView = view as? VideoPreviewView, convertedRect.contains(location) {
+                videoPreviewView.switchFillMode()
+                break
+            }
         }
     }
 
