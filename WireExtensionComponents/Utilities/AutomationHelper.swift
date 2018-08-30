@@ -91,9 +91,11 @@ import WireSyncEngine
         } else {
             self.debugDataToInstall = nil
         }
-        
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()
+        if arguments.hasFlag(AutomationKey.listenForLogSendingEvent.rawValue) {
+            listenForClipboardChanges()
+        }
     }
     
     fileprivate enum AutomationKey: String {
@@ -108,6 +110,8 @@ import WireSyncEngine
         case addressBookRemoteSearchDelay = "addressbook-search-delay"
         case debugDataToInstall = "debug-data-to-install"
         case disableCallQualitySurvey = "disable-call-quality-survey"
+        case listenForLogSendingEvent = "listen-for-logs-keyword" // starts polling the clipboard to detect .pasteLogsInClipboard
+        case pasteLogsInClipboard = "paste-logs" // When this is detected in the clipboard we copy the contents of current log to clipboard
     }
     
     /// Returns the login email and password credentials if set in the given arguments
@@ -218,4 +222,23 @@ extension AutomationHelper {
         try! FileManager.default.copyFolderRecursively(from: packageURL, to: sharedContainerURL, overwriteExistingFiles: true)
     }
     
+}
+
+extension AutomationHelper {
+    fileprivate func listenForClipboardChanges() {
+        // UIClipboard change notifications do not work when contents are changed from
+        // outside the process (e.g. in automation) so the only way is to poll for it
+        pollClipboardContentsForMagicString()
+    }
+
+    fileprivate func pollClipboardContentsForMagicString() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+            if UIPasteboard.general.string == AutomationKey.pasteLogsInClipboard.rawValue {
+                // When magic string is detected we should put contents of the first available log to clipboard
+                let allLogStrings = [ZMSLog.currentLog, ZMSLog.previousLog].lazy.compactMap{ $0 }.compactMap { String(data: $0, encoding: .utf8) }
+                UIPasteboard.general.string = allLogStrings.first ?? "No logs found"
+            }
+            self?.pollClipboardContentsForMagicString()
+        }
+    }
 }
