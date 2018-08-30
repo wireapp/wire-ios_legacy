@@ -95,11 +95,8 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
 
     public func switchFillMode() {
         guard let previewView = previewView else { return }
-        let oldShouldFill = previewView.shouldFill
 
-        previewView.removeFromSuperview()
-        self.previewView = nil
-        createPreviewView(shouldFill: !oldShouldFill) ///TODO: effect?
+        previewView.shouldFill = !previewView.shouldFill
     }
     
     private func createSnapshotView() {
