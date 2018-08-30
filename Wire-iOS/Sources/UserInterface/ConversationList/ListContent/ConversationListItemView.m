@@ -18,6 +18,7 @@
 
 
 #import "ConversationListItemView.h"
+#import "ConversationListItemView+Internal.h"
 
 @import PureLayout;
 
@@ -39,7 +40,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 @property (nonatomic, readwrite) ConversationListAccessoryView *rightAccessory;
 @property (nonatomic) UIView *avatarContainer;
 @property (nonatomic) UIView *labelsContainer;
-@property (nonatomic) UILabel *titleField;
 @property (nonatomic) UILabel *subtitleField;
 @property (nonatomic) UIView *lineView;
 
@@ -66,6 +66,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                                  selector:@selector(mediaPlayerStateChanged:)
                                                      name:MediaPlaybackManagerPlayerStateChangedNotification
                                                    object:nil];
+
+        [self setupStyle];
     }
     return self;
 }

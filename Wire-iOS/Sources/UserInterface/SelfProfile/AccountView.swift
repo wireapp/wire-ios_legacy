@@ -232,7 +232,15 @@ extension BaseAccountView: ZMUserObserver {
 }
 
 @objcMembers public final class PersonalAccountView: BaseAccountView {
-    internal let userImageView = AvatarImageView(frame: .zero)
+    internal let userImageView: AvatarImageView = {
+        let avatarImageView = AvatarImageView(frame: .zero)
+        avatarImageView.containerView.backgroundColor = .backgroundLight
+
+        avatarImageView.initials.font = .smallSemiboldFont
+        avatarImageView.initials.textColor = .textForegroundLight
+
+        return avatarImageView
+    }()
 
     private var conversationListObserver: NSObjectProtocol!
     private var connectionRequestObserver: NSObjectProtocol!
@@ -245,6 +253,7 @@ extension BaseAccountView: ZMUserObserver {
     
     override init(account: Account, user: ZMUser? = nil) {
         super.init(account: account, user: user)
+        
         
         self.isAccessibilityElement = true
         self.accessibilityTraits = UIAccessibilityTraitButton
@@ -309,9 +318,11 @@ extension PersonalAccountView {
         didSet {
             switch (self.style) {
             case .big:
-                self.cas_styleClass = "big"
+                initialLabel.font = .largeThinFont
             case .small:
-                self.cas_styleClass = nil
+                initialLabel.font = .smallSemiboldFont
+                initialLabel.textColor = .textForegroundLight
+                backgroundColor = .backgroundLight
             }
         }
     }

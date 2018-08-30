@@ -48,6 +48,7 @@
 #import "ConversationViewController+Private.h"
 #import "ConversationListCell.h"
 #import "ConversationListItemView.h"
+#import "ConversationListItemView+Internal.h"
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
 #import "RegistrationTextField.h"
