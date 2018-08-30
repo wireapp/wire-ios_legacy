@@ -232,13 +232,13 @@ extension AutomationHelper {
     }
 
     fileprivate func pollClipboardContentsForMagicString() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
             if UIPasteboard.general.string == AutomationKey.pasteLogsInClipboard.rawValue {
                 // When magic string is detected we should put contents of the first available log to clipboard
                 let allLogStrings = [ZMSLog.currentLog, ZMSLog.previousLog].lazy.compactMap{ $0 }.compactMap { String(data: $0, encoding: .utf8) }
                 UIPasteboard.general.string = allLogStrings.first ?? "No logs found"
             }
-            self.pollClipboardContentsForMagicString()
+            self?.pollClipboardContentsForMagicString()
         }
     }
 }
