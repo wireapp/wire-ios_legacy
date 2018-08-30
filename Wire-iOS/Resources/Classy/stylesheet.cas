@@ -117,10 +117,6 @@ ArticleView {
     authorHighlightFont: $font-small-semibold;
 }
 
-UIView.container-view {
-    backgroundColor: $color-placeholder-background;
-}
-
 InputBar: {
     barBackgroundColor: $color-bar-background;
     writingSeparatorColor: $color-separator;
@@ -231,12 +227,6 @@ DescriptionHeaderView {
         textColor: $color-text-foreground-dark;
         backgroundColor: clear
     }
-}
-
-/* Registration */
-
-UIView.status-bar-overlay {
-    backgroundColor: $color-background;
 }
 
 /* Collections */

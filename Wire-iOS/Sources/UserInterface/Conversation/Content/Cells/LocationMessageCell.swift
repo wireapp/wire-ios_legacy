@@ -42,7 +42,7 @@ import Classy
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
-        containerView.cas_styleClass = "container-view"
+        containerView.backgroundColor = .placeholderBackground
         CASStyler.default().styleItem(self)
         configureViews()
         createConstraints()

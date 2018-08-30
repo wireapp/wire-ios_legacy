@@ -41,7 +41,8 @@ class LocationPreviewController: TintColorCorrectedViewController {
         self.message = message
         super.init(nibName: nil, bundle: nil)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.cas_styleClass = "container-view"
+        containerView.backgroundColor = .placeholderBackground
+
         configureViews()
         createConstraints()
     }

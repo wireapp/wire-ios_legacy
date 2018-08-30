@@ -32,7 +32,7 @@ import Classy
         
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         self.containerView.layer.cornerRadius = 4
-        self.containerView.cas_styleClass = "container-view"
+        containerView.backgroundColor = .placeholderBackground
         self.containerView.clipsToBounds = true
         
         self.audioMessageView.delegate = self
