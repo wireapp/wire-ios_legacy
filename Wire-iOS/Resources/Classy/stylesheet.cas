@@ -18,13 +18,6 @@
 
 /* ConversationListAvatar */
 
-ConversationAvatarView UserImageView {
-    initials: @{
-        font: $font-medium-semibold;
-        textColor: $color-list-avatar-initials;
-    }
-}
-
 /* Archive */
 
 ArchivedNavigationBar {
