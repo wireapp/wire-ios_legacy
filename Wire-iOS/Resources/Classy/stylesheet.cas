@@ -16,24 +16,7 @@
 *  along with this program. If not, see http://www.gnu.org/licenses/.
 */ 
 
-/* ConversationListAvatar */
-
 /* Archive */
-
-ArchivedNavigationBar {
-    titleLabel: @{
-        textColor: $color-text-foreground-dark;
-        font: $font-medium-semibold;
-    }
-    
-    separatorView: @{
-        backgroundColor: $color-separator-light;
-    }
-    
-    dismissButton: @{
-        iconColor: $color-text-foreground-dark;
-    }
-}
 
 ConversationListItemView {
     titleField: @{
