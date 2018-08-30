@@ -93,9 +93,9 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             avatarView.height == self.avatarSize
         }
         
-        self.titleLabel.cas_styleClass = "normal-light"
         self.titleLabel.backgroundColor = .clear
         self.titleLabel.textColor = .white
+        titleLabel.font = .normalLightFont
         self.titleLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
         
         self.stackView.addArrangedSubview(self.titleLabel)

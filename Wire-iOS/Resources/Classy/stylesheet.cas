@@ -179,19 +179,6 @@ ModalTopBar {
     }
 }
 
-
-/* Common label styling */
-
-UILabel.small-light {
-    font: $font-small;
-    textColor: white;
-}
-
-UILabel.normal-light {
-    font: $font-normal-light;
-    textColor: white;
-}
-
 /* Contacts */
 
 ContactsSectionHeaderView {
