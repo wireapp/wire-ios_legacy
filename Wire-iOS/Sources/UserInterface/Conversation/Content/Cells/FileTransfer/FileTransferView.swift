@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers final public class FileTransferView: UIView, TransferView {
+final public class FileTransferView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
 
     weak public var delegate: TransferViewDelegate?
@@ -41,10 +41,11 @@ import Cartography
     private let loadingView = ThreeDotsLoadingView()
     public let actionButton = IconButton()
     
-    public var labelTextColor: UIColor? = .textForeground
-    public var labelTextBlendedColor: UIColor? = .textDimmed
-    public var labelFont: UIFont? = .smallSemiboldFont
-    public var labelBoldFont: UIFont?
+    public let labelTextColor: UIColor = .textForeground
+    public let labelTextBlendedColor: UIColor = .textDimmed
+    public let labelFont: UIFont = .smallLightFont
+    public let labelBoldFont: UIFont = .smallSemiboldFont
+
     private var allViews : [UIView] = []
     
     public required override init(frame: CGRect) {
@@ -135,14 +136,8 @@ import Cartography
     
     public func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
-        guard let labelBoldFont = self.labelBoldFont,
-            let labelFont = self.labelFont,
-            let labelTextColor = self.labelTextColor,
-            let labelTextBlendedColor = self.labelTextBlendedColor,
-            let fileMessageData = message.fileMessageData
-            else {
-            return
-        }
+        guard let fileMessageData = message.fileMessageData
+            else { return }
         
         configureVisibleViews(with: message, isInitial: isInitial)
         
