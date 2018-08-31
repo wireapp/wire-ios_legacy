@@ -303,6 +303,21 @@ import SafariServices
     }
     
     func appendMessages(count: Int) {
+        let batchSize = 5_000
+        
+        var currentCount = count
+        
+        repeat {
+            let thisBatchCount = currentCount > batchSize ? batchSize : currentCount
+
+            appendMessagesToDatabase(count: thisBatchCount)
+            
+            currentCount = currentCount - thisBatchCount
+        }
+        while (currentCount > 0)
+    }
+    
+    func appendMessagesToDatabase(count: Int) {
         let userSession = ZMUserSession.shared()!
         let conversation = ZMConversationList.conversations(inUserSession: userSession).firstObject! as! ZMConversation
         let conversationId = conversation.objectID
@@ -314,7 +329,7 @@ import SafariServices
                 let nonce = UUID()
                 let genericMessage = ZMGenericMessage.message(text: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;",
                     nonce: nonce)
-
+                
                 let clientMessage = ZMClientMessage(nonce: nonce, managedObjectContext: syncContext)
                 clientMessage.add(genericMessage.data())
                 clientMessage.sender = ZMUser.selfUser(in: syncContext)
