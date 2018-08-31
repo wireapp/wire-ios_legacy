@@ -51,6 +51,7 @@ class AudioRecordViewControllerTests: ZMSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        delegate = nil
         super.tearDown()
     }
     

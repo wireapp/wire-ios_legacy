@@ -30,7 +30,7 @@ public protocol TextSearchInputViewDelegate: class {
     public let iconView = UIImageView()
     public let searchInput = UITextView()
     public let placeholderLabel = UILabel()
-    public let cancelButton = IconButton.iconButtonDefault()
+    public let cancelButton = IconButton(style: .default)
 
     private let spinner = ProgressSpinner()
     

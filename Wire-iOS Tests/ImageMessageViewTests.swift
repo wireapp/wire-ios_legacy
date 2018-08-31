@@ -22,7 +22,18 @@ import Cartography
 @testable import WireExtensionComponents
 
 class ImageMessageViewTests: ZMSnapshotTestCase {
-    let sut = ImageMessageView()
+    var sut: ImageMessageView!
+
+    override func setUp() {
+        super.setUp()
+        sut = ImageMessageView()
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
 
     func testThatItRendersSmallImage() {
         // GIVEN & WHEN

@@ -250,7 +250,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        return "conversation.status.call".localized && type(of: self).regularStyle
+        return .none
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
@@ -364,7 +364,14 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 messageDescription = (localizationRootPath + ".ephemeral").localized
             }
             else {
-                messageDescription = String(format: (localizationRootPath + "." + localizationKey).localized, message.textMessageData?.messageText ?? "")
+                var format = localizationRootPath + "." + localizationKey
+                
+                if status.isGroup && type == .missedCall {
+                    format += ".groups"
+                    return format.localized(args: sender.displayName(in: conversation)) && Swift.type(of: self).regularStyle
+                }
+                
+                messageDescription = String(format: format.localized, message.textMessageData?.messageText ?? "")
             }
             
             if status.isGroup {

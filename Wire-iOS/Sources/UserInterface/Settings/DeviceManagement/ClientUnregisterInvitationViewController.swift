@@ -80,7 +80,8 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     }
     
     fileprivate func createSignOutButton() {
-        let signOutButton = Button(styleClass: "dialogue-button-empty-monochrome")
+        
+        let signOutButton = Button(style: .emptyMonochrome)
         signOutButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.sign_out_button.title", comment:""), for: UIControlState())
         signOutButton.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.signOut(_:)), for: .touchUpInside)
         signOutButton.isHidden = true // for the moment not supported

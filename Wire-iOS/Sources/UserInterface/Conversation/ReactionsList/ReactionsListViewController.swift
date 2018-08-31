@@ -27,7 +27,7 @@ import Classy
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
     fileprivate let topBar: ModalTopBar
-    public let dismissButton = IconButton.iconButtonDefault()
+    public let dismissButton = IconButton(style: .default)
     public let titleLabel = UILabel()
     
     public init(message: ZMConversationMessage, showsStatusBar: Bool) {
@@ -77,7 +77,7 @@ import Classy
             collectionView.top == topBar.bottom
         }
 
-        CASStyler.default().styleItem(self)
+        view.backgroundColor = UIColor(scheme: .textBackground)
     }
     
     override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {

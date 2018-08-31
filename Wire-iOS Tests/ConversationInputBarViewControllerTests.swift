@@ -46,6 +46,14 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationInputBarViewController!
 
+    override func tearDown() {
+        // Commented out intentionally - if this is nil'ed then
+        // OptionsViewControllerTests.testThatItRendersRevokeLinkConfirmationAlert()
+        // is crashing when running a full test suite
+//        sut = nil
+        super.tearDown()
+    }
+
     func prepareSut() {
         sut = ConversationInputBarViewController(conversation: nil)
 

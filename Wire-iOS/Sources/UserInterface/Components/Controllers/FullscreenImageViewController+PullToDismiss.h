@@ -29,7 +29,6 @@
 @property (nonatomic) UIAttachmentBehavior* attachmentBehavior;
 @property (nonatomic) CGRect initialImageViewBounds;
 @property (nonatomic) CGPoint initialImageViewCenter;
-@property (nonatomic) CGFloat minimumDismissMagnitude;
 
 @property (nonatomic) UIPanGestureRecognizer *panRecognizer;
 @end

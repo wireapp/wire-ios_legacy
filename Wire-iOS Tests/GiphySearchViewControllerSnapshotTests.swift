@@ -48,7 +48,10 @@ final class GiphySearchViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut = nil
         mockConversation = nil
         mockNavigationController = nil
-
+        client = nil
+        requester = nil
+        resultsController = nil
+        
         super.tearDown()
     }
 

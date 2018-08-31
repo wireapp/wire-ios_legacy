@@ -95,6 +95,7 @@
                                       NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     
     self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
+    self.termsOfUseText.linkTextAttributes = @{};
     self.termsOfUseText.delegate = self;
     self.termsOfUseText.attributedText = [[NSAttributedString alloc] initWithAttributedString:attributedTerms];
     [self.containerView addSubview:self.termsOfUseText];

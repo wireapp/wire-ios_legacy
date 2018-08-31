@@ -137,7 +137,7 @@ private struct InputBarConstants {
     public let markdownView = MarkdownBarView()
     
     
-    public var editingBackgroundColor: UIColor?
+    public var editingBackgroundColor = UIColor.brightYellow
     public var barBackgroundColor: UIColor?
     public var writingSeparatorColor: UIColor?
     public var ephemeralColor: UIColor {
@@ -412,8 +412,8 @@ private struct InputBarConstants {
     }
 
     fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
-        guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
-        return state.isWriting || state.isMarkingDown ? writingColor : writingColor.mix(editingColor, amount: 0.16)
+        guard let writingColor = barBackgroundColor else { return nil }
+        return state.isWriting || state.isMarkingDown ? writingColor : writingColor.mix(editingBackgroundColor, amount: 0.16)
     }
 
     fileprivate func updatePlaceholderColors() {

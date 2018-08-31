@@ -50,7 +50,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
     public init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
         self.colorSchemeVariant = variant
-        self.clearButton = variant == .dark ? IconButton.iconButtonDefaultLight() : IconButton.iconButtonDefaultDark()
+        self.clearButton = IconButton(style: .default, variant: variant)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -69,7 +69,7 @@ public protocol SearchHeaderViewControllerDelegate : class {
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
         clearButton.alpha = 0.4
         clearButton.isHidden = true
-        
+
         tokenField.layer.cornerRadius = 4
         tokenField.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         tokenField.tokenTitleColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)

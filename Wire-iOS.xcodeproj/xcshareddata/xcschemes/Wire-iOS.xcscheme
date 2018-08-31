@@ -83,6 +83,10 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--disable-call-quality-survey"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--debug-data-to-install=/Users/xxxxxxx/Database2.41"
             isEnabled = "NO">
          </CommandLineArgument>

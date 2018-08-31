@@ -50,7 +50,7 @@ class TextMessageCellTests: ZMSnapshotTestCase {
 
     override func tearDown() {
         resetDayFormatter()
-        
+        sut = nil
         super.tearDown()
     }
 

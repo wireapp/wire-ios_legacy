@@ -45,6 +45,7 @@ class CallActionsViewTests: ZMSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        widthConstraint = nil
         super.tearDown()
     }
     

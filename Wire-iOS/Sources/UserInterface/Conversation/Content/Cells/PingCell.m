@@ -18,12 +18,11 @@
 
 
 #import "PingCell.h"
+#import "PingCell+Internal.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+WR_ColorScheme.h"
-
-#import <Classy/Classy.h>
 
 @import PureLayout;
 
@@ -38,9 +37,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
 @property (nonatomic, strong) UIImageView *pingImageView;
 @property (nonatomic, assign) BOOL initialPingCellConstraintsCreated;
 @property (nonatomic, strong) AnimationBlock pingAnimationBlock;
-@property (nonatomic, strong) UIFont *pingFont;
-@property (nonatomic, strong) UIFont *authorFont;
-@property (nonatomic, strong) UILabel *pingLabel;
 
 @property (nonatomic, assign) BOOL isPingAnimationRunning;
 
@@ -74,6 +70,8 @@ typedef void (^AnimationBlock)(id, NSInteger);
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
     [accessibilityElements addObjectsFromArray:@[self.pingLabel]];
     self.accessibilityElements = accessibilityElements;
+
+    [self setupStyle];
 }
 
 - (void)createConstraints
