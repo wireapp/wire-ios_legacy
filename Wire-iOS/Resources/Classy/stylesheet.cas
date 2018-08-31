@@ -319,13 +319,6 @@ TwoLineTitleView {
     }
 }
 
-AppLockView {
-    authenticateLabel: @{
-        font: $font-large-thin;
-        textColor: $color-text-foreground-dark;
-    }
-}
-
 TextSearchInputView {
     backgroundColor: $color-bar-background;
     
