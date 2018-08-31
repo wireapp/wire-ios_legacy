@@ -386,19 +386,16 @@ extension CallViewController {
             stopOverlayTimer()
         }
         
-        let animations = { [callInfoRootViewController,  updateConfiguration] in
+        let animations = { [callInfoRootViewController, updateConfiguration] in
+            print("animations Date = \(Date())")
             callInfoRootViewController.view.alpha = show ? 1 : 0
-
-            if self.mediaManager.isMicrophoneMuted {
-                self.videoGridViewController.muteIndicatorViewController.view.isHidden = false
-                self.videoGridViewController.muteIndicatorViewController.view.alpha = show ? 0 : 1
-            } else {
-                self.videoGridViewController.muteIndicatorViewController.view.isHidden = true
-            }
+//            videoGridViewController.isOnTop = !show
             // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
             updateConfiguration()
         }
 
+        videoGridViewController.isCovered = show
+        
         UIView.animate(
             withDuration: 0.2,
             delay: 0,

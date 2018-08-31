@@ -33,7 +33,13 @@ extension CGFloat {
     }
 }
 
-final class MuteIndicatorViewController: UIViewController {
+
+final class MuteIndicatorView: UIView {
+    let mutedIconImageView: UIImageView = {
+        let image = UIImage(for: .microphoneWithStrikethrough, iconSize: .like, color: .white)
+
+        return UIImageView(image: image)
+    }()
 
     let mutedLabel: UILabel = {
         let label = UILabel()
@@ -45,42 +51,25 @@ final class MuteIndicatorViewController: UIViewController {
         return label
     }()
 
-    let mutedIconImageView: UIImageView = {
-        let image = UIImage(for: .microphoneWithStrikethrough, iconSize: .like, color: .white)
+    init() {
+        super.init(frame: .zero)
 
-        return UIImageView(image: image)
-    }()
+        backgroundColor = UIColor.MuteIndicator.containerBackground
+        layer.cornerRadius = CGFloat.MuteIndicator.containerHeight / 2
+        layer.masksToBounds = true
 
-    let containerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.MuteIndicator.containerBackground
-        view.layer.cornerRadius = CGFloat.MuteIndicator.containerHeight / 2
-        view.layer.masksToBounds = true
 
-        return view
-    }()
+        [mutedIconImageView, mutedLabel].forEach( addSubview )
+
+        createConstraints()
+    }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init() {
-        super.init(nibName: nil, bundle: nil)
-
-        [mutedIconImageView, mutedLabel].forEach( containerView.addSubview )
-        view.addSubview(containerView)
-
-        createConstraints()
-    }
-
     private func createConstraints() {
-        constrain(view, containerView) { view, containerView in
-            containerView.centerX == view.centerX
-            containerView.bottom == view.bottom - 24
-            containerView.height == CGFloat.MuteIndicator.containerHeight
-        }
-
-        constrain(mutedIconImageView, mutedLabel, containerView) { mutedIconImageView, mutedLabel, containerView in
+        constrain(mutedIconImageView, mutedLabel, self) { mutedIconImageView, mutedLabel, containerView in
 
             mutedLabel.centerY == containerView.centerY
             mutedIconImageView.centerY == containerView.centerY
@@ -91,5 +80,5 @@ final class MuteIndicatorViewController: UIViewController {
 
         }
     }
-
 }
+

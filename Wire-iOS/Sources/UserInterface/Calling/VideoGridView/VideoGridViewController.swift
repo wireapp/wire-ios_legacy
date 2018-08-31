@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import Cartography
 
 fileprivate extension CGSize {
     static let floatingPreviewSmall = CGSize(width: 108, height: 144)
@@ -35,13 +36,39 @@ class VideoGridViewController: UIViewController {
     private var gridVideoStreams: [UUID] = []
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
-    let muteIndicatorViewController: MuteIndicatorViewController
+    private let muteIndicatorView = MuteIndicatorView()
 
     var previewOverlay: UIView? {
         return thumbnailViewController.contentView
     }
 
     private var selfPreviewView: SelfVideoPreviewView?
+
+
+    /// Show mute indicator when this view controller is not convered
+    var isCovered: Bool = true {
+        didSet {
+            guard oldValue != isCovered else { return }
+
+            print("isOnTop Date = \(Date())")
+            if configuration.isMuted {
+                muteIndicatorView.isHidden = false
+                muteIndicatorView.alpha = self.isCovered ? 1 : 0
+
+                UIView.animate(
+                    withDuration: 0.2,
+                    delay: 0,
+                    options: .curveEaseInOut,
+                    animations: {
+                        self.muteIndicatorView.alpha = self.isCovered ? 0 : 1
+                    },
+                    completion: nil
+                )
+            } else {
+                muteIndicatorView.isHidden = true
+            }
+        }
+    }
 
     var configuration: VideoGridConfiguration {
         didSet {
@@ -53,21 +80,17 @@ class VideoGridViewController: UIViewController {
     init(configuration: VideoGridConfiguration) {
         self.configuration = configuration
 
-        muteIndicatorViewController = MuteIndicatorViewController()
-        muteIndicatorViewController.view.isHidden = true
+        muteIndicatorView.isHidden = true
 
         super.init(nibName: nil, bundle: nil)
+
+        setupViews()
+        createConstraints()
+        updateState()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViews()
-        createConstraints()
-        updateState()
     }
 
     func setupViews() {
@@ -76,13 +99,18 @@ class VideoGridViewController: UIViewController {
         view.addSubview(gridView)
         addToSelf(thumbnailViewController)
 
-        view.addSubview(muteIndicatorViewController.view)
+        view.addSubview(muteIndicatorView)
     }
 
     func createConstraints() {
         gridView.fitInSuperview()
-        [thumbnailViewController,
-         muteIndicatorViewController].forEach{ $0.view.fitInSuperview() }
+        [thumbnailViewController].forEach{ $0.view.fitInSuperview() }
+
+        constrain(view, muteIndicatorView) { view, muteIndicatorView in
+            muteIndicatorView.centerX == view.centerX
+            muteIndicatorView.bottom == view.bottom - 24
+            muteIndicatorView.height == CGFloat.MuteIndicator.containerHeight
+        }
     }
 
     func updateState() {
