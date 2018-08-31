@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 @objcMembers final public class FileTransferView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
@@ -28,20 +27,29 @@ import Classy
     public let progressView = CircularProgressView()
     public let topLabel = UILabel()
     public let bottomLabel = UILabel()
-    public let fileTypeIconView = UIImageView()
-    public let fileEyeView = UIImageView()
+    public let fileTypeIconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .textForeground
+        return imageView
+    }()
+    public let fileEyeView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .background
+        return imageView
+    }()
 
     private let loadingView = ThreeDotsLoadingView()
     public let actionButton = IconButton()
     
-    public var labelTextColor: UIColor?
-    public var labelTextBlendedColor: UIColor?
-    public var labelFont: UIFont?
+    public var labelTextColor: UIColor? = .textForeground
+    public var labelTextBlendedColor: UIColor? = .textDimmed
+    public var labelFont: UIFont? = .smallSemiboldFont
     public var labelBoldFont: UIFont?
     private var allViews : [UIView] = []
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .placeholderBackground
         
         self.topLabel.numberOfLines = 1
         self.topLabel.lineBreakMode = .byTruncatingMiddle
@@ -55,6 +63,7 @@ import Classy
         self.fileEyeView.image = UIImage(for: .eye, iconSize: .messageStatus, color: UIColor.white).withRenderingMode(.alwaysTemplate)
         
         self.actionButton.contentMode = .scaleAspectFit
+        actionButton.setIconColor(.white, for: .normal)
         self.actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.actionButton.accessibilityLabel = "FileTransferActionButton"
         

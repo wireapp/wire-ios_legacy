@@ -22,7 +22,6 @@ import Cartography
 import WireLinkPreview
 import TTTAttributedLabel
 import WireExtensionComponents
-import Classy
 
 @objc protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
@@ -32,13 +31,13 @@ import Classy
 @objcMembers class ArticleView: UIView {
 
     /// MARK - Styling
-    var containerColor: UIColor?
-    var titleTextColor: UIColor?
-    var titleFont: UIFont?
-    var authorTextColor: UIColor?
-    var authorFont: UIFont?
-    var authorHighlightTextColor = UIColor.gray
-    var authorHighlightFont = UIFont.boldSystemFont(ofSize: 14)
+    var containerColor: UIColor? = .placeholderBackground
+    var titleTextColor: UIColor? = .textForeground
+    var titleFont: UIFont? = .normalSemiboldFont
+    var authorTextColor: UIColor? = .textDimmed
+    var authorFont: UIFont? = .smallLightFont
+    var authorHighlightTextColor = UIColor.gray ///TODO: $color-text-dimmed;
+    var authorHighlightFont = .smallSemiboldFont//UIFont.boldSystemFont(ofSize: 14)
     var imageHeight: CGFloat = 144 {
         didSet {
             self.imageHeightConstraint.constant = self.imageHeight

@@ -18,39 +18,6 @@
 
 /* Conversation */
 
-MessageToolboxView {
-    backgroundColor: clear;
-    clipsToBounds: true;
-}
-
-FileTransferView {
-    backgroundColor: $color-placeholder-background;
-
-    labelTextColor: $color-text-foreground;
-    labelTextBlendedColor: $color-text-dimmed;
-    labelFont: $font-small-light;
-    labelBoldFont: $font-small-semibold;
-    fileTypeIconView: @{
-        tintColor: $color-text-foreground;
-    }
-    fileEyeView: @{
-        tintColor: $color-background;
-    }
-    actionButton: @{
-        iconColor: white;
-    }
-}
-
-ArticleView {
-    containerColor: $color-placeholder-background;
-    titleTextColor: $color-text-foreground;
-    titleFont: $font-normal-semibold;
-    authorTextColor: $color-text-dimmed;
-    authorFont: $font-small-light;
-    authorHighlightTextColor: $color-text-dimmed;
-    authorHighlightFont: $font-small-semibold;
-}
-
 InputBar: {
     barBackgroundColor: $color-bar-background;
     writingSeparatorColor: $color-separator;
