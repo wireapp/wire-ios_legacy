@@ -55,10 +55,18 @@ import Cartography
         }
     }
     
-    public let titleLabel = UILabel()
+    public let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallSemiboldFont
+        label.textColor = .textForeground
+
+        return label
+    }()
+
     public let actionButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.strongBlue, for: .normal)
+        button.titleLabel?.font = .smallSemiboldFont
 
         return button
     }()

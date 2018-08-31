@@ -76,8 +76,6 @@
     
     [self createIndicator];
     [self createConstraints];
-
-    [self setupStyle];
 }
 
 - (CGSize)intrinsicContentSize

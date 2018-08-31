@@ -18,7 +18,7 @@
 
 /* Invite Contacts */
 
-TokenField {
+TokenField { 
     numberOfLines: 3;
     lineSpacing: 8;
     tokenOffset: 4;
@@ -37,33 +37,6 @@ TokenField {
 }
 
 /* Collections */
-
-NoResultsView {
-    label: @{
-        font: $font-medium-semibold;
-    }
-}
-
-FeedbackOverlayView {
-    backgroundColor: $color-background;
-    titleLabel: @{
-        font: $font-small-semibold;
-        textColor: $color-text-foreground;
-    }
-}
-
-CollectionHeaderView {
-    titleLabel: @{
-        font: $font-small-semibold;
-        textColor: $color-text-foreground;
-    }
-
-    actionButton: @{
-        titleLabel: @{  
-            font: $font-small-semibold;
-        }
-    }
-}
 
 TextSearchResultFooter {
     nameLabel: @{
