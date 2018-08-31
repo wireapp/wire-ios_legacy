@@ -33,12 +33,10 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        mediaManager = ZMMockAVSMediaManager()
     }
     
     override func tearDown() {
         sut = nil
-        mediaManager = nil
         super.tearDown()
     }
 
