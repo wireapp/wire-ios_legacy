@@ -19,6 +19,13 @@
 import Foundation
 
 @objcMembers final public class SearchResultLabel: UILabel, Copyable {
+
+    init() {
+        super.init(frame: .zero)
+        font = .normalFont
+        textColor = .textForeground
+    }
+
     public convenience init(instance: SearchResultLabel) {
         self.init()
         self.font = instance.font

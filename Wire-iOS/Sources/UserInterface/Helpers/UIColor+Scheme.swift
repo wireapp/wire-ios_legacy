@@ -81,6 +81,6 @@ extension UIColor {
     }
 
     static var contentBackground: UIColor {
-        return UIColor(scheme: .contentBackground, variant: .dark)
+        return UIColor(scheme: .contentBackground)
     }
 }

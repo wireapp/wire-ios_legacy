@@ -56,6 +56,8 @@ public protocol TextSearchInputViewDelegate: class {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        backgroundColor = UIColor(scheme: .barBackground)
         
         iconView.image = UIImage(for: .search, iconSize: .tiny, color: UIColor(scheme: .textForeground))
         iconView.contentMode = .center
@@ -68,10 +70,14 @@ public protocol TextSearchInputViewDelegate: class {
         searchInput.layer.cornerRadius = 4
         searchInput.backgroundColor = UIColor(scheme: .tokenFieldBackground)
         searchInput.textContainerInset = UIEdgeInsetsMake(10, 40, 10, 8)
+        searchInput.font = .normalFont
+        searchInput.textColor = .textForeground
         
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
-        
+        placeholderLabel.font = .smallRegularFont
+        placeholderLabel.textColor = .textDimmed
+
         cancelButton.setIcon(.clearInput, with: .tiny, for: .normal)
         cancelButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.isHidden = true
