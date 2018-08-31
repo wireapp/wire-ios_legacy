@@ -59,6 +59,13 @@ class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
     
     func testThatItShowsJoinButton() {
         // WHEN
+        sut.icon = ConversationStatusIcon.activeCall(showJoin: true)
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
+    
+    func testThatItShowsOngoingCallIndicator() {
+        // WHEN
         sut.icon = ConversationStatusIcon.activeCall(showJoin: false)
         // THEN
         self.verify(view: sut.snapshotView())

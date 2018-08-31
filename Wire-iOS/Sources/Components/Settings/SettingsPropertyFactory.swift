@@ -26,6 +26,7 @@ protocol TrackingInterface {
 
 protocol AVSMediaManagerInterface {
     var intensityLevel : AVSIntensityLevel { get set }
+    var isMicrophoneMuted: Bool { get set }
 }
 
 extension AVSMediaManager: AVSMediaManagerInterface {

@@ -22,12 +22,13 @@ import AVFoundation
 final class CallViewController: UIViewController {
     
     weak var dismisser: ViewControllerDismisser? = nil
-    
-    fileprivate let mediaManager: AVSMediaManager
+
+    fileprivate let mediaManager: AVSMediaManagerInterface
     fileprivate let voiceChannel: VoiceChannel
     fileprivate var callInfoConfiguration: CallInfoConfiguration
     fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
     fileprivate let callInfoRootViewController: CallInfoRootViewController
+    let muteIndicatorViewController: MuteIndicatorViewController
     fileprivate weak var overlayTimer: Timer?
     fileprivate let hapticsController = CallHapticsController()
     fileprivate let participantsTimestamps = CallParticipantTimestamps()
@@ -51,7 +52,7 @@ final class CallViewController: UIViewController {
     
     init(voiceChannel: VoiceChannel,
          proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared()?.proximityMonitorManager,
-         mediaManager: AVSMediaManager = .sharedInstance(),
+         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
          permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
         
         self.voiceChannel = voiceChannel
@@ -59,8 +60,12 @@ final class CallViewController: UIViewController {
         self.proximityMonitorManager = proximityMonitorManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager,  isOverlayVisible: true)
         callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, sortTimestamps: participantsTimestamps)
+
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
+        muteIndicatorViewController = MuteIndicatorViewController()
+        muteIndicatorViewController.view.isHidden = true
+
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
         AVSMediaManagerClientChangeNotification.add(self)
@@ -69,6 +74,10 @@ final class CallViewController: UIViewController {
             self?.proximityStateDidChange(raisedToEar)
         }
         disableVideoIfNeeded()
+
+        setupViews()
+        createConstraints()
+        updateConfiguration()
     }
     
     deinit {
@@ -80,13 +89,6 @@ final class CallViewController: UIViewController {
     private func setupApplicationStateObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(resumeVideoIfNeeded), name: .UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(pauseVideoIfNeeded), name: .UIApplicationWillResignActive, object: nil)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViews()
-        createConstraints()
-        updateConfiguration()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -142,12 +144,11 @@ final class CallViewController: UIViewController {
     }
 
     private func setupViews() {
-        [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
+        [videoGridViewController, muteIndicatorViewController, callInfoRootViewController].forEach(addToSelf)
     }
 
     private func createConstraints() {
-        callInfoRootViewController.view.fitInSuperview()
-        videoGridViewController.view.fitInSuperview()
+        [videoGridViewController, muteIndicatorViewController, callInfoRootViewController].forEach{ $0.view.fitInSuperview() }
     }
     
     fileprivate func minimizeOverlay() {
@@ -367,7 +368,7 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
 // MARK: - Hide + Show Overlay
 
 extension CallViewController {
-    
+
     var isOverlayVisible: Bool {
         return callInfoRootViewController.view.alpha > 0
     }
@@ -388,8 +389,15 @@ extension CallViewController {
             stopOverlayTimer()
         }
         
-        let animations = { [callInfoRootViewController, updateConfiguration] in
+        let animations = { [callInfoRootViewController, muteIndicatorViewController, updateConfiguration] in
             callInfoRootViewController.view.alpha = show ? 1 : 0
+
+            if self.mediaManager.isMicrophoneMuted {
+                muteIndicatorViewController.view.isHidden = false
+                muteIndicatorViewController.view.alpha = show ? 0 : 1
+            } else {
+                muteIndicatorViewController.view.isHidden = true
+            }
             // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
             updateConfiguration()
         }

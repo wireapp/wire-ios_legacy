@@ -16,52 +16,6 @@
 *  along with this program. If not, see http://www.gnu.org/licenses/.
 */ 
 
-IconButton.back-button {
-    borderWidth: 0.5;
-    borderColor[state: normal]: $color-separator;
-    circular: true;
-    backgroundColor $color-background;
-    iconColor[state:normal] $color-icon-normal;
-    iconColor[state:highlighted] $color-icon-highlighted;
-}
-
-IconButton.resend-button {
-    circular: false;
-    iconColor: $color-text-dimmed;
-    iconColor[state:selected]: $color-icon-selected;
-    iconColor[state:highlighted]: $color-icon-highlighted;
-    backgroundImageColor[state:selected]: $color-icon-background-selected;
-}
-
-IconButton.gif-button {
-    iconColor: $color-icon-normal;
-    iconColor[state:selected]: $color-icon-selected;
-    iconColor[state:highlighted]: $color-icon-highlighted;
-    backgroundImageColor[state:selected]: $color-icon-background-selected;
-    borderColor[state:normal]: $color-separator;
-    circular: true;
-    borderWidth: 0.8;
-}
-
-IconButton.emoji-category {
-    iconColor: $color-text-dimmed-dark;
-    iconColor[state:selected]: $color-text-foreground-dark;
-    iconColor[state:highlighted]: $color-icon-highlighted-dark;
-    backgroundImageColor[state:selected]: clear;
-    borderColor[state:normal]: clear;
-    circular: false;
-    borderWidth: 0.0;
-}
-
-IconButton.emoji-backspace {
-    iconColor: $color-text-foreground-dark;
-    iconColor[state:highlighted]: $color-icon-highlighted-dark;
-    backgroundImageColor[state:selected]: clear;
-    borderColor[state:normal]: clear;
-    circular: false;
-    borderWidth: 0.0;
-}
-
 /* ConversationListAvatar */
 
 ConversationAvatarView UserImageView {
@@ -158,38 +112,6 @@ FileTransferView {
     }
 }
 
-VideoMessageView {
-    IconButton {
-        iconColor: white;
-    }
-    
-    UILabel {
-        font: $font-small-light;
-    }
-}
-
-AudioMessageView {
-    backgroundColor: $color-placeholder-background;
-
-    ProgressView {
-        backgroundColor: $color-separator;
-        tintColor: $color-accent-current;
-    }
-    
-    WaveformProgressView {
-        backgroundColor: $color-placeholder-background;
-    }
-    
-    IconButton {
-        iconColor: white;
-    }
-    
-    UILabel {
-        textColor: $color-text-foreground;
-        font: $font-small-semibold;
-    }
-}
-
 ArticleView {
     containerColor: $color-placeholder-background;
     titleTextColor: $color-text-foreground;
@@ -223,13 +145,6 @@ InputBar: {
     }
 }
 
-InputBarEditView: {
-    IconButton {
-        iconColor[state:normal]: $color-icon-normal;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-    }
-}
-
 TypingIndicatorView {
     container: @{
         backgroundColor: $color-background
@@ -242,22 +157,6 @@ TypingIndicatorView {
     nameLabel: @{
         font: $font-small-light;
         textColor: $color-text-placeholder;
-    }
-}
-
-ImageToolbarView.on-image {
-    IconButton {
-        iconColor[state:normal]: $color-icon-normal-dark;
-        iconColor[state:highlighted]: $color-icon-highlighted-dark;
-        iconColor[state:selected]: $color-accent-current-dark;
-    }
-}
-
-ImageToolbarView.on-background {
-    IconButton {
-        iconColor[state:normal]: $color-icon-normal;
-        iconColor[state:highlighted]: $color-icon-highlighted;
-        iconColor[state:selected]: $color-accent-current;
     }
 }
 

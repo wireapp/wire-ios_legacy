@@ -28,10 +28,17 @@ import Cartography
 }
 
 @objcMembers public final class InputBarEditView: UIView {
+    private static var iconButtonTemplate: IconButton {
+        let iconButton = IconButton()
+        iconButton.setIconColor(.iconNormal, for: .normal)
+        iconButton.setIconColor(.iconNormal, for: .normal)
 
-    let undoButton = IconButton()
-    let confirmButton = IconButton()
-    let cancelButton = IconButton()
+        return iconButton
+    }
+
+    let undoButton = InputBarEditView.iconButtonTemplate
+    let confirmButton = InputBarEditView.iconButtonTemplate
+    let cancelButton = InputBarEditView.iconButtonTemplate
     let iconSize: CGFloat = UIImage.size(for: .tiny)
     
     public weak var delegate: InputBarEditViewDelegate?

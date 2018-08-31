@@ -32,9 +32,18 @@ import Classy
     
     private let previewImageView = UIImageView()
     private let progressView = CircularProgressView()
-    private let playButton = IconButton()
+    private let playButton: IconButton = {
+        let button = IconButton()
+        button.setIconColor(.white, for: .normal)
+        return button
+    }()
     private let bottomGradientView = GradientView()
-    private let timeLabel = UILabel()
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+
+        return label
+    }()
     private let loadingView = ThreeDotsLoadingView()
     
     private let normalColor = UIColor.black.withAlphaComponent(0.4)
