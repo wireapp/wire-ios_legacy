@@ -387,7 +387,6 @@ extension CallViewController {
         }
         
         let animations = { [callInfoRootViewController, updateConfiguration] in
-            print("animations Date = \(Date())")
             callInfoRootViewController.view.alpha = show ? 1 : 0
             // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
             updateConfiguration()
