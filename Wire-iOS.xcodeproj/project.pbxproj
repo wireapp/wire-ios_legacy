@@ -1158,6 +1158,7 @@
 		EF6251CF21382FA600943708 /* VideoGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251CE21382FA600943708 /* VideoGridViewController.swift */; };
 		EF6251D621395F7F00943708 /* VideoGridViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */; };
 		EF6251D921396AA900943708 /* CallViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251D821396AA900943708 /* CallViewControllerSnapshotTests.swift */; };
+		EF6251DB21396B9800943708 /* AppLockViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251DA21396B9800943708 /* AppLockViewSnapshotTests.swift */; };
 		EF63528D209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */; };
 		EF640EB82111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF640EB72111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg */; };
 		EF66110F2121D00B00BDF57A /* UIImage+DownSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF66110E2121D00B00BDF57A /* UIImage+DownSize.swift */; };
@@ -2861,6 +2862,7 @@
 		EF6251CE21382FA600943708 /* VideoGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGridViewController.swift; sourceTree = "<group>"; };
 		EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGridViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF6251D821396AA900943708 /* CallViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF6251DA21396B9800943708 /* AppLockViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockViewSnapshotTests.swift; sourceTree = "<group>"; };
 		EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerTests.swift; sourceTree = "<group>"; };
 		EF640EB72111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_very_small_size_40x20.jpg; sourceTree = "<group>"; };
 		EF66110E2121D00B00BDF57A /* UIImage+DownSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+DownSize.swift"; sourceTree = "<group>"; };
@@ -2915,6 +2917,8 @@
 		EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationMessageWindowTableViewAdapter+DataSource.swift"; sourceTree = "<group>"; };
 		EFA10F0120F4AE2800863B72 /* ConversationMessageWindowTableViewAdapter+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationMessageWindowTableViewAdapter+Private.h"; sourceTree = "<group>"; };
 		EFA385C7213583FC00E5CFD0 /* MuteIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteIndicatorView.swift; sourceTree = "<group>"; };
+		EFA385C7213583FC00E5CFD0 /* MuteIndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteIndicatorViewController.swift; sourceTree = "<group>"; };
+		EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteIndicatorViewControllerTests.swift; sourceTree = "<group>"; };
 		EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SizeClass.swift"; sourceTree = "<group>"; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
@@ -5404,6 +5408,9 @@
 				EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */,
 				EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */,
 				EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */,
+				EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */,
+				EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */,
+				EF6251DA21396B9800943708 /* AppLockViewSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7677,6 +7684,7 @@
 				87071CC41CB6A3790039388A /* FileTransferCellTests.swift in Sources */,
 				BFE3FEEC20975D1E003D9AB5 /* CallStatusViewTests.swift in Sources */,
 				BF808B591DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift in Sources */,
+				EF6251DB21396B9800943708 /* AppLockViewSnapshotTests.swift in Sources */,
 				BFBAE9E31E041FB7003FCE49 /* ReactionsCellTests.swift in Sources */,
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,
