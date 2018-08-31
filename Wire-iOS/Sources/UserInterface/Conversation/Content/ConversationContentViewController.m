@@ -254,7 +254,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)updateTableViewHeaderView
 {
-    if (self.dataSource.messages.count != self.conversation.messages.count) {
+    if (!self.dataSource.allMessagesFetched) {
         // Don't display the conversation header if the message window doesn't include the first message.
         return;
     }
@@ -684,7 +684,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ZMMessage *message = [self.dataSource.messages objectAtIndex:indexPath.row];
+    ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.row];
     NSIndexPath *selectedIndexPath = nil;
     
     if ([message isEqual:self.dataSource.selectedMessage]) {

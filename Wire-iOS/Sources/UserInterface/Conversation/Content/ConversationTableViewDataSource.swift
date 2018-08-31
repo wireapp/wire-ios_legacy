@@ -85,15 +85,19 @@ extension ConversationCell {
         while moveUp(by: 1000)
     }
     
-    @discardableResult public func moveUp(by numberOfMessages: Int) -> Bool {
+    @objc public var allMessagesFetched: Bool {
         guard let moc = conversation.managedObjectContext else {
             fatal("conversation.managedObjectContext == nil")
         }
         
         let fetchRequest = self.fetchRequest()
         let totalCount = try! moc.count(for: fetchRequest)
-        
-        guard currentFetchLimit < totalCount else {
+    
+        return currentFetchLimit >= totalCount
+    }
+    
+    @discardableResult public func moveUp(by numberOfMessages: Int) -> Bool {
+        guard !allMessagesFetched else {
             return false
         }
         
@@ -117,8 +121,7 @@ extension ConversationCell {
         }
     }
     
-    func configure(_ conversationCell: ConversationCell, with message: ZMConversationMessage, at index: Int)
-    {
+    func configure(_ conversationCell: ConversationCell, with message: ZMConversationMessage, at index: Int) {
         // If a message has been deleted, we don't try to configure it
         guard !message.hasBeenDeleted else { return }
         
