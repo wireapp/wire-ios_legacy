@@ -19,14 +19,17 @@
 import XCTest
 @testable import Wire
 
-final class MuteIndicatorViewControllerTests: ZMSnapshotTestCase {
+final class CallViewControllerSnapshotTests: ZMSnapshotTestCase {
     
-    var sut: MuteIndicatorViewController!
-    
+    var sut: CallViewController!
+    var mediaManager: ZMMockAVSMediaManager!
+
     override func setUp() {
         super.setUp()
-        sut = MuteIndicatorViewController()
-        sut.view.backgroundColor = .darkGray
+        mediaManager = ZMMockAVSMediaManager()
+        mediaManager.isMicrophoneMuted = true
+        sut = XCTestCase.CreateCallViewController(mediaManager: mediaManager)
+        sut.view.backgroundColor = .black
     }
     
     override func tearDown() {
@@ -34,7 +37,7 @@ final class MuteIndicatorViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForVisibleState(){
+    func testForMuted(){
         verify(view: sut.view)
     }
 }

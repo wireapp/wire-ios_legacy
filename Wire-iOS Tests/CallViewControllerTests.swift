@@ -87,37 +87,4 @@ final class CallViewControllerOverlayTests: XCTestCase {
 
         UIView.setAnimationsEnabled(true)
     }
-
-    func testThatMuteIndicatorIsShownAfterTapOnCallInfoScreenAndMuted() {
-        // GIVEN
-        mediaManager.isMicrophoneMuted = true
-
-        // WHEN
-        // call overlay is visible at the beginning
-        XCTAssert(sut.isOverlayVisible)
-        XCTAssert(sut.videoGridViewController.muteIndicatorViewController.view.isHidden)
-
-        // call overlay is invisible after touch
-        sut.touchesBegan(Set(), with: nil)
-        XCTAssertFalse(sut.isOverlayVisible)
-
-        // THEN
-        XCTAssertFalse(sut.videoGridViewController.muteIndicatorViewController.view.isHidden)
-        XCTAssertEqual(sut.videoGridViewController.muteIndicatorViewController.view.alpha, 1)
-    }
-
-    func testThatMuteIndicatorIsNotShownAfterTapOnCallInfoScreenAndNotMuted() {
-        // GIVEN
-        mediaManager.isMicrophoneMuted = false
-
-        // call overlay is visible at the beginning
-        XCTAssert(sut.isOverlayVisible)
-
-        // call overlay is invisible after touch
-        sut.touchesBegan(Set(), with: nil)
-        XCTAssertFalse(sut.isOverlayVisible)
-
-        // THEN
-        XCTAssert(sut.videoGridViewController.muteIndicatorViewController.view.isHidden)
-    }
 }

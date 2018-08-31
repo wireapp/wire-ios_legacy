@@ -1157,6 +1157,7 @@
 		EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
 		EF6251CF21382FA600943708 /* VideoGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251CE21382FA600943708 /* VideoGridViewController.swift */; };
 		EF6251D621395F7F00943708 /* VideoGridViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */; };
+		EF6251D921396AA900943708 /* CallViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251D821396AA900943708 /* CallViewControllerSnapshotTests.swift */; };
 		EF63528D209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */; };
 		EF640EB82111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF640EB72111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg */; };
 		EF66110F2121D00B00BDF57A /* UIImage+DownSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF66110E2121D00B00BDF57A /* UIImage+DownSize.swift */; };
@@ -1207,7 +1208,6 @@
 		EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */; };
 		EFA10F0020F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift */; };
 		EFA385C8213583FC00E5CFD0 /* MuteIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA385C7213583FC00E5CFD0 /* MuteIndicatorView.swift */; };
-		EFA385CC2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */; };
 		EFA385CE21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */; };
 		EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */; };
@@ -2860,6 +2860,7 @@
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
 		EF6251CE21382FA600943708 /* VideoGridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGridViewController.swift; sourceTree = "<group>"; };
 		EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoGridViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF6251D821396AA900943708 /* CallViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerTests.swift; sourceTree = "<group>"; };
 		EF640EB72111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_very_small_size_40x20.jpg; sourceTree = "<group>"; };
 		EF66110E2121D00B00BDF57A /* UIImage+DownSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+DownSize.swift"; sourceTree = "<group>"; };
@@ -2914,7 +2915,6 @@
 		EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationMessageWindowTableViewAdapter+DataSource.swift"; sourceTree = "<group>"; };
 		EFA10F0120F4AE2800863B72 /* ConversationMessageWindowTableViewAdapter+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationMessageWindowTableViewAdapter+Private.h"; sourceTree = "<group>"; };
 		EFA385C7213583FC00E5CFD0 /* MuteIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteIndicatorView.swift; sourceTree = "<group>"; };
-		EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteIndicatorViewControllerTests.swift; sourceTree = "<group>"; };
 		EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
 		EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+SizeClass.swift"; sourceTree = "<group>"; };
 		EFA820AD2019075400FED370 /* UIViewController+addViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+addViewController.swift"; sourceTree = "<group>"; };
@@ -5383,6 +5383,7 @@
 				EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */,
 				EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */,
 				87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */,
+				EF6251D821396AA900943708 /* CallViewControllerSnapshotTests.swift */,
 				EF80466320D1712B001A1C53 /* MessageDestructionTimeoutValueTests.swift */,
 				BFF9446B20F6480C00531BC3 /* ThumbnailCreationTests.swift */,
 				EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */,
@@ -5401,7 +5402,6 @@
 				EF297DD72131FABE0002983A /* LocationPreviewControllerTests.swift */,
 				EFAFCA812133FB59002B31A6 /* ArchivedNavigationBarTests.swift */,
 				EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */,
-				EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */,
 				EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */,
 				EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */,
 			);
@@ -7524,6 +7524,7 @@
 				EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */,
 				BFFE943C1E7839D10025AD75 /* ConversationRenamedCellTests.swift in Sources */,
 				5EC0871020EF5C89000366B7 /* ImageDownloadCacheTests.swift in Sources */,
+				EF6251D921396AA900943708 /* CallViewControllerSnapshotTests.swift in Sources */,
 				5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */,
 				BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */,
 				87AE8BDC207B99540058715E /* BackupPasswordViewControllerTests.swift in Sources */,
@@ -7592,7 +7593,6 @@
 				87C39A8E206BE83C008DA100 /* NoHistoryViewControllerTests.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */,
-				EFA385CC2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift in Sources */,
 				EF84DF4C213052E600033702 /* ProfilePictureStepViewControllerTests.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
 				5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */,

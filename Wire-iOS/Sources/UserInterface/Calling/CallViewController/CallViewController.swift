@@ -34,7 +34,7 @@ final class CallViewController: UIViewController {
 
     private var observerTokens: [Any] = []
     private var videoConfiguration: VideoConfiguration
-    let videoGridViewController: VideoGridViewController
+    private let videoGridViewController: VideoGridViewController
     private var cameraType: CaptureDevice = .front
     
     private var isInteractiveDismissal = false
@@ -58,7 +58,7 @@ final class CallViewController: UIViewController {
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager,  isOverlayVisible: true)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, sortTimestamps: participantsTimestamps)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, sortTimestamps: participantsTimestamps, mediaManager: mediaManager)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
@@ -169,7 +169,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, sortTimestamps: participantsTimestamps)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, sortTimestamps: participantsTimestamps, mediaManager: mediaManager)
         callInfoRootViewController.configuration = callInfoConfiguration
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager, isOverlayVisible: isOverlayVisible)
         videoGridViewController.configuration = videoConfiguration
@@ -389,7 +389,6 @@ extension CallViewController {
         let animations = { [callInfoRootViewController, updateConfiguration] in
             print("animations Date = \(Date())")
             callInfoRootViewController.view.alpha = show ? 1 : 0
-//            videoGridViewController.isOnTop = !show
             // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
             updateConfiguration()
         }

@@ -50,7 +50,6 @@ class VideoGridViewController: UIViewController {
         didSet {
             guard oldValue != isCovered else { return }
 
-            print("isOnTop Date = \(Date())")
             if configuration.isMuted {
                 muteIndicatorView.isHidden = false
                 muteIndicatorView.alpha = self.isCovered ? 1 : 0
