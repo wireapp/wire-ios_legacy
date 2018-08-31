@@ -52,6 +52,10 @@ extension UIColor {
         return UIColor(scheme: .background)
     }
 
+    static var textPlaceholder: UIColor {
+        return UIColor(scheme: .textPlaceholder)
+    }
+
     static var placeholderBackground: UIColor {
         return UIColor(scheme: .placeholderBackground)
     }
@@ -74,5 +78,9 @@ extension UIColor {
 
     static var iconHighlightedDark: UIColor {
         return UIColor(scheme: .iconHighlighted, variant: .dark)
+    }
+
+    static var contentBackground: UIColor {
+        return UIColor(scheme: .contentBackground, variant: .dark)
     }
 }

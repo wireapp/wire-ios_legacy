@@ -35,6 +35,7 @@ import Cartography
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .contentBackground
         
         self.recreateLayout()
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.collectionViewLayout)

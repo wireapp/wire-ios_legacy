@@ -36,8 +36,9 @@ import WireExtensionComponents
     var titleFont: UIFont? = .normalSemiboldFont
     var authorTextColor: UIColor? = .textDimmed
     var authorFont: UIFont? = .smallLightFont
-    var authorHighlightTextColor = UIColor.gray ///TODO: $color-text-dimmed;
-    var authorHighlightFont = .smallSemiboldFont//UIFont.boldSystemFont(ofSize: 14)
+    let authorHighlightTextColor = UIColor.textDimmed
+    let authorHighlightFont = UIFont.smallSemiboldFont
+    
     var imageHeight: CGFloat = 144 {
         didSet {
             self.imageHeightConstraint.constant = self.imageHeight

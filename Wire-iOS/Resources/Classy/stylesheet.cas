@@ -16,67 +16,7 @@
 *  along with this program. If not, see http://www.gnu.org/licenses/.
 */ 
 
-/* Conversation */
-
-InputBar: {
-    barBackgroundColor: $color-bar-background;
-    writingSeparatorColor: $color-separator;
-    placeholderColor: $color-text-placeholder;
-    textColor: $color-text-foreground;
-
-    textView: @{
-        font: $font-normal-light;
-        placeholderFont: $font-small-semibold;
-        backgroundColor: clear;
-    }
-}
-
-TypingIndicatorView {
-    container: @{
-        backgroundColor: $color-background
-    }
-    
-    expandingLine: @{
-        backgroundColor: $color-background
-    }
-    
-    nameLabel: @{
-        font: $font-small-light;
-        textColor: $color-text-placeholder;
-    }
-}
-
-/* Contacts */
-
-ContactsSectionHeaderView {
-    titleLabel: @{
-        textColor: $color-text-foreground;
-        font: $font-small-semibold;
-    }
-    contentView: @{
-        backgroundColor: $color-background;
-    }
-    backgroundView: @{
-        backgroundColor: clear;
-    }
-}
-
 /* Invite Contacts */
-
-ContactsEmptyResultView  {
-    messageLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-}
-
-ContactsSectionHeaderView {
-    titleLabel: @{
-        textColor: $color-text-foreground-dark;
-    }
-    contentView: @{
-        backgroundColor: $color-background-dark;
-    }
-}
 
 TokenField {
     numberOfLines: 3;
@@ -96,26 +36,7 @@ TokenField {
     }
 }
 
-PickerView {
-    backgroundColor: clear;
-}
-
-
-/* Profile Devices */
-
-DescriptionHeaderView {
-    backgroundColor: clear;
-    descriptionLabel: @{
-        textColor: $color-text-foreground-dark;
-        backgroundColor: clear
-    }
-}
-
 /* Collections */
-
-CollectionsView {
-    backgroundColor: $color-content-background;
-}
 
 NoResultsView {
     label: @{

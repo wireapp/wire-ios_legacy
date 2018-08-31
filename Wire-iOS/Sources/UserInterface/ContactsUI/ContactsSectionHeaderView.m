@@ -18,6 +18,8 @@
 
 
 #import "ContactsSectionHeaderView.h"
+#import "ContactsSectionHeaderView+Internal.h"
+#import "Wire-Swift.h"
 @import PureLayout;
 
 
@@ -39,6 +41,7 @@ NS_ASSUME_NONNULL_END
     if (self) {
         [self setupSubviews];
         [self setupConstraints];
+        [self setupStyle];
     }
     
     return self;
