@@ -18,8 +18,6 @@
 
 import UIKit
 import Cartography
-import Classy
-
 
 open class LayerHostView<LayerType: CALayer>: UIView {
     var hostedLayer: LayerType {
@@ -320,11 +318,15 @@ extension PersonalAccountView {
             case .big:
                 initialLabel.font = .largeThinFont
             case .small:
-                initialLabel.font = .smallSemiboldFont
-                initialLabel.textColor = .textForegroundLight
-                backgroundColor = .backgroundLight
+                applySmallStyle()
             }
         }
+    }
+
+    func applySmallStyle() {
+        initialLabel.font = .smallSemiboldFont
+        initialLabel.textColor = .textForegroundLight
+        backgroundColor = .backgroundLight
     }
     
     init(account: Account) {
@@ -345,6 +347,8 @@ extension PersonalAccountView {
         maskLayer.contentsGravity = "center"
         self.updateClippingLayer()
         self.updateImage()
+
+        applySmallStyle()
     }
     
     required public init?(coder aDecoder: NSCoder) {
