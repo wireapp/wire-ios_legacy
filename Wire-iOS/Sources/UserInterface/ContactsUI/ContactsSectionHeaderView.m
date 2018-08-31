@@ -18,7 +18,6 @@
 
 
 #import "ContactsSectionHeaderView.h"
-#import "ContactsSectionHeaderView+Internal.h"
 #import "Wire-Swift.h"
 @import PureLayout;
 

@@ -2939,7 +2939,6 @@
 		EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+OrientationAndSize.swift"; sourceTree = "<group>"; };
 		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+FilesPopover.swift"; sourceTree = "<group>"; };
 		EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsSectionHeaderView+Style.swift"; sourceTree = "<group>"; };
-		EFDE37FC213994750095DCA4 /* ContactsSectionHeaderView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ContactsSectionHeaderView+Internal.h"; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
 		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
@@ -4417,7 +4416,6 @@
 				87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.h */,
 				87DCF4821D34E9BA00BB420F /* ContactsEmptyResultView.m */,
 				87DCF4831D34E9BA00BB420F /* ContactsSectionHeaderView.h */,
-				EFDE37FC213994750095DCA4 /* ContactsSectionHeaderView+Internal.h */,
 				87DCF4841D34E9BA00BB420F /* ContactsSectionHeaderView.m */,
 				EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView+Style.swift */,
 				87DCF4871D34E9BA00BB420F /* ContactsViewController+Private.h */,
