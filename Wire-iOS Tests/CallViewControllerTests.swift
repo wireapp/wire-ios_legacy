@@ -39,7 +39,7 @@ extension XCTestCase {
 }
 
 extension XCTestCase {
-    static func CreateCallViewController(mediaManager: ZMMockAVSMediaManager) -> CallViewController{
+    static func CreateCallViewController(mediaManager: ZMMockAVSMediaManager) -> CallViewController {
         ZMUser.selfUser().remoteIdentifier = UUID()
 
         let conversation = (MockConversation.oneOnOneConversation() as Any) as! ZMConversation
@@ -88,6 +88,12 @@ final class CallViewControllerOverlayTests: XCTestCase {
         UIView.setAnimationsEnabled(true)
     }
 
+    func tapOnSut() {
+        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
+
+        sut.didTapOnView(sender: mockTapGestureRecognizer)
+    }
+
     func testThatMuteIndicatorIsShownAfterTapOnCallInfoScreenAndMuted() {
         // GIVEN
         mediaManager.isMicrophoneMuted = true
@@ -97,8 +103,8 @@ final class CallViewControllerOverlayTests: XCTestCase {
         XCTAssert(sut.isOverlayVisible)
         XCTAssert(sut.muteIndicatorViewController.view.isHidden)
 
-        // call overlay is invisible after touch
-        sut.touchesBegan(Set(), with: nil)
+        // call overlay is invisible after tapped
+        tapOnSut()
         XCTAssertFalse(sut.isOverlayVisible)
 
         // THEN
@@ -113,8 +119,8 @@ final class CallViewControllerOverlayTests: XCTestCase {
         // call overlay is visible at the beginning
         XCTAssert(sut.isOverlayVisible)
 
-        // call overlay is invisible after touch
-        sut.touchesBegan(Set(), with: nil)
+        // call overlay is invisible after tapped
+        tapOnSut()
         XCTAssertFalse(sut.isOverlayVisible)
 
         // THEN
