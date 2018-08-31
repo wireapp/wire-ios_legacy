@@ -30,7 +30,6 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
 final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: VideoGridViewController!
-    var mediaManager: ZMMockAVSMediaManager!
 
     override func setUp() {
         super.setUp()
