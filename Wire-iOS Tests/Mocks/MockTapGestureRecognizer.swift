@@ -33,6 +33,10 @@ final class MockTapGestureRecognizer: UITapGestureRecognizer {
         return mockLocation ?? super.location(in: view)
     }
 
+    override func location(ofTouch touchIndex: Int, in view: UIView?) -> CGPoint {
+        return mockLocation ?? super.location(ofTouch: touchIndex, in: view)
+    }
+
     override var state: UIGestureRecognizerState {
         get {
             return mockState
