@@ -24,8 +24,7 @@ class CallController: NSObject {
     private(set) weak var activeCallViewController: ActiveCallViewController?
 
     fileprivate let callQualityController = CallQualityController()
-
-    fileprivate var scheduledQualitySurvey: CallQualityViewController?
+    fileprivate var scheduledPostCallAction: (()->Void)?
     fileprivate var token: Any?
     fileprivate var minimizedCall: ZMConversation? = nil
     fileprivate var topOverlayCall: ZMConversation? = nil {
@@ -112,9 +111,9 @@ extension CallController: WireCallCenterCallStateObserver {
         topOverlayCall = nil
 
         activeCallViewController?.dismiss(animated: true) {
-            if let survey = self.scheduledQualitySurvey {
-                self.targetViewController?.present(survey, animated: true, completion: nil)
-                self.scheduledQualitySurvey = nil
+            if let postCallAction = self.scheduledPostCallAction {
+                postCallAction()
+                self.scheduledPostCallAction = nil
             }
         }
         
@@ -152,10 +151,26 @@ extension CallController: CallQualityControllerDelegate {
     }
 
     func callQualityControllerDidScheduleSurvey(with controller: CallQualityViewController) {
-        if self.topOverlayCall == nil {
-            self.targetViewController?.present(controller, animated: true, completion: nil)
+        let presentCallQualityControllerAction: () -> Void = { [weak self] in
+            self?.targetViewController?.present(controller, animated: true, completion: nil)
+        }
+        
+        if self.activeCallViewController == nil {
+            presentCallQualityControllerAction()
         } else {
-            self.scheduledQualitySurvey = controller
+            scheduledPostCallAction = presentCallQualityControllerAction
+        }
+    }
+    
+    func callQualityControllerDidScheduleDebugAlert() {
+        let presentDebugAlertAction: () -> Void = {
+            DebugAlert.showSendLogsMessage(message: "The call failed. Sending the debug logs can help us troubleshoot the issue.")
+        }
+        
+        if self.activeCallViewController == nil {
+            presentDebugAlertAction()
+        } else {
+            scheduledPostCallAction = presentDebugAlertAction
         }
     }
 

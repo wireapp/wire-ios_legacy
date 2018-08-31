@@ -22,7 +22,8 @@ import AVFoundation
 final class CallViewController: UIViewController {
     
     weak var dismisser: ViewControllerDismisser? = nil
-
+    fileprivate var tapRecognizer: UITapGestureRecognizer!
+    fileprivate var doubleTapRecognizer: UITapGestureRecognizer!
     fileprivate let mediaManager: AVSMediaManagerInterface
     fileprivate let voiceChannel: VoiceChannel
     fileprivate var callInfoConfiguration: CallInfoConfiguration
@@ -78,8 +79,38 @@ final class CallViewController: UIViewController {
         setupViews()
         createConstraints()
         updateConfiguration()
+
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnView))
+                tapRecognizer.numberOfTapsRequired = 1
+
+        view.addGestureRecognizer(tapRecognizer)
+
+        doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapOnView))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        tapRecognizer.require(toFail: doubleTapRecognizer)
+
+        view.addGestureRecognizer(doubleTapRecognizer)
+
     }
-    
+
+    @objc func didTapOnView(sender: UIGestureRecognizer) {
+        guard canHideOverlay else { return }
+
+
+        if let overlay = videoGridViewController.previewOverlay,
+            overlay.point(inside: sender.location(ofTouch: 0, in: overlay), with: nil),
+            !isOverlayVisible {
+            return
+        }
+
+        toggleOverlayVisibility()
+    }
+
+    @objc func didDoubleTapOnView(sender: UIGestureRecognizer) {
+        let location = sender.location(ofTouch: 0 , in: videoGridViewController.view)
+        videoGridViewController.switchFillMode(location: location)
+    }
+
     deinit {
         AVSMediaManagerClientChangeNotification.remove(self)
         NotificationCenter.default.removeObserver(self)
@@ -191,20 +222,7 @@ final class CallViewController: UIViewController {
     private func updateAppearance() {
         view.backgroundColor = UIColor(scheme: .background, variant: callInfoConfiguration.variant)
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        guard canHideOverlay else { return }
 
-        if let touch = touches.first,
-            let overlay = videoGridViewController.previewOverlay,
-            overlay.point(inside: touch.location(in: overlay), with: event), !isOverlayVisible {
-            return
-        }
-
-        toggleOverlayVisibility()
-    }
-    
     fileprivate func alertVideoUnavailable() {
         if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
             showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }

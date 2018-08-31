@@ -22,6 +22,7 @@ import WireSyncEngine
 protocol CallQualityControllerDelegate: class {
     func dismissCurrentSurveyIfNeeded()
     func callQualityControllerDidScheduleSurvey(with controller: CallQualityViewController)
+    func callQualityControllerDidScheduleDebugAlert()
 }
 
 /**
@@ -122,7 +123,7 @@ class CallQualityController: NSObject {
 
     /// Presents the debug log prompt after a call failure.
     private func handleCallFailure() {
-        DebugAlert.showSendLogsMessage(message: "The call failed. Sending the debug logs can help us troubleshoot the issue.")
+        delegate?.callQualityControllerDidScheduleDebugAlert()
     }
 
     /// Presents the debug log prompt after a user quality rejection.

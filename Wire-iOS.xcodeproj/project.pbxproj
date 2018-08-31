@@ -1156,6 +1156,8 @@
 		EF6163A51FE9583400C6F5A9 /* Message+dayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */; };
 		EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */; };
 		EF6251D2213844D400943708 /* ConversationListItemView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251D0213844D400943708 /* ConversationListItemView+Style.swift */; };
+		EF6251D421392FFE00943708 /* MockTapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251D321392FFE00943708 /* MockTapGestureRecognizer.swift */; };
+		EF6251DB21396B9800943708 /* AppLockViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6251DA21396B9800943708 /* AppLockViewSnapshotTests.swift */; };
 		EF63528D209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */; };
 		EF640EB82111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EF640EB72111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg */; };
 		EF66110F2121D00B00BDF57A /* UIImage+DownSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF66110E2121D00B00BDF57A /* UIImage+DownSize.swift */; };
@@ -2859,6 +2861,8 @@
 		EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
 		EF6251D0213844D400943708 /* ConversationListItemView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListItemView+Style.swift"; sourceTree = "<group>"; };
 		EF6251D1213844D400943708 /* ConversationListItemView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationListItemView+Internal.h"; sourceTree = "<group>"; };
+		EF6251D321392FFE00943708 /* MockTapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTapGestureRecognizer.swift; sourceTree = "<group>"; };
+		EF6251DA21396B9800943708 /* AppLockViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockViewSnapshotTests.swift; sourceTree = "<group>"; };
 		EF63528C209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerTests.swift; sourceTree = "<group>"; };
 		EF640EB72111EAAC00C1D1F0 /* unsplash_matterhorn_very_small_size_40x20.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_very_small_size_40x20.jpg; sourceTree = "<group>"; };
 		EF66110E2121D00B00BDF57A /* UIImage+DownSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+DownSize.swift"; sourceTree = "<group>"; };
@@ -4354,6 +4358,7 @@
 				5EC16B9F20EBB86900955156 /* MockProxyRequester.swift */,
 				5EC0870E20EF5908000366B7 /* MockURLSession */,
 				5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */,
+				EF6251D321392FFE00943708 /* MockTapGestureRecognizer.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -5403,6 +5408,7 @@
 				EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */,
 				EFA385CB2135934A00E5CFD0 /* MuteIndicatorViewControllerTests.swift */,
 				EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */,
+				EF6251DA21396B9800943708 /* AppLockViewSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7609,6 +7615,7 @@
 				BFF9446C20F6480C00531BC3 /* ThumbnailCreationTests.swift in Sources */,
 				EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */,
 				1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */,
+				EF6251D421392FFE00943708 /* MockTapGestureRecognizer.swift in Sources */,
 				7C9E291A2074F3F100827819 /* EmailVerificationStepViewControllerTests.swift in Sources */,
 				EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */,
 				AF65A25C1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift in Sources */,
@@ -7675,6 +7682,7 @@
 				87071CC41CB6A3790039388A /* FileTransferCellTests.swift in Sources */,
 				BFE3FEEC20975D1E003D9AB5 /* CallStatusViewTests.swift in Sources */,
 				BF808B591DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift in Sources */,
+				EF6251DB21396B9800943708 /* AppLockViewSnapshotTests.swift in Sources */,
 				BFBAE9E31E041FB7003FCE49 /* ReactionsCellTests.swift in Sources */,
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,
