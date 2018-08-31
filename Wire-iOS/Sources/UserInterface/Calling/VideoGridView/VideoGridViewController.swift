@@ -112,6 +112,16 @@ class VideoGridViewController: UIViewController {
         }
     }
 
+    public func switchFillMode(location: CGPoint) {
+        for view in gridView.gridSubviews {
+            let convertedRect = self.view.convert(view.frame, from: view.superview)
+            if let videoPreviewView = view as? VideoPreviewView, convertedRect.contains(location) {
+                videoPreviewView.switchFillMode()
+                break
+            }
+        }
+    }
+    
     func updateState() {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
 

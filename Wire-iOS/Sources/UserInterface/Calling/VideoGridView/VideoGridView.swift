@@ -42,3 +42,16 @@ extension VideoGridConfiguration {
     }
     
 }
+
+fileprivate extension CGSize {
+    static let floatingPreviewSmall = CGSize(width: 108, height: 144)
+    static let floatingPreviewLarge = CGSize(width: 150, height: 200)
+    
+    static func previewSize(for traitCollection: UITraitCollection) -> CGSize {
+        switch traitCollection.horizontalSizeClass {
+        case .regular: return .floatingPreviewLarge
+        case .compact, .unspecified: return .floatingPreviewSmall
+        }
+    }
+}
+
