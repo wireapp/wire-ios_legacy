@@ -19,6 +19,14 @@
 import XCTest
 @testable import Wire
 
+final class MockVideoGridConfiguration: VideoGridConfiguration {
+    var floatingVideoStream: ParticipantVideoState?
+
+    var videoStreams: [ParticipantVideoState] = []
+
+    var isMuted: Bool = true
+}
+
 final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: VideoGridViewController!
@@ -35,25 +43,15 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func createSut(muted: Bool) {
+    func createSut() {
         ZMUser.selfUser().remoteIdentifier = UUID()
-
-        let conversation = (MockConversation.oneOnOneConversation() as Any) as! ZMConversation
-        let voiceChannel = MockVoiceChannel(conversation: conversation)
-        voiceChannel.mockVideoState = VideoState.started
-        voiceChannel.mockIsVideoCall = true
-        voiceChannel.mockCallState = CallState.established
-
-        mediaManager.isMicrophoneMuted = muted
-
-        let videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager,  isOverlayVisible: false)
-        sut = VideoGridViewController(configuration: videoConfiguration)
+        sut = VideoGridViewController(configuration: MockVideoGridConfiguration())
 
         sut.view.backgroundColor = .black
     }
 
     func testForMuted(){
-        createSut(muted: true)
+        createSut()
 
         sut.isCovered = false
         verify(view: sut.view)
