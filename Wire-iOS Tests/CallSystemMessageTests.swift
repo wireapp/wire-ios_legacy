@@ -39,6 +39,21 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         let missedCell = cell(for: .missedCall, fromSelf: false, expanded: true)
         verify(view: missedCell.prepareForSnapshots())
     }
+    
+    func testThatItRendersMissedCallFromSelfUserInGroup() {
+        let missedCell = cell(for: .missedCall, fromSelf: true, inGroup: true)
+        verify(view: missedCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMissedCallFromOtherUserInGroup() {
+        let missedCell = cell(for: .missedCall, fromSelf: false, inGroup: true)
+        verify(view: missedCell.prepareForSnapshots())
+    }
+    
+    func testThatItRendersMissedCallFromOtherUserInGroup_Expanded() {
+        let missedCell = cell(for: .missedCall, fromSelf: false, expanded: true, inGroup: true)
+        verify(view: missedCell.prepareForSnapshots())
+    }
 
     // MARK: - Performed Call
 
@@ -59,8 +74,8 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
 
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false) -> IconSystemCell {
-        let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: uiMOC), from: fromSelf ? selfUser : otherUser)
+    private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false, inGroup: Bool = false) -> IconSystemCell {
+        let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: uiMOC), from: fromSelf ? selfUser : otherUser, inGroup: inGroup)
         let cell = createCell(missed: type == .missedCall)
         cell.layer.speed = 0
         if expanded {
@@ -72,9 +87,12 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         return cell
     }
 
-    private func systemMessage(missed: Bool, in conversation: ZMConversation, from user: ZMUser) -> ZMSystemMessage {
+    private func systemMessage(missed: Bool, in conversation: ZMConversation, from user: ZMUser, inGroup: Bool) -> ZMSystemMessage {
         let date = Date(timeIntervalSince1970: 123456879)
         if missed {
+            if inGroup {
+                conversation.conversationType = .group
+            }
             return conversation.appendMissedCallMessage(fromUser: user, at: date)
         } else {
             let message = conversation.appendPerformedCallMessage(with: 102, caller: user)

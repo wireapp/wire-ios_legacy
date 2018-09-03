@@ -255,11 +255,14 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
 
-        switch conversation.voiceChannel?.state {
+        let state = conversation.voiceChannel?.state
+        switch state {
         case .incoming(_, false, _)?:
             return .activeCall(showJoin: true)
-        default:
+        case .answered?, .established?, .establishedDataChannel?:
             return .activeCall(showJoin: conversation.isSilenced)
+        default:
+            return .none
         }
     }
     

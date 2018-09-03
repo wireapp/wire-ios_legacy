@@ -23,13 +23,14 @@ protocol CallTopOverlayControllerDelegate: class {
     func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController)
 }
 
-extension CallState: CustomStringConvertible {
-    public var description: String {
+extension CallState {
+    public func description(callee: String, conversation: String, isGroup: Bool) -> String {
         switch self {
         case .incoming(_, _, _):
-            return "call.status.incoming".localized
+            let toAppend = (isGroup ? conversation + "・" : "")
+            return toAppend + "call.status.incoming.user".localized(args: callee)
         case .outgoing(_):
-            return "call.status.outgoing".localized
+            return "call.status.outgoing.user".localized(args: isGroup ? conversation : callee)
         case .answered(_), .establishedDataChannel:
             return "call.status.connecting".localized
         case .terminating(_):
@@ -62,6 +63,8 @@ final class CallTopOverlayController: UIViewController {
     }
     
     private let interactiveView = UIView()
+    private let muteIcon = UIImageView()
+    private var muteIconWidth: NSLayoutConstraint?
     private var tapGestureRecognizer: UITapGestureRecognizer!
     private weak var callDurationTimer: Timer? = nil
     private var observerToken: Any? = nil
@@ -78,6 +81,7 @@ final class CallTopOverlayController: UIViewController {
     
     deinit {
         stopCallDurationTimer()
+        AVSMediaManagerClientChangeNotification.remove(self)
     }
     
     init(conversation: ZMConversation) {
@@ -87,6 +91,7 @@ final class CallTopOverlayController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.observerToken = self.conversation.voiceChannel?.addCallStateObserver(self)
+        AVSMediaManagerClientChangeNotification.add(self)
     }
     
     @available(*, unavailable)
@@ -127,21 +132,43 @@ final class CallTopOverlayController: UIViewController {
         interactiveView.addSubview(durationLabel)
         durationLabel.font = FontSpec(.small, .semibold).font
         durationLabel.textColor = .white
+        durationLabel.lineBreakMode = .byTruncatingMiddle
+        durationLabel.textAlignment = .center
+        
+        muteIcon.translatesAutoresizingMaskIntoConstraints = false
+        interactiveView.addSubview(muteIcon)
+        muteIconWidth = muteIcon.widthAnchor.constraint(equalToConstant: 0.0)
+        displayMuteIcon = false
         
         NSLayoutConstraint.activate([
             interactiveView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             interactiveView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             interactiveView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             interactiveView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.safeArea.top),
-            durationLabel.centerXAnchor.constraint(equalTo: interactiveView.centerXAnchor),
             durationLabel.centerYAnchor.constraint(equalTo: interactiveView.centerYAnchor),
-            interactiveView.heightAnchor.constraint(equalToConstant: 32)
+            durationLabel.leadingAnchor.constraint(equalTo: muteIcon.trailingAnchor, constant: 8),
+            durationLabel.trailingAnchor.constraint(equalTo: interactiveView.trailingAnchor, constant: -16),
+            interactiveView.heightAnchor.constraint(equalToConstant: 32),
+            muteIcon.leadingAnchor.constraint(equalTo: interactiveView.leadingAnchor, constant: 8),
+            muteIcon.centerYAnchor.constraint(equalTo: interactiveView.centerYAnchor),
+            muteIconWidth!
             ])
         
         interactiveView.addGestureRecognizer(tapGestureRecognizer)
-        
         updateLabel()
         (conversation.voiceChannel?.state).map(updateCallDurationTimer)
+    }
+    
+    var displayMuteIcon: Bool = false {
+        didSet {
+            if displayMuteIcon {
+                muteIcon.image = UIImage(for: .microphoneWithStrikethrough, fontSize: 16.0, color: .white)
+                muteIconWidth?.constant = 16.0
+            } else {
+                muteIcon.image = nil
+                muteIconWidth?.constant = 0.0
+            }
+        }
     }
     
     fileprivate func updateCallDurationTimer(for callState: CallState) {
@@ -186,10 +213,11 @@ final class CallTopOverlayController: UIViewController {
         switch state {
         case .established, .establishedDataChannel:
             let duration = callDurationFormatter.string(from: callDuration) ?? ""
-            
-            return "voice.top_overlay.tap_to_return".localized + "   " + duration
+            return "voice.top_overlay.tap_to_return".localized + "・" + duration
         default:
-            return state.description
+            let initiator = self.conversation.voiceChannel?.initiator?.displayName ?? ""
+            let conversation = self.conversation.displayName
+            return state.description(callee: initiator, conversation: conversation, isGroup: self.conversation.conversationType == .group)
         }
     }
     
@@ -206,5 +234,11 @@ final class CallTopOverlayController: UIViewController {
 extension CallTopOverlayController: WireCallCenterCallStateObserver {
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
         updateCallDurationTimer(for: callState)
+    }
+}
+
+extension CallTopOverlayController: AVSMediaManagerClientObserver {
+    func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification!) {
+        displayMuteIcon = AVSMediaManager.sharedInstance().isMicrophoneMuted
     }
 }

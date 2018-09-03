@@ -390,7 +390,6 @@
 
 "content.system.call.you" = "You";
 "content.system.call.called" = "%@ called";
-"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ called";
 
 "content.system.renamed_conv.title" = "%@ renamed the conversation";
@@ -540,6 +539,7 @@
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Calling…";
 "call.status.outgoing" = "Ringing…";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Constant Bit Rate";
