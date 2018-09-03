@@ -51,7 +51,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        [CASStyler.defaultStyler styleItem:self];
         [self setupPingCell];
         [self createConstraints];
     }

@@ -204,8 +204,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
     [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.burstTimestampView.unreadDot, self.toolboxView, self.likeButton]];
     self.accessibilityElements = accessibilityElements;
-
-    [CASStyler.defaultStyler styleItem:self];
 }
 
 - (void)prepareForReuse

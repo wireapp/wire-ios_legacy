@@ -70,11 +70,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
         
         let connectionView = UserConnectionView(user: user)
         connectionView.layoutForTest()
-        
-        
-        // Give Classy time to style the view
-        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
-        
+
         return connectionView
     }
 
