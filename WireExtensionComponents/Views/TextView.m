@@ -27,7 +27,6 @@
 #import "UIPasteboard+Compatibility.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 #import "Wire-Swift.h"
-@import Classy;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -41,18 +40,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 // and by http://derpturkey.com/placeholder-in-uitextview/
 
 @implementation TextView
-
-+ (void)initialize
-{
-    if (self == [TextView class]) {
-        // Add textTransform property to Classy
-        CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self];
-        
-        // Set mapping for property key
-        [classDescriptor setArgumentDescriptors:@[[CASArgumentDescriptor argWithValuesByName:TextTransformTable()]]
-                                 forPropertyKey:@cas_propertykey(TextView, placeholderTextTransform)];
-    }
-}
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {

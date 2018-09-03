@@ -28,7 +28,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
-@import Classy;
 
 NSString * const ConversationListItemDidScrollNotification = @"ConversationListItemDidScrollNotification";
 
