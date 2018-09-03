@@ -35,7 +35,9 @@ import Cartography
     var collapseWidthConstraint: NSLayoutConstraint!
     var expandWidthConstraint: NSLayoutConstraint!
     var expandTypingViewWidthConstraint: NSLayoutConstraint!
-
+    let defaultViewWidth: CGFloat = 28
+    let activeCallWidth: CGFloat = 20
+    
     @objc init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
@@ -71,9 +73,9 @@ import Cartography
             typingView.trailing == selfView.trailing ~ 999.0
             typingView.top == selfView.top
             typingView.bottom == selfView.bottom
-            self.expandTypingViewWidthConstraint = typingView.width >= 28
+            self.expandTypingViewWidthConstraint = typingView.width >= defaultViewWidth
             
-            self.expandWidthConstraint = selfView.width >= 28
+            self.expandWidthConstraint = selfView.width >= defaultViewWidth
             self.collapseWidthConstraint = selfView.width == 0
         }
         self.collapseWidthConstraint.isActive = false
@@ -92,9 +94,9 @@ import Cartography
             self.accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
         case .activeCall(false):
-            iconView.image = UIImage(for: .phone, fontSize: 18.0, color: .white)
+            //iconView.image = UIImage(for: .phone, fontSize: 18.0, color: .white)
             self.accessibilityValue = "conversation_list.voiceover.status.active_call".localized
-            return iconView
+            return .none
         case .activeCall(true):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized.uppercased()
             self.accessibilityValue = textLabel.text
@@ -154,6 +156,9 @@ import Cartography
         self.badgeView.isHidden = false
         self.typingView.isHidden = true
         
+        self.expandTypingViewWidthConstraint.constant = defaultViewWidth
+        self.expandWidthConstraint.constant = defaultViewWidth
+        
         self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         
         switch self.icon {
@@ -165,7 +170,13 @@ import Cartography
 
             return
         case .activeCall(false):
-            self.badgeView.backgroundColor = .clear
+            self.badgeView.isHidden = true
+            self.typingView.isHidden = false
+            self.typingView.image = UIImage(for: .phone, fontSize: 18.0, color: .white)
+            
+            self.expandTypingViewWidthConstraint.constant = activeCallWidth
+            self.expandWidthConstraint.constant = activeCallWidth
+
         case .activeCall(true): // "Join" button
             self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color
         case .typing:
