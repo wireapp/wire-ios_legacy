@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "Personas";
 "peoplepicker.header.services" = "Servicios";
-"peoplepicker.services.create_conversation.item" = "Crear una nueva conversación";
+"peoplepicker.services.open_conversation.item" = "Abrir chat";
 "peoplepicker.services.add_service.button" = "Add service";
 "peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "El servicio no está disponible en este momento";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Todos están aquí.";
 
-"add_participants.alert.title" = "Full house";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "verificado";
 
-"conversation.status.call" = "Llamada activa";
 "conversation.status.typing" = "Escribiendo ...";
 "conversation.status.typing.group" = "%@: Escribiendo ...";
 "conversation.status.silenced" = "Silenciado";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "Compartió un archivo";
 "conversation.status.message.knock" = "Hizo ping";
 "conversation.status.message.missedcall" = "Llamada perdida";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Mensaje con caducidad";
 
 "conversation.status.unsent" = "⚠️ Mensaje no enviado";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Buscar";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ te eliminó";
 "content.system.you_removed_other" = "Eliminaste a %@";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "Tú";
 "content.system.call.called" = "%@ llamó";
+"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ llamó";
 
 "content.system.renamed_conv.title" = "%@ renombró el chat";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
 "guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "Eliminar";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "Fair";
 "calling.quality_survey.answer.4" = "Good";
 "calling.quality_survey.answer.5" = "Excellent";
+"calling.quality_survey.skip_button_title" = "Skip";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

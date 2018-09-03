@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "Inimesed";
 "peoplepicker.header.services" = "Teenused";
-"peoplepicker.services.create_conversation.item" = "Alusta vestlust";
+"peoplepicker.services.open_conversation.item" = "Ava vestlus";
 "peoplepicker.services.add_service.button" = "Lisa teenus";
 "peoplepicker.services.add_service.error.title" = "Teenust ei saa lisada";
 "peoplepicker.services.add_service.error.default" = "Teenus pole hetkel saadaval";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Kõik on siin.";
 
-"add_participants.alert.title" = "Full house";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "kinnitatud";
 
-"conversation.status.call" = "Aktiivne kõne";
 "conversation.status.typing" = "Kirjutab…";
 "conversation.status.typing.group" = "%@: kirjutab…";
 "conversation.status.silenced" = "Vaigistatud";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "Jagas faili";
 "conversation.status.message.knock" = "Pingis";
 "conversation.status.message.missedcall" = "Vastamata kõne";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Kustuv sõnum";
 
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Sa ei saa pildistada kõne ajal.";
 
 "conversation.guests_present" = "Kohal on külalisi";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Otsing";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ eemaldas sind";
 "content.system.you_removed_other" = "Sa eemaldasid kasutaja %@";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "Sina";
 "content.system.call.called" = "%@ helistas";
+"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ helistasid";
 
 "content.system.renamed_conv.title" = "%@ nimetas vestluse ümber";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
 "guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "Eemalda";
 "guest_room.revoke_link.message" = "Uued külalised ei saa selle lingi abil liituda. Praegustel külalistel on jätkuvalt ligipääs.";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "Rahuldav";
 "calling.quality_survey.answer.4" = "Hea";
 "calling.quality_survey.answer.5" = "Suurepärane";
+"calling.quality_survey.skip_button_title" = "Jäta vahele";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

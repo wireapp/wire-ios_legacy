@@ -31,7 +31,7 @@
 "general.accept" = "Aceitar";
 "general.decline" = "Não, obrigado";
 "general.failure" = "Algo deu errado";
-"general.service" = "Service";
+"general.service" = "Serviço";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "Pessoas";
 "peoplepicker.header.services" = "Serviços";
-"peoplepicker.services.create_conversation.item" = "Criar uma nova conversa";
+"peoplepicker.services.open_conversation.item" = "Abrir conversa";
 "peoplepicker.services.add_service.button" = "Adicionar serviço";
 "peoplepicker.services.add_service.error.title" = "O serviço não pode ser adicionado";
 "peoplepicker.services.add_service.error.default" = "O serviço está indisponível no momento";
@@ -79,9 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Por favor, insira um endereço de e-mail válido";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sem resultados.";
-"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
+"peoplepicker.no_matching_results_services_title" = "Serviços são ajudantes que podem melhorar seu fluxo de trabalho. Para ativá-los, fale com seu administrador.";
+"peoplepicker.no_matching_results_services_admin_title" = "Serviços são ajudantes que podem melhorar seu fluxo de trabalho.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Gerenciar serviços";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Digite um endereço de e-mail ou";
 /*  */
@@ -98,11 +98,11 @@
 "peoplepicker.quick-action.open-conversation" = "Abrir";
 "peoplepicker.quick-action.create-conversation" = "Criar grupo";
 "peoplepicker.quick-action.create-guest-room" = "Criar grupo de convidados";
-"peoplepicker.quick-action.admin-services" = "Manage Services";
+"peoplepicker.quick-action.admin-services" = "Gerenciar serviços";
 
 "add_participants.all_contacts_added" = "Todo mundo está aqui.";
 
-"add_participants.alert.title" = "Sala cheia";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "Até %d pessoas podem participar de uma conversa.";
 "add_participants.alert.message.existing_conversation" = "Até %1$d pessoas podem participar de uma conversa. Atualmente, há apenas espaço para mais %2$d.";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "verificado";
 
-"conversation.status.call" = "Chamada em curso";
 "conversation.status.typing" = "Digitando uma mensagem…";
 "conversation.status.typing.group" = "%@: está digitando…";
 "conversation.status.silenced" = "Silenciado";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "Compartilhou um arquivo";
 "conversation.status.message.knock" = "Pingou";
 "conversation.status.message.missedcall" = "Chamada não atendida";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Mensagem com tempo";
 
 "conversation.status.unsent" = "⚠️ Mensagem não enviada";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Não é possível tirar uma foto durante a chamada.";
 
 "conversation.guests_present" = "Os convidados estão presentes";
-"conversation.services_present" = "Serviços estão presentes";
-"conversation.guests_services_present" = "Os hóspedes e serviços estão presentes";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Procurar";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ removeu você";
 "content.system.you_removed_other" = "Você removeu %@";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "Você";
 "content.system.call.called" = "%@ ligou";
+"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ ligou";
 
 "content.system.renamed_conv.title" = "%@ renomeou a conversa";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Permitir que os hóspedes e serviços";
-"guest_room.allow_guests.subtitle" = "Abra esta conversa para serviços e pessoas de fora da sua equipe. Você sempre pode mudar depois.";
+"guest_room.allow_guests.subtitle" = "Abra esta conversa para serviços e pessoas fora da sua equipe.";
 "guest_room.remove_guests.message" = "Os hóspedes e serviços atuais serão removidos da conversa. Novos hóspedes e serviços não serão permitidos.";
 "guest_room.remove_guests.action" = "Remover";
 "guest_room.revoke_link.message" = "Novos convidados não será capazes de juntar-se com este link. Os convidados atuais ainda terão acesso.";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "Razoável";
 "calling.quality_survey.answer.4" = "Boa";
 "calling.quality_survey.answer.5" = "Excelente";
+"calling.quality_survey.skip_button_title" = "Pular";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "Kontakte";
 "peoplepicker.header.services" = "Dienste";
-"peoplepicker.services.create_conversation.item" = "Neue Unterhaltung beginnen";
+"peoplepicker.services.open_conversation.item" = "Unterhaltung öffnen";
 "peoplepicker.services.add_service.button" = "Dienst hinzufügen";
 "peoplepicker.services.add_service.error.title" = "Der Dienst kann nicht hinzugefügt werden";
 "peoplepicker.services.add_service.error.default" = "Der Dienst ist derzeit nicht verfügbar";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Alle sind hier.";
 
-"add_participants.alert.title" = "Volles Haus";
+"add_participants.alert.title" = "Die Gruppe ist voll";
 "add_participants.alert.message.new_conversation" = "Bis zu %d Personen können an einer Unterhaltung teilnehmen.";
 "add_participants.alert.message.existing_conversation" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Jetzt ist noch Platz für %2$d weitere.";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "Überprüft";
 
-"conversation.status.call" = "Aktiver Anruf";
 "conversation.status.typing" = "Schreibt eine Nachricht…";
 "conversation.status.typing.group" = "%@: schreibt eine Nachricht…";
 "conversation.status.silenced" = "Lautlos";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "Hat eine Datei geteilt";
 "conversation.status.message.knock" = "hat gepingt";
 "conversation.status.message.missedcall" = "Verpasster Anruf";
+"conversation.status.message.missedcall.groups" = "Verpasster Anruf von %@";
 "conversation.status.message.ephemeral" = "Temporäre Nachricht";
 
 "conversation.status.unsent" = "⚠️ Nicht gesendete Nachricht";
@@ -282,7 +282,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Bilder können während eines Anrufs nicht aufgenommen werden.";
 
 "conversation.guests_present" = "Gäste anwesend";
-"conversation.services_present" = "Dienste anwesend";
+"conversation.services_present" = "Dienste aktiv";
 "conversation.guests_services_present" = "Gäste und Dienste anwesend";
 "conversation.action.search" = "Suche";
 
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ hat dich entfernt";
 "content.system.you_removed_other" = "Du hast %@ entfernt";
 
-"content.system.services.warning" = "Dienste haben Zugriff auf den Inhalt der Unterhaltung";
+"content.system.services.warning" = "Dienste haben Zugriff auf den Inhalt dieser Unterhaltung";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "Du";
 "content.system.call.called" = "%@ hat angerufen";
+"content.system.call.missed-call" = "Verpasster Anruf von %@";
 "content.system.call.called-you" = "%@ hast angerufen";
 
 "content.system.renamed_conv.title" = "%@ hat das Gespräch umbenannt";
@@ -910,7 +911,7 @@
 "open_link.browser.option.brave" = "Brave";
 
 // Sound alerts (TO BE UPDPATED)
-"self.settings.sound_menu.title" = "Benachrichtigungen";
+"self.settings.sound_menu.title" = "Töne";
 "self.settings.sound_menu.no_sounds.title" = "Keine";
 "self.settings.sound_menu.all_sounds.title" = "Alle";
 "self.settings.sound_menu.mute_while_talking.title" = "Erste Nachricht und Pings";
@@ -945,11 +946,11 @@
 "self.settings.privacy.clear_history.title" = "Verlauf löschen";
 "self.settings.privacy.clear_history.subtitle" = "Dies löscht dauerhaft den Inhalt all deiner Unterhaltungen.";
 
-"self.settings.advanced.title" = "Fortgeschrittene Einstellungen";
+"self.settings.advanced.title" = "Erweitert";
 "self.settings.advanced.troubleshooting.title" = "Fehlerbehebung";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht senden";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Diese Information hilft uns Probleme zu erkennen.\nWenn beim Anrufen Probleme auftraten, beschreibe mit welchen Schritten das Problem reproduzierbar ist und sende uns gegebenenfalls Bildschirmfotos mit dieser Email.";
-"self.settings.advanced.reset_push_token.title" = "Benachrichtigungs-Token zurücksetzen";
+"self.settings.advanced.reset_push_token.title" = "Push-Token zurücksetzen";
 "self.settings.advanced.reset_push_token.subtitle" = "Der Wire Kundenservice kann dich bitten, diesen Token zurückzusetzen, wenn du Probleme mit Push-Benachrichtigungen hast.";
 "self.settings.advanced.reset_push_token_alert.title" = "Der Benachrichtigungs-Token wurde zurückgesetzt";
 "self.settings.advanced.reset_push_token_alert.message" = "Sie sollten in wenigen Sekunden wieder Benachrichtigungen erhalten können.";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Gäste und Dienste zulassen";
-"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams. Diese Einstellung kann später jederzeit geändert werden.";
+"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams.";
 "guest_room.remove_guests.message" = "Aktuelle Gäste und Dienste werden aus der Unterhaltung entfernt. Neue Gäste und Dienste sind nicht erlaubt.";
 "guest_room.remove_guests.action" = "Entfernen";
 "guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zum Gästebereich.";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "Befriedigend";
 "calling.quality_survey.answer.4" = "Gut";
 "calling.quality_survey.answer.5" = "Sehr Gut";
+"calling.quality_survey.skip_button_title" = "Überspringen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action
