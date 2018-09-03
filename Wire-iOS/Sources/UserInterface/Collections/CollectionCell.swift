@@ -157,7 +157,7 @@ open class CollectionCell: UICollectionViewCell {
         let isObfuscated = message?.isObfuscated == true
         secureContentsView.isHidden = isObfuscated
         obfuscationView.isHidden = !isObfuscated
-        obfuscationView.backgroundColor = UIColor(scheme: .accentDimmedFlat)
+        obfuscationView.backgroundColor = .accentDimmedFlat
     }
 
     // MARK: - Menu
