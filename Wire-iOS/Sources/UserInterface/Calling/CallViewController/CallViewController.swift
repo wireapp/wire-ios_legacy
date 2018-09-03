@@ -23,7 +23,6 @@ final class CallViewController: UIViewController {
     
     weak var dismisser: ViewControllerDismisser? = nil
     fileprivate var tapRecognizer: UITapGestureRecognizer!
-    fileprivate var doubleTapRecognizer: UITapGestureRecognizer!
     fileprivate let mediaManager: AVSMediaManagerInterface
     fileprivate let voiceChannel: VoiceChannel
     fileprivate var callInfoConfiguration: CallInfoConfiguration
@@ -81,13 +80,6 @@ final class CallViewController: UIViewController {
                 tapRecognizer.numberOfTapsRequired = 1
 
         view.addGestureRecognizer(tapRecognizer)
-
-        doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didDoubleTapOnView))
-        doubleTapRecognizer.numberOfTapsRequired = 2
-        tapRecognizer.require(toFail: doubleTapRecognizer)
-
-        view.addGestureRecognizer(doubleTapRecognizer)
-
     }
 
     @objc func didTapOnView(sender: UIGestureRecognizer) {
@@ -101,11 +93,6 @@ final class CallViewController: UIViewController {
         }
 
         toggleOverlayVisibility()
-    }
-
-    @objc func didDoubleTapOnView(sender: UIGestureRecognizer) {
-        let location = sender.location(ofTouch: 0 , in: videoGridViewController.view)
-        videoGridViewController.switchFillMode(location: location)
     }
 
     deinit {

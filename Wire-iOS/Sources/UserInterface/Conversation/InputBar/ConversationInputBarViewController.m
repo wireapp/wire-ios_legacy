@@ -902,15 +902,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                pointToView:self.videoButton.imageView];
 }
 
-#pragma mark - Video save callback
-
-- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    if (nil != error) {
-        ZMLogError(@"Error saving video: %@", error);
-    }
-}
-
 @end
 
 @interface ZMAssetMetaDataEncoder (Test)
