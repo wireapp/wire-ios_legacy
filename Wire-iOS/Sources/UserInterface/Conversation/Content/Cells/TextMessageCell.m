@@ -21,7 +21,6 @@
 #import "TextMessageCell+Internal.h"
 
 @import PureLayout;
-#import <Classy/Classy.h>
 
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
