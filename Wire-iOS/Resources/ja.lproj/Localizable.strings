@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "メンバー";
 "peoplepicker.header.services" = "サービス";
-"peoplepicker.services.create_conversation.item" = "会話を作成";
+"peoplepicker.services.open_conversation.item" = "会話を始めます";
 "peoplepicker.services.add_service.button" = "サービスを追加";
 "peoplepicker.services.add_service.error.title" = "サービスを追加できません。";
 "peoplepicker.services.add_service.error.default" = "現在、サービスはご利用いただけません。";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "全員います";
 
-"add_participants.alert.title" = "満員です";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "グループ会話には %d 人まで参加することができます。";
 "add_participants.alert.message.existing_conversation" = "グループ会話には %1$d 人まで参加することができます。あと %2$d 人が参加できます。";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "認証済み";
 
-"conversation.status.call" = "通話中";
 "conversation.status.typing" = "メッセージを入力中";
 "conversation.status.typing.group" = "%@: メッセージの入力中";
 "conversation.status.silenced" = "ミュート";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "ファイルが共有されました";
 "conversation.status.message.knock" = "Ping されました";
 "conversation.status.message.missedcall" = "不在着信";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "タイマーメッセージ";
 
 "conversation.status.unsent" = "⚠️ 未送信メッセージ";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "通話中に写真を撮ることはできません。";
 
 "conversation.guests_present" = "ゲストが存在します";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "検索";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@はあなたを削除しました";
 "content.system.you_removed_other" = "あなたは%@を削除しました";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "あなた";
 "content.system.call.called" = "%@ からの着信";
+"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ からの着信";
 
 "content.system.renamed_conv.title" = "%@が会話に名前を付けました";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
 "guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "削除";
 "guest_room.revoke_link.message" = "新しいゲストはこのリンクに参加することができません。現在のゲストはアクセス可能です。";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "普通";
 "calling.quality_survey.answer.4" = "良い";
 "calling.quality_survey.answer.5" = "非常に良い";
+"calling.quality_survey.skip_button_title" = "省略";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

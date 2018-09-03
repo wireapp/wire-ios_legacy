@@ -116,7 +116,7 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     }
 }
 
-// Ephemeral indicator button
+// MARK: - Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){
         // GIVEN
@@ -129,7 +129,20 @@ extension ConversationInputBarViewControllerTests {
         sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
-    
+
+    func testEphemeralTimeNone(){
+        // GIVEN
+        prepareSut()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(.none)
+
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
     func testEphemeralTime10Second() {
         // GIVEN
         sut = ConversationInputBarViewController(conversation: otherUserConversation)

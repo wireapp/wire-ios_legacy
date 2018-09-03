@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "联系人";
 "peoplepicker.header.services" = "服务";
-"peoplepicker.services.create_conversation.item" = "开始新对话";
+"peoplepicker.services.open_conversation.item" = "打开对话";
 "peoplepicker.services.add_service.button" = "添加服务";
 "peoplepicker.services.add_service.error.title" = "无法加入服务";
 "peoplepicker.services.add_service.error.default" = "服务暂时无法使用";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "所有用户已加入群聊";
 
-"add_participants.alert.title" = "Full house";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "已验证";
 
-"conversation.status.call" = "正在呼叫";
 "conversation.status.typing" = "正在输入...";
 "conversation.status.typing.group" = "%@︰正在输入...";
 "conversation.status.silenced" = "静音";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "分享了文件";
 "conversation.status.message.knock" = "打了招呼";
 "conversation.status.message.missedcall" = "未接电话";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "阅后即焚";
 
 "conversation.status.unsent" = "⚠️ 未发信息";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "访客在对话中";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "搜索";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@移除了您";
 "content.system.you_removed_other" = "您移除了%@";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "你";
 "content.system.call.called" = "%@曾打电话";
+"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@曾打电话";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
 "guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "移除";
 "guest_room.revoke_link.message" = "新访客将无法加入此连结。 目前访客仍可使用。";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "一般";
 "calling.quality_survey.answer.4" = "很好";
 "calling.quality_survey.answer.5" = "优秀";
+"calling.quality_survey.skip_button_title" = "跳过";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

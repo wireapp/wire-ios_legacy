@@ -147,6 +147,9 @@ private extension CallClosedReason {
             return "unknown"
         case .lostMedia:
             return "drop"
+        case .rejectedElsewhere:
+            return "rejected_elsewhere"
+            
         }
     }
     
