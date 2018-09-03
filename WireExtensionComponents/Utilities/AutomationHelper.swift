@@ -226,8 +226,11 @@ extension AutomationHelper {
 
 extension AutomationHelper {
     fileprivate func listenForClipboardChanges() {
+
         // UIClipboard change notifications do not work when contents are changed from
         // outside the process (e.g. in automation) so the only way is to poll for it
+        UIPasteboard.general.string = "STARTED POLLING"
+
         pollClipboardContentsForMagicString()
     }
 
