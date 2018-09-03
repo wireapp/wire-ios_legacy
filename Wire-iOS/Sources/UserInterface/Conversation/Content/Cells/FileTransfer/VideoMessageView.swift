@@ -76,7 +76,7 @@ import Cartography
         self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView]
         self.allViews.forEach(self.addSubview)
         
-        CASStyler.default().styleItem(self)
+        
         
         self.createConstraints()
         var currentElements = self.accessibilityElements ?? []

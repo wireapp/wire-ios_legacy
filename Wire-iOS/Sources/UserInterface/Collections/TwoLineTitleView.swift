@@ -61,7 +61,7 @@ public final class TwoLineTitleView: UIView {
             subtitleLabel.bottom == selfView.bottom
         }
 
-        CASStyler.default().styleItem(self)
+        
 
         setNeedsLayout()
         layoutIfNeeded()

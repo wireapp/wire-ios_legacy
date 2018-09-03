@@ -208,7 +208,7 @@ struct HandleChangeState {
     init(state: HandleChangeState) {
         self.state = state
         super.init(style: .grouped)
-        CASStyler.default().styleItem(self)
+        
         setupViews()
     }
 

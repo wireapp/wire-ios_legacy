@@ -304,7 +304,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         imageViewController.swipeToDismiss = self.swipeToDismiss
         imageViewController.showCloseButton = false
         imageViewController.dismissAction = self.dismissAction
-        CASStyler.default().styleItem(imageViewController)
+
         return imageViewController
     }
     

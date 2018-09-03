@@ -218,7 +218,7 @@ private struct InputBarConstants {
         [leftAccessoryView, textView, rightAccessoryStackView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
-        CASStyler.default().styleItem(self)
+        
 
         setupViews()
         createConstraints()

@@ -151,7 +151,7 @@ extension UIAlertController {
     }
 
     private func setupViews() {
-        CASStyler.default().styleItem(self)
+        
         picker.delegate = self
         picker.dataSource = self
         picker.tintColor = .red

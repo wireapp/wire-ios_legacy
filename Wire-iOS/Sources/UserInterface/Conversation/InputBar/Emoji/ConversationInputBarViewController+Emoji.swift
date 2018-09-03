@@ -52,7 +52,7 @@ extension ConversationInputBarViewController {
 
         button.setIconColor(color, for: .normal)
         button.setIcon(type, with: .tiny, for: .normal)
-        CASStyler.default().styleItem(self)
+        
     }
 
     @objc public func createEmojiKeyboardViewController() {

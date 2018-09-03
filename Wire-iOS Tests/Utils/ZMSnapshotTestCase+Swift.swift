@@ -47,7 +47,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
             tableView.height == size.height
         }
         
-        CASStyler.default().styleItem(self)
+        
         self.layoutSubviews()
         return tableView
     }

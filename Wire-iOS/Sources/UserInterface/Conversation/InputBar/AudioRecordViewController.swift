@@ -154,7 +154,7 @@ private let zmLog = ZMSLog(tag: "UI")
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
         updateRecordingState(recordingState)
-        CASStyler.default().styleItem(self)
+        
         
         buttonOverlay.buttonHandler = { [weak self] buttonType in
             guard let `self` = self else {

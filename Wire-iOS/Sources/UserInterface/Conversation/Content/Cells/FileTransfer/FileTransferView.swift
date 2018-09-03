@@ -77,7 +77,7 @@ final public class FileTransferView: UIView, TransferView {
         self.allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
         self.allViews.forEach(self.addSubview)
         
-        CASStyler.default().styleItem(self)
+        
         
         self.createConstraints()
         

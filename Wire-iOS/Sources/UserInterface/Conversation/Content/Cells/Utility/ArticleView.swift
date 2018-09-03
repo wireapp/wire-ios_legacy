@@ -64,7 +64,7 @@ import WireExtensionComponents
             imageView.accessibilityIdentifier = "linkPreviewImage"
         }
         
-        CASStyler.default().styleItem(self)
+        
         
         setupViews()
         setupConstraints(imagePlaceholder)

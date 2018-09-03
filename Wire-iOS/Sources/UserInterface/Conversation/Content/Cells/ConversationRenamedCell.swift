@@ -30,7 +30,7 @@ import Cartography
         nameLabel.numberOfLines = 0
         messageContentView.addSubview(nameLabel)
         createConstraints()
-        CASStyler.default().styleItem(self)
+        
     }
     
     public required init?(coder aDecoder: NSCoder) {

@@ -63,7 +63,7 @@ public class CustomMessageCell : ConversationCell {
             messageLabel.edges == container.edgesWithinMargins
         }
 
-        CASStyler.default().styleItem(self)
+        
 
         messageLabel.delegate = self
 

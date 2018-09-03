@@ -42,7 +42,7 @@ import AddressBook
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
         containerView.backgroundColor = .placeholderBackground
-        CASStyler.default().styleItem(self)
+        
         configureViews()
         createConstraints()
     }
