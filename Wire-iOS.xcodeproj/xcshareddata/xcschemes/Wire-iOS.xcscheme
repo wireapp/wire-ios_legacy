@@ -120,11 +120,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-UseAnalytics 1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "-ConsoleAnalytics"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <EnvironmentVariables>
