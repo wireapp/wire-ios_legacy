@@ -29,7 +29,6 @@ final class CallViewController: UIViewController {
     fileprivate var callInfoConfiguration: CallInfoConfiguration
     fileprivate var preferedVideoPlaceholderState: CallVideoPlaceholderState = .statusTextHidden
     fileprivate let callInfoRootViewController: CallInfoRootViewController
-    let muteIndicatorViewController: MuteIndicatorViewController
     fileprivate weak var overlayTimer: Timer?
     fileprivate let hapticsController = CallHapticsController()
     fileprivate let participantsTimestamps = CallParticipantTimestamps()
@@ -60,12 +59,10 @@ final class CallViewController: UIViewController {
         self.mediaManager = mediaManager
         self.proximityMonitorManager = proximityMonitorManager
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager,  isOverlayVisible: true)
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, sortTimestamps: participantsTimestamps)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissionsConfiguration, cameraType: cameraType, sortTimestamps: participantsTimestamps, mediaManager: mediaManager)
 
         callInfoRootViewController = CallInfoRootViewController(configuration: callInfoConfiguration)
         videoGridViewController = VideoGridViewController(configuration: videoConfiguration)
-        muteIndicatorViewController = MuteIndicatorViewController()
-        muteIndicatorViewController.view.isHidden = true
 
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
@@ -175,11 +172,11 @@ final class CallViewController: UIViewController {
     }
 
     private func setupViews() {
-        [videoGridViewController, muteIndicatorViewController, callInfoRootViewController].forEach(addToSelf)
+        [videoGridViewController, callInfoRootViewController].forEach(addToSelf)
     }
 
     private func createConstraints() {
-        [videoGridViewController, muteIndicatorViewController, callInfoRootViewController].forEach{ $0.view.fitInSuperview() }
+        [videoGridViewController, callInfoRootViewController].forEach{ $0.view.fitInSuperview() }
     }
     
     fileprivate func minimizeOverlay() {
@@ -203,7 +200,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func updateConfiguration() {
-        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, sortTimestamps: participantsTimestamps)
+        callInfoConfiguration = CallInfoConfiguration(voiceChannel: voiceChannel, preferedVideoPlaceholderState: preferedVideoPlaceholderState, permissions: permissions, cameraType: cameraType, sortTimestamps: participantsTimestamps, mediaManager: mediaManager)
         callInfoRootViewController.configuration = callInfoConfiguration
         videoConfiguration = VideoConfiguration(voiceChannel: voiceChannel, mediaManager: mediaManager, isOverlayVisible: isOverlayVisible)
         videoGridViewController.configuration = videoConfiguration
@@ -407,19 +404,14 @@ extension CallViewController {
             stopOverlayTimer()
         }
         
-        let animations = { [callInfoRootViewController, muteIndicatorViewController, updateConfiguration] in
+        let animations = { [callInfoRootViewController, updateConfiguration] in
             callInfoRootViewController.view.alpha = show ? 1 : 0
-
-            if self.mediaManager.isMicrophoneMuted {
-                muteIndicatorViewController.view.isHidden = false
-                muteIndicatorViewController.view.alpha = show ? 0 : 1
-            } else {
-                muteIndicatorViewController.view.isHidden = true
-            }
             // We update the configuration here to ensure the mute overlay fade animation is in sync with the overlay
             updateConfiguration()
         }
 
+        videoGridViewController.isCovered = show
+        
         UIView.animate(
             withDuration: 0.2,
             delay: 0,

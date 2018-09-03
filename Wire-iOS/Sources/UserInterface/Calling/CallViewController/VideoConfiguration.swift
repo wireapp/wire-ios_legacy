@@ -24,7 +24,7 @@ struct VideoConfiguration: VideoGridConfiguration {
     init(voiceChannel: VoiceChannel, mediaManager: AVSMediaManagerInterface, isOverlayVisible: Bool) {
         floatingVideoStream = voiceChannel.videoStreamArrangment.preview
         videoStreams = voiceChannel.videoStreamArrangment.grid
-        isMuted = AVSMediaManager.sharedInstance().isMicrophoneMuted && !isOverlayVisible
+        isMuted = mediaManager.isMicrophoneMuted && !isOverlayVisible
     }
 }
 
