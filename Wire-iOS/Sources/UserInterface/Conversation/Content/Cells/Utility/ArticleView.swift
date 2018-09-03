@@ -51,7 +51,7 @@ import WireExtensionComponents
     let imageView = ImageResourceView()
     var linkPreview: LinkPreview?
     private let obfuscationView = ObfuscationView(icon: .link)
-    private let ephemeralColor = UIColor(scheme: .accent)
+    private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
     

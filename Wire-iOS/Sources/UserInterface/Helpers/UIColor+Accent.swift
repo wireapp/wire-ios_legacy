@@ -22,6 +22,10 @@ extension UIColor {
     @objc open class func accentDarken() -> UIColor {
         return self.accent().mix(.black, amount: 0.32)
     }
+
+    @objc static var accentDimmedFlat: UIColor {
+        return self.accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
+    }
 }
 
 extension UIColor {
