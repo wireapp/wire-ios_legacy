@@ -46,7 +46,7 @@ fileprivate extension VoiceChannel {
             } else {
                 return .none
             }
-        case .unknown, .none, .terminating, .established, .incoming(_, shouldRing: false, _):
+        case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants(using: timestamps).map {
                     .callParticipant(user: $0.0, sendsVideo: $0.1.isSendingVideo)
@@ -180,7 +180,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         case .outgoing: return .ringingOutgoing
         case .answered, .establishedDataChannel: return .connecting
         case .established: return .established(duration: -voiceChannelSnapshot.callStartDate.timeIntervalSinceNow.rounded())
-        case .terminating, .incoming(_ , shouldRing: false, _): return .terminating
+        case .terminating, .mediaStopped, .incoming(_ , shouldRing: false, _): return .terminating
         case .none, .unknown: return .none
         }
     }
