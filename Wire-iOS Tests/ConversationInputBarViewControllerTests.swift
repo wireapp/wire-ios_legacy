@@ -116,7 +116,7 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     }
 }
 
-// Ephemeral indicator button
+// MARK: - Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){
         // GIVEN
