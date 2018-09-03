@@ -902,6 +902,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                pointToView:self.videoButton.imageView];
 }
 
+@end
+
 @interface ZMAssetMetaDataEncoder (Test)
 
 + (CGSize)imageSizeForImageData:(NSData *)imageData;
