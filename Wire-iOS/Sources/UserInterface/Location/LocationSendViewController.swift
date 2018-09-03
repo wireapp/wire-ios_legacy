@@ -18,7 +18,6 @@
 
 
 import Cartography
-import Classy
 
 @objc public protocol LocationSendViewControllerDelegate: class {
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)

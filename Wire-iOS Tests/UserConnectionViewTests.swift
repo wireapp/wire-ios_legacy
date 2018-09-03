@@ -18,7 +18,6 @@
 
 import Foundation
 @testable import Wire
-import Classy
 
 func getMockUser(user: AnyObject) -> MockUserCopyable {
     if let mockUser = (user) as? MockUserCopyable {

@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 /// Displays the audio message with different states
 @objcMembers public final class AudioMessageCell: ConversationCell {

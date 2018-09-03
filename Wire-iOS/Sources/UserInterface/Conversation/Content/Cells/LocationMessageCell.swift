@@ -20,7 +20,6 @@
 import MapKit
 import Cartography
 import AddressBook
-import Classy
 
 /// Displays the location message
 @objcMembers public final class LocationMessageCell: ConversationCell {

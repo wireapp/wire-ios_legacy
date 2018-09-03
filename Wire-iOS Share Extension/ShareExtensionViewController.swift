@@ -23,7 +23,6 @@ import Cartography
 import MobileCoreServices
 import WireDataModel
 import WireExtensionComponents
-import Classy
 import WireLinkPreview
 
 private let zmLog = ZMSLog(tag: "UI")

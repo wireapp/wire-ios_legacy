@@ -21,7 +21,6 @@
 import Foundation
 import Cartography
 import MobileCoreServices
-import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 

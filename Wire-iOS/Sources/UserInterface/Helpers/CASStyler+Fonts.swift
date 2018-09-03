@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Classy
 import WireExtensionComponents
 
 extension FontSpec {

@@ -18,7 +18,6 @@
 
 
 import Cartography
-import Classy
 
 
 final class DraftSendInputAccessoryView: UIView {

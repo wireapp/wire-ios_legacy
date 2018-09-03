@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 @objcMembers final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?

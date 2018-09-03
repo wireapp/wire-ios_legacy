@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 // Cell that disaplys the file transfer and it's states
 @objcMembers public final class FileTransferCell: ConversationCell {

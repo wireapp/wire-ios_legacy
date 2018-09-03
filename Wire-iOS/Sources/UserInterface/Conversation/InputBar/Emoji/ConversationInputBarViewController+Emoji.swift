@@ -18,7 +18,6 @@
 
 
 import Foundation
-import Classy
 
 extension ConversationInputBarViewController {
     

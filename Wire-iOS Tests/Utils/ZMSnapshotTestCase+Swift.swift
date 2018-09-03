@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 @testable import Wire
 
 

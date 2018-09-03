@@ -17,7 +17,6 @@
 // 
 
 
-import Classy
 import Foundation
 
 private let zmLog = ZMSLog(tag: "UI")

@@ -19,7 +19,6 @@
 import Foundation
 import Cartography
 import TTTAttributedLabel
-import Classy
 
 public final class UnknownMessageCell: CustomMessageCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
