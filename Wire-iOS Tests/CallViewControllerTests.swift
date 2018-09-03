@@ -93,20 +93,6 @@ final class CallViewControllerGestureTests: XCTestCase {
         sut.didTapOnView(sender: mockTapGestureRecognizer)
     }
 
-    func testThatOverlayDoesnotDismissAfterDoubleTap() {
-        // GIVEN
-        mediaManager.isMicrophoneMuted = true
-
-        // WHEN
-        // call overlay is visible at the beginning
-        XCTAssert(sut.isOverlayVisible)
-
-        sut.didDoubleTapOnView(sender: MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended))
-
-        // call overlay is still visible after double-tapped
-        XCTAssert(sut.isOverlayVisible)
-    }
-
     func testThatOverlayDismissesAfterTapped() {
         // GIVEN
         mediaManager.isMicrophoneMuted = true
