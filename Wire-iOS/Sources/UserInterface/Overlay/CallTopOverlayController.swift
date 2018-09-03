@@ -159,7 +159,7 @@ final class CallTopOverlayController: UIViewController {
         (conversation.voiceChannel?.state).map(updateCallDurationTimer)
     }
     
-    var displayMuteIcon: Bool = false {
+    private var displayMuteIcon: Bool = false {
         didSet {
             if displayMuteIcon {
                 muteIcon.image = UIImage(for: .microphoneWithStrikethrough, fontSize: 16.0, color: .white)
