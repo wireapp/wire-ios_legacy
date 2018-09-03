@@ -52,8 +52,6 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
         // is crashing when running a full test suite
 //        sut = nil
         super.tearDown()
-
-        recordMode = true
     }
 
     func prepareSut() {
@@ -120,7 +118,19 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
 
 // Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
-    func testEphemeralIndicatorButtonSelectedState(){
+    func testEphemeralIndicatorButton(){
+        // GIVEN
+        prepareSut()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
+    func testEphemeralTimeNone(){
         // GIVEN
         prepareSut()
 
@@ -133,18 +143,6 @@ extension ConversationInputBarViewControllerTests {
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
-    func testEphemeralIndicatorButton(){
-        // GIVEN
-        prepareSut()
-
-        // WHEN
-        sut.mode = .timeoutConfguration
-
-        // THEN
-        sut.view.prepareForSnapshot()
-        self.verifyInAllPhoneWidths(view: sut.view)
-    }
-    
     func testEphemeralTime10Second() {
         // GIVEN
         sut = ConversationInputBarViewController(conversation: otherUserConversation)

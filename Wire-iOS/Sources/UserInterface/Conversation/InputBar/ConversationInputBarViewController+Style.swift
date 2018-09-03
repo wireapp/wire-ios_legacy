@@ -22,8 +22,9 @@ extension ConversationInputBarViewController {
     @objc func setupStyle() {
         ephemeralIndicatorButton.borderWidth = 0.0
         ephemeralIndicatorButton.titleLabel?.font = UIFont.smallSemiboldFont
-        hourglassButton.setIconColor(UIColor(scheme: .iconNormal), for: .normal)
-        hourglassButton.setIconColor(UIColor(scheme: .iconHighlighted), for: .highlighted)
+        hourglassButton.setIconColor(.iconNormal, for: .normal)
+        hourglassButton.setIconColor(.iconHighlighted, for: .highlighted)
+        hourglassButton.setIconColor(.iconNormal, for: .selected)
 
         hourglassButton.setBackgroundImageColor(.clear, for: .selected)
     }
