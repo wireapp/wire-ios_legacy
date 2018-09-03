@@ -94,8 +94,6 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
     }
     
     overridenAccentColor = overrideColor;
-    
-    [[CASStyler defaultStyler] applyDefaultColorSchemeWithAccentColor:[self accentColor]];
 }
 
 - (BOOL)isEqualTo:(id)object;
