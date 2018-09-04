@@ -20,15 +20,20 @@ import Foundation
 
 extension UIColor {
     @objc static var accentDarken: UIColor {
-        return self.accent().mix(.black, amount: 0.32)
+        return accent().mix(.black, amount: 0.32)
     }
 
     @objc static var accentDimmedFlat: UIColor {
-        return self.accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
+        return accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
     }
 
-    @objc static var buttonEmptyText: UIColor {
-        return self.accent()
+    @objc static func buttonEmptyText(variant: ColorSchemeVariant) -> UIColor {
+        switch variant {
+        case .dark:
+            return .white
+        case .light:
+            return accent()
+        }
     }
 }
 
