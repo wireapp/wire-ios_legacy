@@ -3147,31 +3147,10 @@
 		168A16AA1D9597C2005CFA6C /* Wire-iOS Share Extension */ = {
 			isa = PBXGroup;
 			children = (
-				161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */,
-				168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */,
-				D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */,
-				BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */,
-				BFBE45761E36205F009FBF60 /* Error+Logging.swift */,
-				BF96A6C31E2F845E0057974A /* UnsentSendable.swift */,
-				543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */,
-				7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */,
-				543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */,
-				BF96A6C91E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift */,
-				BF96A6CB1E2FD3BA0057974A /* NSItemProvider+Fetching.swift */,
+				5E7F012F213E928300C6F3E9 /* Sources */,
+				5E7F012E213E921400C6F3E9 /* Resources */,
+				5E7F012D213E91F700C6F3E9 /* Supporting Files */,
 				BF2756DA1E38E16D00082786 /* ShareExtensionAnalytics.swift */,
-				BF96A6C71E2FC7B60057974A /* SendController.swift */,
-				545BA2181E2D3C4900AA373E /* PostContent.swift */,
-				BF9AEE151E4A0BA20005FBA7 /* CrashReporter.swift */,
-				BF9AEE171E4A0BC00005FBA7 /* PreprocessorHelper.h */,
-				BF9AEE181E4A0BC00005FBA7 /* PreprocessorHelper.m */,
-				543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */,
-				BF2ADF481E27C3DB00E81B1E /* Localizable.strings */,
-				165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */,
-				165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */,
-				168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */,
-				168A16B01D9597C2005CFA6C /* Info.plist */,
-				165FDC481DD5D447009D75A2 /* Wire-iOS Share Extension-Bridging-Header.h */,
-				7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */,
 			);
 			path = "Wire-iOS Share Extension";
 			sourceTree = "<group>";
@@ -3492,6 +3471,46 @@
 			path = CallQualityController;
 			sourceTree = "<group>";
 		};
+		5E144FF9213E92A700B65E14 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BF9AEE171E4A0BC00005FBA7 /* PreprocessorHelper.h */,
+				BF9AEE181E4A0BC00005FBA7 /* PreprocessorHelper.m */,
+				165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */,
+				165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */,
+				BF9AEE151E4A0BA20005FBA7 /* CrashReporter.swift */,
+				BFBE45761E36205F009FBF60 /* Error+Logging.swift */,
+				7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */,
+				D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */,
+				BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */,
+				BF96A6CB1E2FD3BA0057974A /* NSItemProvider+Fetching.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		5E144FFA213E92CD00B65E14 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */,
+				543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */,
+				7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */,
+				543E0C651E23A72F000E2161 /* SendingProgressViewController.swift */,
+				543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		5E144FFB213E937C00B65E14 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				BF96A6C71E2FC7B60057974A /* SendController.swift */,
+				BF96A6C31E2F845E0057974A /* UnsentSendable.swift */,
+				545BA2181E2D3C4900AA373E /* PostContent.swift */,
+				BF96A6C91E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift */,
+			);
+			name = Content;
+			sourceTree = "<group>";
+		};
 		5E2B13E520E67206002F27E2 /* CollectionLayouts */ = {
 			isa = PBXGroup;
 			children = (
@@ -3536,6 +3555,35 @@
 				5E52376A20E7F99500649241 /* EasingFunction.swift */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		5E7F012D213E91F700C6F3E9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				168A16B01D9597C2005CFA6C /* Info.plist */,
+				168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */,
+				161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */,
+				165FDC481DD5D447009D75A2 /* Wire-iOS Share Extension-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5E7F012E213E921400C6F3E9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BF2ADF481E27C3DB00E81B1E /* Localizable.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		5E7F012F213E928300C6F3E9 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5E144FFB213E937C00B65E14 /* Content */,
+				5E144FFA213E92CD00B65E14 /* View Controllers */,
+				5E144FF9213E92A700B65E14 /* Helpers */,
+			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		5EA73D7A20D900A10001D106 /* Cells */ = {
