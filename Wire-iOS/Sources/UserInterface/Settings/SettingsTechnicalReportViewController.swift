@@ -69,7 +69,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         let mailRecipient = NSLocalizedString("self.settings.technical_report.mail.recipient", comment: "")
 
         guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self)
+            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: "calling-ios@wire.com", from: self)
             return
         }
     
