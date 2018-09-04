@@ -29,9 +29,9 @@ extern ColorSchemeColor ColorSchemeColorTextDimmed;
 extern ColorSchemeColor ColorSchemeColorTextPlaceholder;
 
 //extern ColorSchemeColor ColorSchemeColorAccent; ///TODO: private
-extern ColorSchemeColor ColorSchemeColorAccentDimmed;
+//extern ColorSchemeColor ColorSchemeColorAccentDimmed;
 //extern ColorSchemeColor ColorSchemeColorAccentDimmedFlat; ///TODO: private
-extern ColorSchemeColor ColorSchemeColorAccentDarken;
+//extern ColorSchemeColor ColorSchemeColorAccentDarken;
 
 extern ColorSchemeColor ColorSchemeColorIconNormal;
 extern ColorSchemeColor ColorSchemeColorIconSelected;

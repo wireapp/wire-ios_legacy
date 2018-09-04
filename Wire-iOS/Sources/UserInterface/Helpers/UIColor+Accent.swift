@@ -19,7 +19,7 @@
 import Foundation
 
 extension UIColor {
-    @objc open class func accentDarken() -> UIColor {
+    @objc static var accentDarken: UIColor {
         return self.accent().mix(.black, amount: 0.32)
     }
 

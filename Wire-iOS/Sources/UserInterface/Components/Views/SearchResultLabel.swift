@@ -95,7 +95,7 @@ final public class SearchResultLabel: UILabel, Copyable {
             let nsRange = text.nsRange(from: range)
             
             let highlightedAttributes = [NSAttributedStringKey.font: font,
-                                         .backgroundColor: UIColor(scheme: .accentDarken)]
+                                         .backgroundColor: UIColor.accentDarken]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
                 self.attributedText = attributedText.highlightingAppearances(of: queries,

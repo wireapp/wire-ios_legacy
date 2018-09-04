@@ -36,6 +36,14 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 	return [self colorForZMAccentColor:[self indexedAccentColor]];
 }
 
++ (void)setAccentColor:(ZMAccentColor)accentColor
+{
+    id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        editableSelf.accentColorValue = accentColor;
+    }];
+}
+
 + (ZMAccentColor)indexedAccentColor
 {
 	// priority 1: overriden color
@@ -77,14 +85,6 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
     colorIndex = MIN(accentColors.count - 1, colorIndex);
     colorIndex = MAX(0u, colorIndex);
     return accentColors[colorIndex];
-}
-
-+ (void)setAccentColor:(ZMAccentColor)accentColor
-{
-	id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
-	[[ZMUserSession sharedSession] enqueueChanges:^{
-		editableSelf.accentColorValue = accentColor;
-	}];
 }
 
 + (void)setAccentOverrideColor:(ZMAccentColor)overrideColor
