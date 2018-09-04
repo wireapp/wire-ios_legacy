@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "Žmonės";
 "peoplepicker.header.services" = "Paslaugos";
-"peoplepicker.services.create_conversation.item" = "Kurti naują susirašinėjimą";
+"peoplepicker.services.open_conversation.item" = "Atverti pokalbį";
 "peoplepicker.services.add_service.button" = "Pridėti paslaugą";
 "peoplepicker.services.add_service.error.title" = "Paslauga negali būti pridėta";
 "peoplepicker.services.add_service.error.default" = "Paslauga šiuo metu negalima";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Visi jau čia.";
 
-"add_participants.alert.title" = "Full house";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "patvirtintas";
 
-"conversation.status.call" = "Vykstantis skambutis";
 "conversation.status.typing" = "Rašo žinutę…";
 "conversation.status.typing.group" = "%@: rašo žinutę…";
 "conversation.status.silenced" = "Išjungti pranešimai";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "Pasidalino failu";
 "conversation.status.message.knock" = "Patikrinti ryšį";
 "conversation.status.message.missedcall" = "Praleistas skambutis";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Laikina žinutė";
 
 "conversation.status.unsent" = "⚠ Neišsiųsta žinutė";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Kol kalbate, fotografuoti negalite.";
 
 "conversation.guests_present" = "Yra svečių";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Ieškoti";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ jus pašalino";
 "content.system.you_removed_other" = "Jūs pašalinote pašnekovą %@";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "Jūs";
 "content.system.call.called" = "%@ skambino";
+"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ skambinote";
 
 "content.system.renamed_conv.title" = "%@ pakeitė susirašinėjimo pavadinimą";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
 "guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "Šalinti";
 "guest_room.revoke_link.message" = "Nauji svečiai negalės prisijungti spustelėję nuorodą. Dabartiniai svečiai liks prisijungę.";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "Nebloga";
 "calling.quality_survey.answer.4" = "Gera";
 "calling.quality_survey.answer.5" = "Puiki";
+"calling.quality_survey.skip_button_title" = "Praleisti";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "Участники";
 "peoplepicker.header.services" = "Службы";
-"peoplepicker.services.create_conversation.item" = "Создать новый разговор";
+"peoplepicker.services.open_conversation.item" = "Открыть разговор";
 "peoplepicker.services.add_service.button" = "Добавить службу";
 "peoplepicker.services.add_service.error.title" = "Не удается добавить службу";
 "peoplepicker.services.add_service.error.default" = "В данный момент служба недоступна";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Все пользователи добавлены.";
 
-"add_participants.alert.title" = "Перегрузка";
+"add_participants.alert.title" = "Эта группа заполнена";
 "add_participants.alert.message.new_conversation" = "К разговору могут присоединиться до %d человек.";
 "add_participants.alert.message.existing_conversation" = "К разговору может присоединиться до %1$d человек. На текущий момент в комнате есть места еще для %2$d.";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "верифицировано";
 
-"conversation.status.call" = "Исходящий звонок";
 "conversation.status.typing" = "Набирает сообщение…";
 "conversation.status.typing.group" = "%@: набирает сообщение…";
 "conversation.status.silenced" = "Выкл. уведомления";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "Поделился(-лась) файлом";
 "conversation.status.message.knock" = "Отправил(а) пинг";
 "conversation.status.message.missedcall" = "Пропущенный звонок";
+"conversation.status.message.missedcall.groups" = "Пропущенный вызов от %@";
 "conversation.status.message.ephemeral" = "Временное сообщение";
 
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Во время разговора вы не можете сделать снимок.";
 
 "conversation.guests_present" = "Присутствуют гости";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Поиск";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ удалил вас";
 "content.system.you_removed_other" = "Вы удалили %@";
 
-"content.system.services.warning" = "Сервисы имеют доступ к содержимому разговора";
+"content.system.services.warning" = "Сервисы имеют доступ к содержимому этого разговора";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "Вы";
 "content.system.call.called" = "%@ звонил(-а)";
+"content.system.call.missed-call" = "Пропущенный вызов от %@";
 "content.system.call.called-you" = "%@ звонил";
 
 "content.system.renamed_conv.title" = "%@ переименовал беседу";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Разрешить гостей и сервисы";
-"guest_room.allow_guests.subtitle" = "Открыть этот разговор для сервисов и пользователей не из вашей команды. Вы всегда сможете изменить это позже.";
+"guest_room.allow_guests.subtitle" = "Открыть этот разговор для сервисов и людей не из вашей команды.";
 "guest_room.remove_guests.message" = "Все гости и сервисы будут удалены из разговора. Новые гости и сервисы допущены не будут.";
 "guest_room.remove_guests.action" = "Удалить";
 "guest_room.revoke_link.message" = "Новые гости не смогут присоединиться по этой ссылке. На доступ текущих гостей это не повлияет.";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "Приемлемо";
 "calling.quality_survey.answer.4" = "Хорошо";
 "calling.quality_survey.answer.5" = "Прекрасно";
+"calling.quality_survey.skip_button_title" = "Пропустить";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

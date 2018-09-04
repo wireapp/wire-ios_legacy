@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical Report";
 "self.settings.technical_report.send_report" = "Send report to Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire Calling Report";
 "self.settings.technical_report.include_log" = "Include detailed log";
 "self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";

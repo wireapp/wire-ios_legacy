@@ -65,7 +65,6 @@ final class CallViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
-        AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
         proximityMonitorManager?.stateChanged = { [weak self] raisedToEar in
             self?.proximityStateDidChange(raisedToEar)
@@ -109,6 +108,7 @@ final class CallViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateVideoStatusPlaceholder()
+        AVSMediaManagerClientChangeNotification.add(self)
         proximityMonitorManager?.startListening()
         resumeVideoIfNeeded()
         setupApplicationStateObservers()

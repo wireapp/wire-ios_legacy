@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "聯絡人";
 "peoplepicker.header.services" = "服務";
-"peoplepicker.services.create_conversation.item" = "開始新對話";
+"peoplepicker.services.open_conversation.item" = "開啟對話";
 "peoplepicker.services.add_service.button" = "新增服務";
 "peoplepicker.services.add_service.error.title" = "無法加入服務";
 "peoplepicker.services.add_service.error.default" = "服務暫時無法使用";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "大家都已加入";
 
-"add_participants.alert.title" = "名額已滿";
+"add_participants.alert.title" = "此群組參與者已達上限";
 "add_participants.alert.message.new_conversation" = "最多%d人可以加入對話。";
 "add_participants.alert.message.existing_conversation" = "最多%1$d人可以加入對話。當前還可加入%2$d人。";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "已驗證";
 
-"conversation.status.call" = "通話中";
 "conversation.status.typing" = "輸入訊息中...";
 "conversation.status.typing.group" = "%@：輸入訊息中…";
 "conversation.status.silenced" = "訊息通知已關閉";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "分享了一個檔案";
 "conversation.status.message.knock" = "打了聲招呼";
 "conversation.status.message.missedcall" = "未接來電";
+"conversation.status.message.missedcall.groups" = "錯過%@的來電";
 "conversation.status.message.ephemeral" = "限時訊息";
 
 "conversation.status.unsent" = "⚠️ 未發信息";
@@ -282,7 +282,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "在通話時不能拍攝相片。";
 
 "conversation.guests_present" = "訪客在對話中";
-"conversation.services_present" = "有服務可供使用";
+"conversation.services_present" = "服務已啟動";
 "conversation.guests_services_present" = "對話中有訪客和服務";
 "conversation.action.search" = "搜索";
 
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@移除了您";
 "content.system.you_removed_other" = "您移除了%@";
 
-"content.system.services.warning" = "服務可以存取對話內容";
+"content.system.services.warning" = "服務可以存取這個對話內容";
 
 // New conversation participants added / removed / started system message
 
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "您";
 "content.system.call.called" = "%@曾打電話";
+"content.system.call.missed-call" = "錯過%@的來電";
 "content.system.call.called-you" = "%@曾打電話";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
@@ -569,7 +570,7 @@
 
 "call.announcement.incoming" = "%@的來電";
 "call.actions.label.toggle_mute_on" = "靜音";
-"call.actions.label.toggle_mute_off" = "開啟訊息通知";
+"call.actions.label.toggle_mute_off" = "取消靜音";
 "call.actions.label.flip_camera" = "切換鏡頭";
 "call.actions.label.toggle_speaker_on" = "開啟擴音器";
 "call.actions.label.toggle_speaker_off" = "停用擴音器";
@@ -1073,7 +1074,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "允許訪客和服務";
-"guest_room.allow_guests.subtitle" = "對團隊以外的人和服務公開此對話。您以後可隨時更改。";
+"guest_room.allow_guests.subtitle" = "開放這個對話與團隊以外的訪客及服務。";
 "guest_room.remove_guests.message" = "將移除對話中的訪客和服務。 將不能加入新訪客。";
 "guest_room.remove_guests.action" = "移除";
 "guest_room.revoke_link.message" = "新訪客將無法加入此連結。 目前訪客仍可使用。";
@@ -1404,6 +1405,7 @@
 "calling.quality_survey.answer.3" = "尚可";
 "calling.quality_survey.answer.4" = "好";
 "calling.quality_survey.answer.5" = "很棒";
+"calling.quality_survey.skip_button_title" = "略過";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action
