@@ -26,6 +26,10 @@ extension UIColor {
     @objc static var accentDimmedFlat: UIColor {
         return self.accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
     }
+
+    @objc static var buttonEmptyText: UIColor {
+        return self.accent()
+    }
 }
 
 extension UIColor {

@@ -50,7 +50,7 @@ extern ColorSchemeColor ColorSchemeColorChatHeadTitleText;
 extern ColorSchemeColor ColorSchemeColorChatHeadSubtitleText;
 
 extern ColorSchemeColor ColorSchemeColorButtonHighlighted;
-extern ColorSchemeColor ColorSchemeColorButtonEmptyText;
+//extern ColorSchemeColor ColorSchemeColorButtonEmptyText;
 extern ColorSchemeColor ColorSchemeColorButtonFaded;
 
 extern ColorSchemeColor ColorSchemeColorTabNormal;

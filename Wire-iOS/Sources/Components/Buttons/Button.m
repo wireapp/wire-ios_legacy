@@ -84,7 +84,7 @@
         case ButtonStyleEmpty:
             self.layer.borderWidth = 1;
             
-            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonEmptyText variant:variant] forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor buttonEmptyText] forState:UIControlStateNormal];
             [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateHighlighted];
             [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateDisabled];
             
