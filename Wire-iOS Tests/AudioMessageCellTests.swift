@@ -26,14 +26,9 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
         
         
         let mediaPlayBackManager = MediaPlaybackManager(name: "conversationMedia")
-        let fileMessage = MockMessageFactory.fileTransferMessage()
-        fileMessage?.backingFileMessageData.mimeType = "audio/x-m4a"
-        fileMessage?.backingFileMessageData.filename = "sound.m4a"
-        
-        if let config = config {
-            config(fileMessage!)
-        }
-        
+
+        let fileMessage = MockMessageFactory.audioMessage(config: config)
+
         let cell = AudioMessageCell(style: .default, reuseIdentifier: "test")
         
         let layoutProperties = ConversationCellLayoutProperties()
@@ -74,7 +69,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     
     func testUploadedCell_fromOtherUser_withoutPreview() {
         let cell = self.wrappedCellWithConfig({
-            $0.backingFileMessageData.previewData = nil
+            $0.backingFileMessageData.imagePreviewData = nil
             $0.fileMessageData?.transferState = .uploaded
             $0.backingFileMessageData.fileURL = .none
             $0.sender = MockUser.mockUsers().first!
@@ -118,7 +113,7 @@ class AudioMessageCellTests: ZMSnapshotTestCase {
     func testUploadingCell_fromOtherUser_withoutPreview() {
         let cell = self.wrappedCellWithConfig({
             $0.fileMessageData?.transferState = .uploading
-            $0.backingFileMessageData.previewData = nil
+            $0.backingFileMessageData.imagePreviewData = nil
             $0.backingFileMessageData.fileURL = .none
             $0.sender = MockUser.mockUsers().first!
         })

@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import Classy
 
-final class VideoMessageView: UIView, TransferView {
+@objcMembers final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     
@@ -32,21 +32,31 @@ final class VideoMessageView: UIView, TransferView {
     
     private let previewImageView = UIImageView()
     private let progressView = CircularProgressView()
-    private let playButton = IconButton()
+    private let playButton: IconButton = {
+        let button = IconButton()
+        button.setIconColor(.white, for: .normal)
+        return button
+    }()
     private let bottomGradientView = GradientView()
-    private let timeLabel = UILabel()
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+
+        return label
+    }()
     private let loadingView = ThreeDotsLoadingView()
     
     private let normalColor = UIColor.black.withAlphaComponent(0.4)
     private let failureColor = UIColor.red.withAlphaComponent(0.24)
     private var allViews : [UIView] = []
+    private var state: FileMessageViewState = .unavailable
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
 
         self.previewImageView.contentMode = .scaleAspectFill
         self.previewImageView.clipsToBounds = true
-        self.previewImageView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorPlaceholderBackground)
+        self.previewImageView.backgroundColor = UIColor(scheme: .placeholderBackground)
 
         self.playButton.addTarget(self, action: #selector(VideoMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityIdentifier = "VideoActionButton"
@@ -82,7 +92,7 @@ final class VideoMessageView: UIView, TransferView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open func createConstraints() {
+    public func createConstraints() {
         constrain(self, self.previewImageView, self.progressView, self.playButton, self.bottomGradientView) { selfView, previewImageView, progressView, playButton, bottomGradientView in
             (selfView.width == selfView.height * (4.0 / 3.0)) ~ 750
             previewImageView.edges == selfView.edges
@@ -111,36 +121,22 @@ final class VideoMessageView: UIView, TransferView {
         guard let fileMessage = self.fileMessage,
               let fileMessageData = fileMessage.fileMessageData,
               let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
+                
+        self.state = state
+        self.previewImageView.image = nil
         
-        fileMessage.requestImageDownload()
-        
-        var visibleViews : [UIView] = [previewImageView]
-        
-        
-        if (state == .unavailable) {
-            visibleViews = [previewImageView, loadingView]
-            self.previewImageView.image = nil
-        } else {
+        if (state != .unavailable) {
             updateTimeLabel(withFileMessageData: fileMessageData)
+            self.timeLabel.textColor = UIColor(scheme: .textForeground)
             
-            if let previewData = fileMessageData.previewData {
-                visibleViews.append(contentsOf: [previewImageView, bottomGradientView, playButton])
-                self.previewImageView.image = UIImage(data: previewData)
-                self.timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
-            } else {
-                visibleViews.append(contentsOf: [previewImageView, playButton])
-                self.previewImageView.image = nil
-                self.timeLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
-            }
-            
-            if !self.timeLabelHidden {
-                visibleViews.append(timeLabel)
+            fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
+                guard let image = image else { return }
+                self?.updatePreviewImage(image)
             }
         }
         
         if state == .uploading || state == .downloading {
             self.progressView.setProgress(fileMessageData.progress, animated: !isInitial)
-            visibleViews.append(progressView)
         }
         
         if let viewsState = state.viewsStateForVideo() {
@@ -148,11 +144,42 @@ final class VideoMessageView: UIView, TransferView {
             self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
         }
         
-        if state == .obfuscated {
-            visibleViews = []
+        updateVisibleViews()
+    }
+    
+    private func visibleViews(for state: FileMessageViewState) -> [UIView] {
+        guard state != .obfuscated else {
+            return []
         }
         
-        self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
+        guard state != .unavailable else {
+            return [loadingView]
+        }
+        
+        var visibleViews: [UIView] = [playButton, previewImageView]
+        
+        switch state {
+        case .uploading, .downloading:
+            visibleViews.append(progressView)
+        default:
+            break
+        }
+        
+        if !previewImageView.isHidden && previewImageView.image != nil {
+            visibleViews.append(bottomGradientView)
+        }
+        
+        if !timeLabelHidden {
+            visibleViews.append(timeLabel)
+        }
+        
+        return visibleViews
+    }
+    
+    private func updatePreviewImage(_ image: MediaAsset) {
+        previewImageView.setMediaAsset(image) 
+        timeLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        updateVisibleViews()
     }
     
     private func updateTimeLabel(withFileMessageData fileMessageData: ZMFileMessageData) {
@@ -169,7 +196,11 @@ final class VideoMessageView: UIView, TransferView {
         self.timeLabel.accessibilityValue = self.timeLabel.text
     }
     
-    override open var tintColor: UIColor! {
+    private func updateVisibleViews() {
+        updateVisibleViews(allViews, visibleViews: visibleViews(for: state), animated: !self.loadingView.isHidden)
+    }
+    
+    override public var tintColor: UIColor! {
         didSet {
             self.progressView.tintColor = self.tintColor
         }
@@ -182,7 +213,7 @@ final class VideoMessageView: UIView, TransferView {
     
     // MARK: - Actions
     
-    open func onActionButtonPressed(_ sender: UIButton) {
+    @objc public func onActionButtonPressed(_ sender: UIButton) {
         guard let fileMessageData = self.fileMessage?.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {
@@ -197,6 +228,7 @@ final class VideoMessageView: UIView, TransferView {
             self.delegate?.transferView(self, didSelect: .resend)
         case .uploaded, .downloaded, .failedDownload:
             self.delegate?.transferView(self, didSelect: .present)
+        case .unavailable: break
         }
     }
     

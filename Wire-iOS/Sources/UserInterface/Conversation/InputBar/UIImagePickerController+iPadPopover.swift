@@ -19,8 +19,6 @@
 import Foundation
 
 struct ImagePickerPopoverPresentationContext {
-    let sourceRect: CGRect
-    let sourceView: UIView
     let presentViewController: UIViewController
     let sourceType: UIImagePickerControllerSourceType
 }
@@ -29,18 +27,11 @@ extension UIImagePickerController {
     class func popoverForIPadRegular(with context: ImagePickerPopoverPresentationContext) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.sourceType = context.sourceType
-        picker.preferredContentSize =  CGSize.IPadPopover.preferredContentSize
+        picker.preferredContentSize = CGSize.IPadPopover.preferredContentSize
 
         if context.presentViewController.isIPadRegular(device: UIDevice.current) {
 
             picker.modalPresentationStyle = .popover
-            if let popover = picker.popoverPresentationController {
-
-                popover.sourceRect = context.sourceRect
-                popover.sourceView = context.sourceView
-
-                popover.backgroundColor = .white
-            }
         }
 
         return picker

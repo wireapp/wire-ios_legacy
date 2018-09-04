@@ -21,13 +21,13 @@ import Foundation
 import Contacts
 
 /// Allows access to address book for search
-@objc open class AddressBookHelper : NSObject {
+@objcMembers open class AddressBookHelper : NSObject {
     
     /// Time to wait between searches
     let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h
     
     /// Singleton
-    open static let sharedHelper : AddressBookHelper = AddressBookHelper()
+    public static let sharedHelper : AddressBookHelper = AddressBookHelper()
     
     /// Configuration override (used for testing)
     open var configuration : AddressBookHelperConfiguration!
@@ -129,7 +129,7 @@ extension AddressBookHelper {
         self.addressBookSearchWasPostponed = false;
         self.addressBookSearchPerformedAtLeastOnce = true;
         
-        if TARGET_OS_SIMULATOR == 0 || (self.configuration?.shouldPerformAddressBookRemoteSearchEvenOnSimulator ?? false) {
+        if !UIDevice.isSimulator || (self.configuration?.shouldPerformAddressBookRemoteSearchEvenOnSimulator ?? false) {
             ZMUserSession.shared()?.uploadAddressBookIfAllowed()
         }
         UserDefaults.standard.set(Date(), forKey: addressBookLastSearchDate)

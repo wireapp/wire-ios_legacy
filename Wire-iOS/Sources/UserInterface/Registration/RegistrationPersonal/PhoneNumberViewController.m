@@ -75,6 +75,13 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
     [self selectInitialCountry];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [self.view layoutIfNeeded];
+}
+
 - (void)createSelectCountryButton
 {
     self.selectCountryButton = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -44,6 +44,8 @@
     self = [super initWithNibName:nil bundle:nil];
 
     if (self) {
+        self.device = UIDevice.currentDevice;
+
         self.unregisteredUser = unregisteredUser;
 
         [self createContainerView];
@@ -52,15 +54,11 @@
         [self createAgreeButton];
 
         [self updateViewConstraints];
+
+        [self updateConstraintsForSizeClass];
     }
 
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self updateConstraintsForSizeClass];
 }
 
 - (void)createContainerView {
@@ -97,6 +95,7 @@
                                       NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     
     self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
+    self.termsOfUseText.linkTextAttributes = @{};
     self.termsOfUseText.delegate = self;
     self.termsOfUseText.attributedText = [[NSAttributedString alloc] initWithAttributedString:attributedTerms];
     [self.containerView addSubview:self.termsOfUseText];

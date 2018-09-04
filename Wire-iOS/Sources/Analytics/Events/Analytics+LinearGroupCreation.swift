@@ -46,7 +46,7 @@ extension LinearGroupCreationFlowEvent: Event {
         case .openedGroupCreation:
             return LinearGroupCreationFlowEvent.openedGroupCreationName
         case .openedSelectParticipants:
-            return LinearGroupCreationFlowEvent.openedGroupCreationName
+            return LinearGroupCreationFlowEvent.openedSelectParticipantsName
         case .groupCreationSucceeded:
             return LinearGroupCreationFlowEvent.groupCreationSucceededName
         case .addParticipants:

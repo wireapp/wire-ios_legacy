@@ -33,7 +33,6 @@ class UserNameTakeOverViewControllerTests: ZMSnapshotTestCase {
     func testThatItRendersCorrectInitally() {
         let sut = UserNameTakeOverViewController(suggestedHandle: "joseluis4839", name: "Jose Luis")
 
-        UIApplication.shared.isStatusBarHidden = true
         sut.setNeedsStatusBarAppearanceUpdate()
 
         verify(view: sut.prepareForSnapshots())

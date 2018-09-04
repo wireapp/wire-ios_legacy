@@ -21,30 +21,35 @@ import Cartography
 
 
 extension ShareViewController {
+
+    func createShareablePreview() {
+        let shareablePreviewView = self.shareable.previewView()
+        shareablePreviewView?.layer.cornerRadius = 4
+        shareablePreviewView?.clipsToBounds = true
+        self.shareablePreviewView = shareablePreviewView
+
+        let shareablePreviewWrapper = UIView()
+        shareablePreviewWrapper.clipsToBounds = false
+        shareablePreviewWrapper.layer.shadowOpacity = 1
+        shareablePreviewWrapper.layer.shadowRadius = 8
+        shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
+        shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
+
+        shareablePreviewWrapper.addSubview(shareablePreviewView!)
+        self.shareablePreviewWrapper = shareablePreviewWrapper
+
+        self.shareablePreviewWrapper?.isHidden = !showPreview
+    }
+
     internal func createViews() {
         
-        if self.showPreview {
-            let shareablePreviewView = self.shareable.previewView()
-            shareablePreviewView?.layer.cornerRadius = 4
-            shareablePreviewView?.clipsToBounds = true
-            self.shareablePreviewView = shareablePreviewView
-            
-            let shareablePreviewWrapper = UIView()
-            shareablePreviewWrapper.clipsToBounds = false
-            shareablePreviewWrapper.layer.shadowOpacity = 1
-            shareablePreviewWrapper.layer.shadowRadius = 8
-            shareablePreviewWrapper.layer.shadowOffset = CGSize(width: 0, height: 8)
-            shareablePreviewWrapper.layer.shadowColor = UIColor(white: 0, alpha: 0.4).cgColor
-            
-            shareablePreviewWrapper.addSubview(shareablePreviewView!)
-            self.shareablePreviewWrapper = shareablePreviewWrapper
-        }
+        createShareablePreview()
 
         self.tokenField.textColor = .white
         self.tokenField.clipsToBounds = true
         self.tokenField.layer.cornerRadius = 4
-        self.tokenField.tokenTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
-        self.tokenField.tokenSelectedTitleColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .dark)
+        self.tokenField.tokenTitleColor = UIColor(scheme: .textForeground, variant: .dark)
+        self.tokenField.tokenSelectedTitleColor = UIColor(scheme: .textForeground, variant: .dark)
         self.tokenField.tokenTitleVerticalAdjustment = 1
         self.tokenField.textView.placeholderTextAlignment = .natural
         self.tokenField.textView.accessibilityIdentifier = "textViewSearch"
@@ -53,7 +58,7 @@ extension ShareViewController {
         self.tokenField.textView.returnKeyType = .done
         self.tokenField.textView.autocorrectionType = .no
         self.tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 12)
-        self.tokenField.textView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTokenFieldBackground, variant: .dark)
+        self.tokenField.textView.backgroundColor = UIColor(scheme: .tokenFieldBackground, variant: .dark)
         self.tokenField.delegate = self
 
         self.destinationsTableView.backgroundColor = .clear
@@ -79,8 +84,6 @@ extension ShareViewController {
         self.sendButton.circular = true
         self.sendButton.addTarget(self, action: #selector(ShareViewController.onSendButtonPressed(sender:)), for: .touchUpInside)
 
-        self.bottomSeparatorLine.cas_styleClass = "separator"
-        
         if self.allowsMultipleSelection {
             self.searchIcon.image = UIImage(for: .search, iconSize: .tiny, color: .white)
         }
@@ -102,31 +105,26 @@ extension ShareViewController {
     internal func createConstraints() {
         constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
             blurView.edges == view.edges
-            containerView.top == view.top + safeArea.top
-            self.bottomConstraint = containerView.bottom == view.bottom - safeArea.bottom
+            containerView.top == view.topMargin
+            self.bottomConstraint = containerView.bottom == view.bottomMargin
             containerView.leading == view.leading
             containerView.trailing == view.trailing
         }
         
-        if self.showPreview {
-            constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
-                
-                shareablePreviewWrapper.top == view.topMargin + 8
-                shareablePreviewWrapper.left == view.left + 16
-                shareablePreviewWrapper.right == -16 + view.right
-                
-                shareablePreviewView.edges == shareablePreviewWrapper.edges
-                
-                tokenField.top == shareablePreviewWrapper.bottom + 16
-                
-            }
+        constrain(self.containerView, self.shareablePreviewWrapper!, self.shareablePreviewView!, self.tokenField) { view, shareablePreviewWrapper, shareablePreviewView, tokenField in
+
+            shareablePreviewTopConstraint = shareablePreviewWrapper.top == view.topMargin + 8
+            shareablePreviewWrapper.left == view.left + 16
+            shareablePreviewWrapper.right == -16 + view.right
+            shareablePreviewView.edges == shareablePreviewWrapper.edges
+
+            tokenFieldShareablePreviewSpacingConstraint = tokenField.top == shareablePreviewWrapper.bottom + 16
+
+            tokenFieldTopConstraint = tokenField.top == view.top + 8
         }
-        else {
-            constrain(self.containerView, self.tokenField) { view, tokenField in
-                tokenField.top == view.top + 28
-            }
-        }
-        
+
+        updateShareablePreviewConstraint()
+
         constrain(self.tokenField, self.searchIcon) { tokenField, searchIcon in
             searchIcon.centerY == tokenField.centerY
             searchIcon.left == tokenField.left + 8 // the search icon glyph has whitespaces
@@ -180,13 +178,5 @@ extension ShareViewController {
             }
         }
     }
-    
-    
-    var safeArea: UIEdgeInsets {
-        let size = UIScreen.main.bounds.size
-        if size.width == 375 && size.height == 812 {
-            return UIEdgeInsets(top: 44.0, left: 0, bottom: 34.0, right: 0)
-        }
-        return UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0)
-    }
+
 }

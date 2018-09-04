@@ -60,27 +60,37 @@ public extension UIApplication {
     @objc func wr_topmostViewController() -> UIViewController? {
         return wr_topmostController()
     }
-    
-    public func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
+
+
+    /// return the visible window on the top most which fulfills these conditions:
+    /// 1. the windows has rootViewController
+    /// 2. CallWindowRootViewController is in use and voice channel controller is active
+    /// 3. the window's rootViewController is AppRootViewController
+    public var topMostVisibleWindow: UIWindow? {
         let orderedWindows = self.windows.sorted { win1, win2 in
             win1.windowLevel < win2.windowLevel
         }
-        
+
         let visibleWindow = orderedWindows.filter {
             guard let controller = $0.rootViewController else {
                 return false
             }
-            
-            if let notificationWindowRootController = controller as? NotificationWindowRootViewController {
-                return notificationWindowRootController.voiceChannelController?.voiceChannelIsActive ?? false
+
+            if let callWindowRootController = controller as? CallWindowRootViewController {
+                return callWindowRootController.isDisplayingCallOverlay
             } else if controller is AppRootViewController  {
                 return true
             } else {
                 return false
             }
         }
-        
-        guard let window = visibleWindow.last,
+
+        return visibleWindow.last
+    }
+    
+    public func wr_topmostController(onlyFullScreen: Bool = true) -> UIViewController? {
+
+        guard let window = topMostVisibleWindow,
             var topController = window.rootViewController else {
                 return .none
         }

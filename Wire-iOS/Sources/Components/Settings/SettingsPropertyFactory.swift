@@ -26,6 +26,7 @@ protocol TrackingInterface {
 
 protocol AVSMediaManagerInterface {
     var intensityLevel : AVSIntensityLevel { get set }
+    var isMicrophoneMuted: Bool { get set }
 }
 
 extension AVSMediaManager: AVSMediaManagerInterface {
@@ -43,13 +44,13 @@ extension ZMUserSession: ZMUserSessionInterface {
 }
 
 protocol ValidatorType {
-    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>!) throws
+    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>?) throws
 }
 
 extension ZMUser: ValidatorType {
 }
 
-typealias SettingsSelfUser = ValidatorType & ZMEditableUser & ZMBareUser
+typealias SettingsSelfUser = ValidatorType & ZMEditableUser & UserType
 
 enum SettingsPropertyError: Error {
     case WrongValue(String)
@@ -73,7 +74,6 @@ class SettingsPropertyFactory {
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
         SettingsPropertyName.disableMarkdown            : UserDefaultDisableMarkdown,
         SettingsPropertyName.chatHeadsDisabled          : UserDefaultChatHeadsDisabled,
-        SettingsPropertyName.preferredFlashMode         : UserDefaultPreferredCameraFlashMode,
         SettingsPropertyName.messageSoundName           : UserDefaultMessageSoundName,
         SettingsPropertyName.callSoundName              : UserDefaultCallSoundName,
         SettingsPropertyName.pingSoundName              : UserDefaultPingSoundName,
@@ -179,7 +179,7 @@ class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let intValue):
-                    if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(intValue)),
+                    if let intensivityLevel = AVSIntensityLevel(rawValue: UInt(truncating: intValue)),
                         var mediaManager = self.mediaManager {
                         mediaManager.intensityLevel = intensivityLevel
                     }

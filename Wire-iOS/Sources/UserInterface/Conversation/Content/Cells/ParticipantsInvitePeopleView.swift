@@ -22,13 +22,13 @@ protocol ParticipantsInvitePeopleViewDelegate: class {
     func invitePeopleViewInviteButtonTapped(_ invitePeopleView: ParticipantsInvitePeopleView)
 }
 
-class ParticipantsInvitePeopleView: UIView {
+@objcMembers class ParticipantsInvitePeopleView: UIView {
     
     weak var delegate: ParticipantsInvitePeopleViewDelegate?
     
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
-    let inviteButton = IconButton()
+    let inviteButton = InviteButton()
     
     init() {
         super.init(frame: .zero)
@@ -48,17 +48,11 @@ class ParticipantsInvitePeopleView: UIView {
         [titleLabel, inviteButton].forEach(stackView.addArrangedSubview)
         titleLabel.numberOfLines = 0
         titleLabel.text = "content.system.conversation.invite.title".localized
-        titleLabel.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+        titleLabel.textColor = UIColor(scheme: .textForeground)
         titleLabel.font = FontSpec(.medium, .none).font
+        
         inviteButton.setTitle("content.system.conversation.invite.button".localized, for: .normal)
-        inviteButton.setTitleColor(.wr_color(fromColorScheme: ColorSchemeColorTextForeground), for: .normal)
-        inviteButton.adjustsTitleWhenHighlighted = true
-        inviteButton.setBackgroundImageColor(.init(red: 0.612, green: 0.655, blue: 0.686, alpha: 0.2), for: .normal)
-        inviteButton.clipsToBounds = true
-        inviteButton.titleLabel?.font = FontSpec(.normal, .semibold).font
         inviteButton.addTarget(self, action: #selector(inviteButtonTapped), for: .touchUpInside)
-        inviteButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        inviteButton.layer.cornerRadius = 4
     }
     
     private func createConstraints() {

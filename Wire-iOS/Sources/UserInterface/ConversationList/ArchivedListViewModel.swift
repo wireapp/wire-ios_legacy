@@ -24,7 +24,7 @@ import Foundation
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo)
 }
 
-@objc final class ArchivedListViewModel: NSObject {
+@objcMembers final class ArchivedListViewModel: NSObject {
 
     weak var delegate: ArchivedListViewModelDelegate?
     var archivedConversationListObserverToken: NSObjectProtocol?

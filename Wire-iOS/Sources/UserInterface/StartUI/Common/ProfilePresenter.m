@@ -63,11 +63,6 @@
 
 @implementation ProfilePresenter
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (instancetype)init
 {
     self = [super init];
@@ -95,7 +90,7 @@
     }
 }
 
-- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser, AccentColorProvider>)user inController:(UIViewController *)controller fromRect:(CGRect)rect onDismiss:(dispatch_block_t)onDismiss arrowDirection:(UIPopoverArrowDirection)arrowDirection
+- (void)presentProfileViewControllerForUser:(id<UserType, AccentColorProvider>)user inController:(UIViewController *)controller fromRect:(CGRect)rect onDismiss:(dispatch_block_t)onDismiss arrowDirection:(UIPopoverArrowDirection)arrowDirection
 {
     self.profileOpenedFromPeoplePicker = YES;
     self.viewToPresentOn = controller.view;

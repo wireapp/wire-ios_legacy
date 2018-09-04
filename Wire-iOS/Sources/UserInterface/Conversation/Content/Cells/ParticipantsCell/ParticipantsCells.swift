@@ -17,63 +17,64 @@
 //
 
 
-import Classy
 import Cartography
+import TTTAttributedLabel
 
-public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate {
+@objcMembers public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDelegate, TTTAttributedLabelDelegate {
 
-    private let collectionViewController = ParticipantsCollectionViewController<ParticipantsUserCell>()
     private let stackView = UIStackView()
+    private let bottomStackView = UIStackView()
     private let topContainer = UIView()
     private let bottomContainer = UIView()
     private let leftIconView = UIImageView()
     private let leftIconContainer = UIView()
-    private let labelView = UILabel()
+    private let labelView: TTTAttributedLabel = {
+        let label = TTTAttributedLabel(frame: .zero)
+        label.backgroundColor = .clear
+        return label
+    }()
     private let nameLabel = UILabel()
     private let verticalInset: CGFloat = 16
     private var lineBaseLineConstraint: NSLayoutConstraint?
     private let inviteView = ParticipantsInvitePeopleView()
+    private var viewModel: ParticipantsCellViewModel?
+    private var isVisible = true
+    private let serviceUserWarningLabel = UILabel()
+    private let serviceUserWarningLabelContainer = UIView()
     
-    // Classy
-    let lineView = UIView()
-    var labelTextColor, labelTextBlendedColor: UIColor?
-    var labelBoldFont, labelLargeFont: UIFont?
+    let lineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .separator
+        return view
+    }()
+    var labelTextColor: UIColor? = .textForeground
+    var labelTextBlendedColor: UIColor? = .textDimmed
+    var iconColor: UIColor?
+
+    var labelBoldFont: UIFont? = .mediumSemiboldFont
+    var labelLargeFont: UIFont? = .largeSemiboldFont
     
     var attributedText: NSAttributedString? {
         didSet {
             labelView.attributedText = attributedText
             labelView.accessibilityLabel = attributedText?.string
+            labelView.addLinks()
         }
     }
     
-    var labelFont: UIFont? {
-        didSet {
-            updateLineBaseLineConstraint()
-        }
+    let labelFont: UIFont = .mediumFont
+    
+    /// TTTAttributedLabel needs to be shifted an extra 2pt down so the
+    /// line view aligns with the center of the first line.
+    private var lineMedianYOffset: CGFloat {
+        return 2
     }
 
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         setupViews()
-        setupCollectionView()
         createConstraints()
-        CASStyler.default().styleItem(self)
-    }
-
-    private func setupCollectionView() {
-        // Cells should not be selectable (for now)
-        collectionViewController.collectionView.isUserInteractionEnabled = false
-        bottomContainer.addSubview(collectionViewController.view)
-
-        collectionViewController.configureCell = { [weak self] user, cell in
-            cell.user = user
-            cell.dimmed = self?.message.systemMessageData?.systemMessageType == .participantsRemoved
-        }
-
-        collectionViewController.selectAction = { [weak self] user, cell in
-            guard let `self` = self else { return }
-            self.delegate.conversationCell?(self, userTapped: user, in: cell)
-        }
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -89,12 +90,31 @@ public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDel
         nameLabel.numberOfLines = 0
         nameLabel.isAccessibilityElement = true
         labelView.numberOfLines = 0
+        labelView.extendsLinkTouchArea = true
+        
+        labelView.linkAttributes = [
+            NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue,
+            NSAttributedStringKey.foregroundColor.rawValue: ZMUser.selfUser().accentColor
+        ]
+        
+        labelView.delegate = self
         labelView.isAccessibilityElement = true
+        
+        
+        serviceUserWarningLabel.numberOfLines = 0
+        serviceUserWarningLabel.isAccessibilityElement = true
+        serviceUserWarningLabel.textColor = UIColor(for: .vividRed)
+        serviceUserWarningLabel.text = "content.system.services.warning".localized
+        serviceUserWarningLabel.font = FontSpec(.small, .regular).font
 
         stackView.axis = .vertical
         stackView.spacing = verticalInset
-        messageContentView.addSubview(stackView)
+
+        bottomStackView.axis = .vertical
+        [stackView, bottomStackView].forEach(messageContentView.addSubview)
+        serviceUserWarningLabelContainer.addSubview(serviceUserWarningLabel)
         [topContainer, bottomContainer, inviteView].forEach(stackView.addArrangedSubview)
+        bottomStackView.addArrangedSubview(serviceUserWarningLabelContainer)
         topContainer.addSubview(nameLabel)
         bottomContainer.addSubview(leftIconContainer)
         leftIconContainer.addSubview(leftIconView)
@@ -107,11 +127,14 @@ public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDel
     }
     
     private func createConstraints() {
-        constrain(stackView, messageContentView) { stackView, messageContentView in
+        constrain(stackView, bottomStackView, messageContentView) { stackView, bottomStackView, messageContentView in
             stackView.top == messageContentView.top + verticalInset
             stackView.leading == messageContentView.leading
             stackView.trailing == messageContentView.trailing
-            stackView.bottom == messageContentView.bottom - verticalInset
+            stackView.bottom == bottomStackView.top
+            bottomStackView.leading == messageContentView.leading
+            bottomStackView.trailing == messageContentView.trailing
+            bottomStackView.bottom == messageContentView.bottom - verticalInset
         }
         
         constrain(leftIconContainer, leftIconView, labelView, messageContentView, authorLabel) { leftIconContainer, leftIconView, labelView, messageContentView, authorLabel in
@@ -138,25 +161,24 @@ public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDel
             messageContentView.height >= 32
         }
         
+        constrain(serviceUserWarningLabelContainer, serviceUserWarningLabel, messageContentView, leftIconContainer) { serviceUserWarningLabelContainer, serviceUserWarningLabel, messageContentView, leftIconContainer in
+            serviceUserWarningLabelContainer.leading == leftIconContainer.trailing
+            serviceUserWarningLabelContainer.trailing <= messageContentView.trailing - 72
+            serviceUserWarningLabel.edges == inset(serviceUserWarningLabelContainer.edges, 4, 0, 0, 0)
+        }
+        
         constrain(nameLabel, topContainer) { nameLabel, topContainer in
             nameLabel.top == topContainer.top
             nameLabel.bottom == topContainer.bottom
         }
         
         createLineViewConstraints()
-        updateLineBaseLineConstraint()
         createBaselineConstraint()
-        
-        constrain(messageContentView, labelView, collectionViewController.view, bottomContainer) { container, label, participants, bottomContainer in
-            participants.leading == label.leading
-            participants.trailing == container.trailing - 72
-            participants.top == label.bottom + 8
-            participants.bottom == bottomContainer.bottom
-        }
+        updateLineBaseLineConstraint()
     }
     
     private func createLineViewConstraints() {
-        constrain(lineView, contentView, labelView, messageContentView) { lineView, contentView, labelView, messageContentView in
+        constrain(lineView, contentView, labelView) { lineView, contentView, labelView in
             lineView.leading == labelView.trailing + 16
             lineView.height == .hairline
             lineView.trailing == contentView.trailing
@@ -165,14 +187,15 @@ public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDel
     
     private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
-            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median
+            lineBaseLineConstraint = lineView.centerY == labelView.top
             icon.centerY == lineView.centerY
         }
     }
     
     private func updateLineBaseLineConstraint() {
-        guard let font = labelFont else { return }
-        lineBaseLineConstraint?.constant = font.median
+        lineBaseLineConstraint?.constant = labelFont.median - lineMedianYOffset
+
+        self.layoutIfNeeded()
     }
     
     open override var canResignFirstResponder: Bool {
@@ -183,26 +206,45 @@ public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDel
         super.configure(for: message, layoutProperties: layoutProperties)
         reloadInformation(for: message)
     }
+    
+    public override func willDisplayInTableView() {
+        super.willDisplayInTableView()
+        isVisible = true
+        reloadInformation(for: message)
+    }
+    
+    public override func cellDidEndBeingVisible() {
+        super.cellDidEndBeingVisible()
+        // this is an optimisation to avoid reloading the cell when it is not
+        // visible. Reloading in a large group conversation can be very expensive,
+        // as the set of users are sorted for each reload.
+        isVisible = false
+    }
 
     private func reloadInformation(for message: ZMConversationMessage) {
-        let model = ParticipantsCellViewModel(font: labelFont, boldFont: labelBoldFont, largeFont: labelLargeFont, textColor: labelTextColor, message: message)
+        let model = ParticipantsCellViewModel(
+            font: labelFont,
+            boldFont: labelBoldFont,
+            largeFont: labelLargeFont,
+            textColor: labelTextColor,
+            iconColor: UIColor(scheme: .textDimmed),
+            message: message
+        )
+
         leftIconView.image = model.image()
         attributedText = model.attributedTitle()
         nameLabel.attributedText = model.attributedHeading()
         topContainer.isHidden = nameLabel.attributedText == nil
-        bottomContainer.isHidden = model.sortedUsers().count == 0
+        bottomContainer.isHidden = model.sortedUsers.count == 0
         inviteView.isHidden = !model.showInviteButton
-
-        // We need a layout pass here in order for the collectionView to pick up the correct size
-        setNeedsLayout()
-        layoutIfNeeded()
-        collectionViewController.users = model.sortedUsers()
+        serviceUserWarningLabelContainer.isHidden = !model.showServiceUserWarning
+        viewModel = model
     }
 
     open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
         let needsLayout = super.update(forMessage: changeInfo)
 
-        if changeInfo.usersChanged {
+        if true == changeInfo.userChangeInfo?.nameChanged, isVisible {
             reloadInformation(for: changeInfo.message)
             return true
         }
@@ -215,4 +257,13 @@ public class ParticipantsCell: ConversationCell, ParticipantsInvitePeopleViewDel
     func invitePeopleViewInviteButtonTapped(_ invitePeopleView: ParticipantsInvitePeopleView) {
         delegate?.conversationCell?(self, openGuestOptionsFrom: invitePeopleView.inviteButton)
     }
+    
+    // MARK: - TTTAttributedLabelDelegate
+
+    public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        guard url.absoluteString == ParticipantsCellViewModel.showMoreLinkURL.absoluteString else { return }
+        guard let model = viewModel else { return }
+        delegate?.conversationCell?(self, openParticipantsDetailsWithSelectedUsers: model.selectedUsers, from: self)
+    }
+
 }

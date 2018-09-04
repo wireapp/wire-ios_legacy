@@ -31,14 +31,10 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 minutes
-
 @implementation ConversationInputBarViewController (Files)
 
-- (void)docUploadPressed:(UIButton *)sender
-{
-    [Analytics.shared tagMediaAction:ConversationMediaActionFileTransfer inConversation:self.conversation];
-    
+- (void)docUploadPressed:(IconButton *)sender
+{    
     self.mode = ConversationInputBarViewControllerModeTextInput;
     [self.inputBar.textView resignFirstResponder];
     
@@ -78,69 +74,63 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             [self uploadFileAtURL:destLocation];
         }];
     }];
-    [docController addOptionWithTitle:NSLocalizedString(@"Big file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:@"BigFile.bin"];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            NSData *randomData = [NSData secureRandomDataOfLength:(NSUInteger)[[ZMUserSession sharedSession] maxUploadFileSize] + 1];
-            [randomData writeToURL:destLocation atomically:YES];
-            
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];
-    [docController addOptionWithTitle:NSLocalizedString(@"20 MB file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:@"20MBFile.bin"];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            NSData *randomData = [NSData secureRandomDataOfLength:20*1024*1024];
-            [randomData writeToURL:destLocation atomically:YES];
-            
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];
-    [docController addOptionWithTitle:NSLocalizedString(@"40 MB file", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:@"40MBFile.bin"];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            NSData *randomData = [NSData secureRandomDataOfLength:40*1024*1024];
-            [randomData writeToURL:destLocation atomically:YES];
-            
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];
+    
+    [self appendUploadTestOptionTo:docController
+                              size:(NSUInteger)[[ZMUserSession sharedSession] maxUploadFileSize] + 1
+                             title:NSLocalizedString(@"Big file", nil)
+                          fileName:@"BigFile.bin"];
+    
+    [self appendUploadTestOptionTo:docController size:20*1024*1024 title:NSLocalizedString(@"20 MB file", nil) fileName:@"20MBFile.bin"];
+    [self appendUploadTestOptionTo:docController size:40*1024*1024 title:NSLocalizedString(@"40 MB file", nil) fileName:@"40MBFile.bin"];
+    
+    if([[ZMUser selfUser] hasTeam]) {
+        [self appendUploadTestOptionTo:docController size:80*1024*1024 title:NSLocalizedString(@"80 MB file", nil) fileName:@"80MBFile.bin"];
+        [self appendUploadTestOptionTo:docController size:120*1024*1024 title:NSLocalizedString(@"120 MB file", nil) fileName:@"120MBFile.bin"];
+    }
+    
 #endif
+    
     [docController addOptionWithTitle:NSLocalizedString(@"content.file.upload_video", @"")
                                 image:[UIImage imageForIcon:ZetaIconTypeMovie iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
                               handler:^{
-                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeMovie] allowsEditing:true];
+                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeMovie] allowsEditing:true pointToView:self.videoButton.imageView];
                               }];
     
     [docController addOptionWithTitle:NSLocalizedString(@"content.file.take_video", @"")
                                 image:[UIImage imageForIcon:ZetaIconTypeCameraShutter iconSize:ZetaIconSizeMedium color:[UIColor darkGrayColor]]
                                 order:UIDocumentMenuOrderFirst
                               handler:^{
-                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
+                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false pointToView:self.videoButton.imageView];
                               }];
-    
-    UIPopoverPresentationController* popover = docController.popoverPresentationController;
-    popover.delegate = self;
-    popover.sourceView = sender.superview;
-    popover.sourceRect = sender.frame;
+
+    [self configPopoverWithDocController:docController
+                              sourceView:self.parentViewController.view
+                                delegate:self
+                             pointToView:sender.imageView];
+
     [self.parentViewController presentViewController:docController animated:YES completion:^() {
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
+    }];
+}
+
+- (void)appendUploadTestOptionTo:(UIDocumentMenuViewController*)controller
+                            size:(NSUInteger)size
+                           title:(NSString*)title
+                        fileName:(NSString*)fileName {
+    [controller addOptionWithTitle:title image:nil order:UIDocumentMenuOrderFirst handler:^{
+        [[ZMUserSession sharedSession] enqueueChanges:^{
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *basePath = paths.firstObject;
+            NSString *destLocationString = [basePath stringByAppendingPathComponent:fileName];
+            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
+            
+            NSData *randomData = [NSData secureRandomDataOfLength:size];
+            [randomData writeToURL:destLocation atomically:YES];
+            
+            [self uploadFileAtURL:destLocation];
+        }];
     }];
 }
 
@@ -235,15 +225,9 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
             NSString *errorMessage = [NSString stringWithFormat:NSLocalizedString(@"content.file.too_big", @""), maxSizeString];
             [self showAlertForMessage:errorMessage];
             
-            [self.analyticsTracker tagCannotUploadFileSizeExceedsWithSize:[attributes[NSFileSize] unsignedLongLongValue]
-                                                            fileExtension:[url pathExtension]];
             completion();
         }
         else {
-            [self.analyticsTracker tagInitiatedFileUploadWithSize:[attributes[NSFileSize] unsignedLongLongValue]
-                                                    fileExtension:[url pathExtension]
-                                                          context:FileTransferContextApp];
-            
             [FileMetaDataGenerator metadataForFileAtURL:url UTI:url.UTI name:url.lastPathComponent completion:^(ZMFileMetadata * _Nonnull metadata) {
                 [self.impactFeedbackGenerator prepare];
                 [ZMUserSession.sharedSession performChanges:^{
@@ -311,9 +295,6 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         picker.showLoadingView = YES;
         [AVAsset wr_convertVideoAtURL:videoTempURL toUploadFormatWithCompletion:^(NSURL *resultURL, AVAsset *asset, NSError *error) {
             if (error == nil && resultURL != nil) {
-                [[Analytics shared] tagSentVideoMessageInConversation:self.conversation
-                                                              context:self.videoSendContext
-                                                             duration:CMTimeGetSeconds(asset.duration)];
                 [self uploadFileAtURL:resultURL];
             }
             
@@ -332,25 +313,16 @@ const NSTimeInterval ConversationUploadMaxVideoDuration = 4.0f * 60.0f; // 4 min
         if (image != nil) {
             // In this case the completion was shown already by image picker
             if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                picker.showLoadingView = YES;
-                
-                ConversationMediaPictureCamera camera = picker.cameraDevice == UIImagePickerControllerCameraDeviceFront ? ConversationMediaPictureCameraFront : ConversationMediaPictureCameraBack;
-                
-                [Analytics.shared tagMediaSentPictureSourceCameraInConversation:self.conversation method:ConversationMediaPictureTakeMethodFullFromKeyboard camera:camera];
-
+                UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+                // In case of picking from the camera, the iOS contorller is showing it's own confirmation screen.
                 [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
-                    picker.showLoadingView = NO;
-                    ImageMetadata *metadata = [ImageMetadata metadataWith:camera method:ConversationMediaPictureTakeMethodFullFromKeyboard];
-                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) metadata:metadata];
+                    [self.sendController sendMessageWithImageData:UIImageJPEGRepresentation(image, 0.9)
+                                                       completion:nil];
                 }];
             }
             else {
                 [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
-                    ImageMetadata *metadata = [[ImageMetadata alloc] init];
-                    metadata.method = ConversationMediaPictureTakeMethodFullFromKeyboard;
-                    metadata.source = ConversationMediaPictureSourceGallery;
-                    
-                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) metadata:metadata];
+                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) isFromCamera:NO];
                 }];
             }
             

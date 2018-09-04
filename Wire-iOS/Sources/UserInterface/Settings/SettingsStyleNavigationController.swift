@@ -21,7 +21,7 @@ import Foundation
 class SettingsStyleNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.navigationBar.setBackgroundImage(UIImage(color: .black, andSize: CGSize(width: 1,height: 1)), for:.default)
         self.navigationBar.isTranslucent = false
         self.navigationBar.shadowImage = UIImage()
@@ -29,7 +29,7 @@ class SettingsStyleNavigationController: UINavigationController {
         
         let navButtonAppearance = UIBarButtonItem.appearance(whenContainedInInstancesOf: [UINavigationBar.self])
         
-        let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: 11, weight: UIFontWeightSemibold)]
+        let attributes = [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold)]
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.normal)
         navButtonAppearance.setTitleTextAttributes(attributes, for: UIControlState.highlighted)
         

@@ -22,9 +22,9 @@ import Cartography
 final class TeamCreationStepController: UIViewController {
 
     /// headline font size is fixed and not affected by dynamic type setting,
-    static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFontWeightLight)
+    static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
     /// For 320 pt width screen
-    static let headlineSmallFont    = UIFont.systemFont(ofSize: 32, weight: UIFontWeightLight)
+    static let headlineSmallFont    = UIFont.systemFont(ofSize: 32, weight: UIFont.Weight.light)
     static let subtextFont          = FontSpec(.normal, .regular).font!
     static let errorFont            = FontSpec(.small, .semibold).font!
     static let textButtonFont       = FontSpec(.small, .semibold).font!
@@ -36,6 +36,7 @@ final class TeamCreationStepController: UIViewController {
     private var headlineLabel: UILabel!
     private var subtextLabel: UILabel!
     fileprivate var errorLabel: UILabel!
+    private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
 
     fileprivate var secondaryViewsStackView: UIStackView!
     fileprivate var errorViewContainer: UIView!
@@ -77,9 +78,9 @@ final class TeamCreationStepController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        companyLoginController?.delegate = self
         view.backgroundColor = UIColor.Team.background
-
+        
         createViews()
         createConstraints()
     }
@@ -87,6 +88,8 @@ final class TeamCreationStepController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         observeKeyboard()
+        companyLoginController?.isAutoDetectionEnabled = true
+        companyLoginController?.detectLoginCode()
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
 
@@ -97,6 +100,7 @@ final class TeamCreationStepController: UIViewController {
         super.viewWillDisappear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         NotificationCenter.default.removeObserver(self)
+        companyLoginController?.isAutoDetectionEnabled = false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -124,7 +128,7 @@ final class TeamCreationStepController: UIViewController {
         }
     }
 
-    dynamic func keyboardWillShow(_ notification: Notification) {
+    @objc dynamic func keyboardWillShow(_ notification: Notification) {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             break
@@ -137,7 +141,7 @@ final class TeamCreationStepController: UIViewController {
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
-    dynamic func keyboardWillHide(_ notification: Notification) {
+    @objc dynamic func keyboardWillHide(_ notification: Notification) {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             break
@@ -150,7 +154,7 @@ final class TeamCreationStepController: UIViewController {
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
-    dynamic func keyboardWillChangeFrame(_ notification: Notification) {
+    @objc dynamic func keyboardWillChangeFrame(_ notification: Notification) {
         animateViewsToAccomodateKeyboard(with: notification)
     }
 
@@ -225,7 +229,7 @@ final class TeamCreationStepController: UIViewController {
          subtextLabel,
          mainViewContainer,
          errorViewContainer,
-         secondaryViewsStackView].flatMap {$0}.forEach {
+         secondaryViewsStackView].compactMap {$0}.forEach {
             self.view.addSubview($0)
         }
     }
@@ -352,9 +356,9 @@ final class TeamCreationStepController: UIViewController {
             errorLabel.height >= 19
         }
 
-        headlineLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        subtextLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        errorLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+        headlineLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        subtextLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        errorLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
 
         updateMainViewWidthConstraint()
     }
@@ -390,4 +394,16 @@ extension TeamCreationStepController {
         }
     }
 
+}
+
+// MARK: - CompanyLoginControllerDelegate
+
+extension TeamCreationStepController: CompanyLoginControllerDelegate {
+    func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
+        self.showLoadingView = showLoadingView
+    }
 }

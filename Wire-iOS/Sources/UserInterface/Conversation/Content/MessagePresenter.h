@@ -22,11 +22,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZMConversationMessage;
-@class AnalyticsTracker;
 @class MessagePresenter;
 
 @interface MessagePresenter : NSObject
-@property (nonatomic, nullable) AnalyticsTracker *analyticsTracker;
 
 /// Container of the view that hosts popover controller.
 @property (nonatomic, nullable, weak) UIViewController *targetViewController;
@@ -39,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param delegate the receiver of action callbacks for the message. Currently only forward and reveal in conversation
 ///                 actions are supported.
 - (void)openMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView actionResponder:(nullable id<MessageActionResponder>)delegate;
-- (void)openFileMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView;
 - (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView withPreview:(BOOL)preview;
 
 - (nullable UIViewController *)viewControllerForImageMessage:(id<ZMConversationMessage>)message

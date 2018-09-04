@@ -27,7 +27,7 @@ extension SLComposeServiceViewController {
     /// Get all the attachments to this post
     var allAttachments : [NSItemProvider] {
         guard let items = extensionContext?.inputItems as? [NSExtensionItem] else { return [] }
-        return items.flatMap { $0.attachments as? [NSItemProvider] } // remove optional
+        return items.compactMap { $0.attachments as? [NSItemProvider] } // remove optional
             .flatMap { $0 } // flattens array
     }
 
@@ -47,6 +47,6 @@ extension SLComposeServiceViewController {
                 }
             }
         }
-        group.notify(queue: .main) { _ in callback(urls) }
+        group.notify(queue: .main) { callback(urls) }
     }
 }

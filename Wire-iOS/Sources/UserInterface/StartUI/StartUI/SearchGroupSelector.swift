@@ -20,12 +20,7 @@
 import Foundation
 import Cartography
 
-final class SearchGroupSelector: UIView, TabBarDelegate {
-
-    @objc static var shouldShowBotResults: Bool {
-        return DeveloperMenuState.developerMenuEnabled() && ZMUser.selfUser().team != nil
-    }
-
+@objcMembers final class SearchGroupSelector: UIView, TabBarDelegate {
     @objc public var onGroupSelected: ((SearchGroup)->())? = nil
 
     @objc public var group: SearchGroup = .people {
@@ -66,7 +61,7 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
 
     private func configureViews() {
         tabBar.delegate = self
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: style)
+        backgroundColor = UIColor(scheme: .barBackground, variant: style)
         addSubview(tabBar)
     }
 

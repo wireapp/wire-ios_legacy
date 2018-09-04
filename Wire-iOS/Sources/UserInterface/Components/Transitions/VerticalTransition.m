@@ -75,7 +75,7 @@
         obj.hidden = YES;
     }];
     
-    [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:[self transitionDuration:transitionContext] delay:0 animations:^{
+    [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:[self transitionDuration:transitionContext] delay:0 animations:^{
         fromView.transform = CGAffineTransformMakeTranslation(0.0f, sign * finalRect.size.height);
         toView.transform = CGAffineTransformIdentity;
     } completion:^(BOOL finished) {

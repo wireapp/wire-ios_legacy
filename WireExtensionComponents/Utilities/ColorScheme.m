@@ -14,13 +14,11 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
-
+//
 
 #import "ColorScheme.h"
 #import "UIColor+Mixing.h"
 #import "UIColor+WAZExtensions.h"
-
 
 NSString * const ColorSchemeColorAccent = @"accent-current";
 NSString * const ColorSchemeColorAccentDimmed = @"accent-current-dimmed";
@@ -198,12 +196,12 @@ static NSString* light(NSString *colorString) {
     return defaultColorScheme;
 }
 
-- (UIColor *)colorWithName:(NSString *)colorName
+- (UIColor *)colorWithName:(ColorSchemeColor)colorName
 {
     return [self.colors objectForKey:colorName];
 }
 
-- (UIColor *)colorWithName:(NSString *)colorName variant:(ColorSchemeVariant)variant
+- (UIColor *)colorWithName:(ColorSchemeColor)colorName variant:(ColorSchemeVariant)variant
 {
     return [self.colors objectForKey:variant == ColorSchemeVariantLight ? light(colorName) : dark(colorName)];
 }
@@ -227,6 +225,7 @@ static NSString* light(NSString *colorString) {
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
     UIColor *whiteAlpha40 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.40)"];
+    UIColor *whiteAlpha56 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.56)"];
     UIColor *whiteAlpha80 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.80)"];
     UIColor *black = [UIColor blackColor];
     UIColor *blackAlpha4 = [UIColor wr_colorFromString:@"rgb(0, 0, 0, 0.04)"];
@@ -246,7 +245,7 @@ static NSString* light(NSString *colorString) {
     UIColor *lightGraphiteAlpha24 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.24)"];
     UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
     UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
-    
+
     NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
                                 @{ ColorSchemeColorAccent: accentColor,
                                    ColorSchemeColorAccentDimmed: [accentColor colorWithAlphaComponent:0.16],
@@ -298,7 +297,7 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite,
                                    ColorSchemeColorCellSeparator: graphiteAlpha8,
                                    ColorSchemeColorSearchBarBackground: white,
-                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
+                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4]
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -334,7 +333,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorButtonHighlighted: blackAlpha24,
                                   ColorSchemeColorButtonEmptyText: white,
                                   ColorSchemeColorButtonFaded: whiteAlpha40,
-                                  ColorSchemeColorTabNormal: lightGraphite,
+                                  ColorSchemeColorTabNormal: whiteAlpha56,
                                   ColorSchemeColorTabSelected: white,
                                   ColorSchemeColorTabHighlighted: lightGraphiteAlpha48,
                                   ColorSchemeColorCallBarBackground: black,
@@ -357,7 +356,7 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40,
                                   ColorSchemeColorCellSeparator: whiteAlpha8,
                                   ColorSchemeColorSearchBarBackground: whiteAlpha8,
-                                  ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64],
+                                  ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64]
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -417,4 +416,3 @@ static NSString* light(NSString *colorString) {
 }
 
 @end
-

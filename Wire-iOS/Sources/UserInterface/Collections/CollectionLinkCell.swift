@@ -24,19 +24,19 @@ final public class CollectionLinkCell: CollectionCell {
     private var headerView = CollectionCellHeader()
     
     func createArticleView(with textMessageData: ZMTextMessageData) {
-        let articleView = ArticleView(withImagePlaceholder: textMessageData.hasImageData)
+        let articleView = ArticleView(withImagePlaceholder: textMessageData.linkPreviewHasImage)
         articleView.isUserInteractionEnabled = false
         articleView.imageHeight = 0
         articleView.messageLabel.numberOfLines = 1
         articleView.authorLabel.numberOfLines = 1
         articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
-        self.contentView.addSubview(articleView)
-        self.contentView.cas_styleClass = "container-view"
+        self.secureContentsView.addSubview(articleView)
+        self.secureContentsView.cas_styleClass = "container-view"
         // Reconstraint the header
         self.headerView.removeFromSuperview()
         self.headerView.message = self.message!
         
-        self.contentView.addSubview(self.headerView)
+        self.secureContentsView.addSubview(self.headerView)
         
         self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
         
@@ -53,6 +53,10 @@ final public class CollectionLinkCell: CollectionCell {
         }
         
         self.articleView = articleView
+    }
+
+    override var obfuscationIcon: ZetaIconType {
+        return .link
     }
 
     override func updateForMessage(changeInfo: MessageChangeInfo?) {

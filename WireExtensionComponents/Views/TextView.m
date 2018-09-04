@@ -96,11 +96,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)setPlaceholder:(NSString *)placeholder
 {
     _placeholder = placeholder;
@@ -258,6 +253,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 #pragma clang diagnostic pop
     }
     return resigned;
+}
+
+#pragma mark Language
+
+- (UITextInputMode *) textInputMode {
+    return [self overriddenTextInputMode];
 }
 
 @end

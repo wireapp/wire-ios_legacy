@@ -19,15 +19,12 @@
 import Foundation
 
 extension ImageMessageCell {
-    func updateImageBorder() {
-        let showBorder = !imageSmallerThanMinimumSize()
-        fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0
+    @objc func updateImageBorder() {
 
-        switch self.variant {
-        case .light:
-            fullImageView.layer.borderColor = UIColor(white: 0, alpha: 0.08).cgColor
-        case .dark:
-            fullImageView.layer.borderColor = UIColor(white: 1, alpha: 0.08).cgColor
-        }
+        let isTransparent = fullImageView?.image?.isTransparent() ?? false
+        let showBorder = !isTransparent
+
+        fullImageView.layer.borderWidth = showBorder ? UIScreen.hairline : 0
+        fullImageView.layer.borderColor = UIColor(scheme: .cellSeparator).cgColor
     }
 }

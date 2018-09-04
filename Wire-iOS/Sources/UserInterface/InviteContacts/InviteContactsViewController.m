@@ -20,11 +20,13 @@
 @import WireExtensionComponents;
 
 #import "InviteContactsViewController.h"
+#import "InviteContactsViewController+Internal.h"
 #import "ContactsViewController+Private.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"
 #import "ContactsCell.h"
 #import "WireSyncEngine+iOS.h"
+#import "Wire-Swift.h"
 
 @interface InviteContactsViewController () <ContactsViewControllerDelegate, ContactsViewControllerContentDelegate>
 @end
@@ -46,6 +48,12 @@
     }
     
     return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self setupStyle];
 }
 
 - (BOOL)sharingContactsRequired
@@ -70,7 +78,7 @@
         NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), user.user.displayName, [ZMUser selfUser].name];
         
         [[ZMUserSession sharedSession] enqueueChanges:^{
-            [user connectWithMessageText:messageText completionHandler:nil];
+            [user connectWithMessage:messageText];
         } completionHandler:^{
             [self.tableView reloadData];
         }];

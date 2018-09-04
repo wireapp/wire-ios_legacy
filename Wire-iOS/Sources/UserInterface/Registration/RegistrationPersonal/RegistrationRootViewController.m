@@ -25,20 +25,22 @@
 #import "RegistrationViewController.h"
 #import "RegistrationFormController.h"
 #import "SignInViewController.h"
-#import "AnalyticsTracker+Registration.h"
 #import "Constants.h"
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate>
+@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, CompanyLoginControllerDelegate, SignInViewControllerDelegate>
+
+@property (nonatomic) CompanyLoginController *companyLoginController;
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic) AuthenticationFlowType flowType;
 @property (nonatomic, weak) SignInViewController *signInViewController;
+
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) IconButton *backButton;
-@property (nonatomic, readonly) Account *firstAuthenticatedAccount;
+@property (nonatomic) UIStackView *rightButtonsStack;
 
 @property (nonatomic) NSLayoutConstraint *contentWidthConstraint;
 @property (nonatomic) NSLayoutConstraint *contentHeightConstraint;
@@ -57,6 +59,7 @@
 
     if (self) {
         self.unregisteredUser = unregisteredUser;
+        self.companyLoginController = [[CompanyLoginController alloc] initWithDefaultEnvironment];
         self.flowType = flow;
     }
 
@@ -66,13 +69,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.companyLoginController.delegate = self;
+
     self.view.opaque = NO;
     self.view.backgroundColor = [UIColor clearColor];
     
     SignInViewController *signInViewController = [[SignInViewController alloc] init];
-    signInViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextSignIn];
     signInViewController.loginCredentials = self.loginCredentials;
+    signInViewController.delegate = self;
     
     UIViewController *flowViewController = nil;
     if ([RegistrationViewController registrationFlow] == RegistrationFlowEmail) {
@@ -102,6 +106,7 @@
     }
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
+    self.registrationTabBarController.interactive = NO;
 
     self.signInViewController = signInViewController;
     
@@ -111,20 +116,13 @@
     
     self.registrationTabBarController.style = ColorSchemeVariantDark;
     self.registrationTabBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    self.cancelButton = [[IconButton alloc] init];
-    [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
-    [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.cancelButton.accessibilityIdentifier = @"cancelAddAccount";
-    [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
-    self.cancelButton.hidden = self.shouldHideCancelButton || self.firstAuthenticatedAccount == nil;
-    self.cancelButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
 
     [self addChildViewController:self.registrationTabBarController];
     [self.view addSubview:self.registrationTabBarController.view];
     [self.view addSubview:self.cancelButton];
     [self.registrationTabBarController didMoveToParentViewController:self];
-    
+
+    [self setUpRightButtons];
     [self createConstraints];
 }
 
@@ -132,12 +130,21 @@
 {
     [super viewWillAppear:animated];
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    self.companyLoginController.autoDetectionEnabled = YES;
+    [self.companyLoginController detectLoginCode];
+    [self.view layoutIfNeeded];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.companyLoginController.autoDetectionEnabled = NO;
 }
 
 - (void)setupBackButton
 {
-    self.backButton = [[IconButton alloc] initForAutoLayout];
-    self.backButton.cas_styleClass = @"navigation";
+    self.backButton = [[IconButton alloc] initWithStyle:IconButtonStyleNavigation variant:ColorSchemeVariantDark];
+    self.backButton.translatesAutoresizingMaskIntoConstraints = NO;
 
     ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronLeft : ZetaIconTypeChevronRight;
 
@@ -149,37 +156,40 @@
     [self.backButton addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)setUpRightButtons
+{
+    self.rightButtonsStack = [[UIStackView alloc] initForAutoLayout];
+    self.rightButtonsStack.spacing = 16;
+    self.rightButtonsStack.alignment = UIStackViewAlignmentCenter;
+    self.rightButtonsStack.axis = UILayoutConstraintAxisHorizontal;
+
+    self.cancelButton = [[IconButton alloc] init];
+    [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
+    [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.cancelButton.accessibilityIdentifier = @"cancelAddAccount";
+    self.cancelButton.hidden = self.shouldHideCancelButton || [[SessionManager shared] firstAuthenticatedAccount] == nil;
+    self.cancelButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
+
+    [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.rightButtonsStack addArrangedSubview:self.cancelButton];
+    [self.view addSubview:self.rightButtonsStack];
+}
 
 /**
  Setter of showLogin. When this is set to true, switch to login tab animatied. Else animates to register tab
 
  @param newValue showLogin's new value
  */
-- (void)setShowLogin: (BOOL)newValue{
+- (void)setShowLogin: (BOOL)newValue {
     _showLogin = newValue;
     [self.registrationTabBarController selectIndex:_showLogin ? 1 : 0 animated:YES];
-}
-
-- (Account *)firstAuthenticatedAccount {
-    Account *selectedAccount = SessionManager.shared.accountManager.selectedAccount;
-    
-    if (selectedAccount.isAuthenticated && !self.hasSignInError) {
-        return selectedAccount;
-    }
-    
-    for (Account *account in SessionManager.shared.accountManager.accounts) {
-        if (account.isAuthenticated && account != selectedAccount) {
-            return account;
-        }
-    }
-    
-    return nil;
 }
 
 - (void)createConstraints
 {
     self.contentWidthConstraint = [self.registrationTabBarController.view.widthAnchor constraintEqualToConstant:self.maximumFormSize.width];
-    self.contentHeightConstraint = [self.registrationTabBarController.view.heightAnchor constraintEqualToConstant:0];
+    self.contentHeightConstraint = [self.registrationTabBarController.view.heightAnchor constraintEqualToConstant:[self contentHeightConstraintConstant: self.isHorizontalSizeClassRegular]];
     self.contentLeadingConstraint = [self.registrationTabBarController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
     self.contentTrailingConstraint = [self.registrationTabBarController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor];
     self.contentCenterConstraint = [self.registrationTabBarController.view.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor];
@@ -187,8 +197,8 @@
     self.contentHeightConstraint.active = YES;
     [self.registrationTabBarController.view.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor].active = YES;
 
-    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 32];
-    [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:16];
+    [self.rightButtonsStack autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top + 36];
+    [self.rightButtonsStack autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
 
     if (self.backButton) {
         CGFloat topMargin = 32 + UIScreen.safeArea.top;
@@ -202,10 +212,15 @@
     }
 }
 
+
+- (CGFloat)contentHeightConstraintConstant:(BOOL)isRegular {
+    return isRegular ? 262 : 244;
+}
+
 - (void)updateConstraintsForRegularLayout:(BOOL)isRegular
 {
     self.contentWidthConstraint.active = isRegular;
-    self.contentHeightConstraint.constant = isRegular ? 262 : 244;
+    self.contentHeightConstraint.constant = [self contentHeightConstraintConstant: isRegular];
     self.contentCenterConstraint.active = isRegular;
 
     self.contentLeadingConstraint.active = !isRegular;
@@ -237,7 +252,9 @@
 
 - (void)cancelAddAccount
 {
-    [SessionManager.shared select:self.firstAuthenticatedAccount completion:nil tearDownCompletion:nil];
+    [SessionManager.shared select:[[SessionManager shared] firstAuthenticatedAccount]
+                       completion:nil
+               tearDownCompletion:nil];
 }
 
 #pragma mark - FormStepDelegate
@@ -253,5 +270,23 @@
     [self.signInViewController presentSignInViewControllerWithCredentials:loginCredentials];
 }
 
+#pragma mark - SignInViewControllerDelegate
+
+- (void)signInViewControllerDidTapCompanyLoginButton:(SignInViewController *)signInViewController
+{
+    [self.companyLoginController displayLoginCodePrompt];
+}
+
+#pragma mark - CompanyLoginControllerDelegate
+
+- (void)controller:(CompanyLoginController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert
+{
+    [self presentViewController:presentAlert animated:YES completion:nil];
+}
+
+- (void)controller:(CompanyLoginController *)controller showLoadingView:(BOOL)showLoadingView
+{
+    self.showLoadingView = showLoadingView;
+}
 
 @end

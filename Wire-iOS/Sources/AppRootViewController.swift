@@ -19,12 +19,16 @@
 import Foundation
 import UIKit
 import Classy
+import SafariServices
 
-@objc
-class AppRootViewController: UIViewController {
+var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+
+@objcMembers class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
-    public let overlayWindow: UIWindow
+    public let callWindow: CallWindow
+    public let overlayWindow: NotificationWindow
+
     public fileprivate(set) var sessionManager: SessionManager?
     public fileprivate(set) var quickActionsManager: QuickActionsManager?
     
@@ -45,6 +49,10 @@ class AppRootViewController: UIViewController {
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var flowController: TeamCreationFlowController!
+
+    weak var presentedPopover: UIPopoverPresentationController?
+    weak var popoverPointToView: UIView?
+
 
     fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
         didSet {
@@ -78,23 +86,21 @@ class AppRootViewController: UIViewController {
 
         mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
-
-        overlayWindow = PassthroughWindow(frame: UIScreen.main.bounds)
-        overlayWindow.backgroundColor = .clear
-        overlayWindow.windowLevel = UIWindowLevelStatusBar - 1
-        overlayWindow.accessibilityIdentifier = "ZClientNotificationWindow"
-        overlayWindow.rootViewController = NotificationWindowRootViewController()
+        
+        callWindow = CallWindow(frame: UIScreen.main.bounds)
+        overlayWindow = NotificationWindow(frame: UIScreen.main.bounds)
 
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         AutomationHelper.sharedHelper.installDebugDataIfNeeded()
 
         appStateController.delegate = self
-
+        
         // Notification window has to be on top, so must be made visible last.  Changing the window level is
         // not possible because it has to be below the status bar.
         mainWindow.rootViewController = self
         mainWindow.makeKeyAndVisible()
+        callWindow.makeKeyAndVisible()
         overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
 
@@ -132,16 +138,13 @@ class AppRootViewController: UIViewController {
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-        let sessionManagerAnalytics: AnalyticsType
-        
-        CallQualityScoreProvider.shared.nextProvider = analytics
-        sessionManagerAnalytics = CallQualityScoreProvider.shared
+
         SessionManager.clearPreviousBackups()
 
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
-            analytics: sessionManagerAnalytics,
+            analytics: analytics,
             delegate: appStateController,
             application: UIApplication.shared,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
@@ -211,7 +214,7 @@ class AppRootViewController: UIViewController {
         case .unauthenticated(error: let error):
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
-            
+
             // check if needs to reauthenticate
             var needsToReauthenticate = false
             var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
@@ -231,6 +234,7 @@ class AppRootViewController: UIViewController {
             if needsToReauthenticate {
                 let registrationViewController = RegistrationViewController()
                 registrationViewController.delegate = appStateController
+                registrationViewController.shouldHideCancelButton = SessionManager.numberOfAccounts <= 1
                 registrationViewController.signInError = error
                 viewController = registrationViewController
             }
@@ -333,7 +337,7 @@ class AppRootViewController: UIViewController {
     func prepare(for appState: AppState, completionHandler: @escaping () -> Void) {
 
         if appState == .authenticated(completedRegistration: false) {
-            (overlayWindow.rootViewController as? NotificationWindowRootViewController)?.transitionToLoggedInSession()
+            callWindow.callController.transitionToLoggedInSession()
         } else {
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
@@ -341,7 +345,7 @@ class AppRootViewController: UIViewController {
         if !isClassyInitialized && isClassyRequired(for: appState) {
             isClassyInitialized = true
 
-            let windows = [mainWindow, overlayWindow]
+            let windows = [mainWindow, callWindow, overlayWindow]
             DispatchQueue.main.async {
                 self.setupClassy(with: windows)
                 completionHandler()
@@ -366,23 +370,22 @@ class AppRootViewController: UIViewController {
 
     func setupClassy(with windows: [UIWindow]) {
 
-        let colorScheme = ColorScheme.default()
+        let colorScheme = ColorScheme.default
         colorScheme.accentColor = UIColor.accent()
         colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
 
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         CASStyler.default().cache = classyCache
         CASStyler.bootstrapClassy(withTargetWindows: windows)
         CASStyler.default().apply(colorScheme)
-        CASStyler.default().apply(fontScheme: fontScheme)
+        CASStyler.default().apply(fontScheme: defaultFontScheme)
     }
 
-    func onContentSizeCategoryChange() {
+    @objc func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
-        let fontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        CASStyler.default().apply(fontScheme: fontScheme)
+        defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
+        CASStyler.default().apply(fontScheme: defaultFontScheme)
         type(of: self).configureAppearance()
     }
 
@@ -459,7 +462,7 @@ extension AppRootViewController: ZMRequestsToOpenViewsDelegate {
         })
     }
 
-    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate)->()) {
+    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate) -> ()) {
         if let delegate = self.requestToOpenViewDelegate {
             closure(delegate)
         }
@@ -512,7 +515,7 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
 
 extension AppRootViewController {
 
-    func onUserGrantedAudioPermissions() {
+    @objc func onUserGrantedAudioPermissions() {
         sessionManager?.updateCallNotificationStyleFromSettings()
     }
 }
@@ -541,6 +544,18 @@ extension AppRootViewController: LandingViewControllerDelegate {
             navigationController.pushViewController(registrationViewController, animated: true)
         }
     }
+    
+    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType) {
+        if let navigationController = self.visibleViewController as? NavigationController {
+            let registrationViewController = RegistrationViewController(authenticationFlow: .regular)
+            registrationViewController.delegate = appStateController
+            registrationViewController.shouldHideCancelButton = true
+            registrationViewController.loadViewIfNeeded()
+            registrationViewController.presentNoHistoryViewController(context, animated: false)
+            navigationController.pushViewController(registrationViewController, animated: true)
+        }
+    }
+    
 }
 
 // MARK: - Ask user if they want want switch account if there's an ongoing call
@@ -557,18 +572,18 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
             self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
             completion(true)
         }))
-        alert.addAction(UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: { (action) in
-            completion(false)
-        }))
-        
+        alert.addAction(.cancel { completion(false) })
+
         topmostController.present(alert, animated: true, completion: nil)
     }
     
 }
 
+extension AppRootViewController: PopoverPresenter { }
+
 public extension SessionManager {
     
-    var firstAuthenticatedAccount: Account? {
+    @objc var firstAuthenticatedAccount: Account? {
         
         if let selectedAccount = accountManager.selectedAccount {
             if selectedAccount.isAuthenticated {
@@ -584,11 +599,16 @@ public extension SessionManager {
         
         return nil
     }
+
+    @objc static var numberOfAccounts: Int {
+        return SessionManager.shared?.accountManager.accounts.count ?? 0
+    }
+
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {
-    func sessionManagerShouldExecute(URLAction: RawURLAction, callback: @escaping (Bool) -> (Void)) {
-        switch URLAction {
+    func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
+        switch action {
         case .connectBot:
             guard let _ = ZMUser.selfUser().team else {
                 callback(false)
@@ -614,6 +634,54 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             alert.addAction(cancelAction)
             
             self.present(alert, animated: true, completion: nil)
+
+        case .companyLoginFailure(let error):
+            defer {
+                notifyCompanyLoginCompletion()
+            }
+            
+            guard case .unauthenticated = appStateController.appState else {
+                callback(false)
+                return
+            }
+
+            let message = "login.sso.error.alert.message".localized(args: error.displayCode)
+
+            let alert = UIAlertController(title: "general.failure".localized,
+                                          message: message,
+                                          preferredStyle: .alert)
+
+            alert.addAction(.ok { callback(false) })
+
+            let presentAlert = {
+                self.present(alert, animated: true)
+            }
+
+            if let topmostViewController = UIApplication.shared.wr_topmostController() as? SFSafariViewController {
+                topmostViewController.dismiss(animated: true, completion: presentAlert)
+            } else {
+                presentAlert()
+            }
+
+        case .companyLoginSuccess:
+            defer {
+                notifyCompanyLoginCompletion()
+            }
+
+            guard case .unauthenticated = appStateController.appState else {
+                callback(false)
+                return
+            }
+
+            callback(true)
         }
     }
+
+    private func notifyCompanyLoginCompletion() {
+        NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
+    }
+}
+
+extension Notification.Name {
+    static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
 }

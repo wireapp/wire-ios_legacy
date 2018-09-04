@@ -32,17 +32,14 @@
 @import WireExtensionComponents;
 
 #import "ImagePickerConfirmationController.h"
-#import "CameraViewController.h"
 #import "Analytics.h"
 #import "Constants.h"
 #import "UserImageView.h"
 #import "AppDelegate.h"
 
-#import "AnalyticsTracker.h"
-
 #import "Wire-Swift.h"
 
-@interface ProfileSelfPictureViewController () <CameraViewControllerDelegate>
+@interface ProfileSelfPictureViewController ()
 
 @property (nonatomic) ButtonWithLargerHitArea *cameraButton;
 @property (nonatomic) ButtonWithLargerHitArea *libraryButton;
@@ -51,12 +48,6 @@
 @property (nonatomic) UIImageView *selfUserImageView;
 @property (nonatomic) id userObserverToken;
 @end
-
-
-@interface ProfileSelfPictureViewController (ZMUserObserver) <ZMUserObserver>
-
-@end
-
 
 @implementation ProfileSelfPictureViewController
 
@@ -68,7 +59,7 @@
         _imagePickerConfirmationController = [[ImagePickerConfirmationController alloc] init];
         
         @weakify(self);
-        _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData, ImageMetadata *metadata) {
+        _imagePickerConfirmationController.imagePickedBlock = ^(NSData *imageData) {
             @strongify(self);
             [self dismissViewControllerAnimated:YES completion:nil];
             [self setSelfImageToData:imageData];
@@ -197,12 +188,12 @@
     }
     
     [self presentViewController:imagePickerController animated:YES completion:nil];
-    [[Analytics shared] tagProfilePictureFromSource:PictureUploadPhotoLibrary];
 }
 
 - (void)cameraButtonTapped:(id)sender
 {
-    if (! [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] ||
+        ![UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
         return;
     }
     
@@ -210,17 +201,16 @@
         [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureTakePhoto from:self];
         return;
     }
+
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     
-    CameraViewController *cameraViewController = [[CameraViewController alloc] init];
-    cameraViewController.analyticsTracker = self.analyticsTracker;
-    cameraViewController.savePhotosToCameraRoll = YES;
-    cameraViewController.disableSketch = YES;
-    cameraViewController.delegate = self;
-    cameraViewController.defaultCamera = CameraViewControllerCameraFront;
-    cameraViewController.preferedPreviewSize = CameraViewControllerPreviewSizeFullscreen;
-    cameraViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    [self presentViewController:cameraViewController animated:YES completion:nil];
-    [[Analytics shared] tagProfilePictureFromSource:PictureUploadCamera];
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    picker.delegate = self.imagePickerConfirmationController;
+    picker.allowsEditing = YES;
+    picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    picker.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
+    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)closeButtonTapped:(id)sender
@@ -251,29 +241,5 @@
     [self addCloseButton];
 }
 
-#pragma mark - CameraViewControllerDelegate
-
-- (void)cameraViewController:(CameraViewController *)cameraViewController didPickImageData:(NSData *)imageData imageMetadata:(ImageMetadata *)metadata
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    [self setSelfImageToData:imageData];
-}
-
-- (void)cameraViewControllerDidCancel:(CameraViewController *)cameraViewController
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 @end
 
-@implementation ProfileSelfPictureViewController (ZMUserObserver)
-
-- (void)userDidChange:(UserChangeInfo *)note
-{
-    if (note.imageMediumDataChanged) {
-        self.selfUserImageView.image = [UIImage imageWithData:note.user.imageMediumData];
-    }
-}
-
-@end

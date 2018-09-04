@@ -56,7 +56,6 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         super.init(nibName: nil, bundle: nil)
         
         callDegradationController.targetViewController = self
-        callDegradationController.state = configuration.degradationState
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -86,7 +85,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     private func updateConfiguration(animated: Bool = false) {
         callDegradationController.state = configuration.degradationState
         contentController.configuration = configuration
-        contentNavigationController.navigationBar.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: configuration.effectiveColorVariant)
+        contentNavigationController.navigationBar.tintColor = UIColor(scheme: .textForeground, variant: configuration.effectiveColorVariant)
         contentNavigationController.navigationBar.isTranslucent = true
         contentNavigationController.navigationBar.barTintColor = .clear
         contentNavigationController.navigationBar.setBackgroundImage(UIImage.singlePixelImage(with: .clear), for: .default)

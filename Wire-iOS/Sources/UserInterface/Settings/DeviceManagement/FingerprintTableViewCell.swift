@@ -19,13 +19,28 @@
 
 import Foundation
 import Cartography
-import Classy
 
 class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let fingerprintLabel = CopyableLabel()
     let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-    
+
+    var variant: ColorSchemeVariant? {
+        didSet {
+            var color = UIColor.white
+
+            switch variant {
+            case .dark?, .none:
+                color = .white
+            case .light?:
+                color = UIColor(scheme: .textForeground, variant: .light)
+            }
+
+            fingerprintLabel.textColor = color
+            titleLabel.textColor = color
+        }
+    }
+
     var fingerprintLabelFont: UIFont? {
         didSet {
             self.updateFingerprint()
@@ -71,14 +86,22 @@ class FingerprintTableViewCell: UITableViewCell {
             spinner.bottom <= contentView.bottom - 16
         }
         
-        CASStyler.default().styleItem(self)
         self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
+
+        setupStyle()
     }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setupStyle() {
+        fingerprintLabelFont = .normalLightFont
+        fingerprintLabelBoldFont = .normalSemiboldFont
+
+        titleLabel.font = .smallSemiboldFont
     }
 
     func updateFingerprint() {
@@ -86,8 +109,8 @@ class FingerprintTableViewCell: UITableViewCell {
         if let fingerprintLabelBoldMonoFont = self.fingerprintLabelBoldFont?.monospaced(),
             let fingerprintLabelMonoFont = self.fingerprintLabelFont?.monospaced(),
             let attributedFingerprint = self.fingerprint?.attributedFingerprint(
-                attributes: [NSFontAttributeName: fingerprintLabelMonoFont, NSForegroundColorAttributeName: fingerprintLabel.textColor],
-                boldAttributes: [NSFontAttributeName: fingerprintLabelBoldMonoFont, NSForegroundColorAttributeName: fingerprintLabel.textColor],
+                attributes: [.font: fingerprintLabelMonoFont, .foregroundColor: fingerprintLabel.textColor],
+                boldAttributes: [.font: fingerprintLabelBoldMonoFont, .foregroundColor: fingerprintLabel.textColor],
                 uppercase: false) {
                 
                     self.fingerprintLabel.attributedText = attributedFingerprint

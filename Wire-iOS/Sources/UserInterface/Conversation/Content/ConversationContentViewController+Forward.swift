@@ -24,8 +24,10 @@ import Cartography
 extension ZMConversation: ShareDestination {
     
     public var showsGuestIcon: Bool {
-        return self.conversationType == .oneOnOne &&
-            self.activeParticipants.first { $0 is ZMUser && ($0 as! ZMUser).isGuest(in: self) } != nil
+        return ZMUser.selfUser().hasTeam &&
+            self.conversationType == .oneOnOne &&
+            self.activeParticipants.first {
+                $0 is ZMUser && ($0 as! ZMUser).isGuest(in: self) } != nil
     }
     
     public var avatarView: UIView? {
@@ -40,10 +42,10 @@ extension Array where Element == ZMConversation {
     // Should be called inside ZMUserSession.shared().performChanges block
     func forEachNonEphemeral(_ block: (ZMConversation) -> Void) {
         forEach {
-            let timeout = $0.destructionTimeout
-            $0.updateMessageDestructionTimeout(timeout: .none)
+            let timeout = $0.messageDestructionTimeout
+            $0.messageDestructionTimeout = nil
             block($0)
-            $0.updateMessageDestructionTimeout(timeout: timeout)
+            $0.messageDestructionTimeout = timeout
         }
     }
 }
@@ -146,13 +148,36 @@ extension ZMConversationList {
     }
 }
 
+// MARK: - popover apperance update
+
+extension ConversationContentViewController {
+
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+
+
+        if let keyboardAvoidingViewController = self.presentedViewController as? KeyboardAvoidingViewController,
+           let shareViewController = keyboardAvoidingViewController.viewController as? ShareViewController<ZMConversation, ZMMessage> {
+            shareViewController.showPreview = traitCollection.horizontalSizeClass != .regular
+        }
+    }
+
+    @objc func updatePopover() {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+
+        rootViewController.updatePopoverSourceRect()
+    }
+}
+
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
+
     @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: ConversationCell?) {
         guard let message = message else { return }
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
-        if let window = self.view.window {
-            window.endEditing(true)
-        }
+        view.window?.endEditing(true)
         
         let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversation!)
 
@@ -164,16 +189,23 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
         
+        keyboardAvoiding.shouldAdjustFrame = { controller in
+            // We do not want to adjust the keyboard frame when we are being presented in a popover.
+            controller.popoverPresentationController?.arrowDirection == .unknown
+        }
+        
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
         
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
             if let cell = fromCell {
-                popoverPresentationController.sourceRect = cell.selectionRect
-                popoverPresentationController.sourceView = cell.selectionView
+                popoverPresentationController.config(from: rootViewController,
+                               pointToView: cell.selectionView,
+                               sourceView: rootViewController.view)
             }
+
             popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
-            popoverPresentationController.permittedArrowDirections = [.up, .down]
+            popoverPresentationController.permittedArrowDirections = [.left, .right]
         }
         
         keyboardAvoiding.presentationController?.delegate = self
@@ -183,7 +215,8 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
-        UIApplication.shared.keyWindow?.rootViewController?.present(keyboardAvoiding, animated: true) {
+
+        rootViewController.present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
     }
@@ -194,7 +227,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 }
 
 extension ConversationContentViewController {
-    func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
+    @objc func scroll(to messageToShow: ZMConversationMessage, completion: ((ConversationCell)->())? = .none) {
         guard messageToShow.conversation == self.conversation else {
             fatal("Message from the wrong conversation")
         }
@@ -224,7 +257,7 @@ extension ConversationContentViewController {
         }
     }
     
-    func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
+    @objc func scroll(toIndex indexToShow: Int, completion: ((ConversationCell)->())? = .none) {
         let cellIndexPath = IndexPath(row: indexToShow, section: 0)
 
         self.tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: false)

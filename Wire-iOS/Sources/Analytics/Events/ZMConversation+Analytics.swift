@@ -18,6 +18,10 @@
 
 import Foundation
 
+@objc public enum ConversationType: Int {
+    case oneToOne
+    case group
+}
 
 extension ConversationType {
     var analyticsTypeString : String {
@@ -41,16 +45,16 @@ extension ConversationType {
 
 extension ZMConversation {
     
-    public func analyticsTypeString() -> String? {
+    @objc public func analyticsTypeString() -> String? {
         return ConversationType.type(self)?.analyticsTypeString
     }
     
-    public class func analyticsTypeString(withConversationType conversationType: ConversationType) -> String {
+    @objc public class func analyticsTypeString(withConversationType conversationType: ConversationType) -> String {
         return conversationType.analyticsTypeString
     }
     
     /// Whether the conversation is a 1-on-1 conversation with a service user
-    public var isOneOnOneServiceUserConversation: Bool {
+    @objc public var isOneOnOneServiceUserConversation: Bool {
         guard self.activeParticipants.count == 2,
              let otherUser = self.firstActiveParticipantOtherThanSelf() else {
             return false
@@ -61,19 +65,19 @@ extension ZMConversation {
     }
     
     /// Whether the conversation includes at least 1 service user.
-    public var includesServiceUser: Bool {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return false }
+    @objc public var includesServiceUser: Bool {
+        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return false }
         return participants.any { $0.isServiceUser }
     }
     
-    public var sortedServiceUsers: [ZMBareUser] {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return [] }
-        return participants.filter { $0.isServiceUser }.sorted { $0.0.displayName < $0.1.displayName }
+    @objc public var sortedServiceUsers: [UserType] {
+        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
+        return participants.filter { $0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
     
-    public var sortedOtherParticipants: [ZMBareUser] {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [ZMBareUser] else { return [] }
-        return participants.filter { !$0.isServiceUser }.sorted { $0.0.displayName < $0.1.displayName }
+    @objc public var sortedOtherParticipants: [UserType] {
+        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
+        return participants.filter { !$0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
 
 }

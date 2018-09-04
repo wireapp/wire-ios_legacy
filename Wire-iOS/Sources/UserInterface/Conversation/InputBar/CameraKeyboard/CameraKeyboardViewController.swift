@@ -27,7 +27,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
-    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, metadata: ImageMetadata)
+    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, isFromCamera: Bool)
     func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController)
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController)
 }
@@ -62,7 +62,7 @@ open class CameraKeyboardViewController: UIViewController {
     internal let goBackButton = IconButton()
     internal let cameraRollButton = IconButton()
     
-    open let splitLayoutObservable: SplitLayoutObservable
+    public let splitLayoutObservable: SplitLayoutObservable
     open weak var delegate: CameraKeyboardViewControllerDelegate?
 
     deinit {
@@ -193,11 +193,11 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionView.scrollRectToVisible(CGRect(x: endOfListX, y: 0, width: 10, height: 10), animated: animated)
     }
     
-    func goBackPressed(_ sender: AnyObject) {
+    @objc func goBackPressed(_ sender: AnyObject) {
         scrollToCamera(animated: true)
     }
     
-    func openCameraRollPressed(_ sender: AnyObject) {
+    @objc func openCameraRollPressed(_ sender: AnyObject) {
         self.delegate?.cameraKeyboardViewControllerWantsToOpenCameraRoll(self)
     }
     
@@ -205,57 +205,93 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
     }
-    
+
     fileprivate func forwardSelectedPhotoAsset(_ asset: PHAsset) {
         let manager = PHImageManager.default()
 
-        let options = PHImageRequestOptions()
-        options.deliveryMode = .highQualityFormat
-        options.isNetworkAccessAllowed = false
-        options.isSynchronous = false
-        manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
-            guard let data = data else {
-                let options = PHImageRequestOptions()
-                options.deliveryMode = .highQualityFormat
-                options.isNetworkAccessAllowed = true
-                options.isSynchronous = false
-                DispatchQueue.main.async(execute: {
-                    self.showLoadingView = true
-                })
-                
-                manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
-                    DispatchQueue.main.async(execute: {
-                        self.showLoadingView = false
-                    })
-                    guard let data = data else {
-                        zmLog.error("Failure: cannot fetch image")
-                        return
-                    }
-                    
-                    DispatchQueue.main.async(execute: {
-                        let metadata = ImageMetadata()
-                        metadata.camera = .none
-                        metadata.method = ConversationMediaPictureTakeMethod.keyboard
-                        metadata.source = ConversationMediaPictureSource.gallery
-                        metadata.sketchSource = .none
-                        
-                        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
-                    })
-                })
-                
-                return
+        let completeBlock = { (data: Data?, uti: String?) in
+            guard let data = data else { return }
+
+            let returnData: Data
+            if (uti == "public.heif") ||
+                (uti == "public.heic"),
+                let convertedJPEGData = data.covertHEIFToJPG() {
+                returnData = convertedJPEGData
+            } else {
+                returnData = data
             }
+
             DispatchQueue.main.async(execute: {
-                
-                let metadata = ImageMetadata()
-                metadata.camera = .none
-                metadata.method = ConversationMediaPictureTakeMethod.keyboard
-                metadata.source = ConversationMediaPictureSource.gallery
-                metadata.sketchSource = .none
-                
-                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: data, metadata: metadata)
+                self.delegate?.cameraKeyboardViewController(self, didSelectImageData: returnData, isFromCamera: false)
             })
-        })
+        }
+
+        let limit = CGFloat.Image.maxSupportedLength
+        if CGFloat(asset.pixelWidth) > limit || CGFloat(asset.pixelHeight) > limit {
+
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .highQualityFormat
+            options.isNetworkAccessAllowed = false
+            options.resizeMode = .exact
+            options.isSynchronous = false
+
+            manager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                if let image = image {
+                    let data = UIImageJPEGRepresentation(image, 0.9)
+                    completeBlock(data, info?["PHImageFileUTIKey"] as? String)
+                } else {
+                    options.isSynchronous = true
+                    DispatchQueue.main.async(execute: {
+                        self.showLoadingView = true
+                    })
+
+                    manager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                        DispatchQueue.main.async(execute: {
+                            self.showLoadingView = false
+                        })
+
+                        if let image = image {
+                            let data = UIImageJPEGRepresentation(image, 0.9)
+                            completeBlock(data, info?["PHImageFileUTIKey"] as? String)
+                        } else {
+                            zmLog.error("Failure: cannot fetch image")
+                        }
+                    })
+                }
+
+            })
+        } else {
+            let options = PHImageRequestOptions()
+            options.deliveryMode = .highQualityFormat
+            options.isNetworkAccessAllowed = false
+            options.isSynchronous = false
+
+            manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+
+                guard let data = data else {
+                    options.isNetworkAccessAllowed = true
+                    DispatchQueue.main.async(execute: {
+                        self.showLoadingView = true
+                    })
+
+                    manager.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+                        DispatchQueue.main.async(execute: {
+                            self.showLoadingView = false
+                        })
+                        guard let data = data else {
+                            zmLog.error("Failure: cannot fetch image")
+                            return
+                        }
+
+                        completeBlock(data, uti)
+                    })
+
+                    return
+                }
+
+                completeBlock(data, uti)
+            })
+        }
     }
     
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
@@ -288,9 +324,9 @@ open class CameraKeyboardViewController: UIViewController {
                 }
                 
                 exportSession.outputURL = exportURL
-                exportSession.outputFileType = AVFileTypeQuickTimeMovie
+                exportSession.outputFileType = AVFileType.mov
                 exportSession.shouldOptimizeForNetworkUse = true
-                exportSession.outputFileType = AVFileTypeMPEG4
+                exportSession.outputFileType = AVFileType.mp4
 
                 exportSession.exportAsynchronously {
                     DispatchQueue.main.async(execute: {
@@ -308,7 +344,7 @@ open class CameraKeyboardViewController: UIViewController {
             self.view.backgroundColor = .white
             self.collectionView.delaysContentTouches = true
         } else {
-            self.view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorGraphite)
+            self.view.backgroundColor = UIColor(scheme: .graphite)
             self.collectionView.delaysContentTouches = false
         }
         
@@ -383,7 +419,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
-    var shouldBlockCallingRelatedActions: Bool {
+    @objc var shouldBlockCallingRelatedActions: Bool {
         return ZMUserSession.shared()?.isCallOngoing ?? false
     }
     
@@ -464,17 +500,7 @@ extension CameraKeyboardViewController: CameraCellDelegate {
     }
     
     public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
-        guard let cameraController = cameraCell.cameraController else {
-            return
-        }
-        
-        let isFrontCamera = cameraController.currentCamera == .front
-        
-        let camera: ConversationMediaPictureCamera = isFrontCamera ? ConversationMediaPictureCamera.front : ConversationMediaPictureCamera.back
-
-        let metadata = ImageMetadata.metadata(with: camera, method: .keyboard)
-
-        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, metadata: metadata)
+        self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true)
     }
 }
 
@@ -485,7 +511,8 @@ extension CameraKeyboardViewController: AssetLibraryDelegate {
 }
 
 extension CameraKeyboardViewController: WireCallCenterCallStateObserver {
-    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?)  {
+        /// TODO fix undesired camera keyboard openings here
         self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
     }
 }

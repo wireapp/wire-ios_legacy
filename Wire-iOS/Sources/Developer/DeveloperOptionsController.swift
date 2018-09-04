@@ -86,10 +86,17 @@ extension DeveloperOptionsController {
     func forwardLogCell() -> UITableViewCell {
         return self.createCellWithButton(labelText: "Forward log records") {
             let alert = UIAlertController(title: "Add explanation", message: "Please explain the problem that made you send the logs", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { _ in
+            
+            alert.addAction(UIAlertAction(title: "Send to Devs", style: .default, handler: { _ in
                 guard let text = alert.textFields?.first?.text else { return }
                 DebugLogSender.sendLogsByEmail(message: text)
             }))
+            
+            alert.addAction(UIAlertAction(title: "Send to Devs & AVS", style: .default, handler: { _ in
+                guard let text = alert.textFields?.first?.text else { return }
+                DebugLogSender.sendLogsByEmail(message: text, shareWithAVS: true)
+            }))
+            
             alert.addTextField(configurationHandler: {(textField: UITextField!) in
                 textField.placeholder = "Please explain the problem"
             })
@@ -152,7 +159,7 @@ extension DeveloperOptionsController {
 extension DeveloperOptionsController {
     
     /// Invoked when one of the switches changes
-    func switchDidChange(sender: AnyObject) {
+    @objc func switchDidChange(sender: AnyObject) {
         if let toggle = sender as? UISwitch {
             guard let action = self.uiSwitchToAction[toggle] else {
                 fatalError("Unknown switch?")
@@ -162,7 +169,7 @@ extension DeveloperOptionsController {
     }
     
     /// Invoked when one of the buttons is pressed
-    func didPressButton(sender: AnyObject) {
+    @objc func didPressButton(sender: AnyObject) {
         if let button = sender as? UIButton {
             guard let action = self.uiButtonToAction[button] else {
                 fatalError("Unknown button?")

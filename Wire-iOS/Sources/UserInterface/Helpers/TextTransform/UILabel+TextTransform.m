@@ -19,15 +19,20 @@
 
 #import "UILabel+TextTransform.h"
 #import "ObjcAssociatedObjectHelpers.h"
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
+
 @import Classy;
-
-
 
 
 @implementation UILabel (TextTransform)
 
 + (void)initialize
 {
+    // Do not load Classy in share extension
+    if (UIApplication.runningInExtension) {
+        return;
+    }
+
     if (self == [UILabel self]) {
         // Add textTransform property to Classy
         CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self];

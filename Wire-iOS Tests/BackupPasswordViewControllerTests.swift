@@ -22,10 +22,6 @@ import XCTest
 
 class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     func testDefaultState() {
         // GIVEN
         let sut = BackupPasswordViewController { (_, _) in }

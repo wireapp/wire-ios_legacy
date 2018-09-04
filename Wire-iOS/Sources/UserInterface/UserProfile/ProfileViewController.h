@@ -22,7 +22,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol ZMSearchableUser;
+@protocol UserType;
 @protocol ViewControllerDismisser;
 @class ZMConversation;
 @class ZMUser;
@@ -52,11 +52,11 @@ typedef NS_ENUM(NSInteger, ProfileViewControllerContext) {
 
 @interface ProfileViewController : UIViewController
 
-- (instancetype)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user context:(ProfileViewControllerContext)context;
-- (instancetype)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(nullable ZMConversation *)conversation;
-- (instancetype)initWithUser:(id<ZMSearchableUser, AccentColorProvider>)user conversation:(nullable ZMConversation *)conversation context:(ProfileViewControllerContext)context;
+- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user context:(ProfileViewControllerContext)context;
+- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(nullable ZMConversation *)conversation;
+- (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(nullable ZMConversation *)conversation context:(ProfileViewControllerContext)context;
 
-@property (nonatomic, readonly) id<ZMSearchableUser, AccentColorProvider> bareUser;
+@property (nonatomic, readonly) id<UserType, AccentColorProvider> bareUser;
 @property (nonatomic, weak, nullable) id<ProfileViewControllerDelegate> delegate;
 @property (nonatomic, weak, nullable) id<ViewControllerDismisser> viewControllerDismisser;
 @property (nonatomic, nullable) id<UINavigationControllerDelegate> navigationControllerDelegate;

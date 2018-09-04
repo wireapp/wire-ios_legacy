@@ -23,7 +23,7 @@ import Classy
 import WireExtensionComponents
 import WireDataModel
 
-@objc public class AvailabilityTitleView: TitleView {
+@objcMembers public class AvailabilityTitleView: TitleView {
     
     fileprivate var user: ZMUser?
     fileprivate var style: AvailabilityTitleViewStyle
@@ -37,12 +37,12 @@ import WireDataModel
         
         if style == .selfProfile || style == .header {
             let variant = ColorSchemeVariant.dark
-            titleColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: variant)
-            titleColorSelected = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed, variant: variant)
+            titleColor = UIColor(scheme: .textForeground, variant: variant)
+            titleColorSelected = UIColor(scheme: .textDimmed, variant: variant)
         } else {
             //otherwise, take the default variant
-            titleColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground)
-            titleColorSelected = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+            titleColor = UIColor(scheme: .textForeground)
+            titleColorSelected = UIColor(scheme: .textDimmed)
         }
         
         var titleFont : UIFont?
@@ -75,7 +75,7 @@ import WireDataModel
         var title = ""
         
         if self.style == .header {
-            title = user.name
+            title = user.name ?? ""
         } else if user == ZMUser.selfUser() && availability == .none {
             title = "availability.message.set_status".localized.uppercased()
         } else if availability != .none {
@@ -116,7 +116,6 @@ extension AvailabilityTitleView: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.availabilityChanged || changeInfo.nameChanged,
             let user = changeInfo.user as? ZMUser else { return }
-        provideHapticFeedback()
         configure(user: user)
     }
 }
@@ -141,6 +140,7 @@ extension AvailabilityTitleView {
         ZMUserSession.shared()?.performChanges { [weak self] in
             ZMUser.selfUser().availability = availability
             self?.trackChanges(with: availability)
+            self?.provideHapticFeedback()
         }
     }
     

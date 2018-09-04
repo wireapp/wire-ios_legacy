@@ -22,13 +22,16 @@
 "general.next" = "İleri";
 "general.cancel" = "İptal";
 "general.close" = "Kapat";
-"general.back" = "Back";
+"general.back" = "Geri";
 "general.open_settings" = "Wire Ayarlarını Aç";
 "general.edit" = "Düzenle";
 "general.done" = "Yapıldı";
 "general.confirm" = "TAMAM";
 "general.skip" = "Şimdi değil";
 "general.accept" = "Kabul et";
+"general.decline" = "No, thanks";
+"general.failure" = "Bir şeyler yanlış gitti";
+"general.service" = "Service";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -41,7 +44,7 @@
 "peoplepicker.search_placeholder" = "İsim veya kullanıcı adına göre ara";
 "peoplepicker.header.top_people" = "Sık Görüşülenler";
 "peoplepicker.button.create_conversation" = "Grup Oluştur";
-"peoplepicker.button.add_to_conversation" = "Gruba İnsanları Ekleyin";
+"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
 "peoplepicker.header.conversations" = "Gruplar";
 "peoplepicker.header.team_conversations" = "%@ Grup";
 "peoplepicker.header.send_invitation" = "Davet et";
@@ -49,22 +52,22 @@
 "peoplepicker.header.contacts_personal" = "Kişisel Kişiler";
 "peoplepicker.header.directory" = "Bağlan";
 
-"peoplepicker.group.title.singular" = "Kişi Ekle";
-"peoplepicker.group.title.plural" = "Add People (%d)";
+"peoplepicker.group.title.singular" = "Add Participants";
+"peoplepicker.group.title.plural" = "Add Participants (%d)";
 "peoplepicker.group.skip" = "Skip";
 "peoplepicker.group.done" = "Yapıldı";
 "peoplepicker.group.create" = "Oluştur";
 
 "peoplepicker.header.people" = "İnsanlar";
 "peoplepicker.header.services" = "Servisler";
-"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.open_conversation.item" = "Konuşma aç";
 "peoplepicker.services.add_service.button" = "Add service";
-"peoplepicker.services.add_service.error.title" = "The service can't be added";
+"peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
 "peoplepicker.services.add_service.error.full" = "The conversation is full";
 
 "peoplepicker.title.create_conversation" = "Grup oluştur";
-"peoplepicker.title.add_to_conversation" = "Kişi ekle";
+"peoplepicker.title.add_to_conversation" = "Add participants";
 
 "peoplepicker.no_contacts_title" = "Kişi yok.";
 
@@ -76,6 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Lütfen geçerli bir e-posta adresi girin";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Sonuç yok.";
+"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
+"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Tam bir e-posta adresi girin veya";
 /*  */
@@ -92,8 +98,13 @@
 "peoplepicker.quick-action.open-conversation" = "Aç";
 "peoplepicker.quick-action.create-conversation" = "Grup oluştur";
 "peoplepicker.quick-action.create-guest-room" = "Create guest room";
+"peoplepicker.quick-action.admin-services" = "Manage Services";
 
-"add_participants.all_contacts_added" = "Herkes burada.";
+"add_participants.all_contacts_added" = "Everyone’s here.";
+
+"add_participants.alert.title" = "The group is full";
+"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "İsme göre ara";
@@ -143,6 +154,7 @@
 "conversation_list.voiceover.bottom_bar.compose_button.hint" = "mesaj yaz ve sonrası için kaydet";
 "conversation_list.voiceover.bottom_bar.camera_button.label" = "kamera";
 "conversation_list.voiceover.bottom_bar.camera_button.hint" = "fotoğraf çek ve hemen gönder";
+"conversation_list.voiceover.unread_messages.hint" = "You have unread messages.";
 
 // Archived List
 "archived_list.title" = "arşiv";
@@ -181,7 +193,6 @@
 
 "conversation.voiceover.verified" = "onaylanmış";
 
-"conversation.status.call" = "Devam eden arama";
 "conversation.status.typing" = "Bir mesaj yazıyor…";
 "conversation.status.typing.group" = "%@: bir mesaj yazıyor…";
 "conversation.status.silenced" = "Susturuldu";
@@ -196,6 +207,7 @@
 "conversation.status.message.file" = "Bir dosya paylaştı";
 "conversation.status.message.knock" = "Pingledi";
 "conversation.status.message.missedcall" = "Cevapsız arama";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Süreli Mesaj";
 
 "conversation.status.unsent" = "⚠️ Mesaj gönderilemedi";
@@ -236,6 +248,9 @@
 "conversation.input_bar.audio_message.tooltip.tap_send" = "Göndermek için tıkla";
 "conversation.input_bar.audio_message.too_long.title" = "Kayıt durdu";
 "conversation.input_bar.audio_message.too_long.message" = "Audio messages are limited to %@.";
+
+"conversation.input_bar.audio_message.too_long_size.message" = "File size for audio messages is limited to %@.";
+
 "conversation.input_bar.audio_message.send" = "Gönder";
 
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Kaydetmek için tıkla\nDaha sonra %@ bilirsin";
@@ -258,14 +273,18 @@
 "conversation.create.group_name.placeholder" = "Grup adı";
 "conversation.create.guidance.empty" = "At least 1 character";
 "conversation.create.guidance.toolong" = "Çok fazla karakter";
-"conversation.create.toggle.title" = "Allow guests";
-"conversation.create.toggle.subtitle" = "Open this conversation to people outside your team. You can always change it later.";
+"conversation.create.toggle.title" = "Allow guests and services";
+"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Devam eden arama";
-"conversation.input_bar.ongoing_call_alert.audio.message" = "You can't record an audio message while being on a call.";
-"conversation.input_bar.ongoing_call_alert.video.message" = "You can't record a video while being on a call.";
+"conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
+"conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
+"conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
+"conversation.action.search" = "Arama";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "TAMAM";
@@ -284,7 +303,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire needs access to your\ncamera and photos."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire needs access to your photos.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire needs access to your camera.";
-"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can't access the camera while you are on a video call.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF kilidi";
@@ -306,9 +325,14 @@
 // System messages
 "content.system.you_nominative" = "sen";
 "content.system.you_dative" = "sen";
+"content.system.and_you_dative" = "and you";
 "content.system.you_accusative" = "sen";
 
 "content.system.continued_conversation" = "%@ ile bir konuşma başlat";
+"content.system.started_conversation.truncated_people" = "and %@";
+"content.system.started_conversation.truncated_people.others" = "%@ others";
+"content.system.started_conversation.complete_team" = "all team members";
+"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
 
 "content.system.other_started_conversation" = "%@, %@'la konuşma başlattı";
 "content.system.you_started_conversation" = "%@'la bir konuşma başlattın";
@@ -325,6 +349,8 @@
 "content.system.other_removed_you" = "%@, seni sildi";
 "content.system.you_removed_other" = "%@'i sildiniz";
 
+"content.system.services.warning" = "Services have access to the content of this conversation";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@, %@'la konuşma başlattı";
@@ -339,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "%@ takımdan çıkarıldı.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
-"content.system.conversation.invite.title" = "People outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
 "content.system.conversation.invite.button" = "İnsanları davet et";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ konuşmanın adını kaldırdı";
@@ -364,6 +390,7 @@
 
 "content.system.call.you" = "Sen";
 "content.system.call.called" = "%@ aradı";
+"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ aradı";
 
 "content.system.renamed_conv.title" = "%@ bu konuşmanın adını değiştirdi";
@@ -373,7 +400,15 @@
 "content.system.conversation.with_name.title" = "%@ started the conversation";
 "content.system.conversation.with_name.title-you" = "%@ started the conversation";
 
-"content.system.conversation.with_name.participants" = "with %@";
+"content.system.conversation.with_name.participants" = "with";
+
+"content.system.message_timer_changes" = "%@ set the message timer to %@";
+"content.system.message_timer_changes.you" = "You set the message timer to %@";
+
+"content.system.message_timer.you_part" = "Sen";
+
+"content.system.message_timer_off" = "%@ turned off the message timer";
+"content.system.message_timer_off.you" = "You turned off the message timer";
 
 "content.system.reactivated_device" = "Tekrar %@ kullanmaya başladın. Bu sırada gönderilmiş mesajlar burada gözükmeyecek.";
 
@@ -427,7 +462,8 @@
 "content.message.go_to_conversation" = "Göster";
 "content.message.forward.to" = "Ara…";
 "content.message.open" = "Aç";
-"content.message.copy" = "Copy";
+"content.message.copy" = "Kopyala";
+"content.message.download" = "Download";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";
@@ -483,6 +519,7 @@
 "voice.speaker_button.title" = "Hoparlör";
 "voice.cancel_button.title" = "İptal";
 "voice.call_button.title" = "Ara";
+"voice.end_call_button.title" = "End Call";
 
 "voice.alert.call_in_progress.title" = "Arama sürüyor";
 "voice.alert.call_in_progress.message" = "Tek seferde sadece bir arama yapabilirsiniz";
@@ -499,10 +536,10 @@
 
 // Voice New
 
-"call.status.connecting" = "Connecting…";
+"call.status.connecting" = "Bağlanıyor…";
 "call.status.incoming.user" = "%@ is calling…";
-"call.status.incoming" = "Calling…";
-"call.status.outgoing" = "Ringing…";
+"call.status.incoming" = "Arıyor…";
+"call.status.outgoing" = "Çalıyor…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Sabit Bit Hızı";
@@ -518,8 +555,36 @@
 "call.degraded.alert.title" = "New Device";
 "call.degraded.alert.message.self" = "Yeni bir cihaz kullanmaya başladın.";
 "call.degraded.alert.message.user" = "%@ yeni bir cihaz kullanmaya başladı.";
-"call.degraded.alert.message.unknown" = "Someone started using a new device.";
+"call.degraded.alert.message.unknown" = "Birisi yeni bir cihaz kullanmaya başladı.";
 "call.degraded.alert.action.continue" = "Yine de ara";
+
+"call.alert.ongoing.start.alert_title" = "Start Call?";
+"call.alert.ongoing.join.alert_title" = "Join Call?";
+
+"call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
+"call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
+"call.alert.ongoing.start.button" = "Call Anyway";
+"call.alert.ongoing.join.button" = "Join Anyway";
+
+// Call Actions (accessibility)
+
+"call.announcement.incoming" = "Incoming call from %@";
+"call.actions.label.toggle_mute_on" = "Sustur";
+"call.actions.label.toggle_mute_off" = "Sesi aç";
+"call.actions.label.flip_camera" = "Flip camera";
+"call.actions.label.toggle_speaker_on" = "Enable speaker";
+"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.accept_call" = "Aramayı kabul et";
+"call.actions.label.reject_call" = "Decline call";
+"call.actions.label.terminate_call" = "Çağrıyı sonlandır";
+"call.actions.label.toggle_video_on" = "Turn on camera";
+"call.actions.label.toggle_video_off" = "Turn off camera";
+"call.actions.label.switch_to_back_camera" = "Switch to back camera";
+"call.actions.label.switch_to_front_camera" = "Switch to front camera";
+"call.actions.label.minimize_call" = "Minimize call";
+"call.actions.label.make_audio_call" = "Start audio call";
+"call.actions.label.make_video_call" = "Start video call";
+"call.actions.label.join_call" = "Çağrıya katıl";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Profile and Participants
@@ -528,10 +593,12 @@
 "participants.avatar.guest.title" = "Misafir";
 
 "participants.title" = "Ayrıntılar";
+"participants.all.title" = "İnsanlar";
 "participants.section.participants" = "People (%d)";
 "participants.section.services" = "Services (%d)";
+"participants.section.settings" = "Seçenekler";
 "participants.footer.add_title" = "Add Participants";
-"participants.section.name.footer" = "Up to 128 people can join a group conversation. Video calls work in groups of 4 or less.";
+"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
 "meta.menu.rename" = "Yeniden adlandır";
@@ -642,9 +709,10 @@
 "participants.services.remove_integration.button" = "remove integration";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guest Options";
+"group_details.guest_options_cell.title" = "Guests and services";
 "group_details.guest_options_cell.enabled" = "On";
 "group_details.guest_options_cell.disabled" = "Kapalı";
+"group_details.timeout_options_cell.title" = "Timed messages";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -663,6 +731,8 @@
 "self.voiceover.hint" = "Profili ve ayarları aç";
 "self.new-device.voiceover.label" = "Profil, yeni cihazlar eklendi";
 
+"self.profile.change_user_image.accessibility" = "Tap to change profile picture";
+
 "self.add_phone_number" = "Telefon numarası ekleyin";
 "self.add_email_password" = "E-posta adresi ve parola ekleyin";
 
@@ -674,7 +744,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Self new devices
-"self.new_device_alert.title" = "Your account was used on:";
+"self.new_device_alert.title" = "Hesabınızın kullanıldığı cihazlar:";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
 "self.new_device_alert.message_plural" = "\n%@\n\nIf you don’t recognize the devices above, remove them and reset your password.";
 "self.new_device_alert.manage_devices" = "Cihazları yönet";
@@ -688,6 +758,9 @@
 
 "self.settings.add_account.error.title" = "Üç hesap aktif";
 "self.settings.add_account.error.message" = "Tek seferde üç hesapla giriş yapabilirsiniz. Başka bir tane eklemek için birinden çıkış yapın.";
+
+"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch account";
 
 // Settings - Account details
 "self.settings.account_section" = "Hesap";
@@ -736,10 +809,10 @@
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Kullanım ve kilitlenme raporları";
 "self.settings.privacy_analytics.title" = "Anonim Veri Yolla";
-"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending usage and crash reports.";
+"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending anonymous usage and crash reports.";
 
-"self.settings.receiveNews_and_offers.title" = "Receive News";
-"self.settings.receiveNews_and_offers.description.title" = "Receive news and product update from Wire via email.";
+"self.settings.receiveNews_and_offers.title" = "Receive Newsletter";
+"self.settings.receiveNews_and_offers.description.title" = "Receive news and product updates from Wire via email.";
 
 
 
@@ -829,10 +902,13 @@
 
 "open_link.maps.option.apple" = "Haritalar";
 "open_link.maps.option.google" = "Google Haritalar";
+"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
 "open_link.browser.option.firefox" = "Firefox";
+"open_link.browser.option.snowhaze" = "SnowHaze";
+"open_link.browser.option.brave" = "Brave";
 
 // Sound alerts (TO BE UPDPATED)
 "self.settings.sound_menu.title" = "Sesli Uyarılar";
@@ -904,7 +980,7 @@
 "self.settings.history_backup.title" = "Back Up Conversations";
 "self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
 "self.settings.history_backup.action" = "Back Up Now";
-"self.settings.history_backup.error.title" = "Error";
+"self.settings.history_backup.error.title" = "Hata";
 
 "self.settings.history_backup.set_email.title" = "Set an email and password.";
 "self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
@@ -941,7 +1017,6 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.title" = "Herkes için güvenli mesajlaşma.";
 "landing.create_account.title" = "For personal use";
 "landing.create_account.subtitle" = "create an account";
 "landing.create_team.title" = "For organizations";
@@ -963,7 +1038,7 @@
 "team.email.textfield.accessibility" = "İşletmenizin e-postası";
 "team.email.button.learn_more" = "Daha Fazla";
 
-"team.activation_code.headline" = "E-posta aldınız";
+"team.activation_code.headline" = "Posta geldi";
 "team.activation_code.subheadline" = "%@'a gönderdiğimiz doğrulama kodunu girin.";
 "team.activation_code.button.resend" = "Kodu yeniden gönder";
 "team.activation_code.button.change_email" = "E-postayı değiştir";
@@ -994,14 +1069,14 @@
 "team.invite.error.already_registered" = "This email address is already in use";
 "team.invite.error.already_invited" = "This email has already been invited";
 "team.invite.error.too_many_invitations" = "The maximum number of invitations has been sent";
-"team.invite.error.no_internet" = "No internet connection";
+"team.invite.error.no_internet" = "Internet bağlantısı yok";
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests";
-"guest_room.allow_guests.subtitle" = "Open this conversation to people outside your team.";
-"guest_room.remove_guests.message" = "Current guests will be removed from the conversation. New guests will not be allowed.";
-"guest_room.remove_guests.action" = "Remove Guests";
+"guest_room.allow_guests.title" = "Allow guests and services";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
+"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.remove_guests.action" = "Kaldır";
 "guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
 "guest_room.revoke_link.action" = "Revoke Link";
 
@@ -1009,7 +1084,7 @@
 "guest_room.error.generic.message" = "Check your connection and try again";
 
 "guest_room.link.header.title" = "Invite others with a link";
-"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don't have Wire.";
+"guest_room.link.header.subtitle" = "Anyone with the link can join the conversation, even if they don’t have Wire.";
 
 "guest_room.link.button.title" = "Create Link";
 
@@ -1025,7 +1100,7 @@
 
 // Registration
 
-"registration.launch_back_button.label" = "Back";
+"registration.launch_back_button.label" = "Geri";
 
 "registration.title" = "Kayıt";
 "registration.close_email_invitation_button.email_title" = "Başka bir e-posta kullanın";
@@ -1062,7 +1137,7 @@
 "registration.no_history.restore_backup_warning.proceed" = "Choose Backup File";
 
 /// Restore History Failure Alerts
-"registration.no_history.restore_backup_failed.try_again" = "Try again";
+"registration.no_history.restore_backup_failed.try_again" = "Tekrar deneyin";
 
 // Generic
 "registration.no_history.restore_backup_failed.title" = "Bir şeyler yanlış gitti";
@@ -1075,6 +1150,20 @@
 // Incompatible Version
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatible backup";
 "registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+
+// SSO – Company Login
+"login.sso.alert.title" = "Company Log In";
+"login.sso.alert.message" = "Enter the company SSO access code.";
+"login.sso.alert.action" = "Giriş yap";
+"login.sso.alert.text_field.placeholder" = "SSO access code";
+
+"login.sso.error.alert.title" = "Bir şeyler yanlış gitti";
+"login.sso.error.alert.invalid_code.title" = "Invalid code.";
+"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
+"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
+"login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
+"login.sso.error.alert.unknown.message" = "Please try again later.";
+"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
@@ -1149,12 +1238,13 @@
 "signin.use_one_password.label" = "Log in with 1Password";
 "signin.use_one_password.hint" = "Double tap to fill your password with 1Password";
 "signin.confirm" = "Oturum Aç";
+"signin.company_idp.button.title" = "For Companies";
 
 "registration.phone_country" = "Ülke";
-"registration.phone_code" = "Country Code";
+"registration.phone_code" = "Ülke Kodu";
 "registration.phone_country.hint" = "Double tap to select another country.";
 "registration.phone_code.hint" = "Double tap to select another country code.";
-"registration.phone.verify.label" = "Verify phone number";
+"registration.phone.verify.label" = "Telefon numarasını doğrula";
 "registration.phone.verify_field.label" = "Verification Code";
 
 "registration.add_phone_number.hero.title" = "Telefon numarası ekleyin";
@@ -1206,7 +1296,7 @@
 "error.user.device_deleted_remotely" = "Başka bir cihaz tarafından oturumunuz kapatıldı.";
 "error.user.last_identity_cant_be_deleted" = "E-posta adresinizden veya telefon numaranızdan en az biri gerekli.";
 "error.user.account_suspended" = "Bu hesap artık giriş yapmak için yeterli yetkiye sahip değil.";
-"error.user.account_limit_reached" = "3’ten fazla hesap ekleyemezsin.";
+"error.user.account_limit_reached" = "You can’t add more than 3 accounts.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
@@ -1215,7 +1305,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "Aramak için çok insan var";
 "error.group_call.too_many_members_in_conversation" = "Aramalar %d kişiye kadar yapılabilir.";
 "error.group_call.too_many_participants_in_the_call.title" = "Çağrı dolu";
-"error.group_call.too_many_participants_in_the_call" = "Burda sadece %d kişiye yer var.";
+"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
 "error.call.gsm_ongoing.title" = "Hücresel arama";
 "error.call.gsm_ongoing" = "Lütfen Wire üzerinden arama yapmadan önce hücresel aramayı kapatın.";
 "error.call.general.title" = "Arama hatası";
@@ -1227,7 +1317,7 @@
 "error.invite.no_email_provider" = "Lütfen e-posta ile davet göndermek için e-posta istemcinizi yapılandırın";
 "error.invite.no_messaging_provider" = "Lütfen SMS göndermek için SMS'inizi yapılandırın";
 
-"error.conversation.title" = "Error";
+"error.conversation.title" = "Hata";
 "error.conversation.cannot_add" = "Adding the participant failed";
 "error.conversation.cannot_remove" = "Removing the participant failed";
 "error.conversation.too_many_members" = "The conversation is full";
@@ -1315,11 +1405,12 @@
 "calling.quality_survey.answer.3" = "Fair";
 "calling.quality_survey.answer.4" = "Good";
 "calling.quality_survey.answer.5" = "Excellent";
+"calling.quality_survey.skip_button_title" = "Skip";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action
 
-"url_action.confirm" = "Confirm";
+"url_action.confirm" = "Onay";
 "url_action.title" = "Confirm URL action";
 "url_action.connect_to_bot.message" = "Would you like to connect to the bot?";
 

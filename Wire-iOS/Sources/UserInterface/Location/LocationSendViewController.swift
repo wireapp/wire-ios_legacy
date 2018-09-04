@@ -24,11 +24,20 @@ import Classy
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
 }
 
-@objc public final class LocationSendViewController: UIViewController {
+@objcMembers public final class LocationSendViewController: UIViewController {
     
     public let sendButton = Button(style: .full)
-    public let addressLabel = UILabel()
-    public let separatorView = UIView()
+    public let addressLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalFont
+        label.textColor = .textForeground
+        return label
+    }()
+    public let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.separator
+        return view
+    }()
     fileprivate let containerView = UIView()
     
     weak var delegate: LocationSendViewControllerDelegate?
@@ -41,9 +50,10 @@ import Classy
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        CASStyler.default().styleItem(self)
         configureViews()
         createConstraints()
+
+        view.backgroundColor = .background
     }
     
     fileprivate func configureViews() {
@@ -71,8 +81,8 @@ import Classy
             separator.height == .hairline
         }
         
-        sendButton.setContentCompressionResistancePriority(1000, for: .horizontal)
-        addressLabel.setContentCompressionResistancePriority(750, for: .horizontal)
+        sendButton.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+        addressLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
     }
     
     @objc fileprivate func sendButtonTapped(_ sender: Button) {

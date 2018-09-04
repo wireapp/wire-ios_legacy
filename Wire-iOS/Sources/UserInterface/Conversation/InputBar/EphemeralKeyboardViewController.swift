@@ -26,88 +26,109 @@ protocol EphemeralKeyboardViewControllerDelegate: class {
 
     func ephemeralKeyboard(
         _ keyboard: EphemeralKeyboardViewController,
-        didSelectMessageTimeout timeout: ZMConversationMessageDestructionTimeout
+        didSelectMessageTimeout timeout: TimeInterval
     )
-}
-
-
-fileprivate let longStyleFormatter: DateComponentsFormatter = {
-    let formatter = DateComponentsFormatter()
-    formatter.unitsStyle = .full
-    formatter.allowedUnits = [.day, .hour, .minute, .second]
-    formatter.zeroFormattingBehavior = .dropAll
-    return formatter
-}()
-
-
-extension ZMConversationMessageDestructionTimeout {
-
-    var displayString: String? {
-        guard .none != self else { return "input.ephemeral.timeout.none".localized }
-        return longStyleFormatter.string(from: TimeInterval(rawValue))
-    }
-
-    var shortDisplayString: String? {
-        if isSeconds { return String(Int(rawValue)) }
-        if isMinutes { return String(Int(rawValue / 60)) }
-        if isHours { return String(Int(rawValue / 3600)) }
-        if isDays { return String(Int(rawValue / 86400)) }
-        return nil
-    }
-
-}
-
-
-extension ZMConversationMessageDestructionTimeout {
-
-    var isSeconds: Bool {
-        return rawValue < 60
-    }
-
-    var isMinutes: Bool {
-        return 60..<3600 ~= rawValue
-     }
-
-    var isHours: Bool {
-        return 3600..<86400 ~= rawValue
-    }
-
-    var isDays: Bool {
-        return rawValue >= 86400
-    }
-
 }
 
 public extension ZMConversation {
 
-    var timeoutImage: UIImage? {
-        if destructionTimeout.isDays { return WireStyleKit.imageOfDay(with: UIColor.accent()) }
-        if destructionTimeout.isHours { return WireStyleKit.imageOfHour(with: UIColor.accent()) }
-        if destructionTimeout.isMinutes { return WireStyleKit.imageOfMinute(with: UIColor.accent()) }
-        if destructionTimeout.isSeconds { return WireStyleKit.imageOfSecond(with: UIColor.accent()) }
-        return nil
+    var destructionTimeout: MessageDestructionTimeoutValue? {
+        switch messageDestructionTimeout {
+        case .local(let value)?:
+            return value
+        case .synced(let value)?:
+            return value
+        default:
+            return nil
+        }
+    }
+    
+    @objc var timeoutImage: UIImage? {
+        guard let value = self.destructionTimeout else { return nil }
+        return timeoutImage(for: value)
     }
 
+    @objc var disabledTimeoutImage: UIImage? {
+        guard let value = self.destructionTimeout else { return nil }
+        return timeoutImage(for: value, withColor: UIColor(scheme: .lightGraphite))
+    }
+    
+    private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
+        if timeout.isYears    { return WireStyleKit.imageOfYear(with: color) }
+        if timeout.isWeeks    { return WireStyleKit.imageOfWeek(with: color) }
+        if timeout.isDays     { return WireStyleKit.imageOfDay(with: color) }
+        if timeout.isHours    { return WireStyleKit.imageOfHour(with: color) }
+        if timeout.isMinutes  { return WireStyleKit.imageOfMinute(with: color) }
+        if timeout.isSeconds  { return WireStyleKit.imageOfSecond(with: color) }
+        return nil
+    }
 }
 
+extension UIAlertController {
+    enum AlertError: Error {
+        case userRejected
+    }
+    
+    static func requestCustomTimeInterval(over controller: UIViewController,
+                                          with completion: @escaping (Result<TimeInterval>)->()) {
+        let alertController = UIAlertController(title: "Custom timer", message: nil, preferredStyle: .alert)
+        alertController.addTextField { (textField: UITextField) in
+            textField.keyboardType = .decimalPad
+            textField.placeholder = "Time interval in seconds"
+        }
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { [weak alertController] action in
+            guard let input = alertController?.textFields?.first,
+                let inputText = input.text,
+                let selectedTimeInterval = TimeInterval(inputText) else {
+                    return
+            }
+            
+            completion(.success(selectedTimeInterval))
+        }
+        
+        alertController.addAction(confirmAction)
+        
+        let cancelAction = UIAlertAction.cancel {
+            completion(.failure(AlertError.userRejected))
+        }
+        
+        alertController.addAction(cancelAction)
+        controller.present(alertController, animated: true) { [weak alertController] in
+            guard let input = alertController?.textFields?.first else {
+                return
+            }
+            
+            input.becomeFirstResponder()
+        }
+    }
+}
 
-@objc public final class EphemeralKeyboardViewController: UIViewController {
+@objcMembers public final class EphemeralKeyboardViewController: UIViewController {
 
     weak var delegate: EphemeralKeyboardViewControllerDelegate?
 
-    fileprivate let timeouts = ZMConversationMessageDestructionTimeout.all
+    fileprivate let timeouts: [MessageDestructionTimeoutValue?]
 
     public let titleLabel = UILabel()
-    public var pickerFont: UIFont?
-    public var pickerColor: UIColor?
-    public var separatorColor: UIColor?
+    public var pickerFont: UIFont? = .normalSemiboldFont
+    public var pickerColor: UIColor? = UIColor(scheme: .textForeground, variant: .dark)
+    public var separatorColor: UIColor? = UIColor(scheme: .separator, variant: .light)
 
-    private let conversation: ZMConversation
+    private let conversation: ZMConversation!
     private let picker = PickerView()
 
 
-    public init(conversation: ZMConversation) {
+    /// Allow conversation argument is nil for testing
+    ///
+    /// - Parameter conversation: nil for testing only
+    public init(conversation: ZMConversation!) {
         self.conversation = conversation
+        if DeveloperMenuState.developerMenuEnabled() {
+            timeouts = MessageDestructionTimeoutValue.all + [nil]
+        }
+        else {
+            timeouts = MessageDestructionTimeoutValue.all
+        }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -119,12 +140,14 @@ public extension ZMConversation {
         super.viewDidLoad()
         setupViews()
         createConstraints()
+
+        view.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
     }
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        guard let index = timeouts.index(of: conversation.destructionTimeout) else { return }
+        guard let index = timeouts.index(of: MessageDestructionTimeoutValue(rawValue: conversation.messageDestructionTimeoutValue)) else { return }
         picker.selectRow(index, inComponent: 0, animated: false)
     }
 
@@ -138,6 +161,9 @@ public extension ZMConversation {
         picker.didTapViewClosure = dismissKeyboardIfNeeded
 
         titleLabel.textAlignment = .center
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        titleLabel.font = .smallSemiboldFont
+
         titleLabel.text = "input.ephemeral.title".localized.uppercased()
         titleLabel.numberOfLines = 0
         [titleLabel, picker].forEach(view.addSubview)
@@ -159,6 +185,24 @@ public extension ZMConversation {
         }
     }
 
+    fileprivate func displayCustomPicker() {
+        delegate?.ephemeralKeyboardWantsToBeDismissed(self)
+        
+        UIAlertController.requestCustomTimeInterval(over: UIApplication.shared.wr_topmostController(onlyFullScreen: true)!) { [weak self] result in
+            
+            guard let `self` = self else {
+                return
+            }
+            
+            switch result {
+            case .success(let value):
+                self.delegate?.ephemeralKeyboard(self, didSelectMessageTimeout: value)
+            default:
+                break
+            }
+            
+        }
+    }
 }
 
 
@@ -242,12 +286,25 @@ extension EphemeralKeyboardViewController: UIPickerViewDelegate, UIPickerViewDat
     }
 
     public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        guard let font = pickerFont, let color = pickerColor, let title = timeouts[row].displayString else { return nil }
-        return title && font && color
+        guard let font = pickerFont, let color = pickerColor else { return nil }
+        let timeout = timeouts[row]
+        if let actualTimeout = timeout, let title = actualTimeout.displayString {
+            return title && font && color
+        }
+        else {
+            return "Custom" && font && color
+        }
     }
 
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate?.ephemeralKeyboard(self, didSelectMessageTimeout: timeouts[row])
+        let timeout = timeouts[row]
+        
+        if let actualTimeout = timeout {
+            delegate?.ephemeralKeyboard(self, didSelectMessageTimeout: actualTimeout.rawValue)
+        }
+        else {
+            displayCustomPicker()
+        }
     }
     
 }

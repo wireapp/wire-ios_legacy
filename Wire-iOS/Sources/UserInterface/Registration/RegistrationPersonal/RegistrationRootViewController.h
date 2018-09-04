@@ -18,8 +18,8 @@
 
 
 #import <UIKit/UIKit.h>
-
 #import "FormFlowViewController.h"
+#import "NoHistoryViewController.h"
 
 typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
     AuthenticationFlowRegular,
@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
     AuthenticationFlowOnlyRegistration
 };
 
-@class AnalyticsTracker, ZMIncompleteRegistrationUser, LoginCredentials;
+@class ZMIncompleteRegistrationUser, LoginCredentials;
 
 @interface RegistrationRootViewController : FormFlowViewController
 

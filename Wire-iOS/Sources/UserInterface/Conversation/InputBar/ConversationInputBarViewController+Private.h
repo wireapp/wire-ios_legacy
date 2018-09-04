@@ -41,16 +41,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
 @property (nonatomic)           BOOL inputBarOverlapsContent;
-@property (nonatomic)           NSUInteger videoSendContext;
-@property (nonatomic) id callStateObserverToken;
-@property (nonatomic) BOOL wasRecordingBeforeCall;
+
+// Counter keeping track of calls being made when the audio keyboard ewas visible before.
+@property (nonatomic)           NSInteger callCountWhileCameraKeyboardWasVisible;
+@property (nonatomic)           id callStateObserverToken;
+@property (nonatomic)           BOOL wasRecordingBeforeCall;
 
 @property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
+
+@property (nonatomic) IconButton *sendButton;
+@property (nonatomic) IconButton *hourglassButton;
+@property (nonatomic) IconButton *videoButton;
+
+@property (nonatomic) BOOL inRotation;
+
+// PopoverPresenter
+@property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
+@property (nonatomic, nullable, weak) UIView *popoverPointToView;
 
 - (void)createAudioRecordViewController;
 - (void)sendOrEditText:(NSString *)text;
 - (void)updateRightAccessoryView;
-- (void)updateButtonIconsForEphemeral;
+- (void)updateButtonIcons;
 - (void)updateAccessoryViews;
 - (void)updateNewButtonTitleLabel;
 @end

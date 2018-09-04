@@ -20,61 +20,17 @@
 #import "UserImageView.h"
 @import PureLayout;
 @import WireSyncEngine;
-#import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "UIImage+ZetaIconsNeue.h"
 
 #import "weakify.h"
 
-
-CGFloat PixelSizeForUserImageSize(UserImageViewSize size);
-CGFloat PointSizeForUserImageSize(UserImageViewSize size);
-
-CGFloat PixelSizeForUserImageSize(UserImageViewSize size)
-{
-    return PointSizeForUserImageSize(size) * [UIScreen mainScreen].scale;
-}
-
-CGFloat PointSizeForUserImageSize(UserImageViewSize size)
-{
-    switch (size) {
-        case UserImageViewSizeTiny:
-            return 36.0f;
-            break;
-        case UserImageViewSizeSmall:
-            return 56.0f;
-            break;
-        case UserImageViewSizeNormal:
-            return 64.0f;
-            break;
-        case UserImageViewSizeBig:
-            return 320.0f;
-            break;
-        default:
-            break;
-    }
-    return 0;
-}
-
-
-typedef void (^ImageCacheCompletionBlock)(id , NSString *);
-
-
-
-static CIContext *ciContext(void)
-{
-    static CIContext *context;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        context = [CIContext contextWithOptions:nil];
-    });
-    return context;
-}
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 @interface UserImageView ()
 
 @property (nonatomic) id userObserverToken;
-@property (nonatomic) UIView *indicator;
+@property (nonatomic) RoundedView *indicator;
 
 @end
 
@@ -111,42 +67,29 @@ static CIContext *ciContext(void)
     return self;
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    [self updateIndicatorCornerRadius];
-}
-
 - (void)setupBasicProperties
 {
     _shouldDesaturate = YES;
-    _size = UserImageViewSizeNormal;
+    _size = UserImageViewSizeSmall;
 
     self.accessibilityElementsHidden = YES;
     
     [self createIndicator];
     [self createConstraints];
-    [self updateIndicatorCornerRadius];
-}
-
-- (void)updateIndicatorCornerRadius
-{
-    self.indicator.layer.cornerRadius = self.indicator.bounds.size.width / 2;
 }
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat imageSize = PointSizeForUserImageSize(self.size);
+    CGFloat imageSize = self.size;
     return CGSizeMake(imageSize, imageSize);
 }
 
-- (void)setUser:(id<ZMBareUser, AccentColorProvider>)user
+- (void)setUser:(id<UserType, AccentColorProvider>)user
 {    
     _user = user;
     
     if (self.userSession != nil && user != nil && ([user isKindOfClass:[ZMUser class]] || [user isKindOfClass:[ZMSearchUser class]])) {
-        self.userObserverToken = [UserChangeInfo addObserver:self forBareUser:user userSession:self.userSession];
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:user userSession:self.userSession];
     }
     
     self.initials.textColor = UIColor.whiteColor;
@@ -154,45 +97,45 @@ static CIContext *ciContext(void)
     
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self updateForServiceUserIfNeeded:user];
-    [self setUserImage:nil];
+    [self setUserImage:nil animated:NO];
     [self updateIndicatorColor];
     [self updateUserImage];
 }
 
-- (void)updateForServiceUserIfNeeded:(id <ZMBareUser>)user
+- (void)updateForServiceUserIfNeeded:(id <UserType>)user
 {
     self.shape = [self shapeForUser:user];
     self.containerView.layer.borderColor = [self borderColorForUser:user];
     self.containerView.layer.borderWidth = [self borderWidthForUser:user];
     self.imageView.backgroundColor = [self containerBackgroundColorForUser:user];
-    self.shouldDesaturate |= user.isServiceUser;
 }
 
-- (AvatarImageViewShape)shapeForUser:(id <ZMBareUser>)user
+- (AvatarImageViewShape)shapeForUser:(id <UserType>)user
 {
     return user.isServiceUser ? AvatarImageViewShapeRoundedRelative : AvatarImageViewShapeCircle;
 }
 
-- (UIColor *)containerBackgroundColorForUser:(id <ZMBareUser>)user
+- (UIColor *)containerBackgroundColorForUser:(id <UserType>)user
 {
     return user.isServiceUser ? UIColor.whiteColor : UIColor.clearColor;
 }
 
-- (CGColorRef)borderColorForUser:(id <ZMBareUser>)user
+- (CGColorRef)borderColorForUser:(id <UserType>)user
 {
     return user.isServiceUser ? [UIColor.blackColor colorWithAlphaComponent:0.08].CGColor : nil;
 }
 
-- (CGFloat)borderWidthForUser:(id <ZMBareUser>)user
+- (CGFloat)borderWidthForUser:(id <UserType>)user
 {
     return user.isServiceUser ? 0.5 : 0;
 }
 
 - (void)createIndicator
 {
-    self.indicator = [[UIView alloc ] initForAutoLayout];
+    self.indicator = [[RoundedView alloc ] initForAutoLayout];
     self.indicator.backgroundColor = UIColor.redColor;
     self.indicator.hidden = YES;
+    [self.indicator toggleCircle];
     
     [self addSubview:self.indicator];
 }
@@ -213,126 +156,34 @@ static CIContext *ciContext(void)
     self.indicator.backgroundColor = [(id)self.user accentColor];
 }
 
-- (void)updateUserImage
+- (void)setUserImage:(UIImage *)userImage animated:(BOOL)animated
 {
-    // Check if user object is a zombie in terms of the core data objects.
-    if ([self.user isKindOfClass:[ZMManagedObject class]]) {
-        ZMManagedObject *userInDatabase = (ZMManagedObject *)self.user;
-        if ([userInDatabase isZombieObject]) {
-            return;
+    dispatch_block_t imageUpdate = ^{
+        self.initials.hidden = userImage != nil;
+        self.imageView.hidden = userImage == nil;
+        self.imageView.image = userImage;
+        
+        BOOL isWireless = NO;
+        if ([self.user respondsToSelector:@selector(isWirelessUser)]) {
+            isWireless = [(id)self.user isWirelessUser];
         }
-    }
-    
-    if (self.size == UserImageViewSizeBig &&
-        self.user.imageMediumData == nil) {
         
-        if ([self.user respondsToSelector:@selector(requestMediumProfileImageInUserSession:)] && self.userSession != nil) {
-            [(id)self.user requestMediumProfileImageInUserSession:self.userSession];
+        if (userImage) {
+            self.containerView.backgroundColor = [self containerBackgroundColorForUser:self.user];
         }
-        return;
-    }
-    
-    if (self.size != UserImageViewSizeBig &&
-        self.user.imageSmallProfileData == nil) {
-        
-        if ([self.user respondsToSelector:@selector(requestSmallProfileImageInUserSession:)] && self.userSession != nil) {
-            [(id)self.user requestSmallProfileImageInUserSession:self.userSession];
-        }
-        return;
-    }
-    
-    NSData *imageData = nil;
-    NSString *imageCacheKey = nil;
-    
-    if (self.size == UserImageViewSizeBig) {
-        imageData = self.user.imageMediumData;
-        imageCacheKey = self.user.mediumProfileImageCacheKey;
-    }
-    else {
-        imageData = self.user.imageSmallProfileData;
-        imageCacheKey = self.user.smallProfileImageCacheKey;
-    }
-    
-    BOOL userIsConnected = self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember;
-
-    if (imageData == nil || imageCacheKey == nil) {
-        return;
-    }
-
-    // cache key is not changed when user change his own image
-    if (self.user.isSelfUser) {
-        
-        UIImage *image = [UIImage imageFromData:imageData withMaxSize:PixelSizeForUserImageSize(self.size)];
-
-        [self setUserImage:image];
-        return;
-    }
-
-    @weakify(self);
-    
-    ImageCacheCompletionBlock completionBlock = ^void(id image, NSString *cacheKey){
-        
-        @strongify(self);
-        
-        NSString *updatedCacheKey = nil;
-        
-        if (self.size == UserImageViewSizeBig) {
-            updatedCacheKey = self.user.mediumProfileImageCacheKey;
+        else if ([self.user respondsToSelector:@selector(accentColor)] &&
+                 (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember || isWireless)) {
+            self.containerView.backgroundColor = [(id)self.user accentColor];
         }
         else {
-            updatedCacheKey = self.user.smallProfileImageCacheKey;
-        }
-        
-        if ([cacheKey isEqualToString:updatedCacheKey]) {
-            [self setUserImage:image];
+            self.containerView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
         }
     };
     
-    if (userIsConnected || ! self.shouldDesaturate) {
-        [[UserImageView sharedFullColorImageCacheForSize:self.size] imageForData:imageData cacheKey:imageCacheKey creationBlock:^id(NSData *data) {
-            
-            UIImage *image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.size)];
-            return image;
-            
-        } completion:completionBlock];
-    }
-    else {
-        [[UserImageView sharedDesaturatedImageCacheForSize:self.size] imageForData:imageData cacheKey:imageCacheKey creationBlock:^id(NSData *data) {
-            
-            UIImage *image = [[UserImageView sharedFullColorImageCacheForSize:self.size] imageForCacheKey:imageCacheKey];
-            
-            if (! image) {
-                image = [UIImage imageFromData:data withMaxSize:PixelSizeForUserImageSize(self.size)];
-            }
-            image = [image desaturatedImageWithContext:ciContext()
-                                            saturation:@0];
-          
-            return image;
-            
-        } completion:completionBlock];
-    }
-}
-
-- (void)setUserImage:(UIImage *)userImage
-{
-    self.initials.hidden = userImage != nil;
-    self.imageView.hidden = userImage == nil;
-    self.imageView.image = userImage;
-    
-    BOOL isWireless = NO;
-    if ([self.user respondsToSelector:@selector(isWirelessUser)]) {
-        isWireless = [(id)self.user isWirelessUser];
-    }
-    
-    if (userImage) {
-        self.containerView.backgroundColor = [self containerBackgroundColorForUser:self.user];
-    }
-    else if ([self.user respondsToSelector:@selector(accentColor)] &&
-             (self.user.isConnected || self.user.isSelfUser || self.user.isTeamMember || isWireless)) {
-        self.containerView.backgroundColor = [(id)self.user accentColor];
-    }
-    else {
-        self.containerView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+    if (animated) {
+        [UIView transitionWithView:self duration:0.15 options:UIViewAnimationOptionTransitionCrossDissolve animations:imageUpdate completion:NULL];
+    } else {
+        imageUpdate();
     }
 }
 
@@ -372,50 +223,6 @@ static CIContext *ciContext(void)
     if (change.accentColorValueChanged) {
         [self updateIndicatorColor];
     }
-}
-
-#pragma mark - Class Methods
-
-+ (ImageCache *)sharedFullColorImageCacheForSize:(UserImageViewSize)size
-{
-    static NSArray *fullColorImageCaches;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableArray *fullColorImageCachesMutable = [NSMutableArray arrayWithCapacity:UserImageViewSizeLast - UserImageViewSizeFirst];
-        
-        for (UserImageViewSize s = UserImageViewSizeFirst; s <= UserImageViewSizeLast; s++) {            
-            ImageCache *fullColorImageCache = [[ImageCache alloc] initWithName:[NSString stringWithFormat:@"_UserImageView.fullColorImageCache_%d", (int)s]];
-            fullColorImageCache.maxConcurrentOperationCount = 4;
-            fullColorImageCache.countLimit = 100;
-            fullColorImageCache.totalCostLimit = 1024 * 1024 * 10;
-            fullColorImageCache.qualityOfService = NSQualityOfServiceUtility;
-            [fullColorImageCachesMutable addObject:fullColorImageCache];
-        }
-        
-        fullColorImageCaches = fullColorImageCachesMutable;
-    });
-    return fullColorImageCaches[size];
-}
-
-+ (ImageCache *)sharedDesaturatedImageCacheForSize:(UserImageViewSize)size
-{
-    static NSArray *desaturatedImageCaches;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableArray *desaturatedImageCachesMutable = [NSMutableArray arrayWithCapacity:UserImageViewSizeLast - UserImageViewSizeFirst];
-        
-        for (UserImageViewSize s = UserImageViewSizeFirst; s <= UserImageViewSizeLast; s++) {            
-            ImageCache *desaturatedImageCache = [[ImageCache alloc] initWithName:[NSString stringWithFormat:@"_UserImageView.desaturatedImageCache_%d", (int)s]];
-            desaturatedImageCache.maxConcurrentOperationCount = 4;
-            desaturatedImageCache.countLimit = 100;
-            desaturatedImageCache.totalCostLimit = 1024 * 1024 * 10;
-            desaturatedImageCache.qualityOfService = NSQualityOfServiceUtility;
-            [desaturatedImageCachesMutable addObject:desaturatedImageCache];
-        }
-        
-        desaturatedImageCaches = desaturatedImageCachesMutable;
-    });
-    return desaturatedImageCaches[size];
 }
 
 @end

@@ -40,7 +40,30 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         }
     }
     
-    public let showPreview: Bool
+    var tokenFieldTopConstraint: NSLayoutConstraint?
+    var tokenFieldShareablePreviewSpacingConstraint: NSLayoutConstraint?
+    var shareablePreviewTopConstraint: NSLayoutConstraint?
+
+    public var showPreview: Bool {
+        didSet {
+            shareablePreviewWrapper?.isHidden = !showPreview
+
+            updateShareablePreviewConstraint()
+        }
+    }
+
+    func updateShareablePreviewConstraint() {
+        if showPreview {
+            tokenFieldTopConstraint?.isActive = false
+            shareablePreviewTopConstraint?.isActive = true
+            tokenFieldShareablePreviewSpacingConstraint?.isActive = true
+        } else {
+            shareablePreviewTopConstraint?.isActive = false
+            tokenFieldShareablePreviewSpacingConstraint?.isActive = false
+            tokenFieldTopConstraint?.isActive = true
+        }
+    }
+
     public let allowsMultipleSelection: Bool
     public var onDismiss: ((ShareViewController, Bool)->())?
     internal var bottomConstraint: NSLayoutConstraint?
@@ -71,10 +94,14 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     let searchIcon = UIImageView()
     let topSeparatorView = OverflowSeparatorView()
     let destinationsTableView = UITableView()
-    let closeButton = IconButton.iconButtonDefaultLight()
-    let sendButton = IconButton.iconButtonDefaultDark()
+    let closeButton = IconButton(style: .default, variant: .dark)
+    let sendButton = IconButton(style: .default, variant: .light)
     let tokenField = TokenField()
-    let bottomSeparatorLine = UIView()
+    let bottomSeparatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator)
+        return view
+    }()
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -108,11 +135,11 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     
     // MARK: - Actions
     
-    public func onCloseButtonPressed(sender: AnyObject?) {
+    @objc public func onCloseButtonPressed(sender: AnyObject?) {
         self.onDismiss?(self, false)
     }
     
-    public func onSendButtonPressed(sender: AnyObject?) {
+    @objc public func onSendButtonPressed(sender: AnyObject?) {
         if self.selectedDestinations.count > 0 {
             self.shareable.share(to: Array(self.selectedDestinations))
             self.onDismiss?(self, true)
@@ -190,13 +217,13 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: true)
     }
     
-    func keyboardFrameWillChange(notification: Notification) {
+    @objc func keyboardFrameWillChange(notification: Notification) {
         let firstResponder = UIResponder.wr_currentFirst()
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         
         UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            self.bottomConstraint?.constant = keyboardHeight == 0 ? -self.safeArea.bottom : CGFloat(0)
+            self.bottomConstraint?.constant = keyboardHeight == 0 ? -self.view.safeAreaInsetsOrFallback.bottom : CGFloat(0)
             self.view.layoutIfNeeded()
         }, completion: nil)
     }

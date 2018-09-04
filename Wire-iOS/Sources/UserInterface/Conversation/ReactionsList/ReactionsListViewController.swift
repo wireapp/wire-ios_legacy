@@ -21,14 +21,14 @@ import WireSyncEngine
 import Cartography
 import Classy
 
-@objc open class ReactionsListViewController: UIViewController {
-    open let message: ZMConversationMessage
-    open let reactionsUsers: [ZMUser]
+@objcMembers open class ReactionsListViewController: UIViewController {
+    public let message: ZMConversationMessage
+    public let reactionsUsers: [ZMUser]
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
     fileprivate let topBar: ModalTopBar
-    open let dismissButton = IconButton.iconButtonDefault()
-    open let titleLabel = UILabel()
+    public let dismissButton = IconButton(style: .default)
+    public let titleLabel = UILabel()
     
     public init(message: ZMConversationMessage, showsStatusBar: Bool) {
         self.message = message
@@ -77,7 +77,7 @@ import Classy
             collectionView.top == topBar.bottom
         }
 
-        CASStyler.default().styleItem(self)
+        view.backgroundColor = UIColor(scheme: .textBackground)
     }
     
     override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {

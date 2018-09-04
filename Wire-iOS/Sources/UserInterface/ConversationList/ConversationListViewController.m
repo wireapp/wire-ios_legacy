@@ -18,6 +18,8 @@
 
 
 #import "ConversationListViewController.h"
+#import "ConversationListViewController+Private.h"
+#import "ConversationListViewController+Internal.h"
 #import "ConversationListViewController+StartUI.h"
 
 @import PureLayout;
@@ -31,7 +33,6 @@
 
 #import "Constants.h"
 #import "PermissionDeniedViewController.h"
-#import "AnalyticsTracker.h"
 
 #import "WireSyncEngine+iOS.h"
 
@@ -42,7 +43,6 @@
 // helpers
 
 #import "Analytics.h"
-#import "UIView+Borders.h"
 #import "NSAttributedString+Wire.h"
 
 // Transitions
@@ -103,7 +103,6 @@
 
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
-@property (nonatomic) UILabel *noConversationLabel;
 @property (nonatomic) ConversationListOnboardingHint *onboardingHint;
 @property (nonatomic) ConversationActionController *actionsController;
 
@@ -129,7 +128,6 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self removeUserProfileObserver];
 }
 
@@ -158,7 +156,10 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
-    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    if ([ZMUserSession sharedSession] != nil) {
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    }
     
     self.onboardingHint = [[ConversationListOnboardingHint alloc] init];
     [self.contentContainer addSubview:self.onboardingHint];
@@ -166,8 +167,6 @@
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
-
-    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
 
     [self createNoConversationLabel];
     [self createListContentController];
@@ -184,17 +183,20 @@
     
     [self updateObserverTokensForActiveTeam];
     [self showPushPermissionDeniedDialogIfNeeded];
+
+    [self setupStyle];
 }
 
 - (void)updateObserverTokensForActiveTeam
 {
-    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
-                                                                     userSession:[ZMUserSession sharedSession]];
-    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                           forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                       userSession:[ZMUserSession sharedSession]];
-
+    if ([ZMUserSession sharedSession] != nil) {
+        self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
+                                                                         userSession:[ZMUserSession sharedSession]];
+        self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                               forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                           userSession:[ZMUserSession sharedSession]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -536,7 +538,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
         PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];
-        permissions.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
         permissions.delegate = self;
         
         [self addChildViewController:permissions];
@@ -718,7 +719,6 @@
     switch (buttonType) {
         case ConversationListButtonTypeArchive:
             [self setState:ConversationListStateArchived animated:YES];
-            [Analytics.shared tagArchiveOpened];
             break;
 
         case ConversationListButtonTypeStartUI:
@@ -761,7 +761,6 @@
     [ZMUserSession.sharedSession enqueueChanges:^{
         conversation.isArchived = NO;
     } completionHandler:^{
-        [Analytics.shared tagUnarchivedConversation];
         [self setState:ConversationListStateConversationList animated:YES completion:^{
             @strongify(self)
             [self.listContentController selectConversation:conversation focusOnView:YES animated:YES];

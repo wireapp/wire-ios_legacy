@@ -1,0 +1,41 @@
+{
+    "kind": "youtube#videoListResponse",
+    "etag": "\"DuHzAJ-eQIiCIp7p4ldoVcVAOeY/yEEciwAkJ5JKLUvabpES2kS8I4o\"",
+    "pageInfo": {
+        "totalResults": 1,
+        "resultsPerPage": 1
+    },
+    "items": [
+        {
+            "kind": "youtube#video",
+            "etag": "\"DuHzAJ-eQIiCIp7p4ldoVcVAOeY/F5IDWn2Pb5EggKuh5yDDksfzTnc\"",
+            "id": "txXwg712zw4",
+            "snippet": {
+                "publishedAt": "2017-02-06T01:53:57.000Z",
+                "channelId": "UCDVYQ4Zhbm3S2dlz7P1GBDg",
+                "title": "NFL | Super Bowl LI Halftime Show",
+                "description": "Watch Lady Gaga jump from the roof to the stage in one of the most acrobatic & incredible Pepsi Zero Sugar Super Bowl LI Halftime show performances of all time.",
+                "thumbnails": {
+                    "default": {
+                        "url": "https://i.ytimg.com/vi/txXwg712zw4/default.jpg",
+                        "width": 120,
+                        "height": 90
+                    },
+                    "medium": {
+                        "url": "https://i.ytimg.com/vi/txXwg712zw4/mqdefault.jpg",
+                        "width": 320,
+                        "height": 180
+                    },
+                    "high": {
+                        "url": "https://i.ytimg.com/vi/txXwg712zw4/hqdefault.jpg",
+                        "width": 480,
+                        "height": 360
+                    }
+                },
+                "channelTitle": "NFL",
+                "categoryId": "17",
+                "liveBroadcastContent": "none"
+            }
+        }
+    ]
+}

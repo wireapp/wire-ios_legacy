@@ -22,7 +22,7 @@ import Cartography
 import Classy
 
 /// Displays the audio message with different states
-public final class AudioMessageCell: ConversationCell {
+@objcMembers public final class AudioMessageCell: ConversationCell {
     private let audioMessageView = AudioMessageView()
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .microphone)
@@ -62,7 +62,7 @@ public final class AudioMessageCell: ConversationCell {
         get { return self.audioMessageView.audioTrackPlayer }
     }
     
-    open func createConstraints() {
+    public func createConstraints() {
         constrain(self.messageContentView, self.containerView, self.audioMessageView, self.authorLabel) { messageContentView, containerView, audioMessageView, authorLabel in
             
             containerView.left == messageContentView.leftMargin
@@ -76,17 +76,12 @@ public final class AudioMessageCell: ConversationCell {
 
         constrain(audioMessageView, obfuscationView) { audioMessageView, obfuscationView in
             obfuscationView.edges == audioMessageView.edges
-        }
-        
-        constrain(audioMessageView, countdownContainerView) { container, countDownContainer in
-            countDownContainer.top == container.top
-        }
+        }        
     }
     
     override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
 
         super.configure(for: message, layoutProperties: layoutProperties)
-        
         self.configureMessageView(with: message, isInitial: true)
     }
     
@@ -98,7 +93,6 @@ public final class AudioMessageCell: ConversationCell {
         }
         
         self.configureMessageView(with: message, isInitial: false)
-        
         return needsLayout
     }
     
@@ -112,14 +106,14 @@ public final class AudioMessageCell: ConversationCell {
         self.audioMessageView.stopProximitySensor()
     }
     
-    override open var tintColor: UIColor! {
+    override public var tintColor: UIColor! {
         didSet {
             self.audioMessageView.tintColor = self.tintColor
         }
     }
     // MARK: - Menu
 
-    open func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    public func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         
         let animation = {
             self.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0;
@@ -132,15 +126,15 @@ public final class AudioMessageCell: ConversationCell {
         }
     }
     
-    open override var selectionRect: CGRect {
+    public override var selectionRect: CGRect {
         return audioMessageView.bounds
     }
     
-    open override var selectionView: UIView! {
+    public override var selectionView: UIView! {
         return audioMessageView
     }
     
-    override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
         guard let _ = message else {return nil}
 
         let properties = MenuConfigurationProperties()
@@ -148,16 +142,21 @@ public final class AudioMessageCell: ConversationCell {
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
         
-        var additionalItems = [UIMenuItem]()
+        var additionalItems = [AdditionalMenuItem]()
         
         if message.audioCanBeSaved() {
             let menuItem = UIMenuItem(title: "content.file.save_audio".localized, action:#selector(wr_saveAudio))
-            additionalItems.append(menuItem)
+            additionalItems.append(.forbiddenInEphemeral(menuItem))
         }
         
-        if let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
-            additionalItems.append(.forward(with: #selector(forward)))
+        if let fileMessageData = message.fileMessageData {
+            if let _ = fileMessageData.fileURL {
+                additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
+            }
+            
+            if fileMessageData.transferState.isOne(of: .uploaded, .failedDownload) {
+                additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))
+            }
         }
         
         properties.additionalItems = additionalItems
@@ -165,26 +164,32 @@ public final class AudioMessageCell: ConversationCell {
         return properties
     }
     
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(wr_saveAudio) && self.message.audioCanBeSaved() {
+    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        switch action {
+        case #selector(wr_saveAudio) where message.audioCanBeSaved():
             return true
-        }
-        else if action == #selector(forward(_:)) {
-            if let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
+        case #selector(forward(_:)):
+            if let fileMessageData = message.fileMessageData, let _ = fileMessageData.fileURL {
                 return true
-            }
-            else {
+            } else {
                 return false
             }
+        case #selector(download):
+            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
+        default: break
         }
+        
         return super.canPerformAction(action, withSender: sender)
     }
     
-    open func wr_saveAudio() {
+    @objc public func wr_saveAudio() {
         if self.message.audioCanBeSaved() {
             self.delegate?.conversationCell?(self, didSelect: .save)
         }
+    }
+    
+    @objc func download(_ sender: Any) {
+        delegate?.conversationCell?(self, didSelect: .download)
     }
     
 }

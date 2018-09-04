@@ -25,7 +25,7 @@ import Cartography
 }
 
 
-class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate {
+@objcMembers class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?
@@ -118,9 +118,11 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     // MARK: - FormStepDelegate
     
     func didCompleteFormStep(_ viewController: UIViewController!) {
-        let clientsListController = ClientListViewController(clientsList: self.clients, credentials: self.credentials, showTemporary: false)
+        let clientsListController = ClientListViewController(clientsList: self.clients,
+                                                             credentials: self.credentials,
+                                                             showTemporary: false,
+                                                             variant: .dark)
         clientsListController.delegate = self
-        clientsListController.view.backgroundColor = UIColor.black
 
         if isIPadRegular() {
             let navigationController = UINavigationController(rootViewController: clientsListController)
@@ -146,15 +148,14 @@ class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelega
     
     override func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if viewController is ClientListViewController {
-            UIApplication.shared.isStatusBarHidden = !UIScreen.hasNotch
+            UIApplication.shared.wr_setStatusBarHidden(!UIScreen.hasNotch, with: animated ? .fade : .none)
             navigationController.setNavigationBarHidden(false, animated: animated)
         }
         else {
-            UIApplication.shared.isStatusBarHidden = true
+            UIApplication.shared.wr_setStatusBarHidden(true, with: animated ? .fade : .none)
             navigationController.setNavigationBarHidden(true, animated: animated)
         }
     }
-    
 
 }
 

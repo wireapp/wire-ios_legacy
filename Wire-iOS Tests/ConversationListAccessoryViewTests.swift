@@ -21,11 +21,17 @@ import XCTest
 @testable import Wire
 
 class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
-    let sut = ConversationListAccessoryView(mediaPlaybackManager: MediaPlaybackManager(name: "test"))
+    var sut: ConversationListAccessoryView!
     
     override func setUp() {
         super.setUp()
+        self.sut = ConversationListAccessoryView(mediaPlaybackManager: MediaPlaybackManager(name: "test"))
         accentColor = .violet
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
     func testThatItIsEmptyForNoStatus() {
@@ -52,6 +58,13 @@ class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
     }
     
     func testThatItShowsJoinButton() {
+        // WHEN
+        sut.icon = ConversationStatusIcon.activeCall(showJoin: true)
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
+    
+    func testThatItShowsOngoingCallIndicator() {
         // WHEN
         sut.icon = ConversationStatusIcon.activeCall(showJoin: false)
         // THEN

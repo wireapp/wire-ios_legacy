@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc class PreviewHeightCalculator: NSObject {
+@objcMembers class PreviewHeightCalculator: NSObject {
     
     static let standardCellHeight : CGFloat = 200.0
     static let compressedCellHeight : CGFloat = 160.0
@@ -44,7 +44,7 @@ import Foundation
     }
     
     private static func calculateFinalHeight(for height: CGFloat) -> CGFloat {
-        return min((UIScreen.isCompact() ? compressedCellHeight : standardCellHeight), height)
+        return min((UIScreen.main.isCompact ? compressedCellHeight : standardCellHeight), height)
     }
 
 }

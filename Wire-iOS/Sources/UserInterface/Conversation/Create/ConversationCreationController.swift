@@ -44,14 +44,14 @@ final public class ConversationCreationValues {
     
 }
 
-final class ConversationCreationController: UIViewController {
+@objcMembers final class ConversationCreationController: UIViewController {
 
     static let errorFont = FontSpec(.small, .semibold).font!
     static let mainViewHeight: CGFloat = 56
 
     fileprivate let errorLabel = UILabel()
     fileprivate let errorViewContainer = UIView()
-    fileprivate let colorSchemeVariant = ColorScheme.default().variant
+    fileprivate let colorSchemeVariant = ColorScheme.default.variant
     private let mainViewContainer = UIView()
     private let bottomViewContainer = UIView()
     private let toggleSubtitleLabel = UILabel()
@@ -94,7 +94,7 @@ final class ConversationCreationController: UIViewController {
         super.viewDidLoad()
         Analytics.shared().tagLinearGroupOpened(with: self.source)
 
-        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorContentBackground, variant: colorSchemeVariant)
+        view.backgroundColor = UIColor(scheme: .contentBackground, variant: colorSchemeVariant)
         title = "conversation.create.group_name.title".localized.uppercased()
         
         setupNavigationBar()
@@ -123,7 +123,7 @@ final class ConversationCreationController: UIViewController {
 
     private func setupViews() {
         mainViewContainer.translatesAutoresizingMaskIntoConstraints = false
-        navigationBarBackgroundView.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground, variant: colorSchemeVariant)
+        navigationBarBackgroundView.backgroundColor = UIColor(scheme: .barBackground, variant: colorSchemeVariant)
         mainViewContainer.addSubview(navigationBarBackgroundView)
         
         textField = SimpleTextField()
@@ -148,11 +148,11 @@ final class ConversationCreationController: UIViewController {
         [toggleSubtitleLabel, textFieldSubtitleLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.font = .preferredFont(forTextStyle: .footnote)
-            $0.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+            $0.textColor = UIColor(scheme: .textDimmed)
         }
         
         toggleSubtitleLabel.text = "conversation.create.toggle.subtitle".localized
-        textFieldSubtitleLabel.text = "participants.section.name.footer".localized
+        textFieldSubtitleLabel.text = "participants.section.name.footer".localized(args: ZMConversation.maxParticipants, ZMConversation.maxVideoCallParticipantsExcludingSelf)
         
         [toggleView, toggleSubtitleLabel].forEach(bottomViewContainer.addSubview)
         [mainViewContainer, errorViewContainer, bottomViewContainer].forEach(view.addSubview)
@@ -169,7 +169,7 @@ final class ConversationCreationController: UIViewController {
     }
 
     private func setupNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
+        self.navigationController?.navigationBar.tintColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
         
         if navigationController?.viewControllers.count ?? 0 <= 1 {

@@ -25,7 +25,7 @@ import Cartography
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
-@objc public final class AudioEffectsPickerViewController: UIViewController {
+@objcMembers public final class AudioEffectsPickerViewController: UIViewController {
     
     public let recordingPath: String
     fileprivate let duration: TimeInterval
@@ -230,7 +230,7 @@ import Cartography
         switch self.state {
         case .tip:
             self.subtitleLabel.text = "conversation.input_bar.audio_message.keyboard.filter_tip".localized.uppercased()
-            self.subtitleLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+            self.subtitleLabel.textColor = colorScheme.color(named: .textForeground)
         case .time:
             let duration: Int
             if let player = self.audioPlayerController?.player {
@@ -243,7 +243,7 @@ import Cartography
             let (seconds, minutes) = (duration % 60, duration / 60)
             self.subtitleLabel.text = String(format: "%d:%02d", minutes, seconds)
             self.subtitleLabel.accessibilityValue = self.subtitleLabel.text
-            self.subtitleLabel.textColor = colorScheme.color(withName: ColorSchemeColorTextForeground)
+            self.subtitleLabel.textColor = colorScheme.color(named: .textForeground)
         default:
             // no-op
             break
@@ -273,8 +273,6 @@ import Cartography
     }
     
     fileprivate func playMedia(_ atPath: String) {
-        Analytics.shared().tagPreviewedAudioMessageRecording(.keyboard)
-
         self.audioPlayerController?.tearDown()
 
         self.audioPlayerController = try? AudioPlayerController(contentOf: URL(fileURLWithPath: atPath))

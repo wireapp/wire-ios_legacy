@@ -18,13 +18,13 @@
 
 import Foundation
 
-final class ObfuscationView: UIImageView {
-    init(icon: ZetaIconType) {
+@objcMembers final class ObfuscationView: UIImageView {
+    @objc init(icon: ZetaIconType) {
         super.init(frame: .zero)
-        self.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccentDimmedFlat)
+        self.backgroundColor = UIColor(scheme: .accentDimmedFlat)
         self.isOpaque = true
         self.contentMode = .center
-        self.image = UIImage.init(for: icon, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
+        self.image = UIImage.init(for: icon, iconSize: .tiny, color: UIColor(scheme: .background))
     }
     
     required init(coder: NSCoder) {

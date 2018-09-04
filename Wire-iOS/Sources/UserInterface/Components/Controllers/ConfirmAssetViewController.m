@@ -18,9 +18,9 @@
 
 
 #import "ConfirmAssetViewController.h"
+#import "ConfirmAssetViewController+Internal.h"
 
 @import PureLayout;
-#import <Classy/Classy.h>
 @import AVKit;
 @import AVFoundation;
 @import FLAnimatedImage;
@@ -29,7 +29,6 @@
 #import "UIColor+WAZExtensions.h"
 #import "Constants.h"
 #import "AppDelegate.h"
-#import "UIView+Borders.h"
 @import WireExtensionComponents;
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
@@ -40,12 +39,10 @@ static const CGFloat MarginInset = 24;
 
 @interface ConfirmAssetViewController () <CanvasViewControllerDelegate>
 
-@property (nonatomic) UIView *topPanel;
 @property (nonatomic) UIView *bottomPanel;
 
 @property (nonatomic) UIView *confirmButtonsContainer;
 
-@property (nonatomic) UILabel *titleLabel;
 
 @property (nonatomic) Button *acceptImageButton;
 @property (nonatomic) Button *rejectImageButton;
@@ -56,7 +53,6 @@ static const CGFloat MarginInset = 24;
 
 @property (nonatomic) ImageToolbarView *imageToolbarViewInsideImage;
 @property (nonatomic) ImageToolbarView *imageToolbarView;
-@property (nonatomic) UIView *imageToolbarSeparatorView;
 
 @end
 
@@ -76,8 +72,8 @@ static const CGFloat MarginInset = 24;
     [self createTopPanel];
     [self createBottomPanel];
     [self createConstraints];
-    
-    [[CASStyler defaultStyler] styleItem:self];
+
+    [self setupStyle];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
@@ -182,7 +178,6 @@ static const CGFloat MarginInset = 24;
         
         self.imageToolbarSeparatorView = [[UIView alloc] init];
         self.imageToolbarSeparatorView.translatesAutoresizingMaskIntoConstraints = NO;
-        self.imageToolbarSeparatorView.cas_styleClass = @"separator";
         [self.imageToolbarView addSubview:self.imageToolbarSeparatorView];
     }
     

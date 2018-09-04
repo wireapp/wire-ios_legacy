@@ -30,7 +30,7 @@ protocol TextFieldValidationDelegate: class {
 }
 
 class AccessoryTextField: UITextField {
-    enum Kind {
+    enum Kind: Equatable {
         case email
         case name
         case password
@@ -65,8 +65,7 @@ class AccessoryTextField: UITextField {
     }
 
     let confirmButton: IconButton = {
-        let iconButton = IconButton.iconButtonCircularLight()
-        iconButton.circular = true
+        let iconButton = IconButton(style: .circular, variant: .dark)
         iconButton.accessibilityIdentifier = "AccessoryTextFieldConfirmButton"
         iconButton.isEnabled = false
         return iconButton
@@ -197,7 +196,7 @@ class AccessoryTextField: UITextField {
         return UIEdgeInsetsInsetRect(textRect, self.textInsets)
     }
 
-    func textFieldDidChange(textField: UITextField) {
+    @objc func textFieldDidChange(textField: UITextField) {
         /// enable button if we have some text entered
         let text = textField.text ?? ""
         confirmButton.isEnabled = !text.isEmpty
@@ -205,7 +204,7 @@ class AccessoryTextField: UITextField {
 
     // MARK: - text validation
 
-    func confirmButtonTapped(button: UIButton) {
+    @objc func confirmButtonTapped(button: UIButton) {
         validateInput()
     }
     
@@ -217,8 +216,8 @@ class AccessoryTextField: UITextField {
     // MARK: - placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
-        let attribute: [String: Any] = [NSForegroundColorAttributeName: UIColor.Team.placeholderColor,
-                                        NSFontAttributeName: AccessoryTextField.placeholderFont]
+        let attribute: [NSAttributedStringKey: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
+                                        .font: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }
 

@@ -26,14 +26,12 @@
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
 @import FLAnimatedImage;
-#import "ImageCache.h"
 #import "UIImage+ImageUtilities.h"
 #import "MediaAsset.h"
 #import "Analytics.h"
 #import "Wire-Swift.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "ConversationCell+Private.h"
-#import "UIView+Borders.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -41,12 +39,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ImageMessageCell ()
 
-@property (nonatomic, strong) FLAnimatedImageView *fullImageView;
-@property (nonatomic, strong) ThreeDotsLoadingView *loadingView;
+@property (nonatomic, strong) ImageResourceView *fullImageView;
 @property (nonatomic, strong) ImageToolbarView *imageToolbarView;
-@property (nonatomic, strong) UIView *imageViewContainer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
-@property (nonatomic) SavableImage *savableImage;
 @property (nonatomic) UITapGestureRecognizer *imageTapRecognizer;
 
 /// Can either be UIImage or FLAnimatedImage
@@ -66,21 +61,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ImageMessageCell
 
-static ImageCache *imageCache(void)
-{
-    static ImageCache *cache;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        cache = [[ImageCache alloc] initWithName:@"ConversationImageTableCell.imageCache"];
-        cache.maxConcurrentOperationCount = 4;
-        cache.totalCostLimit = 1024 * 1024 * 10; // 10 MB
-        cache.qualityOfService = NSQualityOfServiceUtility;
-    });
-    return cache;
-}
-
 static const CGFloat ImageToolbarMinimumSize = 192;
-
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -140,6 +121,8 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.obfuscationView.hidden = YES;
     self.imageToolbarView.hidden = NO;
     self.image = nil;
+    
+    [self setImageResource:nil];
 
     if (self.imageAspectConstraint) {
         [self.imageViewContainer removeConstraint:self.imageAspectConstraint];
@@ -161,15 +144,11 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.imageViewContainer.accessibilityTraits = UIAccessibilityTraitImage;
     [self.messageContentView addSubview:self.imageViewContainer];
         
-    self.fullImageView = [[FLAnimatedImageView alloc] init];
+    self.fullImageView = [[ImageResourceView alloc] init];
     self.fullImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.fullImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.fullImageView.clipsToBounds = YES;
-    self.fullImageView.hidden = YES;
     [self.imageViewContainer addSubview:self.fullImageView];
-
-    self.loadingView = [[ThreeDotsLoadingView alloc] initForAutoLayout];
-    [self.imageViewContainer addSubview:self.loadingView];
 
     self.obfuscationView = [[ObfuscationView alloc] initWithIcon:ZetaIconTypePhoto];
     [self.imageViewContainer addSubview:self.obfuscationView];
@@ -180,7 +159,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     self.obfuscationView.hidden = YES;
   
     self.accessibilityIdentifier = @"ImageCell";
-    self.loadingView.hidden = NO;
     
     self.imageToolbarView = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationCell];
     self.imageToolbarView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -194,7 +172,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 - (void)createConstraints
 {
     [self.fullImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.loadingView autoCenterInSuperview];
 
     self.imageTopInsetConstraint = [self.imageViewContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
     
@@ -225,7 +202,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     [self.imageToolbarView autoSetDimension:ALDimensionHeight toSize:48];
     
     [self.obfuscationView autoPinEdgesToSuperviewEdges];
-    [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.fullImageView withOffset:8];
 }
 
  - (void)updateImageMessageConstraintConstants
@@ -297,9 +273,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
     id<ZMImageMessageData> imageMessageData = convMessage.imageMessageData;
     
-    // request
-    [convMessage requestImageDownload]; // there is no harm in calling this if the full content is already available
-
     CGFloat minimumMediaSize = 48.0;
     
     self.originalImageSize = [self sizeForMessage:imageMessageData];
@@ -324,95 +297,15 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     
     [self updateImageMessageConstraintConstants];
     
-    NSData *imageData = imageMessageData.imageData;
-    
-    // If medium image is present, use the medium image
-    if (imageData.length > 0) {
-        
-        BOOL isAnimatedGIF = imageMessageData.isAnimatedGIF;
-        
-        @weakify (self)
-        [imageCache() imageForData:imageData cacheKey:[Message nonNilImageDataIdentifier:convMessage] creationBlock:^id(NSData *data) {
-            
-            id image = nil;
-            
-            if (isAnimatedGIF) {
-                // We MUST make a copy of the data here because FLAnimatedImage doesn't read coredata blobs efficiently
-                NSData *copy = [NSData dataWithBytes:data.bytes length:data.length];
-                image = [[FLAnimatedImage alloc] initWithAnimatedGIFData:copy];
-            } else {
-                
-                CGSize screenSize = [UIScreen mainScreen].nativeBounds.size;
-                CGFloat widthRatio = MIN(screenSize.width / self.imageSize.width, 1.0);
-                CGFloat minimumHeight = self.imageSize.height * widthRatio;
-                CGFloat maxSize = MAX(screenSize.width, minimumHeight);
-                
-                image = [UIImage imageFromData:data withMaxSize:maxSize];
-            }
-            
-            if (image == nil) {
-                ZMLogError(@"Invalid image data returned from sync engine!");
-            }
-            return image;
-            
-        } completion:^(id image, NSString *cacheKey) {
-            @strongify(self);
-            
-            // Double check that our cell's current image is still the same one
-            if (image != nil && self.message != nil && cacheKey != nil && [cacheKey isEqualToString: [Message nonNilImageDataIdentifier:self.message]]) {
-                self.image = image;
-            }
-            else {
-                ZMLogInfo(@"finished loading image but cell is no longer on screen.");
-            }
-        }];
-    }
-    else {
-
-        if (convMessage.isObfuscated) {
-            self.loadingView.hidden = YES;
-            self.obfuscationView.hidden = NO;
-            self.imageToolbarView.hidden = YES;
-            self.imageViewContainer.backgroundColor = [UIColor clearColor];
-        } else {
-            // We did not download the medium image yet, start the progress animation
-            [self.loadingView startProgressAnimation];
-            self.loadingView.hidden = NO;
-
-            self.imageViewContainer.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorPlaceholderBackground variant:self.variant];
-
-        }
-    }
-}
-
-- (void)setImage:(id<MediaAsset>)image
-{
-    if (_image == image) {
-        return;
-    }
-    _image = image;
-    if (image != nil) {
-        self.loadingView.hidden = YES;
-        [self.loadingView stopProgressAnimation];
-        self.fullImageView.hidden = NO;
-        [self.fullImageView setMediaAsset:image];
-        [self updateSavableImage];
+    if (convMessage.isObfuscated) {
+        self.obfuscationView.hidden = NO;
+        self.imageToolbarView.hidden = YES;
+        self.imageViewContainer.backgroundColor = [UIColor clearColor];
     } else {
-        self.savableImage = nil;
-        [self.fullImageView setMediaAsset:nil];
-        self.fullImageView.hidden = YES;
+        [self updateBackgroundColor];
     }
-}
-
-- (void)updateSavableImage
-{
-    NSData *data = self.message.imageMessageData.mediumData;
-    if (nil == data) {
-        return;
-    }
-
-    UIImageOrientation orientation = self.fullImageView.image.imageOrientation;
-    self.savableImage = [[SavableImage alloc] initWithData:data orientation:orientation];
+    
+    [self setImageResource:self.message.imageMessageData];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -524,9 +417,6 @@ static const CGFloat ImageToolbarMinimumSize = 192;
 
 - (void)copy:(id)sender
 {
-    [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-    [[Analytics shared] tagMessageCopy];
-
     [[UIPasteboard generalPasteboard] setMediaAsset:[self.fullImageView mediaAsset]];
 }
 
@@ -562,7 +452,10 @@ static const CGFloat ImageToolbarMinimumSize = 192;
     properties.targetView = self.selectionView;
     UIMenuItem *saveItem = [UIMenuItem saveItemWithAction:@selector(saveImage)];
     UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
-    properties.additionalItems = @[saveItem, forwardItem];
+    properties.additionalItems = @[
+                                   [AdditionalMenuItem forbiddenInEphemeral:saveItem],
+                                   [AdditionalMenuItem forbiddenInEphemeral:forwardItem]
+                                   ];
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
         [self setSelectedByMenu:selected animated:animated];
     };

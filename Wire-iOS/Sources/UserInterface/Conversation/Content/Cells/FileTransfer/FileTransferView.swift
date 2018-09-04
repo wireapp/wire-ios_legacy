@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import Classy
 
-final public class FileTransferView: UIView, TransferView {
+@objcMembers final public class FileTransferView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
 
     weak public var delegate: TransferViewDelegate?
@@ -136,7 +136,6 @@ final public class FileTransferView: UIView, TransferView {
         }
         
         configureVisibleViews(with: message, isInitial: isInitial)
-        message.requestImageDownload()
         
         let filepath = (fileMessageData.filename ?? "") as NSString
         let filesize: UInt64 = fileMessageData.size
@@ -151,13 +150,14 @@ final public class FileTransferView: UIView, TransferView {
         let fileSize = ByteCountFormatter.string(fromByteCount: Int64(filesize), countStyle: .binary)
         let fileSizeAttributed = fileSize && labelFont && labelTextBlendedColor
         
-        if let previewData = fileMessageData.previewData {
-            self.fileTypeIconView.contentMode = .scaleAspectFit
-            self.fileTypeIconView.image = UIImage(data: previewData)
-        }
-        else {
-            self.fileTypeIconView.contentMode = .center
-            self.fileTypeIconView.image = UIImage(for: .document, iconSize: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        fileTypeIconView.contentMode = .center
+        fileTypeIconView.image = UIImage(for: .document, iconSize: .small, color: UIColor.white).withRenderingMode(.alwaysTemplate)
+        
+        fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
+            guard let image = image else { return }
+            
+            self?.fileTypeIconView.contentMode = .scaleAspectFit
+            self?.fileTypeIconView.setMediaAsset(image) 
         }
         
         self.actionButton.isUserInteractionEnabled = true
@@ -186,7 +186,7 @@ final public class FileTransferView: UIView, TransferView {
             self.topLabel.attributedText = firstLine
             self.bottomLabel.attributedText = secondLine
             
-        case .uploaded, .failedDownload:
+        case .uploaded, .failedDownload, .unavailable:
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + extAttributed
             self.topLabel.attributedText = firstLine
@@ -235,20 +235,20 @@ final public class FileTransferView: UIView, TransferView {
         self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
     }
     
-    override open var tintColor: UIColor! {
+    public override var tintColor: UIColor! {
         didSet {
             self.progressView.tintColor = self.tintColor
         }
     }
     
-    override open func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         self.actionButton.layer.cornerRadius = self.actionButton.bounds.size.width / 2.0
     }
     
     // MARK: - Actions
     
-    open func onActionButtonPressed(_ sender: UIButton) {
+    @objc public func onActionButtonPressed(_ sender: UIButton) {
         guard let message = self.fileMessage, let fileMessageData = message.fileMessageData else {
             return
         }
@@ -269,6 +269,7 @@ final public class FileTransferView: UIView, TransferView {
             self.delegate?.transferView(self, didSelect: .present)
         case .uploaded:
             self.delegate?.transferView(self, didSelect: .present)
+        case .unavailable:
             break
         }
     }

@@ -43,7 +43,7 @@ class StrategyFactory {
     }
 
     func tearDown() {
-        strategies.flatMap { $0 as? ZMObjectSyncStrategy }.forEach { $0.tearDown() }
+        strategies.compactMap { $0 as? ZMObjectSyncStrategy }.forEach { $0.tearDown() }
         tornDown = true
     }
 

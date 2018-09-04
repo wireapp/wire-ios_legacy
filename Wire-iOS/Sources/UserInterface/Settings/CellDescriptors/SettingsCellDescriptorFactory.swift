@@ -20,7 +20,7 @@
 import Foundation
 import SafariServices
 
-@objc class SettingsCellDescriptorFactory: NSObject {
+@objcMembers class SettingsCellDescriptorFactory: NSObject {
     static let settingsDevicesCellIdentifier: String = "devices"
     let settingsPropertyFactory: SettingsPropertyFactory
     
@@ -68,7 +68,7 @@ import SafariServices
     func manageTeamCell() -> SettingsCellDescriptorType {
         return SettingsExternalScreenCellDescriptor(title: "self.settings.manage_team.title".localized,
                                                     isDestructive: false,
-                                                    presentationStyle: PresentationStyle.navigation,
+                                                    presentationStyle: PresentationStyle.modal,
                                                     identifier: nil,
                                                     presentationAction: { () -> (UIViewController?) in
                                                         Analytics.shared().tagOpenManageTeamURL()
@@ -128,8 +128,9 @@ import SafariServices
             presentationStyle: PresentationStyle.navigation,
             identifier: type(of: self).settingsDevicesCellIdentifier,
             presentationAction: { () -> (UIViewController?) in
-                Analytics.shared().tagSelfDeviceList()
-                return ClientListViewController(clientsList: .none, credentials: .none, detailedView: true)
+                return ClientListViewController(clientsList: .none,
+                                                credentials: .none,
+                                                detailedView: true)
             },
             previewGenerator: { _ -> SettingsCellPreview in
                 return SettingsCellPreview.badge(ZMUser.selfUser().clients.count)
@@ -182,7 +183,7 @@ import SafariServices
         let pushSectionSubtitle = "self.settings.advanced.reset_push_token.subtitle".localized
         
         let pushButton = SettingsExternalScreenCellDescriptor(title: pushTitle, isDestructive: false, presentationStyle: PresentationStyle.modal, presentationAction: { () -> (UIViewController?) in
-            ZMUserSession.shared()?.resetPushTokens()
+            ZMUserSession.shared()?.validatePushToken()
             let alert = UIAlertController(title: "self.settings.advanced.reset_push_token_alert.title".localized, message: "self.settings.advanced.reset_push_token_alert.message".localized, preferredStyle: .alert)
             weak var weakAlert = alert;
             alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (alertAction: UIAlertAction) -> Void in
@@ -234,14 +235,23 @@ import SafariServices
         developerCellDescriptors.append(enableBatchCollections)
         let sendBrokenMessageButton = SettingsButtonCellDescriptor(title: "Send broken message", isDestructive: true, selectAction: SettingsCellDescriptorFactory.sendBrokenMessage)
         developerCellDescriptors.append(sendBrokenMessageButton)
-        let findUnreadConvoButton = SettingsButtonCellDescriptor(title: "Find first unread conversation", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversation)
-        developerCellDescriptors.append(findUnreadConvoButton)
+        let findUnreadBadgeConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (badge count)", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
+        developerCellDescriptors.append(findUnreadBadgeConversationButton)
+        let findUnreadBackArrowConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (back arrow count)", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBackArrowDot)
+        developerCellDescriptors.append(findUnreadBackArrowConversationButton)
         let shareDatabase = SettingsShareDatabaseCellDescriptor()
         developerCellDescriptors.append(shareDatabase)
         let shareCryptobox = SettingsShareCryptoboxCellDescriptor()
         developerCellDescriptors.append(shareCryptobox)
         let reloadUIButton = SettingsButtonCellDescriptor(title: "Reload user interface", isDestructive: false, selectAction: SettingsCellDescriptorFactory.reloadUserInterface)
         developerCellDescriptors.append(reloadUIButton)
+        let appendManyMessages = SettingsButtonCellDescriptor(title: "Append N messages to the top conv (not sending)", isDestructive: true) { _ in
+            
+            self.requestNumber() { count in
+                self.appendMessages(count: count)
+            }
+        }
+        developerCellDescriptors.append(appendManyMessages)
 
         let showStatistics = SettingsExternalScreenCellDescriptor(title: "Show database statistics", isDestructive: false, presentationStyle: .navigation, presentationAction: {  DatabaseStatisticsController() })
         developerCellDescriptors.append(showStatistics)
@@ -257,20 +267,67 @@ import SafariServices
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .effectRobot)
     }
     
+    func requestNumber(_ callback: @escaping (Int)->()) {
+        guard let controllerToPresentOver = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+
+        
+        let controller = UIAlertController(
+            title: "Enter count of messages",
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "general.ok".localized, style: .default) { [controller] _ in
+            callback(Int(controller.textFields?.first?.text ?? "0")!)
+        }
+        
+        controller.addTextField()
+        
+        controller.addAction(.cancel { })
+        controller.addAction(okAction)
+        controllerToPresentOver.present(controller, animated: true, completion: nil)
+    }
+    
+    func appendMessages(count: Int) {
+        let userSession = ZMUserSession.shared()!
+        let conversation = ZMConversationList.conversations(inUserSession: userSession).firstObject! as! ZMConversation
+        let conversationId = conversation.objectID
+        
+        let syncContext = userSession.syncManagedObjectContext!
+        syncContext.performGroupedBlock {
+            let syncConversation = try! syncContext.existingObject(with: conversationId) as! ZMConversation
+            let messages: [ZMClientMessage] = (0...count).map { i in
+                let nonce = UUID()
+                let genericMessage = ZMGenericMessage.message(text: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;",
+                    nonce: nonce)
+
+                let clientMessage = ZMClientMessage(nonce: nonce, managedObjectContext: syncContext)
+                clientMessage.add(genericMessage.data())
+                clientMessage.sender = ZMUser.selfUser(in: syncContext)
+                
+                clientMessage.expire()
+                clientMessage.linkPreviewState = .done
+                
+                return clientMessage
+            }
+            syncConversation.mutableMessages.addObjects(from: messages)
+            userSession.syncManagedObjectContext.saveOrRollback()
+        }
+    }
+    
     func helpSection() -> SettingsCellDescriptorType {
         
-        let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
-            Analytics.shared().tagHelp()
+        let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
         }, previewGenerator: .none)
         
-        let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
+        let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_askSupport.appendingLocaleParameter)
         }, previewGenerator: .none)
         
         let helpSection = SettingsSectionDescriptor(cellDescriptors: [supportButton, contactButton])
         
-        let reportButton = SettingsExternalScreenCellDescriptor(title: "self.report_abuse".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
+        let reportButton = SettingsExternalScreenCellDescriptor(title: "self.report_abuse".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_reportAbuse.appendingLocaleParameter)
         }, previewGenerator: .none)
         
@@ -281,14 +338,14 @@ import SafariServices
     
     func aboutSection() -> SettingsCellDescriptorType {
         
-        let privacyPolicyButton = SettingsExternalScreenCellDescriptor(title: "about.privacy.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
+        let privacyPolicyButton = SettingsExternalScreenCellDescriptor(title: "about.privacy.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_privacyPolicy.appendingLocaleParameter)
         }, previewGenerator: .none)
-        let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
+        let tosButton = SettingsExternalScreenCellDescriptor(title: "about.tos.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             let url = URL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).appendingLocaleParameter
             return BrowserViewController(url: url)
         }, previewGenerator: .none)
-        let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
+        let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_licenseInformation.appendingLocaleParameter)
         }, previewGenerator: .none)
 
@@ -309,7 +366,7 @@ import SafariServices
             footer: "\n" + version + "\n" + copyrightInfo
         )
         
-        let websiteButton = SettingsExternalScreenCellDescriptor(title: "about.website.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { _ in
+        let websiteButton = SettingsExternalScreenCellDescriptor(title: "about.website.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_website.appendingLocaleParameter)
         }, previewGenerator: .none)
 
@@ -328,7 +385,7 @@ import SafariServices
     // MARK: Actions
     
     /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
-    private static func findUnreadConversation(_ type: SettingsCellDescriptorType) {
+    private static func findUnreadConversationContributingToBadgeCount(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = ZMConversation.predicateForConversationConsideredUnread()!
         
@@ -346,6 +403,33 @@ import SafariServices
                 UIPasteboard.general.string = alert.message
             }))
 
+        } else {
+            alert.message = "No unread conversation"
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        controller.present(alert, animated: false)
+    }
+    
+    /// Check if there is any unread conversation, if there is, show an alert with the name and ID of the conversation
+    private static func findUnreadConversationContributingToBackArrowDot(_ type: SettingsCellDescriptorType) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        let predicate = ZMConversation.predicateForConversationConsideredUnreadExcludingSilenced()!
+        
+        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
+        
+        if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
+            .first(where: predicate.evaluate)
+        {
+            alert.message = ["Found an unread conversation:",
+                             "\(convo.displayName)",
+                "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
+                ].joined(separator: "\n")
+            alert.addAction(UIAlertAction(title: "Copy", style: .default, handler: { _ in
+                UIPasteboard.general.string = alert.message
+            }))
+            
         } else {
             alert.message = "No unread conversation"
         }
@@ -383,7 +467,7 @@ import SafariServices
     private static func resetCallQualitySurveyMuteFilter(_ type: SettingsCellDescriptorType) {
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
 
-        CallQualityScoreProvider.resetSurveyMuteFilter()
+        CallQualityController.resetSurveyMuteFilter()
 
         let alert = UIAlertController(title: "Success",
                                       message: "The call quality survey will be displayed after the next call.",

@@ -40,8 +40,8 @@ extension SearchGroup {
 @objc
 public protocol SearchResultsViewControllerDelegate {
     
-    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: ZMSearchableUser, indexPath: IndexPath, section: SearchResultsViewControllerSection)
-    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: ZMSearchableUser, indexPath: IndexPath)
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection)
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction)
@@ -112,7 +112,7 @@ extension UIViewController {
     }
 }
 
-public class SearchResultsViewController : UIViewController {
+@objcMembers public class SearchResultsViewController : UIViewController {
     
     var searchResultsView: SearchResultsView?
     let searchDirectory: SearchDirectory
@@ -152,7 +152,7 @@ public class SearchResultsViewController : UIViewController {
     }
     
     @objc
-    public init(userSelection: UserSelection, variant: ColorSchemeVariant, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
+    public init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
         self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
@@ -171,7 +171,7 @@ public class SearchResultsViewController : UIViewController {
         teamMemberAndContactsSection.allowsSelection = isAddingParticipants
         teamMemberAndContactsSection.selection = userSelection
         teamMemberAndContactsSection.title = "peoplepicker.header.contacts".localized
-        servicesSection = SearchServicesSectionController()
+        servicesSection = SearchServicesSectionController(canSelfUserManageTeam: ZMUser.selfUser().canManageTeam)
         conversationsSection = GroupConversationsSectionController()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
         topPeopleSection = TopPeopleSectionController(topConversationsDirectory: ZMUserSession.shared()!.topConversationsDirectory)
@@ -198,7 +198,13 @@ public class SearchResultsViewController : UIViewController {
         searchResultsView?.isContainedInPopover = isContainedInPopover()
         view = searchResultsView
     }
-    
+
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        sectionController.collectionView?.reloadData()
+        sectionController.collectionView?.collectionViewLayout.invalidateLayout()
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -217,7 +223,8 @@ public class SearchResultsViewController : UIViewController {
     
     private func performSearch(query: String, options: SearchOptions) {
         pendingSearchTask?.cancel()
-        
+        searchResultsView?.emptyResultContainer.isHidden = true
+
         let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
         let task = searchDirectory.perform(request)
         
@@ -314,7 +321,7 @@ public class SearchResultsViewController : UIViewController {
     func updateSections(withSearchResult searchResult: SearchResult) {
         
         var contacts = searchResult.contacts
-        var teamContacts = searchResult.teamMembers.flatMap({ $0.user })
+        var teamContacts = searchResult.teamMembers.compactMap({ $0.user })
         
         if let filteredParticpants = filterConversation?.activeParticipants {
             contacts = contacts.filter({ !filteredParticpants.contains($0) })
@@ -322,7 +329,7 @@ public class SearchResultsViewController : UIViewController {
         }
         
         contactsSection.contacts = contacts
-
+        
         // Access mode is not set, or the guests are allowed.
         if shouldIncludeGuests {
             teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
@@ -330,7 +337,7 @@ public class SearchResultsViewController : UIViewController {
                 let name1 = $1.name ?? ""
 
                 return name0.compare(name1) == .orderedAscending
-             }
+                }
         }
         else {
             teamMemberAndContactsSection.contacts = teamContacts
@@ -365,7 +372,7 @@ public class SearchResultsViewController : UIViewController {
 
 extension SearchResultsViewController : SearchSectionControllerDelegate {
     
-    func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectUser user: ZMBareUser, at indexPath: IndexPath) {
+    func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectUser user: UserType, at indexPath: IndexPath) {
         if let user = user as? ZMUser {
             delegate?.searchResultsViewController(self, didTapOnUser: user, indexPath: indexPath, section: sectionFor(controller: searchSectionController))
         }
@@ -394,9 +401,13 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
 }
 
 extension SearchResultsViewController : InviteTeamMemberSectionDelegate {
-
     func inviteSectionDidRequestTeamManagement() {
         URL.manageTeam(source: .onboarding).openInApp(above: self)
     }
+}
 
+extension SearchResultsViewController : SearchServicesSectionDelegate {
+    func addServicesSectionDidRequestOpenServicesAdmin() {
+        URL.manageTeam(source: .settings).openInApp(above: self)
+    }
 }

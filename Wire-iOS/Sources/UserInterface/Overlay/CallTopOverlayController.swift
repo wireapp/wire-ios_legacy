@@ -42,6 +42,25 @@ extension CallState: CustomStringConvertible {
 
 final class CallTopOverlayController: UIViewController {
     private let durationLabel = UILabel()
+    
+    class TapableAccessibleView: UIView {
+        let onAccessibilityActivate: ()->()
+        
+        init(onAccessibilityActivate: @escaping ()->()) {
+            self.onAccessibilityActivate = onAccessibilityActivate
+            super.init(frame: .zero)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        override func accessibilityActivate() -> Bool {
+            onAccessibilityActivate()
+            return true
+        }
+    }
+    
     private let interactiveView = UIView()
     private var tapGestureRecognizer: UITapGestureRecognizer!
     private weak var callDurationTimer: Timer? = nil
@@ -81,6 +100,12 @@ final class CallTopOverlayController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return false
+    }
+    
+    override func loadView() {
+        view = TapableAccessibleView(onAccessibilityActivate: { [weak self] in
+            self?.openCall(nil)
+        })
     }
     
     override func viewDidLoad() {
@@ -173,18 +198,13 @@ final class CallTopOverlayController: UIViewController {
         callDurationTimer = nil
     }
     
-    override func accessibilityActivate() -> Bool {
-        openCall(nil)
-        return true
-    }
-    
     @objc dynamic func openCall(_ sender: UITapGestureRecognizer?) {
         delegate?.voiceChannelTopOverlayWantsToRestoreCall(self)
     }
 }
 
 extension CallTopOverlayController: WireCallCenterCallStateObserver {
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
         updateCallDurationTimer(for: callState)
     }
 }

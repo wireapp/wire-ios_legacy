@@ -27,17 +27,17 @@ public protocol ColorPickerControllerDelegate {
     func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController)
 }
 
-@objc open class ColorPickerController: UIViewController {
-    open let overlayView = UIView()
-    open let contentView = UIView()
-    open let tableView = UITableView()
-    open let headerView = UIView()
-    open let titleLabel = UILabel()
-    open let closeButton = IconButton()
+@objcMembers open class ColorPickerController: UIViewController {
+    public let overlayView = UIView()
+    public let contentView = UIView()
+    public let tableView = UITableView()
+    public let headerView = UIView()
+    public let titleLabel = UILabel()
+    public let closeButton = IconButton()
 
     static fileprivate let rowHeight: CGFloat = 44
     
-    open let colors: [UIColor]
+    public let colors: [UIColor]
     open var currentColor: UIColor?
     open var delegate: ColorPickerControllerDelegate?
     
@@ -220,7 +220,7 @@ final class AccentColorPickerController: ColorPickerController {
         self.delegate = self
     }
     
-    open override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.isScrollEnabled = false
     }
@@ -237,7 +237,7 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
         }
         
         ZMUserSession.shared()?.performChanges {
-            ZMUser.selfUser().accentColorValue = self.allAccentColors[colorIndex]
+            (ZMUser.editableSelf() as ZMEditableUser).accentColorValue = self.allAccentColors[colorIndex]
         }
     }
 

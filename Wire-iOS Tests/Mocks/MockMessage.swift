@@ -20,15 +20,26 @@
 import Foundation
 import WireLinkPreview
 
-@objc class MockTextMessageData : NSObject, ZMTextMessageData {
+@objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
+    
     var messageText: String = ""
     var linkPreview: LinkPreview? = nil
     var imageData: Data? = nil
-    var hasImageData: Bool = false
-    var imageDataIdentifier: String? = nil
+    var linkPreviewHasImage: Bool = false
+    var linkPreviewImageCacheKey: String? = nil
+    
+    func fetchLinkPreviewImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
+        completionHandler(imageData)
+    }
+    
+    func requestLinkPreviewImageDownload() {
+        // no-op
+    }
 }
 
-@objc class MockSystemMessageData: NSObject, ZMSystemMessageData {
+@objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {
+
+    var messageTimer: NSNumber!
     var systemMessageType: ZMSystemMessageType = .invalid
     var users: Set<ZMUser>! = Set()
     var clients: Set<AnyHashable>! = Set()
@@ -48,24 +59,98 @@ import WireLinkPreview
 }
 
 
-@objc class MockFileMessageData: NSObject, ZMFileMessageData {
+@objc protocol MockFileMessageDataType: ZMFileMessageData {
+    var mimeType: String? { get set }
+    var filename: String? { get set }
+    var fileURL: URL? { get set }
+    var imagePreviewData: Data? { get set }
+    var durationMilliseconds: UInt64 { get set }
+    var normalizedLoudness: [Float]? { get set }
+}
+
+extension MockPassFileMessageData: MockFileMessageDataType { }
+extension MockFileMessageData: MockFileMessageDataType { }
+
+@objcMembers class MockPassFileMessageData: NSObject, ZMFileMessageData {
+    var mimeType: String? = "application/vnd.apple.pkpass"
+    var size: UInt64 = 1024 * 1024 * 2
+    var transferState: ZMFileTransferState = .uploaded
+    var filename: String? = "ticket.pkpass"
+    var progress: Float = 0
+    var fileURL: URL? {
+        get {
+            let path = Bundle(for: type(of: self)).path(forResource: "sample", ofType: "pkpass")!
+            return URL(fileURLWithPath: path)
+        }
+
+        set {
+
+        }
+    }
+    var imagePreviewData: Data? = nil
+    var thumbnailAssetID : String? = ""
+    var imagePreviewDataIdentifier: String? = "preview-identifier-123"
+    var durationMilliseconds: UInt64 = 0
+    var videoDimensions: CGSize = CGSize.zero
+    var normalizedLoudness: [Float]? = []
+    var previewData: Data? = nil
+
+    var isPass: Bool {
+        return mimeType == "application/vnd.apple.pkpass"
+    }
+
+    var isVideo: Bool {
+        return mimeType == "video/mp4"
+    }
+
+    var isAudio: Bool {
+        return mimeType == "audio/x-m4a"
+    }
+
+    var v3_isImage: Bool {
+        return false
+    }
+
+    func requestFileDownload() {
+        // no-op
+    }
+
+    func cancelTransfer() {
+        // no-op
+    }
+
+    func fetchImagePreviewData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        completionHandler(imagePreviewData)
+    }
+
+    func requestImagePreviewDownload() {
+        // no-op
+    }
+}
+
+@objcMembers class MockFileMessageData: NSObject, ZMFileMessageData {
     var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
     var transferState: ZMFileTransferState = .uploaded
     var filename: String? = "TestFile.pdf"
     var progress: Float = 0
     var fileURL: URL? = .none
-    var previewData: Data? = nil
+    var imagePreviewData: Data? = nil
     var thumbnailAssetID : String? = ""
     var imagePreviewDataIdentifier: String? = "preview-identifier-123"
     var durationMilliseconds: UInt64 = 233000
     var videoDimensions: CGSize = CGSize.zero
     var normalizedLoudness: [Float]? = []
-    
+    var previewData: Data? = nil
+
+    var isPass: Bool {
+        return mimeType == "application/vnd.apple.pkpass"
+    }
+
     var isVideo: Bool {
         return mimeType == "video/mp4"
     }
-    
+
     var isAudio: Bool {
         return mimeType == "audio/x-m4a"
     }
@@ -81,13 +166,22 @@ import WireLinkPreview
     func cancelTransfer() {
         // no-op
     }
+    
+    func fetchImagePreviewData(queue: DispatchQueue, completionHandler: @escaping (Data?) -> Void) {
+        completionHandler(imagePreviewData)
+    }
+    
+    func requestImagePreviewDownload() {
+        // no-op
+    }
 }
 
-@objc class MockKnockMessageData: NSObject, ZMKnockMessageData {
+@objcMembers class MockKnockMessageData: NSObject, ZMKnockMessageData {
     
 }
 
-@objc class MockImageMessageData : NSObject, ZMImageMessageData {
+@objcMembers class MockImageMessageData : NSObject, ZMImageMessageData {
+    
     var mockOriginalSize: CGSize = .zero
     var mockImageData = Data()
     var mockImageDataIdentifier = String()
@@ -96,15 +190,24 @@ import WireLinkPreview
     var previewData: Data! = Data()
     var imagePreviewDataIdentifier: String! = String()
     
+    var isDownloaded: Bool = true
     var isAnimatedGIF: Bool = false
     var imageType: String! = String()
     
     var imageData: Data { return mockImageData }
     var imageDataIdentifier: String { return mockImageDataIdentifier }
     var originalSize: CGSize { return mockOriginalSize }
+    
+    func fetchImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
+        completionHandler(imageData)
+    }
+    
+    func requestImageDownload() {
+        // no-op
+    }
 }
 
-@objc class MockLocationMessageData: NSObject, ZMLocationMessageData {
+@objcMembers class MockLocationMessageData: NSObject, ZMLocationMessageData {
     var longitude: Float = 0
     var latitude: Float = 0
     var name: String? = nil
@@ -112,7 +215,7 @@ import WireLinkPreview
 }
 
 
-@objc class MockMessage: NSObject, ZMConversationMessage {
+@objcMembers class MockMessage: NSObject, ZMConversationMessage {
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
     // MARK: - ZMConversationMessage
@@ -145,9 +248,9 @@ import WireLinkPreview
         return backingTextMessageData
     }
     
-    var backingUsersReaction: UsersByReaction! = [:]
+    var backingUsersReaction: UsersByReaction = [:]
     var backingTextMessageData: MockTextMessageData! = .none
-    var backingFileMessageData: MockFileMessageData! = .none
+    var backingFileMessageData: MockFileMessageDataType! = .none
     var backingLocationMessageData: MockLocationMessageData! = .none
 
     var isEphemeral: Bool = false
@@ -158,14 +261,6 @@ import WireLinkPreview
 
     func startSelfDestructionIfNeeded() -> Bool {
         return true
-    }
-    
-    func requestFileDownload() {
-        // no-op
-    }
-    
-    func requestImageDownload() {
-        // no-op
     }
     
     func resend() {

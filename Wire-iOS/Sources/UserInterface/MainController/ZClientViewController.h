@@ -66,17 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Open the user clients detail screen
  */
-- (void)openDetailScreenForUserClient:(UserClient *)client;
-
-/**
- * Open the user clients detail screen
- */
 - (void)openDetailScreenForConversation:(ZMConversation *)conversation;
-
-/**
- * Open the user client list screen
- */
-- (void)openClientListScreenForUser:(ZMUser *)user;
 
 /**
  * Select the connection inbox and optionally move focus to it.

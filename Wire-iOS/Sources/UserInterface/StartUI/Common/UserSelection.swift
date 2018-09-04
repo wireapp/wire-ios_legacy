@@ -28,7 +28,7 @@ public protocol UserSelectionObserver {
     
 }
 
-@objc
+@objcMembers
 public class UserSelection : NSObject {
     
     public fileprivate(set) var users : Set<ZMUser> = Set()
@@ -63,4 +63,19 @@ public class UserSelection : NSObject {
         observers.remove(at: index)
     }
     
+    // MARK: - Limit
+    
+    public private(set) var limit: Int?
+    private var limitReachedHandler: (() -> Void)?
+    
+    public var hasReachedLimit: Bool {
+        guard let limit = limit, users.count >= limit else { return false }
+        limitReachedHandler?()
+        return true
+    }
+    
+    public func setLimit(_ limit: Int, handler: @escaping () -> Void) {
+        self.limit = limit
+        self.limitReachedHandler = handler
+    }
 }

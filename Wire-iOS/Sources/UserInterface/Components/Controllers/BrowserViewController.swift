@@ -19,62 +19,51 @@
 import Foundation
 import SafariServices
 
-@objc class BrowserViewController: SFSafariViewController {
+@objcMembers class BrowserViewController: SFSafariViewController {
 
-    // MARK: - Events
-
-    private class BrowserDelegate: NSObject, SFSafariViewControllerDelegate {
-
-        var completion: () -> Void
-
-        init(completion: @escaping () -> Void) {
-            self.completion = completion
-        }
-
-        func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-            completion()
-        }
-
-    }
-
-    @objc var completion: (() -> Void)? {
-        get {
-            return (delegate as? BrowserDelegate)?.completion
-        }
-        set {
-            guard let block = newValue else {
-                delegate = nil
-                return
-            }
-            delegate = BrowserDelegate(completion: block)
-        }
-    }
+    @objc var completion: (() -> Void)?
 
     // MARK: - Tint Color
 
     private var overrider = TintColorOverrider()
     private var originalStatusBarStyle: UIStatusBarStyle = .default
+    private var originalStatusBarVisibility: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 10, *) {
-            preferredControlTintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            preferredControlTintColor = UIColor(scheme: .textForeground, variant: .light)
         } else {
-            view.tintColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: .light)
+            view.tintColor = UIColor(scheme: .textForeground, variant: .light)
         }
+
+        delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         originalStatusBarStyle = UIApplication.shared.statusBarStyle
+        originalStatusBarVisibility = UIApplication.shared.isStatusBarHidden
         overrider.override()
         UIApplication.shared.wr_setStatusBarStyle(.default, animated: true)
+        UIApplication.shared.wr_setStatusBarHidden(false, with: .fade)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         overrider.restore()
         UIApplication.shared.wr_setStatusBarStyle(originalStatusBarStyle, animated: true)
+        UIApplication.shared.wr_setStatusBarHidden(originalStatusBarVisibility, with: .fade)
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+
+}
+
+extension BrowserViewController: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        completion?()
+    }
 }

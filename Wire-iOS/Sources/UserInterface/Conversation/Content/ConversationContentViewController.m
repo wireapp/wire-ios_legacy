@@ -55,10 +55,7 @@
 // Cells
 #import "TextMessageCell.h"
 #import "PingCell.h"
-#import "StopWatch.h"
 #import "ImageMessageCell.h"
-
-#import "AnalyticsTracker+FileTransfer.h"
 
 #import "Wire-Swift.h"
 
@@ -90,7 +87,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
 @property (nonatomic) NSObject *activeMediaPlayerObserver;
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) BOOL conversationLoadStopwatchFired;
 @property (nonatomic) NSMutableDictionary *cachedRowHeights;
 @property (nonatomic) BOOL hasDoneInitialLayout;
 @property (nonatomic) id messageWindowObserverToken;
@@ -113,7 +109,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         self.messagePresenter = [[MessagePresenter alloc] init];
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
-        self.messagePresenter.analyticsTracker = self.analyticsTracker;
     }
     
     return self;
@@ -152,7 +147,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.conversationMessageWindowTableViewAdapter =
     [[ConversationMessageWindowTableViewAdapter alloc] initWithTableView:self.tableView
                                                            messageWindow:self.messageWindow];
-    self.conversationMessageWindowTableViewAdapter.analyticsTracker = self.analyticsTracker;
     self.conversationMessageWindowTableViewAdapter.conversationCellDelegate = self;
     
     self.messageWindowObserverToken = [MessageWindowChangeInfo addObserver:self forWindow:self.messageWindow];
@@ -198,6 +192,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     }
     
     self.messagePresenter.modalTargetController = self.parentViewController;
+
+    [self updateHeaderHeight];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -209,23 +205,40 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         [self registerForPreviewingWithDelegate:self sourceView:self.view];
     }
 
-    [self scrollToLastUnreadMessageIfNeeded];
+    [self scrollToFirstUnreadMessageIfNeeded];
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     self.onScreen = NO;
+    [self removeHighlightsAndMenu];
     [super viewWillDisappear:animated];
 }
 
-- (void)scrollToLastUnreadMessageIfNeeded
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    for (ConversationCell *cell in self.tableView.visibleCells) {
+        if ([cell isKindOfClass:ConversationCell.class]) {
+            [cell cellDidEndBeingVisible];
+        }
+    }
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    [self updatePopover];
+}
+
+- (void)scrollToFirstUnreadMessageIfNeeded
 {
     if (! self.hasDoneInitialLayout) {
         self.hasDoneInitialLayout = YES;
         [self updateTableViewHeaderView];
-        if (self.conversationMessageWindowTableViewAdapter.lastUnreadMessage != nil) {
-            [self scrollToMessage:self.conversationMessageWindowTableViewAdapter.lastUnreadMessage animated:NO];
+        if (self.conversationMessageWindowTableViewAdapter.firstUnreadMessage != nil) {
+            [self scrollToMessage:self.conversationMessageWindowTableViewAdapter.firstUnreadMessage animated:NO];
         }
     }
 }
@@ -272,21 +285,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)setConversationHeaderView:(UIView *)headerView
 {
-    CGSize fittingSize = CGSizeMake(self.tableView.bounds.size.width, self.headerHeight);
-    CGSize requiredSize = [headerView systemLayoutSizeFittingSize:fittingSize withHorizontalFittingPriority:UILayoutPriorityRequired verticalFittingPriority:UILayoutPriorityDefaultLow];
-    headerView.frame = CGRectMake(0, 0, requiredSize.width, requiredSize.height);
+    headerView.frame = [self headerViewFrameWithView:headerView];
     self.tableView.tableHeaderView = headerView;
-}
-
-- (CGFloat)headerHeight
-{
-    CGFloat height = 20;
-    if (self.messageWindow.messages.count == 1) {
-        UITableViewCell *cell = [self cellForMessage:self.messageWindow.messages.firstObject];
-        height += CGRectGetHeight(cell.bounds);
-    }
-    
-    return self.tableView.bounds.size.height - height;
 }
 
 - (void)setSearchQueries:(NSArray<NSString *> *)searchQueries
@@ -330,8 +330,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
             {
                 [[ZMUserSession sharedSession] enqueueChanges:^{
                     [cell.message.fileMessageData cancelTransfer];
-                    [self.analyticsTracker tagCancelledFileUploadWithSize:cell.message.fileMessageData.size
-                                                            fileExtension:[cell.message.fileMessageData.filename pathExtension]];
                 }];
             }
                 break;
@@ -448,11 +446,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 break;
             case MessageActionCopy:
             {
-                [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-                [[Analytics shared] tagMessageCopy];
-                
                 NSData *imageData = cell.message.imageMessageData.imageData;
                 [[UIPasteboard generalPasteboard] setMediaAsset:[[UIImage alloc] initWithData:imageData]];
+            }
+                break;
+            
+            case MessageActionDownload:
+            {
+                [ZMUserSession.sharedSession enqueueChanges:^{
+                    [cell.message.fileMessageData requestFileDownload];
+                }];
             }
                 break;
         }
@@ -498,16 +501,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 //  As described in http://stackoverflow.com/questions/4099188/uitableviews-indexpathsforvisiblerows-incorrect
     [self.tableView visibleCells];
     NSArray *indexPathsForVisibleRows = [self.tableView indexPathsForVisibleRows];
-
-    NSIndexPath *topVisibleIndexPath = indexPathsForVisibleRows.firstObject;
-    NSIndexPath *bottomVisibleIndexPath = indexPathsForVisibleRows.lastObject;
+    NSIndexPath *firstIndexPath = indexPathsForVisibleRows.firstObject;
     
-    if (topVisibleIndexPath && bottomVisibleIndexPath) {
-        id<ZMConversationMessage>topVisibleMessage = [self.messageWindow.messages objectAtIndex:topVisibleIndexPath.row];
-        id<ZMConversationMessage>bottomVisibleMessage = [self.messageWindow.messages objectAtIndex:bottomVisibleIndexPath.row];
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [self.conversation setVisibleWindowFromMessage:(ZMMessage *)topVisibleMessage toMessage:(ZMMessage *)bottomVisibleMessage];
-        }];
+    if (firstIndexPath) {
+        id<ZMConversationMessage>lastVisibleMessage = [self.messageWindow.messages objectAtIndex:firstIndexPath.row];
+        [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
 }
 
@@ -534,25 +532,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.messagePresenter openMessage:message targetView:cell actionResponder:self];
 }
 
-- (void)saveImageFromMessage:(id<ZMConversationMessage>)message cell:(ImageMessageCell *)cell
-{
-    if (cell == nil) {
-        NSData *imageData = message.imageMessageData.imageData;
-        SavableImage *savableImage = [[SavableImage alloc] initWithData:imageData orientation:UIImageOrientationUp];
-        [savableImage saveToLibraryWithCompletion:nil];
-    }
-    else {
-        [cell.savableImage saveToLibraryWithCompletion:^(BOOL success) {
-            if (nil != self.view.window && success == YES) {
-                UIView *snapshot = [cell.fullImageView snapshotViewAfterScreenUpdates:YES];
-                snapshot.translatesAutoresizingMaskIntoConstraints = YES;
-                CGRect sourceRect = [self.view convertRect:cell.fullImageView.frame fromView:cell.fullImageView.superview];
-                [self.delegate conversationContentViewController:self performImageSaveAnimation:snapshot sourceRect:sourceRect];
-            }
-        }];
-    }
-}
-
 - (void)openSketchForMessage:(id<ZMConversationMessage>)message inEditMode:(CanvasViewControllerEditMode)editMode
 {
     CanvasViewController *canvasViewController = [[CanvasViewController alloc] init];
@@ -573,9 +552,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
         [[ZMUserSession sharedSession] enqueueChanges:^{
             [self.conversation appendMessageWithImageData:imageData];
         } completionHandler:^{
-            [[Analytics shared] tagMediaAction:ConversationMediaActionPhoto inConversation:self.conversation];
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
-            [[Analytics shared] tagMediaSentPictureSourceSketchInConversation:self.conversation sketchSource:ConversationMediaSketchSourceImageFullView];
         }];
     }
 }
@@ -691,12 +668,12 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     // Unfortunate that this can't be inside the cell itself
     BOOL isMessageOfCellLastMessageInConversation = [self.messageWindow.messages.firstObject isEqual:pingCell.message];
     
-    NSComparisonResult comparisonResult = [pingCell.message.serverTimestamp compare:self.conversation.lastReadMessage.serverTimestamp];
-    BOOL isMessageOlderThanLastReadMessage =  (comparisonResult != NSOrderedAscending);
+    NSComparisonResult comparisonResult = [pingCell.message.serverTimestamp compare:self.conversation.firstUnreadMessage.serverTimestamp];
+    BOOL isMessageOlderThanFirstUnreadMessage =  (comparisonResult != NSOrderedAscending);
     
     if (isMessageOfCellLastMessageInConversation
         && [Message isKnockMessage:pingCell.message]
-        && isMessageOlderThanLastReadMessage ) {
+        && isMessageOlderThanFirstUnreadMessage ) {
         [pingCell startPingAnimation];
     }
 }
@@ -805,11 +782,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)conversationCell:(ConversationCell *)cell didOpenMenuForCellType:(MessageType)messageType;
 {
-    ConversationType conversationType = self.conversation.conversationType == ZMConversationTypeGroup ? ConversationTypeGroup : ConversationTypeOneToOne;
-    
-    [[Analytics shared] tagSelectedMessage:SelectionTypeSingle
-                          conversationType:conversationType
-                               messageType:messageType];
+    // no op
 }
 
 - (void)conversationCellDidTapOpenLikers:(ConversationCell *)cell
@@ -828,6 +801,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)conversationCell:(ConversationCell *)cell openGuestOptionsFromView:(UIView *)sourceView
 {
     [self.delegate conversationContentViewController:self presentGuestOptionsFromView:sourceView];
+}
+
+- (void)conversationCell:(ConversationCell *)cell openParticipantsDetailsWithSelectedUsers:(NSArray<ZMUser *> *)selectedUsers fromView:(UIView *)sourceView
+{
+    [self.delegate conversationContentViewController:self presentParticipantsDetailsWithSelectedUsers:selectedUsers fromView:sourceView];
 }
 
 @end
@@ -867,15 +845,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if (latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth > (int)self.messageWindow.messages.count) {
         [self expandMessageWindowUp];
     }
-    
-    for (NSIndexPath *upcomingIndexPath in indexPaths) {
-        if (upcomingIndexPath.row < (int)self.messageWindow.messages.count) {
-            id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:upcomingIndexPath.row];
-            if ([Message canBePrefetched:message]) {
-                [message requestImageDownload];
-            }
-        }
-    }
 }
 
 - (void)messagesInsideWindow:(ZMConversationMessageWindow *)window didChange:(NSArray<MessageChangeInfo *> *)messageChangeInfos
@@ -887,7 +856,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
              [Message isAudioMessage:selectedMessage] ||
              [Message isFileTransferMessage:selectedMessage])
             && selectedMessage.fileMessageData.transferState == ZMFileTransferStateDownloaded) {
-            if ([self wr_isVisible]) {
+            if ([self isVisible]) {
                 NSUInteger indexOfFileMessage = [[[self messageWindow] messages] indexOfObject:selectedMessage];
                 
                 BOOL __block expectedMessageUpdated = NO;
@@ -917,6 +886,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)conversationWindowDidChange:(MessageWindowChangeInfo *)note
 {
+    [self updateHeaderHeight];
+
     // Clear selectedMessage if it is going to be deleted.
     if ([note.deletedObjects containsObject:self.conversationMessageWindowTableViewAdapter.selectedMessage]) {
         self.conversationMessageWindowTableViewAdapter.selectedMessage = nil;

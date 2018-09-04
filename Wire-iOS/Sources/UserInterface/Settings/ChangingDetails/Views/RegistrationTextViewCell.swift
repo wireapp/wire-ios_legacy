@@ -25,7 +25,15 @@ protocol RegistrationTextFieldCellDelegate: class {
 
 final class RegistrationTextFieldCell: UITableViewCell {
     
-    let textField = RegistrationTextField()
+    let textField: RegistrationTextField = {
+        let textField = RegistrationTextField()
+
+        textField.font = .normalFont
+        textField.textColor = .textForegroundDark
+        textField.backgroundColor = .clear
+
+        return textField
+    }()
     weak var delegate: RegistrationTextFieldCellDelegate?
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -33,6 +41,8 @@ final class RegistrationTextFieldCell: UITableViewCell {
         selectionStyle = .none
         setupViews()
         createConstraints()
+
+        backgroundColor = .clear
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -53,7 +63,7 @@ final class RegistrationTextFieldCell: UITableViewCell {
         }
     }
     
-    func editingChanged(textField: UITextField) {
+    @objc func editingChanged(textField: UITextField) {
         let lowercase = textField.text?.lowercased() ?? ""
         let noSpaces = lowercase.components(separatedBy: .whitespacesAndNewlines).joined()
         textField.text = noSpaces

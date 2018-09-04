@@ -29,7 +29,7 @@ struct CallCellViewModel {
     let font, boldFont: UIFont?
     let textColor: UIColor?
     let message: ZMConversationMessage
-
+    
     func image() -> UIImage? {
         return iconColor.map { UIImage(for: icon, iconSize: .tiny, color: $0) }
     }
@@ -45,7 +45,8 @@ struct CallCellViewModel {
 
         let senderString = string(for: sender)
         
-        let called = key(with: "called").localized(pov: sender.pov, args: senderString) && labelFont
+        let component = (icon == .missedCall) ? "missed-call" : "called"
+        let called = key(with: component).localized(pov: sender.pov, args: senderString) && labelFont
         var title = called.adding(font: labelBoldFont, to: senderString)
 
         if systemMessageData.childMessages.count > 0 {
@@ -65,7 +66,7 @@ struct CallCellViewModel {
 }
 
 
-class MissedCallCell: IconSystemCell {
+@objcMembers class MissedCallCell: IconSystemCell {
 
     override class var userRegularLabel: Bool {
         return true
@@ -79,7 +80,7 @@ class MissedCallCell: IconSystemCell {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
             icon: .missedCall,
-            iconColor: labelTextColor,
+            iconColor: UIColor(scheme: .textDimmed),
             systemMessageType: .missedCall,
             font: labelFont,
             boldFont: labelBoldFont,

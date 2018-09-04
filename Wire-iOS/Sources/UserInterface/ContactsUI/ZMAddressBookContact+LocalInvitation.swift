@@ -36,11 +36,11 @@ class EmailInvitePresenter: NSObject, MFMailComposeViewControllerDelegate, MFMes
 
 
 extension ZMAddressBookContact {
-    public static func canInviteLocallyWithEmail() -> Bool {
+    @objc public static func canInviteLocallyWithEmail() -> Bool {
         return MFMailComposeViewController.canSendMail()
     }
     
-    public func inviteLocallyWithEmail(_ email: String) {
+    @objc public func inviteLocallyWithEmail(_ email: String) {
         let composeController = MFMailComposeViewController()
         composeController.mailComposeDelegate = EmailInvitePresenter.sharedInstance
         composeController.modalPresentationStyle = .formSheet
@@ -50,11 +50,11 @@ extension ZMAddressBookContact {
         ZClientViewController.shared()?.present(composeController, animated: true, completion: .none)
     }
     
-    public static func canInviteLocallyWithPhoneNumber() -> Bool {
+    @objc public static func canInviteLocallyWithPhoneNumber() -> Bool {
         return MFMessageComposeViewController.canSendText()
     }
     
-    public func inviteLocallyWithPhoneNumber(_ phoneNumber: String) {
+    @objc public func inviteLocallyWithPhoneNumber(_ phoneNumber: String) {
         let composeController = MFMessageComposeViewController()
         composeController.messageComposeDelegate = EmailInvitePresenter.sharedInstance
         composeController.modalPresentationStyle = .formSheet
@@ -64,7 +64,7 @@ extension ZMAddressBookContact {
     }
 
     private func invitationBody() -> String {
-        if let handle = ZMUser.selfUser(inUserSession: ZMUserSession.shared()).handle {
+        if let handle = ZMUser.selfUser(inUserSession: ZMUserSession.shared()!).handle {
             return "send_invitation.text".localized(args: "@" + handle)
         } else {
             return "send_invitation_no_email.text".localized

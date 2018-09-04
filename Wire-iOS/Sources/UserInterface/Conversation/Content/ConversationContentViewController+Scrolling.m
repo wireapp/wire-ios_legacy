@@ -22,7 +22,7 @@
 
 // model
 #import "WireSyncEngine+iOS.h"
-
+#import "Wire-Swift.h"
 
 
 @implementation ConversationContentViewController (Scrolling)

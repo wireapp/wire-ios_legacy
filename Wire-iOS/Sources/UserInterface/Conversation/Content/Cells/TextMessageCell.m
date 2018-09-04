@@ -26,9 +26,7 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "Message+Formatting.h"
-#import "UIView+Borders.h"
 #import "Constants.h"
-#import "AnalyticsTracker+Media.h"
 #import "LinkAttachmentViewControllerFactory.h"
 #import "LinkAttachment.h"
 #import "Wire-Swift.h"
@@ -142,7 +140,6 @@
     
     [self.editedImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.authorLabel withOffset:8];
     [self.editedImageView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.authorLabel];
-    [self.countdownContainerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.messageTextView];
 }
 
 - (void)updateTextMessageConstraintConstants
@@ -167,7 +164,6 @@
     }
     
     [super configureForMessage:message layoutProperties:layoutProperties];
-    [message requestImageDownload];
     
     id<ZMTextMessageData> textMesssageData = message.textMessageData;
 
@@ -214,7 +210,7 @@
     }
 
     if (linkPreview != nil && nil == self.linkAttachmentViewController && !isGiphy) {
-        BOOL showImage = textMesssageData.hasImageData;
+        BOOL showImage = textMesssageData.linkPreviewHasImage;
         
         ArticleView *articleView = [[ArticleView alloc] initWithImagePlaceholder:showImage];
 
@@ -223,7 +219,7 @@
             articleView.authorLabel.numberOfLines = 1;
             
             if(showImage) {
-                articleView.imageHeight = [UIScreen isCompact] ? 75.0 : 125.0;
+                articleView.imageHeight = [[UIScreen mainScreen] isCompact] ? 75.0 : 125.0;
             }
         }
         articleView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -286,7 +282,6 @@
     if (change.imageChanged && nil != textMesssageData.linkPreview && [self.linkAttachmentView isKindOfClass:ArticleView.class]) {
         ArticleView *articleView = (ArticleView *)self.linkAttachmentView;
         [articleView configureWithTextMessageData:textMesssageData obfuscated:self.message.isObfuscated];
-        [self.message requestImageDownload];
     }
 
     return needsLayout;
@@ -328,8 +323,6 @@
 - (void)copy:(id)sender
 {
     if (self.message.textMessageData.messageText) {
-        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeCopy];
-        [[Analytics shared] tagMessageCopy];
         [UIPasteboard generalPasteboard].string = self.message.textMessageData.messageText;
     }
 }
@@ -339,7 +332,6 @@
     if([self.delegate respondsToSelector:@selector(conversationCell:didSelectAction:)]) {
         self.beingEdited = YES;
         [self.delegate conversationCell:self didSelectAction:MessageActionEdit];
-        [[Analytics shared] tagOpenedMessageAction:MessageActionTypeEdit];
     }
 }
 
@@ -391,16 +383,18 @@
     MenuConfigurationProperties *properties = [[MenuConfigurationProperties alloc] init];
     
     BOOL isEditableMessage = self.message.conversation.isSelfAnActiveMember && (self.message.deliveryState == ZMDeliveryStateDelivered || self.message.deliveryState == ZMDeliveryStateSent);
-    NSMutableArray *additionalItems = [NSMutableArray array];
+    NSMutableArray <AdditionalMenuItem *>* additionalItems = [NSMutableArray array];
+    
     if (isEditableMessage) {
-         [additionalItems addObject:[[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)]];
+        UIMenuItem *item = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"message.menu.edit.title", @"") action:@selector(edit:)];
+        [additionalItems addObject:[AdditionalMenuItem forbiddenInEphemeral:item]];
     }
 
     UIMenuItem *forwardItem = [UIMenuItem forwardItemWithAction:@selector(forward:)];
-    [additionalItems addObject:forwardItem];
+    [additionalItems addObject:[AdditionalMenuItem forbiddenInEphemeral:forwardItem]];
     
     properties.additionalItems = additionalItems;
-    
+
     properties.targetRect = self.selectionRect;
     properties.targetView = self.selectionView;
     properties.selectedMenuBlock = ^(BOOL selected, BOOL animated) {
@@ -435,16 +429,6 @@
 
 - (BOOL)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
-    LinkAttachment *linkAttachment = [self.layoutProperties.linkAttachments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.URL == %@", url]].lastObject;
-    
-    if (linkAttachment != nil) {
-        [self.analyticsTracker tagExternalLinkVisitEventForAttachmentType:linkAttachment.type
-                                                         conversationType:self.message.conversation.conversationType];
-    } else {
-        [self.analyticsTracker tagExternalLinkVisitEventForAttachmentType:LinkAttachmentTypeNone
-                                                         conversationType:self.message.conversation.conversationType];
-    }
-
     return [url open];
 }
 

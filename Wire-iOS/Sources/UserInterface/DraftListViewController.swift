@@ -63,14 +63,14 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.alignment = .center
         paragraphStyle.paragraphSpacing = 4
-        let paragraphAttributes = [NSParagraphStyleAttributeName: paragraphStyle]
-        let color = ColorScheme.default().color(withName: ColorSchemeColorTextDimmed)
+        let paragraphAttributes = [NSAttributedStringKey.paragraphStyle: paragraphStyle]
+        let color = UIColor(scheme: .textDimmed)
         let title = "compose.drafts.empty.title".localized.uppercased() && FontSpec(.small, .semibold).font!
         let subtitle = "compose.drafts.empty.subtitle".localized.uppercased() && FontSpec(.small, .light).font!
         emptyLabel.attributedText = (title + "\n" + subtitle) && color && paragraphAttributes
         emptyLabel.numberOfLines = 0
         view.addSubview(emptyLabel)
-        view.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        view.backgroundColor = UIColor(scheme: .background)
 
         constrain(view, emptyLabel) { view, emptyLabel in
             emptyLabel.centerY == view.centerY - 20
@@ -88,7 +88,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
 
     private func setupViews() {
         title = "compose.drafts.title".localized.uppercased()
-        tableView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorBackground)
+        tableView.backgroundColor = UIColor(scheme: .background)
         navigationItem.rightBarButtonItem = UIBarButtonItem(icon: .X, style: .done, target: self, action: #selector(closeTapped))
         navigationItem.rightBarButtonItem?.accessibilityLabel = "closeButton"
         navigationItem.leftBarButtonItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(newDraftTapped))
@@ -98,11 +98,11 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         tableView.separatorStyle = .none
     }
 
-    private dynamic func closeTapped(_ sender: Any) {
+    @objc  func closeTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
 
-    private dynamic func newDraftTapped(_ sender: Any) {
+    @objc func newDraftTapped(_ sender: Any) {
         showDraft(nil)
     }
 

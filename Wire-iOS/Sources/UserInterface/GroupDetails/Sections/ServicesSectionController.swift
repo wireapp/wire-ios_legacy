@@ -21,10 +21,10 @@ import Foundation
 class ServicesSectionController: GroupDetailsSectionController {
     
     private weak var delegate: GroupDetailsSectionControllerDelegate?
-    private let serviceUsers: [ZMBareUser]
+    private let serviceUsers: [UserType]
     private let conversation: ZMConversation
     
-    init(serviceUsers: [ZMBareUser], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
+    init(serviceUsers: [UserType], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
         self.serviceUsers = serviceUsers
         self.conversation = conversation
         self.delegate = delegate
@@ -50,10 +50,10 @@ class ServicesSectionController: GroupDetailsSectionController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = serviceUsers[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
+        let cell = collectionView.dequeueReusableCell(ofType: UserCell.self, for: indexPath)
         
         cell.configure(with: user, conversation: conversation)
-        cell.separator.isHidden = (serviceUsers.count - 1) == indexPath.row
+        cell.showSeparator = (serviceUsers.count - 1) != indexPath.row
         cell.accessoryIconView.isHidden = false
         cell.accessibilityIdentifier = "participants.section.services.cell"
         return cell

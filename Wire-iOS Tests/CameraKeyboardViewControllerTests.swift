@@ -42,13 +42,13 @@ class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDele
     }
     
     var cameraKeyboardViewControllerDidSelectImageDataHitCount: UInt = 0
-    @objc func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, metadata: ImageMetadata) {
+    @objc func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectImageData: Data, isFromCamera: Bool) {
         cameraKeyboardViewControllerDidSelectImageDataHitCount = cameraKeyboardViewControllerDidSelectImageDataHitCount + 1
     }
 }
 
 
-@objc class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
+@objcMembers class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
     @objc var layoutSize: SplitViewControllerLayoutSize = .compact
     @objc var leftViewControllerWidth: CGFloat = 0
 }
@@ -62,7 +62,7 @@ private final class MockAssetLibrary: AssetLibrary {
 }
 
 fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
-    override var shouldBlockCallingRelatedActions: Bool {
+    @objc override var shouldBlockCallingRelatedActions: Bool {
         return true
     }
 }
@@ -79,6 +79,14 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         self.splitView = SplitLayoutObservableMock()
         self.delegateMock = CameraKeyboardViewControllerDelegateMock()
     }
+
+    override func tearDown() {
+        sut = nil
+        splitView = nil
+        delegateMock = nil
+        assetLibrary = nil
+        super.tearDown()
+    }
     
     @discardableResult func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
         self.sut.beginAppearanceTransition(true, animated: false)
@@ -86,7 +94,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         
         let container = UIView()
         container.addSubview(self.sut.view)
-        container.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
+        container.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
         
         constrain(self.sut.view, container) { view, container in
             container.height == size.height

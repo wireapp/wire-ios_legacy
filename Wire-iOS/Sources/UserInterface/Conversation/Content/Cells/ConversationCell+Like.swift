@@ -20,14 +20,14 @@ import UIKit
 
 public extension ConversationCell {
 
-    public func createLikeButton() {
+    @objc public func createLikeButton() {
         self.likeButton = LikeButton()
         self.likeButton.translatesAutoresizingMaskIntoConstraints = false
         self.likeButton.accessibilityIdentifier = "likeButton"
         self.likeButton.accessibilityLabel = "likeButton"
         self.likeButton.addTarget(self, action: #selector(ConversationCell.likeMessage(_:)), for: .touchUpInside)
         self.likeButton.setIcon(.liked, with: .like, for: .normal)
-        self.likeButton.setIconColor(ColorScheme.default().color(withName: ColorSchemeColorTextDimmed), for: .normal)
+        self.likeButton.setIconColor(UIColor(scheme: .textDimmed), for: .normal)
         self.likeButton.setIcon(.liked, with: .like, for: .selected)
         self.likeButton.setIconColor(UIColor(for: .vividRed), for: .selected)
         self.likeButton.hitAreaPadding = CGSize(width: 20, height: 20)
@@ -48,25 +48,8 @@ public extension ConversationCell {
         guard let _ = message else { return }
         guard message.canBeLiked else { return }
 
-        let reactionType: ReactionType = message.liked ? .unlike : .like
-        trackReaction(sender, reaction: reactionType)
-
         self.likeButton.setSelected(!self.message.liked, animated: true)
         delegate.conversationCell!(self, didSelect: .like)
-    }
-
-    func trackReaction(_ sender: AnyObject, reaction: ReactionType) {
-        var interactionMethod = InteractionMethod.undefined
-        if sender is LikeButton {
-            interactionMethod = .button
-        }
-        if sender is UIMenuController {
-            interactionMethod = .menu
-        }
-        if sender is UITapGestureRecognizer {
-            interactionMethod = .doubleTap
-        }
-        Analytics.shared().tagReactedOnMessage(message, reactionType:reaction, method: interactionMethod)
     }
 }
 

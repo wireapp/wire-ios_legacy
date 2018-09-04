@@ -29,38 +29,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation Message (UI)
 
-+ (MessageType)messageType:(id<ZMConversationMessage>)message
-{
-    if ([self isImageMessage:message]) {
-        return MessageTypeImage;
-    }
-    if ([self isKnockMessage:message]) {
-        return MessageTypePing;
-    }
-    if ([self isTextMessage:message]) {
-        if ((message.textMessageData.linkPreview != nil) || ([self linkAttachments:message.textMessageData].count > 0)) {
-            return MessageTypeRichMedia;
-        }
-        return MessageTypeText;
-    }
-    if ([self isFileTransferMessage:message]) {
-        if (message.fileMessageData.isVideo) {
-            return MessageTypeVideo;
-        }
-        if (message.fileMessageData.isAudio) {
-            return MessageTypeAudio;
-        }
-        return MessageTypeFile;
-    }
-    if ([self isSystemMessage:message]) {
-        return MessageTypeSystem;
-    }
-    if ([self isLocationMessage:message]) {
-        return MessageTypeLocation;
-    }
-    return MessageTypeUnknown;
-}
-
 + (NSString *)formattedReceivedDateForMessage:(id<ZMConversationMessage>)message
 {
     // Today's date
@@ -119,24 +87,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return longVersionTimeFormatter;
 }
 
-+ (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message
-{
-    BOOL isChatHeadsDisabled = [[Settings sharedSettings] chatHeadsDisabled];
-    BOOL isConversationSilenced = message.conversation.isSilenced;
-    BOOL isSenderSelfUser = [message.sender isSelfUser];
-    BOOL isMessageUnread = (NSUInteger) message.serverTimestamp.timeIntervalSinceReferenceDate > message.conversation.lastReadMessage.serverTimestamp.timeIntervalSinceReferenceDate;
-    // only show a notification chathead if the message is new (recently sent)
-    BOOL isTimelyMessage = [[NSDate date] timeIntervalSinceDate:message.serverTimestamp] <= (0.5f);
-    BOOL isSystemMessage = [self isSystemMessage:message];
-
-    return ! isChatHeadsDisabled &&
-            ! isConversationSilenced &&
-            ! isSenderSelfUser &&
-            isMessageUnread &&
-            isTimelyMessage &&
-            ! isSystemMessage;
-}
-
 + (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message
 {
     NSString *identifier = message.imageMessageData.imageDataIdentifier;
@@ -149,8 +99,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 + (BOOL)canBePrefetched:(id<ZMConversationMessage>)message
 {
-    return [Message isFileTransferMessage:message] ||
-           [Message isImageMessage:message] ||
+    return [Message isImageMessage:message] ||
+           [Message isFileTransferMessage:message] ||
            [Message isTextMessage:message];
 }
 

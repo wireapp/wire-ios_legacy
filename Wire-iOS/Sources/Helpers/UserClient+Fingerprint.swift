@@ -21,7 +21,7 @@ import Foundation
 
 extension UserClient {
     
-    public func attributedRemoteIdentifier(_ attributes: [String : AnyObject], boldAttributes: [String : AnyObject], uppercase: Bool = false) -> NSAttributedString {
+    @objc public func attributedRemoteIdentifier(_ attributes: [NSAttributedStringKey : AnyObject], boldAttributes: [NSAttributedStringKey : AnyObject], uppercase: Bool = false) -> NSAttributedString {
         let identifierPrefixString = NSLocalizedString("registration.devices.id", comment: "") + " "
         let identifierString = NSMutableAttributedString(string: identifierPrefixString, attributes: attributes)
         let identifier = uppercase ? displayIdentifier.uppercased() : displayIdentifier

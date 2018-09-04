@@ -23,7 +23,7 @@ import TTTAttributedLabel
 private let BaseLocalizationString = "content.system.cannot_decrypt"
 private let IdentityString = ".identity"
 
-class CannotDecryptCell: IconSystemCell {
+@objcMembers class CannotDecryptCell: IconSystemCell {
     static fileprivate let generalErrorURL : URL = URL(string:"action://general-error")!
     static fileprivate let remoteIDErrorURL : URL = URL(string:"action://remote-id-error")!
 
@@ -38,8 +38,6 @@ class CannotDecryptCell: IconSystemCell {
     func updateLabel() {
         let acceptedTypes : [ZMSystemMessageType] = [.decryptionFailed, .decryptionFailed_RemoteIdentityChanged]
         guard let systemMessageData = message.systemMessageData,
-            let labelBoldFont = labelBoldFont,
-            let labelFont = labelFont,
             let labelTextColor = labelTextColor,
             let sender = message.sender,
             let labelTextBlendedColor = labelTextBlendedColor,
@@ -49,7 +47,7 @@ class CannotDecryptCell: IconSystemCell {
         let remoteIDChanged = systemMessageData.systemMessageType == .decryptionFailed_RemoteIdentityChanged
         let link = remoteIDChanged ? type(of: self).remoteIDErrorURL : type(of: self).generalErrorURL
 
-        let linkAttributes = [NSFontAttributeName: labelFont, NSLinkAttributeName: link as AnyObject] as [String : AnyObject]
+        let linkAttributes: [NSAttributedStringKey : AnyObject] = [.font: labelFont, .link: link as AnyObject]
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
         let why = localizedWhyPart(remoteIDChanged) && labelFont && labelTextColor && linkAttributes
         let device : NSAttributedString?
@@ -61,7 +59,7 @@ class CannotDecryptCell: IconSystemCell {
         let messageString = localizedWhatPart(remoteIDChanged, name: name) && labelFont && labelTextColor
         let fullString = messageString + " " + why + (device ?? NSAttributedString())
         
-        attributedText = fullString.addAttributes([ NSFontAttributeName: labelBoldFont], toSubstring:name)
+        attributedText = fullString.addAttributes([ .font: labelBoldFont], toSubstring:name)
     }
     
     func localizedWhoPart(_ sender: ZMUser, remoteIDChanged: Bool) -> String {

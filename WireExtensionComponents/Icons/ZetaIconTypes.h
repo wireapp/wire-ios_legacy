@@ -208,7 +208,8 @@ typedef NS_ENUM(NSInteger, ZetaIconType)
     // Team Invites
     ZetaIconTypeExclamationMarkCircle           = 0x751,
     
-    ZetaIconTypeGuest                           = 0x756
+    ZetaIconTypeGuest                           = 0x756,
+    ZetaIconTypeBrowser                         = 0x758
 };
 
 typedef NS_ENUM(NSInteger, ZetaIconSize) {

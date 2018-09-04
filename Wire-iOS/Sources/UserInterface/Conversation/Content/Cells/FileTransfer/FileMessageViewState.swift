@@ -78,7 +78,7 @@ public enum FileMessageViewState {
             } else {
                 return .unavailable
             }
-        case .failedDownload: return .failedDownload
+        case .failedDownload, .unavailable: return .failedDownload
         }
     }
     

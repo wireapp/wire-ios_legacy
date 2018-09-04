@@ -17,10 +17,9 @@
 //
 
 #import "MessagePresenter.h"
+#import "MessagePresenter+Internal.h"
 #import "WireSyncEngine+iOS.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
-#import "AnalyticsTracker+FileTransfer.h"
 #import "Wire-Swift.h"
 #import "UIViewController+WR_Additions.h"
 
@@ -28,12 +27,6 @@
 @import AVFoundation;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-
-@interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
-
-@property (nonatomic) MediaPlayerController *wr_playerController;
-
-@end
 
 @implementation AVPlayerViewControllerWithoutStatusBar
 
@@ -72,7 +65,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         if (message.fileMessageData.fileURL == nil) {
             self.waitingForFileDownload = YES;
             [[ZMUserSession sharedSession] performChanges:^{
-                [message requestFileDownload];
+                [message.fileMessageData requestFileDownload];
             }];
         }
         else {
@@ -90,42 +83,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)openLocationMessage:(id<ZMConversationMessage>)message
 {
     [Message openInMaps:message.locationMessageData];
-}
-
-- (void)openFileMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView
-{
-    
-    if (message.fileMessageData.fileURL == nil || ! [message.fileMessageData.fileURL isFileURL] || message.fileMessageData.fileURL.path.length == 0) {
-        NSAssert(0, @"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
-        ZMLogError(@"File URL is missing: %@ (%@)", message.fileMessageData.fileURL, message.fileMessageData);
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [message.fileMessageData requestFileDownload];
-        }];
-        return;
-    }
-    
-    (void)[message startSelfDestructionIfNeeded];
-    
-    [self.analyticsTracker tagOpenedFileWithSize:message.fileMessageData.size
-                                   fileExtension:[message.fileMessageData.filename pathExtension]];
-    
-    if (message.fileMessageData.isVideo) {
-        AVPlayer *player = [[AVPlayer alloc] initWithURL:message.fileMessageData.fileURL];
-        MediaPlayerController *playerController = [[MediaPlayerController alloc]  initWithPlayer:player message:message delegate: AppDelegate.sharedAppDelegate.mediaPlaybackManager];
-        
-        AVPlayerViewControllerWithoutStatusBar *playerViewController = [[AVPlayerViewControllerWithoutStatusBar alloc] init];
-        playerViewController.player = player;
-        playerViewController.wr_playerController = playerController;
-        [self.targetViewController presentViewController:playerViewController animated:YES completion:^() {
-            [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-            [player play];
-            [Analytics.shared tagPlayedVideoMessage:CMTimeGetSeconds(player.currentItem.duration)];
-        }];
-    }
-    else {
-        
-        [self openDocumentControllerForMessage:message targetView:targetView withPreview:YES];
-    }
 }
 
 - (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView withPreview:(BOOL)preview

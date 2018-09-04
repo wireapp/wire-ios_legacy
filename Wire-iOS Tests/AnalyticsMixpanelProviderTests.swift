@@ -20,26 +20,31 @@ import XCTest
 @testable import Wire
 
 class AnalyticsMixpanelProviderTests: XCTestCase {
-    
+
+    var userDefaults: UserDefaults!
+    var settings: ExtensionSettings!
+
     override func setUp() {
         super.setUp()
+        userDefaults = UserDefaults(suiteName: name)
+        settings = ExtensionSettings(defaults: userDefaults)
     }
     
     override func tearDown() {
-        UserDefaults.shared().set(nil, forKey: MixpanelDistinctIdKey)
-        UserDefaults.shared().synchronize()
-        
+        userDefaults.removeObject(forKey: MixpanelDistinctIdKey)
+        settings.reset()
+        settings = nil
+        userDefaults = nil
         super.tearDown()
     }
     
     func testThatItGeneratesAndStoresUniqueMixpanelId() {
         // given
-        let userDefaults = UserDefaults.shared()
-        XCTAssertNotNil(userDefaults)
-        XCTAssertNil(userDefaults!.string(forKey: MixpanelDistinctIdKey))
+        settings.disableCrashAndAnalyticsSharing = false
+        XCTAssertNil(userDefaults.string(forKey: MixpanelDistinctIdKey))
         
         // when
-        let sut = AnalyticsMixpanelProvider()
+        let sut = AnalyticsMixpanelProvider(defaults: userDefaults)
         let generatedId = sut.mixpanelDistinctId
         
         // then
@@ -47,4 +52,5 @@ class AnalyticsMixpanelProviderTests: XCTestCase {
         XCTAssertNotNil(storedId)
         XCTAssertEqual(storedId!, generatedId)
     }
+
 }

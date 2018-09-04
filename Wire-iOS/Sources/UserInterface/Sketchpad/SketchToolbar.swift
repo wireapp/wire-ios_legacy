@@ -31,20 +31,13 @@ class SketchToolbar : UIView {
     public init(buttons: [UIButton]) {
         
         guard buttons.count >= 2 else {  fatalError("SketchToolbar needs to be initialized with at least two buttons") }
-        
-        buttons.forEach { button in
-            let iconButton = button as? IconButton
-            iconButton?.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconNormal), for: .normal)
-            iconButton?.setIconColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorIconHighlighted), for: .highlighted)
-            iconButton?.setIconColor(UIColor.accent(), for: .selected)
-        }
-        
+
         var unassignedButtons = buttons
         
         leftButton = unassignedButtons.removeFirst()
         rightButton = unassignedButtons.removeLast()
         centerButtons = unassignedButtons
-        separatorLine.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSeparator)
+        separatorLine.backgroundColor = UIColor(scheme: .separator)
         
         super.init(frame: CGRect.zero)
         
@@ -58,7 +51,7 @@ class SketchToolbar : UIView {
     }
     
     func setupSubviews() {
-        backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBackground)
+        backgroundColor = UIColor(scheme: .background)
         addSubview(containerView)
         centerButtons.forEach(centerButtonContainer.addSubview)
         [leftButton, centerButtonContainer, rightButton, separatorLine].forEach(containerView.addSubview)

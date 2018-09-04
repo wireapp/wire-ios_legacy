@@ -35,30 +35,42 @@ final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
     }
 
     override var state: UIGestureRecognizerState {
-        return mockState
+        get {
+            return mockState
+        }
+        set {}
     }
 }
 
-final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
+final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationInputBarViewController!
-    
-    override func setUp() {
-        super.setUp()
 
+    override func tearDown() {
+        // Commented out intentionally - if this is nil'ed then
+        // OptionsViewControllerTests.testThatItRendersRevokeLinkConfirmationAlert()
+        // is crashing when running a full test suite
+//        sut = nil
+        super.tearDown()
+    }
+
+    func prepareSut() {
         sut = ConversationInputBarViewController(conversation: nil)
-        sut.view.layoutIfNeeded()
 
+        sut.view.layoutIfNeeded()
         sut.view.layer.speed = 0
+
+        sut.viewDidLoad()
     }
 
     func testNormalState(){
+        prepareSut()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testAudioRecorderTouchBegan(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -73,7 +85,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
     func testAudioRecorderTouchChanged(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -89,7 +101,7 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
 
     func testAudioRecorderTouchEnded(){
         // GIVEN
-        sut.viewDidLoad()
+        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -100,6 +112,155 @@ final class ConversationInputBarViewControllerTests: ZMSnapshotTestCase {
         sut.view.layoutIfNeeded()
 
         // THEN
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+}
+
+// MARK: - Ephemeral indicator button
+extension ConversationInputBarViewControllerTests {
+    func testEphemeralIndicatorButton(){
+        // GIVEN
+        prepareSut()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
+    func testEphemeralTimeNone(){
+        // GIVEN
+        prepareSut()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(.none)
+
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
+    func testEphemeralTime10Second() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(10)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
+        
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+    
+    func testEphemeralTime5Minutes() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(300)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
+        
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+    
+    func testEphemeralTime2Hours() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(7200)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
+        
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+    
+    func testEphemeralTime3Days() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(259200)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
+        
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
+    func testEphemeralTime4Weeks(){
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+
+        sut.viewDidLoad()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(2419200)
+
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
+
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+    
+    func testEphemeralTime1Year() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        
+        sut.viewDidLoad()
+        
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(31540000)
+        
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
+        
+        // THEN
+        sut.view.prepareForSnapshot()
+        self.verifyInAllPhoneWidths(view: sut.view)
+    }
+
+    func testEphemeralModeWhenTyping() {
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+
+        sut.viewDidLoad()
+
+        // WHEN
+        sut.mode = .timeoutConfguration
+        otherUserConversation.messageDestructionTimeout = .local(2419200)
+
+        sut.inputBar.setInputBarState(.writing(ephemeral: .message), animated: false)
+        let shortText = "Lorem ipsum dolor"
+        sut.inputBar.textView.text = shortText
+
+        // THEN
+        sut.view.prepareForSnapshot()
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 }

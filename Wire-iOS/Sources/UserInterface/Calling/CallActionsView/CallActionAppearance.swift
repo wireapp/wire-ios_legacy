@@ -30,37 +30,36 @@ enum CallActionAppearance: Equatable {
     
     var backgroundColorNormal: UIColor {
         switch self {
-        case .light: return UIColor.wr_color(fromColorScheme: ColorSchemeColorGraphite, variant: .light).withAlphaComponent(0.08)
+        case .light: return UIColor(scheme: .graphite, variant: .light).withAlphaComponent(0.08)
         case .dark: return UIColor.white.withAlphaComponent(0.24)
         }
     }
     
     var backgroundColorSelected: UIColor {
         switch self {
-        case .light: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
-        case .dark: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark)
+        case .light: return UIColor(scheme: .iconNormal, variant: .light)
+        case .dark: return UIColor(scheme: .iconNormal, variant: .dark)
         }
     }
     
     var iconColorNormal: UIColor {
         switch self {
-        case .light: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
-        case .dark: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark)
+        case .light: return UIColor(scheme: .iconNormal, variant: .light)
+        case .dark: return UIColor(scheme: .iconNormal, variant: .dark)
         }
     }
     
     var iconColorSelected: UIColor {
         switch self {
-        case .light: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .dark)
-        case .dark: return .wr_color(fromColorScheme: ColorSchemeColorIconNormal, variant: .light)
+        case .light: return UIColor(scheme: .iconNormal, variant: .dark)
+        case .dark: return UIColor(scheme: .iconNormal, variant: .light)
         }
     }
-}
-
-func ==(lhs: CallActionAppearance, rhs: CallActionAppearance) -> Bool {
-    switch (lhs, rhs) {
-    case (.light, .light): return true
-    case let (.dark(blurred: lhsBlurred), .dark(blurred: rhsBlurred)): return lhsBlurred == rhsBlurred
-    default: return false
+    
+    var backgroundColorSelectedAndHighlighted: UIColor {
+        switch self {
+        case .light: return UIColor.black.withAlphaComponent(0.16)
+        case .dark: return UIColor.white.withAlphaComponent(0.4)
+        }
     }
 }

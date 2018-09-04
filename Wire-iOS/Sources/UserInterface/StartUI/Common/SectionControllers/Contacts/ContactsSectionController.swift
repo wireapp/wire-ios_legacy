@@ -66,7 +66,7 @@ class ContactsSectionController : SearchSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
         cell.configure(with: user)
-        cell.separator.isHidden = (contacts.count - 1) == indexPath.row
+        cell.showSeparator = (contacts.count - 1) != indexPath.row
         cell.checkmarkIconView.isHidden = !allowsSelection
         cell.accessoryIconView.isHidden = true
         
@@ -78,6 +78,10 @@ class ContactsSectionController : SearchSectionController {
         }
 
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return !(selection?.hasReachedLimit ?? false)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

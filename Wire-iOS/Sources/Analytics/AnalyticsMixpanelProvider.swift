@@ -70,55 +70,7 @@ extension Dictionary where Key == String, Value == Any {
 
 final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
-    
-    
-    private static let enabledEvents = Set<String>([
-        conversationMediaCompleteActionEventName,
-        "settings.opted_in_tracking",
-        "settings.opted_out_tracking",
-        "settings.changed_status",
-        "e2ee.failed_message_decyption",
-        "start.opened_start_screen",
-        "start.opened_person_registration",
-        "start.opened_team_registration",
-        "start.opened_login",
-        "team.verified",
-        "team.accepted_terms",
-        "team.created",
-        "team.added_team_name",
-        "team.finished_invite_step",
-        "settings.opened_manage_team",
-        "registration.succeeded",
-        "calling.joined_call",
-        "calling.joined_video_call",
-        "calling.established_call",
-        "calling.established_video_call",
-        "calling.ended_call",
-        "calling.ended_video_call",
-        "calling.initiated_call",
-        "calling.initiated_video_call",
-        "calling.received_call",
-        "calling.received_video_call",
-        "calling.avs_metrics_ended_call",
-        "notifications.processing",
-        TeamInviteEvent.sentInvite(.teamCreation).name,
-        "integration.added_service",
-        "integration.removed_service",
-        LinearGroupCreationFlowEvent.openedGroupCreationName,
-        LinearGroupCreationFlowEvent.openedSelectParticipantsName,
-        LinearGroupCreationFlowEvent.groupCreationSucceededName,
-        LinearGroupCreationFlowEvent.addParticipantsName,
-        ConversationEvent.toggleAllowGuestsName,
-        GuestLinkEvent.created.name,
-        GuestLinkEvent.copied.name,
-        GuestLinkEvent.revoked.name,
-        GuestLinkEvent.shared.name,
-        GuestRoomEvent.created.name,
-        BackupEvent.importSucceeded.name,
-        BackupEvent.importFailed.name,
-        BackupEvent.exportSucceeded.name,
-        BackupEvent.exportFailed.name
-        ])
+    private let defaults: UserDefaults
     
     private static let enabledSuperProperties = Set<String>([
         "app",
@@ -132,9 +84,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         zmLog.info("AnalyticsMixpanelProvider \(self) deallocated")
     }
     
-    override init() {
+    init(defaults: UserDefaults) {
+        self.defaults = defaults
+
         if !MixpanelAPIKey.isEmpty {
-            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey)
+            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey, optOutTrackingByDefault: true)
         }
         super.init()
         mixpanelInstance?.distinctId = mixpanelDistinctId
@@ -145,6 +99,12 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         if DeveloperMenuState.developerMenuEnabled(),
             let uuidString = mixpanelInstance?.distinctId {
             zmLog.error("Mixpanel distinctId = `\(uuidString)`")
+            
+            #if targetEnvironment(simulator)
+            let tempFilePath = URL(fileURLWithPath: "/var/tmp/mixpanel_id.txt")
+            try? FileManager.default.removeItem(at: tempFilePath)
+            try! Data(uuidString.utf8).write(to: tempFilePath)
+            #endif
         }
         
         self.setSuperProperty("app", stringValue: "ios")
@@ -153,21 +113,26 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     }
     
     var mixpanelDistinctId: String {
-        if let id = UserDefaults.shared().string(forKey: MixpanelDistinctIdKey) {
+        if let id = defaults.string(forKey: MixpanelDistinctIdKey) {
             return id
         }
         else {
             let id = UUID().transportString()
-            UserDefaults.shared().set(id, forKey: MixpanelDistinctIdKey)
-            UserDefaults.shared().synchronize()
+            defaults.set(id, forKey: MixpanelDistinctIdKey)
+            defaults.synchronize()
             return id
         }
     }
     
-    public var isOptedOut : Bool = false {
-        didSet {
-            if isOptedOut {
-                self.mixpanelInstance?.flush(completion: {})
+    public var isOptedOut: Bool {
+        get {
+            return mixpanelInstance?.hasOptedOutTracking() ?? true
+        }
+        set {
+            if newValue == true {
+                mixpanelInstance?.optOutTracking()
+            } else {
+                mixpanelInstance?.optInTracking()
             }
         }
     }
@@ -176,12 +141,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }
-        
-        guard AnalyticsMixpanelProvider.enabledEvents.contains(event) else {
-            zmLog.info("Analytics: event \(event) is disabled")
-            return
-        }
-        
+                
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
     
@@ -195,10 +155,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return
         }
         
-        guard AnalyticsMixpanelProvider.enabledSuperProperties.contains(name) else {
-            zmLog.info("Analytics: Super property \(name) is disabled")
-            return
-        }
+        assert(AnalyticsMixpanelProvider.enabledSuperProperties.contains(name), "Analytics: Super property \(name) is disabled")
         
         if let valueNotNil = Dictionary.bridgeOrDescription(for: value) {
             mixpanelInstance.registerSuperProperties([name: valueNotNil])

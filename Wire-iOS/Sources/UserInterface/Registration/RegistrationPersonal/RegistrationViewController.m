@@ -47,8 +47,6 @@
 #import "PhoneSignInViewController.h"
 #import "EmailSignInViewController.h"
 
-#import "AnalyticsTracker+Registration.h"
-
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
@@ -119,6 +117,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateViewConstraints];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
+}
+
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
@@ -152,7 +156,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     if (userSessionErrorCode == ZMUserSessionNeedsToRegisterEmailToRegisterClient) {
         AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-        addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
         addEmailPasswordViewController.formStepDelegate = self;
         rootViewController = addEmailPasswordViewController;
     }
@@ -194,7 +197,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return IS_IPAD ? RegistrationFlowEmail : RegistrationFlowPhone;
 }
 
-- (void)presentNoHistoryViewController:(ContextType)type
+- (void)presentNoHistoryViewController:(ContextType)type animated:(BOOL)animated
 {
     if ([self.rootNavigationController.topViewController isKindOfClass:[NoHistoryViewController class]]) {
         return;
@@ -203,7 +206,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     noHistoryViewController.formStepDelegate = self;
 
     self.rootNavigationController.backButtonEnabled = NO;
-    [self.rootNavigationController pushViewController:noHistoryViewController animated:YES];
+    [self.rootNavigationController pushViewController:noHistoryViewController animated:animated];
 }
 
 #pragma mark - FormStepProtocol
@@ -271,7 +274,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [[UnauthenticatedSession sharedSession] continueAfterBackupImportStep];
     }
     else {
-        [self presentNoHistoryViewController:type];
+        [self presentNoHistoryViewController:type animated:YES];
     }
 }
 
@@ -299,7 +302,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         }
         
         AddEmailPasswordViewController *addEmailPasswordViewController = [[AddEmailPasswordViewController alloc] init];
-        addEmailPasswordViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextPostLogin];
         addEmailPasswordViewController.formStepDelegate = self;
         addEmailPasswordViewController.skipButtonType = AddEmailPasswordViewControllerSkipButtonTypeNone;
         

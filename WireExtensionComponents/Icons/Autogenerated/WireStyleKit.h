@@ -185,6 +185,10 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (void)drawIcon_0x755_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x756_32ptWithColor: (UIColor*)color;
 + (void)drawIcon_0x757_32ptWithColor: (UIColor*)color;
++ (void)drawWeekWithColor: (UIColor*)color;
++ (void)drawMonthWithColor: (UIColor*)color;
++ (void)drawYearWithColor: (UIColor*)color;
++ (void)drawIcon_0x758_32ptWithColor: (UIColor*)color;
 + (void)drawMissedcallWithAccent: (UIColor*)accent;
 + (void)drawYoutubeWithColor: (UIColor*)color;
 + (void)drawMissedcalllastWithAccent: (UIColor*)accent;
@@ -327,6 +331,10 @@ extern CGRect WireStyleKitResizingBehaviorApply(WireStyleKitResizingBehavior beh
 + (UIImage*)imageOfIcon_0x755_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x756_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfIcon_0x757_32ptWithColor: (UIColor*)color;
++ (UIImage*)imageOfWeekWithColor: (UIColor*)color;
++ (UIImage*)imageOfMonthWithColor: (UIColor*)color;
++ (UIImage*)imageOfYearWithColor: (UIColor*)color;
++ (UIImage*)imageOfIcon_0x758_32ptWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcallWithAccent: (UIColor*)accent;
 + (UIImage*)imageOfYoutubeWithColor: (UIColor*)color;
 + (UIImage*)imageOfMissedcalllastWithAccent: (UIColor*)accent;

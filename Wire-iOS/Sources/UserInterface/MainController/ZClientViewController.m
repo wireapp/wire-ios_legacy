@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -39,9 +39,7 @@
 
 #import "Constants.h"
 #import "Analytics.h"
-#import "AnalyticsTracker.h"
 #import "Settings.h"
-#import "StopWatch.h"
 
 #import "Wire-Swift.h"
 
@@ -74,7 +72,6 @@
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
-@property (nonatomic) LegacyMessageTracker *messageCountTracker;
 
 @property (nonatomic) id incomingApnsObserver;
 @property (nonatomic) id networkAvailabilityObserverToken;
@@ -94,7 +91,6 @@
 - (void)dealloc
 {
     [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init
@@ -103,7 +99,6 @@
     if (self) {
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
-        self.messageCountTracker = [[LegacyMessageTracker alloc] initWithManagedObjectContext:ZMUserSession.sharedSession.syncManagedObjectContext];
 
         [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
@@ -123,17 +118,24 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentSizeCategoryDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
                 
-        [[GuestIndicator appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
-        [[UserCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
-        [[UserCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
-        [[SectionHeader appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
-        [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
-        [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
-        [[UIView appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]] setTintColor:[ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground variant:ColorSchemeVariantLight]];
+        [self setupAppearance];
 
         [self setupConversationListViewController];
     }
     return self;
+}
+
+- (void)setupAppearance
+{
+    [[GuestIndicator appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+    [[UserCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+    [[UserCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
+    [[SectionHeader appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+    [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+    [[GroupConversationCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
+    [[OpenServicesAdminCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setColorSchemeVariant:ColorSchemeVariantDark];
+    [[OpenServicesAdminCell appearanceWhenContainedInInstancesOfClasses:@[StartUIView.class]] setContentBackgroundColor:UIColor.clearColor];
+    [[UIView appearanceWhenContainedInInstancesOfClasses:@[UIAlertController.class]] setTintColor:[ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextForeground variant:ColorSchemeVariantLight]];
 }
 
 - (void)viewDidLoad
@@ -265,6 +267,8 @@
 - (void)setupConversationListViewController
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
+    self.conversationListViewController.account = SessionManager.shared.accountManager.selectedAccount;
+
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
 }
@@ -309,9 +313,6 @@
 
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
-    StopWatch *stopWatch = [StopWatch stopWatch];
-    [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
-    
     [self dismissAllModalControllersWithCallback:^{
         [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
     }];
@@ -412,52 +413,12 @@
 
 }
 
-- (void)openDetailScreenForUserClient:(UserClient *)client
-{
-    if (client.user.isSelfUser) {
-        SettingsClientViewController *userClientViewController = [[SettingsClientViewController alloc] initWithUserClient:client credentials:nil];
-        UINavigationController *navWrapperController = [[SettingsStyleNavigationController alloc] initWithRootViewController:userClientViewController];
-
-        navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:navWrapperController animated:YES completion:nil];
-    }
-    else {
-        ProfileClientViewController* userClientViewController = [[ProfileClientViewController alloc] initWithClient:client];
-        userClientViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:userClientViewController animated:YES completion:nil];
-    }
-}
-
 - (void)openDetailScreenForConversation:(ZMConversation *)conversation
 {
     GroupDetailsViewController *controller = [[GroupDetailsViewController alloc] initWithConversation:conversation];
     UINavigationController *navController =  controller.wrapInNavigationController;
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:navController animated:YES completion:nil];
-}
-
-- (void)openClientListScreenForUser:(ZMUser *)user
-{
-    if (user.isSelfUser) {
-        ClientListViewController *clientListViewController = [[ClientListViewController alloc] initWithClientsList:user.clients.allObjects credentials:nil detailedView:YES showTemporary:YES];
-        clientListViewController.view.backgroundColor = [UIColor blackColor];
-        clientListViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissClientListController:)];
-        UINavigationController *navWrapperController = [[SettingsStyleNavigationController alloc] initWithRootViewController:clientListViewController];
-        navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:navWrapperController animated:YES completion:nil];
-        
-    } else {
-        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
-        if ([self.conversationRootViewController isKindOfClass:ConversationRootViewController.class]) {
-            profileViewController.delegate = (id <ProfileViewControllerDelegate>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
-            profileViewController.viewControllerDismisser = (id <ViewControllerDismisser>)[(ConversationRootViewController *)self.conversationRootViewController conversationViewController];
-        }
-        UINavigationController *navWrapperController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
-        navWrapperController.modalPresentationStyle = UIModalPresentationFormSheet;
-        navWrapperController.navigationBarHidden = YES;
-        [self presentViewController:navWrapperController animated:YES completion:nil];
-    }
-
 }
 
 - (void)dismissClientListController:(id)sender
@@ -467,30 +428,48 @@
 
 #pragma mark - Animated conversation switch
 
+- (void)minimizeCallOverlayWithCompletion:(dispatch_block_t)completion
+{
+    [AppDelegate.sharedAppDelegate.callWindowRootViewController minimizeOverlayWithCompletion:completion];
+}
+
 - (void)dismissAllModalControllersWithCallback:(dispatch_block_t)callback
 {
-    if (self.splitViewController.rightViewController.presentedViewController != nil) {
-        [self.splitViewController.rightViewController dismissViewControllerAnimated:NO completion:callback];
-    }
-    else if (self.conversationListViewController.presentedViewController != nil) {
-        // This is a workaround around the fact that the transitioningDelegate of the settings
-        // view controller is not called when the transition is not being performed animated.
-        // This sounds like a bug in UIKit (Radar incoming) as I would expect the custom animator
-        // being called with `transitionContext.isAnimated == false`. As this is not the case
-        // we have to restore the proper pre-presentation state here.
-        UIView *conversationView = self.conversationListViewController.view;
-        if (!CATransform3DIsIdentity(conversationView.layer.transform) || 1 != conversationView.alpha) {
-            conversationView.layer.transform = CATransform3DIdentity;
-            conversationView.alpha = 1;
+    dispatch_block_t dismissAction = ^{
+        if (self.splitViewController.rightViewController.presentedViewController != nil) {
+            [self.splitViewController.rightViewController dismissViewControllerAnimated:NO completion:callback];
         }
-        
-        [self.conversationListViewController.presentedViewController dismissViewControllerAnimated:NO completion:callback];
+        else if (self.conversationListViewController.presentedViewController != nil) {
+            // This is a workaround around the fact that the transitioningDelegate of the settings
+            // view controller is not called when the transition is not being performed animated.
+            // This sounds like a bug in UIKit (Radar incoming) as I would expect the custom animator
+            // being called with `transitionContext.isAnimated == false`. As this is not the case
+            // we have to restore the proper pre-presentation state here.
+            UIView *conversationView = self.conversationListViewController.view;
+            if (!CATransform3DIsIdentity(conversationView.layer.transform) || 1 != conversationView.alpha) {
+                conversationView.layer.transform = CATransform3DIdentity;
+                conversationView.alpha = 1;
+            }
+            
+            [self.conversationListViewController.presentedViewController dismissViewControllerAnimated:NO completion:callback];
+        }
+        else if (self.presentedViewController != nil) {
+            [self dismissViewControllerAnimated:NO completion:callback];
+        }
+        else if (callback) {
+            callback();
+        }
+    };
+
+    ZMConversation *ringingCallConversation = [[ZMUserSession sharedSession] ringingCallConversation];
+    
+    if (ringingCallConversation != nil) {
+        dismissAction();
     }
-    else if (self.presentedViewController != nil) {
-        [self dismissViewControllerAnimated:NO completion:callback];
-    }
-    else if (callback) {
-        callback();
+    else {
+        [self minimizeCallOverlayWithCompletion:^{
+            dismissAction();
+        }];
     }
 }
 
@@ -536,7 +515,6 @@
 {
     [self uploadAddressBookIfNeeded];
     [self trackShareExtensionEventsIfNeeded];
-    [self.messageCountTracker trackLegacyMessageCount];
 }
 
 #pragma mark - Adressbook Upload

@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 
-@objc class ConversationPreviewViewController: TintColorCorrectedViewController {
+@objcMembers class ConversationPreviewViewController: TintColorCorrectedViewController {
 
     let conversation: ZMConversation
     fileprivate let actionController: ConversationActionController
@@ -55,6 +55,10 @@ import Cartography
         constrain(view, contentViewController.view) { view, conversationView in
             conversationView.edges == view.edges
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     // MARK: Preview Actions

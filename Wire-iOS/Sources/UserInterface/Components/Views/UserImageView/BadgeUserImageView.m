@@ -45,9 +45,6 @@
         _badgeColor = UIColor.whiteColor;
 
         [self createBadgeShadow];
-        
-        self.layer.shouldRasterize = YES;
-        self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
     }
     
     return self;
@@ -76,7 +73,7 @@
     [super updateConstraints];
 }
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
+- (void)setUser:(id<UserType, AccentColorProvider>)user
 {
     [super setUser:user];
     
@@ -133,7 +130,7 @@
         if (animated) {
             hideBadge();
             [UIView animateWithDuration:0.65 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:15.0 options:0 animations:showBadge completion:nil];
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutQuart duration:0.15 animations:showShadow];
+            [UIView wr_animateWithEasing:WREasingFunctionEaseOutQuart duration:0.15 animations:showShadow];
         } else {
             showBadge();
             showShadow();

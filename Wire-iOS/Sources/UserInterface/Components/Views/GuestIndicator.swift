@@ -21,7 +21,7 @@ import Foundation
 
 public class GuestIndicator: UIImageView, Themeable {
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -29,16 +29,16 @@ public class GuestIndicator: UIImageView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorIconGuest, variant: colorSchemeVariant))
+        image = UIImage(for: .guest, iconSize: .tiny, color: UIColor(scheme: .iconGuest, variant: colorSchemeVariant))
     }
     
     init() {
         super.init(frame: .zero)
         contentMode = .scaleToFill
-        setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
+        setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         accessibilityIdentifier = "img.guest"
         applyColorScheme(colorSchemeVariant)
     }
@@ -50,7 +50,7 @@ public class GuestIndicator: UIImageView, Themeable {
 
 public class GuestLabelIndicator: UIStackView, Themeable {
     
-    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default().variant {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorSchemeOnSubviews(colorSchemeVariant)
@@ -59,8 +59,8 @@ public class GuestLabelIndicator: UIStackView, Themeable {
     }
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        label.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
-        guestIcon.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
+        label.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        guestIcon.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
     }
     
     private let guestIcon = UIImageView()
@@ -68,19 +68,19 @@ public class GuestLabelIndicator: UIStackView, Themeable {
     
     init() {
         guestIcon.contentMode = .scaleToFill
-        guestIcon.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        guestIcon.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        guestIcon.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
-        guestIcon.setContentHuggingPriority(UILayoutPriorityRequired, for: .horizontal)
-        guestIcon.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant))
+        guestIcon.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        guestIcon.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
+        guestIcon.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+        guestIcon.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
+        guestIcon.image = UIImage(for: .guest, iconSize: .tiny, color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
         guestIcon.accessibilityIdentifier = "img.guest"
 
         label.numberOfLines = 0
         label.textAlignment = .left
         label.font = FontSpec(.medium, .light).font
-        label.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: colorSchemeVariant)
-        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        label.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         label.text = "profile.details.guest".localized
         
         super.init(frame: .zero)

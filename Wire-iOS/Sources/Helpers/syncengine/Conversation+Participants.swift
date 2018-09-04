@@ -24,6 +24,22 @@ extension ZMConversation {
         case offline
     }
     
+    @objc static let maxVideoCallParticipants: Int = 4
+    
+    @objc static let maxParticipants: Int = 300
+    
+    @objc static var maxParticipantsExcludingSelf: Int {
+        return maxParticipants - 1
+    }
+    
+    @objc static var maxVideoCallParticipantsExcludingSelf: Int {
+        return maxVideoCallParticipants - 1
+    }
+    
+    @objc var freeParticipantSlots: Int {
+        return type(of: self).maxParticipants - activeParticipants.count
+    }
+    
     @objc(addParticipantsOrShowError:)
     func addOrShowError(participants: Set<ZMUser>) {
         guard let session = ZMUserSession.shared(),
@@ -35,10 +51,9 @@ extension ZMConversation {
         self.addParticipants(participants,
                              userSession: ZMUserSession.shared()!) { result in
                                 switch result {
-                                case .success:
-                                    Analytics.shared().tagAddParticipants(source:.conversationDetails, participants, allowGuests: self.allowGuests, in: self)
                                 case .failure(let error):
                                     self.showAlertForAdding(for: error)
+                                default: break
                                 }
         }
     }
@@ -61,9 +76,6 @@ extension ZMConversation {
                                 case .success:
                                     if user.isServiceUser {
                                         Analytics.shared().tagDidRemoveService(user)
-                                    }
-                                    else if user.isSelfUser {
-                                        Analytics.shared().tagEventObject(AnalyticsGroupConversationEvent(forLeave: .leave, participantCount: UInt(self.activeParticipants.count)))
                                     }
                                 case .failure(let error):
                                     self.showAlertForRemoval(for: error)

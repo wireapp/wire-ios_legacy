@@ -79,6 +79,10 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--disable-call-quality-survey"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--debug-data-to-install=/Users/xxxxxxx/Database2.41"
             isEnabled = "NO">
          </CommandLineArgument>
@@ -132,11 +136,6 @@
          <EnvironmentVariable
             key = "IMAGE_DIFF_DIR"
             value = "$(SOURCE_ROOT)/SnapshotResults"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "OS_ACTIVITY_MODE"
-            value = "disable"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

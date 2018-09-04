@@ -28,9 +28,7 @@
 #import "ConversationListViewModel.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "UIView+Borders.h"
 
-#import "StopWatch.h"
 #import "ProgressSpinner.h"
 
 #import "ZClientViewController+Internal.h"
@@ -77,7 +75,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
     // Observer must be deallocated before `mediaPlaybackManager`
     self.activeMediaPlayerObserver = nil;
     self.mediaPlaybackManager = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)init
@@ -88,12 +85,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
-        StopWatch *stopWatch = [StopWatch stopWatch];
-        StopWatchEvent *loadContactListEvent = [stopWatch stopEvent:@"LoadContactList"];
-        if (loadContactListEvent) {
-            ZMLogDebug(@"Contact List load after %lums", (unsigned long)loadContactListEvent.elapsedTime);
-        }
-        
+
         if (nil != [UISelectionFeedbackGenerator class]) {
             self.selectionFeedbackGenerator = [[UISelectionFeedbackGenerator alloc] init];
         }
@@ -315,13 +307,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 - (BOOL)selectModelItem:(id)itemToSelect
 {
-    if([itemToSelect isKindOfClass:[ZMConversation class]]) {
-        
-        ZMConversation *conversation = (ZMConversation *)itemToSelect;
-        StopWatch *stopWatch = [StopWatch stopWatch];
-        [stopWatch restartEvent:[NSString stringWithFormat:@"ConversationSelect%@", conversation.displayName]];
-    }
-    
     return [self.listViewModel selectItem:itemToSelect];
 }
 

@@ -18,8 +18,9 @@
 
 
 #import "ProfileDevicesViewController.h"
+#import "ProfileDevicesViewController+Internal.h"
 
-#import "ParticipantsDeviceHeaderView.h"
+#import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceCell.h"
 
 #import "Analytics.h"
@@ -47,7 +48,9 @@
         return nil;
     }
     self.user = user;
-    self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.user userSession:[ZMUserSession sharedSession]];
+    if ([ZMUserSession sharedSession] != nil) {
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:self.user userSession:[ZMUserSession sharedSession]];
+    }
     [self refreshSortedClientsWithSet:user.clients];
     return self;
 }
@@ -63,6 +66,8 @@
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 32, 0);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 56, 0, 0);
     [self setupTableHeaderView];
+
+    [self setupStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -131,7 +136,6 @@
 
 - (void)participantsDeviceHeaderViewDidTapLearnMore:(ParticipantDeviceHeaderView *)headerView
 {
-    [[Analytics shared] tagViewedFingerprintLearnMore];
     [NSURL.wr_fingerprintLearnMoreURL openInAppAboveViewController:self];
 }
 

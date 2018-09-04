@@ -84,7 +84,7 @@ class ClearBackgroundNavigationController: UINavigationController {
         super.pushViewController(viewController, animated: animated)
     }
     
-    func onEdgeSwipe(gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
+    @objc func onEdgeSwipe(gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             self.popViewController(animated: true)
         }

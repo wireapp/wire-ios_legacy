@@ -20,9 +20,10 @@ import Foundation
 
 extension UINavigationController {
     
-    func closeItem() -> UIBarButtonItem {
+    @objc func closeItem() -> UIBarButtonItem {
         let item = UIBarButtonItem(icon: .X, target: self, action: #selector(closeTapped))
         item.accessibilityIdentifier = "close"
+        item.accessibilityLabel = "general.close".localized
         return item
     }
     

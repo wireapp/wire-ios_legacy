@@ -21,9 +21,9 @@ import Classy
 import Cartography
 
 
-final class ConversationRenamedCell: IconSystemCell {
+@objcMembers final class ConversationRenamedCell: IconSystemCell {
 
-    var nameLabelFont: UIFont?
+    var nameLabelFont: UIFont? = .normalSemiboldFont
     private let nameLabel = UILabel()
 
     public required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -69,9 +69,7 @@ final class ConversationRenamedCell: IconSystemCell {
     }
 
     private func attributedTitle(for message: ZMConversationMessage) -> NSAttributedString? {
-        guard let labelFont = labelFont,
-            let labelBoldFont = labelBoldFont,
-            let labelTextColor = labelTextColor,
+        guard let labelTextColor = labelTextColor,
             let sender = message.sender,
             let senderString = self.sender(for: message) else { return nil }
 

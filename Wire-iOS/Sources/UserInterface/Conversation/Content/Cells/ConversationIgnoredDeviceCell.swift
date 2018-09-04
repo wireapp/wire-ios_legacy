@@ -20,7 +20,7 @@
 import Foundation
 import TTTAttributedLabel
 
-class ConversationIgnoredDeviceCell : IconSystemCell {
+@objcMembers class ConversationIgnoredDeviceCell : IconSystemCell {
     fileprivate static let deviceListLink = URL(string:"setting://device-list")!
     
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
@@ -33,8 +33,6 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
     
     func updateLabel() {
         if let systemMessageData = message.systemMessageData,
-            let labelFont = self.labelFont,
-            let labelBoldFont = self.labelBoldFont,
             let labelTextColor = self.labelTextColor
             , systemMessageData.systemMessageType == ZMSystemMessageType.ignoredClient && systemMessageData.users.count > 0 {
                 
@@ -56,9 +54,9 @@ class ConversationIgnoredDeviceCell : IconSystemCell {
                 let deviceRange = (endResult as NSString).range(of: deviceString)
 
                 let attributedString = NSMutableAttributedString(string: endResult)
-                attributedString.addAttributes([NSFontAttributeName: labelFont, NSForegroundColorAttributeName: labelTextColor], range:NSRange(location: 0, length: endResult.count))
-                attributedString.addAttributes([NSFontAttributeName: labelBoldFont, NSForegroundColorAttributeName: labelTextColor], range: youRange)
-                attributedString.addAttributes([NSFontAttributeName: labelFont, NSLinkAttributeName: type(of: self).deviceListLink], range: deviceRange)
+                attributedString.addAttributes([.font: labelFont, .foregroundColor: labelTextColor], range:NSRange(location: 0, length: endResult.count))
+                attributedString.addAttributes([.font: labelBoldFont, .foregroundColor: labelTextColor], range: youRange)
+                attributedString.addAttributes([.font: labelFont, .link: type(of: self).deviceListLink], range: deviceRange)
                 
                 attributedText = NSAttributedString(attributedString: attributedString)
         }

@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-open class LikeButton: IconButton {
+@objcMembers open class LikeButton: IconButton {
     open func setSelected(_ selected: Bool, animated: Bool) {
         if animated {
             guard let imageView = self.imageView else {
@@ -49,11 +49,11 @@ open class LikeButton: IconButton {
                 animationImageView.alpha = 0.0
                 animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 
-                UIView.wr_animate(easing: RBBEasingFunctionEaseOutExpo, duration: 0.35, animations: {
+                UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform.identity
                 })
                 
-                UIView.wr_animate(easing: RBBEasingFunctionEaseOutQuart, duration: 0.35, animations: {
+                UIView.wr_animate(easing: .easeOutQuart, duration: 0.35, animations: {
                         animationImageView.alpha = 1
                     }, completion: { _ in
                         animationImageView.removeFromSuperview()
@@ -64,11 +64,11 @@ open class LikeButton: IconButton {
             }
             else {
                 
-                UIView.wr_animate(easing: RBBEasingFunctionEaseInExpo, duration: 0.35, animations: {
+                UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 })
                 
-                UIView.wr_animate(easing: RBBEasingFunctionEaseInQuart, duration: 0.35, animations: {
+                UIView.wr_animate(easing: .easeInQuart, duration: 0.35, animations: {
                     animationImageView.alpha = 0.0
                     }, completion: { _ in
                         animationImageView.removeFromSuperview()

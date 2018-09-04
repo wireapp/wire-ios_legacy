@@ -36,38 +36,21 @@ protocol ColorVariantProvider {
 extension CallStatusViewInputType {
     var overlayBackgroundColor: UIColor {
         switch (isVideoCall, state) {
-        case (false, _): return variant == .light ? .wr_color(fromColorScheme: ColorSchemeColorBackground, variant: .light) : .black
+        case (false, _): return variant == .light ? UIColor(scheme: .background, variant: .light) : .black
         case (true, .ringingOutgoing), (true, .ringingIncoming): return UIColor.black.withAlphaComponent(0.4)
         case (true, _): return UIColor.black.withAlphaComponent(0.64)
         }
     }
 }
 
-enum CallStatusViewState {
+enum CallStatusViewState: Equatable {
     case none
     case connecting
-    case ringingIncoming(name: String) // Caller name + call type "XYZ is (video) calling..."
+    case ringingIncoming(name: String?) // Caller name + call type "XYZ is calling..."
     case ringingOutgoing // "Ringing..."
     case established(duration: TimeInterval) // Call duration in seconds "04:18"
     case reconnecting // "Reconnecting..."
     case terminating // "Ending call..."
-}
-
-extension CallStatusViewState: Equatable {
-    
-    static func ==(lhs: CallStatusViewState, rhs: CallStatusViewState) -> Bool {
-        switch (lhs, rhs) {
-        case (.none, .none), (.connecting, .connecting), (.reconnecting, .reconnecting), (.terminating, .terminating), (.ringingOutgoing, .ringingOutgoing):
-            return true
-        case (.ringingIncoming(let lhsName), .ringingIncoming(let rhsName)):
-            return lhsName == rhsName
-        case (.established(let lhsDuration), .established(let rhsDuration)):
-            return lhsDuration == rhsDuration
-        default:
-            return false
-        }
-    }
-    
 }
 
 final class CallStatusView: UIView {
@@ -103,14 +86,14 @@ final class CallStatusView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         bitrateLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.spacing = 12
-        titleLabel.accessibilityIdentifier = "CallStatusLabel"
-        subtitleLabel.accessibilityIdentifier = "CallStatusSubtitleLabel"
+        accessibilityIdentifier = "CallStatusLabel"
         [titleLabel, subtitleLabel].forEach(stackView.addArrangedSubview)
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textAlignment = .center
         }
 
-        titleLabel.font = .systemFont(ofSize: 20, weight: UIFontWeightSemibold)
+        titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.font = .systemFont(ofSize: 20, weight: UIFont.Weight.semibold)
         subtitleLabel.font = FontSpec(.normal, .semibold).font
         subtitleLabel.alpha = 0.64
 
@@ -121,8 +104,8 @@ final class CallStatusView: UIView {
     
     private func createConstraints() {
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
             stackView.topAnchor.constraint(equalTo: topAnchor),
             bitrateLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
             bitrateLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -137,10 +120,10 @@ final class CallStatusView: UIView {
         bitrateLabel.isHidden = !configuration.isConstantBitRate
 
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
-            $0.textColor = .wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: configuration.effectiveColorVariant)
+            $0.textColor = UIColor(scheme: .textForeground, variant: configuration.effectiveColorVariant)
         }
 
-        accessibilityLabel = stackView.arrangedSubviews.flatMap { $0.accessibilityLabel }.joined(separator: "\n")
+        accessibilityLabel = stackView.arrangedSubviews.compactMap { $0.accessibilityLabel }.joined(separator: "\n")
     }
     
 }
@@ -160,7 +143,8 @@ extension CallStatusViewInputType {
         switch state {
         case .none: return ""
         case .connecting: return "call.status.connecting".localized
-        case .ringingIncoming(name: let name): return "call.status.incoming.user".localized(args: name)
+        case .ringingIncoming(name: let name?): return "call.status.incoming.user".localized(args: name)
+        case .ringingIncoming(name: nil): return "call.status.incoming".localized
         case .ringingOutgoing: return "call.status.outgoing".localized
         case .established(duration: let duration): return callDurationFormatter.string(from: duration) ?? ""
         case .reconnecting: return "call.status.reconnecting".localized

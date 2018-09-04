@@ -51,12 +51,12 @@ extension ZMConversation {
     }
     
     func joinCall() {
-        joinVoiceChannel(video: voiceChannel?.isVideoCall ?? false)
+        joinVoiceChannel(video: false)
     }
     
     func joinVoiceChannel(video: Bool) {
         guard let userSession = ZMUserSession.shared() else { return }
-        
+
         let onGranted : (_ granted : Bool ) -> Void = { granted in
             if granted {
                 let joined = self.voiceChannel?.join(video: video, userSession: userSession) ?? false
@@ -69,10 +69,14 @@ extension ZMConversation {
             }
         }
         
-        UIApplication.wr_requestOrWarnAboutMicrophoneAccess { (granted) in
+        UIApplication.wr_requestOrWarnAboutMicrophoneAccess { granted in
             if video {
-                UIApplication.wr_requestOrWarnAboutVideoAccess(onGranted)
+                UIApplication.wr_requestOrWarnAboutVideoAccess { _ in
+                    // We still allow starting the call, even if the video permissions were not granted.
+                    onGranted(granted)
+                }
             } else {
+                RunLoop.current.run(until: Date().addingTimeInterval(0.1))
                 onGranted(granted)
             }
         }
@@ -105,6 +109,35 @@ extension ZMConversation {
             return true
         } else {
             return false
+        }
+    }
+
+    func confirmJoiningCallIfNeeded(alertPresenter: UIViewController, forceAlertModal: Bool = false, completion: @escaping () -> Void) {
+        guard ZMUserSession.shared()?.isCallOngoing == true else {
+            return completion()
+        }
+
+        let controller = UIAlertController.ongoingCallJoinCallConfirmation(forceAlertModal: forceAlertModal) { confirmed in
+            guard confirmed else { return }
+            self.endAllCallsExceptIncoming()
+            completion()
+        }
+
+        alertPresenter.present(controller, animated: true)
+    }
+
+    /// Ends all the active calls, except the conversation's incoming call, if any.
+    private func endAllCallsExceptIncoming() {
+        switch voiceChannel?.state {
+        case .incoming?:
+            guard let sharedSession = ZMUserSession.shared() else { return }
+
+            sharedSession.callCenter?.activeCallConversations(in: sharedSession)
+                .filter { $0.remoteIdentifier != self.remoteIdentifier }
+                .forEach { $0.voiceChannel?.leave() }
+
+        default:
+            ZMUserSession.shared()?.callCenter?.endAllCalls()
         }
     }
 

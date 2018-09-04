@@ -47,7 +47,6 @@
 #import "MediaBar.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"
-#import "UIView+Borders.h"
 #import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
@@ -57,8 +56,6 @@
 #import "VerticalTransition.h"
 
 #import "UIColor+WAZExtensions.h"
-#import "AnalyticsTracker.h"
-#import "AnalyticsTracker+Invitations.h"
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -89,15 +86,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
 
-@interface ConversationViewController (VerticalTransitionDataSource) <VerticalTransitionDataSource>
-@end
-
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
 @end
 
 @interface ConversationViewController ()
 
-@property (nonatomic) ConversationDetailsTransitioningDelegate *conversationDetailsTransitioningDelegate;
 @property (nonatomic) BarController *conversationBarController;
 @property (nonatomic) MediaBarViewController *mediaBarViewController;
 
@@ -116,8 +109,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
 
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
-
 @property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
 @property (nonatomic) CollectionsViewController *collectionController;
@@ -134,8 +125,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [self dismissCollectionIfNecessary];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-
     [self hideAndDestroyParticipantsPopoverController];
     self.contentViewController.delegate = nil;
 }
@@ -156,13 +145,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [UIView performWithoutAnimation:^{
         self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextBackground];
     }];
-
-    self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:AnalyticsContextConversation];
-    self.conversationDetailsTransitioningDelegate = [[ConversationDetailsTransitioningDelegate alloc] init];
-    self.conversationDetailsTransitioningDelegate.dataSource = self;
     
     [self createInputBarController];
     [self createContentViewController];
+
+    self.contentViewController.tableView.pannableView = self.inputBarController.view;
+
     [self createConversationBarController];
     [self createMediaBarViewController];
     [self createGuestsBarController];
@@ -190,7 +178,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self.inputBarController = [[ConversationInputBarViewController alloc] initWithConversation:self.conversation];
     self.inputBarController.delegate = self;
-    self.inputBarController.analyticsTracker = self.analyticsTracker;
     self.inputBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
 
     // Create an invisible input accessory view that will allow us to take advantage of built in keyboard
@@ -206,7 +193,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation];
     self.contentViewController.delegate = self;
-    self.contentViewController.analyticsTracker = self.analyticsTracker;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;
 }
@@ -276,43 +262,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self.guestsBarController = [[GuestsBarController alloc] init];
 }
-    
-- (BOOL)guestsBarShouldBePresented
-{
-    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-        return NO;
-    }
-    
-    Team *selfUserTeam = ZMUser.selfUser.team;
-    
-    if (selfUserTeam == nil) {
-        return NO;
-    }
-    
-    if (self.conversation.team == selfUserTeam) {
-        BOOL containsGuests = NO;
-        
-        for (ZMUser *user in self.conversation.activeParticipants) {
-            if ([user isGuestInConversation:self.conversation]) {
-                containsGuests = YES;
-                break;
-            }
-        }
-        
-        return containsGuests;
-    }
-    else {
-        return NO;
-    }
-}
-    
+
 - (void)updateGuestsBarVisibilityAndShowIfNeeded:(BOOL)showIfNeeded
 {
-    if ([self guestsBarShouldBePresented]) {
+    GuestBarState state = self.conversation.guestBarState;
+    if (state != GuestBarStateHidden) {
         BOOL isPresented = nil != self.guestsBarController.parentViewController;
         if (!isPresented || showIfNeeded) {
             [self.conversationBarController presentBar:self.guestsBarController];
-            [self.guestsBarController setCollapsed:NO animated:NO];
+            [self.guestsBarController setState:state animated:NO];
         }
     }
     else {
@@ -468,8 +426,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [ConversationInputBarViewController endEditingMessage];
     [self.inputBarController.inputBar.textView resignFirstResponder];
-    
-    viewController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
+
     [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
                                                        fromView:sourceView
                                           contentViewController:viewController];
@@ -510,12 +467,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     _participantsController = viewController.wrapInNavigationController;
 
     return _participantsController;
-}
-
-- (void)setAnalyticsTracker:(AnalyticsTracker *)analyticsTracker
-{
-    _analyticsTracker = analyticsTracker;
-    self.contentViewController.analyticsTracker = _analyticsTracker;
 }
 
 - (void)didTapMediaBar:(UITapGestureRecognizer *)tapGestureRecognizer
@@ -693,6 +644,20 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self presentParticipantsViewController:navigationController fromView:sourceView];
 }
 
+- (void)conversationContentViewController:(ConversationContentViewController *)controller presentParticipantsDetailsWithSelectedUsers:(NSArray<ZMUser *> *)selectedUsers fromView:(UIView *)sourceView
+{
+    UIViewController *participantsController = self.participantsController;
+    if ([participantsController isKindOfClass:UINavigationController.class]) {
+        UINavigationController *navigationController = (UINavigationController *)participantsController;
+        if ([navigationController.topViewController isKindOfClass:GroupDetailsViewController.class]) {
+            [(GroupDetailsViewController *)navigationController.topViewController presentParticipantsDetailsWithUsers:self.conversation.sortedOtherParticipants
+                                                                                                        selectedUsers:selectedUsers
+                                                                                                             animated:NO];
+        }
+    }
+    [self presentParticipantsViewController:participantsController fromView:sourceView];
+}
+
 @end
 
 
@@ -768,8 +733,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.contentViewController scrollToBottomAnimated:YES];
     }
     
-    [self.guestsBarController setCollapsed:YES animated:YES];
-
+    [self.guestsBarController setState:GuestBarStateHidden animated:YES];
     return YES;
 }
 
@@ -781,15 +745,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)conversationInputBarViewControllerDidFinishEditingMessage:(id<ZMConversationMessage>)message withText:(NSString *)newText
 {
     [self.contentViewController didFinishEditingMessage:message];
-    ConversationType conversationType = (self.conversation.conversationType == ZMConversationTypeGroup) ? ConversationTypeGroup : ConversationTypeOneToOne;
-    MessageType messageType = [Message messageType:message];
-    NSTimeInterval elapsedTime = 0 - [message.serverTimestamp timeIntervalSinceNow];
     [[ZMUserSession sharedSession] enqueueChanges:^{
         if (newText == nil || [newText isEqualToString:@""]) {
-            [[Analytics shared] tagDeletedMessage:messageType messageDeletionType:MessageDeletionTypeEverywhere conversationType:conversationType timeElapsed:elapsedTime];
             [ZMMessage deleteForEveryone:message];
         } else {
-            [[Analytics shared] tagEditedMessageConversationType:conversationType timeElapsed:elapsedTime];
             BOOL fetchLinkPreview = ![[Settings sharedSettings] disableLinkPreviews];
             (void)[ZMMessage edit:message newText:newText fetchLinkPreview:fetchLinkPreview];
         }
@@ -868,6 +827,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
         [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
+    } else {
+        [self.guestsBarController configureTitleWithState: self.conversation.guestBarState];
     }
     
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
@@ -887,28 +848,34 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                 break;
             case ConversationDegradedResultShowDetails:
                 [self.conversation doNotResendMessagesThatCausedDegradation];
-                if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
-                    ZMUser *user = self.conversation.connectedUser;
-                    if (user.clients.count == 1) {
-                        ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
-                        userClientController.showBackButton = NO;
-                        UINavigationController *navigationController = userClientController.wrapInNavigationController;
-                        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                        userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
-                        [self presentViewController:navigationController animated:YES completion:nil];
-                    } else {
-                        ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
-                        profileViewController.delegate = self;
-                        profileViewController.viewControllerDismisser = self;
-                        UINavigationController *navigationController = profileViewController.wrapInNavigationController;
-                        navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-                        [self presentViewController:navigationController animated:YES completion:nil];
-                    }
-                } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
-                    UIViewController *participantsController = [self participantsController];
-                    participantsController.transitioningDelegate = self.conversationDetailsTransitioningDelegate;
-                    [self presentViewController:participantsController animated:YES completion:nil];
+
+                if ([[ZMUser selfUser] hasUntrustedClients]) {
+                    [[ZClientViewController sharedZClientViewController] openClientListScreenForUser:[ZMUser selfUser]];
                 }
+                else {
+                    if (self.conversation.conversationType == ZMConversationTypeOneOnOne) {
+                        ZMUser *user = self.conversation.connectedUser;
+                        if (user.clients.count == 1) {
+                            ProfileClientViewController *userClientController = [[ProfileClientViewController alloc] initWithClient:user.clients.anyObject fromConversation:YES];
+                            userClientController.showBackButton = NO;
+                            UINavigationController *navigationController = userClientController.wrapInNavigationController;
+                            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                            userClientController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX style:UIBarButtonItemStylePlain target:self action:@selector(dismissProfileClientViewController:)];
+                            [self presentViewController:navigationController animated:YES completion:nil];
+                        } else {
+                            ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user context:ProfileViewControllerContextDeviceList];
+                            profileViewController.delegate = self;
+                            profileViewController.viewControllerDismisser = self;
+                            UINavigationController *navigationController = profileViewController.wrapInNavigationController;
+                            navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
+                            [self presentViewController:navigationController animated:YES completion:nil];
+                        }
+                    } else if (self.conversation.conversationType == ZMConversationTypeGroup) {
+                        UIViewController *participantsController = [self participantsController];
+                        [self presentViewController:participantsController animated:YES completion:nil];
+                    }
+                }
+                
                 break;
         }
     }];
@@ -923,23 +890,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@implementation ConversationViewController (VerticalTransitionDataSource)
-
-- (NSArray<UIView *> *)viewsToHideDuringVerticalTransition:(VerticalTransition *)transition
-{
-    NSMutableArray<UIView *> *viewsToHide = [[NSMutableArray alloc] init];
-    
-    if ([self.parentViewController isKindOfClass:[ConversationRootViewController class]]) {
-        ConversationRootViewController *convRootViewController = (ConversationRootViewController *)self.parentViewController;
-        [viewsToHide addObject:convRootViewController.navBarContainer.view];
-    }
-    
-    [viewsToHide addObject:self.inputBarController.view];
-    
-    return viewsToHide;
-}
-
-@end
 
 @implementation ConversationViewController (ConversationListObserver)
 

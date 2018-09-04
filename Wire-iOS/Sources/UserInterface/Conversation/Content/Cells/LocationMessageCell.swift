@@ -23,7 +23,7 @@ import AddressBook
 import Classy
 
 /// Displays the location message
-public final class LocationMessageCell: ConversationCell {
+@objcMembers public final class LocationMessageCell: ConversationCell {
     
     private let mapView = MKMapView()
     private let containerView = UIView()
@@ -32,8 +32,9 @@ public final class LocationMessageCell: ConversationCell {
     private let addressLabel = UILabel()
     private var recognizer: UITapGestureRecognizer?
     private weak var locationAnnotation: MKPointAnnotation? = nil
-    var labelFont: UIFont?
-    var labelTextColor, containerColor: UIColor?
+    var labelFont: UIFont? = .normalFont
+    var labelTextColor: UIColor? = .textForeground
+    var containerColor: UIColor? = .placeholderBackground
     var containerHeightConstraint: NSLayoutConstraint!
     
     public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -92,10 +93,6 @@ public final class LocationMessageCell: ConversationCell {
             addressLabel.edges == inset(addressContainer.edges, 12, 0)
             addressContainer.height == 42
         }
-
-        constrain(containerView, countdownContainerView) { container, countDownContainer in
-            countDownContainer.top == container.top
-        }
     }
 
     public override func prepareForReuse() {
@@ -149,37 +146,34 @@ public final class LocationMessageCell: ConversationCell {
         }
     }
     
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         guard let locationData = message.locationMessageData else { return }
         // The zoomLevel calculation depends on the frame of the mapView, so we need to call this here again
         updateMapLocation(withLocationData: locationData)
     }
     
-    func openInMaps() {
+    @objc func openInMaps() {
         message?.locationMessageData?.openInMaps(with: mapView.region.span)
-        guard let conversation = message.conversation else { return }
-        let sentBySelf = message.sender?.isSelfUser ?? false
-        Analytics.shared().tagMediaOpened(.location, inConversation: conversation, sentBySelf: sentBySelf)
     }
     
-    open override func messageType() -> MessageType {
+    public override func messageType() -> MessageType {
         return .location
     }
     
     // MARK: - Selection
     
-    open override var selectionRect: CGRect {
+    public override var selectionRect: CGRect {
         return containerView.bounds
     }
     
-    open override var selectionView: UIView! {
+    public override var selectionView: UIView! {
         return containerView
     }
     
     // MARK: - Selection, Copy & Delete
     
-    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    public override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         switch action {
         case #selector(cut), #selector(paste(_:)), #selector(select(_:)), #selector(selectAll(_:)):
             return false
@@ -190,18 +184,18 @@ public final class LocationMessageCell: ConversationCell {
         }
     }
     
-    open override func copy(_ sender: Any?) {
+    public override func copy(_ sender: Any?) {
         guard let locationMessageData = message.locationMessageData else { return }
         let coordinates = "\(locationMessageData.latitude), \(locationMessageData.longitude)"
         UIPasteboard.general.string = message.locationMessageData?.name ?? coordinates
     }
     
-    open override func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    public override func menuConfigurationProperties() -> MenuConfigurationProperties! {
         let properties = MenuConfigurationProperties()
         properties.targetRect = selectionRect
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
-        properties.additionalItems = [.forward(with: #selector(forward))]
+        properties.additionalItems = [.forbiddenInEphemeral(.forward(with: #selector(forward)))]
         return properties
     }
     
@@ -211,7 +205,7 @@ public final class LocationMessageCell: ConversationCell {
         }
     }
     
-    public override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
+    @objc public override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         let height = super.prepareLayoutForPreview(message: message)
         self.containerHeightConstraint.constant = 160
         return height

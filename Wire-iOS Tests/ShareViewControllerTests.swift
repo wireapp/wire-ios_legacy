@@ -17,7 +17,6 @@
 //
 
 import XCTest
-import Classy
 import Cartography
 import WireLinkPreview
 @testable import Wire
@@ -68,15 +67,15 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
             return
         }
         
-        if let preview = message.previewView() as? ImageMessageCell {
-            _ = preview.prepareForSnapshot(img.size, image: img)
-        }
-        
         let sut = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message,
             destinations: [groupConversation, oneToOneConversation],
             showPreview: true
         )
+        
+        _ = sut.view // make sure view is loaded
+        
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         
         self.verifyInAllDeviceSizes(view: sut.view)
     }
@@ -99,39 +98,6 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         )
         
         self.verifyInAllDeviceSizes(view: sut.view)
-    }
-    
-    /// BOTS INTEGRATION
-    
-    func testThatItRendersCorrectlyShareServiceViewController_Selection() {
-        
-        let serviceUser = createService(name: "Wire Mountain Bot")
-        
-        let serviceToAdd = Service(serviceUser: serviceUser)
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "Frank Smith")]))
-        XCTAssert(groupConversation.activeParticipants.count == 4)
-        
-        let otherServiceUser = createService(name: "WireBurger Bot")
-        
-        let serviceConversation = ZMConversation.insertNewObject(in: uiMOC)
-        serviceConversation.remoteIdentifier = UUID()
-        serviceConversation.conversationType = .group
-        serviceConversation.internalAddParticipants([selfUser, otherServiceUser])
-        
-        let allConversations: [ServiceConversation] = [.new, .existing(groupConversation), .existing(serviceConversation)]
-        
-        let sut = ShareServiceViewController(shareable: serviceToAdd, destinations: allConversations, showPreview: true, allowsMultipleSelection: false)
-        
-        verifyInAllDeviceSizes(view: sut.view)
-    }
-    
-    private func createService(name: String) -> ZMUser {
-        let bot = createUser(name: name)
-        bot.serviceIdentifier = "serviceIdentifier"
-        bot.providerIdentifier = "providerIdentifier"
-        XCTAssert(bot.isServiceUser)
-        return bot
     }
 
 }

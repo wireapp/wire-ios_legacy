@@ -25,7 +25,7 @@ fileprivate let smallLightFont = FontSpec(.small, .light).font!
 fileprivate let smallBoldFont = FontSpec(.small, .medium).font!
 fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 
-@objc public class AddressBookCorrelationFormatter: NSObject {
+@objcMembers public class AddressBookCorrelationFormatter: NSObject {
 
     let lightFont, boldFont: UIFont
     let color: UIColor
@@ -36,7 +36,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
         self.color = color
     }
 
-    private func addressBookText(for user: ZMBareUser, with addressBookName: String) -> NSAttributedString? {
+    private func addressBookText(for user: UserType, with addressBookName: String) -> NSAttributedString? {
         guard !user.isSelfUser, let userName = user.name else { return nil }
         let suffix = "conversation.connection_view.in_address_book".localized && lightFont && color
         if addressBookName.lowercased() == userName.lowercased() {
@@ -47,7 +47,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
         return contactName + " " + suffix
     }
 
-    func correlationText(for user: ZMBareUser, addressBookName: String?) -> NSAttributedString? {
+    func correlationText(for user: UserType, addressBookName: String?) -> NSAttributedString? {
         if let name = addressBookName, let addressBook = addressBookText(for: user, with: name) {
             return addressBook
         }
@@ -58,7 +58,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 }
 
 
-@objc final class UserNameDetailViewModel: NSObject {
+@objcMembers final class UserNameDetailViewModel: NSObject {
 
     let title: NSAttributedString
 
@@ -90,32 +90,32 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
     }
 
     static var formatter: AddressBookCorrelationFormatter = {
-        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed))
+        AddressBookCorrelationFormatter(lightFont: smallLightFont, boldFont: smallBoldFont, color: UIColor(scheme: .textDimmed))
     }()
 
-    init(user: ZMBareUser?, fallbackName fallback: String, addressBookName: String?) {
+    init(user: UserType?, fallbackName fallback: String, addressBookName: String?) {
         title = UserNameDetailViewModel.attributedTitle(for: user, fallback: fallback)
         handleText = UserNameDetailViewModel.attributedSubtitle(for: user)
         correlationText = UserNameDetailViewModel.attributedCorrelationText(for: user, addressBookName: addressBookName)
     }
 
-    static func attributedTitle(for user: ZMBareUser?, fallback: String) -> NSAttributedString {
-        return (user?.name ?? fallback) && normalBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground)
+    static func attributedTitle(for user: UserType?, fallback: String) -> NSAttributedString {
+        return (user?.name ?? fallback) && normalBoldFont && UIColor(scheme: .textForeground)
     }
 
-    static func attributedSubtitle(for user: ZMBareUser?) -> NSAttributedString? {
+    static func attributedSubtitle(for user: UserType?) -> NSAttributedString? {
         guard let handle = user?.handle, handle.count > 0 else { return nil }
-        return ("@" + handle) && smallBoldFont && UIColor.wr_color(fromColorScheme: ColorSchemeColorTextDimmed)
+        return ("@" + handle) && smallBoldFont && UIColor(scheme: .textDimmed)
     }
 
-    static func attributedCorrelationText(for user: ZMBareUser?, addressBookName: String?) -> NSAttributedString? {
+    static func attributedCorrelationText(for user: UserType?, addressBookName: String?) -> NSAttributedString? {
         guard let user = user else { return nil }
         return formatter.correlationText(for: user, addressBookName: addressBookName)
     }
 }
 
 
-final class UserNameDetailView: UIView {
+@objcMembers final class UserNameDetailView: UIView {
 
     let subtitleLabel = UILabel()
     let correlationLabel = UILabel()

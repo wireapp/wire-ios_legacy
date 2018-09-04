@@ -42,17 +42,36 @@ protocol ChangeHandleTableViewCellDelegate: class {
 }
 
 
-final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
+@objcMembers final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     weak var delegate: ChangeHandleTableViewCellDelegate?
-    let prefixLabel = UILabel()
-    let handleTextField = UITextField()
+    let prefixLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalSemiboldFont
+        label.textColor = UIColor(scheme: .textDimmed, variant: .dark)
+
+        return label
+    }()
+    let handleTextField: UITextField = {
+        let textField = UITextField()
+        textField.font = .normalFont
+        textField.textColor = .textForegroundDark
+
+        return textField
+    }()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
+
+        setupStyle()
     }
+
+    func setupStyle() {
+        backgroundColor = .clear
+    }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -90,7 +109,7 @@ final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     // MARK: - UITextField
 
-    func editingChanged(textField: UITextField) {
+    @objc func editingChanged(textField: UITextField) {
         let lowercase = textField.text?.lowercased() ?? ""
         textField.text = lowercase
         delegate?.tableViewCellDidChangeText(cell: self, text: lowercase)
@@ -167,9 +186,9 @@ struct HandleChangeState {
 }
 
 
-final class ChangeHandleViewController: SettingsBaseTableViewController {
+@objcMembers final class ChangeHandleViewController: SettingsBaseTableViewController {
 
-    public var footerFont: UIFont?
+    public var footerFont: UIFont = .smallFont
     var state: HandleChangeState
     private var footerLabel = UILabel()
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
@@ -229,7 +248,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
         navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
     }
 
-    func saveButtonTapped(sender: UIBarButtonItem) {
+    @objc func saveButtonTapped(sender: UIBarButtonItem) {
         guard let handleToSet = state.newHandle else { return }
         userProfile?.requestSettingHandle(handle: handleToSet)
         showLoadingView = true
@@ -332,7 +351,6 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     func didSetHandle() {
         showLoadingView = false
         state.availability = .taken
-        Analytics.shared().tag(UserNameEvent.Settings.setUsername(withLength: state.newHandle?.count ?? 0))
         guard popOnSuccess else { return }
         _ = navigationController?.popViewController(animated: true)
     }
@@ -363,13 +381,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
 fileprivate extension String {
 
     var isEqualToUnicodeName: Bool {
-        if #available(iOS 9, *) {
-            return applyingTransform(.toUnicodeName, reverse: false) == self
-        } else {
-            let ref = NSMutableString(string: self) as CFMutableString
-            CFStringTransform(ref, nil, kCFStringTransformToUnicodeName, false)
-            return ref as String == self
-        }
+        return applyingTransform(.toUnicodeName, reverse: false) == self
     }
     
 }

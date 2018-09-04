@@ -23,7 +23,7 @@ import Cartography
 import Classy
 
 class InputBarTests: ZMSnapshotTestCase {
-    
+
     let shortText = "Lorem ipsum dolor"
     let longText = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est"
     let LTRText = "ناك حقيقة مثبتة منذ"
@@ -43,52 +43,55 @@ class InputBarTests: ZMSnapshotTestCase {
 
         return [b1, b2, b3, b4]
     }
+
+    var sut: InputBar!
+
+    override func setUp() {
+        super.setUp()
+        sut = InputBar(buttons: buttons())
+        sut.leftAccessoryView.isHidden = true
+        sut.rightAccessoryStackView.isHidden = true
+        sut.translatesAutoresizingMaskIntoConstraints = false
+        sut.layer.speed = 0
+    }
+
+    override func tearDown() {
+        sut = nil
+
+        super.tearDown()
+    }
     
     func testNoText() {
-        let inputBar = InputBar(buttons: buttons())
-        inputBar.translatesAutoresizingMaskIntoConstraints = false
-        inputBar.textView.text = ""
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = ""
+        sut.leftAccessoryView.isHidden = true
+        sut.rightAccessoryStackView.isHidden = true
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
     }
     
     func testShortText() {
-        let inputBar = InputBar(buttons: buttons())
-        inputBar.translatesAutoresizingMaskIntoConstraints = false
-        inputBar.textView.text = shortText
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = shortText
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
     }
     
     func testLongText() {
-        let inputBar = InputBar(buttons: buttons())
-        inputBar.translatesAutoresizingMaskIntoConstraints = false
-        inputBar.textView.text = longText
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = longText
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
-        verifyInAllTabletWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
+        verifyInAllTabletWidths(view: sut)
     }
     
     func testRTLText() {
-        let inputBar = InputBar(buttons: buttons())
-        inputBar.translatesAutoresizingMaskIntoConstraints = false
-        inputBar.textView.text = LTRText
-        inputBar.textView.textAlignment = .right
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = LTRText
+        sut.textView.textAlignment = .right
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
-        verifyInAllTabletWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
+        verifyInAllTabletWidths(view: sut)
     }
     
     func testButtonsWithTitle() {
@@ -96,14 +99,16 @@ class InputBarTests: ZMSnapshotTestCase {
         
         for button in buttonsWithText {
             button.setTitle("NEW", for: UIControlState())
-            button.titleLabel!.font = UIFont.systemFont(ofSize: 8, weight: UIFontWeightSemibold)
+            button.titleLabel!.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
             button.setTitleColor(UIColor.red, for: UIControlState())
         }
         
         let inputBar = InputBar(buttons: buttonsWithText)
+        inputBar.leftAccessoryView.isHidden = true
+        inputBar.rightAccessoryStackView.isHidden = true
+
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
         CASStyler.default().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
@@ -112,45 +117,42 @@ class InputBarTests: ZMSnapshotTestCase {
     func testButtonsWrapsWithEllipsis() {
         let inputBar = InputBar(buttons: buttons() + buttons())
         inputBar.translatesAutoresizingMaskIntoConstraints = false
+        inputBar.leftAccessoryView.isHidden = true
+        inputBar.rightAccessoryStackView.isHidden = true
         inputBar.textView.text = ""
         inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
         CASStyler.default().styleItem(inputBar)
         
         verifyInAllPhoneWidths(view: inputBar)
     }
     
     func testEphemeralMode() {
-        let inputBar = InputBar(buttons: buttons())
-        inputBar.translatesAutoresizingMaskIntoConstraints = false
-        inputBar.textView.text = ""
-        inputBar.layer.speed = 0
-        inputBar.updateFakeCursorVisibility()
-        inputBar.setInputBarState(.writing(ephemeral: true), animated: false)
-        inputBar.updateEphemeralState()
-        CASStyler.default().styleItem(inputBar)
+        sut.textView.text = ""
+        sut.setInputBarState(.writing(ephemeral: .message), animated: false)
+        sut.updateEphemeralState()
+        CASStyler.default().styleItem(sut)
         
-        verifyInAllPhoneWidths(view: inputBar)
+        verifyInAllPhoneWidths(view: sut)
     }
 
-    // Disabled until we figure out the `[MockUser conversationType]` crash after resetting the simulator / on CI
-    func disabled_testThatItRendersCorrectlyInEditState() {
-        let sut = InputBar(buttons: buttons())
-        sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.layer.speed = 0
+    func testEphemeralModeWithMarkdown() {
+        sut.textView.text = ""
+        sut.setInputBarState(.markingDown(ephemeral: .message), animated: false)
+        sut.updateEphemeralState()
+        CASStyler.default().styleItem(sut)
+
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testThatItRendersCorrectlyInEditState() {
         sut.setInputBarState(.editing(originalText: "This text is being edited"), animated: false)
-        sut.updateFakeCursorVisibility()
         CASStyler.default().styleItem(sut)
         verifyInAllPhoneWidths(view: sut)
     }
     
-    func disabled_testThatItRendersCorrectlyInEditState_LongText() {
-        let sut = InputBar(buttons: buttons())
-        sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.layer.speed = 0
+    func testThatItRendersCorrectlyInEditState_LongText() {
         sut.setInputBarState(.editing(originalText: longText), animated: false)
 
-        sut.updateFakeCursorVisibility()
         CASStyler.default().styleItem(sut)
         verifyInAllPhoneWidths(view: sut)
     }

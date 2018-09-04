@@ -24,8 +24,8 @@ extension SelfProfileViewController {
     func presentNewLoginAlertControllerIfNeeded() {
         let clientsRequiringUserAttention = ZMUser.selfUser().clientsRequiringUserAttention
         
-        if (clientsRequiringUserAttention?.count)! > 0 {
-            self.presentNewLoginAlertController(clientsRequiringUserAttention!)
+        if clientsRequiringUserAttention.count > 0 {
+            self.presentNewLoginAlertController(clientsRequiringUserAttention)
         }
     }
     

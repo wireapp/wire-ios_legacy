@@ -72,9 +72,14 @@
     return NO;
 }
 
-- (NSTimeInterval)messageDestructionTimeout
+- (id<ZMConversationMessage>)firstUnreadMessage
 {
-    return 15;
+    return nil;
+}
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+    return nil;
 }
 
 @end

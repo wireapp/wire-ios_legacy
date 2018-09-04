@@ -1,0 +1,7 @@
+{
+    "kind": "youtube#videoListResponse",
+    "error": {
+        "code": 404,
+        "message": "The requested operation failed because a resource associated with the request could not be found."
+    }
+}

@@ -22,7 +22,7 @@
 
 @implementation MediaPreviewData
 
-- (instancetype)initWithTitle:(NSString *)title thumbnails:(NSArray *)thumbnails provider:(MediaPreviewDataProvider)provider
+- (instancetype)initWithTitle:(NSString *)title thumbnails:(NSArray<MediaThumbnail *> *)thumbnails provider:(MediaPreviewDataProvider)provider
 {
     self = [super init];
     if (self) {

@@ -38,11 +38,17 @@
     self.users = [MockLoader mockObjectsOfClass:[MockUser class] fromFile:@"a_lot_of_people.json"];
 }
 
+- (void)tearDown
+{
+    self.users = nil;
+    [super tearDown];
+}
+
 - (void)testThatMatchesAreReturned {
     
     NSArray *matchingUsers = [@"some text @K" usersMatchingLastMention:self.users];
     
-    XCTAssertTrue(matchingUsers.count >0 , @"No matches returned. Expecting some matches");
+    XCTAssertTrue(matchingUsers.count > 0 , @"No matches returned. Expecting some matches");
 }
 
 - (void)testThatAFullMentionDoesNotReturnMatches

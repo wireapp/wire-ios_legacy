@@ -18,20 +18,14 @@
 
 
 #import <WireSyncEngine/WireSyncEngine.h>
-#import "Analytics+ConversationEvents.h"
-
 
 @interface Message (UI)
-
-+ (MessageType)messageType:(id<ZMConversationMessage>)message;
 
 + (BOOL)shouldShowTimestamp:(id<ZMConversationMessage>)message;
 
 + (BOOL)shouldShowDeliveryState:(id<ZMConversationMessage>)message;
 
 + (NSString *)formattedReceivedDateForMessage:(id<ZMConversationMessage>)message;
-
-+ (BOOL)isPresentableAsNotification:(id<ZMConversationMessage>)message;
 
 + (NSString *)nonNilImageDataIdentifier:(id<ZMConversationMessage>)message;
 

@@ -20,15 +20,18 @@
 import XCTest
 @testable import Wire
 
-@objc class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
+@objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
+    
     var originalProfileImageData: Data!
     
     func deleteProfileImage() {
         // no-op
     }
     
-    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>!) throws {
+    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>?) throws {
+        // no-op
     }
+    
 }
 
 class MockZMUserSession: ZMUserSessionInterface {
@@ -44,6 +47,8 @@ class MockZMUserSession: ZMUserSessionInterface {
 }
 
 class ZMMockAVSMediaManager: AVSMediaManagerInterface {
+    var isMicrophoneMuted: Bool = false
+
     var intensityLevel : AVSIntensityLevel = .none
     
     func playMediaByName(_ name: String!) { }
@@ -54,7 +59,18 @@ class ZMMockTracking: TrackingInterface {
 }
 
 class SettingsPropertyTests: XCTestCase {
-    let userDefaults: UserDefaults = UserDefaults.standard
+    var userDefaults: UserDefaults!
+
+    override func setUp() {
+        super.setUp()
+        userDefaults = .standard
+    }
+
+    override func tearDown() {
+        userDefaults = nil
+        super.tearDown()
+    }
+
     
     func saveAndCheck<T>(_ property: SettingsProperty, value: T, file: String = #file, line: UInt = #line) throws where T: Equatable {
         var property = property
@@ -64,7 +80,7 @@ class SettingsPropertyTests: XCTestCase {
                 recordFailure(
                     withDescription: "Wrong property value, read \(readValue) but expected \(value)",
                     inFile: file,
-                    atLine: line,
+                    atLine: Int(line),
                     expected: true
                 )
             }
@@ -73,7 +89,7 @@ class SettingsPropertyTests: XCTestCase {
             recordFailure(
                 withDescription: "Unable to read property value",
                 inFile: file,
-                atLine: line,
+                atLine: Int(line),
                 expected: true
             )
         }

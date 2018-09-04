@@ -34,11 +34,9 @@
 #import "ShareItemProvider.h"
 #import "InviteContactsViewController.h"
 #import "Analytics.h"
-#import "AnalyticsTracker+Invitations.h"
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "ZMUser+Additions.h"
-#import "AnalyticsTracker.h"
 #import "Constants.h"
 #import "UIView+PopoverBorder.h"
 #import "UIViewController+WR_Invite.h"
@@ -53,12 +51,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) StartUIInviteActionBar *quickActionsBar;
-@property (nonatomic) UILabel *emptyResultLabel;
+@property (nonatomic) EmptySearchResultsView *emptyResultView;
 @property (nonatomic) SearchGroupSelector *groupSelector;
 
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic) SearchResultsViewController *searchResultsViewController;
-@property (nonatomic) AnalyticsTracker *analyticsTracker;
 
 @property (nonatomic) BOOL addressBookUploadLogicHandled;
 @end
@@ -70,15 +67,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)dealloc
 {
     [self.userSelection removeObserver:self];
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:@"people_picker"];
-    }
-    return self;
 }
 
 -(void)loadView
@@ -97,10 +85,9 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     
     self.profilePresenter = [[ProfilePresenter alloc] init];
     
-    self.emptyResultLabel = [[UILabel alloc] init];
-    self.emptyResultLabel.text = NSLocalizedString(@"peoplepicker.no_matching_results_after_address_book_upload_title", nil);
-    self.emptyResultLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
-    self.emptyResultLabel.font = UIFont.normalLightFont;
+    self.emptyResultView = [[EmptySearchResultsView alloc] initWithVariant:ColorSchemeVariantDark
+                                                           isSelfUserAdmin:[[ZMUser selfUser] canManageTeam]];
+    self.emptyResultView.delegate = self;
     
     self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:self.userSelection variant:ColorSchemeVariantDark];
     self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;
@@ -127,12 +114,11 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         [self performSearch];
     };
 
-    if (SearchGroupSelector.shouldShowBotResults) {
+    if ([[ZMUser selfUser] canSeeServices]) {
         [self.view addSubview:self.groupSelector];
     }
 
     self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:self.userSelection
-                                                                                          variant:ColorSchemeVariantDark
                                                                              isAddingParticipants:NO
                                                                               shouldIncludeGuests:YES];
     self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
@@ -140,7 +126,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self addChildViewController:self.searchResultsViewController];
     [self.view addSubview:self.searchResultsViewController.view];
     [self.searchResultsViewController didMoveToParentViewController:self];
-    self.searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultLabel;
+    self.searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultView;
     self.searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = @"search.list";
     
     self.quickActionsBar = [[StartUIInviteActionBar alloc] init];
@@ -152,18 +138,18 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self updateActionBar];
     [self handleUploadAddressBookLogicIfNeeded];
     [self.searchResultsViewController searchContactList];
-}
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithIcon:ZetaIconTypeX
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(onDismissPressed)];
     self.navigationItem.rightBarButtonItem.accessibilityIdentifier = @"close";
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
     self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
     [self.navigationController.navigationBar setTranslucent:YES];
     self.navigationController.navigationBar.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
@@ -183,7 +169,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 
-    if (SearchGroupSelector.shouldShowBotResults) {
+    if ([[ZMUser selfUser] canSeeServices]) {
         [self.groupSelector autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
         [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeLeading];
         [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
@@ -216,7 +202,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     }
     else if ([[AddressBookHelper sharedHelper] isAddressBookAccessUnknown]) {
         [[AddressBookHelper sharedHelper] requestPermissions:^(BOOL success) {
-            [self.analyticsTracker tagAddressBookSystemPermissions:success];
             if (success) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:YES];
@@ -266,9 +251,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
             self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
             [self.searchResultsViewController searchContactList];
         } else {
-            BOOL leadingAt = [[searchString substringToIndex:1] isEqualToString:@"@"];
             BOOL hasSelection = self.userSelection.users.count > 0;
-            [Analytics.shared tagEnteredSearchWithLeadingAtSign:leadingAt context:SearchContextStartUI];
             self.searchResultsViewController.mode = hasSelection ? SearchResultsViewControllerModeSelection : SearchResultsViewControllerModeSearch;
             if (hasSelection) {
                 [self.searchResultsViewController searchForLocalUsersWithQuery:searchString];
@@ -281,6 +264,9 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     else {
         [self.searchResultsViewController searchForServicesWithQuery:searchString];
     }
+    
+    [self.emptyResultView updateStatusWithSearchingForServices:self.groupSelector.group == SearchGroupServices
+                                                     hasFilter:searchString.length != 0];
 }
 
 #pragma mark - Action bar
@@ -288,15 +274,12 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)inviteMoreButtonTapped:(UIButton *)sender
 {
     InviteContactsViewController *inviteContactsViewController = [[InviteContactsViewController alloc] init];
-    inviteContactsViewController.analyticsTracker = [AnalyticsTracker analyticsTrackerWithContext:NSStringFromInviteContext(InviteContextStartUI)];
     inviteContactsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     inviteContactsViewController.delegate = self;
-    [self presentViewController:inviteContactsViewController animated:YES completion:^() {
-        [inviteContactsViewController.analyticsTracker tagEvent:AnalyticsEventInviteContactListOpened];
-    }];
+    [self presentViewController:inviteContactsViewController animated:YES completion:nil];
 }
 
-- (void)presentProfileViewControllerForUser:(id<ZMSearchableUser>)bareUser atIndexPath:(NSIndexPath *)indexPath
+- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath
 {
     [self.searchHeaderViewController.tokenField resignFirstResponder];
 

@@ -19,20 +19,19 @@
 
 import Foundation
 import Cartography
-import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
-/// Displays the video message with different states
+/// Displays the video message@objc  with different states
 public final class VideoMessageCell: ConversationCell {
-
+    
     private let videoMessageView = VideoMessageView()
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
 
     public var videoViewHeight : CGFloat = PreviewHeightCalculator.videoViewHeight
 
     private var topMargin: NSLayoutConstraint!
-    
+        
     public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -74,7 +73,7 @@ public final class VideoMessageCell: ConversationCell {
         videoMessageView.layer.cornerRadius = 4
     }
     
-    open override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
+    public override func update(forMessage changeInfo: MessageChangeInfo!) -> Bool {
         let needsLayout = super.update(forMessage: changeInfo)
         self.obfuscationView.isHidden = !message.isObfuscated
 
@@ -85,7 +84,7 @@ public final class VideoMessageCell: ConversationCell {
         return needsLayout
     }
     
-    override open func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
+    override public func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         self.obfuscationView.isHidden = !message.isObfuscated
 
@@ -93,7 +92,7 @@ public final class VideoMessageCell: ConversationCell {
             self.configureForVideoMessage(fileMessageData, isInitial: true)
         }
         else {
-            fatalError("Wrong message type: \(type(of: message)): \(message)")
+            fatalError("Wrong message type: \(type(of: message)): \(String(describing: message))")
         }
     }
     
@@ -103,7 +102,7 @@ public final class VideoMessageCell: ConversationCell {
         topMargin?.constant = layoutProperties.showSender ? 12 : 0
     }
     
-    override open var tintColor: UIColor! {
+    override public var tintColor: UIColor! {
         didSet {
             self.videoMessageView.tintColor = self.tintColor
         }
@@ -111,17 +110,17 @@ public final class VideoMessageCell: ConversationCell {
     
     // MARK: - Selection
     
-    open override var selectionView: UIView! {
+    public override var selectionView: UIView! {
         return videoMessageView
     }
     
-    open override var selectionRect: CGRect {
+    public override var selectionRect: CGRect {
         return videoMessageView.bounds
     }
     
     // MARK: - Menu
     
-    open func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    public func setSelectedByMenu(_ selected: Bool, animated: Bool) {
         
         let animation = {
             self.messageContentView.alpha = selected ? ConversationCellSelectedOpacity : 1.0;
@@ -134,7 +133,7 @@ public final class VideoMessageCell: ConversationCell {
         }
     }
     
-    override open func menuConfigurationProperties() -> MenuConfigurationProperties! {
+    override public func menuConfigurationProperties() -> MenuConfigurationProperties! {
         guard let _ = message else {return nil}
 
         let properties = MenuConfigurationProperties()
@@ -142,15 +141,18 @@ public final class VideoMessageCell: ConversationCell {
         properties.targetView = selectionView
         properties.selectedMenuBlock = setSelectedByMenu
 
-        var additionalItems = [UIMenuItem]()
+        var additionalItems = [AdditionalMenuItem]()
         
         if message.videoCanBeSavedToCameraRoll() {
-            additionalItems.append(.save(with: #selector(wr_saveVideo)))
+            additionalItems.append(.forbiddenInEphemeral(.save(with: #selector(wr_saveVideo))))
         }
         
-        if let fileMessageData = message.fileMessageData,
-            let _ = fileMessageData.fileURL {
-            additionalItems.append(.forward(with: #selector(forward)))
+        if let fileMessageData = message.fileMessageData {
+            if let _ = fileMessageData.fileURL {
+                additionalItems.append(.forbiddenInEphemeral(.forward(with: #selector(forward))))
+            }
+            
+            additionalItems.append(.allowedInEphemeral(.download(with: #selector(download))))
         }
         
         properties.additionalItems = additionalItems
@@ -158,22 +160,26 @@ public final class VideoMessageCell: ConversationCell {
         return properties
     }
 
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(wr_saveVideo) {
-            if self.message.videoCanBeSavedToCameraRoll() {
+    override public func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        switch action {
+        case #selector(wr_saveVideo):
+            if message.videoCanBeSavedToCameraRoll() {
                 return true
             }
-        }
-        else if action == #selector(forward(_:)) {
+        case #selector(forward(_:)):
             if let fileMessageData = message.fileMessageData,
                 let _ = fileMessageData.fileURL {
                 return true
             }
+        case #selector(download):
+            return true == message.fileMessageData?.transferState.isOne(of: .uploaded, .failedDownload)
+        default: break
         }
+
         return super.canPerformAction(action, withSender: sender)
     }
     
-    open func wr_saveVideo() {
+    @objc public func wr_saveVideo() {
         if let fileMessageData = self.message.fileMessageData,
             let fileURL = fileMessageData.fileURL,
             self.message.videoCanBeSavedToCameraRoll() {
@@ -189,9 +195,13 @@ public final class VideoMessageCell: ConversationCell {
         }
     }
     
-    override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
+    @objc override func prepareLayoutForPreview(message: ZMConversationMessage?) -> CGFloat {
         super.prepareLayoutForPreview(message: message)
         return PreviewHeightCalculator.heightForVideo()
+    }
+    
+    @objc func download(_ sender: Any) {
+        delegate?.conversationCell?(self, didSelect: .download)
     }
 }
 

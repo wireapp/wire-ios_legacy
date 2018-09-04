@@ -20,13 +20,19 @@ import Foundation
 import Cartography
 import WireExtensionComponents
 
-@objc internal final class AppLockView: UIView {
+@objcMembers internal final class AppLockView: UIView {
     public var onReauthRequested: (()->())?
     
     public let shieldViewContainer = UIView()
     public let contentContainerView = UIView()
     public let blurView: UIVisualEffectView!
-    public let authenticateLabel = UILabel()
+    public let authenticateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .largeThinFont
+        label.textColor = .textForegroundDark
+
+        return label
+    }()
     public let authenticateButton = Button(style: .fullMonochrome)
     
     private var contentWidthConstraint: NSLayoutConstraint!

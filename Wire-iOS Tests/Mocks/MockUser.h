@@ -24,18 +24,18 @@
 
 @class MockConversation;
 
-@interface MockUser : NSObject<ZMBareUser, ZMBareUserConnection, Mockable>
+@interface MockUser : NSObject<UserType, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockUserFor:(ZMUser *)user;
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
 
-+ (void)setMockSelfUser:(id<ZMBareUser>)newMockUser;
++ (void)setMockSelfUser:(id<UserType>)newMockUser;
 
-@property (nonatomic, readwrite) NSString *name;
+@property (nonatomic, readwrite, copy) NSString *name;
 @property (nonatomic, readwrite) NSString *emailAddress;
 @property (nonatomic, readwrite) NSString *phoneNumber;
-@property (nonatomic, readwrite) NSString *handle;
+@property (nonatomic, readwrite, copy) NSString *handle;
 @property (nonatomic) ZMAccentColor accentColorValue;
 @property (nonatomic, readwrite) BOOL isBlocked;
 @property (nonatomic, readwrite) BOOL isIgnored;
@@ -52,16 +52,18 @@
 @property (nonatomic, assign) BOOL isGuestInConversation;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
+@property (nonatomic, readwrite) NSString *expirationDisplayString;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
-- (UIColor *)accentColor;
 @property (nonatomic) ZMConnection *connection;
 @property (nonatomic) ZMAddressBookContact *contact;
 @property (nonatomic) AddressBookEntry *addressBookEntry;
 @property (nonatomic) NSUUID *remoteIdentifier;
 @property (nonatomic, readwrite) Availability availability;
+@property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
 
 - (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
+- (void)fetchUserClients;
 
 @end

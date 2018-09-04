@@ -16,18 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
-
 @import UIKit;
-
-
-
-static inline CGRect CenterRectHorizontallyInRect(CGRect r, CGRect container)
-{
-    r.origin.x = CGRectGetMinX(container) + ((CGFloat) 0.5) * (CGRectGetWidth(container) - CGRectGetWidth(r));
-    return r;
-}
 
 
 static inline CGFloat CGMax(CGFloat const a, CGFloat const b)
@@ -59,15 +48,6 @@ static inline CGFloat CGAbs(CGFloat const a)
     return fabs(a);
 #else
     return fabsf(a);
-#endif
-}
-
-static inline CGFloat CGSign(CGFloat const a)
-{
-#if CGFLOAT_IS_DOUBLE
-    return copysign(1.0, a);
-#else
-    return copysignf(1.0, a);
 #endif
 }
 

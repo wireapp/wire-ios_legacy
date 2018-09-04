@@ -86,7 +86,7 @@ extension ZMConversation {
 }
 
 
-fileprivate enum Mode {
+fileprivate enum Mode: Equatable {
     /// 0 participants in conversation:
     /// /    \
     /// \    /
@@ -106,7 +106,7 @@ extension Mode {
         self.init(users: conversation.lastServerSyncedActiveParticipants.array as! [ZMUser])
     }
     
-    fileprivate init(users: [ZMBareUser]) {
+    fileprivate init(users: [UserType]) {
         switch (users.count) {
         case 0: self = .none
         case 1: self = .one(serviceUser: users[0].isServiceUser)
@@ -139,7 +139,8 @@ final public class ConversationAvatarView: UIView {
             var index: Int = 0
             self.userImages().forEach {
                 $0.userSession = ZMUserSession.shared()
-                $0.size = .tiny
+                $0.shouldDesaturate = false
+                $0.size = mode == .four ? .tiny : .small
                 if index < users.count {
                     $0.user = users[index]
                 }

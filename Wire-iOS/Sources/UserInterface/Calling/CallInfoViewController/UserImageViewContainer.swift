@@ -23,7 +23,7 @@ final class UserImageViewContainer: UIView {
     private let maxSize: CGFloat
     private let yOffset: CGFloat
     
-    var user: ZMBareUser? {
+    var user: UserType? {
         didSet {
             userImageView.user = user
         }
@@ -49,14 +49,14 @@ final class UserImageViewContainer: UIView {
         addSubview(userImageView)
         
         let priority: Float = 249
-        userImageView.setContentHuggingPriority(priority, for: .vertical)
-        userImageView.setContentHuggingPriority(priority, for: .horizontal)
-        userImageView.setContentCompressionResistancePriority(priority, for: .vertical)
-        userImageView.setContentCompressionResistancePriority(priority, for: .horizontal)
-        userImageView.imageView.setContentHuggingPriority(priority, for: .vertical)
-        userImageView.imageView.setContentHuggingPriority(priority, for: .horizontal)
-        userImageView.imageView.setContentCompressionResistancePriority(priority, for: .vertical)
-        userImageView.imageView.setContentCompressionResistancePriority(priority, for: .horizontal)
+        userImageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .vertical)
+        userImageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .horizontal)
+        userImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .vertical)
+        userImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .horizontal)
+        userImageView.imageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .vertical)
+        userImageView.imageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .horizontal)
+        userImageView.imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .vertical)
+        userImageView.imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .horizontal)
     }
     
     private func createConstraints() {

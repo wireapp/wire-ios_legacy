@@ -18,28 +18,11 @@
 
 import Foundation
 
-enum CallDegradationState {
+enum CallDegradationState: Equatable {
     
     case none
     case incoming(degradedUser: ZMUser?)
     case outgoing(degradedUser: ZMUser?)
-    
-}
-
-extension CallDegradationState: Equatable {
-    
-    static func ==(lhs: CallDegradationState, rhs: CallDegradationState) -> Bool {
-        switch (lhs, rhs) {
-        case (.none, .none):
-            return true
-        case (.incoming(degradedUser: let lhsDegradedUser), .incoming(degradedUser: let rhsDegradedUser)):
-            return lhsDegradedUser == rhsDegradedUser
-        case (.outgoing(degradedUser: let lhsDegradedUser), .outgoing(degradedUser: let rhsDegradedUser)):
-            return lhsDegradedUser == rhsDegradedUser
-        default:
-            return false
-        }
-    }
     
 }
 
@@ -55,6 +38,10 @@ class CallDegradationController: UIViewController {
     weak var delegate: CallDegradationControllerDelegate? = nil
     weak var targetViewController: UIViewController? = nil
     var visisibleAlertController: UIAlertController? = nil
+    
+    // Used to delay presentation of the alert controller until
+    // the view is ready.
+    private var viewIsReady = false
     
     var state: CallDegradationState = .none {
         didSet {
@@ -77,27 +64,30 @@ class CallDegradationController: UIViewController {
             })
         }
         
-        if let alertViewController = visisibleAlertController {
-            Log.calling.debug("Presenting alert about degraded call")
-            present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
-        }
+        presentAlertIfNeeded()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.isUserInteractionEnabled = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if let alertViewController = visisibleAlertController, !alertViewController.isBeingPresented {
-            present(alertViewController, animated: true)
-        }
+        viewIsReady = true
+        presentAlertIfNeeded()  
     }
     
-    
+    private func presentAlertIfNeeded() {
+        guard
+            viewIsReady,
+            let alertViewController = visisibleAlertController,
+            !alertViewController.isBeingPresented
+            else { return }
+        
+        Log.calling.debug("Presenting alert about degraded call")
+        targetViewController?.present(alertViewController, animated: !ProcessInfo.processInfo.isRunningTests)
+    }
     
 }
 

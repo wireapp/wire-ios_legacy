@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-@objc public final class CollectionsView: UIView {
+@objcMembers public final class CollectionsView: UIView {
     var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!
     var collectionView: UICollectionView!
     let noResultsView = NoResultsView()
@@ -80,7 +80,7 @@ import Cartography
     }
     
     public static func closeButton() -> IconButton {
-        let button = IconButton.iconButtonDefault()
+        let button = IconButton(style: .default)
         button.setIcon(.X, with: .tiny, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 48, height: 32)
         button.accessibilityIdentifier = "close"
@@ -89,7 +89,7 @@ import Cartography
     }
     
     public static func backButton() -> IconButton {
-        let button = IconButton.iconButtonDefault()
+        let button = IconButton(style: .default)
         button.setIcon(.backArrow, with: .tiny, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)
         button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0)
@@ -116,7 +116,7 @@ import Cartography
 
             noResultsView.top >= searchBar.bottom + 12
             noResultsView.centerX == selfView.centerX
-            noResultsView.centerY == selfView.centerY ~ UILayoutPriorityDefaultLow
+            noResultsView.centerY == selfView.centerY ~ UILayoutPriority.defaultLow
             noResultsView.bottom <= selfView.bottom - 12
             noResultsView.leading >= selfView.leading + 24
             noResultsView.trailing <= selfView.trailing - 24

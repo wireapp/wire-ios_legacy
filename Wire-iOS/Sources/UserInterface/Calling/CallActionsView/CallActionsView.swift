@@ -23,8 +23,12 @@ protocol CallActionsViewDelegate: class {
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction)
 }
 
-enum MediaState {
-    case sendingVideo, notSendingVideo(speakerEnabled: Bool)
+enum MediaState: Equatable {
+    struct SpeakerState: Equatable {
+        let isEnabled: Bool
+        let canBeToggled: Bool
+    }
+    case sendingVideo, notSendingVideo(speakerState: SpeakerState)
     
     var isSendingVideo: Bool {
         guard case .sendingVideo = self else { return false }
@@ -37,24 +41,14 @@ enum MediaState {
     }
     
     var isSpeakerEnabled: Bool {
-        guard case .notSendingVideo(true) = self else { return false }
-        return true
-    }
-}
-
-extension MediaState: Equatable {
-    
-    static func ==(lhs: MediaState, rhs: MediaState) -> Bool {
-        switch (lhs, rhs) {
-        case (.sendingVideo, .sendingVideo):
-            return true
-        case (.notSendingVideo(let lhsSpeakerEnabled), .notSendingVideo(let rhsSpeakerEnabled)):
-            return lhsSpeakerEnabled == rhsSpeakerEnabled
-        default:
-            return false
-        }
+        guard case .notSendingVideo(let state) = self else { return false }
+        return state.isEnabled
     }
     
+    var canSpeakerBeToggled: Bool {
+        guard case .notSendingVideo(let state) = self else { return false }
+        return state.canBeToggled
+    }
 }
 
 // This protocol describes the input for a `CallActionsView`.
@@ -175,7 +169,7 @@ final class CallActionsView: UIView {
     
     // MARK: - State Input
     
-    // Entry single point for all state changes.
+    // Single entry point for all state changes.
     // All side effects should be started from this method.
     func update(with input: CallActionsViewInputType) {
         let showRoutes = showRoutePicker(with: input)
@@ -188,6 +182,7 @@ final class CallActionsView: UIView {
         flipCameraButton.isHidden = input.mediaState.showSpeaker || showRoutes
         speakerButton.isHidden = !input.mediaState.showSpeaker || showRoutes
         speakerButton.isSelected = input.mediaState.isSpeakerEnabled
+        speakerButton.isEnabled = input.mediaState.canSpeakerBeToggled
         routePickerView?.isHidden = !showRoutes
         acceptCallButton.isHidden = !input.canAccept
         firstBottomRowSpacer.isHidden = input.canAccept || isCompact

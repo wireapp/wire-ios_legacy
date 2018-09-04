@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final internal class ConversationListAccessoryView: UIView {
+@objcMembers final internal class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
         didSet {
             self.updateForIcon()
@@ -33,31 +33,33 @@ final internal class ConversationListAccessoryView: UIView {
     let textLabel = UILabel()
     let iconView = UIImageView()
     var collapseWidthConstraint: NSLayoutConstraint!
-    
-    init(mediaPlaybackManager: MediaPlaybackManager) {
+    var expandWidthConstraint: NSLayoutConstraint!
+    var expandTypingViewWidthConstraint: NSLayoutConstraint!
+
+    @objc init(mediaPlaybackManager: MediaPlaybackManager) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
         
         self.isAccessibilityElement = true
         
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        textLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        textLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
+        textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         textLabel.textAlignment = .center
         textLabel.font = FontSpec(.medium, .semibold).font!
         
         typingView.contentMode = .center
-        typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        typingView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        typingView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        typingView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        typingView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        typingView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        typingView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        typingView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         iconView.contentMode = .center
-        iconView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        iconView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        iconView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        iconView.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        iconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        iconView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        iconView.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         [badgeView, typingView].forEach(addSubview)
         
@@ -69,9 +71,9 @@ final internal class ConversationListAccessoryView: UIView {
             typingView.trailing == selfView.trailing ~ 999.0
             typingView.top == selfView.top
             typingView.bottom == selfView.bottom
-            typingView.width >= 28
+            self.expandTypingViewWidthConstraint = typingView.width >= 28
             
-            selfView.width >= 28
+            self.expandWidthConstraint = selfView.width >= 28
             self.collapseWidthConstraint = selfView.width == 0
         }
         self.collapseWidthConstraint.isActive = false
@@ -90,7 +92,7 @@ final internal class ConversationListAccessoryView: UIView {
             self.accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
         case .activeCall(false):
-            iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
+            iconView.image = UIImage(for: .phone, fontSize: 18.0, color: .white)
             self.accessibilityValue = "conversation_list.voiceover.status.active_call".localized
             return iconView
         case .activeCall(true):
@@ -98,7 +100,7 @@ final internal class ConversationListAccessoryView: UIView {
             self.accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            iconView.image = UIImage(for: .missedCall, fontSize: iconSize, color: .black)
+            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
             self.accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
@@ -130,6 +132,20 @@ final internal class ConversationListAccessoryView: UIView {
             return .none
         }
     }
+
+    func updateCollapseConstraints(isCollapsed: Bool) {
+        if isCollapsed {
+            expandWidthConstraint.isActive = false
+            expandTypingViewWidthConstraint.isActive = false
+            collapseWidthConstraint.isActive = true
+        } else {
+            collapseWidthConstraint.isActive = false
+            expandWidthConstraint.isActive = true
+            expandTypingViewWidthConstraint.isActive = true
+        }
+
+        badgeView.updateCollapseConstraints(isCollapsed: isCollapsed)
+    }
     
     public func updateForIcon() {
         self.badgeView.containedView.subviews.forEach { $0.removeFromSuperview() }
@@ -138,20 +154,20 @@ final internal class ConversationListAccessoryView: UIView {
         self.badgeView.isHidden = false
         self.typingView.isHidden = true
         
-        self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .dark)
-        
-        self.collapseWidthConstraint.isActive = false
+        self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
         
         switch self.icon {
         case .none:
             self.badgeView.isHidden = true
             self.typingView.isHidden = true
-            self.collapseWidthConstraint.isActive = true
+
+            updateCollapseConstraints(isCollapsed: true)
 
             return
-        case .activeCall(_):
+        case .activeCall(false):
+            self.badgeView.backgroundColor = .clear
+        case .activeCall(true): // "Join" button
             self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color
-            
         case .typing:
             self.badgeView.isHidden = true
             self.typingView.isHidden = false
@@ -159,19 +175,21 @@ final internal class ConversationListAccessoryView: UIView {
             
         case .unreadMessages(_):
             self.badgeView.backgroundColor = UIColor(white: 0, alpha: 0.16)
-            self.textLabel.textColor = ColorScheme.default().color(withName: ColorSchemeColorTextForeground, variant: .light)
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
             
         case .unreadPing:
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
 
         case .missedCall:
-            self.badgeView.backgroundColor = ColorScheme.default().color(withName: ColorSchemeColorTextBackground, variant: .light)
+            self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
 
         default:
             self.typingView.image = .none
         }
         
+        updateCollapseConstraints(isCollapsed: false)
+
         if let view = self.viewForState {
             self.badgeView.containedView.addSubview(view)
             

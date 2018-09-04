@@ -35,6 +35,7 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     private var regularWidthConstraint: NSLayoutConstraint?, compactWidthConstraint: NSLayoutConstraint?
     private lazy var dataSource = ArrayDataSource<TeamMemberInviteTableViewCell, InviteResult>(for: self.tableView)
     private var keyboardObserver: KeyboardBlockObserver?
+    private var invitationsCount: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,11 +131,12 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     private func handle(inviteResult result: InviteResult, from source: InviteSource) {
         switch source {
         case .manualInput: handleManualInputResult(result)
-        case.addressBook: handleAddressBookResult(result)
+        case .addressBook: handleAddressBookResult(result)
         }
         
         footerTextFieldView.isLoading = false
         topBar.mode = dataSource.data.count == 0 ? .skip : .done
+        invitationsCount = invitationsCount + 1
     }
     
     private func handleManualInputResult(_ result: InviteResult) {
@@ -154,6 +156,9 @@ final class TeamMemberInviteViewController: UIViewController, TeamInviteTopbarDe
     }
     
     func teamInviteTopBarDidTapButton(_ topBar: TeamInviteTopBar) {
+        let inviteResult = invitationsCount == 0 ? Analytics.InviteResult.none : Analytics.InviteResult.invited(invitesCount: invitationsCount)
+        
+        Analytics.shared().tagTeamFinishedInviteStep(with: inviteResult)
         delegate?.teamInviteViewControllerDidFinish(self)
     }
     

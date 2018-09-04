@@ -18,9 +18,9 @@
 
 import UIKit
 
-@objc class PinnableThumbnailViewController: UIViewController {
+@objcMembers class PinnableThumbnailViewController: UIViewController {
 
-    private let thumbnailView = ContinuousCornersView(cornerRadius: 12)
+    private let thumbnailView = RoundedView()
     private let thumbnailContainerView = UIView()
     private(set) var contentView: UIView?
 
@@ -28,6 +28,8 @@ import UIKit
 
     fileprivate let edgeInsets = CGPoint(x: 16, y: 16)
     fileprivate var originalCenter: CGPoint = .zero
+    fileprivate var hasDoneInitialLayout = false
+    fileprivate var hasEnabledPinningBehavior = false
 
     fileprivate lazy var pinningBehavior: ThumbnailCornerPinningBehavior = {
         return ThumbnailCornerPinningBehavior(item: self.thumbnailView, edgeInsets: self.edgeInsets)
@@ -76,11 +78,22 @@ import UIKit
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        view.layoutIfNeeded()
-        view.backgroundColor = .clear
-
-        updateThumbnailAfterLayoutUpdate()
-        animator.addBehavior(self.pinningBehavior)
+        if !hasDoneInitialLayout {
+            view.layoutIfNeeded()
+            view.backgroundColor = .clear
+            
+            updateThumbnailAfterLayoutUpdate()
+            hasDoneInitialLayout = true
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !hasEnabledPinningBehavior {
+            animator.addBehavior(self.pinningBehavior)
+            hasEnabledPinningBehavior = true
+        }
     }
 
     private func configureViews() {
@@ -89,6 +102,8 @@ import UIKit
         thumbnailContainerView.addSubview(thumbnailView)
         thumbnailView.autoresizingMask = []
         thumbnailView.clipsToBounds = true
+        thumbnailView.shape = .rounded(radius: 12)
+        
         thumbnailContainerView.layer.shadowRadius = 30
         thumbnailContainerView.layer.shadowOpacity = 0.32
         thumbnailContainerView.layer.shadowColor = UIColor.black.cgColor
@@ -114,7 +129,7 @@ import UIKit
 
         // Calculate the new size of the container
 
-        let insets = view.safeAreaInsetsOfFallback
+        let insets = view.safeAreaInsetsOrFallback
 
         let safeSize = CGSize(width: size.width - insets.left - insets.right,
                               height: size.height - insets.top - insets.bottom)

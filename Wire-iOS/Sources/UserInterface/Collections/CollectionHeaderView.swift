@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objc final public class CollectionHeaderView: UICollectionReusableView {
+@objcMembers final public class CollectionHeaderView: UICollectionReusableView {
     
     public var section: CollectionsSectionSet = .none {
         didSet {
@@ -41,7 +41,7 @@ import Cartography
             default: fatal("Unknown section")
             }
             
-            let iconColor = ColorScheme.default().color(withName: ColorSchemeColorLightGraphite)
+            let iconColor = UIColor(scheme: .lightGraphite)
             self.iconImageView.image = UIImage(for: icon, iconSize: .tiny, color: iconColor)
         }
     }
@@ -56,7 +56,13 @@ import Cartography
     }
     
     public let titleLabel = UILabel()
-    public let actionButton = UIButton()
+    public let actionButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.strongBlue, for: .normal)
+
+        return button
+    }()
+
     public let iconImageView = UIImageView()
     
     public var selectionAction: ((CollectionsSectionSet) -> ())? = .none
@@ -98,13 +104,13 @@ import Cartography
     public var desiredWidth: CGFloat = 0
     public var desiredHeight: CGFloat = 0
     
-    override open var intrinsicContentSize: CGSize {
+    override public var intrinsicContentSize: CGSize {
         get {
             return CGSize(width: self.desiredWidth, height: self.desiredHeight)
         }
     }
     
-    override open func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+    override public func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         var newFrame = layoutAttributes.frame
         newFrame.size.width = intrinsicContentSize.width
         newFrame.size.height = intrinsicContentSize.height
@@ -112,7 +118,7 @@ import Cartography
         return layoutAttributes
     }
     
-    public func didSelect(_ button: UIButton!) {
+    @objc public func didSelect(_ button: UIButton!) {
         self.selectionAction?(self.section)
     }
 }

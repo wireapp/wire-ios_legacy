@@ -24,7 +24,7 @@ import UIKit
     case takePhoto
 }
 
-public class CameraAccess: NSObject {
+@objcMembers public class CameraAccess: NSObject {
 
     static func displayCameraAlertForOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) {
         let alert = UIAlertController(title: "conversation.input_bar.ongoing_call_alert.title".localized,

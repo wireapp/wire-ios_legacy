@@ -18,3 +18,4 @@
 
 
 #include "Wire-Share-Extension.base.xcconfig"
+#include "Release.xcconfig"

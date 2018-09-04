@@ -16,15 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "UIView+Borders.h"
-
 @import PureLayout;
 
 #import "NotificationWindowRootViewController.h"
 #import "PassthroughTouchesView.h"
 #import "AppDelegate.h"
-#import "UIView+Borders.h"
-#import "UIView+Borders.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
@@ -87,21 +83,9 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return self.voiceChannelController.prefersStatusBarHidden;
+    return YES;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.voiceChannelController.preferredStatusBarStyle;
-}
-
-- (void)transitionToLoggedInSession
-{
-    _voiceChannelController = [[ActiveVoiceChannelViewController alloc] init];
-    self.voiceChannelController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.voiceChannelController toView:self.view];
-
-    [self.voiceChannelController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-}
 
 #pragma mark - In app custom notifications
 

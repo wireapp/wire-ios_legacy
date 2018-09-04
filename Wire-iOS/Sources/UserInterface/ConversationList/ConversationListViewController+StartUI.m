@@ -21,7 +21,6 @@
 #import "Analytics.h"
 #import "StartUIViewController.h"
 #import "WireSyncEngine+iOS.h"
-#import "CameraViewController.h"
 #import "ZClientViewController.h"
 
 #import "Wire-Swift.h"
@@ -66,8 +65,6 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     onConversationCreated(conversation);
                 });
-                
-                [ConversationListViewController tagGroupConversationCreated:conversation];
             }];
         }
     }];
@@ -78,7 +75,6 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
 - (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet *)users
 {    
     if (users.count == 0) {
-        [[Analytics shared] tagSearchAbortedWithSource:AnalyticsEventSourceUnspecified];
         return;
     }
     
@@ -87,14 +83,10 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
                                                                     focusOnView:YES
                                                                        animated:YES];
     }];
-    
-    [[Analytics shared] tagEventObject:[AnalyticsSearchResultEvent eventForSearchResultUsed:YES participantCount:[users count]]];
 }
 
 - (void)startUI:(StartUIViewController *)startUI didSelectConversation:(ZMConversation *)conversation
 {
-    [Analytics.shared tagOpenedExistingConversationWithType:conversation.conversationType];
-
     [self dismissPeoplePickerWithCompletionBlock:^{
         [[ZClientViewController sharedZClientViewController] selectConversation:conversation
                                                                     focusOnView:YES
@@ -127,15 +119,7 @@ typedef void (^ConversationCreatedBlock)(ZMConversation *);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [ZClientViewController.sharedZClientViewController selectConversation:conversation focusOnView:YES animated:YES];
         });
-        [ConversationListViewController tagGroupConversationCreated:conversation];
     }];
-}
-
-+ (void)tagGroupConversationCreated:(ZMConversation *)conversation
-{
-    AnalyticsGroupConversationEvent *event = [AnalyticsGroupConversationEvent eventForCreatedGroupWithContext:CreatedGroupContextStartUI
-                                                                                             participantCount:conversation.activeParticipants.count]; // Include self
-    [[Analytics shared] tagEventObject:event];
 }
 
 @end

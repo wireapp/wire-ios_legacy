@@ -21,7 +21,7 @@
 #import "ImageMessageCell.h"
 #import "MediaAsset.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import <RBBEasingFunction.h>
+#import "Wire-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
     return message != nil &&
            [Message isImageMessage:message] &&
            message.imageMessageData != nil &&
-           message.imageMessageData.imageData != nil;
+           message.imageMessageData.isDownloaded;
 }
 
 - (void)onPinchZoom:(UIPinchGestureRecognizer *)pinchGestureRecognizer
@@ -67,19 +67,8 @@ NS_ASSUME_NONNULL_BEGIN
             ImageMessageCell *imageCell = (ImageMessageCell *)cell;
             self.pinchImageCell = imageCell;
             CGRect imageFrame = [self.view.window convertRect:imageCell.fullImageView.bounds fromView:imageCell.fullImageView];
-            
-            BOOL isAnimatedGIF = message.imageMessageData.isAnimatedGIF;
-            
-            id<MediaAsset> image;
-            
-            if (isAnimatedGIF) {
-                // We MUST make a copy of the data here because FLAnimatedImage doesn't read coredata blobs efficiently
-                NSData *copy = [NSData dataWithBytes:message.imageMessageData.imageData.bytes length:message.imageMessageData.imageData.length];
-                image = [[FLAnimatedImage alloc] initWithAnimatedGIFData:copy];
-            } else {
-                image = [UIImage imageWithData:message.imageMessageData.imageData];
-            }
-            
+                        
+            id<MediaAsset> image = imageCell.fullImageView.mediaAsset;
             self.initialPinchLocation = [pinchGestureRecognizer locationInView:self.view];
             
             self.dimView = [[UIView alloc] initWithFrame:self.view.window.bounds];
@@ -114,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
         case UIGestureRecognizerStateFailed:
         case UIGestureRecognizerStateCancelled:
         {
-            [UIView wr_animateWithEasing:RBBEasingFunctionEaseOutExpo duration:0.2 animations:^{
+            [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.2 animations:^{
                 self.pinchImageView.transform = CGAffineTransformIdentity;
                 self.dimView.alpha = 0.0f;
             } completion:^(BOOL finished) {

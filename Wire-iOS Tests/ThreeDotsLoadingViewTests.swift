@@ -31,6 +31,11 @@ class ThreeDotsLoadingViewTests: ZMSnapshotTestCase {
         sut.layoutIfNeeded()
         sut.layer.speed = 0
     }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
         
     func testThreeDotsLoadingView() {
         verify(view: sut)

@@ -124,7 +124,7 @@ fileprivate extension URL {
 
     private var tweetID: String? {
         guard let statusRange = absoluteString.range(of: "status/") else { return nil }
-        return absoluteString.substring(from: statusRange.upperBound)
+        return String(absoluteString[statusRange.upperBound...])
     }
 
 }

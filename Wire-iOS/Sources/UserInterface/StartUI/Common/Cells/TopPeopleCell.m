@@ -22,8 +22,6 @@
 #import "BadgeUserImageView.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIView+Borders.h"
-#import <WireDataModel/ZMBareUser.h>
 #import "Wire-Swift.h"
 
 @interface TopPeopleCell ()
@@ -149,7 +147,7 @@
 
 #pragma mark - Get, set
 
-- (void)setUser:(id<ZMBareUser, ZMSearchableUser, AccentColorProvider>)user
+- (void)setUser:(id<UserType, AccentColorProvider>)user
 {
     _user = user;
     self.badgeUserImageView.user = user;

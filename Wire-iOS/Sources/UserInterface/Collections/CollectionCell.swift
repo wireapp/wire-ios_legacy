@@ -28,6 +28,7 @@ protocol CollectionCellMessageChangeDelegate: class {
 }
 
 open class CollectionCell: UICollectionViewCell {
+
     var messageObserverToken: NSObjectProtocol? = .none
     weak var delegate: CollectionCellDelegate?
     // Cell forwards the message changes to the delegate
@@ -55,7 +56,7 @@ open class CollectionCell: UICollectionViewCell {
     
     public var desiredWidth: CGFloat? = .none
     public var desiredHeight: CGFloat? = .none
-    
+
     override open var intrinsicContentSize: CGSize {
         get {
             let width = self.desiredWidth ?? UIViewNoIntrinsicMetric
@@ -66,7 +67,7 @@ open class CollectionCell: UICollectionViewCell {
     }
     
     private var cachedSize: CGSize? = .none
-    
+
     public func flushCachedSize() {
         cachedSize = .none
     }
@@ -115,6 +116,12 @@ open class CollectionCell: UICollectionViewCell {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(CollectionCell.onLongPress(_:)))
         
         self.contentView.addGestureRecognizer(longPressGestureRecognizer)
+
+        self.contentView.addSubview(secureContentsView)
+        self.contentView.addSubview(obfuscationView)
+
+        secureContentsView.autoPinEdgesToSuperviewEdges()
+        obfuscationView.autoPinEdgesToSuperviewEdges()
     }
 
     override open func prepareForReuse() {
@@ -123,25 +130,48 @@ open class CollectionCell: UICollectionViewCell {
         self.message = .none
     }
     
-    func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {
+    @objc func onLongPress(_ gestureRecognizer: UILongPressGestureRecognizer!) {
         if gestureRecognizer.state == .began {
             self.showMenu()
         }
     }
+
+    // MARK: - Obfuscation
+
+    let secureContentsView = UIView()
+
+    var obfuscationIcon: ZetaIconType {
+        return .exclamationMarkCircle
+    }
+
+    fileprivate lazy var obfuscationView = {
+        return ObfuscationView(icon: self.obfuscationIcon)
+    }()
+
+    fileprivate func updateMessageVisibility() {
+        let isObfuscated = message?.isObfuscated == true
+        secureContentsView.isHidden = isObfuscated
+        obfuscationView.isHidden = !isObfuscated
+        obfuscationView.backgroundColor = UIColor(scheme: .accentDimmedFlat)
+    }
+
+    // MARK: - Menu
     
     func menuConfigurationProperties() -> MenuConfigurationProperties? {
         let properties = MenuConfigurationProperties()
         properties.targetRect = self.contentView.bounds
         properties.targetView = self.contentView
         if message?.canBeLiked == true {
-            properties.additionalItems = [.like(for: message, with: #selector(like))]
+            properties.additionalItems = [.forbiddenInEphemeral(.like(for: message, with: #selector(like)))]
+        } else {
+            properties.additionalItems = []
         }
 
         return properties
     }
     
     func showMenu() {
-        guard let menuConfigurationProperties = self.menuConfigurationProperties(), let message = self.message else {
+        guard let menuConfigurationProperties = self.menuConfigurationProperties() else {
             return
         }
         /**
@@ -161,11 +191,14 @@ open class CollectionCell: UICollectionViewCell {
             .delete(with: #selector(deleteMessage)),
             .reveal(with: #selector(showInConversation)),
         ]
-        menuController.menuItems = menuConfigurationProperties.additionalItems + menuItems
+        
+        let existingItems = menuConfigurationProperties.additionalItems
+            .filter { $0.isAvailableInEphemeralConversations }
+            .map { $0.item }
+
+        menuController.menuItems = existingItems + menuItems
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
-        
-        Analytics.shared().tagCollectionOpenItemMenu(for: message.conversation!, itemType: CollectionItemType(message: message))
     }
     
     override open var canBecomeFirstResponder: Bool {
@@ -187,33 +220,26 @@ open class CollectionCell: UICollectionViewCell {
     
     /// To be implemented in the subclass
     func updateForMessage(changeInfo: MessageChangeInfo?) {
+        self.updateMessageVisibility()
         // no-op
     }
 
-    func deleteMessage(_ sender: AnyObject!) {
+    @objc func deleteMessage(_ sender: AnyObject!) {
         guard message?.canBeDeleted == true else { return }
         delegate?.collectionCell(self, performAction: .delete)
     }
 
-    func like(_ sender: AnyObject!) {
+    @objc func like(_ sender: AnyObject!) {
         guard let message = message else { return }
         Message.setLikedMessage(message, liked: !message.liked)
     }
 
-    func forward(_ sender: AnyObject!) {
+    @objc func forward(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .forward)
-        guard let message = self.message else {
-            return
-        }
-        Analytics.shared().tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .forward)
     }
     
-    func showInConversation(_ sender: AnyObject!) {
+    @objc func showInConversation(_ sender: AnyObject!) {
         self.delegate?.collectionCell(self, performAction: .showInConversation)
-        guard let message = self.message else {
-            return
-        }
-        Analytics.shared().tagCollectionDidItemAction(for: message.conversation!, itemType: CollectionItemType(message: message), action: .goto)
     }
 }
 

@@ -29,7 +29,7 @@ import Classy
     func articleViewDidLongPressView(_ articleView: ArticleView)
 }
 
-class ArticleView: UIView {
+@objcMembers class ArticleView: UIView {
 
     /// MARK - Styling
     var containerColor: UIColor?
@@ -48,11 +48,10 @@ class ArticleView: UIView {
     /// MARK - Views
     let messageLabel = TTTAttributedLabel(frame: CGRect.zero)
     let authorLabel = UILabel()
-    let imageView = UIImageView()
-    var loadingView: ThreeDotsLoadingView?
+    let imageView = ImageResourceView()
     var linkPreview: LinkPreview?
     private let obfuscationView = ObfuscationView(icon: .link)
-    private let ephemeralColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorAccent)
+    private let ephemeralColor = UIColor(scheme: .accent)
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
     
@@ -61,11 +60,8 @@ class ArticleView: UIView {
         [messageLabel, authorLabel, imageView, obfuscationView].forEach(addSubview)
         
         if (imagePlaceholder) {
-            let loadingView = ThreeDotsLoadingView()
-            imageView.addSubview(loadingView)
             imageView.isAccessibilityElement = true
             imageView.accessibilityIdentifier = "linkPreviewImage"
-            self.loadingView = loadingView
         }
         
         CASStyler.default().styleItem(self)
@@ -90,11 +86,11 @@ class ArticleView: UIView {
 
         authorLabel.lineBreakMode = .byTruncatingMiddle
         authorLabel.accessibilityIdentifier = "linkPreviewSource"
-        authorLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        authorLabel.setContentHuggingPriority(.required, for: .vertical)
 
         messageLabel.numberOfLines = 0
         messageLabel.accessibilityIdentifier = "linkPreviewContent"
-        messageLabel.setContentHuggingPriority(UILayoutPriorityRequired, for: .vertical)
+        messageLabel.setContentHuggingPriority(.required, for: .vertical)
         messageLabel.delegate = self
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
@@ -106,8 +102,8 @@ class ArticleView: UIView {
     }
 
     private func updateLabels(obfuscated: Bool = false) {
-        messageLabel.linkAttributes = obfuscated ? nil :  [NSForegroundColorAttributeName : UIColor.accent()]
-        messageLabel.activeLinkAttributes = obfuscated ? nil : [NSForegroundColorAttributeName : UIColor.accent().withAlphaComponent(0.5)]
+        messageLabel.linkAttributes = obfuscated ? nil :  [NSAttributedStringKey.foregroundColor.rawValue : UIColor.accent()]
+        messageLabel.activeLinkAttributes = obfuscated ? nil : [NSAttributedStringKey.foregroundColor.rawValue : UIColor.accent().withAlphaComponent(0.5)]
 
         authorLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 16) : authorFont
         messageLabel.font = obfuscated ? UIFont(name: "RedactedScript-Regular", size: 20) : titleFont
@@ -136,16 +132,10 @@ class ArticleView: UIView {
 
             obfuscationView.edges == imageView.edges
         }
-        
-        if let loadingView = self.loadingView {
-            constrain(imageView, loadingView) { imageView, loadingView in
-                loadingView.center == imageView.center
-            }
-        }
     }
     
-    private var authorHighlightAttributes : [String: AnyObject] {
-        return [NSFontAttributeName : authorHighlightFont, NSForegroundColorAttributeName: authorHighlightTextColor]
+    private var authorHighlightAttributes : [NSAttributedStringKey: AnyObject] {
+        return [.font : authorHighlightFont, .foregroundColor: authorHighlightTextColor]
     }
     
     private func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
@@ -158,14 +148,6 @@ class ArticleView: UIView {
             return displayString.attributedString
         }
     }
-    
-    private static var imageCache : ImageCache  = {
-        let cache = ImageCache(name: "ArticleView.imageCache")
-        cache.maxConcurrentOperationCount = 4;
-        cache.totalCostLimit = UInt(1024 * 1024 * 10); // 10 MB
-        cache.qualityOfService = .utility;
-        return cache
-    }()
     
     func configure(withTextMessageData textMessageData: ZMTextMessageData, obfuscated: Bool) {
         guard let linkPreview = textMessageData.linkPreview else {
@@ -183,37 +165,26 @@ class ArticleView: UIView {
         }
 
         obfuscationView.isHidden = !obfuscated
-
-        if let imageData = textMessageData.imageData,
-            let imageDataIdentifier = textMessageData.imageDataIdentifier {
-
-            if obfuscated {
-                ArticleView.imageCache.removeImage(forCacheKey: imageDataIdentifier)
-                imageView.image = UIImage.init(for: .link, iconSize: .tiny, color: ColorScheme.default().color(withName: ColorSchemeColorBackground))
-                setContentMode(isObfuscated: true)
-            } else {
-                imageView.image = nil
-                imageView.contentMode = .scaleAspectFill
-                loadingView?.isHidden = true
-                ArticleView.imageCache.image(for: imageData, cacheKey: imageDataIdentifier, creationBlock: { data -> Any? in
-                    return UIImage.deviceOptimizedImage(from: data)
-                    }, completion: { [weak self] (image, _) in
-                        if let image = image as? UIImage {
-                            self?.imageView.image = image
-                            self?.setContentMode(isObfuscated: false)
-                        }
-                    })
+        
+        if obfuscated {
+            imageView.image = UIImage(for: .link, iconSize: .tiny, color: UIColor(scheme: .background))
+            imageView.contentMode = .center
+        } else {
+            imageView.image = nil
+            imageView.contentMode = .scaleAspectFill
+            imageView.setImageResource(textMessageData.linkPreviewImage) { [weak self] in
+                self?.updateContentMode()
             }
         }
     }
     
-    func setContentMode(isObfuscated: Bool) {
+    func updateContentMode() {
         
         guard let image = self.imageView.image else { return }
         let width = image.size.width * image.scale
         let height = image.size.height * image.scale
         
-        if isObfuscated || width < 480.0 || height < 160.0 {
+        if width < 480.0 || height < 160.0 {
             self.imageView.contentMode = .center
         } else {
             self.imageView.contentMode = .scaleAspectFill
@@ -239,12 +210,12 @@ class ArticleView: UIView {
         messageLabel.text = twitterStatus.message
     }
 
-    dynamic private func viewTapped(_ sender: UITapGestureRecognizer) {
+    @objc private func viewTapped(_ sender: UITapGestureRecognizer) {
         guard let url = linkPreview?.openableURL else { return }
         delegate?.articleViewWantsToOpenURL(self, url: url as URL)
     }
     
-    dynamic private func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
+    @objc private func viewLongPressed(_ sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else { return }
         delegate?.articleViewDidLongPressView(self)
     }

@@ -24,36 +24,37 @@ import Cartography
     func landingViewControllerDidChooseCreateAccount()
     func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()
+    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType)
 }
 
 /// Landing screen for choosing create team or personal account
-final class LandingViewController: UIViewController {
+final class LandingViewController: UIViewController, CompanyLoginControllerDelegate, PreLoginAuthenticationObserver {
     weak var delegate: LandingViewControllerDelegate?
 
-    private let tracker = AnalyticsTracker(context: AnalyticsContextRegistrationEmail)
-
     fileprivate var device: DeviceProtocol
+    private let companyLoginController = CompanyLoginController(withDefaultEnvironment: ())
+    private var token: Any?
 
     // MARK: - UI styles
 
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
-    static let buttonTitleAttribute: [String: Any] = {
+    static let buttonTitleAttribute: [NSAttributedStringKey: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
 
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: semiboldFont]
+        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: semiboldFont]
     }()
 
-    static let buttonSubtitleAttribute: [String: Any] = {
+    static let buttonSubtitleAttribute: [NSAttributedStringKey: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
         alignCenterStyle.alignment = NSTextAlignment.center
         alignCenterStyle.paragraphSpacingBefore = 4
 
         let lightFont = FontSpec(.normal, .light).font!
 
-        return [NSForegroundColorAttributeName: UIColor.Team.textColor, NSParagraphStyleAttributeName: alignCenterStyle, NSFontAttributeName: lightFont]
+        return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: lightFont]
     }()
 
     // MARK: - constraints for iPad
@@ -72,26 +73,7 @@ final class LandingViewController: UIViewController {
         imageView.tintColor = UIColor.Team.textColor
         return imageView
     }()
-
-    let headline: UILabel = {
-        let label = UILabel()
-        label.text = "landing.title".localized
-        label.font = LandingViewController.regularFont
-        label.textColor = UIColor.Team.subtitleColor
-        label.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
-        return label
-    }()
-
-    let headlineStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .center
-        stackView.spacing = 16
-        stackView.axis = .vertical
-
-        return stackView
-    }()
-
+    
     let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
@@ -163,13 +145,12 @@ final class LandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tracker?.tagOpenedLandingScreen()
+        Analytics.shared().tagOpenedLandingScreen(context: "email")
 
         [headerContainerView, buttonStackView, loginHintsLabel, loginButton].forEach(view.addSubview)
-        [logoView, headline].forEach(headlineStackView.addArrangedSubview)
-        headerContainerView.addSubview(headlineStackView)
+        headerContainerView.addSubview(logoView)
         
-        [createAccountButton, createTeamButton].forEach() { button in
+        [createAccountButton, createTeamButton].forEach { button in
             buttonStackView.addArrangedSubview(button)
         }
 
@@ -177,6 +158,7 @@ final class LandingViewController: UIViewController {
         navigationBar.pushItem(navigationItem, animated: false)
         navigationBar.tintColor = .black
         view.addSubview(navigationBar)
+        companyLoginController?.delegate = self
 
         self.createConstraints()
         self.configureAccessibilityElements()
@@ -184,11 +166,28 @@ final class LandingViewController: UIViewController {
         updateStackViewAxis()
         updateConstraintsForIPad()
         updateBarButtonItem()
+        disableTrackingIfNeeded()
 
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
             object: SessionManager.shared?.accountManager,
-            queue: nil) { _ in self.updateBarButtonItem()  }
+            queue: nil) { _ in
+                self.updateBarButtonItem()
+                self.disableTrackingIfNeeded()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        companyLoginController?.isAutoDetectionEnabled = true
+        companyLoginController?.detectLoginCode()
+        token = PreLoginAuthenticationNotification.register(self, for: SessionManager.shared?.unauthenticatedSession)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        companyLoginController?.isAutoDetectionEnabled = false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -208,21 +207,17 @@ final class LandingViewController: UIViewController {
             navigationBar.right == selfView.right
         }
 
-        constrain(headlineStackView, logoView, headline, headerContainerView) {
-            headlineStackView, logoView, headline, headerContainerView in
+        constrain(logoView, headerContainerView) { logoView, headerContainerView in
 
-            ///reserver space for status bar(20pt)
-            headlineStackView.top >= headerContainerView.top + 36
-            logoAlignTop = headlineStackView.top == headerContainerView.top + 72 ~ 500.0
-            headlineStackView.centerX == headerContainerView.centerX
+            logoAlignTop = logoView.top == headerContainerView.top + 72 ~ 500.0
+            logoView.centerX == headerContainerView.centerX
             logoView.width == 96
             logoView.height == 31
 
-            headline.height >= 18
-            headlineStackView.bottom <= headerContainerView.bottom - 16
+            logoView.bottom <= headerContainerView.bottom - 16
 
             if UIDevice.current.userInterfaceIdiom == .pad {
-                headlineAlignBottom = headlineStackView.bottom == headerContainerView.bottom - 80
+                headlineAlignBottom = logoView.bottom == headerContainerView.bottom - 80
             }
         }
 
@@ -230,13 +225,14 @@ final class LandingViewController: UIViewController {
 
             headerContainerView.width == selfView.width
             headerContainerView.centerX == selfView.centerX
-            headerContainerView.top == selfView.top
 
             buttonStackView.centerX == selfView.centerX
             buttonStackView.centerY == selfView.centerY
 
             headerContainerView.bottom == buttonStackView.top
         }
+        
+        headerContainerView.topAnchor.constraint(equalTo: safeTopAnchor).isActive = true
 
         constrain(self.view, buttonStackView, loginHintsLabel, loginButton) {
             selfView, buttonStackView, loginHintsLabel, loginButton in
@@ -257,8 +253,8 @@ final class LandingViewController: UIViewController {
         }
 
         [createAccountButton, createTeamButton].forEach() { button in
-            button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-            button.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+            button.setContentCompressionResistancePriority(.required, for: .vertical)
+            button.setContentCompressionResistancePriority(.required, for: .horizontal)
         }
     }
 
@@ -292,7 +288,6 @@ final class LandingViewController: UIViewController {
     }
 
     private func updateBarButtonItem() {
-
         if SessionManager.shared?.firstAuthenticatedAccount == nil {
             navigationBar.topItem?.rightBarButtonItem = nil
         } else {
@@ -301,21 +296,23 @@ final class LandingViewController: UIViewController {
             cancelItem.accessibilityLabel = "general.cancel".localized
             navigationBar.topItem?.rightBarButtonItem = cancelItem
         }
-
+    }
+    
+    private func disableTrackingIfNeeded() {
+        if SessionManager.shared?.firstAuthenticatedAccount == nil {
+            TrackingManager.shared.disableCrashAndAnalyticsSharing = true
+        }
     }
 
     // MARK: - Accessibility
 
     private func configureAccessibilityElements() {
         logoView.isAccessibilityElement = false
-        headline.isAccessibilityElement = false
 
-        headlineStackView.isAccessibilityElement = true
-        headlineStackView.accessibilityLabel = "landing.app_name".localized + "\n" + "landing.title".localized
-        headlineStackView.accessibilityTraits = UIAccessibilityTraitHeader
-        headlineStackView.shouldGroupAccessibilityChildren = true
-
-        headerContainerView.accessibilityElements = [headlineStackView]
+        headerContainerView.isAccessibilityElement = true
+        headerContainerView.accessibilityLabel = "landing.app_name".localized + " " + "landing.title".localized
+        headerContainerView.accessibilityTraits = UIAccessibilityTraitHeader
+        headerContainerView.shouldGroupAccessibilityChildren = true
     }
 
     private static let createAccountButtonTitle: NSAttributedString = {
@@ -344,18 +341,20 @@ final class LandingViewController: UIViewController {
     // MARK: - Button tapped target
 
     @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedUserRegistration()
+        Analytics.shared().tagOpenedUserRegistration(context: "email")
         delegate?.landingViewControllerDidChooseCreateAccount()
+        token = nil
     }
 
     @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedTeamCreation()
+        Analytics.shared().tagOpenedTeamCreation(context: "email")
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
     @objc public func loginButtonTapped(_ sender: AnyObject!) {
-        tracker?.tagOpenedLogin()
+        Analytics.shared().tagOpenedLogin(context: "email")
         delegate?.landingViewControllerDidChooseLogin()
+        token = nil
     }
     
     @objc public func cancelButtonTapped() {
@@ -364,8 +363,47 @@ final class LandingViewController: UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        // FIXME: We have to hide the status bar when running tests as we are not using a test host.
+        // Some view controllers we test using snapshots requets a status bar appearance update when
+        // they appear. If that happens we will query the topmost view controller which will be the
+        // LandingViewController in tests as we are using no test host application to run tests.
+        // Unfortunately this hack is needed until we either change how we manage the status bar or
+        // start using a test host to run tests.
+        return ProcessInfo.processInfo.isRunningTests
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
+    // MARK: - CompanyLoginControllerDelegate
+    
+    func controller(_ controller: CompanyLoginController, presentAlert alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+
+    func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
+        self.showLoadingView = showLoadingView
+    }
+
+    // MARK: - PreLoginAuthenticationObserver
+    
+    func authenticationReadyToImportBackup(existingAccount: Bool) {
+        guard nil == AutomationHelper.sharedHelper.automationEmailCredentials else {
+            UnauthenticatedSession.sharedSession?.continueAfterBackupImportStep()
+            return
+        }
+        
+        func presentNoHistoryViewController() {
+            let type = existingAccount ? ContextType.loggedOut : .newDevice
+            delegate?.landingViewControllerNeedsToPresentNoHistoryFlow(with: type)
+        }
+        
+        if let visibleController = UIApplication.shared.wr_topmostController() as? BrowserViewController {
+            visibleController.dismiss(animated: true, completion: presentNoHistoryViewController)
+        } else {
+            presentNoHistoryViewController()
+        }
     }
 
 }
-

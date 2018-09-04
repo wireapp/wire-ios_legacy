@@ -21,7 +21,7 @@ import Cartography
 import WireUtilities
 import WireSyncEngine
 
-fileprivate struct PhoneNumber {
+fileprivate struct PhoneNumber: Equatable {
     enum ValidationResult {
         case valid
         case tooLong
@@ -63,7 +63,7 @@ fileprivate struct PhoneNumber {
         guard let country = Country.detect(forPhoneNumber: fullNumber) else { return nil }
         countryCode = country.e164.uintValue
         let prefix = country.e164PrefixString
-        numberWithoutCode = fullNumber.substring(from: prefix.endIndex)
+        numberWithoutCode = String(fullNumber[prefix.endIndex...])
         self.fullNumber = fullNumber
         
     }
@@ -81,12 +81,6 @@ fileprivate struct PhoneNumber {
     }
 }
 
-extension PhoneNumber: Equatable {
-    static func ==(lhs: PhoneNumber, rhs: PhoneNumber) -> Bool {
-        return lhs.fullNumber == rhs.fullNumber
-    }
-}
-
 fileprivate struct ChangePhoneNumberState {
     let currentNumber: PhoneNumber?
     var newNumber: PhoneNumber?
@@ -99,13 +93,15 @@ fileprivate struct ChangePhoneNumberState {
         guard let phoneNumber = visibleNumber else { return false }
         switch phoneNumber.validate() {
         case .valid:
-            return phoneNumber != currentNumber
+            // No current number -> it's a valid change
+            guard let current = currentNumber else { return true }
+            return phoneNumber != current
         default:
             return false
         }
     }
     
-    init(currentPhoneNumber: String = ZMUser.selfUser().phoneNumber) {
+    init(currentPhoneNumber: String = ZMUser.selfUser().phoneNumber!) {
         self.currentNumber = PhoneNumber(fullNumber: currentPhoneNumber)
     }
     
@@ -169,7 +165,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         }
     }
     
-    func saveButtonTapped() {
+    @objc func saveButtonTapped() {
         if let newNumber = state.newNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
             updateSaveButtonState(enabled: false)
@@ -238,7 +234,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         tableView.deselectRow(at: indexPath, animated: false)
     }
     
-    func selectCountry() {
+    @objc func selectCountry() {
         let countryCodeController = CountryCodeTableViewController()
         countryCodeController.delegate = self
         

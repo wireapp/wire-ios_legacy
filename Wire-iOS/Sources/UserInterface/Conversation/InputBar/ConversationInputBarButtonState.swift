@@ -22,8 +22,18 @@ import Foundation
 private let disableEphemeralSending = false
 private let disableEphemeralSendingInGroups = false
 
+extension ZMConversation {
+    @objc var hasSyncedMessageDestructionTimeout: Bool {
+        switch messageDestructionTimeout {
+        case .synced(_)?:
+            return true
+        default:
+            return false
+        }
+    }
+}
 
-public final class ConversationInputBarButtonState: NSObject {
+@objcMembers final public class ConversationInputBarButtonState: NSObject {
 
     public var sendButtonHidden: Bool {
         return !hasText || editing || (Settings.shared().disableSendButton && mode != .emojiInput && !markingDown)
@@ -34,7 +44,11 @@ public final class ConversationInputBarButtonState: NSObject {
     }
 
     public var ephemeralIndicatorButtonHidden: Bool {
-        return hasText || (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || editing || !ephemeral || disableEphemeralSending
+        return (conversationType != .oneOnOne && disableEphemeralSendingInGroups) || !ephemeral || disableEphemeralSending
+    }
+
+    public var ephemeralIndicatorButtonEnabled: Bool {
+        return !ephemeralIndicatorButtonHidden && !syncedMessageDestructionTimeout
     }
 
     private var hasText: Bool {
@@ -51,14 +65,16 @@ public final class ConversationInputBarButtonState: NSObject {
     private var destructionTimeout: TimeInterval = 0
     private var conversationType: ZMConversationType = .oneOnOne
     private var mode: ConversationInputBarViewControllerMode = .textInput
+    private var syncedMessageDestructionTimeout: Bool = false
 
-    public func update(textLength: Int, editing: Bool, markingDown: Bool, destructionTimeout: TimeInterval, conversationType: ZMConversationType, mode: ConversationInputBarViewControllerMode) {
+    public func update(textLength: Int, editing: Bool, markingDown: Bool, destructionTimeout: TimeInterval, conversationType: ZMConversationType, mode: ConversationInputBarViewControllerMode, syncedMessageDestructionTimeout: Bool) {
         self.textLength = textLength
         self.editing = editing
         self.markingDown = markingDown
         self.destructionTimeout = destructionTimeout
         self.conversationType = conversationType
         self.mode = mode
+        self.syncedMessageDestructionTimeout = syncedMessageDestructionTimeout
     }
 
 }

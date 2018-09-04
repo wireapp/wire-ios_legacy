@@ -135,7 +135,7 @@ internal protocol TypedConversationStatusMatcher: ConversationStatusMatcher {
 
 extension TypedConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        let matches: [UInt] = matchedTypes.flatMap { status.messagesRequiringAttentionByType[$0] }
+        let matches: [UInt] = matchedTypes.compactMap { status.messagesRequiringAttentionByType[$0] }
         return matches.reduce(0, +) > 0
     }
 }
@@ -171,8 +171,8 @@ final class ContentSizeCategoryUpdater {
 }
 
 final class ConversationStatusStyle {
-    private(set) var regularStyle: [String: AnyObject] = [:]
-    private(set) var emphasisStyle: [String: AnyObject] = [:]
+    private(set) var regularStyle: [NSAttributedStringKey: AnyObject] = [:]
+    private(set) var emphasisStyle: [NSAttributedStringKey: AnyObject] = [:]
     private var contentSizeStyleUpdater: ContentSizeCategoryUpdater!
     
     init() {
@@ -181,10 +181,10 @@ final class ConversationStatusStyle {
                 return
             }
             
-            self.regularStyle = [NSFontAttributeName: FontSpec(.medium, .none).font!,
-                                 NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
-            self.emphasisStyle = [NSFontAttributeName: FontSpec(.medium, .medium).font!,
-                                  NSForegroundColorAttributeName: UIColor(white:1.0, alpha:0.64)]
+            self.regularStyle = [.font: FontSpec(.medium, .none).font!,
+                                 .foregroundColor: UIColor(white:1.0, alpha:0.64)]
+            self.emphasisStyle = [.font: FontSpec(.medium, .medium).font!,
+                                  .foregroundColor: UIColor(white:1.0, alpha:0.64)]
         }
     }
 }
@@ -192,22 +192,22 @@ final class ConversationStatusStyle {
 fileprivate let statusStyle = ConversationStatusStyle()
 
 extension ConversationStatusMatcher {
-    static var regularStyle: [String: AnyObject] {
+    static var regularStyle: [NSAttributedStringKey: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    static var emphasisStyle: [String: AnyObject] {
+    static var emphasisStyle: [NSAttributedStringKey: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }
 
 // Accessors for ObjC
 extension ZMConversation {
-    static func statusRegularStyle() -> [String: AnyObject] {
+    @objc static func statusRegularStyle() -> [NSAttributedStringKey: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    static func statusEmphasisStyle() -> [String: AnyObject] {
+    @objc static func statusEmphasisStyle() -> [NSAttributedStringKey: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }
@@ -250,14 +250,13 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        return "conversation.status.call".localized && type(of: self).regularStyle
+        return .none
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        let state = conversation.voiceChannel?.state ?? .none
 
-        switch state {
-        case CallState.incoming(_, false, _):
+        switch conversation.voiceChannel?.state {
+        case .incoming(_, false, _)?:
             return .activeCall(showJoin: true)
         default:
             return .activeCall(showJoin: conversation.isSilenced)
@@ -276,7 +275,7 @@ final internal class TypingMatcher: ConversationStatusMatcher {
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         let statusString: NSAttributedString
         if status.isGroup, let typingUsers = conversation.typingUsers() {
-            let typingUsersString = typingUsers.flatMap { $0 as? ZMUser }.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+            let typingUsersString = typingUsers.compactMap { $0 as? ZMUser }.map { $0.displayName(in: conversation) }.joined(separator: ", ")
             let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
             let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle)
             statusString = self.addEmphasis(to: intermediateString, for: typingUsersString)
@@ -333,7 +332,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         if status.isSilenced {
-            let resultString = matchedTypes.filter { status.messagesRequiringAttentionByType[$0] > 0 }.flatMap {
+            let resultString = matchedTypes.filter { status.messagesRequiringAttentionByType[$0] > 0 }.compactMap {
                 guard let localizationKey = matchedTypesDescriptions[$0] else {
                     return .none
                 }
@@ -347,17 +346,17 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             guard let message = status.messagesRequiringAttention.reversed().first(where: {
                     if let _ = $0.sender,
                         let type = StatusMessageType(message: $0),
-                        let _ = matchedTypesDescriptions[type] {
+                        let _ = matchedTypesDescriptions[type],
+                        $0.messageIsRelevantForConversationStatus {
                         return true
-                    }
-                    else {
+                    } else {
                         return false
                     }
                 }),
                     let sender = message.sender,
                     let type = StatusMessageType(message: message),
                     let localizationKey = matchedTypesDescriptions[type] else {
-                return "" && type(of: self).regularStyle
+                return "" && Swift.type(of: self).regularStyle
             }
             
             let messageDescription: String
@@ -365,15 +364,22 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 messageDescription = (localizationRootPath + ".ephemeral").localized
             }
             else {
-                messageDescription = String(format: (localizationRootPath + "." + localizationKey).localized, message.textMessageData?.messageText ?? "")
+                var format = localizationRootPath + "." + localizationKey
+                
+                if status.isGroup && type == .missedCall {
+                    format += ".groups"
+                    return format.localized(args: sender.displayName(in: conversation)) && Swift.type(of: self).regularStyle
+                }
+                
+                messageDescription = String(format: format.localized, message.textMessageData?.messageText ?? "")
             }
             
             if status.isGroup {
-                return ((sender.displayName(in: conversation) + ": ") && type(of: self).emphasisStyle) +
-                        (messageDescription && type(of: self).regularStyle)
+                return ((sender.displayName(in: conversation) + ": ") && Swift.type(of: self).emphasisStyle) +
+                        (messageDescription && Swift.type(of: self).regularStyle)
             }
             else {
-                return messageDescription && type(of: self).regularStyle
+                return messageDescription && Swift.type(of: self).regularStyle
             }
         }
     }
@@ -382,7 +388,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
-                     let _ = matchedTypesDescriptions[type] {
+                     let _ = matchedTypesDescriptions[type],
+                     $0.messageIsRelevantForConversationStatus {
                     return true
                 }
                 else {
@@ -399,7 +406,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         case .missedCall:
             return .missedCall
         default:
-            return .unreadMessages(count: status.messagesRequiringAttention.flatMap { StatusMessageType(message: $0) }.filter { matchedTypes.index(of: $0) != .none }.count)
+            return .unreadMessages(count: status.messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }.filter { matchedTypes.index(of: $0) != .none }.count)
         }
     }
     
@@ -514,7 +521,7 @@ final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
         }
         
         let resultString = [addedString(for: allStatusMessagesByType[.addParticipants] ?? [], in: conversation),
-                            removedString(for: allStatusMessagesByType[.removeParticipants] ?? [], in: conversation)].flatMap { $0 }.joined(separator: "; " && type(of: self).regularStyle)
+                            removedString(for: allStatusMessagesByType[.removeParticipants] ?? [], in: conversation)].compactMap { $0 }.joined(separator: "; " && type(of: self).regularStyle)
         return resultString
     }
     
@@ -612,7 +619,7 @@ extension ConversationStatus {
         guard allMatchers.count > 0 else {
             return "" && [:]
         }
-        let allStrings = allMatchers.flatMap { $0.description(with: self, conversation: conversation) }
+        let allStrings = allMatchers.compactMap { $0.description(with: self, conversation: conversation) }
         return allStrings.joined(separator: " | " && CallingMatcher.regularStyle)
     }
     
@@ -626,37 +633,6 @@ extension ConversationStatus {
 }
 
 extension ZMConversation {
-    internal var unreadMessages: [ZMConversationMessage] {
-        let lastReadIndex: Int
-        
-        if let lastMessage = self.lastReadMessage {
-            lastReadIndex = self.messages.index(of: lastMessage)
-            guard lastReadIndex != NSNotFound else {
-                return []
-            }
-        }
-        else {
-            lastReadIndex = -1
-        }
-        
-        let unreadIndexSet = IndexSet((lastReadIndex + 1)..<self.messages.count)
-        return self.messages.objects(at: unreadIndexSet).flatMap {
-                $0 as? ZMConversationMessage
-            }.filter {
-                if let systemMessageData = $0.systemMessageData {
-                    switch systemMessageData.systemMessageType {
-                    case .participantsRemoved:
-                        fallthrough
-                    case .participantsAdded:
-                        return true
-                    default:
-                        break
-                    }
-                }
-                
-                return !($0.sender?.isSelfUser ?? true)
-            }
-    }
     
     internal var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
@@ -670,7 +646,7 @@ extension ZMConversation {
             messagesRequiringAttention.append(lastMessage)
         }
         
-        let messagesRequiringAttentionTypes = messagesRequiringAttention.flatMap { StatusMessageType(message: $0) }
+        let messagesRequiringAttentionTypes = messagesRequiringAttention.compactMap { StatusMessageType(message: $0) }
         
         var iterator = messagesRequiringAttentionTypes.makeIterator()
         let messagesRequiringAttentionByType = iterator.histogram()
@@ -678,7 +654,7 @@ extension ZMConversation {
         let hasMessages: Bool
         
         if self.messages.count < 10 {
-            hasMessages = self.messages.flatMap {
+            hasMessages = self.messages.compactMap {
                 StatusMessageType(message: $0 as! ZMConversationMessage)
             }.count > 0
         }
@@ -686,27 +662,27 @@ extension ZMConversation {
             hasMessages = true
         }
         
-        
-        var isOngoingCall = false
-        if let state = voiceChannel?.state {
+        let isOngoingCall: Bool = {
+            guard let state = voiceChannel?.state else { return false }
             switch state {
-            case .none, .terminating:
-                break
-            default:
-                isOngoingCall = true
+            case .none, .terminating: return false
+            case .incoming: return conversationType == .group
+            default: return true
             }
-        }
-        
-        return ConversationStatus(isGroup: self.conversationType == .group,
-                                  hasMessages: hasMessages,
-                                  hasUnsentMessages: self.hasUnreadUnsentMessage,
-                                  messagesRequiringAttention: messagesRequiringAttention,
-                                  messagesRequiringAttentionByType: messagesRequiringAttentionByType,
-                                  isTyping: self.typingUsers().count > 0,
-                                  isSilenced: self.isSilenced,
-                                  isOngoingCall: isOngoingCall,
-                                  isBlocked: isBlocked,
-                                  isSelfAnActiveMember: self.isSelfAnActiveMember)
+        }()
+
+        return ConversationStatus(
+            isGroup: conversationType == .group,
+            hasMessages: hasMessages,
+            hasUnsentMessages: hasUnreadUnsentMessage,
+            messagesRequiringAttention: messagesRequiringAttention,
+            messagesRequiringAttentionByType: messagesRequiringAttentionByType,
+            isTyping: typingUsers().count > 0,
+            isSilenced: isSilenced,
+            isOngoingCall: isOngoingCall,
+            isBlocked: isBlocked,
+            isSelfAnActiveMember: isSelfAnActiveMember
+        )
     }
 }
 

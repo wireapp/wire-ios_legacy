@@ -23,17 +23,21 @@ class GridViewTests: ZMSnapshotTestCase {
     
     var sut: GridView!
     
-    var view1 = UIView()
-    var view2 = UIView()
-    var view3 = UIView()
-    var view4 = UIView()
+    var view1: UIView!
+    var view2: UIView!
+    var view3: UIView!
+    var view4: UIView!
     
     override func setUp() {
         super.setUp()
-        
+
+        view1 = UIView()
         view1.backgroundColor = .red
+        view2 = UIView()
         view2.backgroundColor = .blue
+        view3 = UIView()
         view3.backgroundColor = .green
+        view4 = UIView()
         view4.backgroundColor = .yellow
         
         sut = GridView()
@@ -42,6 +46,10 @@ class GridViewTests: ZMSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        view1 = nil
+        view2 = nil
+        view3 = nil
+        view4 = nil
         super.tearDown()
     }
     

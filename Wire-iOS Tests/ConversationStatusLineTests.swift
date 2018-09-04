@@ -32,7 +32,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "@" + otherUser.handle)
+        XCTAssertEqual(status.string, "@" + otherUser.handle!)
     }
     
     func testStatusForNotActiveConversationGroup() {
@@ -78,6 +78,37 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "Missed call")
+    }
+    
+    func testStatusMissedCallInGroup() {
+        // GIVEN
+        let sut = createGroupConversation()
+        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
+        otherMessage.sender = self.otherUser
+        otherMessage.systemMessageType = .missedCall
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "Missed call from Bruno")
+    }
+    
+    func testStatusRejectedCall() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
+        otherMessage.sender = self.otherUser
+        otherMessage.systemMessageType = .missedCall
+        otherMessage.relevantForConversationStatus = false
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "")
     }
     
     func testStatusForMultipleTextMessagesInConversation_silenced() {
@@ -171,7 +202,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added you")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName) added you")
     }
     
     func testNoStatusForSystemMessageIAddedSomeone() {
@@ -245,7 +276,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) added \(anotherUser.displayName!)")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName) added \(anotherUser.displayName)")
     }
     
     func testStatusForSystemMessageSomeoneJoined() {
@@ -262,7 +293,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) joined")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName) joined")
     }
     
     func testStatusForSystemMessageIWasRemoved() {
@@ -314,7 +345,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName!) started a conversation")
+        XCTAssertEqual(status.string, "\(self.otherUser.displayName) started a conversation")
     }
     
     func testNoStatusForSelfConversationStarted() {

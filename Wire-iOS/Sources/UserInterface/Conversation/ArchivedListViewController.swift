@@ -29,7 +29,9 @@ import Cartography
 
 // MARK: - ArchivedListViewController
 
-@objc final class ArchivedListViewController: UIViewController {
+@objcMembers final class ArchivedListViewController: UIViewController {
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
     fileprivate var collectionView: UICollectionView!
     fileprivate let archivedNavigationBar = ArchivedNavigationBar(title: "archived_list.title".localized.uppercased())
@@ -58,6 +60,12 @@ import Cartography
         if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: collectionView)
         }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func createViews() {
@@ -144,6 +152,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
     internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
         applyChangesClosure()
         collectionView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
     }
     
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {

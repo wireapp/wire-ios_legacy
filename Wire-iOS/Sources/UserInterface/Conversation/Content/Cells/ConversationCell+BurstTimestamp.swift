@@ -18,6 +18,13 @@
 
 import Foundation
 
+extension ConversationCell {
+    @objc func setupFont() {
+        burstNormalFont = UIFont.smallLightFont
+        burstBoldFont = UIFont.smallSemiboldFont
+    }
+}
+
 public extension ConversationCell {
 
     @objc func scheduledTimerForUpdateBurstTimestamp() {
@@ -29,7 +36,7 @@ public extension ConversationCell {
         }
     }
 
-    func willDisplayInTableView() {
+    @objc func willDisplayInTableView() {
         scheduledTimerForUpdateBurstTimestamp()
 
         contentView.bringSubview(toFront: likeButton)
@@ -45,6 +52,10 @@ public extension ConversationCell {
         }
 
         messageContentView.bringSubview(toFront: countdownContainerView)
+    }
+    
+    @objc func cellDidEndBeingVisible() {
+        // no-op
     }
 
     @objc public func updateBurstTimestamp() {
