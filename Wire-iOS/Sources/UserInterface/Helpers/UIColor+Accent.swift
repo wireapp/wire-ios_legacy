@@ -20,7 +20,7 @@ import Foundation
 
 extension UIColor {
     @objc static var accentDarken: UIColor {
-        return accent().mix(.black, amount: 0.32)
+        return accent().mix(.black, amount: 0.1).withAlphaComponent(0.32)
     }
 
     @objc static var accentDimmedFlat: UIColor {
