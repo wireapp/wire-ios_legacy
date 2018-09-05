@@ -30,21 +30,12 @@
 @class LinkAttachment;
 @class ConversationCellBurstTimestampView;
 @class AdditionalMenuItem;
+@class MenuConfigurationProperties;
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;
 
 typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
-
-@interface MenuConfigurationProperties : NSObject
-
-@property (nonatomic) CGRect targetRect;
-@property (nonatomic) UIView *targetView;
-@property (nonatomic) SelectedMenuBlock selectedMenuBlock;
-@property (nonatomic) NSArray <AdditionalMenuItem *> *additionalItems;
-@property (nonatomic) NSInteger likeItemIndex;
-
-@end
 
 @interface ConversationCellLayoutProperties : NSObject
 

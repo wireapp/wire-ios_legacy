@@ -55,10 +55,10 @@ public extension ConversationCell {
         var items = [UIMenuItem]()
         
         if message.isEphemeral {
-            items += properties.additionalItems.filter(\.isAvailableInEphemeralConversations).map(\.item)
+            items += properties.additionalItems?.filter(\.isAvailableInEphemeralConversations).map(\.item) ?? []
         } else {
-            items += properties.additionalItems.map(\.item)
-            
+            items += properties.additionalItems?.map(\.item) ?? []
+
             if message.canBeLiked {
                 let index = items.count > 0 ? properties.likeItemIndex : 0
                 items.insert(.like(for: message, with: #selector(likeMessage)), at: index)

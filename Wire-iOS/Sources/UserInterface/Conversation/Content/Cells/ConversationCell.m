@@ -36,10 +36,6 @@ const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 static const CGFloat BurstContainerExpandedHeight = 40;
 
-@implementation MenuConfigurationProperties
-
-@end
-
 @implementation ConversationCellLayoutProperties
 
 @end

@@ -192,11 +192,11 @@ open class CollectionCell: UICollectionViewCell {
             .reveal(with: #selector(showInConversation)),
         ]
         
-        let existingItems = menuConfigurationProperties.additionalItems
+        let existingItems = menuConfigurationProperties.additionalItems?
             .filter { $0.isAvailableInEphemeralConversations }
             .map { $0.item }
 
-        menuController.menuItems = existingItems + menuItems
+        menuController.menuItems = (existingItems ?? []) + menuItems
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
     }
