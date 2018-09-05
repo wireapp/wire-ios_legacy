@@ -30,25 +30,33 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
 final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: VideoGridViewController!
+    var mediaManager: ZMMockAVSMediaManager!
 
     override func setUp() {
         super.setUp()
+
+        mediaManager = ZMMockAVSMediaManager()
     }
     
     override func tearDown() {
         sut = nil
+        mediaManager = nil
+
         super.tearDown()
     }
 
     func createSut() {
         ZMUser.selfUser().remoteIdentifier = UUID()
-        sut = VideoGridViewController(configuration: MockVideoGridConfiguration())
+        sut = VideoGridViewController(configuration: MockVideoGridConfiguration(),
+                                      mediaManager: mediaManager)
 
         sut.view.backgroundColor = .black
     }
 
     func testForMuted(){
         createSut()
+
+        mediaManager.isMicrophoneMuted = true
 
         sut.isCovered = false
         verify(view: sut.view)
