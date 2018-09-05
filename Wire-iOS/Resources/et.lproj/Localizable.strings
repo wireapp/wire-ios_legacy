@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Tehniline aruanne";
 "self.settings.technical_report.send_report" = "Saada raport Wire’le";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire kõneraport";
 "self.settings.technical_report.include_log" = "Lisa detailide logi";
 "self.settings.technical_report.privacy_warning" = "Detailsed logid võivad sisaldada personaalseid andmeid";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Isiklikuks kasutuseks";
+"landing.create_account.title" = "Isiklik";
 "landing.create_account.subtitle" = "loo konto";
-"landing.create_team.title" = "Organisatsioonidele";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "loo meeskond";
 "landing.login.hints" = "Konto juba olemas?";
 "landing.login.button.title" = "Logi sisse";

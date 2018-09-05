@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Tehnično poročilo";
 "self.settings.technical_report.send_report" = "Pošlji poročilo na Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire poročilo o klicih";
 "self.settings.technical_report.include_log" = "Vključi podroben dnevnik";
 "self.settings.technical_report.privacy_warning" = "Podrobni dnevniki lahko vsebujejo osebne podatke";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "For personal use";
+"landing.create_account.title" = "Osebno";
 "landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Prijava";

@@ -207,7 +207,7 @@
 "conversation.status.message.file" = "Поділився(-лась) файлом";
 "conversation.status.message.knock" = "Надіслав(-ла) пінг";
 "conversation.status.message.missedcall" = "Пропущений дзвінок";
-"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.missedcall.groups" = "Пропущений дзвінок від %@";
 "conversation.status.message.ephemeral" = "Тимчасове повідомлення";
 
 "conversation.status.unsent" = "⚠️ Ненадіслане повідомлення";
@@ -390,7 +390,7 @@
 
 "content.system.call.you" = "Ви";
 "content.system.call.called" = "%@ дзвонив(-ла)";
-"content.system.call.missed-call" = "Missed call from %@";
+"content.system.call.missed-call" = "Пропущений дзвінок від %@";
 "content.system.call.called-you" = "%@ дзвонив(-ла)";
 
 "content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Технічний звіт";
 "self.settings.technical_report.send_report" = "Надіслати звіт до Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire звіт про дзвінок";
 "self.settings.technical_report.include_log" = "Включити детальний журнал логів";
 "self.settings.technical_report.privacy_warning" = "Детальні логи можуть містити персональні дані";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Для особистого користування";
+"landing.create_account.title" = "Персональні дані";
 "landing.create_account.subtitle" = "створити акаунт";
-"landing.create_team.title" = "Для організацій";
+"landing.create_team.title" = "Pro-Акаунт";
 "landing.create_team.subtitle" = "створити команду";
 "landing.login.hints" = "Вже зареєстровані?";
 "landing.login.button.title" = "Увійти";
