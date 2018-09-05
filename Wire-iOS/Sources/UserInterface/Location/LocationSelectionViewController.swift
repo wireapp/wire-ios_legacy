@@ -44,7 +44,7 @@ import CoreLocation
     }()
 
     public let locationButtonContainer = UIView()
-    fileprivate let mapView = MKMapView()
+    fileprivate var mapView: MKMapView! = MKMapView()
     fileprivate let toolBar: ModalTopBar
     fileprivate let locationManager = CLLocationManager()
     fileprivate let geocoder = CLGeocoder()
@@ -68,12 +68,21 @@ import CoreLocation
         fatalError("init(coder:) has not been implemented, user 'init(forPopoverPresentation:)'")
     }
 
+    deinit {
+        locationManager.stopUpdatingLocation()
+
+        mapView.delegate = nil
+        mapView = nil
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
+
         locationManager.delegate = self
         mapView.delegate = self
         toolBar.delegate = self
         sendViewController.delegate = self
+
         configureViews()
         createConstraints()
     }

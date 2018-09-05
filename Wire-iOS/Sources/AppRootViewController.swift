@@ -37,14 +37,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     public fileprivate(set) var visibleViewController: UIViewController?
     fileprivate let appStateController: AppStateController
-    fileprivate lazy var classyCache: ClassyCache = {
-        return ClassyCache()
-    }()
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
-    fileprivate var isClassyInitialized = false
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var flowController: TeamCreationFlowController!
@@ -341,40 +337,11 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
 
-        if !isClassyInitialized && isClassyRequired(for: appState) {
-            isClassyInitialized = true
-
-            let windows = [mainWindow, callWindow, overlayWindow]
-            DispatchQueue.main.async {
-                self.setupClassy(with: windows)
-                completionHandler()
-            }
-        } else {
-            completionHandler()
-        }
-    }
-
-    func isClassyRequired(for appState: AppState) -> Bool {
-        switch appState {
-        case .authenticated, .unauthenticated, .loading:
-            return true
-        default:
-            return false
-        }
+        completionHandler()
     }
 
     func configureMediaManager() {
         self.mediaManagerLoader.send(message: .appStart)
-    }
-
-    func setupClassy(with windows: [UIWindow]) {
-
-        let colorScheme = ColorScheme.default
-        colorScheme.accentColor = UIColor.accent()
-        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
-
-        CASStyler.default().cache = classyCache
-        CASStyler.bootstrapClassy(withTargetWindows: windows)
     }
 
     @objc func onContentSizeCategoryChange() {
