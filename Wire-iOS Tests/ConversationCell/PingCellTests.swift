@@ -55,7 +55,7 @@ final class PingCellTests: ZMSnapshotTestCase {
 
         // THEN
         XCTAssertEqual(UIMenuController.shared.menuItems?.count, 1)
-        XCTAssertEqual(UIMenuController.shared.menuItems?.first!.title, "Delete")
+        XCTAssertEqual(UIMenuController.shared.menuItems?.first?.title, "Delete")
     }
 }
 
