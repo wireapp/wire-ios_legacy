@@ -91,6 +91,8 @@ extension Dictionary
     }()
     
     func bcasPath(_ casPath: String, variables: [AnyHashable: Any]!) -> String? {
+        guard let variables = variables else { return .none }
+
         let data = variables.wr_sortedKeyValues()
         guard let fileData = NSMutableData(contentsOfFile: casPath),
             let variablesJSON = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)

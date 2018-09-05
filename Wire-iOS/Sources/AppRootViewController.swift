@@ -375,7 +375,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
         CASStyler.default().cache = classyCache
         CASStyler.bootstrapClassy(withTargetWindows: windows)
-        CASStyler.default().apply(fontScheme: defaultFontScheme)
     }
 
     @objc func onContentSizeCategoryChange() {
@@ -383,7 +382,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        CASStyler.default().apply(fontScheme: defaultFontScheme)
         type(of: self).configureAppearance()
     }
 
