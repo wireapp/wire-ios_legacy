@@ -81,6 +81,7 @@ class VideoGridViewController: UIViewController {
                 return
             }
 
+            muteIndicatorView.isHidden = false
             muteIndicatorView.alpha = isCovered ? 1 : 0
 
             UIView.animate(
