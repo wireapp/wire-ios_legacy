@@ -62,6 +62,8 @@ static NSString* EmptyStringIfNil(NSString *string) {
     [self.avPlayer removeObserver:self forKeyPath:@"status"];
     [self.avPlayer removeObserver:self forKeyPath:@"rate"];
     [self.avPlayer removeObserver:self forKeyPath:@"currentItem"];
+    
+    [self setIsRemoteCommandCenterEnabled:NO];
 }
 
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler
