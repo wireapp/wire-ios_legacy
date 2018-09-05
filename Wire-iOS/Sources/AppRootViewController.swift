@@ -375,7 +375,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
         CASStyler.default().cache = classyCache
         CASStyler.bootstrapClassy(withTargetWindows: windows)
-        CASStyler.default().apply(colorScheme)
         CASStyler.default().apply(fontScheme: defaultFontScheme)
     }
 

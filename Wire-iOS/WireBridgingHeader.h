@@ -183,7 +183,6 @@
 #import "WireStyleKit+Additions.h"
 #import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"
-#import "CASStyler+Variables.h"
 #import "AVSLogObserver.h"
 #import "NSIndexSet+IndexPaths.h"
 #import "UIAlertController+Wire.h"
