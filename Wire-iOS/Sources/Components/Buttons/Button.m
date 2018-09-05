@@ -40,12 +40,6 @@
 
 @implementation Button
 
-+ (void)initialize
-{
-    if (self == [Button self]) {
-    }
-}
-
 + (instancetype)buttonWithStyle:(ButtonStyle)style
 {
     return [[Button alloc] initWithStyle:style];
