@@ -22,6 +22,13 @@ import WireExtensionComponents
 import MobileCoreServices
 import WireDataModel
 
+enum AttachmentType {
+    case image
+    case video
+    case url
+    case rawFile
+    case walletPass
+}
 
 class ExtensionActivity {
 
@@ -35,7 +42,7 @@ class ExtensionActivity {
     private var hasVideo = false
     private var hasFile = false
     public var hasText = false
-    private let attachments: [NSItemProvider]
+    private let attachments: [AttachmentType: [NSItemProvider]]
 
     public var conversation: Conversation? = nil {
         didSet {
@@ -43,8 +50,8 @@ class ExtensionActivity {
         }
     }
 
-    init(attachments: [NSItemProvider]) {
-        self.attachments = attachments
+    init(attachments: [AttachmentType: [NSItemProvider]]?) {
+        self.attachments = attachments ?? [:]
     }
 
     func markConversationDidDegrade() {
@@ -85,21 +92,21 @@ class ExtensionActivity {
     }
 
     func populateAttachmentTypes(completion: @escaping () -> Void) {
-        hasVideo = attachments.contains { $0.hasVideo }
-        numberOfImages = attachments.filter { $0.hasImage }.count
+        hasVideo = attachments.keys.contains(.video)
+        numberOfImages = attachments[.image]?.count ?? 0
 
         let group = DispatchGroup()
         attachments.forEach { _ in
             group.enter()
         }
 
-        attachments.forEach {
-            $0.hasFile { [weak self] in
-                guard let `self` = self else { return }
-                self.hasFile = self.hasFile || $0
-                group.leave()
-            }
-        }
+//        attachments.forEach {
+//            $0.hasFile { [weak self] in
+//                guard let `self` = self else { return }
+//                self.hasFile = self.hasFile || $0
+//                group.leave()
+//            }
+//        }
 
         group.notify(queue: .main) { 
             completion()
@@ -134,7 +141,7 @@ extension NSItemProvider {
     }
 
     var hasURL: Bool {
-        return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1
+        return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1 
     }
 
     var hasVideo: Bool {
@@ -144,5 +151,9 @@ extension NSItemProvider {
     
     var hasWalletPass: Bool {
         return hasItemConformingToTypeIdentifier(UnsentFileSendable.passkitUTI)
+    }
+
+    var hasRawFile: Bool {
+        return hasItemConformingToTypeIdentifier(kUTTypeContent as String) && !hasItemConformingToTypeIdentifier(kUTTypePlainText as String)
     }
 }

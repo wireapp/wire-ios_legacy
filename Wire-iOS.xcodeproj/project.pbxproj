@@ -207,6 +207,7 @@
 		55DD5C341FA236F60082170C /* CallQualityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DD5C331FA236F60082170C /* CallQualityViewController.swift */; };
 		5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
+		5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E144FFD213E973B00B65E14 /* PreviewImageView.swift */; };
 		5E2B13E820E67EA7002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */; };
 		5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CB20AC39C800414EA6 /* CallVideoPlaceholderState.swift */; };
 		5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */; };
@@ -263,6 +264,7 @@
 		5ED26CD420E7D08E00EB9ED4 /* VerticalColumnCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */; };
 		5ED26CD520E7D08E00EB9ED4 /* VerticalColumnPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */; };
 		5ED26CD620E7D08E00EB9ED4 /* VerticalColumnCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */; };
+		5EDD2538213FD5E200C0E254 /* SLComposeServiceViewController+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD2536213FD5C300C0E254 /* SLComposeServiceViewController+Preview.swift */; };
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
 		5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */; };
 		5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */; };
@@ -829,7 +831,7 @@
 		BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8EE5571D6351B100B0D6D7 /* InputBarEditViewTests.swift */; };
 		BF96A6C61E2FA1790057974A /* UnsentSendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF96A6C31E2F845E0057974A /* UnsentSendable.swift */; };
 		BF96A6C81E2FC7B60057974A /* SendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF96A6C71E2FC7B60057974A /* SendController.swift */; };
-		BF96A6CA1E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF96A6C91E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift */; };
+		BF96A6CA1E2FD3340057974A /* NSExtensionContext+Attachments.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF96A6C91E2FD3340057974A /* NSExtensionContext+Attachments.swift */; };
 		BF96A6CC1E2FD3BA0057974A /* NSItemProvider+Fetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF96A6CB1E2FD3BA0057974A /* NSItemProvider+Fetching.swift */; };
 		BF989D081E896D210052BF8F /* ConversationCellBurstTimestampView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF989D071E896D210052BF8F /* ConversationCellBurstTimestampView.swift */; };
 		BF999B601C0C984C008D5414 /* ProfileDevicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF999B5F1C0C984C008D5414 /* ProfileDevicesViewController.m */; };
@@ -1579,6 +1581,7 @@
 		55DD5C331FA236F60082170C /* CallQualityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityViewController.swift; sourceTree = "<group>"; };
 		5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginFlowOpener.swift; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
+		5E144FFD213E973B00B65E14 /* PreviewImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageView.swift; sourceTree = "<group>"; };
 		5E2B13E320E658EC002F27E2 /* VerticalColumnCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewLayout.swift; sourceTree = "<group>"; };
 		5E2B13E620E67EA1002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewLayoutTests.swift; sourceTree = "<group>"; };
 		5E2B13EB20E68443002F27E2 /* VerticalColumnCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnCollectionViewController.swift; sourceTree = "<group>"; };
@@ -1635,6 +1638,7 @@
 		5EC16BA720EBBF8500955156 /* yt_response_valid_video.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yt_response_valid_video.json; sourceTree = "<group>"; };
 		5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioning.swift; sourceTree = "<group>"; };
 		5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalColumnPositioningContext.swift; sourceTree = "<group>"; };
+		5EDD2536213FD5C300C0E254 /* SLComposeServiceViewController+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SLComposeServiceViewController+Preview.swift"; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
 		5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCornerPinningBehavior.swift; sourceTree = "<group>"; };
 		5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
@@ -2474,7 +2478,7 @@
 		BF8EE55B1D64576400B0D6D7 /* Message+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+Private.h"; sourceTree = "<group>"; };
 		BF96A6C31E2F845E0057974A /* UnsentSendable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnsentSendable.swift; sourceTree = "<group>"; };
 		BF96A6C71E2FC7B60057974A /* SendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendController.swift; sourceTree = "<group>"; };
-		BF96A6C91E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SLComposeServiceViewController+Attachments.swift"; sourceTree = "<group>"; };
+		BF96A6C91E2FD3340057974A /* NSExtensionContext+Attachments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSExtensionContext+Attachments.swift"; sourceTree = "<group>"; };
 		BF96A6CB1E2FD3BA0057974A /* NSItemProvider+Fetching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+Fetching.swift"; sourceTree = "<group>"; };
 		BF989D071E896D210052BF8F /* ConversationCellBurstTimestampView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationCellBurstTimestampView.swift; sourceTree = "<group>"; };
 		BF999B5E1C0C984C008D5414 /* ProfileDevicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileDevicesViewController.h; sourceTree = "<group>"; };
@@ -3506,9 +3510,18 @@
 				BF96A6C71E2FC7B60057974A /* SendController.swift */,
 				BF96A6C31E2F845E0057974A /* UnsentSendable.swift */,
 				545BA2181E2D3C4900AA373E /* PostContent.swift */,
-				BF96A6C91E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift */,
+				BF96A6C91E2FD3340057974A /* NSExtensionContext+Attachments.swift */,
+				5EDD2536213FD5C300C0E254 /* SLComposeServiceViewController+Preview.swift */,
 			);
 			name = Content;
+			sourceTree = "<group>";
+		};
+		5E144FFC213E96F800B65E14 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5E144FFD213E973B00B65E14 /* PreviewImageView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		5E2B13E520E67206002F27E2 /* CollectionLayouts */ = {
@@ -3579,6 +3592,7 @@
 		5E7F012F213E928300C6F3E9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				5E144FFC213E96F800B65E14 /* Views */,
 				5E144FFB213E937C00B65E14 /* Content */,
 				5E144FFA213E92CD00B65E14 /* View Controllers */,
 				5E144FF9213E92A700B65E14 /* Helpers */,
@@ -6630,9 +6644,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CB082DC1FB2137100972488 /* ShareExtensionNetworkObserver.swift in Sources */,
-				BF96A6CA1E2FD3340057974A /* SLComposeServiceViewController+Attachments.swift in Sources */,
+				BF96A6CA1E2FD3340057974A /* NSExtensionContext+Attachments.swift in Sources */,
 				BF6EC90A1EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift in Sources */,
 				BF96A6C61E2FA1790057974A /* UnsentSendable.swift in Sources */,
+				5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */,
+				5EDD2538213FD5E200C0E254 /* SLComposeServiceViewController+Preview.swift in Sources */,
 				BF9AEE191E4A0BC00005FBA7 /* PreprocessorHelper.m in Sources */,
 				BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */,
 				165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */,
