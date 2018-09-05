@@ -19,7 +19,6 @@
 @import WireSyncEngine;
 
 @import PureLayout;
-#import <Classy/UIViewController+CASAdditions.h>
 @import WireExtensionComponents;
 
 #import "ContactsViewController.h"
