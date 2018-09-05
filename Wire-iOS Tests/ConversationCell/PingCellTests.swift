@@ -46,5 +46,16 @@ final class PingCellTests: ZMSnapshotTestCase {
     func testForYouPinged() {
         verify(view: sut.tableViewForSnapshot())
     }
+
+    // MARK: shortcut menu
+
+    func testThatDeleteItemIsInMenu(){
+        // GIVEN & WHEN
+        sut.showMenu()
+
+        // THEN
+        XCTAssertEqual(UIMenuController.shared.menuItems?.count, 1)
+        XCTAssertEqual(UIMenuController.shared.menuItems?.first!.title, "Delete")
+    }
 }
 

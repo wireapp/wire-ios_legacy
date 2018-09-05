@@ -22,7 +22,7 @@ public extension ConversationCell {
     
     @objc public func showMenu() {
         guard !message.isEphemeral || message.canBeDeleted else { return } // Ephemeral message's only possibility is to be deleted
-        let shouldBecomeFirstResponder = delegate.conversationCell?(self, shouldBecomeFirstResponderWhenShowMenuWithCellType: messageType()) ?? true
+        let shouldBecomeFirstResponder = delegate?.conversationCell?(self, shouldBecomeFirstResponderWhenShowMenuWithCellType: messageType()) ?? true
         
         guard let properties = menuConfigurationProperties() else { return }
         registerMenuObservers()
