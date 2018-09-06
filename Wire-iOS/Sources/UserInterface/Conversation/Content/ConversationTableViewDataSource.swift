@@ -176,6 +176,8 @@ extension ConversationCell {
         
         self.fetchController.delegate = self
         try! fetchController.performFetch()
+        
+        firstUnreadMessage = conversation.firstUnreadMessage
     }
     
     init(conversation: ZMConversation, tableView: UITableView) {
