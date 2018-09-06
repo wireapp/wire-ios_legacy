@@ -24,7 +24,7 @@ import AddressBook
 /// Displays the location message
 public final class LocationMessageCell: ConversationCell {
     
-    private var mapView: MKMapView! = MKMapView()
+    private var mapView = MKMapView()
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .locationPin)
     private let addressContainerView = UIView()
@@ -51,11 +51,6 @@ public final class LocationMessageCell: ConversationCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        mapView = nil
-        locationAnnotation = nil
-    }
-    
     private func configureViews() {
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false

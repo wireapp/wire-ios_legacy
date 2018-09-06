@@ -26,7 +26,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
     let message: ZMConversationMessage
     weak var messageActionDelegate: MessageActionResponder?
 
-    private var mapView: MKMapView! = MKMapView()
+    private var mapView = MKMapView()
     private let containerView = UIView()
     private let addressContainerView = UIView()
     private let addressLabel = UILabel()
@@ -49,10 +49,6 @@ class LocationPreviewController: TintColorCorrectedViewController {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        mapView = nil
     }
 
     // MARK: - Configuration
