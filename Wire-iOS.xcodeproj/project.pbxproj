@@ -185,7 +185,6 @@
 		1EE85C671B5F96FC008E084B /* WireExtensionComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; };
 		1EE85C691B5F96FC008E084B /* WireExtensionComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1EE85C501B5F96FB008E084B /* WireExtensionComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1EE9DCC11B5F9A6D00E347DF /* TextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EE9DCA81B5F9A6D00E347DF /* TextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1EF42D411B1889B300A3145D /* stylesheet.cas in Resources */ = {isa = PBXBuildFile; fileRef = 1EF42D401B1889B300A3145D /* stylesheet.cas */; };
 		1EFB23DC1ACEDE5400244571 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */; };
 		5407B8C31A643CCE009090C6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5407B8C21A643CCE009090C6 /* UIKit.framework */; };
 		5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */ = {isa = PBXBuildFile; fileRef = 544F73591E8D3A1800EADAF6 /* DeveloperMenuState.m */; };
@@ -1537,7 +1536,6 @@
 		1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+LoadingView.m"; sourceTree = "<group>"; };
 		1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDataSourceTests.m; sourceTree = "<group>"; };
 		1EBA8C721B74EAB10089CC44 /* WireUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireUtilities.framework; path = Carthage/Build/iOS/WireUtilities.framework; sourceTree = "<group>"; };
-		1EC719F71B67B59A00700A14 /* Classy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Classy.framework; path = Carthage/Build/iOS/Classy.framework; sourceTree = "<group>"; };
 		1EC71A271B6A1B9200700A14 /* WireImages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireImages.framework; path = Carthage/Build/iOS/WireImages.framework; sourceTree = "<group>"; };
 		1ED28CD41A94E26D00B96189 /* group-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-icon.png"; sourceTree = "<group>"; };
 		1ED28CD51A94E26D00B96189 /* group-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "group-icon@2x.png"; sourceTree = "<group>"; };
@@ -1558,7 +1556,6 @@
 		1EE9DCB01B5F9A6D00E347DF /* TokenTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenTextAttachment.m; sourceTree = "<group>"; };
 		1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenizedTextView.h; sourceTree = "<group>"; };
 		1EE9DCB21B5F9A6D00E347DF /* TokenizedTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenizedTextView.m; sourceTree = "<group>"; };
-		1EF42D401B1889B300A3145D /* stylesheet.cas */ = {isa = PBXFileReference; explicitFileType = text.css; fileEncoding = 4; name = stylesheet.cas; path = Classy/stylesheet.cas; sourceTree = "<group>"; };
 		1EFB23DD1ACEDE5400244571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		5407B8C21A643CCE009090C6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationSelectionViewController.swift; sourceTree = "<group>"; };
@@ -3471,14 +3468,6 @@
 			path = TokenField;
 			sourceTree = "<group>";
 		};
-		1EF42D441B1889BE00A3145D /* Classy */ = {
-			isa = PBXGroup;
-			children = (
-				1EF42D401B1889B300A3145D /* stylesheet.cas */,
-			);
-			name = Classy;
-			sourceTree = "<group>";
-		};
 		55DD5C321FA231000082170C /* CallQualityController */ = {
 			isa = PBXGroup;
 			children = (
@@ -3686,7 +3675,6 @@
 				1E3FA0321B78AD9500A9743D /* WireSystem.framework */,
 				1EBA8C721B74EAB10089CC44 /* WireUtilities.framework */,
 				095275931B7E834400123BAF /* WireSyncEngine.framework */,
-				1EC719F71B67B59A00700A14 /* Classy.framework */,
 				1EC71A271B6A1B9200700A14 /* WireImages.framework */,
 				BA9EAFAA1AD8121800279A40 /* AdSupport.framework */,
 				5407B8C21A643CCE009090C6 /* UIKit.framework */,
@@ -4661,7 +4649,6 @@
 				1EFB23DE1ACEDE5400244571 /* Localizable.stringsdict */,
 				848DE12A1A83D20000E154B1 /* emoticons.min.json */,
 				876F99061D070F6700CA2788 /* Sounds */,
-				1EF42D441B1889BE00A3145D /* Classy */,
 				8FC85089199245760008B66B /* Images */,
 				BF0BDF701DA7A9D8003C61DE /* Fonts */,
 				8FC850BA199245760008B66B /* Settings.bundle */,
@@ -6365,7 +6352,6 @@
 				BF0BDF721DA7A9D8003C61DE /* RedactedScript-Regular.ttf in Resources */,
 				DB3E943A1B96EDBD00990482 /* LaunchScreen.xib in Resources */,
 				8FC853BF199245770008B66B /* Images.xcassets in Resources */,
-				1EF42D411B1889B300A3145D /* stylesheet.cas in Resources */,
 				1658D2051D3E742A00249609 /* ping_from_them.caf in Resources */,
 				848DE12B1A83D20000E154B1 /* emoticons.min.json in Resources */,
 				1ED28CD81A94E26D00B96189 /* group-icon@2x.png in Resources */,
