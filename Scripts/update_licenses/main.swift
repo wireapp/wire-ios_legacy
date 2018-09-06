@@ -23,8 +23,9 @@
 // Resources" phase in the main target.
 //
 // The first input file must be the Cartfile.resolved file. The second
-// input file must be the Cartfile/Checkouts directory. The output file
-// must be the plist file that contains the licenses.
+// input file must be the Cartfile/Checkouts directory. The third input
+// file must be the EmbeddedDependencies file. The output filecmust be the
+// plist file that will contain the licenses.
 //
 // This script will be run everytime we clean the project, and when the
 // build enviroment changes (when we update Carthage or add/remove
@@ -36,7 +37,7 @@ import Foundation
 // MARK: - Models
 
 /// The structure representing license items to add in the Plist.
-struct Dependency: Encodable {
+struct Dependency: Codable {
 
     /// The name of the project.
     let name: String
@@ -114,7 +115,7 @@ extension String {
 // MARK: - Arguments
 
 /// Returns the input files.
-func getInputs() -> (cartfile: URL, checkouts: URL) {
+func getInputs() -> (cartfile: URL, checkouts: URL, embeddedDependencies: URL) {
     guard let cartfilePath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_0") else {
         fail("The first input file in Xcode must be the 'Cartfile.resolved' file.")
     }
@@ -123,7 +124,11 @@ func getInputs() -> (cartfile: URL, checkouts: URL) {
         fail("The second input file in Xcode must be the 'Cartfile/Checkouts' folder.")
     }
 
-    return (URL(fileURLWithPath: cartfilePath), URL(fileURLWithPath: checkoutsPath))
+    guard let embeddedDependenciesPath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_2") else {
+        fail("The third input file in Xcode must be the 'Cartfile/Checkouts' folder.")
+    }
+
+    return (URL(fileURLWithPath: cartfilePath), URL(fileURLWithPath: checkoutsPath), URL(fileURLWithPath: embeddedDependenciesPath))
 }
 
 /// Returns the output file.
@@ -212,12 +217,12 @@ func generateFromCartfileResolved(_ content: String, checkoutsDir: URL) -> [Depe
         items.append(item)
     }
 
-    return items.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    return items
 }
 
 // MARK: - Execution
 
-let (cartfileURL, checkoutsURL) = getInputs()
+let (cartfileURL, checkoutsURL, embeddedDependencies) = getInputs()
 let outputURL = getOutput()
 
 // 1) Decode the Cartfile
@@ -225,8 +230,15 @@ let outputURL = getOutput()
 let cartfileBinary = try Data(contentsOf: cartfileURL)
 let cartfileContents = String(decoding: cartfileBinary, as: UTF8.self)
 
-let items = generateFromCartfileResolved(cartfileContents, checkoutsDir: checkoutsURL)
-info("Found \(items.count) dependencies.")
+let dependenciesBinary = try Data(contentsOf: embeddedDependencies)
+let existingDependencies = try PropertyListDecoder().decode([Dependency].self, from: dependenciesBinary)
+let dynamicItems = generateFromCartfileResolved(cartfileContents, checkoutsDir: checkoutsURL)
+
+let items = (existingDependencies + dynamicItems).sorted {
+    $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+}
+
+info("Encoding \(items.count) dependencies.")
 
 let encoder = PropertyListEncoder()
 encoder.outputFormat = .binary
