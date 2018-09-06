@@ -20,11 +20,7 @@ import XCTest
 @testable import Wire
 
 class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
+
     // MARK: - OneToOne Audio
     
     func testOneToOneIncomingAudioRinging() {
@@ -198,7 +194,7 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         // then
         verifyInAllIPhoneSizes(view: sut.view)
     }
-    
+
     func testGroupVideoEstablished() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)

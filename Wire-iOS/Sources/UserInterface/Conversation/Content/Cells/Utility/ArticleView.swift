@@ -22,7 +22,6 @@ import Cartography
 import WireLinkPreview
 import TTTAttributedLabel
 import WireExtensionComponents
-import Classy
 
 @objc protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
@@ -32,13 +31,14 @@ import Classy
 @objcMembers class ArticleView: UIView {
 
     /// MARK - Styling
-    var containerColor: UIColor?
-    var titleTextColor: UIColor?
-    var titleFont: UIFont?
-    var authorTextColor: UIColor?
-    var authorFont: UIFont?
-    var authorHighlightTextColor = UIColor.gray
-    var authorHighlightFont = UIFont.boldSystemFont(ofSize: 14)
+    var containerColor: UIColor? = .placeholderBackground
+    var titleTextColor: UIColor? = .textForeground
+    var titleFont: UIFont? = .normalSemiboldFont
+    var authorTextColor: UIColor? = .textDimmed
+    var authorFont: UIFont? = .smallLightFont
+    let authorHighlightTextColor = UIColor.textDimmed
+    let authorHighlightFont = UIFont.smallSemiboldFont
+    
     var imageHeight: CGFloat = 144 {
         didSet {
             self.imageHeightConstraint.constant = self.imageHeight
@@ -51,7 +51,7 @@ import Classy
     let imageView = ImageResourceView()
     var linkPreview: LinkPreview?
     private let obfuscationView = ObfuscationView(icon: .link)
-    private let ephemeralColor = UIColor(scheme: .accent)
+    private let ephemeralColor = UIColor.accent()
     private var imageHeightConstraint: NSLayoutConstraint!
     weak var delegate: ArticleViewDelegate?
     
@@ -64,7 +64,7 @@ import Classy
             imageView.accessibilityIdentifier = "linkPreviewImage"
         }
         
-        CASStyler.default().styleItem(self)
+        
         
         setupViews()
         setupConstraints(imagePlaceholder)

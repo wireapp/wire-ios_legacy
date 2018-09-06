@@ -17,7 +17,6 @@
 // 
 
 
-#import <Classy/Classy.h>
 
 #import "MediaBarViewController.h"
 #import "MediaBar.h"

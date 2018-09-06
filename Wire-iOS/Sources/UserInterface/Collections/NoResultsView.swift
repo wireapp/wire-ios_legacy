@@ -43,6 +43,7 @@ import Cartography
         self.label.numberOfLines = 0
         self.label.textColor = placeholderColor
         self.label.textAlignment = .center
+        label.font = .mediumSemiboldFont
         self.addSubview(self.label)
         
         self.iconView.contentMode = .scaleAspectFit

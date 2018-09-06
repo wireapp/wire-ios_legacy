@@ -19,9 +19,12 @@
 import Foundation
 
 class CallController: NSObject {
-    
+
     weak var targetViewController: UIViewController? = nil
     private(set) weak var activeCallViewController: ActiveCallViewController?
+
+    fileprivate let callQualityController = CallQualityController()
+    fileprivate var scheduledPostCallAction: (()->Void)?
     fileprivate var token: Any?
     fileprivate var minimizedCall: ZMConversation? = nil
     fileprivate var topOverlayCall: ZMConversation? = nil {
@@ -40,11 +43,11 @@ class CallController: NSObject {
     
     override init() {
         super.init()
-        
+        callQualityController.delegate = self
+
         if let userSession = ZMUserSession.shared() {
             token = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         }
-        
     }
 }
 
@@ -106,7 +109,15 @@ extension CallController: WireCallCenterCallStateObserver {
     fileprivate func dismissCall() {
         minimizedCall = nil
         topOverlayCall = nil
-        activeCallViewController?.dismiss(animated: true)
+
+        activeCallViewController?.dismiss(animated: true) {
+            if let postCallAction = self.scheduledPostCallAction {
+                postCallAction()
+                self.scheduledPostCallAction = nil
+            }
+        }
+        
+        activeCallViewController = nil
     }
 }
 
@@ -129,4 +140,38 @@ extension CallController: CallTopOverlayControllerDelegate {
         presentCall(in: controller.conversation)
     }
     
+}
+
+extension CallController: CallQualityControllerDelegate {
+
+    func dismissCurrentSurveyIfNeeded() {
+        if let survey = targetViewController?.presentedViewController as? CallQualityViewController {
+            survey.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    func callQualityControllerDidScheduleSurvey(with controller: CallQualityViewController) {
+        let presentCallQualityControllerAction: () -> Void = { [weak self] in
+            self?.targetViewController?.present(controller, animated: true, completion: nil)
+        }
+        
+        if self.activeCallViewController == nil {
+            presentCallQualityControllerAction()
+        } else {
+            scheduledPostCallAction = presentCallQualityControllerAction
+        }
+    }
+    
+    func callQualityControllerDidScheduleDebugAlert() {
+        let presentDebugAlertAction: () -> Void = {
+            DebugAlert.showSendLogsMessage(message: "The call failed. Sending the debug logs can help us troubleshoot the issue.")
+        }
+        
+        if self.activeCallViewController == nil {
+            presentDebugAlertAction()
+        } else {
+            scheduledPostCallAction = presentDebugAlertAction
+        }
+    }
+
 }

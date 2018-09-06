@@ -86,6 +86,7 @@ CGFloat const accessoryButtonSize = 32.0f;
     [self setupDefaultAppearance];
     [self setupSubviews];
     [self setupConstraints];
+    [self setupStyle];
 }
 
 - (void)setupDefaultAppearance

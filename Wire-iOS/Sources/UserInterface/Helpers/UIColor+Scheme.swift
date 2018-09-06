@@ -28,8 +28,32 @@ extension UIColor {
         return UIColor(scheme: .textForeground)
     }
 
+    static var textForegroundLight: UIColor {
+        return UIColor(scheme: .textForeground, variant: .light)
+    }
+
+    static var textForegroundDark: UIColor {
+        return UIColor(scheme: .textForeground, variant: .dark)
+    }
+
+    static var textBackground: UIColor {
+        return UIColor(scheme: .textBackground)
+    }
+
+    static var backgroundLight: UIColor {
+        return UIColor(scheme: .background, variant: .light)
+    }
+
+    static var backgroundDark: UIColor {
+        return UIColor(scheme: .background, variant: .dark)
+    }
+
     static var background: UIColor {
         return UIColor(scheme: .background)
+    }
+
+    static var textPlaceholder: UIColor {
+        return UIColor(scheme: .textPlaceholder)
     }
 
     static var placeholderBackground: UIColor {
@@ -38,5 +62,25 @@ extension UIColor {
 
     static var separator: UIColor {
         return UIColor(scheme: .separator)
+    }
+
+    static var iconNormal: UIColor {
+        return UIColor(scheme: .iconNormal)
+    }
+
+    static var iconNormalDark: UIColor {
+        return UIColor(scheme: .iconNormal, variant: .dark)
+    }
+
+    static var iconHighlighted: UIColor {
+        return UIColor(scheme: .iconHighlighted)
+    }
+
+    static var iconHighlightedDark: UIColor {
+        return UIColor(scheme: .iconHighlighted, variant: .dark)
+    }
+
+    static var contentBackground: UIColor {
+        return UIColor(scheme: .contentBackground)
     }
 }

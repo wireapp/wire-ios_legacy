@@ -34,6 +34,13 @@ class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         sut = EphemeralKeyboardViewController(conversation: conversation)
     }
 
+    override func tearDown() {
+        conversation = nil
+        sut = nil
+        super.tearDown()
+    }
+
+
     func testThatItRendersCorrectInitially() {
         verify(view: sut.prepareForSnapshots())
     }

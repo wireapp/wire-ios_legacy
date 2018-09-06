@@ -18,18 +18,23 @@
 
 import Foundation
 import XCTest
-import Classy
 import Cartography
 @testable import Wire
 
 class SearchResultLabelTests: ZMSnapshotTestCase {
-    let sut = SearchResultLabel()
+    var sut: SearchResultLabel!
     
     override func setUp() {
         super.setUp()
         accentColor = .violet
+        sut = SearchResultLabel()
         sut.font = UIFont.systemFont(ofSize: 17)
         sut.textColor = UIColor.black
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
     
     func testThatItShowsStringWithoutHighlight() {

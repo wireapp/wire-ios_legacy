@@ -18,7 +18,6 @@
 
 import UIKit
 import XCTest
-import Classy
 @testable import Wire
 
 final class LoadingViewControllerTests: ZMSnapshotTestCase {

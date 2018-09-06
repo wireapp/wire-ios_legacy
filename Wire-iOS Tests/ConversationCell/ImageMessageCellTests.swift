@@ -33,7 +33,7 @@ class ImageMessageCellTests: ZMSnapshotTestCase {
 
     override func tearDown() {
         defaultImageCache.cache.removeAllObjects()
-        
+        sut = nil
         super.tearDown()
     }
 

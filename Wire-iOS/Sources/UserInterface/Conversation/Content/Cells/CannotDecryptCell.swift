@@ -38,8 +38,6 @@ private let IdentityString = ".identity"
     func updateLabel() {
         let acceptedTypes : [ZMSystemMessageType] = [.decryptionFailed, .decryptionFailed_RemoteIdentityChanged]
         guard let systemMessageData = message.systemMessageData,
-            let labelBoldFont = labelBoldFont,
-            let labelFont = labelFont,
             let labelTextColor = labelTextColor,
             let sender = message.sender,
             let labelTextBlendedColor = labelTextBlendedColor,

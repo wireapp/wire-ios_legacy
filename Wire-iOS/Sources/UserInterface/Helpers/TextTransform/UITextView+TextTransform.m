@@ -19,38 +19,12 @@
 
 #import "UITextView+TextTransform.h"
 #import "ObjcAssociatedObjectHelpers.h"
-@import Classy;
-
 
 
 @implementation  UITextView (TextTransform)
 
 + (void)initialize
-{
-    if (self == [UITextView self]) {
-        [UILabel class];
-        // Add textTransform property to Classy
-        CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self];
-        
-        // Set mapping for property key
-        [classDescriptor setArgumentDescriptors:@[[CASArgumentDescriptor argWithValuesByName:TextTransformTable()]]
-                                 forPropertyKey:@cas_propertykey(UITextView, textTransform)];
-        
-        // Add textAlignment property to Classy
-        NSDictionary *textAlignmentMap = @{
-                                           @"center"    : @(NSTextAlignmentCenter),
-                                           @"left"      : @(NSTextAlignmentLeft),
-                                           @"right"     : @(NSTextAlignmentRight),
-                                           @"justified" : @(NSTextAlignmentJustified),
-                                           @"natural"   : @(NSTextAlignmentNatural),
-                                           };
-        
-        // Set mapping for property key
-        [classDescriptor setArgumentDescriptors:@[[CASArgumentDescriptor argWithValuesByName:textAlignmentMap]]
-                                 forPropertyKey:@cas_propertykey(UITextView, textAlignment)];
-
-    }
-    
+{    
     // swizzle setText: to keep text transformed when it changes.
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

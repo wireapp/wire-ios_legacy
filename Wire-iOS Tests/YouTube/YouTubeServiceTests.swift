@@ -21,14 +21,23 @@ import XCTest
 
 class YouTubeServiceTests: XCTestCase {
 
-    let videoURL = URL(string: "https://youtube.com/watch?v=tzod7hyX03I")!
-    let requester = MockProxiedURLRequester()
+    var videoURL: URL!
+    var requester: MockProxiedURLRequester!
 
     var service: YouTubeService!
 
     override func setUp() {
         super.setUp()
+        videoURL = URL(string: "https://youtube.com/watch?v=tzod7hyX03I")!
+        requester = MockProxiedURLRequester()
         service = YouTubeService(requester: requester)
+    }
+
+    override func tearDown() {
+        requester = nil
+        videoURL = nil
+        service = nil
+        super.tearDown()
     }
 
     // MARK: - ID Extraction

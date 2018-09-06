@@ -30,9 +30,21 @@ import CoreLocation
 @objcMembers final public class LocationSelectionViewController: UIViewController {
     
     weak var delegate: LocationSelectionViewControllerDelegate?
-    public let locationButton = IconButton()
+    public let locationButton: IconButton = {
+        let button = IconButton()
+        button.setIcon(.location, with: .tiny, for: UIControlState())
+        button.borderWidth = 0.5
+        button.setBorderColor(.separator, for: .normal)
+        button.circular = true
+        button.backgroundColor = .background
+        button.setIconColor(.iconNormal, for: .normal)
+        button.setIconColor(.iconHighlighted, for: .highlighted)
+
+        return button
+    }()
+
     public let locationButtonContainer = UIView()
-    fileprivate let mapView = MKMapView()
+    fileprivate var mapView = MKMapView()
     fileprivate let toolBar: ModalTopBar
     fileprivate let locationManager = CLLocationManager()
     fileprivate let geocoder = CLGeocoder()
@@ -58,10 +70,12 @@ import CoreLocation
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+
         locationManager.delegate = self
         mapView.delegate = self
         toolBar.delegate = self
         sendViewController.delegate = self
+
         configureViews()
         createConstraints()
     }
@@ -84,8 +98,7 @@ import CoreLocation
         sendViewController.didMove(toParentViewController: self)
         [mapView, sendViewController.view, toolBar, locationButton].forEach(view.addSubview)
         locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
-        locationButton.setIcon(.location, with: .tiny, for: UIControlState())
-        locationButton.cas_styleClass = "back-button"
+
         mapView.isRotateEnabled = false
         mapView.isPitchEnabled = false
         toolBar.title = title

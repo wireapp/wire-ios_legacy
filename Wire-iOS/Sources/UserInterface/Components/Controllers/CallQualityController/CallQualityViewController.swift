@@ -55,14 +55,7 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
 
     // MARK: Initialization
     
-    static func requestSurveyController(callDuration: TimeInterval) -> CallQualityViewController? {
-        
-        let requestDate = Date()
-
-        guard CallQualityScoreProvider.canRequestSurvey(at: requestDate) else {
-            return nil
-        }
-                
+    static func configureSurveyController(callDuration: TimeInterval) -> CallQualityViewController {
         let controller = CallQualityViewController(questionLabelText: NSLocalizedString("calling.quality_survey.question", comment: ""),
                                                    callDuration: Int(callDuration))
 
@@ -104,21 +97,14 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         dimmingView.backgroundColor = UIColor.CallQuality.backgroundDim
         dimmingView.alpha = 0
 
-        closeButton.setIcon(.X, with: .tiny, for: [], renderingMode: .alwaysTemplate)
-        closeButton.circular = true
-        closeButton.borderWidth = 0
+        let graphite = UIColor(scheme: .graphite)
+        let closeButtonTitle = "calling.quality_survey.skip_button_title".localized
+        closeButton.setTitle(closeButtonTitle.uppercased(), for: .normal)
         closeButton.accessibilityIdentifier = "score_close"
-        closeButton.accessibilityLabel = NSLocalizedString("general.close", comment: "")
-        closeButton.imageEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8)
-        closeButton.clipsToBounds = true
-        closeButton.adjustsImageWhenHighlighted = false
-
-        closeButton.setBackgroundImageColor(UIColor.CallQuality.closeButton, for: .normal)
-        closeButton.setBackgroundImageColor(UIColor.CallQuality.buttonHighlight, for: .selected)
-        closeButton.setBackgroundImageColor(UIColor.CallQuality.buttonHighlight, for: .highlighted)
-        closeButton.setIconColor(.black, for: .normal)
-        closeButton.setIconColor(.white, for: .selected)
-        closeButton.setIconColor(.white, for: .highlighted)
+        closeButton.accessibilityLabel = closeButtonTitle
+        closeButton.titleLabel?.font = FontSpec(.small, .semibold).font!
+        closeButton.setTitleColor(graphite, for: .normal)
+        closeButton.setTitleColor(graphite.withAlphaComponent(0.6), for: .highlighted)
 
         closeButton.addTarget(self, action: #selector(onCloseButtonTapped), for: .touchUpInside)
 
@@ -134,13 +120,14 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 0
 
-        callQualityStackView = CustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionLabel, scoreSelectorView])
+        callQualityStackView = CustomSpacingStackView(customSpacedArrangedSubviews: [titleLabel, questionLabel, scoreSelectorView, closeButton])
         callQualityStackView.alignment = .fill
         callQualityStackView.distribution = .fill
         callQualityStackView.axis = .vertical
         callQualityStackView.spacing = 10
         callQualityStackView.wr_addCustomSpacing(24, after: titleLabel)
         callQualityStackView.wr_addCustomSpacing(32, after: questionLabel)
+        callQualityStackView.wr_addCustomSpacing(12, after: scoreSelectorView)
 
         dismissTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onTapToDismiss))
         dismissTapGestureRecognizer.delegate = self
@@ -148,34 +135,36 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
 
         contentView.shape = .rounded(radius: 32)
         contentView.backgroundColor = UIColor.CallQuality.contentBackground
-        contentView.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(dimmingView)
         view.addSubview(contentView)
-        contentView.addSubview(closeButton)
         contentView.addSubview(callQualityStackView)
 
     }
 
     func createConstraints() {
+        dimmingView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        callQualityStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        constrain(view, dimmingView) { selfView, dimmingView in
-            dimmingView.edges == selfView.edges
-        }
+        // Core constraints
+        let coreConstraints = [
+            // Dimming view
+            dimmingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            dimmingView.topAnchor.constraint(equalTo: view.topAnchor),
+            dimmingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            dimmingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-        constrain(closeButton) { closeButton in
-            closeButton.right == (closeButton.superview!.right - 16)
-            closeButton.width == 28
-            closeButton.height == 28
-        }
+            // Content stack
+            callQualityStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            callQualityStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            closeButton.heightAnchor.constraint(equalToConstant: 44),
 
-        constrain(callQualityStackView) { callQualityView in
-            callQualityView.centerX == callQualityView.superview!.centerX
-            callQualityView.bottom == (callQualityView.superview!.bottom - 24)
-        }
+            // Content view
+            contentView.topAnchor.constraint(equalTo: callQualityStackView.topAnchor, constant: -44)
+        ]
 
-        closeButton.bottomAnchor.constraint(equalTo: callQualityStackView.topAnchor, constant: -10).isActive = true
-        contentView.topAnchor.constraint(equalTo: closeButton.topAnchor, constant: -24).isActive = true
+        NSLayoutConstraint.activate(coreConstraints)
 
         // Adaptive Constraints
 
@@ -198,7 +187,6 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
         iphone_paddingRightConstraint = callQualityStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ipad_paddingLeftConstraint = callQualityStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 44)
         ipad_paddingRightConstraint = callQualityStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -44)
-
     }
     
     // MARK: Dismiss Events

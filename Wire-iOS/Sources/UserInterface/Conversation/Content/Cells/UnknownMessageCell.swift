@@ -19,7 +19,6 @@
 import Foundation
 import Cartography
 import TTTAttributedLabel
-import Classy
 
 public final class UnknownMessageCell: CustomMessageCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -64,7 +63,7 @@ public class CustomMessageCell : ConversationCell {
             messageLabel.edges == container.edgesWithinMargins
         }
 
-        CASStyler.default().styleItem(self)
+        
 
         messageLabel.delegate = self
 

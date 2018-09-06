@@ -29,6 +29,11 @@ class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = UIColor.white
     }
 
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
     func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
         accentColor = .strongLimeGreen
         sut.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")

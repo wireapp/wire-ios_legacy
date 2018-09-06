@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import Classy
 import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
@@ -38,14 +37,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     public fileprivate(set) var visibleViewController: UIViewController?
     fileprivate let appStateController: AppStateController
-    fileprivate lazy var classyCache: ClassyCache = {
-        return ClassyCache()
-    }()
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
-    fileprivate var isClassyInitialized = false
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var flowController: TeamCreationFlowController!
@@ -138,16 +133,13 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-        let sessionManagerAnalytics: AnalyticsType
-        
-        CallQualityScoreProvider.shared.nextProvider = analytics
-        sessionManagerAnalytics = CallQualityScoreProvider.shared
+
         SessionManager.clearPreviousBackups()
 
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
-            analytics: sessionManagerAnalytics,
+            analytics: analytics,
             delegate: appStateController,
             application: UIApplication.shared,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
@@ -345,42 +337,11 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
 
-        if !isClassyInitialized && isClassyRequired(for: appState) {
-            isClassyInitialized = true
-
-            let windows = [mainWindow, callWindow, overlayWindow]
-            DispatchQueue.main.async {
-                self.setupClassy(with: windows)
-                completionHandler()
-            }
-        } else {
-            completionHandler()
-        }
-    }
-
-    func isClassyRequired(for appState: AppState) -> Bool {
-        switch appState {
-        case .authenticated, .unauthenticated, .loading:
-            return true
-        default:
-            return false
-        }
+        completionHandler()
     }
 
     func configureMediaManager() {
         self.mediaManagerLoader.send(message: .appStart)
-    }
-
-    func setupClassy(with windows: [UIWindow]) {
-
-        let colorScheme = ColorScheme.default
-        colorScheme.accentColor = UIColor.accent()
-        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
-
-        CASStyler.default().cache = classyCache
-        CASStyler.bootstrapClassy(withTargetWindows: windows)
-        CASStyler.default().apply(colorScheme)
-        CASStyler.default().apply(fontScheme: defaultFontScheme)
     }
 
     @objc func onContentSizeCategoryChange() {
@@ -388,7 +349,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        CASStyler.default().apply(fontScheme: defaultFontScheme)
         type(of: self).configureAppearance()
     }
 

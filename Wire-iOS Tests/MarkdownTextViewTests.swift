@@ -23,7 +23,7 @@ import Down
 final class MarkdownTextViewTests: XCTestCase {
     
     var sut: MarkdownTextView!
-    let bar = MarkdownBarView()
+    var bar: MarkdownBarView!
     var style: DownStyle!
     
     override func setUp() {
@@ -38,11 +38,13 @@ final class MarkdownTextViewTests: XCTestCase {
         style.h2Size = 24
         style.h3Size = 20
         sut = MarkdownTextView(with: style)
+        bar = MarkdownBarView()
     }
     
     override func tearDown() {
         style = nil
         sut = nil
+        bar = nil
         super.tearDown()
     }
     

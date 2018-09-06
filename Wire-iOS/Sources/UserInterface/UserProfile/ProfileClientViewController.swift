@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 
 @objcMembers class ProfileClientViewController: UIViewController {

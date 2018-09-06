@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers internal class TextSearchResultCell: UITableViewCell {
+internal class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
@@ -30,7 +30,12 @@ import Cartography
         return view
     }()
     fileprivate var observerToken: Any?
-    public let resultCountView = RoundedTextBadge()
+    public let resultCountView: RoundedTextBadge = {
+        let roundedTextBadge = RoundedTextBadge()
+        roundedTextBadge.backgroundColor = UIColor(scheme: .graphite, variant: .light)
+
+        return roundedTextBadge
+    }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -91,6 +96,9 @@ import Cartography
             separatorView.bottom == contentView.bottom
             separatorView.height == CGFloat.hairline
         }
+
+        textLabel?.textColor = .background
+        textLabel?.font = .smallSemiboldFont
     }
     
     required init?(coder aDecoder: NSCoder) {

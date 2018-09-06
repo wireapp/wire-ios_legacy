@@ -20,7 +20,6 @@
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
 
-#import <Classy/Classy.h>
 @import PureLayout;
 
 #import "Settings.h"

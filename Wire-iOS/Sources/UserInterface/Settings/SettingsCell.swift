@@ -39,7 +39,11 @@ protocol SettingsCellType: class {
 
 @objcMembers class SettingsTableCell: UITableViewCell, SettingsCellType {
     let iconImageView = UIImageView()
-    public let cellNameLabel = UILabel()
+    public let cellNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalLightFont
+        return label
+    }()
     let valueLabel = UILabel()
     let badge = RoundedBadge(view: UIView())
     var badgeLabel = UILabel()
@@ -64,7 +68,7 @@ protocol SettingsCellType: class {
             cellNameLabel.text = titleText
         }
     }
-    
+
     var preview: SettingsCellPreview = .none {
         didSet {
             switch preview {
@@ -268,6 +272,7 @@ protocol SettingsCellType: class {
             topSeparatorLine.height == .hairline
         }
 
+        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
         variant = .none
     }
     
@@ -412,4 +417,14 @@ protocol SettingsCellType: class {
             descriptor?.select(SettingsPropertyValue.string(value: text))
         }
     }
+}
+
+class SettingsStaticTextTableCell: SettingsTableCell {
+
+    override func setup() {
+        super.setup()
+        cellNameLabel.numberOfLines = 0
+        cellNameLabel.textAlignment = .justified
+    }
+
 }

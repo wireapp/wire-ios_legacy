@@ -32,8 +32,21 @@ protocol EmojiKeyboardViewControllerDelegate: class {
     weak var delegate: EmojiKeyboardViewControllerDelegate?
     fileprivate var emojiDataSource: EmojiDataSource!
     fileprivate let collectionView = EmojiCollectionView()
-    fileprivate let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
-    private let backspaceButton = IconButton(style: .default)
+    let sectionViewController = EmojiSectionViewController(types: EmojiSectionType.all)
+    private let backspaceButton: IconButton = {
+        let button = IconButton(style: .default)
+        button.setIconColor(.textForegroundDark, for: .normal)
+        button.setIconColor(.iconHighlightedDark, for: .highlighted)
+        button.setBackgroundImageColor(.clear, for: .selected)
+        button.setBorderColor(.clear, for: .normal)
+        button.circular = false
+        button.borderWidth = 0
+
+        button.setIcon(.backspace, with: .small, for: .normal)
+
+        return button
+    }()
+
     private var deleting = false
 
     var backspaceEnabled = false {
@@ -47,15 +60,20 @@ protocol EmojiKeyboardViewControllerDelegate: class {
             backspaceButton.isHidden = backspaceHidden
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+
         emojiDataSource = EmojiDataSource(provider: cellForEmoji)
         collectionView.dataSource = emojiDataSource
         collectionView.delegate = self
         sectionViewController.sectionDelegate = self
         setupViews()
         createConstraints()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -78,8 +96,6 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         view.addSubview(sectionViewController.view)
         sectionViewController.didMove(toParentViewController: self)
 
-        backspaceButton.setIcon(.backspace, with: .small, for: .normal)
-        backspaceButton.cas_styleClass = "emoji-backspace"
         backspaceButton.addTarget(self, action: #selector(backspaceTapped), for: .touchUpInside)
         backspaceButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(backspaceLongPressed)))
         backspaceButton.isHidden = backspaceHidden

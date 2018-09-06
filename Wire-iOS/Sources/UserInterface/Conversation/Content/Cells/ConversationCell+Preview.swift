@@ -21,7 +21,6 @@ import Foundation
 import UIKit
 import WireSyncEngine
 import Cartography
-import Classy
 
 extension ConversationCell {
     

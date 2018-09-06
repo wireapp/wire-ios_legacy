@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2018 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,25 +17,16 @@
 //
 
 import Foundation
-import Classy
-import WireExtensionComponents
 
-extension FontSpec {
-    internal var classyName: String {
-        get {
-            return "$font-\(self)"
-        }
-    }
-}
+extension ContactsCell {
+    @objc func setupStyle() {
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
 
-extension CASStyler {
-    @objc func apply(fontScheme: FontScheme) {
-        var currentVars = self.variables ?? [:]
-        
-        fontScheme.fontMapping.forEach {
-            currentVars[$0.key.classyName] = $0.value.classySystemFontName
-        }
-        
-        self.variables = currentVars
+        userNameLabel.textColor = .textForeground
+        userNameLabel.font = .normalLightFont
+
+        userSubtitleLabel.textColor = .textForeground
+        userSubtitleLabel.font = .smallFont
     }
 }

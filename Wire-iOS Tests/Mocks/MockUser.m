@@ -108,6 +108,12 @@ static id<UserType> mockSelfUser = nil;
     return @"+123456789";
 }
 
+
+- (NSString *)expirationDisplayString
+{
+    return @"";
+}
+
 #pragma mark - ZMBareUser
 
 @synthesize name;
@@ -245,6 +251,11 @@ static id<UserType> mockSelfUser = nil;
 - (void)fetchUserClients
 {
     
+}
+
+- (NSSet<UserClient *> *)clientsRequiringUserAttention
+{
+    return [NSSet new];
 }
 
 #pragma mark - ZMBareUserConnection

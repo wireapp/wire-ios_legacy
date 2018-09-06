@@ -18,6 +18,7 @@
 
 
 #import "ParticipantDeviceCell.h"
+#import "ParticipantDeviceCell+Internal.h"
 
 #import "WireSyncEngine+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -30,11 +31,7 @@
 
 @interface ParticipantDeviceCell ()
 
-@property (strong, nonatomic) UILabel *nameLabel;
-@property (strong, nonatomic) UILabel *identifierLabel;
 @property (strong, nonatomic) UIImageView *trustLevelImageView;
-@property (strong, nonatomic) UIFont *boldFingerprintFont;
-@property (strong, nonatomic) UIFont *fingerprintFont;
 
 @end
 
@@ -51,7 +48,7 @@
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [self createViews];
         [self setupConstraints];
-        [[CASStyler defaultStyler] styleItem:self];
+        [self setupStyle];
     }
     
     return self;

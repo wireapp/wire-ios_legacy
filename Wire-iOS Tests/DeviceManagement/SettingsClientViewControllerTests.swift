@@ -36,6 +36,7 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        client = nil
         super.tearDown()
     }
 

@@ -20,21 +20,20 @@
 import Foundation
 import Cartography
 import TTTAttributedLabel
-import Classy
 
 // Class for the new system message that is having a following design with icon, text and separator line:
 // <Icon> Lorem ipsum system message ----
 //        by user A, B, C
 
-@objcMembers open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
+open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
     let leftIconView = UIImageView(frame: .zero)
     let leftIconContainer = UIView(frame: .zero)
     let lineView = UIView(frame: .zero)
 
     let labelView: UILabel
     
-    var labelTextColor: UIColor?
-    var labelTextBlendedColor: UIColor?
+    var labelTextColor: UIColor? = .textForeground
+    var labelTextBlendedColor: UIColor? = .textDimmed
 
     var lineBaseLineConstraint: NSLayoutConstraint?
 
@@ -46,12 +45,9 @@ import Classy
         }
     }
 
-    var labelFont: UIFont? {
-        didSet {
-            updateLineBaseLineConstraint()
-        }
-    }
-    var labelBoldFont: UIFont?
+    let labelFont: UIFont = .mediumFont
+
+    let labelBoldFont: UIFont = .mediumSemiboldFont
 
     var verticalInset: CGFloat {
         return 16
@@ -69,7 +65,6 @@ import Classy
         labelView = type(of: self).userRegularLabel ? UILabel(frame: .zero) : TTTAttributedLabel(frame: .zero)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        CASStyler.default().styleItem(self)
         createConstraints()
     }
 
@@ -84,6 +79,7 @@ import Classy
 
         self.labelView.numberOfLines = 0
         self.labelView.isAccessibilityElement = true
+        labelView.backgroundColor = .clear
 
         if let label = labelView as? TTTAttributedLabel {
             label.extendsLinkTouchArea = true
@@ -99,6 +95,7 @@ import Classy
         self.leftIconContainer.addSubview(self.leftIconView)
         self.messageContentView.addSubview(self.labelView)
         self.contentView.addSubview(self.lineView)
+        lineView.backgroundColor = .separator
 
         var accessibilityElements = self.accessibilityElements ?? []
         accessibilityElements.append(contentsOf: [self.labelView, self.leftIconView])
@@ -124,8 +121,8 @@ import Classy
         }
 
         createLineViewConstraints()
-        updateLineBaseLineConstraint()
         createBaselineConstraint()
+        updateLineBaseLineConstraint()
     }
     
     private func createLineViewConstraints() {
@@ -138,14 +135,13 @@ import Classy
     
     private func createBaselineConstraint() {
         constrain(lineView, labelView, leftIconContainer) { lineView, labelView, icon in
-            lineBaseLineConstraint = lineView.centerY == labelView.top + self.labelView.font.median - lineMedianYOffset
+            lineBaseLineConstraint = lineView.centerY == labelView.top
             icon.centerY == lineView.centerY
         }
     }
 
     private func updateLineBaseLineConstraint() {
-        guard let font = labelFont else { return }
-        lineBaseLineConstraint?.constant = font.median - lineMedianYOffset
+        lineBaseLineConstraint?.constant = labelFont.median - lineMedianYOffset
     }
 
     open override var canResignFirstResponder: Bool {
