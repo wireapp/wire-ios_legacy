@@ -4579,7 +4579,6 @@
 				872AC9C21B397E6A00575CF3 /* Cartfile */,
 				87A418BD1C0CAB1A006FA803 /* Cartfile.private */,
 				1E88CC4D1BEB63020020B853 /* Cartfile.resolved */,
-				EFAFCA802133FA96002B31A6 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5932,13 +5931,6 @@
 			path = FullscreenImageViewController;
 			sourceTree = "<group>";
 		};
-		EFAFCA802133FA96002B31A6 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		F10F46D02028857C00261449 /* Create */ = {
 			isa = PBXGroup;
 			children = (
@@ -6533,7 +6525,6 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireLinkPreview.framework/WireLinkPreview",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WireShareEngine.framework/WireShareEngine",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Ziphy.framework/Ziphy",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Classy.framework/Classy",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ProtocolBuffers.framework/ProtocolBuffers",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Cartography.framework/Cartography",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TTTAttributedLabel.framework/TTTAttributedLabel",
