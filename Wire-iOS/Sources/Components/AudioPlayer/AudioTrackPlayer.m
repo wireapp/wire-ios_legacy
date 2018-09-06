@@ -45,6 +45,11 @@ static NSString* EmptyStringIfNil(NSString *string) {
 @property (nonatomic) id<ZMConversationMessage> sourceMessage;
 @property (nonatomic) NSObject *artworkObserver;
 @property (nonatomic) NSDictionary *nowPlayingInfo;
+@property (nonatomic) id playHandler;
+@property (nonatomic) id pauseHandler;
+@property (nonatomic) id nextTrackHandler;
+@property (nonatomic) id previousTrackHandler;
+
 
 @end
 
@@ -57,17 +62,8 @@ static NSString* EmptyStringIfNil(NSString *string) {
     [self.avPlayer removeObserver:self forKeyPath:@"status"];
     [self.avPlayer removeObserver:self forKeyPath:@"rate"];
     [self.avPlayer removeObserver:self forKeyPath:@"currentItem"];
-}
-
-- (instancetype)init
-{
-    self = [super init];
     
-    if (self) {
-        [self configureRemoteCommandCenter];
-    }
-    
-    return self;
+    [self setIsRemoteCommandCenterEnabled:NO];
 }
 
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler
@@ -118,12 +114,20 @@ static NSString* EmptyStringIfNil(NSString *string) {
     }];
 }
 
-- (void)configureRemoteCommandCenter
+- (void)setIsRemoteCommandCenterEnabled:(BOOL)enabled
 {
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     
+    if (!enabled) {
+        [commandCenter.playCommand removeTarget:self.playHandler];
+        [commandCenter.pauseCommand removeTarget:self.pauseHandler];
+        [commandCenter.nextTrackCommand removeTarget:self.nextTrackHandler];
+        [commandCenter.previousTrackCommand removeTarget:self.previousTrackHandler];
+        return;
+    }
+    
     ZM_WEAK(self);
-    [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+    self.pauseHandler = [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
         ZM_STRONG(self);
         if (self.avPlayer.rate > 0) {
             [self pause];
@@ -132,13 +136,13 @@ static NSString* EmptyStringIfNil(NSString *string) {
             return MPRemoteCommandHandlerStatusCommandFailed;
         }
     }];
-    
-    [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+
+    self.playHandler = [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
         ZM_STRONG(self);
         if (self.audioTrack == nil) {
             return MPRemoteCommandHandlerStatusNoSuchContent;
         }
-        
+
         if (self.avPlayer.rate == 0) {
             [self play];
             return MPRemoteCommandHandlerStatusSuccess;
@@ -147,23 +151,26 @@ static NSString* EmptyStringIfNil(NSString *string) {
         }
     }];
     
-    [commandCenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-        ZM_STRONG(self);
-        if ([self skipToNextTrack]) {
-           return MPRemoteCommandHandlerStatusSuccess;
-        } else {
-            return MPRemoteCommandHandlerStatusNoSuchContent;
-        }
-    }];
-    
-    [commandCenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
-        ZM_STRONG(self);
-        if ([self skipToPreviousTrack]) {
-            return MPRemoteCommandHandlerStatusSuccess;
-        } else {
-            return MPRemoteCommandHandlerStatusNoSuchContent;
-        }
-    }];
+    if (self.audioPlaylist != nil) {
+        
+        self.nextTrackHandler = [commandCenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+            ZM_STRONG(self);
+            if ([self skipToNextTrack]) {
+                return MPRemoteCommandHandlerStatusSuccess;
+            } else {
+                return MPRemoteCommandHandlerStatusNoSuchContent;
+            }
+        }];
+        
+        self.previousTrackHandler = [commandCenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent *event) {
+            ZM_STRONG(self);
+            if ([self skipToPreviousTrack]) {
+                return MPRemoteCommandHandlerStatusSuccess;
+            } else {
+                return MPRemoteCommandHandlerStatusNoSuchContent;
+            }
+        }];
+    }
 }
 
 - (NSTimeInterval)elapsedTime {
@@ -338,10 +345,12 @@ static NSString* EmptyStringIfNil(NSString *string) {
     if (object == self.avPlayer && [keyPath isEqualToString:@"currentItem"]) {
      
         if (self.avPlayer.currentItem == nil) {
+            [self setIsRemoteCommandCenterEnabled:NO];
             [self clearNowPlayingState];
             self.state = MediaPlayerStateCompleted;
             [self.mediaPlayerDelegate mediaPlayer:self didChangeToState:self.state];
         } else {
+            [self setIsRemoteCommandCenterEnabled:YES];
             [self populateNowPlayingState];
         }
     }

@@ -345,9 +345,6 @@ import SafariServices
             let url = URL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).appendingLocaleParameter
             return BrowserViewController(url: url)
         }, previewGenerator: .none)
-        let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
-            return BrowserViewController(url: URL.wr_licenseInformation.appendingLocaleParameter)
-        }, previewGenerator: .none)
 
         let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
         let buildNumber = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String ?? "Unknown"
@@ -361,7 +358,7 @@ import SafariServices
         let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
 
         let linksSection = SettingsSectionDescriptor(
-            cellDescriptors: [tosButton, privacyPolicyButton, licenseButton],
+            cellDescriptors: [tosButton, privacyPolicyButton, licensesSection()],
             header: nil,
             footer: "\n" + version + "\n" + copyrightInfo
         )
@@ -380,6 +377,35 @@ import SafariServices
             previewGenerator: .none,
             icon: .wireLogo
         )
+    }
+
+    func licensesSection() -> SettingsCellDescriptorType {
+        guard let licenses = LicensesLoader.shared.loadLicenses() else {
+            return webLicensesSection()
+        }
+
+        let childItems: [SettingsGroupCellDescriptor] = licenses.map { item in
+            let projectCell = SettingsExternalScreenCellDescriptor(title: "about.license.open_project_button".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
+                return BrowserViewController(url: item.projectURL)
+            }, previewGenerator: .none)
+            let detailsSection = SettingsSectionDescriptor(cellDescriptors: [projectCell], header: "about.license.project_header".localized, footer: nil)
+
+            let licenseCell = SettingsStaticTextCellDescriptor(text: item.licenseText)
+            let licenseSection = SettingsSectionDescriptor(cellDescriptors: [licenseCell], header: "about.license.license_header".localized, footer: nil)
+
+            return SettingsGroupCellDescriptor(items: [detailsSection, licenseSection], title: item.name, style: .grouped)
+        }
+
+        let licensesSection = SettingsSectionDescriptor(cellDescriptors: childItems)
+        return SettingsGroupCellDescriptor(items: [licensesSection], title: "about.license.title".localized, style: .plain)
+
+    }
+
+    func webLicensesSection() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
+            let url = URL.wr_licenseInformation.appendingLocaleParameter
+            return BrowserViewController(url: url)
+        }, previewGenerator: .none)
     }
     
     // MARK: Actions
