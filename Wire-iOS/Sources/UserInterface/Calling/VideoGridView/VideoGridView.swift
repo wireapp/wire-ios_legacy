@@ -135,8 +135,10 @@ class VideoGridViewController: UIViewController {
         [thumbnailViewController].forEach{ $0.view.fitInSuperview() }
 
         constrain(view, muteIndicatorView) { view, muteIndicatorView in
+            let bottomOffset: CGFloat = UIScreen.safeArea.bottom + (UIScreen.hasNotch ? 8 : 24)
+            
             muteIndicatorView.centerX == view.centerX
-            muteIndicatorView.bottom == view.bottom - 24
+            muteIndicatorView.bottom == view.bottom - bottomOffset
             muteIndicatorView.height == CGFloat.MuteIndicator.containerHeight
         }
     }

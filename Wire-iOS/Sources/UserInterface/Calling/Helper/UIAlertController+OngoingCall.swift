@@ -69,7 +69,7 @@ extension UIAlertController {
         completion: @escaping (Bool) -> Void
         ) -> UIAlertController {
 
-        let defaultStyle: UIAlertControllerStyle = UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
+        let defaultStyle: UIAlertControllerStyle = .alert
         let effectiveStyle = forceAlertModal ? .alert : defaultStyle
 
         let controller = UIAlertController(

@@ -223,7 +223,7 @@ final class ServiceDetailViewController: UIViewController {
             case let .removeService(conversation):
                 guard let user = serviceUser as? ZMUser else { return }
                 self.presentRemoveDialogue(for: user, from: conversation, dismisser: self.viewControllerDismisser)
-            case .openConversation:
+            case .openConversation: return/*
                 if let existingConversation = ZMConversation.existingConversation(in: userSession.managedObjectContext, service: serviceUser, team: ZMUser.selfUser().team) {
                     completion?(.success(conversation: existingConversation))
                 } else {
@@ -233,7 +233,7 @@ final class ServiceDetailViewController: UIViewController {
                         }
                         completion?(result)
                     }
-                }
+                }*/
             }
         }
     }

@@ -94,7 +94,6 @@ import Cartography
             self.accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
         case .activeCall(false):
-            //iconView.image = UIImage(for: .phone, fontSize: 18.0, color: .white)
             self.accessibilityValue = "conversation_list.voiceover.status.active_call".localized
             return .none
         case .activeCall(true):

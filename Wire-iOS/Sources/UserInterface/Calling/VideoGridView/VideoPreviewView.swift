@@ -84,7 +84,7 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
 
     public func switchFillMode() {
         guard let previewView = previewView else { return }
-
+        
         previewView.shouldFill = !previewView.shouldFill
     }
     

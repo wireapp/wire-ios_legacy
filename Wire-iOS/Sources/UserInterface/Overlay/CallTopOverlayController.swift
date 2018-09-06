@@ -30,7 +30,7 @@ extension CallState {
             let toAppend = (isGroup ? conversation + "・" : "")
             return toAppend + "call.status.incoming.user".localized(args: callee)
         case .outgoing(_):
-            return "call.status.outgoing.user".localized(args: isGroup ? conversation : callee)
+            return "call.status.outgoing.user".localized(args: conversation)
         case .answered(_), .establishedDataChannel:
             return "call.status.connecting".localized
         case .terminating(_):
@@ -82,6 +82,7 @@ final class CallTopOverlayController: UIViewController {
     deinit {
         stopCallDurationTimer()
         AVSMediaManagerClientChangeNotification.remove(self)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     init(conversation: ZMConversation) {
@@ -162,8 +163,9 @@ final class CallTopOverlayController: UIViewController {
     private var displayMuteIcon: Bool = false {
         didSet {
             if displayMuteIcon {
-                muteIcon.image = UIImage(for: .microphoneWithStrikethrough, fontSize: 16.0, color: .white)
-                muteIconWidth?.constant = 16.0
+                let width: CGFloat = 12.0
+                muteIcon.image = UIImage(for: .microphoneWithStrikethrough, fontSize: width, color: .white)
+                muteIconWidth?.constant = width
             } else {
                 muteIcon.image = nil
                 muteIconWidth?.constant = 0.0

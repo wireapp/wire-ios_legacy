@@ -36,6 +36,8 @@ final class CallViewController: UIViewController {
     private var videoConfiguration: VideoConfiguration
     private let videoGridViewController: VideoGridViewController
     private var cameraType: CaptureDevice = .front
+    private var singleTapRecognizer: UITapGestureRecognizer!
+    private var doubleTapRecognizer: UITapGestureRecognizer!
     
     private var isInteractiveDismissal = false
 
@@ -74,19 +76,35 @@ final class CallViewController: UIViewController {
         setupViews()
         createConstraints()
         updateConfiguration()
+        
+        singleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
+        singleTapRecognizer.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(singleTapRecognizer)
+        doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        self.view.addGestureRecognizer(doubleTapRecognizer)
+        
+        singleTapRecognizer.require(toFail: doubleTapRecognizer)
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
+    @objc private func handleSingleTap(_ sender: UITapGestureRecognizer) {
+        
         guard canHideOverlay else { return }
 
-        if let touch = touches.first,
-            let overlay = videoGridViewController.previewOverlay,
-            overlay.point(inside: touch.location(in: overlay), with: event), !isOverlayVisible {
+        if let overlay = videoGridViewController.previewOverlay,
+            overlay.point(inside: sender.location(in: overlay), with: nil), !isOverlayVisible {
             return
         }
-
         toggleOverlayVisibility()
+    }
+    
+    @objc private func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+        
+        guard canHideOverlay, !isOverlayVisible else { return }
+        
+        let overlay = videoGridViewController.previewOverlay
+        let location = sender.location(in: overlay)
+        videoGridViewController.switchFillMode(location: location)
     }
 
     deinit {
