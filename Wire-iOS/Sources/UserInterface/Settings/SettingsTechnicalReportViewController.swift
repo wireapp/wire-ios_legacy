@@ -66,15 +66,13 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     
     
     func sendReport() {
-        let mailRecipient = NSLocalizedString("self.settings.technical_report.mail.recipient", comment: "")
+        let mailRecipient = "calling-ios@wire.com"
 
         guard MFMailComposeViewController.canSendMail() else {
             DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self)
             return
         }
     
-        let report = "Calling report"
-
         let mailComposeViewController = MFMailComposeViewController()
         mailComposeViewController.mailComposeDelegate = self
         mailComposeViewController.setToRecipients([mailRecipient])
@@ -88,7 +86,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
                 mailComposeViewController.addAttachmentData(previousLog, mimeType: "text/plain", fileName: previousPath.lastPathComponent)
             }
         }
-        mailComposeViewController.setMessageBody(report, isHTML: false)
+        mailComposeViewController.setMessageBody("Calling report", isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
     

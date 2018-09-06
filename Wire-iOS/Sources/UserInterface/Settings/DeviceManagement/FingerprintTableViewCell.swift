@@ -85,6 +85,8 @@ class FingerprintTableViewCell: UITableViewCell {
             spinner.top >= titleLabel.bottom + 4
             spinner.bottom <= contentView.bottom - 16
         }
+
+        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
         
         self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()

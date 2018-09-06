@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Todo mundo está aqui.";
 
-"add_participants.alert.title" = "The group is full";
+"add_participants.alert.title" = "O grupo está cheio";
 "add_participants.alert.message.new_conversation" = "Até %d pessoas podem participar de uma conversa.";
 "add_participants.alert.message.existing_conversation" = "Até %1$d pessoas podem participar de uma conversa. Atualmente, há apenas espaço para mais %2$d.";
 
@@ -207,7 +207,7 @@
 "conversation.status.message.file" = "Compartilhou um arquivo";
 "conversation.status.message.knock" = "Pingou";
 "conversation.status.message.missedcall" = "Chamada não atendida";
-"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.missedcall.groups" = "Chamada não atendida de %@";
 "conversation.status.message.ephemeral" = "Mensagem com tempo";
 
 "conversation.status.unsent" = "⚠️ Mensagem não enviada";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Não é possível tirar uma foto durante a chamada.";
 
 "conversation.guests_present" = "Os convidados estão presentes";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+"conversation.services_present" = "Serviços estão ativos";
+"conversation.guests_services_present" = "Os hóspedes e serviços estão presentes";
 "conversation.action.search" = "Procurar";
 
 // Image confirmation dialogue
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ removeu você";
 "content.system.you_removed_other" = "Você removeu %@";
 
-"content.system.services.warning" = "Services have access to the content of this conversation";
+"content.system.services.warning" = "Serviços têm acesso ao conteúdo dessa conversa";
 
 // New conversation participants added / removed / started system message
 
@@ -390,7 +390,7 @@
 
 "content.system.call.you" = "Você";
 "content.system.call.called" = "%@ ligou";
-"content.system.call.missed-call" = "Missed call from %@";
+"content.system.call.missed-call" = "Chamada não atendida de %@";
 "content.system.call.called-you" = "%@ ligou";
 
 "content.system.renamed_conv.title" = "%@ renomeou a conversa";
@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Relatório Técnico";
 "self.settings.technical_report.send_report" = "Enviar relatório para o Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Relatório de Chamadas do Wire";
 "self.settings.technical_report.include_log" = "Incluir o log detalhado";
 "self.settings.technical_report.privacy_warning" = "Registros detalhados podem conter dados pessoais";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Para uso pessoal";
+"landing.create_account.title" = "Pessoal";
 "landing.create_account.subtitle" = "criar uma conta";
-"landing.create_team.title" = "Para organizações";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "criar uma equipe";
 "landing.login.hints" = "Já tem uma conta?";
 "landing.login.button.title" = "Iniciar sessão";

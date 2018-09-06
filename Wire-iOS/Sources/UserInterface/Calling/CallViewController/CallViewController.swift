@@ -65,7 +65,6 @@ final class CallViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
-        AVSMediaManagerClientChangeNotification.add(self)
         observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
         proximityMonitorManager?.stateChanged = { [weak self] raisedToEar in
             self?.proximityStateDidChange(raisedToEar)
@@ -75,20 +74,15 @@ final class CallViewController: UIViewController {
         setupViews()
         createConstraints()
         updateConfiguration()
-
-        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapOnView))
-                tapRecognizer.numberOfTapsRequired = 1
-
-        view.addGestureRecognizer(tapRecognizer)
     }
 
-    @objc func didTapOnView(sender: UIGestureRecognizer) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
         guard canHideOverlay else { return }
 
-
-        if let overlay = videoGridViewController.previewOverlay,
-            overlay.point(inside: sender.location(ofTouch: 0, in: overlay), with: nil),
-            !isOverlayVisible {
+        if let touch = touches.first,
+            let overlay = videoGridViewController.previewOverlay,
+            overlay.point(inside: touch.location(in: overlay), with: event), !isOverlayVisible {
             return
         }
 
@@ -109,6 +103,7 @@ final class CallViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateVideoStatusPlaceholder()
+        AVSMediaManagerClientChangeNotification.add(self)
         proximityMonitorManager?.startListening()
         resumeVideoIfNeeded()
         setupApplicationStateObservers()

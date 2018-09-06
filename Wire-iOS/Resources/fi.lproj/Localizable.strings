@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Tekninen Raportti";
 "self.settings.technical_report.send_report" = "Lähetä raportti Wirelle";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wiren Puhelu Raportti";
 "self.settings.technical_report.include_log" = "Sisällytä yksityiskohtainen loki";
 "self.settings.technical_report.privacy_warning" = "Yksityiskohtaiset logit voivat sisältää henkilökohtaista tietoa";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "For personal use";
+"landing.create_account.title" = "Henkilökohtainen";
 "landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Onko sinulla jo tili?";
 "landing.login.button.title" = "Kirjaudu sisään";

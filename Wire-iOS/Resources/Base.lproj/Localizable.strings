@@ -743,6 +743,11 @@
 "about.website.title"="Wire Website";
 "about.copyright.title"="© Wire Swiss GmbH";
 
+// Licenses screen
+"about.license.project_header" = "Details";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
+
 // Self new devices
 "self.new_device_alert.title" = "Your account was used on:";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
@@ -962,7 +967,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical Report";
 "self.settings.technical_report.send_report" = "Send report to Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire Calling Report";
 "self.settings.technical_report.include_log" = "Include detailed log";
 "self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
@@ -1017,9 +1021,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "For personal use";
+"landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
