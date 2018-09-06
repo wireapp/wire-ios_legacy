@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import MobileCoreServices
 
 extension NSExtensionContext {
 
@@ -28,6 +29,8 @@ extension NSExtensionContext {
     }
 
 }
+
+// MARK: - Sorting
 
 extension Array where Element == NSItemProvider {
 
@@ -53,6 +56,8 @@ extension Array where Element == NSItemProvider {
     }
 
 }
+
+// MARK: - Preview Support
 
 extension Dictionary where Key == AttachmentType, Value == [NSItemProvider] {
 

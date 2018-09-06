@@ -67,6 +67,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     lazy var preview: PreviewImageView? = {
         let imageView = PreviewImageView(frame: .zero)
         imageView.clipsToBounds = true
+        imageView.shouldGroupAccessibilityChildren = true
+        imageView.isAccessibilityElement = false
         return imageView
     }()
 
@@ -80,8 +82,24 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     private var observer: SendableBatchObserver? = nil
     private weak var progressViewController: SendingProgressViewController? = nil
 
+    // MARK: - Host App State
+
+    private var applicationGroupIdentifier: String? {
+        return Bundle.main.infoDictionary?["ApplicationGroupIdentifier"] as? String
+    }
+
+    private var hostBundleIdentifier: String? {
+        return Bundle.main.infoDictionary?["HostBundleIdentifier"] as? String
+    }
+
+    private var accountManager: AccountManager? {
+        guard let applicationGroupIdentifier = applicationGroupIdentifier else { return nil }
+        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
+        return AccountManager(sharedDirectory: sharedContainerURL)
+    }
+
     // MARK: - Configuration
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupObserver()
@@ -122,13 +140,35 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         self.placeholder = "share_extension.input.placeholder".localized
     }
 
-
     private func setupNavigationBar() {
         guard let item = navigationController?.navigationBar.items?.first else { return }
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
     }
+
+    private func recreateSharingSession(account: Account?) throws {
+        guard let applicationGroupIdentifier = applicationGroupIdentifier,
+            let hostBundleIdentifier = hostBundleIdentifier,
+            let accountIdentifier = account?.userIdentifier
+            else { return }
+
+        sharingSession = try SharingSession(
+            applicationGroupIdentifier: applicationGroupIdentifier,
+            accountIdentifier: accountIdentifier,
+            hostBundleIdentifier: hostBundleIdentifier
+        )
+    }
+
+    override func configurationItems() -> [Any]! {
+        if accountManager?.accounts.count > 1 {
+            return [accountItem, conversationItem]
+        } else {
+            return [conversationItem]
+        }
+    }
+
+    // MARK: - Events
 
     @objc private func extensionHostDidEnterBackground() {
         postContent?.cancel { [weak self] in
@@ -142,32 +182,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
     }
 
-    private var applicationGroupIdentifier: String? {
-        return Bundle.main.infoDictionary?["ApplicationGroupIdentifier"] as? String
-    }
-    
-    private var hostBundleIdentifier: String? {
-        return Bundle.main.infoDictionary?["HostBundleIdentifier"] as? String
-    }
-    
-    private func recreateSharingSession(account: Account?) throws {
-        guard let applicationGroupIdentifier = applicationGroupIdentifier,
-            let hostBundleIdentifier = hostBundleIdentifier,
-            let accountIdentifier = account?.userIdentifier
-        else { return }
-        
-        sharingSession = try SharingSession(
-                applicationGroupIdentifier: applicationGroupIdentifier,
-                accountIdentifier: accountIdentifier,
-                hostBundleIdentifier: hostBundleIdentifier
-            )
-    }
-    
-    private var accountManager: AccountManager? {
-        guard let applicationGroupIdentifier = applicationGroupIdentifier else { return nil }
-        let sharedContainerURL = FileManager.sharedContainerDirectory(for: applicationGroupIdentifier)
-        return AccountManager(sharedDirectory: sharedContainerURL)
-    }
+    // MARK: - Editing
 
     override func isContentValid() -> Bool {
         // Do validation of contentText and/or NSExtensionContext attachments here
@@ -185,11 +200,23 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         return self.charactersRemaining == nil ? conditions : conditions && self.charactersRemaining.intValue >= 0
     }
 
-    /// invoked when the user wants to post
+    /// If there is a URL attachment, copy the text of the URL attachment into the text field
+    private func appendTextToEditor() {
+        guard let urlItems = extensionActivity?.attachments[.url] else {
+            return
+        }
+
+        urlItems.first?.fetchURL { url in
+            guard let url = url, !url.isFileURL else { return }
+            let separator = self.textView.text.isEmpty ? "" : "\n"
+            self.textView.text = self.textView.text + separator + url.absoluteString
+            self.textView.delegate?.textViewDidChange?(self.textView)
+        }
+    }
+
+    /// Invoked when the user wants to post.
     @objc func appendPostTapped() {
         navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
-
-        updateUrlAttachments()
         
         postContent?.send(text: contentText, sharingSession: sharingSession!) { [weak self] progress in
             guard let `self` = self, let postContent = self.postContent else { return }
@@ -237,17 +264,6 @@ class ShareExtensionViewController: SLComposeServiceViewController {
             }
         }
     }
-    
-    private func updateUrlAttachments() {
-        let urlDetector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-        let matches = urlDetector.matches(in: contentText,
-                                          options: [],
-                                          range: NSMakeRange(0, (contentText as NSString).length))
-        
-        var attachments = extensionContext?.attachments.filter { !$0.hasURL } ?? []
-        attachments.append(contentsOf: matches.compactMap { NSItemProvider(contentsOf: $0.url) })
-        postContent?.attachments = attachments
-    }
 
     override func cancel() {
         if let event = extensionActivity?.cancelledEvent() {
@@ -271,17 +287,6 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         return preview
     }
 
-    /// If there is a URL attachment, copy the text of the URL attachment into the text field
-    private func appendTextToEditor() {
-//        fetchURLAttachments { [weak self] (urls) in
-//            guard let url = urls.first, let `self` = self else { return }
-//            if !url.isFileURL { // remote URL (not local file)
-//                let separator = self.textView.text.isEmpty ? "" : "\n"
-//                self.textView.text = self.textView.text + separator + url.absoluteString
-//                self.textView.delegate?.textViewDidChange?(self.textView)
-//            }
-//        }
-    }
 
     func updatePreview() {
         fetchMainAttachmentPreview { previewItem, displayMode in
@@ -310,7 +315,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
     }
 
-    func fetchWebsitePreview(for url: URL) {
+    /// Fetches the preview image for the given website.
+    private func fetchWebsitePreview(for url: URL) {
         sharingSession?.downloadLinkPreviews(inText: url.absoluteString) { previews in
             if let imageData = previews.first?.imageData.first {
                 let image = UIImage(data: imageData)
@@ -322,15 +328,8 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
     }
 
-    
-    override func configurationItems() -> [Any]! {
-        if accountManager?.accounts.count > 1 {
-            return [accountItem, conversationItem]
-        } else {
-            return [conversationItem]
-        }
-    }
-    
+    // MARK: - Transitions
+
     private func presentSendingProgress(mode: SendingProgressViewController.ProgressMode) {
         let progressSendingViewController = SendingProgressViewController()
         progressViewController?.mode = mode

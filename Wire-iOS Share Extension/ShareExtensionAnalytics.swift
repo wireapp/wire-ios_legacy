@@ -38,11 +38,22 @@ class ExtensionActivity {
 
     private var verifiedConversation = false
     private var conversationDidDegrade = false
-    private var numberOfImages = 0
-    private var hasVideo = false
-    private var hasFile = false
+
+    private var numberOfImages: Int {
+        return attachments[.image]?.count ?? 0
+    }
+
+    private var hasVideo: Bool {
+        return attachments.keys.contains(.video)
+    }
+
+    private var hasFile: Bool {
+        return attachments.keys.contains(.rawFile)
+    }
+
     public var hasText = false
-    private let attachments: [AttachmentType: [NSItemProvider]]
+
+    let attachments: [AttachmentType: [NSItemProvider]]
 
     public var conversation: Conversation? = nil {
         didSet {
@@ -73,48 +84,22 @@ class ExtensionActivity {
     }
 
     func sentEvent(completion: @escaping (StorableTrackingEvent) -> Void) {
-        populateAttachmentTypes { [weak self] in
-            guard let `self` = self else { return }
-            let event = StorableTrackingEvent(
-                name: ExtensionActivity.sentEventName,
-                attributes: [
-                    "verified_conversation": self.verifiedConversation,
-                    "number_of_images": self.numberOfImages,
-                    "video": self.hasVideo,
-                    "file": self.hasFile,
-                    "text": self.hasText,
-                    "conversation_did_degrade": self.conversationDidDegrade
-                ]
-            )
+        let event = StorableTrackingEvent(
+            name: ExtensionActivity.sentEventName,
+            attributes: [
+                "verified_conversation": self.verifiedConversation,
+                "number_of_images": self.numberOfImages,
+                "video": self.hasVideo,
+                "file": self.hasFile,
+                "text": self.hasText,
+                "conversation_did_degrade": self.conversationDidDegrade
+            ]
+        )
 
-            completion(event)
-        }
-    }
-
-    func populateAttachmentTypes(completion: @escaping () -> Void) {
-        hasVideo = attachments.keys.contains(.video)
-        numberOfImages = attachments[.image]?.count ?? 0
-
-        let group = DispatchGroup()
-        attachments.forEach { _ in
-            group.enter()
-        }
-
-//        attachments.forEach {
-//            $0.hasFile { [weak self] in
-//                guard let `self` = self else { return }
-//                self.hasFile = self.hasFile || $0
-//                group.leave()
-//            }
-//        }
-
-        group.notify(queue: .main) { 
-            completion()
-        }
+        completion(event)
     }
 
 }
-
 
 extension NSItemProvider {
 
