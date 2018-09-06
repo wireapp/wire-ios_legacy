@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class PingCellTests: XCTestCase {
+final class PingCellSnapshotTests: ZMSnapshotTestCase {
 
     var sut: PingCell!
 
@@ -36,15 +36,8 @@ final class PingCellTests: XCTestCase {
         super.tearDown()
     }
 
-    // MARK: shortcut menu
-
-    func testThatDeleteItemIsInMenu(){
-        // GIVEN & WHEN
-        sut.showMenu()
-
-        // THEN
-        XCTAssertEqual(UIMenuController.shared.menuItems?.count, 1)
-        XCTAssertEqual(UIMenuController.shared.menuItems?.first?.title, "Delete")
+    func testForYouPinged() {
+        verify(view: sut.tableViewForSnapshot())
     }
 }
 

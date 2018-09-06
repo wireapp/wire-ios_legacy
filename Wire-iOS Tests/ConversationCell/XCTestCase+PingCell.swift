@@ -16,35 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
 
-final class PingCellTests: XCTestCase {
+extension XCTestCase {
+    func createPingCellForTest() -> PingCell {
+        let sut = PingCell()
 
-    var sut: PingCell!
+        let layoutProperties = ConversationCellLayoutProperties()
+        layoutProperties.showSender = true
+        layoutProperties.showBurstTimestamp = false
+        layoutProperties.showUnreadMarker = false
 
-    override func setUp() {
+        sut.configure(for: MockMessageFactory.pingMessage(), layoutProperties: layoutProperties)
 
-        super.setUp()
-
-        sut = createPingCellForTest()
-    }
-
-    override func tearDown() {
-        sut = nil
-
-        super.tearDown()
-    }
-
-    // MARK: shortcut menu
-
-    func testThatDeleteItemIsInMenu(){
-        // GIVEN & WHEN
-        sut.showMenu()
-
-        // THEN
-        XCTAssertEqual(UIMenuController.shared.menuItems?.count, 1)
-        XCTAssertEqual(UIMenuController.shared.menuItems?.first?.title, "Delete")
+        return sut
     }
 }
-

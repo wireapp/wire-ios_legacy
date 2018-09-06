@@ -1126,6 +1126,8 @@
 		EF297DEC213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DEA213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift */; };
 		EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */; };
 		EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */; };
+		EF2B74C6214157F200FD2574 /* PingCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C5214157F200FD2574 /* PingCellSnapshotTests.swift */; };
+		EF2B74C821415B0100FD2574 /* XCTestCase+PingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C721415B0100FD2574 /* XCTestCase+PingCell.swift */; };
 		EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */; };
 		EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */; };
 		EF2C18A21FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2C18A11FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift */; };
@@ -2824,6 +2826,8 @@
 		EF297DEB213340CF0002983A /* ParticipantDeviceHeaderView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantDeviceHeaderView+Internal.h"; sourceTree = "<group>"; };
 		EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageViewTests.swift; sourceTree = "<group>"; };
 		EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerTests.swift; sourceTree = "<group>"; };
+		EF2B74C5214157F200FD2574 /* PingCellSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingCellSnapshotTests.swift; sourceTree = "<group>"; };
+		EF2B74C721415B0100FD2574 /* XCTestCase+PingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+PingCell.swift"; sourceTree = "<group>"; };
 		EF2C189C1FED0D3000E9F2FD /* ConversationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCellTests.swift; sourceTree = "<group>"; };
 		EF2C189F1FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+BurstTimestamp.swift"; sourceTree = "<group>"; };
 		EF2C18A11FED541F00E9F2FD /* Timer+AllVersionCompatibleScheduledTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+AllVersionCompatibleScheduledTimer.swift"; sourceTree = "<group>"; };
@@ -5921,6 +5925,8 @@
 			children = (
 				EF84DF472130373D00033702 /* IconSystemCellTests.swift */,
 				EF84DF432130332100033702 /* ParticipantDeviceCellTests.swift */,
+				EF2B74C721415B0100FD2574 /* XCTestCase+PingCell.swift */,
+				EF2B74C5214157F200FD2574 /* PingCellSnapshotTests.swift */,
 				EFC8E218212C6AF500BE7BBE /* PingCellTests.swift */,
 				BF8EE5591D636F4600B0D6D7 /* TextMessageCellTests.swift */,
 				BFA13E191D4B66EE00F0A91B /* ImageMessageCellTests.swift */,
@@ -7560,6 +7566,7 @@
 				BFC9149B1D181BE7001F068B /* LocationMessageCellTests.swift in Sources */,
 				16A2026B1B66A0040095BBD1 /* SoundcloudServiceTests.m in Sources */,
 				EF6E3C7C208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift in Sources */,
+				EF2B74C821415B0100FD2574 /* XCTestCase+PingCell.swift in Sources */,
 				EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */,
 				87BEB0DC1C734D710094BFE9 /* MockConversation.m in Sources */,
 				EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */,
@@ -7637,6 +7644,7 @@
 				EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */,
 				EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */,
 				DBB45F3B1B53F8DE0010053C /* NSString+MentionsTests.m in Sources */,
+				EF2B74C6214157F200FD2574 /* PingCellSnapshotTests.swift in Sources */,
 				8740205C1BF4CF7E001F2D4C /* AVSStub.m in Sources */,
 				1658C19C20A1F07800148F6D /* MockCallInfoViewControllerInput.swift in Sources */,
 				EF21A07121305FD700B9120C /* DeleteMessageTests.swift in Sources */,
