@@ -51,11 +51,11 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         makeTestForShareViewController()
     }
     
-//    func testThatItRendersCorrectlyShareViewController_LocationMessage() {
-//        let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 5)
-//        groupConversation.appendMessage(with: location)
-//        makeTestForShareViewController()
-//    }
+    func testThatItRendersCorrectlyShareViewController_LocationMessage() {
+        let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
+        groupConversation.appendMessage(with: location)
+        makeTestForShareViewController() ///TODO: inject a mock map view???
+    }
 
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
