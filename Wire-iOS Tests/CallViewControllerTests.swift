@@ -68,7 +68,7 @@ final class CallViewControllerTests: XCTestCase {
     }
 }
 
-final class CallViewControllerOverlayTests: XCTestCase {
+final class CallViewControllerGestureTests: XCTestCase {
     var sut: CallViewController!
     var mediaManager: ZMMockAVSMediaManager!
 
@@ -88,56 +88,20 @@ final class CallViewControllerOverlayTests: XCTestCase {
     }
 
     func tapOnSut() {
-        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
-
-        sut.didTapOnView(sender: mockTapGestureRecognizer)
+        sut.touchesBegan(Set(), with: nil)
     }
 
-    func testThatOverlayDoesnotDismissAfterDoubleTap() {
+    func testThatOverlayDismissesAfterTapped() {
         // GIVEN
         mediaManager.isMicrophoneMuted = true
 
         // WHEN
         // call overlay is visible at the beginning
         XCTAssert(sut.isOverlayVisible)
-        XCTAssert(sut.muteIndicatorViewController.view.isHidden)
 
-        sut.didDoubleTapOnView(sender: MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended))
-
-        // call overlay is still visible after double-tapped
-        XCTAssert(sut.isOverlayVisible)
-    }
-
-    func testThatMuteIndicatorIsShownAfterTapOnCallInfoScreenAndMuted() {
-        // GIVEN
-        mediaManager.isMicrophoneMuted = true
-
-        // WHEN
-        // call overlay is visible at the beginning
-        XCTAssert(sut.isOverlayVisible)
-        XCTAssert(sut.muteIndicatorViewController.view.isHidden)
+        tapOnSut()
 
         // call overlay is invisible after tapped
-        tapOnSut()
         XCTAssertFalse(sut.isOverlayVisible)
-
-        // THEN
-        XCTAssertFalse(sut.muteIndicatorViewController.view.isHidden)
-        XCTAssertEqual(sut.muteIndicatorViewController.view.alpha, 1)
-    }
-
-    func testThatMuteIndicatorIsNotShownAfterTapOnCallInfoScreenAndNotMuted() {
-        // GIVEN
-        mediaManager.isMicrophoneMuted = false
-
-        // call overlay is visible at the beginning
-        XCTAssert(sut.isOverlayVisible)
-
-        // call overlay is invisible after tapped
-        tapOnSut()
-        XCTAssertFalse(sut.isOverlayVisible)
-
-        // THEN
-        XCTAssert(sut.muteIndicatorViewController.view.isHidden)
     }
 }

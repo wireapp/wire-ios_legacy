@@ -19,22 +19,46 @@
 import XCTest
 @testable import Wire
 
-final class MuteIndicatorViewControllerTests: ZMSnapshotTestCase {
+final class MockVideoGridConfiguration: VideoGridConfiguration {
+    var floatingVideoStream: ParticipantVideoState?
+
+    var videoStreams: [ParticipantVideoState] = []
+
+    var isMuted: Bool = true
+}
+
+final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     
-    var sut: MuteIndicatorViewController!
-    
+    var sut: VideoGridViewController!
+    var mediaManager: ZMMockAVSMediaManager!
+
     override func setUp() {
         super.setUp()
-        sut = MuteIndicatorViewController()
-        sut.view.backgroundColor = .darkGray
+
+        mediaManager = ZMMockAVSMediaManager()
     }
     
     override func tearDown() {
         sut = nil
+        mediaManager = nil
+
         super.tearDown()
     }
 
-    func testForVisibleState(){
+    func createSut() {
+        ZMUser.selfUser().remoteIdentifier = UUID()
+        sut = VideoGridViewController(configuration: MockVideoGridConfiguration(),
+                                      mediaManager: mediaManager)
+
+        sut.view.backgroundColor = .black
+    }
+
+    func testForMuted(){
+        createSut()
+
+        mediaManager.isMicrophoneMuted = true
+
+        sut.isCovered = false
         verify(view: sut.view)
     }
 }

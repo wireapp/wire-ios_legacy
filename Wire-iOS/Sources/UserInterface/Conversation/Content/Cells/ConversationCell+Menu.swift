@@ -53,12 +53,16 @@ public extension ConversationCell {
     
     private static func items(for message: ZMConversationMessage, with properties: MenuConfigurationProperties) -> [UIMenuItem] {
         var items = [UIMenuItem]()
-        
+
         if message.isEphemeral {
-            items += properties.additionalItems.filter(\.isAvailableInEphemeralConversations).map(\.item)
+            if let additionalItems = properties.additionalItems {
+                items += additionalItems.filter(\.isAvailableInEphemeralConversations).map(\.item)
+            }
         } else {
-            items += properties.additionalItems.map(\.item)
-            
+            if let additionalItems = properties.additionalItems {
+                items += additionalItems.map(\.item)
+            }
+
             if message.canBeLiked {
                 let index = items.count > 0 ? properties.likeItemIndex : 0
                 items.insert(.like(for: message, with: #selector(likeMessage)), at: index)
