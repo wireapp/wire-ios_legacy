@@ -22,7 +22,7 @@ import Foundation
  * Represents an item for the licenses pane.
  */
 
-struct SettingsLicenseItem: Decodable {
+struct SettingsLicenseItem: Decodable, Equatable {
 
     /// The name of the license software.
     let name: String

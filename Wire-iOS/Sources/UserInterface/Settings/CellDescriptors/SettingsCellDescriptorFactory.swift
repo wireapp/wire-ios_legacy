@@ -380,11 +380,7 @@ import SafariServices
     }
 
     func licensesSection() -> SettingsCellDescriptorType {
-        guard
-            let licensesFile = Bundle.main.url(forResource: "Licenses.generated", withExtension: "plist"),
-            let licensesData = try? Data(contentsOf: licensesFile),
-            let licenses = try? PropertyListDecoder().decode([SettingsLicenseItem].self, from: licensesData)
-        else {
+        guard let licenses = LicensesLoader.shared.loadLicenses() else {
             return webLicensesSection()
         }
 

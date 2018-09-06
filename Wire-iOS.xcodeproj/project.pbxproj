@@ -266,6 +266,8 @@
 		5EDD253A213FFD9700C0E254 /* Licenses.generated.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EDD2539213FFD9700C0E254 /* Licenses.generated.plist */; };
 		5EDD253C2140044D00C0E254 /* SettingsLicenseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD253B2140044D00C0E254 /* SettingsLicenseItem.swift */; };
 		5EDD25412140240B00C0E254 /* SettingsStaticTextCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD25402140240B00C0E254 /* SettingsStaticTextCellDescriptor.swift */; };
+		5EDD25442141555600C0E254 /* LicensesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD25432141555600C0E254 /* LicensesLoader.swift */; };
+		5EDD25462141571600C0E254 /* LicensesLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDD25452141571600C0E254 /* LicensesLoaderTests.swift */; };
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
 		5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */; };
 		5EEFC16820BEBE56007E8A79 /* BrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */; };
@@ -1642,6 +1644,8 @@
 		5EDD253B2140044D00C0E254 /* SettingsLicenseItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLicenseItem.swift; sourceTree = "<group>"; };
 		5EDD25402140240B00C0E254 /* SettingsStaticTextCellDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStaticTextCellDescriptor.swift; sourceTree = "<group>"; };
 		5EDD254221412ED200C0E254 /* EmbeddedDependencies.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = EmbeddedDependencies.plist; sourceTree = "<group>"; };
+		5EDD25432141555600C0E254 /* LicensesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesLoader.swift; sourceTree = "<group>"; };
+		5EDD25452141571600C0E254 /* LicensesLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesLoaderTests.swift; sourceTree = "<group>"; };
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
 		5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCornerPinningBehavior.swift; sourceTree = "<group>"; };
 		5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserViewController.swift; sourceTree = "<group>"; };
@@ -4063,6 +4067,7 @@
 				5E0EB1FA2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift */,
 				1E5E0CAB1B6B83C6003B0CAC /* Buttons */,
 				160D6915212AB95100096EAD /* ImageResourceView.swift */,
+				5EDD25432141555600C0E254 /* LicensesLoader.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -5415,6 +5420,7 @@
 				EF6251D521395F7E00943708 /* VideoGridViewControllerSnapshotTests.swift */,
 				EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */,
 				EF6251DA21396B9800943708 /* AppLockViewSnapshotTests.swift */,
+				5EDD25452141571600C0E254 /* LicensesLoaderTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7075,6 +7081,7 @@
 				F12CDAE71E43880100CEFCEB /* RegistrationTextViewCell.swift in Sources */,
 				EF71BFD620EBCC5F00894A7C /* UIView+IPadPopover.swift in Sources */,
 				87BEB03C1D3E44BA00DE9575 /* CameraKeyboardViewController.swift in Sources */,
+				5EDD25442141555600C0E254 /* LicensesLoader.swift in Sources */,
 				876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */,
 				871BC2941D34F8F800DF0793 /* UIView+Zeta.m in Sources */,
 				EFDE37FA2139889C0095DCA4 /* MuteIndicatorView.swift in Sources */,
@@ -7691,6 +7698,7 @@
 				BF079A3620EF9E6F00B152DD /* ConversationListCellTests.swift in Sources */,
 				16A94AED20934AA8008A5718 /* CallParticipantsViewTests.swift in Sources */,
 				7CF651861FDA837D00D6B9F4 /* AvailabilityTitleViewTests.swift in Sources */,
+				5EDD25462141571600C0E254 /* LicensesLoaderTests.swift in Sources */,
 				5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */,
 				87D5E4401C3E797A00EB8289 /* UserClientFingerprintTests.swift in Sources */,
 				EF32A4CD204EFD8E003632FB /* CameraCellTests.swift in Sources */,
