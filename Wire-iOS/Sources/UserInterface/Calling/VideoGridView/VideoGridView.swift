@@ -63,6 +63,7 @@ class VideoGridViewController: UIViewController {
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let muteIndicatorView = MuteIndicatorView()
+    fileprivate let mediaManager: AVSMediaManagerInterface
 
     var previewOverlay: UIView? {
         return thumbnailViewController.contentView
@@ -75,23 +76,23 @@ class VideoGridViewController: UIViewController {
     var isCovered: Bool = true {
         didSet {
             guard oldValue != isCovered else { return }
-
-            if configuration.isMuted {
-                muteIndicatorView.isHidden = false
-                muteIndicatorView.alpha = self.isCovered ? 1 : 0
-
-                UIView.animate(
-                    withDuration: 0.2,
-                    delay: 0,
-                    options: .curveEaseInOut,
-                    animations: {
-                        self.muteIndicatorView.alpha = self.isCovered ? 0 : 1
-                },
-                    completion: nil
-                )
-            } else {
+            guard mediaManager.isMicrophoneMuted else {
                 muteIndicatorView.isHidden = true
+                return
             }
+
+            muteIndicatorView.isHidden = false
+            muteIndicatorView.alpha = isCovered ? 1 : 0
+
+            UIView.animate(
+                withDuration: 0.2,
+                delay: 0,
+                options: .curveEaseInOut,
+                animations: {
+                    self.muteIndicatorView.alpha = self.isCovered ? 0 : 1
+            },
+                completion: nil
+            )
         }
     }
 
@@ -102,8 +103,10 @@ class VideoGridViewController: UIViewController {
         }
     }
 
-    init(configuration: VideoGridConfiguration) {
+    init(configuration: VideoGridConfiguration,
+         mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()) {
         self.configuration = configuration
+        self.mediaManager = mediaManager
 
         muteIndicatorView.isHidden = true
 

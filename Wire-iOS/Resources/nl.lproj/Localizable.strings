@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technisch rapport";
 "self.settings.technical_report.send_report" = "Stuur rapport naar Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Rapport over bellen met Wire";
 "self.settings.technical_report.include_log" = "Voeg gedetailleerd log toe";
 "self.settings.technical_report.privacy_warning" = "Gedetailleerde logs kunnen persoonlijke gegevens bevatten";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Voor persoonlijk gebruik";
+"landing.create_account.title" = "Persoonlijk";
 "landing.create_account.subtitle" = "account aanmaken";
-"landing.create_team.title" = "Voor organisaties";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "creëer Team";
 "landing.login.hints" = "Heb je al een account?";
 "landing.login.button.title" = "Inloggen";

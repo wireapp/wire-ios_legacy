@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Teknisk rapport";
 "self.settings.technical_report.send_report" = "Send rapport til Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire Opkald Rapportering";
 "self.settings.technical_report.include_log" = "Inkludér detaljeret log";
 "self.settings.technical_report.privacy_warning" = "Detaljerede logfiler kan indeholde personoplysninger";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "For personal use";
+"landing.create_account.title" = "Personligt";
 "landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log ind";

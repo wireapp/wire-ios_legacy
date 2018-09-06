@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Techninė ataskaita";
 "self.settings.technical_report.send_report" = "Siųsti ataskaitą į „Wire“";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "„Wire“ skambinimo ataskaita";
 "self.settings.technical_report.include_log" = "Pridėti išsamų žurnalą";
 "self.settings.technical_report.privacy_warning" = "Išsamiuose žurnaluose gali būti asmeninių duomenų";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "„Wire“";
-"landing.create_account.title" = "Asmeniniam naudojimui";
+"landing.create_account.title" = "Asmeninis";
 "landing.create_account.subtitle" = "kurti paskyrą";
-"landing.create_team.title" = "Organizacijoms";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "kurti komandą";
 "landing.login.hints" = "Jau turite paskyrą?";
 "landing.login.button.title" = "Prisijungti";
