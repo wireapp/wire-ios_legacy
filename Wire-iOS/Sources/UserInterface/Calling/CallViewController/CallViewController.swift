@@ -65,7 +65,7 @@ final class CallViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
-        observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self)]
+        observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self), voiceChannel.addNetworkConditionObserver(self)]
         proximityMonitorManager?.stateChanged = { [weak self] raisedToEar in
             self?.proximityStateDidChange(raisedToEar)
         }
@@ -325,6 +325,12 @@ extension CallViewController: ConstantBitRateAudioObserver {
         updateConfiguration()
     }
     
+}
+
+extension CallViewController: NetworkConditionObserver {
+    func callCenterDidChange(networkCondition: NetworkCondition) {
+        updateConfiguration()
+    }
 }
 
 extension CallViewController: CallInfoRootViewControllerDelegate {
