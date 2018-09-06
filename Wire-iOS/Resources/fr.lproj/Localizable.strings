@@ -207,7 +207,7 @@
 "conversation.status.message.file" = "A partagé un fichier";
 "conversation.status.message.knock" = "A fait un signe";
 "conversation.status.message.missedcall" = "Appel manqué";
-"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.missedcall.groups" = "Appel manqué de %@";
 "conversation.status.message.ephemeral" = "Message éphémère";
 
 "conversation.status.unsent" = "⚠️ Message non envoyé";
@@ -390,7 +390,7 @@
 
 "content.system.call.you" = "Vous";
 "content.system.call.called" = "%@ a appelé";
-"content.system.call.missed-call" = "Missed call from %@";
+"content.system.call.missed-call" = "Appel manqué de %@";
 "content.system.call.called-you" = "%@ avez appelé";
 
 "content.system.renamed_conv.title" = "%@ a renommé la conversation";
@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Rapport technique";
 "self.settings.technical_report.send_report" = "Envoyer le rapport à Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Rapport d'appel de Wire";
 "self.settings.technical_report.include_log" = "Inclure le rapport détaillé";
 "self.settings.technical_report.privacy_warning" = "Les rapports détaillés pourraient contenir des données personnelles";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Pour un usage personnel";
+"landing.create_account.title" = "Personnel";
 "landing.create_account.subtitle" = "créer un compte";
-"landing.create_team.title" = "Pour les entreprises";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "créer une équipe";
 "landing.login.hints" = "Vous avez déjà un compte ?";
 "landing.login.button.title" = "Se connecter";
