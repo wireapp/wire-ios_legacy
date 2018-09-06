@@ -35,6 +35,8 @@ import Foundation
     private(set) var cache: [SettingsLicenseItem]? = nil
     private var memoryWarningToken: Any?
 
+    // MARK: - Initialization
+
     init(memoryManager: Any? = nil) {
         super.init()
         memoryWarningToken = NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: memoryManager, queue: .main) { [weak self] _ in
@@ -45,6 +47,8 @@ import Foundation
     deinit {
         memoryWarningToken.apply(NotificationCenter.default.removeObserver)
     }
+
+    // MARK: - Reading the list of Licences
 
     /// Returns the list of 3rd party licences used by the app.
     func loadLicenses() -> [SettingsLicenseItem]? {
@@ -64,7 +68,7 @@ import Foundation
         return decodedPlist
     }
 
-    // MARK: Testing
+    // MARK: - Testing
 
     @objc var cacheEmpty: Bool {
         return cache == nil
