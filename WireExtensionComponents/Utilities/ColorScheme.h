@@ -28,11 +28,6 @@ extern ColorSchemeColor ColorSchemeColorTextBackground;
 extern ColorSchemeColor ColorSchemeColorTextDimmed;
 extern ColorSchemeColor ColorSchemeColorTextPlaceholder;
 
-//extern ColorSchemeColor ColorSchemeColorAccent; ///TODO: private
-//extern ColorSchemeColor ColorSchemeColorAccentDimmed;
-//extern ColorSchemeColor ColorSchemeColorAccentDimmedFlat; ///TODO: private
-//extern ColorSchemeColor ColorSchemeColorAccentDarken;
-
 extern ColorSchemeColor ColorSchemeColorIconNormal;
 extern ColorSchemeColor ColorSchemeColorIconSelected;
 extern ColorSchemeColor ColorSchemeColorIconHighlighted;
@@ -50,7 +45,6 @@ extern ColorSchemeColor ColorSchemeColorChatHeadTitleText;
 extern ColorSchemeColor ColorSchemeColorChatHeadSubtitleText;
 
 extern ColorSchemeColor ColorSchemeColorButtonHighlighted;
-//extern ColorSchemeColor ColorSchemeColorButtonEmptyText;
 extern ColorSchemeColor ColorSchemeColorButtonFaded;
 
 extern ColorSchemeColor ColorSchemeColorTabNormal;

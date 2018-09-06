@@ -19,12 +19,12 @@
 import Foundation
 
 extension ContactsSectionHeaderView {
-@objc func setupStyle() {
-    titleLabel.font = .smallSemiboldFont
-    titleLabel.textColor = .textForeground //$color-text-foreground-dark; ?
+    @objc func setupStyle() {
+        titleLabel.font = .smallSemiboldFont
+        titleLabel.textColor = .textForeground
 
-    contentView.backgroundColor = .background //$color-background-dark; ?
+        contentView.backgroundColor = .background
 
-    backgroundView?.backgroundColor = .clear
-}
+        backgroundView?.backgroundColor = .clear
+    }
 }
