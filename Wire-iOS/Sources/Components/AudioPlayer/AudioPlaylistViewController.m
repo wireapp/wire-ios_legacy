@@ -75,7 +75,6 @@ static const CGFloat SeparatorLineOverflow = 4;
 -(void)dealloc
 {
     self.artworkObserver = nil;
-    self.view.cas_alternativeParent = nil; // Workaround for https://github.com/cloudkite/Classy/issues/82
 }
 
 - (void)tearDown;

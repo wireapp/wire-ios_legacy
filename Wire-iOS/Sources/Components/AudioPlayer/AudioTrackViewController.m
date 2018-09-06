@@ -61,7 +61,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)dealloc
 {
     self.artworkObserver = nil;
-    self.view.cas_alternativeParent = nil;
 }
 
 - (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer sourceMessage:(id<ZMConversationMessage>)sourceMessage

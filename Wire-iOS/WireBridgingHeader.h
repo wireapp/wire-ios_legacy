@@ -42,7 +42,6 @@
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
 #import "WireStyleKit.h"
-#import <Classy/UIViewController+CASAdditions.h>
 #import "UIViewController+Errors.h"
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
@@ -177,7 +176,6 @@
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"
-#import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
 #import "WireStyleKit+Additions.h"
