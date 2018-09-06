@@ -743,6 +743,11 @@
 "about.website.title"="Wire Website";
 "about.copyright.title"="© Wire Swiss GmbH";
 
+// Licenses screen
+"about.license.project_header" = "Details";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
+
 // Self new devices
 "self.new_device_alert.title" = "Your account was used on:";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
