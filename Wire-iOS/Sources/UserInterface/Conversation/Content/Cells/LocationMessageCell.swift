@@ -53,6 +53,7 @@ import AddressBook
 
     deinit {
         mapView = nil
+        locationAnnotation = nil
     }
     
     private func configureViews() {
