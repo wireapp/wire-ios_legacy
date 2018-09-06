@@ -26,7 +26,6 @@
 
 + (void)initialize
 {
-    // Do not load Classy in share extension
     if (UIApplication.runningInExtension) {
         return;
     }
