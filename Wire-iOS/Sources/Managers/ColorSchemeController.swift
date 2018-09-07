@@ -18,6 +18,14 @@
 
 import Foundation
 
+extension Notification.Name {
+    static let colorSchemeControllerDidApplyColorSchemeChange = Notification.Name("ColorSchemeControllerDidApplyColorSchemeChange")
+}
+
+@objc extension NSNotification {
+    public static let colorSchemeControllerDidApplyColorSchemeChange = Notification.Name.colorSchemeControllerDidApplyColorSchemeChange
+}
+
 class ColorSchemeController: NSObject {
 
     var userObserverToken: Any?
@@ -31,7 +39,7 @@ class ColorSchemeController: NSObject {
     }
 
     func notifyColorSchemeChange() {
-        NotificationCenter.default.post(name: .ColorSchemeControllerDidApplyColorSchemeChange, object: self)
+        NotificationCenter.default.post(name: .colorSchemeControllerDidApplyColorSchemeChange, object: self)
     }
 
     @objc func settingsColorSchemeDidChange(notification: Notification?) {
