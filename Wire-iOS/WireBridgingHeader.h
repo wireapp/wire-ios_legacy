@@ -192,6 +192,7 @@
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
+#import "ColorSchemeController.h"
 
 // Camera
 #import "CameraController.h"
