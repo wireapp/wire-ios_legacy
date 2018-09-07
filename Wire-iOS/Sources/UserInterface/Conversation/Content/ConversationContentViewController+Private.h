@@ -52,7 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ConversationContentViewController (MessageWindow)
 
-- (void)expandMessageWindowUp;
+- (void)moveMessageWindowUp;
+- (void)moveMessageWindowDown;
 - (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 
 @end

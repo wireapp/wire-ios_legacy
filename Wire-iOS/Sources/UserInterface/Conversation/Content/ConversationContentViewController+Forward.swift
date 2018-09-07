@@ -233,7 +233,11 @@ extension ConversationContentViewController {
             fatal("Message from the wrong conversation")
         }
         
-        dataSource.moveUp(until: message) { index in
+        showLoadingView = true
+        
+        dataSource.find(message) { index in
+            self.showLoadingView = false
+            
             guard let indexToShow = index else {
                 return
             }

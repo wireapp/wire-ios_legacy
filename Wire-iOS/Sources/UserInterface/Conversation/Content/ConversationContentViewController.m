@@ -254,7 +254,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void)updateTableViewHeaderView
 {
-    if (!self.dataSource.allMessagesFetched) {
+    if (!self.dataSource.oldestMessageFetched) {
         // Don't display the conversation header if the message window doesn't include the first message.
         return;
     }
@@ -824,9 +824,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @implementation ConversationContentViewController (MessageWindow)
 
-- (void)expandMessageWindowUp
+- (void)moveMessageWindowUp
 {
     [self.dataSource moveUpBy:ConversationTableViewDataSource.defaultBatchSize];
+}
+
+- (void)moveMessageWindowDown
+{
+    [self.dataSource moveDownBy:ConversationTableViewDataSource.defaultBatchSize];
 }
 
 - (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
@@ -836,7 +841,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
 
     if ((latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth) > (int)self.conversation.allMessages.count) {
-        [self expandMessageWindowUp];
+        [self moveMessageWindowUp];
     }
 }
 

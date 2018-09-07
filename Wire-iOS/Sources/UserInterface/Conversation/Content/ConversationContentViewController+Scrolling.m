@@ -45,14 +45,22 @@
     CGFloat bottomOffset = scrollView.contentOffset.y;
     
     if (self.dataSource.messages.count) {
-        [self.delegate conversationContentViewController:self didScrollWithOffsetFromBottom:bottomOffset withLatestMessage:self.dataSource.messages.lastObject];
+        [self.delegate conversationContentViewController:self
+                           didScrollWithOffsetFromBottom:bottomOffset
+                                       withLatestMessage:self.dataSource.messages.lastObject];
     }
     
     // if I am at top, try to load some more messages
     BOOL atTheTop = scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height;
     
     if (atTheTop) {
-        [self expandMessageWindowUp];
+        [self moveMessageWindowUp];
+    }
+    
+    BOOL atTheBottom = scrollView.contentOffset.y < 50;
+    
+    if (atTheBottom) {
+        [self moveMessageWindowDown];
     }
 }
 

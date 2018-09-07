@@ -50,7 +50,7 @@ extension ConversationCell {
     @objc public static let defaultBatchSize = 30 // Magic amount of messages per screen (upper bound)
     
     private var fetchController: NSFetchedResultsController<ZMMessage>!
-    private var currentFetchLimit: Int = defaultBatchSize * 3 {
+    private var fetchOffset: Int = 0 {
         didSet {
             createFetchController()
             tableView.reloadData()
@@ -77,27 +77,26 @@ extension ConversationCell {
         return fetchController.fetchedObjects ?? []
     }
     
-    public func moveUp(until message: ZMConversationMessage, completion: ((Int?)->())? = nil) {
-        if let index = index(of: message) {
-            completion?(index)
-            return
+    public func find(_ message: ZMConversationMessage, completion: ((Int?)->())? = nil) {
+        guard let moc = conversation.managedObjectContext, let serverTimestamp = message.serverTimestamp else {
+            fatal("conversation.managedObjectContext == nil or serverTimestamp == nil")
         }
-        else {
-            // Increase the window and try to find the message again
-            guard self.moveUp(by: 1000) else {
-                completion?(nil)
-                return
-            }
-            
-            DispatchQueue.main.async {
-                autoreleasepool(invoking: { () -> Void in
-                    self.moveUp(until: message, completion: completion)
-                })
-            }
-        }
+        
+        let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())
+        let validMessage = conversation.visibleMessagesPredicate!
+        let beforeGivenMessage = NSPredicate(format: "%K < %@", ZMMessageServerTimestampKey, serverTimestamp as NSDate)
+    
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [validMessage, beforeGivenMessage])
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(ZMMessage.serverTimestamp), ascending: false)]
+        
+        let index = try! moc.count(for: fetchRequest)
+
+        fetchOffset = index > 5 ? index - 5 : index
+        
+        completion?(index)
     }
     
-    @objc public var allMessagesFetched: Bool {
+    @objc public var oldestMessageFetched: Bool {
         guard let moc = conversation.managedObjectContext else {
             fatal("conversation.managedObjectContext == nil")
         }
@@ -105,15 +104,28 @@ extension ConversationCell {
         let fetchRequest = self.fetchRequest()
         let totalCount = try! moc.count(for: fetchRequest)
     
-        return currentFetchLimit >= totalCount
+        return fetchOffset + ConversationTableViewDataSource.defaultBatchSize >= totalCount
     }
     
-    @discardableResult public func moveUp(by numberOfMessages: Int) -> Bool {
-        guard !allMessagesFetched else {
+    public var newestMessageFetched: Bool {
+        return fetchOffset == 0
+    }
+    
+    @objc @discardableResult public func moveUp(by numberOfMessages: Int) -> Bool {
+        guard !oldestMessageFetched else {
             return false
         }
         
-        currentFetchLimit = currentFetchLimit + numberOfMessages
+        fetchOffset = fetchOffset + numberOfMessages
+        return true
+    }
+    
+    @objc @discardableResult public func moveDown(by numberOfMessages: Int) -> Bool {
+        guard !newestMessageFetched else {
+            return false
+        }
+        
+        fetchOffset = fetchOffset - numberOfMessages
         return true
     }
     
@@ -179,13 +191,9 @@ extension ConversationCell {
     
     private func createFetchController() {
         let fetchRequest = self.fetchRequest()
-        if currentFetchLimit >= 1000 {
-            fetchRequest.fetchOffset = currentFetchLimit - 1000
-            fetchRequest.fetchLimit = 1000
-        }
-        else {
-            fetchRequest.fetchLimit = currentFetchLimit
-        }
+        fetchRequest.fetchLimit = ConversationTableViewDataSource.defaultBatchSize
+        fetchRequest.fetchOffset = fetchOffset
+        
         fetchController = NSFetchedResultsController<ZMMessage>(fetchRequest: fetchRequest,
                                                                 managedObjectContext: conversation.managedObjectContext!,
                                                                 sectionNameKeyPath: nil,
