@@ -33,7 +33,10 @@ class ColorSchemeController: NSObject {
     override init() {
         super.init()
 
-        userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: ZMUserSession.shared()!)
+        if let session = ZMUserSession.shared() {
+            userObserverToken = UserChangeInfo.add(userObserver:self, for: ZMUser.selfUser(), userSession: session)
+        }
+
         NotificationCenter.default.addObserver(self, selector: #selector(settingsColorSchemeDidChange(notification:)), name: .SettingsColorSchemeChanged, object: nil)
 
     }
@@ -55,14 +58,11 @@ class ColorSchemeController: NSObject {
 
         notifyColorSchemeChange()
     }
-
 }
 
 extension ColorSchemeController: ZMUserObserver {
     public func userDidChange(_ note: UserChangeInfo) {
-        if !note.accentColorValueChanged {
-            return
-        }
+        guard note.accentColorValueChanged else { return }
 
         let colorScheme = ColorScheme.default
         let newAccentColor = UIColor.accent()
