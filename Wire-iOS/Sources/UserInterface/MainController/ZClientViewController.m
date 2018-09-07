@@ -29,7 +29,6 @@
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
-#import "ColorSchemeController.h"
 #import "ProfileViewController.h"
 
 #import "WireSyncEngine+iOS.h"

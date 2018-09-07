@@ -501,7 +501,6 @@
 		875F89141D6DD6D000D8748E /* ReactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89131D6DD6D000D8748E /* ReactionsView.swift */; };
 		875F89171D6F35EC00D8748E /* ReactionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875F89161D6F35EC00D8748E /* ReactionsListViewController.swift */; };
 		876041551F5451EA003CB161 /* AccountViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876041531F5451B3003CB161 /* AccountViewTests.swift */; };
-		876113E01DD1DD19007F5969 /* ColorSchemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 876113DF1DD1DD19007F5969 /* ColorSchemeController.m */; };
 		876113E21DD1DD4D007F5969 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876113E11DD1DD4D007F5969 /* CanvasViewController.swift */; };
 		876113E41DD1DD6B007F5969 /* SketchToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876113E31DD1DD6B007F5969 /* SketchToolbar.swift */; };
 		876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876113EA1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift */; };
@@ -1214,6 +1213,7 @@
 		EF9B950420BEBD89000D4CA1 /* MockUser+AccentColorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */; };
 		EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */; };
 		EF9FC3EF2142A77500033ED0 /* ColorSchemeControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9FC3EE2142A77500033ED0 /* ColorSchemeControllerTests.swift */; };
+		EF9FC3F12142AEDE00033ED0 /* ColorSchemeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9FC3F02142AEDE00033ED0 /* ColorSchemeController.swift */; };
 		EFA10F0020F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift */; };
 		EFA385CE21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */; };
 		EFA6E24C2056E0DB008AB47E /* UIViewController+SizeClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFA6E24B2056E0DA008AB47E /* UIViewController+SizeClass.swift */; };
@@ -1976,8 +1976,6 @@
 		875F89131D6DD6D000D8748E /* ReactionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsView.swift; sourceTree = "<group>"; };
 		875F89161D6F35EC00D8748E /* ReactionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionsListViewController.swift; sourceTree = "<group>"; };
 		876041531F5451B3003CB161 /* AccountViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewTests.swift; sourceTree = "<group>"; };
-		876113DE1DD1DD19007F5969 /* ColorSchemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSchemeController.h; sourceTree = "<group>"; };
-		876113DF1DD1DD19007F5969 /* ColorSchemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSchemeController.m; sourceTree = "<group>"; };
 		876113E11DD1DD4D007F5969 /* CanvasViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CanvasViewController.swift; path = Sketchpad/CanvasViewController.swift; sourceTree = "<group>"; };
 		876113E31DD1DD6B007F5969 /* SketchToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SketchToolbar.swift; path = Sketchpad/SketchToolbar.swift; sourceTree = "<group>"; };
 		876113E61DD1DE89007F5969 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -2930,6 +2928,7 @@
 		EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+AccentColorProvider.swift"; sourceTree = "<group>"; };
 		EF9C552620D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EphemeralTimeoutFormatterTests.swift; sourceTree = "<group>"; };
 		EF9FC3EE2142A77500033ED0 /* ColorSchemeControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeControllerTests.swift; sourceTree = "<group>"; };
+		EF9FC3F02142AEDE00033ED0 /* ColorSchemeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeController.swift; sourceTree = "<group>"; };
 		EFA10EFF20F4AB0000863B72 /* ConversationMessageWindowTableViewAdapter+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationMessageWindowTableViewAdapter+DataSource.swift"; sourceTree = "<group>"; };
 		EFA10F0120F4AE2800863B72 /* ConversationMessageWindowTableViewAdapter+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationMessageWindowTableViewAdapter+Private.h"; sourceTree = "<group>"; };
 		EFA385CD21368E2900E5CFD0 /* EmojiKeyboardViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiKeyboardViewControllerTests.swift; sourceTree = "<group>"; };
@@ -4917,8 +4916,7 @@
 				1E80A3641B0DF6120049A809 /* MediaPlaybackManager.m */,
 				BA79B0A31B6284D900F23AFB /* SoundEventRulesWatchDog.h */,
 				BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.m */,
-				876113DE1DD1DD19007F5969 /* ColorSchemeController.h */,
-				876113DF1DD1DD19007F5969 /* ColorSchemeController.m */,
+				EF9FC3F02142AEDE00033ED0 /* ColorSchemeController.swift */,
 				875060721E5B3D9E005B21C7 /* FileBackupExcluder.swift */,
 			);
 			path = Managers;
@@ -6870,6 +6868,7 @@
 				1687ABA820EBB5F30007C240 /* ImageMessageCell+Configure.swift in Sources */,
 				87371C1A1B7355C400807499 /* ConversationListViewController+StartUI.m in Sources */,
 				8FC85451199245770008B66B /* ConversationContentViewController+Scrolling.m in Sources */,
+				EF9FC3F12142AEDE00033ED0 /* ColorSchemeController.swift in Sources */,
 				D5168F2A2008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift in Sources */,
 				BFE4185D209B06D600503C7C /* AVSMediaManager+Helper.swift in Sources */,
 				5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */,
@@ -7522,7 +7521,6 @@
 				EF2C18A01FED435600E9F2FD /* ConversationCell+BurstTimestamp.swift in Sources */,
 				EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */,
 				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,
-				876113E01DD1DD19007F5969 /* ColorSchemeController.m in Sources */,
 				EF2127041FB9DFE300625A9B /* RegistrationViewController.m in Sources */,
 				EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */,
 				EF66110F2121D00B00BDF57A /* UIImage+DownSize.swift in Sources */,

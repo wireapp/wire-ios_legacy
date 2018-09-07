@@ -38,6 +38,8 @@ typedef NS_ENUM (NSUInteger, SettingsLastScreen) {
     SettingsLastScreenConversation
 };
 
+extern NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification;
+
 extern NSString * const SettingsColorSchemeChangedNotification;
 
 extern NSString * const UserDefaultDisableMarkdown;
