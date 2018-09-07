@@ -22,18 +22,20 @@ import XCTest
 final class ColorSchemeControllerTests: XCTestCase {
     
     var sut: ColorSchemeController!
-    var oriScheme: Any!
+    var originalColorScheme: Any! = nil
+
     override func setUp() {
         super.setUp()
 
         sut = ColorSchemeController()
-        oriScheme = UserDefaults.standard.value(forKey: UserDefaultColorScheme)
+        if originalColorScheme == nil {
+            originalColorScheme = UserDefaults.standard.value(forKey: UserDefaultColorScheme)
+        }
     }
     
     override func tearDown() {
         sut = nil
-        UserDefaults.standard.set(oriScheme, forKey: UserDefaultColorScheme)
-        oriScheme = nil
+        UserDefaults.standard.set(originalColorScheme, forKey: UserDefaultColorScheme)
 
         super.tearDown()
     }
