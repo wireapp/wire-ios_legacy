@@ -54,6 +54,7 @@ extension ConversationCell {
         didSet {
             createFetchController()
             tableView.reloadData()
+            faultInvisibleMessages()
         }
     }
 
@@ -76,13 +77,24 @@ extension ConversationCell {
         return fetchController.fetchedObjects ?? []
     }
     
-    public func moveUp(until message: ZMConversationMessage) {
-        repeat {
-            if let _ = index(of: message) {
+    public func moveUp(until message: ZMConversationMessage, completion: ((Int?)->())? = nil) {
+        if let index = index(of: message) {
+            completion?(index)
+            return
+        }
+        else {
+            // Increase the window and try to find the message again
+            guard self.moveUp(by: 1000) else {
+                completion?(nil)
                 return
             }
+            
+            DispatchQueue.main.async {
+                autoreleasepool(invoking: { () -> Void in
+                    self.moveUp(until: message, completion: completion)
+                })
+            }
         }
-        while moveUp(by: 1000)
     }
     
     @objc public var allMessagesFetched: Bool {
@@ -167,8 +179,13 @@ extension ConversationCell {
     
     private func createFetchController() {
         let fetchRequest = self.fetchRequest()
-        fetchRequest.fetchLimit = currentFetchLimit
-        
+        if currentFetchLimit >= 1000 {
+            fetchRequest.fetchOffset = currentFetchLimit - 1000
+            fetchRequest.fetchLimit = 1000
+        }
+        else {
+            fetchRequest.fetchLimit = currentFetchLimit
+        }
         fetchController = NSFetchedResultsController<ZMMessage>(fetchRequest: fetchRequest,
                                                                 managedObjectContext: conversation.managedObjectContext!,
                                                                 sectionNameKeyPath: nil,
@@ -178,6 +195,15 @@ extension ConversationCell {
         try! fetchController.performFetch()
         
         firstUnreadMessage = conversation.firstUnreadMessage
+    }
+    
+    private func faultInvisibleMessages() {
+        guard let invisibleMessages = fetchController.fetchedObjects?.suffix(ConversationTableViewDataSource.defaultBatchSize) else {
+            return
+        }
+        invisibleMessages.forEach {
+            conversation.managedObjectContext!.refresh($0, mergeChanges: $0.hasChanges)
+        }
     }
     
     init(conversation: ZMConversation, tableView: UITableView) {

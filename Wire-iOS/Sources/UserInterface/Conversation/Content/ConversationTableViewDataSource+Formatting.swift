@@ -21,17 +21,11 @@ import Foundation
 extension ConversationTableViewDataSource {
     
     func messagePrevious(to message: ZMConversationMessage, at index: Int) -> ZMConversationMessage? {
-        var previous = NSNotFound
-        
-        if index < messages.count - 1 && index != NSNotFound {
-            previous = index + 1
+        guard (index + 1) < messages.count else {
+            return nil
         }
         
-        if previous != NSNotFound {
-            return messages[previous]
-        }
-        
-        return nil
+        return messages[index + 1]
     }
     
     func shouldShowDaySeparator(for message: ZMConversationMessage, at index: Int) -> Bool {

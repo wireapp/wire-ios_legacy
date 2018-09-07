@@ -233,9 +233,11 @@ extension ConversationContentViewController {
             fatal("Message from the wrong conversation")
         }
         
-        dataSource.moveUp(until: message)
-        
-        if let indexToShow = dataSource.index(of: message) {
+        dataSource.moveUp(until: message) { index in
+            guard let indexToShow = index else {
+                return
+            }
+            
             self.scroll(toIndex: indexToShow, completion: completion)
         }
     }

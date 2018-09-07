@@ -71,7 +71,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.sender = self.otherUser
         otherMessage.systemMessageType = .missedCall
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
 
         // WHEN
@@ -86,7 +86,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.sender = self.otherUser
         otherMessage.systemMessageType = .missedCall
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -102,7 +102,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.systemMessageType = .missedCall
         otherMessage.relevantForConversationStatus = false
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -149,7 +149,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.sender = self.otherUser
         otherMessage.systemMessageType = .conversationNameChanged
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         
         sut.lastReadServerTimeStamp = Date.distantPast
         
@@ -196,7 +196,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.users = Set([self.selfUser])
         otherMessage.addedUsers = Set([self.selfUser])
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -213,7 +213,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.selfUser
         otherMessage.users = Set([self.otherUser])
         otherMessage.addedUsers = Set([self.otherUser])
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -231,7 +231,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.selfUser
         otherMessage.users = Set([self.otherUser])
         otherMessage.removedUsers = Set([self.otherUser])
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -250,7 +250,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = selfUser
         otherMessage.users = [otherUser]
         otherMessage.removedUsers = [otherUser]
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = .distantPast
 
         // When
@@ -270,7 +270,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.users = [anotherUser]
         otherMessage.addedUsers = [anotherUser]
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -287,7 +287,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.users = Set([self.otherUser])
         otherMessage.addedUsers = Set([self.otherUser])
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -304,7 +304,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.users = Set([self.selfUser])
         otherMessage.removedUsers = Set([self.selfUser])
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -323,7 +323,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.users = Set([self.otherUser])
         otherMessage.removedUsers = Set([self.otherUser])
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         sut.lastReadServerTimeStamp = Date.distantPast
         
         // WHEN
@@ -340,7 +340,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.otherUser
         otherMessage.users = Set([self.otherUser, self.selfUser])
         otherMessage.addedUsers = Set([self.otherUser, self.selfUser])
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         
         // WHEN
         let status = sut.status.description(for: sut)
@@ -356,7 +356,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         otherMessage.sender = self.selfUser
         otherMessage.users = Set([self.otherUser, self.selfUser])
         otherMessage.addedUsers = Set([self.otherUser, self.selfUser])
-        sut.sortedAppendMessage(otherMessage)
+        sut.append(otherMessage)
         
         // WHEN
         let status = sut.status.description(for: sut)
