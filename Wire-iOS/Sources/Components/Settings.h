@@ -37,13 +37,10 @@ typedef NS_ENUM (NSUInteger, SettingsLastScreen) {
     SettingsLastScreenConversation
 };
 
-
 typedef NS_ENUM (NSUInteger, SettingsCamera) {
     SettingsCameraFront,
     SettingsCameraBack
 };
-
-extern NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification;
 
 extern NSString * const SettingsColorSchemeChangedNotification;
 
