@@ -86,7 +86,7 @@ class LicensesLoaderTests: XCTestCase {
         }
 
         sendMemoryWarning()
-        wait(for: [deletedCacheExpectation], timeout: 1)
+        wait(for: [deletedCacheExpectation], timeout: 10)
 
         // THEN
         XCTAssertTrue(loader.cacheEmpty)
