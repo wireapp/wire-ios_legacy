@@ -54,6 +54,23 @@ class MarkdownTextStorage: NSTextStorage {
         endEditing()
     }
     
+    override func addAttributes(_ attrs: [NSAttributedStringKey : Any], range: NSRange) {
+        beginEditing()
+        storage.addAttributes(attrs, range: range)
+        
+        // This is a workaround for the case where the markdown id is missing
+        // after automatically inserts corrections or fullstops after a space.
+        // If the needsCheck flag is set (after characters are replaced) & the
+        // attrs is missing the markdown id, then we need to included it.
+        if  needsCheck, attrs[NSAttributedStringKey.markdownID] == nil {
+            needsCheck = false
+            storage.addAttribute(NSAttributedStringKey.markdownID, value: currentMarkdown, range: range)
+        }
+        
+        edited(.editedAttributes, range: range, changeInLength: 0)
+        endEditing()
+    }
+    
     override func replaceCharacters(in range: NSRange, with str: String) {
         beginEditing()
         storage.replaceCharacters(in: range, with: str)
