@@ -64,6 +64,12 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
     if (! note.accentColorValueChanged) {
         return;
     }
+
+    ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
+    UIColor *newAccentColor = [UIColor accentColor];
+    if (![colorScheme.accentColor isEqual:newAccentColor]) {
+        [self notifyColorSchemeChange];
+    }
 }
 
 #pragma mark - SettingsColorSchemeDidChangeNotification
@@ -71,6 +77,10 @@ NSString * const ColorSchemeControllerDidApplyColorSchemeChangeNotification = @"
 - (void)settingsColorSchemeDidChange:(NSNotification *)notification
 {
     [Message invalidateMarkdownStyle];
+
+    ColorScheme *colorScheme = [ColorScheme defaultColorScheme];
+    colorScheme.variant = (ColorSchemeVariant)[[Settings sharedSettings] colorScheme];
+
     [self notifyColorSchemeChange];
 }
 

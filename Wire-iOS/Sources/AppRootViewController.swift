@@ -337,6 +337,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
 
+        let colorScheme = ColorScheme.default
+        colorScheme.accentColor = UIColor.accent()
+        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
+
         completionHandler()
     }
 
