@@ -193,9 +193,6 @@
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
 
-// Camera
-#import "CameraController.h"
-
 // Audio player
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"

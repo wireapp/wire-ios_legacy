@@ -212,12 +212,12 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
     [self.defaults setObject:locationDict forKey:UserDefaultLastUserLocation];
 }
 
-- (CameraControllerCamera)preferredCamera
+- (SettingsCamera)preferredCamera
 {
     return [self.defaults integerForKey:UserDefaultPreferredCamera];
 }
 
-- (void)setPreferredCamera:(CameraControllerCamera)preferredCamera
+- (void)setPreferredCamera:(SettingsCamera)preferredCamera
 {
     [self.defaults setInteger:preferredCamera forKey:UserDefaultPreferredCamera];
 }

@@ -84,45 +84,12 @@ import UIKit
 
 extension LinkInteractionTextView: UITextViewDelegate {
     
-    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        let beganLongPressRecognizers: [UILongPressGestureRecognizer] = gestureRecognizers?.compactMap { (recognizer: AnyObject) -> (UILongPressGestureRecognizer?) in
-            
-            if let recognizer = recognizer as? UILongPressGestureRecognizer, recognizer.state == .began {
-                return recognizer
-            }
-            else {
-                return .none
-            }
-        } ?? []
-
-        if beganLongPressRecognizers.count > 0 {
-            interactionDelegate?.textViewDidLongPress(self)
-            return false
-        }
-        
-        // if alert shown, link opening is handled in alert actions
-        if showAlertIfNeeded(for: URL, in: characterRange) { return false }
-        
-        // data detector links should be handled by the system
-        return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
-    }
-    
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange) -> Bool {
-        return true
-    }
-    
-    @available(iOS 10.0, *)
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        if interaction == .presentActions {
-            interactionDelegate?.textViewDidLongPress(self)
-            return false
-        }
-        else {
-            return true
-        }
+        guard interaction == .presentActions else { return true }
+        interactionDelegate?.textViewDidLongPress(self)
+        return false
     }
     
-    @available(iOS 10.0, *)
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:

@@ -404,8 +404,18 @@ static NSString* EmptyStringIfNil(NSString *string) {
         return;
     }
     
+    CGSize boundSize = self.audioTrack.artwork.size;
+
+    MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:boundSize
+                                                                  requestHandler:^UIImage * _Nonnull(CGSize size)
+    {
+        CGFloat scale = size.width / boundSize.width;
+        UIImage *scaledImage = [self.audioTrack.artwork imageScaledWithFactor:scale];
+        return scaledImage;
+    }];
+    
     NSMutableDictionary *newInfo = [self.nowPlayingInfo mutableCopy];
-    [newInfo setObject:[[MPMediaItemArtwork alloc] initWithImage:self.audioTrack.artwork] forKey:MPMediaItemPropertyArtwork];
+    [newInfo setObject:artwork forKey:MPMediaItemPropertyArtwork];
     
     MPNowPlayingInfoCenter* info = [MPNowPlayingInfoCenter defaultCenter];
     info.nowPlayingInfo = newInfo;

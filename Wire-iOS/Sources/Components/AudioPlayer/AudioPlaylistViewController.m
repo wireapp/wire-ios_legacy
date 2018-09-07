@@ -435,7 +435,9 @@ static const CGFloat SeparatorLineOverflow = 4;
 
 - (IBAction)openInBrowser:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:self.audioPlaylist.externalURL];
+    [[UIApplication sharedApplication] openURL:self.audioPlaylist.externalURL
+                                       options:@{}
+                             completionHandler:NULL];
 }
 
 #pragma mark - AudioTrackCellDelegate

@@ -93,7 +93,7 @@ private let IdentityString = ".identity"
         else if URL == type(of: self).remoteIDErrorURL {
             url = .wr_cannotDecryptNewRemoteIDHelp
         }
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url)
     }
 }
 

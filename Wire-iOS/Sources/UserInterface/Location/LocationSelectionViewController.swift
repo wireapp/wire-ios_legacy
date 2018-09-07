@@ -161,7 +161,7 @@ import CoreLocation
         let cancelAction = UIAlertAction(title: localize("cancel"), style: .cancel , handler: nil)
         let settingsAction = UIAlertAction(title: localize("settings"), style: .default) { _ in
             guard let url = URL(string: UIApplicationOpenSettingsURLString) else { return }
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url)
         }
         
         [cancelAction, settingsAction].forEach(alertController.addAction)

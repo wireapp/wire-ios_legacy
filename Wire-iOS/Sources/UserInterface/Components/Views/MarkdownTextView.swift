@@ -297,7 +297,7 @@ extension Notification.Name {
         
         for (md, mdRange) in exisitngMarkdownRanges {
             let updatedAttributes = attributes(for: transform(md))
-            markdownTextStorage.setAttributes(updatedAttributes, range: mdRange)
+            markdownTextStorage.addAttributes(updatedAttributes, range: mdRange)
         }
     }
     

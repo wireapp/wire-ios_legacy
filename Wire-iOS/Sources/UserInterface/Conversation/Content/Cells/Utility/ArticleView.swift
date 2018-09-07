@@ -225,7 +225,7 @@ import WireExtensionComponents
 extension ArticleView : TTTAttributedLabelDelegate {
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url)
     }
 }
 

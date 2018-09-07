@@ -390,12 +390,9 @@ extension ProfileClientViewController: UserClientObserver {
 
 extension ProfileClientViewController: UITextViewDelegate {
 
-    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange) -> Bool {
-        guard url == .wr_fingerprintHowToVerify else {
-            return false
-        }
+    func textView(_ textView: UITextView, shouldInteractWith url: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        guard url == .wr_fingerprintHowToVerify else { return false }
         url.openInApp(above: self)
         return false
     }
-
 }

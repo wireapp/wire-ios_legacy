@@ -93,7 +93,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell {
     
     @objc private func openSettings() {
         guard let url = URL(string:UIApplicationOpenSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url)
     }
     
     private func createConstraints(deniedAuthorization: DeniedAuthorizationType) {

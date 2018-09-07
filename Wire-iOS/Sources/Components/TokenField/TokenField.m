@@ -751,13 +751,9 @@ CGFloat const accessoryButtonSize = 32.0f;
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange
+- (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
 {
-    if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]]) {
-        return NO;
-    }
-    
-    return YES;
+    return ![textAttachment isKindOfClass:[TokenSeparatorAttachment class]];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

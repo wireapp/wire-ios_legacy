@@ -90,13 +90,9 @@ private let zmLog = ZMSLog(tag: "UI")
     func beginRecording() {
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
 
-        if #available(iOS 10, *) {
-            let feedbackGenerator = UINotificationFeedbackGenerator()
-            feedbackGenerator.prepare()
-            feedbackGenerator.notificationOccurred(.success)
-        } else {
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        }
+        let feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator.prepare()
+        feedbackGenerator.notificationOccurred(.success)
 
         self.recorder.startRecording()
     }

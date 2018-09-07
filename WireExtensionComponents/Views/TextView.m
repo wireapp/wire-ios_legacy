@@ -24,7 +24,6 @@
 @import PureLayout;
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
-#import "UIPasteboard+Compatibility.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 #import "Wire-Swift.h"
 
@@ -199,7 +198,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     ZMLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
     
-    if ((pasteboard.wr_hasImages)
+    if ((pasteboard.hasImages)
         && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
         id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset];
 #pragma clang diagnostic push
@@ -207,10 +206,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.delegate performSelector:@selector(textView:hasImageToPaste:) withObject:self withObject:image];
 #pragma clang diagnostic pop
     }
-    else if (pasteboard.wr_hasStrings) {
+    else if (pasteboard.hasStrings) {
         [super paste:sender];
     }
-    else if (pasteboard.wr_hasURLs) {
+    else if (pasteboard.hasURLs) {
         if (pasteboard.string.length != 0) {
             [super paste:sender];
         }
@@ -224,7 +223,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if (action == @selector(paste:)) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-        return pasteboard.wr_hasImages || pasteboard.wr_hasStrings;
+        return pasteboard.hasImages || pasteboard.hasStrings;
     }
 
     return [super canPerformAction:action withSender:sender];
