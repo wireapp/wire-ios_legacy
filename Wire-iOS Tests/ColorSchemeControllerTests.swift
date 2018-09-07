@@ -23,6 +23,8 @@ final class ColorSchemeControllerTests: XCTestCase {
     
     var sut: ColorSchemeController!
     var originalColorScheme: Any! = nil
+    var originalVariant: ColorSchemeVariant!
+
 
     override func setUp() {
         super.setUp()
@@ -31,11 +33,16 @@ final class ColorSchemeControllerTests: XCTestCase {
         if originalColorScheme == nil {
             originalColorScheme = UserDefaults.standard.value(forKey: UserDefaultColorScheme)
         }
+
+        if originalVariant == nil {
+            originalVariant = ColorScheme.default.variant
+        }
     }
     
     override func tearDown() {
         sut = nil
         UserDefaults.standard.set(originalColorScheme, forKey: UserDefaultColorScheme)
+        ColorScheme.default.variant = originalVariant
 
         super.tearDown()
     }
