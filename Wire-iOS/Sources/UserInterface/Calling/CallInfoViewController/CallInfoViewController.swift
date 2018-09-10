@@ -27,6 +27,7 @@ protocol CallInfoViewControllerInput: CallActionsViewInputType, CallStatusViewIn
     var degradationState: CallDegradationState { get }
     var videoPlaceholderState: CallVideoPlaceholderState { get }
     var disableIdleTimer: Bool { get }
+    var networkCondition: NetworkCondition { get }
 }
 
 // Workaround to make the protocol equatable, it might be possible to conform CallInfoConfiguration
@@ -55,6 +56,17 @@ extension CallInfoViewControllerInput {
     }
 }
 
+extension NetworkCondition {
+    fileprivate var displayString: String? {
+        switch self {
+        case .medium, .poor:
+            return "Poor connection".uppercased() // TODO: localize
+        case .normal:
+            return nil
+        }
+    }
+}
+
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
 
     weak var delegate: CallInfoViewControllerDelegate?
@@ -64,6 +76,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
+    private let titleViewLabel = UILabel()
 
     var configuration: CallInfoViewControllerInput {
         didSet {
@@ -138,6 +151,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         minimizeItem.accessibilityIdentifier = "CallDismissOverlayButton"
 
         navigationItem.leftBarButtonItem = minimizeItem
+        titleViewLabel.font = FontSpec(.small, .semibold).font
+        titleViewLabel.textColor = UIColor.nameColor(for: .brightOrange, variant: .light)
+        navigationItem.titleView = titleViewLabel
     }
 
     private func updateState() {
@@ -146,6 +162,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         statusViewController.configuration = configuration
         accessoryViewController.configuration = configuration
         backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
+
+        titleViewLabel.text = configuration.networkCondition.displayString
+        titleViewLabel.isHidden = (titleViewLabel.text == nil)
     }
     
     // MARK: - Actions + Delegates

@@ -36,6 +36,7 @@ struct MockCallInfoViewControllerInput: CallInfoViewControllerInput {
     var variant: ColorSchemeVariant
     var disableIdleTimer: Bool
     var cameraType: CaptureDevice
+    var networkCondition: NetworkCondition
 }
 
 extension MockCallInfoViewControllerInput: CustomDebugStringConvertible  {}

@@ -20,22 +20,22 @@ import Foundation
 @testable import Wire
 
 struct CallInfoTestFixture {
-    
+
     enum GroupSize: Int {
         case large = 10
         case small = 4
     }
-    
+
     let otherUser: ZMUser
     let groupSize: GroupSize
-    
+
     init(otherUser: ZMUser, groupSize: GroupSize = .small) {
         self.otherUser = otherUser
         self.groupSize = groupSize
     }
-    
+
     // MARK: - OneToOne Audio
-    
+
     var oneToOneOutgoingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -53,10 +53,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var oneToOneIncomingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -74,10 +75,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var oneToOneOutgoingAudioDegraded: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -95,10 +97,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var oneToOneIncomingAudioDegraded: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -116,10 +119,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var oneToOneAudioConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -137,10 +141,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var oneToOneAudioEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -158,10 +163,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-        
+
     var oneToOneAudioEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -179,12 +185,35 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
+    var oneToOneAudioEstablishedPoorNetwork: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: .hidden,
+            permissions: CallPermissions(),
+            degradationState: .none,
+            accessoryType: .avatar(otherUser),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .notSendingVideo(speakerState: .deselectedCanBeToggled),
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: false,
+            variant: .light,
+            disableIdleTimer: false,
+            cameraType: .front,
+            networkCondition: .poor
+        )
+    }
+
     // MARK: - OneToOne Video
-    
+
     var oneToOneOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -202,10 +231,11 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var oneToOneIncomingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -223,7 +253,8 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
 
@@ -244,7 +275,8 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
 
@@ -265,7 +297,8 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
 
@@ -286,10 +319,11 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var oneToOneVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -307,10 +341,11 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var oneToOneVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -328,12 +363,13 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     // MARK: - Group Audio
-    
+
     var groupOutgoingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -351,10 +387,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupIncomingAudioRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -372,10 +409,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupAudioConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -393,10 +431,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupAudioEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -414,10 +453,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupAudioEstablishedRemoteTurnedVideoOn: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -435,10 +475,11 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupAudioEstablishedVideoUnavailable: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -456,10 +497,11 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupAudioEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -477,12 +519,13 @@ struct CallInfoTestFixture {
             isVideoCall: false,
             variant: .light,
             disableIdleTimer: false,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     // MARK: - Group Video
-    
+
     var groupOutgoingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -500,10 +543,11 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupIncomingVideoRinging: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -521,10 +565,11 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupVideoConnecting: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -542,10 +587,11 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -563,10 +609,11 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
     var groupVideoEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -584,7 +631,8 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
 
@@ -606,7 +654,8 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
 
@@ -628,9 +677,10 @@ struct CallInfoTestFixture {
             isVideoCall: true,
             variant: .light,
             disableIdleTimer: true,
-            cameraType: .front
+            cameraType: .front,
+            networkCondition: .normal
         )
     }
-    
+
 }
 
