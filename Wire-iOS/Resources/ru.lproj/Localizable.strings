@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Технический отчет";
 "self.settings.technical_report.send_report" = "Отправить отчет в Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire отчет о звонке";
 "self.settings.technical_report.include_log" = "Включить подробную запись логов";
 "self.settings.technical_report.privacy_warning" = "Подробные журналы могут содержать личные данные";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Для личного пользования";
+"landing.create_account.title" = "Личные";
 "landing.create_account.subtitle" = "создать учетную запись";
-"landing.create_team.title" = "Для организаций";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "создать команду";
 "landing.login.hints" = "Уже зарегистрированы?";
 "landing.login.button.title" = "Войти";

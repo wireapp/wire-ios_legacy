@@ -18,7 +18,6 @@
 
 
 import Cartography
-import Classy
 
 
 final class DraftSendInputAccessoryView: UIView {
@@ -54,7 +53,7 @@ final class DraftSendInputAccessoryView: UIView {
         sendButton.hitAreaPadding = CGSize(width: 30, height: 30)
         sendButton.addTarget(self, action: #selector(sendTapped), for: .touchUpInside)
 
-        CASStyler.default().styleItem(sendButton)
+        
     }
 
     @objc private dynamic  func sendTapped() {

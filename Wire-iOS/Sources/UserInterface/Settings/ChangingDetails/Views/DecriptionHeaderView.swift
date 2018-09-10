@@ -24,9 +24,13 @@ import Cartography
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .clear
         
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
+        descriptionLabel.backgroundColor = .clear
+        descriptionLabel.textColor = .textForegroundDark
+
         addSubview(descriptionLabel)
         
         constrain(self, descriptionLabel) { container, label in

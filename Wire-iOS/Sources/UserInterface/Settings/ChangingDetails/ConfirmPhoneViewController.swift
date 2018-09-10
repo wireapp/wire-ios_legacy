@@ -202,6 +202,10 @@ protocol ConfirmPhoneDelegate: class {
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
+    }
 }
 
 extension ConfirmPhoneViewController: ZMUserObserver {

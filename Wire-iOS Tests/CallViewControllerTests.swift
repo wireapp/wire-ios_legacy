@@ -88,9 +88,7 @@ final class CallViewControllerGestureTests: XCTestCase {
     }
 
     func tapOnSut() {
-        let mockTapGestureRecognizer = MockTapGestureRecognizer(location: CGPoint(x: sut.view.bounds.size.width / 2, y: sut.view.bounds.size.height / 2), state: .ended)
-
-        sut.didTapOnView(sender: mockTapGestureRecognizer)
+        sut.touchesBegan(Set(), with: nil)
     }
 
     func testThatOverlayDismissesAfterTapped() {

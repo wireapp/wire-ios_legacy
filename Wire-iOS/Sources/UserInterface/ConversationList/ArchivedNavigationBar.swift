@@ -23,8 +23,20 @@ import Cartography
 
 @objcMembers final class ArchivedNavigationBar: UIView {
     
-    let separatorView = UIView()
-    let titleLabel = UILabel()
+    let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator, variant: .light)
+
+        return view
+    }()
+
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .textForegroundDark
+        label.font = .mediumSemiboldFont
+
+        return label
+    }()
     let dismissButton = IconButton()
     private let barHeight: CGFloat = 44
     private let statusbarHeight: CGFloat = 20
@@ -53,6 +65,7 @@ import Cartography
         dismissButton.setIcon(.cancel, with: .tiny, for: UIControlState())
         dismissButton.addTarget(self, action: #selector(ArchivedNavigationBar.dismissButtonTapped(_:)), for: .touchUpInside)
         dismissButton.accessibilityIdentifier = "archiveCloseButton"
+        dismissButton.setIconColor(.textForegroundDark, for: .normal)
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
     }
     

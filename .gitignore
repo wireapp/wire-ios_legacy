@@ -20,3 +20,5 @@ Wire-iOS/ComponentsVersions.plist
 /wire-ios-build-assets
 .bundle/
 SnapshotResults
+Wire-iOS/Resources/Licenses.generated.plist
+Scripts/**/.build

@@ -16,13 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 
-#import <UIKit/UIKit.h>
-
-@interface UIPasteboard (Compatibility)
-
-- (BOOL)wr_hasImages;
-- (BOOL)wr_hasStrings;
-- (BOOL)wr_hasURLs;
-
-@end
+extension ConversationListItemView {
+    @objc func setupStyle() {
+        titleField?.textColor = .textForegroundDark
+    }
+}

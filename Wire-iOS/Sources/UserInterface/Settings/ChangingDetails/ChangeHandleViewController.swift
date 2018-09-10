@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 fileprivate extension UIView {
 
@@ -209,7 +208,7 @@ struct HandleChangeState {
     init(state: HandleChangeState) {
         self.state = state
         super.init(style: .grouped)
-        CASStyler.default().styleItem(self)
+        
         setupViews()
     }
 
@@ -295,6 +294,9 @@ struct HandleChangeState {
         return cell
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
+    }
 }
 
 

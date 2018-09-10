@@ -18,7 +18,6 @@
 
 import UIKit
 import Cartography
-import Classy
 
 protocol AccountSelectorViewDelegate: class {
     

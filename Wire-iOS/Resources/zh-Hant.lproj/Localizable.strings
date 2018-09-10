@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "技術報告";
 "self.settings.technical_report.send_report" = "傳送報告到Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire通話報告";
 "self.settings.technical_report.include_log" = "包含詳細日誌";
 "self.settings.technical_report.privacy_warning" = "詳細日誌可能包含個人資料";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "供個人使用";
+"landing.create_account.title" = "個人版";
 "landing.create_account.subtitle" = "新增帳號";
-"landing.create_team.title" = "供機構使用";
+"landing.create_team.title" = "專業版";
 "landing.create_team.subtitle" = "建立團隊";
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";

@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "テクニカルリポート";
 "self.settings.technical_report.send_report" = "Wireにレポートを送信する";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire通話のレポート";
 "self.settings.technical_report.include_log" = "詳細なログを含める";
 "self.settings.technical_report.privacy_warning" = "詳細なログは個人情報を含む可能性があります";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "個人用途";
+"landing.create_account.title" = "パーソナル";
 "landing.create_account.subtitle" = "アカウントを作成";
-"landing.create_team.title" = "企業・その他組織の方向け";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "新しいチームを作成";
 "landing.login.hints" = "既にアカウントをお持ちですか？";
 "landing.login.button.title" = "ログイン";

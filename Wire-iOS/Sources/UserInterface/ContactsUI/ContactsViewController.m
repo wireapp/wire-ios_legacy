@@ -19,7 +19,6 @@
 @import WireSyncEngine;
 
 @import PureLayout;
-#import <Classy/UIViewController+CASAdditions.h>
 @import WireExtensionComponents;
 
 #import "ContactsViewController.h"
@@ -100,7 +99,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self cas_updateStylingIfNeeded];
     [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
 }
 
@@ -196,7 +194,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     [self.inviteOthersButton setTitle:NSLocalizedString(@"contacts_ui.invite_others", @"") forState:UIControlStateNormal];
     [self.bottomContainerView addSubview:self.inviteOthersButton];
     
-    [self.view cas_updateStylingIfNeeded];
     [self updateEmptyResults];
 }
 
@@ -494,12 +491,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     ContactsSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:ContactsViewControllerSectionHeaderID];
     headerView.titleLabel.text = [self.dataSource tableView:tableView titleForHeaderInSection:section];
     return headerView;
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-{
-    // For some reason section header view styling is not updated in time, unless we mark it explicitly
-    [view cas_setNeedsUpdateStylingForSubviews];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

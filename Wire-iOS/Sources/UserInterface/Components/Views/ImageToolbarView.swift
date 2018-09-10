@@ -66,7 +66,7 @@ import Cartography
     private func updateButtonStyle() {
         let normalColor: UIColor = isPlacedOnImage ? .iconNormalDark : .iconNormal
         let highlightedColor: UIColor = isPlacedOnImage ? .iconHighlightedDark : .iconHighlighted
-        let selectedColor: UIColor = isPlacedOnImage ? .accentDarken() : .accent()
+        let selectedColor: UIColor = isPlacedOnImage ? .accentDarken : .accent()
 
         [sketchButton, emojiButton, textButton, expandButton].forEach {
             $0.setIconColor(normalColor, for: .normal)

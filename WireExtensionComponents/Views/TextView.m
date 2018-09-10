@@ -24,10 +24,8 @@
 @import PureLayout;
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
-#import "UIPasteboard+Compatibility.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 #import "Wire-Swift.h"
-@import Classy;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -41,18 +39,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 // and by http://derpturkey.com/placeholder-in-uitextview/
 
 @implementation TextView
-
-+ (void)initialize
-{
-    if (self == [TextView class]) {
-        // Add textTransform property to Classy
-        CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self];
-        
-        // Set mapping for property key
-        [classDescriptor setArgumentDescriptors:@[[CASArgumentDescriptor argWithValuesByName:TextTransformTable()]]
-                                 forPropertyKey:@cas_propertykey(TextView, placeholderTextTransform)];
-    }
-}
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -212,7 +198,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     ZMLogDebug(@"types available: %@", [pasteboard pasteboardTypes]);
     
-    if ((pasteboard.wr_hasImages)
+    if ((pasteboard.hasImages)
         && [self.delegate respondsToSelector:@selector(textView:hasImageToPaste:)]) {
         id<MediaAsset> image = [[UIPasteboard generalPasteboard] mediaAsset];
 #pragma clang diagnostic push
@@ -220,10 +206,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self.delegate performSelector:@selector(textView:hasImageToPaste:) withObject:self withObject:image];
 #pragma clang diagnostic pop
     }
-    else if (pasteboard.wr_hasStrings) {
+    else if (pasteboard.hasStrings) {
         [super paste:sender];
     }
-    else if (pasteboard.wr_hasURLs) {
+    else if (pasteboard.hasURLs) {
         if (pasteboard.string.length != 0) {
             [super paste:sender];
         }
@@ -237,7 +223,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if (action == @selector(paste:)) {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-        return pasteboard.wr_hasImages || pasteboard.wr_hasStrings;
+        return pasteboard.hasImages || pasteboard.hasStrings;
     }
 
     return [super canPerformAction:action withSender:sender];

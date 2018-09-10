@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 import Cartography
-import Classy
 
 @objcMembers open class ReactionsListViewController: UIViewController {
     public let message: ZMConversationMessage

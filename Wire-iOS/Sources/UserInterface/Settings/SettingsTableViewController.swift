@@ -75,6 +75,8 @@ class SettingsBaseTableViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 56
         view.addSubview(tableView)
         view.addSubview(footerContainer)
         footerContainer.addSubview(footerSeparator)
@@ -119,10 +121,6 @@ class SettingsBaseTableViewController: UIViewController {
 }
 
 extension SettingsBaseTableViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
-    }
-
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparator.scrollViewDidScroll(scrollView: scrollView)
         self.footerSeparator.scrollViewDidScroll(scrollView: scrollView)
@@ -181,7 +179,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
     }
 
     func setupTableView() {
-        let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self]
+        let allCellTypes: [SettingsTableCell.Type] = [SettingsTableCell.self, SettingsGroupCell.self, SettingsButtonCell.self, SettingsToggleCell.self, SettingsValueCell.self, SettingsTextCell.self, SettingsStaticTextTableCell.self]
 
         for aClass in allCellTypes {
             tableView.register(aClass, forCellReuseIdentifier: aClass.reuseIdentifier)

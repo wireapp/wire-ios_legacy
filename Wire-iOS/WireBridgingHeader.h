@@ -42,12 +42,12 @@
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
 #import "WireStyleKit.h"
-#import <Classy/UIViewController+CASAdditions.h>
 #import "UIViewController+Errors.h"
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"
 #import "ConversationListCell.h"
 #import "ConversationListItemView.h"
+#import "ConversationListItemView+Internal.h"
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
 #import "RegistrationTextField.h"
@@ -81,6 +81,7 @@
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
+#import "ContactsSectionHeaderView.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
@@ -175,13 +176,11 @@
 #import "LinkAttachment.h"
 #import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"
-#import <Classy/UIColor+CASAdditions.h>
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
 #import "WireStyleKit+Additions.h"
 #import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"
-#import "CASStyler+Variables.h"
 #import "AVSLogObserver.h"
 #import "NSIndexSet+IndexPaths.h"
 #import "UIAlertController+Wire.h"
@@ -193,9 +192,6 @@
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
-
-// Camera
-#import "CameraController.h"
 
 // Audio player
 #import "AudioTrack.h"

@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 import WireExtensionComponents
 import WireDataModel
 
@@ -92,10 +91,6 @@ import WireDataModel
     }
     
     func provideHapticFeedback() {
-        guard #available(iOS 10, *) else {
-            return
-        }
-        
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 }

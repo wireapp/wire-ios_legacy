@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 import Cartography
-import Classy
 import TTTAttributedLabel
 
 
@@ -95,6 +94,9 @@ extension ZMSystemMessageData {
         super.init(frame: frame)
         self.isAccessibilityElement = true
         self.accessibilityElementsHidden = false
+
+        backgroundColor = .clear
+        clipsToBounds = true
     }
     
     private func setupViews() {
@@ -149,8 +151,7 @@ extension ZMSystemMessageData {
     open func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {
         if !self.isConfigured {
             self.isConfigured = true
-            CASStyler.default().styleItem(self)
-            
+
             setupViews()
             createConstraints()
             

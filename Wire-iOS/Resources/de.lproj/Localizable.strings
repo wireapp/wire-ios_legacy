@@ -273,7 +273,7 @@
 "conversation.create.group_name.placeholder" = "Gruppenname";
 "conversation.create.guidance.empty" = "Mindestens 1 Zeichen";
 "conversation.create.guidance.toolong" = "Zu viele Zeichen";
-"conversation.create.toggle.title" = "Gäste und Dienstleistungen zulassen";
+"conversation.create.toggle.title" = "Gäste und Dienste zulassen";
 "conversation.create.toggle.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams. Diese Einstellung kann später jederzeit geändert werden.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Aktiver Anruf";
@@ -962,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technische Logs";
 "self.settings.technical_report.send_report" = "Logs an Wire senden";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Anruf-Fehlerbericht";
 "self.settings.technical_report.include_log" = "Detaillierten Verlauf hinzufügen";
 "self.settings.technical_report.privacy_warning" = "Detaillierte Logs können personenbezogene Daten enthalten.";
@@ -1017,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Für die private Nutzung";
+"landing.create_account.title" = "Privat";
 "landing.create_account.subtitle" = "Konto erstellen";
-"landing.create_team.title" = "Für Organisationen";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Team erstellen";
 "landing.login.hints" = "Hast du bereits ein Benutzerkonto?";
 "landing.login.button.title" = "Login";

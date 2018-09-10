@@ -51,7 +51,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        [CASStyler.defaultStyler styleItem:self];
         [self setupPingCell];
         [self createConstraints];
     }
@@ -100,7 +99,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
     NSAttributedString *text = [[NSAttributedString alloc] initWithString:pingText attributes:@{ NSFontAttributeName: self.pingFont }];
     self.pingLabel.attributedText = [text addingFont:self.authorFont toSubstring:senderText];
 
-    UIColor *pingColor = message.isObfuscated ? [UIColor wr_colorFromColorScheme:ColorSchemeColorAccentDimmedFlat] : self.message.sender.accentColor;
+    UIColor *pingColor = message.isObfuscated ? UIColor.accentDimmedFlat : self.message.sender.accentColor;
     self.pingImageView.image = [UIImage imageForIcon:ZetaIconTypePing fontSize:20 color:pingColor];
     self.authorImageView.hidden = YES;
     self.authorLabel.hidden = YES;

@@ -28,7 +28,7 @@ extension SettingsCellDescriptorFactory {
         
         let shareButtonTitleDisabled = "self.settings.privacy_contacts_menu.settings_button.title".localized
         let shareContactsDisabledSettingsButton = SettingsButtonCellDescriptor(title: shareButtonTitleDisabled, isDestructive: false, selectAction: { (descriptor: SettingsCellDescriptorType) -> () in
-            UIApplication.shared.openURL(URL(string:UIApplicationOpenSettingsURLString)!)
+            UIApplication.shared.open(URL(string:UIApplicationOpenSettingsURLString)!)
         }) { (descriptor: SettingsCellDescriptorType) -> (Bool) in
             if AddressBookHelper.sharedHelper.addressBookSearchPerformedAtLeastOnce {
                 if AddressBookHelper.sharedHelper.isAddressBookAccessDisabled || AddressBookHelper.sharedHelper.isAddressBookAccessUnknown {
@@ -110,13 +110,11 @@ extension SettingsCellDescriptorFactory {
         let soundAlertSection = SettingsSectionDescriptor(cellDescriptors: [soundAlert])
         cellDescriptors.append(soundAlertSection)
         
-        if #available(iOS 10.0, *) {
-            let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit), inverse: true)
-            let callKitHeader = "self.settings.callkit.title".localized
-            let callKitDescription = "self.settings.callkit.description".localized
-            let callKitSection = SettingsSectionDescriptor(cellDescriptors: [callKitDescriptor], header: callKitHeader, footer: callKitDescription, visibilityAction: .none)
-            cellDescriptors.append(callKitSection)
-        }
+        let callKitDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableCallKit), inverse: true)
+        let callKitHeader = "self.settings.callkit.title".localized
+        let callKitDescription = "self.settings.callkit.description".localized
+        let callKitSection = SettingsSectionDescriptor(cellDescriptors: [callKitDescriptor], header: callKitHeader, footer: callKitDescription, visibilityAction: .none)
+        cellDescriptors.append(callKitSection)
         
         let VBRDescriptor = SettingsPropertyToggleCellDescriptor(
             settingsProperty: settingsPropertyFactory.property(.callingConstantBitRate),

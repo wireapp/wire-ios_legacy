@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 
 @objcMembers public class OverflowSeparatorView: UIView {

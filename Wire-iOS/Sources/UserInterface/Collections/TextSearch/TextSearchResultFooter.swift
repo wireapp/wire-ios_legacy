@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 
-@objcMembers public final class TextSearchResultFooter: UIView {
+public final class TextSearchResultFooter: UIView {
     public var message: ZMConversationMessage? {
         didSet {
             guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.sender else {
@@ -60,6 +60,18 @@ import Cartography
         }
     }
     
-    public var nameLabel = UILabel()
-    public var dateLabel = UILabel()
+    public var nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallSemiboldFont
+
+        return label
+    }()
+
+    public var dateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+        label.textColor = .textDimmed
+
+        return label
+    }()
 }

@@ -17,7 +17,6 @@
 //
 
 import XCTest
-import Classy
 import Cartography
 @testable import Wire
 
