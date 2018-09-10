@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 
 
 @objcMembers public class TitleView: UIView {

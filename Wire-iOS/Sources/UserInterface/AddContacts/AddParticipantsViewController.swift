@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 extension ZMConversation {
     var canAddGuest: Bool {

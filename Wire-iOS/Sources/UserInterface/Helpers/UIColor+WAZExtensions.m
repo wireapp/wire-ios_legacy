@@ -20,7 +20,6 @@
 #import "UIColor+WAZExtensions.h"
 
 #import "WireSyncEngine+iOS.h"
-#import "CASStyler+Variables.h"
 #import "ColorScheme.h"
 #import "Wire-Swift.h"
 
@@ -34,6 +33,14 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 + (instancetype)accentColor
 {
 	return [self colorForZMAccentColor:[self indexedAccentColor]];
+}
+
++ (void)setAccentColor:(ZMAccentColor)accentColor
+{
+    id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
+    [[ZMUserSession sharedSession] enqueueChanges:^{
+        editableSelf.accentColorValue = accentColor;
+    }];
 }
 
 + (ZMAccentColor)indexedAccentColor
@@ -79,14 +86,6 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
     return accentColors[colorIndex];
 }
 
-+ (void)setAccentColor:(ZMAccentColor)accentColor
-{
-	id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];
-	[[ZMUserSession sharedSession] enqueueChanges:^{
-		editableSelf.accentColorValue = accentColor;
-	}];
-}
-
 + (void)setAccentOverrideColor:(ZMAccentColor)overrideColor
 {
     if (overridenAccentColor == overrideColor) {
@@ -94,8 +93,6 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
     }
     
     overridenAccentColor = overrideColor;
-    
-    [[CASStyler defaultStyler] applyDefaultColorSchemeWithAccentColor:[self accentColor]];
 }
 
 - (BOOL)isEqualTo:(id)object;

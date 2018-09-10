@@ -83,7 +83,7 @@
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
 {
     if ([self.delegate respondsToSelector:@selector(participantsDeviceHeaderViewDidTapLearnMore:)]) {
         [self.delegate participantsDeviceHeaderViewDidTapLearnMore:self];

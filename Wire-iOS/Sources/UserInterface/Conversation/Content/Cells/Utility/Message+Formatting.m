@@ -116,7 +116,7 @@ static inline NSDataDetector *linkDataDetector(void)
     if (obfuscated) {
         NSDictionary *attrs = @{
                                 NSFontAttributeName: [UIFont fontWithName:@"RedactedScript-Regular" size:18],
-                                NSForegroundColorAttributeName: [UIColor wr_colorFromColorScheme:ColorSchemeColorAccent],
+                                NSForegroundColorAttributeName: [UIColor accentColor],
                                 NSParagraphStyleAttributeName: cellParagraphStyle
                                 };
         

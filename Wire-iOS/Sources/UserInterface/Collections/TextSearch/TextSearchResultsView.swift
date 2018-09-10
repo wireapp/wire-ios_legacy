@@ -27,6 +27,8 @@ import Cartography
         super.init(frame: frame)
         setupViews()
         createConstraints()
+
+        backgroundColor = .contentBackground
     }
 
     func setupViews() {

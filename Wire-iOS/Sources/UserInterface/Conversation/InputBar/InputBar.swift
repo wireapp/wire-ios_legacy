@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 import WireExtensionComponents
 import Down
 
@@ -138,13 +137,13 @@ private struct InputBarConstants {
     
     
     public var editingBackgroundColor = UIColor.brightYellow
-    public var barBackgroundColor: UIColor?
-    public var writingSeparatorColor: UIColor?
+    public var barBackgroundColor: UIColor? = UIColor(scheme: .barBackground)
+    public var writingSeparatorColor: UIColor? = .separator
     public var ephemeralColor: UIColor {
         return .accent()
     }
-    public var placeholderColor: UIColor?
-    public var textColor: UIColor?
+    public var placeholderColor: UIColor? = .textPlaceholder
+    public var textColor: UIColor? = .textForeground
 
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
@@ -219,7 +218,7 @@ private struct InputBarConstants {
         [leftAccessoryView, textView, rightAccessoryStackView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
-        CASStyler.default().styleItem(self)
+        
 
         setupViews()
         createConstraints()
@@ -245,6 +244,9 @@ private struct InputBarConstants {
         textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
+        textView.font = .normalLightFont
+        textView.placeholderFont = .smallSemiboldFont
+        textView.backgroundColor = .clear
         
         markdownView.delegate = textView
 

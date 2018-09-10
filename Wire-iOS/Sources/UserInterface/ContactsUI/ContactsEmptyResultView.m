@@ -20,6 +20,7 @@
 #import "ContactsEmptyResultView.h"
 @import PureLayout;
 #import "Button.h"
+@import WireExtensionComponents;
 
 @interface ContactsEmptyResultView ()
 @property (nonatomic) UIView *containerView;
@@ -46,6 +47,7 @@
 
     self.messageLabel = [[UILabel alloc] initForAutoLayout];
     self.messageLabel.textAlignment = NSTextAlignmentCenter;
+    self.messageLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     [self.containerView addSubview:self.messageLabel];
 
     self.actionButton = [Button buttonWithStyle:ButtonStyleFull];

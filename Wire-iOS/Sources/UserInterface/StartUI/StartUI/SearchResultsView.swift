@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 @objcMembers class SearchResultsView : UIView {
     

@@ -44,7 +44,7 @@ class BlacklistViewController : LaunchImageViewController {
         let alertController = UIAlertController(title: "force.update.title".localized, message: "force.update.message".localized, preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "force.update.ok_button".localized, style: .default) { (_) in
             if let itunesURL = URL(string: "https://itunes.apple.com/us/app/wire/id930944768?mt=8") {
-                UIApplication.shared.openURL(itunesURL)
+                UIApplication.shared.open(itunesURL)
             }
         }
         

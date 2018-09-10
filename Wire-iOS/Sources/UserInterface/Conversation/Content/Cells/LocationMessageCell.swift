@@ -20,12 +20,11 @@
 import MapKit
 import Cartography
 import AddressBook
-import Classy
 
 /// Displays the location message
-@objcMembers public final class LocationMessageCell: ConversationCell {
+public final class LocationMessageCell: ConversationCell {
     
-    private let mapView = MKMapView()
+    private var mapView = MKMapView()
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .locationPin)
     private let addressContainerView = UIView()
@@ -42,8 +41,8 @@ import Classy
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
-        containerView.cas_styleClass = "container-view"
-        CASStyler.default().styleItem(self)
+        containerView.backgroundColor = .placeholderBackground
+        
         configureViews()
         createConstraints()
     }
@@ -51,7 +50,7 @@ import Classy
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func configureViews() {
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false

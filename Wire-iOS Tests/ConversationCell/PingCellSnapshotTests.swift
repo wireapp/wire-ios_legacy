@@ -16,33 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import XCTest
+@testable import Wire
 
-#import "UIPasteboard+Compatibility.h"
+final class PingCellSnapshotTests: ZMSnapshotTestCase {
 
-@implementation UIPasteboard (Compatibility)
+    var sut: PingCell!
 
-- (BOOL)wr_hasImages {
-    if(@available(iOS 10, *)) {
-        return self.hasImages;
-    } else {
-        return [self containsPasteboardTypes:UIPasteboardTypeListImage];
+    override func setUp() {
+
+        super.setUp()
+
+        sut = createPingCellForTest()
+    }
+
+    override func tearDown() {
+        sut = nil
+
+        super.tearDown()
+    }
+
+    func testForYouPinged() {
+        verify(view: sut.tableViewForSnapshot())
     }
 }
 
-- (BOOL)wr_hasStrings {
-    if(@available(iOS 10, *)) {
-        return self.hasStrings;
-    } else {
-        return [self containsPasteboardTypes:UIPasteboardTypeListString];
-    }
-}
-
-- (BOOL)wr_hasURLs {
-    if(@available(iOS 10, *)) {
-        return self.hasURLs;
-    } else {
-        return [self containsPasteboardTypes:UIPasteboardTypeListURL];
-    }
-}
-
-@end

@@ -528,37 +528,36 @@
     BOOL pushAlertHappenedMoreThan1DayBefore = [[Settings sharedSettings] lastPushAlertDate] == nil ||
     fabs([[[Settings sharedSettings] lastPushAlertDate] timeIntervalSinceNow]) > 60 * 60 * 24;
     
-    BOOL pushNotificationsDisabled = ! [[UIApplication sharedApplication] isRegisteredForRemoteNotifications] ||
-    [[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone;
-    
-    if (pushNotificationsDisabled &&
-        pushAlertHappenedMoreThan1DayBefore &&
-        !AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
-        PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];
-        permissions.delegate = self;
-        
-        [self addChildViewController:permissions];
-        [self.view addSubview:permissions.view];
-        [permissions didMoveToParentViewController:self];
-        
-        [permissions.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        self.pushPermissionDeniedViewController = permissions;
-        
-        self.contentContainer.alpha = 0.0f;
+    if (!pushAlertHappenedMoreThan1DayBefore) {
+        return;
     }
+    
+    [[UNUserNotificationCenter currentNotificationCenter] checkPushesDisabled:^(BOOL pushesDisabled) {
+        if (pushesDisabled) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+            [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
+            PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];
+            permissions.delegate = self;
+            
+            [self addChildViewController:permissions];
+            [self.view addSubview:permissions.view];
+            [permissions didMoveToParentViewController:self];
+            
+            [permissions.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+            self.pushPermissionDeniedViewController = permissions;
+            
+            self.contentContainer.alpha = 0.0f;
+        }
+    }];
 }
 
 - (void)closePushPermissionDialogIfNotNeeded
 {
-    BOOL pushNotificationsDisabled = ! [[UIApplication sharedApplication] isRegisteredForRemoteNotifications] ||
-    [[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone;
-    
-    if (self.pushPermissionDeniedViewController != nil && ! pushNotificationsDisabled) {
-        [self closePushPermissionDeniedDialog];
-    }
+    [[UNUserNotificationCenter currentNotificationCenter] checkPushesDisabled:^(BOOL pushesDisabled) {
+        if (!pushesDisabled && self.pushPermissionDeniedViewController != nil) {
+            [self closePushPermissionDeniedDialog];
+        }
+    }];
 }
 
 - (void)closePushPermissionDeniedDialog

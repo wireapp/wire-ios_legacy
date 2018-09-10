@@ -40,12 +40,6 @@
 
 @implementation Button
 
-+ (void)initialize
-{
-    if (self == [Button self]) {
-    }
-}
-
 + (instancetype)buttonWithStyle:(ButtonStyle)style
 {
     return [[Button alloc] initWithStyle:style];
@@ -84,7 +78,7 @@
         case ButtonStyleEmpty:
             self.layer.borderWidth = 1;
             
-            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorButtonEmptyText variant:variant] forState:UIControlStateNormal];
+            [self setTitleColor:[UIColor buttonEmptyTextWithVariant:variant] forState:UIControlStateNormal];
             [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateHighlighted];
             [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateDisabled];
             
