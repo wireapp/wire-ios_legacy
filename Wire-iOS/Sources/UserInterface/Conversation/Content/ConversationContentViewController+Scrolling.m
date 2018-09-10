@@ -50,18 +50,7 @@
                                        withLatestMessage:self.dataSource.messages.lastObject];
     }
     
-    // if I am at top, try to load some more messages
-    BOOL atTheTop = scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height;
-    
-    if (atTheTop) {
-        [self moveMessageWindowUp];
-    }
-    
-    BOOL atTheBottom = scrollView.contentOffset.y < 50;
-    
-    if (atTheBottom) {
-        [self moveMessageWindowDown];
-    }
+    [self.dataSource tableViewDidScroll:self.tableView];
 }
 
 - (void)scrollToBottomAnimated:(BOOL)animated

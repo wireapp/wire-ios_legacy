@@ -46,8 +46,9 @@ extension ConversationCell {
     ]
 }
 
-@objcMembers final class ConversationTableViewDataSource: NSObject {
-    @objc public static let defaultBatchSize = 30 // Magic amount of messages per screen (upper bound)
+final class ConversationTableViewDataSource: NSObject {
+    public static let defaultBatchSize = 30 // Magic number: amount of messages per screen (upper bound)
+    public static let maximumWindowSize = 100 // Magic number: maximum amount of messages visible.
     
     private var fetchController: NSFetchedResultsController<ZMMessage>!
     private var fetchOffset: Int = 0 {
@@ -58,23 +59,47 @@ extension ConversationCell {
         }
     }
 
-    let conversation: ZMConversation
-    let tableView: UITableView
+    private var readerPosition: Int = 0 {
+        didSet {
+            // TODO adjust fetchOffset
+        }
+    }
+    
+    private var deletedIndexPathsInCurrentUpdate = IndexSet()
+    
+    public let conversation: ZMConversation
+    public let tableView: UITableView
     
     public var firstUnreadMessage: ZMConversationMessage?
     public var selectedMessage: ZMConversationMessage? = nil
     public var editingMessage: ZMConversationMessage? = nil {
         didSet {
-            self.reconfigureVisibleCells(withDeleted: Set())
+            reconfigureVisibleCells()
         }
     }
     
     public weak var conversationCellDelegate: ConversationCellDelegate? = nil
     
-    public var searchQueries: [String] = []
+    public var searchQueries: [String] = [] {
+        didSet {
+            reconfigureVisibleCells()
+        }
+    }
     
     public var messages: [ZMConversationMessage] {
         return fetchController.fetchedObjects ?? []
+    }
+    
+    public init(conversation: ZMConversation, tableView: UITableView) {
+        self.conversation = conversation
+        self.tableView = tableView
+        tableView.dataSource = self
+        tableView.prefetchDataSource = self
+        
+        super.init()
+        
+        registerTableCellClasses()
+        createFetchController()
     }
     
     public func find(_ message: ZMConversationMessage, completion: ((Int?)->())? = nil) {
@@ -91,7 +116,9 @@ extension ConversationCell {
         
         let index = try! moc.count(for: fetchRequest)
 
-        fetchOffset = index > 5 ? index - 5 : index
+        // Move the message window to show the message and previous
+        let messagesShownBeforeGivenMessage = 5
+        fetchOffset = index > messagesShownBeforeGivenMessage ? index - messagesShownBeforeGivenMessage : index
         
         completion?(index)
     }
@@ -111,7 +138,7 @@ extension ConversationCell {
         return fetchOffset == 0
     }
     
-    @objc @discardableResult public func moveUp(by numberOfMessages: Int) -> Bool {
+    private func moveUp(by numberOfMessages: Int) -> Bool {
         guard !oldestMessageFetched else {
             return false
         }
@@ -120,7 +147,7 @@ extension ConversationCell {
         return true
     }
     
-    @objc @discardableResult public func moveDown(by numberOfMessages: Int) -> Bool {
+    private func moveDown(by numberOfMessages: Int) -> Bool {
         guard !newestMessageFetched else {
             return false
         }
@@ -145,7 +172,11 @@ extension ConversationCell {
         }
     }
     
-    func configure(_ conversationCell: ConversationCell, with message: ZMConversationMessage, at index: Int) {
+    @objc(tableViewDidScroll:) public func didScroll(tableView: UITableView) {
+        // TODO: adjust readerPosition
+    }
+    
+    private func configure(_ conversationCell: ConversationCell, with message: ZMConversationMessage, at index: Int) {
         // If a message has been deleted, we don't try to configure it
         guard !message.hasBeenDeleted else { return }
         
@@ -157,12 +188,11 @@ extension ConversationCell {
         conversationCell.configure(for: message, layoutProperties: layoutProperties)
     }
     
-    public func reconfigureVisibleCells(withDeleted deletedIndexes: Set<IndexPath>) {
-        
+    private func reconfigureVisibleCells(withDeleted deletedIndexes: IndexSet = IndexSet()) {
         tableView.visibleCells.forEach { cell in
             guard let conversationCell = cell as? ConversationCell,
                   let indexPath = self.tableView.indexPath(for: cell),
-                    !deletedIndexes.contains(indexPath) else {
+                    !deletedIndexes.contains(indexPath.row) else {
                 return
             }
             
@@ -213,16 +243,6 @@ extension ConversationCell {
             conversation.managedObjectContext!.refresh($0, mergeChanges: $0.hasChanges)
         }
     }
-    
-    init(conversation: ZMConversation, tableView: UITableView) {
-        self.conversation = conversation
-        self.tableView = tableView
-        
-        super.init()
-        
-        registerTableCellClasses()
-        createFetchController()
-    }
 }
 
 extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
@@ -247,7 +267,7 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
             guard let indexPathToRemove = indexPath else {
                 fatal("Missing index path")
             }
-            
+            deletedIndexPathsInCurrentUpdate.insert(indexPathToRemove.row)
             tableView.deleteRows(at: [indexPathToRemove], with: .fade)
             self.stopAudioPlayer(for: indexPathToRemove)
         case .update:
@@ -289,15 +309,14 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
     }
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        reconfigureVisibleCells(withDeleted: deletedIndexPathsInCurrentUpdate)
+        deletedIndexPathsInCurrentUpdate.removeAll()
         tableView.endUpdates()
     }
-    
-
 }
 
 extension ConversationTableViewDataSource {
-    
-    func registerTableCellClasses() {
+    fileprivate func registerTableCellClasses() {
         ConversationCell.allCellTypes.forEach {
             tableView.register($0, forCellReuseIdentifier: $0.reuseIdentifier)
         }
@@ -328,6 +347,16 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
             configure(conversationCell, with: message, at: indexPath.row)
         }
         return conversationCell
+    }
+}
+
+extension ConversationTableViewDataSource: UITableViewDataSourcePrefetching {
+    public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        // TODO: adjust readerPosition
+    }
+    
+    public func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        // TODO: adjust readerPosition
     }
 }
 

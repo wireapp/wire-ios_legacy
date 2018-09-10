@@ -59,10 +59,7 @@
 #import "Wire-Swift.h"
 
 
-const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
-
-
-@interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
+@interface ConversationContentViewController (TableView) <UITableViewDelegate>
 
 @end
 
@@ -140,8 +137,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 {
     [super viewDidLoad];
     
-    self.dataSource =
-    [[ConversationTableViewDataSource alloc] initWithConversation:self.conversation tableView:self.tableView];
+    self.dataSource = [[ConversationTableViewDataSource alloc] initWithConversation:self.conversation
+                                                                          tableView:self.tableView];
     self.dataSource.conversationCellDelegate = self;
     
     self.tableView.estimatedRowHeight = 80;
@@ -149,19 +146,17 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.tableView.allowsSelection = YES;
     self.tableView.allowsMultipleSelection = NO;
     self.tableView.delegate = self;
-    self.tableView.dataSource = self.dataSource;
-    if ([self.tableView respondsToSelector:@selector(setPrefetchDataSource:)]) {
-        self.tableView.prefetchDataSource = self;
-    }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delaysContentTouches = NO;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     
     [UIView performWithoutAnimation:^{
-    self.tableView.backgroundColor = self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
+        self.tableView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
+        self.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorContentBackground];
     }];
     
-    UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
+    UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                                                                      action:@selector(onPinchZoom:)];
     pinchImageGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
 }
@@ -290,7 +285,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     
     _searchQueries = searchQueries;
     self.dataSource.searchQueries = self.searchQueries;
-    [self.dataSource reconfigureVisibleCellsWithDeleted:[NSSet set]];
 }
 
 #pragma mark - Get/set
@@ -721,11 +715,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [tableView endUpdates];
 }
 
-- (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
-{
-    [self prefetchNextMessagesForIndexPaths:indexPaths];
-}
-
 @end
 
 
@@ -817,32 +806,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 - (void)didFinishEditingMessage:(id<ZMConversationMessage>)message
 {
     self.dataSource.editingMessage = nil;
-}
-
-@end
-
-
-@implementation ConversationContentViewController (MessageWindow)
-
-- (void)moveMessageWindowUp
-{
-    [self.dataSource moveUpBy:ConversationTableViewDataSource.defaultBatchSize];
-}
-
-- (void)moveMessageWindowDown
-{
-    [self.dataSource moveDownBy:ConversationTableViewDataSource.defaultBatchSize];
-}
-
-- (void)prefetchNextMessagesForIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
-{
-    NSArray<NSIndexPath *> *sortedIndexPaths = [indexPaths sortedArrayUsingSelector:@selector(row)];
-
-    NSIndexPath* latestIndexPath = sortedIndexPaths.lastObject;
-
-    if ((latestIndexPath.row + ConversationContentViewControllerMessagePrefetchDepth) > (int)self.conversation.allMessages.count) {
-        [self moveMessageWindowUp];
-    }
 }
 
 @end
