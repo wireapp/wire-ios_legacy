@@ -41,7 +41,6 @@ static const CGFloat GuidanceDotViewWidth = 40;
 @property (nonatomic, readwrite) IconButton *confirmButton;
 @property (nonatomic) CountryCodeView *countryCodeView;
 @property (nonatomic) GuidanceDotView *guidanceDotView;
-@property (nonatomic) UIEdgeInsets textInsets;
 
 @end
 
