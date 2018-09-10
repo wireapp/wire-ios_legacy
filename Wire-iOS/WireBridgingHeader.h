@@ -51,6 +51,7 @@
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
 #import "RegistrationTextField.h"
+#import "RegistrationTextField+Internal.h"
 #import "InvisibleInputAccessoryView.h"
 #import "SCSiriWaveformView.h"
 #import "ConversationInputBarSendController.h"

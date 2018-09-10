@@ -55,5 +55,4 @@ typedef NS_ENUM(NSUInteger, RegistrationTextFieldLeftAccessoryView) {
 @property (nonatomic, readonly) UIButton *countryCodeButton;
 @property (nonatomic, readonly) IconButton *confirmButton;
 
-
 @end
