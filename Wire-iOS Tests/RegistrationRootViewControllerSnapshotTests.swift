@@ -26,8 +26,6 @@ final class RegistrationRootViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = RegistrationRootViewController()
-
-        recordMode = true
     }
     
     override func tearDown() {
