@@ -33,8 +33,14 @@ final class RegistrationTextFieldSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForAllPhoneWidths(){
+    func testForPlaceholderText(){
         sut.placeholder = "EMAIL"
+        verifyInAllPhoneWidths(view: sut)
+    }
+
+    func testForTextEntered(){
+        sut.placeholder = "EMAIL"
+        sut.text = "blahblah@wire.com"
         verifyInAllPhoneWidths(view: sut)
     }
 }
