@@ -100,7 +100,7 @@ final class CallViewController: UIViewController {
     
     @objc private func handleDoubleTap(_ sender: UITapGestureRecognizer) {
         
-        guard canHideOverlay, !isOverlayVisible else { return }
+        guard !isOverlayVisible else { return }
         
         let overlay = videoGridViewController.previewOverlay
         let location = sender.location(in: overlay)
