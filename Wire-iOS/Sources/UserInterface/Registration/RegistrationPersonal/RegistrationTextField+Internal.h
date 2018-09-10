@@ -19,5 +19,6 @@
 @interface RegistrationTextField ()
 
 @property (nonatomic) UIEdgeInsets placeholderInsets;
+@property (nonatomic) UIEdgeInsets textInsets;
 
 @end
