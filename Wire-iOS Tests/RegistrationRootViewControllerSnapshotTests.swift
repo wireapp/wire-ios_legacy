@@ -19,13 +19,15 @@
 import XCTest
 @testable import Wire
 
-final class RegistrationViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class RegistrationRootViewControllerSnapshotTests: ZMSnapshotTestCase {
     
-    var sut: RegistrationViewController!
+    var sut: RegistrationRootViewController!
     
     override func setUp() {
         super.setUp()
-        sut = RegistrationViewController()
+        sut = RegistrationRootViewController()
+
+        recordMode = true
     }
     
     override func tearDown() {
@@ -33,7 +35,7 @@ final class RegistrationViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitStateRegisterWithPhone(){
+    func testForInitStatePhoneRegistration(){
         verify(view: sut.view)
     }
 }
