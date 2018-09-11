@@ -18,9 +18,8 @@
 
 import Foundation
 import Cartography
-import Classy
 
-@objcMembers final public class FileTransferView: UIView, TransferView {
+final public class FileTransferView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
 
     weak public var delegate: TransferViewDelegate?
@@ -28,20 +27,30 @@ import Classy
     public let progressView = CircularProgressView()
     public let topLabel = UILabel()
     public let bottomLabel = UILabel()
-    public let fileTypeIconView = UIImageView()
-    public let fileEyeView = UIImageView()
+    public let fileTypeIconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .textForeground
+        return imageView
+    }()
+    public let fileEyeView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .background
+        return imageView
+    }()
 
     private let loadingView = ThreeDotsLoadingView()
     public let actionButton = IconButton()
     
-    public var labelTextColor: UIColor?
-    public var labelTextBlendedColor: UIColor?
-    public var labelFont: UIFont?
-    public var labelBoldFont: UIFont?
+    public let labelTextColor: UIColor = .textForeground
+    public let labelTextBlendedColor: UIColor = .textDimmed
+    public let labelFont: UIFont = .smallLightFont
+    public let labelBoldFont: UIFont = .smallSemiboldFont
+
     private var allViews : [UIView] = []
     
     public required override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .placeholderBackground
         
         self.topLabel.numberOfLines = 1
         self.topLabel.lineBreakMode = .byTruncatingMiddle
@@ -55,6 +64,7 @@ import Classy
         self.fileEyeView.image = UIImage(for: .eye, iconSize: .messageStatus, color: UIColor.white).withRenderingMode(.alwaysTemplate)
         
         self.actionButton.contentMode = .scaleAspectFit
+        actionButton.setIconColor(.white, for: .normal)
         self.actionButton.addTarget(self, action: #selector(FileTransferView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.actionButton.accessibilityLabel = "FileTransferActionButton"
         
@@ -67,7 +77,7 @@ import Classy
         self.allViews = [topLabel, bottomLabel, fileTypeIconView, fileEyeView, actionButton, progressView, loadingView]
         self.allViews.forEach(self.addSubview)
         
-        CASStyler.default().styleItem(self)
+        
         
         self.createConstraints()
         
@@ -126,14 +136,8 @@ import Classy
     
     public func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
-        guard let labelBoldFont = self.labelBoldFont,
-            let labelFont = self.labelFont,
-            let labelTextColor = self.labelTextColor,
-            let labelTextBlendedColor = self.labelTextBlendedColor,
-            let fileMessageData = message.fileMessageData
-            else {
-            return
-        }
+        guard let fileMessageData = message.fileMessageData
+            else { return }
         
         configureVisibleViews(with: message, isInitial: isInitial)
         

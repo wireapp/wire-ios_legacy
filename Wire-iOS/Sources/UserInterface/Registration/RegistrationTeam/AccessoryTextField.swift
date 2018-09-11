@@ -190,10 +190,17 @@ class AccessoryTextField: UITextField {
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
     }
 
+    // MARK: - custom edge insets
+
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
 
         return UIEdgeInsetsInsetRect(textRect, self.textInsets)
+    }
+
+    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let editingRect: CGRect = super.editingRect(forBounds: bounds)
+        return UIEdgeInsetsInsetRect(editingRect, textInsets)
     }
 
     @objc func textFieldDidChange(textField: UITextField) {

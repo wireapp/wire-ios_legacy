@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 // Cell that disaplys the file transfer and it's states
 @objcMembers public final class FileTransferCell: ConversationCell {
@@ -32,7 +31,7 @@ import Classy
         
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         self.containerView.layer.cornerRadius = 4
-        self.containerView.cas_styleClass = "container-view"
+        containerView.backgroundColor = .placeholderBackground
         self.containerView.clipsToBounds = true
         
         self.fileTransferView.delegate = self

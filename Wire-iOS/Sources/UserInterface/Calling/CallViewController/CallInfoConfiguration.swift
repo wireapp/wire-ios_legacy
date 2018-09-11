@@ -46,7 +46,7 @@ fileprivate extension VoiceChannel {
             } else {
                 return .none
             }
-        case .unknown, .none, .terminating, .established, .incoming(_, shouldRing: false, _):
+        case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants(using: timestamps).map {
                     .callParticipant(user: $0.0, sendsVideo: $0.1.isSendingVideo)
@@ -142,6 +142,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
     let videoPlaceholderState: CallVideoPlaceholderState
     let disableIdleTimer: Bool
     let cameraType: CaptureDevice
+    let mediaManager: AVSMediaManagerInterface
 
     private let voiceChannelSnapshot: VoiceChannelSnapshot
 
@@ -150,14 +151,16 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         preferedVideoPlaceholderState: CallVideoPlaceholderState,
         permissions: CallPermissionsConfiguration,
         cameraType: CaptureDevice,
-        sortTimestamps: CallParticipantTimestamps
+        sortTimestamps: CallParticipantTimestamps,
+        mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance()
         ) {
         self.permissions = permissions
         self.cameraType = cameraType
+        self.mediaManager = mediaManager
         voiceChannelSnapshot = VoiceChannelSnapshot(voiceChannel)
         degradationState = voiceChannel.degradationState
         accessoryType = voiceChannel.accessoryType(using: sortTimestamps)
-        isMuted = AVSMediaManager.sharedInstance().isMicrophoneMuted
+        isMuted = mediaManager.isMicrophoneMuted
         canToggleMediaType = voiceChannel.canToggleMediaType(with: permissions)
         canAccept = voiceChannel.canAccept
         isVideoCall = voiceChannel.internalIsVideoCall
@@ -177,7 +180,7 @@ struct CallInfoConfiguration: CallInfoViewControllerInput  {
         case .outgoing: return .ringingOutgoing
         case .answered, .establishedDataChannel: return .connecting
         case .established: return .established(duration: -voiceChannelSnapshot.callStartDate.timeIntervalSinceNow.rounded())
-        case .terminating, .incoming(_ , shouldRing: false, _): return .terminating
+        case .terminating, .mediaStopped, .incoming(_ , shouldRing: false, _): return .terminating
         case .none, .unknown: return .none
         }
     }

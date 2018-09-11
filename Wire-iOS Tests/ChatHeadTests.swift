@@ -34,12 +34,16 @@ class ChatHeadTests: CoreDataSnapshotTestCase {
             title.append(" in \(teamName)")
         }
         
+        let userInfo = NotificationUserInfo()
+        userInfo.conversationName = conversationName
+        userInfo.teamName = teamName
+        
         return ChatHeadView(
             title: title.isEmpty ? nil : title.trimmingCharacters(in: .whitespaces),
             body: body,
             userID: selfUser.remoteIdentifier!,
             sender: otherUser,
-            userInfo: [ConversationNameStringKey: conversationName as Any, TeamNameStringKey: teamName as Any],
+            userInfo: userInfo,
             isEphemeral: ephemeral
         )
     }

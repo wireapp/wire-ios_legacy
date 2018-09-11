@@ -19,12 +19,24 @@
 
 import UIKit
 import Cartography
-import Classy
 
-@objcMembers public final class TwoLineTitleView: UIView {
+public final class TwoLineTitleView: UIView {
     
-    public let titleLabel = UILabel()
-    public let subtitleLabel = UILabel()
+    public let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallSemiboldFont
+        label.textColor = .textForeground
+
+        return label
+    }()
+
+    public let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+        label.textColor = .textForeground
+
+        return label
+    }()
     
     init(first: String, second: String) {
         super.init(frame: CGRect.zero)
@@ -49,7 +61,7 @@ import Classy
             subtitleLabel.bottom == selfView.bottom
         }
 
-        CASStyler.default().styleItem(self)
+        
 
         setNeedsLayout()
         layoutIfNeeded()

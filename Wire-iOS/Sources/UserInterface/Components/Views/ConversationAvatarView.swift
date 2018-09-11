@@ -209,7 +209,12 @@ final public class ConversationAvatarView: UIView {
     }
     
     let clippingView = UIView()
-    let imageViewLeftTop = UserImageView()
+    let imageViewLeftTop: UserImageView = {
+        let userImageView = UserImageView()
+        userImageView.initials.font = .mediumSemiboldFont
+
+        return userImageView
+    }()
     lazy var imageViewRightTop: UserImageView = {
         return UserImageView()
     }()

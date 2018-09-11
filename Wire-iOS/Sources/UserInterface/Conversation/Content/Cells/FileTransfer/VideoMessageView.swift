@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 @objcMembers final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
@@ -77,7 +76,7 @@ import Classy
         self.allViews = [previewImageView, playButton, bottomGradientView, progressView, timeLabel, loadingView]
         self.allViews.forEach(self.addSubview)
         
-        CASStyler.default().styleItem(self)
+        
         
         self.createConstraints()
         var currentElements = self.accessibilityElements ?? []

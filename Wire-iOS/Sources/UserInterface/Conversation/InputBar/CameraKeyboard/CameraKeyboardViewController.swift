@@ -215,7 +215,7 @@ open class CameraKeyboardViewController: UIViewController {
             let returnData: Data
             if (uti == "public.heif") ||
                 (uti == "public.heic"),
-                let convertedJPEGData = data.covertHEIFToJPG() {
+                let convertedJPEGData = data.convertHEIFToJPG() {
                 returnData = convertedJPEGData
             } else {
                 returnData = data

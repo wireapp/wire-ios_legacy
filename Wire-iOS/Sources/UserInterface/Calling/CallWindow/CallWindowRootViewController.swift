@@ -52,10 +52,18 @@ final class CallWindowRootViewController: UIViewController {
     override func loadView() {
         view = PassthroughTouchesView()
     }
+
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
     
     func transitionToLoggedInSession() {
         callController = CallController()
         callController?.targetViewController = self
+    }
+    
+    func presentCallCurrentlyInProgress() {
+        callController?.updateState()
     }
     
     private func topmostViewController() -> UIViewController? {

@@ -32,6 +32,8 @@ final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
         UITextField.appearance().tintColor = UIColor(for: .vividRed)!
 
         sut = ConfirmPhoneViewController(newNumber: "012345678901", delegate: nil)
+        sut.view.layoutIfNeeded()
+
         sut.view.backgroundColor = .black
         sut.view.layer.speed = 0
 
@@ -46,6 +48,6 @@ final class ConfirmPhoneViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     func testConfirmationSentToPhoneNumber(){
-        self.verify(view: sut.view)
+        verify(view: sut.view)
     }
 }

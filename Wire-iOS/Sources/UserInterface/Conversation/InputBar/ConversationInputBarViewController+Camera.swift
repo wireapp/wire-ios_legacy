@@ -129,6 +129,13 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             zmLog.error("didFinishSavingWithError: \(error)")
         }
     }
+
+    // MARK: - Video save callback
+    @objc func video(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+        if let error = error {
+            zmLog.error("Error saving video: \(error)")
+        }
+    }
     
     public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {

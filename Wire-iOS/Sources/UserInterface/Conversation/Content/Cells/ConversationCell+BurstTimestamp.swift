@@ -30,7 +30,7 @@ public extension ConversationCell {
     @objc func scheduledTimerForUpdateBurstTimestamp() {
         guard let _ = layoutProperties, layoutProperties.showBurstTimestamp else { return }
 
-        burstTimestampTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 60, repeats: true) {
+        burstTimestampTimer = .scheduledTimer(withTimeInterval: 60, repeats: true) {
             [weak self] _ in
             self?.updateBurstTimestamp()
         }

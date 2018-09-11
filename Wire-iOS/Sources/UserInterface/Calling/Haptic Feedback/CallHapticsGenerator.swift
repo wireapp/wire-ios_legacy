@@ -41,7 +41,6 @@ enum CallHapticsEvent: String {
     }
 }
 
-@available(iOS 10, *)
 final class CallHapticsGenerator: CallHapticsGeneratorType {
     
     private let impactGenerator = UIImpactFeedbackGenerator(style: .light)

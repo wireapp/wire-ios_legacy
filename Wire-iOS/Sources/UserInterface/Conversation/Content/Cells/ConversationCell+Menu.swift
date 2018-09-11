@@ -22,7 +22,7 @@ public extension ConversationCell {
     
     @objc public func showMenu() {
         guard !message.isEphemeral || message.canBeDeleted else { return } // Ephemeral message's only possibility is to be deleted
-        let shouldBecomeFirstResponder = delegate.conversationCell?(self, shouldBecomeFirstResponderWhenShowMenuWithCellType: messageType()) ?? true
+        let shouldBecomeFirstResponder = delegate?.conversationCell?(self, shouldBecomeFirstResponderWhenShowMenuWithCellType: messageType()) ?? true
         
         guard let properties = menuConfigurationProperties() else { return }
         registerMenuObservers()
@@ -55,10 +55,10 @@ public extension ConversationCell {
         var items = [UIMenuItem]()
         
         if message.isEphemeral {
-            items += properties.additionalItems.filter(\.isAvailableInEphemeralConversations).map(\.item)
+            items += properties.additionalItems?.filter(\.isAvailableInEphemeralConversations).map(\.item) ?? []
         } else {
-            items += properties.additionalItems.map(\.item)
-            
+            items += properties.additionalItems?.map(\.item) ?? []
+
             if message.canBeLiked {
                 let index = items.count > 0 ? properties.likeItemIndex : 0
                 items.insert(.like(for: message, with: #selector(likeMessage)), at: index)

@@ -150,10 +150,8 @@ public protocol CollectionsViewControllerDelegate: class {
 
         self.contentView.collectionView.delegate = self
         self.contentView.collectionView.dataSource = self
-        if #available(iOS 10.0, *) {
-            self.contentView.collectionView.prefetchDataSource = self
-        }
-
+        self.contentView.collectionView.prefetchDataSource = self
+        
         self.updateNoElementsState()
     }
     

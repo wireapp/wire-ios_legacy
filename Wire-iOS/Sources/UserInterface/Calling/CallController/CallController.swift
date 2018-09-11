@@ -54,6 +54,10 @@ class CallController: NSObject {
 extension CallController: WireCallCenterCallStateObserver {
     
     func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+        updateState()
+    }
+    
+    func updateState() {
         guard let userSession = ZMUserSession.shared() else { return }
         
         if let priorityCallConversation = userSession.priorityCallConversation {

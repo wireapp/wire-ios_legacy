@@ -29,8 +29,8 @@
 
 /// Set accent color on self user to this index.
 + (void)setAccentColor:(ZMAccentColor)accentColor;
-
 + (instancetype)accentColor;
+
 + (ZMAccentColor)indexedAccentColor;
 
 + (UIColor *)colorForZMAccentColor:(ZMAccentColor)accentColor;

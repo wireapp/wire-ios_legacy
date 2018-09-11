@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import Classy
 import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
@@ -38,14 +37,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     public fileprivate(set) var visibleViewController: UIViewController?
     fileprivate let appStateController: AppStateController
-    fileprivate lazy var classyCache: ClassyCache = {
-        return ClassyCache()
-    }()
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
-    fileprivate var isClassyInitialized = false
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var flowController: TeamCreationFlowController!
@@ -176,9 +171,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             transitionGroup.enter()
 
             DispatchQueue.main.async {
-                self.prepare(for: appState, completionHandler: {
-                    transitionGroup.leave()
-                })
+                self.applicationWillTransition(to: appState)
+                transitionGroup.leave()
             }
 
             transitionGroup.wait()
@@ -192,6 +186,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             DispatchQueue.main.async {
                 self.transition(to: appState, completionHandler: {
                     transitionGroup.leave()
+                    self.applicationDidTransition(to: appState)
                     completion?()
                 })
             }
@@ -334,7 +329,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         }
     }
 
-    func prepare(for appState: AppState, completionHandler: @escaping () -> Void) {
+    func applicationWillTransition(to appState: AppState) {
 
         if appState == .authenticated(completedRegistration: false) {
             callWindow.callController.transitionToLoggedInSession()
@@ -342,25 +337,14 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
 
-        if !isClassyInitialized && isClassyRequired(for: appState) {
-            isClassyInitialized = true
-
-            let windows = [mainWindow, callWindow, overlayWindow]
-            DispatchQueue.main.async {
-                self.setupClassy(with: windows)
-                completionHandler()
-            }
-        } else {
-            completionHandler()
-        }
+        let colorScheme = ColorScheme.default
+        colorScheme.accentColor = UIColor.accent()
+        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
     }
-
-    func isClassyRequired(for appState: AppState) -> Bool {
-        switch appState {
-        case .authenticated, .unauthenticated, .loading:
-            return true
-        default:
-            return false
+    
+    func applicationDidTransition(to appState: AppState) {
+        if appState == .authenticated(completedRegistration: false) {
+            callWindow.callController.presentCallCurrentlyInProgress()
         }
     }
 
@@ -368,24 +352,11 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         self.mediaManagerLoader.send(message: .appStart)
     }
 
-    func setupClassy(with windows: [UIWindow]) {
-
-        let colorScheme = ColorScheme.default
-        colorScheme.accentColor = UIColor.accent()
-        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
-
-        CASStyler.default().cache = classyCache
-        CASStyler.bootstrapClassy(withTargetWindows: windows)
-        CASStyler.default().apply(colorScheme)
-        CASStyler.default().apply(fontScheme: defaultFontScheme)
-    }
-
     @objc func onContentSizeCategoryChange() {
         Message.invalidateMarkdownStyle()
         NSAttributedString.wr_flushCellParagraphStyleCache()
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        CASStyler.default().apply(fontScheme: defaultFontScheme)
         type(of: self).configureAppearance()
     }
 

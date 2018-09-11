@@ -84,7 +84,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     }()
 
     let createAccountButton: LandingButton = {
-        let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
+        let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
         button.accessibilityIdentifier = "CreateAccountButton"
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
@@ -92,7 +92,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     }()
 
     let createTeamButton: LandingButton = {
-        let button = LandingButton(title: createTeamButtonTitle, icon: .team, iconBackgroundColor: UIColor.Team.createTeamGreen)
+        let button = LandingButton(title: createTeamButtonTitle, icon: .team, iconBackgroundColor: UIColor.Team.createAccountBlue)
         button.accessibilityIdentifier = "CreateTeamButton"
         button.addTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)), for: .touchUpInside)
 

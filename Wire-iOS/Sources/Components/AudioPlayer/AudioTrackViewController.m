@@ -61,7 +61,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)dealloc
 {
     self.artworkObserver = nil;
-    self.view.cas_alternativeParent = nil;
 }
 
 - (instancetype)initWithAudioTrackPlayer:(AudioTrackPlayer *)audioTrackPlayer sourceMessage:(id<ZMConversationMessage>)sourceMessage
@@ -273,7 +272,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (IBAction)openInBrowser:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:self.audioTrack.externalURL];
+    [[UIApplication sharedApplication] openURL:self.audioTrack.externalURL
+                                       options:@{}
+                             completionHandler:NULL];
 }
 
 #pragma mark - KVO observer

@@ -70,33 +70,34 @@ final class ConversationTableViewDataSource: NSObject {
     public let conversation: ZMConversation
     public let tableView: UITableView
     
-    public var firstUnreadMessage: ZMConversationMessage?
-    public var selectedMessage: ZMConversationMessage? = nil
-    public var editingMessage: ZMConversationMessage? = nil {
+    @objc public var firstUnreadMessage: ZMConversationMessage?
+    @objc public var selectedMessage: ZMConversationMessage? = nil
+    @objc public var editingMessage: ZMConversationMessage? = nil {
         didSet {
             reconfigureVisibleCells()
         }
     }
     
-    public weak var conversationCellDelegate: ConversationCellDelegate? = nil
+    @objc public weak var conversationCellDelegate: ConversationCellDelegate? = nil
     
-    public var searchQueries: [String] = [] {
+    @objc public var searchQueries: [String] = [] {
         didSet {
             reconfigureVisibleCells()
         }
     }
     
-    public var messages: [ZMConversationMessage] {
+    @objc public var messages: [ZMConversationMessage] {
         return fetchController.fetchedObjects ?? []
     }
     
-    public init(conversation: ZMConversation, tableView: UITableView) {
+    @objc public init(conversation: ZMConversation, tableView: UITableView) {
         self.conversation = conversation
         self.tableView = tableView
-        tableView.dataSource = self
-        tableView.prefetchDataSource = self
         
         super.init()
+        
+        tableView.dataSource = self
+        tableView.prefetchDataSource = self
         
         registerTableCellClasses()
         createFetchController()

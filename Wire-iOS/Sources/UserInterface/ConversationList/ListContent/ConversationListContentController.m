@@ -20,7 +20,6 @@
 #import "ConversationListContentController.h"
 
 @import PureLayout;
-#import <Classy/Classy.h>
 
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"

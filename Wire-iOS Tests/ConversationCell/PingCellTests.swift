@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class PingCellTests: ZMSnapshotTestCase {
+final class PingCellTests: XCTestCase {
 
     var sut: PingCell!
 
@@ -27,14 +27,7 @@ final class PingCellTests: ZMSnapshotTestCase {
 
         super.setUp()
 
-        sut = PingCell()
-
-        let layoutProperties = ConversationCellLayoutProperties()
-        layoutProperties.showSender = true
-        layoutProperties.showBurstTimestamp = false
-        layoutProperties.showUnreadMarker = false
-
-        sut.configure(for: MockMessageFactory.pingMessage(), layoutProperties: layoutProperties)
+        sut = createPingCellForTest()
     }
 
     override func tearDown() {
@@ -43,8 +36,15 @@ final class PingCellTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForYouPinged() {
-        verify(view: sut.tableViewForSnapshot())
+    // MARK: shortcut menu
+
+    func testThatDeleteItemIsInMenu(){
+        // GIVEN & WHEN
+        sut.showMenu()
+
+        // THEN
+        XCTAssertEqual(UIMenuController.shared.menuItems?.count, 1)
+        XCTAssertEqual(UIMenuController.shared.menuItems?.first?.title, "Delete")
     }
 }
 

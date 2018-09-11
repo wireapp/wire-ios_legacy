@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-@objcMembers public final class CollectionsView: UIView {
+public final class CollectionsView: UIView {
     var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!
     var collectionView: UICollectionView!
     let noResultsView = NoResultsView()
@@ -35,6 +35,7 @@ import Cartography
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .contentBackground
         
         self.recreateLayout()
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: self.collectionViewLayout)

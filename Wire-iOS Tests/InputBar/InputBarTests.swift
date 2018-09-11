@@ -20,7 +20,6 @@
 import XCTest
 import Cartography
 @testable import Wire
-import Classy
 
 class InputBarTests: ZMSnapshotTestCase {
 
@@ -65,21 +64,21 @@ class InputBarTests: ZMSnapshotTestCase {
         sut.textView.text = ""
         sut.leftAccessoryView.isHidden = true
         sut.rightAccessoryStackView.isHidden = true
-        CASStyler.default().styleItem(sut)
+        
         
         verifyInAllPhoneWidths(view: sut)
     }
     
     func testShortText() {
         sut.textView.text = shortText
-        CASStyler.default().styleItem(sut)
+        
         
         verifyInAllPhoneWidths(view: sut)
     }
     
     func testLongText() {
         sut.textView.text = longText
-        CASStyler.default().styleItem(sut)
+        
         
         verifyInAllPhoneWidths(view: sut)
         verifyInAllTabletWidths(view: sut)
@@ -88,7 +87,7 @@ class InputBarTests: ZMSnapshotTestCase {
     func testRTLText() {
         sut.textView.text = LTRText
         sut.textView.textAlignment = .right
-        CASStyler.default().styleItem(sut)
+        
         
         verifyInAllPhoneWidths(view: sut)
         verifyInAllTabletWidths(view: sut)
@@ -109,7 +108,7 @@ class InputBarTests: ZMSnapshotTestCase {
 
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         inputBar.layer.speed = 0
-        CASStyler.default().styleItem(inputBar)
+        
         
         verifyInAllPhoneWidths(view: inputBar)
     }
@@ -121,7 +120,7 @@ class InputBarTests: ZMSnapshotTestCase {
         inputBar.rightAccessoryStackView.isHidden = true
         inputBar.textView.text = ""
         inputBar.layer.speed = 0
-        CASStyler.default().styleItem(inputBar)
+        
         
         verifyInAllPhoneWidths(view: inputBar)
     }
@@ -130,7 +129,7 @@ class InputBarTests: ZMSnapshotTestCase {
         sut.textView.text = ""
         sut.setInputBarState(.writing(ephemeral: .message), animated: false)
         sut.updateEphemeralState()
-        CASStyler.default().styleItem(sut)
+        
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -139,21 +138,21 @@ class InputBarTests: ZMSnapshotTestCase {
         sut.textView.text = ""
         sut.setInputBarState(.markingDown(ephemeral: .message), animated: false)
         sut.updateEphemeralState()
-        CASStyler.default().styleItem(sut)
+        
 
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersCorrectlyInEditState() {
         sut.setInputBarState(.editing(originalText: "This text is being edited"), animated: false)
-        CASStyler.default().styleItem(sut)
+        
         verifyInAllPhoneWidths(view: sut)
     }
     
     func testThatItRendersCorrectlyInEditState_LongText() {
         sut.setInputBarState(.editing(originalText: longText), animated: false)
 
-        CASStyler.default().styleItem(sut)
+        
         verifyInAllPhoneWidths(view: sut)
     }
 

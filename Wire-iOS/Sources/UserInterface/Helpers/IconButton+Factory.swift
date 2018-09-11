@@ -53,7 +53,7 @@ extension IconButton {
             icon: .send,
             accessibilityId: "sendButton",
             backgroundColor: [.normal:      UIColor.accent(),
-                              .highlighted: UIColor.accentDarken()],
+                              .highlighted: UIColor.accentDarken],
             iconColor: [.normal: sendButtonIconColor,
                         .highlighted: sendButtonIconColor,
                         .disabled: sendButtonIconColor,

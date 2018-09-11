@@ -44,7 +44,7 @@ import CoreLocation
     }()
 
     public let locationButtonContainer = UIView()
-    fileprivate let mapView = MKMapView()
+    fileprivate var mapView = MKMapView()
     fileprivate let toolBar: ModalTopBar
     fileprivate let locationManager = CLLocationManager()
     fileprivate let geocoder = CLGeocoder()
@@ -70,10 +70,12 @@ import CoreLocation
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+
         locationManager.delegate = self
         mapView.delegate = self
         toolBar.delegate = self
         sendViewController.delegate = self
+
         configureViews()
         createConstraints()
     }
@@ -159,7 +161,7 @@ import CoreLocation
         let cancelAction = UIAlertAction(title: localize("cancel"), style: .cancel , handler: nil)
         let settingsAction = UIAlertAction(title: localize("settings"), style: .default) { _ in
             guard let url = URL(string: UIApplicationOpenSettingsURLString) else { return }
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url)
         }
         
         [cancelAction, settingsAction].forEach(alertController.addAction)

@@ -201,8 +201,7 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
         self.launchType = ApplicationLaunchURL;
     }
     
-    if (self.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil ||
-        self.launchOptions[UIApplicationLaunchOptionsLocalNotificationKey] != nil) {
+    if (self.launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
         self.launchType = ApplicationLaunchPush;
     }
     [self trackErrors];
@@ -262,59 +261,12 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 
 
 
-@implementation AppDelegate (PushNotifications)
-
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-{
-    // no op
-}
-
-@end
-
 @implementation AppDelegate (BackgroundUpdates)
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler
 {
     ZMLogInfo(@"application:didReceiveRemoteNotification:fetchCompletionHandler: notification: %@", userInfo);
     self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
-}
-
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    ZMLogInfo(@"application:didReceiveLocalNotification: %@", notification);
-    
-    [[SessionManager shared] didReceiveLocalNotification:notification application:application];
-    
-    self.launchType = (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) ? ApplicationLaunchPush: ApplicationLaunchDirect;
-}
-
-- (void)application:(UIApplication *)application
-handleActionWithIdentifier:(NSString *)identifier
-forLocalNotification:(UILocalNotification *)notification
-  completionHandler:(void (^)(void))completionHandler
-{
-    ZMLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@", identifier, notification);
-    
-    [[SessionManager shared] handleActionWithIdentifier:identifier
-                                   forLocalNotification:notification
-                                       withResponseInfo:[NSDictionary dictionary]
-                                      completionHandler:completionHandler
-                                            application:application];
-}
-
-- (void)application:(UIApplication *)application
-handleActionWithIdentifier:(NSString *)identifier
-forLocalNotification:(UILocalNotification *)notification
-   withResponseInfo:(NSDictionary *)responseInfo
-  completionHandler:(void(^)(void))completionHandler;
-{
-    ZMLogInfo(@"application:handleActionWithIdentifier:forLocalNotification: identifier: %@, notification: %@ responseInfo: %@", identifier, notification, responseInfo);
-    
-    [[SessionManager shared] handleActionWithIdentifier:identifier
-                                   forLocalNotification:notification
-                                       withResponseInfo:responseInfo
-                                      completionHandler:completionHandler
-                                            application:application];
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))completionHandler;

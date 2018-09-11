@@ -21,14 +21,10 @@ final class CallHapticsController {
     private var lastCallState: CallState?
     private var participants = Set<UUID>()
     private var videoStates = [UUID: Bool]()
-    private var hapticGenerator: CallHapticsGeneratorType?
+    private let hapticGenerator: CallHapticsGeneratorType
     
-    init(hapticGenerator: CallHapticsGeneratorType? = nil) {
-        if let generator = hapticGenerator {
-            self.hapticGenerator = generator
-        } else if #available(iOS 10, *) {
-            self.hapticGenerator =  CallHapticsGenerator()
-        }
+    init(hapticGenerator: CallHapticsGeneratorType = CallHapticsGenerator()) {
+        self.hapticGenerator = hapticGenerator
     }
 
     func updateParticipants(_ newParticipants: [(UUID, CallParticipantState)]) {
@@ -43,11 +39,11 @@ final class CallHapticsController {
         
         if (false == lastCallState?.isEnding || nil == lastCallState) && newCallState.isEnding {
             Log.haptics.debug("triggering end event")
-            hapticGenerator?.trigger(event: .end)
+            hapticGenerator.trigger(event: .end)
         }
         if (false == lastCallState?.isEstablished || nil == lastCallState) && newCallState.isEstablished {
             Log.haptics.debug("triggering start event")
-            hapticGenerator?.trigger(event: .start)
+            hapticGenerator.trigger(event: .start)
         }
     }
     
@@ -61,11 +57,11 @@ final class CallHapticsController {
         
         if removed {
             Log.haptics.debug("triggering leave event")
-            hapticGenerator?.trigger(event: .leave)
+            hapticGenerator.trigger(event: .leave)
         }
         if added {
             Log.haptics.debug("triggering join event")
-            hapticGenerator?.trigger(event: .join)
+            hapticGenerator.trigger(event: .join)
         }
         
         participants = updated
@@ -77,7 +73,7 @@ final class CallHapticsController {
         for (uuid, wasSending) in videoStates {
             if let isSending = newVideoStates[uuid], isSending != wasSending {
                 Log.haptics.debug("triggering toggle video event")
-                hapticGenerator?.trigger(event: .toggleVideo)
+                hapticGenerator.trigger(event: .toggleVideo)
             }
         }
         videoStates = newVideoStates

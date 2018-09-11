@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 /// Displays the audio message with different states
 @objcMembers public final class AudioMessageCell: ConversationCell {
@@ -32,7 +31,7 @@ import Classy
         
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         self.containerView.layer.cornerRadius = 4
-        self.containerView.cas_styleClass = "container-view"
+        containerView.backgroundColor = .placeholderBackground
         self.containerView.clipsToBounds = true
         
         self.audioMessageView.delegate = self

@@ -16,8 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@class PermissionDeniedViewController;
+
 @interface ConversationListViewController ()
 
-@property (nonatomic) UILabel *noConversationLabel;
+@property (nonatomic, nonnull) UILabel *noConversationLabel;
+@property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
 
 @end

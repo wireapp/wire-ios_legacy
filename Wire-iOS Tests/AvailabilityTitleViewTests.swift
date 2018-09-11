@@ -18,7 +18,6 @@
 
 import XCTest
 @testable import Wire
-import Classy
 import Cartography
 
 class AvailabilityTitleViewTests: ZMSnapshotTestCase {
