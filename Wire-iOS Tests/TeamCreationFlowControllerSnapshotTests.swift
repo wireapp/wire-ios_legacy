@@ -39,6 +39,6 @@ final class TeamCreationFlowControllerSnapshotTests: ZMSnapshotTestCase {
 
     func testForStartFlowInputTeamNameScreen(){
         sut.startFlow()
-        verify(view: sut.navigationController.view)
+        verify(view: sut.navigationController.topViewController!.view)
     }
 }
