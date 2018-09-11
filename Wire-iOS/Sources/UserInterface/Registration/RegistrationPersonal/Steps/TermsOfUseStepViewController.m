@@ -91,7 +91,7 @@
                                                          NSForegroundColorAttributeName: [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] }];
     
     [attributedTerms addAttributes:@{ NSFontAttributeName : UIFont.largeSemiboldFont,
-                                      NSForegroundColorAttributeName : UIColor.accentColor,
+                                      NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark],
                                       NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     
     self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
