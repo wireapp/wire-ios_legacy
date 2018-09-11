@@ -171,9 +171,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             transitionGroup.enter()
 
             DispatchQueue.main.async {
-                self.prepare(for: appState, completionHandler: {
-                    transitionGroup.leave()
-                })
+                self.applicationWillTransition(to: appState)
+                transitionGroup.leave()
             }
 
             transitionGroup.wait()
@@ -187,6 +186,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             DispatchQueue.main.async {
                 self.transition(to: appState, completionHandler: {
                     transitionGroup.leave()
+                    self.applicationDidTransition(to: appState)
                     completion?()
                 })
             }
@@ -329,7 +329,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         }
     }
 
-    func prepare(for appState: AppState, completionHandler: @escaping () -> Void) {
+    func applicationWillTransition(to appState: AppState) {
 
         if appState == .authenticated(completedRegistration: false) {
             callWindow.callController.transitionToLoggedInSession()
@@ -340,8 +340,12 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = UIColor.accent()
         colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
-
-        completionHandler()
+    }
+    
+    func applicationDidTransition(to appState: AppState) {
+        if appState == .authenticated(completedRegistration: false) {
+            callWindow.callController.presentCallCurrentlyInProgress()
+        }
     }
 
     func configureMediaManager() {
