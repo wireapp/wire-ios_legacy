@@ -87,7 +87,7 @@ final class CallViewController: UIViewController {
         singleTapRecognizer.require(toFail: doubleTapRecognizer)
     }
 
-    @objc private func handleSingleTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleSingleTap(_ sender: UITapGestureRecognizer) {
         
         guard canHideOverlay else { return }
 
@@ -98,7 +98,7 @@ final class CallViewController: UIViewController {
         toggleOverlayVisibility()
     }
     
-    @objc private func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+    @objc func handleDoubleTap(_ sender: UITapGestureRecognizer) {
         
         guard !isOverlayVisible else { return }
         

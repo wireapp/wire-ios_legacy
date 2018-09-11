@@ -259,7 +259,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
         switch state {
         case .incoming(_, false, _)?:
             return .activeCall(showJoin: true)
-        case .established?, .establishedDataChannel?:
+        case .answered?, .established?, .establishedDataChannel?:
             return .activeCall(showJoin: conversation.isSilenced)
         default:
             return .none
