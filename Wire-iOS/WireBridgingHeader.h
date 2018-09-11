@@ -143,6 +143,7 @@
 #import "NoHistoryViewController.h"
 #import "TermsOfUseStepViewController.h"
 #import "TermsOfUseStepViewController+Private.h"
+#import "PermissionDeniedViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
