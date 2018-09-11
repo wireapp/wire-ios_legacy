@@ -99,6 +99,10 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        if !userHasSetFillMode {
+            previewView?.shouldFill = (previewView?.videoSize.aspectRatio == previewView?.frame.size.aspectRatio)
+        }
     }
 
     private func updateState(animated: Bool = false) {
@@ -139,10 +143,6 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
                 self?.snapshotView = nil
                 self?.blurView.isHidden = true
                 self?.pausedLabel.isHidden = true
-            }
-            
-            if !userHasSetFillMode {
-                previewView?.shouldFill = (previewView?.videoSize.aspectRatio == previewView?.frame.size.aspectRatio)
             }
             
             if animated {
