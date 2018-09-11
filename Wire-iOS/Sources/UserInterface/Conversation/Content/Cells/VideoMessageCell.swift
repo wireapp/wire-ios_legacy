@@ -184,12 +184,12 @@ public final class VideoMessageCell: ConversationCell {
             let fileURL = fileMessageData.fileURL,
             self.message.videoCanBeSavedToCameraRoll() {
             
-            let selector = "video:didFinishSavingWithError:contextInfo:"
-            UISaveVideoAtPathToSavedPhotosAlbum(fileURL.path, self, Selector(selector), nil)
+            let selector = #selector(self.video(_:didFinishSavingWithError:contextInfo:))
+            UISaveVideoAtPathToSavedPhotosAlbum(fileURL.path, self, selector, nil)
         }
     }
     
-    func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
+    @objc func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         if let error = error {
             zmLog.error("Cannot save video: \(error)")
         }

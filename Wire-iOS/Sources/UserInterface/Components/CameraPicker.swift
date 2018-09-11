@@ -120,8 +120,8 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
             try! fileManager.moveItem(at: videoURL, to: videoTempURL)
             
             if (picker.sourceType == .camera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempPath)) {
-                let selector = "video:didFinishSavingWithError:contextInfo:"
-                UISaveVideoAtPathToSavedPhotosAlbum(videoTempPath, self, Selector(selector), nil)
+                let selector = #selector(self.video(_:didFinishSavingWithError:contextInfo:))
+                UISaveVideoAtPathToSavedPhotosAlbum(videoTempPath, self, selector, nil)
             }
             
             picker.showLoadingView = true
@@ -157,7 +157,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
         }
     }
     
-    func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
+    @objc func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         if let error = error {
             zmLog.error("Cannot save video: \(error)")
         }
