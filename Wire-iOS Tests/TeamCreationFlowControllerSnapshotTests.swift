@@ -30,10 +30,6 @@ final class TeamCreationFlowControllerSnapshotTests: ZMSnapshotTestCase {
         let navigationController = UINavigationController()
 
         sut = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus!)
-
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
@@ -42,8 +38,6 @@ final class TeamCreationFlowControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForStartFlowInputTeamNameScreen(){
-
-
         sut.startFlow()
         verify(view: sut.navigationController.view)
     }
