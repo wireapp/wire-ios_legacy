@@ -102,8 +102,7 @@ final class CallViewController: UIViewController {
         
         guard !isOverlayVisible else { return }
         
-        let overlay = videoGridViewController.previewOverlay
-        let location = sender.location(in: overlay)
+        let location = sender.location(in: self.view)
         videoGridViewController.switchFillMode(location: location)
     }
 
