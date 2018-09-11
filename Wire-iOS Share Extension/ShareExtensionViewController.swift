@@ -206,10 +206,12 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
 
         urlItems.first?.fetchURL { url in
-            guard let url = url, !url.isFileURL else { return }
-            let separator = self.textView.text.isEmpty ? "" : "\n"
-            self.textView.text = self.textView.text + separator + url.absoluteString
-            self.textView.delegate?.textViewDidChange?(self.textView)
+            DispatchQueue.main.async {
+                guard let url = url, !url.isFileURL else { return }
+                let separator = self.textView.text.isEmpty ? "" : "\n"
+                self.textView.text = self.textView.text + separator + url.absoluteString
+                self.textView.delegate?.textViewDidChange?(self.textView)
+            }
         }
     }
 
