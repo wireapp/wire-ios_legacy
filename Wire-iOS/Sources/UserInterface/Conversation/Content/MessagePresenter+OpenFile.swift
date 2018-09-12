@@ -22,21 +22,35 @@ import AVKit
 fileprivate let zmLog = ZMSLog(tag: "MessagePresenter")
 
 extension MessagePresenter {
-    @objc fileprivate func playerDismissed(notification: Notification) {
-        mediaPlayerController?.tearDown()
 
-        UIViewController.attemptRotationToDeviceOrientation()
+    /// init method for injecting MediaPlaybackManager for testing
+    ///
+    /// - Parameter mediaPlaybackManager: for testing only
+    convenience init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared().mediaPlaybackManager) {
+        self.init()
 
-        NotificationCenter.default.removeObserver(self, name: .dismissingAVPlayer, object: nil)
+        self.mediaPlaybackManager = mediaPlaybackManager
     }
+}
+
+// MARK: - AVPlayerViewController dismissial
+extension MessagePresenter {
 
     fileprivate func observePlayerDismissial() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(playerDismissed(notification:)),
-                                               name: .dismissingAVPlayer,
-                                               object: nil)
+        videoPlayerObserver = NotificationCenter.default.addObserver(forName: .dismissingAVPlayer, object: nil, queue: OperationQueue.main) { notification in
+            self.mediaPlayerController?.tearDown()
 
+            UIViewController.attemptRotationToDeviceOrientation()
+
+            if let videoPlayerObserver = self.videoPlayerObserver {
+                NotificationCenter.default.removeObserver(videoPlayerObserver)
+                self.videoPlayerObserver = nil
+            }
+        }
     }
+}
+
+extension MessagePresenter {
 
     @objc func openFileMessage(_ message: ZMConversationMessage, targetView: UIView) {
 
@@ -60,7 +74,7 @@ extension MessagePresenter {
 
         } else if let fileMessageData = message.fileMessageData, fileMessageData.isVideo,
                   let fileURL = fileURL,
-                  let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
+                  let mediaPlaybackManager = mediaPlaybackManager {
             let player = AVPlayer(url: fileURL)
             mediaPlayerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
             let playerViewController = AVPlayerViewController()

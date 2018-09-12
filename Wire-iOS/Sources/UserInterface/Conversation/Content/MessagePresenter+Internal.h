@@ -18,8 +18,12 @@
 
 #import "MessagePresenter.h"
 
+@class MediaPlaybackManager;
+
 @interface MessagePresenter ()
 
 @property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
+@property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
+@property (nonatomic, nullable) id<NSObject> videoPlayerObserver;
 
 @end

@@ -19,31 +19,59 @@
 import XCTest
 @testable import Wire
 import PassKit
+import AVKit
 
 final class MessagePresenterTests: XCTestCase {
     
     var sut: MessagePresenter!
-    
+    var mediaPlaybackManager: MediaPlaybackManager!
+    var originalRootViewConttoller: UIViewController!
+
     override func setUp() {
         super.setUp()
-        sut = MessagePresenter()
+        mediaPlaybackManager = MediaPlaybackManager()
+        sut = MessagePresenter(mediaPlaybackManager: mediaPlaybackManager)
+        UIView.setAnimationsEnabled(false)
+
+        if originalRootViewConttoller == nil {
+            originalRootViewConttoller = UIApplication.shared.keyWindow?.rootViewController
+        }
     }
     
     override func tearDown() {
         sut = nil
+        mediaPlaybackManager = nil
         super.tearDown()
+        UIView.setAnimationsEnabled(true)
+        UIApplication.shared.keyWindow?.rootViewController = originalRootViewConttoller
     }
 
     // MARK: - Video
-    func testThatVideoFileIsShown(){
+    func testThatAVPlayerViewControllerIsPresentedWhenOpeningAVideoFile(){
         // GIVEN
-        let message = MockMessageFactory.videoMessage()
+        let message = MockMessageFactory.videoMessage()!
+        let fileURL = Bundle(for: MockAudioRecorder.self).url(forResource: "video", withExtension: "mp4")
+        message.backingFileMessageData?.fileURL = fileURL
+
+        let targetViewController = UIViewController()
+        UIApplication.shared.keyWindow?.rootViewController = targetViewController
+        sut.targetViewController = targetViewController
+        let _ = targetViewController.view
 
         // WHEN
-        let addPassesViewController = sut.openFileMessage(message, targetView: UIView())
+        sut.openFileMessage(message, targetView: UIView())
 
         // THEN
-        XCTAssertNotNil(addPassesViewController)
+        let playerViewController = targetViewController.presentedViewController!
+        XCTAssert(playerViewController is AVPlayerViewController)
+        XCTAssertNotNil(sut.videoPlayerObserver)
+
+        // Dismiss
+        playerViewController.beginAppearanceTransition(false, animated: false)
+        playerViewController.endAppearanceTransition()
+
+        // THEN
+        XCTAssertNil(sut.videoPlayerObserver)
     }
 
 
