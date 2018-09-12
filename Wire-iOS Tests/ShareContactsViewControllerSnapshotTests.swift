@@ -20,23 +20,20 @@ import XCTest
 @testable import Wire
 
 final class ShareContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
+
     var sut: ShareContactsViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = ShareContactsViewController()
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(view: sut.view)
     }
 }
