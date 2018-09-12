@@ -16,9 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import AVKit;
-@import AVFoundation;
+@interface MediaPlayerController ()
 
+@property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
 
-@class MediaPlayerController;
-
+@end

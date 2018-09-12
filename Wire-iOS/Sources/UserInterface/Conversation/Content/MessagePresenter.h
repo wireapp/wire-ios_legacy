@@ -34,10 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) BOOL waitingForFileDownload;
 
-///TODO: internal
-@property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
-
-
 /// Target view must be container in @c targetViewController's view.
 /// @param delegate the receiver of action callbacks for the message. Currently only forward and reveal in conversation
 ///                 actions are supported.

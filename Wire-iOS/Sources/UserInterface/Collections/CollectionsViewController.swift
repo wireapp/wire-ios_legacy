@@ -184,13 +184,7 @@ public protocol CollectionsViewControllerDelegate: class {
     override public var shouldAutorotate: Bool {
             switch (self.traitCollection.horizontalSizeClass) {
             case .compact:
-
-                // allow rotation if in landscape mode
-                if self.traitCollection.verticalSizeClass == .compact {
-                    return true
-                } else {
                 return false
-                }
             default:
                 return true
             }
