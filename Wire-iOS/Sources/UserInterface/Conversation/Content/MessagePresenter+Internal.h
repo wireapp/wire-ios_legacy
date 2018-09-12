@@ -16,7 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface MediaPlayerController ()
+#import "MessagePresenter.h"
+
+@interface MessagePresenter ()
 
 @property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
 

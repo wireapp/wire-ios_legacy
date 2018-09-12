@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import AVKit
 
 extension AVPlayerViewController {
     override open var prefersStatusBarHidden: Bool {
