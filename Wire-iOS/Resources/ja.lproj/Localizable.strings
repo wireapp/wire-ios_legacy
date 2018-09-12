@@ -390,7 +390,6 @@
 
 "content.system.call.you" = "あなた";
 "content.system.call.called" = "%@ からの着信";
-"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ からの着信";
 
 "content.system.renamed_conv.title" = "%@が会話に名前を付けました";
@@ -540,6 +539,7 @@
 "call.status.incoming.user" = "%@ を呼出中...";
 "call.status.incoming" = "発信中...";
 "call.status.outgoing" = "呼び出し中...";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "再接続…";
 "call.status.terminating" = "通話終了中...";
 "call.status.constant_bitrate" = "固定ビットレート";
@@ -742,6 +742,11 @@
 "about.license.title" = "ライセンス情報";
 "about.website.title" = "Wire のウェブサイト";
 "about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "詳細";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
 
 // Self new devices
 "self.new_device_alert.title" = "あなたのアカウントの使用:";

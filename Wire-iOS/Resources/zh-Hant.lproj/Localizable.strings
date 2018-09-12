@@ -390,7 +390,6 @@
 
 "content.system.call.you" = "您";
 "content.system.call.called" = "%@曾打電話";
-"content.system.call.missed-call" = "錯過%@的來電";
 "content.system.call.called-you" = "%@曾打電話";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
@@ -540,6 +539,7 @@
 "call.status.incoming.user" = "%@呼叫中...";
 "call.status.incoming" = "呼叫中...";
 "call.status.outgoing" = "響鈴中...";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "重新連線中...";
 "call.status.terminating" = "正在掛斷...";
 "call.status.constant_bitrate" = "固定位元率";
@@ -742,6 +742,11 @@
 "about.license.title" = "許可證資訊";
 "about.website.title" = "Wire網站";
 "about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "詳細資訊";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
 
 // Self new devices
 "self.new_device_alert.title" = "您的帳號用於：";

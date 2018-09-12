@@ -390,7 +390,6 @@
 
 "content.system.call.you" = "Tú";
 "content.system.call.called" = "%@ llamó";
-"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ llamó";
 
 "content.system.renamed_conv.title" = "%@ renombró el chat";
@@ -540,6 +539,7 @@
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Llamando…";
 "call.status.outgoing" = "Llamando…";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "Reconectando…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Tasa de bits constante";
@@ -742,6 +742,11 @@
 "about.license.title" = "Información de licencia";
 "about.website.title" = "Sitio web de Wire";
 "about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Detalles";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
 
 // Self new devices
 "self.new_device_alert.title" = "Tu cuenta fue usada en:";

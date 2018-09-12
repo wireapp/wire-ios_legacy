@@ -390,7 +390,6 @@
 
 "content.system.call.you" = "Ви";
 "content.system.call.called" = "%@ дзвонив(-ла)";
-"content.system.call.missed-call" = "Пропущений дзвінок від %@";
 "content.system.call.called-you" = "%@ дзвонив(-ла)";
 
 "content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
@@ -540,6 +539,7 @@
 "call.status.incoming.user" = "%@ дзвонить…";
 "call.status.incoming" = "Дзвінок…";
 "call.status.outgoing" = "Дзвінок…";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "Повторне підключення…";
 "call.status.terminating" = "Роз'єднання…";
 "call.status.constant_bitrate" = "Стала швидкість передачі даних";
@@ -742,6 +742,11 @@
 "about.license.title" = "Відомості про ліцензію";
 "about.website.title" = "Веб-сайт Wire";
 "about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Подробиці";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
 
 // Self new devices
 "self.new_device_alert.title" = "Ваш акаунт використовується на:";

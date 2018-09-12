@@ -31,7 +31,7 @@
 "general.accept" = "Vasta";
 "general.decline" = "Tänan, ei";
 "general.failure" = "Midagi läks valesti";
-"general.service" = "Service";
+"general.service" = "Teenus";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -44,7 +44,7 @@
 "peoplepicker.search_placeholder" = "Otsi nime või kasutajanime järgi";
 "peoplepicker.header.top_people" = "Aktiivsed vestlused";
 "peoplepicker.button.create_conversation" = "Loo grupivestlus";
-"peoplepicker.button.add_to_conversation" = "Add Participants to Group";
+"peoplepicker.button.add_to_conversation" = "Lisa osalejaid gruppi";
 "peoplepicker.header.conversations" = "Grupid";
 "peoplepicker.header.team_conversations" = "%@ grupid";
 "peoplepicker.header.send_invitation" = "Kutsu";
@@ -53,7 +53,7 @@
 "peoplepicker.header.directory" = "Lisa kontakt";
 
 "peoplepicker.group.title.singular" = "Lisa osalejaid";
-"peoplepicker.group.title.plural" = "Add Participants (%d)";
+"peoplepicker.group.title.plural" = "Lisa osalejaid (%d)";
 "peoplepicker.group.skip" = "Jäta vahele";
 "peoplepicker.group.done" = "Valmis";
 "peoplepicker.group.create" = "Loo";
@@ -67,7 +67,7 @@
 "peoplepicker.services.add_service.error.full" = "Vestlus on täis";
 
 "peoplepicker.title.create_conversation" = "Loo grupp";
-"peoplepicker.title.add_to_conversation" = "Add participants";
+"peoplepicker.title.add_to_conversation" = "Lisa osalejaid";
 
 "peoplepicker.no_contacts_title" = "Ei ole kontakte.";
 
@@ -79,9 +79,9 @@
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Palun sisesta korrektne e-posti aadress";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Tulemusi ei leitud.";
-"peoplepicker.no_matching_results_services_title" = "Services are helpers that can improve your workflow. To enable them, ask your administrator.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
-"peoplepicker.no_matching_results_services_manage_services_title" = "Manage Services";
+"peoplepicker.no_matching_results_services_title" = "Teenused on abistajad, mis võivad aidata sul töid teha. Nende lubamiseks pöördu oma administraatori poole.";
+"peoplepicker.no_matching_results_services_admin_title" = "Teenused on abistajad, mis võivad aidata sul töid teha.";
+"peoplepicker.no_matching_results_services_manage_services_title" = "Halda teenuseid";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Otsi meiliaadressi järgi või";
 /*  */
@@ -98,13 +98,13 @@
 "peoplepicker.quick-action.open-conversation" = "Ava";
 "peoplepicker.quick-action.create-conversation" = "Loo grupivestlus";
 "peoplepicker.quick-action.create-guest-room" = "Loo külalistetuba";
-"peoplepicker.quick-action.admin-services" = "Manage Services";
+"peoplepicker.quick-action.admin-services" = "Halda teenuseid";
 
 "add_participants.all_contacts_added" = "Kõik on siin.";
 
-"add_participants.alert.title" = "The group is full";
-"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
-"add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
+"add_participants.alert.title" = "Grupp on täis";
+"add_participants.alert.message.new_conversation" = "Vestlusega saab liituda kuni %d inimest.";
+"add_participants.alert.message.existing_conversation" = "Vestlusega saab liituda kuni %1$d inimest. Hetkel on siin ruumi veel %2$d inimesele.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Otsi nime järgi";
@@ -207,7 +207,7 @@
 "conversation.status.message.file" = "Jagas faili";
 "conversation.status.message.knock" = "Pingis";
 "conversation.status.message.missedcall" = "Vastamata kõne";
-"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.missedcall.groups" = "Vastamata kõne kasutajalt %@";
 "conversation.status.message.ephemeral" = "Kustuv sõnum";
 
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
@@ -273,8 +273,8 @@
 "conversation.create.group_name.placeholder" = "Grupi nimi";
 "conversation.create.guidance.empty" = "Vähemalt 1 tähemärk";
 "conversation.create.guidance.toolong" = "Liiga pikk nimi";
-"conversation.create.toggle.title" = "Allow guests and services";
-"conversation.create.toggle.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"conversation.create.toggle.title" = "Luba külalisi ja teenuseid";
+"conversation.create.toggle.subtitle" = "Ava see vestlus teenustele ja meeskonnast väljas olevatele inimestele. Sa saad seda alati hiljem muuta.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Aktiivne kõne";
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Sa ei saa salvestada audiosõnumit kõne ajal.";
@@ -282,8 +282,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Sa ei saa pildistada kõne ajal.";
 
 "conversation.guests_present" = "Kohal on külalisi";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+"conversation.services_present" = "Teenused on kohal";
+"conversation.guests_services_present" = "Kohal on külalisi ja teenuseid";
 "conversation.action.search" = "Otsing";
 
 // Image confirmation dialogue
@@ -325,14 +325,14 @@
 // System messages
 "content.system.you_nominative" = "sina";
 "content.system.you_dative" = "sina";
-"content.system.and_you_dative" = "and you";
+"content.system.and_you_dative" = "ja sina";
 "content.system.you_accusative" = "sina";
 
 "content.system.continued_conversation" = "Alusta vestlust kasutajaga %@";
-"content.system.started_conversation.truncated_people" = "and %@";
-"content.system.started_conversation.truncated_people.others" = "%@ others";
-"content.system.started_conversation.complete_team" = "all team members";
-"content.system.started_conversation.complete_team.guests" = "all team members and %@ guests";
+"content.system.started_conversation.truncated_people" = "ja %@";
+"content.system.started_conversation.truncated_people.others" = "%@ veel";
+"content.system.started_conversation.complete_team" = "kõik meeskonna liikmed";
+"content.system.started_conversation.complete_team.guests" = "kõik meeskonna liikmed ja %@ külalist";
 
 "content.system.other_started_conversation" = "%@ alustas vestlust kasutajaga %@";
 "content.system.you_started_conversation" = "Alustasid vestlust kasutajaga %@";
@@ -349,7 +349,7 @@
 "content.system.other_removed_you" = "%@ eemaldas sind";
 "content.system.you_removed_other" = "Sa eemaldasid kasutaja %@";
 
-"content.system.services.warning" = "Services have access to the content of this conversation";
+"content.system.services.warning" = "Teenustel on ligipääs selle vestluse sisule";
 
 // New conversation participants added / removed / started system message
 
@@ -365,7 +365,7 @@
 "content.system.conversation.team.member-leave" = "%@ eemaldati tiimist.";
 "content.system.conversation.guest.joined" = "%@ liitus";
 
-"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Teenused ja inimesed väljaspool sinu meeskonda saavad liituda selle vestlusega.";
 "content.system.conversation.invite.button" = "Jaga teistega";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ eemaldas vestluselt nime";
@@ -390,7 +390,6 @@
 
 "content.system.call.you" = "Sina";
 "content.system.call.called" = "%@ helistas";
-"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ helistasid";
 
 "content.system.renamed_conv.title" = "%@ nimetas vestluse ümber";
@@ -463,7 +462,7 @@
 "content.message.forward.to" = "Otsi…";
 "content.message.open" = "Ava";
 "content.message.copy" = "Kopeeri";
-"content.message.download" = "Download";
+"content.message.download" = "Laadi alla";
 
 "content.message.open_link_alert.title" = "Ava lehekülg";
 "content.message.open_link_alert.message" = "Link viitab lehele: %@";
@@ -540,6 +539,7 @@
 "call.status.incoming.user" = "%@ helistab…";
 "call.status.incoming" = "Helistab…";
 "call.status.outgoing" = "Heliseb…";
+"call.status.outgoing.user" = "Helistan kontaktile %@…";
 "call.status.reconnecting" = "Ühenduse taastamine…";
 "call.status.terminating" = "Kõne lõpetamine…";
 "call.status.constant_bitrate" = "Ühtlane bitisagedus";
@@ -598,7 +598,7 @@
 "participants.section.services" = "Teenused (%d)";
 "participants.section.settings" = "Seaded";
 "participants.footer.add_title" = "Lisa osalejaid";
-"participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.name.footer" = "Grupivestlusega saab liituda kuni %1$dinimest. Videokõned töötavad kuni %2$d inimesega, lisaks sinule.";
 
 // Meta Menu
 "meta.menu.rename" = "Nimeta ümber";
@@ -709,7 +709,7 @@
 "participants.services.remove_integration.button" = "eemalda integratsioon";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests and services";
+"group_details.guest_options_cell.title" = "Külalised ja teenused";
 "group_details.guest_options_cell.enabled" = "Sees";
 "group_details.guest_options_cell.disabled" = "Väljas";
 "group_details.timeout_options_cell.title" = "Kustuvad sõnumid";
@@ -742,6 +742,11 @@
 "about.license.title" = "Litsentsiteave";
 "about.website.title" = "Wire koduleht";
 "about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Üksikasjad";
+"about.license.open_project_button" = "Ava projekti leht";
+"about.license.license_header" = "Tunnustused";
 
 // Self new devices
 "self.new_device_alert.title" = "Sinu kontot kasutati:";
@@ -1072,9 +1077,9 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
-"guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
+"guest_room.allow_guests.title" = "Luba külalisi ja teenuseid";
+"guest_room.allow_guests.subtitle" = "Ava see vestlus teenustele ja meeskonnast väljas olevatele inimestele.";
+"guest_room.remove_guests.message" = "Praegused külalised ja teenused eemaldatakse vestlusest. Uusi külalisi ja teenuseid ei lubata.";
 "guest_room.remove_guests.action" = "Eemalda";
 "guest_room.revoke_link.message" = "Uued külalised ei saa selle lingi abil liituda. Praegustel külalistel on jätkuvalt ligipääs.";
 "guest_room.revoke_link.action" = "Tühista link";
@@ -1157,12 +1162,12 @@
 "login.sso.alert.text_field.placeholder" = "SSO ligipääsukood";
 
 "login.sso.error.alert.title" = "Midagi läks valesti";
-"login.sso.error.alert.invalid_code.title" = "Invalid code.";
-"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
-"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
-"login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
-"login.sso.error.alert.unknown.message" = "Please try again later.";
-"login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.invalid_code.title" = "Sobimatu kood.";
+"login.sso.error.alert.invalid_code.message" = "Palun kinnita oma ettevõtte SSO ligipääsukood ja proovi uuesti.";
+"login.sso.error.offline.alert.message" = "Kontrolli oma netiühendust ja proovi uuesti.";
+"login.sso.error.alert.message" = "Palun pöördu oma meeskonna administraatori poole lisateabe saamiseks (viga %@).";
+"login.sso.error.alert.unknown.message" = "Palun proovi hiljem uuesti.";
+"login.sso.error.alert.invalid_status.message" = "Palun proovi hiljem uuesti (viga %@).";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Taastan…";
@@ -1304,7 +1309,7 @@
 "error.group_call.too_many_members_in_conversation.title" = "Vestluses on liiga palju inimesi, et kõnet alustada";
 "error.group_call.too_many_members_in_conversation" = "Kõnede tegemiseks on maksimaalne inimeste arv vestluses %d.";
 "error.group_call.too_many_participants_in_the_call.title" = "Kõne on täis";
-"error.group_call.too_many_participants_in_the_call" = "There’s only room for %d participants in here.";
+"error.group_call.too_many_participants_in_the_call" = "Osalejaid mahub siia vaid %d.";
 "error.call.gsm_ongoing.title" = "Mobiilikõne";
 "error.call.gsm_ongoing" = "Wire kõne alustamiseks katkesta palun mobiilikõne.";
 "error.call.general.title" = "Kõne viga";

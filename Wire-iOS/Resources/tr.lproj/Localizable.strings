@@ -390,7 +390,6 @@
 
 "content.system.call.you" = "Sen";
 "content.system.call.called" = "%@ aradı";
-"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ aradı";
 
 "content.system.renamed_conv.title" = "%@ bu konuşmanın adını değiştirdi";
@@ -540,6 +539,7 @@
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Arıyor…";
 "call.status.outgoing" = "Çalıyor…";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Sabit Bit Hızı";
@@ -742,6 +742,11 @@
 "about.license.title" = "Lisans Bilgileri";
 "about.website.title" = "Wire İnternet Sitesi";
 "about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "Ayrıntılar";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
 
 // Self new devices
 "self.new_device_alert.title" = "Hesabınızın kullanıldığı cihazlar:";

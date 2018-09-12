@@ -390,7 +390,6 @@
 
 "content.system.call.you" = "你";
 "content.system.call.called" = "%@曾打电话";
-"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@曾打电话";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
@@ -540,6 +539,7 @@
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "正在呼叫...";
 "call.status.outgoing" = "响铃中...";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "固定码率";
@@ -742,6 +742,11 @@
 "about.license.title" = "授權資訊";
 "about.website.title" = "Wire官网";
 "about.copyright.title" = "© Wire Swiss GmbH";
+
+// Licenses screen
+"about.license.project_header" = "详细信息";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
 
 // Self new devices
 "self.new_device_alert.title" = "您的账号被使用在：";
