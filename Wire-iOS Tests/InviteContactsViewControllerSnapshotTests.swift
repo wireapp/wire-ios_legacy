@@ -40,10 +40,21 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         verify(view: sut.view)
     }
 
-    func testFor(){
-//        AutomationHelper.sharedHelper.skipFirstLoginAlerts = false
+    func testForNoResult(){
+//        let _ = sut.view
+//        sut.dismiss(animated: false, completion: nil)
+
+        if let childVC = sut.childViewControllers.first as? ShareContactsViewController {
+            childVC.formStepDelegate.didCompleteFormStep(sut)
+        }
 
         verify(view: sut.view)
     }
 
+
+    func testForContactsAreShown(){
+        sut.dismiss(animated: false, completion: nil)
+
+        verify(view: sut.view)
+    }
 }
