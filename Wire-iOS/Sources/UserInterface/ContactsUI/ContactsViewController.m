@@ -74,6 +74,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     
     if (self) {
         _colorSchemeVariant = [ColorScheme defaultColorScheme].variant;
+
+        self.shouldShowShareContactsViewController = YES;
     }
     
     return self;
@@ -90,7 +92,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
     ///TODO: mock
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;
-    if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip) {
+    if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip && self.shouldShowShareContactsViewController) {
         [self presentShareContactsViewController];
     }
 

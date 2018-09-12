@@ -19,13 +19,13 @@
 import XCTest
 @testable import Wire
 
-final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class ShareContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     
-    var sut: InviteContactsViewController!
+    var sut: ShareContactsViewController!
     
     override func setUp() {
         super.setUp()
-        sut = InviteContactsViewController()
+        sut = ShareContactsViewController()
 
         /// TODO: remove this after snapshot is created
         recordMode = true
@@ -36,13 +36,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForNoResult(){
-        sut.shouldShowShareContactsViewController = false
-        verify(view: sut.view)
-    }
-
-
-    func testForContactsAreShown(){ ///TODO: ref to ContactsDataSourceTests
+    func testForInitState(){
         verify(view: sut.view)
     }
 }
