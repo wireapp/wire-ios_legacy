@@ -183,10 +183,6 @@ public protocol CollectionsViewControllerDelegate: class {
     }
     
     override public var shouldAutorotate: Bool {
-//        if isPresentingPlayer {
-//            return true
-//        } else {
-
             switch (self.traitCollection.horizontalSizeClass) {
             case .compact:
 
@@ -253,6 +249,8 @@ public protocol CollectionsViewControllerDelegate: class {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackOpeningIfNeeded()
+
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

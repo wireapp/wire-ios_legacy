@@ -28,9 +28,9 @@ extension AVPlayerViewController {
         }
     }
 
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        if self.isBeingDismissed == false {
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        guard self.isBeingDismissed else {
             return
         }
 
@@ -46,7 +46,6 @@ extension MessagePresenter {
             rotationAwareNavigationController.isPresentingPlayer = false
         }
 
-        delay(1) {
         UIViewController.attemptRotationToDeviceOrientation()
 
             if let rotationAwareNavigationController = self.targetViewController as? RotationAwareNavigationController {
@@ -55,7 +54,8 @@ extension MessagePresenter {
                 }
             }
 
-        }
+        ///TODO
+//        NotificationCenter.default.remove
     }
 
     func observePlayerDismissial() {
