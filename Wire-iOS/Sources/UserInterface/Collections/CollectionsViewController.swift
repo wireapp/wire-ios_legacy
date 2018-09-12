@@ -27,7 +27,6 @@ public protocol CollectionsViewControllerDelegate: class {
 }
 
 @objcMembers final public class CollectionsViewController: UIViewController {
-    var isPresentingPlayer = false
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
     public weak var delegate: CollectionsViewControllerDelegate?

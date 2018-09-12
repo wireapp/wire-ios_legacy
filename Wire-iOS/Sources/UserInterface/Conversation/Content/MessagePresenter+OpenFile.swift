@@ -20,42 +20,11 @@ import Foundation
 
 fileprivate let zmLog = ZMSLog(tag: "MessagePresenter")
 
-// create an extension of AVPlayerViewController
-extension AVPlayerViewController {
-    override open var prefersStatusBarHidden: Bool {
-        get {
-            return true;
-        }
-    }
-
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        guard self.isBeingDismissed else {
-            return
-        }
-
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DismissingAVPlayer"), object: self)
-    }
-}
-
 extension MessagePresenter {
     @objc func playerDismissed(notification: Notification) {
         mediaPlayerController?.tearDown()
 
-        if let rotationAwareNavigationController = targetViewController as? RotationAwareNavigationController {
-            rotationAwareNavigationController.isPresentingPlayer = false
-        }
-
         UIViewController.attemptRotationToDeviceOrientation()
-
-            if let rotationAwareNavigationController = self.targetViewController as? RotationAwareNavigationController {
-                if let collectionViewController = (rotationAwareNavigationController.topViewController! as! KeyboardAvoidingViewController).viewController as? CollectionsViewController {
-                    collectionViewController.isPresentingPlayer = false
-                }
-            }
-
-        ///TODO
-//        NotificationCenter.default.remove
     }
 
     func observePlayerDismissial() {
@@ -94,10 +63,6 @@ extension MessagePresenter {
             let playerViewController = AVPlayerViewController()
             playerViewController.player = player
 
-            if let rotationAwareNavigationController = targetViewController as? RotationAwareNavigationController {
-                rotationAwareNavigationController.isPresentingPlayer = true
-            }
-
             observePlayerDismissial()
 
             targetViewController?.present(playerViewController, animated: true) {
@@ -108,5 +73,4 @@ extension MessagePresenter {
             openDocumentController(for: message, targetView: targetView, withPreview: true)
         }
     }
-
 }
