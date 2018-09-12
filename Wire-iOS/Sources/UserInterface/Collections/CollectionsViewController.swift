@@ -145,7 +145,6 @@ public protocol CollectionsViewControllerDelegate: class {
         self.textSearchController.delegate = self
         self.contentView.constrainViews(searchViewController: self.textSearchController)
         
-        self.messagePresenter.targetViewController = self
         self.messagePresenter.modalTargetController = self
 
         self.contentView.collectionView.delegate = self
@@ -159,9 +158,14 @@ public protocol CollectionsViewControllerDelegate: class {
         super.viewWillAppear(animated)
         self.setupNavigationItem()
         self.flushLayout()
-        
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        if let navigationController = self.navigationController {
+        navigationController.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController.interactivePopGestureRecognizer?.delegate = self
+
+        //        self.messagePresenter.targetViewController = self
+        self.messagePresenter.targetViewController = navigationController
+        }
     }
     
     override public func viewWillDisappear(_ animated: Bool) {
@@ -179,12 +183,14 @@ public protocol CollectionsViewControllerDelegate: class {
     }
     
     override public var shouldAutorotate: Bool {
-        switch (self.traitCollection.horizontalSizeClass) {
-        case .compact:
-            return false
-        default:
-            return true
-        }
+        return true
+
+//        switch (self.traitCollection.horizontalSizeClass) {
+//        case .compact:
+//            return false
+//        default:
+//            return true
+//        }
     }
 
     private func flushLayout() {
