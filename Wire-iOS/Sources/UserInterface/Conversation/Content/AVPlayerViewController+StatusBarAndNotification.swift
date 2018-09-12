@@ -19,6 +19,10 @@
 import Foundation
 import AVKit
 
+extension Notification.Name {
+    static let dismissingAVPlayer = Notification.Name("DismissingAVPlayer")
+}
+
 extension AVPlayerViewController {
     override open var prefersStatusBarHidden: Bool {
         get {
@@ -32,8 +36,7 @@ extension AVPlayerViewController {
             return
         }
 
-        ///TODO: notification name
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DismissingAVPlayer"), object: self)
+        NotificationCenter.default.post(name: .dismissingAVPlayer, object: self)
     }
 }
 

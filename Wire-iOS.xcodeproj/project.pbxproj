@@ -5039,8 +5039,8 @@
 				87F18BCF1E02F63700C69D9B /* MessagePresenter.m */,
 				EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */,
 				EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */,
-				87AAE4221E43234A00E1D13A /* MessagePresenter+ConversationImages.swift */,
 				EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */,
+				87AAE4221E43234A00E1D13A /* MessagePresenter+ConversationImages.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
