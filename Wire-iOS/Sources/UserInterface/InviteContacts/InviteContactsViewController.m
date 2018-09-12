@@ -58,7 +58,7 @@
 
 - (BOOL)sharingContactsRequired
 {
-    return YES;
+    return NO; ///TODO: mock
 }
 
 - (void)inviteUser:(ZMSearchUser *)user fromView:(UIView *)view

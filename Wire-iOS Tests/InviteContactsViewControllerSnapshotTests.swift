@@ -36,7 +36,14 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForShareContactsViewControllerShown() {
         verify(view: sut.view)
     }
+
+    func testFor(){
+//        AutomationHelper.sharedHelper.skipFirstLoginAlerts = false
+
+        verify(view: sut.view)
+    }
+
 }
