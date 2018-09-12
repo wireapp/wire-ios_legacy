@@ -34,6 +34,21 @@ final class MessagePresenterTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: - Video
+    func testThatVideoFileIsShown(){
+        // GIVEN
+        let message = MockMessageFactory.videoMessage()
+
+        // WHEN
+        let addPassesViewController = sut.openFileMessage(message, targetView: UIView())
+
+        // THEN
+        XCTAssertNotNil(addPassesViewController)
+    }
+
+
+    // MARK: - Pass
+
     func testThatCreateAddPassesViewControllerReturnsNilForFileMessage(){
         // GIVEN
         let message = MockMessageFactory.fileTransferMessage()!
