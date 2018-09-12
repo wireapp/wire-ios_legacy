@@ -18,7 +18,6 @@
 
 import UIKit
 import Cartography
-import Classy
 
 @objc enum ImageToolbarConfiguration : UInt {
     case cell
@@ -60,17 +59,29 @@ import Classy
     var isPlacedOnImage : Bool = false {
         didSet {
             backgroundColor = isPlacedOnImage ? UIColor(white: 0, alpha: 0.40) : UIColor.clear
-            cas_styleClass = isPlacedOnImage ? "on-image" : "on-background"
-            buttons.forEach(CASStyler.default().styleItem)
+            updateButtonStyle()
         }
     }
-    
+
+    private func updateButtonStyle() {
+        let normalColor: UIColor = isPlacedOnImage ? .iconNormalDark : .iconNormal
+        let highlightedColor: UIColor = isPlacedOnImage ? .iconHighlightedDark : .iconHighlighted
+        let selectedColor: UIColor = isPlacedOnImage ? .accentDarken() : .accent()
+
+        [sketchButton, emojiButton, textButton, expandButton].forEach {
+            $0.setIconColor(normalColor, for: .normal)
+            $0.setIconColor(highlightedColor, for: .highlighted)
+            $0.setIconColor(selectedColor, for: .selected)
+        }
+    }
+
     @objc public init(withConfiguraton configuration: ImageToolbarConfiguration) {
         self.configuration = configuration
         
         super.init(frame: CGRect.zero)
-        
-        cas_styleClass = "on-background"
+
+        updateButtonStyle()
+
         addSubview(buttonContainer)
         
         constrain(self, buttonContainer) { container, buttonContainer in

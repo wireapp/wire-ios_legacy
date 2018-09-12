@@ -44,6 +44,14 @@
     _service = [[SoundcloudService alloc] initWithUserSession:_sessionMock];
 }
 
+- (void)tearDown
+{
+    [_sessionMock stopMocking];
+    _sessionMock = nil;
+    _service = nil;
+    [super tearDown];
+}
+
 - (void)testThatloadAudioResourceFromURLConstructsValidRequest
 {
     // given

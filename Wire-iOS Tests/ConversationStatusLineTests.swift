@@ -80,6 +80,21 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.string, "Missed call")
     }
     
+    func testStatusMissedCallInGroup() {
+        // GIVEN
+        let sut = createGroupConversation()
+        let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
+        otherMessage.sender = self.otherUser
+        otherMessage.systemMessageType = .missedCall
+        sut.sortedAppendMessage(otherMessage)
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "Missed call from Bruno")
+    }
+    
     func testStatusRejectedCall() {
         // GIVEN
         let sut = self.otherUserConversation!

@@ -109,7 +109,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationInputBarViewController ()
 
 @property (nonatomic) IconButton *audioButton;
-@property (nonatomic) IconButton *videoButton;
 @property (nonatomic) IconButton *photoButton;
 @property (nonatomic) IconButton *uploadFileButton;
 @property (nonatomic) IconButton *sketchButton;
@@ -242,6 +241,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateAvailabilityPlaceholder];
 
     [self setInputLanguage];
+    [self setupStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -378,7 +378,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     const CGFloat senderDiameter = 28;
 
-    self.emojiButton = IconButton.iconButtonCircular;
+    self.emojiButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
     self.emojiButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.emojiButton.accessibilityIdentifier = @"emojiButton";
 
@@ -392,7 +392,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     const CGFloat senderDiameter = 28;
 
-    self.markdownButton = IconButton.iconButtonCircular;
+    self.markdownButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
     self.markdownButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.markdownButton.accessibilityIdentifier = @"markdownButton";
     [self.inputBar.leftAccessoryView addSubview:self.markdownButton];
@@ -403,13 +403,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)createHourglassButton
 {
-    self.hourglassButton = IconButton.iconButtonDefault;
+    self.hourglassButton = [[IconButton alloc] initWithStyle:IconButtonStyleDefault];
     self.hourglassButton.translatesAutoresizingMaskIntoConstraints = NO;
 
     [self.hourglassButton setIcon:ZetaIconTypeHourglass withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
 
     self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
-    self.hourglassButton.cas_styleClass = @"hourglass";
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
 
     [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];
@@ -897,16 +896,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         return;
     }
     
-    [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false];
-}
-
-#pragma mark - Video save callback
-
-- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    if (nil != error) {
-        ZMLogError(@"Error saving video: %@", error);
-    }
+    [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera
+                                mediaTypes:@[(id)kUTTypeMovie]
+                             allowsEditing:false
+                               pointToView:self.videoButton.imageView];
 }
 
 @end

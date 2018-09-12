@@ -19,29 +19,6 @@
 import XCTest
 @testable import Wire
 
-final class MockTapGestureRecognizer: UITapGestureRecognizer {
-    let mockState: UIGestureRecognizerState
-    var mockLocation: CGPoint?
-
-    init(location: CGPoint?, state: UIGestureRecognizerState) {
-        mockLocation = location
-        mockState = state
-
-        super.init(target: nil, action: nil)
-    }
-
-    override func location(in view: UIView?) -> CGPoint {
-        return mockLocation ?? super.location(in: view)
-    }
-
-    override var state: UIGestureRecognizerState {
-        get {
-            return mockState
-        }
-        set {}
-    }
-}
-
 final class FullscreenImageViewControllerTests: XCTestCase {
     
     var sut: FullscreenImageViewController!

@@ -32,9 +32,18 @@ import Classy
     
     private let previewImageView = UIImageView()
     private let progressView = CircularProgressView()
-    private let playButton = IconButton()
+    private let playButton: IconButton = {
+        let button = IconButton()
+        button.setIconColor(.white, for: .normal)
+        return button
+    }()
     private let bottomGradientView = GradientView()
-    private let timeLabel = UILabel()
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+
+        return label
+    }()
     private let loadingView = ThreeDotsLoadingView()
     
     private let normalColor = UIColor.black.withAlphaComponent(0.4)
@@ -120,7 +129,7 @@ import Classy
             updateTimeLabel(withFileMessageData: fileMessageData)
             self.timeLabel.textColor = UIColor(scheme: .textForeground)
             
-            fileMessageData.thumbnailImage.fetchImage { [weak self] (image) in
+            fileMessageData.thumbnailImage.fetchImage { [weak self] (image, _) in
                 guard let image = image else { return }
                 self?.updatePreviewImage(image)
             }

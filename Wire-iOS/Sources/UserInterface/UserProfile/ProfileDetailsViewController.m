@@ -18,6 +18,7 @@
 
 
 #import "ProfileDetailsViewController.h"
+#import "ProfileDetailsViewController+Internal.h"
 
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
@@ -82,7 +83,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 @property (nonatomic) UIView *footerView;
 @property (nonatomic) UIView *stackViewContainer;
 @property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
-@property (nonatomic) UILabel *remainingTimeLabel;
 @property (nonatomic) BOOL showGuestLabel;
 @property (nonatomic) AvailabilityTitleView *availabilityView;
 @property (nonatomic) CustomSpacingStackView *stackView;
@@ -94,7 +94,7 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (instancetype)initWithUser:(id<UserType, AccentColorProvider>)user conversation:(ZMConversation *)conversation context:(ProfileViewControllerContext)context
 {
     self = [super initWithNibName:nil bundle:nil];
-    
+
     if (self) {
         _context = context;
         _bareUser = user;

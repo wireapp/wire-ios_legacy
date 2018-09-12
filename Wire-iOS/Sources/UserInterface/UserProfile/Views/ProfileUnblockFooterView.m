@@ -32,7 +32,7 @@
 {
     self = [super init];
     if (self) {
-        self.unblockButton = [Button buttonWithStyleClass:@"dialogue-button-full"];
+        self.unblockButton = [Button buttonWithStyle:ButtonStyleFull];
         self.unblockButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:self.unblockButton];
 

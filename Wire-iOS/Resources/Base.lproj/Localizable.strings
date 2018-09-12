@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "People";
 "peoplepicker.header.services" = "Services";
-"peoplepicker.services.create_conversation.item" = "Create conversation";
+"peoplepicker.services.open_conversation.item" = "Open conversation";
 "peoplepicker.services.add_service.button" = "Add service";
 "peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 
-"add_participants.alert.title" = "Full house";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
@@ -193,7 +193,6 @@
 
 "conversation.voiceover.verified" = "verified";
 
-"conversation.status.call" = "Ongoing call";
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
@@ -208,6 +207,7 @@
 "conversation.status.message.file" = "Shared a file";
 "conversation.status.message.knock" = "Pinged";
 "conversation.status.message.missedcall" = "Missed call";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Timed message";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
@@ -390,6 +390,7 @@
 
 "content.system.call.you" = "You";
 "content.system.call.called" = "%@ called";
+"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ called";
 
 "content.system.renamed_conv.title" = "%@ renamed the conversation";
@@ -961,7 +962,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical Report";
 "self.settings.technical_report.send_report" = "Send report to Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire Calling Report";
 "self.settings.technical_report.include_log" = "Include detailed log";
 "self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
@@ -1016,9 +1016,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "For personal use";
+"landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
@@ -1404,6 +1404,7 @@
 "calling.quality_survey.answer.3" = "Fair";
 "calling.quality_survey.answer.4" = "Good";
 "calling.quality_survey.answer.5" = "Excellent";
+"calling.quality_survey.skip_button_title" = "Skip";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

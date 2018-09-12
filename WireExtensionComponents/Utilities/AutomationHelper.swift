@@ -54,6 +54,9 @@ import WireSyncEngine
     
     /// Whether address book upload is enabled on simulator
     @objc public let uploadAddressbookOnSimulator : Bool
+
+    /// Whether we should disable the call quality survey.
+    public let disableCallQualitySurvey: Bool
     
     /// Delay in address book remote search override
     public let delayInAddressBookRemoteSearch : TimeInterval?
@@ -68,14 +71,16 @@ import WireSyncEngine
         let url = URL(string: NSTemporaryDirectory())?.appendingPathComponent(fileArgumentsName)
         let arguments: ArgumentsType = url.flatMap(FileArguments.init) ?? CommandLineArguments()
 
-        self.disablePushNotificationAlert = arguments.hasFlag(AutomationKey.disablePushNotificationAlert.rawValue)
-        self.disableAutocorrection = arguments.hasFlag(AutomationKey.disableAutocorrection.rawValue)
-        self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator.rawValue)
+        self.disablePushNotificationAlert = arguments.hasFlag(AutomationKey.disablePushNotificationAlert)
+        self.disableAutocorrection = arguments.hasFlag(AutomationKey.disableAutocorrection)
+        self.uploadAddressbookOnSimulator = arguments.hasFlag(AutomationKey.enableAddressBookOnSimulator)
+        self.disableCallQualitySurvey = arguments.hasFlag(AutomationKey.disableCallQualitySurvey)
+
         self.automationEmailCredentials = AutomationHelper.credentials(arguments)
-        if arguments.hasFlag(AutomationKey.logNetwork.rawValue) {
+        if arguments.hasFlag(AutomationKey.logNetwork) {
             ZMSLog.set(level: .debug, tag: "Network")
         }
-        if arguments.hasFlag(AutomationKey.logCalling.rawValue) {
+        if arguments.hasFlag(AutomationKey.logCalling) {
             ZMSLog.set(level: .debug, tag: "calling")
         }
         AutomationHelper.enableLogTags(arguments)
@@ -86,9 +91,11 @@ import WireSyncEngine
         } else {
             self.debugDataToInstall = nil
         }
-        
         self.delayInAddressBookRemoteSearch = AutomationHelper.addressBookSearchDelay(arguments)
         super.init()
+        if arguments.hasFlag(AutomationKey.listenForLogSendingEvent.rawValue) {
+            listenForClipboardChanges()
+        }
     }
     
     fileprivate enum AutomationKey: String {
@@ -102,6 +109,9 @@ import WireSyncEngine
         case enableAddressBookOnSimulator = "addressbook-on-simulator"
         case addressBookRemoteSearchDelay = "addressbook-search-delay"
         case debugDataToInstall = "debug-data-to-install"
+        case disableCallQualitySurvey = "disable-call-quality-survey"
+        case listenForLogSendingEvent = "listen-for-logs-keyword" // starts polling the clipboard to detect .pasteLogsInClipboard
+        case pasteLogsInClipboard = "paste-logs" // When this is detected in the clipboard we copy the contents of current log to clipboard
     }
     
     /// Returns the login email and password credentials if set in the given arguments
@@ -152,6 +162,10 @@ extension ArgumentsType {
 
     func hasFlag(_ name: String) -> Bool {
         return self.arguments.contains(flagPrefix + name)
+    }
+
+    func hasFlag<Flag: RawRepresentable>(_ flag: Flag) -> Bool where Flag.RawValue == String {
+        return hasFlag(flag.rawValue)
     }
 
     func flagValueIfPresent(_ commandLineArgument: String) -> String? {
@@ -208,4 +222,23 @@ extension AutomationHelper {
         try! FileManager.default.copyFolderRecursively(from: packageURL, to: sharedContainerURL, overwriteExistingFiles: true)
     }
     
+}
+
+extension AutomationHelper {
+    fileprivate func listenForClipboardChanges() {
+        // UIClipboard change notifications do not work when contents are changed from
+        // outside the process (e.g. in automation) so the only way is to poll for it
+        pollClipboardContentsForMagicString()
+    }
+
+    fileprivate func pollClipboardContentsForMagicString() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+            if UIPasteboard.general.string == AutomationKey.pasteLogsInClipboard.rawValue {
+                // When magic string is detected we should put contents of the first available log to clipboard
+                let allLogStrings = [ZMSLog.currentLog, ZMSLog.previousLog].lazy.compactMap{ $0 }.compactMap { String(data: $0, encoding: .utf8) }
+                UIPasteboard.general.string = allLogStrings.first ?? "No logs found"
+            }
+            self?.pollClipboardContentsForMagicString()
+        }
+    }
 }

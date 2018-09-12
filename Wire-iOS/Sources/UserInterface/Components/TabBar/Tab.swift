@@ -23,7 +23,7 @@ class Tab: Button {
 
     var title: String = "" {
         didSet {
-            setTitle(title, for: .normal)
+            setTitle(title.localizedUppercase, for: .normal)
         }
     }
 
@@ -38,7 +38,10 @@ class Tab: Button {
         super.init(frame: .zero)
 
         titleLabel?.font = FontSpec(.small, .semibold).font
+        titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0)
         isSelected = false
+        
+        updateColors()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -49,22 +52,10 @@ class Tab: Button {
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIViewNoIntrinsicMetric, height: 48)
     }
-
-    override var isSelected: Bool {
-        didSet {
-            updateColors()
-        }
-    }
-
+    
     private func updateColors() {
-        let selectionColor: UIColor
-        switch self.colorSchemeVariant {
-        case .dark:
-            selectionColor = .white
-        case .light:
-            selectionColor = .black
-        }
-        
-        setTitleColor(isSelected ? selectionColor : selectionColor.withAlphaComponent(0.5), for: .normal)
+        setTitleColor(UIColor(scheme: .tabNormal, variant: colorSchemeVariant), for: .normal)
+        setTitleColor(UIColor(scheme: .tabSelected, variant: colorSchemeVariant), for: .selected)
+        setTitleColor(UIColor(scheme: .tabHighlighted, variant: colorSchemeVariant), for: .highlighted)
     }
 }

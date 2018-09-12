@@ -20,7 +20,6 @@
 import Foundation
 import UIKit
 import Cartography
-import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -31,7 +30,7 @@ enum ClientSection: Int {
     case removeDevice = 3
 }
 
-@objcMembers class SettingsClientViewController: UIViewController,
+class SettingsClientViewController: UIViewController,
                                     UITableViewDelegate,
                                     UITableViewDataSource,
                                     UserClientObserver,
@@ -100,9 +99,14 @@ enum ClientSection: Int {
         
 
         if fromConversation {
-            self.cas_styleClass = "conversation"
+            setupFromConversationStyle()
         }
-        CASStyler.default().styleItem(self)
+    }
+
+    func setupFromConversationStyle() {
+        view.backgroundColor = .background
+        tableView.separatorColor = .separator
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor(scheme: .textForeground)]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -211,12 +215,6 @@ enum ClientSection: Int {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let clientSection = ClientSection(rawValue: (indexPath as NSIndexPath).section) else { return UITableViewCell() }
 
-        let styler = {[unowned self] (cell: UITableViewCell) -> () in
-            if self.fromConversation {
-                cell.cas_styleClass = "conversation"
-            }
-        }
-        
         switch clientSection {
             
         case .info:
@@ -226,7 +224,6 @@ enum ClientSection: Int {
                 cell.wr_editable = false
                 cell.showVerified = false
                 cell.showLabel = true
-                styler(cell)
                 cell.variant = self.variant
                 return cell
             }
@@ -239,8 +236,7 @@ enum ClientSection: Int {
                     
                     cell.selectionStyle = .none
                     cell.fingerprint = self.userClient.fingerprint
-                    styler(cell)
-                    cell.variant = self.variant
+                        cell.variant = self.variant
                     return cell
                 }
             }
@@ -252,8 +248,7 @@ enum ClientSection: Int {
                     cell.switchView.accessibilityIdentifier = "device verified"
                     cell.accessibilityIdentifier = "device verified"
                     cell.switchView.isOn = self.userClient.verified
-                    styler(cell)
-                    cell.variant = self.variant
+                        cell.variant = self.variant
                     return cell
                 }
             }
@@ -262,7 +257,6 @@ enum ClientSection: Int {
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).resetCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("profile.devices.detail.reset_session.title", comment: "")
                 cell.accessibilityIdentifier = "reset session"
-                styler(cell)
                 cell.variant = self.variant
                 return cell
             }
@@ -272,7 +266,6 @@ enum ClientSection: Int {
             if let cell = tableView.dequeueReusableCell(withIdentifier: type(of: self).deleteCellReuseIdentifier, for: indexPath) as? SettingsTableCell {
                 cell.titleText = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
                 cell.accessibilityIdentifier = "remove device"
-                styler(cell)
                 cell.variant = self.variant
                 return cell
             }

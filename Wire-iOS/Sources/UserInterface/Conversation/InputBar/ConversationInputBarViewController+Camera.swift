@@ -129,18 +129,31 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             zmLog.error("didFinishSavingWithError: \(error)")
         }
     }
+
+    // MARK: - Video save callback
+    @objc func video(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+        if let error = error {
+            zmLog.error("Error saving video: \(error)")
+        }
+    }
     
     public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
-            self.presentImagePicker(with: .camera, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
+            self.presentImagePicker(with: .camera,
+                                    mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
+                                    allowsEditing: false,
+                                    pointToView:self.photoButton.imageView)
         }
     }
     
     public func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
-            self.presentImagePicker(with: .photoLibrary, mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String], allowsEditing: false)
+            self.presentImagePicker(with: .photoLibrary,
+                                    mediaTypes: [kUTTypeMovie as String, kUTTypeImage as String],
+                                    allowsEditing: false,
+                                    pointToView:self.photoButton.imageView)
         }
     }
     

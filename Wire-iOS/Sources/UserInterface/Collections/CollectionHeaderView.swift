@@ -56,7 +56,13 @@ import Cartography
     }
     
     public let titleLabel = UILabel()
-    public let actionButton = UIButton()
+    public let actionButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.strongBlue, for: .normal)
+
+        return button
+    }()
+
     public let iconImageView = UIImageView()
     
     public var selectionAction: ((CollectionsSectionSet) -> ())? = .none

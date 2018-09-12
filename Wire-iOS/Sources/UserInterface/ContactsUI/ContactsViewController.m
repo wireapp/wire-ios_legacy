@@ -23,6 +23,7 @@
 @import WireExtensionComponents;
 
 #import "ContactsViewController.h"
+#import "ContactsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "ContactsViewController+ShareContacts.h"
 #import "ContactsCell.h"
@@ -50,8 +51,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) Button *inviteOthersButton;
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) NSArray *actionButtonTitles;
-@property (nonatomic) UILabel *noContactsLabel;
-@property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) ContactsEmptyResultView *emptyResultsView;
 
 @property (nonatomic) BOOL searchResultsReceived;
@@ -59,8 +58,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 // Containers, ect.
 @property (nonatomic) UIView *topContainerView;
 @property (nonatomic) UIView *separatorView;
-@property (nonatomic) UIView *bottomContainerView;
-@property (nonatomic) UIView *bottomContainerSeparatorView;
 @property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
 @property (nonatomic) NSLayoutConstraint *emptyResultsBottomConstraint;
 @property (nonatomic) NSLayoutConstraint *titleLabelHeightConstraint;
@@ -96,6 +93,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip) {
         [self presentShareContactsViewController];
     }
+
+    [self setupStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated

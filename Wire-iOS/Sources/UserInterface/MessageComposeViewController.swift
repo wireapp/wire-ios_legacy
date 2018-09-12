@@ -134,7 +134,7 @@ final class MessageComposeViewController: UIViewController {
         updateRightNavigationItem()
     }
 
-    private let draftsBackButton = IconButton.iconButtonDefault()
+    private let draftsBackButton = IconButton(style: .default)
 
     private func updateRightNavigationItem() {
         let showItem = traitCollection.horizontalSizeClass == .compact

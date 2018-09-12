@@ -27,6 +27,11 @@ class ModalTopBarTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ModalTopBar()
     }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
     
     func testThatItRendersCorrectly_ShortTitle() {
         sut.title = "Tim Cook"

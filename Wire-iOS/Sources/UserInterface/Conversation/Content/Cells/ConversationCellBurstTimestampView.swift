@@ -17,14 +17,15 @@
 //
 
 
-import Classy
 import Cartography
-
 
 @objcMembers final public class ConversationCellBurstTimestampView: UIView {
 
     public let unreadDot = UIView()
-    public let label = UILabel()
+    public let label: UILabel = {
+        let label = UILabel()
+        return label
+    }()
 
     public var separatorColor: UIColor?
     public var separatorColorExpanded: UIColor?
@@ -71,13 +72,14 @@ import Cartography
 
     init() {
         super.init(frame: .zero)
-        CASStyler.default().styleItem(self)
         setupViews()
         createConstraints()
 
         accentColorObserver = AccentColorChangeHandler.addObserver(self) { [weak self] (color, _) in
             self?.unreadDot.backgroundColor = color
         }
+
+        setupStyle()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -126,4 +128,9 @@ import Cartography
         }
     }
 
+    func setupStyle() {
+        label.textColor = UIColor(scheme: .textForeground)
+        separatorColor = UIColor(scheme: .separator)
+        separatorColorExpanded = UIColor(scheme: .paleSeparator)
+    }
 }

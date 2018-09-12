@@ -34,7 +34,7 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func tearDown() {
         sut = nil
         mockDevice = nil
-
+        mockParentViewControler = nil
         super.tearDown()
     }
 

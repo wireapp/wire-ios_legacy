@@ -73,7 +73,7 @@
 
 - (void)createPlayPauseButton
 {
-    self.playPauseButton = [IconButton iconButtonDefault];
+    self.playPauseButton = [[IconButton alloc] initWithStyle:IconButtonStyleDefault];
     self.playPauseButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.playPauseButton setIcon:ZetaIconTypeMediaBarPlay withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.contentView addSubview:self.playPauseButton];
@@ -81,7 +81,7 @@
 
 - (void)createCloseButton
 {
-    self.closeButton = [IconButton iconButtonDefault];
+    self.closeButton = [[IconButton alloc] initWithStyle:IconButtonStyleDefault];
     self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.closeButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.contentView addSubview:self.closeButton];

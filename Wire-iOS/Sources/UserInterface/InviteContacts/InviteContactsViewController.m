@@ -20,11 +20,13 @@
 @import WireExtensionComponents;
 
 #import "InviteContactsViewController.h"
+#import "InviteContactsViewController+Internal.h"
 #import "ContactsViewController+Private.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"
 #import "ContactsCell.h"
 #import "WireSyncEngine+iOS.h"
+#import "Wire-Swift.h"
 
 @interface InviteContactsViewController () <ContactsViewControllerDelegate, ContactsViewControllerContentDelegate>
 @end
@@ -46,6 +48,12 @@
     }
     
     return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self setupStyle];
 }
 
 - (BOOL)sharingContactsRequired

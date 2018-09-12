@@ -52,6 +52,7 @@
 @property (nonatomic, assign) BOOL isGuestInConversation;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
+@property (nonatomic, readwrite) NSString *expirationDisplayString;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 @property (nonatomic) ZMConnection *connection;
@@ -59,6 +60,7 @@
 @property (nonatomic) AddressBookEntry *addressBookEntry;
 @property (nonatomic) NSUUID *remoteIdentifier;
 @property (nonatomic, readwrite) Availability availability;
+@property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
 
 - (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;

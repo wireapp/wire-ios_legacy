@@ -18,18 +18,17 @@
 
 
 #import "ContactsCell.h"
+#import "ContactsCell+Internal.h"
+#import "Button.h"
 #import "BadgeUserImageView.h"
 @import PureLayout;
 #import "WireSyncEngine+iOS.h"
-@import WireExtensionComponents;
-
+#import "Wire-Swift.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 @interface ContactsCell ()
 @property (nonatomic) BadgeUserImageView *userImageView;
-@property (nonatomic) UILabel *userNameLabel;
-@property (nonatomic) UILabel *userSubtitleLabel;
 @property (nonatomic) UIView *userNameContainerView;
 @property (nonatomic, readwrite) Button *actionButton;
 @property (nonatomic) CGFloat actionButtonWidth;
@@ -78,6 +77,7 @@ NS_ASSUME_NONNULL_END
     _actionButtonWidth = 50;    // default value
     [self setupSubviews];
     [self setupConstraints];
+    [self setupStyle];
 }
 
 - (void)setupSubviews
@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_END
     self.userSubtitleLabel = [[UILabel alloc] initForAutoLayout];
     [self.userNameContainerView addSubview:self.userSubtitleLabel];
     
-    self.actionButton = [Button buttonWithStyleClass:@"dialogue-button-full"];
+    self.actionButton = [[Button alloc] initWithStyle:ButtonStyleFull];
     [self.actionButton setTitle:NSLocalizedString(@"contacts_ui.action_button.invite", @"") forState:UIControlStateNormal];
     [self.actionButton addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:self.actionButton];

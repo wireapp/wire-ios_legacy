@@ -43,7 +43,7 @@ extension UserType {
         return derivedKey
     }
         
-    public func fetchProfileImage(cache: ImageCache<UIImage> = defaultUserImageCache, sizeLimit: Int? = nil, desaturate: Bool = false, completion: @escaping (_ image: UIImage?) -> Void ) -> Void {
+    public func fetchProfileImage(cache: ImageCache<UIImage> = defaultUserImageCache, sizeLimit: Int? = nil, desaturate: Bool = false, completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
         
         let screenScale = UIScreen.main.scale
         let previewSizeLimit: CGFloat = 280
@@ -55,11 +55,11 @@ extension UserType {
         }
         
         guard let cacheKey = cacheKey(for: size, sizeLimit: sizeLimit, desaturate: desaturate) as NSString? else {
-            return completion(nil)
+            return completion(nil, false)
         }
         
         if let image = cache.cache.object(forKey: cacheKey) {
-            return completion(image)
+            return completion(image, true)
         }
         
         switch size {
@@ -72,7 +72,7 @@ extension UserType {
         imageData(for: size, queue: cache.processingQueue) { (imageData) in
             guard let imageData = imageData else {
                 return DispatchQueue.main.async {
-                    completion(nil)
+                    completion(nil, false)
                 }
             }
             
@@ -92,7 +92,7 @@ extension UserType {
             }
             
             DispatchQueue.main.async {
-                completion(image)
+                completion(image, false)
             }
         }
     }

@@ -26,7 +26,13 @@ import WireExtensionComponents
     public let shieldViewContainer = UIView()
     public let contentContainerView = UIView()
     public let blurView: UIVisualEffectView!
-    public let authenticateLabel = UILabel()
+    public let authenticateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .largeThinFont
+        label.textColor = .textForegroundDark
+
+        return label
+    }()
     public let authenticateButton = Button(style: .fullMonochrome)
     
     private var contentWidthConstraint: NSLayoutConstraint!

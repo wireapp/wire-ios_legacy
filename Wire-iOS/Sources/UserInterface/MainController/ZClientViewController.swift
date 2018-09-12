@@ -24,14 +24,17 @@ extension ZClientViewController {
     func setTopOverlay(to viewController: UIViewController?, animated: Bool = true) {
         topOverlayViewController?.willMove(toParentViewController: nil)
         
-        if let previousViewController = topOverlayViewController, animated {
-            if let viewController = viewController {
-                addChildViewController(viewController)
+        if let previousViewController = topOverlayViewController, let viewController = viewController {
+            addChildViewController(viewController)
+            viewController.view.frame = topOverlayContainer.bounds
+            viewController.view.translatesAutoresizingMaskIntoConstraints = false
+            
+            if animated {
                 transition(from: previousViewController,
                            to: viewController,
                            duration: 0.5,
                            options: .transitionCrossDissolve,
-                           animations: nil,
+                           animations: { viewController.view.fitInSuperview() },
                            completion: { (finished) in
                             viewController.didMove(toParentViewController: self)
                             previousViewController.removeFromParentViewController()
@@ -39,10 +42,18 @@ extension ZClientViewController {
                             self.updateSplitViewTopConstraint()
                             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 })
+            } else {
+                topOverlayContainer.addSubview(viewController.view)
+                viewController.view.fitInSuperview()
+                viewController.didMove(toParentViewController: self)
+                topOverlayViewController = viewController
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+                updateSplitViewTopConstraint()
             }
-            else {
+        } else if let previousViewController = topOverlayViewController {
+            if animated {
                 let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
-
+                
                 UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
                     heightConstraint.isActive = true
                     
@@ -56,9 +67,13 @@ extension ZClientViewController {
                     self.topOverlayViewController = nil
                     self.updateSplitViewTopConstraint()
                 }
+            } else {
+                self.topOverlayViewController?.removeFromParentViewController()
+                previousViewController.view.removeFromSuperview()
+                self.topOverlayViewController = nil
+                self.updateSplitViewTopConstraint()
             }
-        }
-        else if let viewController = viewController {
+        } else if let viewController = viewController {
             addChildViewController(viewController)
             viewController.view.frame = topOverlayContainer.bounds
             viewController.view.translatesAutoresizingMaskIntoConstraints = false

@@ -92,7 +92,7 @@ import Cartography
             self.accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
         case .activeCall(false):
-            iconView.image = UIImage(for: .phone, fontSize: iconSize, color: .white)
+            iconView.image = UIImage(for: .phone, fontSize: 18.0, color: .white)
             self.accessibilityValue = "conversation_list.voiceover.status.active_call".localized
             return iconView
         case .activeCall(true):
@@ -100,7 +100,7 @@ import Cartography
             self.accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
-            iconView.image = UIImage(for: .missedCall, fontSize: iconSize, color: .black)
+            iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
             self.accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
@@ -164,9 +164,10 @@ import Cartography
             updateCollapseConstraints(isCollapsed: true)
 
             return
-        case .activeCall(_):
+        case .activeCall(false):
+            self.badgeView.backgroundColor = .clear
+        case .activeCall(true): // "Join" button
             self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color
-            
         case .typing:
             self.badgeView.isHidden = true
             self.typingView.isHidden = false

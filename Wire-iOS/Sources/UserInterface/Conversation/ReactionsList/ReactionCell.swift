@@ -19,12 +19,23 @@
 import Foundation
 import WireSyncEngine
 import Cartography
-import Classy
 
-@objcMembers public class ReactionCell: UICollectionViewCell {
+public class ReactionCell: UICollectionViewCell {
     public let userImageView = UserImageView()
-    public let userDisplayNameLabel = UILabel()
-    public let usernameLabel = UILabel()
+    public let userDisplayNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalFont
+        label.textColor = .textForeground
+
+        return label
+    }()
+    public let usernameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallSemiboldFont
+        label.textColor = .textDimmed
+
+        return label
+    }()
 
     var displayNameVerticalConstraint: NSLayoutConstraint?
     var displayNameTopConstraint: NSLayoutConstraint?
@@ -80,9 +91,14 @@ import Classy
             displayNameTopConstraint = userDisplayNameLabel.bottom == contentView.centerY + verticalOffset
             displayNameVerticalConstraint = userDisplayNameLabel.centerY == userImageView.centerY
         }
-        
-        CASStyler.default().styleItem(self)
+
+        setupStyle()
     }
+
+    func setupStyle() {
+        contentView.backgroundColor = .textBackground
+    }
+
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

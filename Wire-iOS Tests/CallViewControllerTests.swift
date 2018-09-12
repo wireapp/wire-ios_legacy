@@ -20,10 +20,10 @@ import XCTest
 @testable import Wire
 
 extension XCTestCase {
-    public func verifyDeallocation<T: AnyObject>(of instanceGenerator: ()->(T)) {
+    public func verifyDeallocation<T: AnyObject>(of instanceGenerator: () -> (T)) {
         weak var weakInstance: T? = nil
         var instance: T? = nil
-        
+
         autoreleasepool {
             instance = instanceGenerator()
             // then
@@ -32,29 +32,76 @@ extension XCTestCase {
             // when
             instance = nil
         }
-        
+
         XCTAssertNil(instance)
         XCTAssertNil(weakInstance)
     }
 }
 
+extension XCTestCase {
+    static func CreateCallViewController(mediaManager: ZMMockAVSMediaManager) -> CallViewController {
+        ZMUser.selfUser().remoteIdentifier = UUID()
+
+        let conversation = (MockConversation.oneOnOneConversation() as Any) as! ZMConversation
+        let voiceChannel = MockVoiceChannel(conversation: conversation)
+        voiceChannel.mockVideoState = VideoState.started
+        voiceChannel.mockIsVideoCall = true
+        voiceChannel.mockCallState = CallState.established
+        let proximityManager = ProximityMonitorManager()
+        let callController = CallViewController(voiceChannel: voiceChannel, proximityMonitorManager: proximityManager, mediaManager:mediaManager)
+
+        return callController
+    }
+}
+
 final class CallViewControllerTests: XCTestCase {
+
     func testThatItDeallocates() {
         // when & then
         verifyDeallocation { () -> CallViewController in
             // given
-            ZMUser.selfUser().remoteIdentifier = UUID()
-            
-            let conversation = (MockConversation.oneOnOneConversation() as Any) as! ZMConversation
-            let voiceChannel = MockVoiceChannel(conversation: conversation)
-            voiceChannel.mockVideoState = VideoState.started
-            voiceChannel.mockIsVideoCall = true
-            voiceChannel.mockCallState = CallState.established
-            let proximityManager = ProximityMonitorManager()
-            let callController = CallViewController(voiceChannel: voiceChannel, proximityMonitorManager: proximityManager)
+            let callController = XCTestCase.CreateCallViewController(mediaManager: ZMMockAVSMediaManager())
             // Simulate user click
             callController.startOverlayTimer()
             return callController
         }
+    }
+}
+
+final class CallViewControllerGestureTests: XCTestCase {
+    var sut: CallViewController!
+    var mediaManager: ZMMockAVSMediaManager!
+
+    override func setUp() {
+        super.setUp()
+        UIView.setAnimationsEnabled(false)
+
+        mediaManager = ZMMockAVSMediaManager()
+        sut = XCTestCase.CreateCallViewController(mediaManager: mediaManager)
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+
+        UIView.setAnimationsEnabled(true)
+    }
+
+    func tapOnSut() {
+        sut.touchesBegan(Set(), with: nil)
+    }
+
+    func testThatOverlayDismissesAfterTapped() {
+        // GIVEN
+        mediaManager.isMicrophoneMuted = true
+
+        // WHEN
+        // call overlay is visible at the beginning
+        XCTAssert(sut.isOverlayVisible)
+
+        tapOnSut()
+
+        // call overlay is invisible after tapped
+        XCTAssertFalse(sut.isOverlayVisible)
     }
 }

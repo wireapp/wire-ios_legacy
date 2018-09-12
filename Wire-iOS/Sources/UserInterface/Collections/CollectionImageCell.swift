@@ -33,8 +33,7 @@ final public class CollectionImageCell: CollectionCell {
         }
     }
         
-    private let imageView = FLAnimatedImageView()
-    private let loadingView = ThreeDotsLoadingView()
+    private let imageView = ImageResourceView()
     
     /// This token is changes everytime the cell is re-used. Useful when performing
     /// asynchronous tasks where the cell might have been re-used in the mean time.
@@ -56,15 +55,13 @@ final public class CollectionImageCell: CollectionCell {
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.clipsToBounds = true
         self.imageView.accessibilityIdentifier = "image"
-        self.loadingView.accessibilityIdentifier = "loading"
+        self.imageView.imageSizeLimit = .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)
         self.secureContentsView.addSubview(self.imageView)
-        self.secureContentsView.addSubview(self.loadingView)
-        constrain(self, self.imageView, self.loadingView) { selfView, imageView, loadingView in
+        constrain(self, self.imageView) { selfView, imageView in
             imageView.left == selfView.left
             imageView.right == selfView.right
             imageView.top == selfView.top
             imageView.bottom == selfView.bottom
-            loadingView.center == selfView.center
         }
     }
     
@@ -131,23 +128,7 @@ final public class CollectionImageCell: CollectionCell {
     }
 
     fileprivate func loadImage() {
-        guard let imageMessageData = message?.imageMessageData else {
-            self.imageView.image = .none
-            return
-        }
-        
-        imageView.isHidden = true
-        loadingView.isHidden = false
-        
-        let token = reuseToken
-        
-        imageMessageData.image.fetchImage(sizeLimit: .maxDimensionForShortSide(CollectionImageCell.maxCellSize * UIScreen.main.scale)) { [weak self] (image) in
-            guard token == self?.reuseToken else { return }
-            
-            self?.imageView.setMediaAsset(image)
-            self?.imageView.isHidden = false
-            self?.loadingView.isHidden = true
-        }
+        imageView.imageResource = message?.imageMessageData?.image
     }
 }
 

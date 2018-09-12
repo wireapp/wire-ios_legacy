@@ -96,13 +96,22 @@ class MockAudioRecorder: AudioRecorderType {
 
 class AudioRecordKeyboardViewControllerTests: XCTestCase {
     var sut: AudioRecordKeyboardViewController!
-    var audioRecorder = MockAudioRecorder()
-    var mockDelegate = MockAudioRecordKeyboardDelegate()
+    var audioRecorder: MockAudioRecorder!
+    var mockDelegate: MockAudioRecordKeyboardDelegate!
     
     override func setUp() {
         super.setUp()
+        self.audioRecorder = MockAudioRecorder()
+        self.mockDelegate = MockAudioRecordKeyboardDelegate()
         self.sut = AudioRecordKeyboardViewController(audioRecorder: self.audioRecorder)
         self.sut.delegate = self.mockDelegate
+    }
+
+    override func tearDown() {
+        self.sut = nil
+        self.audioRecorder = nil
+        self.mockDelegate = nil
+        super.tearDown()
     }
     
     func testThatItStartsRecordingWhenClickingRecordButton() {

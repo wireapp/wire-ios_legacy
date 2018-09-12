@@ -28,7 +28,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
     override func tearDown() {
         
         defaultImageCache.cache.removeAllObjects()
-        
+        sut = nil
         super.tearDown()
     }
         
@@ -160,7 +160,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
 
     func testArticleViewObfuscated() {
         sut = ArticleView(withImagePlaceholder: true)
-        sut.loadingView?.layer.speed = 0
+        sut.layer.speed = 0
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: true)
         sut.layoutIfNeeded()
