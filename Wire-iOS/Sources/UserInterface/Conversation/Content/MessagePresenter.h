@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZMConversationMessage;
 @class MessagePresenter;
+@class MediaPlayerController;
 
 @interface MessagePresenter : NSObject
 
@@ -32,6 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, weak) UIViewController *modalTargetController;
 
 @property (nonatomic, readonly) BOOL waitingForFileDownload;
+
+///TODO: internal
+@property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
+
 
 /// Target view must be container in @c targetViewController's view.
 /// @param delegate the receiver of action callbacks for the message. Currently only forward and reveal in conversation

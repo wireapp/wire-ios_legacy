@@ -22,8 +22,9 @@
 
 @class MediaPlayerController;
 
-@interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
+//@interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
+//
+//@property (nonatomic) MediaPlayerController *wr_playerController;
+//
+//@end
 
-@property (nonatomic) MediaPlayerController *wr_playerController;
-
-@end

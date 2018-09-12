@@ -20,7 +20,37 @@ import Foundation
 
 fileprivate let zmLog = ZMSLog(tag: "MessagePresenter")
 
+// create an extension of AVPlayerViewController
+extension AVPlayerViewController {
+    override open var prefersStatusBarHidden: Bool {
+        get {
+            return true;
+        }
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if self.isBeingDismissed == false {
+            return
+        }
+
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "DismissingAVPlayer"), object: self)
+    }
+}
+
 extension MessagePresenter {
+    @objc func playerDismissed(notification: Notification) {
+        mediaPlayerController?.tearDown()
+    }
+
+    func observePlayerDismissial() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerDismissed(notification:)),
+                                               name: NSNotification.Name(rawValue: "DismissingAVPlayer"),
+                                               object: nil)
+
+    }
+
     @objc func openFileMessage(_ message: ZMConversationMessage, targetView: UIView) {
 
         let fileURL = message.fileMessageData?.fileURL
@@ -45,11 +75,13 @@ extension MessagePresenter {
                   let fileURL = fileURL,
                   let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
             let player = AVPlayer(url: fileURL)
-            let playerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
-            let playerViewController = AVPlayerViewControllerWithoutStatusBar()
+            mediaPlayerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
+            let playerViewController = AVPlayerViewController()
             playerViewController.player = player
-            playerViewController.wr_playerController = playerController
-            
+//            playerViewController.wr_playerController = playerController
+
+            observePlayerDismissial()
+
             targetViewController?.present(playerViewController, animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 player.play()
