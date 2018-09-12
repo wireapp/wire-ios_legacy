@@ -87,7 +87,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     
     [self setupViews];
     [self setupLayout];
-    
+
+    ///TODO: mock
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;
     if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip) {
         [self presentShareContactsViewController];

@@ -41,7 +41,7 @@
         self.colorSchemeVariant = ColorSchemeVariantDark;
         self.delegate = self;
         self.contentDelegate = self;
-        self.dataSource = [[ContactsDataSource alloc] init];
+        self.dataSource = [[ContactsDataSource alloc] init]; ///TODO: inject
         self.dataSource.searchQuery = @"";
         
         self.title = NSLocalizedString(@"contacts_ui.title", @"");
