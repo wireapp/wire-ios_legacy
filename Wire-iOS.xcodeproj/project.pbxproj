@@ -1142,8 +1142,8 @@
 		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Animation.swift */; };
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
 		EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */; };
-		EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */; };
 		EF3CBC082147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CBC072147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift */; };
+		EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */; };
 		EF40005720568C4400E03347 /* NetworkStatusBarConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */; };
 		EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */; };
 		EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BF2059761D00CFBCB0 /* MockApplication.swift */; };
@@ -1238,6 +1238,7 @@
 		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */; };
 		EFDE37FA2139889C0095DCA4 /* MuteIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE37F92139889B0095DCA4 /* MuteIndicatorView.swift */; };
 		EFDE37FD213994750095DCA4 /* ContactsSectionHeaderView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView+Style.swift */; };
+		EFE043992149CE8D00BC3079 /* InviteContactsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */; };
 		EFE285442146B4DC00720737 /* RegistrationTextField+EdgeInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE285432146B4DC00720737 /* RegistrationTextField+EdgeInset.swift */; };
 		EFE285462146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE285452146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift */; };
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
@@ -2850,8 +2851,8 @@
 		EF3976CF21148A110030BE68 /* KeyboardAvoidingViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyboardAvoidingViewController+Internal.h"; sourceTree = "<group>"; };
 		EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Language.swift"; sourceTree = "<group>"; };
 		EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLanguageSettable.swift; sourceTree = "<group>"; };
-		EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+PushPermissions.swift"; sourceTree = "<group>"; };
 		EF3CBC072147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCreationFlowControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+PushPermissions.swift"; sourceTree = "<group>"; };
 		EF40005620568C4400E03347 /* NetworkStatusBarConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBarConstants.swift; sourceTree = "<group>"; };
 		EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationProtocol.swift; sourceTree = "<group>"; };
 		EF4018BF2059761D00CFBCB0 /* MockApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockApplication.swift; sourceTree = "<group>"; };
@@ -2955,6 +2956,7 @@
 		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+FilesPopover.swift"; sourceTree = "<group>"; };
 		EFDE37F92139889B0095DCA4 /* MuteIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuteIndicatorView.swift; sourceTree = "<group>"; };
 		EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsSectionHeaderView+Style.swift"; sourceTree = "<group>"; };
+		EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteContactsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EFE285432146B4DC00720737 /* RegistrationTextField+EdgeInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegistrationTextField+EdgeInset.swift"; sourceTree = "<group>"; };
 		EFE285452146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationTextFieldSnapshotTests.swift; sourceTree = "<group>"; };
 		EFE285482146B7A200720737 /* RegistrationTextField+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RegistrationTextField+Internal.h"; sourceTree = "<group>"; };
@@ -5483,6 +5485,7 @@
 				EFE285452146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift */,
 				EF40AAE52146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift */,
 				EF3CBC072147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift */,
+				EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7700,6 +7703,7 @@
 				1E18C2BC1AFBB7E00043F3CF /* EmoticonSubstitutionConfigurationTests.m in Sources */,
 				EEAC654C206BD64700365C0C /* LinkInteractionTextViewTests.swift in Sources */,
 				5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */,
+				EFE043992149CE8D00BC3079 /* InviteContactsViewControllerSnapshotTests.swift in Sources */,
 				1658C19820A1E55200148F6D /* CallInfoRootViewControllerTests.swift in Sources */,
 				EF68856820F611D50074CA0F /* CanvasViewControllerTests.swift in Sources */,
 				5EC16B9820EB9D3900955156 /* YouTubeServiceTests.swift in Sources */,
