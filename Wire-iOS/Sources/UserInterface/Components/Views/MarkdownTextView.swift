@@ -47,15 +47,18 @@ extension Notification.Name {
         var mentionRanges = [(NSRange, String)]()
         attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { (attributes, range, stop) in
             if let attachment = attributes[.attachment] as? MentionsTextAttachment {
-                mentionRanges.append((range, attachment.text))
+                mentionRanges.append((range, attachment.attributedText.string))
             }
         }
 
-        let withMentions = NSMutableAttributedString(attributedString: self.attributedText)
-        mentionRanges.forEach { (range, string) in
-            withMentions.replaceCharacters(in: range, with: string)
-        }
-        return self.parser.parse(attributedString: withMentions)
+        let withMentions = NSMutableAttributedString(attributedString: attributedText)
+
+        // We reverse to maintain correct ranges for subsequent inserts.
+        mentionRanges.reverse()
+        // Replace the text attachment with the mention text content.
+        mentionRanges.forEach(withMentions.replaceCharacters)
+
+        return parser.parse(attributedString: withMentions)
     }
     
     /// Set when newline is entered, used for auto list item creation.

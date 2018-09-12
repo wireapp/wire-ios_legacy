@@ -18,24 +18,41 @@
 
 import Foundation
 
+/// The purpose of this subclass of NSTextAttachment is to render a mention in the input bar.
+/// It also stores relevant information about the mention that can be used
+/// to flatten the attachment when sending a text message containing mentions.
 class MentionsTextAttachment: NSTextAttachment {
-
-    var text: String {
-        return "@Jacob"
+    
+    /// The text the attachment renders, this is the name passed to init prefixed with an "@".
+    let attributedText: NSAttributedString
+    
+    init(name: String, font: UIFont = .normalLightFont, color: UIColor = .accent()) {
+        attributedText = "@" + name && font && color
+        super.init(data: nil, ofType: nil)
+        refreshImage()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func refreshImage() {
+        image = imageForName()
     }
 
-    override var image: UIImage? {
-        get {
-            bounds.size = CGSize(width: 100, height: 24)
-            UIGraphicsBeginImageContext(bounds.size)
-            text.attributedString.draw(at: .zero)
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-
-            return image
-        }
-        set {
-
-        }
+    private func imageForName() -> UIImage? {
+        bounds = attributedText.boundingRect(with: .max, options: [], context: nil)
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        
+        attributedText.draw(at: .zero)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
+
+}
+
+fileprivate extension CGSize {
+    static let max = CGSize(width: .max, height: .max)
 }
