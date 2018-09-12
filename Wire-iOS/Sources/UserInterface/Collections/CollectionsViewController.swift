@@ -182,12 +182,12 @@ public protocol CollectionsViewControllerDelegate: class {
     }
     
     override public var shouldAutorotate: Bool {
-            switch (self.traitCollection.horizontalSizeClass) {
-            case .compact:
-                return false
-            default:
-                return true
-            }
+        switch (self.traitCollection.horizontalSizeClass) {
+        case .compact:
+            return false
+        default:
+            return true
+        }
     }
 
     override public var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
