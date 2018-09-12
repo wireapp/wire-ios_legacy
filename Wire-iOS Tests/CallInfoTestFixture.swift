@@ -592,6 +592,28 @@ struct CallInfoTestFixture {
         )
     }
 
+    var groupVideoEstablishedPoorConnection: CallInfoViewControllerInput {
+        return MockCallInfoViewControllerInput(
+            videoPlaceholderState: .hidden,
+            permissions: MockCallPermissions.videoAllowedForever,
+            degradationState: .none,
+            accessoryType: .participantsList(CallParticipantsViewTests.participants(count: groupSize.rawValue, sendsVideo: true)),
+            canToggleMediaType: true,
+            isMuted: false,
+            isTerminating: false,
+            canAccept: false,
+            mediaState: .sendingVideo,
+            state: .established(duration: 10),
+            isConstantBitRate: false,
+            title: otherUser.displayName,
+            isVideoCall: true,
+            variant: .light,
+            disableIdleTimer: true,
+            cameraType: .front,
+            networkCondition: .poor
+        )
+    }
+
     var groupVideoEstablished: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(
             videoPlaceholderState: .hidden,
@@ -613,6 +635,7 @@ struct CallInfoTestFixture {
             networkCondition: .normal
         )
     }
+
 
     var groupVideoEstablishedCBR: CallInfoViewControllerInput {
         return MockCallInfoViewControllerInput(

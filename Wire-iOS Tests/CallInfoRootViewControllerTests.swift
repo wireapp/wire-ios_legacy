@@ -89,6 +89,20 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         // then
         verifySafeAreas(viewController: sut)
     }
+
+    @available(iOS 11.0, *)
+    func testOneToOneAudioEstablishedPoorConnection() {
+        recordMode = true
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablishedPoorNetwork)
+
+        // then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+
     
     // MARK: - OneToOne Video
     
@@ -202,6 +216,18 @@ class CallInfoRootViewControllerTests: CoreDataSnapshotTestCase {
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablished)
         
+        // then
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+
+    func testGroupVideoEstablishedPoorConnection() {
+        recordMode = true
+        // given
+        let fixture = CallInfoTestFixture(otherUser: otherUser)
+
+        // when
+        let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedPoorConnection)
+
         // then
         verifyInAllIPhoneSizes(view: sut.view)
     }

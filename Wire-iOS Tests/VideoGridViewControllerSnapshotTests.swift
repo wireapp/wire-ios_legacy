@@ -24,18 +24,22 @@ final class MockVideoGridConfiguration: VideoGridConfiguration {
 
     var videoStreams: [ParticipantVideoState] = []
 
-    var isMuted: Bool = true
+    var isMuted: Bool = false
+
+    var networkCondition: NetworkCondition = .normal
 }
 
 final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     var sut: VideoGridViewController!
     var mediaManager: ZMMockAVSMediaManager!
+    var configuration: MockVideoGridConfiguration!
 
     override func setUp() {
         super.setUp()
 
         mediaManager = ZMMockAVSMediaManager()
+        configuration = MockVideoGridConfiguration()
     }
     
     override func tearDown() {
@@ -47,16 +51,25 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     func createSut() {
         ZMUser.selfUser().remoteIdentifier = UUID()
-        sut = VideoGridViewController(configuration: MockVideoGridConfiguration(),
+        sut = VideoGridViewController(configuration: configuration,
                                       mediaManager: mediaManager)
 
         sut.view.backgroundColor = .black
     }
 
     func testForMuted(){
+        configuration.isMuted = true
         createSut()
 
-        mediaManager.isMicrophoneMuted = true
+        sut.isCovered = false
+        verify(view: sut.view)
+    }
+
+    func testForBadNetwork(){
+        recordMode = true
+        configuration.networkCondition = .poor
+        createSut()
+
 
         sut.isCovered = false
         verify(view: sut.view)

@@ -56,17 +56,6 @@ extension CallInfoViewControllerInput {
     }
 }
 
-extension NetworkCondition {
-    fileprivate var displayString: String? {
-        switch self {
-        case .medium, .poor:
-            return "Poor connection".uppercased() // TODO: localize
-        case .normal:
-            return nil
-        }
-    }
-}
-
 final class CallInfoViewController: UIViewController, CallActionsViewDelegate, CallAccessoryViewControllerDelegate {
 
     weak var delegate: CallInfoViewControllerDelegate?
@@ -163,8 +152,8 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         accessoryViewController.configuration = configuration
         backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
 
-        titleViewLabel.text = configuration.networkCondition.displayString
-        titleViewLabel.isHidden = (titleViewLabel.text == nil)
+        titleViewLabel.attributedText = configuration.networkCondition.attributedString(color: UIColor.nameColor(for: .brightOrange, variant: .light))
+        titleViewLabel.isHidden = (titleViewLabel.attributedText == nil)
     }
     
     // MARK: - Actions + Delegates
