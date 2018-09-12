@@ -27,13 +27,14 @@ public protocol CollectionsViewControllerDelegate: class {
 }
 
 @objcMembers final public class CollectionsViewController: UIViewController {
+    var isPresentingPlayer = false
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
     public weak var delegate: CollectionsViewControllerDelegate?
     public var isShowingSearchResults: Bool {
         guard let textSearchController = self.textSearchController,
-              let resultsView = textSearchController.resultsView else {
-            return false
+            let resultsView = textSearchController.resultsView else {
+                return false
         }
         return !resultsView.isHidden
     }
@@ -160,11 +161,10 @@ public protocol CollectionsViewControllerDelegate: class {
         self.flushLayout()
 
         if let navigationController = self.navigationController {
-        navigationController.interactivePopGestureRecognizer?.isEnabled = true
-        navigationController.interactivePopGestureRecognizer?.delegate = self
+            navigationController.interactivePopGestureRecognizer?.isEnabled = true
+            navigationController.interactivePopGestureRecognizer?.delegate = self
 
-        //        self.messagePresenter.targetViewController = self
-        self.messagePresenter.targetViewController = navigationController
+            self.messagePresenter.targetViewController = navigationController
         }
     }
     
@@ -183,14 +183,26 @@ public protocol CollectionsViewControllerDelegate: class {
     }
     
     override public var shouldAutorotate: Bool {
-        return true
-
-//        switch (self.traitCollection.horizontalSizeClass) {
-//        case .compact:
-//            return false
-//        default:
+//        if isPresentingPlayer {
 //            return true
-//        }
+//        } else {
+
+            switch (self.traitCollection.horizontalSizeClass) {
+            case .compact:
+
+                // allow rotation if in landscape mode
+                if self.traitCollection.verticalSizeClass == .compact {
+                    return true
+                } else {
+                return false
+                }
+            default:
+                return true
+            }
+    }
+
+    override public var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return .portrait
     }
 
     private func flushLayout() {
@@ -309,10 +321,10 @@ public protocol CollectionsViewControllerDelegate: class {
             }
         case .present:
             self.selectedMessage = message
-                        
+
             if message.isImage {
                 let imagesController = ConversationImagesViewController(collection: self.collection, initialMessage: message)
-            
+
                 let backButton = CollectionsView.backButton()
                 backButton.addTarget(self, action: #selector(CollectionsViewController.backButtonPressed(_:)), for: .touchUpInside)
 
@@ -402,7 +414,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         case CollectionsSectionSet.images:
             let max = self.inOverviewMode ? self.maxOverviewElementsInGrid(in: section) : Int.max
             return min(self.imageMessages.count, max)
-        
+
         case CollectionsSectionSet.filesAndAudio:
             let max = self.inOverviewMode ? self.maxOverviewElementsInTable : Int.max
             return min(self.fileAndAudioMessages.count, max)
@@ -486,7 +498,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             if !CollectionsView.useAutolayout {
                 desiredHeight = 96
             }
-        
+
         case CollectionsSectionSet.links:
             desiredWidth = self.contentView.collectionView.bounds.size.width - self.horizontalInset(in: section)
             if !CollectionsView.useAutolayout {
@@ -556,7 +568,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             
         case CollectionsSectionSet.videos:
             resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionVideoCell.reuseIdentifier, for: indexPath) as! CollectionVideoCell
-    
+
         case CollectionsSectionSet.links:
             resultCell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionLinkCell.reuseIdentifier, for: indexPath) as! CollectionLinkCell
             
@@ -565,7 +577,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
             cell.collapsed = self.fetchingDone
             cell.containerWidth = collectionView.bounds.size.width - self.horizontalInset(in: section)
             return cell
-        
+
         default: fatal("Unknown section")
         }
         
@@ -654,7 +666,7 @@ extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
             guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
                 fatal("Unknown section")
             }
-        
+
             guard section != .loading else {
                 continue
             }
@@ -691,12 +703,12 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
     public func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
         
         guard let message = self.selectedMessage as? ZMMessage,
-              changeInfo.message == message,
-              let fileMessageData = message.fileMessageData,
-              fileMessageData.transferState == .downloaded,
-              self.messagePresenter.waitingForFileDownload,
-              message.isFile || message.isVideo || message.isAudio else {
-            return
+            changeInfo.message == message,
+            let fileMessageData = message.fileMessageData,
+            fileMessageData.transferState == .downloaded,
+            self.messagePresenter.waitingForFileDownload,
+            message.isFile || message.isVideo || message.isAudio else {
+                return
         }
         
         self.messagePresenter.openFileMessage(message, targetView: cell)
@@ -710,7 +722,7 @@ extension CollectionsViewController: MessageActionResponder {
             switch action {
             case .like, .forward, .copy, .save, .showInConversation:
                 return true
-            
+
             default:
                 return false
             }

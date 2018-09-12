@@ -28,29 +28,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-//@implementation AVPlayerViewControllerWithoutStatusBar
-//
-//- (BOOL)prefersStatusBarHidden
-//{
-//    return YES;
-//}
-//
-//- (void)viewWillDisappear:(BOOL)animated {
-//    [super viewWillDisappear:animated];
-//    [self.wr_playerController tearDown];
-//}
-//
-//- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-//{
-//    return UIInterfaceOrientationMaskAllButUpsideDown;
-//}
-
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-//{
-//    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-//}
-//@end
-
 
 @interface MessagePresenter (UIDocumentInteractionController) <UIDocumentInteractionControllerDelegate>
 @end

@@ -20,22 +20,34 @@
 import Foundation
 
 class RotationAwareNavigationController: UINavigationController {
-    
+
+    var isPresentingPlayer = false
+
     override var shouldAutorotate : Bool {
-        if let topController = self.viewControllers.last {
-            return topController.shouldAutorotate
-        }
-        else {
-            return super.shouldAutorotate
+        if isPresentingPlayer {
+            return true
+        } else {
+
+            if let topController = self.viewControllers.last {
+                return topController.shouldAutorotate
+            }
+            else {
+                return super.shouldAutorotate
+            }
         }
     }
     
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
-        if let topController = self.viewControllers.last {
-            return topController.supportedInterfaceOrientations
-        }
-        else {
-            return super.supportedInterfaceOrientations
+        if isPresentingPlayer {
+            return .all
+        } else {
+
+            if let topController = self.viewControllers.last {
+                return topController.supportedInterfaceOrientations
+            }
+            else {
+                return super.supportedInterfaceOrientations
+            }
         }
     }
     

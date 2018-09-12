@@ -38,7 +38,11 @@ extension UIViewAnimationCurve {
 }
 
 extension KeyboardAvoidingViewController {
-    
+
+    override open var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return viewController.preferredInterfaceOrientationForPresentation
+    }
+
     @objc func keyboardFrameWillChange(_ notification: Notification?) {
         guard let bottomEdgeConstraint = self.bottomEdgeConstraint else { return }
 

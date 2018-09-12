@@ -41,6 +41,21 @@ extension AVPlayerViewController {
 extension MessagePresenter {
     @objc func playerDismissed(notification: Notification) {
         mediaPlayerController?.tearDown()
+
+        if let rotationAwareNavigationController = targetViewController as? RotationAwareNavigationController {
+            rotationAwareNavigationController.isPresentingPlayer = false
+        }
+
+        delay(1) {
+        UIViewController.attemptRotationToDeviceOrientation()
+
+            if let rotationAwareNavigationController = self.targetViewController as? RotationAwareNavigationController {
+                if let collectionViewController = (rotationAwareNavigationController.topViewController! as! KeyboardAvoidingViewController).viewController as? CollectionsViewController {
+                    collectionViewController.isPresentingPlayer = false
+                }
+            }
+
+        }
     }
 
     func observePlayerDismissial() {
@@ -78,7 +93,10 @@ extension MessagePresenter {
             mediaPlayerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
             let playerViewController = AVPlayerViewController()
             playerViewController.player = player
-//            playerViewController.wr_playerController = playerController
+
+            if let rotationAwareNavigationController = targetViewController as? RotationAwareNavigationController {
+                rotationAwareNavigationController.isPresentingPlayer = true
+            }
 
             observePlayerDismissial()
 
