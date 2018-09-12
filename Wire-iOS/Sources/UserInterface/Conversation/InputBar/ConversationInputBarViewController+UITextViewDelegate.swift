@@ -49,6 +49,16 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             sendOrEditText(candidateText)
             return false
         }
+        
+        // Start mentioning
+        if text == "@" {
+            let attachment = MentionsTextAttachment()
+            let attributedString = NSAttributedString(attachment: attachment)
+            textView.attributedText = textView.attributedText + attributedString
+            return false
+        }
+
+        mentioningInTextView(textView, range: range, replacementText: text)
 
         inputBar.textView.respondToChange(text, inRange: range)
         return true

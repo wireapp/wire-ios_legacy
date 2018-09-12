@@ -44,7 +44,18 @@ extension Notification.Name {
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
     var preparedText: String {
-        return self.parser.parse(attributedString: self.attributedText)
+        var mentionRanges = [(NSRange, String)]()
+        attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { (attributes, range, stop) in
+            if let attachment = attributes[.attachment] as? MentionsTextAttachment {
+                mentionRanges.append((range, attachment.text))
+            }
+        }
+
+        let withMentions = NSMutableAttributedString(attributedString: self.attributedText)
+        mentionRanges.forEach { (range, string) in
+            withMentions.replaceCharacters(in: range, with: string)
+        }
+        return self.parser.parse(attributedString: withMentions)
     }
     
     /// Set when newline is entered, used for auto list item creation.
