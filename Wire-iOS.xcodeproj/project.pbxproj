@@ -288,6 +288,7 @@
 		7C25D755214911AC002E22BF /* MentionsSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D754214911AC002E22BF /* MentionsSearchResultsViewController.swift */; };
 		7C25D75721491240002E22BF /* MentionsSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D75621491240002E22BF /* MentionsSearchResultCell.swift */; };
 		7C25D7592149182C002E22BF /* MentionsSearchResultCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D7582149182C002E22BF /* MentionsSearchResultCellTests.swift */; };
+		7C25D75B21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */; };
 		7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */; };
 		7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */; };
 		7C374E4C1FDE7B8C00A43B9C /* unsplash_matterhorn_exact_size.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */; };
@@ -1675,6 +1676,7 @@
 		7C25D754214911AC002E22BF /* MentionsSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultsViewController.swift; sourceTree = "<group>"; };
 		7C25D75621491240002E22BF /* MentionsSearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultCell.swift; sourceTree = "<group>"; };
 		7C25D7582149182C002E22BF /* MentionsSearchResultCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultCellTests.swift; sourceTree = "<group>"; };
+		7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultsViewControllerTests.swift; sourceTree = "<group>"; };
 		7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpacingStackView.swift; sourceTree = "<group>"; };
 		7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_small_height.jpg; sourceTree = "<group>"; };
 		7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_exact_size.jpg; sourceTree = "<group>"; };
@@ -5500,6 +5502,7 @@
 				EF40AAE52146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift */,
 				EF3CBC072147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift */,
 				7C25D7582149182C002E22BF /* MentionsSearchResultCellTests.swift */,
+				7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7807,6 +7810,7 @@
 				EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */,
 				EF297DD42131F39F0002983A /* MediaPreviewViewControllerTests.swift in Sources */,
 				5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */,
+				7C25D75B21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift in Sources */,
 				EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */,
 				EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */,
 				8742C2F11E533AC400329FB6 /* NSAttributedStringHighlightTests.swift in Sources */,
