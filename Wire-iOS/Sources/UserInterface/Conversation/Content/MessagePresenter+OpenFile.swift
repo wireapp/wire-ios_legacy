@@ -22,7 +22,7 @@ import AVKit
 fileprivate let zmLog = ZMSLog(tag: "MessagePresenter")
 
 extension MessagePresenter {
-    @objc func playerDismissed(notification: Notification) {
+    @objc fileprivate func playerDismissed(notification: Notification) {
         mediaPlayerController?.tearDown()
 
         UIViewController.attemptRotationToDeviceOrientation()
@@ -30,7 +30,7 @@ extension MessagePresenter {
         NotificationCenter.default.removeObserver(self, name: .dismissingAVPlayer, object: nil)
     }
 
-    func observePlayerDismissial() {
+    fileprivate func observePlayerDismissial() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerDismissed(notification:)),
                                                name: .dismissingAVPlayer,
