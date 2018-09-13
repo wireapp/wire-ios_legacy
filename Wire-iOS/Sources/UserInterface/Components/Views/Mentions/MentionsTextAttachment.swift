@@ -21,13 +21,39 @@ import Foundation
 /// The purpose of this subclass of NSTextAttachment is to render a mention in the input bar.
 /// It also stores relevant information about the mention that can be used
 /// to flatten the attachment when sending a text message containing mentions.
-class MentionsTextAttachment: NSTextAttachment {
+final class MentionTextAttachment: NSTextAttachment {
     
+    /// Used to configure a `MentionsTextAttachment` and to create a
+    /// Mentions object to be sent together with the message.
+    /// Holds relevant information to identify a user in a mention.
+    struct Configuration {
+        
+        /// The remote identifier of the user being mentioned.
+        let identifier: UUID
+        /// The name of the user being mentioned.
+        let name: String
+        
+        init(identifier: UUID, name: String) {
+            self.identifier = identifier
+            self.name = name
+        }
+        
+        init(user: ZMUser) {
+            self.init(identifier: user.remoteIdentifier, name: user.name ?? "")
+        }
+        
+    }
+
     /// The text the attachment renders, this is the name passed to init prefixed with an "@".
     let attributedText: NSAttributedString
     
-    init(name: String, font: UIFont = .normalLightFont, color: UIColor = .accent()) {
-        attributedText = "@" + name && font && color
+    /// The configuration value holding relevant information to configure the attachment
+    /// plus additional information needed to send it to other users (identifier).
+    let configuration: Configuration
+    
+    init(configuration: Configuration, font: UIFont = .normalLightFont, color: UIColor = .accent()) {
+        self.configuration = configuration
+        attributedText = "@" + configuration.name && font && color
         super.init(data: nil, ofType: nil)
         refreshImage()
     }

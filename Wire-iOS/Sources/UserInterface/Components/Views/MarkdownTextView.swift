@@ -46,7 +46,7 @@ extension Notification.Name {
     var preparedText: String {
         var mentionRanges = [(NSRange, String)]()
         attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { (attributes, range, stop) in
-            if let attachment = attributes[.attachment] as? MentionsTextAttachment {
+            if let attachment = attributes[.attachment] as? MentionTextAttachment {
                 mentionRanges.append((range, attachment.attributedText.string))
             }
         }

@@ -52,7 +52,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         
         // Start mentioning
         if text == "@" {
-            let attachment = MentionsTextAttachment(name: "Julian_OnVacation🏝 Mair @Wire")
+            let attachment = MentionTextAttachment(configuration: .init(user: .selfUser()))
             let attributedString = NSAttributedString(attachment: attachment)
             textView.attributedText = textView.attributedText + attributedString
             return false
