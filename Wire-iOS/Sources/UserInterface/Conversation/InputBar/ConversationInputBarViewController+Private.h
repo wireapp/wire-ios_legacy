@@ -19,6 +19,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class Mention;
 @class AudioRecordKeyboardViewController;
 @class CameraKeyboardViewController;
 @class ConversationInputBarSendController;
@@ -60,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, weak) UIView *popoverPointToView;
 
 - (void)createAudioRecordViewController;
-- (void)sendOrEditText:(NSString *)text;
+- (void)sendOrEditText:(NSString *)text mentions:(NSArray <Mention *> *)mentions;
 - (void)updateRightAccessoryView;
 - (void)updateButtonIcons;
 - (void)updateAccessoryViews;

@@ -27,6 +27,7 @@ import WireLinkPreview
     var imageData: Data? = nil
     var linkPreviewHasImage: Bool = false
     var linkPreviewImageCacheKey: String? = nil
+    var mentions = [Mention]()
     
     func fetchLinkPreviewImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
         completionHandler(imageData)

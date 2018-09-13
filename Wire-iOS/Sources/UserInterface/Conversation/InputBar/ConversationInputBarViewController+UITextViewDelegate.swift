@@ -46,7 +46,16 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         if textView.returnKeyType == .send && (text == "\n") {
             inputBar.textView.autocorrectLastWord()
             let candidateText = inputBar.textView.preparedText
-            sendOrEditText(candidateText)
+            sendOrEditText(candidateText, mentions: inputBar.textView.mentions)
+            return false
+        }
+        
+        // TODO: Integrate with suggestions pop-up
+        // Start mentioning
+        if text == "@" {
+            let attachment = MentionTextAttachment(configuration: .init(user: .selfUser()))
+            let attributedString = NSAttributedString(attachment: attachment)
+            textView.attributedText = textView.attributedText + attributedString
             return false
         }
 

@@ -741,7 +741,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return YES;
 }
 
-- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id<ZMConversationMessage>)message withText:(NSString *)newText
+- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id<ZMConversationMessage>)message
+                                                         withText:(NSString *)newText
+                                                         mentions:(NSArray <Mention *> *)mentions
 {
     [self.contentViewController didFinishEditingMessage:message];
     [[ZMUserSession sharedSession] enqueueChanges:^{
@@ -749,6 +751,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [ZMMessage deleteForEveryone:message];
         } else {
             BOOL fetchLinkPreview = ![[Settings sharedSettings] disableLinkPreviews];
+            
+            // TODO: We need to forward the potentially updated mentions here.
             (void)[ZMMessage edit:message newText:newText fetchLinkPreview:fetchLinkPreview];
         }
     }];
