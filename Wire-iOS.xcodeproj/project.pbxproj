@@ -1272,6 +1272,7 @@
 		F16427041FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */; };
 		F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */; };
 		F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */; };
+		F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16E8EA7214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift */; };
 		F187D6C820162A4300A2DA8F /* ConversationCell+Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = F187D6C720162A4300A2DA8F /* ConversationCell+Sender.swift */; };
 		F18998B72111F8C000A7FC95 /* UIApplication+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18998B52111F76500A7FC95 /* UIApplication+ShareExtension.swift */; };
 		F194AD7A1E3F3BBC00B0049B /* UIApplication+RTL.swift in Sources */ = {isa = PBXBuildFile; fileRef = F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */; };
@@ -2999,6 +3000,7 @@
 		F16427031FCC5BB600D2ABFC /* VerifyEmailStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailStepDescription.swift; sourceTree = "<group>"; };
 		F16427051FCC5BE400D2ABFC /* SetFullNameStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetFullNameStepDescription.swift; sourceTree = "<group>"; };
 		F16427071FCC5BF800D2ABFC /* SetPasswordStepDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordStepDescription.swift; sourceTree = "<group>"; };
+		F16E8EA7214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Mentions.swift"; sourceTree = "<group>"; };
 		F187D6C720162A4300A2DA8F /* ConversationCell+Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Sender.swift"; sourceTree = "<group>"; };
 		F18998B52111F76500A7FC95 /* UIApplication+ShareExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+ShareExtension.swift"; sourceTree = "<group>"; };
 		F194AD791E3F3BBC00B0049B /* UIApplication+RTL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+RTL.swift"; sourceTree = "<group>"; };
@@ -5112,6 +5114,7 @@
 				EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */,
 				EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */,
 				EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */,
+				F16E8EA7214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift */,
 				BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */,
 				BF2A74701CEB466A002608BF /* ConversationInputBarViewController+Audio.swift */,
 				BF0BDF6C1DA6794E003C61DE /* ConversationInputBarViewController+Ephemeral.swift */,
@@ -7257,6 +7260,7 @@
 				BFE41863209B15F800503C7C /* Calling+Logs.swift in Sources */,
 				871DD79D2080C4F6006B1C56 /* Conversation+Participants.swift in Sources */,
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,
+				F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */,
 				871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */,
 				CE8E4FC01DF17BBE0009F437 /* UITextView+TextTransform.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
