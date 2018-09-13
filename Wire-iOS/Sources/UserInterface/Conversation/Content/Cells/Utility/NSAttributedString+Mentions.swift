@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireExtensionComponents
 
 private let log = ZMSLog(tag: "Mentions")
 
@@ -85,7 +86,7 @@ extension NSMutableString {
 }
 
 extension NSMutableAttributedString {
-    static func mention(for user: UserType, link: URL) -> NSAttributedString {
+    static func mention(for user: UserType, link: URL, suggestedSize: CGFloat? = nil) -> NSAttributedString {
         let color: UIColor
         let backgroundColor: UIColor
         
@@ -98,8 +99,12 @@ extension NSMutableAttributedString {
             backgroundColor = .clear
         }
         
-        let atFont = UIFont.normalLightFont
-        let mentionFont = UIFont.normalMediumFont
+        let size = suggestedSize ?? 16
+        
+        let atFont: UIFont = UIFont.systemFont(ofSize: size - 2, contentSizeCategory: UIApplication.shared.preferredContentSizeCategory, weight: .light)
+        let mentionFont: UIFont = UIFont.systemFont(ofSize: size,
+                                                    contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
+                                                    weight: .semibold)
         
         var atAttributes = [NSAttributedStringKey.font: atFont,
                             NSAttributedStringKey.foregroundColor: color,
@@ -139,7 +144,9 @@ extension NSMutableAttributedString {
                 return
             }
             
-            let replacementString = NSMutableAttributedString.mention(for: user, link: mention.link)
+            let currentFont = self.attributes(at: mentionRange.location, effectiveRange: nil)[.font] as? UIFont
+            
+            let replacementString = NSMutableAttributedString.mention(for: user, link: mention.link, suggestedSize: currentFont?.pointSize)
             
             self.replaceCharacters(in: mentionRange, with: replacementString)
         }
