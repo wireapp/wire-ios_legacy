@@ -21,11 +21,27 @@ import UIKit
 extension ContactsCell2: Themeable {
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
+
+        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
+        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
+
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        subtitleLabel.textColor = sectionTextColor
+        updateTitleLabel()
     }
+
+
+    final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
+        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+    }
+
 }
 
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with index bar
-@objcMembers class ContactsCell2: UITableViewCell {
+//TODO: @objcMembers
+class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
+    weak var user: UserType? = nil
+    ///TODO: sectionIndexShown: Bool
 
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
@@ -34,14 +50,64 @@ extension ContactsCell2: Themeable {
         }
     }
 
-    let avatar = BadgeUserImageView()
-    let titleLabel = UILabel()
-    let subtitleLabel = UILabel()
-    let actionButton = Button()
+    // if nil the background color is the default content background color for the theme
+    @objc dynamic var contentBackgroundColor: UIColor? = nil {
+        didSet {
+            guard oldValue != contentBackgroundColor else { return }
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
+
+    let avatar: BadgeUserImageView = {
+        let badgeUserImageView = BadgeUserImageView()
+        badgeUserImageView.userSession = ZMUserSession.shared()
+        badgeUserImageView.initials.font = .avatarInitial
+        badgeUserImageView.size = .small
+        badgeUserImageView.translatesAutoresizingMaskIntoConstraints = false
+
+
+        return badgeUserImageView
+    }()
+
+    let avatarSpacer = UIView()
+
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .smallLightFont
+        label.accessibilityIdentifier = "contact_cell.name"
+
+        return label
+    }()
+
+    let subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .smallRegularFont
+        label.accessibilityIdentifier = "contact_cell.username" ///TODO:
+
+        return label
+    }()
+
+    let actionButton: Button = {
+        let button = Button(style: .full)
+        button.setTitle("contacts_ui.action_button.invite".localized, for: .normal)
+
+        return button
+    }()
+    var actionButtonHandler: ContactsCellActionButtonHandler?
+
+    var titleStackView : UIStackView!
+    var contentStackView : UIStackView!
 
     // SeparatorCollectionViewCell
-    private let separator = UIView()
-    private var separatorInsetConstraint: NSLayoutConstraint!
+    let separator = UIView()
+    var separatorInsetConstraint: NSLayoutConstraint!
+    var separatorLeadingInset: CGFloat = 64 {
+        didSet {
+            separatorInsetConstraint?.constant = separatorLeadingInset
+        }
+    }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,6 +120,24 @@ extension ContactsCell2: Themeable {
 
 
     func setUp() {
+        avatarSpacer.addSubview(avatar)
+        avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
+
+        titleStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
+        titleStackView.axis = .vertical
+        titleStackView.distribution = .equalSpacing
+        titleStackView.alignment = .leading
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleStackView])
+        contentStackView.axis = .horizontal
+        contentStackView.distribution = .fill
+        contentStackView.alignment = .center
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        contentView.addSubview(contentStackView)
+
+        createConstraints()
     }
 
 
@@ -64,14 +148,13 @@ extension ContactsCell2: Themeable {
         separator.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(separator)
 
-//        createSeparatorConstraints()
+        createSeparatorConstraints()
 
         applyColorScheme(ColorScheme.default.variant)
 
     }
 
 
-    /*
     func createConstraints() {
         NSLayoutConstraint.activate([
             avatar.widthAnchor.constraint(equalToConstant: 28),
@@ -86,6 +169,11 @@ extension ContactsCell2: Themeable {
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             ])
     }
- */
 
+    private func updateTitleLabel() {
+        guard let user = self.user else {
+            return
+        }
+        titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
+    }
 }

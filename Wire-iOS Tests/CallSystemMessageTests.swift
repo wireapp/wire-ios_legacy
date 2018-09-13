@@ -110,22 +110,3 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
     }
 
 }
-
-
-
-private extension UITableViewCell {
-
-    func prepareForSnapshots() -> UIView {
-        setNeedsLayout()
-        layoutIfNeeded()
-
-        bounds.size = systemLayoutSizeFitting(
-            CGSize(width: 320, height: 0),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-
-        return wrapInTableView()
-    }
-
-}

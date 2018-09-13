@@ -1131,6 +1131,8 @@
 		EF2A8DE7214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */; };
 		EF2A8DE9214A8B38002C9058 /* MockUser+Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DE8214A8B38002C9058 /* MockUser+Service.swift */; };
 		EF2A8DEB214A9AFD002C9058 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEA214A9AFD002C9058 /* ContactsCell.swift */; };
+		EF2A8DED214AA36E002C9058 /* SeparatorViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */; };
+		EF2A8DEF214AAB13002C9058 /* ContactsCell2SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEE214AAB13002C9058 /* ContactsCell2SnapshotTests.swift */; };
 		EF2B74C6214157F200FD2574 /* PingCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C5214157F200FD2574 /* PingCellSnapshotTests.swift */; };
 		EF2B74C821415B0100FD2574 /* XCTestCase+PingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C721415B0100FD2574 /* XCTestCase+PingCell.swift */; };
 		EF2B74CA2141699100FD2574 /* LandingViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */; };
@@ -2842,6 +2844,8 @@
 		EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF2A8DE8214A8B38002C9058 /* MockUser+Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+Service.swift"; sourceTree = "<group>"; };
 		EF2A8DEA214A9AFD002C9058 /* ContactsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCell.swift; sourceTree = "<group>"; };
+		EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorViewProtocol.swift; sourceTree = "<group>"; };
+		EF2A8DEE214AAB13002C9058 /* ContactsCell2SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsCell2SnapshotTests.swift; sourceTree = "<group>"; };
 		EF2B74C5214157F200FD2574 /* PingCellSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingCellSnapshotTests.swift; sourceTree = "<group>"; };
 		EF2B74C721415B0100FD2574 /* XCTestCase+PingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+PingCell.swift"; sourceTree = "<group>"; };
 		EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -3972,6 +3976,7 @@
 				5EA73D8420D900FF0001D106 /* DetailsCollectionViewCell.swift */,
 				5EA73D8520D900FF0001D106 /* ImageContainer.swift */,
 				5EA73D8320D900FE0001D106 /* SeparatorCollectionViewCell.swift */,
+				EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */,
 				EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */,
 				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */,
 				871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */,
@@ -5498,6 +5503,7 @@
 				EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */,
 				EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */,
 				EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */,
+				EF2A8DEE214AAB13002C9058 /* ContactsCell2SnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6951,6 +6957,7 @@
 				D58192002091CEBF003BA7EC /* UIStackView+Helper.swift in Sources */,
 				871BC2851D34F8F800DF0793 /* UIColor+WAZExtensions.m in Sources */,
 				870C926F1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift in Sources */,
+				EF2A8DED214AA36E002C9058 /* SeparatorViewProtocol.swift in Sources */,
 				1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */,
 				EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */,
 				D54224C420513A9800526A57 /* TextCell.swift in Sources */,
@@ -7823,6 +7830,7 @@
 				1E8772231B0C8B0F005BDDC6 /* EmoticonSubstitutionConfigurationMocks.m in Sources */,
 				1651F9BC1D352C5700A9FAE8 /* ArticleViewTests.swift in Sources */,
 				BF78687F1D86B3710063762F /* LocationDataTests.swift in Sources */,
+				EF2A8DEF214AAB13002C9058 /* ContactsCell2SnapshotTests.swift in Sources */,
 				EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */,
 				5E2B13E820E67EA7002F27E2 /* VerticalColumnCollectionViewLayoutTests.swift in Sources */,
 				BF2A74751CEB595E002608BF /* AudioButtonOverlayTests.swift in Sources */,

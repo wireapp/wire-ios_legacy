@@ -37,6 +37,6 @@ final class ContactsCell2SnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        verify(view: sut)
+        verify(view: sut.prepareForSnapshots())
     }
 }
