@@ -25,8 +25,8 @@ private let endEditingNotificationName = "ConversationInputBarViewControllerShou
 
 extension ConversationInputBarViewController {
 
-    @objc func sendEditedMessageAndUpdateState(withText text: String) {
-        delegate.conversationInputBarViewControllerDidFinishEditing?(editingMessage, withText: text)
+    @objc func sendEditedMessageAndUpdateState(withText text: String, mentions: [Mention]) {
+        delegate.conversationInputBarViewControllerDidFinishEditing?(editingMessage, withText: text, mentions: mentions)
         editingMessage = nil
         updateWritingState(animated: true)
     }
@@ -85,7 +85,7 @@ extension ConversationInputBarViewController: InputBarEditViewDelegate {
         switch buttonType {
         case .undo: inputBar.undo()
         case .cancel: endEditingMessageIfNeeded()
-        case .confirm: sendOrEditText(inputBar.textView.preparedText)
+        case .confirm: sendOrEditText(inputBar.textView.preparedText, mentions: inputBar.textView.mentions)
         }
     }
     

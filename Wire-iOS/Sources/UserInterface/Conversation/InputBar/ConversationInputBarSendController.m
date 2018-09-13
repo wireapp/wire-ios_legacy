@@ -68,7 +68,7 @@
     }
 }
 
-- (void)sendTextMessage:(NSString *)text
+- (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions
 {
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
@@ -81,13 +81,13 @@
             for(int i = 0; i < 500; ++i) {
                 NSString *textWithNumber = [NSString stringWithFormat:@"%@ (%d)", text, i+1];
                 // only save last ones, who cares
-                textMessage = [self.conversation appendMessageWithText:textWithNumber fetchLinkPreview:shouldFetchLinkPreview];
+                textMessage = [self.conversation appendMessageWithText:textWithNumber mentions:mentions fetchLinkPreview:shouldFetchLinkPreview];
                 [(ZMMessage *)textMessage removeExpirationDate];
             }
         }
         else {
             // normal sending
-            textMessage = [self.conversation appendMessageWithText:text fetchLinkPreview:shouldFetchLinkPreview];
+            textMessage = [self.conversation appendMessageWithText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview];
         }
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
@@ -95,40 +95,20 @@
     }];
 }
 
-- (void)sendTextMessage:(NSString *)text withImageData:(NSData *)data
+- (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions withImageData:(NSData *)data
 {
     __block id <ZMConversationMessage> textMessage = nil;
     
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
     [ZMUserSession.sharedSession enqueueChanges:^{
-        textMessage = [self.conversation appendMessageWithText:text fetchLinkPreview:shouldFetchLinkPreview];
+        textMessage = [self.conversation appendMessageWithText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview];
         
         [self.conversation appendMessageWithImageData:data];
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];
-    }];
-}
-
-- (void)sendMentionsToUsersInMessage:(NSString *)text
-{
-    NSArray *mentionedUsers = [text usersMatchingMentions:self.conversation.activeParticipants.array strict:YES];
-    NSPredicate *filterSelfUserPredicate = [NSPredicate predicateWithFormat:@"SELF != %@", [ZMUser selfUser]];
-    NSArray *usersToPing = [mentionedUsers filteredArrayUsingPredicate:filterSelfUserPredicate];
-    
-    [usersToPing enumerateObjectsUsingBlock:^(id participant, NSUInteger idx, BOOL *stop) {
-        
-        ZMUser *user = (ZMUser *) participant;
-        
-        ZMConversation *conversation = user.oneToOneConversation;
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [conversation appendKnock];
-            [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
-        }];
-        
-        [self sendTextMessage:[NSString stringWithFormat:@"I want your attention in %@", self.conversation.displayName]];
     }];
 }
 

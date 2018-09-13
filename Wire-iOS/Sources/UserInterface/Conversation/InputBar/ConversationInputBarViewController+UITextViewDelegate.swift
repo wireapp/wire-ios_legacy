@@ -46,7 +46,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         if textView.returnKeyType == .send && (text == "\n") {
             inputBar.textView.autocorrectLastWord()
             let candidateText = inputBar.textView.preparedText
-            sendOrEditText(candidateText)
+            sendOrEditText(candidateText, mentions: inputBar.textView.mentions)
             return false
         }
         

@@ -19,6 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class Mention;
 @class InputBar;
 @class IconButton;
 @class ZMConversation;
@@ -41,7 +42,7 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing;
 - (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller;
 - (void)conversationInputBarViewControllerDidNotSendMessageConversationDegraded:(ConversationInputBarViewController *)controller;
-- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id <ZMConversationMessage>)message withText:(NSString *)newText;
+- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id <ZMConversationMessage>)message withText:(NSString *)newText mentions:(NSArray <Mention *> *)mentions;
 - (void)conversationInputBarViewControllerDidCancelEditingMessage:(id <ZMConversationMessage>)message;
 - (void)conversationInputBarViewControllerEditLastMessage;
 
