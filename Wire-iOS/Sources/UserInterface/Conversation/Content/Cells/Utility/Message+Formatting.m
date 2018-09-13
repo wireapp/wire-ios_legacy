@@ -78,6 +78,7 @@ static inline NSDataDetector *linkDataDetector(void)
                                                 forMessage:(id<ZMTextMessageData>)message
                                                    isGiphy:(BOOL)isGiphy
                                                 obfuscated:(BOOL)obfuscated
+                                                mentions:(NSArray <MentionWithUser *>*)mentions
 {
     if (message.messageText.length == 0) {
         return [[NSAttributedString alloc] initWithString:@""];
@@ -123,7 +124,9 @@ static inline NSDataDetector *linkDataDetector(void)
         return [[NSAttributedString alloc] initWithString:text attributes:attrs];
     }
     
-    NSMutableAttributedString *attributedString = [NSMutableAttributedString markdownFrom:text style:style];
+    NSMutableAttributedString *attributedString = [NSMutableAttributedString markdownFrom:text
+                                                                                    style:style
+                                                                                 mentions:mentions];
     
     [attributedString beginEditing];
     

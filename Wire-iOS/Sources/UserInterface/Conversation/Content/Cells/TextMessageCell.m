@@ -102,7 +102,7 @@
                                              UIDataDetectorTypeFlightNumber |
                                              UIDataDetectorTypeCalendarEvent |
                                              UIDataDetectorTypeShipmentTrackingNumber;
-
+    
     self.linkAttachmentContainer = [[UIView alloc] init];
     self.linkAttachmentContainer.translatesAutoresizingMaskIntoConstraints = NO;
     self.linkAttachmentContainer.preservesSuperviewLayoutMargins = YES;
@@ -162,6 +162,8 @@
         return;
     }
     
+    ZMMessage *backingMessage = (ZMMessage *)message;
+    
     [super configureForMessage:message layoutProperties:layoutProperties];
     
     id<ZMTextMessageData> textMesssageData = message.textMessageData;
@@ -172,7 +174,9 @@
     NSAttributedString *attributedMessageText = [NSAttributedString formattedStringWithLinkAttachments:layoutProperties.linkAttachments
                                                                                             forMessage:message.textMessageData
                                                                                                isGiphy:isGiphy
-                                                                                            obfuscated:message.isObfuscated];
+                                                                                            obfuscated:message.isObfuscated
+                                                                                              mentions:backingMessage.mentionsWithUsers];
+    
     if (self.searchQueries.count > 0 && attributedMessageText.length > 0) {
         
         NSDictionary<NSString *, id> *highlightStyle = @{ NSBackgroundColorAttributeName: UIColor.accentDarken};
