@@ -58,8 +58,6 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             return false
         }
 
-//        mentioningInTextView(textView, range: range, replacementText: text)
-
         inputBar.textView.respondToChange(text, inRange: range)
         return true
     }
