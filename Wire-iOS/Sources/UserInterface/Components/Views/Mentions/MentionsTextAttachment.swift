@@ -86,8 +86,7 @@ fileprivate extension CGSize {
 extension Mention {
 
     convenience init(configuration: MentionTextAttachment.Configuration, range: NSRange) {
-        let closedRange = range.location...(range.location + range.length)
-        self.init(range: closedRange, userId: configuration.identifier)
+        self.init(range: range, userId: configuration.identifier)
     }
 
 }
