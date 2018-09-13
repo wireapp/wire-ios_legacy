@@ -26,6 +26,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = InviteContactsViewController()
+        sut.shouldShowShareContactsViewController = false
 
         /// TODO: remove this after snapshot is created
         recordMode = true
@@ -37,12 +38,14 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForNoResult(){
-        sut.shouldShowShareContactsViewController = false
         verify(view: sut.view)
     }
 
 
     func testForContactsAreShown(){ ///TODO: ref to ContactsDataSourceTests
+        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-01.json")
+        sut.dataSource?.ungroupedSearchResults = mockUsers
+
         verify(view: sut.view)
     }
 }
