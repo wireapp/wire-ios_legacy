@@ -40,16 +40,14 @@
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-static NSString * const ContactsViewControllerCellID = @"ContactsCell";
 static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
 
 
-@interface ContactsViewController () <TokenFieldDelegate, UITableViewDelegate, ContactsDataSourceDelegate>
+@interface ContactsViewController () <TokenFieldDelegate, UITableViewDelegate>
 @property (nonatomic) TokenField *tokenField;
 @property (nonatomic, readwrite) UITableView *tableView;
 @property (nonatomic) Button *inviteOthersButton;
 @property (nonatomic) IconButton *cancelButton;
-@property (nonatomic) NSArray *actionButtonTitles;
 @property (nonatomic) ContactsEmptyResultView *emptyResultsView;
 
 @property (nonatomic) BOOL searchResultsReceived;
@@ -168,7 +166,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     self.tableView.rowHeight = 52.0f;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.tableView.sectionIndexMinimumDisplayRowCount = MinimumNumberOfContactsToDisplaySections;
-    [self.tableView registerClass:[ContactsCell class] forCellReuseIdentifier:ContactsViewControllerCellID];
+    [self.tableView registerClass:[ContactsCell2 class] forCellReuseIdentifier:ContactsViewControllerCellID]; ///TODO: replace with UserCell like cell, with avatar, label and a button
     [self.tableView registerClass:[ContactsSectionHeaderView class] forHeaderFooterViewReuseIdentifier:ContactsViewControllerSectionHeaderID];
     [self.view addSubview:self.tableView];
 
@@ -414,49 +412,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidConfirmSelection:)]) {
         [self.delegate contactsViewControllerDidConfirmSelection:self];
     }
-}
-
-#pragma mark - ContactsDataSourceDelegate
-
-- (UITableViewCell *)dataSource:(ContactsDataSource *)dataSource cellForUser:(ZMSearchUser *)user atIndexPath:(NSIndexPath *)indexPath
-{
-    ContactsCell *cell = (ContactsCell *)[self.tableView dequeueReusableCellWithIdentifier:ContactsViewControllerCellID forIndexPath:indexPath];
-    cell.searchUser = user;
-    cell.sectionIndexShown = self.dataSource.shouldShowSectionIndex;
-    
-    @weakify(cell);
-    @weakify(self);
-    cell.actionButtonHandler = ^(ZMSearchUser * __nullable user) {
-        @strongify(cell);
-        @strongify(self);
-        if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:actionButton:pressedForUser:)]) {
-            [self.contentDelegate contactsViewController:self actionButton:cell.actionButton pressedForUser:user];
-        }
-        if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:shouldDisplayActionButtonForUser:)]) {
-            cell.actionButton.hidden = ! [self.contentDelegate contactsViewController:self shouldDisplayActionButtonForUser:user];
-        }
-    };
-    
-    if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:shouldDisplayActionButtonForUser:)]) {
-        cell.actionButton.hidden = ! [self.contentDelegate contactsViewController:self shouldDisplayActionButtonForUser:user];
-    } else {
-        cell.actionButton.hidden = YES;
-    }
-    
-    if (! cell.actionButton.hidden) {
-        if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:actionButtonTitleIndexForUser:)]) {
-            NSUInteger index = [self.contentDelegate contactsViewController:self actionButtonTitleIndexForUser:user];
-            NSString *titleString = self.actionButtonTitles[index];
-            cell.allActionButtonTitles = self.actionButtonTitles;
-            [cell.actionButton setTitle:titleString forState:UIControlStateNormal];
-        }
-    }
-    
-    if ([dataSource.selection containsObject:user]) {
-        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    }
-    
-    return cell;
 }
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didReceiveSearchResult:(NSArray * __nonnull)newUsers

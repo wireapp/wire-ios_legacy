@@ -27,8 +27,6 @@ final class ContactsCell2SnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ContactsCell2()
 
-        ///TODO: test for dark style only
-
         /// TODO: remove this after snapshot is created
         recordMode = true
     }
@@ -43,6 +41,8 @@ final class ContactsCell2SnapshotTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         sut.user = user
 
-        verify(view: sut.prepareForSnapshots())
+        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
+
+    ///TODO: text another button text
 }

@@ -30,3 +30,63 @@ extension ContactsViewController {
         noContactsLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }
 }
+
+extension ContactsViewController: ContactsDataSourceDelegate {
+
+    var actionButtonHidden: Bool {
+        if let shouldDisplayActionButtonForUser = contentDelegate?.contactsViewController?(self, shouldDisplayActionButtonFor: user) {
+            return !shouldDisplayActionButtonForUser
+        } else {
+            return true
+        }
+    }
+
+    public func dataSource(_ dataSource: ContactsDataSource, cellFor user: ZMSearchUser, at indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell2 else {
+            fatal("Cannot create cell")
+        }
+        cell.user = user
+
+        ///TODO:
+        //    cell.sectionIndexShown = self.dataSource.shouldShowSectionIndex;
+
+        cell.actionButtonHandler = {[weak self, weak cell] user in
+            guard let `self` = self,
+                let cell = cell,
+                let user = user else { return }
+
+            self.contentDelegate?.contactsViewController!(self, actionButton: cell.actionButton, pressedFor: user)
+
+            if let shouldDisplayActionButtonFor = self.contentDelegate?.contactsViewController?(self, shouldDisplayActionButtonFor: user) {
+                cell.actionButton.isHidden = !shouldDisplayActionButtonFor
+            }
+        }
+
+        ///TODO: block, merge with above
+        if let shouldDisplayActionButtonForUser = contentDelegate?.contactsViewController?(self, shouldDisplayActionButtonFor: user) {
+            cell.actionButton.isHidden = !shouldDisplayActionButtonForUser
+        } else {
+            cell.actionButton.isHidden = true
+        }
+
+        if !cell.actionButton.isHidden {
+            ///TODO:
+//            if let index = contentDelegate?.contactsViewController?(self, actionButtonTitleIndexFor: user),
+//                let actionButtonTitles = actionButtonTitles as? [String],
+//                let titleString = actionButtonTitles[(int)index] {
+//
+////                cell.allActionButtonTitles = actionButtonTitles ///TODO:
+//                cell.actionButton.setTitle(titleString, for: .normal)
+//            }
+        }
+
+        if dataSource.selection.contains(user) {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
+
+        return cell
+
+    }
+
+    
+}
