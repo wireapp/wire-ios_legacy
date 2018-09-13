@@ -118,6 +118,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) IconButton *emojiButton;
 @property (nonatomic) IconButton *markdownButton;
 @property (nonatomic) IconButton *gifButton;
+@property (nonatomic) IconButton *mentionButton;
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
@@ -211,6 +212,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self configureAudioButton:self.audioButton];
     [self configureEmojiButton:self.emojiButton];
     [self configureMarkdownButton];
+    [self configureMentionButton];
     [self configureEphemeralKeyboardButton:self.hourglassButton];
     [self configureEphemeralKeyboardButton:self.ephemeralIndicatorButton];
     
@@ -306,8 +308,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.gifButton = [[IconButton alloc] init];
     self.gifButton.hitAreaPadding = CGSizeZero;
     self.gifButton.accessibilityIdentifier = @"gifButton";
-    
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
+
+    self.mentionButton = [[IconButton alloc] init];
+    self.mentionButton.hitAreaPadding = CGSizeZero;
+    self.mentionButton.accessibilityIdentifier = @"mentionButton";
+
+    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.mentionButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
     self.inputBar.textView.delegate = self;
     
@@ -514,7 +520,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.gifButton setIcon:ZetaIconTypeGif
                    withSize:ZetaIconSizeTiny
                    forState:UIControlStateNormal];
- 
+
+    [self.mentionButton setIcon:ZetaIconTypeMention
+                   withSize:ZetaIconSizeTiny
+                   forState:UIControlStateNormal];
+
     [self.sendButton setIcon:ZetaIconTypeSend
                     withSize:ZetaIconSizeTiny
                     forState:UIControlStateNormal];
