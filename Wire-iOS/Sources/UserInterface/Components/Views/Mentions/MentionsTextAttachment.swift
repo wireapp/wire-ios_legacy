@@ -82,3 +82,12 @@ final class MentionTextAttachment: NSTextAttachment {
 fileprivate extension CGSize {
     static let max = CGSize(width: .max, height: .max)
 }
+
+extension Mention {
+
+    convenience init(configuration: MentionTextAttachment.Configuration, range: NSRange) {
+        let closedRange = range.location...(range.location + range.length)
+        self.init(range: closedRange, userId: configuration.identifier)
+    }
+
+}

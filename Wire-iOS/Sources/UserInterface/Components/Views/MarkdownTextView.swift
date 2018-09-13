@@ -61,6 +61,18 @@ extension Notification.Name {
         return parser.parse(attributedString: withMentions)
     }
     
+    /// The mentions contained in the text, should be used to insert a message with mentions.
+    var mentions: [Mention] {
+        var result = [Mention]()
+        attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { attributes, range, _ in
+            if let attachment = attributes[.attachment] as? MentionTextAttachment {
+                let mention = Mention(configuration: attachment.configuration, range: range)
+                result.append(mention)
+            }
+        }
+        return result
+    }
+
     /// Set when newline is entered, used for auto list item creation.
     private var newlineFlag = false
     
