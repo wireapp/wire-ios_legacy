@@ -57,7 +57,7 @@ extension ZMMessage {
 }
 
 extension Mention {
-    var link: URL {
+    public var link: URL {
         return URL(string: "wire-user://id/" + userId.transportString())!
     }
 }
@@ -124,7 +124,7 @@ extension NSMutableAttributedString {
             mentionAttributes[NSAttributedStringKey.link] = link as NSObject
         }
         
-        let mentionText = user.displayName && mentionAttributes
+        let mentionText = (user.name ?? user.displayName) && mentionAttributes
         
         return atString + mentionText
     }

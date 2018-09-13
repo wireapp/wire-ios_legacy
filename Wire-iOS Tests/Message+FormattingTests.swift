@@ -153,4 +153,20 @@ class Message_FormattingTests: XCTestCase {
         XCTAssertEqual(formattedText.string, "hello:")
     }
 
+    func testMentionLinkOverridesDetectedLink() {
+        // given
+        let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url}@mention")
+        
+        // when
+        let mockUser = MockUser.mockUsers()[0]
+        mockUser.remoteIdentifier = UUID()
+        
+        let mention = Mention(range: (textMessageData.messageText as NSString).range(of: "@mention"), userId: mockUser.remoteIdentifier)
+        let mentionWithUser = MentionWithUser(mention: mention, user: mockUser)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mentionWithUser])
+        
+        // then
+        XCTAssertEqual(formattedText.string, "\(previewURL)@James Hetfield")
+        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
+    }
 }
