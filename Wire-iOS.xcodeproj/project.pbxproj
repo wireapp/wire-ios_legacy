@@ -1128,6 +1128,8 @@
 		EF297DEC213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DEA213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift */; };
 		EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */; };
 		EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */; };
+		EF2A8DE7214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */; };
+		EF2A8DE9214A8B38002C9058 /* MockUser+Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DE8214A8B38002C9058 /* MockUser+Service.swift */; };
 		EF2B74C6214157F200FD2574 /* PingCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C5214157F200FD2574 /* PingCellSnapshotTests.swift */; };
 		EF2B74C821415B0100FD2574 /* XCTestCase+PingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C721415B0100FD2574 /* XCTestCase+PingCell.swift */; };
 		EF2B74CA2141699100FD2574 /* LandingViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */; };
@@ -2836,6 +2838,8 @@
 		EF297DEB213340CF0002983A /* ParticipantDeviceHeaderView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantDeviceHeaderView+Internal.h"; sourceTree = "<group>"; };
 		EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageViewTests.swift; sourceTree = "<group>"; };
 		EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerTests.swift; sourceTree = "<group>"; };
+		EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF2A8DE8214A8B38002C9058 /* MockUser+Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+Service.swift"; sourceTree = "<group>"; };
 		EF2B74C5214157F200FD2574 /* PingCellSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingCellSnapshotTests.swift; sourceTree = "<group>"; };
 		EF2B74C721415B0100FD2574 /* XCTestCase+PingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+PingCell.swift"; sourceTree = "<group>"; };
 		EF2B74C92141699100FD2574 /* LandingViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -4416,6 +4420,7 @@
 				EF9B950220BEBD4B000D4CA1 /* MockUser+AccentColorProvider.swift */,
 				EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */,
 				EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */,
+				EF2A8DE8214A8B38002C9058 /* MockUser+Service.swift */,
 				87BEB0DE1C734DA60094BFE9 /* MockLoader.h */,
 				87BEB0DF1C734DA60094BFE9 /* MockLoader.m */,
 				87BEB0E11C734DB60094BFE9 /* MockMessage.swift */,
@@ -5489,6 +5494,7 @@
 				EF3CBC072147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift */,
 				EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */,
 				EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */,
+				EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6551,7 +6557,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the update_licenses package\nswift run --chdir Scripts/update_licenses/";
+			shellScript = "# Run the update_licenses package\nswift run --chdir Scripts/update_licenses/\n";
 		};
 		873AA0501D05A74B0038343B /* Strip BitCode */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7733,6 +7739,7 @@
 				87C39A90206BF00A008DA100 /* BackupViewControllerTests.swift in Sources */,
 				EF27CD9F20C161500077FE55 /* ProfileClientViewControllerTests.swift in Sources */,
 				BADA351F1B431E5000396F2C /* NSURLWireLocaleTests.m in Sources */,
+				EF2A8DE7214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift in Sources */,
 				164B533C20A0A5E800EC8265 /* CallInfoConfigurationTests.swift in Sources */,
 				5EA73D9220D903BC0001D106 /* CheckmarkCellTests.swift in Sources */,
 				874941CB1DE34DEC006CF32B /* UserConnectionViewTests.swift in Sources */,
@@ -7789,6 +7796,7 @@
 				BFE3FEEC20975D1E003D9AB5 /* CallStatusViewTests.swift in Sources */,
 				BF808B591DE72B7100718076 /* UserNameTakeOverViewControllerTests.swift in Sources */,
 				EF6251DB21396B9800943708 /* AppLockViewSnapshotTests.swift in Sources */,
+				EF2A8DE9214A8B38002C9058 /* MockUser+Service.swift in Sources */,
 				BFBAE9E31E041FB7003FCE49 /* ReactionsCellTests.swift in Sources */,
 				8787BDD91BF374420096B1B5 /* SettingsPropertyTests.swift in Sources */,
 				D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */,

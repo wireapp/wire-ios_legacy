@@ -22,22 +22,24 @@ class TopPeopleSectionController : SearchSectionController {
     
     fileprivate var innerCollectionView: UICollectionView!
     fileprivate let innerCollectionViewController = TopPeopleLineCollectionViewController()
-    fileprivate let topConversationsDirectory: TopConversationsDirectory
+    fileprivate let topConversationsDirectory: TopConversationsDirectory!
     var token : Any? = nil
     weak var delegate : SearchSectionControllerDelegate? = nil
     
-    init(topConversationsDirectory: TopConversationsDirectory) {
+    init(topConversationsDirectory: TopConversationsDirectory!) {
         self.topConversationsDirectory = topConversationsDirectory
         
         super.init()
         
         createInnerCollectionView()
-        
-        self.token = topConversationsDirectory.add(observer: self)
+
+        if let topConversationsDirectory = topConversationsDirectory {
+            self.token = topConversationsDirectory.add(observer: self)
+            self.innerCollectionViewController.topPeople = topConversationsDirectory.topConversations
+            topConversationsDirectory.refreshTopConversations()
+        }
         self.innerCollectionViewController.delegate = self
-        self.innerCollectionViewController.topPeople = topConversationsDirectory.topConversations
         self.innerCollectionView.reloadData()
-        self.topConversationsDirectory.refreshTopConversations()
     }
     
     func createInnerCollectionView() {
@@ -68,7 +70,11 @@ class TopPeopleSectionController : SearchSectionController {
     }
     
     override var isHidden: Bool {
-        return topConversationsDirectory.topConversations.isEmpty
+        if let topConversationsDirectory = topConversationsDirectory {
+            return topConversationsDirectory.topConversations.isEmpty
+        } else {
+            return true
+        }
     }
     
     override var sectionTitle: String {

@@ -19,17 +19,14 @@
 import XCTest
 @testable import Wire
 
-final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
     
-    var sut: InviteContactsViewController!
+    var sut: StartUIViewController!
     
     override func setUp() {
         super.setUp()
-        sut = InviteContactsViewController()
-        sut.shouldShowShareContactsViewController = false
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
+        sut = StartUIViewController()
+        sut.view.backgroundColor = .black
     }
     
     override func tearDown() {
@@ -37,15 +34,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForNoResult(){
-        verify(view: sut.view)
-    }
-
-
-    func testForContactsAreShown(){
-        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-01.json")
-        sut.dataSource?.ungroupedSearchResults = mockUsers
-
-        verify(view: sut.view)
+    func testForNoContact() {
+        verifyInAllIPhoneSizes(view: sut.view)
     }
 }

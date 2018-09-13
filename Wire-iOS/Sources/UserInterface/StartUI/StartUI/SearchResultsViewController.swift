@@ -115,7 +115,7 @@ extension UIViewController {
 @objcMembers public class SearchResultsViewController : UIViewController {
     
     var searchResultsView: SearchResultsView?
-    let searchDirectory: SearchDirectory
+    var searchDirectory: SearchDirectory!
     let userSelection: UserSelection
 
     let sectionController: SectionCollectionViewController
@@ -148,12 +148,11 @@ extension UIViewController {
     }
     
     deinit {
-        searchDirectory.tearDown()
+        searchDirectory?.tearDown()
     }
     
     @objc
     public init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
-        self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
@@ -174,7 +173,12 @@ extension UIViewController {
         servicesSection = SearchServicesSectionController(canSelfUserManageTeam: ZMUser.selfUser().canManageTeam)
         conversationsSection = GroupConversationsSectionController()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
-        topPeopleSection = TopPeopleSectionController(topConversationsDirectory: ZMUserSession.shared()!.topConversationsDirectory)
+        if let session = ZMUserSession.shared() {
+            searchDirectory = SearchDirectory(userSession: session)
+            topPeopleSection = TopPeopleSectionController(topConversationsDirectory: session.topConversationsDirectory)
+        } else {
+            topPeopleSection = TopPeopleSectionController(topConversationsDirectory:nil)
+        }
         inviteTeamMemberSection = InviteTeamMemberSection(team: team)
         
         super.init(nibName: nil, bundle: nil)
@@ -226,12 +230,12 @@ extension UIViewController {
         searchResultsView?.emptyResultContainer.isHidden = true
 
         let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
-        let task = searchDirectory.perform(request)
-        
-        task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
-        task.start()
-        
-        pendingSearchTask = task
+        if let task = searchDirectory?.perform(request) {
+            task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
+            task.start()
+            
+            pendingSearchTask = task
+        }
     }
     
     @objc
@@ -254,12 +258,11 @@ extension UIViewController {
         pendingSearchTask?.cancel()
         
         let request = SearchRequest(query: "", searchOptions: [.contacts, .teamMembers], team: ZMUser.selfUser().team)
-        let task = searchDirectory.perform(request)
-        
-        task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
-        task.start()
-        
-        pendingSearchTask = task
+        if let task = searchDirectory?.perform(request) {
+            task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
+            task.start()
+            pendingSearchTask = task
+        }
     }
     
     var isResultEmpty: Bool = true {
