@@ -18,10 +18,39 @@
 
 import UIKit
 
+protocol ViewWithContentView {
+    var contentView: UIView { get }
+}
+
+extension UICollectionViewCell: ViewWithContentView {}
+extension UITableViewCell: ViewWithContentView {}
+
+protocol SeparatorViewProtocol: class {
+    var separator: UIView { get }
+    var separatorInsetConstraint: NSLayoutConstraint! { get set }
+    var separatorLeadingInset: CGFloat { get }
+}
+
+extension SeparatorViewProtocol where Self: ViewWithContentView {
+    func createSeparatorConstraints() {
+        separatorInsetConstraint = separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                                      constant: separatorLeadingInset)
+
+        NSLayoutConstraint.activate([
+            separatorInsetConstraint,
+            separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            separator.heightAnchor.constraint(equalToConstant: .hairline),
+            ])
+    }
+}
+
+extension SeparatorCollectionViewCell: SeparatorViewProtocol {}
+
 class SeparatorCollectionViewCell: UICollectionViewCell, Themeable {
 
-    private let separator = UIView()
-    private var separatorInsetConstraint: NSLayoutConstraint!
+    let separator = UIView()
+    var separatorInsetConstraint: NSLayoutConstraint!
 
     var separatorLeadingInset: CGFloat = 64 {
         didSet {
@@ -53,15 +82,7 @@ class SeparatorCollectionViewCell: UICollectionViewCell, Themeable {
         separator.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(separator)
 
-        separatorInsetConstraint = separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                                                      constant: separatorLeadingInset)
-
-        NSLayoutConstraint.activate([
-            separatorInsetConstraint,
-            separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            separator.heightAnchor.constraint(equalToConstant: .hairline),
-        ])
+        createSeparatorConstraints()
 
         applyColorScheme(ColorScheme.default.variant)
 
