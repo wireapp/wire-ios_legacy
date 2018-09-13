@@ -88,10 +88,27 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
     
-    
     func testThatItRendersMentions_InMarkdown() {
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), userId: otherUser.remoteIdentifier)
+        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
+    func testThatItRendersMentions_MarkdownInMention_Code() {
+        let messageText = "# Hello @`Bruno`"
+        let mention = Mention(range: NSRange(location: 8, length: 8), userId: otherUser.remoteIdentifier)
+        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
+    func testThatItRendersMentions_MarkdownInMention_Link() {
+        let messageText = "# Hello @[Bruno](http://google.com)"
+        let mention = Mention(range: NSRange(location: 8, length: 27), userId: otherUser.remoteIdentifier)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
