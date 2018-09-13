@@ -27,9 +27,9 @@ extension ContactsCell2: Themeable {
 
         titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
+
         updateTitleLabel()
     }
-
 
     final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
         return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
@@ -37,10 +37,27 @@ extension ContactsCell2: Themeable {
 
 }
 
+extension ContactsCell2: UserCellSubtitleProtocol {
+    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
+}
+
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with index bar
 //TODO: @objcMembers
 class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
-    weak var user: UserType? = nil
+    var user: UserType? = nil {
+        didSet {
+            avatar.user = user
+            updateTitleLabel()
+
+            if let subtitle = subtitle(forRegularUser: user), subtitle.length > 0 {
+                subtitleLabel.isHidden = false
+                subtitleLabel.attributedText = subtitle
+            } else {
+                subtitleLabel.isHidden = true
+            }
+        }
+    }
+
     ///TODO: sectionIndexShown: Bool
 
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
@@ -58,13 +75,15 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
+    static let boldFont: UIFont = .smallRegularFont
+    static let lightFont: UIFont = .smallLightFont
+
     let avatar: BadgeUserImageView = {
         let badgeUserImageView = BadgeUserImageView()
         badgeUserImageView.userSession = ZMUserSession.shared()
         badgeUserImageView.initials.font = .avatarInitial
         badgeUserImageView.size = .small
         badgeUserImageView.translatesAutoresizingMaskIntoConstraints = false
-
 
         return badgeUserImageView
     }()
@@ -93,12 +112,14 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
         let button = Button(style: .full)
         button.setTitle("contacts_ui.action_button.invite".localized, for: .normal)
 
+        button.addTarget(self, action: #selector(ContactsCell2.actionButtonPressed(sender:)), for: .touchUpInside)
+
         return button
     }()
     var actionButtonHandler: ContactsCellActionButtonHandler?
 
-    var titleStackView : UIStackView!
-    var contentStackView : UIStackView!
+    var titleStackView: UIStackView!
+    var contentStackView: UIStackView!
 
     // SeparatorCollectionViewCell
     let separator = UIView()
@@ -118,7 +139,6 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
         fatalError("init(coder:) has not been implemented")
     }
 
-
     func setUp() {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
@@ -129,7 +149,7 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
         titleStackView.alignment = .leading
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleStackView])
+        contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleStackView, actionButton])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
@@ -139,7 +159,6 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
 
         createConstraints()
     }
-
 
     private func configureSubviews() {
 
@@ -151,9 +170,7 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
         createSeparatorConstraints()
 
         applyColorScheme(ColorScheme.default.variant)
-
     }
-
 
     func createConstraints() {
         NSLayoutConstraint.activate([
@@ -166,7 +183,7 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
             contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
             ])
     }
 
@@ -174,6 +191,13 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
         guard let user = self.user else {
             return
         }
+
         titleLabel.attributedText = user.nameIncludingAvailability(color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
+    }
+
+    @objc func actionButtonPressed(sender: Any?) {
+        if let user = user as? ZMSearchUser {
+            actionButtonHandler?(user)
+        }
     }
 }

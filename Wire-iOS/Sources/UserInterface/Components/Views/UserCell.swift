@@ -19,6 +19,52 @@
 import UIKit
 import WireExtensionComponents
 
+protocol UserCellSubtitleProtocol: class {
+    func subtitle(forRegularUser user: UserType?) -> NSAttributedString?
+
+    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] { get set }
+
+    static var boldFont: UIFont { get }
+    static var lightFont: UIFont { get }
+}
+
+extension UserCellSubtitleProtocol where Self: UIView & Themeable {
+    func subtitle(forRegularUser user: UserType?) -> NSAttributedString? {
+        guard let user = user else { return nil }
+        
+        var components: [NSAttributedString?] = []
+
+        if let handle = user.handle, !handle.isEmpty {
+            components.append("@\(handle)" && UserCell.boldFont)
+        }
+
+        WirelessExpirationTimeFormatter.shared.string(for: user).apply {
+            components.append($0 && UserCell.boldFont)
+        }
+
+        if let user = user as? ZMUser, let addressBookName = user.addressBookEntry?.cachedName {
+            let formatter = Self.correlationFormatter(for: colorSchemeVariant)
+            components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
+        }
+
+        return components.compactMap({ $0 }).joined(separator: " · " && UserCell.lightFont)
+    }
+
+    private static func correlationFormatter(for colorSchemeVariant: ColorSchemeVariant) -> AddressBookCorrelationFormatter {
+        if let formatter = correlationFormatters[colorSchemeVariant] {
+            return formatter
+        }
+
+        let color = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
+        let formatter = AddressBookCorrelationFormatter(lightFont: lightFont, boldFont: boldFont, color: color)
+
+        correlationFormatters[colorSchemeVariant] = formatter
+
+        return formatter
+    }
+
+}
+
 class UserCell: SeparatorCollectionViewCell {
 
     enum AccessoryIcon {
@@ -43,8 +89,8 @@ class UserCell: SeparatorCollectionViewCell {
     
     weak var user: UserType? = nil
     
-    fileprivate static let boldFont: UIFont! = FontSpec.init(.small, .regular).font!
-    fileprivate static let lightFont: UIFont! = FontSpec.init(.small, .light).font!
+    static let boldFont: UIFont = .smallRegularFont
+    static let lightFont: UIFont = .smallLightFont
 
     override var isSelected: Bool {
         didSet {
@@ -212,6 +258,8 @@ class UserCell: SeparatorCollectionViewCell {
 
 // MARK: - Subtitle
 
+extension UserCell: UserCellSubtitleProtocol {}
+
 extension UserCell {
     
     func subtitle(for user: UserType) -> NSAttributedString? {
@@ -221,46 +269,14 @@ extension UserCell {
             return subtitle(forRegularUser: user)
         }
     }
-    
-    private func subtitle(forRegularUser user: UserType) -> NSAttributedString {
-        var components: [NSAttributedString?] = []
-        
-        if let handle = user.handle, !handle.isEmpty {
-            components.append("@\(handle)" && UserCell.boldFont)
-        }
-        
-        WirelessExpirationTimeFormatter.shared.string(for: user).apply {
-            components.append($0 && UserCell.boldFont)
-        }
-        
-        if let user = user as? ZMUser, let addressBookName = user.addressBookEntry?.cachedName {
-            let formatter = UserCell.correlationFormatter(for: colorSchemeVariant)
-            components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
-        }
-        
-        return components.compactMap({ $0 }).joined(separator: " · " && UserCell.lightFont)
-    }
-    
+
     private func subtitle(forServiceUser service: SearchServiceUser) -> NSAttributedString? {
         guard let summary = service.summary else { return nil }
         
         return summary && UserCell.boldFont
     }
-    
-    private static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
-    private class func correlationFormatter(for colorSchemeVariant: ColorSchemeVariant) -> AddressBookCorrelationFormatter {
-        if let formatter = correlationFormatters[colorSchemeVariant] {
-            return formatter
-        }
-        
-        let color = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
-        let formatter = AddressBookCorrelationFormatter(lightFont: lightFont, boldFont: boldFont, color: color)
-        
-        correlationFormatters[colorSchemeVariant] = formatter
-        
-        return formatter
-    }
-    
+
+    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
 }
 
 // MARK: - Availability
