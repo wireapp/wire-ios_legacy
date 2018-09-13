@@ -50,6 +50,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             return false
         }
         
+        // TODO: Integrate with suggestions pop-up
         // Start mentioning
         if text == "@" {
             let attachment = MentionTextAttachment(configuration: .init(user: .selfUser()))
