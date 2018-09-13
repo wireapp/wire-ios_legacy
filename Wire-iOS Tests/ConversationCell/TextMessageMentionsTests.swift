@@ -49,8 +49,6 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersMentions_OnlyMention() {
-        recordMode = true
-        
         let messageText = "@Bruno"
         let mention = Mention(range: NSRange(location: 0, length: 6), userId: otherUser.remoteIdentifier)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -60,8 +58,6 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersMentions() {
-        recordMode = true
-
         let messageText = "Hello @Bruno! I had some questions about your program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 6), userId: otherUser.remoteIdentifier)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -71,8 +67,6 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersMentions_DifferentLength() {
-        recordMode = true
-        
         let messageText = "Hello @Br @Br @Br"
         let mention1 = Mention(range: NSRange(location: 6, length: 3), userId: otherUser.remoteIdentifier)
         let mention2 = Mention(range: NSRange(location: 10, length: 3), userId: otherUser.remoteIdentifier)
@@ -86,8 +80,6 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersMentions_SelfMention() {
-        recordMode = true
-        
         let messageText = "Hello @Me! I had some questions about my program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 3), userId: selfUser.remoteIdentifier)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -98,8 +90,6 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     
     
     func testThatItRendersMentions_InMarkdown() {
-        recordMode = true
-        
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), userId: otherUser.remoteIdentifier)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
