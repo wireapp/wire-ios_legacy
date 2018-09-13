@@ -44,17 +44,15 @@ extension Notification.Name {
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
     var preparedText: String {
-        var mentionRanges = [(NSRange, String)]()
-        attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { (attributes, range, stop) in
-            if let attachment = attributes[.attachment] as? MentionTextAttachment {
-                mentionRanges.append((range, attachment.attributedText.string))
-            }
+        var mentionRanges = mentionAttachmentsWithRange().map { attachment, range in
+            (range, attachment.attributedText.string)
         }
+        
+        // We reverse to maintain correct ranges for subsequent inserts.
+        mentionRanges.reverse()
 
         let withMentions = NSMutableAttributedString(attributedString: attributedText)
 
-        // We reverse to maintain correct ranges for subsequent inserts.
-        mentionRanges.reverse()
         // Replace the text attachment with the mention text content.
         mentionRanges.forEach(withMentions.replaceCharacters)
 
@@ -63,11 +61,27 @@ extension Notification.Name {
     
     /// The mentions contained in the text, should be used to insert a message with mentions.
     var mentions: [Mention] {
-        var result = [Mention]()
+        var locationOffset = 0
+        
+        // As text attachments always have a length of 1 we have to adjust and offset the ranges of mentions.
+        let lengthAdjusted: [(MentionTextAttachment, NSRange)] = mentionAttachmentsWithRange().map { (attachment, range) in
+            let length = attachment.attributedText.string.count
+            let adjustedRange = NSRange(location: range.location + locationOffset, length: length)
+            locationOffset += length
+            
+            return (attachment, adjustedRange)
+        }
+
+        return lengthAdjusted.map { attachment, range in
+            Mention(configuration: attachment.configuration, range: range)
+        }
+    }
+    
+    private func mentionAttachmentsWithRange() -> [(MentionTextAttachment, NSRange)] {
+        var result = [(MentionTextAttachment, NSRange)]()
         attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { attributes, range, _ in
             if let attachment = attributes[.attachment] as? MentionTextAttachment {
-                let mention = Mention(configuration: attachment.configuration, range: range)
-                result.append(mention)
+                result.append((attachment, range))
             }
         }
         return result
