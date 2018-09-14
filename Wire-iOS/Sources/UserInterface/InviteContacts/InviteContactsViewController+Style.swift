@@ -22,6 +22,8 @@ extension InviteContactsViewController {
     @objc override func setupStyle() {
         super.setupStyle()
 
+        view.backgroundColor = .clear
+
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionIndexBackgroundColor = .clear

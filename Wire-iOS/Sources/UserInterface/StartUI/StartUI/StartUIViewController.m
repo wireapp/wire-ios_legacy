@@ -274,9 +274,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)inviteMoreButtonTapped:(UIButton *)sender
 {
     InviteContactsViewController *inviteContactsViewController = [[InviteContactsViewController alloc] init];
-    inviteContactsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     inviteContactsViewController.delegate = self;
-    [self presentViewController:inviteContactsViewController animated:YES completion:nil];
+    [self.navigationController pushViewController:inviteContactsViewController animated:true];
 }
 
 - (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath

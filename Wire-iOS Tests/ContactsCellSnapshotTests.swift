@@ -30,11 +30,7 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = ContactsCell2()
 
-
         sut.allActionButtonTitles = buttonTitles
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
 
     override func tearDown() {

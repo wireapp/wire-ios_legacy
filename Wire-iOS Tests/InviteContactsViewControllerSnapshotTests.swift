@@ -27,6 +27,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = InviteContactsViewController()
         sut.shouldShowShareContactsViewController = false
+        sut.view.backgroundColor = .black
 
         /// TODO: remove this after snapshot is created
         recordMode = true
