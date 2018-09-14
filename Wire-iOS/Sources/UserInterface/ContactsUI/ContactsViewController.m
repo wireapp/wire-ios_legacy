@@ -25,7 +25,6 @@
 #import "ContactsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "ContactsViewController+ShareContacts.h"
-#import "ContactsSectionHeaderView.h"
 #import "UIView+Zeta.h"
 #import "Constants.h"
 #import "ColorScheme.h"
@@ -448,7 +447,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     ContactsSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:ContactsViewControllerSectionHeaderID];
-    headerView.titleLabel.text = [self.dataSource tableView:tableView titleForHeaderInSection:section];
+    headerView.label.text = [self.dataSource tableView:tableView titleForHeaderInSection:section];
     return headerView;
 }
 

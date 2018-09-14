@@ -19,6 +19,10 @@
 import Foundation
 
 extension InviteContactsViewController {
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     @objc override func setupStyle() {
         super.setupStyle()
 

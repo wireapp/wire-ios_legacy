@@ -60,7 +60,7 @@
         self.cancelButton.hidden = YES;
     }
 
-} ///TODO: status bar is white
+}
 
 - (BOOL)sharingContactsRequired
 {

@@ -80,7 +80,6 @@
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
-#import "ContactsSectionHeaderView.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"

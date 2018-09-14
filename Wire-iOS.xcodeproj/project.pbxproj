@@ -645,7 +645,6 @@
 		87DCF47A1D34E95B00BB420F /* ShareContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4781D34E95B00BB420F /* ShareContactsViewController.m */; };
 		87DCF48E1D34E9BA00BB420F /* ContactsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4801D34E9BA00BB420F /* ContactsDataSource.m */; };
 		87DCF48F1D34E9BA00BB420F /* ContactsEmptyResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4821D34E9BA00BB420F /* ContactsEmptyResultView.m */; };
-		87DCF4901D34E9BA00BB420F /* ContactsSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4841D34E9BA00BB420F /* ContactsSectionHeaderView.m */; };
 		87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4891D34E9BA00BB420F /* ContactsViewController+ShareContacts.m */; };
 		87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */; };
 		87DCF4941D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF48C1D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift */; };
@@ -1243,7 +1242,7 @@
 		EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */; };
 		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */; };
 		EFDE37FA2139889C0095DCA4 /* MuteIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE37F92139889B0095DCA4 /* MuteIndicatorView.swift */; };
-		EFDE37FD213994750095DCA4 /* ContactsSectionHeaderView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView+Style.swift */; };
+		EFDE37FD213994750095DCA4 /* ContactsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView.swift */; };
 		EFE043992149CE8D00BC3079 /* InviteContactsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */; };
 		EFE0439B2149D9CA00BC3079 /* ShareContactsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */; };
 		EFE285442146B4DC00720737 /* RegistrationTextField+EdgeInset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE285432146B4DC00720737 /* RegistrationTextField+EdgeInset.swift */; };
@@ -2165,8 +2164,6 @@
 		87DCF4801D34E9BA00BB420F /* ContactsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDataSource.m; sourceTree = "<group>"; };
 		87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsEmptyResultView.h; sourceTree = "<group>"; };
 		87DCF4821D34E9BA00BB420F /* ContactsEmptyResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsEmptyResultView.m; sourceTree = "<group>"; };
-		87DCF4831D34E9BA00BB420F /* ContactsSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsSectionHeaderView.h; sourceTree = "<group>"; };
-		87DCF4841D34E9BA00BB420F /* ContactsSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsSectionHeaderView.m; sourceTree = "<group>"; };
 		87DCF4871D34E9BA00BB420F /* ContactsViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ContactsViewController+Private.h"; sourceTree = "<group>"; };
 		87DCF4881D34E9BA00BB420F /* ContactsViewController+ShareContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ContactsViewController+ShareContacts.h"; sourceTree = "<group>"; };
 		87DCF4891D34E9BA00BB420F /* ContactsViewController+ShareContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ContactsViewController+ShareContacts.m"; sourceTree = "<group>"; };
@@ -2966,7 +2963,7 @@
 		EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+OrientationAndSize.swift"; sourceTree = "<group>"; };
 		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+FilesPopover.swift"; sourceTree = "<group>"; };
 		EFDE37F92139889B0095DCA4 /* MuteIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuteIndicatorView.swift; sourceTree = "<group>"; };
-		EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsSectionHeaderView+Style.swift"; sourceTree = "<group>"; };
+		EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsSectionHeaderView.swift; sourceTree = "<group>"; };
 		EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteContactsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareContactsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EFE285432146B4DC00720737 /* RegistrationTextField+EdgeInset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RegistrationTextField+EdgeInset.swift"; sourceTree = "<group>"; };
@@ -4497,9 +4494,7 @@
 				163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */,
 				87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.h */,
 				87DCF4821D34E9BA00BB420F /* ContactsEmptyResultView.m */,
-				87DCF4831D34E9BA00BB420F /* ContactsSectionHeaderView.h */,
-				87DCF4841D34E9BA00BB420F /* ContactsSectionHeaderView.m */,
-				EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView+Style.swift */,
+				EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView.swift */,
 				87DCF4871D34E9BA00BB420F /* ContactsViewController+Private.h */,
 				87DCF4881D34E9BA00BB420F /* ContactsViewController+ShareContacts.h */,
 				87DCF4891D34E9BA00BB420F /* ContactsViewController+ShareContacts.m */,
@@ -7419,7 +7414,7 @@
 				8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */,
 				5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */,
 				5EA73D8A20D901000001D106 /* CheckmarkCell.swift in Sources */,
-				EFDE37FD213994750095DCA4 /* ContactsSectionHeaderView+Style.swift in Sources */,
+				EFDE37FD213994750095DCA4 /* ContactsSectionHeaderView.swift in Sources */,
 				7CEB45281F8FAAC400D772D5 /* UINavigationBarContainer.swift in Sources */,
 				87A540A81E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift in Sources */,
 				AF58EC801E9FAB7700EB94CD /* DraftSendInputAccessoryView.swift in Sources */,
@@ -7468,7 +7463,6 @@
 				BF3A3DCE1EA75290005477F8 /* RotatingKeyboardAvoidingViewController.swift in Sources */,
 				BFC914921D1814AF001F068B /* LocationMessageCell.swift in Sources */,
 				87DCF49B1D34E9E600BB420F /* LocationSelectionViewController.swift in Sources */,
-				87DCF4901D34E9BA00BB420F /* ContactsSectionHeaderView.m in Sources */,
 				871067431C0DC78F0035603B /* SettingsExternalScreenCellDescriptor.swift in Sources */,
 				87DCF4EE1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m in Sources */,
 				EF2127281FB9E06300625A9B /* LandingViewController.swift in Sources */,
