@@ -66,8 +66,8 @@ extension NSMutableAttributedString {
         let backgroundColor: UIColor
         
         if user.isSelfUser {
-            color = .white
-            backgroundColor = ColorScheme.default.accentColor
+            color = ColorScheme.default.color(named: .textForeground)
+            backgroundColor = ColorScheme.default.accentColor.withAlphaComponent(0.16)
         }
         else {
             color = ColorScheme.default.accentColor

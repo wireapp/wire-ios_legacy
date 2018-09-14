@@ -29,11 +29,9 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = UIColor(scheme: .contentBackground)
-        accentColor = .strongBlue
-        sut = TextMessageCell(style: .default, reuseIdentifier: name)
-        sut.layer.speed = 0
-        
+        NSAttributedString.wr_flushCellParagraphStyleCache()
+        Message.invalidateMarkdownStyle()
+
         resetDayFormatter()
         
         [Message.shortVersionDateFormatter(), Message.longVersionTimeFormatter()].forEach {
@@ -42,13 +40,24 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         }
     }
     
+    func createSUT(for variant: ColorSchemeVariant) {
+        ColorScheme.default.variant = variant
+
+        snapshotBackgroundColor = UIColor(scheme: .contentBackground)
+        accentColor = .strongBlue
+        sut = TextMessageCell(style: .default, reuseIdentifier: name)
+        sut.layer.speed = 0
+    }
+    
     override func tearDown() {
         resetDayFormatter()
         sut = nil
+        ColorScheme.default.variant = .light
         super.tearDown()
     }
     
     func testThatItRendersMentions_OnlyMention() {
+        createSUT(for: .light)
         let messageText = "@Bruno"
         let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -58,6 +67,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersMentions() {
+        createSUT(for: .light)
         let messageText = "Hello @Bruno! I had some questions about your program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 6), user: otherUser)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -67,6 +77,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersMentions_DifferentLength() {
+        createSUT(for: .light)
         let messageText = "Hello @Br @Br @Br"
         let mention1 = Mention(range: NSRange(location: 6, length: 3), user: otherUser)
         let mention2 = Mention(range: NSRange(location: 10, length: 3), user: otherUser)
@@ -80,6 +91,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersMentions_SelfMention() {
+        createSUT(for: .light)
         let messageText = "Hello @Me! I had some questions about my program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 3), user: selfUser)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -89,6 +101,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersMentions_SelfMention_LongText() {
+        createSUT(for: .light)
         let messageText =
 """
 She was a liar. She had no diseases at all. I had seen her at Free and Clear, my blood parasites group Thursdays. Then at Hope, my bimonthly sickle cell circle. And again at Seize the Day, my tuberculosis Friday night. @Marla, the big tourist. Her lie reflected my lie, and suddenly, I felt nothing.
@@ -101,7 +114,22 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         verify(view: sut.prepareForSnapshot())
     }
     
+    func testThatItRendersMentions_SelfMention_LongText_Dark() {
+        createSUT(for: .dark)
+        let messageText =
+        """
+She was a liar. She had no diseases at all. I had seen her at Free and Clear, my blood parasites group Thursdays. Then at Hope, my bimonthly sickle cell circle. And again at Seize the Day, my tuberculosis Friday night. @Marla, the big tourist. Her lie reflected my lie, and suddenly, I felt nothing.
+"""
+        selfUser.name = "Tyler Durden"
+        let mention = Mention(range: NSRange(location: 219, length: 6), user: selfUser)
+        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
     func testThatItRendersMentions_InMarkdown() {
+        createSUT(for: .light)
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), user: otherUser)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -111,6 +139,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
     }
     
     func testThatItRendersMentions_MarkdownInMention_Code() {
+        createSUT(for: .light)
         let messageText = "# Hello @`Bruno`"
         let mention = Mention(range: NSRange(location: 8, length: 8), user: otherUser)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -120,6 +149,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
     }
     
     func testThatItRendersMentions_MarkdownInMention_Link() {
+        createSUT(for: .light)
         let messageText = "# Hello @[Bruno](http://google.com)"
         let mention = Mention(range: NSRange(location: 8, length: 27), user: otherUser)
         let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
@@ -129,6 +159,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
     }
     
     func testThatItRendersMentions_MarkdownInUserName() {
+        createSUT(for: .light)
         otherUser.name = "[Hello](http://google.com)"
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), user: otherUser)
@@ -136,6 +167,28 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
+    }
+    
+    func testDarkMode() {
+        createSUT(for: .dark)
+        let messageText = "@Bruno"
+        let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
+        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+        
+    }
+    
+    func testDarkModeSelf() {
+        createSUT(for: .dark)
+        let messageText = "@current"
+        let mention = Mention(range: NSRange(location: 0, length: 8), user: selfUser)
+        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+        
     }
 }
 
