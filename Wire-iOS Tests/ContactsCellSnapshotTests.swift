@@ -49,7 +49,7 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
         sut.actionButton.setTitle(buttonTitles[1], for: .normal)
 
-        verify(view: sut.prepareForSnapshots())
+        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
 
     func testForOpenButton() {
@@ -59,6 +59,32 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
         sut.actionButton.setTitle(buttonTitles[0], for: .normal)
 
-        verify(view: sut.prepareForSnapshots())
+        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
+}
+
+extension UITableView: Themeable {
+    private func getFirstThemeableCell() -> Themeable? {
+        let indexPath = IndexPath(row: 0, section: 0)
+        if let cell = self.cellForRow(at: indexPath) as? Themeable {
+            return cell
+        }
+
+        return nil
+    }
+
+    public var colorSchemeVariant: ColorSchemeVariant {
+        get {
+            return getFirstThemeableCell()?.colorSchemeVariant ?? .light
+        }
+        set(newValue) {
+            var cell = getFirstThemeableCell()
+            cell?.colorSchemeVariant = newValue
+        }
+    }
+
+    public func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+    }
+
+
 }

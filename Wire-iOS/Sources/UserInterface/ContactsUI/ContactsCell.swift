@@ -38,7 +38,7 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
 
     ///TODO: sectionIndexShown: Bool
 
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+    var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorScheme(colorSchemeVariant)
@@ -46,11 +46,15 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
     }
 
     // if nil the background color is the default content background color for the theme
-    @objc dynamic var contentBackgroundColor: UIColor? = nil {
+    var contentBackgroundColor: UIColor? = nil {
         didSet {
             guard oldValue != contentBackgroundColor else { return }
             applyColorScheme(colorSchemeVariant)
         }
+    }
+
+    final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
+        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
     }
 
     static let boldFont: UIFont = .smallRegularFont
@@ -225,10 +229,6 @@ extension ContactsCell2: Themeable {
         subtitleLabel.textColor = sectionTextColor
 
         updateTitleLabel()
-    }
-
-    final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
     }
 
 }
