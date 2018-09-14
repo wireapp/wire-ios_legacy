@@ -1,4 +1,4 @@
-////
+//
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -36,5 +36,27 @@ extension NSMutableAttributedString {
         }
         
         return result
+    }
+    
+    /**
+     * Parses the markdown and adding the @-mentions highlights.
+     * The logic is the following:
+     * 1. Replace @-mention ranges with UUID strings.
+     * 2. Process markdown styling.
+     * 3. Replace UUID with mentions.
+     * This is necessary, since markdown parsing might change the string length.
+     * @param userSource is used to find the user's names
+     */
+    @objc
+    static func markdown(from text: String,
+                         style: DownStyle,
+                         mentions: [Mention]) -> NSMutableAttributedString {
+        
+        let mutableText = NSMutableString(string: text)
+        let mentionsWithTokens = mutableText.replaceMentions(mentions)
+        let parsedMarkdown = self.markdown(from: mutableText as String, style: style)
+        parsedMarkdown.highlight(mentions: mentionsWithTokens)
+        
+        return parsedMarkdown
     }
 }

@@ -78,6 +78,7 @@ static inline NSDataDetector *linkDataDetector(void)
                                                 forMessage:(id<ZMTextMessageData>)message
                                                    isGiphy:(BOOL)isGiphy
                                                 obfuscated:(BOOL)obfuscated
+                                                  mentions:(NSArray <Mention *>*)mentions
 {
     if (message.messageText.length == 0) {
         return [[NSAttributedString alloc] initWithString:@""];
@@ -123,7 +124,9 @@ static inline NSDataDetector *linkDataDetector(void)
         return [[NSAttributedString alloc] initWithString:text attributes:attrs];
     }
     
-    NSMutableAttributedString *attributedString = [NSMutableAttributedString markdownFrom:text style:style];
+    NSMutableAttributedString *attributedString = [NSMutableAttributedString markdownFrom:text
+                                                                                    style:style
+                                                                                 mentions:mentions];
     
     [attributedString beginEditing];
     
@@ -191,6 +194,8 @@ static inline NSDataDetector *linkDataDetector(void)
 }
 
 + (NSArray *)linkAttachmentsForURLMatches:(NSArray *)matches
+                              matchedText:(NSString *)matchedText
+                             originalText:(NSString *)originalText
 {
     if (matches == nil || matches.count == 0) {
         return nil;
@@ -199,7 +204,13 @@ static inline NSDataDetector *linkDataDetector(void)
     NSMutableArray *linkAttributes = [NSMutableArray arrayWithCapacity:matches.count];
     
     for (NSTextCheckingResult *match in matches) {
-        LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:match.URL range:match.range];
+        NSString *matchedRangeText = [matchedText substringWithRange:match.range];
+        NSRange originalRange = [originalText rangeOfString:matchedRangeText];
+        if (originalRange.location == NSNotFound) {
+            continue;
+        }
+        
+        LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:match.URL range:originalRange];
         [linkAttributes addObject:linkAttachment];
     }
     
@@ -214,12 +225,15 @@ static inline NSDataDetector *linkDataDetector(void)
     // if the message contains markdown, the parsed string will be shorter
     // b/c the markdown syntax is removed. In order to ensure the link
     // attachment ranges are valid, we must detect links from the parsed string.
-    NSString *text = [NSMutableAttributedString markdownFrom:message.messageText style:DownStyle.normal].string;
+    NSMutableString *text = [NSMutableAttributedString markdownFrom:message.messageText style:DownStyle.normal].mutableString;
+    NSString *originalText = [text copy];
+    [text removeMentions:message.mentions];
+    
     NSString *trimmedText = [text trimmedCopy];
     
     if (trimmedText.length > 0) {
         NSArray *matches = [detector matchesInString:trimmedText options:0 range:NSMakeRange(0, trimmedText.length)];
-        contentURLs = [Message linkAttachmentsForURLMatches:matches];
+        contentURLs = [Message linkAttachmentsForURLMatches:matches matchedText:trimmedText originalText:originalText];
     }
     
     return contentURLs;
