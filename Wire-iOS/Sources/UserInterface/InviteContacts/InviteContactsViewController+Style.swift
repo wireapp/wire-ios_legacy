@@ -23,6 +23,12 @@ extension InviteContactsViewController {
         return .lightContent
     }
 
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        view.layoutIfNeeded()
+    }
+
     @objc override func setupStyle() {
         super.setupStyle()
 
