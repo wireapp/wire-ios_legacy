@@ -27,7 +27,7 @@ import Cartography
 
         return label
     }()
-    var height: CGFloat = 0
+    static let height: CGFloat = 20
     var sectionTitleLeftConstraint: NSLayoutConstraint!
 
     override init(reuseIdentifier: String?) {
@@ -50,7 +50,6 @@ import Cartography
     }
 
     func setupSubviews() {
-        height = 20.0
 
         contentView.addSubview(label)
     }
@@ -68,7 +67,7 @@ import Cartography
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: height)
+        return CGSize(width: UIViewNoIntrinsicMetric, height: ContactsSectionHeaderView.height)
     }
 
 }

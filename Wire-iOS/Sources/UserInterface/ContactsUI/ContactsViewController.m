@@ -444,11 +444,28 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 #pragma mark - UITableViewDelegate
 
+#pragma mark - Header
+///TODO: search box style
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    NSString * title = [self.dataSource tableView:tableView titleForHeaderInSection:section];
+    if (title.length <= 0) {
+        return nil;
+    }
+
     ContactsSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:ContactsViewControllerSectionHeaderID];
-    headerView.label.text = [self.dataSource tableView:tableView titleForHeaderInSection:section];
+    headerView.label.text = title;
+
     return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    NSString * title = [self.dataSource tableView:tableView titleForHeaderInSection:section];
+    if (title.length <= 0) {
+        return 0;
+    }
+
+    return ContactsSectionHeaderView.height;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
