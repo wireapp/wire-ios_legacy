@@ -32,8 +32,24 @@ struct MentionWithToken {
 }
 
 extension Mention {
+    static let mentionScheme = "wire-mention"
+    
     static func link(for index: Int) -> URL {
-        return URL(string: "wire-mention://id/\(index)")!
+        return URL(string: "\(mentionScheme)://id/\(index)")!
+    }
+}
+
+extension NSURL {
+    @objc var isMentionURL: Bool {
+        return scheme == Mention.mentionScheme
+    }
+    
+    @objc var mentionIndex: Int {
+        guard self.isMentionURL, let indexString = pathComponents?.last, let index = Int(indexString) else {
+            return NSNotFound
+        }
+        
+        return index
     }
 }
 
