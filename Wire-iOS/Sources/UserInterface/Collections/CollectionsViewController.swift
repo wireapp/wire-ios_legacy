@@ -187,6 +187,10 @@ public protocol CollectionsViewControllerDelegate: class {
         }
     }
 
+    override public var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return .portrait
+    }
+
     private func flushLayout() {
         for cell in self.contentView.collectionView.visibleCells {
             guard let cell = cell as? CollectionCell else {
@@ -235,6 +239,8 @@ public protocol CollectionsViewControllerDelegate: class {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackOpeningIfNeeded()
+
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

@@ -1,4 +1,4 @@
-////
+//
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -16,14 +16,27 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "MessagePresenter.h"
+import Foundation
+import AVKit
 
-@class MediaPlaybackManager;
+extension Notification.Name {
+    static let dismissingAVPlayer = Notification.Name("DismissingAVPlayer")
+}
 
-@interface MessagePresenter ()
+extension AVPlayerViewController {
+    override open var prefersStatusBarHidden: Bool {
+        get {
+            return true
+        }
+    }
 
-@property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
-@property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic, nullable) id<NSObject> videoPlayerObserver;
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        guard self.isBeingDismissed else {
+            return
+        }
 
-@end
+        NotificationCenter.default.post(name: .dismissingAVPlayer, object: self)
+    }
+}
+
