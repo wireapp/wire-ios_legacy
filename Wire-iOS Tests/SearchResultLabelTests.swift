@@ -59,7 +59,6 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
 
         let combinator = CombinationTest(mutable: self.sut, mutators: [firstMutator, secondMutator])
 
-        ///TODO: dark style
         XCTAssertEqual(combinator.testAll {
             let identifier = "\($0.combinationChain)"
             print("Testing combination " + identifier)
@@ -74,7 +73,11 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
             $0.result.setContentHuggingPriority(.required, for: .vertical)
 
             $0.result.layoutForTest()
-            self.verify(view: $0.result, identifier: identifier, file: #file, line: #line)
+            let mockBackgroundView = UIView(frame: $0.result.frame)
+            mockBackgroundView.backgroundColor = .background
+            mockBackgroundView.addSubview($0.result)
+
+            self.verify(view: mockBackgroundView, identifier: identifier, file: #file, line: #line)
             return .none
             }.count, 0, line: #line)
     }
