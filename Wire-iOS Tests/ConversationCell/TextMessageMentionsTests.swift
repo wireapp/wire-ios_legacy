@@ -88,6 +88,19 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
     
+    func testThatItRendersMentions_SelfMention_LongText() {
+        let messageText =
+"""
+She was a liar. She had no diseases at all. I had seen her at Free and Clear, my blood parasites group Thursdays. Then at Hope, my bimonthly sickle cell circle. And again at Seize the Day, my tuberculosis Friday night. @Marla, the big tourist. Her lie reflected my lie, and suddenly, I felt nothing.
+"""
+        selfUser.name = "Tyler Durden"
+        let mention = Mention(range: NSRange(location: 219, length: 6), userId: selfUser.remoteIdentifier)
+        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+    
     func testThatItRendersMentions_InMarkdown() {
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), userId: otherUser.remoteIdentifier)
