@@ -62,15 +62,11 @@ extension ContactsViewController: ContactsDataSourceDelegate {
 
         cell.actionButton.isHidden = actionButtonHidden(user: user)
 
-        if !cell.actionButton.isHidden {
-            ///TODO:
-//            if let index = contentDelegate?.contactsViewController?(self, actionButtonTitleIndexFor: user),
-//                let actionButtonTitles = actionButtonTitles as? [String],
-//                let titleString = actionButtonTitles[(int)index] {
-//
+        if !cell.actionButton.isHidden,
+            let index = contentDelegate?.contactsViewController?(self, actionButtonTitleIndexFor: user),
+            let titleString = actionButtonTitles?[Int(index)] as? String {
 ////                cell.allActionButtonTitles = actionButtonTitles ///TODO:
-//                cell.actionButton.setTitle(titleString, for: .normal)
-//            }
+                cell.actionButton.setTitle(titleString, for: .normal)
         }
 
         if dataSource.selection.contains(user) {

@@ -23,7 +23,7 @@ extension ContactsCell2: Themeable {
         separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
 
         let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
+        backgroundColor = contentBackgroundColor(for: colorSchemeVariant) ///TODO: clear??
 
         titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor
@@ -42,7 +42,6 @@ extension ContactsCell2: UserCellSubtitleProtocol {
 }
 
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with index bar
-//TODO: @objcMembers
 class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
     var user: UserType? = nil {
         didSet {
@@ -103,7 +102,7 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .smallRegularFont
-        label.accessibilityIdentifier = "contact_cell.username" ///TODO:
+        label.accessibilityIdentifier = "contact_cell.username"
 
         return label
     }()
@@ -111,8 +110,6 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
     let actionButton: Button = {
         let button = Button(style: .full)
         button.setTitle("contacts_ui.action_button.invite".localized, for: .normal)
-
-        button.addTarget(self, action: #selector(ContactsCell2.actionButtonPressed(sender:)), for: .touchUpInside)
 
         return button
     }()
@@ -158,6 +155,8 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
         contentView.addSubview(contentStackView)
 
         createConstraints()
+
+        actionButton.addTarget(self, action: #selector(ContactsCell2.actionButtonPressed(sender:)), for: .touchUpInside)
     }
 
     private func configureSubviews() {
@@ -169,7 +168,7 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
 
         createSeparatorConstraints()
 
-        applyColorScheme(ColorScheme.default.variant)
+        applyColorScheme(ColorScheme.default.variant) ///TODO: should be dark
     }
 
     func createConstraints() {
