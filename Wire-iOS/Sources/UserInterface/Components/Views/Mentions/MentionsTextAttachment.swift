@@ -19,41 +19,18 @@
 import Foundation
 
 /// The purpose of this subclass of NSTextAttachment is to render a mention in the input bar.
-/// It also stores relevant information about the mention that can be used
-/// to flatten the attachment when sending a text message containing mentions.
+/// It also keeps a reference to the `UserType` describing the User being mentioned.
 final class MentionTextAttachment: NSTextAttachment {
-    
-    /// Used to configure a `MentionsTextAttachment` and to create a
-    /// Mentions object to be sent together with the message.
-    /// Holds relevant information to identify a user in a mention.
-    struct Configuration {
-        
-        /// The remote identifier of the user being mentioned.
-        let identifier: UUID
-        /// The name of the user being mentioned.
-        let name: String
-        
-        init(identifier: UUID, name: String) {
-            self.identifier = identifier
-            self.name = name
-        }
-        
-        init(user: ZMUser) {
-            self.init(identifier: user.remoteIdentifier, name: user.name ?? "")
-        }
-        
-    }
 
     /// The text the attachment renders, this is the name passed to init prefixed with an "@".
     let attributedText: NSAttributedString
     
-    /// The configuration value holding relevant information to configure the attachment
-    /// plus additional information needed to send it to other users (identifier).
-    let configuration: Configuration
+    /// The user being mentioned.
+    let user: UserType
     
-    init(configuration: Configuration, font: UIFont = .normalLightFont, color: UIColor = .accent()) {
-        self.configuration = configuration
-        attributedText = "@" + configuration.name && font && color
+    init(user: UserType, font: UIFont = .normalLightFont, color: UIColor = .accent()) {
+        self.user = user
+        attributedText = "@" + (user.name ?? "") && font && color
         super.init(data: nil, ofType: nil)
         refreshImage()
     }
@@ -81,12 +58,4 @@ final class MentionTextAttachment: NSTextAttachment {
 
 fileprivate extension CGSize {
     static let max = CGSize(width: .max, height: .max)
-}
-
-extension Mention {
-
-    convenience init(configuration: MentionTextAttachment.Configuration, range: NSRange) {
-        self.init(range: range, userId: configuration.identifier)
-    }
-
 }

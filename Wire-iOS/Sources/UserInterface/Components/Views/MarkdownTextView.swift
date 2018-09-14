@@ -73,7 +73,7 @@ extension Notification.Name {
         }
 
         return lengthAdjusted.map { attachment, range in
-            Mention(configuration: attachment.configuration, range: range)
+            Mention(range: range, user: attachment.user)
         }
     }
     
