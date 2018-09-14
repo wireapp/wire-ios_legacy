@@ -19,30 +19,46 @@
 import XCTest
 @testable import Wire
 
-final class ContactsCell2SnapshotTests: ZMSnapshotTestCase {
-    
+final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
+
     var sut: ContactsCell2!
-    
+    let buttonTitles = ["contacts_ui.action_button.open".localized,
+                        "contacts_ui.action_button.invite".localized,
+                        "connection_request.send_button_title".localized]
+
     override func setUp() {
         super.setUp()
         sut = ContactsCell2()
 
+
+        sut.allActionButtonTitles = buttonTitles
+
         /// TODO: remove this after snapshot is created
         recordMode = true
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInviteButton() {
 
         let user = MockUser.mockUsers()[0]
         sut.user = user
 
-        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
+        sut.actionButton.setTitle(buttonTitles[1], for: .normal)
+
+        verify(view: sut.prepareForSnapshots())
     }
 
-    ///TODO: text another button text
+    func testForOpenButton() {
+
+        let user = MockUser.mockUsers()[0]
+        sut.user = user
+
+        sut.actionButton.setTitle(buttonTitles[0], for: .normal)
+
+        verify(view: sut.prepareForSnapshots())
+    }
 }

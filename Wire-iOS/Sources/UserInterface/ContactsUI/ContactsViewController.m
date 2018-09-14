@@ -166,7 +166,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     self.tableView.rowHeight = 52.0f;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     self.tableView.sectionIndexMinimumDisplayRowCount = MinimumNumberOfContactsToDisplaySections;
-    [self.tableView registerClass:[ContactsCell2 class] forCellReuseIdentifier:ContactsViewControllerCellID]; ///TODO: replace with UserCell like cell, with avatar, label and a button
+    [self.tableView registerClass:[ContactsCell2 class] forCellReuseIdentifier:ContactsViewControllerCellID];
     [self.tableView registerClass:[ContactsSectionHeaderView class] forHeaderFooterViewReuseIdentifier:ContactsViewControllerSectionHeaderID];
     [self.view addSubview:self.tableView];
 
