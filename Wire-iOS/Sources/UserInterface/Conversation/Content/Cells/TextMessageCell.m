@@ -430,7 +430,17 @@
 
 - (BOOL)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
-    return [url open];
+    if (url.isMentionURL) {
+        Mention *mention = self.message.textMessageData.mentions[url.mentionIndex];
+        
+        UITextRange *range = [textView rangeOfLinkToURL:url];
+        
+        [self openMention:mention frame:[textView firstRectForRange:range]];
+        return YES;
+    }
+    else {
+        return [url open];
+    }
 }
 
 - (void)textViewDidLongPress:(LinkInteractionTextView *)textView
