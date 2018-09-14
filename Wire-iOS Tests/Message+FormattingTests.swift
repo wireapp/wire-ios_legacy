@@ -161,12 +161,31 @@ class Message_FormattingTests: XCTestCase {
         let mockUser = MockUser.mockUsers()[0]
         mockUser.remoteIdentifier = UUID()
         
-        let mention = Mention(range: (textMessageData.messageText as NSString).range(of: "@mention"), userId: mockUser.remoteIdentifier)
-        let mentionWithUser = MentionWithUser(mention: mention, user: mockUser)
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mentionWithUser])
+        let mention = Mention(range: (textMessageData.messageText as NSString).range(of: "@mention"), user: mockUser)
+        textMessageData.mentions = [mention]
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
         
         // then
-        XCTAssertEqual(formattedText.string, "\(previewURL)@James Hetfield")
-        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
+        XCTAssertEqual(formattedText.string, "\(previewURL)@mention")
+        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, Mention.link(for: 0))
+    }
+    
+    func testMentionLinkOverridesDetectedLink_mentionBefore() {
+        // given
+        let textMessageData = createTextMessageData(withMessageTemplate: "@mention{preview-url} lala")
+        
+        // when
+        let mockUser = MockUser.mockUsers()[0]
+        mockUser.remoteIdentifier = UUID()
+        
+        let mention = Mention(range: (textMessageData.messageText as NSString).range(of: "@mention"), user: mockUser)
+        textMessageData.mentions = [mention]
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
+        
+        // then
+        XCTAssertEqual(formattedText.string, "@mention\(previewURL) lala")
+        XCTAssertEqual(formattedText.attributes(at: 0, effectiveRange: nil)[.link] as! URL, Mention.link(for: 0))
+        let linkDetected = formattedText.attributes(at: mention.range.location + mention.range.length + 1, effectiveRange: nil)[.link] as! URL
+        XCTAssertEqual(linkDetected.absoluteString, previewURL)
     }
 }

@@ -21,72 +21,47 @@ import WireExtensionComponents
 
 private let log = ZMSLog(tag: "Mentions")
 
-@objc class MentionWithUser: NSObject {
-    let mention: Mention
-    let user: UserType
-    
-    init(mention: Mention, user: UserType) {
-        self.mention = mention
-        self.user = user
-        super.init()
-    }
-}
-
 struct MentionToken {
     let value: String
+    let name: String
 }
 
 struct MentionWithToken {
-    let mention: MentionWithUser
+    let mention: Mention
     let token: MentionToken
 }
 
-extension ZMMessage {
-    @objc var mentionsWithUsers: [MentionWithUser] {
-        guard let managedObjectContext = self.managedObjectContext else {
-            fatal("userSession.managedObjectContext == nil")
-        }
-        
-        return self.textMessageData?.mentions?.compactMap { mention in
-            guard let user = ZMUser(remoteID: mention.userId, createIfNeeded: false, in: managedObjectContext) else {
-                return nil
-            }
-            return MentionWithUser(mention: mention, user: user)
-        } ?? []
-    }
-}
-
 extension Mention {
-    public var link: URL {
-        return URL(string: "wire-user://id/" + userId.transportString())!
+    static func link(for index: Int) -> URL {
+        return URL(string: "wire-mention://id/\(index)")!
     }
 }
 
 extension NSMutableString {
-    func replaceMentionsWithTokens(_ mentions: [MentionWithUser]) -> [MentionWithToken] {
+    @objc(removeMentions:)
+    func remove(_ mentions: [Mention]) {
         return mentions.sorted {
-            return $0.mention.range.location > $1.mention.range.location
-            } .prefix(500).compactMap { mentionWithUser in
-                
-                let mention = mentionWithUser.mention
-                
-                guard mention.range.location >= 0,
-                      mention.range.length > 0,
-                     (mention.range.location + mention.range.length) <= self.length else {
-                      log.error("Cannot process mention: \(mention)")
-                        return nil
-                }
-                
-                let token = UUID().transportString()
-                self.replaceCharacters(in: mention.range, with: token)
-                
-                return MentionWithToken(mention: mentionWithUser, token: MentionToken(value: token))
+            return $0.range.location > $1.range.location
+        }.forEach { mention in
+            self.replaceCharacters(in: mention.range, with: "")
+        }
+    }
+    
+    @discardableResult func replaceMentions(_ mentions: [Mention]) -> [MentionWithToken] {
+        return mentions.sorted {
+            return $0.range.location > $1.range.location
+        } .map { mention in
+            let token = UUID().transportString()
+            let name = self.substring(with: mention.range).replacingOccurrences(of: "@", with: "")
+            self.replaceCharacters(in: mention.range, with: token)
+            
+            return MentionWithToken(mention: mention, token: MentionToken(value: token, name: name))
         }
     }
 }
 
 extension NSMutableAttributedString {
-    static func mention(for user: UserType, link: URL, suggestedSize: CGFloat? = nil) -> NSAttributedString {
+    static private func mention(for user: UserType, name: String, link: URL, suggestedFontSize: CGFloat? = nil) -> NSAttributedString {
         let color: UIColor
         let backgroundColor: UIColor
         
@@ -99,10 +74,10 @@ extension NSMutableAttributedString {
             backgroundColor = .clear
         }
         
-        let size = suggestedSize ?? 16
+        let fontSize = suggestedFontSize ?? UIFont.normalMediumFont.pointSize
         
-        let atFont: UIFont = UIFont.systemFont(ofSize: size - 2, contentSizeCategory: UIApplication.shared.preferredContentSizeCategory, weight: .light)
-        let mentionFont: UIFont = UIFont.systemFont(ofSize: size,
+        let atFont: UIFont = UIFont.systemFont(ofSize: fontSize - 2, contentSizeCategory: UIApplication.shared.preferredContentSizeCategory, weight: .light)
+        let mentionFont: UIFont = UIFont.systemFont(ofSize: fontSize,
                                                     contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
                                                     weight: .semibold)
         
@@ -124,7 +99,7 @@ extension NSMutableAttributedString {
             mentionAttributes[NSAttributedStringKey.link] = link as NSObject
         }
         
-        let mentionText = (user.name ?? user.displayName) && mentionAttributes
+        let mentionText = name && mentionAttributes
         
         return atString + mentionText
     }
@@ -133,22 +108,26 @@ extension NSMutableAttributedString {
         
         let mutableString = self.mutableString
         
+        var index = mentions.count - 1
+        
         mentions.forEach { mentionWithToken in
             let mentionRange = mutableString.range(of: mentionWithToken.token.value)
-            let mention = mentionWithToken.mention.mention
-            let user = mentionWithToken.mention.user
             
-            guard mentionRange.location != NSNotFound
-                else {
+            guard mentionRange.location != NSNotFound else {
                 log.error("Cannot process mention: \(mentionWithToken)")
                 return
             }
             
             let currentFont = self.attributes(at: mentionRange.location, effectiveRange: nil)[.font] as? UIFont
             
-            let replacementString = NSMutableAttributedString.mention(for: user, link: mention.link, suggestedSize: currentFont?.pointSize)
+            let replacementString = NSMutableAttributedString.mention(for: mentionWithToken.mention.user,
+                                                                      name: mentionWithToken.token.name,
+                                                                      link: Mention.link(for: index),
+                                                                      suggestedFontSize: currentFont?.pointSize)
             
             self.replaceCharacters(in: mentionRange, with: replacementString)
+            
+            index = index - 1
         }
     }
 }

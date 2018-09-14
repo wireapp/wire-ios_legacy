@@ -162,8 +162,6 @@
         return;
     }
     
-    ZMMessage *backingMessage = (ZMMessage *)message;
-    
     [super configureForMessage:message layoutProperties:layoutProperties];
     
     id<ZMTextMessageData> textMesssageData = message.textMessageData;
@@ -175,7 +173,7 @@
                                                                                             forMessage:message.textMessageData
                                                                                                isGiphy:isGiphy
                                                                                             obfuscated:message.isObfuscated
-                                                                                              mentions:backingMessage.mentionsWithUsers];
+                                                                                              mentions:textMesssageData.mentions];
     
     if (self.searchQueries.count > 0 && attributedMessageText.length > 0) {
         

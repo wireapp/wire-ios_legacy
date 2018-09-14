@@ -22,7 +22,7 @@
 
 @class ConversationCellLayoutProperties;
 @class LinkAttachment;
-@class MentionWithUser;
+@class Mention;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                 forMessage:(id<ZMTextMessageData>)message
                                                    isGiphy:(BOOL)isGiphy
                                                 obfuscated:(BOOL)obfuscated
-                                                  mentions:(NSArray <MentionWithUser *>*)mentions;
+                                                  mentions:(NSArray <Mention *>*)mentions;
 
 /// This method needs to be called when preferred content size is changed.
 + (void)wr_flushCellParagraphStyleCache;

@@ -50,10 +50,10 @@ extension NSMutableAttributedString {
     @objc
     static func markdown(from text: String,
                          style: DownStyle,
-                         mentions: [MentionWithUser]) -> NSMutableAttributedString {
+                         mentions: [Mention]) -> NSMutableAttributedString {
         
         let mutableText = NSMutableString(string: text)
-        let mentionsWithTokens = mutableText.replaceMentionsWithTokens(mentions)
+        let mentionsWithTokens = mutableText.replaceMentions(mentions)
         let parsedMarkdown = self.markdown(from: mutableText as String, style: style)
         parsedMarkdown.highlight(mentions: mentionsWithTokens)
         
