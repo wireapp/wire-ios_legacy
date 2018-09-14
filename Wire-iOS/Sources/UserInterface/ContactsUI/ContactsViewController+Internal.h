@@ -17,6 +17,7 @@
 //
 
 static NSString * const ContactsViewControllerCellID = @"ContactsCell";
+static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
 
 @class IconButton;
 

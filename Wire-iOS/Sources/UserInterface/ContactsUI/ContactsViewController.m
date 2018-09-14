@@ -38,10 +38,9 @@
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
 
 
-@interface ContactsViewController () <TokenFieldDelegate, UITableViewDelegate>
+@interface ContactsViewController () <TokenFieldDelegate>
 @property (nonatomic) TokenField *tokenField;
 @property (nonatomic, readwrite) UITableView *tableView;
 @property (nonatomic) Button *inviteOthersButton;
@@ -442,54 +441,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     }];
 }
 
-#pragma mark - UITableViewDelegate
-
-#pragma mark - Header
 ///TODO: search box style
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    NSString * title = [self.dataSource tableView:tableView titleForHeaderInSection:section];
-    if (title.length <= 0) {
-        return nil;
-    }
-
-    ContactsSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:ContactsViewControllerSectionHeaderID];
-    headerView.label.text = title;
-
-    return headerView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    NSString * title = [self.dataSource tableView:tableView titleForHeaderInSection:section];
-    if (title.length <= 0) {
-        return 0;
-    }
-
-    return ContactsSectionHeaderView.height;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.dataSource selectUser:[self.dataSource userAtIndexPath:indexPath]];
-}
-
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ZMSearchUser *user = [self.dataSource userAtIndexPath:indexPath];
-    if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:shouldSelectUser:)] && [self.contentDelegate contactsViewController:self shouldSelectUser:user]) {
-        return indexPath;
-    } else if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:didSelectCell:forUser:)]) {
-        [self.contentDelegate contactsViewController:self didSelectCell:[self.tableView cellForRowAtIndexPath:indexPath] forUser:user];
-    }
-    
-    return nil;
-}
-
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.dataSource deselectUser:[self.dataSource userAtIndexPath:indexPath]];
-}
-
 #pragma mark - Send Invite
 
 - (void)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view
