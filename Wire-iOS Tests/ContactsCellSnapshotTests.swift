@@ -21,14 +21,14 @@ import XCTest
 
 final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
-    var sut: ContactsCell2!
+    var sut: ContactsCell!
     let buttonTitles = ["contacts_ui.action_button.open".localized,
                         "contacts_ui.action_button.invite".localized,
                         "connection_request.send_button_title".localized]
 
     override func setUp() {
         super.setUp()
-        sut = ContactsCell2()
+        sut = ContactsCell()
 
         sut.allActionButtonTitles = buttonTitles
     }

@@ -29,7 +29,7 @@ extension ContactsViewController: ContactsDataSourceDelegate {
     }
 
     public func dataSource(_ dataSource: ContactsDataSource, cellFor user: ZMSearchUser, at indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell2 else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell else {
             fatal("Cannot create cell")
         }
         cell.contentBackgroundColor = .clear

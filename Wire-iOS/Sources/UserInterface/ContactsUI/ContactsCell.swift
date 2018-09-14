@@ -19,9 +19,10 @@
 import UIKit
 import Cartography
 
+typealias ContactsCellActionButtonHandler = (ZMSearchUser?) -> Void
 
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with index bar
-class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
+class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     var user: UserType? = nil {
         didSet {
             avatar.user = user
@@ -156,7 +157,7 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
 
         createConstraints()
 
-        actionButton.addTarget(self, action: #selector(ContactsCell2.actionButtonPressed(sender:)), for: .touchUpInside)
+        actionButton.addTarget(self, action: #selector(ContactsCell.actionButtonPressed(sender:)), for: .touchUpInside)
     }
 
     private func configureSubviews() {
@@ -218,7 +219,7 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
     }
 }
 
-extension ContactsCell2: Themeable {
+extension ContactsCell: Themeable {
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
 
@@ -233,6 +234,6 @@ extension ContactsCell2: Themeable {
 
 }
 
-extension ContactsCell2: UserCellSubtitleProtocol {
+extension ContactsCell: UserCellSubtitleProtocol {
     static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
 }

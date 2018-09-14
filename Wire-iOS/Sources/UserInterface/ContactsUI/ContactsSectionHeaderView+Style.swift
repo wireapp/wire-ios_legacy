@@ -21,9 +21,9 @@ import Foundation
 extension ContactsSectionHeaderView {
     @objc func setupStyle() {
         titleLabel.font = .smallSemiboldFont
-        titleLabel.textColor = .textForeground
+        titleLabel.textColor = .textForegroundDark
 
-        contentView.backgroundColor = .background
+        contentView.backgroundColor = .clear
 
         backgroundView?.backgroundColor = .clear
     }

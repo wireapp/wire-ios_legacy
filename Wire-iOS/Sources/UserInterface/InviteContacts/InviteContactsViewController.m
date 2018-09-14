@@ -24,7 +24,6 @@
 #import "ContactsViewController+Private.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"
-#import "ContactsCell.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
@@ -61,7 +60,7 @@
         self.cancelButton.hidden = YES;
     }
 
-} ///TODO: cross/status bar is white
+} ///TODO: status bar is white
 
 - (BOOL)sharingContactsRequired
 {
