@@ -18,6 +18,8 @@
 
 static NSString * const ContactsViewControllerCellID = @"ContactsCell";
 
+@class IconButton;
+
 @interface ContactsViewController ()
 
 @property (nonatomic) UILabel *titleLabel;
@@ -25,5 +27,6 @@ static NSString * const ContactsViewControllerCellID = @"ContactsCell";
 @property (nonatomic) UIView *bottomContainerSeparatorView;
 @property (nonatomic) UILabel *noContactsLabel;
 @property (nonatomic) NSArray *actionButtonTitles;
+@property (nonatomic) IconButton *cancelButton;
 
 @end

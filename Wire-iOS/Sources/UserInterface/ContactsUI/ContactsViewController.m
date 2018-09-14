@@ -47,7 +47,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) TokenField *tokenField;
 @property (nonatomic, readwrite) UITableView *tableView;
 @property (nonatomic) Button *inviteOthersButton;
-@property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) ContactsEmptyResultView *emptyResultsView;
 
 @property (nonatomic) BOOL searchResultsReceived;
@@ -221,8 +220,11 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     [self.separatorView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.tableView];
 
     [self.separatorView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.emptyResultsView];
-    [self.tableView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 0, 0, 0) excludingEdge:ALEdgeTop];
-    
+
+    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.tableView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomContainerView withOffset:0];
+
     [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     self.emptyResultsBottomConstraint = [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeBottom];

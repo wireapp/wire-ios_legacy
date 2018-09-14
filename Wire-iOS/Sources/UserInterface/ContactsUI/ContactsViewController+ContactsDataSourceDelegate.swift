@@ -32,6 +32,9 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell2 else {
             fatal("Cannot create cell")
         }
+        cell.contentBackgroundColor = .clear
+        cell.colorSchemeVariant = .dark
+
         cell.user = user
 
         ///TODO:

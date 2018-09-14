@@ -44,7 +44,7 @@
         self.dataSource = [[ContactsDataSource alloc] init]; ///TODO: inject
         self.dataSource.searchQuery = @"";
         
-        self.title = NSLocalizedString(@"contacts_ui.title", @"");
+        self.title = [NSLocalizedString(@"contacts_ui.title", @"") uppercaseString];
     }
     
     return self;
@@ -54,11 +54,18 @@
 {
     [super viewDidLoad];
     [self setupStyle];
-}
+
+    ///hide titleLabel and cancel button, which is duplicated in the navi bar
+    if (self.navigationController) {
+        self.titleLabel.hidden = YES;
+        self.cancelButton.hidden = YES;
+    }
+
+} ///TODO: cross/status bar is white
 
 - (BOOL)sharingContactsRequired
 {
-    return YES; ///TODO: mock
+    return YES;
 }
 
 - (void)inviteUser:(ZMSearchUser *)user fromView:(UIView *)view
