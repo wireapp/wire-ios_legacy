@@ -17,29 +17,8 @@
 //
 
 import UIKit
+import Cartography
 
-extension ContactsCell2: Themeable {
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
-
-        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = contentBackgroundColor(for: colorSchemeVariant) ///TODO: clear??
-
-        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
-        subtitleLabel.textColor = sectionTextColor
-
-        updateTitleLabel()
-    }
-
-    final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
-        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
-    }
-
-}
-
-extension ContactsCell2: UserCellSubtitleProtocol {
-    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
-}
 
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with index bar
 class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
@@ -115,6 +94,23 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
     }()
     var actionButtonHandler: ContactsCellActionButtonHandler?
 
+
+    /// needed to calculate button width
+    var allActionButtonTitles: [String] = [] {
+        didSet {
+            if let titleLabelFont = actionButton.titleLabel?.font {
+                actionButtonWidth = CGFloat(actionButtonWidth(forTitles: allActionButtonTitles, textTransform: actionButton.textTransform, contentInsets: actionButton.contentEdgeInsets, textAttributes: [NSAttributedStringKey.font: titleLabelFont]))
+            }
+        }
+    }
+
+    var actionButtonWidth: CGFloat = 0 {
+        didSet {
+            actionButtonWidthConstraint.constant = actionButtonWidth
+        }
+    }
+    var actionButtonWidthConstraint: NSLayoutConstraint!
+
     var titleStackView: UIStackView!
     var contentStackView: UIStackView!
 
@@ -184,6 +180,23 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
             ])
+
+        constrain(actionButton){ actionButton in
+            actionButtonWidthConstraint = actionButton.width == actionButtonWidth
+        }
+    }
+
+    func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedStringKey : Any]?) -> Float {
+        var width: CGFloat = 0
+        for title: String in actionButtonTitles {
+            let transformedTitle = title.transform(with: textTransform)
+
+            if let titleWidth = transformedTitle?.size(withAttributes: textAttributes).width,
+                titleWidth > width {
+                width = titleWidth
+            }
+        }
+        return ceilf(Float(contentInsets.left + width + contentInsets.right))
     }
 
     private func updateTitleLabel() {
@@ -199,4 +212,27 @@ class ContactsCell2: UITableViewCell, SeparatorViewProtocol {
             actionButtonHandler?(user)
         }
     }
+}
+
+extension ContactsCell2: Themeable {
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
+
+        let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
+        backgroundColor = contentBackgroundColor(for: colorSchemeVariant) ///TODO: clear??
+
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
+        subtitleLabel.textColor = sectionTextColor
+
+        updateTitleLabel()
+    }
+
+    final func contentBackgroundColor(for colorSchemeVariant: ColorSchemeVariant) -> UIColor {
+        return contentBackgroundColor ?? UIColor(scheme: .barBackground, variant: colorSchemeVariant)
+    }
+
+}
+
+extension ContactsCell2: UserCellSubtitleProtocol {
+    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
 }
