@@ -33,9 +33,12 @@ import Cartography
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
 
-        let backgroundView = UIView(frame: self.bounds)
-        backgroundView.backgroundColor = .clear
-        self.backgroundView = backgroundView
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = bounds
+        blurEffectView.backgroundColor = .clear
+
+        backgroundView = blurEffectView
 
         setupSubviews()
         setupConstraints()
