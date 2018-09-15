@@ -96,7 +96,7 @@ final class UserNameTakeOverViewController: UIViewController {
     func setupSubtitleLabel() {
         subtitleLabel.textAlignment = .natural
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: []]
+        subtitleLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
         subtitleLabel.extendsLinkTouchArea = true
         
         let font = FontSpec(.large, .thin).font!

@@ -93,7 +93,7 @@ import TTTAttributedLabel
         labelView.extendsLinkTouchArea = true
         
         labelView.linkAttributes = [
-            NSAttributedString.Key.underlineStyle: [],
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
             NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
         ]
         

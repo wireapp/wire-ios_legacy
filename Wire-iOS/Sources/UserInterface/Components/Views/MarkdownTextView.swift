@@ -60,7 +60,7 @@ extension Notification.Name {
             if oldValue != activeMarkdown {
                 currentAttributes = attributes(for: activeMarkdown)
                 markdownTextStorage.currentMarkdown = activeMarkdown
-                updateTypingAttributes(with: currentAttributes)
+                typingAttributes = currentAttributes
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
         }
@@ -107,7 +107,7 @@ extension Notification.Name {
         super.init(frame: .zero, textContainer: textContainer)
         
         currentAttributes = attributes(for: activeMarkdown)
-        updateTypingAttributes(with: currentAttributes)
+        typingAttributes = currentAttributes
 
         NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: UITextView.textDidChangeNotification, object: nil)
     }

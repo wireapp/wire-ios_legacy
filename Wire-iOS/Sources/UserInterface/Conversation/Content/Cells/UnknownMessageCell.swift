@@ -50,7 +50,7 @@ public class CustomMessageCell : ConversationCell {
         messageLabel.numberOfLines = 0
         messageLabel.isAccessibilityElement = true
         messageLabel.accessibilityLabel = "Text"
-        messageLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: [],
+        messageLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
                                        NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor]
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
