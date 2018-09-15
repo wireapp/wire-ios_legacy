@@ -18,58 +18,6 @@
 
 import Foundation
 
-extension ContactsViewController: UITableViewDelegate {
-    func headerTitle(section: Int) -> String? {
-        return dataSource?.tableView(tableView, titleForHeaderInSection: section)
-    }
-
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let title = headerTitle(section: section), title.count > 0 else {
-            return nil
-        }
-
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ContactsViewControllerSectionHeaderID) as? ContactsSectionHeaderView
-        headerView?.label.text = title
-
-        return headerView
-    }
-
-    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let title = headerTitle(section: section), title.count > 0 else {
-            return 0
-        }
-
-        return ContactsSectionHeaderView.height
-    }
-    
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let user = dataSource?.user(at: indexPath) {
-            dataSource?.select(user)
-        }
-    }
-
-    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        guard let user = dataSource?.user(at: indexPath) else { return nil }
-
-        if let shouldSelect = contentDelegate?.contactsViewController?(self, shouldSelect: user),
-            shouldSelect{
-            return indexPath
-        } else {
-            if let cell = self.tableView.cellForRow(at: indexPath) as? ContactsCell {
-                contentDelegate?.contactsViewController?(self, didSelect: cell, for: user)
-            }
-        }
-
-        return nil
-    }
-
-    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let user = dataSource?.user(at: indexPath) {
-            dataSource?.deselect(user)
-        }
-    }
-}
-
 extension ContactsViewController: ContactsDataSourceDelegate {
 
     func actionButtonHidden(user: ZMSearchUser) -> Bool {
