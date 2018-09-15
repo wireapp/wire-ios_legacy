@@ -142,7 +142,7 @@ extension Notification.Name {
     }
     
     // MARK: - Private Interface
-        
+
     /// Called after each text change has been committed. We use this opportunity
     /// to insert new list items in the case a newline was entered, as well as
     /// to validate any potential list items on the currently selected line.
@@ -401,9 +401,9 @@ extension Notification.Name {
         let prefix = nextListPrefix(type: type)
         
         // insert prefix with no md
-        updateTypingAttributes(with: attributes(for: .none))
+        typingAttributes = attributes(for: .none)
         replaceText(in: lineStart, with: prefix, restoringSelection: selection)
-        updateTypingAttributes(with: currentAttributes)
+        typingAttributes = currentAttributes
         
         // add list md to whole line
         guard let newLineRange = currentLineRange else { return }
