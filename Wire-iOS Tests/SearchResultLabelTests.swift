@@ -23,47 +23,46 @@ import Cartography
 
 class SearchResultLabelTests: ZMSnapshotTestCase {
     var sut: SearchResultLabel!
-    
+
     override func setUp() {
         super.setUp()
         accentColor = .violet
-        sut = SearchResultLabel()
-        sut.font = UIFont.systemFont(ofSize: 17)
-        sut.textColor = UIColor.black
     }
 
     override func tearDown() {
         sut = nil
         super.tearDown()
+
+        ColorScheme.default.variant = .light
     }
-    
-    func testThatItShowsStringWithoutHighlight() {
+
+    fileprivate func performTest(file: StaticString = #file, line: UInt = #line) {
         let textCombinations = Set<String>(arrayLiteral: "Very short text", "Very very long text Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-        
+
         let queryCombinations = Set<String>(arrayLiteral: "", "Short", "Very", "very long", "veniam")
-        
+
         let firstMutation = { (proto: SearchResultLabel, value: String) -> SearchResultLabel in
             let new = proto.copyInstance()
             new.resultText = value
             return new
         }
-        
+
         let firstMutator = Mutator<SearchResultLabel, String>(applicator: firstMutation, combinations: textCombinations)
-        
+
         let secondMutation = { (proto: SearchResultLabel, value: String) -> SearchResultLabel in
             let new = proto.copyInstance()
             new.queries = value.components(separatedBy: .whitespaces)
             return new
         }
-        
+
         let secondMutator = Mutator<SearchResultLabel, String>(applicator: secondMutation, combinations: queryCombinations)
-        
+
         let combinator = CombinationTest(mutable: self.sut, mutators: [firstMutator, secondMutator])
-        
+
         XCTAssertEqual(combinator.testAll {
             let identifier = "\($0.combinationChain)"
             print("Testing combination " + identifier)
-            
+
             $0.result.configure(with: $0.result.resultText!, queries: $0.result.queries)
 
             constrain($0.result) { label in
@@ -72,11 +71,34 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
             $0.result.numberOfLines = 1
             $0.result.setContentCompressionResistancePriority(.required, for: .vertical)
             $0.result.setContentHuggingPriority(.required, for: .vertical)
-            
+
             $0.result.layoutForTest()
-            self.verify(view: $0.result, identifier: identifier, file: #file, line: #line)
+            let mockBackgroundView = UIView(frame: $0.result.frame)
+            mockBackgroundView.backgroundColor = .background
+            mockBackgroundView.addSubview($0.result)
+
+            self.verify(view: mockBackgroundView, identifier: identifier, file: #file, line: #line)
             return .none
             }.count, 0, line: #line)
     }
-}
 
+    func prepareForTest(variant: ColorSchemeVariant) {
+        ColorScheme.default.variant = variant
+
+        sut = SearchResultLabel()
+        sut.font = UIFont.systemFont(ofSize: 17)
+    }
+
+    func testThatItShowsStringWithoutHighlightInDarkTheme() {
+
+        prepareForTest(variant: .dark)
+
+        performTest()
+    }
+
+    func testThatItShowsStringWithoutHighlight() {
+        prepareForTest(variant: .light)
+
+        performTest()
+    }
+}
