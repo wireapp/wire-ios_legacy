@@ -154,8 +154,8 @@ class StringAllRangesOfStringTests: XCTestCase {
         let result = sut.allRanges(of: ["test", "string"])
         // THEN
         XCTAssertEqual(result.keys.count, 2)
-        XCTAssertEqual(result.keys.first, "test")
-        XCTAssertEqual(result.keys.dropFirst().first, "string")
+        XCTAssertTrue(result.keys.contains("test"))
+        XCTAssertTrue(result.keys.contains("string"))
         XCTAssertEqual(result["test"]!, [NSRange(location: 4, length: 4)])
         XCTAssertEqual(result["string"]!, [NSRange(location: 9, length: 6)])
     }
