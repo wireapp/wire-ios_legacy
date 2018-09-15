@@ -107,10 +107,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
 
         transition(to: .headless)
@@ -157,7 +157,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                                                            application: UIApplication.shared)
                 
             sessionManager.urlHandler.delegate = self
-            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+            if let url = launchOptions[UIApplication.LaunchOptionsKey.url] as? URL {
                 sessionManager.urlHandler.openURL(url, options: [:])
             }
         }
@@ -284,7 +284,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     private func dismissModalsFromAllChildren(of viewController: UIViewController?) {
         guard let viewController = viewController else { return }
-        for child in viewController.childViewControllers {
+        for child in viewController.children {
             if child.presentedViewController != nil {
                 child.dismiss(animated: false, completion: nil)
             }
@@ -297,31 +297,31 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         // If we have some modal view controllers presented in any of the (grand)children
         // of this controller they stay in memory and leak on iOS 10.
         dismissModalsFromAllChildren(of: visibleViewController)
-        visibleViewController?.willMove(toParentViewController: nil)
+        visibleViewController?.willMove(toParent: nil)
 
         if let previousViewController = visibleViewController, animated {
 
-            addChildViewController(viewController)
+            addChild(viewController)
             transition(from: previousViewController,
                        to: viewController,
                        duration: 0.5,
                        options: .transitionCrossDissolve,
                        animations: nil,
                        completion: { (finished) in
-                    viewController.didMove(toParentViewController: self)
-                    previousViewController.removeFromParentViewController()
+                    viewController.didMove(toParent: self)
+                    previousViewController.removeFromParent()
                     self.visibleViewController = viewController
                     UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                     completionHandler?()
             })
         } else {
             UIView.performWithoutAnimation {
-                visibleViewController?.removeFromParentViewController()
-                addChildViewController(viewController)
+                visibleViewController?.removeFromParent()
+                addChild(viewController)
                 viewController.view.frame = view.bounds
                 viewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
                 view.addSubview(viewController.view)
-                viewController.didMove(toParentViewController: self)
+                viewController.didMove(toParent: self)
                 visibleViewController = viewController
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }

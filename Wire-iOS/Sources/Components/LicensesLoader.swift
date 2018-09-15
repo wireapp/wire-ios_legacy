@@ -39,7 +39,7 @@ import Foundation
 
     init(memoryManager: Any? = nil) {
         super.init()
-        memoryWarningToken = NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: memoryManager, queue: .main) { [weak self] _ in
+        memoryWarningToken = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: memoryManager, queue: .main) { [weak self] _ in
             self?.cache = nil
         }
     }

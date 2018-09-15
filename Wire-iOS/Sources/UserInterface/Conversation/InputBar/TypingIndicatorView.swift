@@ -57,7 +57,7 @@ class AnimatedPenView : UIView {
         pen.layer.speed = 0
         pen.layer.timeOffset = 2
         
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

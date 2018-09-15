@@ -78,7 +78,7 @@ final public class BackgroundViewController: UIViewController {
     }
 
     public override var preferredStatusBarStyle : UIStatusBarStyle {
-        if let child = childViewControllers.first {
+        if let child = children.first {
             return child.preferredStatusBarStyle
         }
         else {

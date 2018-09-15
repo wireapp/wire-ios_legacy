@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 class LandingButton: ButtonWithLargerHitArea {
-    var priorState: UIControlState?
+    var priorState: UIControl.State?
 
     public var iconButton: IconButton!
     public var subtitleLabel: UILabel!

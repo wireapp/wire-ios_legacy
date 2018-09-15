@@ -54,7 +54,7 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
         mockParentViewControler = UINavigationController(rootViewController: sut)
 
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 768, height: 1024))
@@ -72,7 +72,7 @@ final class TermsOfUseStepViewControllerSnapshotTests: ZMSnapshotTestCase {
         let traitCollection = UITraitCollection(horizontalSizeClass: .regular)
         mockParentViewControler = UINavigationController(rootViewController: sut)
 
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: 1024, height: 768))

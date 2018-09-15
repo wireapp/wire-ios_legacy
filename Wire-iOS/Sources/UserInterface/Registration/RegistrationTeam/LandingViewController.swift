@@ -40,16 +40,16 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
-    static let buttonTitleAttribute: [NSAttributedStringKey: AnyObject] = {
+    static let buttonTitleAttribute: [NSAttributedString.Key: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = NSTextAlignment.center
+        alignCenterStyle.alignment = .center
 
         return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: semiboldFont]
     }()
 
-    static let buttonSubtitleAttribute: [NSAttributedStringKey: AnyObject] = {
+    static let buttonSubtitleAttribute: [NSAttributedString.Key: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = NSTextAlignment.center
+        alignCenterStyle.alignment = .center
         alignCenterStyle.paragraphSpacingBefore = 4
 
         let lightFont = FontSpec(.normal, .light).font!
@@ -311,7 +311,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
 
         headerContainerView.isAccessibilityElement = true
         headerContainerView.accessibilityLabel = "landing.app_name".localized + " " + "landing.title".localized
-        headerContainerView.accessibilityTraits = UIAccessibilityTraitHeader
+        headerContainerView.accessibilityTraits = .header
         headerContainerView.shouldGroupAccessibilityChildren = true
     }
 

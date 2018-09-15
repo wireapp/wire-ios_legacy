@@ -54,7 +54,7 @@ class TopPeopleSectionController : SearchSectionController {
         innerCollectionView.allowsMultipleSelection = false
         innerCollectionView.showsHorizontalScrollIndicator = false
         innerCollectionView.isDirectionalLockEnabled = true
-        innerCollectionView.contentInset = UIEdgeInsetsMake(0, 16, 8, 16)
+        innerCollectionView.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 8, right: 16)
         innerCollectionView.register(TopPeopleCell.self, forCellWithReuseIdentifier: TopPeopleCell.zm_reuseIdentifier)
         
         innerCollectionView.delegate = innerCollectionViewController

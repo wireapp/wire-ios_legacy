@@ -43,11 +43,11 @@ final class ConversationListTopBar: TopBar {
             
             titleLabel.font = FontSpec(.normal, .semibold).font
             titleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
-            titleLabel.accessibilityTraits = UIAccessibilityTraitHeader
-            titleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
-            titleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-            titleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-            titleLabel.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
+            titleLabel.accessibilityTraits = .header
+            titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+            titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+            titleLabel.setContentHuggingPriority(.required, for: .horizontal)
+            titleLabel.setContentHuggingPriority(.required, for: .vertical)
             self.middleView = titleLabel
             
             if let sharedSession = ZMUserSession.shared() {
@@ -158,7 +158,7 @@ open class TopBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.layoutMargins = UIEdgeInsetsMake(0, 16, 0, 16)
+        self.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(self.addSubview)
         
         constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) {
@@ -183,6 +183,6 @@ open class TopBar: UIView {
     }
     
     override open var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 44)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 44)
     }
 }

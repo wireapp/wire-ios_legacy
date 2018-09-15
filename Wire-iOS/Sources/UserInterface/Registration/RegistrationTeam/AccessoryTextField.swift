@@ -195,12 +195,12 @@ class AccessoryTextField: UITextField {
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
 
-        return UIEdgeInsetsInsetRect(textRect, self.textInsets)
+        return textRect.inset(by: self.textInsets)
     }
 
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         let editingRect: CGRect = super.editingRect(forBounds: bounds)
-        return UIEdgeInsetsInsetRect(editingRect, textInsets)
+        return editingRect.inset(by: textInsets)
     }
 
     @objc func textFieldDidChange(textField: UITextField) {
@@ -223,7 +223,7 @@ class AccessoryTextField: UITextField {
     // MARK: - placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
-        let attribute: [NSAttributedStringKey: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
+        let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
                                         .font: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }
@@ -240,7 +240,7 @@ class AccessoryTextField: UITextField {
     }
 
     override func drawPlaceholder(in rect: CGRect) {
-        super.drawPlaceholder(in: UIEdgeInsetsInsetRect(rect, placeholderInsets))
+        super.drawPlaceholder(in: rect.inset(by: placeholderInsets))
     }
 
     // MARK: - right and left accessory

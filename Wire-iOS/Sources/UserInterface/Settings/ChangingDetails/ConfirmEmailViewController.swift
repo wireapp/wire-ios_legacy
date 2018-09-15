@@ -90,7 +90,7 @@ extension UITableView {
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
         
-        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 30
 
         let description = DescriptionHeaderView()

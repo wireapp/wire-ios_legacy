@@ -23,7 +23,7 @@ final class LoadingIndicatorCell: UITableViewCell, CellConfigurationConfigurable
     
     private let spinner = ProgressSpinner()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(spinner)
         backgroundColor = .clear

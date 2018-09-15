@@ -79,7 +79,7 @@ final public class CollectionFileCell: CollectionForwardableSaveableFileCell {
         self.fileTransferView.layer.cornerRadius = 4
         self.fileTransferView.clipsToBounds = true
 
-        self.secureContentsView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
+        self.secureContentsView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
         self.secureContentsView.addSubview(self.headerView)
         self.secureContentsView.addSubview(self.fileTransferView)
 

@@ -29,16 +29,16 @@ class InputBarTests: ZMSnapshotTestCase {
     
     let buttons = { () -> [UIButton] in
         let b1 = IconButton()
-        b1.setIcon(.paperclip, with: .tiny, for: UIControlState())
+        b1.setIcon(.paperclip, with: .tiny, for: [])
         
         let b2 = IconButton()
-        b2.setIcon(.photo, with: .tiny, for: UIControlState())
+        b2.setIcon(.photo, with: .tiny, for: [])
         
         let b3 = IconButton()
-        b3.setIcon(.brush, with: .tiny, for: UIControlState())
+        b3.setIcon(.brush, with: .tiny, for: [])
         
         let b4 = IconButton()
-        b4.setIcon(.ping, with: .tiny, for: UIControlState())
+        b4.setIcon(.ping, with: .tiny, for: [])
 
         return [b1, b2, b3, b4]
     }
@@ -97,9 +97,9 @@ class InputBarTests: ZMSnapshotTestCase {
         let buttonsWithText = buttons()
         
         for button in buttonsWithText {
-            button.setTitle("NEW", for: UIControlState())
+            button.setTitle("NEW", for: [])
             button.titleLabel!.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
-            button.setTitleColor(UIColor.red, for: UIControlState())
+            button.setTitleColor(UIColor.red, for: [])
         }
         
         let inputBar = InputBar(buttons: buttonsWithText)

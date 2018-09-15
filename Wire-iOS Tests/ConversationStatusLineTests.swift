@@ -167,7 +167,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
             (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
         for _ in 1...5 {
-            (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+            (sut.appendMessage(withImageData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
         }
         sut.lastReadServerTimeStamp = Date.distantPast
 

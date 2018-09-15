@@ -158,7 +158,7 @@ protocol SettingsCellType: class {
     
     var descriptor: SettingsCellDescriptorType?
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
         setupAccessibiltyElements()
@@ -301,7 +301,7 @@ protocol SettingsCellType: class {
 @objcMembers class SettingsGroupCell: SettingsTableCell {
     override func setup() {
         super.setup()
-        accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+        accessoryType = .disclosureIndicator
     }
 }
 

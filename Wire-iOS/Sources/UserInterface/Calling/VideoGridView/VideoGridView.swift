@@ -224,7 +224,7 @@ class VideoGridViewController: UIViewController {
         gridView.layoutDirection = newAxis
     }
 
-    private func gridAxis(for traitCollection: UITraitCollection) -> UILayoutConstraintAxis {
+    private func gridAxis(for traitCollection: UITraitCollection) -> NSLayoutConstraint.Axis {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         switch (traitCollection.userInterfaceIdiom, traitCollection.horizontalSizeClass, isLandscape) {
         case (.pad, .regular, true): return .horizontal

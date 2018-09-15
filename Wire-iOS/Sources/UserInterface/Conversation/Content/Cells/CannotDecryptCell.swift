@@ -47,7 +47,7 @@ private let IdentityString = ".identity"
         let remoteIDChanged = systemMessageData.systemMessageType == .decryptionFailed_RemoteIdentityChanged
         let link = remoteIDChanged ? type(of: self).remoteIDErrorURL : type(of: self).generalErrorURL
 
-        let linkAttributes: [NSAttributedStringKey : AnyObject] = [.font: labelFont, .link: link as AnyObject]
+        let linkAttributes: [NSAttributedString.Key : AnyObject] = [.font: labelFont, .link: link as AnyObject]
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
         let why = localizedWhyPart(remoteIDChanged) && labelFont && labelTextColor && linkAttributes
         let device : NSAttributedString?
