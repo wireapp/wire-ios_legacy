@@ -1305,6 +1305,13 @@
 			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
 			remoteInfo = ZetaFramework;
 		};
+		5E2BEC66214C01B800E65B53 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F42C530199244A700288E4D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1EE85C4F1B5F96FB008E084B;
+			remoteInfo = WireExtensionComponents;
+		};
 		87B7DAB31E696F5D005F5140 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8F42C530199244A700288E4D /* Project object */;
@@ -6180,6 +6187,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5E2BEC67214C01B800E65B53 /* PBXTargetDependency */,
 			);
 			name = "Wire Share Extension";
 			productName = "Wire-iOS Share Extension";
@@ -6387,11 +6395,11 @@
 			projectRoot = "";
 			targets = (
 				8F42C537199244A700288E4D /* Wire-iOS */,
-				BACB88501AF7C48900DDCDB0 /* Wire-iOS-Tests */,
 				1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */,
+				BFAD53FA1E6972CC0015C677 /* NotificationFetchComponents */,
 				168A16A81D9597C2005CFA6C /* Wire Share Extension */,
 				87B7DAA01E696E4E005F5140 /* ImageNotificationExtension */,
-				BFAD53FA1E6972CC0015C677 /* NotificationFetchComponents */,
+				BACB88501AF7C48900DDCDB0 /* Wire-iOS-Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -6552,7 +6560,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the update_licenses package\nswift run --chdir Scripts/update_licenses/";
+			shellScript = "# Run the update_licenses package\nswift run --package-path Scripts/update_licenses/\n";
 		};
 		873AA0501D05A74B0038343B /* Strip BitCode */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7858,6 +7866,11 @@
 			isa = PBXTargetDependency;
 			target = 1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */;
 			targetProxy = 1EE85C651B5F96FC008E084B /* PBXContainerItemProxy */;
+		};
+		5E2BEC67214C01B800E65B53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1EE85C4F1B5F96FB008E084B /* WireExtensionComponents */;
+			targetProxy = 5E2BEC66214C01B800E65B53 /* PBXContainerItemProxy */;
 		};
 		87B7DAB41E696F5D005F5140 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
