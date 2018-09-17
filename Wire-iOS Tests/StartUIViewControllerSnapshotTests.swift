@@ -38,6 +38,12 @@ final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForNoContact() {
+        MockUser.mockSelf().isTeamMember = false
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+
+    func testForNoContactWhenSelfIsTeamMember() {
+        MockUser.mockSelf().isTeamMember = true
         verifyInAllIPhoneSizes(view: sut.view)
     }
 }
