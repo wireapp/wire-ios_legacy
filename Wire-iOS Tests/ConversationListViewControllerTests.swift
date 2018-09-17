@@ -26,7 +26,9 @@ final class ConversationListViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConversationListViewController()
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
+
+        ///The name is Tarja Turunen, one of the mock users
+        let account = Account(userName: "", userIdentifier: UUID(), teamName: nil, imageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
         sut.account = account
 
         sut.view.backgroundColor = .black
