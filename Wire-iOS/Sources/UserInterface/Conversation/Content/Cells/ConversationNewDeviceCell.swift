@@ -32,9 +32,9 @@ import TTTAttributedLabel
     }
     
     struct TextAttributes {
-        let senderAttributes : [NSAttributedStringKey: AnyObject]
-        let startedUsingAttributes : [NSAttributedStringKey: AnyObject]
-        let linkAttributes : [NSAttributedStringKey: AnyObject]
+        let senderAttributes : [NSAttributedString.Key: AnyObject]
+        let startedUsingAttributes : [NSAttributedString.Key: AnyObject]
+        let linkAttributes : [NSAttributedString.Key: AnyObject]
         
         init(boldFont: UIFont, normalFont: UIFont, textColor: UIColor, link: URL) {
             senderAttributes = [.font: boldFont, .foregroundColor: textColor]

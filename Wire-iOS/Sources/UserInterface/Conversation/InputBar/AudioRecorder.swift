@@ -109,7 +109,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleInterruption),
-                                               name: .AVAudioSessionInterruption,
+                                               name: AVAudioSession.interruptionNotification,
                                                object: AVAudioSession.sharedInstance())
 
         return audioRecorder
@@ -152,7 +152,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     private func setupDidEnterBackgroundObserver() {
         token = NotificationCenter.default.addObserver(
-            forName: .UIApplicationDidEnterBackground,
+            forName: UIApplication.didEnterBackgroundNotification,
             object: nil,
             queue: .main,
             using: { _ in UIApplication.shared.isIdleTimerDisabled = false }
@@ -164,7 +164,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     @objc func handleInterruption(_ notification: Notification) {
         guard let info = notification.userInfo,
             let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
-            let type = AVAudioSessionInterruptionType(rawValue: typeValue) else {
+            let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
                 return
         }
         if type == .began {
@@ -223,7 +223,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     fileprivate func setupDisplayLink() {
         displayLink = CADisplayLink(target: self, selector: #selector(displayLinkDidFire))
-        displayLink?.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        displayLink?.add(to: .current, forMode: .common)
     }
     
     fileprivate func removeDisplayLink() {
@@ -262,7 +262,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         guard let audioRecorder = self.audioRecorder else { return }
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         } catch let error {
             zmLog.error("Failed change audio category for playback: \(error)")
         }

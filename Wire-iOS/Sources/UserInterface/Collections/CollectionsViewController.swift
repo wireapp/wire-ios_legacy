@@ -187,6 +187,10 @@ public protocol CollectionsViewControllerDelegate: class {
         }
     }
 
+    override public var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return .portrait
+    }
+
     private func flushLayout() {
         for cell in self.contentView.collectionView.visibleCells {
             guard let cell = cell as? CollectionCell else {
@@ -235,6 +239,8 @@ public protocol CollectionsViewControllerDelegate: class {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackOpeningIfNeeded()
+
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -599,7 +605,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         switch (kind) {
-        case UICollectionElementKindSectionHeader:
+        case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.reuseIdentifier, for: indexPath) as! CollectionHeaderView
             header.section = section
             header.totalItemsCount = UInt(self.moreElementsToSee(in: section) ? self.elements(for: section).count : 0)

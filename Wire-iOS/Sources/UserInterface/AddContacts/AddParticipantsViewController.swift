@@ -213,20 +213,20 @@ public class AddParticipantsViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameWillChange(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
         if viewModel.botCanBeAdded {
             view.addSubview(searchGroupSelector)
         }
         
         searchHeaderViewController.delegate = self
-        addChildViewController(searchHeaderViewController)
+        addChild(searchHeaderViewController)
         view.addSubview(searchHeaderViewController.view)
-        searchHeaderViewController.didMove(toParentViewController: self)
+        searchHeaderViewController.didMove(toParent: self)
         
-        addChildViewController(searchResultsViewController)
+        addChild(searchResultsViewController)
         view.addSubview(searchResultsViewController.view)
-        searchResultsViewController.didMove(toParentViewController: self)
+        searchResultsViewController.didMove(toParent: self)
         searchResultsViewController.searchResultsView?.emptyResultView = emptyResultView
         searchResultsViewController.searchResultsView?.backgroundColor = UIColor(scheme: .contentBackground, variant: self.variant)
         searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "add_participants.list"

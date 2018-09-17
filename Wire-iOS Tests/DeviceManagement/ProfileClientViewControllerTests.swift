@@ -28,6 +28,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         user = ZMUser.insertNewObject(in: uiMOC)
+        accentColor = .vividRed
 
         client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "102030405060708090"

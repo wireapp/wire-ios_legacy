@@ -32,9 +32,9 @@ extension ConversationListViewController {
         usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: name)
         usernameTakeoverViewController.delegate = self
 
-        addChildViewController(usernameTakeoverViewController)
+        addChild(usernameTakeoverViewController)
         view.addSubview(usernameTakeoverViewController.view)
-        usernameTakeoverViewController.didMove(toParentViewController: self)
+        usernameTakeoverViewController.didMove(toParent: self)
         contentContainer.alpha = 0
 
         constrain(view, usernameTakeoverViewController.view) { view, takeover in
@@ -47,9 +47,9 @@ extension ConversationListViewController {
 
     func removeUsernameTakeover() {
         guard let takeover = usernameTakeoverViewController else { return }
-        takeover.willMove(toParentViewController: nil)
+        takeover.willMove(toParent: nil)
         takeover.view.removeFromSuperview()
-        takeover.removeFromParentViewController()
+        takeover.removeFromParent()
         contentContainer.alpha = 1
         usernameTakeoverViewController = nil
         removeUserProfileObserver()

@@ -60,11 +60,11 @@ import Cartography
         }
         
         undoButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPressUndoButton)))
-        undoButton.setIcon(.undo, with: .tiny, for: UIControlState())
+        undoButton.setIcon(.undo, with: .tiny, for: [])
         undoButton.accessibilityIdentifier = "undoButton"
-        confirmButton.setIcon(.checkmark, with: .medium, for: UIControlState())
+        confirmButton.setIcon(.checkmark, with: .medium, for: [])
         confirmButton.accessibilityIdentifier = "confirmButton"
-        cancelButton.setIcon(.X, with: .tiny, for: UIControlState())
+        cancelButton.setIcon(.X, with: .tiny, for: [])
         cancelButton.accessibilityIdentifier = "cancelButton"
         undoButton.isEnabled = false
         confirmButton.isEnabled = false

@@ -69,7 +69,7 @@ extension UIAlertController {
         completion: @escaping (Bool) -> Void
         ) -> UIAlertController {
 
-        let defaultStyle: UIAlertControllerStyle = .alert
+        let defaultStyle: UIAlertController.Style = .alert
         let effectiveStyle = forceAlertModal ? .alert : defaultStyle
 
         let controller = UIAlertController(

@@ -46,7 +46,7 @@ class AccountViewTests: ZMSnapshotTestCase {
     
     func testThatItShowsBasicAccountWithPicture_Personal() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
         let sut = PersonalAccountView(account: account)
         // WHEN && THEN
         self.verify(view: sut.snapshotView())
@@ -54,7 +54,7 @@ class AccountViewTests: ZMSnapshotTestCase {
     
     func testThatItShowsBasicAccountWithPictureSelected_Personal() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
         let sut = PersonalAccountView(account: account)
         // WHEN 
         sut.selected = true
@@ -82,7 +82,7 @@ class AccountViewTests: ZMSnapshotTestCase {
     
     func testThatItShowsBasicAccountWithPicture_Team() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
         let sut = TeamAccountView(account: account)
         // WHEN && THEN
         self.verify(view: sut.snapshotView())
@@ -90,7 +90,7 @@ class AccountViewTests: ZMSnapshotTestCase {
     
     func testThatItShowsBasicAccountWithPictureSelected_Team() {
         // GIVEN
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
         let sut = TeamAccountView(account: account)
         // WHEN
         sut.selected = true

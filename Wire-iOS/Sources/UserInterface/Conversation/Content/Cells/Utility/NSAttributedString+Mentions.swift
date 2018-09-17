@@ -102,22 +102,22 @@ extension NSMutableAttributedString {
                                                     contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
                                                     weight: .semibold)
         
-        var atAttributes = [NSAttributedStringKey.font: atFont,
-                            NSAttributedStringKey.foregroundColor: color,
-                            NSAttributedStringKey.backgroundColor: backgroundColor]
+        var atAttributes = [NSAttributedString.Key.font: atFont,
+                            NSAttributedString.Key.foregroundColor: color,
+                            NSAttributedString.Key.backgroundColor: backgroundColor]
         
         if !user.isSelfUser {
-            atAttributes[NSAttributedStringKey.link] = link as NSObject
+            atAttributes[NSAttributedString.Key.link] = link as NSObject
         }
         
         let atString = "@" && atAttributes
         
-        var mentionAttributes = [NSAttributedStringKey.font: mentionFont,
-                                 NSAttributedStringKey.foregroundColor: color,
-                                 NSAttributedStringKey.backgroundColor: backgroundColor]
+        var mentionAttributes = [NSAttributedString.Key.font: mentionFont,
+                                 NSAttributedString.Key.foregroundColor: color,
+                                 NSAttributedString.Key.backgroundColor: backgroundColor]
         
         if !user.isSelfUser {
-            mentionAttributes[NSAttributedStringKey.link] = link as NSObject
+            mentionAttributes[NSAttributedString.Key.link] = link as NSObject
         }
         
         let mentionText = name && mentionAttributes

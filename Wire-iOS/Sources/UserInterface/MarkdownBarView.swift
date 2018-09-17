@@ -59,7 +59,7 @@ public final class MarkdownBarView: UIView {
     }
     
     override public var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 56)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
     private func setupViews() {

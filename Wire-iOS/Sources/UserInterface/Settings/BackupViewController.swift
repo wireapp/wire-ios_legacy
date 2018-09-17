@@ -24,7 +24,7 @@ final class BackupStatusCell: UITableViewCell {
     let descriptionLabel = UILabel()
     let iconView = UIImageView()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
@@ -66,7 +66,7 @@ final class BackupStatusCell: UITableViewCell {
 final class BackupActionCell: UITableViewCell {
     let actionTitleLabel = UILabel()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
@@ -143,7 +143,7 @@ final class BackupViewController: UIViewController {
         view.backgroundColor = .clear
         
         tableView.isScrollEnabled = false
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.backgroundColor = .clear
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)

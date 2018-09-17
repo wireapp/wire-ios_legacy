@@ -35,18 +35,18 @@ extension ProfilePictureStepViewController {
 extension ProfilePictureStepViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     @objc public func imagePickerController(_ picker: UIImagePickerController,
-                                      didFinishPickingMediaWithInfo info: [String : Any]) {
+                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
         // For iOS 11, simply get single image form dictionary instead of PHImageManager, to get rid of photo access permission dialog
         if #available(iOS 11.0, *) {
-            guard let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
 
                 self.dismiss(animated: true)
                 return
             }
 
             self.profilePictureImageView.image = image
-            self.setPictureImageData(UIImageJPEGRepresentation(image, 1.0))
+            self.setPictureImageData(image.jpegData(compressionQuality: 1.0))
 
             self.dismiss(animated: true)
         } else {

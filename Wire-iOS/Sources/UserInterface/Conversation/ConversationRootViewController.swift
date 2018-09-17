@@ -55,9 +55,9 @@ import Cartography
 
         networkStatusViewController.delegate = self
 
-        self.addChildViewController(conversationController)
+        self.addChild(conversationController)
         self.contentView.addSubview(conversationController.view)
-        conversationController.didMove(toParentViewController: self)
+        conversationController.didMove(toParent: self)
 
         conversationViewController = conversationController
 
