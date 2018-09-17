@@ -18,16 +18,24 @@
 
 import Foundation
 
-extension CGSize {
-    enum iPhoneSize {
-        static let iPhone4: CGSize = CGSize(width: 320, height: 568)
-        static let iPhone4_7: CGSize = CGSize(width: 375, height: 667)
-    }
+enum PhoneWidth: CGFloat {
+    case iPhone4 = 320
+    case iPhone4_7 = 375
 }
 
-extension UIViewController {
+extension UITableViewCell {
 
-    func setBoundsSizeAsIPhone4_7Inch() {
-        self.view.bounds.size = CGSize.iPhoneSize.iPhone4_7
+    func prepareForSnapshots(width: PhoneWidth = .iPhone4_7) -> UITableView {
+        setNeedsLayout()
+        layoutIfNeeded()
+
+        bounds.size = systemLayoutSizeFitting(
+            CGSize(width: width.rawValue, height: 0),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+
+        return wrapInTableView()
     }
+
 }
