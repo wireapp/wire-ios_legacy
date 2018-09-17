@@ -33,11 +33,17 @@ extension ContactsViewController {
 
 extension ContactsViewController: SearchHeaderViewControllerDelegate {
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
-
+        dataSource?.searchQuery = query
+        updateEmptyResults()
     }
 
     public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
-        
+        if searchHeaderViewController.tokenField.tokens.count == 0 {
+            updateEmptyResults()
+            return
+        }
+
+        delegate?.contactsViewControllerDidConfirmSelection!(self)
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
@@ -51,9 +57,9 @@ extension ContactsViewController: SearchHeaderViewControllerDelegate {
         searchHeaderViewController.delegate = self
         searchHeaderViewController.allowsMultipleSelection = false
         searchHeaderViewController.view.backgroundColor = UIColor(scheme: .searchBarBackground, variant: .dark)
-        addChildViewController(searchHeaderViewController)
-        view.addSubview(searchHeaderViewController.view)
-        searchHeaderViewController.didMove(toParentViewController: self)
+        topContainerView.addSubview(searchHeaderViewController.view)
+
+        addToSelf(searchHeaderViewController)
     }
 }
 
@@ -65,11 +71,6 @@ extension ContactsViewController: SearchHeaderViewControllerDelegate {
     [self.dataSource setSelection:[NSOrderedSet orderedSetWithArray:tokenFieldSelection]];
     }
 
-    - (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text
-{
-    self.dataSource.searchQuery = text ? text : @"";
-    [self updateEmptyResults];
-    }
 
     - (void)tokenFieldDidConfirmSelection:(TokenField *)controller
 {

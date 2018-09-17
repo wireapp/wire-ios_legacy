@@ -30,7 +30,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.view.backgroundColor = .black
 
         /// TODO: remove this after snapshot is created
-//        recordMode = true
+        recordMode = true
     }
 
     override func tearDown() {
@@ -52,7 +52,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForContactsAreShown() { ///TODO: hide no contact label
-        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-01.json")
+        let mockUsers = MockUser.mockUsers()
         sut.dataSource?.ungroupedSearchResults = mockUsers
 
         snapshotWithNavigationBarWithBackButton()

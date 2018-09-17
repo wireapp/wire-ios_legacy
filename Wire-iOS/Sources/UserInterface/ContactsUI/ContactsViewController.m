@@ -40,8 +40,7 @@
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
-@interface ContactsViewController () <TokenFieldDelegate>
-//@property (nonatomic) TokenField *tokenField;
+@interface ContactsViewController ()
 @property (nonatomic, readwrite) UITableView *tableView;
 @property (nonatomic) Button *inviteOthersButton;
 @property (nonatomic) ContactsEmptyResultView *emptyResultsView;
@@ -49,7 +48,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) BOOL searchResultsReceived;
 
 // Containers, ect.
-@property (nonatomic) UIView *topContainerView;
 @property (nonatomic) UIView *separatorView;
 @property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
 @property (nonatomic) NSLayoutConstraint *emptyResultsBottomConstraint;
@@ -229,7 +227,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, bottomContainerHeight, 0);
     
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
-//    [self.tokenField autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.tokenField autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.searchHeaderViewController.view autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cancelButton withOffset:- standardOffset / 2];
     [self.searchHeaderViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
@@ -374,31 +372,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         completionBlock(YES);
     }
 }
-
-//#pragma mark - TokenFieldDelegate
-
-//- (void)tokenField:(TokenField *)tokenField changedTokensTo:(NSArray *)tokens
-//{
-//    NSArray *tokenFieldSelection = [tokens valueForKey:NSStringFromSelector(@selector(representedObject))];
-//    [self.dataSource setSelection:[NSOrderedSet orderedSetWithArray:tokenFieldSelection]];
-//}
-//
-//- (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text
-//{
-//    self.dataSource.searchQuery = text ? text : @"";
-//    [self updateEmptyResults];
-//}
-//
-//- (void)tokenFieldDidConfirmSelection:(TokenField *)controller
-//{
-//    if (self.tokenField.tokens.count == 0) {
-//        [self updateEmptyResults];
-//        return;
-//    }
-//    if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidConfirmSelection:)]) {
-//        [self.delegate contactsViewControllerDidConfirmSelection:self];
-//    }
-//}
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didReceiveSearchResult:(NSArray * __nonnull)newUsers
 {

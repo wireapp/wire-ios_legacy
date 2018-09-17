@@ -31,5 +31,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) NSArray *actionButtonTitles;
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
+@property (nonatomic) UIView *topContainerView;
+
+- (void)updateEmptyResults;
 
 @end
