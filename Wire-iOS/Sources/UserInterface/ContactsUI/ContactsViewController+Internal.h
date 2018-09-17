@@ -33,6 +33,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic) UIView *topContainerView;
 
+@property (nonatomic) NSLayoutConstraint *closeButtonWidthConstraint;
+
 - (void)updateEmptyResults;
 
 @end

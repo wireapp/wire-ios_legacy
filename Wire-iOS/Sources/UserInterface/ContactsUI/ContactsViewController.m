@@ -227,7 +227,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, bottomContainerHeight, 0);
     
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
-    [self.tokenField autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     [self.searchHeaderViewController.view autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cancelButton withOffset:- standardOffset / 2];
     [self.searchHeaderViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
@@ -242,7 +242,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }];
 
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
-    [self.cancelButton autoSetDimension:ALDimensionWidth toSize:16];
+    self.closeButtonWidthConstraint = [self.cancelButton autoSetDimension:ALDimensionWidth toSize:16];
     [self.cancelButton autoSetDimension:ALDimensionHeight toSize:16];
     
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
