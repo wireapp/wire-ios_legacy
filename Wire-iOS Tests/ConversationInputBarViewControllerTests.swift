@@ -54,6 +54,10 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
+    override func setUp() {
+        super.setUp()
+    }
+
     func prepareSut() {
         sut = ConversationInputBarViewController(conversation: nil)
 
