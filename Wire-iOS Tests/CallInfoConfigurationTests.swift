@@ -348,8 +348,7 @@ class CallInfoConfigurationTests: XCTestCase {
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        mockSelfUser.isTeamMember = true
-        
+
         mockVoiceChannel.mockCallState = .answered(degraded: false)
         mockVoiceChannel.mockInitiator = otherUser
         
@@ -366,8 +365,7 @@ class CallInfoConfigurationTests: XCTestCase {
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let mockUsers: [ZMUser] = MockUser.mockUsers()!
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        mockSelfUser.isTeamMember = true
-        
+
         mockVoiceChannel.mockCallState = .established
         mockVoiceChannel.mockCallDuration = 10
         mockVoiceChannel.mockInitiator = selfUser
@@ -439,8 +437,6 @@ class CallInfoConfigurationTests: XCTestCase {
         let mockConversation = ((mockGroupConversation as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
 
-        mockSelfUser.isTeamMember = true
-        
         mockVoiceChannel.mockCallState = .established
         mockVoiceChannel.mockCallDuration = 10
         mockVoiceChannel.mockInitiator = selfUser
