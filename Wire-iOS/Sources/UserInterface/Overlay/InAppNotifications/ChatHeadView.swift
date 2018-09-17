@@ -38,11 +38,11 @@ class ChatHeadView: UIView {
     private let imageDiameter: CGFloat = 28
     private let padding: CGFloat = 10
     
-    private let titleRegularAttributes: [NSAttributedStringKey: AnyObject] = [
+    private let titleRegularAttributes: [NSAttributedString.Key: AnyObject] = [
         .font: FontSpec(.medium, .none).font!.withSize(14),
         .foregroundColor: UIColor(scheme: .chatHeadTitleText)
     ]
-    private let titleMediumAttributes: [NSAttributedStringKey: AnyObject] = [
+    private let titleMediumAttributes: [NSAttributedString.Key: AnyObject] = [
         .font: FontSpec(.medium, .medium).font!.withSize(14),
         .foregroundColor: UIColor(scheme: .chatHeadTitleText)
     ]
@@ -57,7 +57,7 @@ class ChatHeadView: UIView {
     
     override var intrinsicContentSize: CGSize {
         let height = imageDiameter + 2 * padding
-        return CGSize(width: UIViewNoIntrinsicMetric, height: height)
+        return CGSize(width: UIView.noIntrinsicMetric, height: height)
     }
 
     init(title: String?, body: String, userID: UUID, sender: ZMUser?, userInfo: NotificationUserInfo? = nil, isEphemeral: Bool = false) {

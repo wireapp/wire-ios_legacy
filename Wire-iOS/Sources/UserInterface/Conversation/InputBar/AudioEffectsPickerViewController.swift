@@ -163,7 +163,7 @@ import Cartography
         self.collectionViewLayout.scrollDirection = .vertical
         self.collectionViewLayout.minimumLineSpacing = 0
         self.collectionViewLayout.minimumInteritemSpacing = 0
-        self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
         self.collectionView.register(AudioEffectCell.self, forCellWithReuseIdentifier: AudioEffectCell.reuseIdentifier)
         self.collectionView.delegate = self
@@ -186,9 +186,9 @@ import Cartography
         }
     }
     
-    public override func removeFromParentViewController() {
+    public override func removeFromParent() {
         tearDown()
-        super.removeFromParentViewController()
+        super.removeFromParent()
     }
     
     public override func viewWillAppear(_ animated: Bool) {
@@ -255,7 +255,7 @@ import Cartography
         }
         
         if animated {
-            let options: UIViewAnimationOptions = (state == .playing) ? .transitionFlipFromTop : .transitionFlipFromBottom
+            let options: UIView.AnimationOptions = (state == .playing) ? .transitionFlipFromTop : .transitionFlipFromBottom
             UIView.transition(with: self.statusBoxView, duration: 0.35, options: options, animations: change, completion: .none)
         }
         else {

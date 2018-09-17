@@ -94,7 +94,7 @@ final public class FileTransferView: UIView, TransferView {
     }
     
     public override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 56)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
     private func createConstraints() {

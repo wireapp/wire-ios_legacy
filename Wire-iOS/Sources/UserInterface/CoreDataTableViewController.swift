@@ -82,11 +82,11 @@ class CoreDataTableViewController<Model: NSFetchRequestResult, Cell: UITableView
         select(cell: cell, with: fetchedResultsController.object(at: indexPath))
     }
 
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return canDelete ? .delete : .none
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let cell = tableView.cellForRow(at: indexPath) as! Cell
             delete(cell: cell, with: fetchedResultsController.object(at: indexPath))

@@ -20,7 +20,7 @@ import Foundation
 
 struct ImagePickerPopoverPresentationContext {
     let presentViewController: UIViewController
-    let sourceType: UIImagePickerControllerSourceType
+    let sourceType: UIImagePickerController.SourceType
 }
 
 extension UIImagePickerController {

@@ -3,7 +3,7 @@ defaults: &defaults
   environment:
     - DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
   macos:
-    xcode: "9.4.1"
+    xcode: "10.0.0"
   shell: /bin/bash --login -eo pipefail
 
 # ----------------CACHING----------------

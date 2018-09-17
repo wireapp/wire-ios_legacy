@@ -31,8 +31,8 @@ final class KeyboardBlockObserver: NSObject {
         
         init?(_ note: Notification, kind: Kind) {
             guard let info = note.userInfo else { return nil }
-            guard let frameValue = info[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-                let duration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval else { return nil }
+            guard let frameValue = info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+                let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return nil }
             frame = frameValue.cgRectValue
             animationDuration = duration
             self.kind = kind
@@ -59,9 +59,9 @@ final class KeyboardBlockObserver: NSObject {
     }
     
     private func registerKeyboardObservers() {
-        center.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     @objc private func keyboardWillShow(_ note: Notification) {

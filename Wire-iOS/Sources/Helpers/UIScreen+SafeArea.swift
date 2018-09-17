@@ -24,7 +24,7 @@ extension UIScreen {
         if #available(iOS 11, *), hasNotch {
             return UIApplication.shared.keyWindow!.safeAreaInsets
         }
-        return UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0)
+        return UIEdgeInsets(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
     @objc static var hasNotch: Bool {

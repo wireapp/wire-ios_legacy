@@ -46,7 +46,7 @@ final public class CameraPicker: NSObject {
             return
         }
         
-        var sourceType = UIImagePickerControllerSourceType.camera
+        var sourceType = UIImagePickerController.SourceType.camera
         
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
             sourceType = .photoLibrary
@@ -91,9 +91,9 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
         self.finishPicking()
     }
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        guard let mediaType = info[UIImagePickerControllerMediaType] as? String else {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        guard let mediaType = info[.mediaType] as? String else {
             self.finishPicking()
             return
         }
@@ -103,7 +103,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
         
         switch mediaType {
         case kUTTypeMovie.string:
-            guard let videoURL = info[UIImagePickerControllerMediaURL] as? URL else {
+            guard let videoURL = info[.mediaURL] as? URL else {
                 zmLog.error("Video not provided form \(picker): info \(info)")
                 self.finishPicking()
                 return
@@ -142,7 +142,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
                 }
             }
         case kUTTypeImage.string:
-            guard let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
                 self.finishPicking()
                 return
             }

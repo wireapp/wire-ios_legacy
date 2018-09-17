@@ -114,10 +114,10 @@ extension ZMSystemMessageData {
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
-        statusLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle.rawValue,
-                                      NSAttributedStringKey.foregroundColor.rawValue: UIColor(for: .vividRed)]
-        statusLabel.activeLinkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleSingle.rawValue,
-                                            NSAttributedStringKey.foregroundColor.rawValue: UIColor(for: .vividRed).withAlphaComponent(0.5)]
+        statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
+                                      NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed)]
+        statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
+                                            NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed).withAlphaComponent(0.5)]
         
         labelClipView.addSubview(statusLabel)
         
@@ -230,7 +230,7 @@ extension ZMSystemMessageData {
             return user.displayName
         }.joined(separator: ", ")
         
-        let attributes: [NSAttributedStringKey : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
+        let attributes: [NSAttributedString.Key : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
         let likersNamesAttributedString = likersNames && attributes
 
         let framesetter = CTFramesetterCreateWithAttributedString(likersNamesAttributedString)
@@ -355,7 +355,7 @@ extension ZMSystemMessageData {
     
     fileprivate func configureLikeTip(_ message: ZMConversationMessage, animated: Bool = false) {
         let likeTooltipText = "content.system.like_tooltip".localized
-        let attributes: [NSAttributedStringKey : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
+        let attributes: [NSAttributedString.Key : AnyObject] = [.font: statusLabel.font, .foregroundColor: statusLabel.textColor]
         let attributedText = likeTooltipText && attributes
 
         if let currentText = self.statusLabel.attributedText, currentText.string == attributedText.string {

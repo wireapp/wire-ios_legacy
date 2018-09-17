@@ -186,13 +186,13 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
         
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
-        let timeTolerance = CMTimeMakeWithSeconds(1, 60)
+        let timeTolerance = CMTimeMakeWithSeconds(1, preferredTimescale: 60)
 
         generator.requestedTimeToleranceBefore = timeTolerance
         generator.requestedTimeToleranceAfter = timeTolerance
         
-        let time = CMTimeMakeWithSeconds(asset.duration.seconds * 0.1, 60)
-        var actualTime = kCMTimeZero
+        let time = CMTimeMakeWithSeconds(asset.duration.seconds * 0.1, preferredTimescale: 60)
+        var actualTime = CMTime.zero
         guard let cgImage = try? generator.copyCGImage(at: time, actualTime:&actualTime),
             let colorSpace = cgImage.colorSpace else {
             return

@@ -66,7 +66,7 @@ public protocol ColorPickerControllerDelegate {
         self.contentView.clipsToBounds = true
         self.contentView.backgroundColor = UIColor.white
         
-        self.closeButton.setIcon(.X, with: .tiny, for: UIControlState())
+        self.closeButton.setIcon(.X, with: .tiny, for: [])
         self.closeButton.addTarget(self, action: #selector(ColorPickerController.didPressDismiss(_:)), for: .touchUpInside)
         self.closeButton.setIconColor(UIColor.darkGray, for: .normal)
         
@@ -130,7 +130,7 @@ public protocol ColorPickerControllerDelegate {
         fileprivate let checkmarkView = UIImageView()
         fileprivate let colorView = UIView()
     
-        override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             self.selectionStyle = .none
             

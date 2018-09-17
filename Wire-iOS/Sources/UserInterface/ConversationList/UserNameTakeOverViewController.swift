@@ -96,7 +96,7 @@ final class UserNameTakeOverViewController: UIViewController {
     func setupSubtitleLabel() {
         subtitleLabel.textAlignment = .natural
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue]
+        subtitleLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber]
         subtitleLabel.extendsLinkTouchArea = true
         
         let font = FontSpec(.large, .thin).font!
@@ -104,7 +104,7 @@ final class UserNameTakeOverViewController: UIViewController {
         let color = UIColor(scheme: .textForeground, variant: .dark)
 
         let subtitle = "registration.select_handle.takeover.subtitle".localized
-        let linkAttributes: [NSAttributedStringKey: Any] = [
+        let linkAttributes: [NSAttributedString.Key: Any] = [
             .font: linkFont,
             .link: learnMoreURL
         ]

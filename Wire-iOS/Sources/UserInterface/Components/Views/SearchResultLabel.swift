@@ -95,7 +95,7 @@ final public class SearchResultLabel: UILabel, Copyable {
         if let range = currentRange {
             let nsRange = text.nsRange(from: range)
             
-            let highlightedAttributes = [NSAttributedStringKey.font: font,
+            let highlightedAttributes = [NSAttributedString.Key.font: font,
                                          .backgroundColor: UIColor.accentDarken]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {

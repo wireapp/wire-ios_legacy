@@ -51,7 +51,7 @@ extension Notification.Name {
     private var newlineFlag = false
     
     /// The current attributes to be applied when typing.
-    fileprivate var currentAttributes: [NSAttributedStringKey : Any] = [:]
+    fileprivate var currentAttributes: [NSAttributedString.Key : Any] = [:]
 
     /// The currently active markdown. This determines which attributes
     /// are applied when typing.
@@ -60,7 +60,7 @@ extension Notification.Name {
             if oldValue != activeMarkdown {
                 currentAttributes = attributes(for: activeMarkdown)
                 markdownTextStorage.currentMarkdown = activeMarkdown
-                updateTypingAttributes(with: currentAttributes)
+                typingAttributes = currentAttributes
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
         }
@@ -107,9 +107,9 @@ extension Notification.Name {
         super.init(frame: .zero, textContainer: textContainer)
         
         currentAttributes = attributes(for: activeMarkdown)
-        updateTypingAttributes(with: currentAttributes)
+        typingAttributes = currentAttributes
 
-        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: .UITextViewTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: UITextView.textDidChangeNotification, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -138,23 +138,11 @@ extension Notification.Name {
             }
         }
         
-        updateTypingAttributes(with: currentAttributes)
+        typingAttributes = currentAttributes
     }
     
     // MARK: - Private Interface
-    
-    /// Calling this method ensures that the current attributes are applied
-    /// to newly typed text. Since iOS11, typing attributes are automatically
-    /// cleared when selection & text changes, so we have to keep setting it
-    /// to provide continuity.
-    private func updateTypingAttributes(with newAttributes: [NSAttributedStringKey: Any]) {
-        var attributes = [String: Any]()
-        for (key, value) in newAttributes {
-            attributes[key.rawValue] = value
-        }
-        typingAttributes = attributes
-    }
-    
+
     /// Called after each text change has been committed. We use this opportunity
     /// to insert new list items in the case a newline was entered, as well as
     /// to validate any potential list items on the currently selected line.
@@ -226,7 +214,7 @@ extension Notification.Name {
     // MARK: - Attribute Manipulation
     
     /// Returns the attributes for the given markdown.
-    private func attributes(for markdown: Markdown) -> [NSAttributedStringKey : Any] {
+    private func attributes(for markdown: Markdown) -> [NSAttributedString.Key : Any] {
         
         // the idea is to query for specific markdown & adjust the attributes
         // incrementally
@@ -413,9 +401,9 @@ extension Notification.Name {
         let prefix = nextListPrefix(type: type)
         
         // insert prefix with no md
-        updateTypingAttributes(with: attributes(for: .none))
+        typingAttributes = attributes(for: .none)
         replaceText(in: lineStart, with: prefix, restoringSelection: selection)
-        updateTypingAttributes(with: currentAttributes)
+        typingAttributes = currentAttributes
         
         // add list md to whole line
         guard let newLineRange = currentLineRange else { return }

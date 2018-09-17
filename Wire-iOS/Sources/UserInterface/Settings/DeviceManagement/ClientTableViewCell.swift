@@ -119,7 +119,7 @@ class ClientTableViewCell: UITableViewCell {
     }
 
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.wr_editable = true
         
         nameLabel.accessibilityIdentifier = "device name"

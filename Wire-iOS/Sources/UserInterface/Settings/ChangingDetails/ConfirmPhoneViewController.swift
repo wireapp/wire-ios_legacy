@@ -84,7 +84,7 @@ protocol ConfirmPhoneDelegate: class {
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
         
-        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 60
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(

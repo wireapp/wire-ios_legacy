@@ -18,8 +18,8 @@
 
 import Foundation
 
-fileprivate extension UILayoutConstraintAxis{
-    var flipped: UILayoutConstraintAxis {
+fileprivate extension NSLayoutConstraint.Axis{
+    var flipped: NSLayoutConstraint.Axis {
         switch self {
         case .horizontal: return .vertical
         case .vertical: return .horizontal
@@ -32,7 +32,7 @@ class GridView: UIStackView {
     let upperHorizontalStackerView: UIStackView! = UIStackView(arrangedSubviews: [])
     let lowerHorizontalStackerView: UIStackView! = UIStackView(arrangedSubviews: [])
 
-    var layoutDirection: UILayoutConstraintAxis = .vertical {
+    var layoutDirection: NSLayoutConstraint.Axis = .vertical {
         didSet {
             axis = layoutDirection
             lowerHorizontalStackerView.axis = layoutDirection.flipped
