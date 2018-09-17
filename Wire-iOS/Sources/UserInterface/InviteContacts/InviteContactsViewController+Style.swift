@@ -26,6 +26,12 @@ extension InviteContactsViewController {
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        ///hide titleLabel and cancel cross button, which is duplicated in the navi bar
+        if self.navigationController != nil {
+            self.titleLabel.isHidden = true
+            self.cancelButton.isHidden = true
+        }
+
         view.layoutIfNeeded()
     }
 

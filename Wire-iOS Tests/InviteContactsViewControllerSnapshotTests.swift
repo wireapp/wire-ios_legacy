@@ -43,10 +43,14 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
 
-    func testForContactsAreShown(){
+    func testForContactsAreShown(){ ///TODO: accent color(?), hide no contact label
         let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-01.json")
         sut.dataSource?.ungroupedSearchResults = mockUsers
 
-        verify(view: sut.view)
+        let navigationController = sut.wrapInNavigationController(ClearBackgroundNavigationController.self)
+
+        sut.viewWillAppear(false)
+
+        verify(view: navigationController.view)
     }
 }

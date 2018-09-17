@@ -53,13 +53,6 @@
 {
     [super viewDidLoad];
     [self setupStyle];
-
-    ///hide titleLabel and cancel button, which is duplicated in the navi bar
-    if (self.navigationController) {
-        self.titleLabel.hidden = YES;
-        self.cancelButton.hidden = YES;
-    }
-
 }
 
 - (BOOL)sharingContactsRequired
