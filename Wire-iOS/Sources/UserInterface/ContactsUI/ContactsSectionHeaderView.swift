@@ -67,7 +67,7 @@ import Cartography
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: ContactsSectionHeaderView.height)
+        return CGSize(width: UIView.noIntrinsicMetric, height: ContactsSectionHeaderView.height)
     }
 
 }

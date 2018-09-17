@@ -104,7 +104,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     var allActionButtonTitles: [String] = [] {
         didSet {
             if let titleLabelFont = actionButton.titleLabel?.font {
-                actionButtonWidth = CGFloat(actionButtonWidth(forTitles: allActionButtonTitles, textTransform: actionButton.textTransform, contentInsets: actionButton.contentEdgeInsets, textAttributes: [NSAttributedStringKey.font: titleLabelFont]))
+                actionButtonWidth = CGFloat(actionButtonWidth(forTitles: allActionButtonTitles, textTransform: actionButton.textTransform, contentInsets: actionButton.contentEdgeInsets, textAttributes: [NSAttributedString.Key.font: titleLabelFont]))
             }
         }
     }
@@ -128,7 +128,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureSubviews()
     }
@@ -191,7 +191,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedStringKey : Any]?) -> Float {
+    func actionButtonWidth(forTitles actionButtonTitles: [String], textTransform: TextTransform, contentInsets: UIEdgeInsets, textAttributes: [NSAttributedString.Key : Any]?) -> Float {
         var width: CGFloat = 0
         for title: String in actionButtonTitles {
             let transformedTitle = title.transform(with: textTransform)
