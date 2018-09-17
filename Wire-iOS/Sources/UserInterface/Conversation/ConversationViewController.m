@@ -745,9 +745,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [ZMMessage deleteForEveryone:message];
         } else {
             BOOL fetchLinkPreview = ![[Settings sharedSettings] disableLinkPreviews];
-            
-            // TODO: We need to forward the potentially updated mentions here.
-            (void)[ZMMessage edit:message newText:newText fetchLinkPreview:fetchLinkPreview];
+            NOT_USED([ZMMessage edit:message newText:newText mentions:mentions fetchLinkPreview:fetchLinkPreview]);
         }
     }];
 }

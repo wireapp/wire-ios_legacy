@@ -47,7 +47,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusFailedToSend() {
         // GIVEN
         let sut = self.otherUserConversation!
-        let message = sut.appendMessage(withText: "text") as! ZMMessage
+        let message = sut.append(text: "text") as! ZMMessage
         message.expire()
         // WHEN
         let status = sut.status.description(for: sut)
@@ -116,7 +116,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let sut = self.otherUserConversation!
         sut.isSilenced = true
         for index in 1...5 {
-            (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
+            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
         sut.lastReadServerTimeStamp = Date.distantPast
 
@@ -130,7 +130,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         for index in 1...5 {
-            (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
+            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
         sut.lastReadServerTimeStamp = Date.distantPast
 
@@ -144,7 +144,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         for index in 1...5 {
-            (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
+            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
         let otherMessage = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
         otherMessage.sender = self.otherUser
@@ -164,10 +164,10 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let sut = self.otherUserConversation!
         sut.isSilenced = true
         for index in 1...5 {
-            (sut.appendMessage(withText: "test \(index)") as! ZMMessage).sender = self.otherUser
+            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
         for _ in 1...5 {
-            (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+            (sut.append(imageFromData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
         }
         sut.lastReadServerTimeStamp = Date.distantPast
 

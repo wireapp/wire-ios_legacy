@@ -29,7 +29,7 @@ func forward(_ image: UIImage, to conversations: [AnyObject]) {
     }
     
     conversations.forEach { conversation in
-        conversation.appendMessage(withImageData: imageData)
+        conversation.append(imageFromData: imageData)
     }
 }
 
@@ -62,7 +62,7 @@ func forward(_ videoAtURL: URL, to conversations: [AnyObject]) {
     
     FileMetaDataGenerator.metadataForFileAtURL(videoAtURL, UTI: kUTTypeMovie as String, name: "Recording") { metadata in
         conversations.forEach { conversation in
-            conversation.appendMessage(with: metadata)
+            conversation.append(file: metadata)
         }
     }
 }

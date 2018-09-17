@@ -75,7 +75,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersConversationWithMessagesFromSelf() {
         // when
-        otherUserConversation.appendMessage(withText: "Hey there!")
+        otherUserConversation.append(text: "Hey there!")
         
         // then
         verify(otherUserConversation)
@@ -83,7 +83,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersConversationWithNewMessage() {
         // when
-        let message = otherUserConversation.appendMessage(withText: "Hey there!")
+        let message = otherUserConversation.append(text: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
         
         // then
@@ -93,7 +93,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersConversationWithNewMessages() {
         // when
         (0..<8).forEach {_ in 
-            let message = otherUserConversation.appendMessage(withText: "Hey there!")
+            let message = otherUserConversation.append(text: "Hey there!")
             (message as! ZMClientMessage).sender = otherUser
         }
         

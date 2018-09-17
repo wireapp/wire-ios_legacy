@@ -35,8 +35,8 @@ class Message_FormattingTests: XCTestCase {
         textMessageData.messageText = text
         
         if (messageTemplate.contains("{preview-url}")) {
-            let range = textMessageData.messageText.range(of: previewURL)!
-            let offset = textMessageData.messageText.distance(from: textMessageData.messageText.startIndex, to: range.lowerBound)
+            let range = textMessageData.messageText!.range(of: previewURL)!
+            let offset = textMessageData.messageText!.distance(from: textMessageData.messageText!.startIndex, to: range.lowerBound)
             
             textMessageData.linkPreview = Article(originalURLString: previewURL, permanentURLString: previewURL, resolvedURLString: previewURL, offset: offset)
         }
@@ -162,7 +162,7 @@ class Message_FormattingTests: XCTestCase {
         let mockUser = MockUser.mockUsers()[0]
         mockUser.remoteIdentifier = UUID()
         
-        let mention = Mention(range: (textMessageData.messageText as NSString).range(of: "@mention"), user: mockUser)
+        let mention = Mention(range: (textMessageData.messageText! as NSString).range(of: "@mention"), user: mockUser)
         textMessageData.mentions = [mention]
         let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
         
@@ -179,7 +179,7 @@ class Message_FormattingTests: XCTestCase {
         let mockUser = MockUser.mockUsers()[0]
         mockUser.remoteIdentifier = UUID()
         
-        let mention = Mention(range: (textMessageData.messageText as NSString).range(of: "@mention"), user: mockUser)
+        let mention = Mention(range: (textMessageData.messageText! as NSString).range(of: "@mention"), user: mockUser)
         textMessageData.mentions = [mention]
         let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
         

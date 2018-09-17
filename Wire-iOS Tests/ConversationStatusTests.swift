@@ -47,7 +47,7 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadOneMessage() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withText: "test") as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test") as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -74,7 +74,7 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadOneImage() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -89,8 +89,8 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         (sut.appendKnock() as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test") as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -105,9 +105,9 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadManyTexts() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withText: "test 1") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test 2") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test 3") as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test 1") as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test 2") as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test 3") as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -139,9 +139,9 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadManyImages() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: UIImagePNGRepresentation(self.image(inTestBundleNamed: "unsplash_burger.jpg"))!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
