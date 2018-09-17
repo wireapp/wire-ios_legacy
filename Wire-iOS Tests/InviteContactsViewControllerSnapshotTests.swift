@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
+
     var sut: InviteContactsViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = InviteContactsViewController()
@@ -32,25 +32,29 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         /// TODO: remove this after snapshot is created
 //        recordMode = true
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForNoResult(){
-        verify(view: sut.view)
-    }
+    fileprivate func snapshotWithNavigationBarWithBackButton(file: StaticString = #file, line: UInt = #line) {
+        let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
 
-
-    func testForContactsAreShown(){ ///TODO: accent color(?), hide no contact label
-        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-01.json")
-        sut.dataSource?.ungroupedSearchResults = mockUsers
-
-        let navigationController = sut.wrapInNavigationController(ClearBackgroundNavigationController.self)
-
+        navigationController.pushViewController(sut, animated: false)
         sut.viewWillAppear(false)
 
         verify(view: navigationController.view)
+    }
+
+    func testForNoResult() {
+        snapshotWithNavigationBarWithBackButton()
+    }
+
+    func testForContactsAreShown() { ///TODO: hide no contact label
+        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-01.json")
+        sut.dataSource?.ungroupedSearchResults = mockUsers
+
+        snapshotWithNavigationBarWithBackButton()
     }
 }
