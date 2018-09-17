@@ -138,20 +138,19 @@ class InputBarTests: ZMSnapshotTestCase {
         sut.textView.text = ""
         sut.setInputBarState(.markingDown(ephemeral: .message), animated: false)
         sut.updateEphemeralState()
-        
 
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersCorrectlyInEditState() {
         sut.setInputBarState(.editing(originalText: "This text is being edited"), animated: false)
-        
+        sut.textView.resignFirstResponder() // make sure to avoid cursor being visible
+
         verifyInAllPhoneWidths(view: sut)
     }
     
     func testThatItRendersCorrectlyInEditState_LongText() {
         sut.setInputBarState(.editing(originalText: longText), animated: false)
-
         
         verifyInAllPhoneWidths(view: sut)
     }
