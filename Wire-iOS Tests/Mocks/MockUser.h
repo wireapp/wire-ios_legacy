@@ -48,7 +48,7 @@
 @property (nonatomic, readwrite) NSTimeInterval expiresAfter;
 @property (nonatomic, assign) BOOL isSelfUser;
 @property (nonatomic, assign) BOOL isServiceUser;
-@property (nonatomic, assign) BOOL isTeamMember;
+@property (nonatomic, readwrite) BOOL isTeamMember;
 @property (nonatomic, assign) BOOL isGuestInConversation;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
