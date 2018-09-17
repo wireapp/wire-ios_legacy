@@ -1,20 +1,20 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 
 #import "MockUser.h"
@@ -31,11 +31,12 @@ static id<UserType> mockSelfUser = nil;
     self = [super init];
     if (self) {
         _clients = [NSSet set];
+        self.isTeamMember = YES;
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
             if (value == NSNull.null) { continue; }
             [self setValue:value forKey:key];
-        
+
         }
     }
     return self;
@@ -46,7 +47,7 @@ static id<UserType> mockSelfUser = nil;
     if (![otherObject isKindOfClass:ZMUser.class]) {
         return NO;
     }
-    
+
     return [self.name isEqual:[(ZMUser *)otherObject name]];
 }
 
@@ -62,7 +63,7 @@ static id<UserType> mockSelfUser = nil;
         mockUser.isSelfUser = YES;
         mockSelfUser = (MockUser *)mockUser;
     }
-    
+
     return (MockUser *)mockSelfUser;
 }
 
@@ -128,7 +129,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize totalCommonConnections;
 @synthesize smallProfileImageCacheKey;
 @synthesize mediumProfileImageCacheKey;
-
+@synthesize isTeamMember;
 
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
@@ -186,7 +187,7 @@ static id<UserType> mockSelfUser = nil;
 }
 
 - (void)connectWithMessage:(NSString * _Nonnull)message {
-    
+
 }
 
 - (void)imageDataFor:(enum ProfileImageSize)size queue:(dispatch_queue_t _Nonnull)queue completion:(void (^ _Nonnull)(NSData * _Nullable))completion {
@@ -206,12 +207,12 @@ static id<UserType> mockSelfUser = nil;
 
 
 - (void)requestCompleteProfileImage {
-    
+
 }
 
 
 - (void)requestPreviewProfileImage {
-    
+
 }
 
 - (Team *)team
@@ -250,12 +251,17 @@ static id<UserType> mockSelfUser = nil;
 
 - (void)fetchUserClients
 {
-    
+
 }
 
 - (NSSet<UserClient *> *)clientsRequiringUserAttention
 {
     return [NSSet new];
+}
+
+- (ZMUser *)user
+{
+    return nil;
 }
 
 #pragma mark - ZMBareUserConnection
