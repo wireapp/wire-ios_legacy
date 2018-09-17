@@ -20,6 +20,7 @@ static NSString * const ContactsViewControllerCellID = @"ContactsCell";
 static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
 
 @class IconButton;
+@class SearchHeaderViewController;
 
 @interface ContactsViewController ()
 
@@ -29,5 +30,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) UILabel *noContactsLabel;
 @property (nonatomic) NSArray *actionButtonTitles;
 @property (nonatomic) IconButton *cancelButton;
+@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 
 @end

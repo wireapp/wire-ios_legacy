@@ -41,7 +41,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 @interface ContactsViewController () <TokenFieldDelegate>
-@property (nonatomic) TokenField *tokenField;
+//@property (nonatomic) TokenField *tokenField;
 @property (nonatomic, readwrite) UITableView *tableView;
 @property (nonatomic) Button *inviteOthersButton;
 @property (nonatomic) ContactsEmptyResultView *emptyResultsView;
@@ -99,13 +99,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.tokenField resignFirstResponder];
-    [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-}
-
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
@@ -135,15 +128,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.titleLabel.text = self.title;
     self.titleLabel.textColor = [colorScheme colorWithName:ColorSchemeColorTextForeground];
     [self.topContainerView addSubview:self.titleLabel];
-    
-    self.tokenField = [[TokenField alloc] initForAutoLayout];
-    self.tokenField.delegate = self;
-    self.tokenField.textColor = [colorScheme colorWithName:ColorSchemeColorTextForeground];
-    self.tokenField.textView.accessibilityIdentifier = @"textViewSearch";
-    self.tokenField.textView.placeholder = NSLocalizedString(@"contacts_ui.search_placeholder", @"");
-    self.tokenField.textView.keyboardAppearance = [ColorScheme keyboardAppearanceForVariant:self.colorSchemeVariant];
-    [self.topContainerView addSubview:self.tokenField];
-    
+
+    [self createSearchHeader];
+
     self.cancelButton = [[IconButton alloc] initForAutoLayout];
     [self.cancelButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeSearchBar forState:UIControlStateNormal];
     self.cancelButton.accessibilityIdentifier = @"ContactsViewCloseButton";
@@ -226,7 +213,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     self.emptyResultsBottomConstraint = [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    [self.noContactsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.tokenField withOffset:standardOffset];
+    [self.noContactsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view withOffset:standardOffset];
     [self.noContactsLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.view withOffset:standardOffset];
     [self.noContactsLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
@@ -241,12 +228,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, bottomContainerHeight, 0);
     
-    [self.tokenField autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
-    [self.tokenField autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.tokenField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cancelButton withOffset:- standardOffset / 2];
-    [self.tokenField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
+//    [self.tokenField autoPinEdgeToSuperviewEdge:ALEdgeBottom];
+    [self.searchHeaderViewController.view autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cancelButton withOffset:- standardOffset / 2];
+    [self.searchHeaderViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.tokenField autoSetContentHuggingPriorityForAxis:ALAxisVertical];
+        [self.searchHeaderViewController.view autoSetContentHuggingPriorityForAxis:ALAxisVertical];
     }];
     
     self.closeButtonTopConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:16 + UIScreen.safeArea.top];
@@ -348,7 +335,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)updateEmptyResults
 {
     BOOL showEmptyResults = self.searchResultsReceived && ! [self.tableView numberOfTotalRows];
-    BOOL showNoContactsLabel = ! [self.tableView numberOfTotalRows] && (self.dataSource.searchQuery.length == 0) && !self.tokenField.userDidConfirmInput;
+    BOOL showNoContactsLabel = ! [self.tableView numberOfTotalRows] && (self.dataSource.searchQuery.length == 0) && !self.searchHeaderViewController.tokenField.userDidConfirmInput;
     self.noContactsLabel.hidden = ! showNoContactsLabel;
     self.bottomContainerView.hidden = (self.dataSource.searchQuery.length > 0) || showEmptyResults;
     
@@ -388,30 +375,30 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-#pragma mark - TokenFieldDelegate
+//#pragma mark - TokenFieldDelegate
 
-- (void)tokenField:(TokenField *)tokenField changedTokensTo:(NSArray *)tokens
-{
-    NSArray *tokenFieldSelection = [tokens valueForKey:NSStringFromSelector(@selector(representedObject))];
-    [self.dataSource setSelection:[NSOrderedSet orderedSetWithArray:tokenFieldSelection]];
-}
-
-- (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text
-{
-    self.dataSource.searchQuery = text ? text : @"";
-    [self updateEmptyResults];
-}
-
-- (void)tokenFieldDidConfirmSelection:(TokenField *)controller
-{
-    if (self.tokenField.tokens.count == 0) {
-        [self updateEmptyResults];
-        return;
-    }
-    if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidConfirmSelection:)]) {
-        [self.delegate contactsViewControllerDidConfirmSelection:self];
-    }
-}
+//- (void)tokenField:(TokenField *)tokenField changedTokensTo:(NSArray *)tokens
+//{
+//    NSArray *tokenFieldSelection = [tokens valueForKey:NSStringFromSelector(@selector(representedObject))];
+//    [self.dataSource setSelection:[NSOrderedSet orderedSetWithArray:tokenFieldSelection]];
+//}
+//
+//- (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text
+//{
+//    self.dataSource.searchQuery = text ? text : @"";
+//    [self updateEmptyResults];
+//}
+//
+//- (void)tokenFieldDidConfirmSelection:(TokenField *)controller
+//{
+//    if (self.tokenField.tokens.count == 0) {
+//        [self updateEmptyResults];
+//        return;
+//    }
+//    if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidConfirmSelection:)]) {
+//        [self.delegate contactsViewControllerDidConfirmSelection:self];
+//    }
+//}
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didReceiveSearchResult:(NSArray * __nonnull)newUsers
 {
@@ -421,9 +408,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateEmptyResults];
 }
 
+///TODO: update the binding
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didSelectUser:(ZMSearchUser *)user
 {
-    [self.tokenField addToken:[[Token alloc] initWithTitle:user.displayName representedObject:user]];
+    [self.searchHeaderViewController.tokenField addToken:[[Token alloc] initWithTitle:user.displayName representedObject:user]];
     [UIView performWithoutAnimation:^{
         [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
     }];
@@ -431,17 +419,16 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didDeselectUser:(ZMSearchUser *)user
 {
-    Token *token = [self.tokenField tokenForRepresentedObject:user];
+    Token *token = [self.searchHeaderViewController.tokenField tokenForRepresentedObject:user];
     
     if (token != nil) {
-        [self.tokenField removeToken:token];
+        [self.searchHeaderViewController.tokenField removeToken:token];
     }
     [UIView performWithoutAnimation:^{
         [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
     }];
 }
 
-///TODO: search box style
 #pragma mark - Send Invite
 
 - (void)inviteContact:(ZMAddressBookContact *)contact fromView:(UIView *)view

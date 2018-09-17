@@ -30,3 +30,55 @@ extension ContactsViewController {
         noContactsLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }
 }
+
+extension ContactsViewController: SearchHeaderViewControllerDelegate {
+    public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
+
+    }
+
+    public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
+        
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchHeaderViewController.tokenField.resignFirstResponder()
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+    }
+
+    @objc func createSearchHeader() {
+        searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
+        searchHeaderViewController.delegate = self
+        searchHeaderViewController.allowsMultipleSelection = false
+        searchHeaderViewController.view.backgroundColor = UIColor(scheme: .searchBarBackground, variant: .dark)
+        addChildViewController(searchHeaderViewController)
+        view.addSubview(searchHeaderViewController.view)
+        searchHeaderViewController.didMove(toParentViewController: self)
+    }
+}
+
+///TODO:
+/*
+- (void)tokenField:(TokenField *)tokenField changedTokensTo:(NSArray *)tokens
+{
+    NSArray *tokenFieldSelection = [tokens valueForKey:NSStringFromSelector(@selector(representedObject))];
+    [self.dataSource setSelection:[NSOrderedSet orderedSetWithArray:tokenFieldSelection]];
+    }
+
+    - (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text
+{
+    self.dataSource.searchQuery = text ? text : @"";
+    [self updateEmptyResults];
+    }
+
+    - (void)tokenFieldDidConfirmSelection:(TokenField *)controller
+{
+    if (self.tokenField.tokens.count == 0) {
+        [self updateEmptyResults];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidConfirmSelection:)]) {
+        [self.delegate contactsViewControllerDidConfirmSelection:self];
+    }
+}
+*/
