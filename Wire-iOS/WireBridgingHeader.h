@@ -144,6 +144,7 @@
 #import "TermsOfUseStepViewController.h"
 #import "TermsOfUseStepViewController+Private.h"
 #import "PermissionDeniedViewController.h"
+#import "ShareContactsViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
