@@ -88,7 +88,7 @@ class ProximityMonitorManager : NSObject {
         UIDevice.current.isProximityMonitoringEnabled = true
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleProximityChange),
-                                               name: NSNotification.Name.UIDeviceProximityStateDidChange,
+                                               name: UIDevice.proximityStateDidChangeNotification,
                                                object: nil)
     }
     

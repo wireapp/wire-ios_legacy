@@ -31,7 +31,7 @@ import Cartography
     let separatorLineView = UIView()
     let typeLabel = UILabel()
     let IDLabel = UILabel()
-    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let spinner = UIActivityIndicatorView(style: .gray)
     let fullIDLabel = CopyableLabel()
     let verifiedToggle = UISwitch()
     let verifiedToggleLabel = UILabel()
@@ -120,7 +120,7 @@ import Cartography
     }
 
     private func setupBackButton() {
-        backButton.setIcon(.chevronLeft, with: .tiny, for: UIControlState())
+        backButton.setIcon(.chevronLeft, with: .tiny, for: [])
         backButton.accessibilityIdentifier = "back"
         backButton.addTarget(self, action: #selector(ProfileClientViewController.onBackTapped(_:)), for: .touchUpInside)
         backButton.isHidden = !self.showBackButton
@@ -129,7 +129,7 @@ import Cartography
     
     private func setupShowMyDeviceButton() {
         showMyDeviceButton.accessibilityIdentifier = "show my device"
-        showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercased(), for: UIControlState())
+        showMyDeviceButton.setTitle(NSLocalizedString("profile.devices.detail.show_my_device.title", comment: "").uppercased(), for: [])
         showMyDeviceButton.addTarget(self, action: #selector(ProfileClientViewController.onShowMyDeviceTapped(_:)), for: .touchUpInside)
         showMyDeviceButton.setTitleColor(UIColor.accent(), for: .normal)
         showMyDeviceButton.titleLabel?.font = FontSpec(.small, .light).font!
@@ -142,6 +142,7 @@ import Cartography
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor(scheme: .textForeground)
         descriptionTextView.backgroundColor = UIColor(scheme: .textBackground)
+        descriptionTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
@@ -235,7 +236,7 @@ import Cartography
     private func setupResetButton() {
         resetButton.setTitleColor(UIColor.accent(), for: .normal)
         resetButton.titleLabel?.font = FontSpec(.small, .light).font!
-        resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: UIControlState())
+        resetButton.setTitle(NSLocalizedString("profile.devices.detail.reset_session.title", comment: "").uppercased(), for: [])
         resetButton.addTarget(self, action: #selector(ProfileClientViewController.onResetTapped(_:)), for: .touchUpInside)
         resetButton.accessibilityIdentifier = "reset session"
         self.contentView.addSubview(resetButton)
@@ -246,7 +247,7 @@ import Cartography
         let deleteButton = ButtonWithLargerHitArea()
         deleteButton.setTitleColor(UIColor.accent(), for: .normal)
         deleteButton.titleLabel?.font = FontSpec(.small, .light).font!
-        deleteButton.setTitle("DELETE (⚠️ will cause decryption errors later ⚠️)", for: UIControlState())
+        deleteButton.setTitle("DELETE (⚠️ will cause decryption errors later ⚠️)", for: [])
         deleteButton.addTarget(self, action: #selector(ProfileClientViewController.onDeleteDeviceTapped(_:)), for: .touchUpInside)
         self.contentView.addSubview(deleteButton)
         self.deleteDeviceButton = deleteButton

@@ -19,10 +19,10 @@
 import Foundation
 
 final class MockTapGestureRecognizer: UITapGestureRecognizer {
-    let mockState: UIGestureRecognizerState
+    let mockState: UIGestureRecognizer.State
     var mockLocation: CGPoint?
 
-    init(location: CGPoint?, state: UIGestureRecognizerState) {
+    init(location: CGPoint?, state: UIGestureRecognizer.State) {
         mockLocation = location
         mockState = state
 
@@ -37,7 +37,7 @@ final class MockTapGestureRecognizer: UITapGestureRecognizer {
         return mockLocation ?? super.location(ofTouch: touchIndex, in: view)
     }
 
-    override var state: UIGestureRecognizerState {
+    override var state: UIGestureRecognizer.State {
         get {
             return mockState
         }

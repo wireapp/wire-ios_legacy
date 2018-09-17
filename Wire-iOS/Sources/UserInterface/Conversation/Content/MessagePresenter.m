@@ -28,20 +28,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@implementation AVPlayerViewControllerWithoutStatusBar
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.wr_playerController tearDown];
-}
-
-@end
-
 
 @interface MessagePresenter (UIDocumentInteractionController) <UIDocumentInteractionControllerDelegate>
 @end

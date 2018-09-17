@@ -100,7 +100,7 @@ final class MarkdownTextViewTests: XCTestCase {
     }
     
     // Attributes that we expect for certain markdown combinations.
-    func attrs(for markdown: Markdown) -> [NSAttributedStringKey: Any] {
+    func attrs(for markdown: Markdown) -> [NSAttributedString.Key: Any] {
         switch markdown {
         case .none, .oList, .uList:
             return [
@@ -172,7 +172,7 @@ final class MarkdownTextViewTests: XCTestCase {
     }
     
     // A way to check that two attribute dictionaries are equal
-    func equal(_ lhs: [NSAttributedStringKey: Any], _ rhs: [NSAttributedStringKey: Any]) -> Bool {
+    func equal(_ lhs: [NSAttributedString.Key: Any], _ rhs: [NSAttributedString.Key: Any]) -> Bool {
         if lhs[.markdownID] as? Markdown != rhs[.markdownID] as? Markdown {
             return false
         }

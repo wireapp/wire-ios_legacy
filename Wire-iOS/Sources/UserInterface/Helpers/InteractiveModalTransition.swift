@@ -172,9 +172,9 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         view.addSubview(dimView)
         dimView.backgroundColor = .clear
         dimView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapDimView)))
-        addChildViewController(viewController)
+        addChild(viewController)
         view.addSubview(viewController.view)
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
     }
     
     private func createConstraints() {

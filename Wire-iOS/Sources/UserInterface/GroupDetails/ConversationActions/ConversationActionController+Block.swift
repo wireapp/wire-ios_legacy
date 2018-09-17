@@ -33,7 +33,7 @@ enum BlockResult {
         }
     }
     
-    private var style: UIAlertActionStyle {
+    private var style: UIAlertAction.Style {
         guard case .cancel = self else { return .destructive }
         return .cancel
     }

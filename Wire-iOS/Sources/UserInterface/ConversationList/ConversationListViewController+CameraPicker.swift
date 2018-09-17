@@ -22,7 +22,7 @@ import MobileCoreServices
 import Cartography
 
 func forward(_ image: UIImage, to conversations: [AnyObject]) {
-    guard let imageData = UIImageJPEGRepresentation(image, 0.9),
+    guard let imageData = image.jpegData(compressionQuality: 0.9),
         let conversations = conversations as? [ZMConversation] else {
         
         return

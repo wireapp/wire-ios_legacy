@@ -124,7 +124,7 @@ final class CallTopOverlayController: UIViewController {
         view.shouldGroupAccessibilityChildren = true
         view.isAccessibilityElement = true
         view.accessibilityLabel = "voice.top_overlay.accessibility_title".localized
-        view.accessibilityTraits = UIAccessibilityTraitButton
+        view.accessibilityTraits = .button
         
         interactiveView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(interactiveView)

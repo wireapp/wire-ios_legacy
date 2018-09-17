@@ -72,7 +72,7 @@ extension FontWeight {
     ]
     
     public func fontWeight(accessibilityBoldText: Bool? = nil) -> UIFont.Weight {
-        let boldTextEnabled = accessibilityBoldText ?? UIAccessibilityIsBoldTextEnabled()
+        let boldTextEnabled = accessibilityBoldText ?? UIAccessibility.isBoldTextEnabled
         let mapping = boldTextEnabled ? type(of: self).accessibilityWeightMapping : type(of: self).weightMapping
         return mapping[self]!
     }

@@ -162,7 +162,7 @@ final class ContentSizeCategoryUpdater {
     init(callback: @escaping () -> ()) {
         self.callback = callback
         callback()
-        self.observer = NotificationCenter.default.addObserver(forName: Notification.Name.UIContentSizeCategoryDidChange,
+        self.observer = NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification,
                                                                object: nil,
                                                                queue: nil) { [weak self] _ in
                                                                 self?.callback()
@@ -171,8 +171,8 @@ final class ContentSizeCategoryUpdater {
 }
 
 final class ConversationStatusStyle {
-    private(set) var regularStyle: [NSAttributedStringKey: AnyObject] = [:]
-    private(set) var emphasisStyle: [NSAttributedStringKey: AnyObject] = [:]
+    private(set) var regularStyle: [NSAttributedString.Key: AnyObject] = [:]
+    private(set) var emphasisStyle: [NSAttributedString.Key: AnyObject] = [:]
     private var contentSizeStyleUpdater: ContentSizeCategoryUpdater!
     
     init() {
@@ -192,22 +192,22 @@ final class ConversationStatusStyle {
 fileprivate let statusStyle = ConversationStatusStyle()
 
 extension ConversationStatusMatcher {
-    static var regularStyle: [NSAttributedStringKey: AnyObject] {
+    static var regularStyle: [NSAttributedString.Key: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    static var emphasisStyle: [NSAttributedStringKey: AnyObject] {
+    static var emphasisStyle: [NSAttributedString.Key: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }
 
 // Accessors for ObjC
 extension ZMConversation {
-    @objc static func statusRegularStyle() -> [NSAttributedStringKey: AnyObject] {
+    @objc static func statusRegularStyle() -> [NSAttributedString.Key: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    @objc static func statusEmphasisStyle() -> [NSAttributedStringKey: AnyObject] {
+    @objc static func statusEmphasisStyle() -> [NSAttributedString.Key: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }

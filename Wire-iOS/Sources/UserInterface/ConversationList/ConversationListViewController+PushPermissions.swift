@@ -34,9 +34,9 @@ extension ConversationListViewController {
     }
 
     @objc func closePushPermissionDeniedDialog() {
-        pushPermissionDeniedViewController?.willMove(toParentViewController: nil)
+        pushPermissionDeniedViewController?.willMove(toParent: nil)
         pushPermissionDeniedViewController?.view.removeFromSuperview()
-        pushPermissionDeniedViewController?.removeFromParentViewController()
+        pushPermissionDeniedViewController?.removeFromParent()
         pushPermissionDeniedViewController = nil
 
         contentContainer.alpha = 1.0
@@ -53,7 +53,7 @@ extension ConversationListViewController {
             return
         }
 
-        let pushAlertHappenedMoreThan1DayBefore: Bool = Settings.shared().lastPushAlertDate == nil || fabs(Float(Settings.shared().lastPushAlertDate.timeIntervalSinceNow)) > 60 * 60 * 24
+        let pushAlertHappenedMoreThan1DayBefore: Bool = Settings.shared().lastPushAlertDate == nil || abs(Float(Settings.shared().lastPushAlertDate.timeIntervalSinceNow)) > 60 * 60 * 24
 
         if !pushAlertHappenedMoreThan1DayBefore {
             return
@@ -62,14 +62,14 @@ extension ConversationListViewController {
         UNUserNotificationCenter.current().checkPushesDisabled({ pushesDisabled in
             DispatchQueue.main.async {
                 if pushesDisabled {
-                    NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive(_:)), name: .UIApplicationDidBecomeActive, object: nil)
+                    NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
                     Settings.shared().lastPushAlertDate = Date()
                     if let permissions = PermissionDeniedViewController.push() {
                         permissions.delegate = self
 
-                        self.addChildViewController(permissions)
+                        self.addChild(permissions)
                         self.view.addSubview(permissions.view)
-                        permissions.didMove(toParentViewController: self)
+                        permissions.didMove(toParent: self)
 
                         permissions.view.autoPinEdgesToSuperviewEdges(with: UIEdgeInsets.zero)
                         self.pushPermissionDeniedViewController = permissions
