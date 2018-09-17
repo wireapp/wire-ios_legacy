@@ -142,6 +142,7 @@ import Cartography
         descriptionTextView.delegate = self
         descriptionTextView.textColor = UIColor(scheme: .textForeground)
         descriptionTextView.backgroundColor = UIColor(scheme: .textBackground)
+        descriptionTextView.linkTextAttributes = [.foregroundColor : UIColor.accent()]
         
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
