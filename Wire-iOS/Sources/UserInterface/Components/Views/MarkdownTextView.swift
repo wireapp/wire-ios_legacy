@@ -67,7 +67,7 @@ extension Notification.Name {
         let lengthAdjusted: [(MentionTextAttachment, NSRange)] = mentionAttachmentsWithRange().map { (attachment, range) in
             let length = attachment.attributedText.string.count
             let adjustedRange = NSRange(location: range.location + locationOffset, length: length)
-            locationOffset += length
+            locationOffset += length - 1 // Adjust for the length 1 attachment that we replaced.
             
             return (attachment, adjustedRange)
         }
