@@ -40,7 +40,7 @@ public enum EphemeralState: Equatable {
 
 public enum InputBarState: Equatable {
     case writing(ephemeral: EphemeralState)
-    case editing(originalText: String)
+    case editing(originalText: String, mentions: [Mention])
     case markingDown(ephemeral: EphemeralState)
 
     var isWriting: Bool {
@@ -52,7 +52,7 @@ public enum InputBarState: Equatable {
 
     var isEditing: Bool {
         switch self {
-        case .editing(originalText: _): return true
+        case .editing(originalText: _, mentions: _): return true
         default: return false
         }
     }
@@ -377,8 +377,8 @@ private struct InputBarConstants {
                 if let oldState = oldState, oldState.isEditing {
                     self.textView.text = nil
                 }
-            case .editing(let text):
-                self.setInputBarText(text)
+            case .editing(let text, let mentions):
+                self.setInputBarText(text, mentions: mentions)
                 self.secondaryButtonsView.setEditBarView()
             
             case .markingDown:
@@ -454,8 +454,8 @@ private struct InputBarConstants {
 
     // MARK: – Editing View State
 
-    public func setInputBarText(_ text: String) {
-        textView.text = text
+    public func setInputBarText(_ text: String, mentions: [Mention]) {
+        textView.setText(text, withMentions: mentions)
         textView.setContentOffset(.zero, animated: false)
         textView.undoManager?.removeAllActions()
         updateEditViewState()
@@ -469,7 +469,7 @@ private struct InputBarConstants {
     }
 
     fileprivate func updateEditViewState() {
-        if case .editing(let text) = inputBarState {
+        if case .editing(let text, _) = inputBarState {
             let canUndo = textView.undoManager?.canUndo ?? false
             editingView.undoButton.isEnabled = canUndo
 

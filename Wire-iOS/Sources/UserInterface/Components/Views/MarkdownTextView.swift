@@ -77,6 +77,23 @@ extension Notification.Name {
         }
     }
     
+    func setDraftMessage(_ draft: DraftMessage) {
+        setText(draft.text, withMentions: draft.mentions)
+    }
+
+    func setText(_ newText: String, withMentions mentions: [Mention]) {
+        text = newText
+        let mutable = NSMutableAttributedString(attributedString: attributedText)
+
+        for mention in mentions {
+            let attachment = MentionTextAttachment(user: mention.user)
+            let attributedString = NSAttributedString(attachment: attachment)
+            mutable.replaceCharacters(in: mention.range, with: attributedString)
+        }
+        
+        attributedText = mutable
+    }
+    
     private func mentionAttachmentsWithRange() -> [(MentionTextAttachment, NSRange)] {
         var result = [(MentionTextAttachment, NSRange)]()
         attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { attributes, range, _ in

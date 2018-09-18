@@ -37,7 +37,7 @@ extension ConversationInputBarViewController {
         editingMessage = message
         updateRightAccessoryView()
 
-        inputBar.setInputBarState(.editing(originalText: text), animated: true)
+        inputBar.setInputBarState(.editing(originalText: text, mentions: message.textMessageData?.mentions ?? []), animated: true)
         updateMarkdownButton()
 
         NotificationCenter.default.addObserver(
@@ -53,7 +53,7 @@ extension ConversationInputBarViewController {
         delegate.conversationInputBarViewControllerDidCancelEditing?(editingMessage)
         editingMessage = nil
         ZMUserSession.shared()?.enqueueChanges {
-            self.conversation.draftMessageText = ""
+            self.conversation.draftMessage = nil
         }
         updateWritingState(animated: true)
 
@@ -91,7 +91,7 @@ extension ConversationInputBarViewController: InputBarEditViewDelegate {
     
     @objc public func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView) {
         guard let text = editingMessage?.textMessageData?.messageText else { return }
-        inputBar.setInputBarText(text)
+        inputBar.setInputBarText(text, mentions: editingMessage?.textMessageData?.mentions ?? [])
     }
 
 }
