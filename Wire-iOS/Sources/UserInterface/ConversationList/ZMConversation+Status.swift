@@ -80,11 +80,11 @@ extension StatusMessageType {
     
     init?(message: ZMConversationMessage) {
         
-        if message.textMessageData?.isMentioningSelf ?? false {
-            self = .mention
-        }
-        else if message.isText, let textMessage = message.textMessageData {
-            if let _ = textMessage.linkPreview {
+        if message.isText, let textMessage = message.textMessageData {
+            if textMessage.isMentioningSelf {
+                self = .mention
+            }
+            else if let _ = textMessage.linkPreview {
                 self = .link
             }
             else {
