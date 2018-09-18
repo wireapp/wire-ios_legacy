@@ -81,13 +81,13 @@
             for(int i = 0; i < 500; ++i) {
                 NSString *textWithNumber = [NSString stringWithFormat:@"%@ (%d)", text, i+1];
                 // only save last ones, who cares
-                textMessage = [self.conversation appendMessageWithText:textWithNumber mentions:mentions fetchLinkPreview:shouldFetchLinkPreview];
+                textMessage = [self.conversation appendText:textWithNumber mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
                 [(ZMMessage *)textMessage removeExpirationDate];
             }
         }
         else {
             // normal sending
-            textMessage = [self.conversation appendMessageWithText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview];
+            textMessage = [self.conversation appendText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
         }
         self.conversation.draftMessageText = @"";
     } completionHandler:^{
@@ -102,7 +102,7 @@
     BOOL shouldFetchLinkPreview = ![Settings sharedSettings].disableLinkPreviews;
     
     [ZMUserSession.sharedSession enqueueChanges:^{
-        textMessage = [self.conversation appendMessageWithText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview];
+        textMessage = [self.conversation appendText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
         
         [self.conversation appendMessageWithImageData:data];
         self.conversation.draftMessageText = @"";

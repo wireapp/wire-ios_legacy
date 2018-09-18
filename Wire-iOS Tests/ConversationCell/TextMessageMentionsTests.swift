@@ -70,7 +70,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         createSUT(for: .light)
         let messageText = "@Bruno"
         let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -80,7 +80,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         createSUT(for: .light)
         let messageText = "Hello @Bruno! I had some questions about your program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 6), user: otherUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -93,7 +93,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         let mention2 = Mention(range: NSRange(location: 10, length: 3), user: otherUser)
         let mention3 = Mention(range: NSRange(location: 14, length: 3), user: otherUser)
         
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention1, mention2, mention3],
+        let message = otherUserConversation.append(text: messageText, mentions: [mention1, mention2, mention3],
                                                           fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
@@ -104,7 +104,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         createSUT(for: .light)
         let messageText = "Hello @Me! I had some questions about my program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 3), user: selfUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -118,7 +118,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
 """
         selfUser.name = "Tyler Durden"
         let mention = Mention(range: NSRange(location: 219, length: 6), user: selfUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -132,7 +132,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
 """
         selfUser.name = "Tyler Durden"
         let mention = Mention(range: NSRange(location: 219, length: 6), user: selfUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -142,7 +142,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         createSUT(for: .light)
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), user: otherUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -152,7 +152,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         createSUT(for: .light)
         let messageText = "# Hello @`Bruno`"
         let mention = Mention(range: NSRange(location: 8, length: 8), user: otherUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -162,7 +162,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         createSUT(for: .light)
         let messageText = "# Hello @[Bruno](http://google.com)"
         let mention = Mention(range: NSRange(location: 8, length: 27), user: otherUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -173,7 +173,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         otherUser.name = "[Hello](http://google.com)"
         let messageText = "# Hello @Bruno"
         let mention = Mention(range: NSRange(location: 8, length: 6), user: otherUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -183,7 +183,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         createSUT(for: .dark)
         let messageText = "@Bruno"
         let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
@@ -194,7 +194,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         createSUT(for: .dark)
         let messageText = "@current"
         let mention = Mention(range: NSRange(location: 0, length: 8), user: selfUser)
-        let message = otherUserConversation.appendMessage(withText: messageText, mentions: [mention], fetchLinkPreview: false)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
         
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
