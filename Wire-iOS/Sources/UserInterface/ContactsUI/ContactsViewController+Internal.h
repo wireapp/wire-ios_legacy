@@ -24,6 +24,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 @interface ContactsViewController ()
 
+@property (nonatomic) BOOL searchResultsReceived;
+
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UIView *bottomContainerView;
 @property (nonatomic) UIView *bottomContainerSeparatorView;
@@ -33,6 +35,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic) UIView *topContainerView;
 @property (nonatomic) UIView *separatorView;
+@property (nonatomic, readwrite) UITableView *tableView;
 
 @property (nonatomic) NSLayoutConstraint *closeButtonHeightConstraint;
 @property (nonatomic) NSLayoutConstraint *titleLabelHeightConstraint;
@@ -42,6 +45,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) NSLayoutConstraint *closeButtonBottomConstraint;
 @property (nonatomic) NSLayoutConstraint *topContainerHeightConstraint;
 
-- (void)updateEmptyResults;
+- (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end

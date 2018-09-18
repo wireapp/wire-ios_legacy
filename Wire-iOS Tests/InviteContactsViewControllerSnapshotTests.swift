@@ -39,6 +39,9 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     fileprivate func snapshotWithNavigationBarWithBackButton(file: StaticString = #file, line: UInt = #line) {
+        sut.tableView.reloadData()
+        sut.updateEmptyResults()
+
         let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
 
         navigationController.pushViewController(sut, animated: false)

@@ -41,11 +41,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 @interface ContactsViewController ()
-@property (nonatomic, readwrite) UITableView *tableView;
 @property (nonatomic) Button *inviteOthersButton;
 @property (nonatomic) ContactsEmptyResultView *emptyResultsView;
-
-@property (nonatomic) BOOL searchResultsReceived;
 
 // Containers, ect.
 @property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
@@ -75,7 +72,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLoad];
     
-    [self setupViews];
+    [self setupViews]; ///TODO: mv to init
     [self setupLayout];
 
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;
@@ -314,16 +311,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                  }
                                  completion:^(BOOL finished) {
                                  }];
-}
-
-- (void)updateEmptyResults
-{
-    BOOL showEmptyResults = self.searchResultsReceived && ! [self.tableView numberOfTotalRows];
-    BOOL showNoContactsLabel = ! [self.tableView numberOfTotalRows] && (self.dataSource.searchQuery.length == 0) && !self.searchHeaderViewController.tokenField.userDidConfirmInput;
-    self.noContactsLabel.hidden = ! showNoContactsLabel;
-    self.bottomContainerView.hidden = (self.dataSource.searchQuery.length > 0) || showEmptyResults;
-    
-    [self setEmptyResultsHidden:! showEmptyResults animated:showEmptyResults];
 }
 
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated

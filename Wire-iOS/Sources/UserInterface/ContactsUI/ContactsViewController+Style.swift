@@ -29,4 +29,17 @@ extension ContactsViewController {
         noContactsLabel.font = .normalLightFont
         noContactsLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }
+
+    @objc func updateEmptyResults() {
+        let isNoTableRows = tableView.numberOfTotalRows() == 0
+        let searchQueryCount = dataSource?.searchQuery.count ?? 0
+
+        let showEmptyResults = searchResultsReceived && !isNoTableRows
+        let showNoContactsLabel = isNoTableRows && (searchQueryCount == 0) && !searchHeaderViewController.tokenField.userDidConfirmInput
+        noContactsLabel.isHidden = !showNoContactsLabel
+        bottomContainerView.isHidden = (searchQueryCount > 0) || showEmptyResults
+
+        setEmptyResultsHidden(!showEmptyResults, animated: showEmptyResults)
+    }
+
 }
