@@ -431,7 +431,13 @@
 - (BOOL)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
     if (url.isMentionURL) {
-        Mention *mention = self.message.textMessageData.mentions[url.mentionIndex];
+        Mention *mention = [self.message.textMessageData.mentions firstObjectMatchingWithBlock:^BOOL(Mention* mention) {
+            return mention.location == url.mentionLocation;
+        }];
+        
+        if (nil == mention) {
+            return NO;
+        }
         
         UITextRange *range = [textView rangeOfLinkToURL:url];
         

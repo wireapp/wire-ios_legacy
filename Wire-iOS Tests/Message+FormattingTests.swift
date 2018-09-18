@@ -168,7 +168,7 @@ class Message_FormattingTests: XCTestCase {
         
         // then
         XCTAssertEqual(formattedText.string, "\(previewURL)@mention")
-        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, Mention.link(for: 0))
+        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
     }
     
     func testMentionLinkOverridesDetectedLink_mentionBefore() {
@@ -185,7 +185,7 @@ class Message_FormattingTests: XCTestCase {
         
         // then
         XCTAssertEqual(formattedText.string, "@mention\(previewURL) lala")
-        XCTAssertEqual(formattedText.attributes(at: 0, effectiveRange: nil)[.link] as! URL, Mention.link(for: 0))
+        XCTAssertEqual(formattedText.attributes(at: 0, effectiveRange: nil)[.link] as! URL, mention.link)
         let linkDetected = formattedText.attributes(at: mention.range.location + mention.range.length + 1, effectiveRange: nil)[.link] as! URL
         XCTAssertEqual(linkDetected.absoluteString, previewURL)
     }
@@ -203,7 +203,7 @@ class Message_FormattingTests: XCTestCase {
         let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
         
         // then
-        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, Mention.link(for: 0))
+        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
     }
     
     func testThatItUsesCorrectUTF16OffsetForMention_Emoji() {
@@ -219,6 +219,6 @@ class Message_FormattingTests: XCTestCase {
         let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
         
         // then
-        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, Mention.link(for: 0))
+        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
     }
 }

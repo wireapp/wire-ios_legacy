@@ -34,8 +34,12 @@ struct MentionWithToken {
 extension Mention {
     static let mentionScheme = "wire-mention"
     
-    static func link(for index: Int) -> URL {
-        return URL(string: "\(mentionScheme)://id/\(index)")!
+    var link: URL {
+        return URL(string: "\(Mention.mentionScheme)://location/\(range.location)")!
+    }
+    
+    @objc var location: Int {
+        return range.location
     }
 }
 
@@ -44,7 +48,7 @@ extension NSURL {
         return scheme == Mention.mentionScheme
     }
     
-    @objc var mentionIndex: Int {
+    @objc var mentionLocation: Int {
         guard self.isMentionURL, let indexString = pathComponents?.last, let index = Int(indexString) else {
             return NSNotFound
         }
@@ -59,6 +63,10 @@ extension NSMutableString {
         return mentions.sorted {
             return $0.range.location > $1.range.location
         }.forEach { mention in
+            guard self.length >= (mention.range.location + mention.range.length) else {
+                log.error("Wrong mention: \(mention)")
+                return
+            }
             self.replaceCharacters(in: mention.range, with: "")
         }
     }
@@ -66,7 +74,12 @@ extension NSMutableString {
     @discardableResult func replaceMentions(_ mentions: [Mention]) -> [MentionWithToken] {
         return mentions.sorted {
             return $0.range.location > $1.range.location
-        } .map { mention in
+        } .compactMap { mention in
+            guard self.length >= (mention.range.location + mention.range.length) else {
+                log.error("Wrong mention: \(mention)")
+                return nil
+            }
+            
             let token = UUID().transportString()
             let name = self.substring(with: mention.range).replacingOccurrences(of: "@", with: "")
             self.replaceCharacters(in: mention.range, with: token)
@@ -129,8 +142,6 @@ extension NSMutableAttributedString {
         
         let mutableString = self.mutableString
         
-        var index = mentions.count - 1
-        
         mentions.forEach { mentionWithToken in
             let mentionRange = mutableString.range(of: mentionWithToken.token.value)
             
@@ -143,12 +154,10 @@ extension NSMutableAttributedString {
             
             let replacementString = NSMutableAttributedString.mention(for: mentionWithToken.mention.user,
                                                                       name: mentionWithToken.token.name,
-                                                                      link: Mention.link(for: index),
+                                                                      link: mentionWithToken.mention.link,
                                                                       suggestedFontSize: currentFont?.pointSize)
             
             self.replaceCharacters(in: mentionRange, with: replacementString)
-            
-            index = index - 1
         }
     }
 }
