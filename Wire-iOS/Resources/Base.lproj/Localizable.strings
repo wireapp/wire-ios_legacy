@@ -146,6 +146,7 @@
 "conversation_list.voiceover.status.silenced" = "silenced";
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacts";
@@ -209,6 +210,7 @@
 "conversation.status.message.missedcall" = "Missed call";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Timed message";
+"conversation.status.message.mention" = "%@";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "You";

@@ -28,6 +28,7 @@ internal enum ConversationStatusIcon {
     case unreadMessages(count: Int)
     case unreadPing
     case missedCall
+    case mention
     
     case silenced
     
@@ -54,6 +55,7 @@ internal struct ConversationStatus {
 
 // Describes the conversation message.
 internal enum StatusMessageType: Int {
+    case mention
     case text
     case link
     case image
@@ -77,7 +79,11 @@ extension StatusMessageType {
     ]
     
     init?(message: ZMConversationMessage) {
-        if message.isText, let textMessage = message.textMessageData {
+        
+        if message.textMessageData?.isMentioningSelf ?? false {
+            self = .mention
+        }
+        else if message.isText, let textMessage = message.textMessageData {
             if let _ = textMessage.linkPreview {
                 self = .link
             }
@@ -317,7 +323,7 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
 // In not silenced: "[Sender:] <message text>"
 // Ephemeral: "Ephemeral message"
 final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
-    let matchedTypes: [StatusMessageType] = [.text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
+    let matchedTypes: [StatusMessageType] = [.mention, .text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
     let localizationSilencedRootPath = "conversation.silenced.status.message"
     let localizationRootPath = "conversation.status.message"
 
@@ -330,7 +336,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         .video:    "video",
         .file:     "file",
         .knock:    "knock",
-        .missedCall: "missedcall"
+        .missedCall: "missedcall",
+        .mention:  "mention"
     ]
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -404,6 +411,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         }
         
         switch type {
+        case .mention:
+            return .mention
         case .knock:
             return .unreadPing
         case .missedCall:

@@ -101,6 +101,25 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(otherUserConversation)
     }
     
+    func testThatItRendersConversationWithMention() {
+        // when
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        
+        // then
+        verify(otherUserConversation)
+    }
+    
+    func testThatItRendersMutedConversationWithMention() {
+        // when
+        otherUserConversation.isSilenced = true
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        
+        // then
+        verify(otherUserConversation)
+    }
+    
     func testThatItRendersConversationWithKnockFromSelf() {
         // when
         otherUserConversation.appendKnock()
