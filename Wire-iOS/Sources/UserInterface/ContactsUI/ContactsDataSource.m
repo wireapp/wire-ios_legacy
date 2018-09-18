@@ -68,7 +68,6 @@ NS_ASSUME_NONNULL_END
 
 - (void)dealloc
 {
-    ///TODO:
     [self.searchDirectory tearDown];
 }
 

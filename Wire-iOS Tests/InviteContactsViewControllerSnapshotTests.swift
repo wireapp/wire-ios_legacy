@@ -30,7 +30,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut.view.backgroundColor = .black
 
         /// TODO: remove this after snapshot is created
-        recordMode = true
+//        recordMode = true
     }
 
     override func tearDown() {

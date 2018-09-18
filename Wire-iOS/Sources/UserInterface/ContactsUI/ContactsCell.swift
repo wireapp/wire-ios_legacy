@@ -37,8 +37,6 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         }
     }
 
-    ///TODO: sectionIndexShown: Bool
-
     var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
@@ -169,7 +167,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
 
         createSeparatorConstraints()
 
-        applyColorScheme(ColorScheme.default.variant) ///TODO: should be dark
+        applyColorScheme(ColorScheme.default.variant)
     }
 
     func createConstraints() {
@@ -224,7 +222,7 @@ extension ContactsCell: Themeable {
         separator.backgroundColor = UIColor(scheme: .separator, variant: colorSchemeVariant)
 
         let sectionTextColor = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
-        backgroundColor = contentBackgroundColor(for: colorSchemeVariant) ///TODO: clear??
+        backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
 
         titleLabel.textColor = UIColor(scheme: .textForeground, variant: colorSchemeVariant)
         subtitleLabel.textColor = sectionTextColor

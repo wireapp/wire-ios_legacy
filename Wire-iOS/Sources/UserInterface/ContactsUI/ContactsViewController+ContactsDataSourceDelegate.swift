@@ -37,9 +37,6 @@ extension ContactsViewController: ContactsDataSourceDelegate {
 
         cell.user = user
 
-        ///TODO:
-        //    cell.sectionIndexShown = self.dataSource.shouldShowSectionIndex;
-
         cell.actionButtonHandler = {[weak self, weak cell] user in
             guard let `self` = self,
                 let cell = cell,

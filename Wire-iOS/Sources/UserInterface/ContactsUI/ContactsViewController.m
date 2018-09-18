@@ -78,7 +78,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupViews];
     [self setupLayout];
 
-    ///TODO: mock
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;
     if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip && self.shouldShowShareContactsViewController) {
         [self presentShareContactsViewController];
