@@ -21,23 +21,6 @@ import Foundation
 import Cartography
 @testable import Wire
 
-extension UITableViewCell {
-
-    func prepareForSnapshots(width: CGFloat = 375) -> UITableView {
-        setNeedsLayout()
-        layoutIfNeeded()
-
-        bounds.size = systemLayoutSizeFitting(
-            CGSize(width: width, height: 0),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-
-        return wrapInTableView()
-    }
-
-}
-
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     @objc public func wrapInTableView() -> UITableView {

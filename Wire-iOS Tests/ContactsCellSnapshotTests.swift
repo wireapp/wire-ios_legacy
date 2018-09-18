@@ -57,6 +57,17 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
         verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
+
+    func testForNoSubtitle() {
+
+        let user = MockUser.mockUsers()[0]
+        (user as Any as! MockUser).handle = nil
+        sut.user = user
+
+        sut.actionButton.setTitle(buttonTitles[0], for: .normal)
+
+        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
+    }
 }
 
 extension UITableView: Themeable {

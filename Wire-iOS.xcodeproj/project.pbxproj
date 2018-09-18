@@ -1048,6 +1048,7 @@
 		EF106E83204D869B00B9F0F6 /* DeviceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF106E82204D869B00B9F0F6 /* DeviceProtocol.swift */; };
 		EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF106E84204D8B4200B9F0F6 /* MockDevice.swift */; };
 		EF106E88204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF106E87204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift */; };
+		EF10CB20215105A400AEA8EA /* UITableViewCell+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF10CB1E2151057D00AEA8EA /* UITableViewCell+Snapshot.swift */; };
 		EF159F381FD59607006E0A9C /* TextFieldValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */; };
 		EF15A7B020BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */; };
 		EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */; };
@@ -2726,6 +2727,7 @@
 		EF106E82204D869B00B9F0F6 /* DeviceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceProtocol.swift; sourceTree = "<group>"; };
 		EF106E84204D8B4200B9F0F6 /* MockDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDevice.swift; sourceTree = "<group>"; };
 		EF106E87204DAE8600B9F0F6 /* PingCell+PointOfViewString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PingCell+PointOfViewString.swift"; sourceTree = "<group>"; };
+		EF10CB1E2151057D00AEA8EA /* UITableViewCell+Snapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Snapshot.swift"; sourceTree = "<group>"; };
 		EF159F361FD59556006E0A9C /* TextFieldValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldValidatorTests.swift; sourceTree = "<group>"; };
 		EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+SaveImage.swift"; sourceTree = "<group>"; };
 		EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavableImageTests.swift; sourceTree = "<group>"; };
@@ -4379,6 +4381,7 @@
 				EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */,
 				EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */,
 				BF5127141CC9118F00F23DEA /* ZMSnapshotTestCase+Swift.swift */,
+				EF10CB1E2151057D00AEA8EA /* UITableViewCell+Snapshot.swift */,
 				BF29C9861C6E357100601EE7 /* ZMSnapshotTestCase.m */,
 				BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */,
 			);
@@ -7724,6 +7727,7 @@
 				87C39A8E206BE83C008DA100 /* NoHistoryViewControllerTests.swift in Sources */,
 				BF7ED2DC1DF1D1CF003A4397 /* IncomingConnectionViewTests.swift in Sources */,
 				EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */,
+				EF10CB20215105A400AEA8EA /* UITableViewCell+Snapshot.swift in Sources */,
 				EF84DF4C213052E600033702 /* ProfilePictureStepViewControllerTests.swift in Sources */,
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
 				5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */,
