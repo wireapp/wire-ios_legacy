@@ -162,4 +162,18 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         XCTAssertFalse(status.hasMessages)
         XCTAssertTrue(status.isBlocked)
     }
+    
+    func testThatItDetectsMentions() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        sut.lastReadServerTimeStamp = Date.distantPast
+        // WHEN
+        let status = sut.status
+        // THEN
+        XCTAssertTrue(status.hasMessages)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 1)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.mention]!, 1)
+    }
 }

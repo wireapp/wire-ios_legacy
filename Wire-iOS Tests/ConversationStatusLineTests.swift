@@ -140,6 +140,24 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         XCTAssertEqual(status.string, "test 5")
     }
     
+    func testStatusForMultipleTextMessagesInConversationIncludingMention() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        for index in 1...5 {
+            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
+        }
+        
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "@self test")
+    }
+    
     func testStatusForMultipleTextMessagesInConversation_LastRename() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -175,6 +193,24 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "5 new text messages, 5 new images")
+    }
+    
+    func testStatusForMultipleVariousMessagesInConversation_silenced_mention() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        sut.isSilenced = true
+        for index in 1...5 {
+            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
+        }
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        
+        sut.lastReadServerTimeStamp = Date.distantPast
+        
+        // WHEN
+        let status = sut.status.description(for: sut)
+        // THEN
+        XCTAssertEqual(status.string, "@self test")
     }
     
     func testStatusForSystemMessageILeft() {
