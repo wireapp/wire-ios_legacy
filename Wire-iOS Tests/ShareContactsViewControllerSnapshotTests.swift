@@ -26,7 +26,6 @@ final class ShareContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ShareContactsViewController()
-//        recordMode = true
     }
 
     override func tearDown() {

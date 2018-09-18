@@ -27,49 +27,49 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersMissedCallFromSelfUser() {
         let missedCell = cell(for: .missedCall, fromSelf: true)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
 
     func testThatItRendersMissedCallFromOtherUser() {
         let missedCell = cell(for: .missedCall, fromSelf: false)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
 
     func testThatItRendersMissedCallFromOtherUser_Expanded() {
         let missedCell = cell(for: .missedCall, fromSelf: false, expanded: true)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
-    
+
     func testThatItRendersMissedCallFromSelfUserInGroup() {
         let missedCell = cell(for: .missedCall, fromSelf: true, inGroup: true)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
-    
+
     func testThatItRendersMissedCallFromOtherUserInGroup() {
         let missedCell = cell(for: .missedCall, fromSelf: false, inGroup: true)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
-    
+
     func testThatItRendersMissedCallFromOtherUserInGroup_Expanded() {
         let missedCell = cell(for: .missedCall, fromSelf: false, expanded: true, inGroup: true)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
 
     // MARK: - Performed Call
 
     func testThatItRendersPerformedCallFromSelfUser() {
         let missedCell = cell(for: .performedCall, fromSelf: true)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
 
     func testThatItRendersPerformedCallFromOtherUser() {
         let missedCell = cell(for: .performedCall, fromSelf: false)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
 
     func testThatItRendersPerformedCallFromOtherUser_Expanded() {
         let missedCell = cell(for: .performedCall, fromSelf: false, expanded: true)
-        verify(view: missedCell.prepareForSnapshots())
+        verify(view: missedCell.prepareForSnapshots(width: .iPhone4))
     }
 
     // MARK: - Helper
@@ -107,25 +107,6 @@ class CallSystemMessageTests: CoreDataSnapshotTestCase {
         } else {
             return PerformedCallCell(style: .default, reuseIdentifier: name)
         }
-    }
-
-}
-
-
-
-private extension UITableViewCell {
-
-    func prepareForSnapshots() -> UIView {
-        setNeedsLayout()
-        layoutIfNeeded()
-
-        bounds.size = systemLayoutSizeFitting(
-            CGSize(width: 320, height: 0),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-
-        return wrapInTableView()
     }
 
 }

@@ -27,8 +27,6 @@ final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         sut = StartUIViewController()
         sut.view.backgroundColor = .black
-
-//        recordMode = true
     }
     
     override func tearDown() {
