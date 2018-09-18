@@ -85,7 +85,8 @@ extension Notification.Name {
         text = newText
         let mutable = NSMutableAttributedString(attributedString: attributedText)
 
-        for mention in mentions {
+        // We reverse to maintain correct ranges for subsequent inserts.
+        for mention in mentions.reversed() {
             let attachment = MentionTextAttachment(user: mention.user)
             let attributedString = NSAttributedString(attachment: attachment)
             mutable.replaceCharacters(in: mention.range, with: attributedString)
