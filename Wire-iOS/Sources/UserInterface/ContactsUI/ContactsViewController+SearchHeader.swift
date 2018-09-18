@@ -20,10 +20,20 @@ import Foundation
 import Cartography
 
 extension ContactsViewController {
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+    }
+
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        showKeyboardIfNeeded()
+    }
+
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchHeaderViewController.tokenField.resignFirstResponder()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     @objc func createSearchHeader() {
@@ -54,6 +64,29 @@ extension ContactsViewController {
             searchHeader.bottom == separatorView.top
         }
     }
+
+    @objc func updateEmptyResults() {
+
+        let searchQueryCount: Int
+        if let dataSource = dataSource {
+            searchQueryCount = dataSource.searchQuery.count
+        } else {
+            searchQueryCount = 0
+        }
+
+        let showEmptyResults = searchResultsReceived && !(numTableRows != 0)
+        let showNoContactsLabel = !(numTableRows != 0) && (searchQueryCount == 0) && !(searchHeaderViewController?.tokenField.userDidConfirmInput ?? false)
+        noContactsLabel.isHidden = !showNoContactsLabel
+        bottomContainerView.isHidden = (searchQueryCount > 0) || showEmptyResults
+
+        setEmptyResultsHidden(!showEmptyResults, animated: showEmptyResults)
+    }
+
+    func showKeyboardIfNeeded() {
+        if numTableRows > Int(StartUIInitiallyShowsKeyboardConversationThreshold) {
+            searchHeaderViewController.tokenField.becomeFirstResponder()
+        }
+    }
 }
 
 extension ContactsViewController: SearchHeaderViewControllerDelegate {
@@ -71,24 +104,3 @@ extension ContactsViewController: SearchHeaderViewControllerDelegate {
         delegate?.contactsViewControllerDidConfirmSelection!(self)
     }
 }
-
-///TODO:
-/*
- - (void)tokenField:(TokenField *)tokenField changedTokensTo:(NSArray *)tokens
- {
- NSArray *tokenFieldSelection = [tokens valueForKey:NSStringFromSelector(@selector(representedObject))];
- [self.dataSource setSelection:[NSOrderedSet orderedSetWithArray:tokenFieldSelection]];
- }
-
-
- - (void)tokenFieldDidConfirmSelection:(TokenField *)controller
- {
- if (self.tokenField.tokens.count == 0) {
- [self updateEmptyResults];
- return;
- }
- if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidConfirmSelection:)]) {
- [self.delegate contactsViewControllerDidConfirmSelection:self];
- }
- }
- */

@@ -47,7 +47,13 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         verify(view: navigationController.view)
     }
 
-    func testForNoResult() {
+    func testForNoContacts() {
+        snapshotWithNavigationBarWithBackButton()
+    }
+
+    func testForNoSearchResult() {
+        sut.searchResultsReceived = true
+
         snapshotWithNavigationBarWithBackButton()
     }
 

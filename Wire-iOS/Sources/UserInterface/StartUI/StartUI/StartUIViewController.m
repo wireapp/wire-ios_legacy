@@ -44,7 +44,6 @@
 
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 
 @interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchHeaderViewControllerDelegate>

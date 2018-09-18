@@ -83,12 +83,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupStyle];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-}
-
 - (BOOL)prefersStatusBarHidden
 {
     return NO;
