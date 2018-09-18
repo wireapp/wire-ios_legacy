@@ -19,12 +19,15 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class Mention;
 @class InputBar;
 @class IconButton;
 @class ZMConversation;
 @class ConversationInputBarViewController;
 @class AudioRecordViewController;
+@class MentionsHandler;
 @protocol ZMConversationMessage;
 
 typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
@@ -57,11 +60,14 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic, readonly) IconButton *mentionButton;
 @property (nonatomic, readonly) InputBar *inputBar;
 @property (nonatomic, readonly) ZMConversation *conversation;
-@property (nonatomic, weak) id <ConversationInputBarViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id <ConversationInputBarViewControllerDelegate> delegate;
 @property (nonatomic) ConversationInputBarViewControllerMode mode;
-@property (nonatomic, readonly) UIViewController *inputController;
+@property (nonatomic, readonly, nullable) UIViewController *inputController;
+@property (nonatomic, strong, nullable) MentionsHandler *mentionsHandler;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)bounceCameraIcon;
 
 @end
+
+NS_ASSUME_NONNULL_END

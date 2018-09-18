@@ -26,7 +26,9 @@ private let endEditingNotificationName = "ConversationInputBarViewControllerShou
 extension ConversationInputBarViewController {
 
     @objc func sendEditedMessageAndUpdateState(withText text: String, mentions: [Mention]) {
-        delegate.conversationInputBarViewControllerDidFinishEditing?(editingMessage, withText: text, mentions: mentions)
+        if let message = editingMessage {
+            delegate?.conversationInputBarViewControllerDidFinishEditing?(message, withText: text, mentions: mentions)
+        }
         editingMessage = nil
         updateWritingState(animated: true)
     }
@@ -49,8 +51,8 @@ extension ConversationInputBarViewController {
     }
     
     @objc func endEditingMessageIfNeeded() {
-        guard nil != editingMessage else { return }
-        delegate.conversationInputBarViewControllerDidCancelEditing?(editingMessage)
+        guard let message = editingMessage else { return }
+        delegate?.conversationInputBarViewControllerDidCancelEditing?(message)
         editingMessage = nil
         ZMUserSession.shared()?.enqueueChanges {
             self.conversation.draftMessageText = ""
