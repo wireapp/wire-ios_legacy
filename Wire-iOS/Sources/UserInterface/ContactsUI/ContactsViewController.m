@@ -72,7 +72,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLoad];
     
-    [self setupViews]; ///TODO: mv to init
+    [self setupViews];
     [self setupLayout];
 
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;

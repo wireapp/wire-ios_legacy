@@ -31,11 +31,22 @@ extension ContactsViewController {
     }
 
     @objc func updateEmptyResults() {
-        let isNoTableRows = tableView.numberOfTotalRows() == 0
-        let searchQueryCount = dataSource?.searchQuery.count ?? 0
+        let numberOfTotalRows: UInt
+        if let tableView = tableView {
+            numberOfTotalRows = tableView.numberOfTotalRows()
+        } else {
+            numberOfTotalRows = 0
+        }
 
-        let showEmptyResults = searchResultsReceived && !isNoTableRows
-        let showNoContactsLabel = isNoTableRows && (searchQueryCount == 0) && !searchHeaderViewController.tokenField.userDidConfirmInput
+        let searchQueryCount: Int
+        if let dataSource = dataSource {
+            searchQueryCount = dataSource.searchQuery.count
+        } else {
+            searchQueryCount = 0
+        }
+
+        let showEmptyResults = searchResultsReceived && !(numberOfTotalRows != 0)
+        let showNoContactsLabel = !(numberOfTotalRows != 0) && (searchQueryCount == 0) && !searchHeaderViewController.tokenField.userDidConfirmInput
         noContactsLabel.isHidden = !showNoContactsLabel
         bottomContainerView.isHidden = (searchQueryCount > 0) || showEmptyResults
 
