@@ -133,6 +133,7 @@ internal class TextSearchResultCell: UITableViewCell {
         
         resultCountView.isHidden = totalMatches <= 1
         resultCountView.textLabel.text = "\(totalMatches)"
+        resultCountView.updateCollapseConstraints(isCollapsed: false)
     }
     
     public func configure(with newMessage: ZMConversationMessage, queries newQueries: [String]) {
