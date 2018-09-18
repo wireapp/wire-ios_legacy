@@ -27,16 +27,15 @@ extension InviteContactsViewController {
         super.viewWillAppear(animated)
 
         ///hide titleLabel and cancel cross button, which is duplicated in the navi bar
+
+        let subViewConstraints = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint]
+
         if navigationController != nil {
             titleLabel.isHidden = true
 
             cancelButton.isHidden = true
             closeButtonHeightConstraint.constant = 0
-            titleLabelHeightConstraint.isActive = false
-            titleLabelTopConstraint.isActive = false
-            titleLabelBottomConstraint.isActive = false
-            closeButtonTopConstraint.isActive = false
-            closeButtonBottomConstraint.isActive = false
+            subViewConstraints.forEach(){ $0?.isActive = false }
 
             topContainerHeightConstraint.isActive = true
         } else {
@@ -47,12 +46,7 @@ extension InviteContactsViewController {
             closeButtonHeightConstraint.constant = 16
             topContainerHeightConstraint.isActive = false
 
-            titleLabelHeightConstraint.isActive = true
-            titleLabelTopConstraint.isActive = true
-            titleLabelBottomConstraint.isActive = true
-            closeButtonTopConstraint.isActive = true
-            closeButtonBottomConstraint.isActive = true
-
+            subViewConstraints.forEach(){ $0?.isActive = true }
         }
 
         view.layoutIfNeeded()
