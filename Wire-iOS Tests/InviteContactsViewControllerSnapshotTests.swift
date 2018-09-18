@@ -51,8 +51,15 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         snapshotWithNavigationBarWithBackButton()
     }
 
-    func testForContactsAreShown() { ///TODO: hide no contact label
+    func testForContactsWithoutSectionBar() { ///TODO: hide no contact label
         let mockUsers = MockUser.mockUsers()
+        sut.dataSource?.ungroupedSearchResults = mockUsers
+
+        snapshotWithNavigationBarWithBackButton()
+    }
+
+    func testForContactsAndIndexSectionBarAreShown() { ///TODO: hide no contact label
+        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-15Sections.json")
         sut.dataSource?.ungroupedSearchResults = mockUsers
 
         snapshotWithNavigationBarWithBackButton()

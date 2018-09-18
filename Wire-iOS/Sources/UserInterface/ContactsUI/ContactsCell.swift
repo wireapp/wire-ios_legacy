@@ -21,7 +21,7 @@ import Cartography
 
 typealias ContactsCellActionButtonHandler = (ZMSearchUser?) -> Void
 
-/// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with index bar
+/// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with table view index bar
 class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     var user: UserType? = nil {
         didSet {

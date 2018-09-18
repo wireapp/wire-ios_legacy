@@ -367,7 +367,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateEmptyResults];
 }
 
-///TODO: update the binding
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didSelectUser:(ZMSearchUser *)user
 {
     [self.searchHeaderViewController.tokenField addToken:[[Token alloc] initWithTitle:user.displayName representedObject:user]];
