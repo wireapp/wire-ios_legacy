@@ -1019,7 +1019,6 @@
 		DB5206491B06355300138586 /* MentionsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5206481B06355300138586 /* MentionsCollectionViewController.m */; };
 		DB7FEC921B8729AD00BA72DE /* ConversationInputBarSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7FEC911B8729AD00BA72DE /* ConversationInputBarSendController.m */; };
 		DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBACFF781B3C96E1004062E0 /* MentionsBubbleView.m */; };
-		DBB45F3B1B53F8DE0010053C /* NSString+MentionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB45F3A1B53F8DE0010053C /* NSString+MentionsTests.m */; };
 		DBCBD19219F10A1F000510C1 /* ConnectRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBCBD19119F10A1F000510C1 /* ConnectRequestCell.m */; };
 		DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD990551B39BEDF000ACF94 /* MentionsCollectionView.m */; };
 		DBF597581A3600FC00269B7F /* icon-no-appstore.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBF597571A3600FC00269B7F /* icon-no-appstore.xcassets */; };
@@ -2691,7 +2690,6 @@
 		DB7FEC911B8729AD00BA72DE /* ConversationInputBarSendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationInputBarSendController.m; sourceTree = "<group>"; };
 		DBACFF781B3C96E1004062E0 /* MentionsBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MentionsBubbleView.m; sourceTree = "<group>"; };
 		DBACFF791B3C96E1004062E0 /* MentionsBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MentionsBubbleView.h; sourceTree = "<group>"; };
-		DBB45F3A1B53F8DE0010053C /* NSString+MentionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MentionsTests.m"; sourceTree = "<group>"; };
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectRequestCell.h; sourceTree = "<group>"; };
 		DBCBD19119F10A1F000510C1 /* ConnectRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectRequestCell.m; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
@@ -5403,7 +5401,6 @@
 				BACB88531AF7C48900DDCDB0 /* Supporting Files */,
 				BADA351E1B431E5000396F2C /* NSURLWireLocaleTests.m */,
 				BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */,
-				DBB45F3A1B53F8DE0010053C /* NSString+MentionsTests.m */,
 				BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */,
 				876AE75F1C159A9C00E3E743 /* NSStringFingerprintTests.m */,
 				8787BDD31BF374420096B1B5 /* Settings */,
@@ -7777,7 +7774,6 @@
 				EF84DF482130373D00033702 /* IconSystemCellTests.swift in Sources */,
 				EF6163A61FE9682700C6F5A9 /* TextMessageCellTests.swift in Sources */,
 				EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */,
-				DBB45F3B1B53F8DE0010053C /* NSString+MentionsTests.m in Sources */,
 				EF2B74C6214157F200FD2574 /* PingCellSnapshotTests.swift in Sources */,
 				8740205C1BF4CF7E001F2D4C /* AVSStub.m in Sources */,
 				1658C19C20A1F07800148F6D /* MockCallInfoViewControllerInput.swift in Sources */,
