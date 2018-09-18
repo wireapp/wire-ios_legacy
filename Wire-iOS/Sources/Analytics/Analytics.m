@@ -19,6 +19,7 @@
 @import WireSystem;
 
 #import "Analytics.h"
+#import "Analytics+Internal.h"
 #import "AnalyticsProvider.h"
 #import "ZMUser+Additions.h"
 #import "WireSyncEngine+iOS.h"
@@ -37,7 +38,6 @@ BOOL UseAnalytics = USE_ANALYTICS;
 
 @interface Analytics ()
 
-@property (nonatomic, strong, nullable) id<AnalyticsProvider> provider;
 @property (nonatomic, strong) AnalyticsSessionSummaryEvent *sessionSummary;
 @property (nonatomic, strong) AnalyticsCallingTracker *callingTracker;
 @property (nonatomic, strong) AnalyticsDecryptionFailedObserver *decryptionFailedObserver;
@@ -79,29 +79,6 @@ static Analytics *sharedAnalytics = nil;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (BOOL)isOptedOut
-{
-    return self.provider.isOptedOut;
-}
-
-- (void)setIsOptedOut:(BOOL)isOptedOut
-{
-    if (isOptedOut && self.provider.isOptedOut) {
-        return;
-    }
-    
-    if (isOptedOut) {
-        [self tagEvent:@"settings.opted_out_tracking"];
-        self.provider.isOptedOut = isOptedOut;
-        self.provider = nil;
-    }
-    else {
-        self.provider = [[AnalyticsProviderFactory shared] analyticsProvider];
-        self.team = [[ZMUser selfUser] team];
-        [self tagEvent:@"settings.opted_in_tracking"];
-    }
 }
 
 - (void)setTeam:(Team *)team

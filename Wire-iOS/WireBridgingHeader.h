@@ -158,6 +158,7 @@
 
 // Utils
 #import "Analytics.h"
+#import "Analytics+Internal.h"
 #import "AnalyticsProvider.h"
 #import "Application+runDuration.h"
 #import "NSURL+WireLocale.h"
