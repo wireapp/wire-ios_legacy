@@ -286,8 +286,6 @@
 		7C232CD91FE029BD00792E9B /* Analytics+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C232CD81FE029BD00792E9B /* Analytics+Availability.swift */; };
 		7C23A26D20247500005FEB54 /* ShareViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */; };
 		7C25D755214911AC002E22BF /* MentionsSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D754214911AC002E22BF /* MentionsSearchResultsViewController.swift */; };
-		7C25D75721491240002E22BF /* MentionsSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D75621491240002E22BF /* MentionsSearchResultCell.swift */; };
-		7C25D7592149182C002E22BF /* MentionsSearchResultCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D7582149182C002E22BF /* MentionsSearchResultCellTests.swift */; };
 		7C25D75B21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */; };
 		7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */; };
 		7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */; };
@@ -1676,8 +1674,6 @@
 		7C232CD81FE029BD00792E9B /* Analytics+Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Availability.swift"; sourceTree = "<group>"; };
 		7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerTests.swift; sourceTree = "<group>"; };
 		7C25D754214911AC002E22BF /* MentionsSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultsViewController.swift; sourceTree = "<group>"; };
-		7C25D75621491240002E22BF /* MentionsSearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultCell.swift; sourceTree = "<group>"; };
-		7C25D7582149182C002E22BF /* MentionsSearchResultCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultCellTests.swift; sourceTree = "<group>"; };
 		7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultsViewControllerTests.swift; sourceTree = "<group>"; };
 		7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpacingStackView.swift; sourceTree = "<group>"; };
 		7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_small_height.jpg; sourceTree = "<group>"; };
@@ -3725,7 +3721,6 @@
 			isa = PBXGroup;
 			children = (
 				7C25D754214911AC002E22BF /* MentionsSearchResultsViewController.swift */,
-				7C25D75621491240002E22BF /* MentionsSearchResultCell.swift */,
 			);
 			path = Mentions;
 			sourceTree = "<group>";
@@ -5506,7 +5501,6 @@
 				EFE285452146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift */,
 				EF40AAE52146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift */,
 				EF3CBC072147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift */,
-				7C25D7582149182C002E22BF /* MentionsSearchResultCellTests.swift */,
 				7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */,
 			);
 			path = "Wire-iOS Tests";
@@ -6992,7 +6986,6 @@
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
 				8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */,
 				876EECB31F5078D200E269F3 /* AccountSelectorController.swift in Sources */,
-				7C25D75721491240002E22BF /* MentionsSearchResultCell.swift in Sources */,
 				161B75C820B6BCB50002B0F7 /* ZMUserSession+Calling.swift in Sources */,
 				871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */,
 				160D6920212C78E800096EAD /* CallQualityController.swift in Sources */,
@@ -7690,7 +7683,6 @@
 				EE118C012031D1C300BC68D6 /* MarkdownTextViewTests.swift in Sources */,
 				BFFE943E1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift in Sources */,
 				BFA13E1A1D4B66EE00F0A91B /* ImageMessageCellTests.swift in Sources */,
-				7C25D7592149182C002E22BF /* MentionsSearchResultCellTests.swift in Sources */,
 				EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */,
 				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
 				EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */,

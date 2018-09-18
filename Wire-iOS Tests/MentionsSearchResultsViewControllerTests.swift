@@ -16,6 +16,7 @@ class MentionsSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = MentionsSearchResultsViewController(nibName: nil, bundle: nil)
+        
         sut.viewDidLoad()
         self.recordMode = true
     }

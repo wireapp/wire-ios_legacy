@@ -11,8 +11,7 @@ import Cartography
 
 class MentionsSearchResultsViewController: UIViewController {
 
-    private let reuseIdentifier = "MentionsCell"
-    private let tableView = UITableView(frame: .zero)
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var searchResults: [ZMUser] = []
     private var query: String = ""
     private var pendingSearchTask: SearchTask? = nil
@@ -27,27 +26,32 @@ class MentionsSearchResultsViewController: UIViewController {
             searchDirectory = SearchDirectory(userSession: session)
         }
         
-        tableView.register(MentionsSearchResultCell.self, forCellReuseIdentifier: reuseIdentifier)
+        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         setupDesign()
     }
     
     private func setupDesign() {
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = UIColor.white
         
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
         
-        constrain(self.view, tableView) { (selfView, tableView) in
-            tableView.bottom == selfView.bottom
-            tableView.leading == selfView.leading
-            tableView.trailing == selfView.trailing
-            tableViewHeight = tableView.height == 0
+        constrain(self.view, collectionView) { (selfView, collectionView) in
+            collectionView.bottom == selfView.bottom
+            collectionView.leading == selfView.leading
+            collectionView.trailing == selfView.trailing
+            //collectionView.top == selfView.top
+            tableViewHeight = collectionView.height == 0
         }
+        
+        collectionView.setNeedsLayout()
+        collectionView.layoutIfNeeded()
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,44 +80,40 @@ class MentionsSearchResultsViewController: UIViewController {
     func reloadTable(with results: [ZMUser]) {
         searchResults = results
         tableViewHeight?.constant = CGFloat(min(3, searchResults.count)) * rowHeight
-        tableView.reloadData()
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.reloadData()
+        
+        collectionView.setNeedsLayout()
+        collectionView.layoutIfNeeded()
     }
     
     func cancelPreviousSearch() {
         pendingSearchTask?.cancel()
         pendingSearchTask = nil
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
-extension MentionsSearchResultsViewController: UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
+extension MentionsSearchResultsViewController: UICollectionViewDelegate {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchResults.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return rowHeight
     }
 }
 
-extension MentionsSearchResultsViewController: UITableViewDataSource {
+extension MentionsSearchResultsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width, height: rowHeight)
+    }
+}
+
+extension MentionsSearchResultsViewController: UICollectionViewDataSource {
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MentionsSearchResultCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         let user = searchResults[indexPath.item]
         cell.configure(with: user)
         return cell
