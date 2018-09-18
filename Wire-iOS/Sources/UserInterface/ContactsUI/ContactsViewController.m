@@ -48,12 +48,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) BOOL searchResultsReceived;
 
 // Containers, ect.
-@property (nonatomic) UIView *separatorView;
 @property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
 @property (nonatomic) NSLayoutConstraint *emptyResultsBottomConstraint;
-@property (nonatomic) NSLayoutConstraint *titleLabelHeightConstraint;
-@property (nonatomic) NSLayoutConstraint *closeButtonTopConstraint;
-
 @end
 
 
@@ -181,21 +177,20 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)setupLayout
 {
-    [self.topContainerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.topContainerView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.separatorView];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.topContainerView autoSetDimension:ALDimensionHeight toSize:62];
-    }];
-    
+    [self createTopContainerConstraints];
+
     CGFloat standardOffset = 24.0f;
 
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
+    self.titleLabelTopConstraint = [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:standardOffset];
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:standardOffset];
-        
+    self.titleLabelBottomConstraint = [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:standardOffset];
+
     self.titleLabelHeightConstraint = [self.titleLabel autoSetDimension:ALDimensionHeight toSize:44.0f];
     self.titleLabelHeightConstraint.active = (self.titleLabel.text.length > 0);
-    
+
+    [self createSearchHeaderConstraints];
+
     [self.separatorView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
     [self.separatorView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:standardOffset];
     [self.separatorView autoSetDimension:ALDimensionHeight toSize:0.5f];
@@ -225,25 +220,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.bottomContainerSeparatorView autoSetDimension:ALDimensionHeight toSize:0.5];
     
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, bottomContainerHeight, 0);
-    
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
-    [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.searchHeaderViewController.view autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cancelButton withOffset:- standardOffset / 2];
-    [self.searchHeaderViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.searchHeaderViewController.view autoSetContentHuggingPriorityForAxis:ALAxisVertical];
-    }];
-    
+
     self.closeButtonTopConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:16 + UIScreen.safeArea.top];
     self.closeButtonTopConstraint.active = (self.titleLabel.text.length > 0);
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:8];
+        self.closeButtonBottomConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:8];
     }];
 
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
-    self.closeButtonWidthConstraint = [self.cancelButton autoSetDimension:ALDimensionWidth toSize:16];
-    [self.cancelButton autoSetDimension:ALDimensionHeight toSize:16];
+    [self.cancelButton autoSetDimension:ALDimensionWidth toSize:16];
+    self.closeButtonHeightConstraint = [self.cancelButton autoSetDimension:ALDimensionHeight toSize:16];
     
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:standardOffset];

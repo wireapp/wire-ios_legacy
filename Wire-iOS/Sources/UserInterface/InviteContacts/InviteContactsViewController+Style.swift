@@ -31,12 +31,27 @@ extension InviteContactsViewController {
             titleLabel.isHidden = true
 
             cancelButton.isHidden = true
-            closeButtonWidthConstraint.constant = 0
+            closeButtonHeightConstraint.constant = 0
+            titleLabelHeightConstraint.isActive = false
+            titleLabelTopConstraint.isActive = false
+            titleLabelBottomConstraint.isActive = false
+            closeButtonTopConstraint.isActive = false
+            closeButtonBottomConstraint.isActive = false
+
+            topContainerHeightConstraint.isActive = true
         } else {
             titleLabel.isHidden = false
 
             cancelButton.isHidden = false
-            closeButtonWidthConstraint.constant = 16
+
+            closeButtonHeightConstraint.constant = 16
+            topContainerHeightConstraint.isActive = false
+
+            titleLabelHeightConstraint.isActive = true
+            titleLabelTopConstraint.isActive = true
+            titleLabelBottomConstraint.isActive = true
+            closeButtonTopConstraint.isActive = true
+            closeButtonBottomConstraint.isActive = true
 
         }
 

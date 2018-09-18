@@ -32,8 +32,15 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) IconButton *cancelButton;
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic) UIView *topContainerView;
+@property (nonatomic) UIView *separatorView;
 
-@property (nonatomic) NSLayoutConstraint *closeButtonWidthConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelTopConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonTopConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *topContainerHeightConstraint;
 
 - (void)updateEmptyResults;
 
