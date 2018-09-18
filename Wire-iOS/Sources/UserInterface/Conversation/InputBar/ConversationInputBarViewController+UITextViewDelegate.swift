@@ -53,7 +53,8 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         // TODO: Integrate with suggestions pop-up
         // Start mentioning
         if text == "@" {
-            let attachment = MentionTextAttachment(user: ZMUser.selfUser())
+            let user: UserType = conversation.connectedUser ?? conversation.sortedOtherParticipants.randomElement() ?? ZMUser.selfUser()
+            let attachment = MentionTextAttachment(user: user)
             let attributedString = NSAttributedString(attachment: attachment)
             textView.attributedText = textView.attributedText + attributedString
             return false

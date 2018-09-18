@@ -25,7 +25,6 @@
 #import "Analytics.h"
 #import "Message+Formatting.h"
 #import "LinkAttachment.h"
-#import "NSString+Mentions.h"
 #import "Settings.h"
 #import "Wire-Swift.h"
 
