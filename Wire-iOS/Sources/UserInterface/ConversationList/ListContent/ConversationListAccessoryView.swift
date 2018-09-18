@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-@objcMembers final internal class ConversationListAccessoryView: UIView {
+@objcMembers final class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
         didSet {
             self.updateForIcon()
