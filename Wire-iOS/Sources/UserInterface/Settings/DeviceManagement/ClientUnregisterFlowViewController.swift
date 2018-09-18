@@ -84,7 +84,7 @@ import Cartography
     fileprivate func setupNavigationController() {
         let invitationController = ClientUnregisterInvitationViewController()
         invitationController.formStepDelegate = self
-        invitationController.view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+        invitationController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         let rootNavigationController = NavigationController(rootViewController: invitationController)
         rootNavigationController.delegate = self
@@ -94,9 +94,9 @@ import Cartography
         rootNavigationController.navigationBar.tintColor = UIColor.accent()
         rootNavigationController.backButtonEnabled = false
         rootNavigationController.rightButtonEnabled = false
-        self.addChildViewController(rootNavigationController)
+        self.addChild(rootNavigationController)
         self.view.addSubview(rootNavigationController.view)
-        rootNavigationController.didMove(toParentViewController: self)
+        rootNavigationController.didMove(toParent: self)
         rootNavigationController.setNavigationBarHidden(true, animated: false)
         self.rootNavigationController = rootNavigationController
     }
@@ -135,7 +135,7 @@ import Cartography
     
     // MARK: - UINavigationControllerDelegate
     
-    override func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    override func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .pop:
             return self.popTransition

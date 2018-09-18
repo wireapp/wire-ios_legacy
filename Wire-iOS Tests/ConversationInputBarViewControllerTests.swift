@@ -20,10 +20,10 @@ import XCTest
 @testable import Wire
 
 final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
-    let mockState: UIGestureRecognizerState
+    let mockState: UIGestureRecognizer.State
     var mockLocation: CGPoint?
 
-    init(location: CGPoint?, state: UIGestureRecognizerState) {
+    init(location: CGPoint?, state: UIGestureRecognizer.State) {
         mockLocation = location
         mockState = state
 
@@ -34,7 +34,7 @@ final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
         return mockLocation ?? super.location(in: view)
     }
 
-    override var state: UIGestureRecognizerState {
+    override var state: UIGestureRecognizer.State {
         get {
             return mockState
         }

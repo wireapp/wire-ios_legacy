@@ -68,7 +68,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             videoEditor.delegate = self
             videoEditor.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
             videoEditor.videoPath = videoURL.path
-            videoEditor.videoQuality = UIImagePickerControllerQualityType.typeMedium
+            videoEditor.videoQuality = .typeMedium
 
             switch UIDevice.current.userInterfaceIdiom {
             case .pad:
@@ -172,7 +172,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                 UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
             }
             
-            if let editedImage = editedImage, let editedImageData = UIImagePNGRepresentation(editedImage) {
+            if let editedImage = editedImage, let editedImageData = editedImage.pngData() {
                 self.sendController.sendMessage(withImageData: editedImageData, completion: .none)
             } else {
                 self.sendController.sendMessage(withImageData: imageData as Data, completion: .none)
@@ -262,7 +262,7 @@ extension ConversationInputBarViewController : CanvasViewControllerDelegate {
             guard let `self` = self else { return }
             
             self.dismiss(animated: true, completion: {
-                let imageData = UIImagePNGRepresentation(image)
+                let imageData = image.pngData()
                 self.sendController.sendMessage(withImageData: imageData, completion: {})
             })
         }

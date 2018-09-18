@@ -217,7 +217,7 @@ extension ChatHeadsViewController {
             chatHeadViewRightMarginConstraint?.constant = viewOffsetX - containerInsets.right
             
         case .ended, .failed, .cancelled:
-            guard offset.x < 0 && fabs(offset.x) > dragGestureDistanceThreshold else {
+            guard offset.x < 0 && abs(offset.x) > dragGestureDistanceThreshold else {
                 revealChatHeadFromCurrentState()
                 break
             }
@@ -229,7 +229,7 @@ extension ChatHeadsViewController {
             
             // calculate time from formula dx = t * v + d0
             let velocityVector = pan.velocity(in: view)
-            var time = Double((view.bounds.width - fabs(offset.x)) / fabs(velocityVector.x))
+            var time = Double((view.bounds.width - abs(offset.x)) / abs(velocityVector.x))
             
             // min/max animation duration
             if time < 0.05 { time = 0.05 }

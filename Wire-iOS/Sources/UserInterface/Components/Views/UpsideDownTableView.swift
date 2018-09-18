@@ -23,7 +23,7 @@ class UpsideDownTableView: UITableView {
     /// The view that allow pan gesture to scroll the tableview
     @objc weak var pannableView: UIView?
 
-    override init(frame: CGRect, style: UITableViewStyle) {
+    override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
 
         UIView.performWithoutAnimation({
@@ -38,28 +38,28 @@ class UpsideDownTableView: UITableView {
     @objc public var correctedContentInset: UIEdgeInsets {
         get {
             let insets = super.contentInset
-            return UIEdgeInsetsMake(insets.bottom, insets.left, insets.top, insets.right)
+            return UIEdgeInsets(top: insets.bottom, left: insets.left, bottom: insets.top, right: insets.right)
         }
 
         set {
-            super.contentInset = UIEdgeInsetsMake(newValue.bottom,
-                                                  newValue.left,
-                                                  newValue.top,
-                                                  newValue.right)
+            super.contentInset = UIEdgeInsets(top: newValue.bottom,
+                                                  left: newValue.left,
+                                                  bottom: newValue.top,
+                                                  right: newValue.right)
         }
     }
 
     public var correctedScrollIndicatorInsets: UIEdgeInsets {
         get {
             let insets = super.scrollIndicatorInsets
-            return UIEdgeInsetsMake(insets.bottom, insets.left, insets.top, insets.right)
+            return UIEdgeInsets(top: insets.bottom, left: insets.left, bottom: insets.top, right: insets.right)
         }
 
         set {
-            super.scrollIndicatorInsets = UIEdgeInsetsMake(newValue.bottom,
-                                                           newValue.left,
-                                                           newValue.top,
-                                                           newValue.right)
+            super.scrollIndicatorInsets = UIEdgeInsets(top: newValue.bottom,
+                                                           left: newValue.left,
+                                                           bottom: newValue.top,
+                                                           right: newValue.right)
         }
     }
 
@@ -108,11 +108,11 @@ class UpsideDownTableView: UITableView {
         return cell
     }
 
-    override func scrollToNearestSelectedRow(at scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    override func scrollToNearestSelectedRow(at scrollPosition: UITableView.ScrollPosition, animated: Bool) {
         super.scrollToNearestSelectedRow(at: inverseScrollPosition(scrollPosition), animated: animated)
     }
 
-    override func scrollToRow(at indexPath: IndexPath, at scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    override func scrollToRow(at indexPath: IndexPath, at scrollPosition: UITableView.ScrollPosition, animated: Bool) {
         super.scrollToRow(at: indexPath, at: inverseScrollPosition(scrollPosition), animated: animated)
     }
 
@@ -124,7 +124,7 @@ class UpsideDownTableView: UITableView {
         return cell
     }
 
-    func inverseScrollPosition(_ scrollPosition: UITableViewScrollPosition) -> UITableViewScrollPosition {
+    func inverseScrollPosition(_ scrollPosition: UITableView.ScrollPosition) -> UITableView.ScrollPosition {
         if scrollPosition == .top {
             return .bottom
         } else if scrollPosition == .bottom {

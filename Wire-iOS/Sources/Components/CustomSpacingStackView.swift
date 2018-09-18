@@ -74,17 +74,17 @@ import Cartography
         }
     }
     
-    var alignment: UIStackViewAlignment {
+    var alignment: UIStackView.Alignment {
         get { return stackView.alignment }
         set { stackView.alignment = newValue }
     }
 
-    var distribution: UIStackViewDistribution {
+    var distribution: UIStackView.Distribution {
         get { return stackView.distribution }
         set { stackView.distribution = newValue }
     }
 
-    var axis: UILayoutConstraintAxis {
+    var axis: NSLayoutConstraint.Axis {
         get { return stackView.axis }
         set { stackView.axis = newValue }
     }

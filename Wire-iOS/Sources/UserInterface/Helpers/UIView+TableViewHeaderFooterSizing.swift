@@ -21,7 +21,7 @@ import UIKit
 extension UIView {
     func sized(fittingWidth width: CGFloat) -> UIView {
         frame.size = systemLayoutSizeFitting(
-            CGSize(width: width, height: UIViewNoIntrinsicMetric),
+            CGSize(width: width, height: UIView.noIntrinsicMetric),
             withHorizontalFittingPriority: UILayoutPriority.required,
             verticalFittingPriority: UILayoutPriority.fittingSizeLevel
         )

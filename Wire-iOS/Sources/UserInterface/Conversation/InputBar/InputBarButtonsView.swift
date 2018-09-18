@@ -79,7 +79,7 @@ public final class InputBarButtonsView: UIView {
         buttonInnerContainer.clipsToBounds = true
         expandRowButton.accessibilityIdentifier = "showOtherRowButton"
         expandRowButton.hitAreaPadding = .zero
-        expandRowButton.setIcon(.ellipsis, with: .tiny, for: UIControlState())
+        expandRowButton.setIcon(.ellipsis, with: .tiny, for: [])
         expandRowButton.addTarget(self, action: #selector(ellipsisButtonPressed), for: .touchUpInside)
         buttonOuterContainer.addSubview(buttonInnerContainer)
         buttonOuterContainer.clipsToBounds = true
@@ -223,24 +223,24 @@ public final class InputBarButtonsView: UIView {
         let firstButtonLabelSize = firstButton.titleLabel!.intrinsicContentSize
         let firstTitleMargin = (UIView.conversationLayoutMargins.left / 2) - constants.iconSize - (firstButtonLabelSize.width / 2)
         firstButton.contentHorizontalAlignment = .left
-        firstButton.imageEdgeInsets = UIEdgeInsetsMake(0, buttonMargin, 0, 0)
-        firstButton.titleEdgeInsets = UIEdgeInsetsMake(constants.iconSize + firstButtonLabelSize.height + constants.titleTopMargin, firstTitleMargin, 0, 0)
+        firstButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonMargin, bottom: 0, right: 0)
+        firstButton.titleEdgeInsets = UIEdgeInsets(top: constants.iconSize + firstButtonLabelSize.height + constants.titleTopMargin, left: firstTitleMargin, bottom: 0, right: 0)
         
         if rowIsFull {
             let lastButton = buttons.last!
             let lastButtonLabelSize = lastButton.titleLabel!.intrinsicContentSize
             let lastTitleMargin = UIView.conversationLayoutMargins.left / 2.0 - lastButtonLabelSize.width / 2.0
             lastButton.contentHorizontalAlignment = .right
-            lastButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, buttonMargin - lastButtonLabelSize.width)
-            lastButton.titleEdgeInsets = UIEdgeInsetsMake(constants.iconSize + lastButtonLabelSize.height + constants.titleTopMargin, 0, 0, lastTitleMargin - 1)
+            lastButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: buttonMargin - lastButtonLabelSize.width)
+            lastButton.titleEdgeInsets = UIEdgeInsets(top: constants.iconSize + lastButtonLabelSize.height + constants.titleTopMargin, left: 0, bottom: 0, right: lastTitleMargin - 1)
             lastButton.titleLabel?.lineBreakMode = .byClipping
         }
         
         for button in buttons.dropFirst().dropLast() {
             let buttonLabelSize = button.titleLabel!.intrinsicContentSize
             button.contentHorizontalAlignment = .center
-            button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -buttonLabelSize.width)
-            button.titleEdgeInsets = UIEdgeInsetsMake(constants.iconSize + buttonLabelSize.height + constants.titleTopMargin, -constants.iconSize, 0, 0)
+            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -buttonLabelSize.width)
+            button.titleEdgeInsets = UIEdgeInsets(top: constants.iconSize + buttonLabelSize.height + constants.titleTopMargin, left: -constants.iconSize, bottom: 0, right: 0)
         }
     }
     

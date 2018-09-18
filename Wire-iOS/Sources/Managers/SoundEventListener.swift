@@ -69,8 +69,8 @@ class SoundEventListener : NSObject {
         callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         unreadMessageObserverToken = NewUnreadMessagesChangeInfo.add(observer: self, for: userSession)
         unreadKnockMessageObserverToken = NewUnreadKnockMessagesChangeInfo.add(observer: self, for: userSession)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
         soundEventWatchDog.startIgnoreDate = Date()
         soundEventWatchDog.isMuted = UIApplication.shared.applicationState == .background

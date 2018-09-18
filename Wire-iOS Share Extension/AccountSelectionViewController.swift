@@ -61,7 +61,7 @@ class AccountSelectionViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let account = accounts[indexPath.row]
-        let cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: cellReuseIdentifier)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellReuseIdentifier)
 
         cell.textLabel?.text = account.userName
         cell.detailTextLabel?.text = account.teamName

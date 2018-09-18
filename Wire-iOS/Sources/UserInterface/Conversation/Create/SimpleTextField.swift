@@ -111,13 +111,13 @@ class SimpleTextField: UITextField, Themeable {
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         let textRect = super.textRect(forBounds: bounds)
 
-        return UIEdgeInsetsInsetRect(textRect, self.textInsets)
+        return textRect.inset(by: self.textInsets)
     }
 
     // MARK: - Placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
-        let attribute: [NSAttributedStringKey: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
+        let attribute: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.Team.placeholderColor,
                                         .font: AccessoryTextField.placeholderFont]
         return placeholder && attribute
     }
@@ -134,7 +134,7 @@ class SimpleTextField: UITextField, Themeable {
     }
 
     override func drawPlaceholder(in rect: CGRect) {
-        super.drawPlaceholder(in: UIEdgeInsetsInsetRect(rect, placeholderInsets))
+        super.drawPlaceholder(in: rect.inset(by: placeholderInsets))
     }
 }
 

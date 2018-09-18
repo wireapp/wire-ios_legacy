@@ -386,6 +386,13 @@ class CallInfoConfigurationTests: XCTestCase {
         let mockConversation = ((MockConversation.groupConversation() as Any) as! ZMConversation)
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let mockUsers: [ZMUser] = MockUser.mockUsers()!
+        mockUsers.forEach {
+            ($0 as Any as! MockUser).isTeamMember = false
+        }
+
+        (otherUser as Any as! MockUser).isTeamMember = false
+        (selfUser as Any as! MockUser).isTeamMember = false
+
         let fixture = CallInfoTestFixture(otherUser: otherUser)
         
         mockVoiceChannel.mockCallState = .established

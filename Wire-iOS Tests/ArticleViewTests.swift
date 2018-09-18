@@ -60,7 +60,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
         textMessageData.linkPreviewImageCacheKey = "image-id-\(imageNamed)"
-        textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: imageNamed), 0.9)
+        textMessageData.imageData = image(inTestBundleNamed: imageNamed).jpegData(compressionQuality: 0.9)
         textMessageData.linkPreviewHasImage = true
         
         return textMessageData
@@ -78,7 +78,7 @@ class ArticleViewTests: ZMSnapshotTestCase {
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
         textMessageData.linkPreviewImageCacheKey = "image-id"
-        textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
+        textMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         textMessageData.linkPreviewHasImage = true
         
         return textMessageData
