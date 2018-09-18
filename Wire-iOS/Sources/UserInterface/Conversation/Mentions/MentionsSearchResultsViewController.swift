@@ -1,13 +1,32 @@
 //
-//  MentionsSearchResultsViewController.swift
-//  Wire-iOS
+// Wire
+// Copyright (C) 2018 Wire Swiss GmbH
 //
-//  Created by Nicola Giancecchi on 12.09.18.
-//  Copyright © 2018 Zeta Project Germany GmbH. All rights reserved.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
 import UIKit
 import Cartography
+
+@objc protocol MentionsSearchResultsViewControllerDelegate {
+    func didSelectUserToMention(_ user: ZMUser)
+}
+
+@objc protocol MentionsSearchResultsViewProtocol {
+    func searchForUsers(with name: String)
+    func dismissIfVisible()
+}
 
 class MentionsSearchResultsViewController: UIViewController {
 
@@ -19,6 +38,8 @@ class MentionsSearchResultsViewController: UIViewController {
     private var tableViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     
+    public var delegate: MentionsSearchResultsViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,21 +47,31 @@ class MentionsSearchResultsViewController: UIViewController {
             searchDirectory = SearchDirectory(userSession: session)
         }
         
-        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        setupDesign()
+        setupCollectionView()
+        setupConstraints()
     }
     
-    private func setupDesign() {
+    private func setupCollectionView() {
+        view.isHidden = true
         
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = UIColor.white
         
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
+        
+        collectionView.collectionViewLayout = layout
+
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(collectionView)
-        
+    }
+
+    private func setupConstraints() {
         constrain(self.view, collectionView) { (selfView, collectionView) in
             collectionView.bottom == selfView.bottom
             collectionView.leading == selfView.leading
@@ -48,13 +79,43 @@ class MentionsSearchResultsViewController: UIViewController {
             tableViewHeight = collectionView.height == 0
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    private func handleSearchResult(result: SearchResult, isCompleted: Bool) {
+        reloadTable(with: result.contacts)
     }
     
-    @objc func searchForUsers(with name: String) {
+    @objc func reloadTable(with results: [ZMUser]) {
+        searchResults = results
+        
+        let viewHeight = self.view.bounds.size.height
+        let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
+        tableViewHeight?.constant = minValue
+        collectionView.isScrollEnabled = (minValue == viewHeight)
+        
+        collectionView.reloadData()
+    }
+    
+    func cancelPreviousSearch() {
+        pendingSearchTask?.cancel()
+        pendingSearchTask = nil
+    }
+    
+    func show() {
+        self.view.isHidden = false
+    }
+    
+}
+
+extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol {
+    
+    func dismissIfVisible() {
+        self.view.isHidden = true
+    }
+    
+    func searchForUsers(with name: String) {
+        
+        show()
+        
         pendingSearchTask?.cancel()
         
         let request = SearchRequest(query: query,
@@ -66,40 +127,6 @@ class MentionsSearchResultsViewController: UIViewController {
         task?.start()
         
         pendingSearchTask = task
-    }
-    
-    private func handleSearchResult(result: SearchResult, isCompleted: Bool) {
-        reloadTable(with: result.contacts)
-    }
-    
-    @objc func reloadTable(with results: [ZMUser]) {
-        searchResults = results
-        tableViewHeight?.constant = CGFloat(min(3, searchResults.count)) * rowHeight
-        collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.reloadData()
-    }
-    
-    func cancelPreviousSearch() {
-        pendingSearchTask?.cancel()
-        pendingSearchTask = nil
-    }
-    
-    func show() {
-        self.view.alpha = 0.0
-        self.view.isHidden = false
-        UIView.animate(withDuration: 0.25) {
-            self.view.alpha = 1.0
-        }
-    }
-    
-    func dismiss() {
-        UIView.animate(withDuration: 0.25, animations: {
-            self.view.alpha = 0.0
-        }) { (completed) in
-            if completed {
-                self.view.isHidden = true
-            }
-        }
     }
 }
 
@@ -122,7 +149,6 @@ extension MentionsSearchResultsViewController: UICollectionViewDelegateFlowLayou
 
 extension MentionsSearchResultsViewController: UICollectionViewDataSource {
     
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = searchResults[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
@@ -130,4 +156,8 @@ extension MentionsSearchResultsViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didSelectUserToMention(searchResults[indexPath.item])
+        dismissIfVisible()
+    }
 }

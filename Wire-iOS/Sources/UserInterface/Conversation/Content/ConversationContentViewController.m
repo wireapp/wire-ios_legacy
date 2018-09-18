@@ -567,15 +567,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     // delegate here
     
-    
-    self.mentionsSearchResultsContainer = [UIView new];
-    //self.mentionsSearchResultsContainer.hidden = YES;
-    self.mentionsSearchResultsContainer.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
     [self addChildViewController:self.mentionsSearchResultsViewController];
-    [self.view addSubview:self.mentionsSearchResultsContainer];
-    [self.mentionsSearchResultsContainer autoPinEdgesToSuperviewEdges];
-    
-    [self.mentionsSearchResultsContainer addSubview:self.mentionsSearchResultsViewController.view];
+    [self.view addSubview:self.mentionsSearchResultsViewController.view];
     
     [self.mentionsSearchResultsViewController.view autoPinEdgesToSuperviewEdges];
     

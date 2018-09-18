@@ -1,9 +1,19 @@
 //
-//  MentionsSearchResultsViewControllerTests.swift
-//  Wire-iOS-Tests
+// Wire
+// Copyright (C) 2018 Wire Swiss GmbH
 //
-//  Created by Nicola Giancecchi on 12.09.18.
-//  Copyright © 2018 Zeta Project Germany GmbH. All rights reserved.
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
 import XCTest
@@ -15,18 +25,36 @@ class MentionsSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = MentionsSearchResultsViewController(nibName: nil, bundle: nil)
-        
-        sut.viewDidLoad()
         self.recordMode = true
+        
+        sut = MentionsSearchResultsViewController(nibName: nil, bundle: nil)
+        sut.viewDidLoad()
     }
     
     override func tearDown() {
         super.tearDown()
     }
     
-    func testViewController() {
+    func testWithTwoUsers() {
         sut.reloadTable(with: [selfUser, otherUser])
+        guard let view = sut.view else { XCTFail(); return }
+        verify(view: view)
+    }
+    
+    func testThatDoesntOverflowWithTooManyUsers() {
+        var users: [ZMUser] = []
+        for name in usernames {
+            let user = ZMUser.insertNewObject(in: uiMOC)
+            user.remoteIdentifier = UUID()
+            user.name = name
+            user.setHandle(name.lowercased())
+            user.accentColorValue = .brightOrange
+            uiMOC.saveOrRollback()
+            users.append(user)
+        }
+        
+        sut.reloadTable(with: users)
+        
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }

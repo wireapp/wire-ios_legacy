@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class AudioRecordViewController;
 @class MentionsHandler;
 @protocol ZMConversationMessage;
+@protocol MentionsSearchResultsViewProtocol;
 
 typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
     ConversationInputBarViewControllerModeTextInput,
@@ -64,6 +65,7 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic) ConversationInputBarViewControllerMode mode;
 @property (nonatomic, readonly, nullable) UIViewController *inputController;
 @property (nonatomic, strong, nullable) MentionsHandler *mentionsHandler;
+@property (nonatomic, weak, nullable) id<MentionsSearchResultsViewProtocol> mentionsView;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)bounceCameraIcon;

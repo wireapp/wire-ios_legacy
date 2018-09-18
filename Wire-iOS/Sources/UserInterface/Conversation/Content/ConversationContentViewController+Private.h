@@ -44,8 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) UIView *dimView;
 @property (nonatomic) CGPoint initialPinchLocation;
 
-@property (nonatomic, nullable) UIView *mentionsSearchResultsContainer;
-
 - (void)removeHighlightsAndMenu;
 - (nullable ConversationCell *)cellForMessage:(id<ZMConversationMessage>)message;
 
