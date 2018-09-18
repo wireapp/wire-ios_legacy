@@ -39,12 +39,11 @@ extension ContactsViewController {
         constrain(self.view, topContainerView) {selfView, topContainerView in
             topContainerView.leading == selfView.leading
             topContainerView.trailing == selfView.trailing
-            if #available(iOS 11, *) {
-                topContainerView.top == selfView.safeAreaLayoutGuide.bottom
-            } else {
-                topContainerView.top == selfView.top
-            }
+            topContainerView.top == selfView.top + UIScreen.safeArea.top
+            topContainerHeightConstraint = topContainerView.height == 0
         }
+
+        topContainerHeightConstraint.isActive = false
     }
 
     @objc func createSearchHeaderConstraints() {

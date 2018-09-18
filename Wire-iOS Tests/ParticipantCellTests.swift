@@ -260,4 +260,3 @@ private enum Users {
     case none, sender, one, some, many, justYou, youAndAnother, overflow, service
 }
 
-
