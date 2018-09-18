@@ -199,6 +199,22 @@
 			<string>%d new text messages</string>
 		</dict>
 	</dict>
+	<key>conversation.silenced.status.message.mention</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@d_number_of_new@</string>
+		<key>d_number_of_new</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>1 mention</string>
+			<key>other</key>
+			<string>%d mentions</string>
+		</dict>
+	</dict>
 	<key>conversation.silenced.status.message.link</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

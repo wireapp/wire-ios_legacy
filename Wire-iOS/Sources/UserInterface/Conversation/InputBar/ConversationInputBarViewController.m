@@ -118,6 +118,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) IconButton *emojiButton;
 @property (nonatomic) IconButton *markdownButton;
 @property (nonatomic) IconButton *gifButton;
+@property (nonatomic) IconButton *mentionButton;
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
@@ -204,13 +205,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createHourglassButton];
     [self createTypingIndicatorView];
     
-    if (self.conversation.hasDraftMessageText) {
-        self.inputBar.textView.text = self.conversation.draftMessageText;
+    if (self.conversation.hasDraftMessage) {
+        [self.inputBar.textView setDraftMessage:self.conversation.draftMessage];
     }
-    
+
     [self configureAudioButton:self.audioButton];
     [self configureEmojiButton:self.emojiButton];
     [self configureMarkdownButton];
+    [self configureMentionButton];
     [self configureEphemeralKeyboardButton:self.hourglassButton];
     [self configureEphemeralKeyboardButton:self.ephemeralIndicatorButton];
     
@@ -306,8 +308,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.gifButton = [[IconButton alloc] init];
     self.gifButton.hitAreaPadding = CGSizeZero;
     self.gifButton.accessibilityIdentifier = @"gifButton";
-    
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
+
+    self.mentionButton = [[IconButton alloc] init];
+    self.mentionButton.hitAreaPadding = CGSizeZero;
+    self.mentionButton.accessibilityIdentifier = @"mentionButton";
+
+    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.mentionButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
     self.inputBar.textView.delegate = self;
     
@@ -514,7 +520,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.gifButton setIcon:ZetaIconTypeGif
                    withSize:ZetaIconSizeTiny
                    forState:UIControlStateNormal];
- 
+
+    [self.mentionButton setIcon:ZetaIconTypeMention
+                   withSize:ZetaIconSizeTiny
+                   forState:UIControlStateNormal];
+
     [self.sendButton setIcon:ZetaIconTypeSend
                     withSize:ZetaIconSizeTiny
                     forState:UIControlStateNormal];
@@ -598,7 +608,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     NSString *candidateText = self.inputBar.textView.preparedText;
     if (nil != candidateText) {
-        [self sendOrEditText:candidateText];
+        [self sendOrEditText:candidateText mentions:self.inputBar.textView.mentions];
     }
 }
 
@@ -776,7 +786,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)sendOrEditText:(NSString *)text
+- (void)sendOrEditText:(NSString *)text mentions:(NSArray <Mention *>*)mentions
 {
     NSString *candidateText = [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
     BOOL conversationWasNotDeleted = self.conversation.managedObjectContext != nil;
@@ -784,7 +794,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (self.inputBar.isEditing && nil != self.editingMessage) {
         NSString *previousText = [self.editingMessage.textMessageData.messageText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
         if (![candidateText isEqualToString:previousText]) {
-            [self sendEditedMessageAndUpdateStateWithText:candidateText];
+            [self sendEditedMessageAndUpdateStateWithText:candidateText mentions:mentions];
         }
         
         return;
@@ -799,7 +809,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [self runCommand:args];
         }
         else {
-            [self.sendController sendTextMessage:candidateText];
+            [self.sendController sendTextMessage:candidateText mentions:mentions];
         }
     }
 }
@@ -971,8 +981,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
-    if([self checkMessageLength]){
-        [self sendOrEditText:self.inputBar.textView.preparedText];
+    if ([self checkMessageLength]){
+        [self sendOrEditText:self.inputBar.textView.preparedText mentions:self.inputBar.textView.mentions];
     }
 }
 
@@ -1063,7 +1073,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         return;
     }
     
-    [self.sendController sendTextMessage:[NSString stringWithFormat:@"/%@", [args componentsJoinedByString:@" "]]];
+    [self.sendController sendTextMessage:[NSString stringWithFormat:@"/%@", [args componentsJoinedByString:@" "]] mentions:@[]];
 }
 
 @end
@@ -1121,8 +1131,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self clearInputBar];
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    
-    
     NSString *messageText = nil;
     
     if ([searchTerm isEqualToString:@""]) {
@@ -1131,7 +1139,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
     }
     
-    [self.sendController sendTextMessage:messageText withImageData:imageData];
+    [self.sendController sendTextMessage:messageText mentions:@[] withImageData:imageData];
 }
 
 @end

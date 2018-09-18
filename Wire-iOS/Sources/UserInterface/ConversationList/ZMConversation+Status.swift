@@ -19,7 +19,7 @@
 import Foundation
 
 // Describes the icon to be shown for the conversation in the list.
-internal enum ConversationStatusIcon {
+enum ConversationStatusIcon {
     case none
     case pendingConnection
     
@@ -28,6 +28,7 @@ internal enum ConversationStatusIcon {
     case unreadMessages(count: Int)
     case unreadPing
     case missedCall
+    case mention
     
     case silenced
     
@@ -37,7 +38,7 @@ internal enum ConversationStatusIcon {
 }
 
 // Describes the status of the conversation.
-internal struct ConversationStatus {
+struct ConversationStatus {
     let isGroup: Bool
     
     let hasMessages: Bool
@@ -53,7 +54,8 @@ internal struct ConversationStatus {
 }
 
 // Describes the conversation message.
-internal enum StatusMessageType: Int {
+enum StatusMessageType: Int {
+    case mention
     case text
     case link
     case image
@@ -77,8 +79,12 @@ extension StatusMessageType {
     ]
     
     init?(message: ZMConversationMessage) {
+        
         if message.isText, let textMessage = message.textMessageData {
-            if let _ = textMessage.linkPreview {
+            if textMessage.isMentioningSelf {
+                self = .mention
+            }
+            else if let _ = textMessage.linkPreview {
                 self = .link
             }
             else {
@@ -119,7 +125,7 @@ extension StatusMessageType {
 
 // Describes object that is able to match and describe the conversation.
 // Provides rich description and status icon.
-internal protocol ConversationStatusMatcher {
+protocol ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString?
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon
@@ -129,7 +135,7 @@ internal protocol ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] { get }
 }
 
-internal protocol TypedConversationStatusMatcher: ConversationStatusMatcher {
+protocol TypedConversationStatusMatcher: ConversationStatusMatcher {
     var matchedTypes: [StatusMessageType] { get }
 }
 
@@ -299,7 +305,7 @@ final internal class TypingMatcher: ConversationStatusMatcher {
 // "Silenced"
 final internal class SilencedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.isSilenced
+        return status.isSilenced && !status.hasSelfMention
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -313,11 +319,32 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+
+extension ConversationStatus {
+    var hasSelfMention: Bool {
+        return (messagesRequiringAttentionByType[.mention] != nil)
+    }
+    
+    var latestMessageIsSelfMention: Bool {
+        return messagesRequiringAttention.last?.textMessageData?.isMentioningSelf ?? false
+    }
+    
+    var shouldSummarizeMessages: Bool {
+        if hasSelfMention {
+            return !latestMessageIsSelfMention
+        }
+        else {
+            return isSilenced
+        }
+    }
+}
+
+
 // In silenced "N (text|image|link|...) message, ..."
 // In not silenced: "[Sender:] <message text>"
 // Ephemeral: "Ephemeral message"
 final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
-    let matchedTypes: [StatusMessageType] = [.text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
+    let matchedTypes: [StatusMessageType] = [.mention, .text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
     let localizationSilencedRootPath = "conversation.silenced.status.message"
     let localizationRootPath = "conversation.status.message"
 
@@ -330,11 +357,12 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
         .video:    "video",
         .file:     "file",
         .knock:    "knock",
-        .missedCall: "missedcall"
+        .missedCall: "missedcall",
+        .mention:  "mention"
     ]
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        if status.isSilenced {
+        if status.shouldSummarizeMessages {
             let resultString = matchedTypes.filter { status.messagesRequiringAttentionByType[$0] > 0 }.compactMap {
                 guard let localizationKey = matchedTypesDescriptions[$0] else {
                     return .none
@@ -388,6 +416,10 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+        if status.hasSelfMention {
+            return .mention
+        }
+        
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
@@ -617,7 +649,7 @@ extension ConversationStatus {
         return .none
     }
     
-    internal func description(for conversation: ZMConversation) -> NSAttributedString {
+    func description(for conversation: ZMConversation) -> NSAttributedString {
         let allMatchers = self.appliedMatchersForDescription(for: conversation)
         guard allMatchers.count > 0 else {
             return "" && [:]
@@ -626,7 +658,7 @@ extension ConversationStatus {
         return allStrings.joined(separator: " | " && CallingMatcher.regularStyle)
     }
     
-    internal func icon(for conversation: ZMConversation) -> ConversationStatusIcon {
+    func icon(for conversation: ZMConversation) -> ConversationStatusIcon {
         guard let topMatcher = self.appliedMatcherForIcon(for: conversation) else {
             return .none
         }
@@ -637,7 +669,7 @@ extension ConversationStatus {
 
 extension ZMConversation {
     
-    internal var status: ConversationStatus {
+    var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
         
         var messagesRequiringAttention = self.unreadMessages

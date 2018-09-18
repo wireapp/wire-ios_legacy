@@ -102,7 +102,7 @@
                                              UIDataDetectorTypeFlightNumber |
                                              UIDataDetectorTypeCalendarEvent |
                                              UIDataDetectorTypeShipmentTrackingNumber;
-
+    
     self.linkAttachmentContainer = [[UIView alloc] init];
     self.linkAttachmentContainer.translatesAutoresizingMaskIntoConstraints = NO;
     self.linkAttachmentContainer.preservesSuperviewLayoutMargins = YES;
@@ -172,7 +172,9 @@
     NSAttributedString *attributedMessageText = [NSAttributedString formattedStringWithLinkAttachments:layoutProperties.linkAttachments
                                                                                             forMessage:message.textMessageData
                                                                                                isGiphy:isGiphy
-                                                                                            obfuscated:message.isObfuscated];
+                                                                                            obfuscated:message.isObfuscated
+                                                                                              mentions:textMesssageData.mentions];
+    
     if (self.searchQueries.count > 0 && attributedMessageText.length > 0) {
         
         NSDictionary<NSString *, id> *highlightStyle = @{ NSBackgroundColorAttributeName: UIColor.accentDarken};
@@ -428,7 +430,23 @@
 
 - (BOOL)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
-    return [url open];
+    if (url.isMentionURL) {
+        Mention *mention = [self.message.textMessageData.mentions firstObjectMatchingWithBlock:^BOOL(Mention* mention) {
+            return mention.location == url.mentionLocation;
+        }];
+        
+        if (nil == mention) {
+            return NO;
+        }
+        
+        UITextRange *range = [textView rangeOfLinkToURL:url];
+        
+        [self openMention:mention frame:[textView firstRectForRange:range]];
+        return YES;
+    }
+    else {
+        return [url open];
+    }
 }
 
 - (void)textViewDidLongPress:(LinkInteractionTextView *)textView

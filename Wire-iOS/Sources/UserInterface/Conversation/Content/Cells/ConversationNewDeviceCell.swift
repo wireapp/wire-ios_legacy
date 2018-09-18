@@ -56,7 +56,7 @@ import TTTAttributedLabel
             a.displayName.compare(b.displayName) == ComparisonResult.orderedAscending
         })
         
-        if let addedUsers = systemMessageData.addedUsers, addedUsers.count > 0 {
+        if !systemMessageData.addedUsers.isEmpty {
             configureForAddedUsers(with: textAttributes)
         }
         else if let user = users.first , user.isSelfUser && systemMessageData.systemMessageType == .usingNewDevice {
@@ -125,10 +125,8 @@ import TTTAttributedLabel
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
         if URL == type(of: self).userClientLink {
-            if let systemMessageData = message.systemMessageData,
-                let conversation = message.conversation,
-                let addedUsers = systemMessageData.addedUsers,
-                addedUsers.count > 0 {
+            if let systemMessageData = message.systemMessageData, !systemMessageData.addedUsers.isEmpty,
+               let conversation = message.conversation  {
                 ZClientViewController.shared()?.openDetailScreen(for: conversation)
             }
             else if let systemMessageData = message.systemMessageData,

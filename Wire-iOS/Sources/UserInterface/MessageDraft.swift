@@ -101,8 +101,10 @@ extension MessageDraft: Shareable {
 
 
 fileprivate func send(draft: MessageDraft, to: [AnyObject]) {
+    guard let text = draft.shareableText() else { return }
+    
     let conversations = to as! [ZMConversation]
     conversations.forEachNonEphemeral {
-        _ = $0.appendMessage(withText: draft.shareableText())
+        _ = $0.append(text: text)
     }
 }

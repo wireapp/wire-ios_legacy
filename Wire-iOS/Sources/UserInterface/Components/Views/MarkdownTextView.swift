@@ -44,9 +44,67 @@ extension Notification.Name {
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
     var preparedText: String {
-        return self.parser.parse(attributedString: self.attributedText)
+        var mentionRanges = mentionAttachmentsWithRange().map { attachment, range in
+            (range, attachment.attributedText.string)
+        }
+        
+        // We reverse to maintain correct ranges for subsequent inserts.
+        mentionRanges.reverse()
+
+        let withMentions = NSMutableAttributedString(attributedString: attributedText)
+
+        // Replace the text attachment with the mention text content.
+        mentionRanges.forEach(withMentions.replaceCharacters)
+
+        return parser.parse(attributedString: withMentions)
     }
     
+    /// The mentions contained in the text, should be used to insert a message with mentions.
+    var mentions: [Mention] {
+        var locationOffset = 0
+        
+        // As text attachments always have a length of 1 we have to adjust and offset the ranges of mentions.
+        let lengthAdjusted: [(MentionTextAttachment, NSRange)] = mentionAttachmentsWithRange().map { (attachment, range) in
+            let length = attachment.attributedText.string.count
+            let adjustedRange = NSRange(location: range.location + locationOffset, length: length)
+            locationOffset += length - 1 // Adjust for the length 1 attachment that we replaced.
+            
+            return (attachment, adjustedRange)
+        }
+
+        return lengthAdjusted.map { attachment, range in
+            Mention(range: range, user: attachment.user)
+        }
+    }
+    
+    func setDraftMessage(_ draft: DraftMessage) {
+        setText(draft.text, withMentions: draft.mentions)
+    }
+
+    func setText(_ newText: String, withMentions mentions: [Mention]) {
+        text = newText
+        let mutable = NSMutableAttributedString(attributedString: attributedText)
+
+        // We reverse to maintain correct ranges for subsequent inserts.
+        for mention in mentions.reversed() {
+            let attachment = MentionTextAttachment(user: mention.user)
+            let attributedString = NSAttributedString(attachment: attachment)
+            mutable.replaceCharacters(in: mention.range, with: attributedString)
+        }
+        
+        attributedText = mutable
+    }
+    
+    private func mentionAttachmentsWithRange() -> [(MentionTextAttachment, NSRange)] {
+        var result = [(MentionTextAttachment, NSRange)]()
+        attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { attributes, range, _ in
+            if let attachment = attributes[.attachment] as? MentionTextAttachment {
+                result.append((attachment, range))
+            }
+        }
+        return result
+    }
+
     /// Set when newline is entered, used for auto list item creation.
     private var newlineFlag = false
     

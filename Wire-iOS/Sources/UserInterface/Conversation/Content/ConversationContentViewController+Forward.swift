@@ -57,26 +57,26 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     if message.isText {
         let fetchLinkPreview = !Settings.shared().disableLinkPreviews
         ZMUserSession.shared()?.performChanges {
-            conversations.forEachNonEphemeral { _ = $0.appendMessage(withText: message.textMessageData!.messageText, fetchLinkPreview: fetchLinkPreview) }
+            conversations.forEachNonEphemeral { _ = $0.append(text: message.textMessageData!.messageText!, mentions: message.textMessageData!.mentions, fetchLinkPreview: fetchLinkPreview) }
         }
     }
-    else if message.isImage {
+    else if message.isImage, let imageData = message.imageMessageData?.imageData {
         ZMUserSession.shared()?.performChanges {
-            conversations.forEachNonEphemeral { _ = $0.appendMessage(withImageData: message.imageMessageData!.imageData) }
+            conversations.forEachNonEphemeral { _ = $0.append(imageFromData: imageData) }
         }
     }
     else if message.isVideo || message.isAudio || message.isFile {
         let url  = message.fileMessageData!.fileURL!
         FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
             ZMUserSession.shared()?.performChanges {
-                conversations.forEachNonEphemeral { _ = $0.appendMessage(with: fileMetadata) }
+                conversations.forEachNonEphemeral { _ = $0.append(file: fileMetadata) }
             }
         }
     }
     else if message.isLocation {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
         ZMUserSession.shared()?.performChanges {
-            conversations.forEachNonEphemeral { _ = $0.appendMessage(with: locationData) }
+            conversations.forEachNonEphemeral { _ = $0.append(location: locationData) }
         }
     }
     else {

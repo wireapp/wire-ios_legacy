@@ -33,10 +33,11 @@ class Message_FormattingTests: XCTestCase {
 
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = text
-        let range = textMessageData.messageText.range(of: previewURL)!
-        let offset = textMessageData.messageText.distance(from: textMessageData.messageText.startIndex, to: range.lowerBound)
         
         if (messageTemplate.contains("{preview-url}")) {
+            let range = textMessageData.messageText!.range(of: previewURL)!
+            let offset = textMessageData.messageText!.distance(from: textMessageData.messageText!.startIndex, to: range.lowerBound)
+            
             textMessageData.linkPreview = Article(originalURLString: previewURL, permanentURLString: previewURL, resolvedURLString: previewURL, offset: offset)
         }
         
@@ -48,7 +49,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {preview-url}")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [])
         
         // then
         XCTAssertEqual(formattedText.string, "text text")
@@ -59,7 +60,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {preview-url}")
 
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: true, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: true, obfuscated: false, mentions: [])
 
         // then
         XCTAssertEqual(formattedText.string, "text text \(previewURL)")
@@ -70,7 +71,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url}")
 
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: true, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: true, obfuscated: false, mentions: [])
 
         // then
         XCTAssertEqual(formattedText.string, previewURL)
@@ -81,7 +82,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {regular-url} {preview-url}")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [])
         
         // then
         XCTAssertEqual(formattedText.string, "text text \(regularURL)")
@@ -92,7 +93,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "text text {preview-url} {regular-url}")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [])
         
         // then
         XCTAssertEqual(formattedText.string, "text text \(previewURL) \(regularURL)")
@@ -103,7 +104,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url} text text")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [])
         
         // then
         XCTAssertEqual(formattedText.string, "\(previewURL) text text")
@@ -114,7 +115,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url} {regular-url} text text")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [])
         
         // then
         XCTAssertEqual(formattedText.string, "\(previewURL) \(regularURL) text text")
@@ -125,7 +126,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{regular-url} {preview-url} text text")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [])
         
         // then
         XCTAssertEqual(formattedText.string, "\(regularURL) \(previewURL) text text")
@@ -136,7 +137,7 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url}")
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [])
         
         // then
         XCTAssertEqual(formattedText.string, "")
@@ -147,10 +148,77 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "hello:{preview-url}") // NSDataDetector gets confused by this text
         
         // when
-        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false)
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [])
         
         // then
         XCTAssertEqual(formattedText.string, "hello:")
     }
 
+    func testMentionLinkOverridesDetectedLink() {
+        // given
+        let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url}@mention")
+        
+        // when
+        let mockUser = MockUser.mockUsers()[0]
+        mockUser.remoteIdentifier = UUID()
+        
+        let mention = Mention(range: (textMessageData.messageText! as NSString).range(of: "@mention"), user: mockUser)
+        textMessageData.mentions = [mention]
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
+        
+        // then
+        XCTAssertEqual(formattedText.string, "\(previewURL)@mention")
+        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
+    }
+    
+    func testMentionLinkOverridesDetectedLink_mentionBefore() {
+        // given
+        let textMessageData = createTextMessageData(withMessageTemplate: "@mention{preview-url} lala")
+        
+        // when
+        let mockUser = MockUser.mockUsers()[0]
+        mockUser.remoteIdentifier = UUID()
+        
+        let mention = Mention(range: (textMessageData.messageText! as NSString).range(of: "@mention"), user: mockUser)
+        textMessageData.mentions = [mention]
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
+        
+        // then
+        XCTAssertEqual(formattedText.string, "@mention\(previewURL) lala")
+        XCTAssertEqual(formattedText.attributes(at: 0, effectiveRange: nil)[.link] as! URL, mention.link)
+        let linkDetected = formattedText.attributes(at: mention.range.location + mention.range.length + 1, effectiveRange: nil)[.link] as! URL
+        XCTAssertEqual(linkDetected.absoluteString, previewURL)
+    }
+    
+    func testThatItUsesCorrectUTF16OffsetForMention() {
+        // given
+        let textMessageData = createTextMessageData(withMessageTemplate: "Z͉̬͎̞̙ͅA̻̹͉̪̰͐̂ͯ̈̔L̵̝͍̒̇̄͋̂ͬG̴͈̬̝̝̙̺̀̌̎ͭ̇̚O̿̔ͪ̓̋ͭ҉̘̻̗̜̗͎̗@͍ͣͯ́ͨ̄̆̐Z̾ͪ̾ͥ̎Ả͖̫͔̮ͪͧ̔ͨ̀L̰͖̹͚̲̈́ͩ͋͒̅G̴͆Ö̬̬̰̱̦̱͛̅̔ͩ̇̔")
+        
+        // when
+        let mockUser = MockUser.mockUsers()[0]
+        mockUser.remoteIdentifier = UUID()
+        
+        let mention = Mention(range: NSRange(location: 57, length: 54), user: mockUser)
+        textMessageData.mentions = [mention]
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
+        
+        // then
+        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
+    }
+    
+    func testThatItUsesCorrectUTF16OffsetForMention_Emoji() {
+        // given
+        let textMessageData = createTextMessageData(withMessageTemplate: "Hello 👩‍❤️‍💋‍👩! @👨‍👨‍👧‍👦")
+        
+        // when
+        let mockUser = MockUser.mockUsers()[0]
+        mockUser.remoteIdentifier = UUID()
+        
+        let mention = Mention(range: NSRange(location: 19, length: 12), user: mockUser)
+        textMessageData.mentions = [mention]
+        let formattedText = NSAttributedString.formattedString(with: Message.linkAttachments(textMessageData), forMessage: textMessageData, isGiphy: false, obfuscated: false, mentions: [mention])
+        
+        // then
+        XCTAssertEqual(formattedText.attributes(at: mention.range.location + 1, effectiveRange: nil)[.link] as! URL, mention.link)
+    }
 }

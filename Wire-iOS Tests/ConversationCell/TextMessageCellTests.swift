@@ -301,7 +301,7 @@ extension TextMessageCellTests {
 
 // MARK: - Helpers
 
-private extension TextMessageCell {
+extension TextMessageCell {
 
     func prepareForSnapshot() -> UIView {
         self.backgroundColor = .clear
