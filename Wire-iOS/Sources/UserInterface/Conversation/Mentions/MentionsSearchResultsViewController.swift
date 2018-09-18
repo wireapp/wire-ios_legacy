@@ -83,6 +83,24 @@ class MentionsSearchResultsViewController: UIViewController {
         pendingSearchTask?.cancel()
         pendingSearchTask = nil
     }
+    
+    func show() {
+        self.view.alpha = 0.0
+        self.view.isHidden = false
+        UIView.animate(withDuration: 0.25) {
+            self.view.alpha = 1.0
+        }
+    }
+    
+    func dismiss() {
+        UIView.animate(withDuration: 0.25, animations: {
+            self.view.alpha = 0.0
+        }) { (completed) in
+            if completed {
+                self.view.isHidden = true
+            }
+        }
+    }
 }
 
 extension MentionsSearchResultsViewController: UICollectionViewDelegate {
