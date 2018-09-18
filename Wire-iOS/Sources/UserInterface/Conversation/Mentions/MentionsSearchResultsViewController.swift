@@ -26,8 +26,7 @@ class MentionsSearchResultsViewController: UIViewController {
             searchDirectory = SearchDirectory(userSession: session)
         }
         
-        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
-        
+        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -46,12 +45,8 @@ class MentionsSearchResultsViewController: UIViewController {
             collectionView.bottom == selfView.bottom
             collectionView.leading == selfView.leading
             collectionView.trailing == selfView.trailing
-            //collectionView.top == selfView.top
             tableViewHeight = collectionView.height == 0
         }
-        
-        collectionView.setNeedsLayout()
-        collectionView.layoutIfNeeded()
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,7 +54,7 @@ class MentionsSearchResultsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func searchForUsers(with name: String) {
+    @objc func searchForUsers(with name: String) {
         pendingSearchTask?.cancel()
         
         let request = SearchRequest(query: query,
@@ -77,14 +72,11 @@ class MentionsSearchResultsViewController: UIViewController {
         reloadTable(with: result.contacts)
     }
     
-    func reloadTable(with results: [ZMUser]) {
+    @objc func reloadTable(with results: [ZMUser]) {
         searchResults = results
         tableViewHeight?.constant = CGFloat(min(3, searchResults.count)) * rowHeight
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.reloadData()
-        
-        collectionView.setNeedsLayout()
-        collectionView.layoutIfNeeded()
     }
     
     func cancelPreviousSearch() {
@@ -106,16 +98,18 @@ extension MentionsSearchResultsViewController: UICollectionViewDelegate {
 
 extension MentionsSearchResultsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width, height: rowHeight)
+        return CGSize(width: collectionView.bounds.size.width, height: rowHeight)
     }
 }
 
 extension MentionsSearchResultsViewController: UICollectionViewDataSource {
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         let user = searchResults[indexPath.item]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         cell.configure(with: user)
         return cell
     }
+    
 }
