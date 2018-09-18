@@ -1269,6 +1269,7 @@
 		F12CDAE31E4386A100CEFCEB /* ChangeHandleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAE21E4386A100CEFCEB /* ChangeHandleViewController.swift */; };
 		F12CDAE71E43880100CEFCEB /* RegistrationTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */; };
 		F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */; };
+		F12EAF73214FB6FF00B00AD9 /* MentionsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12EAF72214FB6FE00B00AD9 /* MentionsHandler.swift */; };
 		F14FB864214941160012A131 /* MentionsTextAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14FB863214941160012A131 /* MentionsTextAttachment.swift */; };
 		F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15E9BFC1E4878AC00EA207F /* UINavigationController+Additions.swift */; };
 		F16426F61FCC0FE200D2ABFC /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16426F51FCC0FE200D2ABFC /* UIColor+Hex.swift */; };
@@ -3001,6 +3002,7 @@
 		F12CDAE21E4386A100CEFCEB /* ChangeHandleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeHandleViewController.swift; sourceTree = "<group>"; };
 		F12CDAE61E43880100CEFCEB /* RegistrationTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationTextViewCell.swift; sourceTree = "<group>"; };
 		F12CDAEA1E43886A00CEFCEB /* DecriptionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecriptionHeaderView.swift; sourceTree = "<group>"; };
+		F12EAF72214FB6FE00B00AD9 /* MentionsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsHandler.swift; sourceTree = "<group>"; };
 		F144171A1FD9469100CB2850 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		F144171B1FD9469100CB2850 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		F144171C1FD9469200CB2850 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -5134,6 +5136,7 @@
 				EF2C59EC20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift */,
 				EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */,
 				EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */,
+				F12EAF72214FB6FE00B00AD9 /* MentionsHandler.swift */,
 				EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */,
 				F16E8EA7214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift */,
 				BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */,
@@ -7522,6 +7525,7 @@
 				5EF4A6E220F3C4A300A9EF22 /* GiphyCollectionViewCell.swift in Sources */,
 				EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */,
 				EEF28EEA1F1613DA007642E2 /* MarkdownBarView.swift in Sources */,
+				F12EAF73214FB6FF00B00AD9 /* MentionsHandler.swift in Sources */,
 				BF5DF5C320F4A51F002BCB67 /* GroupParticipantsDetailViewController.swift in Sources */,
 				87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */,
 				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,

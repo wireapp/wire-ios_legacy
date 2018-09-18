@@ -49,15 +49,25 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             sendOrEditText(candidateText, mentions: inputBar.textView.mentions)
             return false
         }
-        
-        // TODO: Integrate with suggestions pop-up
-        // Start mentioning
+
+        // Enter mentioning flow
         if text == "@" {
-            let user: UserType = conversation.connectedUser ?? conversation.sortedOtherParticipants.randomElement() ?? ZMUser.selfUser()
-            let attachment = MentionTextAttachment(user: user)
-            let attributedString = NSAttributedString(attachment: attachment)
-            textView.attributedText = textView.attributedText + attributedString
-            return false
+            self.mentionsHandler = MentionsHandler(atSymbolRange: range)
+        } else if let handler = mentionsHandler, let previousText = textView.text {
+            // In mentioning flow
+            let currentText = previousText.replacingCharacters(in: Range(range, in: previousText)!, with: text)
+            if handler.shouldReplaceMention(in: currentText) {
+                let searchString = handler.searchString(in: currentText)
+                let fetchRequest = ZMUser.sortedFetchRequest(with: ZMUser.predicateForConnectedUsers(withSearch: "@" + searchString))
+                let users = (ZMUserSession.shared()?.managedObjectContext.executeFetchRequestOrAssert(fetchRequest) as? [ZMUser]) ?? []
+                if let user = users.first {
+                    let attachment = MentionTextAttachment(user: user)                    
+                    textView.attributedText = handler.replace(mention: attachment, in: textView.attributedText)
+                }
+                mentionsHandler = nil
+            }
+        } else {
+            mentionsHandler = nil
         }
 
         inputBar.textView.respondToChange(text, inRange: range)
@@ -66,9 +76,9 @@ extension ConversationInputBarViewController: UITextViewDelegate {
 
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         guard mode != .audioRecord else { return true }
-        guard delegate.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:isEditingMessage:))) else { return true }
+        guard delegate?.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:isEditingMessage:))) == true else { return true }
 
-        return delegate.conversationInputBarViewControllerShouldBeginEditing!(self, isEditingMessage: (nil != editingMessage))
+        return delegate?.conversationInputBarViewControllerShouldBeginEditing?(self, isEditingMessage: (nil != editingMessage)) ?? true
     }
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
@@ -78,9 +88,9 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     }
 
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        guard delegate.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) else { return true }
+        guard delegate?.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) == true else { return true }
 
-        return delegate.conversationInputBarViewControllerShouldEndEditing!(self)
+        return delegate?.conversationInputBarViewControllerShouldEndEditing?(self) ?? true
     }
 
     public func textViewDidEndEditing(_ textView: UITextView) {
