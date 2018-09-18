@@ -67,7 +67,7 @@ extension Notification.Name {
         let lengthAdjusted: [(MentionTextAttachment, NSRange)] = mentionAttachmentsWithRange().map { (attachment, range) in
             let length = attachment.attributedText.string.count
             let adjustedRange = NSRange(location: range.location + locationOffset, length: length)
-            locationOffset += length
+            locationOffset += length - 1 // Adjust for the length 1 attachment that we replaced.
             
             return (attachment, adjustedRange)
         }
@@ -75,6 +75,24 @@ extension Notification.Name {
         return lengthAdjusted.map { attachment, range in
             Mention(range: range, user: attachment.user)
         }
+    }
+    
+    func setDraftMessage(_ draft: DraftMessage) {
+        setText(draft.text, withMentions: draft.mentions)
+    }
+
+    func setText(_ newText: String, withMentions mentions: [Mention]) {
+        text = newText
+        let mutable = NSMutableAttributedString(attributedString: attributedText)
+
+        // We reverse to maintain correct ranges for subsequent inserts.
+        for mention in mentions.reversed() {
+            let attachment = MentionTextAttachment(user: mention.user)
+            let attributedString = NSAttributedString(attachment: attachment)
+            mutable.replaceCharacters(in: mention.range, with: attributedString)
+        }
+        
+        attributedText = mutable
     }
     
     private func mentionAttachmentsWithRange() -> [(MentionTextAttachment, NSRange)] {

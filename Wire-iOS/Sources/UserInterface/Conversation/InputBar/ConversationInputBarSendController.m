@@ -62,7 +62,6 @@
                 completionHandler();
             }
             [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
-
         }];
     }
 }
@@ -88,7 +87,7 @@
             // normal sending
             textMessage = [self.conversation appendText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
         }
-        self.conversation.draftMessageText = @"";
+        self.conversation.draftMessage = nil;
     } completionHandler:^{
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];
     }];
@@ -104,7 +103,7 @@
         textMessage = [self.conversation appendText:text mentions:mentions fetchLinkPreview:shouldFetchLinkPreview nonce:NSUUID.UUID];
         
         [self.conversation appendMessageWithImageData:data];
-        self.conversation.draftMessageText = @"";
+        self.conversation.draftMessage = nil;
     } completionHandler:^{
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionPhoto inConversation:self.conversation];
         [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionText inConversation:self.conversation];

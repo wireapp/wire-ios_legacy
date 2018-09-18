@@ -97,8 +97,14 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         if textView.text.count > 0 {
             conversation.setIsTyping(false)
         }
-        ZMUserSession.shared()?.enqueueChanges({() -> Void in
-            self.conversation.draftMessageText = textView.text
-        })
+        
+        guard let textView = textView as? MarkdownTextView else { preconditionFailure("Invalid textView class") }
+
+        ZMUserSession.shared()?.enqueueChanges {
+            self.conversation.draftMessage = DraftMessage(
+                text: textView.preparedText,
+                mentions: textView.mentions
+            )
+        }
     }
 }

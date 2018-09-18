@@ -205,10 +205,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createHourglassButton];
     [self createTypingIndicatorView];
     
-    if (self.conversation.hasDraftMessageText) {
-        self.inputBar.textView.text = self.conversation.draftMessageText;
+    if (self.conversation.hasDraftMessage) {
+        [self.inputBar.textView setDraftMessage:self.conversation.draftMessage];
     }
-    
+
     [self configureAudioButton:self.audioButton];
     [self configureEmojiButton:self.emojiButton];
     [self configureMarkdownButton];
