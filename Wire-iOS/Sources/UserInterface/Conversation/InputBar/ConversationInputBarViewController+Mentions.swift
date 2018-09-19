@@ -25,6 +25,7 @@ extension ConversationInputBarViewController {
     }
 
     @objc func mentionButtonTapped(sender: Any) {
-
+        inputBar.textView.text.append("@")
+        
     }
 }
