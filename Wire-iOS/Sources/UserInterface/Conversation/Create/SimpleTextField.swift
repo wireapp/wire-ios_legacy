@@ -85,6 +85,8 @@ class SimpleTextField: UITextField, Themeable {
 
         setupTextFieldProperties()
         applyColorScheme(colorSchemeVariant)
+
+        tintColor = .accent()
     }
 
     required init?(coder aDecoder: NSCoder) {
