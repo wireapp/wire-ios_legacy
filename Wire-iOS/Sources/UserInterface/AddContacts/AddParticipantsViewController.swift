@@ -109,7 +109,7 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate let emptyResultView: EmptySearchResultsView
     fileprivate var bottomConstraint: NSLayoutConstraint?
     fileprivate let backButtonDescriptor = BackButtonDescription()
-    private let bottomMargin: CGFloat = UIScreen.hasNotch ? 8 : 16
+    private let bottomMargin: CGFloat = UIScreen.hasBottomInset ? 8 : 16
 
     
     public weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
