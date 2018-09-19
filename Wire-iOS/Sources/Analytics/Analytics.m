@@ -20,7 +20,6 @@
 
 #import "Analytics.h"
 #import "Analytics+Internal.h"
-#import "AnalyticsProvider.h"
 #import "ZMUser+Additions.h"
 #import "WireSyncEngine+iOS.h"
 #import "ZMUser+Additions.h"

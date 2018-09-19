@@ -154,7 +154,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.setSuperProperty(name, value: stringValue as NSObject?)
     }
     
-    func setSuperProperty(_ name: String, value: NSObject?) {
+    func setSuperProperty(_ name: String, value: Any?) {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }
