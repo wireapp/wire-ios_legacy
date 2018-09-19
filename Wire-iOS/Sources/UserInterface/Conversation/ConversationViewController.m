@@ -194,6 +194,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.contentViewController.delegate = self;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;
+    self.inputBarController.mentionsView = self.contentViewController.mentionsSearchResultsViewController;
+    
+    //self.contentViewController.mentionsSearchResultsViewController.delegate = self.inputBarController
 }
 
 - (void)createOutgoingConnectionViewController

@@ -171,6 +171,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
     pinchImageGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
+    
+    [self createMentionsResultsView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -558,6 +560,18 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 }
 
 #pragma mark - Custom UI, utilities
+
+- (void) createMentionsResultsView {
+    
+    self.mentionsSearchResultsViewController = [[MentionsSearchResultsViewController alloc] init];
+    self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    // delegate here
+    
+    [self addChildViewController:self.mentionsSearchResultsViewController];
+    [self.view addSubview:self.mentionsSearchResultsViewController.view];
+    
+    [self.mentionsSearchResultsViewController.view autoPinEdgesToSuperviewEdges];
+}
 
 - (void)removeHighlightsAndMenu
 {
