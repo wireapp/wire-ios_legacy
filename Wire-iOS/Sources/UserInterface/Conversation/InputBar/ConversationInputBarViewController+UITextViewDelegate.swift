@@ -49,13 +49,20 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             sendOrEditText(candidateText, mentions: inputBar.textView.mentions)
             return false
         }
+        
+        let participants = conversation.activeParticipants.array as! [ZMUser]
+        let usersToSearch = participants.filter { user in
+            return user != ZMUser.selfUser() && !user.isServiceUser
+        }
 
         // Enter mentioning flow
         if text == "@" {
             self.mentionsHandler = MentionsHandler(atSymbolRange: range)
+            mentionsView?.search(in: usersToSearch, with: "") //search(with: "")
         } else if let handler = mentionsHandler, let previousText = textView.text {
             // In mentioning flow
             let currentText = previousText.replacingCharacters(in: Range(range, in: previousText)!, with: text)
+            
             if handler.shouldReplaceMention(in: currentText) {
                 let searchString = handler.searchString(in: currentText)
                 let fetchRequest = ZMUser.sortedFetchRequest(with: ZMUser.predicateForConnectedUsers(withSearch: "@" + searchString))
@@ -65,9 +72,11 @@ extension ConversationInputBarViewController: UITextViewDelegate {
                     textView.attributedText = handler.replace(mention: attachment, in: textView.attributedText)
                 }
                 mentionsHandler = nil
+                mentionsView?.dismissIfVisible()
             }
         } else {
             mentionsHandler = nil
+            mentionsView?.dismissIfVisible()
         }
 
         inputBar.textView.respondToChange(text, inRange: range)
@@ -106,5 +115,12 @@ extension ConversationInputBarViewController: UITextViewDelegate {
                 mentions: textView.mentions
             )
         }
+    }
+}
+
+extension ConversationInputBarViewController: MentionsSearchResultsViewControllerDelegate {
+    func didSelectUserToMention(_ user: ZMUser) {
+        mentionsView?.dismissIfVisible()
+        
     }
 }
