@@ -114,6 +114,11 @@ class SimpleTextField: UITextField, Themeable {
         return textRect.inset(by: self.textInsets)
     }
 
+    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let editingRect: CGRect = super.editingRect(forBounds: bounds)
+        return editingRect.inset(by: textInsets)
+    }
+
     // MARK: - Placeholder
 
     func attributedPlaceholderString(placeholder: String) -> NSAttributedString {
