@@ -1212,7 +1212,6 @@
 		EF883F292151190900B440CC /* UserCellSubtitleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF883F282151190900B440CC /* UserCellSubtitleProtocol.swift */; };
 		EF883F2B21511DD700B440CC /* people-15Sections.json in Resources */ = {isa = PBXBuildFile; fileRef = EF883F2A21511DD700B440CC /* people-15Sections.json */; };
 		EF883F2E215144B800B440CC /* Analytics+OptOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF883F2C215144B800B440CC /* Analytics+OptOut.swift */; };
-		EF883F2F215144B800B440CC /* Analytics+OptOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF883F2C215144B800B440CC /* Analytics+OptOut.swift */; };
 		EF883F8A2152476900B440CC /* ConversationCreationControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF883F892152476900B440CC /* ConversationCreationControllerSnapshotTests.swift */; };
 		EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */; };
 		EF8DD906211C67DA00E970F1 /* ImageMessageCell+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD905211C67D900E970F1 /* ImageMessageCell+BackgroundColor.swift */; };
@@ -7852,7 +7851,6 @@
 				EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */,
 				EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */,
 				8742C2F11E533AC400329FB6 /* NSAttributedStringHighlightTests.swift in Sources */,
-				EF883F2F215144B800B440CC /* Analytics+OptOut.swift in Sources */,
 				EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */,
 				EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */,
 				EF21A06B21305C4000B9120C /* ConversationTitleViewTests.swift in Sources */,
