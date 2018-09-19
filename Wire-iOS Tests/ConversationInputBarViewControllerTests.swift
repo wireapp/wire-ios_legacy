@@ -59,7 +59,9 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     func prepareSut() {
-        sut = ConversationInputBarViewController(conversation: ZMConversation(remoteID: UUID(), createIfNeeded: true, in: self.uiMOC)!)
+        let conversation = ZMConversation.insertNewObject(in: uiMOC)
+        conversation.remoteIdentifier = .create()
+        sut = ConversationInputBarViewController(conversation: conversation)
 
         sut.view.layoutIfNeeded()
         sut.view.layer.speed = 0
