@@ -26,6 +26,7 @@ final class ConversationCreationControllerSnapshotTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = ConversationCreationController()
+        accentColor = .violet
     }
     
     override func tearDown() {
