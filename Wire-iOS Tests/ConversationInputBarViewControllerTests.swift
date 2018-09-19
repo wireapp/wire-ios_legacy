@@ -58,25 +58,20 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
         super.setUp()
     }
 
-    func prepareSut() {
-        let conversation = ZMConversation.insertNewObject(in: uiMOC)
-        conversation.remoteIdentifier = .create()
-        sut = ConversationInputBarViewController(conversation: conversation)
-
-        sut.view.layoutIfNeeded()
-        sut.view.layer.speed = 0
-
-        sut.viewDidLoad()
-    }
-
     func testNormalState(){
-        prepareSut()
-        self.verifyInAllPhoneWidths(view: sut.view)
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
+        
+        // THEN
+        verifyInAllPhoneWidths(view: sut.view)
     }
 
     func testAudioRecorderTouchBegan(){
         // GIVEN
-        prepareSut()
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
+        
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -91,7 +86,9 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
 
     func testAudioRecorderTouchChanged(){
         // GIVEN
-        prepareSut()
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
+        
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -107,7 +104,9 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
 
     func testAudioRecorderTouchEnded(){
         // GIVEN
-        prepareSut()
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
+        
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
 
@@ -126,7 +125,8 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
 extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){
         // GIVEN
-        prepareSut()
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
 
         // WHEN
         sut.mode = .timeoutConfguration
@@ -138,8 +138,9 @@ extension ConversationInputBarViewControllerTests {
 
     func testEphemeralTimeNone(){
         // GIVEN
-        prepareSut()
-
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
+        
         // WHEN
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(.none)
