@@ -26,7 +26,18 @@ extension UIScreen {
         }
         return UIEdgeInsets(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
-    
+
+    static var hasBottomInset: Bool {
+        if #available(iOS 11, *) {
+            guard let window = UIApplication.shared.keyWindow else { return false }
+            let insets = window.safeAreaInsets
+
+            return insets.bottom > 0
+        }
+
+        return false
+    }
+
     @objc static var hasNotch: Bool {
         if #available(iOS 12, *) {
             ///on iOS12 insets.top == 20 on device without notch.
