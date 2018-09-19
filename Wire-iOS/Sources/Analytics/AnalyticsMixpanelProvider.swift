@@ -123,7 +123,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return id
         }
     }
-    
+
+    public func flush(completion: (() -> Void)?) {
+        mixpanelInstance?.flush(completion: completion)
+    }
+
     public var isOptedOut: Bool {
         get {
             return mixpanelInstance?.hasOptedOutTracking() ?? true

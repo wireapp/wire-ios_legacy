@@ -34,9 +34,16 @@ extension Analytics {
 
             if newValue {
                 tagEvent("settings.opted_out_tracking")
-                delay(10) {
-                    self.provider?.isOptedOut = newValue
-                    self.provider = nil
+
+                if let provider = provider as? AnalyticsMixpanelProvider,
+                    provider.isKind(of: AnalyticsMixpanelProvider.self) {
+                    provider.flush() {
+                        self.provider?.isOptedOut = newValue
+                        self.provider = nil
+                    }
+                } else {
+                    provider?.isOptedOut = newValue
+                    provider = nil
                 }
             } else {
                 provider = AnalyticsProviderFactory.shared.analyticsProvider()
