@@ -571,10 +571,6 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     [self.view addSubview:self.mentionsSearchResultsViewController.view];
     
     [self.mentionsSearchResultsViewController.view autoPinEdgesToSuperviewEdges];
-    
-    
-    [self.mentionsSearchResultsViewController reloadTableWith:[self.conversation.activeParticipants array]];
-    
 }
 
 - (void)removeHighlightsAndMenu

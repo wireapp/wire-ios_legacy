@@ -24,7 +24,7 @@ import Cartography
 }
 
 @objc protocol MentionsSearchResultsViewProtocol {
-    func searchForUsers(with name: String)
+    func search(in users: [ZMUser], with query: String)
     func dismissIfVisible()
 }
 
@@ -33,8 +33,6 @@ class MentionsSearchResultsViewController: UIViewController {
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var searchResults: [ZMUser] = []
     private var query: String = ""
-    private var pendingSearchTask: SearchTask? = nil
-    private var searchDirectory: SearchDirectory?
     private var tableViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     
@@ -43,10 +41,6 @@ class MentionsSearchResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let session = ZMUserSession.shared() {
-            searchDirectory = SearchDirectory(userSession: session)
-        }
-        
         setupCollectionView()
         setupConstraints()
     }
@@ -69,6 +63,9 @@ class MentionsSearchResultsViewController: UIViewController {
 
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(collectionView)
+        
+        view.accessibilityIdentifier = "mentions.list.container"
+        collectionView.accessibilityIdentifier = "mentions.list.collection"
     }
 
     private func setupConstraints() {
@@ -80,10 +77,6 @@ class MentionsSearchResultsViewController: UIViewController {
         }
     }
     
-    private func handleSearchResult(result: SearchResult, isCompleted: Bool) {
-        reloadTable(with: result.contacts)
-    }
-    
     @objc func reloadTable(with results: [ZMUser]) {
         searchResults = results
         
@@ -93,11 +86,12 @@ class MentionsSearchResultsViewController: UIViewController {
         collectionView.isScrollEnabled = (minValue == viewHeight)
         
         collectionView.reloadData()
-    }
-    
-    func cancelPreviousSearch() {
-        pendingSearchTask?.cancel()
-        pendingSearchTask = nil
+        
+        if minValue > 0 {
+            show()
+        } else {
+            dismissIfVisible()
+        }
     }
     
     func show() {
@@ -112,21 +106,35 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
         self.view.isHidden = true
     }
     
-    func searchForUsers(with name: String) {
+    func search(in users: [ZMUser], with query: String) {
         
-        show()
+        var results: [ZMUser] = []
         
-        pendingSearchTask?.cancel()
+        defer { reloadTable(with: results) }
         
-        let request = SearchRequest(query: query,
-                                    searchOptions: [.contacts, .teamMembers],
-                                    team: ZMUser.selfUser().team)
-        let task = searchDirectory?.perform(request)
+        if query == "" {
+            results = users
+            return
+        }
         
-        task?.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
-        task?.start()
+        let query = query.lowercased().normalized() as String
+        let rules: [ ((ZMUser) -> Bool) ] = [
+            { $0.name?.lowercased().normalized()?.hasPrefix(query) ?? false },
+            { $0.nameTokens.first(where: { $0.lowercased().normalized()?.hasPrefix(query) ?? false }) != nil },
+            { $0.handle?.lowercased().normalized()?.hasPrefix(query) ?? false },
+            { $0.name?.lowercased().normalized().contains(query) ?? false },
+            { $0.handle?.lowercased().normalized()?.contains(query) ?? false }
+        ]
         
-        pendingSearchTask = task
+        var foundUsers = Set<ZMUser>()
+        
+        rules.forEach { rule in
+            let matches = users.filter({ rule($0) }).filter { !foundUsers.contains($0) }
+                .sorted(by: { $0.name < $1.name })
+            foundUsers = foundUsers.union(matches)
+            results = results + matches
+        }
+        
     }
 }
 
@@ -159,5 +167,11 @@ extension MentionsSearchResultsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.didSelectUserToMention(searchResults[indexPath.item])
         dismissIfVisible()
+    }
+}
+
+extension ZMUser {
+    public var nameTokens: [String] {
+        return self.name?.components(separatedBy: CharacterSet.alphanumerics.inverted) ?? []
     }
 }

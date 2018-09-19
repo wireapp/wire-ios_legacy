@@ -49,11 +49,16 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             sendOrEditText(candidateText, mentions: inputBar.textView.mentions)
             return false
         }
+        
+        let participants = conversation.activeParticipants.array as! [ZMUser]
+        let usersToSearch = participants.filter { user in
+            return user != ZMUser.selfUser() && !user.isServiceUser
+        }
 
         // Enter mentioning flow
         if text == "@" {
             self.mentionsHandler = MentionsHandler(atSymbolRange: range)
-            mentionsView?.searchForUsers(with: "")
+            mentionsView?.search(in: usersToSearch, with: "") //search(with: "")
         } else if let handler = mentionsHandler, let previousText = textView.text {
             // In mentioning flow
             let currentText = previousText.replacingCharacters(in: Range(range, in: previousText)!, with: text)
