@@ -33,9 +33,11 @@ extension Analytics {
             }
 
             if newValue {
-                tagEvent("settings.opted_out_tracking") ///TODO: do not nil til?? tagged
-                provider?.isOptedOut = newValue
-//                provider = nil
+                tagEvent("settings.opted_out_tracking")
+                delay(10) {
+                    self.provider?.isOptedOut = newValue
+                    self.provider = nil
+                }
             } else {
                 provider = AnalyticsProviderFactory.shared.analyticsProvider()
                 team = ZMUser.selfUser()?.team
