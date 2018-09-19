@@ -723,6 +723,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationViewController (InputBar)
 
+- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions
+{
+    [self.inputBarController.sendController sendTextMessage:text mentions:mentions];
+}
+
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing
 {
     if (! self.contentViewController.isScrolledToBottom && !isEditing) {

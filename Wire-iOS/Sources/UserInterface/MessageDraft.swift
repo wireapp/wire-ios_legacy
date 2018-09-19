@@ -58,7 +58,7 @@ import Down
         
         if let attributedMessage = attributedMessage, !attributedMessage.string.isEmpty {
             let parser = AttributedStringParser()
-            text += parser.parse(attributedString: attributedMessage.withDecodedMarkdownIDs)
+            text += parser.parse(attributedString: attributedMessage.withDecodedMarkdownIDs).string
         }
         else if let message = message, !message.isEmpty {
             text += message

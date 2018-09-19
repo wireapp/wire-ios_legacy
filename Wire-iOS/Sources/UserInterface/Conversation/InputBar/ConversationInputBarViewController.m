@@ -46,13 +46,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface ConversationInputBarViewController (Commands)
-
-- (void)runCommand:(NSArray *)args;
-
-@end
-
-
 
 @interface ConversationInputBarViewController (CameraViewController)
 - (void)cameraButtonPressed:(id)sender;
@@ -606,10 +599,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)commandReturnPressed
 {
-    NSString *candidateText = self.inputBar.textView.preparedText;
-    if (nil != candidateText) {
-        [self sendOrEditText:candidateText mentions:self.inputBar.textView.mentions];
-    }
+    [self sendText];
 }
 
 - (void)upArrowPressed
@@ -786,34 +776,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)sendOrEditText:(NSString *)text mentions:(NSArray <Mention *>*)mentions
-{
-    NSString *candidateText = [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-    BOOL conversationWasNotDeleted = self.conversation.managedObjectContext != nil;
-    
-    if (self.inputBar.isEditing && nil != self.editingMessage) {
-        NSString *previousText = [self.editingMessage.textMessageData.messageText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-        if (![candidateText isEqualToString:previousText]) {
-            [self sendEditedMessageAndUpdateStateWithText:candidateText mentions:mentions];
-        }
-        
-        return;
-    }
-    
-    if (candidateText.length && conversationWasNotDeleted) {
-        
-        [self clearInputBar];
-        
-        NSArray *args = candidateText.args;
-        if(args.count > 0) {
-            [self runCommand:args];
-        }
-        else {
-            [self.sendController sendTextMessage:candidateText mentions:mentions];
-        }
-    }
-}
-
 #pragma mark - Animations
 
 - (void)bounceCameraIcon;
@@ -981,25 +943,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
-    if ([self checkMessageLength]){
-        [self sendOrEditText:self.inputBar.textView.preparedText mentions:self.inputBar.textView.mentions];
-    }
-}
-
--(BOOL)checkMessageLength
-{
-    BOOL allowed = self.inputBar.textView.text.length <= (NSUInteger)SharedConstants.maximumMessageLength;
-    
-    if(!allowed) {
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"conversation.input_bar.message_too_long.message", nil), SharedConstants.maximumMessageLength];
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"conversation.input_bar.message_too_long.title", nil)
-                                                                       message:message
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    
-    return allowed;
+    [self sendText];
 }
 
 @end
@@ -1060,20 +1004,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (changeInfo.availabilityChanged) {
         [self updateAvailabilityPlaceholder];
     }
-}
-
-@end
-
-
-@implementation ConversationInputBarViewController (Commands)
-
-- (void)runCommand:(NSArray *)args
-{
-    if (args.count == 0) {
-        return;
-    }
-    
-    [self.sendController sendTextMessage:[NSString stringWithFormat:@"/%@", [args componentsJoinedByString:@" "]] mentions:@[]];
 }
 
 @end

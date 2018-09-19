@@ -43,38 +43,21 @@ extension Notification.Name {
     
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
-    var preparedText: String {
-        var mentionRanges = mentionAttachmentsWithRange().map { attachment, range in
-            (range, attachment.attributedText.string)
-        }
+    var preparedText: (String, [Mention]) {
+        
+        let markdownText = parser.parse(attributedString: attributedText)
+        let mentions = self.mentions(from: markdownText)
         
         // We reverse to maintain correct ranges for subsequent inserts.
-        mentionRanges.reverse()
-
-        let withMentions = NSMutableAttributedString(attributedString: attributedText)
-
-        // Replace the text attachment with the mention text content.
-        mentionRanges.forEach(withMentions.replaceCharacters)
-
-        return parser.parse(attributedString: withMentions)
-    }
-    
-    /// The mentions contained in the text, should be used to insert a message with mentions.
-    var mentions: [Mention] {
-        var locationOffset = 0
+        let mentionRanges = mentionAttachmentsWithRange(from: markdownText).map ({ attachment, range in
+            (range, attachment.attributedText.string)
+        }).reversed()
         
-        // As text attachments always have a length of 1 we have to adjust and offset the ranges of mentions.
-        let lengthAdjusted: [(MentionTextAttachment, NSRange)] = mentionAttachmentsWithRange().map { (attachment, range) in
-            let length = attachment.attributedText.string.count
-            let adjustedRange = NSRange(location: range.location + locationOffset, length: length)
-            locationOffset += length - 1 // Adjust for the length 1 attachment that we replaced.
-            
-            return (attachment, adjustedRange)
-        }
-
-        return lengthAdjusted.map { attachment, range in
-            Mention(range: range, user: attachment.user)
-        }
+        // Replace the text attachment with the mention text content.
+        let markdownTextWithMentions = NSMutableString(string: markdownText.string)
+        mentionRanges.forEach(markdownTextWithMentions.replaceCharacters)
+        
+        return (markdownTextWithMentions as String, mentions)
     }
     
     func setDraftMessage(_ draft: DraftMessage) {
@@ -95,7 +78,20 @@ extension Notification.Name {
         attributedText = mutable
     }
     
-    private func mentionAttachmentsWithRange() -> [(MentionTextAttachment, NSRange)] {
+    private func mentions(from attributedText: NSAttributedString) -> [Mention] {
+        var locationOffset = 0
+        let mentions: [Mention] = mentionAttachmentsWithRange(from: attributedText).map { tuple in
+            let (attachment, range) = tuple
+            let length = attachment.attributedText.string.count
+            let adjustedRange = NSRange(location: range.location + locationOffset, length: length)
+            locationOffset += length - 1 // Adjust for the length 1 attachment that we replaced.
+            
+            return Mention(range: adjustedRange, user: attachment.user)
+        }
+        return mentions
+    }
+    
+    private func mentionAttachmentsWithRange(from attributedText: NSAttributedString) -> [(MentionTextAttachment, NSRange)] {
         var result = [(MentionTextAttachment, NSRange)]()
         attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { attributes, range, _ in
             if let attachment = attributes[.attachment] as? MentionTextAttachment {

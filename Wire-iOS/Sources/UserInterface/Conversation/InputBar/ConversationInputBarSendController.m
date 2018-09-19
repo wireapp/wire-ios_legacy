@@ -73,7 +73,7 @@
     __block id<ZMConversationMessage> textMessage = nil;
     [[ZMUserSession sharedSession] enqueueChanges:^{
         
-        if([Settings sharedSettings].shouldSend500Messages) {
+        if ([Settings sharedSettings].shouldSend500Messages) {
             [Settings sharedSettings].shouldSend500Messages = NO;
             // This is a debug function to stress-load the client
             for(int i = 0; i < 500; ++i) {
