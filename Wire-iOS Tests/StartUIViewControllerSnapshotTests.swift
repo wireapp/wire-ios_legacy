@@ -16,9 +16,31 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface ContactsCell ()
+import XCTest
+@testable import Wire
 
-@property (nonatomic) UILabel *userNameLabel;
-@property (nonatomic) UILabel *userSubtitleLabel;
+final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
+    
+    var sut: StartUIViewController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = StartUIViewController()
+        sut.view.backgroundColor = .black
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
-@end
+    func testForNoContact() {
+        MockUser.mockSelf().isTeamMember = false
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+
+    func testForNoContactWhenSelfIsTeamMember() {
+        MockUser.mockSelf().isTeamMember = true
+        verifyInAllIPhoneSizes(view: sut.view)
+    }
+}

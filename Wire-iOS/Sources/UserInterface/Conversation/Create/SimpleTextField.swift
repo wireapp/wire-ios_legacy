@@ -85,6 +85,8 @@ class SimpleTextField: UITextField, Themeable {
 
         setupTextFieldProperties()
         applyColorScheme(colorSchemeVariant)
+
+        tintColor = .accent()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -112,6 +114,11 @@ class SimpleTextField: UITextField, Themeable {
         let textRect = super.textRect(forBounds: bounds)
 
         return textRect.inset(by: self.textInsets)
+    }
+
+    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let editingRect: CGRect = super.editingRect(forBounds: bounds)
+        return editingRect.inset(by: textInsets)
     }
 
     // MARK: - Placeholder

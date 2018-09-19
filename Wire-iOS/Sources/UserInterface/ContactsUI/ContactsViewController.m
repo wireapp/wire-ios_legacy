@@ -25,8 +25,6 @@
 #import "ContactsViewController+Internal.h"
 #import "ContactsDataSource.h"
 #import "ContactsViewController+ShareContacts.h"
-#import "ContactsCell.h"
-#import "ContactsSectionHeaderView.h"
 #import "UIView+Zeta.h"
 #import "Constants.h"
 #import "ColorScheme.h"
@@ -40,28 +38,15 @@
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-static NSString * const ContactsViewControllerCellID = @"ContactsCell";
-static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
 
 
-@interface ContactsViewController () <TokenFieldDelegate, UITableViewDelegate, ContactsDataSourceDelegate>
-@property (nonatomic) TokenField *tokenField;
-@property (nonatomic, readwrite) UITableView *tableView;
+@interface ContactsViewController ()
 @property (nonatomic) Button *inviteOthersButton;
-@property (nonatomic) IconButton *cancelButton;
-@property (nonatomic) NSArray *actionButtonTitles;
 @property (nonatomic) ContactsEmptyResultView *emptyResultsView;
 
-@property (nonatomic) BOOL searchResultsReceived;
-
 // Containers, ect.
-@property (nonatomic) UIView *topContainerView;
-@property (nonatomic) UIView *separatorView;
 @property (nonatomic) NSLayoutConstraint *bottomContainerBottomConstraint;
 @property (nonatomic) NSLayoutConstraint *emptyResultsBottomConstraint;
-@property (nonatomic) NSLayoutConstraint *titleLabelHeightConstraint;
-@property (nonatomic) NSLayoutConstraint *closeButtonTopConstraint;
-
 @end
 
 
@@ -74,6 +59,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     
     if (self) {
         _colorSchemeVariant = [ColorScheme defaultColorScheme].variant;
+
+        self.shouldShowShareContactsViewController = YES;
     }
     
     return self;
@@ -87,26 +74,13 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     
     [self setupViews];
     [self setupLayout];
-    
+
     BOOL shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser.hasTeam;
-    if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip) {
+    if (self.sharingContactsRequired && ! [[AddressBookHelper sharedHelper] isAddressBookAccessGranted] && !shouldSkip && self.shouldShowShareContactsViewController) {
         [self presentShareContactsViewController];
     }
 
     [self setupStyle];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.tokenField resignFirstResponder];
-    [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -138,15 +112,9 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     self.titleLabel.text = self.title;
     self.titleLabel.textColor = [colorScheme colorWithName:ColorSchemeColorTextForeground];
     [self.topContainerView addSubview:self.titleLabel];
-    
-    self.tokenField = [[TokenField alloc] initForAutoLayout];
-    self.tokenField.delegate = self;
-    self.tokenField.textColor = [colorScheme colorWithName:ColorSchemeColorTextForeground];
-    self.tokenField.textView.accessibilityIdentifier = @"textViewSearch";
-    self.tokenField.textView.placeholder = NSLocalizedString(@"contacts_ui.search_placeholder", @"");
-    self.tokenField.textView.keyboardAppearance = [ColorScheme keyboardAppearanceForVariant:self.colorSchemeVariant];
-    [self.topContainerView addSubview:self.tokenField];
-    
+
+    [self createSearchHeader];
+
     self.cancelButton = [[IconButton alloc] initForAutoLayout];
     [self.cancelButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeSearchBar forState:UIControlStateNormal];
     self.cancelButton.accessibilityIdentifier = @"ContactsViewCloseButton";
@@ -199,34 +167,36 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)setupLayout
 {
-    [self.topContainerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
-    [self.topContainerView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.separatorView];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.topContainerView autoSetDimension:ALDimensionHeight toSize:62];
-    }];
-    
+    [self createTopContainerConstraints];
+
     CGFloat standardOffset = 24.0f;
 
-    [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
+    self.titleLabelTopConstraint = [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:UIScreen.safeArea.top];
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:standardOffset];
     [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:standardOffset];
-        
+    self.titleLabelBottomConstraint = [self.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:standardOffset];
+
     self.titleLabelHeightConstraint = [self.titleLabel autoSetDimension:ALDimensionHeight toSize:44.0f];
     self.titleLabelHeightConstraint.active = (self.titleLabel.text.length > 0);
-    
+
+    [self createSearchHeaderConstraints];
+
     [self.separatorView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
     [self.separatorView autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:standardOffset];
     [self.separatorView autoSetDimension:ALDimensionHeight toSize:0.5f];
     [self.separatorView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.tableView];
 
     [self.separatorView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.emptyResultsView];
-    [self.tableView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 0, 0, 0) excludingEdge:ALEdgeTop];
-    
+
+    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
+    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
+    [self.tableView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.bottomContainerView withOffset:0];
+
     [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     self.emptyResultsBottomConstraint = [self.emptyResultsView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
 
-    [self.noContactsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.tokenField withOffset:standardOffset];
+    [self.noContactsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view withOffset:standardOffset];
     [self.noContactsLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.view withOffset:standardOffset];
     [self.noContactsLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
     
@@ -240,25 +210,17 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     [self.bottomContainerSeparatorView autoSetDimension:ALDimensionHeight toSize:0.5];
     
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, bottomContainerHeight, 0);
-    
-    [self.tokenField autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
-    [self.tokenField autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    [self.tokenField autoPinEdge:ALEdgeTrailing toEdge:ALEdgeLeading ofView:self.cancelButton withOffset:- standardOffset / 2];
-    [self.tokenField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.tokenField autoSetContentHuggingPriorityForAxis:ALAxisVertical];
-    }];
-    
+
     self.closeButtonTopConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:16 + UIScreen.safeArea.top];
     self.closeButtonTopConstraint.active = (self.titleLabel.text.length > 0);
     
     [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:8];
+        self.closeButtonBottomConstraint = [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:8];
     }];
 
     [self.cancelButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:16];
     [self.cancelButton autoSetDimension:ALDimensionWidth toSize:16];
-    [self.cancelButton autoSetDimension:ALDimensionHeight toSize:16];
+    self.closeButtonHeightConstraint = [self.cancelButton autoSetDimension:ALDimensionHeight toSize:16];
     
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:standardOffset];
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:standardOffset];
@@ -345,16 +307,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
                                  }];
 }
 
-- (void)updateEmptyResults
-{
-    BOOL showEmptyResults = self.searchResultsReceived && ! [self.tableView numberOfTotalRows];
-    BOOL showNoContactsLabel = ! [self.tableView numberOfTotalRows] && (self.dataSource.searchQuery.length == 0) && !self.tokenField.userDidConfirmInput;
-    self.noContactsLabel.hidden = ! showNoContactsLabel;
-    self.bottomContainerView.hidden = (self.dataSource.searchQuery.length > 0) || showEmptyResults;
-    
-    [self setEmptyResultsHidden:! showEmptyResults animated:showEmptyResults];
-}
-
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated
 {
     void (^setHiddenBlock)(BOOL) = ^(BOOL hidden) {
@@ -388,74 +340,6 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
     }
 }
 
-#pragma mark - TokenFieldDelegate
-
-- (void)tokenField:(TokenField *)tokenField changedTokensTo:(NSArray *)tokens
-{
-    NSArray *tokenFieldSelection = [tokens valueForKey:NSStringFromSelector(@selector(representedObject))];
-    [self.dataSource setSelection:[NSOrderedSet orderedSetWithArray:tokenFieldSelection]];
-}
-
-- (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text
-{
-    self.dataSource.searchQuery = text ? text : @"";
-    [self updateEmptyResults];
-}
-
-- (void)tokenFieldDidConfirmSelection:(TokenField *)controller
-{
-    if (self.tokenField.tokens.count == 0) {
-        [self updateEmptyResults];
-        return;
-    }
-    if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidConfirmSelection:)]) {
-        [self.delegate contactsViewControllerDidConfirmSelection:self];
-    }
-}
-
-#pragma mark - ContactsDataSourceDelegate
-
-- (UITableViewCell *)dataSource:(ContactsDataSource *)dataSource cellForUser:(ZMSearchUser *)user atIndexPath:(NSIndexPath *)indexPath
-{
-    ContactsCell *cell = (ContactsCell *)[self.tableView dequeueReusableCellWithIdentifier:ContactsViewControllerCellID forIndexPath:indexPath];
-    cell.searchUser = user;
-    cell.sectionIndexShown = self.dataSource.shouldShowSectionIndex;
-    
-    @weakify(cell);
-    @weakify(self);
-    cell.actionButtonHandler = ^(ZMSearchUser * __nullable user) {
-        @strongify(cell);
-        @strongify(self);
-        if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:actionButton:pressedForUser:)]) {
-            [self.contentDelegate contactsViewController:self actionButton:cell.actionButton pressedForUser:user];
-        }
-        if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:shouldDisplayActionButtonForUser:)]) {
-            cell.actionButton.hidden = ! [self.contentDelegate contactsViewController:self shouldDisplayActionButtonForUser:user];
-        }
-    };
-    
-    if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:shouldDisplayActionButtonForUser:)]) {
-        cell.actionButton.hidden = ! [self.contentDelegate contactsViewController:self shouldDisplayActionButtonForUser:user];
-    } else {
-        cell.actionButton.hidden = YES;
-    }
-    
-    if (! cell.actionButton.hidden) {
-        if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:actionButtonTitleIndexForUser:)]) {
-            NSUInteger index = [self.contentDelegate contactsViewController:self actionButtonTitleIndexForUser:user];
-            NSString *titleString = self.actionButtonTitles[index];
-            cell.allActionButtonTitles = self.actionButtonTitles;
-            [cell.actionButton setTitle:titleString forState:UIControlStateNormal];
-        }
-    }
-    
-    if ([dataSource.selection containsObject:user]) {
-        [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    }
-    
-    return cell;
-}
-
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didReceiveSearchResult:(NSArray * __nonnull)newUsers
 {
     self.searchResultsReceived = YES;
@@ -466,7 +350,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didSelectUser:(ZMSearchUser *)user
 {
-    [self.tokenField addToken:[[Token alloc] initWithTitle:user.displayName representedObject:user]];
+    [self.searchHeaderViewController.tokenField addToken:[[Token alloc] initWithTitle:user.displayName representedObject:user]];
     [UIView performWithoutAnimation:^{
         [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
     }];
@@ -474,45 +358,14 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)dataSource:(ContactsDataSource * __nonnull)dataSource didDeselectUser:(ZMSearchUser *)user
 {
-    Token *token = [self.tokenField tokenForRepresentedObject:user];
+    Token *token = [self.searchHeaderViewController.tokenField tokenForRepresentedObject:user];
     
     if (token != nil) {
-        [self.tokenField removeToken:token];
+        [self.searchHeaderViewController.tokenField removeToken:token];
     }
     [UIView performWithoutAnimation:^{
         [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
     }];
-}
-
-#pragma mark - UITableViewDelegate
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    ContactsSectionHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:ContactsViewControllerSectionHeaderID];
-    headerView.titleLabel.text = [self.dataSource tableView:tableView titleForHeaderInSection:section];
-    return headerView;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.dataSource selectUser:[self.dataSource userAtIndexPath:indexPath]];
-}
-
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ZMSearchUser *user = [self.dataSource userAtIndexPath:indexPath];
-    if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:shouldSelectUser:)] && [self.contentDelegate contactsViewController:self shouldSelectUser:user]) {
-        return indexPath;
-    } else if ([self.contentDelegate respondsToSelector:@selector(contactsViewController:didSelectCell:forUser:)]) {
-        [self.contentDelegate contactsViewController:self didSelectCell:[self.tableView cellForRowAtIndexPath:indexPath] forUser:user];
-    }
-    
-    return nil;
-}
-
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.dataSource deselectUser:[self.dataSource userAtIndexPath:indexPath]];
 }
 
 #pragma mark - Send Invite

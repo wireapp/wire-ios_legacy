@@ -24,7 +24,6 @@
 #import "ContactsViewController+Private.h"
 #import "ContactsDataSource.h"
 #import "ZClientViewController.h"
-#import "ContactsCell.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
@@ -44,7 +43,7 @@
         self.dataSource = [[ContactsDataSource alloc] init];
         self.dataSource.searchQuery = @"";
         
-        self.title = NSLocalizedString(@"contacts_ui.title", @"");
+        self.title = [NSLocalizedString(@"contacts_ui.title", @"") uppercaseString];
     }
     
     return self;

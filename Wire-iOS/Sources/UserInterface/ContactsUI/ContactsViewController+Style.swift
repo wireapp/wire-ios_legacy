@@ -29,4 +29,12 @@ extension ContactsViewController {
         noContactsLabel.font = .normalLightFont
         noContactsLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }
+
+    var numTableRows: UInt {
+        if let tableView = tableView {
+            return tableView.numberOfTotalRows()
+        } else {
+            return 0
+        }
+    }
 }

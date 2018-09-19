@@ -31,8 +31,6 @@
 @import WireExtensionComponents;
 #import "ParticipantDeviceCell.h"
 #import "ParticipantDeviceCell+Internal.h"
-#import "ContactsCell.h"
-#import "ContactsCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "ConversationCell.h"
@@ -82,7 +80,7 @@
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
-#import "ContactsSectionHeaderView.h"
+#import "UITableView+RowCount.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
@@ -144,6 +142,7 @@
 #import "TermsOfUseStepViewController.h"
 #import "TermsOfUseStepViewController+Private.h"
 #import "PermissionDeniedViewController.h"
+#import "ShareContactsViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

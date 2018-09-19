@@ -18,13 +18,24 @@
 
 import Foundation
 
-extension ContactsSectionHeaderView {
-    @objc func setupStyle() {
-        titleLabel.font = .smallSemiboldFont
-        titleLabel.textColor = .textForeground
+enum PhoneWidth: CGFloat {
+    case iPhone4 = 320
+    case iPhone4_7 = 375
+}
 
-        contentView.backgroundColor = .background
+extension UITableViewCell {
 
-        backgroundView?.backgroundColor = .clear
+    func prepareForSnapshots(width: PhoneWidth = .iPhone4_7) -> UITableView {
+        setNeedsLayout()
+        layoutIfNeeded()
+
+        bounds.size = systemLayoutSizeFitting(
+            CGSize(width: width.rawValue, height: 0),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+
+        return wrapInTableView()
     }
+
 }
