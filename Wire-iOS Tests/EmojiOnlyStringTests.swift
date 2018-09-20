@@ -22,22 +22,18 @@ import XCTest
 @testable import Wire
 
 class EmojiOnlyStringTests: XCTestCase {
-    func testThatEmoji5IsDetected() {
+    
+    func testThatCommonEmojisAreDetected() {
         // given
-        let commonEmoji = ["🧘🏿‍♀️", "🧡", "🦒 "]
-
+        let commonEmoji = ["©️", "ℹ️", "☘️", "⏰️", "➰️", "♥️",
+                           "😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁",
+                           "❤︎", "❤️", "🈚︎", //emoji variation
+                           "👩", "👩🏻", "👩🏼", "👩🏽", "👩🏾", "👩🏿", //Fitzpatrick modifiers
+                           "🧘🏿‍♀️", "🧡", "🦒", "🧦" ///Emoji 5.0
+        ]
         // then
         commonEmoji.forEach {
             XCTAssert($0.containsOnlyEmojiWithSpaces, "Failed: \($0)")
-        }
-    }
-
-    func testThatCommonEmojisAreDetected() {
-        // given
-        let commonEmoji = ["ℹ️", "☘️", "⏰️", "⏱️", "⏲️", "⏳️", "😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁"]
-        // then
-        commonEmoji.forEach {
-            XCTAssert($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
         }
     }
     
@@ -61,10 +57,7 @@ class EmojiOnlyStringTests: XCTestCase {
     
     func testThatNewEmojisAreDetected() {
         // given
-        let newEmoji = [//"💪🏾",
-                        "🤘🏼",
-//                        "👶🏼", "💅🏼"
-        ]
+        let newEmoji = ["💪🏾", "🤘🏼", "👶🏼", "💅🏼"]
         // then
         newEmoji.forEach {
             XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
@@ -112,7 +105,7 @@ class EmojiOnlyStringTests: XCTestCase {
         let languageEmojiStrings = ["😜ḀẀẶỳ", "👯ठःअठी३", "👯勺卉善爨", "👯Ёжик"]
         // then
         languageEmojiStrings.forEach {
-            XCTAssertFalse($0.wr_containsOnlyEmojiWithSpaces())
+            XCTAssertFalse($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
         }
     }
     
