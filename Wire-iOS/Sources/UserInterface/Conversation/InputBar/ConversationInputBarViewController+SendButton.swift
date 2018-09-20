@@ -33,4 +33,32 @@ extension ConversationInputBarViewController {
         inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
         createSendButtonConstraints()
     }
+        
+    @objc func sendText() {
+        let (text, mentions) = inputBar.textView.preparedText
+        
+        guard !showAlertIfTextIsTooLong(text: text) else { return }
+        
+        if inputBar.isEditing, let message = editingMessage {
+            guard message.textMessageData?.messageText != text else { return }
+            
+            delegate?.conversationInputBarViewControllerDidFinishEditing?(message, withText: text, mentions: mentions)
+            editingMessage = nil
+            updateWritingState(animated: true)
+        } else {
+            clearInputBar()
+            delegate?.conversationInputBarViewControllerDidComposeText(text, mentions: mentions)
+        }
+    }
+    
+    func showAlertIfTextIsTooLong(text: String) -> Bool {
+        guard text.count > SharedConstants.maximumMessageLength else { return false }
+        
+        self.showAlert(forMessage: "conversation.input_bar.message_too_long.message".localized,
+                       title: "conversation.input_bar.message_too_long.title".localized,
+                       handler: nil)
+        
+        return true
+    }
+    
 }

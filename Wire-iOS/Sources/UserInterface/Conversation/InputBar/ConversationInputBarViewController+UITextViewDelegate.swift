@@ -45,8 +45,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         // send only if send key pressed
         if textView.returnKeyType == .send && (text == "\n") {
             inputBar.textView.autocorrectLastWord()
-            let candidateText = inputBar.textView.preparedText
-            sendOrEditText(candidateText, mentions: inputBar.textView.mentions)
+            sendText()
             return false
         }
         
@@ -100,9 +99,10 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         guard let textView = textView as? MarkdownTextView else { preconditionFailure("Invalid textView class") }
 
         ZMUserSession.shared()?.enqueueChanges {
+            let (text, mentions) = textView.preparedText
             self.conversation.draftMessage = DraftMessage(
-                text: textView.preparedText,
-                mentions: textView.mentions
+                text: text,
+                mentions: mentions
             )
         }
     }

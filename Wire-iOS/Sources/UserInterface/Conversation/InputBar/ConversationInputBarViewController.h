@@ -42,6 +42,8 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 
 @protocol ConversationInputBarViewControllerDelegate <NSObject>
 
+- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions;
+
 @optional
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing;
 - (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller;
