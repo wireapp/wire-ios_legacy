@@ -25,10 +25,11 @@ extension NSString {
 }
 
 extension Unicode.Scalar {
-    var isEmoji: Bool {
+    var isEmojiComponent: Bool {
         switch self.value {
         case 0x200D,       // Zero width joiner
         0x2030...0x329F,   // Misc symbols
+        0xE007F,           // Cancel Tag
         0xFE00...0xFE0F:   // Variation Selectors
             return true
         default:
@@ -43,13 +44,21 @@ extension String {
     }
     
     var containsOnlyEmoji: Bool {
-        guard self.count > 0 else { return false }
+        guard count > 0 else { return false }
         
-        for scalar in unicodeScalars {
-            if !CharacterSet.symbols.contains(scalar) &&
-                !scalar.isEmoji
-            {
-                return false
+        let flag = Unicode.Scalar(0x1F3F4)!
+        
+        for char in self {
+            // some national flags are combination of black flag and characters
+            if char.unicodeScalars.contains(flag) {
+                continue
+            }
+            
+            for scalar in char.unicodeScalars {
+                if !CharacterSet.symbols.contains(scalar) &&
+                    !scalar.isEmojiComponent {
+                    return false
+                }
             }
         }
         
