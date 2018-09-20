@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import MobileCoreServices
 import Down
 
 extension Notification.Name {
@@ -44,18 +45,9 @@ extension Notification.Name {
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
     var preparedText: (String, [Mention]) {
-        
         let markdownText = parser.parse(attributedString: attributedText)
         let mentions = self.mentions(from: markdownText)
-        
-        // We reverse to maintain correct ranges for subsequent inserts.
-        let mentionRanges = mentionAttachmentsWithRange(from: markdownText).map ({ attachment, range in
-            (range, attachment.attributedText.string)
-        }).reversed()
-        
-        // Replace the text attachment with the mention text content.
-        let markdownTextWithMentions = NSMutableString(string: markdownText.string)
-        mentionRanges.forEach(markdownTextWithMentions.replaceCharacters)
+        let markdownTextWithMentions = replaceMentionAttachmentsWithPlainText(in: markdownText)
         
         return (markdownTextWithMentions as String, mentions)
     }
@@ -91,6 +83,19 @@ extension Notification.Name {
         return mentions
     }
     
+    private func replaceMentionAttachmentsWithPlainText(in attributedText: NSAttributedString) -> String {
+        let textWithPlainTextMentions = NSMutableString(string: attributedText.string)
+        
+        // We reverse to maintain correct ranges for subsequent inserts.
+        let mentionRanges = mentionAttachmentsWithRange(from: attributedText).map ({ attachment, range in
+            (range, attachment.attributedText.string)
+        }).reversed()
+        
+        mentionRanges.forEach(textWithPlainTextMentions.replaceCharacters)
+        
+        return textWithPlainTextMentions as String
+    }
+    
     private func mentionAttachmentsWithRange(from attributedText: NSAttributedString) -> [(MentionTextAttachment, NSRange)] {
         var result = [(MentionTextAttachment, NSRange)]()
         attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { attributes, range, _ in
@@ -118,6 +123,13 @@ extension Notification.Name {
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
         }
+    }
+    
+    override func copy(_ sender: Any?) {
+        let copiedAttributedText = attributedText.attributedSubstring(from: selectedRange)
+        let copiedAttributedTextPlainText = replaceMentionAttachmentsWithPlainText(in: copiedAttributedText)
+    
+        UIPasteboard.general.setValue(copiedAttributedTextPlainText, forPasteboardType: kUTTypeUTF8PlainText as String)
     }
     
     public override var selectedTextRange: UITextRange? {
