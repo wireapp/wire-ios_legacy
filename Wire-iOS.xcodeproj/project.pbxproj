@@ -390,7 +390,6 @@
 		871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */; };
 		871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */; };
 		871BC27D1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */; };
-		871BC27F1D34F8F800DF0793 /* NSString+Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F41D34F8F800DF0793 /* NSString+Emoji.m */; };
 		871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */; };
 		871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F91D34F8F800DF0793 /* UIAlertController+Wire.m */; };
 		871BC2841D34F8F800DF0793 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */; };
@@ -1244,6 +1243,7 @@
 		EFB23D0A1FC852380055B866 /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */; };
 		EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF61B33F1FC84B0100D8E631 /* AccessoryTextFieldValidationTests.swift */; };
 		EFBCC90F2152A93F006AAB70 /* AnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBCC90E2152A93F006AAB70 /* AnalyticsProvider.swift */; };
+		EFBCC9112153EA36006AAB70 /* String+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBCC9102153EA36006AAB70 /* String+Emoji.swift */; };
 		EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */; };
 		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
 		EFC8E217212C67E400BE7BBE /* PingCell+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8E216212C67E300BE7BBE /* PingCell+Style.swift */; };
@@ -1844,8 +1844,6 @@
 		871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebLinkTextView.m; sourceTree = "<group>"; };
 		871BC1EF1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAMediaTimingFunction+AdditionalEquations.h"; sourceTree = "<group>"; };
 		871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAMediaTimingFunction+AdditionalEquations.m"; sourceTree = "<group>"; };
-		871BC1F31D34F8F800DF0793 /* NSString+Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Emoji.h"; sourceTree = "<group>"; };
-		871BC1F41D34F8F800DF0793 /* NSString+Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Emoji.m"; sourceTree = "<group>"; };
 		871BC1F61D34F8F800DF0793 /* NSString+Fingerprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Fingerprint.h"; sourceTree = "<group>"; };
 		871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Fingerprint.m"; sourceTree = "<group>"; };
 		871BC1F81D34F8F800DF0793 /* UIAlertController+Wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Wire.h"; sourceTree = "<group>"; };
@@ -2987,6 +2985,7 @@
 		EFAFCA8B21342A1E002B31A6 /* ConversationListViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+Internal.h"; sourceTree = "<group>"; };
 		EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerTests.swift; sourceTree = "<group>"; };
 		EFBCC90E2152A93F006AAB70 /* AnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsProvider.swift; sourceTree = "<group>"; };
+		EFBCC9102153EA36006AAB70 /* String+Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Emoji.swift"; sourceTree = "<group>"; };
 		EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuConfigurationProperties.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
 		EFC8E216212C67E300BE7BBE /* PingCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PingCell+Style.swift"; sourceTree = "<group>"; };
@@ -4085,8 +4084,6 @@
 				CE8E4FB61DF17BBE0009F437 /* TextTransform */,
 				871BC1EF1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.h */,
 				871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */,
-				871BC1F31D34F8F800DF0793 /* NSString+Emoji.h */,
-				871BC1F41D34F8F800DF0793 /* NSString+Emoji.m */,
 				871BC1F61D34F8F800DF0793 /* NSString+Fingerprint.h */,
 				871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */,
 				871BC1F81D34F8F800DF0793 /* UIAlertController+Wire.h */,
@@ -4152,6 +4149,7 @@
 				87B48EBD20A050AA00DBAD9D /* ViewControllerDismisser.swift */,
 				BFF8CBDB2126E98300DB0330 /* InteractiveModalTransition.swift */,
 				5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */,
+				EFBCC9102153EA36006AAB70 /* String+Emoji.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7450,6 +7448,7 @@
 				AF58EC821E9FBCD800EB94CD /* ColorScheme+Helper.swift in Sources */,
 				AF36C5A31E9F681000FADECC /* DraftsRootViewController.swift in Sources */,
 				BFC47D84211DAA690021B3F2 /* GuestBarState.swift in Sources */,
+				EFBCC9112153EA36006AAB70 /* String+Emoji.swift in Sources */,
 				16C02A10204E964300811912 /* GroupConversationCell.swift in Sources */,
 				7CED307C1FD97895009F0DAC /* AvailabilityStringBuilder.swift in Sources */,
 				EF80462020CABE73001A1C53 /* ProfilePictureStepViewController+ImagePicker.swift in Sources */,
@@ -7493,7 +7492,6 @@
 				7CEB45281F8FAAC400D772D5 /* UINavigationBarContainer.swift in Sources */,
 				87A540A81E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift in Sources */,
 				AF58EC801E9FAB7700EB94CD /* DraftSendInputAccessoryView.swift in Sources */,
-				871BC27F1D34F8F800DF0793 /* NSString+Emoji.m in Sources */,
 				87AD89F71CB5179C002C6EC1 /* FileTransferCell.swift in Sources */,
 				BF0515251E390E10000D5C22 /* CopyableLabel.swift in Sources */,
 				EF21270C1FB9DFE300625A9B /* Country.m in Sources */,

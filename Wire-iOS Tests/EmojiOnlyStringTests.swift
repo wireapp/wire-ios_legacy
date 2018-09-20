@@ -22,9 +22,19 @@ import XCTest
 @testable import Wire
 
 class EmojiOnlyStringTests: XCTestCase {
+    func testThatEmoji5IsDetected() {
+        // given
+        let commonEmoji = ["🧘🏿‍♀️", "🧡", "🦒 "]
+
+        // then
+        commonEmoji.forEach {
+            XCTAssert($0.containsOnlyEmojiWithSpaces, "Failed: \($0)")
+        }
+    }
+
     func testThatCommonEmojisAreDetected() {
         // given
-        let commonEmoji = ["😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁"]
+        let commonEmoji = ["❤️", "😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁"]
         // then
         commonEmoji.forEach {
             XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces())
@@ -45,16 +55,19 @@ class EmojiOnlyStringTests: XCTestCase {
         let commonEmojiGroups = ["😜      🙏 🌝 😘", "    👍💩😂😍", "😁💁🙌 ", "👯 😻"]
         // then
         commonEmojiGroups.forEach {
-            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces())
+            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
         }
     }
     
     func testThatNewEmojisAreDetected() {
         // given
-        let newEmoji = ["💪🏾", "🤘🏼", "👶🏼", "💅🏼"]
+        let newEmoji = [//"💪🏾",
+                        "🤘🏼",
+//                        "👶🏼", "💅🏼"
+        ]
         // then
         newEmoji.forEach {
-            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces())
+            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
         }
     }
     
@@ -63,7 +76,7 @@ class EmojiOnlyStringTests: XCTestCase {
         let newEmojiGroups = ["💪🏾🤘🏼", "👶🏼💅🏼🤘🏼"]
         // then
         newEmojiGroups.forEach {
-            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces())
+            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
         }
     }
     
@@ -72,7 +85,7 @@ class EmojiOnlyStringTests: XCTestCase {
         let newEmojiGroupsWithSpaces = [" 💪🏾🤘🏼", "👶🏼 💅🏼    🤘🏼 "]
         // then
         newEmojiGroupsWithSpaces.forEach {
-            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces())
+            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
         }
     }
     

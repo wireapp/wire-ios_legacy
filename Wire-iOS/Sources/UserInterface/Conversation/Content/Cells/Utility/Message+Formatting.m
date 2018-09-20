@@ -24,7 +24,6 @@
 #import "NSString+EmoticonSubstitution.h"
 #import "Settings.h"
 #import "UIColor+WR_ColorScheme.h"
-#import "NSString+Emoji.h"
 #import "Wire-Swift.h"
 
 
