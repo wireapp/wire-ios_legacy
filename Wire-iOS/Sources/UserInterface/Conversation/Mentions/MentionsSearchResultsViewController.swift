@@ -36,7 +36,7 @@ class MentionsSearchResultsViewController: UIViewController {
     private var tableViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     
-    public var delegate: MentionsSearchResultsViewControllerDelegate?
+    @objc public weak var delegate: MentionsSearchResultsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
