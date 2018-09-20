@@ -20,21 +20,16 @@ import Foundation
 
 extension NSString {
     @objc func wr_containsOnlyEmojiWithSpaces() -> Bool {
-        let string: String = self as String
-
-        return string.containsOnlyEmojiWithSpaces
+        return (self as String).containsOnlyEmojiWithSpaces
     }
 }
 
 extension Unicode.Scalar {
-    //  ref: https://en.wikipedia.org/wiki/Emoji#Unicode_blocks
-    //       https://unicode.org/emoji/charts/full-emoji-list.html
     var isEmoji: Bool {
         switch self.value {
-        case 0x200D,            // Zero width joiner
-             0x2030...0x329F,   // Misc symbols
-             0xFE00...0xFE0F,   // Variation Selectors
-             0x1F000...0x1F9FF: // Emoji 5.0 range
+        case 0x200D,       // Zero width joiner
+        0x2030...0x329F,   // Misc symbols
+        0xFE00...0xFE0F:   // Variation Selectors
             return true
         default:
             return false
@@ -44,18 +39,20 @@ extension Unicode.Scalar {
 
 extension String {
     var containsOnlyEmojiWithSpaces: Bool {
-        let noSpaceString = components(separatedBy: .whitespaces).joined()
-        return noSpaceString.containsOnlyEmoji
+        return components(separatedBy: .whitespaces).joined().containsOnlyEmoji
     }
-
+    
     var containsOnlyEmoji: Bool {
         guard self.count > 0 else { return false }
+        
         for scalar in unicodeScalars {
-            if !scalar.isEmoji {
+            if !CharacterSet.symbols.contains(scalar) &&
+                !scalar.isEmoji
+            {
                 return false
             }
         }
-
+        
         return true
     }
 }
