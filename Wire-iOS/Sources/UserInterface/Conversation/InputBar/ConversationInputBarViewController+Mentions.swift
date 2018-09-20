@@ -25,7 +25,17 @@ extension ConversationInputBarViewController {
     }
 
     @objc func mentionButtonTapped(sender: Any) {
-        inputBar.textView.text.append("@")
-        
+        // TODO: Trigger mentioning flow
+    }
+}
+
+extension ConversationInputBarViewController: MentionsSearchResultsViewControllerDelegate {
+    func didSelectUserToMention(_ user: ZMUser) {
+        guard let handler = mentionsHandler else { return }
+
+        let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
+        inputBar.textView.attributedText = handler.replace(mention: user, in: text)
+        mentionsHandler = nil
+        mentionsView?.dismissIfVisible()
     }
 }

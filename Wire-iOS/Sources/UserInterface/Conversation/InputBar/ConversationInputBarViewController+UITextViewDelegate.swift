@@ -54,26 +54,16 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         let usersToSearch = participants.filter { user in
             return user != ZMUser.selfUser() && !user.isServiceUser
         }
+        let previousText = textView.text ?? ""
+        let currentText = previousText.replacingCharacters(in: Range(range, in: previousText)!, with: text)
 
         // Enter mentioning flow
         if text == "@" {
-            self.mentionsHandler = MentionsHandler(atSymbolRange: range)
-            mentionsView?.search(in: usersToSearch, with: "") //search(with: "")
-        } else if let handler = mentionsHandler, let previousText = textView.text {
-            // In mentioning flow
-            let currentText = previousText.replacingCharacters(in: Range(range, in: previousText)!, with: text)
-            
-            if handler.shouldReplaceMention(in: currentText) {
-                let searchString = handler.searchString(in: currentText)
-                let fetchRequest = ZMUser.sortedFetchRequest(with: ZMUser.predicateForConnectedUsers(withSearch: "@" + searchString))
-                let users = (ZMUserSession.shared()?.managedObjectContext.executeFetchRequestOrAssert(fetchRequest) as? [ZMUser]) ?? []
-                if let user = users.first {
-                    let attachment = MentionTextAttachment(user: user)                    
-                    textView.attributedText = handler.replace(mention: attachment, in: textView.attributedText)
-                }
-                mentionsHandler = nil
-                mentionsView?.dismissIfVisible()
-            }
+            self.mentionsHandler = MentionsHandler(text: currentText, range: range)
+        }
+
+        if let handler = mentionsHandler, let searchString = handler.searchString(in: currentText) {
+            mentionsView?.search(in: usersToSearch, with: searchString)
         } else {
             mentionsHandler = nil
             mentionsView?.dismissIfVisible()
@@ -118,9 +108,3 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     }
 }
 
-extension ConversationInputBarViewController: MentionsSearchResultsViewControllerDelegate {
-    func didSelectUserToMention(_ user: ZMUser) {
-        mentionsView?.dismissIfVisible()
-        
-    }
-}
