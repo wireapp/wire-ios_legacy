@@ -25,12 +25,14 @@ class EmojiOnlyStringTests: XCTestCase {
     
     func testThatCommonEmojisAreDetected() {
         // given
-        let commonEmoji = ["©️", "ℹ️", "☘️", "⏰️", "➰️", "♥️",
+        let commonEmoji = ["©️", "ℹ️", "☘️", "⏰️", "➰️", "♥️", "🀄️", "🇨🇭",
                            "😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁",
-                           "❤︎", "❤️", "🈚︎", //emoji variation
+                           "❤︎", "❤️", "🈚︎",  "🀄︎", //emoji variation
                            "👩", "👩🏻", "👩🏼", "👩🏽", "👩🏾", "👩🏿", //Fitzpatrick modifiers
-                           "🧘🏿‍♀️", "🧡", "🦒", "🧦" ///Emoji 5.0
+                           "👨‍👩‍👧", // Joining
+                           "🧘🏿‍♀️", "🧡", "🦒", "🧦", "🏴󠁧󠁢󠁷󠁬󠁳󠁿", "🧟‍♂️" ///Emoji 5.0
         ]
+        
         // then
         commonEmoji.forEach {
             XCTAssert($0.containsOnlyEmojiWithSpaces, "Failed: \($0)")
