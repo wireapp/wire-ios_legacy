@@ -34,10 +34,10 @@ class EmojiOnlyStringTests: XCTestCase {
 
     func testThatCommonEmojisAreDetected() {
         // given
-        let commonEmoji = ["❤️", "😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁"]
+        let commonEmoji = ["ℹ️", "☘️", "⏰️", "⏱️", "⏲️", "⏳️", "😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁"]
         // then
         commonEmoji.forEach {
-            XCTAssertTrue($0.wr_containsOnlyEmojiWithSpaces())
+            XCTAssert($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
         }
     }
     

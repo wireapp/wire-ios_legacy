@@ -32,10 +32,9 @@ extension Unicode.Scalar {
     var isEmoji: Bool {
         switch self.value {
         case 0x200D,            // Zero width joiner
-             0x2600...0x26FF,   // Misc symbols
-             0x2700...0x27BF,   // Dingbats
+             0x2030...0x329F,   // Misc symbols
              0xFE00...0xFE0F,   // Variation Selectors
-             0x1F210...0x1F9FF: // Emoji 5.0 range
+             0x1F000...0x1F9FF: // Emoji 5.0 range
             return true
         default:
             return false
