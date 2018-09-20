@@ -22,12 +22,9 @@ import Foundation
 
     let atSymbolIndex: Int
 
-    init(atSymbolRange: NSRange) {
-        self.atSymbolIndex = atSymbolRange.lowerBound
-    }
-
-    func shouldReplaceMention(in text: String) -> Bool {
-        return text.hasSuffix(" ")
+    init?(text: String, range: NSRange) {
+        guard text == "@" || text.hasSuffix("@") else { return nil }
+        atSymbolIndex = range.location
     }
 
     func mentionRange(in text: String, includingAtSymbol: Bool) -> Range<String.UTF16View.Index> {
@@ -37,14 +34,15 @@ import Foundation
         return range
     }
 
-    func searchString(in text: String) -> String {
+    func searchString(in text: String) -> String? {
+        let validIndex = (text.startIndex.encodedOffset..<text.endIndex.encodedOffset).contains(atSymbolIndex)
+        guard validIndex else { return nil }
         let range = mentionRange(in: text, includingAtSymbol: false)
-        let searchString = text[range]
-        return String(searchString)
+        return String(text[range])
     }
 
-    func replace(mention: MentionTextAttachment, in attributedString: NSAttributedString) -> NSAttributedString {
-        let mentionString = NSAttributedString(attachment: mention)
+    func replace(mention: UserType, in attributedString: NSAttributedString) -> NSAttributedString {
+        let mentionString = NSAttributedString(attachment: MentionTextAttachment(user: mention))
         let range = mentionRange(in: attributedString.string, includingAtSymbol: true)
         let nsRange = NSRange(range, in: attributedString.string)
         let mut = NSMutableAttributedString(attributedString: attributedString)
