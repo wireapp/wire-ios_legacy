@@ -146,7 +146,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
-            self.sessionManager?.localNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             self.sessionManager?.switchingDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
@@ -445,11 +444,7 @@ extension AppRootViewController: ZMRequestsToOpenViewsDelegate {
 
 // MARK: - Application Icon Badge Number
 
-extension AppRootViewController: LocalNotificationResponder {
-
-    func processLocal(_ notification: ZMLocalNotification, forSession session: ZMUserSession) {
-        (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)
-    }
+extension AppRootViewController {
 
     @objc fileprivate func applicationWillEnterForeground() {
         updateOverlayWindowFrame()
