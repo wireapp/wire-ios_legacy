@@ -46,8 +46,17 @@ extension ContactsViewController {
             searchHeader.leading == selfView.leading
             searchHeader.trailing == selfView.trailing
             searchHeaderTopConstraint = searchHeader.top == topContainerView.bottom
-            searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.top
             searchHeader.bottom == separatorView.top
+        }
+
+        if #available(iOS 11.0, *) {
+            constrain(searchHeaderViewController.view, self.view) {
+            searchHeader, selfView in         searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.safeAreaLayoutGuide.top
+            }
+        } else {
+            constrain(searchHeaderViewController.view, self.view) {
+                searchHeader, selfView in         searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.top
+            }
         }
 
         searchHeaderTopConstraint.isActive = false
