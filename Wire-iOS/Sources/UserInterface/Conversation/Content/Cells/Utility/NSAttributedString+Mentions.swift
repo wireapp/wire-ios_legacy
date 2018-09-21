@@ -97,10 +97,12 @@ extension NSMutableAttributedString {
         if user.isSelfUser {
             color = ColorScheme.default.color(named: .textForeground)
             if ColorScheme.default.variant == .dark {
-                backgroundColor = ColorScheme.default.accentColor.withAlphaComponent(0.48)
+//                backgroundColor = ColorScheme.default.accentColor.withAlphaComponent(0.48)
+                backgroundColor = UIColor.accent().withAlphaComponent(0.48)
             }
             else {
-                backgroundColor = ColorScheme.default.accentColor.withAlphaComponent(0.16)
+//                backgroundColor = ColorScheme.default.accentColor.withAlphaComponent(0.16)
+                backgroundColor = UIColor.accent().withAlphaComponent(0.16)
             }
         }
         else {
