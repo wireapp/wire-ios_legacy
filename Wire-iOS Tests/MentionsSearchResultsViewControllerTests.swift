@@ -48,26 +48,132 @@ class MentionsSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
     
-    func testThatSelfUserIsNotVisibleWithEmptyQuery() {
+    // Tests
+    
+    func testThatItSearchesByName() {
+        // given
+        let userWithDifferentNameAndHandle = ZMUser.insertNewObject(in: uiMOC)
+        userWithDifferentNameAndHandle.remoteIdentifier = UUID()
+        userWithDifferentNameAndHandle.name = "user"
+        userWithDifferentNameAndHandle.setHandle("test")
+        
+        let users = [otherUser, userWithDifferentNameAndHandle]
+        
+        // when
+        let results = sut.search(in: users as! [ZMUser], with: "user")
+        
+        // then
+        XCTAssertEqual(results.count, 1)
+        XCTAssertFalse(results.contains(otherUser))
+        XCTAssertTrue(results.contains(userWithDifferentNameAndHandle))
+    }
+    
+    func testThatItSearchesByHandle() {
+        // given
+        let userWithDifferentNameAndHandle = ZMUser.insertNewObject(in: uiMOC)
+        userWithDifferentNameAndHandle.remoteIdentifier = UUID()
+        userWithDifferentNameAndHandle.name = "user"
+        userWithDifferentNameAndHandle.setHandle("test")
+        
+        let users = [otherUser, userWithDifferentNameAndHandle]
+        
+        // when
+        let results = sut.search(in: users as! [ZMUser], with: "test")
+        
+        // then
+        XCTAssertEqual(results.count, 1)
+        XCTAssertFalse(results.contains(otherUser))
+        XCTAssertTrue(results.contains(userWithDifferentNameAndHandle))
+    }
+    
+    func testThatSelfUserIsNotIncludedWithEmptyQuery() {
+        // given
+        let users = [selfUser, otherUser]
+        
+        // when
+        let results = sut.search(in: users as! [ZMUser], with: "")
+        
+        // then
+        XCTAssertEqual(results.count, 1)
+        XCTAssertTrue(results.contains(otherUser))
+        XCTAssertFalse(results.contains(selfUser))
+    }
+    
+    func testThatSelfUserIsNotIncludedWithQuery() {
+        // given
+        let users = [selfUser, otherUser]
+        
+        // when
+        let results = sut.search(in: users as! [ZMUser], with: "u")
+        
+        // then
+        XCTAssertEqual(results.count, 1)
+        XCTAssertTrue(results.contains(otherUser))
+        XCTAssertFalse(results.contains(selfUser))
+    }
+    
+    func testThatConversationWithServiceUserDoesntReturnUsersWithEmptyQuery() {
+        // given
+        let users = [selfUser, serviceUser]
+        
+        // when
+        let results = sut.search(in: users as! [ZMUser], with: "")
+        
+        // then
+        XCTAssertEqual(results.count, 0)
+        XCTAssertFalse(results.contains(serviceUser))
+        XCTAssertFalse(results.contains(selfUser))
+    }
+    
+    func testThatConversationWithServiceUserDoesntReturnUsersWithQuery() {
+        // given
+        let users = [selfUser, serviceUser]
+        
+        // when
+        let results = sut.search(in: users as! [ZMUser], with: "u")
+        
+        // then
+        XCTAssertEqual(results.count, 0)
+        XCTAssertFalse(results.contains(serviceUser))
+        XCTAssertFalse(results.contains(selfUser))
+    }
+    
+    func testThatSelfAndServiceUsersAreNotIncludedWithEmptyQuery() {
+        // given
+        let users = [selfUser, otherUser, serviceUser]
+        
+        // when
+        let results = sut.search(in: users as! [ZMUser], with: "")
+        
+        // then
+        XCTAssertEqual(results.count, 1)
+        XCTAssertTrue(results.contains(otherUser))
+        XCTAssertFalse(results.contains(selfUser))
+    }
+    
+    func testThatSelfAndServiceUsersAreNotIncludedWithQuery() {
+        // given
+        let users = [selfUser, otherUser, serviceUser]
+        
+        // when
+        let results = sut.search(in: users as! [ZMUser], with: "u")
+        
+        // then
+        XCTAssertEqual(results.count, 1)
+        XCTAssertTrue(results.contains(otherUser))
+        XCTAssertFalse(results.contains(selfUser))
+    }
+    
+    // UI Tests
+    
+    func testThatShowsResultsInConversationWithEmptyQuery() {
         sut.search(in: [selfUser, otherUser], with: "")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
 
-    func testThatSelfUserIsNotVisibleInSearch() {
+    func testThatShowsResultsInConversationWithQuery() {
         sut.search(in: [selfUser, otherUser], with: "u")
-        guard let view = sut.view else { XCTFail(); return }
-        verify(view: view)
-    }
-    
-    func testThatServiceUserIsNotVisibleWithEmptyQuery() {
-        sut.search(in: [selfUser, otherUser, serviceUser], with: "")
-        guard let view = sut.view else { XCTFail(); return }
-        verify(view: view)
-    }
-    
-    func testThatServiceUserIsNotVisibleInSearch() {
-        sut.search(in: [selfUser, otherUser, serviceUser], with: "u")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }

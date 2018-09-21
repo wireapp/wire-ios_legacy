@@ -24,7 +24,7 @@ import Cartography
 }
 
 @objc protocol MentionsSearchResultsViewProtocol {
-    func search(in users: [ZMUser], with query: String)
+    @discardableResult func search(in users: [ZMUser], with query: String) -> [ZMUser] 
     func dismissIfVisible()
 }
 
@@ -106,7 +106,7 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
         self.view.isHidden = true
     }
     
-    func search(in users: [ZMUser], with query: String) {
+    @discardableResult func search(in users: [ZMUser], with query: String) -> [ZMUser] {
         
         var results: [ZMUser] = []
         
@@ -114,11 +114,13 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
             return !user.isSelfUser && !user.isServiceUser
         }
         
-        defer { reloadTable(with: results) }
+        defer {
+            reloadTable(with: results)
+        }
         
         if query == "" {
             results = usersToSearch
-            return
+            return results
         }
         
         let query = query.lowercased().normalized() as String
@@ -139,6 +141,7 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
             results = results + matches
         }
         
+        return results
     }
 }
 
