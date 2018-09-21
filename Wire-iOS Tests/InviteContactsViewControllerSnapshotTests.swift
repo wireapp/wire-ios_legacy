@@ -28,6 +28,8 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         sut = InviteContactsViewController()
         sut.shouldShowShareContactsViewController = false
         sut.view.backgroundColor = .black
+
+        recordMode = true
     }
 
     override func tearDown() {
