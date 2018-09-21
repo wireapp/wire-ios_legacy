@@ -58,7 +58,7 @@
     XCTAssertEqualObjects(config.substitutionRules[@":-)"], @"😊");
 }
 
-- (void)testThatParsingPerformanceForFullConfigurationIsEnoughForUsingOnMainQueue
+- (void)DISABLE_testThatParsingPerformanceForFullConfigurationIsEnoughForUsingOnMainQueue
 {
     // EmoticonSubstitutionConfiguration is intended to be used on main thread,
     // so performance is important: parsing should not take much time.
