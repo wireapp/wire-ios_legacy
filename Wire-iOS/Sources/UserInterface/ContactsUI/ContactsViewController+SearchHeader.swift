@@ -49,7 +49,7 @@ extension ContactsViewController {
         constrain(self.view, topContainerView) {selfView, topContainerView in
             topContainerView.leading == selfView.leading
             topContainerView.trailing == selfView.trailing
-            topContainerView.top == selfView.top + UIScreen.safeArea.top
+            topContainerView.top == selfView.top
             topContainerHeightConstraint = topContainerView.height == 0
         }
 
