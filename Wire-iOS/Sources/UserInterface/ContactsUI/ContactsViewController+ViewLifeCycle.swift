@@ -19,7 +19,7 @@
 import Foundation
 
 extension ContactsViewController {
-    
+
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -30,5 +30,6 @@ extension ContactsViewController {
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchHeaderViewController.tokenField.resignFirstResponder()
+    }
 }
 

@@ -34,7 +34,7 @@ extension ContactsViewController {
         constrain(self.view, topContainerView) {selfView, topContainerView in
             topContainerView.leading == selfView.leading
             topContainerView.trailing == selfView.trailing
-            topContainerView.top == selfView.top
+            topContainerView.top == selfView.topMargin
             topContainerHeightConstraint = topContainerView.height == 0
         }
 
@@ -45,9 +45,13 @@ extension ContactsViewController {
         constrain(searchHeaderViewController.view, self.view, topContainerView, separatorView) { searchHeader, selfView, topContainerView, separatorView in
             searchHeader.leading == selfView.leading
             searchHeader.trailing == selfView.trailing
-            searchHeader.top == topContainerView.bottom
+            searchHeaderTopConstraint = searchHeader.top == topContainerView.bottom
+            searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.top
             searchHeader.bottom == separatorView.top
         }
+
+        searchHeaderTopConstraint.isActive = false
+        searchHeaderWithNavigatorBarTopConstraint.isActive = true
     }
 
 

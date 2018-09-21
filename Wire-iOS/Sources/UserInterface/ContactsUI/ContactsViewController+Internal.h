@@ -44,6 +44,8 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @property (nonatomic) NSLayoutConstraint *closeButtonTopConstraint;
 @property (nonatomic) NSLayoutConstraint *closeButtonBottomConstraint;
 @property (nonatomic) NSLayoutConstraint *topContainerHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *searchHeaderTopConstraint;
+@property (nonatomic) NSLayoutConstraint *searchHeaderWithNavigatorBarTopConstraint;
 
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
 
