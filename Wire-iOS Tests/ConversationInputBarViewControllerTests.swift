@@ -42,7 +42,7 @@ final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
     }
 }
 
-final class MockAudioSession: AVAudioSessionType {
+final class MockAudioSession: NSObject, AVAudioSessionType {
     var recordPermission: AVAudioSession.RecordPermission = .granted
 }
 
@@ -65,8 +65,6 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
         sut.view.layoutIfNeeded()
 
         sut.audioSession = MockAudioSession()
-
-        recordMode = true
     }
 
     func testAudioRecorderTouchBegan() {
@@ -117,12 +115,6 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
         // OptionsViewControllerTests.testThatItRendersRevokeLinkConfirmationAlert()
         // is crashing when running a full test suite
         super.tearDown()
-    }
-
-    override func setUp() {
-        super.setUp()
-
-//        recordMode = true
     }
 
     func testNormalState(){
