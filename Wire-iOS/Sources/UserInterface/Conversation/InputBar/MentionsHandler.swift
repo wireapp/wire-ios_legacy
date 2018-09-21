@@ -26,7 +26,6 @@ import Foundation
 
     let mentionMatchRange: NSRange
     let searchQueryMatchRange: NSRange
-    var token: Any?
 
     init?(text: String?, cursorPosition: Int) {
         guard let text = text else { return nil }
