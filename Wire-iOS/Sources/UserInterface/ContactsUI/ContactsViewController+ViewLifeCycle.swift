@@ -19,18 +19,16 @@
 import Foundation
 
 extension ContactsViewController {
-    @objc func setupStyle() {
-        titleLabel?.textAlignment = .center
-        titleLabel?.font = .smallLightFont
-        titleLabel?.textTransform = .upper
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
-        bottomContainerView.backgroundColor = .background
-
-        noContactsLabel.font = .normalLightFont
-        noContactsLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        showKeyboardIfNeeded()
     }
 
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchHeaderViewController.tokenField.resignFirstResponder()
 }
+

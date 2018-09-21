@@ -20,21 +20,6 @@ import Foundation
 import Cartography
 
 extension ContactsViewController {
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-    }
-
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        showKeyboardIfNeeded()
-    }
-
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        searchHeaderViewController.tokenField.resignFirstResponder()
-    }
 
     @objc func createSearchHeader() {
         searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
@@ -62,6 +47,15 @@ extension ContactsViewController {
             searchHeader.trailing == selfView.trailing
             searchHeader.top == topContainerView.bottom
             searchHeader.bottom == separatorView.top
+        }
+    }
+
+
+    var numTableRows: UInt {
+        if let tableView = tableView {
+            return tableView.numberOfTotalRows()
+        } else {
+            return 0
         }
     }
 
