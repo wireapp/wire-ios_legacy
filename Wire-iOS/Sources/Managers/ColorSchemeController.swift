@@ -66,8 +66,7 @@ extension ColorSchemeController: ZMUserObserver {
 
         let colorScheme = ColorScheme.default
 
-        if let newAccentColor = UIColor.accent(),
-           !colorScheme.isCurrentAccentColor(newAccentColor) {
+        if !colorScheme.isCurrentAccentColor(UIColor.accent()) {
             notifyColorSchemeChange()
         }
     }
