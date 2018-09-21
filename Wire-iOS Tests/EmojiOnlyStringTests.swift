@@ -29,13 +29,14 @@ class EmojiOnlyStringTests: XCTestCase {
                            "😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁",
                            "❤︎", "❤️", "🈚︎",  "🀄︎", //emoji variation
                            "👩", "👩🏻", "👩🏼", "👩🏽", "👩🏾", "👩🏿", //Fitzpatrick modifiers
-                           "👨‍👩‍👧", // Joining
+                           "👨‍👩‍👧", "🏳️‍🌈", // Joining
                            "🧘🏿‍♀️", "🧡", "🦒", "🧦", "🏴󠁧󠁢󠁷󠁬󠁳󠁿", "🧟‍♂️" ///Emoji 5.0
         ]
         
         // then
         commonEmoji.forEach {
             XCTAssert($0.containsOnlyEmojiWithSpaces, "Failed: \($0)")
+            XCTAssert($0.containsEmoji, "Failed: \($0)")
         }
     }
     
@@ -90,6 +91,7 @@ class EmojiOnlyStringTests: XCTestCase {
         // then
         langaugeStrings.forEach {
             XCTAssertFalse($0.wr_containsOnlyEmojiWithSpaces())
+            XCTAssertFalse($0.containsEmoji)
         }
     }
     
@@ -108,6 +110,7 @@ class EmojiOnlyStringTests: XCTestCase {
         // then
         languageEmojiStrings.forEach {
             XCTAssertFalse($0.wr_containsOnlyEmojiWithSpaces(), "Failed: \($0)")
+            XCTAssert($0.containsEmoji)
         }
     }
     
