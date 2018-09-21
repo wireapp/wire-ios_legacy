@@ -110,10 +110,14 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
         
         var results: [ZMUser] = []
         
+        let usersToSearch = users.filter { user in
+            return !user.isSelfUser && !user.isServiceUser
+        }
+        
         defer { reloadTable(with: results) }
         
         if query == "" {
-            results = users
+            results = usersToSearch
             return
         }
         
@@ -129,7 +133,7 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
         var foundUsers = Set<ZMUser>()
         
         rules.forEach { rule in
-            let matches = users.filter({ rule($0) }).filter { !foundUsers.contains($0) }
+            let matches = usersToSearch.filter({ rule($0) }).filter { !foundUsers.contains($0) }
                 .sorted(by: { $0.name < $1.name })
             foundUsers = foundUsers.union(matches)
             results = results + matches

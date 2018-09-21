@@ -50,9 +50,6 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         }
         
         let participants = conversation.activeParticipants.array as! [ZMUser]
-        let usersToSearch = participants.filter { user in
-            return user != ZMUser.selfUser() && !user.isServiceUser
-        }
         let previousText = textView.text ?? ""
         let currentText = previousText.replacingCharacters(in: Range(range, in: previousText)!, with: text)
 
@@ -62,7 +59,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         }
 
         if let handler = mentionsHandler, let searchString = handler.searchString(in: currentText) {
-            mentionsView?.search(in: usersToSearch, with: searchString)
+            mentionsView?.search(in: participants, with: searchString)
         } else {
             mentionsHandler = nil
             mentionsView?.dismissIfVisible()

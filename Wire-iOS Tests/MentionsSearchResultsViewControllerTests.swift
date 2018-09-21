@@ -22,30 +22,60 @@ import XCTest
 class MentionsSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
 
     var sut: MentionsSearchResultsViewController!
+    var serviceUser: ZMUser!
     
     override func setUp() {
         super.setUp()
+        recordMode = true
+        
+        serviceUser = ZMUser.insertNewObject(in: uiMOC)
+        serviceUser.remoteIdentifier = UUID()
+        serviceUser.name = "ServiceUser"
+        serviceUser.setHandle(name.lowercased())
+        serviceUser.accentColorValue = .brightOrange
+        serviceUser.serviceIdentifier = UUID.create().transportString()
+        serviceUser.providerIdentifier = UUID.create().transportString()
+        uiMOC.saveOrRollback()
         
         sut = MentionsSearchResultsViewController(nibName: nil, bundle: nil)
         
         sut.view.layoutIfNeeded()
+        
+        sut.view.backgroundColor = .black
         sut.view.layer.speed = 0
-
-        sut.viewDidLoad()
     }
     
     override func tearDown() {
         super.tearDown()
     }
     
-    func testWithTwoUsers() {
-        sut.reloadTable(with: [selfUser, otherUser])
+    func testThatSelfUserIsNotVisibleWithEmptyQuery() {
+        sut.search(in: [selfUser, otherUser], with: "")
+        guard let view = sut.view else { XCTFail(); return }
+        verify(view: view)
+    }
+
+    func testThatSelfUserIsNotVisibleInSearch() {
+        sut.search(in: [selfUser, otherUser], with: "u")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
     
-    func testThatDoesntOverflowWithTooManyUsers() {
-        var users: [ZMUser] = []
+    func testThatServiceUserIsNotVisibleWithEmptyQuery() {
+        sut.search(in: [selfUser, otherUser, serviceUser], with: "")
+        guard let view = sut.view else { XCTFail(); return }
+        verify(view: view)
+    }
+    
+    func testThatServiceUserIsNotVisibleInSearch() {
+        sut.search(in: [selfUser, otherUser, serviceUser], with: "u")
+        guard let view = sut.view else { XCTFail(); return }
+        verify(view: view)
+    }
+    
+    func testThatItOverflowsWithTooManyUsers() {
+        var allUsers: [ZMUser] = []
+        
         for name in usernames {
             let user = ZMUser.insertNewObject(in: uiMOC)
             user.remoteIdentifier = UUID()
@@ -53,11 +83,12 @@ class MentionsSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
             user.setHandle(name.lowercased())
             user.accentColorValue = .brightOrange
             uiMOC.saveOrRollback()
-            users.append(user)
+            allUsers.append(user)
         }
         
-        sut.reloadTable(with: users)
+        allUsers.append(selfUser)
         
+        sut.search(in: allUsers, with: "")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
