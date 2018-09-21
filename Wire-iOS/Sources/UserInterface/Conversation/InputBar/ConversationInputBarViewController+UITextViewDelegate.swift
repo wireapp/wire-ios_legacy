@@ -38,21 +38,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
 
         conversation.setIsTyping(textView.text.count > 0)
 
-        let participants = conversation.activeParticipants.array as! [ZMUser]
-        let currentText = textView.text ?? ""
-
-        if let selectedRange = textView.selectedTextRange {
-            let position = textView.offset(from: textView.beginningOfDocument, to: selectedRange.start)
-            mentionsHandler = MentionsHandler(text: currentText, cursorPosition: position)
-        }
-
-        if let handler = mentionsHandler, let searchString = handler.searchString(in: currentText) {
-            mentionsView?.search(in: participants, with: searchString)
-        } else {
-            mentionsHandler = nil
-            mentionsView?.dismissIfVisible()
-        }
-
+        triggerMentionsIfNeeded(from: textView)
         updateRightAccessoryView()
     }
 

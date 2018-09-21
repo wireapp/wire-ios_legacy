@@ -26,6 +26,7 @@ import Foundation
 
     let mentionMatchRange: NSRange
     let searchQueryMatchRange: NSRange
+    var token: Any?
 
     init?(text: String?, cursorPosition: Int) {
         guard let text = text else { return nil }
@@ -44,7 +45,8 @@ import Foundation
         searchQueryMatchRange = match.range(at: 3)
     }
 
-    func searchString(in text: String) -> String? {
+    func searchString(in text: String?) -> String? {
+        guard let text = text else { return nil }
         guard let range = Range(searchQueryMatchRange, in: text) else { return nil }
         return String(text[range])
     }
