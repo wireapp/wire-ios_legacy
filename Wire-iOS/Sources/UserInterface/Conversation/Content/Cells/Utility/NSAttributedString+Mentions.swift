@@ -106,7 +106,7 @@ extension NSMutableAttributedString {
             }
         }
         else {
-            color = ColorScheme.default.accentColor
+            color = .accent()
             backgroundColor = .clear
         }
         
