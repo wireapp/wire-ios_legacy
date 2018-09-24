@@ -105,6 +105,8 @@ extension NSAttributedString {
         }
         
         markdownText.removeTrailingWhitespace()
+        markdownText.changeFontSizeIfMessageContainsOnlyEmoticons()
+
         
         return markdownText
     }
@@ -139,6 +141,12 @@ extension NSMutableAttributedString {
         for range in allowedIndexSet.rangeView {
             let range = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex)
             self.mutableString.resolveEmoticonShortcuts(in: range)
+        }
+    }
+    
+    func changeFontSizeIfMessageContainsOnlyEmoticons() {
+        if string.containsOnlyEmojiWithSpaces {
+            setAttributes([.font: UIFont.systemFont(ofSize: 40)], range: wholeRange)
         }
     }
     
