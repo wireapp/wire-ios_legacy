@@ -1261,6 +1261,7 @@
 		EFE285462146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE285452146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift */; };
 		EFE8062B1FDFF24C006A0EE7 /* NSDate+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */; };
 		EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */; };
+		EFE91CFF21592CE600154240 /* String+ReplaceMentionsTestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE91CFE21592CE600154240 /* String+ReplaceMentionsTestsTests.swift */; };
 		EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */; };
 		EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */; };
 		EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */; };
@@ -3003,6 +3004,7 @@
 		EFE285482146B7A200720737 /* RegistrationTextField+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RegistrationTextField+Internal.h"; sourceTree = "<group>"; };
 		EFE8062A1FDFF24C006A0EE7 /* NSDate+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Format.swift"; sourceTree = "<group>"; };
 		EFE8062E1FE005A7006A0EE7 /* DateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterTests.swift; sourceTree = "<group>"; };
+		EFE91CFE21592CE600154240 /* String+ReplaceMentionsTestsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ReplaceMentionsTestsTests.swift"; sourceTree = "<group>"; };
 		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
 		EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPasteboard+MediaAsset.swift"; sourceTree = "<group>"; };
 		EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+leftView.swift"; sourceTree = "<group>"; };
@@ -5552,6 +5554,7 @@
 				EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */,
 				EF2A8DEE214AAB13002C9058 /* ContactsCellSnapshotTests.swift */,
 				EF883F892152476900B440CC /* ConversationCreationControllerSnapshotTests.swift */,
+				EFE91CFE21592CE600154240 /* String+ReplaceMentionsTestsTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7763,6 +7766,7 @@
 				EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */,
+				EFE91CFF21592CE600154240 /* String+ReplaceMentionsTestsTests.swift in Sources */,
 				87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */,
 				F127BD5A1E2667170093B2F1 /* MockCollection.swift in Sources */,
 				EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */,

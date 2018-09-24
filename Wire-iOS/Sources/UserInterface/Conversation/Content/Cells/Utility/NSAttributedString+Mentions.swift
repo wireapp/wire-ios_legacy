@@ -88,7 +88,6 @@ extension String {
                 
                 let name = self.substring(with: mention.range).replacingOccurrences(of: "@", with: "")
                 self.replaceSubrange(mention.range.convert(with: self), with: token)
-//                self.replacingCharacters(in: mention.range, with: token)
 
                 return MentionWithToken(mention: mention, token: MentionToken(value: token, name: name))
         }
