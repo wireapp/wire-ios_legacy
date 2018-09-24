@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class String_ReplaceMentionsTestsTestsTests: XCTestCase {
+final class StringReplaceMentionsTests: XCTestCase {
 
     var sut: String!
     var selfUser: ZMUser!
