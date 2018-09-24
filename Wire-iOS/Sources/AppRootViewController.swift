@@ -338,7 +338,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         }
 
         let colorScheme = ColorScheme.default
-        colorScheme.accentColor = UIColor.accent()
+        colorScheme.setAccentColor(.accent())
         colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
     }
     

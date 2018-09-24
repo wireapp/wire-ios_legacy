@@ -68,6 +68,7 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic, readonly, nullable) UIViewController *inputController;
 @property (nonatomic, strong, nullable) MentionsHandler *mentionsHandler;
 @property (nonatomic, weak, nullable) id<MentionsSearchResultsViewProtocol> mentionsView;
+@property (nonatomic, strong, nullable) id textfieldObserverToken;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)bounceCameraIcon;

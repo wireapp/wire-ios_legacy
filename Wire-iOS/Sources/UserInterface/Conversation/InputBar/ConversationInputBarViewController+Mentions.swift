@@ -39,3 +39,28 @@ extension ConversationInputBarViewController: MentionsSearchResultsViewControlle
         mentionsView?.dismissIfVisible()
     }
 }
+
+extension ConversationInputBarViewController {
+
+    func triggerMentionsIfNeeded(from textView: UITextView, with selection: UITextRange? = nil) {
+        if let selectedRange = selection ?? textView.selectedTextRange {
+            let position = textView.offset(from: textView.beginningOfDocument, to: selectedRange.start)
+            mentionsHandler = MentionsHandler(text: textView.text, cursorPosition: position)
+        }
+
+        if let handler = mentionsHandler, let searchString = handler.searchString(in: textView.text) {
+            let participants = conversation.activeParticipants.array as! [ZMUser]
+            mentionsView?.search(in: participants, with: searchString)
+        } else {
+            mentionsHandler = nil
+            mentionsView?.dismissIfVisible()
+        }
+    }
+
+    @objc func registerForTextFieldSelectionChange() {
+        textfieldObserverToken = inputBar.textView.observe(\MarkdownTextView.selectedTextRange, options: [.prior]) { [weak self] (textView: MarkdownTextView, change: NSKeyValueObservedChange<UITextRange?>) -> Void in
+            let newValue = change.newValue ?? nil
+            self?.triggerMentionsIfNeeded(from: textView, with: newValue)
+        }
+    }
+}

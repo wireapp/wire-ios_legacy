@@ -30,7 +30,9 @@ final class MentionTextAttachment: NSTextAttachment {
     
     init(user: UserType, font: UIFont = .normalLightFont, color: UIColor = .accent()) {
         self.user = user
-        attributedText = "@" + (user.name ?? "") && font && color
+        // Replace all spaces with non-breaking space to avoid wrapping when displaying mention
+        let nameWithNonBreakingSpaces = user.name?.replacingOccurrences(of: " ", with: " ")
+        attributedText = "@" + (nameWithNonBreakingSpaces ?? "") && font && color
         super.init(data: nil, ofType: nil)
         refreshImage()
     }

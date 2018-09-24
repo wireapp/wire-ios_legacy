@@ -123,6 +123,7 @@ static NSString* light(NSString *colorString) {
 @interface ColorScheme ()
 
 @property (nonatomic) NSDictionary *colors;
+@property (nonatomic) UIColor *accentColor;
 
 @end
 
@@ -167,6 +168,11 @@ static NSString* light(NSString *colorString) {
 {
     _accentColor = accentColor;
     [self updateColors];
+}
+
+- (BOOL)isCurrentAccentColor:(UIColor *)accentColor
+{
+    return _accentColor == accentColor;
 }
 
 - (void)setVariant:(ColorSchemeVariant)variant

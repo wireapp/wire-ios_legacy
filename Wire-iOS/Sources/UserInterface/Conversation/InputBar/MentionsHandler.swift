@@ -20,33 +20,40 @@ import Foundation
 
 @objc public class MentionsHandler: NSObject {
 
-    let atSymbolIndex: Int
+    var mentionRegex: NSRegularExpression = {
+        try! NSRegularExpression(pattern: "([\\s]|^)(@(\\S*))", options: [.anchorsMatchLines])
+    }()
 
-    init?(text: String, range: NSRange) {
-        guard text == "@" || text.hasSuffix("@") else { return nil }
-        atSymbolIndex = range.location
+    let mentionMatchRange: NSRange
+    let searchQueryMatchRange: NSRange
+
+    init?(text: String?, cursorPosition: Int) {
+        guard let text = text else { return nil }
+        let wholeRange = NSRange(location: 0, length: text.endIndex.encodedOffset)
+        let matches = mentionRegex.matches(in: text, range: wholeRange)
+        // We need to offset the cursor position because it is at the end of entered text
+        let positionInMention = max(0, cursorPosition - 1)
+        guard let match = matches.first(where: { result in result.range.contains(positionInMention) }) else { return nil }
+        // Should be 4 matches:
+        // 0. whole string
+        // 1. space or start of string
+        // 2. whole mention
+        // 3. only the search string without @
+        guard match.numberOfRanges == 4 else { return nil }
+        mentionMatchRange = match.range(at: 2)
+        searchQueryMatchRange = match.range(at: 3)
     }
 
-    func mentionRange(in text: String, includingAtSymbol: Bool) -> Range<String.UTF16View.Index> {
-        let extraOffset = includingAtSymbol ? 0 : 1
-        let start = text.utf16.index(text.utf16.startIndex, offsetBy: atSymbolIndex + extraOffset)
-        let range = start..<text.utf16.endIndex
-        return range
-    }
-
-    func searchString(in text: String) -> String? {
-        let validIndex = (text.startIndex.encodedOffset..<text.endIndex.encodedOffset).contains(atSymbolIndex)
-        guard validIndex else { return nil }
-        let range = mentionRange(in: text, includingAtSymbol: false)
+    func searchString(in text: String?) -> String? {
+        guard let text = text else { return nil }
+        guard let range = Range(searchQueryMatchRange, in: text) else { return nil }
         return String(text[range])
     }
 
     func replace(mention: UserType, in attributedString: NSAttributedString) -> NSAttributedString {
         let mentionString = NSAttributedString(attachment: MentionTextAttachment(user: mention))
-        let range = mentionRange(in: attributedString.string, includingAtSymbol: true)
-        let nsRange = NSRange(range, in: attributedString.string)
         let mut = NSMutableAttributedString(attributedString: attributedString)
-        mut.replaceCharacters(in: nsRange, with: mentionString)
+        mut.replaceCharacters(in: mentionMatchRange, with: mentionString)
         return mut
     }
 }

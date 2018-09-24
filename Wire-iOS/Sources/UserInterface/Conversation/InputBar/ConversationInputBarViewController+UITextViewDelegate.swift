@@ -38,6 +38,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
 
         conversation.setIsTyping(textView.text.count > 0)
 
+        triggerMentionsIfNeeded(from: textView)
         updateRightAccessoryView()
     }
 
@@ -47,22 +48,6 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             inputBar.textView.autocorrectLastWord()
             sendText()
             return false
-        }
-        
-        let participants = conversation.activeParticipants.array as! [ZMUser]
-        let previousText = textView.text ?? ""
-        let currentText = previousText.replacingCharacters(in: Range(range, in: previousText)!, with: text)
-
-        // Enter mentioning flow
-        if text == "@" {
-            self.mentionsHandler = MentionsHandler(text: currentText, range: range)
-        }
-
-        if let handler = mentionsHandler, let searchString = handler.searchString(in: currentText) {
-            mentionsView?.search(in: participants, with: searchString)
-        } else {
-            mentionsHandler = nil
-            mentionsView?.dismissIfVisible()
         }
 
         inputBar.textView.respondToChange(text, inRange: range)
