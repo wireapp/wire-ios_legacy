@@ -210,7 +210,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "@self test")
+        XCTAssertEqual(status.string, "1 mention, 5 new text messages")
     }
     
     func testStatusForSystemMessageILeft() {
