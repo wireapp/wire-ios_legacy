@@ -45,7 +45,6 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, assign) BOOL alwaysShowDeliveryState;
 @property (nonatomic, assign) BOOL showUnreadMarker;
 @property (nonatomic, assign) CGFloat topPadding;
-@property (nonatomic, strong) NSArray<LinkAttachment *> *linkAttachments;
 
 @end
 
