@@ -39,8 +39,8 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        NSAttributedString.wr_flushCellParagraphStyleCache()
-        Message.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
+        NSAttributedString.invalidateMarkdownStyle()
 
         resetDayFormatter()
         

@@ -69,7 +69,7 @@ extension NSAttributedString {
     }
     
     @objc
-    static func format(message: ZMTextMessageData, isObfuscated: Bool, linkAttachment: UnsafeMutablePointer<LinkAttachment>) -> NSAttributedString {
+    static func format(message: ZMTextMessageData, isObfuscated: Bool, linkAttachment: UnsafeMutablePointer<LinkAttachment>?) -> NSAttributedString {
         
         var plainText = message.messageText ?? ""
         
@@ -101,8 +101,10 @@ extension NSAttributedString {
         markdownText.replaceEmoticons(excluding: linkAttachmentRanges + mentionRanges)
         
         if let firstKnownLinkAttachment = linkAttachments.first(where: { $0.type != .none }) {
-            linkAttachment.initialize(to: firstKnownLinkAttachment)
+            linkAttachment?.initialize(to: firstKnownLinkAttachment)
         }
+        
+        markdownText.removeTrailingWhitespace()
         
         return markdownText
     }
@@ -140,11 +142,19 @@ extension NSMutableAttributedString {
         }
     }
     
+    func removeTrailingWhitespace() {
+        let trailingWhitespaceRange = mutableString.rangeOfCharacter(from: .whitespacesAndNewlines, options: [.anchored, .backwards])
+        
+        if trailingWhitespaceRange.location != NSNotFound {
+            mutableString.deleteCharacters(in: trailingWhitespaceRange)
+        }
+    }
+    
     func removeTrailingLink(for linkPreview: LinkPreview, linkAttachments: [LinkAttachment]) -> [LinkAttachment] {
     
         // Don't remove trailing link if we embed content
         guard linkAttachments.first?.type == LinkAttachmentType.none,
-              linkPreview.originalURLString.lowercased() == "giphy.com", // Don't remove giphy links
+              linkPreview.originalURLString.lowercased() != "giphy.com", // Don't remove giphy links
               let linkPreviewAttachment = linkAttachments.reversed().first(where: { $0.string == linkPreview.originalURLString }),
               linkPreviewAttachment.range.upperBound == self.length
         else {
