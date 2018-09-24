@@ -24,7 +24,7 @@ import Cartography
 }
 
 @objc protocol MentionsSearchResultsViewProtocol {
-    func search(in users: [ZMUser], with query: String)
+    @discardableResult func search(in users: [ZMUser], with query: String) -> [ZMUser] 
     func dismissIfVisible()
 }
 
@@ -78,7 +78,7 @@ class MentionsSearchResultsViewController: UIViewController {
     }
     
     @objc func reloadTable(with results: [ZMUser]) {
-        searchResults = results
+        searchResults = results.reversed()
         
         let viewHeight = self.view.bounds.size.height
         let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
@@ -86,7 +86,9 @@ class MentionsSearchResultsViewController: UIViewController {
         collectionView.isScrollEnabled = (minValue == viewHeight)
         
         collectionView.reloadData()
-        
+        collectionView.layoutIfNeeded()
+        collectionView.scrollToItem(at: IndexPath(item: searchResults.count - 1, section: 0), at: .bottom, animated: false)
+
         if minValue > 0 {
             show()
         } else {
@@ -106,15 +108,21 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
         self.view.isHidden = true
     }
     
-    func search(in users: [ZMUser], with query: String) {
+    @discardableResult func search(in users: [ZMUser], with query: String) -> [ZMUser] {
         
         var results: [ZMUser] = []
         
-        defer { reloadTable(with: results) }
+        let usersToSearch = users.filter { user in
+            return !user.isSelfUser && !user.isServiceUser
+        }
+        
+        defer {
+            reloadTable(with: results)
+        }
         
         if query == "" {
-            results = users
-            return
+            results = usersToSearch
+            return results
         }
         
         let query = query.lowercased().normalized() as String
@@ -129,12 +137,13 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
         var foundUsers = Set<ZMUser>()
         
         rules.forEach { rule in
-            let matches = users.filter({ rule($0) }).filter { !foundUsers.contains($0) }
+            let matches = usersToSearch.filter({ rule($0) }).filter { !foundUsers.contains($0) }
                 .sorted(by: { $0.name < $1.name })
             foundUsers = foundUsers.union(matches)
             results = results + matches
         }
         
+        return results
     }
 }
 

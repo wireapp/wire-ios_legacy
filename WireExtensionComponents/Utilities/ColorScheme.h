@@ -90,7 +90,6 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 @property (nonatomic, readonly) UIKeyboardAppearance keyboardAppearance;
 @property (nonatomic, readonly) UIBlurEffectStyle blurEffectStyle;
 
-@property (nonatomic) UIColor *accentColor;
 @property (nonatomic) ColorSchemeVariant variant;
 
 @property (class, readonly, strong) ColorScheme *defaultColorScheme;
@@ -103,6 +102,8 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 
 - (UIColor *)nameAccentForColor:(ZMAccentColor)color variant:(ColorSchemeVariant)variant;
 
+- (void)setAccentColor:(UIColor *)accentColor;
+- (BOOL)isCurrentAccentColor:(UIColor *)accentColor;
 @end
 
 @interface UIColor (ColorScheme)
