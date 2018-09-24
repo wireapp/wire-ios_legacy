@@ -278,7 +278,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
 // "A, B, C: typing a message..."
 final internal class TypingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.isTyping
+        return status.isTyping && !status.hasSelfMention
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
