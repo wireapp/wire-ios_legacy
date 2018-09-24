@@ -75,7 +75,18 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
-    
+
+    func testThatItRendersMentionWithEmoji() {
+        createSUT(for: .light)
+        let messageText = "Hello @Bill 🎅🏾👨‍👩‍👧‍👦🧟‍♀️🧟‍♂️😞🤟🏿! I had some questions about your program. I think I found the bug 🐛."
+        let mention = Mention(range: NSRange(location: 6, length: 12), user: selfUser)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
+
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+
+
     func testThatItRendersMentions() {
         createSUT(for: .light)
         let messageText = "Hello @Bruno! I had some questions about your program. I think I found the bug 🐛."
