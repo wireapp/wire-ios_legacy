@@ -63,19 +63,4 @@ extension MentionsHandler {
         let cursorOffset = prefix.isEmpty ? 1 : 2
         return (result, cursorOffset)
     }
-
-    static func attributedStringForMentioning(with text: NSAttributedString?, at cursorPosition: Int) -> NSAttributedString {
-        guard let text = text else { return "@".attributedString }
-        guard text.length > 0 else { return "@".attributedString }
-        guard text.wholeRange.contains(cursorPosition) else { return text }
-        if cursorPosition == 0 {
-            return "@ ".attributedString + text
-        } else {
-            let beforeCursor = NSRange(location: 0, length: cursorPosition)
-            let afterCursor = NSRange(location: cursorPosition, length: text.length - cursorPosition)
-            let before = text.attributedSubstring(from: beforeCursor)
-            let after = text.attributedSubstring(from: afterCursor)
-            return before + "@" + after
-        }
-    }
 }
