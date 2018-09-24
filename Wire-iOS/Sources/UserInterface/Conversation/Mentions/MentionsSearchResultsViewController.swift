@@ -138,7 +138,7 @@ extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol
         
         rules.forEach { rule in
             let matches = usersToSearch.filter({ rule($0) }).filter { !foundUsers.contains($0) }
-                .sorted(by: { $0.name < $1.name })
+                .sorted(by: { $0.name > $1.name })
             foundUsers = foundUsers.union(matches)
             results = results + matches
         }
@@ -170,6 +170,7 @@ extension MentionsSearchResultsViewController: UICollectionViewDataSource {
         let user = searchResults[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         cell.configure(with: user)
+        cell.showSeparator = false
         return cell
     }
     
