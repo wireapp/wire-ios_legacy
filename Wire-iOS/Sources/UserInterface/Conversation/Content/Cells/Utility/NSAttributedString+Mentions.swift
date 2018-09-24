@@ -57,6 +57,44 @@ extension NSURL {
     }
 }
 
+
+extension NSRange {
+    func convert(with string: String) -> Range<String.Index> {
+        let start = string.index(string.startIndex, offsetBy: location)
+        let end = string.index(string.startIndex, offsetBy: location + length)
+        return start..<end
+    }
+}
+
+extension String {
+    func substring(with range: NSRange) -> String {
+        let mySubstring = self[range.convert(with: self)]
+
+        return String(mySubstring)
+    }
+
+    ///TODO: unit test
+    @discardableResult mutating func replaceMentions(_ mentions: [Mention]) -> [MentionWithToken] {
+        return mentions.sorted {
+            return $0.range.location > $1.range.location
+            } .compactMap { mention in
+                guard count >= (mention.range.location + mention.range.length) else {
+                    log.error("Wrong mention: \(mention)")
+                    return nil
+                }
+
+                let token = UUID().transportString()
+
+                
+                let name = self.substring(with: mention.range).replacingOccurrences(of: "@", with: "")
+                self.replaceSubrange(mention.range.convert(with: self), with: token)
+//                self.replacingCharacters(in: mention.range, with: token)
+
+                return MentionWithToken(mention: mention, token: MentionToken(value: token, name: name))
+        }
+    }
+}
+
 extension NSMutableString {
     @objc(removeMentions:)
     func remove(_ mentions: [Mention]) {
@@ -68,23 +106,6 @@ extension NSMutableString {
                 return
             }
             self.replaceCharacters(in: mention.range, with: "")
-        }
-    }
-    
-    @discardableResult func replaceMentions(_ mentions: [Mention]) -> [MentionWithToken] {
-        return mentions.sorted {
-            return $0.range.location > $1.range.location
-        } .compactMap { mention in
-            guard self.length >= (mention.range.location + mention.range.length) else {
-                log.error("Wrong mention: \(mention)")
-                return nil
-            }
-            
-            let token = UUID().transportString()
-            let name = self.substring(with: mention.range).replacingOccurrences(of: "@", with: "")
-            self.replaceCharacters(in: mention.range, with: token)
-            
-            return MentionWithToken(mention: mention, token: MentionToken(value: token, name: name))
         }
     }
 }

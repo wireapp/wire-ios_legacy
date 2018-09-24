@@ -76,7 +76,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         verify(view: sut.prepareForSnapshot())
     }
 
-    func testThatItRendersMentionWithEmoji() {
+    func testThatItRendersMentionWithEmoji_SelfMention() {
         createSUT(for: .light)
         let messageText = "Hello @Bill 🎅🏾👨‍👩‍👧‍👦🧟‍♀️🧟‍♂️😞🤟🏿! I had some questions about your program. I think I found the bug 🐛."
         let mention = Mention(range: NSRange(location: 6, length: 12), user: selfUser)

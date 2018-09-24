@@ -52,7 +52,7 @@ extension NSMutableAttributedString {
                          style: DownStyle,
                          mentions: [Mention]) -> NSMutableAttributedString {
         
-        let mutableText = NSMutableString(string: text)
+        var mutableText = text
         let mentionsWithTokens = mutableText.replaceMentions(mentions)
         let parsedMarkdown = self.markdown(from: mutableText as String, style: style)
         parsedMarkdown.highlight(mentions: mentionsWithTokens)
