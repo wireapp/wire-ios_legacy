@@ -18,13 +18,19 @@
 
 import Foundation
 
+fileprivate extension NSAttributedString {
+    func hasSpaceAt(position: Int) -> Bool {
+        guard wholeRange.contains(position) else { return false }
+        return attributedSubstring(from: NSRange(location: position, length: 1)).string == " "
+    }
+}
+
 extension MentionsHandler {
 
     static func cursorPosition(in textView: UITextView, range: UITextRange? = nil) -> Int? {
         if let range = (range ?? textView.selectedTextRange) {
             let position = textView.offset(from: textView.beginningOfDocument, to: range.start)
             return position
-
         }
         return nil
     }
@@ -47,24 +53,14 @@ extension MentionsHandler {
 
         let selectionRange = textView.selectedRange
         let cursorPosition = selectionRange.location
-        let beforeCursor = NSRange(location: 0, length: cursorPosition)
-        let afterCursor = NSRange(location: cursorPosition, length: text.length - cursorPosition)
 
-        var insertSpaceBefore = false
-        var insertSpaceAfter = false
-        if beforeCursor.length > 0 {
-            insertSpaceBefore = (text.attributedSubstring(from: NSRange(location: cursorPosition - 1, length: 1)).string != " ")
-        }
-        if afterCursor.length > 0 {
-            insertSpaceAfter = (text.attributedSubstring(from: NSRange(location: cursorPosition, length: 1)).string != " ")
-        }
+        let prefix = text.hasSpaceAt(position: cursorPosition - 1) ? "" : " "
+        let suffix = text.hasSpaceAt(position: cursorPosition) ? "" : " "
 
-        let result =
-            (insertSpaceBefore ? " " : "") +
-            "@" +
-            (insertSpaceAfter ? " " : "")
+        let result = prefix + "@" + suffix
 
-        let cursorOffset = insertSpaceBefore ? 2 : 1
+        // We need to change the selection depending if we insert only '@' or '@ '
+        let cursorOffset = prefix.isEmpty ? 1 : 2
         return (result, cursorOffset)
     }
 
