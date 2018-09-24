@@ -330,11 +330,12 @@ extension ConversationStatus {
     }
     
     var shouldSummarizeMessages: Bool {
-        if hasSelfMention {
+        if isSilenced {
+            return true
+        } else if hasSelfMention {
             return !latestMessageIsSelfMention
-        }
-        else {
-            return isSilenced
+        } else {
+            return false
         }
     }
 }
