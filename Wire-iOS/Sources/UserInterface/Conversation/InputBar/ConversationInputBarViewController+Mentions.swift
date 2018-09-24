@@ -19,13 +19,23 @@
 import Foundation
 
 extension ConversationInputBarViewController {
+    var isInMentionsFlow: Bool {
+        return mentionsHandler != nil
+    }
     
     @objc func configureMentionButton() {
         mentionButton.addTarget(self, action: #selector(ConversationInputBarViewController.mentionButtonTapped(sender:)), for: .touchUpInside)
     }
 
     @objc func mentionButtonTapped(sender: Any) {
-        // TODO: Trigger mentioning flow
+        guard !isInMentionsFlow else { return }
+
+        let textView = inputBar.textView
+        textView.becomeFirstResponder()
+
+        MentionsHandler.startMentioning(in: textView)
+        let position = MentionsHandler.cursorPosition(in: inputBar.textView) ?? 0
+        mentionsHandler = MentionsHandler(text: inputBar.textView.text, cursorPosition: position)
     }
 }
 
@@ -43,8 +53,7 @@ extension ConversationInputBarViewController: MentionsSearchResultsViewControlle
 extension ConversationInputBarViewController {
 
     func triggerMentionsIfNeeded(from textView: UITextView, with selection: UITextRange? = nil) {
-        if let selectedRange = selection ?? textView.selectedTextRange {
-            let position = textView.offset(from: textView.beginningOfDocument, to: selectedRange.start)
+        if let position = MentionsHandler.cursorPosition(in: textView, range: selection) {
             mentionsHandler = MentionsHandler(text: textView.text, cursorPosition: position)
         }
 
