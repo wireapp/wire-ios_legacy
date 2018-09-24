@@ -59,7 +59,7 @@ extension MentionsHandler {
 
         let result = prefix + "@" + suffix
 
-        // We need to change the selection depending if we insert only '@' or '@ '
+        // We need to change the selection depending if we insert only '@' or ' @'
         let cursorOffset = prefix.isEmpty ? 1 : 2
         return (result, cursorOffset)
     }
