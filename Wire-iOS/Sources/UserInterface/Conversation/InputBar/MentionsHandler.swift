@@ -20,7 +20,7 @@ import Foundation
 
 @objc public class MentionsHandler: NSObject {
 
-    var mentionRegex: NSRegularExpression = {
+    fileprivate var mentionRegex: NSRegularExpression = {
         try! NSRegularExpression(pattern: "([\\s]|^)(@(\\S*))", options: [.anchorsMatchLines])
     }()
 
