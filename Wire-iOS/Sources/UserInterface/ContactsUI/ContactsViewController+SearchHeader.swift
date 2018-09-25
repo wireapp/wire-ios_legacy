@@ -49,14 +49,9 @@ extension ContactsViewController {
             searchHeader.bottom == separatorView.top
         }
 
-        if #available(iOS 11.0, *) {
-            constrain(searchHeaderViewController.view, self.view) {
-            searchHeader, selfView in         searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.safeAreaLayoutGuide.top
-            }
-        } else {
-            constrain(searchHeaderViewController.view, self.view) {
-                searchHeader, selfView in         searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.top
-            }
+        constrain(searchHeaderViewController.view, self.view) {
+            searchHeader, selfView in
+            searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.top
         }
 
         searchHeaderTopConstraint.isActive = false
@@ -83,7 +78,7 @@ extension ContactsViewController {
 
         let showEmptyResults = searchResultsReceived && !(numTableRows != 0)
         let showNoContactsLabel = !(numTableRows != 0) && (searchQueryCount == 0) && !(searchHeaderViewController?.tokenField.userDidConfirmInput ?? false)
-        noContactsLabel.isHidden = !showNoContactsLabel
+        noContactsLabel?.isHidden = !showNoContactsLabel
         bottomContainerView.isHidden = (searchQueryCount > 0) || showEmptyResults
 
         setEmptyResultsHidden(!showEmptyResults, animated: showEmptyResults)
