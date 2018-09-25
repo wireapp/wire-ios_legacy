@@ -58,7 +58,7 @@ class MentionsSearchResultsViewController: UIViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 1
         layout.minimumInteritemSpacing = 1
-        
+
         collectionView.collectionViewLayout = layout
 
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
@@ -87,7 +87,12 @@ class MentionsSearchResultsViewController: UIViewController {
         
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
-        collectionView.scrollToItem(at: IndexPath(item: searchResults.count - 1, section: 0), at: .bottom, animated: false)
+
+        let firstMatchIndexPath = IndexPath(item: searchResults.count - 1, section: 0)
+
+        if collectionView.containsCell(at: firstMatchIndexPath) {
+            collectionView.scrollToItem(at: firstMatchIndexPath, at: .bottom, animated: false)
+        }
 
         if minValue > 0 {
             show()

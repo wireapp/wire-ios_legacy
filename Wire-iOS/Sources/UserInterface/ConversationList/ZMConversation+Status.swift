@@ -434,10 +434,13 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             }
             
             let messageDescription: String
+
             if message.isEphemeral {
                 var typeSuffix = ".ephemeral"
                 if type == .mention {
                     typeSuffix += status.isGroup ? ".mention.group" : ".mention"
+                } else if type == .knock {
+                    typeSuffix += status.isGroup ? ".knock.group" : ".knock"
                 } else if status.isGroup {
                     typeSuffix += ".group"
                 }
