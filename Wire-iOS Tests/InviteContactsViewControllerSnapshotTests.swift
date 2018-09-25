@@ -40,12 +40,13 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
 
         navigationController.pushViewController(sut, animated: false)
+
         sut.viewWillAppear(false)
 
-        sut.tableView.reloadData()
+        sut.tableView?.reloadData()
         sut.updateEmptyResults()
 
-        verify(view: navigationController.view)
+        verify(view: sut.view)
     }
 
     func testForNoContacts() {
