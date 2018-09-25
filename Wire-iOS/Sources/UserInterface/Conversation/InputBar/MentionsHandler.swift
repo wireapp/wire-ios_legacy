@@ -55,7 +55,14 @@ import Foundation
     func replace(mention: UserType, in attributedString: NSAttributedString) -> NSAttributedString {
         let mentionString = NSAttributedString(attachment: MentionTextAttachment(user: mention))
         let mut = NSMutableAttributedString(attributedString: attributedString)
+        let characterAfterMention = mentionMatchRange.upperBound
+
+        // Add space after mention if it's not there
+        if !mut.hasSpaceAt(position: characterAfterMention) {
+            mut.insert(" ".attributedString, at: characterAfterMention)
+        }
         mut.replaceCharacters(in: mentionMatchRange, with: mentionString)
+
         return mut
     }
 }

@@ -172,7 +172,7 @@ static NSString* light(NSString *colorString) {
 
 - (BOOL)isCurrentAccentColor:(UIColor *)accentColor
 {
-    return _accentColor == accentColor;
+    return [self.accentColor isEqualTo:accentColor];
 }
 
 - (void)setVariant:(ColorSchemeVariant)variant
