@@ -175,6 +175,13 @@ extension NSMutableAttributedString {
 
 }
 
+extension String {
+    func range(with range: NSRange) -> Range<String.Index> {
+        let start = index(self.startIndex, offsetBy: range.location)
+        let end = index(start, offsetBy: range.length)
+        return start..<end
+    }
+}
 
 fileprivate extension String {
     
@@ -182,8 +189,8 @@ fileprivate extension String {
         return mentions.sorted(by: {
             return $0.range.location > $1.range.location
         }).compactMap({ mention in
-            guard let range = Range(mention.range, in: self) else { return nil }
-            
+            let range = self.range(with: mention.range)
+
             let name = String(self[range].dropFirst()) // drop @
             let textObject = TextMarker<Mention>(mention, replacementText: name)
             
