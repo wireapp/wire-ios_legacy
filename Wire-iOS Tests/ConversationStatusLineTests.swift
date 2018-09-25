@@ -192,7 +192,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "5 new text messages, 5 new images")
+        XCTAssertEqual(status.string, "10 new messages")
     }
     
     func testStatusForMultipleVariousMessagesInConversation_silenced_mention() {
