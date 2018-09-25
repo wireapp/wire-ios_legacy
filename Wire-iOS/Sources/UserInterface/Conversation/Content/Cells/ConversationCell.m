@@ -528,8 +528,20 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         return;
     }
     
-    if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:)]) {
-        [self.delegate conversationCell:self userTapped:BareUserToUser(userImageView.user) inView:userImageView];
+    // Edge case prevention:
+    // If the keyboard (input field has focus) is up and the user is tapping directly on an avatar, we ignore this tap. This
+    // solves us the problem of the repositioning the popover after the keyboard destroys the layout and the we would re-position
+    // the popover again
+    
+    if (! IS_IPAD || IS_IPAD_LANDSCAPE_LAYOUT) {
+        return;
+    }
+
+    if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:frame:)]) {
+        [self.delegate conversationCell:self
+                             userTapped:BareUserToUser(userImageView.user)
+                                 inView:userImageView
+                                  frame:userImageView.bounds];
     }
 }
 

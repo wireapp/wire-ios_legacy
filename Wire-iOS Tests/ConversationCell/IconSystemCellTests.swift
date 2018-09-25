@@ -85,7 +85,7 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
     func testNewClient_selfUser_oneClient() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .newClient, users: 1, clients: 1, config: { message in
             let mockMessageData = message.systemMessageData as? MockSystemMessageData
-            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as? Set<ZMUser>
+            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
         })
         verify(view: wrappedCell!)
     }
@@ -93,7 +93,7 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
     func testNewClient_selfUser_manyClients() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .newClient, users: 1, clients: 2, config: { message in
             let mockMessageData = message.systemMessageData as? MockSystemMessageData
-            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as? Set<ZMUser>
+            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
         })
         verify(view: wrappedCell!)
     }
@@ -116,7 +116,7 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
     func testIgnoredClient_selfUser_oneClient() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .ignoredClient, users: 1, clients: 1, config: { message in
             let mockMessageData = message.systemMessageData as? MockSystemMessageData
-            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as? Set<ZMUser>
+            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
         })
         verify(view: wrappedCell!)
     }
@@ -124,7 +124,7 @@ final class IconSystemCellTests: ZMSnapshotTestCase {
     func testIgnoredClient_selfUser_manyClients() {
         let wrappedCell: UITableView? = IconSystemCellTests.wrappedCell(for: .ignoredClient, users: 1, clients: 2, config: { message in
             let mockMessageData = message.systemMessageData as? MockSystemMessageData
-            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as? Set<ZMUser>
+            mockMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
         })
         verify(view: wrappedCell!)
     }

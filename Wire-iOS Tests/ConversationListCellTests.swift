@@ -75,7 +75,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersConversationWithMessagesFromSelf() {
         // when
-        otherUserConversation.appendMessage(withText: "Hey there!")
+        otherUserConversation.append(text: "Hey there!")
         
         // then
         verify(otherUserConversation)
@@ -83,7 +83,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersConversationWithNewMessage() {
         // when
-        let message = otherUserConversation.appendMessage(withText: "Hey there!")
+        let message = otherUserConversation.append(text: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
         
         // then
@@ -93,9 +93,56 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersConversationWithNewMessages() {
         // when
         (0..<8).forEach {_ in 
-            let message = otherUserConversation.appendMessage(withText: "Hey there!")
+            let message = otherUserConversation.append(text: "Hey there!")
             (message as! ZMClientMessage).sender = otherUser
         }
+        
+        // then
+        verify(otherUserConversation)
+    }
+    
+    func testThatItRendersConversation_TextMessagesThenMention() {
+        // when
+        let message = otherUserConversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = otherUser
+        
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        
+        // then
+        verify(otherUserConversation)
+    }
+    
+    func testThatItRendersConversation_MentionThenTextMessages() {
+        // when
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        let message = otherUserConversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = otherUser
+        
+        // then
+        verify(otherUserConversation)
+    }
+    
+    func testThatItRendersMutedConversation_TextMessagesThenMention() {
+        // when
+        otherUserConversation.isSilenced = true
+        let message = otherUserConversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = otherUser
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        
+        // then
+        verify(otherUserConversation)
+    }
+    
+    func testThatItRendersMutedConversation_MentionThenTextMessages() {
+        // when
+        otherUserConversation.isSilenced = true
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        let message = otherUserConversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = otherUser
         
         // then
         verify(otherUserConversation)

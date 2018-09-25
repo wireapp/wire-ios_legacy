@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-@objcMembers final internal class ConversationListAccessoryView: UIView {
+@objcMembers final class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon = .none {
         didSet {
             self.updateForIcon()
@@ -91,43 +91,47 @@ import Cartography
         switch self.icon {
         case .pendingConnection:
             iconView.image = UIImage(for: .clock, fontSize: iconSize, color: .white)
-            self.accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
+            accessibilityValue = "conversation_list.voiceover.status.pending_connection".localized
             return iconView
         case .activeCall(false):
-            self.accessibilityValue = "conversation_list.voiceover.status.active_call".localized
+            accessibilityValue = "conversation_list.voiceover.status.active_call".localized
             return .none
         case .activeCall(true):
             textLabel.text = "conversation_list.right_accessory.join_button.title".localized.uppercased()
-            self.accessibilityValue = textLabel.text
+            accessibilityValue = textLabel.text
             return textLabel
         case .missedCall:
             iconView.image = UIImage(for: .endCall, fontSize: iconSize, color: .black)
-            self.accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
+            accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
             if let mediaPlayer = self.mediaPlaybackManager.activeMediaPlayer, mediaPlayer.state == .playing {
                 iconView.image = UIImage(for: .pause, fontSize: iconSize, color: .white)
-                self.accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
+                accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
             }
             else {
                 iconView.image = UIImage(for: .play, fontSize: iconSize, color: .white)
-                self.accessibilityValue = "conversation_list.voiceover.status.play_media".localized
+                accessibilityValue = "conversation_list.voiceover.status.play_media".localized
             }
             return iconView
         case .silenced:
             iconView.image = UIImage(for: .bellWithStrikethrough, fontSize: iconSize, color: .white)
-            self.accessibilityValue = "conversation_list.voiceover.status.silenced".localized
+            accessibilityValue = "conversation_list.voiceover.status.silenced".localized
             return iconView
         case .typing:
-            self.accessibilityValue = "conversation_list.voiceover.status.typing".localized
+            accessibilityValue = "conversation_list.voiceover.status.typing".localized
             return .none
         case .unreadMessages(let count):
             textLabel.text = String(count)
-            self.accessibilityValue = textLabel.text
+            accessibilityValue = textLabel.text
             return textLabel
+        case .mention:
+            iconView.image = UIImage(for: .mention, fontSize: iconSize, color: .black)
+            accessibilityValue = "conversation_list.voiceover.status.mention".localized
+            return iconView
         case .unreadPing:
             iconView.image = UIImage(for: .ping, fontSize: iconSize, color: .black)
-            self.accessibilityValue = "conversation_list.voiceover.status.ping".localized
+            accessibilityValue = "conversation_list.voiceover.status.ping".localized
             return iconView
         default:
             return .none
@@ -178,13 +182,13 @@ import Cartography
 
         case .activeCall(true): // "Join" button
             self.badgeView.backgroundColor = ZMAccentColor.strongLimeGreen.color
+            
         case .typing:
             self.badgeView.isHidden = true
             self.transparentIconView.isHidden = false
             self.transparentIconView.image = UIImage(for: .pencil, fontSize: 12.0, color: .white)
             
-        case .unreadMessages(_):
-            self.badgeView.backgroundColor = UIColor(white: 0, alpha: 0.16)
+        case .unreadMessages(_), .mention:
             self.textLabel.textColor = UIColor(scheme: .textForeground, variant: .light)
             self.badgeView.backgroundColor = UIColor(scheme: .textBackground, variant: .light)
             

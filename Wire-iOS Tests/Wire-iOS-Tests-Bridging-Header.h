@@ -33,7 +33,6 @@
 #import "ImageMessageCell+Internal.h"
 #import "TextMessageCell.h"
 #import "Message+Private.h"
-#import "Message+Formatting.h"
 #import "MockConversation.h"
 #import "MockConversationFactory.h"
 #import "EmailVerificationStepViewController.h"

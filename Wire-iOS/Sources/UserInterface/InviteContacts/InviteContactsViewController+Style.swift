@@ -19,8 +19,43 @@
 import Foundation
 
 extension InviteContactsViewController {
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        ///hide titleLabel and cancel cross button, which is duplicated in the navi bar
+
+        let subViewConstraints = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint]
+
+        if navigationController != nil {
+            titleLabel.isHidden = true
+
+            cancelButton.isHidden = true
+            closeButtonHeightConstraint.constant = 0
+            subViewConstraints.forEach(){ $0?.isActive = false }
+
+            topContainerHeightConstraint.isActive = true
+        } else {
+            titleLabel.isHidden = false
+
+            cancelButton.isHidden = false
+
+            closeButtonHeightConstraint.constant = 16
+            topContainerHeightConstraint.isActive = false
+
+            subViewConstraints.forEach(){ $0?.isActive = true }
+        }
+
+        view.layoutIfNeeded()
+    }
+
     @objc override func setupStyle() {
         super.setupStyle()
+
+        view.backgroundColor = .clear
 
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
@@ -28,7 +63,7 @@ extension InviteContactsViewController {
         tableView.sectionIndexColor = .accent()
 
         bottomContainerSeparatorView.backgroundColor = UIColor(scheme: .separator, variant: .dark)
-        bottomContainerView.backgroundColor = UIColor(scheme: .background, variant: .dark)
+        bottomContainerView.backgroundColor = .clear
 
         titleLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }

@@ -47,7 +47,7 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadOneMessage() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withText: "test") as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test") as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -74,7 +74,7 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadOneImage() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withImageData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -89,8 +89,8 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.otherUserConversation!
         (sut.appendKnock() as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test") as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -105,9 +105,9 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadManyTexts() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withText: "test 1") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test 2") as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withText: "test 3") as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test 1") as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test 2") as! ZMMessage).sender = self.otherUser
+        (sut.append(text: "test 3") as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -139,9 +139,9 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadManyImages() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.appendMessage(withImageData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
-        (sut.appendMessage(withImageData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -161,5 +161,19 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertFalse(status.hasMessages)
         XCTAssertTrue(status.isBlocked)
+    }
+    
+    func testThatItDetectsMentions() {
+        // GIVEN
+        let sut = self.otherUserConversation!
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        sut.lastReadServerTimeStamp = Date.distantPast
+        // WHEN
+        let status = sut.status
+        // THEN
+        XCTAssertTrue(status.hasMessages)
+        XCTAssertEqual(status.messagesRequiringAttention.count, 1)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.mention]!, 1)
     }
 }

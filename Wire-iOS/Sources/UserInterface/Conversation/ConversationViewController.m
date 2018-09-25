@@ -194,6 +194,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.contentViewController.delegate = self;
     self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.contentViewController.bottomMargin = 16;
+    self.inputBarController.mentionsView = self.contentViewController.mentionsSearchResultsViewController;
+    self.contentViewController.mentionsSearchResultsViewController.delegate = self.inputBarController;
 }
 
 - (void)createOutgoingConnectionViewController
@@ -543,24 +545,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.inputBarController.inputBarOverlapsContent = ! contentViewController.isScrolledToBottom;
 }
 
-- (void)didTapOnUserAvatar:(ZMUser *)user view:(UIView *)view
+- (void)didTapOnUserAvatar:(id<UserType>)user view:(UIView *)view frame:(CGRect)frame
 {
     if (! user || ! view) {
         return;
     }
 
-    // Edge case prevention:
-    // If the keyboard (input field has focus) is up and the user is tapping directly on an avatar, we ignore this tap. This
-    // solves us the problem of the repositioning the popover after the keyboard destroys the layout and the we would re-position
-    // the popover again
-
-    if (! IS_IPAD || IS_IPAD_LANDSCAPE_LAYOUT) {
-        return;
-    }
-
-    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user
-                                                                                  conversation:self.conversation];
-    [self createAndPresentParticipantsPopoverControllerWithRect:view.bounds fromView:view contentViewController:profileViewController];
+    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:(id)user
+                                                                      conversation:self.conversation];
+    profileViewController.delegate = self;
+    [self createAndPresentParticipantsPopoverControllerWithRect:frame
+                                                       fromView:view
+                                          contentViewController:profileViewController.wrapInNavigationController];
 }
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController willDisplayActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
@@ -726,6 +722,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationViewController (InputBar)
 
+- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions
+{
+    [self.inputBarController.sendController sendTextMessage:text mentions:mentions];
+}
+
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing
 {
     if (! self.contentViewController.isScrolledToBottom && !isEditing) {
@@ -741,7 +742,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return YES;
 }
 
-- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id<ZMConversationMessage>)message withText:(NSString *)newText
+- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id<ZMConversationMessage>)message
+                                                         withText:(NSString *)newText
+                                                         mentions:(NSArray <Mention *> *)mentions
 {
     [self.contentViewController didFinishEditingMessage:message];
     [[ZMUserSession sharedSession] enqueueChanges:^{
@@ -749,7 +752,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             [ZMMessage deleteForEveryone:message];
         } else {
             BOOL fetchLinkPreview = ![[Settings sharedSettings] disableLinkPreviews];
-            (void)[ZMMessage edit:message newText:newText fetchLinkPreview:fetchLinkPreview];
+            NOT_USED([ZMMessage edit:message newText:newText mentions:mentions fetchLinkPreview:fetchLinkPreview]);
         }
     }];
 }

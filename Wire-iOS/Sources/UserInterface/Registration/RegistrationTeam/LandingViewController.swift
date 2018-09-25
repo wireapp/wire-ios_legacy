@@ -67,7 +67,7 @@ final class LandingViewController: UIViewController, CompanyLoginControllerDeleg
     // MARK: - subviews
 
     let logoView: UIImageView = {
-        let image = UIImage(named: "wire-logo-black")!
+        let image = UIImage(named: "wire-logo-black")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .center
         imageView.tintColor = UIColor.Team.textColor

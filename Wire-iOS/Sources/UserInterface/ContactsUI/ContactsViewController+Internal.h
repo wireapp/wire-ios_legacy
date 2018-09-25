@@ -16,11 +16,35 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+static NSString * const ContactsViewControllerCellID = @"ContactsCell";
+static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
+
+@class IconButton;
+@class SearchHeaderViewController;
+
 @interface ContactsViewController ()
+
+@property (nonatomic) BOOL searchResultsReceived;
 
 @property (nonatomic) UILabel *titleLabel;
 @property (nonatomic) UIView *bottomContainerView;
 @property (nonatomic) UIView *bottomContainerSeparatorView;
 @property (nonatomic) UILabel *noContactsLabel;
+@property (nonatomic) NSArray *actionButtonTitles;
+@property (nonatomic) IconButton *cancelButton;
+@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
+@property (nonatomic) UIView *topContainerView;
+@property (nonatomic) UIView *separatorView;
+@property (nonatomic, readwrite) UITableView *tableView;
+
+@property (nonatomic) NSLayoutConstraint *closeButtonHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelHeightConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelTopConstraint;
+@property (nonatomic) NSLayoutConstraint *titleLabelBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonTopConstraint;
+@property (nonatomic) NSLayoutConstraint *closeButtonBottomConstraint;
+@property (nonatomic) NSLayoutConstraint *topContainerHeightConstraint;
+
+- (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end

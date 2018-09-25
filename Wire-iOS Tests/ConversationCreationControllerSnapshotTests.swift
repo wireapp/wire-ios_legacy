@@ -16,17 +16,32 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension ContactsCell {
-    @objc func setupStyle() {
-        contentView.backgroundColor = .clear
-        backgroundColor = .clear
+final class ConversationCreationControllerSnapshotTests: ZMSnapshotTestCase {
+    
+    var sut: ConversationCreationController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = ConversationCreationController()
+        accentColor = .violet
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
-        userNameLabel.textColor = .textForeground
-        userNameLabel.font = .normalLightFont
+    func testForEditingTextField(){
 
-        userSubtitleLabel.textColor = .textForeground
-        userSubtitleLabel.font = .smallFont
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(false, animated: false)
+        sut.endAppearanceTransition()
+
+        sut.viewDidAppear(false)
+
+        verify(view: sut.view)
     }
 }

@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
+
 @interface StartUIViewController ()
 
 @property (nonatomic) UserSelection *userSelection;

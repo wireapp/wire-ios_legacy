@@ -337,7 +337,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         }
 
         let colorScheme = ColorScheme.default
-        colorScheme.accentColor = UIColor.accent()
+        colorScheme.setAccentColor(.accent())
         colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
     }
     
@@ -352,8 +352,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     }
 
     @objc func onContentSizeCategoryChange() {
-        Message.invalidateMarkdownStyle()
-        NSAttributedString.wr_flushCellParagraphStyleCache()
+        NSAttributedString.invalidateParagraphStyle()
+        NSAttributedString.invalidateMarkdownStyle()
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         type(of: self).configureAppearance()

@@ -259,6 +259,11 @@ static id<UserType> mockSelfUser = nil;
     return [NSSet new];
 }
 
+- (ZMUser *)user
+{
+    return nil;
+}
+
 #pragma mark - ZMBareUserConnection
 
 @synthesize isPendingApprovalByOtherUser = _isPendingApprovalByOtherUser;

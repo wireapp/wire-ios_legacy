@@ -171,6 +171,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
     pinchImageGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
+    
+    [self createMentionsResultsView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -559,6 +561,18 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 #pragma mark - Custom UI, utilities
 
+- (void) createMentionsResultsView {
+    
+    self.mentionsSearchResultsViewController = [[MentionsSearchResultsViewController alloc] init];
+    self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    // delegate here
+    
+    [self addChildViewController:self.mentionsSearchResultsViewController];
+    [self.view addSubview:self.mentionsSearchResultsViewController.view];
+    
+    [self.mentionsSearchResultsViewController.view autoPinEdgesToSuperviewEdges];
+}
+
 - (void)removeHighlightsAndMenu
 {
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
@@ -739,14 +753,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @implementation ConversationContentViewController (ConversationCellDelegate)
 
-- (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view
+- (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame
 {
     if (!cell || !view) {
         return;
     }
 
-    if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:)]) {
-        [self.delegate didTapOnUserAvatar:user view:view];
+    if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:frame:)]) {
+        [self.delegate didTapOnUserAvatar:user view:view frame:frame];
     }
 }
 

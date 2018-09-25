@@ -31,8 +31,6 @@
 @import WireExtensionComponents;
 #import "ParticipantDeviceCell.h"
 #import "ParticipantDeviceCell+Internal.h"
-#import "ContactsCell.h"
-#import "ContactsCell+Internal.h"
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "ConversationCell.h"
@@ -82,7 +80,7 @@
 #import "IconButton.h"
 #import "Button.h"
 #import "ButtonWithLargerHitArea.h"
-#import "ContactsSectionHeaderView.h"
+#import "UITableView+RowCount.h"
 
 // View Controllers
 #import "ProfileDevicesViewController.h"
@@ -160,7 +158,7 @@
 
 // Utils
 #import "Analytics.h"
-#import "AnalyticsProvider.h"
+#import "Analytics+Internal.h"
 #import "Application+runDuration.h"
 #import "NSURL+WireLocale.h"
 #import "DeveloperMenuState.h"
@@ -172,12 +170,9 @@
 #import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Zeta.h"
-#import "NSString+Emoji.h"
-#import "Message+Formatting.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "LinkAttachment.h"
-#import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
@@ -195,6 +190,7 @@
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
+#import "NSString+EmoticonSubstitution.h"
 
 // Audio player
 #import "AudioTrack.h"

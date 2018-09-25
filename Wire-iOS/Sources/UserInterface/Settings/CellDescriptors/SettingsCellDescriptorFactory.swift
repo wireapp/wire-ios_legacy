@@ -298,9 +298,7 @@ import SafariServices
             let syncConversation = try! syncContext.existingObject(with: conversationId) as! ZMConversation
             let messages: [ZMClientMessage] = (0...count).map { i in
                 let nonce = UUID()
-                let genericMessage = ZMGenericMessage.message(text: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;",
-                    nonce: nonce)
-
+                let genericMessage = ZMGenericMessage.message(content: ZMText.text(with: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;"), nonce: nonce)
                 let clientMessage = ZMClientMessage(nonce: nonce, managedObjectContext: syncContext)
                 clientMessage.add(genericMessage.data())
                 clientMessage.sender = ZMUser.selfUser(in: syncContext)
@@ -473,9 +471,9 @@ import SafariServices
                 return
         }
         
-        let builder = ZMExternal.builder()
-        _ = builder?.setOtrKey("broken_key".data(using: .utf8))
-        let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID(), expiresAfter: nil)
+        let builder = ZMExternalBuilder()
+        _ = builder.setOtrKey("broken_key".data(using: .utf8))
+        let genericMessage = ZMGenericMessage.message(content: builder.build())
         
         userSession.enqueueChanges {
             conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
