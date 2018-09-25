@@ -344,7 +344,7 @@ extension ConversationStatus {
 // In not silenced: "[Sender:] <message text>"
 // Ephemeral: "Ephemeral message"
 final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
-    let matchedTypes: [StatusMessageType] = [.mention, .text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
+    let matchedTypes: [StatusMessageType] = [.mention, .missedCall, .knock, .text, .link, .image, .location, .audio, .video, .file]
     let localizationSilencedRootPath = "conversation.silenced.status.message"
     let localizationRootPath = "conversation.status.message"
 
