@@ -39,8 +39,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        NSAttributedString.wr_flushCellParagraphStyleCache()
-        Message.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
 
         resetDayFormatter()
         
@@ -52,6 +51,7 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
     
     func createSUT(for variant: ColorSchemeVariant) {
         ColorScheme.default.variant = variant
+        NSAttributedString.invalidateMarkdownStyle()
 
         snapshotBackgroundColor = UIColor(scheme: .contentBackground)
         accentColor = .strongBlue

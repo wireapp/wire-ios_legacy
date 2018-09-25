@@ -170,11 +170,9 @@
 #import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Zeta.h"
-#import "Message+Formatting.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "LinkAttachment.h"
-#import "Message+Formatting.h"
 #import "UIImagePickerController+GetImage.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
@@ -192,6 +190,7 @@
 #import "KeyboardFrameObserver+iOS.h"
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
+#import "NSString+EmoticonSubstitution.h"
 
 // Audio player
 #import "AudioTrack.h"

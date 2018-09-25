@@ -353,8 +353,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     }
 
     @objc func onContentSizeCategoryChange() {
-        Message.invalidateMarkdownStyle()
-        NSAttributedString.wr_flushCellParagraphStyleCache()
+        NSAttributedString.invalidateParagraphStyle()
+        NSAttributedString.invalidateMarkdownStyle()
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         type(of: self).configureAppearance()

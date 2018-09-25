@@ -88,7 +88,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.defaults = defaults
 
         if !MixpanelAPIKey.isEmpty {
-            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey, optOutTrackingByDefault: true)
+            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey, automaticPushTracking: false, optOutTrackingByDefault: true)
         }
         super.init()
         mixpanelInstance?.distinctId = mixpanelDistinctId

@@ -21,14 +21,25 @@ import WireExtensionComponents
 
 private let log = ZMSLog(tag: "Mentions")
 
-struct MentionToken {
-    let value: String
-    let name: String
+struct TextMarker<A> {
+    
+    let replacementText: String
+    let token: String
+    let value: A
+    
+    init(_ value: A, replacementText: String) {
+        self.value = value
+        self.replacementText = replacementText
+        self.token = UUID().transportString()
+    }
 }
 
-struct MentionWithToken {
-    let mention: Mention
-    let token: MentionToken
+extension TextMarker {
+    
+    func range(in string: String) -> Range<Int>? {
+        return Range((string as NSString).range(of: token))
+    }
+    
 }
 
 extension Mention {
@@ -57,39 +68,8 @@ extension NSURL {
     }
 }
 
-extension NSMutableString {
-    @objc(removeMentions:)
-    func remove(_ mentions: [Mention]) {
-        return mentions.sorted {
-            return $0.range.location > $1.range.location
-        }.forEach { mention in
-            guard self.length >= (mention.range.location + mention.range.length) else {
-                log.error("Wrong mention: \(mention)")
-                return
-            }
-            self.replaceCharacters(in: mention.range, with: "")
-        }
-    }
-    
-    @discardableResult func replaceMentions(_ mentions: [Mention]) -> [MentionWithToken] {
-        return mentions.sorted {
-            return $0.range.location > $1.range.location
-        } .compactMap { mention in
-            guard self.length >= (mention.range.location + mention.range.length) else {
-                log.error("Wrong mention: \(mention)")
-                return nil
-            }
-            
-            let token = UUID().transportString()
-            let name = self.substring(with: mention.range).replacingOccurrences(of: "@", with: "")
-            self.replaceCharacters(in: mention.range, with: token)
-            
-            return MentionWithToken(mention: mention, token: MentionToken(value: token, name: name))
-        }
-    }
-}
-
 extension NSMutableAttributedString {
+    
     static private func mention(for user: UserType, name: String, link: URL, suggestedFontSize: CGFloat? = nil) -> NSAttributedString {
         let color: UIColor
         let backgroundColor: UIColor
@@ -115,9 +95,9 @@ extension NSMutableAttributedString {
                                                     contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
                                                     weight: .semibold)
         
-        var atAttributes = [NSAttributedString.Key.font: atFont,
-                            NSAttributedString.Key.foregroundColor: color,
-                            NSAttributedString.Key.backgroundColor: backgroundColor]
+        var atAttributes: [NSAttributedString.Key: Any] = [.font: atFont,
+                                                           .foregroundColor: color,
+                                                           .backgroundColor: backgroundColor]
         
         if !user.isSelfUser {
             atAttributes[NSAttributedString.Key.link] = link as NSObject
@@ -125,9 +105,9 @@ extension NSMutableAttributedString {
         
         let atString = "@" && atAttributes
         
-        var mentionAttributes = [NSAttributedString.Key.font: mentionFont,
-                                 NSAttributedString.Key.foregroundColor: color,
-                                 NSAttributedString.Key.backgroundColor: backgroundColor]
+        var mentionAttributes: [NSAttributedString.Key: Any] = [.font: mentionFont,
+                                                                .foregroundColor: color,
+                                                                .backgroundColor: backgroundColor]
         
         if !user.isSelfUser {
             mentionAttributes[NSAttributedString.Key.link] = link as NSObject
@@ -138,23 +118,23 @@ extension NSMutableAttributedString {
         return atString + mentionText
     }
     
-    func highlight(mentions: [MentionWithToken]) {
+    func highlight(mentions: [TextMarker<(Mention)>]) {
         
         let mutableString = self.mutableString
         
-        mentions.forEach { mentionWithToken in
-            let mentionRange = mutableString.range(of: mentionWithToken.token.value)
+        mentions.forEach { textObject in
+            let mentionRange = mutableString.range(of: textObject.token)
             
             guard mentionRange.location != NSNotFound else {
-                log.error("Cannot process mention: \(mentionWithToken)")
+                log.error("Cannot process mention: \(textObject)")
                 return
             }
             
             let currentFont = self.attributes(at: mentionRange.location, effectiveRange: nil)[.font] as? UIFont
             
-            let replacementString = NSMutableAttributedString.mention(for: mentionWithToken.mention.user,
-                                                                      name: mentionWithToken.token.name,
-                                                                      link: mentionWithToken.mention.link,
+            let replacementString = NSMutableAttributedString.mention(for: textObject.value.user,
+                                                                      name: textObject.replacementText,
+                                                                      link: textObject.value.link,
                                                                       suggestedFontSize: currentFont?.pointSize)
             
             self.replaceCharacters(in: mentionRange, with: replacementString)

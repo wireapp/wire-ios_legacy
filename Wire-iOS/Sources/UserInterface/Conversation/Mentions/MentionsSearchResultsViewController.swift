@@ -78,7 +78,7 @@ class MentionsSearchResultsViewController: UIViewController {
     }
     
     @objc func reloadTable(with results: [ZMUser]) {
-        searchResults = results
+        searchResults = results.reversed()
         
         let viewHeight = self.view.bounds.size.height
         let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
@@ -86,7 +86,9 @@ class MentionsSearchResultsViewController: UIViewController {
         collectionView.isScrollEnabled = (minValue == viewHeight)
         
         collectionView.reloadData()
-        
+        collectionView.layoutIfNeeded()
+        collectionView.scrollToItem(at: IndexPath(item: searchResults.count - 1, section: 0), at: .bottom, animated: false)
+
         if minValue > 0 {
             show()
         } else {
@@ -168,6 +170,7 @@ extension MentionsSearchResultsViewController: UICollectionViewDataSource {
         let user = searchResults[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         cell.configure(with: user)
+        cell.showSeparator = false
         return cell
     }
     
