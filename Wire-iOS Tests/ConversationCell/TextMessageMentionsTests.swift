@@ -109,6 +109,17 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
         sut.configure(for: message, layoutProperties: layoutProperties)
         verify(view: sut.prepareForSnapshot())
     }
+
+    func testThatItRendersMentionWithEmoji_SelfMention() {
+        createSUT(for: .light)
+        let messageText = "Hello @Bill 👨‍👩‍👧‍👦! I had some questions about your program. I think I found the bug 🐛."
+        let mention = Mention(range: NSRange(location: 6, length: 7), user: selfUser)
+        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)
+
+        sut.configure(for: message, layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+
     
     func testThatItRendersMentions_SelfMention_LongText() {
         createSUT(for: .light)
