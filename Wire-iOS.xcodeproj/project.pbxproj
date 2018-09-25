@@ -1304,6 +1304,7 @@
 		F1B5EAC92029AC7E0081D402 /* SimpleTextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */; };
 		F1C9E3601EAE008C006438D7 /* TestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */; };
 		F1CB5D252158FE1F001CCF5D /* MentionsHandler+TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CB5D242158FE1F001CCF5D /* MentionsHandler+TextView.swift */; };
+		F1CB5D27215A3011001CCF5D /* NSAttributedString+Space.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CB5D26215A3011001CCF5D /* NSAttributedString+Space.swift */; };
 		F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
@@ -3055,6 +3056,7 @@
 		F1B5EAC82029AC7E0081D402 /* SimpleTextFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextFieldValidator.swift; sourceTree = "<group>"; };
 		F1C9E35E1EADFFB8006438D7 /* TestSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSetup.swift; sourceTree = "<group>"; };
 		F1CB5D242158FE1F001CCF5D /* MentionsHandler+TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MentionsHandler+TextView.swift"; sourceTree = "<group>"; };
+		F1CB5D26215A3011001CCF5D /* NSAttributedString+Space.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Space.swift"; sourceTree = "<group>"; };
 		F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PureLayout.framework; path = Carthage/Build/iOS/PureLayout.framework; sourceTree = "<group>"; };
 		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
@@ -5175,6 +5177,7 @@
 				EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */,
 				F12EAF72214FB6FE00B00AD9 /* MentionsHandler.swift */,
 				F1CB5D242158FE1F001CCF5D /* MentionsHandler+TextView.swift */,
+				F1CB5D26215A3011001CCF5D /* NSAttributedString+Space.swift */,
 				EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */,
 				F16E8EA7214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift */,
 				BF8EE5551D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift */,
@@ -7040,6 +7043,7 @@
 				163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */,
 				167B3B491BB36F6C003F5104 /* ConversationMessageWindowTableViewAdapter.m in Sources */,
 				D54224C820513EC100526A57 /* IconActionCell.swift in Sources */,
+				F1CB5D27215A3011001CCF5D /* NSAttributedString+Space.swift in Sources */,
 				871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */,
 				8FC85459199245770008B66B /* InvisibleInputAccessoryView.m in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
