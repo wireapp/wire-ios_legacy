@@ -18,7 +18,6 @@
 
 import UIKit
 import Cartography
-import WireExtensionComponents
 
 @objc protocol MentionsSearchResultsViewControllerDelegate {
     func didSelectUserToMention(_ user: ZMUser)
