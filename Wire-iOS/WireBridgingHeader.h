@@ -58,7 +58,6 @@
 #import "UIAlertController+NewSelfClients.h"
 #import "SwizzleTransition.h"
 #import "Country.h"
-#import "ContrastUserImageView.h"
 #import "PassthroughTouchesView.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"
 #import "Token.h"
