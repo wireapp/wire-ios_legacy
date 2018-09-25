@@ -170,6 +170,7 @@ extension MentionsSearchResultsViewController: UICollectionViewDataSource {
         let user = searchResults[indexPath.item]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         cell.configure(with: user)
+        cell.showSeparator = false
         return cell
     }
     
