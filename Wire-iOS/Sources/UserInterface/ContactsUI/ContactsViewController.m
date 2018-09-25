@@ -205,11 +205,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.noContactsLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.view withOffset:standardOffset];
     [self.noContactsLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 
-    ///TODO: var?
     CGFloat bottomContainerHeight = 56.0f + UIScreen.safeArea.bottom;
     [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-//    [self.bottomContainerView autoSetDimension:ALDimensionHeight toSize:bottomContainerHeight];
     self.bottomContainerBottomConstraint = [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     [self.bottomContainerSeparatorView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
