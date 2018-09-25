@@ -146,6 +146,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
+            self.sessionManager?.foregroundNotificationResponder = self
             self.sessionManager?.requestToOpenViewDelegate = self
             self.sessionManager?.switchingDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
@@ -439,6 +440,15 @@ extension AppRootViewController: ZMRequestsToOpenViewsDelegate {
         else {
             self.performWhenRequestsToOpenViewsDelegateAvailable = closure
         }
+    }
+}
+
+// MARK: - Foreground Notification Responder
+
+extension AppRootViewController: ForegroundNotificationResponder {
+    func shouldPresentForegroundNotification(for conversation: UUID) -> Bool {
+        guard let clientVC = ZClientViewController.shared() else { return true }
+        return !clientVC.isLastMessageVisible(for: conversation)
     }
 }
 
