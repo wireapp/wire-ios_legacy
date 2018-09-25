@@ -20,6 +20,8 @@ import Foundation
 
 extension ContactsViewController: UITableViewDelegate {
     func headerTitle(section: Int) -> String? {
+        guard let tableView = tableView else { return nil }
+
         return dataSource?.tableView(tableView, titleForHeaderInSection: section)
     }
 
@@ -59,7 +61,7 @@ extension ContactsViewController: UITableViewDelegate {
             shouldSelect{
             return indexPath
         } else {
-            if let cell = self.tableView.cellForRow(at: indexPath) as? ContactsCell {
+            if let cell = tableView.cellForRow(at: indexPath) as? ContactsCell {
                 contentDelegate?.contactsViewController?(self, didSelect: cell, for: user)
             }
         }

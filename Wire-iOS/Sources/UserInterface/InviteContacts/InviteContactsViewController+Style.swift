@@ -31,22 +31,22 @@ extension InviteContactsViewController {
         let subViewConstraints = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint, searchHeaderTopConstraint]
 
         if navigationController != nil {
-            titleLabel.isHidden = true
+            titleLabel?.isHidden = true
 
-            cancelButton.isHidden = true
-            closeButtonHeightConstraint.constant = 0
+            cancelButton?.isHidden = true
+            closeButtonHeightConstraint?.constant = 0
             subViewConstraints.forEach(){ $0?.isActive = false }
 
-            topContainerHeightConstraint.isActive = true
-            searchHeaderWithNavigatorBarTopConstraint.isActive = true
+            topContainerHeightConstraint?.isActive = true
+            searchHeaderWithNavigatorBarTopConstraint?.isActive = true
         } else {
-            titleLabel.isHidden = false
+            titleLabel?.isHidden = false
 
-            cancelButton.isHidden = false
+            cancelButton?.isHidden = false
 
-            closeButtonHeightConstraint.constant = 16
-            topContainerHeightConstraint.isActive = false
-            searchHeaderWithNavigatorBarTopConstraint.isActive = false
+            closeButtonHeightConstraint?.constant = 16
+            topContainerHeightConstraint?.isActive = false
+            searchHeaderWithNavigatorBarTopConstraint?.isActive = false
 
             subViewConstraints.forEach(){ $0?.isActive = true }
         }
@@ -59,13 +59,13 @@ extension InviteContactsViewController {
 
         view.backgroundColor = .clear
 
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.sectionIndexBackgroundColor = .clear
-        tableView.sectionIndexColor = .accent()
+        tableView?.backgroundColor = .clear
+        tableView?.separatorStyle = .none
+        tableView?.sectionIndexBackgroundColor = .clear
+        tableView?.sectionIndexColor = .accent()
 
-        bottomContainerSeparatorView.backgroundColor = UIColor(scheme: .separator, variant: .dark)
-        bottomContainerView.backgroundColor = .clear
+        bottomContainerSeparatorView?.backgroundColor = UIColor(scheme: .separator, variant: .dark)
+        bottomContainerView?.backgroundColor = .clear
 
         titleLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }

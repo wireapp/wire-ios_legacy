@@ -24,10 +24,10 @@ extension ContactsViewController {
         titleLabel?.font = .smallLightFont
         titleLabel?.textTransform = .upper
 
-        bottomContainerView.backgroundColor = .background
+        bottomContainerView?.backgroundColor = .background
 
-        noContactsLabel.font = .normalLightFont
-        noContactsLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        noContactsLabel?.font = .normalLightFont
+        noContactsLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {

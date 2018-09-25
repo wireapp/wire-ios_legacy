@@ -22,14 +22,26 @@ extension ContactsViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         showKeyboardIfNeeded()
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        searchHeaderViewController.tokenField.resignFirstResponder()
+        searchHeaderViewController?.tokenField.resignFirstResponder()
+    }
+
+    @objc func keyboardFrameWillChange(_ notification: Notification) {
+        guard let beginOrigin = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect)?.origin.y,
+            let endOrigin = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.origin.y else { return }
+
+        let diff = beginOrigin - endOrigin
+        let padding: CGFloat = 12
+
+        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrame) in
+            self.bottomEdgeConstraint?.constant = -padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 }
 
