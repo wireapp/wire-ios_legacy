@@ -409,7 +409,11 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             
             let messageDescription: String
             if message.isEphemeral {
-                messageDescription = (localizationRootPath + ".ephemeral").localized
+                if type == .mention {
+                    messageDescription = String(format: (localizationSilencedRootPath + ".mention").localized, 1)
+                } else {
+                    messageDescription = (localizationRootPath + ".ephemeral").localized
+                }
             }
             else {
                 var format = localizationRootPath + "." + localizationKey
