@@ -435,7 +435,10 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             
             let messageDescription: String
             if message.isEphemeral {
-                let typeSuffix = type == .mention ? ".mention.ephemeral" : ".ephemeral"
+                var typeSuffix = ".ephemeral"
+                if type == .mention {
+                    typeSuffix += status.isGroup ? ".mention.group" : ".mention"
+                }
                 messageDescription = (localizationRootPath + typeSuffix).localized
             }
             else {

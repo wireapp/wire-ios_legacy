@@ -211,7 +211,8 @@
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.ephemeral" = "Timed message";
 "conversation.status.message.mention" = "%@";
-"conversation.status.message.mention.ephemeral" = "Someone mentioned you";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "You";
