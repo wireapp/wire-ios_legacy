@@ -438,6 +438,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 var typeSuffix = ".ephemeral"
                 if type == .mention {
                     typeSuffix += status.isGroup ? ".mention.group" : ".mention"
+                } else if status.isGroup {
+                    typeSuffix += ".group"
                 }
                 messageDescription = (localizationRootPath + typeSuffix).localized
             }
@@ -452,7 +454,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 messageDescription = String(format: format.localized, message.textMessageData?.messageText ?? "")
             }
             
-            if status.isGroup {
+            if status.isGroup && !message.isEphemeral {
                 return ((sender.displayName(in: conversation) + ": ") && Swift.type(of: self).emphasisStyle) +
                         (messageDescription && Swift.type(of: self).regularStyle)
             }
