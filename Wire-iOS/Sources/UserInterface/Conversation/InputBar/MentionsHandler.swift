@@ -58,10 +58,8 @@ import Foundation
         let characterAfterMention = mentionMatchRange.upperBound
 
         // Add space after mention if it's not there
-        if !mut.hasSpaceAt(position: characterAfterMention) {
-            mut.insert(" ".attributedString, at: characterAfterMention)
-        }
-        mut.replaceCharacters(in: mentionMatchRange, with: mentionString)
+        let suffix = mut.hasSpaceAt(position: characterAfterMention) ? "".attributedString : " ".attributedString
+        mut.replaceCharacters(in: mentionMatchRange, with: mentionString + suffix)
 
         return mut
     }
