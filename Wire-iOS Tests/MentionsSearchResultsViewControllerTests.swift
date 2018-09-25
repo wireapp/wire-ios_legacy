@@ -197,6 +197,14 @@ class MentionsSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
-    
+
+    func testThatItDoesNotCrashWithNoResults() {
+        // given
+        let users = [selfUser, otherUser, serviceUser]
+        _ = sut.search(in: users as! [ZMUser], with: "u")
+
+        // when
+        sut.search(in: users as! [ZMUser], with: "362D00AE-B606-4680-BD47-F17749229E64")
+    }
     
 }
