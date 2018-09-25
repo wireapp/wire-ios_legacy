@@ -123,7 +123,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "5 new text messages")
+        XCTAssertEqual(status.string, "5 new messages")
     }
     
     func testStatusForMultipleTextMessagesInConversation() {
@@ -155,7 +155,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "@self test")
+        XCTAssertEqual(status.string, "1 mention, 5 new messages")
     }
     
     func testStatusForMultipleTextMessagesInConversation_LastRename() {
@@ -210,7 +210,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "1 mention, 5 new text messages")
+        XCTAssertEqual(status.string, "1 mention, 5 new messages")
     }
     
     func testStatusForSystemMessageILeft() {

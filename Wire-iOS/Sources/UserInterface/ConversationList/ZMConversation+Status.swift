@@ -56,6 +56,8 @@ struct ConversationStatus {
 // Describes the conversation message.
 enum StatusMessageType: Int {
     case mention
+    case missedCall
+    case knock
     case text
     case link
     case image
@@ -63,16 +65,21 @@ enum StatusMessageType: Int {
     case audio
     case video
     case file
-    case knock
     case addParticipants
     case removeParticipants
     case newConversation
-    case missedCall
 }
 
 extension StatusMessageType {
     /// Types of statuses that can be included in a status summary.
     static let summaryTypes: [StatusMessageType] = [.mention, .missedCall, .knock, .text, .link, .image, .location, .audio, .video, .file]
+
+    var parentSummaryType: StatusMessageType? {
+        switch self {
+        case .link, .image, .location, .audio, .video, .file: return .text
+        default: return nil
+        }
+    }
 
     private static let conversationSystemMessageTypeToStatusMessageType: [ZMSystemMessageType: StatusMessageType] = [
         .participantsAdded:   .addParticipants,
@@ -358,34 +365,53 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
     let localizationSilencedRootPath = "conversation.silenced.status.message"
     let localizationRootPath = "conversation.status.message"
 
-    let matchedTypesDescriptions: [StatusMessageType: String] = [
-        .mention:  "mention",
+    let matchedSummaryTypesDescriptions: [StatusMessageType: String] = [
+        .mention:    "mention",
         .missedCall: "missedcall",
-        .knock:    "knock",
-        .text:     "generic_message",
-        .link:     "generic_message",
-        .image:    "generic_message",
-        .location: "generic_message",
-        .audio:    "generic_message",
-        .video:    "generic_message",
-        .file:     "generic_message",
+        .knock:      "knock",
+        .text:       "generic_message"
     ]
-    
+
+    let matchedTypesDescriptions: [StatusMessageType: String] = [
+        .mention:    "mention",
+        .missedCall: "missedcall",
+        .knock:      "knock",
+        .text:       "text",
+        .link:       "link",
+        .image:      "image",
+        .location:   "location",
+        .audio:      "audio",
+        .video:      "video",
+        .file:       "file"
+    ]
+
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         if status.shouldSummarizeMessages {
-            var matchedDescriptions: [String] = []
-            let localizedMatchedItems: [String] = matchedTypes.filter { status.messagesRequiringAttentionByType[$0] > 0 }.compactMap {
-                guard let localizationKey = matchedTypesDescriptions[$0] else {
-                    return nil
+            // Get the count of each category we can summarize, and group them under their parent type
+            let flattenedCount: [StatusMessageType: UInt] = matchedTypes
+                .reduce(into: [StatusMessageType: UInt]()) {
+                    guard let count = status.messagesRequiringAttentionByType[$1], count > 0 else {
+                        return
+                    }
+
+                    if let parentType = $1.parentSummaryType {
+                        $0[parentType, default: 0] += count
+                    } else {
+                        $0[$1, default: 0] += count
+                    }
                 }
 
-                guard !matchedDescriptions.contains(localizationKey) else {
-                    return nil
-                }
+            // For each top-level summary type, generate the subtitle fragment
+            let localizedMatchedItems: [String] = flattenedCount.keys.lazy
+                .sorted { $0.rawValue < $1.rawValue }
+                .reduce(into: []) {
+                    guard let count = flattenedCount[$1], let localizationKey = matchedSummaryTypesDescriptions[$1] else {
+                        return
+                    }
 
-                matchedDescriptions.append(localizationKey)
-                return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, status.messagesRequiringAttentionByType[$0] ?? 0)
-            }
+                    let string = String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count)
+                    $0.append(string)
+                }
 
             let resultString = localizedMatchedItems.joined(separator: ", ")
             return resultString.capitalizingFirstLetter() && type(of: self).regularStyle
@@ -409,11 +435,8 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             
             let messageDescription: String
             if message.isEphemeral {
-                if type == .mention {
-                    messageDescription = String(format: (localizationSilencedRootPath + ".mention").localized, 1)
-                } else {
-                    messageDescription = (localizationRootPath + ".ephemeral").localized
-                }
+                let typeSuffix = type == .mention ? ".mention.ephemeral" : ".ephemeral"
+                messageDescription = (localizationRootPath + typeSuffix).localized
             }
             else {
                 var format = localizationRootPath + "." + localizationKey
