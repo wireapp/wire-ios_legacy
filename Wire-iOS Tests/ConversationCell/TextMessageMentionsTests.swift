@@ -47,8 +47,6 @@ final class TextMessageMentionsTests: CoreDataSnapshotTestCase {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
-
-        recordMode = true
     }
     
     func createSUT(for variant: ColorSchemeVariant) {
