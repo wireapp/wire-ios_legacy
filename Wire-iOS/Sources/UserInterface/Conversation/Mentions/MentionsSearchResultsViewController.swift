@@ -43,6 +43,8 @@ class MentionsSearchResultsViewController: UIViewController {
 
         setupCollectionView()
         setupConstraints()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     private func setupCollectionView() {
@@ -79,27 +81,44 @@ class MentionsSearchResultsViewController: UIViewController {
     
     @objc func reloadTable(with results: [ZMUser]) {
         searchResults = results.reversed()
-        
-        let viewHeight = self.view.bounds.size.height
-        let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
-        tableViewHeight?.constant = minValue
-        collectionView.isScrollEnabled = (minValue == viewHeight)
+        resizeTable()
         
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
-        collectionView.scrollToItem(at: IndexPath(item: searchResults.count - 1, section: 0), at: .bottom, animated: false)
+        
+        scrollToLastItem()
 
-        if minValue > 0 {
+        if results.count > 0 {
             show()
         } else {
             dismissIfVisible()
         }
     }
     
+    private func resizeTable() {
+        let viewHeight = self.view.bounds.size.height
+        let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
+        tableViewHeight?.constant = minValue
+        collectionView.isScrollEnabled = (minValue == viewHeight)
+    }
+    
+    private func scrollToLastItem() {
+        collectionView.scrollToItem(at: IndexPath(item: searchResults.count - 1, section: 0), at: .bottom, animated: false)
+    }
+    
     func show() {
         self.view.isHidden = false
     }
     
+    @objc dynamic func keyboardWillChangeFrame(_ notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        resizeTable()
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+            self.scrollToLastItem()
+        }
+    }
+
 }
 
 extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol {
