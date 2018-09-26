@@ -183,7 +183,7 @@
 			<string>new devices</string>
 		</dict>
 	</dict>
-	<key>conversation.silenced.status.message.text</key>
+	<key>conversation.silenced.status.message.generic_message</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@d_number_of_new@</string>
@@ -194,9 +194,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new text message</string>
+			<string>1 new message</string>
 			<key>other</key>
-			<string>%d new text messages</string>
+			<string>%d new messages</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.mention</key>
@@ -215,86 +215,6 @@
 			<string>%d mentions</string>
 		</dict>
 	</dict>
-	<key>conversation.silenced.status.message.link</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@d_number_of_new@</string>
-		<key>d_number_of_new</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>new link</string>
-			<key>other</key>
-			<string>%d new links</string>
-		</dict>
-	</dict>
-	<key>conversation.silenced.status.message.image</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@d_number_of_new@</string>
-		<key>d_number_of_new</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>new image</string>
-			<key>other</key>
-			<string>%d new images</string>
-		</dict>
-	</dict>
-	<key>conversation.silenced.status.message.location</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@d_number_of_new@</string>
-		<key>d_number_of_new</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>new location</string>
-			<key>other</key>
-			<string>%d new locations</string>
-		</dict>
-	</dict>
-	<key>conversation.silenced.status.message.audio</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@d_number_of_new@</string>
-		<key>d_number_of_new</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>new audio message</string>
-			<key>other</key>
-			<string>%d new audio messages</string>
-		</dict>
-	</dict>
-	<key>conversation.silenced.status.message.video</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@d_number_of_new@</string>
-		<key>d_number_of_new</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>new video</string>
-			<key>other</key>
-			<string>%d new videos</string>
-		</dict>
-	</dict>
 	<key>conversation.silenced.status.message.knock</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -306,9 +226,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>new ping</string>
+			<string>1 ping</string>
 			<key>other</key>
-			<string>%d new pings</string>
+			<string>%d pings</string>
 		</dict>
 	</dict>
 	<key>conversation.silenced.status.message.missedcall</key>
@@ -322,25 +242,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>missed call</string>
+			<string>1 missed call</string>
 			<key>other</key>
 			<string>%d missed calls</string>
-		</dict>
-	</dict>
-	<key>conversation.silenced.status.message.file</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@d_number_of_new@</string>
-		<key>d_number_of_new</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>new file</string>
-			<key>other</key>
-			<string>%d new files</string>
 		</dict>
 	</dict>
 	<key>content.system.call.missed-call</key>

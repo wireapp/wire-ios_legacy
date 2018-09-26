@@ -20,7 +20,7 @@ import Foundation
 
 @objc public class MentionsHandler: NSObject {
 
-    var mentionRegex: NSRegularExpression = {
+    fileprivate var mentionRegex: NSRegularExpression = {
         try! NSRegularExpression(pattern: "([\\s]|^)(@(\\S*))", options: [.anchorsMatchLines])
     }()
 
@@ -55,7 +55,12 @@ import Foundation
     func replace(mention: UserType, in attributedString: NSAttributedString) -> NSAttributedString {
         let mentionString = NSAttributedString(attachment: MentionTextAttachment(user: mention))
         let mut = NSMutableAttributedString(attributedString: attributedString)
-        mut.replaceCharacters(in: mentionMatchRange, with: mentionString)
+        let characterAfterMention = mentionMatchRange.upperBound
+
+        // Add space after mention if it's not there
+        let suffix = mut.hasSpaceAt(position: characterAfterMention) ? "".attributedString : " ".attributedString
+        mut.replaceCharacters(in: mentionMatchRange, with: mentionString + suffix)
+
         return mut
     }
 }
