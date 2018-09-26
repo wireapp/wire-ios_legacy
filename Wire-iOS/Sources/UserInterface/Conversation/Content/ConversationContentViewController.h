@@ -25,7 +25,7 @@
 @class ZMConversation;
 @class ConversationMediaController;
 @class UpsideDownTableView;
-@class MentionsSearchResultsViewController;
+@class UserSearchResultsViewController;
 
 /// The main conversation view controller
 @interface ConversationContentViewController : UIViewController
@@ -37,7 +37,7 @@
 @property (nonatomic, weak) ConversationMediaController *mediaController;
 @property (nonatomic) UpsideDownTableView *tableView;
 @property (nonatomic) NSArray<NSString *> *searchQueries;
-@property (nonatomic) MentionsSearchResultsViewController *mentionsSearchResultsViewController;
+@property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;

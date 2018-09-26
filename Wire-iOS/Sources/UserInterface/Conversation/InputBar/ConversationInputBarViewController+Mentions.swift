@@ -39,8 +39,8 @@ extension ConversationInputBarViewController {
     }
 }
 
-extension ConversationInputBarViewController: MentionsSearchResultsViewControllerDelegate {
-    func didSelectUserToMention(_ user: ZMUser) {
+extension ConversationInputBarViewController: UserSearchResultsViewControllerDelegate {
+    func didSelect(user: UserType) {
         guard let handler = mentionsHandler else { return }
 
         let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
@@ -53,7 +53,7 @@ extension ConversationInputBarViewController {
     
     func dismissMentionsIfNeeded() {
         mentionsHandler = nil
-        mentionsView?.dismissIfVisible()
+        mentionsView?.dismiss()
     }
 
     func triggerMentionsIfNeeded(from textView: UITextView, with selection: UITextRange? = nil) {
@@ -62,8 +62,8 @@ extension ConversationInputBarViewController {
         }
 
         if let handler = mentionsHandler, let searchString = handler.searchString(in: textView.text) {
-            let participants = conversation.activeParticipants.array as! [ZMUser]
-            mentionsView?.search(in: participants, with: searchString)
+            let participants = conversation.activeParticipants.array as! [UserType]
+            mentionsView?.users = ZMUser.searchForMentions(in: participants, with: searchString)
         } else {
             dismissMentionsIfNeeded()
         }

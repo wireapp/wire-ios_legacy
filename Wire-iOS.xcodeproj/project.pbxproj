@@ -287,8 +287,8 @@
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
 		7C232CD91FE029BD00792E9B /* Analytics+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C232CD81FE029BD00792E9B /* Analytics+Availability.swift */; };
 		7C23A26D20247500005FEB54 /* ShareViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */; };
-		7C25D755214911AC002E22BF /* MentionsSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D754214911AC002E22BF /* MentionsSearchResultsViewController.swift */; };
-		7C25D75B21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */; };
+		7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D754214911AC002E22BF /* UserSearchResultsViewController.swift */; };
+		7C25D75B21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D75A21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift */; };
 		7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */; };
 		7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */; };
 		7C374E4C1FDE7B8C00A43B9C /* unsplash_matterhorn_exact_size.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */; };
@@ -435,6 +435,8 @@
 		871BE95F1CD0C462002267E8 /* FBSnapshotTestCase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		871DD79D2080C4F6006B1C56 /* Conversation+Participants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871DD79C2080C4F6006B1C56 /* Conversation+Participants.swift */; };
 		8723342A1CD0D8F100CF8B11 /* VideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */; };
+		87240380215B8EBA0094363B /* ZMUser+Mention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8724037F215B8EBA0094363B /* ZMUser+Mention.swift */; };
+		87240383215B92F90094363B /* ZMUserMentionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87240381215B92F00094363B /* ZMUserMentionsTest.swift */; };
 		872786CB1D38EE2000CC3C15 /* OnePasswordExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 872786CA1D38EE2000CC3C15 /* OnePasswordExtension.framework */; };
 		872B3283209B208D005AC615 /* CallTopOverlayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872B3282209B208D005AC615 /* CallTopOverlayController.swift */; };
 		872C823C214A9B8500236A76 /* TextMessageMentionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C823B214A9B8500236A76 /* TextMessageMentionsTests.swift */; };
@@ -1704,8 +1706,8 @@
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
 		7C232CD81FE029BD00792E9B /* Analytics+Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Availability.swift"; sourceTree = "<group>"; };
 		7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerTests.swift; sourceTree = "<group>"; };
-		7C25D754214911AC002E22BF /* MentionsSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultsViewController.swift; sourceTree = "<group>"; };
-		7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MentionsSearchResultsViewControllerTests.swift; sourceTree = "<group>"; };
+		7C25D754214911AC002E22BF /* UserSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchResultsViewController.swift; sourceTree = "<group>"; };
+		7C25D75A21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSearchResultsViewControllerTests.swift; sourceTree = "<group>"; };
 		7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpacingStackView.swift; sourceTree = "<group>"; };
 		7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_small_height.jpg; sourceTree = "<group>"; };
 		7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_exact_size.jpg; sourceTree = "<group>"; };
@@ -1925,6 +1927,8 @@
 		871BE9561CD0C2DD002267E8 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Carthage/Build/iOS/OCMock.framework; sourceTree = "<group>"; };
 		871DD79C2080C4F6006B1C56 /* Conversation+Participants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+Participants.swift"; sourceTree = "<group>"; };
 		872334291CD0D8F000CF8B11 /* VideoMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoMessageCell.swift; sourceTree = "<group>"; };
+		8724037F215B8EBA0094363B /* ZMUser+Mention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Mention.swift"; sourceTree = "<group>"; };
+		87240381215B92F00094363B /* ZMUserMentionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZMUserMentionsTest.swift; sourceTree = "<group>"; };
 		872786CA1D38EE2000CC3C15 /* OnePasswordExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OnePasswordExtension.framework; path = Carthage/Build/iOS/OnePasswordExtension.framework; sourceTree = "<group>"; };
 		872AC9C21B397E6A00575CF3 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		872B3282209B208D005AC615 /* CallTopOverlayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallTopOverlayController.swift; sourceTree = "<group>"; };
@@ -3766,7 +3770,8 @@
 		7C25D7532149118D002E22BF /* Mentions */ = {
 			isa = PBXGroup;
 			children = (
-				7C25D754214911AC002E22BF /* MentionsSearchResultsViewController.swift */,
+				7C25D754214911AC002E22BF /* UserSearchResultsViewController.swift */,
+				8724037F215B8EBA0094363B /* ZMUser+Mention.swift */,
 			);
 			path = Mentions;
 			sourceTree = "<group>";
@@ -5555,13 +5560,14 @@
 				EFE285452146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift */,
 				EF40AAE52146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift */,
 				EF3CBC072147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift */,
-				7C25D75A21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift */,
+				7C25D75A21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift */,
 				F1CB5D28215A3108001CCF5D /* MentionsHandlerTests.swift */,
 				EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */,
 				EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */,
 				EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */,
 				EF2A8DEE214AAB13002C9058 /* ContactsCellSnapshotTests.swift */,
 				EF883F892152476900B440CC /* ConversationCreationControllerSnapshotTests.swift */,
+				87240381215B92F00094363B /* ZMUserMentionsTest.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6876,6 +6882,7 @@
 				87AEF9351ECF38B0008CB9D9 /* WireStyleKit+Additions.m in Sources */,
 				BFAC71F920A1CC5C002711C4 /* CallInfoConfiguration.swift in Sources */,
 				BF7ED2DA1DF1B5ED003A4397 /* OutgoingConnectionBottomBar.swift in Sources */,
+				87240380215B8EBA0094363B /* ZMUser+Mention.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
@@ -7414,7 +7421,7 @@
 				87B48EBE20A050AA00DBAD9D /* ViewControllerDismisser.swift in Sources */,
 				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
 				EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */,
-				7C25D755214911AC002E22BF /* MentionsSearchResultsViewController.swift in Sources */,
+				7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
 				EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */,
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
@@ -7900,9 +7907,10 @@
 				EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */,
 				EF297DD42131F39F0002983A /* MediaPreviewViewControllerTests.swift in Sources */,
 				5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */,
-				7C25D75B21494E4B002E22BF /* MentionsSearchResultsViewControllerTests.swift in Sources */,
+				7C25D75B21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift in Sources */,
 				EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */,
 				EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */,
+				87240383215B92F90094363B /* ZMUserMentionsTest.swift in Sources */,
 				8742C2F11E533AC400329FB6 /* NSAttributedStringHighlightTests.swift in Sources */,
 				EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */,
 				EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */,

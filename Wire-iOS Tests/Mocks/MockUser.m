@@ -53,6 +53,11 @@ static id<UserType> mockSelfUser = nil;
 
 + (NSArray *)mockUsers
 {
+    return [self realMockUsers];
+}
+
++ (NSArray *)realMockUsers
+{
     return [MockLoader mockObjectsOfClass:[self class] fromFile:@"people-01.json"];
 }
 
