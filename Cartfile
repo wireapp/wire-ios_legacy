@@ -1,8 +1,8 @@
 github "wireapp/wire-ios-ziphy" ~> 12.0
 github "wireapp/Cartography" "3.0.2-xcode10"
 github "wireapp/TTTAttributedLabel" "2.0.0-swift3.0.2"
-github "wireapp/wire-ios-share-engine" ~> 92.0
-github "wireapp/wire-ios-sync-engine" ~> 193.0
+github "wireapp/wire-ios-share-engine" ~> 93.0
+github "wireapp/wire-ios-sync-engine" ~> 194.0
 github "wireapp/onepassword-app-extension" "framework/1.8.2-wire-swift3.0.2"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/wire-ios-canvas" ~> 9.0
