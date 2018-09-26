@@ -288,7 +288,7 @@
 		7C232CD91FE029BD00792E9B /* Analytics+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C232CD81FE029BD00792E9B /* Analytics+Availability.swift */; };
 		7C23A26D20247500005FEB54 /* ShareViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */; };
 		7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D754214911AC002E22BF /* UserSearchResultsViewController.swift */; };
-		7C25D75B21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D75A21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift */; };
+		7C25D75B21494E4B002E22BF /* UserSearchResultsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C25D75A21494E4B002E22BF /* UserSearchResultsViewControllerTests.swift */; };
 		7C3083AC1FE15FBF0036AFCC /* CustomSpacingStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */; };
 		7C374E4B1FDE7B8C00A43B9C /* unsplash_matterhorn_small_height.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */; };
 		7C374E4C1FDE7B8C00A43B9C /* unsplash_matterhorn_exact_size.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */; };
@@ -1710,7 +1710,7 @@
 		7C232CD81FE029BD00792E9B /* Analytics+Availability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Availability.swift"; sourceTree = "<group>"; };
 		7C23A26B20247474005FEB54 /* ShareViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewControllerTests.swift; sourceTree = "<group>"; };
 		7C25D754214911AC002E22BF /* UserSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchResultsViewController.swift; sourceTree = "<group>"; };
-		7C25D75A21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersSearchResultsViewControllerTests.swift; sourceTree = "<group>"; };
+		7C25D75A21494E4B002E22BF /* UserSearchResultsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchResultsViewControllerTests.swift; sourceTree = "<group>"; };
 		7C3083AB1FE15FBF0036AFCC /* CustomSpacingStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpacingStackView.swift; sourceTree = "<group>"; };
 		7C374E471FDE7B8B00A43B9C /* unsplash_matterhorn_small_height.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_small_height.jpg; sourceTree = "<group>"; };
 		7C374E481FDE7B8B00A43B9C /* unsplash_matterhorn_exact_size.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_exact_size.jpg; sourceTree = "<group>"; };
@@ -2997,9 +2997,9 @@
 		EFAFCA8B21342A1E002B31A6 /* ConversationListViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+Internal.h"; sourceTree = "<group>"; };
 		EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerTests.swift; sourceTree = "<group>"; };
 		EFBCC90E2152A93F006AAB70 /* AnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsProvider.swift; sourceTree = "<group>"; };
+		EFBCC9102153EA36006AAB70 /* String+Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Emoji.swift"; sourceTree = "<group>"; };
 		EFBCC9122154FF18006AAB70 /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		EFBCC91421551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+ViewLifeCycle.swift"; sourceTree = "<group>"; };
-		EFBCC9102153EA36006AAB70 /* String+Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Emoji.swift"; sourceTree = "<group>"; };
 		EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuConfigurationProperties.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
 		EFC8E216212C67E300BE7BBE /* PingCell+Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PingCell+Style.swift"; sourceTree = "<group>"; };
@@ -5568,7 +5568,7 @@
 				EFE285452146B6A300720737 /* RegistrationTextFieldSnapshotTests.swift */,
 				EF40AAE52146C94600211FBF /* RegistrationRootViewControllerSnapshotTests.swift */,
 				EF3CBC072147C06500566295 /* TeamCreationFlowControllerSnapshotTests.swift */,
-				7C25D75A21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift */,
+				7C25D75A21494E4B002E22BF /* UserSearchResultsViewControllerTests.swift */,
 				F1CB5D28215A3108001CCF5D /* MentionsHandlerTests.swift */,
 				EFE043972149CE7600BC3079 /* InviteContactsViewControllerSnapshotTests.swift */,
 				EFE0439A2149D9C900BC3079 /* ShareContactsViewControllerSnapshotTests.swift */,
@@ -7919,7 +7919,7 @@
 				EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */,
 				EF297DD42131F39F0002983A /* MediaPreviewViewControllerTests.swift in Sources */,
 				5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */,
-				7C25D75B21494E4B002E22BF /* UsersSearchResultsViewControllerTests.swift in Sources */,
+				7C25D75B21494E4B002E22BF /* UserSearchResultsViewControllerTests.swift in Sources */,
 				EF80C0042097151C00E0040B /* ZMConversationMessageWindowTests.swift in Sources */,
 				EF2C189E1FED0D6900E9F2FD /* ConversationCellTests.swift in Sources */,
 				87240383215B92F90094363B /* ZMUserMentionsTest.swift in Sources */,
