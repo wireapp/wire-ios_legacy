@@ -101,7 +101,7 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate let searchResultsViewController : SearchResultsViewController
     fileprivate let searchGroupSelector : SearchGroupSelector
     fileprivate let searchHeaderViewController : SearchHeaderViewController
-    fileprivate let userSelection : UserSelection = UserSelection()
+    let userSelection : UserSelection = UserSelection()
     fileprivate let collectionView : UICollectionView
     fileprivate let collectionViewLayout : UICollectionViewFlowLayout
     fileprivate let confirmButtonHeight: CGFloat = 46.0
@@ -109,7 +109,7 @@ public class AddParticipantsViewController: UIViewController {
     fileprivate let emptyResultView: EmptySearchResultsView
     fileprivate var bottomConstraint: NSLayoutConstraint?
     fileprivate let backButtonDescriptor = BackButtonDescription()
-    private let bottomMargin: CGFloat = UIScreen.hasNotch ? 8 : 16
+    private let bottomMargin: CGFloat = UIScreen.hasBottomInset ? 8 : 16
 
     
     public weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?

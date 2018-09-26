@@ -57,7 +57,10 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     if message.isText {
         let fetchLinkPreview = !Settings.shared().disableLinkPreviews
         ZMUserSession.shared()?.performChanges {
-            conversations.forEachNonEphemeral { _ = $0.append(text: message.textMessageData!.messageText!, mentions: message.textMessageData!.mentions, fetchLinkPreview: fetchLinkPreview) }
+            conversations.forEachNonEphemeral {
+                // We should not forward any mentions to other conversations
+                _ = $0.append(text: message.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
+            }
         }
     }
     else if message.isImage, let imageData = message.imageMessageData?.imageData {

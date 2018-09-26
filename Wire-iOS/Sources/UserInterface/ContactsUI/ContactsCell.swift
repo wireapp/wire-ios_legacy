@@ -74,7 +74,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .smallLightFont
+        label.font = .normalLightFont
         label.accessibilityIdentifier = "contact_cell.name"
 
         return label

@@ -18,19 +18,8 @@
 
 import Foundation
 
-extension ContactsViewController {
-    @objc func setupStyle() {
-        titleLabel?.textAlignment = .center
-        titleLabel?.font = .smallLightFont
-        titleLabel?.textTransform = .upper
-
-        bottomContainerView?.backgroundColor = .background
-
-        noContactsLabel?.font = .normalLightFont
-        noContactsLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
-    }
-
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+extension CGFloat {
+    enum StartUI {
+        static public let CellHeight: CGFloat = 56
     }
 }
