@@ -61,6 +61,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         _colorSchemeVariant = [ColorScheme defaultColorScheme].variant;
 
         self.shouldShowShareContactsViewController = YES;
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardFrameWillChange:)
+                                                     name:UIKeyboardWillChangeFrameNotification
+                                                   object:nil];
     }
     
     return self;
@@ -199,11 +204,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.noContactsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view withOffset:standardOffset];
     [self.noContactsLabel autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:self.view withOffset:standardOffset];
     [self.noContactsLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    
+
     CGFloat bottomContainerHeight = 56.0f + UIScreen.safeArea.bottom;
     [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
-    [self.bottomContainerView autoSetDimension:ALDimensionHeight toSize:bottomContainerHeight];
     self.bottomContainerBottomConstraint = [self.bottomContainerView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
     
     [self.bottomContainerSeparatorView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
@@ -226,6 +230,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:standardOffset];
     [self.inviteOthersButton autoSetDimension:ALDimensionHeight toSize:28];
     [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:standardOffset / 2.0];
+    self.bottomEdgeConstraint = [self.inviteOthersButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset: standardOffset / 2.0 + UIScreen.safeArea.bottom];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }

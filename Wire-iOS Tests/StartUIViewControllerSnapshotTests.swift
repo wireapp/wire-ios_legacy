@@ -34,6 +34,17 @@ final class StartUIViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
+    func testForWrappedInNavigationViewController() {
+        MockUser.mockSelf().isTeamMember = false
+
+        let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
+
+
+        navigationController.pushViewController(sut, animated: false)
+
+        verifyInAllIPhoneSizes(view: navigationController.view)
+    }
+
     func testForNoContact() {
         MockUser.mockSelf().isTeamMember = false
         verifyInAllIPhoneSizes(view: sut.view)

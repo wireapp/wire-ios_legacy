@@ -49,6 +49,8 @@ extension ConversationInputBarViewController {
             clearInputBar()
             delegate?.conversationInputBarViewControllerDidComposeText(text, mentions: mentions)
         }
+        
+        dismissMentionsIfNeeded()
     }
     
     func showAlertIfTextIsTooLong(text: String) -> Bool {

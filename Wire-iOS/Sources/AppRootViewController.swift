@@ -538,8 +538,12 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
         guard let session = ZMUserSession.shared(), session.isCallOngoing else { return completion(true) }
         guard let topmostController = UIApplication.shared.wr_topmostController() else { return completion(false) }
         
-        let alert = UIAlertController(title: "self.settings.switch_account.title".localized, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized, style: .default, handler: { [weak self] (action) in
+        let alert = UIAlertController(title: "call.alert.ongoing.alert_title".localized,
+                                      message: "self.settings.switch_account.message".localized,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized,
+                                      style: .default,
+                                      handler: { [weak self] (action) in
             self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
             completion(true)
         }))

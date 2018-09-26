@@ -120,7 +120,10 @@ class MentionsHandlerTests: XCTestCase {
         XCTAssertEqual(attachments.count, 1)
         guard let mention = attachments.first else { XCTFail(); return}
 
-        let expected = "Hi ".attributedString + NSAttributedString(attachment: mention) + " ".attributedString
+        let expected = NSMutableAttributedString(string: query)
+        let rangeOfMention = (query as NSString).range(of: "@bill")
+        expected.replaceCharacters(in: rangeOfMention, with: NSAttributedString(attachment: mention) + " ")
+
         XCTAssertEqual(replaced, expected)
     }
 

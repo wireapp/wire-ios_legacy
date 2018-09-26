@@ -47,13 +47,18 @@ extension MentionsHandler {
         let selectionRange = textView.selectedRange
         let cursorPosition = selectionRange.location
 
-        let prefix = text.hasSpaceAt(position: cursorPosition - 1) ? "" : " "
-        let suffix = text.hasSpaceAt(position: cursorPosition) ? "" : " "
+        let prefix = needsSpace(text: text, position: cursorPosition - 1) ? " " : ""
+        let suffix = needsSpace(text: text, position: cursorPosition) ? " " : ""
 
         let result = prefix + "@" + suffix
 
         // We need to change the selection depending if we insert only '@' or ' @'
         let cursorOffset = prefix.isEmpty ? 1 : 2
         return (result, cursorOffset)
+    }
+
+    fileprivate static func needsSpace(text: NSAttributedString, position: Int) -> Bool {
+        guard text.wholeRange.contains(position) else { return false }
+        return !text.hasSpaceAt(position: position)
     }
 }
