@@ -318,7 +318,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     /// Fetches the preview image for the given website.
     private func fetchWebsitePreview(for url: URL) {
-        sharingSession?.downloadLinkPreviews(inText: url.absoluteString) { previews in
+        sharingSession?.downloadLinkPreviews(inText: url.absoluteString, excluding: []) { previews in
             if let imageData = previews.first?.imageData.first {
                 let image = UIImage(data: imageData)
                 DispatchQueue.main.async {
