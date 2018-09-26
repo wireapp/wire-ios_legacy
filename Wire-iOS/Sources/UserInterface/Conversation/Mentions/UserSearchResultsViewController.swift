@@ -36,7 +36,7 @@ class UserSearchResultsViewController: UIViewController {
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var searchResults: [UserType] = []
     private var query: String = ""
-    private var tableViewHeight: NSLayoutConstraint?
+    private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     
     @objc public weak var delegate: UserSearchResultsViewControllerDelegate?
@@ -55,7 +55,7 @@ class UserSearchResultsViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = UIColor.white
+        collectionView.backgroundColor = UIColor(scheme: .background)
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -64,7 +64,7 @@ class UserSearchResultsViewController: UIViewController {
 
         collectionView.collectionViewLayout = layout
 
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.backgroundColor = UIColor(scheme: .background).withAlphaComponent(0.5)
         view.addSubview(collectionView)
         
         view.accessibilityIdentifier = "mentions.list.container"
@@ -76,7 +76,7 @@ class UserSearchResultsViewController: UIViewController {
             collectionView.bottom == selfView.bottom
             collectionView.leading == selfView.leading
             collectionView.trailing == selfView.trailing
-            tableViewHeight = collectionView.height == 0
+            collectionViewHeight = collectionView.height == 0
         }
     }
     
@@ -85,7 +85,7 @@ class UserSearchResultsViewController: UIViewController {
         
         let viewHeight = self.view.bounds.size.height
         let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
-        tableViewHeight?.constant = minValue
+        collectionViewHeight?.constant = minValue
         collectionView.isScrollEnabled = (minValue == viewHeight)
         
         collectionView.reloadData()
