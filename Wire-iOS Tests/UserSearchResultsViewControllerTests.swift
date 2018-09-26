@@ -35,7 +35,9 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         serviceUser.serviceIdentifier = UUID.create().transportString()
         serviceUser.providerIdentifier = UUID.create().transportString()
         uiMOC.saveOrRollback()
-        
+    }
+    
+    func createSUT() {
         sut = UserSearchResultsViewController(nibName: nil, bundle: nil)
         
         sut.view.layoutIfNeeded()
@@ -47,24 +49,36 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     override func tearDown() {
         sut = nil
         serviceUser = nil
+        ColorScheme.default.variant = .light
         super.tearDown()
     }
     
     // UI Tests
     
     func testThatShowsResultsInConversationWithEmptyQuery() {
+        createSUT()
         sut.users = ZMUser.searchForMentions(in: [selfUser, otherUser], with: "")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
 
     func testThatShowsResultsInConversationWithQuery() {
+        createSUT()
+        sut.users = ZMUser.searchForMentions(in: [selfUser, otherUser], with: "u")
+        guard let view = sut.view else { XCTFail(); return }
+        verify(view: view)
+    }
+    
+    func testThatShowsResultsInConversationWithQuery_DarkMode() {
+        ColorScheme.default.variant = .dark
+        createSUT()
         sut.users = ZMUser.searchForMentions(in: [selfUser, otherUser], with: "u")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
     
     func testThatItOverflowsWithTooManyUsers() {
+        createSUT()
         var allUsers: [ZMUser] = []
         
         for name in usernames {
@@ -85,6 +99,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     func testThatItDoesNotCrashWithNoResults() {
+        createSUT()
         // given
         let users: [UserType] = [selfUser, otherUser, serviceUser]
         sut.users = ZMUser.searchForMentions(in: users, with: "u")
