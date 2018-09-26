@@ -20,6 +20,10 @@ import Foundation
 
 // MARK: SplitViewController reveal
 
+extension CharacterSet {
+    static var newlinesAndTabulation = CharacterSet(charactersIn: "\r\n\t")
+}
+
 extension ConversationInputBarViewController {
     func hideLeftView() {
         guard self.isIPadRegularPortrait(device: UIDevice.current, application: UIApplication.shared) else { return }
@@ -49,8 +53,18 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // send only if send key pressed
         if textView.returnKeyType == .send && (text == "\n") {
-            inputBar.textView.autocorrectLastWord()
-            sendText()
+            if canInsertMention {
+                insertBestMatchMention()
+            }
+            else {
+                inputBar.textView.autocorrectLastWord()
+                sendText()
+            }
+            return false
+        }
+        
+        if text.count == 1, text.containsCharacters(from: CharacterSet.newlinesAndTabulation), canInsertMention {
+            insertBestMatchMention()
             return false
         }
 

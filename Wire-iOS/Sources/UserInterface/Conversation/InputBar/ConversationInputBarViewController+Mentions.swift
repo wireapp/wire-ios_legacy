@@ -23,6 +23,30 @@ extension ConversationInputBarViewController {
         return mentionsHandler != nil
     }
     
+    var canInsertMention: Bool {
+        guard isInMentionsFlow, let mentionsView = mentionsView, mentionsView.users.count > 0 else {
+            return false
+        }
+        return true
+    }
+    
+    func insertBestMatchMention() {
+        guard canInsertMention, let mentionsView = mentionsView else {
+            fatal("Cannot insert best mention")
+        }
+        
+        let bestSuggestion = mentionsView.users[0]
+        insertMention(for: bestSuggestion)
+    }
+    
+    func insertMention(for user: UserType) {
+        guard let handler = mentionsHandler else { return }
+        
+        let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
+        inputBar.textView.attributedText = handler.replace(mention: user, in: text)
+        dismissMentionsIfNeeded()
+    }
+    
     @objc func configureMentionButton() {
         mentionButton.addTarget(self, action: #selector(ConversationInputBarViewController.mentionButtonTapped(sender:)), for: .touchUpInside)
     }
@@ -41,11 +65,7 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: UserSearchResultsViewControllerDelegate {
     func didSelect(user: UserType) {
-        guard let handler = mentionsHandler else { return }
-
-        let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
-        inputBar.textView.attributedText = handler.replace(mention: user, in: text)
-        dismissMentionsIfNeeded()
+        insertMention(for: user)
     }
 }
 
