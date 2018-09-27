@@ -158,7 +158,7 @@
         <string>uut seadet</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.text</key>
+    <key>conversation.silenced.status.message.generic_message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -169,12 +169,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>uus sõnum</string>
+        <string>1 uus sõnum</string>
         <key>other</key>
         <string>%d uut sõnumit</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.link</key>
+    <key>conversation.silenced.status.message.mention</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -185,73 +185,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>uus viide</string>
+        <string>1 mainimine</string>
         <key>other</key>
-        <string>%d uut viidet</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.image</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>uus pilt</string>
-        <key>other</key>
-        <string>%d uut pilti</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.location</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>uus asukoht</string>
-        <key>other</key>
-        <string>%d uut asukohta</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.audio</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>uus helisõnum</string>
-        <key>other</key>
-        <string>%d uut helisõnumit</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.video</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>uus video</string>
-        <key>other</key>
-        <string>%d uut videot</string>
+        <string>%d mainimist</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -265,9 +201,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>uus ping</string>
+        <string>1 ping</string>
         <key>other</key>
-        <string>%d uut pingi</string>
+        <string>%d pingi</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -281,25 +217,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>vastamata kõne</string>
+        <string>1 vastamata kõne</string>
         <key>other</key>
         <string>%d vastamata kõnet</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.file</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>uus fail</string>
-        <key>other</key>
-        <string>%d uut faili</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call</key>
@@ -313,9 +233,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Vastamata kõne</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>Vastamata kõned</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -329,9 +249,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Vastamata kõne kasutajalt %2$@</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>Vastamata kõned kasutajalt %2$@</string>
       </dict>
     </dict>
   </dict>

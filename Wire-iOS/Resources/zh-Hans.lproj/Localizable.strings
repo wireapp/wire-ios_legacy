@@ -31,7 +31,7 @@
 "general.accept" = "接听";
 "general.decline" = "不用了，谢谢";
 "general.failure" = "好像出了点问题。";
-"general.service" = "Service";
+"general.service" = "服务";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = "\U200B";
@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新消息。";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "帮助我们改善Wire";
-"conversation_list.data_usage_permission_alert.message" = "发送匿名使用状况和崩溃报告有助改善我们的产品和服务。我们不会将这些资讯用于其他地方。";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "否";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在联系人中";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "静音";
 "conversation_list.voiceover.status.typing" = "输入中";
 "conversation_list.voiceover.status.ping" = "打招呼";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已归档";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "已归档的聊天列表";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "联系人";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "打了招呼";
 "conversation.status.message.missedcall" = "未接电话";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
-"conversation.status.message.ephemeral" = "阅后即焚";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.knock" = "打了招呼";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ 未发信息";
 "conversation.status.you" = "你";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "在联系人中";
 
 "conversation.input_bar.shortcut.send" = "发送消息";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "编辑最新消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "有人开始使用新的设备。";
 "call.degraded.alert.action.continue" = "仍然要通话";
 
-"call.alert.ongoing.start.alert_title" = "Start Call?";
-"call.alert.ongoing.join.alert_title" = "Join Call?";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
-"call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.button" = "仍要加入";
+"call.alert.ongoing.start.button" = "仍然要通话";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -764,8 +773,8 @@
 "self.settings.add_account.error.title" = "已啓動三個帐户";
 "self.settings.add_account.error.message" = "您只能同时登录三个帐户。请先登出任何一个帐户，然后加入新帐户。";
 
-"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch account";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "帐户";

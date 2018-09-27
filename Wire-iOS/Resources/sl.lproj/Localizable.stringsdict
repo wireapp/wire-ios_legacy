@@ -198,7 +198,7 @@
         <string>nove naprave</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.text</key>
+    <key>conversation.silenced.status.message.generic_message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -209,16 +209,16 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>novo sporočilo</string>
+        <string>1 new message</string>
         <key>two</key>
-        <string>%d novih sporočil</string>
+        <string>%d new messages</string>
         <key>few</key>
-        <string>%d novih sporočil</string>
+        <string>%d new messages</string>
         <key>other</key>
-        <string>%d novih sporočil</string>
+        <string>%d new messages</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.link</key>
+    <key>conversation.silenced.status.message.mention</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -229,93 +229,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>nova povezava</string>
+        <string>1 mention</string>
         <key>two</key>
-        <string>%d novih povezav</string>
+        <string>%d mentions</string>
         <key>few</key>
-        <string>%d novih povezav</string>
+        <string>%d mentions</string>
         <key>other</key>
-        <string>%d novih povezav</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.image</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>nova slika</string>
-        <key>two</key>
-        <string>%d nove slike</string>
-        <key>few</key>
-        <string>%d nove slike</string>
-        <key>other</key>
-        <string>%d nove slike</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.location</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>nova lokacija</string>
-        <key>two</key>
-        <string>%d nove lokacije</string>
-        <key>few</key>
-        <string>%d nove lokacije</string>
-        <key>other</key>
-        <string>%d nove lokacije</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.audio</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>novo zvočno sporočilo</string>
-        <key>two</key>
-        <string>%d nova zvočna sporočila</string>
-        <key>few</key>
-        <string>%d nova zvočna sporočila</string>
-        <key>other</key>
-        <string>%d nova zvočna sporočila</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.video</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>nov video</string>
-        <key>two</key>
-        <string>%d novih videov</string>
-        <key>few</key>
-        <string>%d novih videov</string>
-        <key>other</key>
-        <string>%d novih videov</string>
+        <string>%d mentions</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -329,13 +249,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>nov ping</string>
+        <string>1 ping</string>
         <key>two</key>
-        <string>%d novih pingov</string>
+        <string>%d pings</string>
         <key>few</key>
-        <string>%d novih pingov</string>
+        <string>%d pings</string>
         <key>other</key>
-        <string>%d novih pingov</string>
+        <string>%d pings</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -349,33 +269,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>zgrešen klic</string>
+        <string>1 missed call</string>
         <key>two</key>
         <string>%d zgrešenih klicev</string>
         <key>few</key>
         <string>%d zgrešenih klicev</string>
         <key>other</key>
         <string>%d zgrešenih klicev</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.file</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>nova zbirka</string>
-        <key>two</key>
-        <string>%d novih zbirk</string>
-        <key>few</key>
-        <string>%d novih zbirk</string>
-        <key>other</key>
-        <string>%d novih zbirk</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call</key>

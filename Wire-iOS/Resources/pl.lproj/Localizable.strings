@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ma nowe wiadomości.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Pomóż nam ulepszyć Wire";
-"conversation_list.data_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "Nie";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "w kontaktach";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "silenced";
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontakty";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "Zaczepiony";
 "conversation.status.message.missedcall" = "Nieodebrane połączenie";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
-"conversation.status.message.ephemeral" = "Wiadomość czasowa";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.knock" = "Zaczepiony";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠ Wiadomość niewysłana";
 "conversation.status.you" = "Ty";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "w kontaktach";
 
 "conversation.input_bar.shortcut.send" = "Wyślij wiadomość";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Anuluj";
 
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "Kto zaczął używać nowego urządzenia.";
 "call.degraded.alert.action.continue" = "Dzwoń mimo to";
 
-"call.alert.ongoing.start.alert_title" = "Start Call?";
-"call.alert.ongoing.join.alert_title" = "Join Call?";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
-"call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.button" = "Join Anyway";
+"call.alert.ongoing.start.button" = "Dzwoń mimo to";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -764,8 +773,8 @@
 "self.settings.add_account.error.title" = "Three accounts active";
 "self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
-"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch account";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";

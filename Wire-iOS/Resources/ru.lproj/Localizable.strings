@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Есть новые сообщения.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
-"conversation_list.data_usage_permission_alert.message" = "Отправка анонимных отчетов об использовании и сбоях помогает нам улучшать наши продукты и сервисы. Мы не используем эту информацию ни для чего другого.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "Нет";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "тишина";
 "conversation_list.voiceover.status.typing" = "печатает";
 "conversation_list.voiceover.status.ping" = "пинг";
+"conversation_list.voiceover.status.mention" = "вас упомянули";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "Архивные";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "список архивных разговоров";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакты";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "Отправил(а) пинг";
 "conversation.status.message.missedcall" = "Пропущенный звонок";
 "conversation.status.message.missedcall.groups" = "Пропущенный вызов от %@";
-"conversation.status.message.ephemeral" = "Временное сообщение";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Прислал сообщение";
+"conversation.status.message.ephemeral.group" = "Кто-то прислал сообщение";
+"conversation.status.message.ephemeral.mention" = "Упомянул вас";
+"conversation.status.message.ephemeral.mention.group" = "Вас упомянули";
+"conversation.status.message.ephemeral.knock" = "Отправил(а) пинг";
+"conversation.status.message.ephemeral.knock.group" = "Новый пинг";
 
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
 "conversation.status.you" = "Вы";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "в контактах";
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Изм. последнее сообщение";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
 
@@ -282,8 +292,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Во время разговора вы не можете сделать снимок.";
 
 "conversation.guests_present" = "Присутствуют гости";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+"conversation.services_present" = "Сервисы активны";
+"conversation.guests_services_present" = "Присутствуют гости и сервисы";
 "conversation.action.search" = "Поиск";
 
 // Image confirmation dialogue
@@ -539,7 +549,7 @@
 "call.status.incoming.user" = "%@ звонит…";
 "call.status.incoming" = "Звонит…";
 "call.status.outgoing" = "Звонит…";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "Вызывает %@…";
 "call.status.reconnecting" = "Переподключение…";
 "call.status.terminating" = "Разъединение…";
 "call.status.constant_bitrate" = "Постоянный битрейт";
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "Используется новое устройство.";
 "call.degraded.alert.action.continue" = "Все равно позвонить";
 
-"call.alert.ongoing.start.alert_title" = "Начать вызов?";
-"call.alert.ongoing.join.alert_title" = "Присоединиться к вызову?";
+"call.alert.ongoing.alert_title" = "Это действие завершит другой ваш вызов.";
 
 "call.alert.ongoing.start.message" = "Уже есть активный вызов в другой беседе.\nВызов в этой беседе прервет его.";
 "call.alert.ongoing.join.message" = "Уже есть активный вызов в другой беседе.\nОн будет прерван в случае начала нового вызова.";
 "call.alert.ongoing.start.button" = "Все равно позвонить";
-"call.alert.ongoing.join.button" = "Начать в любом случае";
+"call.alert.ongoing.join.button" = "Все равно присоединиться";
 
 // Call Actions (accessibility)
 
@@ -764,14 +773,14 @@
 "self.settings.add_account.error.title" = "Три активных аккаунта";
 "self.settings.add_account.error.message" = "Можно авторизоваться не более чем в трех аккаунтах одновременно. Выйдите из одного для добавления другого.";
 
-"self.settings.switch_account.title" = "Переключение аккаунтов приведет к завершению текущего вызова.";
-"self.settings.switch_account.action" = "Сменить аккаунт";
+"self.settings.switch_account.message" = "В этой учетной записи активен вызов.\nПереключение учетных записей приведет к завершению текущего вызова.";
+"self.settings.switch_account.action" = "Все равно переключиться";
 
 // Settings - Account details
 "self.settings.account_section" = "Аккаунт";
 
 "self.settings.account_details_group.info.title" = "Информация";
-"self.settings.account_details_group.personal.title" = "Личные";
+"self.settings.account_details_group.personal.title" = "Personal";
 
 "self.settings.account_section.name.title" = "Имя";
 "self.settings.account_section.email.title" = "Email";
@@ -1131,7 +1140,7 @@
 "registration.cancel_action.title" = "Отменить";
 
 "registration.no_history.hero" = "Вы впервые используете Wire на этом устройстве.";
-"registration.no_history.subtitle" = "Из соображений конфиденциальности история ваших разговоров не будет показана здесь.";
+"registration.no_history.subtitle" = "История разговоров не отображается из соображений конфиденциальности.";
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Восстановить из резервной копии";
 
@@ -1208,7 +1217,7 @@
 "registration.share_contacts.skip_button.title" = "Не сейчас";
 
 "registration.address_book_access_denied.hero.title" = "У Wire нет доступа к вашим контактам.";
-"registration.address_book_access_denied.hero.paragraph1" = "Wire поможет вам найти ваших друзей, если поделитесь вашими контактами.";
+"registration.address_book_access_denied.hero.paragraph1" = "Wire помогает найти друзей, если вы делитесь своими контактами.";
 "registration.address_book_access_denied.hero.paragraph2" = "Чтобы гарантировать доступ, зайдите в Настройки и разрешите доступ к Контактам.";
 "registration.address_book_access_denied.settings_button.title" = "Настройки";
 "registration.address_book_access_denied.maybe_later_button.title" = "Возможно, позже";

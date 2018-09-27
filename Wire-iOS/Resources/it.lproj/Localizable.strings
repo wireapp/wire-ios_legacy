@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ha nuovi messaggi.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Aiutaci a migliorare Wire";
-"conversation_list.data_usage_permission_alert.message" = "L'invio di rapporti anonimi riguardanti l'utilizzo e gli arresti anomali ci aiuta a migliorare i nostri prodotti e servizi. Non utilizziamo queste informazioni per qualsiasi altro scopo.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "No";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contatti";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "silenzio";
 "conversation_list.voiceover.status.typing" = "sta scrivendo";
 "conversation_list.voiceover.status.ping" = "fai un trillo";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivio";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "elenco di conversazioni archiviate";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatti";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "Ha fatto un trillo";
 "conversation.status.message.missedcall" = "Chiamata senza risposta";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
-"conversation.status.message.ephemeral" = "Messaggio a tempo";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.knock" = "Ha fatto un trillo";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ Messaggio non inviato";
 "conversation.status.you" = "Tu";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "in Contatti";
 
 "conversation.input_bar.shortcut.send" = "Invia un messaggio";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Modifica l'ultimo messaggio";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annulla";
 
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "Qualcuno ha iniziato ad usare un nuovo dispositivo.";
 "call.degraded.alert.action.continue" = "Chiama comunque";
 
-"call.alert.ongoing.start.alert_title" = "Start Call?";
-"call.alert.ongoing.join.alert_title" = "Join Call?";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.start.button" = "Chiama comunque";
-"call.alert.ongoing.join.button" = "Entra comunque";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -764,8 +773,8 @@
 "self.settings.add_account.error.title" = "Tre account attivi";
 "self.settings.add_account.error.message" = "Puoi connetterti solo con tre account per volta. Esci da un account per aggiungerne un altro.";
 
-"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Cambia account";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";

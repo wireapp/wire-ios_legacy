@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Є нові повідомлення.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Допоможіть нам зробити Wire кращим";
-"conversation_list.data_usage_permission_alert.message" = "Надсилання анонімних звітів про використання та збої в роботі допомагає нам вдосконалити наші продукти та послуги. Ми не використовуємо цю інформацію для будь-яких інших цілей.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "Ні";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в Контактах";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "сповіщення вимкнено";
 "conversation_list.voiceover.status.typing" = "вводить текст";
 "conversation_list.voiceover.status.ping" = "пінг";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "заархівовано";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "перелік заархівованих розмов";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакти";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "Надіслав(-ла) пінг";
 "conversation.status.message.missedcall" = "Пропущений дзвінок";
 "conversation.status.message.missedcall.groups" = "Пропущений дзвінок від %@";
-"conversation.status.message.ephemeral" = "Тимчасове повідомлення";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.knock" = "Надіслав(-ла) пінг";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ Ненадіслане повідомлення";
 "conversation.status.you" = "Ви";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "в Контактах";
 
 "conversation.input_bar.shortcut.send" = "Надіслати повідомлення";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
 
@@ -539,7 +549,7 @@
 "call.status.incoming.user" = "%@ дзвонить…";
 "call.status.incoming" = "Дзвінок…";
 "call.status.outgoing" = "Дзвінок…";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "%@ дзвонить…";
 "call.status.reconnecting" = "Повторне підключення…";
 "call.status.terminating" = "Роз'єднання…";
 "call.status.constant_bitrate" = "Стала швидкість передачі даних";
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "Хтось почав використовувати новий пристрій.";
 "call.degraded.alert.action.continue" = "Подзвонити все-одно";
 
-"call.alert.ongoing.start.alert_title" = "Розпочати дзвінок?";
-"call.alert.ongoing.join.alert_title" = "Приєднатися до дзвінка?";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "Інша розмова має активний дзвінок.\nДзвінок у цій розмові припинить його.";
 "call.alert.ongoing.join.message" = "Інша розмова має активний дзвінок.\nПриєднання до дзвінка у цій розмові припинить його.";
-"call.alert.ongoing.start.button" = "Подзвонити все-одно";
-"call.alert.ongoing.join.button" = "Приєднатися все-одно";
+"call.alert.ongoing.start.button" = "Подзвонити все одно";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -745,8 +754,8 @@
 
 // Licenses screen
 "about.license.project_header" = "Подробиці";
-"about.license.open_project_button" = "View Project Page";
-"about.license.license_header" = "Acknowledgements";
+"about.license.open_project_button" = "Переглянути сторінку проекту";
+"about.license.license_header" = "Подяки";
 
 // Self new devices
 "self.new_device_alert.title" = "Ваш акаунт використовується на:";
@@ -764,8 +773,8 @@
 "self.settings.add_account.error.title" = "Три акаунти вже активні";
 "self.settings.add_account.error.message" = "Тільки три акаунти можуть одночасно бути активними. Вийдіть з одного активного акаунта, щоб додати наступний.";
 
-"self.settings.switch_account.title" = "Переключення облікових записів призведе до завершення активного дзвінка.";
-"self.settings.switch_account.action" = "Переключити акаунт";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "Акаунт";
@@ -1021,9 +1030,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Персональні дані";
+"landing.create_account.title" = "Персональний акаунт";
 "landing.create_account.subtitle" = "створити акаунт";
-"landing.create_team.title" = "Pro-Акаунт";
+"landing.create_team.title" = "Pro акаунт";
 "landing.create_team.subtitle" = "створити команду";
 "landing.login.hints" = "Вже зареєстровані?";
 "landing.login.button.title" = "Увійти";

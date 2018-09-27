@@ -158,7 +158,7 @@
         <string>neue Geräte</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.text</key>
+    <key>conversation.silenced.status.message.generic_message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -169,12 +169,12 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Neue Nachricht</string>
+        <string>1 neue Nachricht</string>
         <key>other</key>
         <string>%d neue Nachrichten</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.link</key>
+    <key>conversation.silenced.status.message.mention</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -185,73 +185,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Neuer Link</string>
+        <string>1 Erwähnung</string>
         <key>other</key>
-        <string>%d neue Links</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.image</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Neues Bild</string>
-        <key>other</key>
-        <string>%d neue Bilder</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.location</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Neuer Standort</string>
-        <key>other</key>
-        <string>%d neue Standorte</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.audio</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Neue Audionachricht</string>
-        <key>other</key>
-        <string>%d neue Audionachrichten</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.video</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Neues Video</string>
-        <key>other</key>
-        <string>%d neue Videos</string>
+        <string>%d Erwähnungen</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -265,9 +201,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Neuer Ping</string>
+        <string>1 Ping</string>
         <key>other</key>
-        <string>%d neue Pings</string>
+        <string>%d Pings</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -281,25 +217,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>verpasster Anruf</string>
+        <string>1 verpasster Anruf</string>
         <key>other</key>
-        <string>Verpasster Anruf</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.file</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>Neue Datei</string>
-        <key>other</key>
-        <string>%d neue Dateien</string>
+        <string>%d verpasste Anrufe</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call</key>
@@ -313,9 +233,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Verpasster Anruf</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>Verpasste Anrufe</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -329,9 +249,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Verpasster Anruf von %2$@</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>Verpasste Anrufe von %2$@</string>
       </dict>
     </dict>
   </dict>

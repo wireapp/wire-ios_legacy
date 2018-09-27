@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新訊息。";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "幫助我們改善Wire";
-"conversation_list.data_usage_permission_alert.message" = "發送匿名使用狀況和崩潰報告有助改善我們的產品和服務。我們不會將這些資訊用於其他地方。";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "不好";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在聯絡人中";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "靜音";
 "conversation_list.voiceover.status.typing" = "輸入中";
 "conversation_list.voiceover.status.ping" = "招呼";
+"conversation_list.voiceover.status.mention" = "有人提及你";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已封存";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "已封存對話";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡人";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "打了聲招呼";
 "conversation.status.message.missedcall" = "未接來電";
 "conversation.status.message.missedcall.groups" = "錯過%@的來電";
-"conversation.status.message.ephemeral" = "限時訊息";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "某人提及你";
+"conversation.status.message.ephemeral.knock" = "打了聲招呼";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ 未發信息";
 "conversation.status.you" = "您";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "在連絡人中";
 
 "conversation.input_bar.shortcut.send" = "發送訊息";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "編輯最新訊息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
@@ -539,7 +549,7 @@
 "call.status.incoming.user" = "%@呼叫中...";
 "call.status.incoming" = "呼叫中...";
 "call.status.outgoing" = "響鈴中...";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "呼叫%@中...";
 "call.status.reconnecting" = "重新連線中...";
 "call.status.terminating" = "正在掛斷...";
 "call.status.constant_bitrate" = "固定位元率";
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "某人開始使用了新設備。";
 "call.degraded.alert.action.continue" = "仍然要通話";
 
-"call.alert.ongoing.start.alert_title" = "開始通話？";
-"call.alert.ongoing.join.alert_title" = "參與通話？";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "在其他對話裏有另一通話。 \n現在打電話會掛斷該通話。";
 "call.alert.ongoing.join.message" = "在其他對話裏有另一通話。 \n加入這個通話會掛斷該通話。";
-"call.alert.ongoing.start.button" = "仍要通話";
-"call.alert.ongoing.join.button" = "仍要加入";
+"call.alert.ongoing.start.button" = "仍然要通話";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -745,8 +754,8 @@
 
 // Licenses screen
 "about.license.project_header" = "詳細資訊";
-"about.license.open_project_button" = "View Project Page";
-"about.license.license_header" = "Acknowledgements";
+"about.license.open_project_button" = "檢視專案頁面";
+"about.license.license_header" = "致謝聲明";
 
 // Self new devices
 "self.new_device_alert.title" = "您的帳號用於：";
@@ -764,8 +773,8 @@
 "self.settings.add_account.error.title" = "已啓動三個賬號";
 "self.settings.add_account.error.message" = "您只能同時登錄三個帳號。請先登出任何一個賬號，然後加入新賬號。";
 
-"self.settings.switch_account.title" = "切換帳戶將掛斷當前通話。";
-"self.settings.switch_account.action" = "切換帳號";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "帳號";

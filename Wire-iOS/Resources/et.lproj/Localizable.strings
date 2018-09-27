@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "On uusi sõnumeid.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Aita meil muuta Wire'i paremaks";
-"conversation_list.data_usage_permission_alert.message" = "Anonüümsete kasutus- ja krahhiaruannete saatmine aitab meil oma tooteid ja teenuseid parandada. Me ei kasuta seda infot mitte millegi muu jaoks.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "Ei";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "hääletu";
 "conversation_list.voiceover.status.typing" = "trükib";
 "conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "sind on mainitud";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arhiveeritud";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "arhiveeritud vestluste nimekiri";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktid";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "Pingis";
 "conversation.status.message.missedcall" = "Vastamata kõne";
 "conversation.status.message.missedcall.groups" = "Vastamata kõne kasutajalt %@";
-"conversation.status.message.ephemeral" = "Kustuv sõnum";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Saatis sõnumi";
+"conversation.status.message.ephemeral.group" = "Keegi saatis sõnumi";
+"conversation.status.message.ephemeral.mention" = "Mainis sind";
+"conversation.status.message.ephemeral.mention.group" = "Keegi mainis sind";
+"conversation.status.message.ephemeral.knock" = "Pingis";
+"conversation.status.message.ephemeral.knock.group" = "Keegi pingis";
 
 "conversation.status.unsent" = "⚠️ Saatmata sõnum";
 "conversation.status.you" = "Sina";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
 
 "conversation.input_bar.shortcut.send" = "Saada teade";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Viimase sõnumi muutmine";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Tühista";
 
@@ -399,7 +409,7 @@
 "content.system.conversation.with_name.title" = "%@ alustas vestlust";
 "content.system.conversation.with_name.title-you" = "%@ alustas vestlust";
 
-"content.system.conversation.with_name.participants" = "with";
+"content.system.conversation.with_name.participants" = "ja";
 
 "content.system.message_timer_changes" = "%@ määras sõnumi taimeriks: %@";
 "content.system.message_timer_changes.you" = "Sina määrasid sõnumi taimeriks %@";
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "Keegi hakkas uut seadet kasutama.";
 "call.degraded.alert.action.continue" = "Helista ikkagi";
 
-"call.alert.ongoing.start.alert_title" = "Alusta kõnet?";
-"call.alert.ongoing.join.alert_title" = "Liitu kõnega?";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "Teises vestluses on hetkel aktiivne kõne.\nSiin helistades lõpetad käimasoleva kõne.";
 "call.alert.ongoing.join.message" = "Teises vestluses on aktiivne kõne.\nSelle kõnega liitumine lõpetab teise.";
 "call.alert.ongoing.start.button" = "Helista ikkagi";
-"call.alert.ongoing.join.button" = "Liitu ikkagi";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -764,8 +773,8 @@
 "self.settings.add_account.error.title" = "Kolm aktiivset kontot";
 "self.settings.add_account.error.message" = "Korraga saad kasutada kolme kontot. Lisakonto kasutamiseks pead ühega olemasolevatest välja logima.";
 
-"self.settings.switch_account.title" = "Kontode vahetamine lõpetab käimasoleva kõne.";
-"self.settings.switch_account.action" = "Vaheta kontot";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";

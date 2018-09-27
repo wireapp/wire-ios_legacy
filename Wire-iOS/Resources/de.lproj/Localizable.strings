@@ -148,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "Schweigen";
 "conversation_list.voiceover.status.typing" = "tippt";
 "conversation_list.voiceover.status.ping" = "Ping";
+"conversation_list.voiceover.status.mention" = "du wurdest erwähnt";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivierte";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "Liste der archivierten Unterhaltungen";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "Kontakte";
@@ -210,7 +211,13 @@
 "conversation.status.message.knock" = "hat gepingt";
 "conversation.status.message.missedcall" = "Verpasster Anruf";
 "conversation.status.message.missedcall.groups" = "Verpasster Anruf von %@";
+"conversation.status.message.mention" = "%@";
 "conversation.status.message.ephemeral" = "Temporäre Nachricht";
+"conversation.status.message.ephemeral.group" = "Jemand hat eine Nachricht gesendet";
+"conversation.status.message.ephemeral.mention" = "Hat dich erwähnt";
+"conversation.status.message.ephemeral.mention.group" = "Jemand hat dich erwähnt";
+"conversation.status.message.ephemeral.knock" = "hat gepingt";
+"conversation.status.message.ephemeral.knock.group" = "Jemand hat gepingt";
 
 "conversation.status.unsent" = "⚠️ Nicht gesendete Nachricht";
 "conversation.status.you" = "Du";
@@ -265,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "in Kontakte";
 
 "conversation.input_bar.shortcut.send" = "Nachricht senden";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Letzte Nachricht bearbeiten";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Abbrechen";
 
@@ -541,7 +549,7 @@
 "call.status.incoming.user" = "%@ ruft an…";
 "call.status.incoming" = "Ruft an…";
 "call.status.outgoing" = "Klingeln…";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "%@ anrufen…";
 "call.status.reconnecting" = "Erneut verbinden…";
 "call.status.terminating" = "Auflegen…";
 "call.status.constant_bitrate" = "Konstante Bitrate";
@@ -560,8 +568,7 @@
 "call.degraded.alert.message.unknown" = "Jemand verwendet ein neues Gerät.";
 "call.degraded.alert.action.continue" = "Trotzdem anrufen";
 
-"call.alert.ongoing.start.alert_title" = "Anrufen?";
-"call.alert.ongoing.join.alert_title" = "Anruf beitreten?";
+"call.alert.ongoing.alert_title" = "Dies wird den anderen Anruf beenden.";
 
 "call.alert.ongoing.start.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nEin Anruf hier beendet den anderen.";
 "call.alert.ongoing.join.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nDiesen Anruf anzunehmen, beendet den anderen.";
@@ -766,8 +773,8 @@
 "self.settings.add_account.error.title" = "Drei Benutzerkonten sind aktiv";
 "self.settings.add_account.error.message" = "Du kannst zugleich mit drei Benutzerkonten angemeldet sein. Logge dich aus einem aus, um ein neues Konto hinzuzufügen.";
 
-"self.settings.switch_account.title" = "Ein Wechsel des Kontos wird den aktuellen Anruf beenden.";
-"self.settings.switch_account.action" = "Konto wechseln";
+"self.settings.switch_account.message" = "In diesem Konto ist ein Anruf aktiv.\nDurch das Wechseln von Konten wird der aktuelle Anruf beendet.";
+"self.settings.switch_account.action" = "Trotzdem wechseln";
 
 // Settings - Account details
 "self.settings.account_section" = "Benutzerkonto";
