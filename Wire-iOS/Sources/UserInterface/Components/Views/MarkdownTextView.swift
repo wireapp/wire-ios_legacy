@@ -125,6 +125,17 @@ extension Notification.Name {
         }
     }
     
+    override func cut(_ sender: Any?) {
+        guard let selectedTextRange = selectedTextRange else { return }
+        
+        let copiedAttributedText = attributedText.attributedSubstring(from: selectedRange)
+        let copiedAttributedTextPlainText = replaceMentionAttachmentsWithPlainText(in: copiedAttributedText)
+        
+        UIPasteboard.general.setValue(copiedAttributedTextPlainText, forPasteboardType: kUTTypeUTF8PlainText as String)
+        
+        replace(selectedTextRange, withText: "")
+    }
+    
     override func copy(_ sender: Any?) {
         let copiedAttributedText = attributedText.attributedSubstring(from: selectedRange)
         let copiedAttributedTextPlainText = replaceMentionAttachmentsWithPlainText(in: copiedAttributedText)
