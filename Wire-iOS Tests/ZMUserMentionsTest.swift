@@ -172,4 +172,18 @@ class ZMUserMentionsTest: XCTestCase {
         // THEN
         XCTAssertEqual(results.map(HashBox.init), users.map(HashBox.init))
     }
+    
+    func testThatItFindsUsersWithPunctuation() {
+        // GIVEN
+        let mockUser = MockUser.realMockUsers()![0]
+        mockUser.name = "Hell@World"
+        
+        let users: [UserType] = [mockUser]
+        
+        // WHEN
+        let results = ZMUser.searchForMentions(in: users, with: "@")
+        
+        // THEN
+        XCTAssertEqual(results.map(HashBox.init), users.map(HashBox.init))
+    }
 }
