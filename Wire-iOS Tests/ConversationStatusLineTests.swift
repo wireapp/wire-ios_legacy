@@ -399,4 +399,22 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertEqual(status.string, "")
     }
+    
+    func testThatTypingHasHigherPrioThanMentions() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        sut.managedObjectContext?.saveOrRollback()
+        
+        sut.managedObjectContext?.typingUsers.update([otherUser], in: sut)
+        
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        sut.lastReadServerTimeStamp = Date.distantPast
+        // WHEN
+        let status = sut.status
+        // THEN
+        XCTAssertEqual(status.isTyping, true)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.mention]!, 1)
+        XCTAssertEqual(status.description(for: sut).string, "Bruno: typing a message…")
+    }
 }
