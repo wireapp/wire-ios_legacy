@@ -54,13 +54,13 @@ extension ZMUser {
             return usersToSearch
         }
         
-        let query = query.lowercased()
+        let query = query.lowercased().normalizedForSearch() as String
         let rules: [ ((UserType) -> Bool) ] = [
-            { $0.name?.lowercased().hasPrefix(query) ?? false },
-            { $0.nameTokens.first(where: { $0.lowercased().hasPrefix(query) }) != nil },
-            { $0.handle?.lowercased().hasPrefix(query) ?? false },
-            { $0.name?.lowercased().contains(query) ?? false },
-            { $0.handle?.lowercased().contains(query) ?? false }
+            { $0.name?.lowercased().normalizedForSearch()?.hasPrefix(query) ?? false },
+            { $0.nameTokens.first(where: { $0.lowercased().normalizedForSearch()?.hasPrefix(query) ?? false }) != nil },
+            { $0.handle?.lowercased().normalizedForSearch()?.hasPrefix(query) ?? false },
+            { $0.name?.lowercased().normalizedForSearch().contains(query) ?? false },
+            { $0.handle?.lowercased().normalizedForSearch()?.contains(query) ?? false }
         ]
         
         var foundUsers = Set<HashBox<UserType>>()
