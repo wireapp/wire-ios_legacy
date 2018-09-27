@@ -270,6 +270,7 @@
 "conversation.connection_view.in_address_book" = "in Contacts";
 
 "conversation.input_bar.shortcut.send" = "Send Message";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancel";
 

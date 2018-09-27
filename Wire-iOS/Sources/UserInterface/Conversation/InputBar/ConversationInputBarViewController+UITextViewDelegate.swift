@@ -53,7 +53,8 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // send only if send key pressed
         if textView.returnKeyType == .send && (text == "\n") {
-            if canInsertMention {
+            if UIDevice.current.type == .iPad,
+                canInsertMention {
                 insertBestMatchMention()
             }
             else {
@@ -62,8 +63,12 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             }
             return false
         }
-        
-        if text.count == 1, text.containsCharacters(from: CharacterSet.newlinesAndTabulation), canInsertMention {
+                
+        if UIDevice.current.type == .iPad,
+            text.count == 1,
+            text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
+            canInsertMention {
+            
             insertBestMatchMention()
             return false
         }
