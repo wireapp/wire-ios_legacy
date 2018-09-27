@@ -21,6 +21,7 @@ import Foundation
 extension MarkdownTextView {
     func setupGestureRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTextView(_:)))
+        tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
     }
 
@@ -43,5 +44,11 @@ extension MarkdownTextView {
         guard let end = position(from: start, offset: 1) else { return }
 
         selectedTextRange = textRange(from: start, to: end)
+    }
+}
+
+extension MarkdownTextView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
