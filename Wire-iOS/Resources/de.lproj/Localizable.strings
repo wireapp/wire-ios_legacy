@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Hilf uns, Wire zu verbessern";
-"conversation_list.date_usage_permission_alert.message" = "Anonymisierte Nutzungs- und Fehlerberichte helfen uns, unsere Produkte und Dienstleistungen zu verbessern. Wir verwenden diese Informationen nicht für andere Zwecke.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "Ich willige ein, dass Wire anonymisierte Nutzungs- und Fehlerberichte erstellen und verwenden darf, um die Wire-App zu verbessern. Ich kann diese Einwilligung jederzeit widerrufen.";
+"conversation_list.data_usage_permission_alert.disagree" = "Nein";
+"conversation_list.data_usage_permission_alert.agree" = "Ich willige ein";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Kontakte";

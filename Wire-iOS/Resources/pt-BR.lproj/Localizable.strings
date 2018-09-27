@@ -130,8 +130,8 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tem novas mensagens.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Nos ajude a melhorar o Wire";
-"conversation_list.date_usage_permission_alert.message" = "O envio de relatórios de falhas e uso anônimos nos ajuda a melhorar nossos produtos e serviços. Nós não usamos essa informação para mais nada.";
+"conversation_list.data_usage_permission_alert.title" = "Nos ajude a melhorar o Wire";
+"conversation_list.data_usage_permission_alert.message" = "O envio de relatórios de falhas e uso anônimos nos ajuda a melhorar nossos produtos e serviços. Nós não usamos essa informação para mais nada.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "nos Contatos";

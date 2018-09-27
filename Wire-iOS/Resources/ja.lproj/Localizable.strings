@@ -130,8 +130,8 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "新しいメッセージ";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Wire の改善にご協力を";
-"conversation_list.date_usage_permission_alert.message" = "匿名の使用状況とクラッシュレポートを送信することにより、当社の製品およびサービスの改善に役立ちます。\n我々はそれ以外の目的のためにこれらの情報を使うことはありません。";
+"conversation_list.data_usage_permission_alert.title" = "Wire の改善にご協力を";
+"conversation_list.data_usage_permission_alert.message" = "匿名の使用状況とクラッシュレポートを送信することにより、当社の製品およびサービスの改善に役立ちます。\n我々はそれ以外の目的のためにこれらの情報を使うことはありません。";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "連絡先";

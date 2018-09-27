@@ -130,8 +130,8 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Heeft nieuwe berichten.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Help ons Wire te verbeteren";
-"conversation_list.date_usage_permission_alert.message" = "Het anoniem versturen van gebruikers data van de app help ons om onze producten en services te verbeteren. We gebruiken deze informatie voor niks anders.";
+"conversation_list.data_usage_permission_alert.title" = "Help ons Wire te verbeteren";
+"conversation_list.data_usage_permission_alert.message" = "Het anoniem versturen van gebruikers data van de app help ons om onze producten en services te verbeteren. We gebruiken deze informatie voor niks anders.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacten";

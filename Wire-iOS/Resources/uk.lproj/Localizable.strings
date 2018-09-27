@@ -130,8 +130,8 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Є нові повідомлення.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Допоможіть нам зробити Wire кращим";
-"conversation_list.date_usage_permission_alert.message" = "Надсилання анонімних звітів про використання та збої в роботі допомагає нам вдосконалити наші продукти та послуги. Ми не використовуємо цю інформацію для будь-яких інших цілей.";
+"conversation_list.data_usage_permission_alert.title" = "Допоможіть нам зробити Wire кращим";
+"conversation_list.data_usage_permission_alert.message" = "Надсилання анонімних звітів про використання та збої в роботі допомагає нам вдосконалити наші продукти та послуги. Ми не використовуємо цю інформацію для будь-яких інших цілей.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в Контактах";

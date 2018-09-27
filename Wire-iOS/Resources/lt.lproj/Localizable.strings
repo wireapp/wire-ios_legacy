@@ -130,8 +130,8 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Turi naujų žinučių.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Pagerinkite „Wire“";
-"conversation_list.date_usage_permission_alert.message" = "Siųsdami anoniminę naudojimosi ir trikčių ataskaitą padedate mums pagerinti produktus ir paslaugas. Šios informacijos daugiau niekur nenaudojame.";
+"conversation_list.data_usage_permission_alert.title" = "Pagerinkite „Wire“";
+"conversation_list.data_usage_permission_alert.message" = "Siųsdami anoniminę naudojimosi ir trikčių ataskaitą padedate mums pagerinti produktus ir paslaugas. Šios informacijos daugiau niekur nenaudojame.";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "konktaktuose";

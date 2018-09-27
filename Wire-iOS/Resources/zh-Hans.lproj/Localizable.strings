@@ -130,8 +130,8 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新消息。";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "帮助我们改善Wire";
-"conversation_list.date_usage_permission_alert.message" = "发送匿名使用状况和崩溃报告有助改善我们的产品和服务。我们不会将这些资讯用于其他地方。";
+"conversation_list.data_usage_permission_alert.title" = "帮助我们改善Wire";
+"conversation_list.data_usage_permission_alert.message" = "发送匿名使用状况和崩溃报告有助改善我们的产品和服务。我们不会将这些资讯用于其他地方。";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在联系人中";
