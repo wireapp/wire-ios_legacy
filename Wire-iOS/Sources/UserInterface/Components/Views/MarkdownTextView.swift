@@ -176,6 +176,7 @@ extension Notification.Name {
         typingAttributes = currentAttributes
 
         NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: UITextView.textDidChangeNotification, object: nil)
+        setupGestureRecognizer()
     }
     
     required init?(coder aDecoder: NSCoder) {
