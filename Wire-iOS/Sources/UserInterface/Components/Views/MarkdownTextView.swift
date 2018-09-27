@@ -57,8 +57,7 @@ extension Notification.Name {
     }
 
     func setText(_ newText: String, withMentions mentions: [Mention]) {
-        text = newText
-        let mutable = NSMutableAttributedString(attributedString: attributedText)
+        let mutable = NSMutableAttributedString(string: newText, attributes: currentAttributes)
 
         // We reverse to maintain correct ranges for subsequent inserts.
         for mention in mentions.reversed() {
