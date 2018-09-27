@@ -47,7 +47,10 @@ class UserSearchResultsViewController: UIViewController {
         setupCollectionView()
         setupConstraints()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillChangeFrame(_:)),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
     }
     
     private func setupCollectionView() {
@@ -66,7 +69,7 @@ class UserSearchResultsViewController: UIViewController {
 
         collectionView.collectionViewLayout = layout
 
-        view.backgroundColor = UIColor(scheme: .background).withAlphaComponent(0.5)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.32)
         view.addSubview(collectionView)
         
         view.accessibilityIdentifier = "mentions.list.container"
