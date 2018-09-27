@@ -21,19 +21,32 @@ import Foundation
 /// The purpose of this subclass of NSTextAttachment is to render a mention in the input bar.
 /// It also keeps a reference to the `UserType` describing the User being mentioned.
 final class MentionTextAttachment: NSTextAttachment {
+    
+    // Color used for the mention
+    let color: UIColor
 
     /// The text the attachment renders, this is the name passed to init prefixed with an "@".
-    let attributedText: NSAttributedString
+    var attributedText: NSAttributedString
+    
+    /// Font used for the mention, this gets updated when from the underlying text storage
+    var font: UIFont {
+        didSet {
+            guard font != oldValue else { return }
+            refreshImage()
+        }
+    }
     
     /// The user being mentioned.
     let user: UserType
     
-    init(user: UserType, font: UIFont = .normalLightFont, color: UIColor = .accent()) {
+    init(user: UserType, color: UIColor = .accent()) {
+        self.font = .normalLightFont
+        self.color = color
         self.user = user
-        // Replace all spaces with non-breaking space to avoid wrapping when displaying mention
-        let nameWithNonBreakingSpaces = user.name?.replacingOccurrences(of: " ", with: " ")
-        attributedText = "@" + (nameWithNonBreakingSpaces ?? "") && font && color
+        self.attributedText = type(of: self).attributedMentionString(user: user, font: font, color: color)
+        
         super.init(data: nil, ofType: nil)
+        
         refreshImage()
     }
     
@@ -43,6 +56,7 @@ final class MentionTextAttachment: NSTextAttachment {
     }
     
     private func refreshImage() {
+        attributedText = type(of: self).attributedMentionString(user: user, font: font, color: color)
         image = imageForName()
     }
 
@@ -55,7 +69,24 @@ final class MentionTextAttachment: NSTextAttachment {
         UIGraphicsEndImageContext()
         return image
     }
-
+    
+    private class func attributedMentionString(user: UserType, font: UIFont, color: UIColor) -> NSAttributedString {
+        // Replace all spaces with non-breaking space to avoid wrapping when displaying mention
+        let nameWithNonBreakingSpaces = user.name?.replacingOccurrences(of: " ", with: " ")
+        return "@" + (nameWithNonBreakingSpaces ?? "") && font && color
+    }
+    
+    private func updateFont(textContainer: NSTextContainer?, characterIndex charIndex: Int) {
+        guard let font = textContainer?.layoutManager?.textStorage?.attribute(.font, at: charIndex, effectiveRange: nil) as? UIFont else {return }
+        self.font = font
+    }
+    
+    override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
+        updateFont(textContainer: textContainer, characterIndex: charIndex)
+        
+        return super.attachmentBounds(for: textContainer, proposedLineFragment: lineFrag, glyphPosition: position, characterIndex: charIndex)
+    }
+    
 }
 
 fileprivate extension CGSize {

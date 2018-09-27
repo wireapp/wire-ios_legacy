@@ -43,7 +43,7 @@ extension ConversationInputBarViewController {
         guard let handler = mentionsHandler else { return }
         
         let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
-        inputBar.textView.attributedText = handler.replace(mention: user, in: text)
+        inputBar.textView.attributedText = handler.replace(mention: user, in: text, typingAttributes: inputBar.textView.typingAttributes)
         dismissMentionsIfNeeded()
     }
     

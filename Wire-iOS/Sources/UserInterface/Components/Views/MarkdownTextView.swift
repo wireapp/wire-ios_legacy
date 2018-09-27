@@ -63,7 +63,7 @@ extension Notification.Name {
         // We reverse to maintain correct ranges for subsequent inserts.
         for mention in mentions.reversed() {
             let attachment = MentionTextAttachment(user: mention.user)
-            let attributedString = NSAttributedString(attachment: attachment)
+            let attributedString = NSAttributedString(attachment: attachment) && typingAttributes
             mutable.replaceCharacters(in: mention.range, with: attributedString)
         }
         

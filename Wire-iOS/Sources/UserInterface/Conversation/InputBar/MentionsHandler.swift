@@ -52,8 +52,8 @@ import Foundation
         return String(text[range])
     }
 
-    func replace(mention: UserType, in attributedString: NSAttributedString) -> NSAttributedString {
-        let mentionString = NSAttributedString(attachment: MentionTextAttachment(user: mention))
+    func replace(mention: UserType, in attributedString: NSAttributedString, typingAttributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
+        let mentionString = NSAttributedString(attachment: MentionTextAttachment(user: mention)) && typingAttributes
         let mut = NSMutableAttributedString(attributedString: attributedString)
         let characterAfterMention = mentionMatchRange.upperBound
 
