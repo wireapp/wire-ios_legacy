@@ -100,7 +100,7 @@ class MentionsHandlerTests: XCTestCase {
         let handler = MentionsHandler(text: query, cursorPosition: 4)
         guard let sut = handler else { XCTFail(); return }
 
-        let replaced = sut.replace(mention: mockUser, in: query.attributedString)
+        let replaced = sut.replace(mention: mockUser, in: query.attributedString, typingAttributes: [:])
         let attachments = replaced.allAttachments
         XCTAssertEqual(attachments.count, 1)
         guard let mention = attachments.first else { XCTFail(); return}
@@ -115,7 +115,7 @@ class MentionsHandlerTests: XCTestCase {
         let handler = MentionsHandler(text: query, cursorPosition: 4)
         guard let sut = handler else { XCTFail(); return }
 
-        let replaced = sut.replace(mention: mockUser, in: query.attributedString)
+        let replaced = sut.replace(mention: mockUser, in: query.attributedString, typingAttributes: [:])
         let attachments = replaced.allAttachments
         XCTAssertEqual(attachments.count, 1)
         guard let mention = attachments.first else { XCTFail(); return}
