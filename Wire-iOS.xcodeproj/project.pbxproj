@@ -113,6 +113,7 @@
 		16A2027C1B677A5D0095BBD1 /* soundcloud-track4.json in Resources */ = {isa = PBXBuildFile; fileRef = 16A2027B1B677A5D0095BBD1 /* soundcloud-track4.json */; };
 		16A293DA1F5FFA2E00B4EB16 /* SkeletonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A293D91F5FFA2E00B4EB16 /* SkeletonViewController.swift */; };
 		16A5FDC52154F53F00AEEBBD /* NSAttributedString+MessageFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5FDC42154F53F00AEEBBD /* NSAttributedString+MessageFormatting.swift */; };
+		16A5FE25215CB64D00AEEBBD /* UIFont+Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */; };
 		16A94AE920932386008A5718 /* CallParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AE820932386008A5718 /* CallParticipantsView.swift */; };
 		16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AEA20932841008A5718 /* ShowAllParticipantsCell.swift */; };
 		16A94AED20934AA8008A5718 /* CallParticipantsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A94AEC20934AA8008A5718 /* CallParticipantsViewTests.swift */; };
@@ -1505,6 +1506,7 @@
 		16A2027B1B677A5D0095BBD1 /* soundcloud-track4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "soundcloud-track4.json"; sourceTree = "<group>"; };
 		16A293D91F5FFA2E00B4EB16 /* SkeletonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkeletonViewController.swift; sourceTree = "<group>"; };
 		16A5FDC42154F53F00AEEBBD /* NSAttributedString+MessageFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+MessageFormatting.swift"; sourceTree = "<group>"; };
+		16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Weight.swift"; sourceTree = "<group>"; };
 		16A94AE820932386008A5718 /* CallParticipantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantsView.swift; sourceTree = "<group>"; };
 		16A94AEA20932841008A5718 /* ShowAllParticipantsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAllParticipantsCell.swift; sourceTree = "<group>"; };
 		16A94AEC20934AA8008A5718 /* CallParticipantsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantsViewTests.swift; sourceTree = "<group>"; };
@@ -3425,6 +3427,7 @@
 				1677FD321BBC19A400491481 /* ColorScheme.m */,
 				87AAE4161E422E2300E1D13A /* FontScheme.swift */,
 				87AAE41C1E42399E00E1D13A /* UIFont+DynamicType.swift */,
+				16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */,
 				1E5E0CF31B6B8EDB003B0CAC /* UIColor+Mixing.h */,
 				1E5E0CF41B6B8EDB003B0CAC /* UIColor+Mixing.m */,
 				1E5E0CF51B6B8EDB003B0CAC /* UIControl+Wire.h */,
@@ -6771,7 +6774,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# to run locally, replace with $(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework\n/usr/local/bin/carthage copy-frameworks";
+			shellScript = "# to run locally, replace with $(BUILT_PRODUCTS_DIR)/WireSyncEngine.framework\n/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -6817,6 +6820,7 @@
 				87AAE4171E422E2300E1D13A /* FontScheme.swift in Sources */,
 				878607221D33E3FF00971A19 /* NetworkStatus.m in Sources */,
 				5423EF6D1E9B85C8007091DE /* DeveloperMenuState.m in Sources */,
+				16A5FE25215CB64D00AEEBBD /* UIFont+Weight.swift in Sources */,
 				CE8E4FAB1DF066750009F437 /* FileMetaDataGenerator.swift in Sources */,
 				1E5E0CFC1B6B8EDB003B0CAC /* UIImage+ZetaIconsNeue.m in Sources */,
 				D5197FC1207BAD2100F4622B /* SpinnerSubtitleView.swift in Sources */,

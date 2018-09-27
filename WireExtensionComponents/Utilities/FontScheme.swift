@@ -110,28 +110,6 @@ extension UIFont {
     }
 }
 
-extension UIFont {
-    @objc public var isItalic: Bool {
-        return fontDescriptor.symbolicTraits.contains(.traitItalic)
-    }
-    
-    @objc public func italicFont() -> UIFont {
-        
-        if isItalic {
-            return self
-        } else {
-            var symbolicTraits = fontDescriptor.symbolicTraits
-            symbolicTraits.insert([.traitItalic])
-            
-            if let newFontDescriptor = fontDescriptor.withSymbolicTraits(symbolicTraits) {
-                return UIFont(descriptor: newFontDescriptor, size: pointSize)
-            } else {
-                return self
-            }
-        }
-    }
-}
-
 public struct FontSpec: Hashable {
     public let size: FontSize
     public let weight: FontWeight?

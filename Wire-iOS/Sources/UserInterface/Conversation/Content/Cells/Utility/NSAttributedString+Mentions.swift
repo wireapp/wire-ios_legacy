@@ -70,7 +70,7 @@ extension NSURL {
 
 extension NSMutableAttributedString {
     
-    static private func mention(for user: UserType, name: String, link: URL, suggestedFontSize: CGFloat? = nil) -> NSAttributedString {
+    static private func mention(for user: UserType, name: String, link: URL, suggestedAttributes: [NSAttributedString.Key : Any] = [:]) -> NSAttributedString {
         let color: UIColor
         let backgroundColor: UIColor
         
@@ -88,13 +88,10 @@ extension NSMutableAttributedString {
             backgroundColor = .clear
         }
         
-        let fontSize = suggestedFontSize ?? UIFont.normalMediumFont.pointSize
-        
-        let atFont: UIFont = UIFont.systemFont(ofSize: fontSize - 2, contentSizeCategory: UIApplication.shared.preferredContentSizeCategory, weight: .light)
-        let mentionFont: UIFont = UIFont.systemFont(ofSize: fontSize,
-                                                    contentSizeCategory: UIApplication.shared.preferredContentSizeCategory,
-                                                    weight: .semibold)
-        
+        let suggestedFont = suggestedAttributes[.font] as? UIFont ?? UIFont.normalMediumFont
+        let atFont: UIFont = suggestedFont.withSize(suggestedFont.pointSize - 2).withWeight(.light)
+        let mentionFont = suggestedFont.isBold ? suggestedFont : suggestedFont.withWeight(.semibold)
+
         var atAttributes: [NSAttributedString.Key: Any] = [.font: atFont,
                                                            .foregroundColor: color,
                                                            .backgroundColor: backgroundColor]
@@ -130,12 +127,11 @@ extension NSMutableAttributedString {
                 return
             }
             
-            let currentFont = self.attributes(at: mentionRange.location, effectiveRange: nil)[.font] as? UIFont
-            
+            let attributes = self.attributes(at: mentionRange.location, effectiveRange: nil)
             let replacementString = NSMutableAttributedString.mention(for: textObject.value.user,
                                                                       name: textObject.replacementText,
                                                                       link: textObject.value.link,
-                                                                      suggestedFontSize: currentFont?.pointSize)
+                                                                      suggestedAttributes: attributes)
             
             self.replaceCharacters(in: mentionRange, with: replacementString)
         }
