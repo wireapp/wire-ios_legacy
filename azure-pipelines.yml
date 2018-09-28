@@ -7,6 +7,9 @@ pool:
   vmImage: 'macOS 10.13'
 
 steps:
+- task: ShellScript@2
+  inputs:
+    scriptPath: 'setup.sh'
 - task: Xcode@5
   inputs:
     actions: 'build-for-testing'
