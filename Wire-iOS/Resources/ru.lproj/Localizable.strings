@@ -130,10 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Есть новые сообщения.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
+"conversation_list.data_usage_permission_alert.message" = "Я согласен с тем, что Wire может создавать и использовать анонимные отчеты об использовании и ошибках для улучшения приложения Wire. Я могу отозвать это согласие в любое время.";
 "conversation_list.data_usage_permission_alert.disagree" = "Нет";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.agree" = "Принимаю";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
@@ -272,7 +272,7 @@
 "conversation.connection_view.in_address_book" = "в контактах";
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "Вставить разрыв строки";
 "conversation.input_bar.shortcut.edit_last_message" = "Изм. последнее сообщение";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
 

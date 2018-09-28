@@ -272,7 +272,7 @@
 "conversation.connection_view.in_address_book" = "in Kontakte";
 
 "conversation.input_bar.shortcut.send" = "Nachricht senden";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "Zeilenumbruch einfügen";
 "conversation.input_bar.shortcut.edit_last_message" = "Letzte Nachricht bearbeiten";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Abbrechen";
 
@@ -773,7 +773,7 @@
 "self.settings.add_account.error.title" = "Drei Benutzerkonten sind aktiv";
 "self.settings.add_account.error.message" = "Du kannst zugleich mit drei Benutzerkonten angemeldet sein. Logge dich aus einem aus, um ein neues Konto hinzuzufügen.";
 
-"self.settings.switch_account.message" = "In diesem Konto ist ein Anruf aktiv.\nDurch das Wechseln von Konten wird der aktuelle Anruf beendet.";
+"self.settings.switch_account.message" = "In diesem Konto ist ein Anruf aktiv.\nEin Wechsel der Konten beendet den aktuellen Anruf.";
 "self.settings.switch_account.action" = "Trotzdem wechseln";
 
 // Settings - Account details
