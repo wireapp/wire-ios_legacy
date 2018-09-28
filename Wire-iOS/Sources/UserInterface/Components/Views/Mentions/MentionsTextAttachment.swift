@@ -29,15 +29,19 @@ final class MentionTextAttachment: NSTextAttachment {
     var attributedText: NSAttributedString
     
     /// Font used for the mention, this gets updated when from the underlying text storage
-    var font: UIFont {
-        didSet {
-            guard font != oldValue else { return }
-            refreshImage()
-        }
-    }
+    var font: UIFont
+    
+    /// Fitting size used when the mention was rendered the last time
+    var lastFittingSize: CGSize = .zero
     
     /// The user being mentioned.
     let user: UserType
+    
+    static var paragraphStyle: NSParagraphStyle = {
+        let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.lineBreakMode = .byTruncatingTail
+        return paragraphStyle
+    }()
     
     init(user: UserType, color: UIColor = .accent()) {
         self.font = .normalLightFont
@@ -46,8 +50,6 @@ final class MentionTextAttachment: NSTextAttachment {
         self.attributedText = type(of: self).attributedMentionString(user: user, font: font, color: color)
         
         super.init(data: nil, ofType: nil)
-        
-        refreshImage()
     }
     
     @available(*, unavailable)
@@ -55,16 +57,24 @@ final class MentionTextAttachment: NSTextAttachment {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func refreshImage() {
-        attributedText = type(of: self).attributedMentionString(user: user, font: font, color: color)
-        image = imageForName()
+    private func updateImageIfNeeded(for textContainer: NSTextContainer?, characterIndex charIndex: Int) {
+        guard let font = textContainer?.layoutManager?.textStorage?.attribute(.font, at: charIndex, effectiveRange: nil) as? UIFont,
+              let textContainerSize = textContainer?.size else { return }
+        
+        guard font != self.font || textContainerSize != lastFittingSize else { return }
+        
+        self.font = font
+        self.lastFittingSize = textContainerSize
+        self.attributedText = type(of: self).attributedMentionString(user: user, font: font, color: color)
+        
+        image = mentionImage(fittingIntoSize: textContainerSize)
     }
 
-    private func imageForName() -> UIImage? {
-        bounds = attributedText.boundingRect(with: .max, options: [], context: nil)
+    private func mentionImage(fittingIntoSize size: CGSize) -> UIImage? {
+        bounds = attributedText.boundingRect(with: size, options: [], context: nil)
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
         
-        attributedText.draw(at: .zero)
+        attributedText.draw(in: CGRect(origin: .zero, size: size))
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
@@ -73,16 +83,11 @@ final class MentionTextAttachment: NSTextAttachment {
     private class func attributedMentionString(user: UserType, font: UIFont, color: UIColor) -> NSAttributedString {
         // Replace all spaces with non-breaking space to avoid wrapping when displaying mention
         let nameWithNonBreakingSpaces = user.name?.replacingOccurrences(of: " ", with: " ")
-        return "@" + (nameWithNonBreakingSpaces ?? "") && font && color
-    }
-    
-    private func updateFont(textContainer: NSTextContainer?, characterIndex charIndex: Int) {
-        guard let font = textContainer?.layoutManager?.textStorage?.attribute(.font, at: charIndex, effectiveRange: nil) as? UIFont else {return }
-        self.font = font
+        return "@" + (nameWithNonBreakingSpaces ?? "") && font && color && [.paragraphStyle : paragraphStyle]
     }
     
     override func attachmentBounds(for textContainer: NSTextContainer?, proposedLineFragment lineFrag: CGRect, glyphPosition position: CGPoint, characterIndex charIndex: Int) -> CGRect {
-        updateFont(textContainer: textContainer, characterIndex: charIndex)
+        updateImageIfNeeded(for: textContainer, characterIndex: charIndex)
         
         return super.attachmentBounds(for: textContainer, proposedLineFragment: lineFrag, glyphPosition: position, characterIndex: charIndex)
     }
