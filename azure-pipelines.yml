@@ -5,8 +5,8 @@ variables:
 
 steps:
 - script: |
-    ls /Applications
-    carthage bootstrap --platform ios
+    sudo xcode-select -switch /Applications/Xcode_10.app
+    carthage bootstrap --platform iOS
   env: 
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)
   displayName: "Setup environment"
