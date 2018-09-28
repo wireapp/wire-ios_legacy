@@ -1,0 +1,26 @@
+# Xcode
+# Build, test, and archive an Xcode workspace on macOS.
+# Add steps that install certificates, test, sign, and distribute an app, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
+
+pool:
+  vmImage: 'macOS 10.13'
+
+steps:
+- task: Xcode@5
+  inputs:
+    actions: 'build-for-testing'
+    scheme: 'Wire-iOS'
+    sdk: 'iphonesimulator'
+    configuration: 'Debug'
+    xcodeVersion: 10
+- task: Xcode@5
+  inputs:
+    actions: 'test-without-building'
+    scheme: 'Wire-iOS'
+    sdk: 'iphonesimulator'
+    destinationSimulators: 'iPhone 7'
+    configuration: 'Debug'
+    xcodeVersion: 10
+    useXcpretty: true
+    publishJUnitResults: true
