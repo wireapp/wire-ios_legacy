@@ -15,6 +15,8 @@ steps:
     actions: 'build-for-testing'
     scheme: 'Wire-iOS'
     xcWorkspacePath: '*.xcodeproj'
+    sdk: 'iphonesimulator'
+    configuration: 'Debug'
     args: "-destination $(DESTINATION) -derivedDataPath DerivedData -enableCodeCoverage YES -quiet"
   displayName: "Build"
 - task: Xcode@5
@@ -22,6 +24,8 @@ steps:
     actions: 'test-without-building'
     scheme: 'Wire-iOS'
     xcWorkspacePath: '*.xcodeproj'
+    sdk: 'iphonesimulator'
+    configuration: 'Debug'
     useXcpretty: true
     publishJUnitResults: true
     args: "-destination $(DESTINATION) -derivedDataPath DerivedData -enableCodeCoverage YES"
