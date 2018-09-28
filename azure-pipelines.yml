@@ -17,7 +17,9 @@ steps:
     xcWorkspacePath: '*.xcodeproj'
     sdk: 'iphonesimulator'
     configuration: 'Debug'
-    args: "-destination '$(DESTINATION)' -derivedDataPath DerivedData -enableCodeCoverage YES -quiet"
+    destinationPlatform: 'iOS Simulator'
+    destinationSimulators: 'iPhone 7'
+    args: "-derivedDataPath DerivedData -enableCodeCoverage YES -quiet"
   displayName: "Build"
 - task: Xcode@5
   inputs:
@@ -26,7 +28,9 @@ steps:
     xcWorkspacePath: '*.xcodeproj'
     sdk: 'iphonesimulator'
     configuration: 'Debug'
+    destinationPlatform: 'iOS Simulator'
+    destinationSimulators: 'iPhone 7'
     useXcpretty: true
     publishJUnitResults: true
-    args: "-destination '$(DESTINATION)' -derivedDataPath DerivedData -enableCodeCoverage YES"
+    args: "-derivedDataPath DerivedData -enableCodeCoverage YES"
   displayName: "Test"
