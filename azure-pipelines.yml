@@ -13,12 +13,14 @@ steps:
 - task: Xcode@5
   inputs:
     actions: 'build-for-testing'
-    args: "-scheme Wire-iOS -destination $(DESTINATION) -derivedDataPath DerivedData -enableCodeCoverage YES -quiet"
+    scheme: 'Wire-iOS'
+    args: "-destination $(DESTINATION) -derivedDataPath DerivedData -enableCodeCoverage YES -quiet"
   displayName: "Build"
 - task: Xcode@5
   inputs:
     actions: 'test-without-building'
+    scheme: 'Wire-iOS'
     useXcpretty: true
     publishJUnitResults: true
-    args: "-scheme Wire-iOS -destination $(DESTINATION) -derivedDataPath DerivedData -enableCodeCoverage YES"
+    args: "-destination $(DESTINATION) -derivedDataPath DerivedData -enableCodeCoverage YES"
   displayName: "Test"
