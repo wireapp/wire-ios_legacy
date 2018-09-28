@@ -1,29 +1,18 @@
-# Xcode
-# Build, test, and archive an Xcode workspace on macOS.
-# Add steps that install certificates, test, sign, and distribute an app, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/xcode
-
 pool:
-  vmImage: 'macOS 10.13'
+   vmImage: 'macOS 10.13'
+variables:
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 7,OS=latest'
 
 steps:
-- task: ShellScript@2
-  inputs:
-    scriptPath: 'setup.sh'
-- task: Xcode@5
-  inputs:
-    actions: 'build-for-testing'
-    scheme: 'Wire-iOS'
-    sdk: 'iphonesimulator'
-    configuration: 'Debug'
-    xcodeVersion: 10
-- task: Xcode@5
-  inputs:
-    actions: 'test-without-building'
-    scheme: 'Wire-iOS'
-    sdk: 'iphonesimulator'
-    destinationSimulators: 'iPhone 7'
-    configuration: 'Debug'
-    xcodeVersion: 10
-    useXcpretty: true
-    publishJUnitResults: true
+- script: |
+    sudo xcode-select /Applications/Xcode_10.0.0.app
+    carthage bootstrap --platform ios
+  env: 
+    GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)
+  displayName: "Setup environment"
+- script: |
+    xcodebuild -scheme 'Wire-iOS' -destination "$(DESTINATION)" -derivedDataPath DerivedData -enableCodeCoverage YES build-for-testing
+  displayName: "Build"
+- script: |
+    xcodebuild -scheme 'Wire-iOS' -destination "$(DESTINATION)" -derivedDataPath DerivedData -enableCodeCoverage YES test-without-building
+  displayName: "Test"
