@@ -49,7 +49,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     override func tearDown() {
         sut = nil
         serviceUser = nil
-        ColorScheme.default.variant = .light
+        resetColorScheme()
         super.tearDown()
     }
     

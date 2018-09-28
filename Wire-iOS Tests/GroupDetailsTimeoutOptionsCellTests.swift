@@ -33,7 +33,7 @@ class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
     override func tearDown() {
         cell = nil
         conversation = nil
-        ColorScheme.default.variant = .light
+        resetColorScheme()
         super.tearDown()
     }
 

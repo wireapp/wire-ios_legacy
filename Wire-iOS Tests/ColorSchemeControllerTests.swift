@@ -43,7 +43,8 @@ final class ColorSchemeControllerTests: XCTestCase {
         sut = nil
         UserDefaults.standard.set(originalColorScheme, forKey: UserDefaultColorScheme)
         ColorScheme.default.variant = originalVariant
-
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
         super.tearDown()
     }
 

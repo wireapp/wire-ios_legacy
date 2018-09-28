@@ -22,7 +22,7 @@ import XCTest
 class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
     
     override func tearDown() {
-        ColorScheme.default.variant = .light
+        resetColorScheme()
         super.tearDown()
     }
     
