@@ -100,13 +100,16 @@ class MentionsHandlerTests: XCTestCase {
         let handler = MentionsHandler(text: query, cursorPosition: 4)
         guard let sut = handler else { XCTFail(); return }
 
-        let replaced = sut.replace(mention: mockUser, in: query.attributedString, typingAttributes: [:])
-        let attachments = replaced.allAttachments
-        XCTAssertEqual(attachments.count, 1)
-        guard let mention = attachments.first else { XCTFail(); return}
+        let (range, replacement) = sut.replacement(forMention: mockUser, in: query.attributedString, typingAttributes: [:])
 
-        let expected = "Hi ".attributedString + NSAttributedString(attachment: mention) + " how are you?".attributedString
-        XCTAssertEqual(replaced, expected)
+        let attachments = replacement.allAttachments
+        XCTAssertEqual(attachments.count, 1)
+        guard let mention = attachments.first as? MentionTextAttachment else { XCTFail(); return}
+        XCTAssertEqual(mention.user.name, mockUser.name)
+        XCTAssertEqual(range, (query as NSString).range(of: "@bill") )
+
+        let expected = NSAttributedString(attachment: mention)
+        XCTAssertEqual(replacement, expected)
     }
 
     func testThatItAppendsSpaceAfterMention() {
@@ -115,16 +118,17 @@ class MentionsHandlerTests: XCTestCase {
         let handler = MentionsHandler(text: query, cursorPosition: 4)
         guard let sut = handler else { XCTFail(); return }
 
-        let replaced = sut.replace(mention: mockUser, in: query.attributedString, typingAttributes: [:])
-        let attachments = replaced.allAttachments
+        let (range, replacement) = sut.replacement(forMention: mockUser, in: query.attributedString, typingAttributes: [:])
+
+        let attachments = replacement.allAttachments
         XCTAssertEqual(attachments.count, 1)
-        guard let mention = attachments.first else { XCTFail(); return}
+        guard let mention = attachments.first as? MentionTextAttachment else { XCTFail(); return}
+        XCTAssertEqual(mention.user.name, mockUser.name)
+        XCTAssertEqual(range, (query as NSString).range(of: "@bill") )
 
-        let expected = NSMutableAttributedString(string: query)
-        let rangeOfMention = (query as NSString).range(of: "@bill")
-        expected.replaceCharacters(in: rangeOfMention, with: NSAttributedString(attachment: mention) + " ")
+        let expected = NSAttributedString(attachment: mention) + " "
 
-        XCTAssertEqual(replaced, expected)
+        XCTAssertEqual(replacement, expected)
     }
 
 }
