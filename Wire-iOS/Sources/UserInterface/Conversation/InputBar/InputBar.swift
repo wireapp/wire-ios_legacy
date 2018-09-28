@@ -45,14 +45,14 @@ public enum InputBarState: Equatable {
 
     var isWriting: Bool {
         switch self {
-        case .writing(ephemeral: _): return true
+        case .writing: return true
         default: return false
         }
     }
 
     var isEditing: Bool {
         switch self {
-        case .editing(originalText: _, mentions: _): return true
+        case .editing: return true
         default: return false
         }
     }
@@ -332,8 +332,7 @@ private struct InputBarConstants {
         } else if inputBarState.isEphemeral {
             placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized) && ephemeralColor
         }
-        
-        if case .editing = state {
+        if state.isEditing {
             return nil
         } else {
             return placeholder
@@ -386,11 +385,11 @@ private struct InputBarConstants {
             }
         }
         
-        let completion: (Bool) -> Void = { _ in
+        let completion: () -> Void = {
             self.updateColors()
             self.updatePlaceholderColors()
 
-            if case .editing(_) = state {
+            if state.isEditing {
                 self.textView.becomeFirstResponder()
             }
         }
@@ -399,11 +398,12 @@ private struct InputBarConstants {
             UIView.wr_animate(easing: .easeInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
                 self.updateColors()
+                completion()
             }
         } else {
             layoutIfNeeded()
             textViewChanges()
-            completion(true)
+            completion()
         }
     }
 
