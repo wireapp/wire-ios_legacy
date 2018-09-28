@@ -60,12 +60,11 @@ class UserSearchResultsViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = UIColor(scheme: .background)
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 1
-        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
 
         collectionView.collectionViewLayout = layout
 
