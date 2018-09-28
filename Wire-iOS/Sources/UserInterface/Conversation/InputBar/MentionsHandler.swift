@@ -52,8 +52,7 @@ import Foundation
         return String(text[range])
     }
 
-    func replacement(forMention mention: UserType, in attributedString: NSAttributedString, typingAttributes: [NSAttributedString.Key: Any]) -> (NSRange, NSAttributedString) {
-
+    func replacement(forMention mention: UserType, in attributedString: NSAttributedString) -> (NSRange, NSAttributedString) {
         let mentionString = NSAttributedString(attachment: MentionTextAttachment(user: mention))
         let characterAfterMention = mentionMatchRange.upperBound
 
@@ -61,7 +60,7 @@ import Foundation
         let endOfString = !attributedString.wholeRange.contains(characterAfterMention)
         let suffix = endOfString || !attributedString.hasSpaceAt(position: characterAfterMention) ? " " : ""
 
-        return (mentionMatchRange, (mentionString + suffix) && typingAttributes)
+        return (mentionMatchRange, (mentionString + suffix))
     }
 
 }

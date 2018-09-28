@@ -44,9 +44,9 @@ extension ConversationInputBarViewController {
         
         let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
 
-        let (range, attributedText) = handler.replacement(forMention: user, in: text, typingAttributes: inputBar.textView.typingAttributes)
+        let (range, attributedText) = handler.replacement(forMention: user, in: text)
 
-        inputBar.textView.replace(range, withAttributedText: attributedText)
+        inputBar.textView.replace(range, withAttributedText: (attributedText && inputBar.textView.typingAttributes))
         dismissMentionsIfNeeded()
     }
     
