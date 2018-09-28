@@ -1,0 +1,36 @@
+pool:
+   vmImage: 'macOS 10.13'
+variables:
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 7,OS=latest'
+
+steps:
+- script: |
+    sudo xcode-select -switch /Applications/Xcode_10.app
+    carthage bootstrap --platform iOS
+  env: 
+    GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)
+  displayName: "Setup environment"
+- task: Xcode@5
+  inputs:
+    actions: 'build-for-testing'
+    scheme: 'Wire-iOS'
+    xcWorkspacePath: '*.xcodeproj'
+    sdk: 'iphonesimulator'
+    configuration: 'Debug'
+    destinationPlatform: 'iOS Simulator'
+    destinationSimulators: 'iPhone 7'
+    args: "-derivedDataPath DerivedData -enableCodeCoverage YES -quiet"
+  displayName: "Build"
+- task: Xcode@5
+  inputs:
+    actions: 'test-without-building'
+    scheme: 'Wire-iOS'
+    xcWorkspacePath: '*.xcodeproj'
+    sdk: 'iphonesimulator'
+    configuration: 'Debug'
+    destinationPlatform: 'iOS Simulator'
+    destinationSimulators: 'iPhone 7'
+    useXcpretty: true
+    publishJUnitResults: true
+    args: "-derivedDataPath DerivedData -enableCodeCoverage YES"
+  displayName: "Test"
