@@ -33,6 +33,7 @@ class CheckmarkCellTests: ZMSnapshotTestCase {
     override func tearDown() {
         cell = nil
         conversation = nil
+        ColorScheme.default.variant = .light
         super.tearDown()
     }
 
