@@ -5,20 +5,19 @@ variables:
 
 steps:
 - script: |
-    ./setup.sh
+    sudo xcode-select -switch /Applications/Xcode_10.app
+    carthage bootstrap --platform iOS
   env: 
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)
   displayName: "Setup environment"
 - task: Xcode@5
   inputs:
     actions: 'build-for-testing'
-    xcodeVersion: 10
     args: "-scheme Wire-iOS -destination $(DESTINATION) -derivedDataPath DerivedData -enableCodeCoverage YES -quiet"
   displayName: "Build"
 - task: Xcode@5
   inputs:
     actions: 'test-without-building'
-    xcodeVersion: 10
     useXcpretty: true
     publishJUnitResults: true
     args: "-scheme Wire-iOS -destination $(DESTINATION) -derivedDataPath DerivedData -enableCodeCoverage YES"
