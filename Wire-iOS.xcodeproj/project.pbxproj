@@ -3615,6 +3615,8 @@
 			children = (
 				5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */,
 				5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */,
+				EF2127271FB9E06300625A9B /* LandingViewController.swift */,
+				EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */,
 				5E8DA763211B2CF000360979 /* Coordinator */,
 				5E8DA753211AF7BA00360979 /* Delegates */,
 				5E8DA74A211AEB6C00360979 /* Event Handlers */,
@@ -5962,8 +5964,6 @@
 				F1199D2B1FC8490A0070FAC3 /* Flow */,
 				D5DBAAA820064D7D00E9F65B /* Team Invites */,
 				EF61B3411FC8508400D8E631 /* TextFieldValidator.swift */,
-				EF2127271FB9E06300625A9B /* LandingViewController.swift */,
-				EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */,
 				EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */,
 				EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */,
 				8759E2C41FC86090008E17C9 /* UIAlertController+TOS.swift */,

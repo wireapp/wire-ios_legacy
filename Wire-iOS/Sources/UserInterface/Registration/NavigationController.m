@@ -349,6 +349,7 @@
 
 - (IBAction)backButtonTapped:(id)sender
 {
+    [self.topViewController resignFirstResponder];
     [self popViewControllerAnimated:YES];
 }
 

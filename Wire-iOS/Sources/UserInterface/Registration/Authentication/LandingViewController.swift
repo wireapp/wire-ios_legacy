@@ -237,8 +237,6 @@ final class LandingViewController: AuthenticationStepViewController {
                 loginHintAlignTop = loginHintsLabel.top == buttonStackView.bottom + 80
             }
 
-
-            loginButton.top == loginHintsLabel.bottom + 4
             loginButton.centerX == selfView.centerX
             loginButton.height >= 44
             loginButton.width >= 44

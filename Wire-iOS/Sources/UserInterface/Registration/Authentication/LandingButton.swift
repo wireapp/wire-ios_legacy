@@ -44,6 +44,9 @@ class LandingButton: ButtonWithLargerHitArea {
         // smaller icon for iPhone4s screen size
         self.iconButton.setIcon(icon, with: UIScreen.main.bounds.size.height <= 480 ? ZetaIconSize.small : ZetaIconSize.registrationButton, for: .normal)
         self.iconButton.setBackgroundImageColor(iconBackgroundColor, for: .normal)
+        self.iconButton.setIconColor(.white, for: .normal)
+        self.iconButton.setIconColor(.white, for: .selected)
+        self.iconButton.setIconColor(.white, for: .highlighted)
 
         self.isAccessibilityElement = true
         self.accessibilityLabel = title.string
@@ -92,7 +95,6 @@ class LandingButton: ButtonWithLargerHitArea {
             super.isHighlighted = isHighlighted
             iconButton.isHighlighted = isHighlighted
             updateForNewStateIfNeeded()
-
         }
     }
 
