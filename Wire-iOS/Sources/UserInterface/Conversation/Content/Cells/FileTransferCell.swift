@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 // Cell that disaplys the file transfer and it's states
 @objcMembers public final class FileTransferCell: ConversationCell {
@@ -27,12 +26,12 @@ import Classy
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .paperclip)
 
-    public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public required override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         self.containerView.layer.cornerRadius = 4
-        self.containerView.cas_styleClass = "container-view"
+        containerView.backgroundColor = .placeholderBackground
         self.containerView.clipsToBounds = true
         
         self.fileTransferView.delegate = self

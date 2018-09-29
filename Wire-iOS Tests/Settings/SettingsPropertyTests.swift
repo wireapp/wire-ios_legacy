@@ -47,6 +47,8 @@ class MockZMUserSession: ZMUserSessionInterface {
 }
 
 class ZMMockAVSMediaManager: AVSMediaManagerInterface {
+    var isMicrophoneMuted: Bool = false
+
     var intensityLevel : AVSIntensityLevel = .none
     
     func playMediaByName(_ name: String!) { }
@@ -57,7 +59,18 @@ class ZMMockTracking: TrackingInterface {
 }
 
 class SettingsPropertyTests: XCTestCase {
-    let userDefaults: UserDefaults = UserDefaults.standard
+    var userDefaults: UserDefaults!
+
+    override func setUp() {
+        super.setUp()
+        userDefaults = .standard
+    }
+
+    override func tearDown() {
+        userDefaults = nil
+        super.tearDown()
+    }
+
     
     func saveAndCheck<T>(_ property: SettingsProperty, value: T, file: String = #file, line: UInt = #line) throws where T: Equatable {
         var property = property
@@ -176,7 +189,7 @@ class SettingsPropertyTests: XCTestCase {
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
         let key = "IntegerKey"
-        XCTAssertNil(settings.value(for: key, in: account))
+        XCTAssertNil(settings.value(for: key, in: account) as Int?)
         
         // when
         settings.setValue(42, for: key, in: account)
@@ -191,7 +204,7 @@ class SettingsPropertyTests: XCTestCase {
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
         let key = "BooleanKey"
-        XCTAssertNil(settings.value(for: key, in: account))
+        XCTAssertNil(settings.value(for: key, in: account) as Bool?)
         
         // when
         settings.setValue(true, for: key, in: account)

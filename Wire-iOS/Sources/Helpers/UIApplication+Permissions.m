@@ -109,7 +109,9 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
     UIAlertAction *actionSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil)
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * _Nonnull action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+                                           options:@{}
+                                 completionHandler:NULL];
         if (nil != completion) completion();
     }];
     
@@ -135,7 +137,9 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
                                                                      cancelButtonTitle:NSLocalizedString(@"general.ok", nil)];
     
     [noMicrophoneAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+                                           options:@{}
+                                 completionHandler:NULL];
     }]];
     
     [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:noMicrophoneAlert animated:YES completion:nil];
@@ -157,7 +161,9 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
                                                                cancelButtonTitle:NSLocalizedString(@"general.cancel", nil)];
 
     [deniedAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+                                           options:@{}
+                                 completionHandler:NULL];
     }]];
 
     [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:deniedAlert animated:YES completion:nil];

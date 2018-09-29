@@ -21,13 +21,20 @@ import XCTest
 
 class DecodeImageOperationTests: ZMSnapshotTestCase {
 
-    let operationQueue = OperationQueue()
+    var operationQueue: OperationQueue!
     var sut: UIImageView!
 
     override func setUp() {
         super.setUp()
+        operationQueue = OperationQueue()
         sut = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
         sut.contentMode = .scaleAspectFit
+    }
+
+    override func tearDown() {
+        sut = nil
+        operationQueue = nil
+        super.tearDown()
     }
 
     func testThatItDecodedValidImageData() {

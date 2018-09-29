@@ -25,72 +25,72 @@ class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersMessageTimerSystemMessage_None_Other() {
         let timerCell = cell(fromSelf: false, messageTimer: .none)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_TenSeconds_Other() {
         let timerCell = cell(fromSelf: false, messageTimer: .tenSeconds)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_FiveMinutes_Other() {
         let timerCell = cell(fromSelf: false, messageTimer: .fiveMinutes)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_OneHour_Other() {
         let timerCell = cell(fromSelf: false, messageTimer: .oneHour)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_OneDay_Other() {
         let timerCell = cell(fromSelf: false, messageTimer: .oneDay)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_OneWeek_Other() {
         let timerCell = cell(fromSelf: false, messageTimer: .oneWeek)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_FourWeeks_Other() {
         let timerCell = cell(fromSelf: false, messageTimer: .fourWeeks)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_None_Self() {
         let timerCell = cell(fromSelf: true, messageTimer: .none)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_TenSeconds_Self() {
         let timerCell = cell(fromSelf: true, messageTimer: .tenSeconds)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_FiveMinutes_Self() {
         let timerCell = cell(fromSelf: true, messageTimer: .fiveMinutes)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_OneHour_Self() {
         let timerCell = cell(fromSelf: true, messageTimer: .oneHour)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_OneDay_Self() {
         let timerCell = cell(fromSelf: true, messageTimer: .oneDay)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_OneWeek_Self() {
         let timerCell = cell(fromSelf: true, messageTimer: .oneWeek)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     func testThatItRendersMessageTimerSystemMessage_FourWeeks_Self() {
         let timerCell = cell(fromSelf: true, messageTimer: .fourWeeks)
-        verify(view: timerCell.prepareForSnapshots())
+        verify(view: timerCell.prepareForSnapshots(width: .iPhone4))
     }
     
     // MARK: - Helper
@@ -106,23 +106,4 @@ class MessageTimerSystemMessageTests: CoreDataSnapshotTestCase {
         cell.configure(for: message, layoutProperties: props)
         return cell
     }
-}
-
-
-
-private extension UITableViewCell {
-    
-    func prepareForSnapshots() -> UIView {
-        setNeedsLayout()
-        layoutIfNeeded()
-        
-        bounds.size = systemLayoutSizeFitting(
-            CGSize(width: 320, height: 0),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-        
-        return wrapInTableView()
-    }
-    
 }

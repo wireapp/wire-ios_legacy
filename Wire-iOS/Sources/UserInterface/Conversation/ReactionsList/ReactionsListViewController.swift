@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 import Cartography
-import Classy
 
 @objcMembers open class ReactionsListViewController: UIViewController {
     public let message: ZMConversationMessage
@@ -27,7 +26,7 @@ import Classy
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
     fileprivate let topBar: ModalTopBar
-    public let dismissButton = IconButton.iconButtonDefault()
+    public let dismissButton = IconButton(style: .default)
     public let titleLabel = UILabel()
     
     public init(message: ZMConversationMessage, showsStatusBar: Bool) {
@@ -52,7 +51,7 @@ import Classy
         self.collectionViewLayout.scrollDirection = .vertical
         self.collectionViewLayout.minimumLineSpacing = 0
         self.collectionViewLayout.minimumInteritemSpacing = 0
-        self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
         self.collectionView.register(ReactionCell.self, forCellWithReuseIdentifier: ReactionCell.reuseIdentifier)
         self.collectionView.delegate = self
@@ -77,7 +76,7 @@ import Classy
             collectionView.top == topBar.bottom
         }
 
-        CASStyler.default().styleItem(self)
+        view.backgroundColor = UIColor(scheme: .textBackground)
     }
     
     override open var supportedInterfaceOrientations : UIInterfaceOrientationMask {

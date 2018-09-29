@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 
 @objcMembers public class OverflowSeparatorView: UIView {
@@ -43,7 +42,7 @@ import Classy
     
     override open var intrinsicContentSize: CGSize {
         get {
-            return CGSize(width: UIViewNoIntrinsicMetric, height: .hairline)
+            return CGSize(width: UIView.noIntrinsicMetric, height: .hairline)
         }
     }
     

@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Classy
 import Cartography
 
 struct ChangeEmailState {

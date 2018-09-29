@@ -42,7 +42,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
         client = nil
         selfClient = nil
 
-        ColorScheme.default.variant = .light
+        resetColorScheme()
 
         super.tearDown()
     }

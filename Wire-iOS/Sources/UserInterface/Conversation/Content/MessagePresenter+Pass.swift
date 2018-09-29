@@ -27,9 +27,7 @@ extension MessagePresenter {
                 return nil
         }
 
-        var error: NSError?
-        let pass = PKPass(data: passData, error: &error)
-        guard error == nil else { return nil }
+        guard let pass = try? PKPass.init(data: passData) else { return nil }
 
         if PKAddPassesViewController.canAddPasses() {
             return PKAddPassesViewController(pass: pass)

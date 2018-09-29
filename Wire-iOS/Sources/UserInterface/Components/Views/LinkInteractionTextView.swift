@@ -35,6 +35,10 @@ import UIKit
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
+        
+        if #available(iOS 11.0, *) {
+            textDragDelegate = self
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -75,7 +79,7 @@ import UIKit
     /// link in the specified range is a markdown link.
     fileprivate func showAlertIfNeeded(for url: URL, in range: NSRange) -> Bool {
         // only show alert if the link is a markdown link
-        guard attributedText.ranges(of: .link, inRange: range) == [range] else { return false }
+        guard attributedText.ranges(containing: .link, inRange: range) == [range] else { return false }
         ZClientViewController.shared()?.present(confirmationAlert(for: url), animated: true, completion: nil)
         return true
     }
@@ -84,45 +88,12 @@ import UIKit
 
 extension LinkInteractionTextView: UITextViewDelegate {
     
-    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
-        let beganLongPressRecognizers: [UILongPressGestureRecognizer] = gestureRecognizers?.compactMap { (recognizer: AnyObject) -> (UILongPressGestureRecognizer?) in
-            
-            if let recognizer = recognizer as? UILongPressGestureRecognizer, recognizer.state == .began {
-                return recognizer
-            }
-            else {
-                return .none
-            }
-        } ?? []
-
-        if beganLongPressRecognizers.count > 0 {
-            interactionDelegate?.textViewDidLongPress(self)
-            return false
-        }
-        
-        // if alert shown, link opening is handled in alert actions
-        if showAlertIfNeeded(for: URL, in: characterRange) { return false }
-        
-        // data detector links should be handled by the system
-        return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
-    }
-    
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange) -> Bool {
-        return true
-    }
-    
-    @available(iOS 10.0, *)
     public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        if interaction == .presentActions {
-            interactionDelegate?.textViewDidLongPress(self)
-            return false
-        }
-        else {
-            return true
-        }
+        guard interaction == .presentActions else { return true }
+        interactionDelegate?.textViewDidLongPress(self)
+        return false
     }
     
-    @available(iOS 10.0, *)
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
@@ -138,4 +109,24 @@ extension LinkInteractionTextView: UITextViewDelegate {
             return !showAlertIfNeeded(for: URL, in: characterRange)
         }
     }
+}
+
+@available(iOS 11.0, *)
+extension LinkInteractionTextView: UITextDragDelegate {
+    
+    public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+        
+        func isMentionLink(_ attributeTuple: (NSAttributedString.Key, Any)) -> Bool {
+            return attributeTuple.0 == NSAttributedString.Key.link && (attributeTuple.1 as? NSURL)?.scheme ==  Mention.mentionScheme
+        }
+        
+        if let attributes = textStyling(at: dragRequest.dragRange.start, in: .forward) {
+            if attributes.contains(where: isMentionLink) {
+                return []
+            }
+        }
+        
+        return dragRequest.suggestedItems
+    }
+    
 }

@@ -19,6 +19,18 @@
 import UIKit
 
 extension TokenField {
+    @objc func setupStyle() {
+        tokenOffset = 4
+
+        textView.tintColor = .accent()
+        textView.autocorrectionType = .no
+        textView.returnKeyType = .go
+        textView.placeholderFont = .smallRegularFont
+        textView.placeholderTextContainerInset = UIEdgeInsets(top: 0, left: 48, bottom: 0, right: 0)
+        textView.placeholderTextTransform = .upper
+        textView.lineFragmentPadding = 0
+    }
+
     @objc func setupFonts() {
         // Dynamic Type is disabled for now until the separator dots
         // vertical alignment has been fixed for larger fonts.

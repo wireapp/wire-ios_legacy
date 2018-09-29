@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)
@@ -110,9 +109,9 @@ extension UIAlertController {
     fileprivate let timeouts: [MessageDestructionTimeoutValue?]
 
     public let titleLabel = UILabel()
-    public var pickerFont: UIFont?
-    public var pickerColor: UIColor?
-    public var separatorColor: UIColor?
+    public var pickerFont: UIFont? = .normalSemiboldFont
+    public var pickerColor: UIColor? = UIColor(scheme: .textForeground, variant: .dark)
+    public var separatorColor: UIColor? = UIColor(scheme: .separator, variant: .light)
 
     private let conversation: ZMConversation!
     private let picker = PickerView()
@@ -140,6 +139,8 @@ extension UIAlertController {
         super.viewDidLoad()
         setupViews()
         createConstraints()
+
+        view.backgroundColor = UIColor(scheme: .textForeground, variant: .light)
     }
 
     public override func viewWillAppear(_ animated: Bool) {
@@ -150,7 +151,7 @@ extension UIAlertController {
     }
 
     private func setupViews() {
-        CASStyler.default().styleItem(self)
+        
         picker.delegate = self
         picker.dataSource = self
         picker.tintColor = .red
@@ -159,6 +160,9 @@ extension UIAlertController {
         picker.didTapViewClosure = dismissKeyboardIfNeeded
 
         titleLabel.textAlignment = .center
+        titleLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        titleLabel.font = .smallSemiboldFont
+
         titleLabel.text = "input.ephemeral.title".localized.uppercased()
         titleLabel.numberOfLines = 0
         [titleLabel, picker].forEach(view.addSubview)
@@ -212,6 +216,8 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
     init() {
         super.init(frame: .zero)
+        self.backgroundColor = .clear
+
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)

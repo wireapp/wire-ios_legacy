@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 import WireExtensionComponents
 import Down
 
@@ -41,19 +40,19 @@ public enum EphemeralState: Equatable {
 
 public enum InputBarState: Equatable {
     case writing(ephemeral: EphemeralState)
-    case editing(originalText: String)
+    case editing(originalText: String, mentions: [Mention])
     case markingDown(ephemeral: EphemeralState)
 
     var isWriting: Bool {
         switch self {
-        case .writing(ephemeral: _): return true
+        case .writing: return true
         default: return false
         }
     }
 
     var isEditing: Bool {
         switch self {
-        case .editing(originalText: _): return true
+        case .editing: return true
         default: return false
         }
     }
@@ -137,14 +136,14 @@ private struct InputBarConstants {
     public let markdownView = MarkdownBarView()
     
     
-    public var editingBackgroundColor: UIColor?
-    public var barBackgroundColor: UIColor?
-    public var writingSeparatorColor: UIColor?
+    public var editingBackgroundColor = UIColor.brightYellow
+    public var barBackgroundColor: UIColor? = UIColor(scheme: .barBackground)
+    public var writingSeparatorColor: UIColor? = .separator
     public var ephemeralColor: UIColor {
         return .accent()
     }
-    public var placeholderColor: UIColor?
-    public var textColor: UIColor?
+    public var placeholderColor: UIColor? = .textPlaceholder
+    public var textColor: UIColor? = .textForeground
 
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
     
@@ -188,7 +187,7 @@ private struct InputBarConstants {
     
     override public var bounds: CGRect {
         didSet {
-            invisibleInputAccessoryView?.intrinsicContentSize = CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height)
+            invisibleInputAccessoryView?.intrinsicContentSize = CGSize(width: UIView.noIntrinsicMetric, height: bounds.height)
         }
     }
         
@@ -219,15 +218,15 @@ private struct InputBarConstants {
         [leftAccessoryView, textView, rightAccessoryStackView, buttonContainer, buttonRowSeparator].forEach(addSubview)
         buttonContainer.addSubview(buttonInnerContainer)
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
-        CASStyler.default().styleItem(self)
+        
 
         setupViews()
         createConstraints()
         
         notificationCenter.addObserver(markdownView, selector: #selector(markdownView.textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
-        notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
-        notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextView.textDidChangeNotification, object: textView)
+        notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: UITextView.textDidBeginEditingNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: UITextView.textDidEndEditingNotification, object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -239,12 +238,15 @@ private struct InputBarConstants {
         updatePlaceholder()
         textView.lineFragmentPadding = 0
         textView.textAlignment = .natural
-        textView.textContainerInset = UIEdgeInsetsMake(inputBarVerticalInset / 2, 0, inputBarVerticalInset / 2, 4)
-        textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
+        textView.textContainerInset = UIEdgeInsets(top: inputBarVerticalInset / 2, left: 0, bottom: inputBarVerticalInset / 2, right: 4)
+        textView.placeholderTextContainerInset = UIEdgeInsets(top: 21, left: 10, bottom: 21, right: 0)
         textView.keyboardType = .default
         textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
         textView.placeholderTextTransform = .upper
         textView.tintAdjustmentMode = .automatic
+        textView.font = .normalLightFont
+        textView.placeholderFont = .smallSemiboldFont
+        textView.backgroundColor = .clear
         
         markdownView.delegate = textView
 
@@ -330,8 +332,7 @@ private struct InputBarConstants {
         } else if inputBarState.isEphemeral {
             placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized) && ephemeralColor
         }
-        
-        if case .editing = state {
+        if state.isEditing {
             return nil
         } else {
             return placeholder
@@ -375,8 +376,8 @@ private struct InputBarConstants {
                 if let oldState = oldState, oldState.isEditing {
                     self.textView.text = nil
                 }
-            case .editing(let text):
-                self.setInputBarText(text)
+            case .editing(let text, let mentions):
+                self.setInputBarText(text, mentions: mentions)
                 self.secondaryButtonsView.setEditBarView()
             
             case .markingDown:
@@ -384,11 +385,11 @@ private struct InputBarConstants {
             }
         }
         
-        let completion: (Bool) -> Void = { _ in
+        let completion: () -> Void = {
             self.updateColors()
             self.updatePlaceholderColors()
 
-            if case .editing(_) = state {
+            if state.isEditing {
                 self.textView.becomeFirstResponder()
             }
         }
@@ -397,11 +398,12 @@ private struct InputBarConstants {
             UIView.wr_animate(easing: .easeInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
                 self.updateColors()
+                completion()
             }
         } else {
             layoutIfNeeded()
             textViewChanges()
-            completion(true)
+            completion()
         }
     }
 
@@ -412,8 +414,8 @@ private struct InputBarConstants {
     }
 
     fileprivate func backgroundColor(forInputBarState state: InputBarState) -> UIColor? {
-        guard let writingColor = barBackgroundColor, let editingColor = editingBackgroundColor else { return nil }
-        return state.isWriting || state.isMarkingDown ? writingColor : writingColor.mix(editingColor, amount: 0.16)
+        guard let writingColor = barBackgroundColor else { return nil }
+        return state.isWriting || state.isMarkingDown ? writingColor : writingColor.mix(editingBackgroundColor, amount: 0.16)
     }
 
     fileprivate func updatePlaceholderColors() {
@@ -452,8 +454,8 @@ private struct InputBarConstants {
 
     // MARK: – Editing View State
 
-    public func setInputBarText(_ text: String) {
-        textView.text = text
+    public func setInputBarText(_ text: String, mentions: [Mention]) {
+        textView.setText(text, withMentions: mentions)
         textView.setContentOffset(.zero, animated: false)
         textView.undoManager?.removeAllActions()
         updateEditViewState()
@@ -467,7 +469,7 @@ private struct InputBarConstants {
     }
 
     fileprivate func updateEditViewState() {
-        if case .editing(let text) = inputBarState {
+        if case .editing(let text, _) = inputBarState {
             let canUndo = textView.undoManager?.canUndo ?? false
             editingView.undoButton.isEnabled = canUndo
 

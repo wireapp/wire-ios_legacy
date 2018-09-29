@@ -21,13 +21,11 @@ import Foundation
 
 extension UIApplicationShortcutItem {
     static let markAllAsReadType = "com.wire.shortcut.markAllAsRead"
-    @available(iOS 9.1, *)
     static let markAllAsRead = UIApplicationShortcutItem(type: markAllAsReadType,
                                                          localizedTitle: "shortcut.mark_all_as_read.title".localized,
                                                          localizedSubtitle: nil,
                                                          icon: UIApplicationShortcutIcon(type: .taskCompleted),
                                                          userInfo: nil)
-    
 }
 
 public final class QuickActionsManager: NSObject {
@@ -47,14 +45,8 @@ public final class QuickActionsManager: NSObject {
             application.shortcutItems = []
             return
         }
-        
-        var allItems: [UIApplicationShortcutItem] = []
-        
-        if #available(iOS 9.1, *) {
-            allItems.append(.markAllAsRead)
-        }
-        
-        application.shortcutItems = allItems
+
+        application.shortcutItems = [.markAllAsRead]
     }
     
     @objc func performAction(for shortcutItem: UIApplicationShortcutItem, completionHandler: ((Bool)->())?) {

@@ -19,6 +19,7 @@
 
 
 #import "RegistrationTextField.h"
+#import "RegistrationTextField+Internal.h"
 
 @import WireExtensionComponents;
 
@@ -41,8 +42,6 @@ static const CGFloat GuidanceDotViewWidth = 40;
 @property (nonatomic, readwrite) IconButton *confirmButton;
 @property (nonatomic) CountryCodeView *countryCodeView;
 @property (nonatomic) GuidanceDotView *guidanceDotView;
-@property (nonatomic) UIEdgeInsets textInsets;
-@property (nonatomic) UIEdgeInsets placeholderInsets;
 
 @end
 

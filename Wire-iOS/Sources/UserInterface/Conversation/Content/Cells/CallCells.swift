@@ -29,7 +29,7 @@ struct CallCellViewModel {
     let font, boldFont: UIFont?
     let textColor: UIColor?
     let message: ZMConversationMessage
-
+    
     func image() -> UIImage? {
         return iconColor.map { UIImage(for: icon, iconSize: .tiny, color: $0) }
     }
@@ -45,11 +45,26 @@ struct CallCellViewModel {
 
         let senderString = string(for: sender)
         
-        let called = key(with: "called").localized(pov: sender.pov, args: senderString) && labelFont
+        var called = NSAttributedString()
+        let childs = systemMessageData.childMessages.count
+        
+        if systemMessageType == .missedCall {
+            
+            var detailKey = "missed-call"
+            
+            if message.conversation?.conversationType == .group {
+                detailKey.append(".groups")
+            }
+            
+            called = key(with: detailKey).localized(pov: sender.pov, args: childs + 1, senderString) && labelFont
+        } else {
+            called = key(with: "called").localized(pov: sender.pov, args: senderString) && labelFont
+        }
+        
         var title = called.adding(font: labelBoldFont, to: senderString)
 
-        if systemMessageData.childMessages.count > 0 {
-            title += " (\(systemMessageData.childMessages.count + 1))" && labelFont
+        if childs > 0 {
+            title += " (\(childs + 1))" && labelFont
         }
 
         return title && labelTextColor
@@ -78,8 +93,8 @@ struct CallCellViewModel {
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         let model = CallCellViewModel(
-            icon: .missedCall,
-            iconColor: UIColor(scheme: .textDimmed),
+            icon: .endCall,
+            iconColor: UIColor(for: .vividRed),
             systemMessageType: .missedCall,
             font: labelFont,
             boldFont: labelBoldFont,

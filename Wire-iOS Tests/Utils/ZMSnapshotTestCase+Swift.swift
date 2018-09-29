@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 @testable import Wire
 
 
@@ -31,7 +30,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.layoutMargins = self.layoutMargins
         
         let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
@@ -48,7 +47,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
             tableView.height == size.height
         }
         
-        CASStyler.default().styleItem(self)
+        
         self.layoutSubviews()
         return tableView
     }
@@ -108,8 +107,8 @@ extension ZMSnapshotTestCase {
         verifyView(view, extraLayoutPass: false, tolerance: 0, file: file.utf8SignedStart(), line: line, identifier: "")
     }
     
-    func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line) {
-        verifyView(inAllPhoneSizes: view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line, configurationBlock: nil)
+    func verifyInAllIPhoneSizes(view: UIView, extraLayoutPass: Bool = false, file: StaticString = #file, line: UInt = #line, configurationBlock: ((UIView) -> Swift.Void)? = nil) {
+        verifyView(inAllPhoneSizes: view, extraLayoutPass: extraLayoutPass, file: file.utf8SignedStart(), line: line, configurationBlock: configurationBlock)
     }
     
     func verifyInAllColorSchemes(view: UIView, tolerance: Float = 0, file: StaticString = #file, line: UInt = #line) {
@@ -136,5 +135,12 @@ extension ZMSnapshotTestCase {
         viewController.viewSafeAreaInsetsDidChange()
         viewController.view.frame = CGRect(x: 0, y: 0, width: 375, height: 812)
         verify(view: viewController.view)
+    }
+    
+    func resetColorScheme() {
+        ColorScheme.default.variant = .light
+
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
     }
 }

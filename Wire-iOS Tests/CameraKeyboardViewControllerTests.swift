@@ -79,6 +79,14 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         self.splitView = SplitLayoutObservableMock()
         self.delegateMock = CameraKeyboardViewControllerDelegateMock()
     }
+
+    override func tearDown() {
+        sut = nil
+        splitView = nil
+        delegateMock = nil
+        assetLibrary = nil
+        super.tearDown()
+    }
     
     @discardableResult func prepareForSnapshot(_ size: CGSize = CGSize(width: 320, height: 216)) -> UIView {
         self.sut.beginAppearanceTransition(true, animated: false)

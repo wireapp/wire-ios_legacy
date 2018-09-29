@@ -19,10 +19,9 @@
 import Foundation
 import Cartography
 import TTTAttributedLabel
-import Classy
 
 public final class UnknownMessageCell: CustomMessageCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.messageText = "content.system.unknown_message.body".localized
     }
@@ -46,13 +45,13 @@ public class CustomMessageCell : ConversationCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         messageLabel.extendsLinkTouchArea = true
         messageLabel.numberOfLines = 0
         messageLabel.isAccessibilityElement = true
         messageLabel.accessibilityLabel = "Text"
-        messageLabel.linkAttributes = [NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue,
-                                       NSAttributedStringKey.foregroundColor.rawValue: ZMUser.selfUser().accentColor]
+        messageLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
+                                       NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor]
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -64,7 +63,7 @@ public class CustomMessageCell : ConversationCell {
             messageLabel.edges == container.edgesWithinMargins
         }
 
-        CASStyler.default().styleItem(self)
+        
 
         messageLabel.delegate = self
 
@@ -77,6 +76,6 @@ public class CustomMessageCell : ConversationCell {
 extension CustomMessageCell : TTTAttributedLabelDelegate {
 
     public func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url)
     }
 }

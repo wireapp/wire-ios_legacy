@@ -24,12 +24,6 @@ private let endEditingNotificationName = "ConversationInputBarViewControllerShou
 
 
 extension ConversationInputBarViewController {
-
-    @objc func sendEditedMessageAndUpdateState(withText text: String) {
-        delegate.conversationInputBarViewControllerDidFinishEditing?(editingMessage, withText: text)
-        editingMessage = nil
-        updateWritingState(animated: true)
-    }
     
     @objc func editMessage(_ message: ZMConversationMessage) {
         guard let text = message.textMessageData?.messageText else { return }
@@ -37,7 +31,7 @@ extension ConversationInputBarViewController {
         editingMessage = message
         updateRightAccessoryView()
 
-        inputBar.setInputBarState(.editing(originalText: text), animated: true)
+        inputBar.setInputBarState(.editing(originalText: text, mentions: message.textMessageData?.mentions ?? []), animated: true)
         updateMarkdownButton()
 
         NotificationCenter.default.addObserver(
@@ -49,11 +43,11 @@ extension ConversationInputBarViewController {
     }
     
     @objc func endEditingMessageIfNeeded() {
-        guard nil != editingMessage else { return }
-        delegate.conversationInputBarViewControllerDidCancelEditing?(editingMessage)
+        guard let message = editingMessage else { return }
+        delegate?.conversationInputBarViewControllerDidCancelEditing?(message)
         editingMessage = nil
         ZMUserSession.shared()?.enqueueChanges {
-            self.conversation.draftMessageText = ""
+            self.conversation.draftMessage = nil
         }
         updateWritingState(animated: true)
 
@@ -85,13 +79,14 @@ extension ConversationInputBarViewController: InputBarEditViewDelegate {
         switch buttonType {
         case .undo: inputBar.undo()
         case .cancel: endEditingMessageIfNeeded()
-        case .confirm: sendOrEditText(inputBar.textView.preparedText)
+        case .confirm:
+            sendText()
         }
     }
     
     @objc public func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView) {
         guard let text = editingMessage?.textMessageData?.messageText else { return }
-        inputBar.setInputBarText(text)
+        inputBar.setInputBarText(text, mentions: editingMessage?.textMessageData?.mentions ?? [])
     }
 
 }

@@ -298,9 +298,7 @@ import SafariServices
             let syncConversation = try! syncContext.existingObject(with: conversationId) as! ZMConversation
             let messages: [ZMClientMessage] = (0...count).map { i in
                 let nonce = UUID()
-                let genericMessage = ZMGenericMessage.message(text: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;",
-                    nonce: nonce)
-
+                let genericMessage = ZMGenericMessage.message(content: ZMText.text(with: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;"), nonce: nonce)
                 let clientMessage = ZMClientMessage(nonce: nonce, managedObjectContext: syncContext)
                 clientMessage.add(genericMessage.data())
                 clientMessage.sender = ZMUser.selfUser(in: syncContext)
@@ -345,9 +343,6 @@ import SafariServices
             let url = URL.wr_termsOfServicesURL(forTeamAccount: ZMUser.selfUser().hasTeam).appendingLocaleParameter
             return BrowserViewController(url: url)
         }, previewGenerator: .none)
-        let licenseButton = SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
-            return BrowserViewController(url: URL.wr_licenseInformation.appendingLocaleParameter)
-        }, previewGenerator: .none)
 
         let shortVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
         let buildNumber = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String ?? "Unknown"
@@ -361,7 +356,7 @@ import SafariServices
         let copyrightInfo = String(format: "about.copyright.title".localized, currentYear)
 
         let linksSection = SettingsSectionDescriptor(
-            cellDescriptors: [tosButton, privacyPolicyButton, licenseButton],
+            cellDescriptors: [tosButton, privacyPolicyButton, licensesSection()],
             header: nil,
             footer: "\n" + version + "\n" + copyrightInfo
         )
@@ -380,6 +375,35 @@ import SafariServices
             previewGenerator: .none,
             icon: .wireLogo
         )
+    }
+
+    func licensesSection() -> SettingsCellDescriptorType {
+        guard let licenses = LicensesLoader.shared.loadLicenses() else {
+            return webLicensesSection()
+        }
+
+        let childItems: [SettingsGroupCellDescriptor] = licenses.map { item in
+            let projectCell = SettingsExternalScreenCellDescriptor(title: "about.license.open_project_button".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
+                return BrowserViewController(url: item.projectURL)
+            }, previewGenerator: .none)
+            let detailsSection = SettingsSectionDescriptor(cellDescriptors: [projectCell], header: "about.license.project_header".localized, footer: nil)
+
+            let licenseCell = SettingsStaticTextCellDescriptor(text: item.licenseText)
+            let licenseSection = SettingsSectionDescriptor(cellDescriptors: [licenseCell], header: "about.license.license_header".localized, footer: nil)
+
+            return SettingsGroupCellDescriptor(items: [detailsSection, licenseSection], title: item.name, style: .grouped)
+        }
+
+        let licensesSection = SettingsSectionDescriptor(cellDescriptors: childItems)
+        return SettingsGroupCellDescriptor(items: [licensesSection], title: "about.license.title".localized, style: .plain)
+
+    }
+
+    func webLicensesSection() -> SettingsCellDescriptorType {
+        return SettingsExternalScreenCellDescriptor(title: "about.license.title".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
+            let url = URL.wr_licenseInformation.appendingLocaleParameter
+            return BrowserViewController(url: url)
+        }, previewGenerator: .none)
     }
     
     // MARK: Actions
@@ -447,9 +471,9 @@ import SafariServices
                 return
         }
         
-        let builder = ZMExternal.builder()
-        _ = builder?.setOtrKey("broken_key".data(using: .utf8))
-        let genericMessage = ZMGenericMessage.genericMessage(pbMessage: builder!.build(), messageID: UUID(), expiresAfter: nil)
+        let builder = ZMExternalBuilder()
+        _ = builder.setOtrKey("broken_key".data(using: .utf8))
+        let genericMessage = ZMGenericMessage.message(content: builder.build())
         
         userSession.enqueueChanges {
             conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
@@ -467,7 +491,7 @@ import SafariServices
     private static func resetCallQualitySurveyMuteFilter(_ type: SettingsCellDescriptorType) {
         guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
 
-        CallQualityScoreProvider.resetSurveyMuteFilter()
+        CallQualityController.resetSurveyMuteFilter()
 
         let alert = UIAlertController(title: "Success",
                                       message: "The call quality survey will be displayed after the next call.",

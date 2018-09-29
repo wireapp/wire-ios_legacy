@@ -20,7 +20,8 @@ import Foundation
 
 extension CGSize {
     enum iPhoneSize {
-        static let iPhone4_7: CGSize = CGSize(width: 375.0, height: 667.0)
+        static let iPhone4: CGSize = CGSize(width: 320, height: 568)
+        static let iPhone4_7: CGSize = CGSize(width: 375, height: 667)
     }
 }
 

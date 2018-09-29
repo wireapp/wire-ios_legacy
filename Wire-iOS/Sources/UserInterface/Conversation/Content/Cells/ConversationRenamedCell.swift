@@ -17,21 +17,20 @@
 //
 
 
-import Classy
 import Cartography
 
 
 @objcMembers final class ConversationRenamedCell: IconSystemCell {
 
-    var nameLabelFont: UIFont?
+    var nameLabelFont: UIFont? = .normalSemiboldFont
     private let nameLabel = UILabel()
 
-    public required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         nameLabel.numberOfLines = 0
         messageContentView.addSubview(nameLabel)
         createConstraints()
-        CASStyler.default().styleItem(self)
+        
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -69,9 +68,7 @@ import Cartography
     }
 
     private func attributedTitle(for message: ZMConversationMessage) -> NSAttributedString? {
-        guard let labelFont = labelFont,
-            let labelBoldFont = labelBoldFont,
-            let labelTextColor = labelTextColor,
+        guard let labelTextColor = labelTextColor,
             let sender = message.sender,
             let senderString = self.sender(for: message) else { return nil }
 

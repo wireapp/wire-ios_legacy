@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-public class RoundedBadge: UIView {
+public class RoundedBadge: UIButton {
     public let containedView: UIView
     public var trailingConstraint: NSLayoutConstraint!
     public var widthGreaterThanHeightConstraint: NSLayoutConstraint!
@@ -77,6 +77,8 @@ public class RoundedTextBadge: RoundedBadge {
         textLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         textLabel.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
         textLabel.textAlignment = .center
+        textLabel.textColor = .background
+        textLabel.font = .smallSemiboldFont
     }
     
     required public init?(coder aDecoder: NSCoder) {

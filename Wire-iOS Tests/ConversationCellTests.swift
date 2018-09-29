@@ -30,7 +30,27 @@ final class ConversationCellTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
+        ColorScheme.default.variant = .light
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
         super.tearDown()
+    }
+
+    func testThatBurstTimestampViewColorIsCorrectInLightTheme() {
+        // GIVEN & WHEN
+        let sut = ConversationCell(style: .default, reuseIdentifier: nil)
+
+        // THEN
+        XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor(scheme: .textForeground, variant:.light))
+    }
+
+    func testThatBurstTimestampViewColorIsCorrectInDarkTheme() {
+        // GIVEN & WHEN
+        ColorScheme.default.variant = .dark
+        let sut = ConversationCell(style: .default, reuseIdentifier: nil)
+
+        // THEN
+        XCTAssertEqual(sut.burstTimestampView.label.textColor, UIColor(scheme: .textForeground, variant:.dark))
     }
 
     func testConversationCellIsNotRetainedAfterTimerIsScheduled() {

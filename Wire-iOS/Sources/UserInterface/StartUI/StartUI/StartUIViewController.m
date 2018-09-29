@@ -44,7 +44,6 @@
 
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 
 @interface StartUIViewController () <ContactsViewControllerDelegate, UserSelectionObserver, SearchHeaderViewControllerDelegate>
@@ -114,7 +113,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
         [self performSearch];
     };
 
-    if (SearchGroupSelector.shouldShowBotResults) {
+    if ([[ZMUser selfUser] canSeeServices]) {
         [self.view addSubview:self.groupSelector];
     }
 
@@ -169,7 +168,7 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading];
     [self.searchHeaderViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
 
-    if (SearchGroupSelector.shouldShowBotResults) {
+    if ([[ZMUser selfUser] canSeeServices]) {
         [self.groupSelector autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.searchHeaderViewController.view];
         [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeLeading];
         [self.groupSelector autoPinEdgeToSuperviewEdge:ALEdgeTrailing];
@@ -274,9 +273,8 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 - (void)inviteMoreButtonTapped:(UIButton *)sender
 {
     InviteContactsViewController *inviteContactsViewController = [[InviteContactsViewController alloc] init];
-    inviteContactsViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     inviteContactsViewController.delegate = self;
-    [self presentViewController:inviteContactsViewController animated:YES completion:nil];
+    [self.navigationController pushViewController:inviteContactsViewController animated:true];
 }
 
 - (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath

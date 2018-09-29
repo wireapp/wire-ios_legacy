@@ -21,9 +21,8 @@ import UIKit
 import Cartography
 import CoreLocation
 import Contacts
-import Classy
 
-@objcMembers class ClientTableViewCell: UITableViewCell {
+class ClientTableViewCell: UITableViewCell {
     
     let nameLabel = UILabel(frame: CGRect.zero)
     let labelLabel = UILabel(frame: CGRect.zero)
@@ -120,7 +119,7 @@ import Classy
     }
 
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.wr_editable = true
         
         nameLabel.accessibilityIdentifier = "device name"
@@ -160,10 +159,11 @@ import Classy
             verifiedLabel.bottom == contentView.bottom - 16
         }
         
-        CASStyler.default().styleItem(self)
         self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
+
+        setupStyle()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -175,7 +175,16 @@ import Classy
             super.setEditing(editing, animated: animated)
         }
     }
-    
+
+    func setupStyle() {
+        nameLabel.font = .normalSemiboldFont
+        labelLabel.font = .smallSemiboldFont
+        activationLabel.font = .smallLightFont
+        verifiedLabel.font = .smallFont
+        fingerprintLabelFont = .smallLightFont
+        fingerprintLabelBoldFont = .smallSemiboldFont
+    }
+
     func updateVerifiedLabel() {
         if let userClient = self.userClient,
             self.showVerified {

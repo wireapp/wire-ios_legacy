@@ -43,11 +43,11 @@ class SearchSectionController: NSObject, CollectionViewSectionController {
     }
         
     func prepareForUse(in collectionView : UICollectionView?) {
-        collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader")
+        collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
+        let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
         
         if let sectionHeaderView = supplementaryView as? SectionHeader {
             sectionHeaderView.titleLabel.text = sectionTitle.localizedUppercase
@@ -62,7 +62,7 @@ class SearchSectionController: NSObject, CollectionViewSectionController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: 56)
+        return CGSize(width: collectionView.bounds.size.width, height: CGFloat.StartUI.CellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

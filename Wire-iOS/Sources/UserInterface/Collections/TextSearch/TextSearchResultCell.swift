@@ -19,16 +19,25 @@
 import Foundation
 import Cartography
 
-@objcMembers internal class TextSearchResultCell: UITableViewCell {
+internal class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()
     fileprivate let userImageView = UserImageView()
-    fileprivate let separatorView = UIView()
+    fileprivate let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator)
+        return view
+    }()
     fileprivate var observerToken: Any?
-    public let resultCountView = RoundedTextBadge()
+    public let resultCountView: RoundedTextBadge = {
+        let roundedTextBadge = RoundedTextBadge()
+        roundedTextBadge.backgroundColor = UIColor(scheme: .graphite, variant: .light)
+
+        return roundedTextBadge
+    }()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         userImageView.userSession = ZMUserSession.shared()
@@ -49,7 +58,6 @@ import Cartography
         
         contentView.addSubview(userImageViewContainer)
         
-        separatorView.cas_styleClass = "separator"
         contentView.addSubview(separatorView)
         
         resultCountView.textLabel.accessibilityIdentifier = "count of matches"
@@ -88,6 +96,9 @@ import Cartography
             separatorView.bottom == contentView.bottom
             separatorView.height == CGFloat.hairline
         }
+
+        textLabel?.textColor = .background
+        textLabel?.font = .smallSemiboldFont
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -122,6 +133,7 @@ import Cartography
         
         resultCountView.isHidden = totalMatches <= 1
         resultCountView.textLabel.text = "\(totalMatches)"
+        resultCountView.updateCollapseConstraints(isCollapsed: false)
     }
     
     public func configure(with newMessage: ZMConversationMessage, queries newQueries: [String]) {

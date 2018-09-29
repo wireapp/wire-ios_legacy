@@ -18,12 +18,11 @@
 
 
 #import "PingCell.h"
+#import "PingCell+Internal.h"
 #import "WireSyncEngine+iOS.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIColor+WR_ColorScheme.h"
-
-#import <Classy/Classy.h>
 
 @import PureLayout;
 
@@ -38,9 +37,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
 @property (nonatomic, strong) UIImageView *pingImageView;
 @property (nonatomic, assign) BOOL initialPingCellConstraintsCreated;
 @property (nonatomic, strong) AnimationBlock pingAnimationBlock;
-@property (nonatomic, strong) UIFont *pingFont;
-@property (nonatomic, strong) UIFont *authorFont;
-@property (nonatomic, strong) UILabel *pingLabel;
 
 @property (nonatomic, assign) BOOL isPingAnimationRunning;
 
@@ -55,7 +51,6 @@ typedef void (^AnimationBlock)(id, NSInteger);
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        [CASStyler.defaultStyler styleItem:self];
         [self setupPingCell];
         [self createConstraints];
     }
@@ -74,6 +69,8 @@ typedef void (^AnimationBlock)(id, NSInteger);
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
     [accessibilityElements addObjectsFromArray:@[self.pingLabel]];
     self.accessibilityElements = accessibilityElements;
+
+    [self setupStyle];
 }
 
 - (void)createConstraints
@@ -102,7 +99,7 @@ typedef void (^AnimationBlock)(id, NSInteger);
     NSAttributedString *text = [[NSAttributedString alloc] initWithString:pingText attributes:@{ NSFontAttributeName: self.pingFont }];
     self.pingLabel.attributedText = [text addingFont:self.authorFont toSubstring:senderText];
 
-    UIColor *pingColor = message.isObfuscated ? [UIColor wr_colorFromColorScheme:ColorSchemeColorAccentDimmedFlat] : self.message.sender.accentColor;
+    UIColor *pingColor = message.isObfuscated ? UIColor.accentDimmedFlat : self.message.sender.accentColor;
     self.pingImageView.image = [UIImage imageForIcon:ZetaIconTypePing fontSize:20 color:pingColor];
     self.authorImageView.hidden = YES;
     self.authorLabel.hidden = YES;

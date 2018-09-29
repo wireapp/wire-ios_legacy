@@ -26,6 +26,7 @@
 
 @interface MockUser : NSObject<UserType, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
++ (NSArray <MockUser *> *)realMockUsers;
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockUserFor:(ZMUser *)user;
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;
@@ -48,10 +49,12 @@
 @property (nonatomic, readwrite) NSTimeInterval expiresAfter;
 @property (nonatomic, assign) BOOL isSelfUser;
 @property (nonatomic, assign) BOOL isServiceUser;
-@property (nonatomic, assign) BOOL isTeamMember;
+@property (nonatomic, readwrite) BOOL isTeamMember;
 @property (nonatomic, assign) BOOL isGuestInConversation;
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
+@property (nonatomic, readwrite) NSString *expirationDisplayString;
+@property (nonatomic) ZMUser * user;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;
 @property (nonatomic) ZMConnection *connection;
@@ -59,6 +62,7 @@
 @property (nonatomic) AddressBookEntry *addressBookEntry;
 @property (nonatomic) NSUUID *remoteIdentifier;
 @property (nonatomic, readwrite) Availability availability;
+@property (nonatomic, readonly) NSSet<UserClient *> * clientsRequiringUserAttention;
 
 - (NSArray<MockUserClient *> *)featureWithUserClients:(NSUInteger)numClients;
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;

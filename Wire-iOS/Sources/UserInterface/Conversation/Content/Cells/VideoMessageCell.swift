@@ -19,12 +19,11 @@
 
 import Foundation
 import Cartography
-import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
 /// Displays the video message@objc  with different states
-@objcMembers public final class VideoMessageCell: ConversationCell {
+public final class VideoMessageCell: ConversationCell {
     
     private let videoMessageView = VideoMessageView()
     private let obfuscationView = ObfuscationView(icon: .videoMessage)
@@ -33,7 +32,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
     private var topMargin: NSLayoutConstraint!
         
-    public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public required override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.contentView.addSubview(self.videoMessageView)
@@ -185,12 +184,12 @@ private let zmLog = ZMSLog(tag: "UI")
             let fileURL = fileMessageData.fileURL,
             self.message.videoCanBeSavedToCameraRoll() {
             
-            let selector = "video:didFinishSavingWithError:contextInfo:"
-            UISaveVideoAtPathToSavedPhotosAlbum(fileURL.path, self, Selector(selector), nil)
+            let selector = #selector(self.video(_:didFinishSavingWithError:contextInfo:))
+            UISaveVideoAtPathToSavedPhotosAlbum(fileURL.path, self, selector, nil)
         }
     }
     
-    func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
+    @objc func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         if let error = error {
             zmLog.error("Cannot save video: \(error)")
         }

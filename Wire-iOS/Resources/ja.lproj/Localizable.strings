@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "メンバー";
 "peoplepicker.header.services" = "サービス";
-"peoplepicker.services.create_conversation.item" = "会話を作成";
+"peoplepicker.services.open_conversation.item" = "会話を始めます";
 "peoplepicker.services.add_service.button" = "サービスを追加";
 "peoplepicker.services.add_service.error.title" = "サービスを追加できません。";
 "peoplepicker.services.add_service.error.default" = "現在、サービスはご利用いただけません。";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "全員います";
 
-"add_participants.alert.title" = "満員です";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "グループ会話には %d 人まで参加することができます。";
 "add_participants.alert.message.existing_conversation" = "グループ会話には %1$d 人まで参加することができます。あと %2$d 人が参加できます。";
 
@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "新しいメッセージ";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Wire の改善にご協力を";
-"conversation_list.date_usage_permission_alert.message" = "匿名の使用状況とクラッシュレポートを送信することにより、当社の製品およびサービスの改善に役立ちます。\n我々はそれ以外の目的のためにこれらの情報を使うことはありません。";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "いいえ";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "連絡先";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "マナーモード";
 "conversation_list.voiceover.status.typing" = "入力中";
 "conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "アーカイブ済み";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "アーカイブ済み会話一覧";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡先";
@@ -193,7 +196,6 @@
 
 "conversation.voiceover.verified" = "認証済み";
 
-"conversation.status.call" = "通話中";
 "conversation.status.typing" = "メッセージを入力中";
 "conversation.status.typing.group" = "%@: メッセージの入力中";
 "conversation.status.silenced" = "ミュート";
@@ -208,7 +210,14 @@
 "conversation.status.message.file" = "ファイルが共有されました";
 "conversation.status.message.knock" = "Ping されました";
 "conversation.status.message.missedcall" = "不在着信";
-"conversation.status.message.ephemeral" = "タイマーメッセージ";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.knock" = "Ping されました";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ 未送信メッセージ";
 "conversation.status.you" = "あなた";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "連絡先";
 
 "conversation.input_bar.shortcut.send" = "メッセージを送信";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "最後のメッセージを編集";
 "conversation.input_bar.shortcut.cancel_editing_message" = "キャンセル";
 
@@ -282,8 +292,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "通話中に写真を撮ることはできません。";
 
 "conversation.guests_present" = "ゲストが存在します";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "検索";
 
 // Image confirmation dialogue
@@ -349,7 +359,7 @@
 "content.system.other_removed_you" = "%@はあなたを削除しました";
 "content.system.you_removed_other" = "あなたは%@を削除しました";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
@@ -539,6 +549,7 @@
 "call.status.incoming.user" = "%@ を呼出中...";
 "call.status.incoming" = "発信中...";
 "call.status.outgoing" = "呼び出し中...";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "再接続…";
 "call.status.terminating" = "通話終了中...";
 "call.status.constant_bitrate" = "固定ビットレート";
@@ -557,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "新しいデバイスを使い始めた人がいます";
 "call.degraded.alert.action.continue" = "とにかく電話をする";
 
-"call.alert.ongoing.start.alert_title" = "通話を開始しますか？";
-"call.alert.ongoing.join.alert_title" = "通話に参加しますか？";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "他の会話で通話中です。\nここで呼び出すと、その他の通話は終了します。";
 "call.alert.ongoing.join.message" = "他の会話で通話中です。\nこの呼び出しに参加すると、その他の通話は終了します。";
 "call.alert.ongoing.start.button" = "とにかく電話をする";
-"call.alert.ongoing.join.button" = "とにかく参加します。";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -742,6 +752,11 @@
 "about.website.title" = "Wire のウェブサイト";
 "about.copyright.title" = "© Wire Swiss GmbH";
 
+// Licenses screen
+"about.license.project_header" = "詳細";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
+
 // Self new devices
 "self.new_device_alert.title" = "あなたのアカウントの使用:";
 "self.new_device_alert.message" = "\n%@\n\nもし上のデバイスを知らない場合は、それを削除して、パスワードをリセットしてください。";
@@ -758,8 +773,8 @@
 "self.settings.add_account.error.title" = "3 つのアカウントがアクティブです";
 "self.settings.add_account.error.message" = "１度に３つのアカウントまでログインできます。新規にログインする為に、１つログアウトしてください。";
 
-"self.settings.switch_account.title" = "アカウント切替を行うと、現在の通話は終了します。";
-"self.settings.switch_account.action" = "アカウントの切り替え";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "アカウント";
@@ -961,7 +976,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "テクニカルリポート";
 "self.settings.technical_report.send_report" = "Wireにレポートを送信する";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire通話のレポート";
 "self.settings.technical_report.include_log" = "詳細なログを含める";
 "self.settings.technical_report.privacy_warning" = "詳細なログは個人情報を含む可能性があります";
@@ -1016,9 +1030,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "個人用途";
+"landing.create_account.title" = "パーソナル";
 "landing.create_account.subtitle" = "アカウントを作成";
-"landing.create_team.title" = "企業・その他組織の方向け";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "新しいチームを作成";
 "landing.login.hints" = "既にアカウントをお持ちですか？";
 "landing.login.button.title" = "ログイン";
@@ -1073,7 +1087,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team. You can always change it later.";
+"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
 "guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "削除";
 "guest_room.revoke_link.message" = "新しいゲストはこのリンクに参加することができません。現在のゲストはアクセス可能です。";
@@ -1404,6 +1418,7 @@
 "calling.quality_survey.answer.3" = "普通";
 "calling.quality_survey.answer.4" = "良い";
 "calling.quality_survey.answer.5" = "非常に良い";
+"calling.quality_survey.skip_button_title" = "省略";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

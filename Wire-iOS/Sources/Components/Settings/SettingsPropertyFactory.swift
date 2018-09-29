@@ -26,6 +26,7 @@ protocol TrackingInterface {
 
 protocol AVSMediaManagerInterface {
     var intensityLevel : AVSIntensityLevel { get set }
+    var isMicrophoneMuted: Bool { get set }
 }
 
 extension AVSMediaManager: AVSMediaManagerInterface {
@@ -162,7 +163,7 @@ class SettingsPropertyFactory {
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
                 
-                NotificationCenter.default.post(name: NSNotification.Name.SettingsColorSchemeChanged, object: self)
+                NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self)
             }
             
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)

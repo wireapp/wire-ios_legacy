@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import Classy
 import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
@@ -38,14 +37,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     public fileprivate(set) var visibleViewController: UIViewController?
     fileprivate let appStateController: AppStateController
-    fileprivate lazy var classyCache: ClassyCache = {
-        return ClassyCache()
-    }()
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
-    fileprivate var isClassyInitialized = false
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var authenticationCoordinator: AuthenticationCoordinator?
@@ -113,10 +108,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
 
         transition(to: .headless)
@@ -139,16 +134,13 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
-        let sessionManagerAnalytics: AnalyticsType
-        
-        CallQualityScoreProvider.shared.nextProvider = analytics
-        sessionManagerAnalytics = CallQualityScoreProvider.shared
+
         SessionManager.clearPreviousBackups()
 
         SessionManager.create(
             appVersion: appVersion!,
             mediaManager: mediaManager!,
-            analytics: sessionManagerAnalytics,
+            analytics: analytics,
             delegate: appStateController,
             application: UIApplication.shared,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
@@ -166,7 +158,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                                                            application: UIApplication.shared)
                 
             sessionManager.urlHandler.delegate = self
-            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+            if let url = launchOptions[UIApplication.LaunchOptionsKey.url] as? URL {
                 sessionManager.urlHandler.openURL(url, options: [:])
             }
         }
@@ -180,9 +172,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             transitionGroup.enter()
 
             DispatchQueue.main.async {
-                self.prepare(for: appState, completionHandler: {
-                    transitionGroup.leave()
-                })
+                self.applicationWillTransition(to: appState)
+                transitionGroup.leave()
             }
 
             transitionGroup.wait()
@@ -196,6 +187,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             DispatchQueue.main.async {
                 self.transition(to: appState, completionHandler: {
                     transitionGroup.leave()
+                    self.applicationDidTransition(to: appState)
                     completion?()
                 })
             }
@@ -277,7 +269,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     private func dismissModalsFromAllChildren(of viewController: UIViewController?) {
         guard let viewController = viewController else { return }
-        for child in viewController.childViewControllers {
+        for child in viewController.children {
             if child.presentedViewController != nil {
                 child.dismiss(animated: false, completion: nil)
             }
@@ -290,31 +282,31 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         // If we have some modal view controllers presented in any of the (grand)children
         // of this controller they stay in memory and leak on iOS 10.
         dismissModalsFromAllChildren(of: visibleViewController)
-        visibleViewController?.willMove(toParentViewController: nil)
+        visibleViewController?.willMove(toParent: nil)
 
         if let previousViewController = visibleViewController, animated {
 
-            addChildViewController(viewController)
+            addChild(viewController)
             transition(from: previousViewController,
                        to: viewController,
                        duration: 0.5,
                        options: .transitionCrossDissolve,
                        animations: nil,
                        completion: { (finished) in
-                    viewController.didMove(toParentViewController: self)
-                    previousViewController.removeFromParentViewController()
+                    viewController.didMove(toParent: self)
+                    previousViewController.removeFromParent()
                     self.visibleViewController = viewController
                     UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                     completionHandler?()
             })
         } else {
             UIView.performWithoutAnimation {
-                visibleViewController?.removeFromParentViewController()
-                addChildViewController(viewController)
+                visibleViewController?.removeFromParent()
+                addChild(viewController)
                 viewController.view.frame = view.bounds
                 viewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
                 view.addSubview(viewController.view)
-                viewController.didMove(toParentViewController: self)
+                viewController.didMove(toParent: self)
                 visibleViewController = viewController
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
@@ -322,7 +314,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         }
     }
 
-    func prepare(for appState: AppState, completionHandler: @escaping () -> Void) {
+    func applicationWillTransition(to appState: AppState) {
 
         if appState == .authenticated(completedRegistration: false) {
             callWindow.callController.transitionToLoggedInSession()
@@ -330,25 +322,14 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
 
-        if !isClassyInitialized && isClassyRequired(for: appState) {
-            isClassyInitialized = true
-
-            let windows = [mainWindow, callWindow, overlayWindow]
-            DispatchQueue.main.async {
-                self.setupClassy(with: windows)
-                completionHandler()
-            }
-        } else {
-            completionHandler()
-        }
+        let colorScheme = ColorScheme.default
+        colorScheme.setAccentColor(.accent())
+        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
     }
-
-    func isClassyRequired(for appState: AppState) -> Bool {
-        switch appState {
-        case .authenticated, .unauthenticated, .loading:
-            return true
-        default:
-            return false
+    
+    func applicationDidTransition(to appState: AppState) {
+        if appState == .authenticated(completedRegistration: false) {
+            callWindow.callController.presentCallCurrentlyInProgress()
         }
     }
 
@@ -356,24 +337,11 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         self.mediaManagerLoader.send(message: .appStart)
     }
 
-    func setupClassy(with windows: [UIWindow]) {
-
-        let colorScheme = ColorScheme.default
-        colorScheme.accentColor = UIColor.accent()
-        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
-
-        CASStyler.default().cache = classyCache
-        CASStyler.bootstrapClassy(withTargetWindows: windows)
-        CASStyler.default().apply(colorScheme)
-        CASStyler.default().apply(fontScheme: defaultFontScheme)
-    }
-
     @objc func onContentSizeCategoryChange() {
-        Message.invalidateMarkdownStyle()
-        NSAttributedString.wr_flushCellParagraphStyleCache()
+        NSAttributedString.invalidateParagraphStyle()
+        NSAttributedString.invalidateMarkdownStyle()
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
-        CASStyler.default().apply(fontScheme: defaultFontScheme)
         type(of: self).configureAppearance()
     }
 
@@ -517,8 +485,12 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
         guard let session = ZMUserSession.shared(), session.isCallOngoing else { return completion(true) }
         guard let topmostController = UIApplication.shared.wr_topmostController() else { return completion(false) }
         
-        let alert = UIAlertController(title: "self.settings.switch_account.title".localized, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized, style: .default, handler: { [weak self] (action) in
+        let alert = UIAlertController(title: "call.alert.ongoing.alert_title".localized,
+                                      message: "self.settings.switch_account.message".localized,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized,
+                                      style: .default,
+                                      handler: { [weak self] (action) in
             self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
             completion(true)
         }))

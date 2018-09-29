@@ -18,16 +18,28 @@
 
 import Foundation
 
+// MARK: - Avatar
+
+extension UIFont {
+    class var avatarInitial: UIFont {
+        return UIFont.systemFont(ofSize: 11, weight: .light)
+    }
+}
+
 // Objective-C compatiblity layer for the Swift only FontSpec
 @objc
 extension UIFont {
     
     // MARK: - Small
     
+    class var smallFont: UIFont {
+        return FontSpec(.small, .none).font!
+    }
+
     class var smallLightFont: UIFont {
         return FontSpec(.small, .light).font!
     }
-    
+
     class var smallRegularFont: UIFont {
         return FontSpec(.small, .regular).font!
     }
@@ -42,19 +54,37 @@ extension UIFont {
     
 
     // MARK: - Normal
-    
+
+    class var normalFont: UIFont {
+        return FontSpec(.normal, .none).font!
+    }
+
     class var normalLightFont: UIFont {
         return FontSpec(.normal, .light).font!
     }
-    
+
     class var normalRegularFont: UIFont {
         return FontSpec(.normal, .regular).font!
     }
-    
+
     class var normalMediumFont: UIFont {
         return FontSpec(.normal, .medium).font!
     }
-    
+
+    class var normalSemiboldFont: UIFont {
+        return FontSpec(.normal, .semibold).font!
+    }
+
+    // MARK: - Medium
+
+    class var mediumFont: UIFont {
+        return FontSpec(.medium, .none).font!
+    }
+
+    class var mediumSemiboldFont: UIFont {
+        return FontSpec(.medium, .semibold).font!
+    }
+
     // MARK: - Large
     
     class var largeThinFont: UIFont {

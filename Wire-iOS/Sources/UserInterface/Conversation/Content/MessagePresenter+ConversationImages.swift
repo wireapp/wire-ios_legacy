@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Classy
 
 extension MessagePresenter {
 
@@ -53,7 +52,7 @@ extension MessagePresenter {
         }
         imagesController.modalTransitionStyle = .crossDissolve
 
-        CASStyler.default().styleItem(imagesController)
+        
 
         let closeButton = CollectionsView.closeButton()
         closeButton.addTarget(self, action: #selector(MessagePresenter.closeImagesButtonPressed(_:)), for: .touchUpInside)

@@ -72,52 +72,6 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
     private var mixpanelInstance: MixpanelInstance? = .none
     private let defaults: UserDefaults
     
-    // INFO: this list has to go after we are sure that we are not sending any unexpected events.
-    private static let enabledEvents = Set<String>([
-        conversationMediaCompleteActionEventName,
-        "settings.opted_in_tracking",
-        "settings.opted_out_tracking",
-        "settings.changed_status",
-        "start.opened_start_screen",
-        "start.opened_person_registration",
-        "start.opened_team_registration",
-        "start.opened_login",
-        "team.verified",
-        "team.accepted_terms",
-        "team.created",
-        "team.added_team_name",
-        "team.finished_invite_step",
-        "settings.opened_manage_team",
-        "registration.succeeded",
-        "calling.joined_call",
-        "calling.established_call",
-        "calling.ended_call",
-        "calling.initiated_call",
-        "calling.received_call",
-        "calling.avs_metrics_ended_call",
-        "notifications.processing",
-        TeamInviteEvent.sentInvite(.teamCreation).name,
-        "integration.added_service",
-        "integration.removed_service",
-        LinearGroupCreationFlowEvent.openedGroupCreationName,
-        LinearGroupCreationFlowEvent.openedSelectParticipantsName,
-        LinearGroupCreationFlowEvent.groupCreationSucceededName,
-        LinearGroupCreationFlowEvent.addParticipantsName,
-        ConversationEvent.toggleAllowGuestsName,
-        GuestLinkEvent.created.name,
-        GuestLinkEvent.copied.name,
-        GuestLinkEvent.revoked.name,
-        GuestLinkEvent.shared.name,
-        GuestRoomEvent.created.name,
-        BackupEvent.importSucceeded.name,
-        BackupEvent.importFailed.name,
-        BackupEvent.exportSucceeded.name,
-        BackupEvent.exportFailed.name,
-        "e2ee.failed_message_decyption",
-        "request.loop",
-        "debug.database_context_save_failure"
-        ])
-    
     private static let enabledSuperProperties = Set<String>([
         "app",
         "team.in_team",
@@ -134,7 +88,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.defaults = defaults
 
         if !MixpanelAPIKey.isEmpty {
-            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey, optOutTrackingByDefault: true)
+            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey, automaticPushTracking: false, optOutTrackingByDefault: true)
         }
         super.init()
         mixpanelInstance?.distinctId = mixpanelDistinctId
@@ -145,6 +99,12 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         if DeveloperMenuState.developerMenuEnabled(),
             let uuidString = mixpanelInstance?.distinctId {
             zmLog.error("Mixpanel distinctId = `\(uuidString)`")
+            
+            #if targetEnvironment(simulator)
+            let tempFilePath = URL(fileURLWithPath: "/var/tmp/mixpanel_id.txt")
+            try? FileManager.default.removeItem(at: tempFilePath)
+            try! Data(uuidString.utf8).write(to: tempFilePath)
+            #endif
         }
         
         self.setSuperProperty("app", stringValue: "ios")
@@ -163,7 +123,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return id
         }
     }
-    
+
+    public func flush(completion: (() -> Void)?) {
+        mixpanelInstance?.flush(completion: completion)
+    }
+
     public var isOptedOut: Bool {
         get {
             return mixpanelInstance?.hasOptedOutTracking() ?? true
@@ -181,9 +145,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }
-        
-        assert(AnalyticsMixpanelProvider.enabledEvents.contains(event), "Analytics: event \(event) is disabled")
-        
+                
         mixpanelInstance.track(event: event, properties: attributes.propertiesRemovingLocation())
     }
     
@@ -192,7 +154,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.setSuperProperty(name, value: stringValue as NSObject?)
     }
     
-    func setSuperProperty(_ name: String, value: NSObject?) {
+    func setSuperProperty(_ name: String, value: Any?) {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }

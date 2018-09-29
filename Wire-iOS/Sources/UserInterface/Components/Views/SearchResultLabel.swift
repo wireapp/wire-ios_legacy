@@ -18,7 +18,8 @@
 
 import Foundation
 
-@objcMembers final public class SearchResultLabel: UILabel, Copyable {
+final public class SearchResultLabel: UILabel, Copyable {
+
     public convenience init(instance: SearchResultLabel) {
         self.init()
         self.font = instance.font
@@ -57,6 +58,7 @@ import Foundation
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.lineBreakMode = .byTruncatingTail
+        textColor = .textForeground
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -93,8 +95,8 @@ import Foundation
         if let range = currentRange {
             let nsRange = text.nsRange(from: range)
             
-            let highlightedAttributes = [NSAttributedStringKey.font: font,
-                                         .backgroundColor: UIColor(scheme: .accentDarken)]
+            let highlightedAttributes = [NSAttributedString.Key.font: font,
+                                         .backgroundColor: UIColor.accentDarken]
             
             if self.fits(attributedText: attributedText, fromRange: nsRange) {
                 self.attributedText = attributedText.highlightingAppearances(of: queries,

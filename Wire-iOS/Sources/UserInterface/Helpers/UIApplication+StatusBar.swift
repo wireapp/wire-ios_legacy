@@ -77,7 +77,7 @@ public extension UIApplication {
             }
 
             if let callWindowRootController = controller as? CallWindowRootViewController {
-                return callWindowRootController.voiceChannelController?.voiceChannelIsActive ?? false
+                return callWindowRootController.isDisplayingCallOverlay
             } else if controller is AppRootViewController  {
                 return true
             } else {

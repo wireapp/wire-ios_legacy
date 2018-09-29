@@ -1,4 +1,4 @@
-// 
+//
 // Wire
 // Copyright (C) 2016 Wire Swiss GmbH
 // 
@@ -29,7 +29,6 @@
 #import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
-#import "ColorSchemeController.h"
 #import "ProfileViewController.h"
 
 #import "WireSyncEngine+iOS.h"
@@ -168,7 +167,7 @@
         [self restoreStartupState];
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSchemeControllerDidApplyChanges:) name:ColorSchemeControllerDidApplyColorSchemeChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSchemeControllerDidApplyChanges:) name:NSNotification.colorSchemeControllerDidApplyColorSchemeChange object:nil];
     
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
@@ -267,6 +266,8 @@
 - (void)setupConversationListViewController
 {
     self.conversationListViewController = [[ConversationListViewController alloc] init];
+    self.conversationListViewController.account = SessionManager.shared.accountManager.selectedAccount;
+
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
     self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
 }

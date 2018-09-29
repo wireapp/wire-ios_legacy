@@ -42,15 +42,15 @@
 
 - (void)tearDown
 {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    self.dataSource = nil;
     [super tearDown];
 }
 
 - (void)testThatDataSourceHasCorrectNumberOfSectionsForSmallNumberOfUsers
 {
     // GIVEN
-    NSArray *mockUsers = [MockLoader mockObjectsOfClass:[MockUser class] fromFile:@"people-01.json"];
-    
+    NSArray *mockUsers = [MockUser mockUsers];
+
     // WHEN
     self.dataSource.ungroupedSearchResults = mockUsers;
     

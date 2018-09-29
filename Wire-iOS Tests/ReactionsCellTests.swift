@@ -19,7 +19,6 @@
 import XCTest
 
 @testable import Wire
-import Classy
 import Cartography
 
 class ReactionsCellTests: ZMSnapshotTestCase {
@@ -31,6 +30,11 @@ class ReactionsCellTests: ZMSnapshotTestCase {
         snapshotBackgroundColor = .white
         accentColor = .strongBlue
         sut = ReactionCell(frame: .zero)
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
     func testThatItRendersReactionCellWithoutUsername() {

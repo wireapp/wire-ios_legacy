@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 import WireExtensionComponents
 import WireDataModel
 
@@ -58,7 +57,7 @@ import WireDataModel
             self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         configure(user: user)
     }
@@ -92,10 +91,6 @@ import WireDataModel
     }
     
     func provideHapticFeedback() {
-        guard #available(iOS 10, *) else {
-            return
-        }
-        
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 }

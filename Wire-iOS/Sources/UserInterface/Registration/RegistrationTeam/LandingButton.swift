@@ -20,14 +20,14 @@ import Foundation
 import Cartography
 
 class LandingButton: ButtonWithLargerHitArea {
-    var priorState: UIControlState?
+    var priorState: UIControl.State?
 
     public var iconButton: IconButton!
     public var subtitleLabel: UILabel!
 
     public init() {
         super.init(frame: CGRect.zero)
-        iconButton = IconButton.iconButtonCircularLight()
+        iconButton = IconButton(style: .circular, variant: .dark)
         iconButton.isUserInteractionEnabled = false
         addSubview(iconButton)
 

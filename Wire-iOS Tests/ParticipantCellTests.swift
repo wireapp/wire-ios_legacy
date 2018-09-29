@@ -25,7 +25,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        accentColor = .strongBlue
     }
 
     // MARK: - Started a Conversation
@@ -261,20 +260,3 @@ private enum Users {
     case none, sender, one, some, many, justYou, youAndAnother, overflow, service
 }
 
-
-private extension UITableViewCell {
-
-    func prepareForSnapshots() -> UIView {
-        setNeedsLayout()
-        layoutIfNeeded()
-
-        bounds.size = systemLayoutSizeFitting(
-            CGSize(width: 375, height: 0),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-
-        return wrapInTableView()
-    }
-    
-}

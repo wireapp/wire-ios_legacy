@@ -18,7 +18,8 @@
 
 
 @import UIKit;
-@import WireExtensionComponents;
+
+#import "IconButton.h"
 
 
 @interface NavigationController : UINavigationController

@@ -128,11 +128,6 @@
     [self.view layoutIfNeeded];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
 - (void)setUpRightButtons
 {
     self.rightButtonsStack = [[UIStackView alloc] initForAutoLayout];

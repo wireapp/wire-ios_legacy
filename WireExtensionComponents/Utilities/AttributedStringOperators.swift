@@ -78,7 +78,7 @@ infix operator += : AssignmentPrecedence
 // Applies the attributes on the rhs to the string on the lhs
 infix operator && : LogicalConjunctionPrecedence
 
-public func &&(left: String, right: [NSAttributedStringKey: Any]) -> NSAttributedString {
+public func &&(left: String, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
     let result = NSAttributedString(string: left, attributes: right)
     return result
 }
@@ -106,7 +106,7 @@ public func &&(left: NSAttributedString, right: UIColor) -> NSAttributedString {
     return NSAttributedString(attributedString: result)
 }
 
-public func &&(left: NSAttributedString, right: [NSAttributedStringKey: Any]) -> NSAttributedString {
+public func &&(left: NSAttributedString, right: [NSAttributedString.Key: Any]) -> NSAttributedString {
     let result = NSMutableAttributedString(attributedString: left)
     result.addAttributes(right, range: NSMakeRange(0, result.length))
     return NSAttributedString(attributedString: result)
@@ -214,13 +214,13 @@ public extension String {
 public extension NSAttributedString {
     
     // Adds the attribtues to the given substring in self and returns the resulting String
-    @objc public func addAttributes(_ attributes: [NSAttributedStringKey: AnyObject], toSubstring substring: String) -> NSAttributedString {
+    @objc public func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.addAttributes(attributes, to: substring)
         return NSAttributedString(attributedString: mutableSelf)
     }
     
-    @objc public func setAttributes(_ attributes: [NSAttributedStringKey: AnyObject], toSubstring substring: String) -> NSAttributedString {
+    @objc public func setAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.setAttributes(attributes, range: (string as NSString).range(of: substring))
         return NSAttributedString(attributedString: mutableSelf)
@@ -258,7 +258,7 @@ extension Sequence where Iterator.Element == NSAttributedString {
 
 public extension NSMutableAttributedString {
 
-    @objc public func addAttributes(_ attributes: [NSAttributedStringKey: AnyObject], to substring: String) {
+    @objc public func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], to substring: String) {
         addAttributes(attributes, range: (string as NSString).range(of: substring))
     }
 
