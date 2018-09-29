@@ -38,13 +38,13 @@ import Foundation
     fileprivate func setup() {
         setupShapeLayer()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(CircularProgressView.applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(CircularProgressView.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     fileprivate func setupShapeLayer() {
         self.createPath()
         self.shapeLayer.lineWidth = CGFloat(lineWidth)
-        self.shapeLayer.lineCap = kCALineCapSquare
+        self.shapeLayer.lineCap = .square
         self.shapeLayer.strokeStart = 0.0
         self.shapeLayer.strokeEnd = CGFloat(self.progress)
         self.shapeLayer.fillColor = UIColor.clear.cgColor
@@ -100,7 +100,7 @@ import Foundation
             stroke.fromValue = self.shapeLayer.strokeEnd
             stroke.toValue = progress
             stroke.duration = 0.35
-            stroke.fillMode = kCAFillModeForwards
+            stroke.fillMode = .forwards
             
             self.shapeLayer.add(stroke, forKey: nil)
         } else {
@@ -133,12 +133,12 @@ import Foundation
     
     fileprivate func startSpinningAnimation() {
         let rotate = CABasicAnimation.init(keyPath: "transform.rotation.z")
-        rotate.fillMode = kCAFillModeForwards;
+        rotate.fillMode = .forwards
         rotate.toValue = 2 * CGFloat.pi
         rotate.repeatCount = .infinity
         rotate.duration = 1.0
         rotate.isCumulative = true
-        rotate.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionLinear)
+        rotate.timingFunction = CAMediaTimingFunction(name: .linear)
         
         self.shapeLayer.add(rotate, forKey: SpinningAnimationKey);
     }

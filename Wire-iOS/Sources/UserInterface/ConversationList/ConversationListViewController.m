@@ -18,6 +18,8 @@
 
 
 #import "ConversationListViewController.h"
+#import "ConversationListViewController+Private.h"
+#import "ConversationListViewController+Internal.h"
 #import "ConversationListViewController+StartUI.h"
 
 @import PureLayout;
@@ -65,9 +67,6 @@
 @interface ConversationListViewController (Archive) <ArchivedListViewControllerDelegate>
 @end
 
-@interface ConversationListViewController (PermissionDenied) <PermissionDeniedViewControllerDelegate>
-@end
-
 @interface ConversationListViewController (InitialSyncObserver) <ZMInitialSyncCompletionObserver>
 @end
 
@@ -101,11 +100,8 @@
 
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
-@property (nonatomic) UILabel *noConversationLabel;
 @property (nonatomic) ConversationListOnboardingHint *onboardingHint;
 @property (nonatomic) ConversationActionController *actionsController;
-
-@property (nonatomic) PermissionDeniedViewController *pushPermissionDeniedViewController;
 
 @property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
 @property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
@@ -155,7 +151,10 @@
     [self.view addSubview:self.contentContainer];
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
-    self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+    if ([ZMUserSession sharedSession] != nil) {
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
+    }
     
     self.onboardingHint = [[ConversationListOnboardingHint alloc] init];
     [self.contentContainer addSubview:self.onboardingHint];
@@ -163,8 +162,6 @@
     self.conversationListContainer = [[UIView alloc] initForAutoLayout];
     self.conversationListContainer.backgroundColor = [UIColor clearColor];
     [self.contentContainer addSubview:self.conversationListContainer];
-
-    self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];
 
     [self createNoConversationLabel];
     [self createListContentController];
@@ -181,17 +178,20 @@
     
     [self updateObserverTokensForActiveTeam];
     [self showPushPermissionDeniedDialogIfNeeded];
+
+    [self setupStyle];
 }
 
 - (void)updateObserverTokensForActiveTeam
 {
-    self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
-                                                                     userSession:[ZMUserSession sharedSession]];
-    self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                           forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                       userSession:[ZMUserSession sharedSession]];
-
+    if ([ZMUserSession sharedSession] != nil) {
+        self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
+                                                                         userSession:[ZMUserSession sharedSession]];
+        self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self
+                                                                               forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
+                                                                           userSession:[ZMUserSession sharedSession]];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -506,70 +506,6 @@
     [self.actionsController presentMenuFromSourceView:view];
 }
 
-#pragma mark - Push permissions
-
-- (void)showPushPermissionDeniedDialogIfNeeded
-{
-    // We only want to present the notification takeover when the user already has a handle
-    // and is not coming from the registration flow (where we alreday ask for permissions).
-    if (! self.isComingFromRegistration || nil == ZMUser.selfUser.handle) {
-        return;
-    }
-
-    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts || self.usernameTakeoverViewController != nil) {
-        return;
-    }
-    
-    BOOL pushAlertHappenedMoreThan1DayBefore = [[Settings sharedSettings] lastPushAlertDate] == nil ||
-    fabs([[[Settings sharedSettings] lastPushAlertDate] timeIntervalSinceNow]) > 60 * 60 * 24;
-    
-    BOOL pushNotificationsDisabled = ! [[UIApplication sharedApplication] isRegisteredForRemoteNotifications] ||
-    [[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone;
-    
-    if (pushNotificationsDisabled &&
-        pushAlertHappenedMoreThan1DayBefore &&
-        !AutomationHelper.sharedHelper.skipFirstLoginAlerts) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
-        PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];
-        permissions.delegate = self;
-        
-        [self addChildViewController:permissions];
-        [self.view addSubview:permissions.view];
-        [permissions didMoveToParentViewController:self];
-        
-        [permissions.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        self.pushPermissionDeniedViewController = permissions;
-        
-        self.contentContainer.alpha = 0.0f;
-    }
-}
-
-- (void)closePushPermissionDialogIfNotNeeded
-{
-    BOOL pushNotificationsDisabled = ! [[UIApplication sharedApplication] isRegisteredForRemoteNotifications] ||
-    [[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone;
-    
-    if (self.pushPermissionDeniedViewController != nil && ! pushNotificationsDisabled) {
-        [self closePushPermissionDeniedDialog];
-    }
-}
-
-- (void)closePushPermissionDeniedDialog
-{
-    [self.pushPermissionDeniedViewController willMoveToParentViewController:nil];
-    [self.pushPermissionDeniedViewController.view removeFromSuperview];
-    [self.pushPermissionDeniedViewController removeFromParentViewController];
-    self.pushPermissionDeniedViewController = nil;
-    
-    self.contentContainer.alpha = 1.0f;
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)notif
-{
-    [self closePushPermissionDialogIfNotNeeded];
-}
 
 #pragma mark - Conversation Collection Vertical Pan Gesture Handling
 

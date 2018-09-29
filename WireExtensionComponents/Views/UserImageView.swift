@@ -20,7 +20,7 @@
 import Foundation
 
 extension UserImageView {
-    
+
     @objc
     func updateUserImage() {
         
@@ -28,7 +28,7 @@ extension UserImageView {
         
         var desaturate = false
         if shouldDesaturate {
-            desaturate = !user.isConnected && !user.isSelfUser && !user.isTeamMember || user.isServiceUser
+            desaturate = !user.isConnected && !user.isSelfUser && !user.isTeamMember && !user.isServiceUser
         }
         
         user.fetchProfileImage(sizeLimit: Int(size.rawValue), desaturate: desaturate, completion: { [weak self] (image, cacheHit) in

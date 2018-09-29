@@ -80,8 +80,8 @@
 
 - (void)setupBackButton
 {
-    self.backButton = [[IconButton alloc] initForAutoLayout];
-    self.backButton.cas_styleClass = @"navigation";
+    self.backButton = [[IconButton alloc] initWithStyle:IconButtonStyleNavigation variant:ColorSchemeVariantDark];
+    self.backButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronLeft : ZetaIconTypeChevronRight;
 
@@ -95,14 +95,14 @@
 
 - (void)setupRightButton
 {
-    self.rightTitledButton = [Button buttonWithStyleClass:@"dialogue-button-empty-monochrome"];
+    self.rightTitledButton = [Button buttonWithStyle:ButtonStyleEmptyMonochrome];
     self.rightTitledButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.rightTitledButton.alpha = 0;
     self.rightTitledButton.accessibilityIdentifier = @"RegistrationRightButton";
 
     [self.view addSubview:self.rightTitledButton];
     
-    self.rightIconedButton = [IconButton iconButtonCircular];
+    self.rightIconedButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
     self.rightIconedButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.rightIconedButton.alpha = 0;
     self.rightIconedButton.accessibilityIdentifier = @"RightButton";

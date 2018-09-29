@@ -30,6 +30,12 @@ class AudioButtonOverlayTests: ZMSnapshotTestCase {
         sut = AudioButtonOverlay()
         sut.buttonHandler = { self.buttonTapHistory.append($0) }
     }
+
+    override func tearDown() {
+        buttonTapHistory = []
+        sut = nil
+        super.tearDown()
+    }
     
     func testThatItRendersTheButtonOverlayCorrectInitially_Recording() {
         sut.setOverlayState(.default)

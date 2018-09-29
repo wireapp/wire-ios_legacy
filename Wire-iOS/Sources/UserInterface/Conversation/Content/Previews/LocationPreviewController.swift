@@ -26,13 +26,14 @@ class LocationPreviewController: TintColorCorrectedViewController {
     let message: ZMConversationMessage
     weak var messageActionDelegate: MessageActionResponder?
 
-    private let mapView = MKMapView()
+    private var mapView = MKMapView()
     private let containerView = UIView()
     private let addressContainerView = UIView()
     private let addressLabel = UILabel()
 
-    var labelFont: UIFont?
-    var labelTextColor, containerColor: UIColor?
+    let labelFont = UIFont.normalFont
+    let labelTextColor = UIColor.textForeground
+    let containerColor = UIColor.placeholderBackground
 
     // MARK: - Initialization
 
@@ -40,8 +41,8 @@ class LocationPreviewController: TintColorCorrectedViewController {
         self.message = message
         super.init(nibName: nil, bundle: nil)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.cas_styleClass = "container-view"
-        CASStyler.default().styleItem(self)
+        containerView.backgroundColor = .placeholderBackground
+
         configureViews()
         createConstraints()
     }
@@ -82,9 +83,8 @@ class LocationPreviewController: TintColorCorrectedViewController {
         annotation.coordinate = locationData.coordinate
         mapView.addAnnotation(annotation)
 
-        guard let font = labelFont, let color = labelTextColor, let containerColor = containerColor else { return }
-        addressLabel.font = font
-        addressLabel.textColor = color
+        addressLabel.font = labelFont
+        addressLabel.textColor = labelTextColor
         addressContainerView.backgroundColor = containerColor
     }
 
@@ -114,7 +114,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
             let span = MKCoordinateSpan(zoomLevel: Int(locationData.zoomLevel), viewSize: Float(view.frame.size.height))
             region = MKCoordinateRegion(center: locationData.coordinate, span: span)
         } else {
-            region = MKCoordinateRegionMakeWithDistance(locationData.coordinate, 250, 250)
+            region = MKCoordinateRegion(center: locationData.coordinate, latitudinalMeters: 250, longitudinalMeters: 250)
         }
 
         mapView.setRegion(region, animated: false)

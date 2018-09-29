@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 
 
 @objcMembers public class TitleView: UIView {
@@ -71,7 +70,7 @@ import Classy
         let selectedLabel = IconStringsBuilder.iconString(with: icon, title: title, interactive: shouldShowInteractiveIcon, color: selectedColor)
         
         titleButton.titleLabel!.font = font
-        titleButton.setAttributedTitle(normalLabel, for: UIControlState())
+        titleButton.setAttributedTitle(normalLabel, for: [])
         titleButton.setAttributedTitle(selectedLabel, for: .highlighted)
         titleButton.sizeToFit()
         titleButton.isEnabled = interactive

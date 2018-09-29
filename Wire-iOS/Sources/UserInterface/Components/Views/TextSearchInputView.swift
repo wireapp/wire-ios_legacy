@@ -30,7 +30,7 @@ public protocol TextSearchInputViewDelegate: class {
     public let iconView = UIImageView()
     public let searchInput = UITextView()
     public let placeholderLabel = UILabel()
-    public let cancelButton = IconButton.iconButtonDefault()
+    public let cancelButton = IconButton(style: .default)
 
     private let spinner = ProgressSpinner()
     
@@ -56,6 +56,8 @@ public protocol TextSearchInputViewDelegate: class {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        backgroundColor = UIColor(scheme: .barBackground)
         
         iconView.image = UIImage(for: .search, iconSize: .tiny, color: UIColor(scheme: .textForeground))
         iconView.contentMode = .center
@@ -67,11 +69,15 @@ public protocol TextSearchInputViewDelegate: class {
         searchInput.keyboardAppearance = ColorScheme.default.keyboardAppearance
         searchInput.layer.cornerRadius = 4
         searchInput.backgroundColor = UIColor(scheme: .tokenFieldBackground)
-        searchInput.textContainerInset = UIEdgeInsetsMake(10, 40, 10, 8)
+        searchInput.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
+        searchInput.font = .normalFont
+        searchInput.textColor = .textForeground
         
         placeholderLabel.textAlignment = .natural
         placeholderLabel.isAccessibilityElement = false
-        
+        placeholderLabel.font = .smallRegularFont
+        placeholderLabel.textColor = .textDimmed
+
         cancelButton.setIcon(.clearInput, with: .tiny, for: .normal)
         cancelButton.addTarget(self, action: #selector(TextSearchInputView.onCancelButtonTouchUpInside(_:)), for: .touchUpInside)
         cancelButton.isHidden = true
@@ -94,7 +100,7 @@ public protocol TextSearchInputViewDelegate: class {
             
             selfView.height <= 100
             
-            searchInput.edges == inset(selfView.edges, UIEdgeInsetsMake(8, 8, 8, 8))
+            searchInput.edges == inset(selfView.edges, UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
 
             placeholderLabel.leading == searchInput.leading + 48
             placeholderLabel.top == searchInput.top

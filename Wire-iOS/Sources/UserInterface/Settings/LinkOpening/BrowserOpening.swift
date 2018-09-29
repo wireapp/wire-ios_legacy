@@ -60,26 +60,29 @@ extension URL {
         log.debug("Trying to open \"\(self)\" in thrid party browser")
         let saved = BrowserOpeningOption.storedPreference()
         log.debug("Saved option to open a regular link: \(saved.displayString)")
+        let app = UIApplication.shared
 
         switch saved {
         case .safari: return false
         case .chrome:
-            guard let url = chromeURL else { return false }
+            guard let url = chromeURL, app.canOpenURL(url) else { return false }
             log.debug("Trying to open chrome app using \"\(url)\"")
-            return UIApplication.shared.openURL(url)
+            app.open(url)
         case .firefox:
-            guard let url = firefoxURL else { return false }
+            guard let url = firefoxURL, app.canOpenURL(url) else { return false }
             log.debug("Trying to open firefox app using \"\(url)\"")
-            return UIApplication.shared.openURL(url)
+            app.open(url)
         case .snowhaze:
-            guard let url = snowhazeURL else { return false }
+            guard let url = snowhazeURL, app.canOpenURL(url) else { return false }
             log.debug("Trying to open snowhaze app using \"\(url)\"")
-            return UIApplication.shared.openURL(url)
+            app.open(url)
         case .brave:
-            guard let url = braveURL else { return false }
+            guard let url = braveURL, app.canOpenURL(url) else { return false }
             log.debug("Trying to open brave app using \"\(url)\"")
-            return UIApplication.shared.openURL(url)
+            app.open(url)
         }
+        
+        return true
     }
 
 }

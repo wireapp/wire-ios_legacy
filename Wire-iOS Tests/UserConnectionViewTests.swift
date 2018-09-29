@@ -18,7 +18,6 @@
 
 import Foundation
 @testable import Wire
-import Classy
 
 func getMockUser(user: AnyObject) -> MockUserCopyable {
     if let mockUser = (user) as? MockUserCopyable {
@@ -68,14 +67,11 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
         mockUser.isPendingApprovalByOtherUser = true
         mockUser.isPendingApprovalBySelfUser = false
         mockUser.isConnected = false
+        mockUser.isTeamMember = false
         
         let connectionView = UserConnectionView(user: user)
         connectionView.layoutForTest()
-        CASStyler.default().styleItem(connectionView)
-        
-        // Give Classy time to style the view
-        RunLoop.current.run(until: Date().addingTimeInterval(0.2))
-        
+
         return connectionView
     }
 
@@ -96,8 +92,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
     func testWithUserName() {
         let sut = sutForUser()
         sut.layoutForTest()
-        verify(view: sut)
-        
+        verify(view: sut)        
     }
 
     func testWithoutUserName() {

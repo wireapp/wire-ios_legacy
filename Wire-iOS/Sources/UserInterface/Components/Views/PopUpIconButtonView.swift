@@ -109,7 +109,7 @@ class PopUpIconButtonView: UIView {
         if let buttonImageView = button.imageView {
             for (index, icon) in button.itemIcons.enumerated() {
                 let itemRect = rectForItem(icon)!
-                let iconColor = index == selectedIndex ? UIColor(scheme: .accent) : UIColor(scheme: .iconNormal)
+                let iconColor = index == selectedIndex ? .accent() : UIColor(scheme: .iconNormal)
                 let image = UIImage(for: icon, iconSize: .medium, color: iconColor)!
                 // rect in window coordinates
                 var imageRect = buttonImageView.convert(buttonImageView.bounds, to: nil)

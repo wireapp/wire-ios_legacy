@@ -38,6 +38,15 @@ extension CallEvent {
 }
 
 extension Analytics {
+
+    func tagCallQualityReview(_ feedback: CallQualitySurveyReview) {
+        var attributes: [AnyHashable: Any] = [:]
+        attributes["label"] = feedback.label
+        attributes["score"] = feedback.score
+        attributes["ignore-reason"] = feedback.ignoreReason
+
+        tagEvent("calling.call_quality_review", attributes: attributes)
+    }
     
     func tag(callEvent: CallEvent, in conversation: ZMConversation, callInfo: CallInfo) {        
         tagEvent(callEvent.eventName, attributes: attributes(for: callEvent, callInfo: callInfo, conversation: conversation))

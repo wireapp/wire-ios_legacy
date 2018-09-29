@@ -104,7 +104,7 @@ import Foundation
         requester.delegate = self
 
         token = NotificationCenter.default.addObserver(
-            forName: .UIApplicationWillEnterForeground,
+            forName: UIApplication.willEnterForegroundNotification,
             object: nil,
             queue: .main,
             using: { [internalDetectLoginCode] _ in internalDetectLoginCode(false) }
@@ -113,11 +113,9 @@ import Foundation
     
     private func startPollingTimer() {
         guard UIDevice.current.userInterfaceIdiom == .pad, CompanyLoginController.isPollingEnabled else { return }
-        pollingTimer = Timer.allVersionCompatibleScheduledTimer(
-            withTimeInterval: 1,
-            repeats: true,
-            block: { [internalDetectLoginCode] _ in internalDetectLoginCode(true) }
-        )
+        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) {
+            [internalDetectLoginCode] _ in internalDetectLoginCode(true)
+        }
     }
     
     private func stopPollingTimer() {

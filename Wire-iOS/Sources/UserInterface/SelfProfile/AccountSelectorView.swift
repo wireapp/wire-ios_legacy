@@ -18,7 +18,6 @@
 
 import UIKit
 import Cartography
-import Classy
 
 protocol AccountSelectorViewDelegate: class {
     
@@ -134,7 +133,7 @@ final internal class AccountSelectorView: UIView {
     init() {
         super.init(frame: .zero)
         
-        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
+        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
             self?.update(with: SessionManager.shared?.accountManager.accounts)
         })
         

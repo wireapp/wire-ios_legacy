@@ -20,6 +20,10 @@ import Foundation
 
 // MARK: SplitViewController reveal
 
+extension CharacterSet {
+    static var newlinesAndTabulation = CharacterSet(charactersIn: "\r\n\t")
+}
+
 extension ConversationInputBarViewController {
     func hideLeftView() {
         guard self.isIPadRegularPortrait(device: UIDevice.current, application: UIApplication.shared) else { return }
@@ -38,16 +42,46 @@ extension ConversationInputBarViewController: UITextViewDelegate {
 
         conversation.setIsTyping(textView.text.count > 0)
 
+        triggerMentionsIfNeeded(from: textView)
         updateRightAccessoryView()
+    }
+
+    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return textAttachment.image == nil
     }
 
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // send only if send key pressed
         if textView.returnKeyType == .send && (text == "\n") {
-            inputBar.textView.autocorrectLastWord()
-            let candidateText = inputBar.textView.preparedText
-            sendOrEditText(candidateText)
+            if UIDevice.current.type == .iPad,
+                canInsertMention {
+                insertBestMatchMention()
+            }
+            else {
+                inputBar.textView.autocorrectLastWord()
+                sendText()
+            }
             return false
+        }
+                
+        if UIDevice.current.type == .iPad,
+            text.count == 1,
+            text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
+            canInsertMention {
+            
+            insertBestMatchMention()
+            return false
+        }
+
+        // we are deleting text one by one
+        if text == "" && range.length == 1 {
+            if let cursor = textView.selectedTextRange, let deletionStart = textView.position(from: cursor.start, offset: -1) {
+                if cursor.start == cursor.end && // We have only caret, no selected text
+                    textView.attributedText.containsAttachments(in: range) { // Text to be deleted has text attachment
+                    textView.selectedTextRange = textView.textRange(from: deletionStart, to: cursor.start) // Select the text to be deleted and ignore the backspace
+                    return false
+                }
+            }
         }
 
         inputBar.textView.respondToChange(text, inRange: range)
@@ -56,9 +90,9 @@ extension ConversationInputBarViewController: UITextViewDelegate {
 
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         guard mode != .audioRecord else { return true }
-        guard delegate.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:isEditingMessage:))) else { return true }
+        guard delegate?.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:isEditingMessage:))) == true else { return true }
 
-        return delegate.conversationInputBarViewControllerShouldBeginEditing!(self, isEditingMessage: (nil != editingMessage))
+        return delegate?.conversationInputBarViewControllerShouldBeginEditing?(self, isEditingMessage: (nil != editingMessage)) ?? true
     }
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
@@ -68,17 +102,25 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     }
 
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        guard delegate.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) else { return true }
+        guard delegate?.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) == true else { return true }
 
-        return delegate.conversationInputBarViewControllerShouldEndEditing!(self)
+        return delegate?.conversationInputBarViewControllerShouldEndEditing?(self) ?? true
     }
 
     public func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.count > 0 {
             conversation.setIsTyping(false)
         }
-        ZMUserSession.shared()?.enqueueChanges({() -> Void in
-            self.conversation.draftMessageText = textView.text
-        })
+        
+        guard let textView = textView as? MarkdownTextView else { preconditionFailure("Invalid textView class") }
+
+        ZMUserSession.shared()?.enqueueChanges {
+            let (text, mentions) = textView.preparedText
+            self.conversation.draftMessage = DraftMessage(
+                text: text,
+                mentions: mentions
+            )
+        }
     }
 }
+

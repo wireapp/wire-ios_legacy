@@ -18,7 +18,6 @@
 
 
 import Cartography
-import Classy
 
 @objc public protocol LocationSendViewControllerDelegate: class {
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
@@ -27,8 +26,17 @@ import Classy
 @objcMembers public final class LocationSendViewController: UIViewController {
     
     public let sendButton = Button(style: .full)
-    public let addressLabel = UILabel()
-    public let separatorView = UIView()
+    public let addressLabel: UILabel = {
+        let label = UILabel()
+        label.font = .normalFont
+        label.textColor = .textForeground
+        return label
+    }()
+    public let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.separator
+        return view
+    }()
     fileprivate let containerView = UIView()
     
     weak var delegate: LocationSendViewControllerDelegate?
@@ -41,13 +49,14 @@ import Classy
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        CASStyler.default().styleItem(self)
         configureViews()
         createConstraints()
+
+        view.backgroundColor = .background
     }
     
     fileprivate func configureViews() {
-        sendButton.setTitle("location.send_button.title".localized.uppercased(), for: UIControlState())
+        sendButton.setTitle("location.send_button.title".localized.uppercased(), for: [])
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         sendButton.accessibilityIdentifier = "sendLocation"
         addressLabel.accessibilityIdentifier = "selectedAddress"

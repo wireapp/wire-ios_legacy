@@ -41,7 +41,7 @@ extension UIPasteboard {
                 return UIImage(data: aData)
             }
             return nil
-        } else if wr_hasImages() {
+        } else if hasImages {
             return image
         }
         return nil

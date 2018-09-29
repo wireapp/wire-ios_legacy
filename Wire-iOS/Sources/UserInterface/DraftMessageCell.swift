@@ -35,7 +35,7 @@ final class DraftMessageCell: UITableViewCell {
     private let dateLabel = UILabel()
     private let separator = UIView()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()

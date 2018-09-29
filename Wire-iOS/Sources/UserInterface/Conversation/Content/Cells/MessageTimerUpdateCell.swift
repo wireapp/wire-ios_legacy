@@ -31,8 +31,6 @@ class MessageTimerUpdateCell: IconSystemCell {
         guard let systemMessageData = message.systemMessageData,
             systemMessageData.systemMessageType == .messageTimerUpdate,
             let timer = systemMessageData.messageTimer,
-            let labelFont = labelFont,
-            let labelBoldFont = labelBoldFont,
             let labelTextColor = labelTextColor,
             let sender = systemMessageData.users.first else { return }
 
@@ -40,7 +38,7 @@ class MessageTimerUpdateCell: IconSystemCell {
         let name = sender.displayName
         let youString = "content.system.message_timer.you_part".localized
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
-        let boldAttributes: [NSAttributedStringKey: AnyObject] = [.font: labelBoldFont]
+        let boldAttributes: [NSAttributedString.Key: AnyObject] = [.font: labelBoldFont]
         
         if timeoutValue == .none {
             if sender.isSelfUser {

@@ -21,11 +21,9 @@
 #import "TextMessageCell+Internal.h"
 
 @import PureLayout;
-#import <Classy/Classy.h>
 
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
-#import "Message+Formatting.h"
 #import "Constants.h"
 #import "LinkAttachmentViewControllerFactory.h"
 #import "LinkAttachment.h"
@@ -103,7 +101,7 @@
                                              UIDataDetectorTypeFlightNumber |
                                              UIDataDetectorTypeCalendarEvent |
                                              UIDataDetectorTypeShipmentTrackingNumber;
-
+    
     self.linkAttachmentContainer = [[UIView alloc] init];
     self.linkAttachmentContainer.translatesAutoresizingMaskIntoConstraints = NO;
     self.linkAttachmentContainer.preservesSuperviewLayoutMargins = YES;
@@ -169,14 +167,15 @@
 
     // We do not want to expand the giphy.com link that is sent when sending a GIF via Giphy
     BOOL isGiphy = [textMesssageData.linkPreview.originalURLString.lowercaseString isEqualToString:@"giphy.com"];
-
-    NSAttributedString *attributedMessageText = [NSAttributedString formattedStringWithLinkAttachments:layoutProperties.linkAttachments
-                                                                                            forMessage:message.textMessageData
-                                                                                               isGiphy:isGiphy
-                                                                                            obfuscated:message.isObfuscated];
+    
+    LinkAttachment *lastKnownLinkAttachment = nil;
+    NSAttributedString *attributedMessageText = [NSAttributedString formatWithMessage:message.textMessageData
+                                                                         isObfuscated:message.isObfuscated
+                                                                       linkAttachment:&lastKnownLinkAttachment];
+    
     if (self.searchQueries.count > 0 && attributedMessageText.length > 0) {
         
-        NSDictionary<NSString *, id> *highlightStyle = @{ NSBackgroundColorAttributeName: [[ColorScheme defaultColorScheme] colorWithName:ColorSchemeColorAccentDarken]};
+        NSDictionary<NSString *, id> *highlightStyle = @{ NSBackgroundColorAttributeName: UIColor.accentDarken};
         attributedMessageText = [attributedMessageText highlightingAppearancesOf:self.searchQueries
                                                                             with:highlightStyle
                                                                        upToWidth:0
@@ -200,7 +199,7 @@
         self.linkAttachmentViewController = nil;
     }
     
-    self.linkAttachment = [self lastKnownLinkAttachmentInList:layoutProperties.linkAttachments];
+    self.linkAttachment = lastKnownLinkAttachment;
     self.linkAttachmentViewController = [[LinkAttachmentViewControllerFactory sharedInstance] viewControllerForLinkAttachment:self.linkAttachment message:self.message];
     
     if (self.linkAttachmentViewController) {
@@ -236,21 +235,6 @@
     [self.linkAttachmentViewController fetchAttachment];
 
     [self updateTextMessageConstraintConstants];
-}
-
-
-- (LinkAttachment *)lastKnownLinkAttachmentInList:(NSArray *)linkAttachments
-{
-    LinkAttachment *result = nil;
-    
-    for (NSInteger i = linkAttachments.count - 1; i >= 0; i--) {
-        LinkAttachment *linkAttachment = linkAttachments[i];
-        if (linkAttachment.type != LinkAttachmentTypeNone) {
-            result = linkAttachment;
-        }
-    }
-
-    return result;
 }
 
 #pragma mark - Message updates
@@ -429,7 +413,23 @@
 
 - (BOOL)textView:(LinkInteractionTextView *)textView open:(NSURL *)url
 {
-    return [url open];
+    if (url.isMentionURL) {
+        Mention *mention = [self.message.textMessageData.mentions firstObjectMatchingWithBlock:^BOOL(Mention* mention) {
+            return mention.location == url.mentionLocation;
+        }];
+        
+        if (nil == mention) {
+            return NO;
+        }
+        
+        UITextRange *range = [textView rangeOfLinkToURL:url];
+        
+        [self openMention:mention frame:[textView firstRectForRange:range]];
+        return YES;
+    }
+    else {
+        return [url open];
+    }
 }
 
 - (void)textViewDidLongPress:(LinkInteractionTextView *)textView

@@ -28,11 +28,6 @@ extern ColorSchemeColor ColorSchemeColorTextBackground;
 extern ColorSchemeColor ColorSchemeColorTextDimmed;
 extern ColorSchemeColor ColorSchemeColorTextPlaceholder;
 
-extern ColorSchemeColor ColorSchemeColorAccent;
-extern ColorSchemeColor ColorSchemeColorAccentDimmed;
-extern ColorSchemeColor ColorSchemeColorAccentDimmedFlat;
-extern ColorSchemeColor ColorSchemeColorAccentDarken;
-
 extern ColorSchemeColor ColorSchemeColorIconNormal;
 extern ColorSchemeColor ColorSchemeColorIconSelected;
 extern ColorSchemeColor ColorSchemeColorIconHighlighted;
@@ -49,6 +44,7 @@ extern ColorSchemeColor ColorSchemeColorChatHeadBorder;
 extern ColorSchemeColor ColorSchemeColorChatHeadTitleText;
 extern ColorSchemeColor ColorSchemeColorChatHeadSubtitleText;
 
+extern ColorSchemeColor ColorSchemeColorButtonHighlighted;
 extern ColorSchemeColor ColorSchemeColorButtonFaded;
 
 extern ColorSchemeColor ColorSchemeColorTabNormal;
@@ -94,7 +90,6 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 @property (nonatomic, readonly) UIKeyboardAppearance keyboardAppearance;
 @property (nonatomic, readonly) UIBlurEffectStyle blurEffectStyle;
 
-@property (nonatomic) UIColor *accentColor;
 @property (nonatomic) ColorSchemeVariant variant;
 
 @property (class, readonly, strong) ColorScheme *defaultColorScheme;
@@ -107,6 +102,8 @@ typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
 
 - (UIColor *)nameAccentForColor:(ZMAccentColor)color variant:(ColorSchemeVariant)variant;
 
+- (void)setAccentColor:(UIColor *)accentColor;
+- (BOOL)isCurrentAccentColor:(UIColor *)accentColor;
 @end
 
 @interface UIColor (ColorScheme)

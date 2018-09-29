@@ -19,7 +19,6 @@
 import Foundation
 import Cartography
 import WireSyncEngine
-import Classy
 
 typealias DismissAction = (_ completion: (()->())?)->()
 
@@ -48,10 +47,14 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     fileprivate var navBarContainer: UINavigationBarContainer?
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
-    let deleteButton = IconButton.iconButtonDefault()
+    let deleteButton = IconButton(style: .default)
     let overlay = FeedbackOverlayView()
-    let separator = UIView()
-    fileprivate let likeButton = IconButton.iconButtonDefault()
+    let separator: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator)
+        return view
+    }()
+    fileprivate let likeButton = IconButton(style: .default)
     
     internal let inverse: Bool
     
@@ -108,8 +111,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         self.collection.assetCollectionDelegate.add(self)
         
         self.createNavigationTitle()
-
-        separator.cas_styleClass = "separator"
     }
     
     deinit {
@@ -157,9 +158,9 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
         
         if let navBarContainer = navBarContainer {
-            addChildViewController(navBarContainer)
+            addChild(navBarContainer)
             view.addSubview(navBarContainer.view)
-            navBarContainer.didMove(toParentViewController: self)
+            navBarContainer.didMove(toParent: self)
 
             constrain(view, navBarContainer.view) { view, navigationBar in
                 navigationBar.top == view.top
@@ -169,6 +170,8 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
 
         updateBarsForPreview()
+
+        view.backgroundColor = .background
     }
     
     private func createPageController() {
@@ -176,9 +179,9 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         pageViewController.dataSource = self
         pageViewController.setViewControllers([self.imageController(for: self.currentMessage)], direction: .forward, animated: false, completion: .none)
         
-        self.addChildViewController(pageViewController)
+        self.addChild(pageViewController)
         self.view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParentViewController: self)
+        pageViewController.didMove(toParent: self)
     }
     
     fileprivate func logicalPreviousIndex(for index: Int) -> Int? {
@@ -226,7 +229,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         // message b/c ephemeral messages are excluded in the collection.
         if !currentMessage.isEphemeral {
 
-            let copyButton = IconButton.iconButtonDefault()
+            let copyButton = IconButton(style: .default)
             copyButton.setIcon(.copy, with: .tiny, for: .normal)
             copyButton.accessibilityLabel = "copy"
             copyButton.addTarget(self, action: #selector(ConversationImagesViewController.copyCurrent(_:)), for: .touchUpInside)
@@ -234,27 +237,27 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             likeButton.addTarget(self, action: #selector(likeCurrent), for: .touchUpInside)
             updateLikeButton()
 
-            let saveButton = IconButton.iconButtonDefault()
+            let saveButton = IconButton(style: .default)
             saveButton.setIcon(.save, with: .tiny, for: .normal)
             saveButton.accessibilityLabel = "save"
             saveButton.addTarget(self, action: #selector(ConversationImagesViewController.saveCurrent(_:)), for: .touchUpInside)
 
-            let shareButton = IconButton.iconButtonDefault()
+            let shareButton = IconButton(style: .default)
             shareButton.setIcon(.export, with: .tiny, for: .normal)
             shareButton.accessibilityLabel = "share"
             shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
 
-            let sketchButton = IconButton.iconButtonDefault()
+            let sketchButton = IconButton(style: .default)
             sketchButton.setIcon(.brush, with: .tiny, for: .normal)
             sketchButton.accessibilityLabel = "sketch over image"
             sketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrent(_:)), for: .touchUpInside)
 
-            let emojiSketchButton = IconButton.iconButtonDefault()
+            let emojiSketchButton = IconButton(style: .default)
             emojiSketchButton.setIcon(.emoji, with: .tiny, for: .normal)
             emojiSketchButton.accessibilityLabel = "sketch emoji over image"
             emojiSketchButton.addTarget(self, action: #selector(ConversationImagesViewController.sketchCurrentEmoji(_:)), for: .touchUpInside)
 
-            let revealButton = IconButton.iconButtonDefault()
+            let revealButton = IconButton(style: .default)
             revealButton.setIcon(.eye, with: .tiny, for: .normal)
             revealButton.accessibilityLabel = "reveal in conversation"
             revealButton.addTarget(self, action: #selector(ConversationImagesViewController.revealCurrent(_:)), for: .touchUpInside)
@@ -301,7 +304,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         imageViewController.swipeToDismiss = self.swipeToDismiss
         imageViewController.showCloseButton = false
         imageViewController.dismissAction = self.dismissAction
-        CASStyler.default().styleItem(imageViewController)
+
         return imageViewController
     }
     
@@ -546,4 +549,3 @@ extension ConversationImagesViewController {
     }
 
 }
-

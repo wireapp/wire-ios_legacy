@@ -57,7 +57,7 @@ class AnimatedPenView : UIView {
         pen.layer.speed = 0
         pen.layer.timeOffset = 2
         
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -110,11 +110,27 @@ class AnimatedPenView : UIView {
 
 @objcMembers class TypingIndicatorView: UIView {
     
-    public let nameLabel = UILabel()
+    public let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+        label.textColor = .textPlaceholder
+
+        return label
+    }()
     public let animatedPen = AnimatedPenView()
-    public let container = UIView()
-    public let expandingLine = UIView()
-    
+    public let container: UIView = {
+        let view = UIView()
+        view.backgroundColor = .background
+
+        return view
+    }()
+    public let expandingLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .background
+
+        return view
+    }()
+
     private var expandingLineWidth : NSLayoutConstraint?
     
     public var typingUsers : [ZMUser] = [] {

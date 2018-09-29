@@ -89,8 +89,6 @@ final class TeamCreationStepController: AuthenticationStepViewController {
         mainView.becomeFirstResponder()
     }
 
-
-
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)

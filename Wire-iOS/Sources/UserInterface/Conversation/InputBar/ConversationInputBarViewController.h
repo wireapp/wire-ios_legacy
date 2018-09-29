@@ -19,12 +19,18 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+@class Mention;
 @class InputBar;
 @class IconButton;
 @class ZMConversation;
 @class ConversationInputBarViewController;
 @class AudioRecordViewController;
+@class MentionsHandler;
 @protocol ZMConversationMessage;
+@protocol Dismissable;
+@protocol UserList;
 
 typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
     ConversationInputBarViewControllerModeTextInput,
@@ -37,11 +43,13 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 
 @protocol ConversationInputBarViewControllerDelegate <NSObject>
 
+- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions;
+
 @optional
 - (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller isEditingMessage:(BOOL)isEditing;
 - (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller;
 - (void)conversationInputBarViewControllerDidNotSendMessageConversationDegraded:(ConversationInputBarViewController *)controller;
-- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id <ZMConversationMessage>)message withText:(NSString *)newText;
+- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id <ZMConversationMessage>)message withText:(NSString *)newText mentions:(NSArray <Mention *> *)mentions;
 - (void)conversationInputBarViewControllerDidCancelEditingMessage:(id <ZMConversationMessage>)message;
 - (void)conversationInputBarViewControllerEditLastMessage;
 
@@ -53,13 +61,19 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic, readonly) IconButton *photoButton;
 @property (nonatomic, readonly) IconButton *ephemeralIndicatorButton;
 @property (nonatomic, readonly) IconButton *markdownButton;
+@property (nonatomic, readonly) IconButton *mentionButton;
 @property (nonatomic, readonly) InputBar *inputBar;
 @property (nonatomic, readonly) ZMConversation *conversation;
-@property (nonatomic, weak) id <ConversationInputBarViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id <ConversationInputBarViewControllerDelegate> delegate;
 @property (nonatomic) ConversationInputBarViewControllerMode mode;
-@property (nonatomic, readonly) UIViewController *inputController;
+@property (nonatomic, readonly, nullable) UIViewController *inputController;
+@property (nonatomic, strong, nullable) MentionsHandler *mentionsHandler;
+@property (nonatomic, weak, nullable) id<Dismissable, UserList> mentionsView;
+@property (nonatomic, strong, nullable) id textfieldObserverToken;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)bounceCameraIcon;
 
 @end
+
+NS_ASSUME_NONNULL_END

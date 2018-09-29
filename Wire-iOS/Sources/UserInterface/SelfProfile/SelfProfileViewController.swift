@@ -94,9 +94,9 @@ final internal class SelfProfileViewController: UIViewController {
         profileContainerView.addSubview(profileView)
         view.addSubview(profileContainerView)
         
-        settingsController.willMove(toParentViewController: self)
+        settingsController.willMove(toParent: self)
         view.addSubview(settingsController.view)
-        addChildViewController(settingsController)
+        addChild(settingsController)
         
         settingsController.view.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         settingsController.view.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)

@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 @objcMembers class SearchResultsView : UIView {
     
@@ -53,7 +52,7 @@ import Classy
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameDidChange(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
     }
     

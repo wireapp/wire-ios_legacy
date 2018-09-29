@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "People";
 "peoplepicker.header.services" = "Services";
-"peoplepicker.services.create_conversation.item" = "Create a new conversation";
+"peoplepicker.services.open_conversation.item" = "Open conversation";
 "peoplepicker.services.add_service.button" = "Add service";
 "peoplepicker.services.add_service.error.title" = "The service can’t be added";
 "peoplepicker.services.add_service.error.default" = "The service is unavailable at the moment";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 
-"add_participants.alert.title" = "Full house";
+"add_participants.alert.title" = "The group is full";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "No";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "silenced";
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacts";
@@ -193,7 +196,6 @@
 
 "conversation.voiceover.verified" = "verified";
 
-"conversation.status.call" = "Ongoing call";
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";
 "conversation.status.silenced" = "Muted";
@@ -208,7 +210,14 @@
 "conversation.status.message.file" = "Shared a file";
 "conversation.status.message.knock" = "Pinged";
 "conversation.status.message.missedcall" = "Missed call";
-"conversation.status.message.ephemeral" = "Timed message";
+"conversation.status.message.missedcall.groups" = "Missed call from %@";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.knock" = "Pinged";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "You";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "in Contacts";
 
 "conversation.input_bar.shortcut.send" = "Send Message";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancel";
 
@@ -282,8 +292,8 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
 
 "conversation.guests_present" = "Guests are present";
-"conversation.services_present" = "Services are present";
-"conversation.guests_services_present" = "Guests and Services are present";
+"conversation.services_present" = "Services are active";
+"conversation.guests_services_present" = "Guests and services are present";
 "conversation.action.search" = "Search";
 
 // Image confirmation dialogue
@@ -349,7 +359,7 @@
 "content.system.other_removed_you" = "%@ removed you";
 "content.system.you_removed_other" = "You removed %@";
 
-"content.system.services.warning" = "Services have access to the content of the conversation";
+"content.system.services.warning" = "Services have access to the content of this conversation";
 
 // New conversation participants added / removed / started system message
 
@@ -539,6 +549,7 @@
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Calling…";
 "call.status.outgoing" = "Ringing…";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Constant Bit Rate";
@@ -557,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "Someone started using a new device.";
 "call.degraded.alert.action.continue" = "Call anyway";
 
-"call.alert.ongoing.start.alert_title" = "Start Call?";
-"call.alert.ongoing.join.alert_title" = "Join Call?";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
-"call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.button" = "Join Anyway";
+"call.alert.ongoing.start.button" = "Call anyway";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -742,6 +752,11 @@
 "about.website.title"="Wire Website";
 "about.copyright.title"="© Wire Swiss GmbH";
 
+// Licenses screen
+"about.license.project_header" = "Details";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
+
 // Self new devices
 "self.new_device_alert.title" = "Your account was used on:";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
@@ -758,8 +773,8 @@
 "self.settings.add_account.error.title" = "Three accounts active";
 "self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
-"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch account";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -961,7 +976,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technical Report";
 "self.settings.technical_report.send_report" = "Send report to Wire";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Wire Calling Report";
 "self.settings.technical_report.include_log" = "Include detailed log";
 "self.settings.technical_report.privacy_warning" = "Detailed logs could contain personal data";
@@ -1016,9 +1030,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "For personal use";
+"landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "create an account";
-"landing.create_team.title" = "For organizations";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "create a team";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
@@ -1379,7 +1393,7 @@
 "compose.drafts.title" = "Messages";
 "compose.drafts.empty.title" = "No messages";
 "compose.drafts.empty.subtitle" = "Tap + to compose one";
-"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.title" = "Type a message";
 "compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";
@@ -1411,6 +1425,7 @@
 "calling.quality_survey.answer.3" = "Fair";
 "calling.quality_survey.answer.4" = "Good";
 "calling.quality_survey.answer.5" = "Excellent";
+"calling.quality_survey.skip_button_title" = "Skip";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

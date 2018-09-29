@@ -1,4 +1,4 @@
 github "wireapp/ocmock" "v3.4"
-github "wireapp/ios-snapshot-test-case" ~> 4.0.0
-github "wireapp/wire-ios-testing" ~> 16.0
+github "wireapp/ios-snapshot-test-case" "4.0.0-xcode_10"
+github "wireapp/wire-ios-testing" ~> 17.0
 

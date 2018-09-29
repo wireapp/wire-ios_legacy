@@ -19,7 +19,7 @@
 import UIKit
 
 extension UIStackView {
-    convenience init(axis: UILayoutConstraintAxis) {
+    convenience init(axis: NSLayoutConstraint.Axis) {
         self.init(frame: .zero)
         self.axis = axis
     }

@@ -21,25 +21,13 @@
 #import "ObjcAssociatedObjectHelpers.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
-@import Classy;
-
 
 @implementation UILabel (TextTransform)
 
 + (void)initialize
 {
-    // Do not load Classy in share extension
     if (UIApplication.runningInExtension) {
         return;
-    }
-
-    if (self == [UILabel self]) {
-        // Add textTransform property to Classy
-        CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self];
-        
-        // Set mapping for property key
-        [classDescriptor setArgumentDescriptors:@[[CASArgumentDescriptor argWithValuesByName:TextTransformTable()]]
-                                 forPropertyKey:@cas_propertykey(UILabel, textTransform)];
     }
     
     // swizzle setText: to keep text transformed when it changes.

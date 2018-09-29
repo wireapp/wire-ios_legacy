@@ -59,8 +59,8 @@ open class CollectionCell: UICollectionViewCell {
 
     override open var intrinsicContentSize: CGSize {
         get {
-            let width = self.desiredWidth ?? UIViewNoIntrinsicMetric
-            let height = self.desiredHeight ?? UIViewNoIntrinsicMetric
+            let width = self.desiredWidth ?? UIView.noIntrinsicMetric
+            let height = self.desiredHeight ?? UIView.noIntrinsicMetric
             
             return CGSize(width: width, height: height)
         }
@@ -138,7 +138,12 @@ open class CollectionCell: UICollectionViewCell {
 
     // MARK: - Obfuscation
 
-    let secureContentsView = UIView()
+    let secureContentsView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .placeholderBackground
+
+        return view
+    }()
 
     var obfuscationIcon: ZetaIconType {
         return .exclamationMarkCircle
@@ -152,7 +157,7 @@ open class CollectionCell: UICollectionViewCell {
         let isObfuscated = message?.isObfuscated == true
         secureContentsView.isHidden = isObfuscated
         obfuscationView.isHidden = !isObfuscated
-        obfuscationView.backgroundColor = UIColor(scheme: .accentDimmedFlat)
+        obfuscationView.backgroundColor = .accentDimmedFlat
     }
 
     // MARK: - Menu
@@ -192,11 +197,11 @@ open class CollectionCell: UICollectionViewCell {
             .reveal(with: #selector(showInConversation)),
         ]
         
-        let existingItems = menuConfigurationProperties.additionalItems
+        let existingItems = menuConfigurationProperties.additionalItems?
             .filter { $0.isAvailableInEphemeralConversations }
             .map { $0.item }
 
-        menuController.menuItems = existingItems + menuItems
+        menuController.menuItems = (existingItems ?? []) + menuItems
         menuController.setTargetRect(menuConfigurationProperties.targetRect, in: menuConfigurationProperties.targetView)
         menuController.setMenuVisible(true, animated: true)
     }

@@ -84,7 +84,7 @@ protocol ConfirmPhoneDelegate: class {
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
         
-        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 60
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -201,6 +201,10 @@ protocol ConfirmPhoneDelegate: class {
             reloadResendCell()
         }
         tableView.deselectRow(at: indexPath, animated: false)
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
 }
 

@@ -60,7 +60,7 @@
 
 "peoplepicker.header.people" = "Kontakte";
 "peoplepicker.header.services" = "Dienste";
-"peoplepicker.services.create_conversation.item" = "Neue Unterhaltung beginnen";
+"peoplepicker.services.open_conversation.item" = "Unterhaltung öffnen";
 "peoplepicker.services.add_service.button" = "Dienst hinzufügen";
 "peoplepicker.services.add_service.error.title" = "Der Dienst kann nicht hinzugefügt werden";
 "peoplepicker.services.add_service.error.default" = "Der Dienst ist derzeit nicht verfügbar";
@@ -102,7 +102,7 @@
 
 "add_participants.all_contacts_added" = "Alle sind hier.";
 
-"add_participants.alert.title" = "Volles Haus";
+"add_participants.alert.title" = "Die Gruppe ist voll";
 "add_participants.alert.message.new_conversation" = "Bis zu %d Personen können an einer Unterhaltung teilnehmen.";
 "add_participants.alert.message.existing_conversation" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Jetzt ist noch Platz für %2$d weitere.";
 
@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Hilf uns, Wire zu verbessern";
-"conversation_list.date_usage_permission_alert.message" = "Anonymisierte Nutzungs- und Fehlerberichte helfen uns, unsere Produkte und Dienstleistungen zu verbessern. Wir verwenden diese Informationen nicht für andere Zwecke.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "Ich willige ein, dass Wire anonymisierte Nutzungs- und Fehlerberichte erstellen und verwenden darf, um die Wire-App zu verbessern. Ich kann diese Einwilligung jederzeit widerrufen.";
+"conversation_list.data_usage_permission_alert.disagree" = "Nein";
+"conversation_list.data_usage_permission_alert.agree" = "Ich willige ein";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Kontakte";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "Schweigen";
 "conversation_list.voiceover.status.typing" = "tippt";
 "conversation_list.voiceover.status.ping" = "Ping";
+"conversation_list.voiceover.status.mention" = "du wurdest erwähnt";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivierte";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "Liste der archivierten Unterhaltungen";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "Kontakte";
@@ -193,7 +196,6 @@
 
 "conversation.voiceover.verified" = "Überprüft";
 
-"conversation.status.call" = "Aktiver Anruf";
 "conversation.status.typing" = "Schreibt eine Nachricht…";
 "conversation.status.typing.group" = "%@: schreibt eine Nachricht…";
 "conversation.status.silenced" = "Lautlos";
@@ -208,7 +210,14 @@
 "conversation.status.message.file" = "Hat eine Datei geteilt";
 "conversation.status.message.knock" = "hat gepingt";
 "conversation.status.message.missedcall" = "Verpasster Anruf";
+"conversation.status.message.missedcall.groups" = "Verpasster Anruf von %@";
+"conversation.status.message.mention" = "%@";
 "conversation.status.message.ephemeral" = "Temporäre Nachricht";
+"conversation.status.message.ephemeral.group" = "Jemand hat eine Nachricht gesendet";
+"conversation.status.message.ephemeral.mention" = "Hat dich erwähnt";
+"conversation.status.message.ephemeral.mention.group" = "Jemand hat dich erwähnt";
+"conversation.status.message.ephemeral.knock" = "hat gepingt";
+"conversation.status.message.ephemeral.knock.group" = "Jemand hat gepingt";
 
 "conversation.status.unsent" = "⚠️ Nicht gesendete Nachricht";
 "conversation.status.you" = "Du";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "in Kontakte";
 
 "conversation.input_bar.shortcut.send" = "Nachricht senden";
+"conversation.input_bar.shortcut.newline" = "Zeilenumbruch einfügen";
 "conversation.input_bar.shortcut.edit_last_message" = "Letzte Nachricht bearbeiten";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Abbrechen";
 
@@ -273,7 +283,7 @@
 "conversation.create.group_name.placeholder" = "Gruppenname";
 "conversation.create.guidance.empty" = "Mindestens 1 Zeichen";
 "conversation.create.guidance.toolong" = "Zu viele Zeichen";
-"conversation.create.toggle.title" = "Gäste und Dienstleistungen zulassen";
+"conversation.create.toggle.title" = "Gäste und Dienste zulassen";
 "conversation.create.toggle.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams. Diese Einstellung kann später jederzeit geändert werden.";
 
 "conversation.input_bar.ongoing_call_alert.title" = "Aktiver Anruf";
@@ -282,7 +292,7 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Bilder können während eines Anrufs nicht aufgenommen werden.";
 
 "conversation.guests_present" = "Gäste anwesend";
-"conversation.services_present" = "Dienste anwesend";
+"conversation.services_present" = "Dienste aktiv";
 "conversation.guests_services_present" = "Gäste und Dienste anwesend";
 "conversation.action.search" = "Suche";
 
@@ -349,7 +359,7 @@
 "content.system.other_removed_you" = "%@ hat dich entfernt";
 "content.system.you_removed_other" = "Du hast %@ entfernt";
 
-"content.system.services.warning" = "Dienste haben Zugriff auf den Inhalt der Unterhaltung";
+"content.system.services.warning" = "Dienste haben Zugriff auf den Inhalt dieser Unterhaltung";
 
 // New conversation participants added / removed / started system message
 
@@ -539,6 +549,7 @@
 "call.status.incoming.user" = "%@ ruft an…";
 "call.status.incoming" = "Ruft an…";
 "call.status.outgoing" = "Klingeln…";
+"call.status.outgoing.user" = "%@ anrufen…";
 "call.status.reconnecting" = "Erneut verbinden…";
 "call.status.terminating" = "Auflegen…";
 "call.status.constant_bitrate" = "Konstante Bitrate";
@@ -557,8 +568,7 @@
 "call.degraded.alert.message.unknown" = "Jemand verwendet ein neues Gerät.";
 "call.degraded.alert.action.continue" = "Trotzdem anrufen";
 
-"call.alert.ongoing.start.alert_title" = "Anrufen?";
-"call.alert.ongoing.join.alert_title" = "Anruf beitreten?";
+"call.alert.ongoing.alert_title" = "Dies wird den anderen Anruf beenden.";
 
 "call.alert.ongoing.start.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nEin Anruf hier beendet den anderen.";
 "call.alert.ongoing.join.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nDiesen Anruf anzunehmen, beendet den anderen.";
@@ -742,6 +752,11 @@
 "about.website.title" = "Wire-Webseite";
 "about.copyright.title" = "© Wire Swiss GmbH";
 
+// Licenses screen
+"about.license.project_header" = "Details";
+"about.license.open_project_button" = "Projektseite anzeigen";
+"about.license.license_header" = "Kenntnisnahme";
+
 // Self new devices
 "self.new_device_alert.title" = "Dein Benutzerkonto wurde verwendet:";
 "self.new_device_alert.message" = "\n%@\n\nWenn Sie das oben genannte Gerät nicht erkennen, entfernen Sie es und setzen Sie Ihr Passwort zurück.";
@@ -758,8 +773,8 @@
 "self.settings.add_account.error.title" = "Drei Benutzerkonten sind aktiv";
 "self.settings.add_account.error.message" = "Du kannst zugleich mit drei Benutzerkonten angemeldet sein. Logge dich aus einem aus, um ein neues Konto hinzuzufügen.";
 
-"self.settings.switch_account.title" = "Ein Wechsel des Kontos wird den aktuellen Anruf beenden.";
-"self.settings.switch_account.action" = "Konto wechseln";
+"self.settings.switch_account.message" = "In diesem Konto ist ein Anruf aktiv.\nEin Wechsel der Konten beendet den aktuellen Anruf.";
+"self.settings.switch_account.action" = "Trotzdem wechseln";
 
 // Settings - Account details
 "self.settings.account_section" = "Benutzerkonto";
@@ -910,7 +925,7 @@
 "open_link.browser.option.brave" = "Brave";
 
 // Sound alerts (TO BE UPDPATED)
-"self.settings.sound_menu.title" = "Benachrichtigungen";
+"self.settings.sound_menu.title" = "Töne";
 "self.settings.sound_menu.no_sounds.title" = "Keine";
 "self.settings.sound_menu.all_sounds.title" = "Alle";
 "self.settings.sound_menu.mute_while_talking.title" = "Erste Nachricht und Pings";
@@ -945,11 +960,11 @@
 "self.settings.privacy.clear_history.title" = "Verlauf löschen";
 "self.settings.privacy.clear_history.subtitle" = "Dies löscht dauerhaft den Inhalt all deiner Unterhaltungen.";
 
-"self.settings.advanced.title" = "Fortgeschrittene Einstellungen";
+"self.settings.advanced.title" = "Erweitert";
 "self.settings.advanced.troubleshooting.title" = "Fehlerbehebung";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht senden";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Diese Information hilft uns Probleme zu erkennen.\nWenn beim Anrufen Probleme auftraten, beschreibe mit welchen Schritten das Problem reproduzierbar ist und sende uns gegebenenfalls Bildschirmfotos mit dieser Email.";
-"self.settings.advanced.reset_push_token.title" = "Benachrichtigungs-Token zurücksetzen";
+"self.settings.advanced.reset_push_token.title" = "Push-Token zurücksetzen";
 "self.settings.advanced.reset_push_token.subtitle" = "Der Wire Kundenservice kann dich bitten, diesen Token zurückzusetzen, wenn du Probleme mit Push-Benachrichtigungen hast.";
 "self.settings.advanced.reset_push_token_alert.title" = "Der Benachrichtigungs-Token wurde zurückgesetzt";
 "self.settings.advanced.reset_push_token_alert.message" = "Sie sollten in wenigen Sekunden wieder Benachrichtigungen erhalten können.";
@@ -961,7 +976,6 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technische Logs";
 "self.settings.technical_report.send_report" = "Logs an Wire senden";
-"self.settings.technical_report.mail.recipient" = "callingsupport@wire.com";
 "self.settings.technical_report.mail.subject" = "Anruf-Fehlerbericht";
 "self.settings.technical_report.include_log" = "Detaillierten Verlauf hinzufügen";
 "self.settings.technical_report.privacy_warning" = "Detaillierte Logs können personenbezogene Daten enthalten.";
@@ -1016,9 +1030,9 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Für die private Nutzung";
+"landing.create_account.title" = "Privat";
 "landing.create_account.subtitle" = "Konto erstellen";
-"landing.create_team.title" = "Für Organisationen";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Team erstellen";
 "landing.login.hints" = "Hast du bereits ein Benutzerkonto?";
 "landing.login.button.title" = "Login";
@@ -1073,7 +1087,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Gäste und Dienste zulassen";
-"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams. Diese Einstellung kann später jederzeit geändert werden.";
+"guest_room.allow_guests.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams.";
 "guest_room.remove_guests.message" = "Aktuelle Gäste und Dienste werden aus der Unterhaltung entfernt. Neue Gäste und Dienste sind nicht erlaubt.";
 "guest_room.remove_guests.action" = "Entfernen";
 "guest_room.revoke_link.message" = "Neue Gäste werden sich nicht mehr mit diesem Link anmelden können. Aktuelle Gäste haben weiterhin Zugang zum Gästebereich.";
@@ -1404,6 +1418,7 @@
 "calling.quality_survey.answer.3" = "Befriedigend";
 "calling.quality_survey.answer.4" = "Gut";
 "calling.quality_survey.answer.5" = "Sehr Gut";
+"calling.quality_survey.skip_button_title" = "Überspringen";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action

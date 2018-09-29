@@ -18,14 +18,15 @@
 
 import Foundation
 
-extension UIViewAnimationCurve {
-    init(rawValue: Int, fallbackValue: UIViewAnimationCurve) {
-        self = UIViewAnimationCurve(rawValue: rawValue) ?? fallbackValue
+extension UIView.AnimationCurve {
+    init(rawValue: Int, fallbackValue: UIView.AnimationCurve) {
+        self = UIView.AnimationCurve(rawValue: rawValue) ?? fallbackValue
 
         if #available(iOS 11.0, *) {
         } else {
-            // iOS returns an undocumented type 7 animation curve raw value, which causes crashes on iOS 10 if it is used as an argument in UIViewPropertyAnimator init method. Workaround: assign a fallback value.
-
+            // iOS returns an undocumented type 7 animation curve raw value,
+            // which causes crashes on iOS 10 if it is used as an argument in
+            // UIViewPropertyAnimator init method. Workaround: assign a fallback value.
             if self != .easeInOut &&
                 self != .easeIn &&
                 self != .easeOut &&
@@ -37,52 +38,45 @@ extension UIViewAnimationCurve {
 }
 
 extension KeyboardAvoidingViewController {
+
+    override open var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return viewController.preferredInterfaceOrientationForPresentation
+    }
+
     @objc func keyboardFrameWillChange(_ notification: Notification?) {
         guard let bottomEdgeConstraint = self.bottomEdgeConstraint else { return }
 
-        if let shouldAdjustFrame = shouldAdjustFrame,
-            !shouldAdjustFrame(self) {
+        if let shouldAdjustFrame = shouldAdjustFrame, !shouldAdjustFrame(self) {
             bottomEdgeConstraint.constant = 0
             view.layoutIfNeeded()
             return
         }
 
-        // Using stoppable UIViewPropertyAnimator instead of UIView animation for iOS 10+. When the keyboard is dismissed and then revealed in a short time, the later earlier animation will be cancelled.
-        if #available(iOS 10.0, *) {
-            guard let duration = notification?.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval,
-                let curveRawValue = notification?.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? Int else { return }
-
-            let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
-            let bottomOffset: CGFloat = -keyboardFrameInView.size.height
-
-            guard bottomEdgeConstraint.constant != bottomOffset else { return }
-
-            animator?.stopAnimation(true)
-
-            bottomEdgeConstraint.constant = bottomOffset
-            self.view.setNeedsLayout()
-
-
-            animator = UIViewPropertyAnimator(duration: duration, curve: UIViewAnimationCurve(rawValue: curveRawValue, fallbackValue: .easeIn), animations: {
-                self.view.layoutIfNeeded()
-            })
-
-            animator?.addCompletion { [weak self] _ in
-                self?.animator = nil
-            }
-            animator?.startAnimation()
-
-        } else {
-            UIView.animate(withKeyboardNotification: notification,
-                           in: view,
-                           animations: { keyboardFrameInView in
-                            let bottomOffset: CGFloat = -keyboardFrameInView.size.height
-                            if bottomEdgeConstraint.constant != bottomOffset {
-                                bottomEdgeConstraint.constant = bottomOffset
-                                self.view.layoutIfNeeded()
-                            }
-                            },
-                           completion: nil)
-        }
+        guard
+            let userInfo = notification?.userInfo,
+            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval,
+            let curveRawValue = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int
+            else { return }
+        
+        let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
+        let bottomOffset: CGFloat = -keyboardFrameInView.size.height
+        
+        guard bottomEdgeConstraint.constant != bottomOffset else { return }
+        
+        // When the keyboard is dismissed and then quickly revealed again, then
+        // the dismiss animation will be cancelled.
+        animator?.stopAnimation(true)
+        
+        bottomEdgeConstraint.constant = bottomOffset
+        self.view.setNeedsLayout()
+        
+        let animationCurve = UIView.AnimationCurve(rawValue: curveRawValue, fallbackValue: .easeIn)
+        
+        animator = UIViewPropertyAnimator(duration: duration,
+                                          curve: animationCurve,
+                                          animations: self.view.layoutIfNeeded)
+        
+        animator?.addCompletion { [weak self] _ in self?.animator = nil }
+        animator?.startAnimation()
     }
 }

@@ -31,14 +31,13 @@ final public class CollectionLinkCell: CollectionCell {
         articleView.authorLabel.numberOfLines = 1
         articleView.configure(withTextMessageData: textMessageData, obfuscated: false)
         self.secureContentsView.addSubview(articleView)
-        self.secureContentsView.cas_styleClass = "container-view"
         // Reconstraint the header
         self.headerView.removeFromSuperview()
         self.headerView.message = self.message!
         
         self.secureContentsView.addSubview(self.headerView)
         
-        self.contentView.layoutMargins = UIEdgeInsetsMake(16, 4, 4, 4)
+        self.contentView.layoutMargins = UIEdgeInsets(top: 16, left: 4, bottom: 4, right: 4)
         
         constrain(self.contentView, articleView, headerView) { contentView, articleView, headerView in
             

@@ -21,7 +21,7 @@ import Foundation
 extension ConversationInputBarViewController {
 
     @objc func setupInputLanguageObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(inputModeDidChange(_:)), name: .UITextInputCurrentInputModeDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(inputModeDidChange(_:)), name: UITextInputMode.currentInputModeDidChangeNotification, object: nil)
 
     }
 
@@ -36,6 +36,6 @@ extension ConversationInputBarViewController {
     }
 
     @objc func setInputLanguage() {
-        inputBar.textView.language = conversation?.language
+        inputBar.textView.language = conversation.language
     }
 }

@@ -77,7 +77,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @property (nonatomic, readwrite) UIScrollView *scrollView;
 
-@property (nonatomic) UIView *topOverlay;
 @property (nonatomic) CALayer *highlightLayer;
 @property (nonatomic, strong) ObfuscationView *obfuscationView;
 
@@ -154,6 +153,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.view.userInteractionEnabled = YES;
     [self setupGestureRecognizers];
     [self showChrome:YES];
+
+    [self setupStyle];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -299,7 +300,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addSubview:self.obfuscationView];
 
     // Close button
-    self.closeButton = [IconButton iconButtonCircular];
+    self.closeButton = [[IconButton alloc] initWithStyle:IconButtonStyleCircular];
     self.closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.closeButton setIcon:ZetaIconTypeX withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.topOverlay addSubview:self.closeButton];

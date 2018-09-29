@@ -26,12 +26,12 @@ import Cartography
                 return
             }
             
-            let prevState: UIControlState
+            let prevState: UIControl.State
             if self.isSelected {
                 prevState = .selected
             }
             else {
-                prevState = UIControlState()
+                prevState = []
             }
 
             let fakeImageView = UIImageView(image: UIImage.init(for: self.iconType(for: prevState), iconSize: .large, color: self.iconColor(for: prevState)))

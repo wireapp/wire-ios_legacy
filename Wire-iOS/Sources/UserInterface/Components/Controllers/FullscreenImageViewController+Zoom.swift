@@ -56,7 +56,7 @@ extension FullscreenImageViewController {
 
         let isImageZoomedToMax = scrollView.zoomScale == scrollView.maximumZoomScale
 
-        let isImageZoomed = fabs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
+        let isImageZoomed = abs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
         updateScrollViewZoomScale(viewSize: size, imageSize: imageSize)
 
         let animationBlock: () -> Void = {

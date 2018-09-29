@@ -46,6 +46,11 @@ class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         sut = ConversationAvatarView()
     }
 
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
     func testThatItRendersNoUserImages() {
         // GIVEN
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)

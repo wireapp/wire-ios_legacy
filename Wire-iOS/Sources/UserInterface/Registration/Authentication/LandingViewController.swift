@@ -41,16 +41,16 @@ final class LandingViewController: AuthenticationStepViewController {
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
-    static let buttonTitleAttribute: [NSAttributedStringKey: AnyObject] = {
+    static let buttonTitleAttribute: [NSAttributedString.Key: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = NSTextAlignment.center
+        alignCenterStyle.alignment = .center
 
         return [.foregroundColor: UIColor.Team.textColor, .paragraphStyle: alignCenterStyle, .font: semiboldFont]
     }()
 
-    static let buttonSubtitleAttribute: [NSAttributedStringKey: AnyObject] = {
+    static let buttonSubtitleAttribute: [NSAttributedString.Key: AnyObject] = {
         let alignCenterStyle = NSMutableParagraphStyle()
-        alignCenterStyle.alignment = NSTextAlignment.center
+        alignCenterStyle.alignment = .center
         alignCenterStyle.paragraphSpacingBefore = 4
 
         let lightFont = FontSpec(.normal, .light).font!
@@ -68,7 +68,7 @@ final class LandingViewController: AuthenticationStepViewController {
     // MARK: - subviews
 
     let logoView: UIImageView = {
-        let image = UIImage(named: "wire-logo-black")!
+        let image = UIImage(named: "wire-logo-black")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .center
         imageView.tintColor = UIColor.Team.textColor
@@ -85,7 +85,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     let createAccountButton: LandingButton = {
-        let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createAccountBlue)
+        let button = LandingButton(title: createAccountButtonTitle, icon: .selfProfile, iconBackgroundColor: UIColor.Team.createTeamGreen)
         button.accessibilityIdentifier = "CreateAccountButton"
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
@@ -93,7 +93,7 @@ final class LandingViewController: AuthenticationStepViewController {
     }()
 
     let createTeamButton: LandingButton = {
-        let button = LandingButton(title: createTeamButtonTitle, icon: .team, iconBackgroundColor: UIColor.Team.createTeamGreen)
+        let button = LandingButton(title: createTeamButtonTitle, icon: .team, iconBackgroundColor: UIColor.Team.createAccountBlue)
         button.accessibilityIdentifier = "CreateTeamButton"
         button.addTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)), for: .touchUpInside)
 
@@ -302,7 +302,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
         headerContainerView.isAccessibilityElement = true
         headerContainerView.accessibilityLabel = "landing.app_name".localized + " " + "landing.title".localized
-        headerContainerView.accessibilityTraits = UIAccessibilityTraitHeader
+        headerContainerView.accessibilityTraits = .header
         headerContainerView.shouldGroupAccessibilityChildren = true
     }
 

@@ -54,6 +54,12 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
         self.sut = ShareDestinationCell(style: .default, reuseIdentifier: "reuseIdentifier")
         self.sut.backgroundColor = .black
     }
+
+    override func tearDown() {
+        sut = nil
+        destination = nil
+        super.tearDown()
+    }
     
     func testThatItRendersCorrectly_CellWithPersonalNameAndPicture_NotSecure_Unchecked() {
         // given
@@ -239,13 +245,6 @@ class ShareDestinationCellTests: ZMSnapshotTestCase {
         // then
         verify(view: sut.prepareForSnapshotWithCellSelected())
     }
-    
-    override func tearDown() {
-        sut = nil
-        destination = nil
-        super.tearDown()
-    }
-    
 }
 
 fileprivate extension UITableViewCell {
@@ -254,15 +253,6 @@ fileprivate extension UITableViewCell {
         let view = self.prepareForSnapshots()
         view.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .none)
         return view
-    }
-
-    func prepareForSnapshots() -> UITableView {
-        bounds.size = systemLayoutSizeFitting(
-            CGSize(width: 375, height: 0),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-        return wrapInTableView()
     }
 
 }

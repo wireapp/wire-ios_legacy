@@ -55,8 +55,22 @@ import Cartography
         }
     }
     
-    public let titleLabel = UILabel()
-    public let actionButton = UIButton()
+    public let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallSemiboldFont
+        label.textColor = .textForeground
+
+        return label
+    }()
+
+    public let actionButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.strongBlue, for: .normal)
+        button.titleLabel?.font = .smallSemiboldFont
+
+        return button
+    }()
+
     public let iconImageView = UIImageView()
     
     public var selectionAction: ((CollectionsSectionSet) -> ())? = .none

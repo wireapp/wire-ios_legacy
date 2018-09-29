@@ -73,15 +73,16 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     
     fileprivate func createDeleteDevicesButton() {
         let manageDevicesButton = Button(style: .fullMonochrome)
-        manageDevicesButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.manage_button.title", comment:""), for: UIControlState())
+        manageDevicesButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.manage_button.title", comment:""), for: [])
         manageDevicesButton.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.openManageDevices(_:)), for: .touchUpInside)
         self.manageDevicesButton = manageDevicesButton
         self.containerView?.addSubview(manageDevicesButton)
     }
     
     fileprivate func createSignOutButton() {
-        let signOutButton = Button(styleClass: "dialogue-button-empty-monochrome")
-        signOutButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.sign_out_button.title", comment:""), for: UIControlState())
+        
+        let signOutButton = Button(style: .emptyMonochrome)
+        signOutButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.sign_out_button.title", comment:""), for: [])
         signOutButton.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.signOut(_:)), for: .touchUpInside)
         signOutButton.isHidden = true // for the moment not supported
         self.signOutButton = signOutButton

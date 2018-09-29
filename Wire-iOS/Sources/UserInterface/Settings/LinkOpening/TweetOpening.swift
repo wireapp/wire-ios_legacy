@@ -57,18 +57,21 @@ extension URL {
         guard isTweet else { return false }
         let saved = TweetOpeningOption.storedPreference()
         log.debug("Saved option to open a tweet: \(saved.displayString)")
-
+        let app = UIApplication.shared
+        
         switch saved {
         case .none: return false
         case .tweetbot:
-            guard let url = tweetbotURL else { return false }
+            guard let url = tweetbotURL, app.canOpenURL(url) else { return false }
             log.debug("Trying to open tweetbot app using \"\(url)\"")
-            return UIApplication.shared.openURL(url)
+            app.open(url)
         case .twitterrific:
-            guard let url = twitterrificURL else { return false }
+            guard let url = twitterrificURL, app.canOpenURL(url) else { return false }
             log.debug("Trying to open twitterific app using \"\(url)\"")
-            return UIApplication.shared.openURL(url)
+            app.open(url)
         }
+        
+        return true
     }
 
 }

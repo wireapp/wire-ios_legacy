@@ -53,7 +53,7 @@ extension MKMapView {
     
     func setCenterCoordinate(_ coordinate: CLLocationCoordinate2D, zoomLevel: Int, animated: Bool = false) {
         guard CLLocationCoordinate2DIsValid(coordinate) else { return }
-        let region = MKCoordinateRegionMake(coordinate, MKCoordinateSpan(zoomLevel: zoomLevel, viewSize: Float(frame.height)))
+        let region = MKCoordinateRegion(center: coordinate, span: MKCoordinateSpan(zoomLevel: zoomLevel, viewSize: Float(frame.height)))
         setRegion(region, animated: animated)
     }
 

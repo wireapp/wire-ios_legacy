@@ -79,14 +79,17 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameWillChange(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+
+        self.createViews()
+        self.createConstraints()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     let containerView  = UIView()
     var shareablePreviewView: UIView?
@@ -94,16 +97,14 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     let searchIcon = UIImageView()
     let topSeparatorView = OverflowSeparatorView()
     let destinationsTableView = UITableView()
-    let closeButton = IconButton.iconButtonDefaultLight()
-    let sendButton = IconButton.iconButtonDefaultDark()
+    let closeButton = IconButton(style: .default, variant: .dark)
+    let sendButton = IconButton(style: .default, variant: .light)
     let tokenField = TokenField()
-    let bottomSeparatorLine = UIView()
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        self.createViews()
-        self.createConstraints()
-    }
+    let bottomSeparatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator)
+        return view
+    }()
     
     override public var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

@@ -18,8 +18,8 @@
 
 import Foundation
 
-public let UIWindowLevelNotification: UIWindowLevel = UIWindowLevelStatusBar - 1
-public let UIWindowLevelCallOverlay: UIWindowLevel = UIWindowLevelNotification - 1
+public let UIWindowLevelNotification: UIWindow.Level = UIWindow.Level.statusBar - 1
+public let UIWindowLevelCallOverlay: UIWindow.Level = UIWindowLevelNotification - 1
 
 final class CallWindow: PassthroughWindow {
     let callController = CallWindowRootViewController()

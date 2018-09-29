@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -42,10 +41,37 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     private let downloadProgressView = CircularProgressView()
-    let playButton = IconButton()
-    private let timeLabel = UILabel()
-    private let playerProgressView = ProgressView()
-    private let waveformProgressView = WaveformProgressView()
+    let playButton: IconButton = {
+        let button = IconButton()
+        button.setIconColor(.white, for: .normal)
+        return button
+    }()
+
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = (UIFont.smallSemiboldFont).monospaced()
+        label.textColor = .textForeground
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.accessibilityLabel = "AudioTimeLabel"
+
+        return label
+    }()
+
+    private let playerProgressView: ProgressView = {
+        let progressView = ProgressView()
+        progressView.backgroundColor = .separator
+        progressView.tintColor = .accent()
+
+        return progressView
+    }()
+
+    private let waveformProgressView: WaveformProgressView = {
+        let waveformProgressView = WaveformProgressView()
+        waveformProgressView.backgroundColor = .placeholderBackground
+
+        return waveformProgressView
+    }()
     private let loadingView = ThreeDotsLoadingView()
     
     private var audioPlayerProgressObserver: NSObject? = .none
@@ -67,6 +93,7 @@ private let zmLog = ZMSLog(tag: "UI")
         isPausedForIncomingCall = false
 
         super.init(frame: frame)
+        backgroundColor = .placeholderBackground
 
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "AudioActionButton"
@@ -75,10 +102,7 @@ private let zmLog = ZMSLog(tag: "UI")
         self.downloadProgressView.isUserInteractionEnabled = false
         self.downloadProgressView.accessibilityLabel = "AudioProgressView"
         
-        self.timeLabel.numberOfLines = 1
-        self.timeLabel.textAlignment = .center
-        self.timeLabel.accessibilityLabel = "AudioTimeLabel"
-        
+
         self.playerProgressView.setDeterministic(true, animated: false)
         self.playerProgressView.accessibilityLabel = "PlayerProgressView"
         
@@ -86,10 +110,7 @@ private let zmLog = ZMSLog(tag: "UI")
         
         self.allViews = [self.playButton, self.timeLabel, self.downloadProgressView, self.playerProgressView, self.waveformProgressView, self.loadingView]
         self.allViews.forEach(self.addSubview)
-        
-        CASStyler.default().styleItem(self)
-        self.timeLabel.font = self.timeLabel.font.monospaced()
-        
+
         self.createConstraints()
         
         var currentElements = self.accessibilityElements ?? []
@@ -114,7 +135,7 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     public override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 56)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
     private func createConstraints() {
@@ -262,7 +283,6 @@ private let zmLog = ZMSLog(tag: "UI")
         else {
             self.timeLabel.text = ""
         }
-        self.timeLabel.accessibilityLabel = "AudioTimeLabel"
         self.timeLabel.accessibilityValue = self.timeLabel.text
     }
     
@@ -272,18 +292,18 @@ private let zmLog = ZMSLog(tag: "UI")
         self.playButton.backgroundColor = FileMessageViewState.normalColor
         
         if audioTrackPlayer.isPlaying {
-            self.playButton.setIcon(.pause, with: .tiny, for: UIControlState())
+            self.playButton.setIcon(.pause, with: .tiny, for: [])
             self.playButton.accessibilityValue = "pause"
         }
         else {
-            self.playButton.setIcon(.play, with: .tiny, for: UIControlState())
+            self.playButton.setIcon(.play, with: .tiny, for: [])
             self.playButton.accessibilityValue = "play"
         }
     }
     
     private func updateInactivePlayer() {
         self.playButton.backgroundColor = FileMessageViewState.normalColor
-        self.playButton.setIcon(.play, with: .tiny, for: UIControlState())
+        self.playButton.setIcon(.play, with: .tiny, for: [])
         self.playButton.accessibilityValue = "play"
         
         self.playerProgressView.setProgress(0, animated: false)
@@ -296,7 +316,7 @@ private let zmLog = ZMSLog(tag: "UI")
         let progress: Float
         var animated = animated
         
-        if fabs(1 - audioTrackPlayer.progress) < 0.01 {
+        if abs(1 - audioTrackPlayer.progress) < 0.01 {
             progress = 0
             animated = false
         }
@@ -463,10 +483,10 @@ private let zmLog = ZMSLog(tag: "UI")
     private func setAudioOutput(earpiece: Bool) {
         do {
             if earpiece {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default)
                 AVSMediaManager.sharedInstance().playbackRoute = .builtIn
             } else {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
                 AVSMediaManager.sharedInstance().playbackRoute = .speaker
             }
         } catch {

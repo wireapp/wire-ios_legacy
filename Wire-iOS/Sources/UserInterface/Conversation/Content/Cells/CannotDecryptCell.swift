@@ -38,8 +38,6 @@ private let IdentityString = ".identity"
     func updateLabel() {
         let acceptedTypes : [ZMSystemMessageType] = [.decryptionFailed, .decryptionFailed_RemoteIdentityChanged]
         guard let systemMessageData = message.systemMessageData,
-            let labelBoldFont = labelBoldFont,
-            let labelFont = labelFont,
             let labelTextColor = labelTextColor,
             let sender = message.sender,
             let labelTextBlendedColor = labelTextBlendedColor,
@@ -49,7 +47,7 @@ private let IdentityString = ".identity"
         let remoteIDChanged = systemMessageData.systemMessageType == .decryptionFailed_RemoteIdentityChanged
         let link = remoteIDChanged ? type(of: self).remoteIDErrorURL : type(of: self).generalErrorURL
 
-        let linkAttributes: [NSAttributedStringKey : AnyObject] = [.font: labelFont, .link: link as AnyObject]
+        let linkAttributes: [NSAttributedString.Key : AnyObject] = [.font: labelFont, .link: link as AnyObject]
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
         let why = localizedWhyPart(remoteIDChanged) && labelFont && labelTextColor && linkAttributes
         let device : NSAttributedString?
@@ -95,7 +93,7 @@ private let IdentityString = ".identity"
         else if URL == type(of: self).remoteIDErrorURL {
             url = .wr_cannotDecryptNewRemoteIDHelp
         }
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url)
     }
 }
 

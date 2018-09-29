@@ -63,7 +63,7 @@ final class DraftListViewController: CoreDataTableViewController<MessageDraft, D
         let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.alignment = .center
         paragraphStyle.paragraphSpacing = 4
-        let paragraphAttributes = [NSAttributedStringKey.paragraphStyle: paragraphStyle]
+        let paragraphAttributes = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
         let color = UIColor(scheme: .textDimmed)
         let title = "compose.drafts.empty.title".localized.uppercased() && FontSpec(.small, .semibold).font!
         let subtitle = "compose.drafts.empty.subtitle".localized.uppercased() && FontSpec(.small, .light).font!

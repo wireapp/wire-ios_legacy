@@ -28,10 +28,17 @@ import Cartography
 }
 
 @objcMembers public final class InputBarEditView: UIView {
+    private static var iconButtonTemplate: IconButton {
+        let iconButton = IconButton()
+        iconButton.setIconColor(.iconNormal, for: .normal)
+        iconButton.setIconColor(.iconNormal, for: .normal)
 
-    let undoButton = IconButton()
-    let confirmButton = IconButton()
-    let cancelButton = IconButton()
+        return iconButton
+    }
+
+    let undoButton = InputBarEditView.iconButtonTemplate
+    let confirmButton = InputBarEditView.iconButtonTemplate
+    let cancelButton = InputBarEditView.iconButtonTemplate
     let iconSize: CGFloat = UIImage.size(for: .tiny)
     
     public weak var delegate: InputBarEditViewDelegate?
@@ -53,11 +60,11 @@ import Cartography
         }
         
         undoButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(didLongPressUndoButton)))
-        undoButton.setIcon(.undo, with: .tiny, for: UIControlState())
+        undoButton.setIcon(.undo, with: .tiny, for: [])
         undoButton.accessibilityIdentifier = "undoButton"
-        confirmButton.setIcon(.checkmark, with: .medium, for: UIControlState())
+        confirmButton.setIcon(.checkmark, with: .medium, for: [])
         confirmButton.accessibilityIdentifier = "confirmButton"
-        cancelButton.setIcon(.X, with: .tiny, for: UIControlState())
+        cancelButton.setIcon(.X, with: .tiny, for: [])
         cancelButton.accessibilityIdentifier = "cancelButton"
         undoButton.isEnabled = false
         confirmButton.isEnabled = false

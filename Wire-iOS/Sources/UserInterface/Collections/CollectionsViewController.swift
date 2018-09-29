@@ -150,10 +150,8 @@ public protocol CollectionsViewControllerDelegate: class {
 
         self.contentView.collectionView.delegate = self
         self.contentView.collectionView.dataSource = self
-        if #available(iOS 10.0, *) {
-            self.contentView.collectionView.prefetchDataSource = self
-        }
-
+        self.contentView.collectionView.prefetchDataSource = self
+        
         self.updateNoElementsState()
     }
     
@@ -187,6 +185,10 @@ public protocol CollectionsViewControllerDelegate: class {
         default:
             return true
         }
+    }
+
+    override public var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+        return .portrait
     }
 
     private func flushLayout() {
@@ -237,6 +239,8 @@ public protocol CollectionsViewControllerDelegate: class {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackOpeningIfNeeded()
+
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -601,7 +605,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         }
         
         switch (kind) {
-        case UICollectionElementKindSectionHeader:
+        case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.reuseIdentifier, for: indexPath) as! CollectionHeaderView
             header.section = section
             header.totalItemsCount = UInt(self.moreElementsToSee(in: section) ? self.elements(for: section).count : 0)

@@ -48,13 +48,9 @@ public extension URL {
         }
         else {
             log.debug("Did not open \"\(self)\" in a twitter application or third party browser.")
-            if UIApplication.shared.canOpenURL(self) {
-                UIApplication.shared.openURL(self)
-                return true
-            }
-            else {
-                return false
-            }
+            guard UIApplication.shared.canOpenURL(self) else { return false }
+            UIApplication.shared.open(self)
+            return true
         }
     }
 

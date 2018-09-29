@@ -19,12 +19,11 @@
 
 import Foundation
 import Cartography
-import Classy
 
-@objcMembers class FingerprintTableViewCell: UITableViewCell {
+class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let fingerprintLabel = CopyableLabel()
-    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let spinner = UIActivityIndicatorView(style: .gray)
 
     var variant: ColorSchemeVariant? {
         didSet {
@@ -59,7 +58,7 @@ import Classy
         }
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.titleLabel.text = NSLocalizedString("self.settings.account_details.key_fingerprint.title", comment: "")
         self.titleLabel.accessibilityIdentifier = "fingerprint title"
         self.fingerprintLabel.numberOfLines = 0
@@ -86,15 +85,25 @@ import Classy
             spinner.top >= titleLabel.bottom + 4
             spinner.bottom <= contentView.bottom - 16
         }
+
+        contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 56).isActive = true
         
-        CASStyler.default().styleItem(self)
         self.backgroundColor = UIColor.clear
         self.backgroundView = UIView()
         self.selectedBackgroundView = UIView()
+
+        setupStyle()
     }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setupStyle() {
+        fingerprintLabelFont = .normalLightFont
+        fingerprintLabelBoldFont = .normalSemiboldFont
+
+        titleLabel.font = .smallSemiboldFont
     }
 
     func updateFingerprint() {

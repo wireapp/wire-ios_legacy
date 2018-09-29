@@ -36,10 +36,6 @@ const CGFloat ConversationCellSelectedOpacity = 0.4;
 const NSTimeInterval ConversationCellSelectionAnimationDuration = 0.33;
 static const CGFloat BurstContainerExpandedHeight = 40;
 
-@implementation MenuConfigurationProperties
-
-@end
-
 @implementation ConversationCellLayoutProperties
 
 @end
@@ -91,6 +87,7 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        [self setupFont];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
@@ -203,8 +200,6 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     NSMutableArray *accessibilityElements = [NSMutableArray arrayWithArray:self.accessibilityElements];
     [accessibilityElements addObjectsFromArray:@[self.messageContentView, self.authorLabel, self.authorImageView, self.burstTimestampView.unreadDot, self.toolboxView, self.likeButton]];
     self.accessibilityElements = accessibilityElements;
-
-    [CASStyler.defaultStyler styleItem:self];
 }
 
 - (void)prepareForReuse
@@ -533,8 +528,20 @@ static const CGFloat BurstContainerExpandedHeight = 40;
         return;
     }
     
-    if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:)]) {
-        [self.delegate conversationCell:self userTapped:BareUserToUser(userImageView.user) inView:userImageView];
+    // Edge case prevention:
+    // If the keyboard (input field has focus) is up and the user is tapping directly on an avatar, we ignore this tap. This
+    // solves us the problem of the repositioning the popover after the keyboard destroys the layout and the we would re-position
+    // the popover again
+    
+    if (! IS_IPAD || IS_IPAD_LANDSCAPE_LAYOUT) {
+        return;
+    }
+
+    if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:frame:)]) {
+        [self.delegate conversationCell:self
+                             userTapped:BareUserToUser(userImageView.user)
+                                 inView:userImageView
+                                  frame:userImageView.bounds];
     }
 }
 
