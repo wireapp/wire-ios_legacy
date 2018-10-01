@@ -20,6 +20,19 @@ import Foundation
 
 typealias TeamCreationSecondaryViewDescription = SecondaryViewDescription & AuthenticationActionable
 
+typealias ValueSubmitted = (String) -> ()
+typealias ValueValidated = (TextFieldValidator.ValidationError) -> ()
+
+protocol ViewDescriptor: class {
+    func create() -> UIView
+}
+
+protocol ValueSubmission: class {
+    var acceptsInput: Bool { get set }
+    var valueSubmitted: ValueSubmitted? { get set }
+    var valueValidated: ValueValidated? { get set }
+}
+
 protocol TeamCreationStepDescription {
     var backButton: BackButtonDescription? { get }
     var mainView: ViewDescriptor & ValueSubmission { get }

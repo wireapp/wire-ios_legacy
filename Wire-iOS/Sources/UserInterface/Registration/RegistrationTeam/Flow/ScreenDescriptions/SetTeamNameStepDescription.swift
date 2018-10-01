@@ -44,7 +44,7 @@ final class SetTeamNameStepDescription: TeamCreationStepDescription {
 
     init() {
         backButton = BackButtonDescription()
-        mainView = TextFieldDescription(placeholder: "team.name.textfield.placeholder".localized, actionDescription: "team.name.textfield.accessibility".localized, kind: .name)
+        mainView = TextFieldDescription(placeholder: "team.name.textfield.placeholder".localized, actionDescription: "team.name.textfield.accessibility".localized, kind: .name(isTeam: true))
         headline = "team.name.headline".localized
         subtext = "team.name.subheadline".localized
         secondaryView = SetTeamNameStepSecondaryView()

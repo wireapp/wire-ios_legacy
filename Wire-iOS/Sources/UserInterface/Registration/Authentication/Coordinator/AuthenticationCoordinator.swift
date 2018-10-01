@@ -135,6 +135,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     func sessionManagerCreated(userSession: ZMUserSession) {
         log.info("Session manager created session: \(userSession)")
+        assignRandomProfileImage()
         initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
     }
 
@@ -665,6 +666,21 @@ extension AuthenticationCoordinator {
         stateController.transition(to: .teamCreation(nextTeamState))
 
         registrationStatus.sendActivationCode(to: .email(emailAddress))
+    }
+
+    func assignRandomProfileImage() {
+        guard let userSession = statusProvider?.sharedUserSession else {
+            log.error("Not assigning a random profile picture, because the user session does not exist.")
+            return
+        }
+
+        URLSession.shared.dataTask(with: URL(string: UnsplashRandomImageHiQualityURL)!) { (data, _, error) in
+            if let data = data, error == nil {
+                DispatchQueue.main.async {
+                    userSession.profileUpdate.updateImage(imageData: data)
+                }
+            }
+        }.resume()
     }
 
 }

@@ -32,7 +32,7 @@ protocol TextFieldValidationDelegate: class {
 class AccessoryTextField: UITextField {
     enum Kind: Equatable {
         case email
-        case name
+        case name(isTeam: Bool)
         case password(isNew: Bool)
         case unknown
     }
@@ -144,10 +144,13 @@ class AccessoryTextField: UITextField {
                 textContentType = isNew ? .newPassword : .password
                 passwordRules = textFieldValidator.passwordRules
             }
-        case .name:
             autocapitalizationType = .words
             accessibilityIdentifier = "NameField"
-            textContentType = .givenName
+            textContentType = .organizationName
+        case .name(let isTeam):
+            autocapitalizationType = .words
+            accessibilityIdentifier = "NameField"
+            textContentType = isTeam ? .organizationName : .name
         case .unknown:
             keyboardType = .asciiCapable
             textContentType = nil

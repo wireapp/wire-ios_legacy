@@ -283,6 +283,8 @@ final class TeamCreationStepController: AuthenticationStepViewController {
             (mainView as? UITextField)?.text = nil
         case .showGuidanceDot:
             break
+        case .showAdditionalInfo:
+            break
         }
     }
 
