@@ -55,7 +55,7 @@ platform :ios do
                 UI.user_error! "Source branch env variable missing. Set BUILD_SOURCEBRANCH to fix it"
             end
 
-            pull_request_number = ENV["BUILD_SOURCEBRANCH"].split("/").[2] # For PRs the branch is in format "refs/pull/1/merge"
+            pull_request_number = ENV["BUILD_SOURCEBRANCH"].split("/")[2] # For PRs the branch is in format "refs/pull/1/merge"
 
             dependencies_url = ENV.fetch("DEPENDENCIES_BASE_URL") { "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master" }
             sh "curl -O #{dependencies_url}/Dangerfile"
