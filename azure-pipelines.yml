@@ -9,6 +9,7 @@ steps:
     sudo xcode-select -switch /Applications/Xcode_10.app
     bundle install --path ~/.gem
     bundle exec fastlane prepare  
+    mkdir SnapshotResults
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"
