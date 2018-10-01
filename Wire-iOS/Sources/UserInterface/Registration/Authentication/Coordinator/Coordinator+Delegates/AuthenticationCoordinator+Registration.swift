@@ -20,13 +20,13 @@ import Foundation
 
 extension AuthenticationCoordinator: RegistrationStatusDelegate {
 
-    /// Called when the user is registered.
-    func userRegistered() {
-        // no-op
+    /// Called when registration fails.
+    func userRegistrationFailed(with error: Error) {
+        eventResponderChain.handleEvent(ofType: .registrationError(error as NSError))
     }
 
     /// Called when registration fails.
-    func userRegistrationFailed(with error: Error) {
+    func teamRegistrationFailed(with error: Error) {
         eventResponderChain.handleEvent(ofType: .registrationError(error as NSError))
     }
 
@@ -50,12 +50,14 @@ extension AuthenticationCoordinator: RegistrationStatusDelegate {
         eventResponderChain.handleEvent(ofType: .registrationError(error as NSError))
     }
 
-    func teamRegistered() {
-        // no-op
+    /// Called when the user is registered.
+    func userRegistered() {
+        // no-op, handled in the event responder chain
     }
 
-    func teamRegistrationFailed(with error: Error) {
-        // no-op
+    /// Called when the team is registered.
+    func teamRegistered() {
+        // no-op, handled in the event responder chain
     }
 
 }
