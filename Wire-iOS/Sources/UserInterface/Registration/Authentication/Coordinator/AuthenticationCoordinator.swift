@@ -663,7 +663,8 @@ extension AuthenticationCoordinator {
             presenter?.showLoadingView = true
             registrationStatus.checkActivationCode(credential: .email(emailAddress), code: activationCode)
 
-        case .setFullName:
+        case .provideMarketingConsent:
+            presenter?.showLoadingView = false
             let marketingConsentAlertModel = AuthenticationCoordinatorAlert.makeMarketingConsentAlert()
             presentAlert(for: marketingConsentAlertModel)
 

@@ -33,6 +33,7 @@ enum TeamCreationState: Equatable {
     var needsInterface: Bool {
         switch self {
         case .sendEmailCode, .verifyActivationCode: return false
+        case .provideMarketingConsent: return false
         case .createTeam: return false
         default: return true
         }
