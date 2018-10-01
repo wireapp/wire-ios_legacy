@@ -24,9 +24,10 @@ enum TeamCreationState: Equatable {
     case sendEmailCode(teamName: String, email: String, isResend: Bool)
     case verifyEmail(teamName: String, email: String)
     case verifyActivationCode(teamName: String, email: String, activationCode: String)
-    case setFullName(teamName: String, email: String, activationCode: String)
-    case setPassword(teamName: String, email: String, activationCode: String, fullName: String)
-    case createTeam(teamName: String, email: String, activationCode: String, fullName: String, password: String)
+    case provideMarketingConsent(teamName: String, email: String, activationCode: String)
+    case setFullName(teamName: String, email: String, activationCode: String, marketingConsent: Bool)
+    case setPassword(teamName: String, email: String, activationCode: String, marketingConsent: Bool, fullName: String)
+    case createTeam(teamName: String, email: String, activationCode: String, marketingConsent: Bool, fullName: String, password: String)
     case inviteMembers
 
     var needsInterface: Bool {
@@ -59,12 +60,14 @@ extension TeamCreationState {
             return nil // transition handled by the responder chain
         case let .verifyEmail(teamName: teamName, email: email):
             return .verifyActivationCode(teamName: teamName, email: email, activationCode: value)
-        case .verifyActivationCode:
-            return nil // transition handled by the responder chain
-        case let .setFullName(teamName: teamName, email: email, activationCode: activationCode):
-            return .setPassword(teamName: teamName, email: email, activationCode: activationCode, fullName: value)
-        case let .setPassword(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName):
-            return .createTeam(teamName: teamName, email: email, activationCode: activationCode, fullName: fullName, password: value)
+        case let .verifyActivationCode(teamName, email, activationCode):
+            return .provideMarketingConsent(teamName: teamName, email: email, activationCode: activationCode)
+        case .provideMarketingConsent:
+            return nil // handled by the authentication coordinator via actions
+        case let .setFullName(teamName: teamName, email: email, activationCode: activationCode, marketingConsent: marketingConsent):
+            return .setPassword(teamName: teamName, email: email, activationCode: activationCode, marketingConsent: marketingConsent, fullName: value)
+        case let .setPassword(teamName: teamName, email: email, activationCode: activationCode, marketingConsent: marketingConsent, fullName: fullName):
+            return .createTeam(teamName: teamName, email: email, activationCode: activationCode, marketingConsent: marketingConsent, fullName: fullName, password: value)
         case .createTeam:
             return nil // transition handled by the responder chain
         case .inviteMembers:

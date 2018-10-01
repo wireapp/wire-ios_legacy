@@ -273,6 +273,7 @@
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
 		5E9E8A9D21621FEC0058D6E1 /* AuthenticationActioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9E8A9C21621FEC0058D6E1 /* AuthenticationActioner.swift */; };
 		5E9E8A9F21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9E8A9E21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift */; };
+		5E9E8AA1216277800058D6E1 /* AuthenticationPostRegistrationFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9E8AA0216277800058D6E1 /* AuthenticationPostRegistrationFields.swift */; };
 		5EA73D7920D900830001D106 /* GroupOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */; };
 		5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */; };
 		5EA73D8020D900A10001D106 /* GroupDetailsOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */; };
@@ -1745,6 +1746,7 @@
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
 		5E9E8A9C21621FEC0058D6E1 /* AuthenticationActioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationActioner.swift; sourceTree = "<group>"; };
 		5E9E8A9E21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCredentialsVerifiedEventHandler.swift; sourceTree = "<group>"; };
+		5E9E8AA0216277800058D6E1 /* AuthenticationPostRegistrationFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPostRegistrationFields.swift; sourceTree = "<group>"; };
 		5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOptionsSectionController.swift; sourceTree = "<group>"; };
 		5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsGuestOptionsCell.swift; sourceTree = "<group>"; };
 		5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsOptionsCell.swift; sourceTree = "<group>"; };
@@ -3930,6 +3932,7 @@
 			children = (
 				5E8DA773211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift */,
 				5E8C38B7212FDD68002AE12B /* ObservableSessionManager.swift */,
+				5E9E8AA0216277800058D6E1 /* AuthenticationPostRegistrationFields.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -7292,6 +7295,7 @@
 				5E8C38B2212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift in Sources */,
 				8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */,
 				DBACFF7A1B3C96E1004062E0 /* MentionsBubbleView.m in Sources */,
+				5E9E8AA1216277800058D6E1 /* AuthenticationPostRegistrationFields.swift in Sources */,
 				16E6C1001A837C0300AA2F32 /* NSIndexSet+IndexPaths.m in Sources */,
 				87A15FCE1E07EAB400AED79B /* AssetCollectionWrapper.swift in Sources */,
 				871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */,

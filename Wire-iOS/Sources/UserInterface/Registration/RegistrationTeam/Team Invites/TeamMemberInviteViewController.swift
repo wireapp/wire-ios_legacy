@@ -36,7 +36,6 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
     private let footerTextFieldView = TeamInviteTextFieldFooterView()
     private var regularWidthConstraint: NSLayoutConstraint?, compactWidthConstraint: NSLayoutConstraint?
     private lazy var dataSource = ArrayDataSource<TeamMemberInviteTableViewCell, InviteResult>(for: self.tableView)
-    private var keyboardObserver: KeyboardBlockObserver?
     private var invitationsCount: Int = 0
     
     override func viewDidLoad() {
@@ -59,7 +58,6 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
         setupHeaderView()
         setupFooterView()
         updateScrollIndicatorInsets()
-        setupKeyboardObserver()
         dataSource.configure = { cell, content in cell.content = content }
     }
     
@@ -79,16 +77,6 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
             compactWidthConstraint = tableView.width == view.width
         }
         updateMainViewWidthConstraint()
-    }
-    
-    private func setupKeyboardObserver() {
-        keyboardObserver = KeyboardBlockObserver { [weak self] info in
-            info.animate {
-                guard let `self` = self else { return }
-                self.tableView.correctedContentInset.adjust(bottom: info.kind == .hide ? self.bottomOffset : info.frame.height)
-                self.tableView.correctedScrollIndicatorInsets.adjust(bottom: info.frame.height)
-            }
-        }
     }
     
     private func setupTableView() {

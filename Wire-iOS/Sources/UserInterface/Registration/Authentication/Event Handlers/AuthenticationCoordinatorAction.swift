@@ -38,10 +38,10 @@ enum AuthenticationCoordinatorAction {
     case configureNotifications
     case startIncrementalUserCreation(UnregisteredUser)
     case setMarketingConsent(Bool)
-    case sendPostRegistrationFields(UnregisteredUser)
     case completeUserRegistration
     case openURL(URL)
     case repeatAction
+    case advanceTeamCreation(String)
 
     var retainsModal: Bool {
         switch self {

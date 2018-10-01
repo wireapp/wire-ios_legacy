@@ -142,6 +142,7 @@ class AuthenticationEventResponderChain {
         registerHandler(RegistrationActivationCodeSentEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(TeamEmailVerificationCodeAvailableEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
+        registerHandler(TeamCredentialsVerifiedEventHandler(), to: &registrationSuccessHandlers)
         registerHandler(RegistrationIncrementalUserDataChangeHandler(), to: &registrationSuccessHandlers)
 
         // userProfileChangeObservers

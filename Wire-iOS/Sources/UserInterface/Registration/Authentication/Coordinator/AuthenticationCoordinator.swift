@@ -136,6 +136,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
     func sessionManagerCreated(userSession: ZMUserSession) {
         log.info("Session manager created session: \(userSession)")
         assignRandomProfileImage()
+        currentPostRegistrationFields().apply(sendPostRegistrationFields)
         initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
     }
 
@@ -218,15 +219,10 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 eventResponderChain.handleEvent(ofType: .registrationStepSuccess)
 
             case .setMarketingConsent(let consentValue):
-                updateUnregisteredUser {
-                    $0.marketingConsent = consentValue
-                }
+                setMarketingConsent(consentValue)
 
             case .completeUserRegistration:
                 finishRegisteringUser()
-
-            case .sendPostRegistrationFields(let unregisteredUser):
-                sendPostRegistrationFields(for: unregisteredUser)
 
             case .unwindState(let popController):
                 if popController {
@@ -249,6 +245,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .repeatAction:
                 repeatAction()
+
+            case .advanceTeamCreation(let newValue):
+                advanceTeamCreation(value: newValue)
             }
         }
     }
@@ -381,14 +380,18 @@ extension AuthenticationCoordinator {
         }
     }
 
-    /**
-     * Notifies the registration state observers that the user set a profile picture.
-     */
-
-    @objc(setProfilePictureWithData:)
-    func setProfilePicture(_ data: Data) {
-        updateUnregisteredUser {
-            $0.profileImageData = data
+    func setMarketingConsent(_ consentValue: Bool) {
+        switch stateController.currentStep {
+        case .createUser:
+            updateUnregisteredUser {
+                $0.marketingConsent = consentValue
+            }
+        case .teamCreation(TeamCreationState.provideMarketingConsent(let teamName, let email, let activationCode)):
+            let nextState: TeamCreationState = .setFullName(teamName: teamName, email: email, activationCode: activationCode, marketingConsent: consentValue)
+            stateController.transition(to: .teamCreation(nextState), resetStack: true)
+        default:
+            log.error("Cannot set marketing consent in current state \(stateController.currentStep)")
+            return
         }
     }
 
@@ -413,16 +416,33 @@ extension AuthenticationCoordinator {
         registrationStatus.create(user: unregisteredUser)
     }
 
+    private func currentPostRegistrationFields() -> AuthenticationPostRegistrationFields? {
+        switch stateController.currentStep {
+        case .createUser(let unregisteredUser):
+            guard let marketingConsent = unregisteredUser.marketingConsent else {
+                return nil
+            }
+
+            return AuthenticationPostRegistrationFields(marketingConsent: marketingConsent)
+
+        case let .teamCreation(.createTeam(_, _, _, marketingConsent, _, _)):
+            return AuthenticationPostRegistrationFields(marketingConsent: marketingConsent)
+
+        default:
+            return nil
+        }
+    }
+
     /// Sends the fields provided during registration that requires a registered user session.
-    private func sendPostRegistrationFields(for unregisteredUser: UnregisteredUser) {
+    private func sendPostRegistrationFields(_ fields: AuthenticationPostRegistrationFields) {
         guard let userSession = statusProvider?.sharedUserSession else {
             log.error("Could not save the marketing consent and , as there is no user session for the user.")
             return
         }
 
-        let consentValue = unregisteredUser.marketingConsent ?? false
+        // Marketing consent
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
-        userSession.submitMarketingConsent(with: consentValue)
+        userSession.submitMarketingConsent(with: fields.marketingConsent)
     }
 
     // MARK: Login
@@ -647,7 +667,7 @@ extension AuthenticationCoordinator {
             let marketingConsentAlertModel = AuthenticationCoordinatorAlert.makeMarketingConsentAlert()
             presentAlert(for: marketingConsentAlertModel)
 
-        case let .createTeam(teamName, email, activationCode, fullName, password):
+        case let .createTeam(teamName, email, activationCode, _, fullName, password):
             presenter?.showLoadingView = true
             let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
             registrationStatus.create(team: unregisteredTeam)

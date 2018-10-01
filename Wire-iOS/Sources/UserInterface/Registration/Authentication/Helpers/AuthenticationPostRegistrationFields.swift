@@ -18,18 +18,14 @@
 
 import Foundation
 
-class TeamCredentialsVerifiedEventHandler: AuthenticationEventHandler {
+/**
+ * A structure that contains the fields to send after a user
+ * session is available.
+ */
 
-    weak var statusProvider: AuthenticationStatusProvider?
+struct AuthenticationPostRegistrationFields {
 
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        // Only handle team verification requests results
-        guard case let .teamCreation(.verifyActivationCode(_, _, code)) = currentStep else {
-            return nil
-        }
-
-        // Move to the next linear step
-        return [.hideLoadingView, .advanceTeamCreation(code)]
-    }
+    /// The value the user provided for their marketing consent.
+    let marketingConsent: Bool
 
 }
