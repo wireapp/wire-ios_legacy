@@ -3,15 +3,14 @@ pool:
 
 trigger:
   - develop
-
-variables:
-  DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
-  GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)
+  
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.app
     bundle install --path ~/.gem
-    bundle exec fastlane prepare     
+    bundle exec fastlane prepare  
+  env:
+    GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"
 - script: |
     bundle exec fastlane build
@@ -24,4 +23,8 @@ steps:
     testResultsFiles: 'test/*.xml'
 - script: |
     bundle exec fastlane test
+  env:  
+    CODECOV_TOKEN: $(CODECOV_TOKEN)
+    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
+    GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Post Test"
