@@ -228,8 +228,12 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .sendPostRegistrationFields(let unregisteredUser):
                 sendPostRegistrationFields(for: unregisteredUser)
 
-            case .unwindState:
-                stateController.unwindState()
+            case .unwindState(let popController):
+                if popController {
+                    presenter?.popViewController(animated: true)
+                } else {
+                    stateController.unwindState()
+                }
 
             case .openURL(let url):
                 let browser = BrowserViewController(url: url)
@@ -242,6 +246,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 }
 
                 self.presenter?.present(browser, animated: true, completion: nil)
+
+            case .repeatAction:
+                repeatAction()
             }
         }
     }
@@ -679,6 +686,17 @@ extension AuthenticationCoordinator {
                 }
             }
         }.resume()
+    }
+
+    func repeatAction() {
+        switch stateController.currentStep {
+        case .teamCreation(.verifyEmail):
+            resendTeamEmailCode()
+        case .enterLoginCode, .enterActivationCode:
+            resendVerificationCode()
+        default:
+            return
+        }
     }
 
 }

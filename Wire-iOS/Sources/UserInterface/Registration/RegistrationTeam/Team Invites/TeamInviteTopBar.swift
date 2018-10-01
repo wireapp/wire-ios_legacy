@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 protocol TeamInviteTopbarDelegate: class {
     func teamInviteTopBarDidTapButton(_ topBar: TeamInviteTopBar)
@@ -66,11 +65,13 @@ final class TeamInviteTopBar: UIView {
     }
     
     private func createConstraints() {
-        constrain(self, actionButton) { view, actionButton in
-            actionButton.trailing == view.trailing - 16
-            actionButton.bottom == view.bottom - 12
-            view.height == 44
-        }
+        let constraints: [NSLayoutConstraint] = [
+            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            actionButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
+            heightAnchor.constraint(equalToConstant: 44)
+        ]
+
+        NSLayoutConstraint.activate(constraints)
     }
     
     private func updateButtonMode() {

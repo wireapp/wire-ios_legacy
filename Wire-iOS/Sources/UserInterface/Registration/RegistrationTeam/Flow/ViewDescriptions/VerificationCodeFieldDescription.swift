@@ -26,10 +26,10 @@ final class VerificationCodeFieldDescription: NSObject, ValueSubmission {
     var constraints: [NSLayoutConstraint] = []
 }
 
-fileprivate final class ResponderContainer: UIView {
-    private let responder: UIView
+fileprivate final class ResponderContainer<Child: UIView>: UIView {
+    private let responder: Child
     
-    init(responder: UIView) {
+    init(responder: Child) {
         self.responder = responder
         super.init(frame: .zero)
         self.addSubview(self.responder)
@@ -52,9 +52,21 @@ fileprivate final class ResponderContainer: UIView {
     }
 }
 
+extension ResponderContainer: TextContainer where Child: TextContainer {
+
+    var text: String? {
+        get {
+            return responder.text
+        }
+        set {
+            responder.text = newValue
+        }
+    }
+
+}
+
 extension VerificationCodeFieldDescription: ViewDescriptor {
     func create() -> UIView {
-
         /// get the with from keyWindow for iPad non full screen modes.
         let width = UIApplication.shared.keyWindow?.frame.width ?? UIScreen.main.bounds.size.width
         let size = CGSize(width: width, height: TeamCreationStepController.mainViewHeight)
@@ -84,14 +96,14 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
 extension VerificationCodeFieldDescription: CharacterInputFieldDelegate {
 
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool {
-        return acceptsInput
+        return acceptsInput && inputField.text != nil
     }
 
     func didChangeText(_ inputField: CharacterInputField, to: String) {
         self.valueValidated?(.none)
     }
 
-    func didFillInput(inputField: CharacterInputField) {
-        self.valueSubmitted?(inputField.text)
+    func didFillInput(inputField: CharacterInputField, text: String) {
+        self.valueSubmitted?(text)
     }
 }

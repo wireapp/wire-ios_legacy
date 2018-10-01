@@ -25,7 +25,7 @@ import Foundation
 enum AuthenticationCoordinatorAction {
     case showLoadingView
     case hideLoadingView
-    case unwindState
+    case unwindState(withInterface: Bool)
     case executeFeedbackAction(AuthenticationErrorFeedbackAction)
     case presentAlert(AuthenticationCoordinatorAlert)
     case presentErrorAlert(AuthenticationCoordinatorErrorAlert)
@@ -41,6 +41,7 @@ enum AuthenticationCoordinatorAction {
     case sendPostRegistrationFields(UnregisteredUser)
     case completeUserRegistration
     case openURL(URL)
+    case repeatAction
 
     var retainsModal: Bool {
         switch self {

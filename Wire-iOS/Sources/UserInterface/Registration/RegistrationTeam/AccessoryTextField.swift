@@ -29,7 +29,7 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError)
 }
 
-class AccessoryTextField: UITextField {
+class AccessoryTextField: UITextField, TextContainer {
     enum Kind: Equatable {
         case email
         case name(isTeam: Bool)

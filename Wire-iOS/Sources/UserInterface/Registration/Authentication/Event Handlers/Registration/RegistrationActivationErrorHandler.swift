@@ -28,22 +28,20 @@ class RegistrationActivationErrorHandler: AuthenticationEventHandler {
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
         let error = context
+        var postAlertAction: [AuthenticationCoordinatorAction] = [.unwindState(withInterface: false)]
 
         // Only handle errors during authentication requests
         switch currentStep {
-        case .sendActivationCode, .activateCredentials:
+        case .sendActivationCode, .teamCreation(.sendEmailCode):
             break
-        case .teamCreation(let teamCreationState):
-            guard case .sendEmailCode = teamCreationState else {
-                fallthrough
-            }
-            
+        case .activateCredentials, .teamCreation(.verifyActivationCode):
+            postAlertAction.append(.executeFeedbackAction(.clearInputFields))
         default:
             return nil
         }
 
         // Show the alert
-        let errorAlert = AuthenticationCoordinatorErrorAlert(error: error, completionActions: [.unwindState])
+        let errorAlert = AuthenticationCoordinatorErrorAlert(error: error, completionActions: postAlertAction)
         return [.hideLoadingView, .presentErrorAlert(errorAlert)]
     }
 

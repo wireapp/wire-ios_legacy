@@ -42,6 +42,14 @@ extension AuthenticationActioner {
     func executeAction(_ action: AuthenticationCoordinatorAction) {
         self.executeActions([action])
     }
+
+    /**
+     * Repeats the last action if possible.
+     */
+
+    func repeatAction() {
+        self.executeAction(.repeatAction)
+    }
 }
 
 /**

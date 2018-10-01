@@ -18,27 +18,22 @@
 
 import Foundation
 
-protocol VerifyEmailStepDescriptionDelegate: class {
-    func resendActivationCode(to email: String)
-    func changeEmail()
-}
-
 class VerifyEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
     let views: [ViewDescriptor]
     weak var actioner: AuthenticationActioner?
 
     init(email: String) {
         let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
-//        resendCode.buttonTapped = { [weak delegate] in
-//            delegate?.resendActivationCode(to: email)
-//        }
-
         let changeEmail = ButtonDescription(title: "team.activation_code.button.change_email".localized, accessibilityIdentifier: "change_email_button")
-//        changeEmail.buttonTapped = { [weak delegate] in
-//            delegate?.changeEmail()
-//        }
-        
         views = [resendCode, changeEmail]
+
+        resendCode.buttonTapped = {
+            self.actioner?.repeatAction()
+        }
+
+        changeEmail.buttonTapped = { [weak self] in
+            self?.actioner?.executeAction(.unwindState(withInterface: true))
+        }
     }
 }
 

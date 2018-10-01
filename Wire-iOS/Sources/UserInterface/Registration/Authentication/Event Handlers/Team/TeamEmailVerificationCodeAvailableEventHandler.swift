@@ -44,7 +44,7 @@ class TeamEmailVerificationCodeAvailableEventHandler: AuthenticationEventHandler
             let nextStep: AuthenticationFlowStep = .teamCreation(nextState)
             actions.append(.transition(nextStep, resetStack: false))
         } else {
-            actions.append(.unwindState)
+            actions.append(.unwindState(withInterface: false))
         }
 
         return actions

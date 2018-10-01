@@ -272,6 +272,7 @@
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
 		5E9E8A9D21621FEC0058D6E1 /* AuthenticationActioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9E8A9C21621FEC0058D6E1 /* AuthenticationActioner.swift */; };
+		5E9E8A9F21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9E8A9E21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift */; };
 		5EA73D7920D900830001D106 /* GroupOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */; };
 		5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */; };
 		5EA73D8020D900A10001D106 /* GroupDetailsOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */; };
@@ -1743,6 +1744,7 @@
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
 		5E9E8A9C21621FEC0058D6E1 /* AuthenticationActioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationActioner.swift; sourceTree = "<group>"; };
+		5E9E8A9E21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamCredentialsVerifiedEventHandler.swift; sourceTree = "<group>"; };
 		5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOptionsSectionController.swift; sourceTree = "<group>"; };
 		5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsGuestOptionsCell.swift; sourceTree = "<group>"; };
 		5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsOptionsCell.swift; sourceTree = "<group>"; };
@@ -3778,6 +3780,7 @@
 			children = (
 				5E65A7AE213450D2008BFCC0 /* TeamEmailVerificationErrorHandler.swift */,
 				5E65A7B021345314008BFCC0 /* TeamEmailVerificationCodeAvailableEventHandler.swift */,
+				5E9E8A9E21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift */,
 			);
 			path = Team;
 			sourceTree = "<group>";
@@ -7646,6 +7649,7 @@
 				54F4BAB61E143B4C00603C6F /* AppDelegate+ErrorTracking.swift in Sources */,
 				879718921D1C109900163C07 /* AudioRecordKeyboardViewController.swift in Sources */,
 				F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */,
+				5E9E8A9F21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift in Sources */,
 				AF36C5AB1E9F903800FADECC /* DraftNavigationController.swift in Sources */,
 				16A293DA1F5FFA2E00B4EB16 /* SkeletonViewController.swift in Sources */,
 				EF21271C1FB9DFE300625A9B /* RegistrationStepViewController.m in Sources */,

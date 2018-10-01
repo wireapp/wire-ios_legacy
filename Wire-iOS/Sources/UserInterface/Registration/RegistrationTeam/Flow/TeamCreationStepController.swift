@@ -280,7 +280,7 @@ final class TeamCreationStepController: AuthenticationStepViewController {
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         switch feedbackAction {
         case .clearInputFields:
-            (mainView as? UITextField)?.text = nil
+            (mainView as? TextContainer)?.text = nil
         case .showGuidanceDot:
             break
         case .showAdditionalInfo:

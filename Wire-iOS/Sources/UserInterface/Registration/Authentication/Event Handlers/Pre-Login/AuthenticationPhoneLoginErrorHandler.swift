@@ -39,7 +39,7 @@ class AuthenticationPhoneLoginErrorHandler: AuthenticationEventHandler {
 
         // Prepare and return the alert
         let errorAlert = AuthenticationCoordinatorErrorAlert(error: error,
-                                                             completionActions: [.unwindState])
+                                                             completionActions: [.unwindState(withInterface: false)])
 
         return [.hideLoadingView, .presentErrorAlert(errorAlert)]
     }

@@ -53,7 +53,7 @@ class AuthenticationEmailLoginUnknownErrorHandler: AuthenticationEventHandler {
         // Show the alert with a guidance dot
 
         let alert = AuthenticationCoordinatorErrorAlert(error: detectedError,
-                                                        completionActions: [.unwindState])
+                                                        completionActions: [.unwindState(withInterface: false)])
 
         return [.hideLoadingView, .executeFeedbackAction(.showGuidanceDot), .presentErrorAlert(alert)]
     }

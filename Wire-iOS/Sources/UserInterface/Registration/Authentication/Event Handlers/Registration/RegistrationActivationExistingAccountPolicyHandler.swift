@@ -47,7 +47,7 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
 
         switch user.credentials! {
         case .email:
-            let changeEmailAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_email_action".localized, coordinatorActions: [.unwindState, .executeFeedbackAction(.clearInputFields)])
+            let changeEmailAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_email_action".localized, coordinatorActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
             let loginAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_signin_action".localized, coordinatorActions: [])
 
             let alert = AuthenticationCoordinatorAlert(title: "registration.alert.account_exists.title".localized,
@@ -57,7 +57,7 @@ class RegistrationActivationExistingAccountPolicyHandler: AuthenticationEventHan
             actions.append(.presentAlert(alert))
 
         case .phone(let number):
-            let changePhoneAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_phone_action".localized, coordinatorActions: [.unwindState, .executeFeedbackAction(.clearInputFields)])
+            let changePhoneAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_phone_action".localized, coordinatorActions: [.unwindState(withInterface: false), .executeFeedbackAction(.clearInputFields)])
             let loginAction = AuthenticationCoordinatorAlertAction(title: "registration.alert.change_signin_action".localized, coordinatorActions: [.showLoadingView, .performPhoneLoginFromRegistration(phoneNumber: number)])
 
             let alert = AuthenticationCoordinatorAlert(title: "registration.alert.account_exists.title".localized,

@@ -39,7 +39,7 @@ class AuthenticationLoginCodeAvailableEventHandler: AuthenticationEventHandler {
             let nextStep = AuthenticationFlowStep.enterLoginCode(phoneNumber: phoneNumber)
             actions.append(.transition(nextStep, resetStack: false))
         } else {
-            actions.append(.unwindState)
+            actions.append(.unwindState(withInterface: false))
         }
 
         return actions
