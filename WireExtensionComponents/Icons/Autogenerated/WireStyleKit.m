@@ -434,42 +434,55 @@ static UIImage* _imageOfShieldnotverified = nil;
 
 + (void)drawIcon_0x162_32ptWithColor: (UIColor*)color
 {
-    
-    //// Silence Drawing
-    UIBezierPath* silencePath = [UIBezierPath bezierPath];
-    [silencePath moveToPoint: CGPointMake(8.81, 42.95)];
-    [silencePath addLineToPoint: CGPointMake(15.73, 12.92)];
-    [silencePath addLineToPoint: CGPointMake(15.85, 12.92)];
-    [silencePath addCurveToPoint: CGPointMake(31.89, 0) controlPoint1: CGPointMake(16.85, 5.64) controlPoint2: CGPointMake(23.65, 0)];
-    [silencePath addCurveToPoint: CGPointMake(47.93, 12.92) controlPoint1: CGPointMake(40.13, 0) controlPoint2: CGPointMake(46.94, 5.64)];
-    [silencePath addLineToPoint: CGPointMake(48.06, 12.92)];
-    [silencePath addLineToPoint: CGPointMake(48.68, 15.63)];
-    [silencePath addLineToPoint: CGPointMake(55.86, 10.71)];
-    [silencePath addLineToPoint: CGPointMake(59.18, 8.43)];
-    [silencePath addLineToPoint: CGPointMake(63.78, 15.01)];
-    [silencePath addLineToPoint: CGPointMake(60.46, 17.29)];
-    [silencePath addLineToPoint: CGPointMake(7.92, 53.29)];
-    [silencePath addLineToPoint: CGPointMake(4.6, 55.57)];
-    [silencePath addLineToPoint: CGPointMake(0, 48.99)];
-    [silencePath addLineToPoint: CGPointMake(3.32, 46.71)];
-    [silencePath addLineToPoint: CGPointMake(8.81, 42.95)];
-    [silencePath addLineToPoint: CGPointMake(8.81, 42.95)];
-    [silencePath closePath];
-    [silencePath moveToPoint: CGPointMake(27.32, 48)];
-    [silencePath addLineToPoint: CGPointMake(56.14, 48)];
-    [silencePath addLineToPoint: CGPointMake(52.21, 30.94)];
-    [silencePath addLineToPoint: CGPointMake(27.32, 48)];
-    [silencePath addLineToPoint: CGPointMake(27.32, 48)];
-    [silencePath closePath];
-    [silencePath moveToPoint: CGPointMake(39.97, 56)];
-    [silencePath addCurveToPoint: CGPointMake(31.89, 64) controlPoint1: CGPointMake(39.97, 60.42) controlPoint2: CGPointMake(36.36, 64)];
-    [silencePath addCurveToPoint: CGPointMake(23.81, 56) controlPoint1: CGPointMake(27.43, 64) controlPoint2: CGPointMake(23.81, 60.42)];
-    [silencePath addLineToPoint: CGPointMake(39.97, 56)];
-    [silencePath addLineToPoint: CGPointMake(39.97, 56)];
-    [silencePath closePath];
-    silencePath.usesEvenOddFillRule = YES;
-    [color setFill];
-    [silencePath fill];
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    //// Mute Alerts
+    {
+        CGContextSaveGState(context);
+        CGContextBeginTransparencyLayer(context, NULL);
+
+        //// Clip Clip
+        UIBezierPath* clipPath = [UIBezierPath bezierPath];
+        [clipPath moveToPoint: CGPointMake(56.42, 7.13)];
+        [clipPath addCurveToPoint: CGPointMake(61.92, 8.11) controlPoint1: CGPointMake(58.21, 5.86) controlPoint2: CGPointMake(60.67, 6.3)];
+        [clipPath addCurveToPoint: CGPointMake(60.95, 13.68) controlPoint1: CGPointMake(63.18, 9.92) controlPoint2: CGPointMake(62.74, 12.41)];
+        [clipPath addLineToPoint: CGPointMake(7.27, 51.73)];
+        [clipPath addCurveToPoint: CGPointMake(1.77, 50.75) controlPoint1: CGPointMake(5.48, 53) controlPoint2: CGPointMake(3.02, 52.56)];
+        [clipPath addCurveToPoint: CGPointMake(2.74, 45.17) controlPoint1: CGPointMake(0.52, 48.94) controlPoint2: CGPointMake(0.95, 46.44)];
+        [clipPath addLineToPoint: CGPointMake(7.78, 41.6)];
+        [clipPath addCurveToPoint: CGPointMake(8.13, 40.72) controlPoint1: CGPointMake(7.88, 41.31) controlPoint2: CGPointMake(7.99, 41.02)];
+        [clipPath addCurveToPoint: CGPointMake(12.69, 29.99) controlPoint1: CGPointMake(8.13, 40.72) controlPoint2: CGPointMake(11.4, 33.83)];
+        [clipPath addCurveToPoint: CGPointMake(16.77, 12.92) controlPoint1: CGPointMake(14.37, 25.02) controlPoint2: CGPointMake(16.77, 12.92)];
+        [clipPath addCurveToPoint: CGPointMake(32.45, 0) controlPoint1: CGPointMake(17.74, 5.64) controlPoint2: CGPointMake(24.39, 0)];
+        [clipPath addCurveToPoint: CGPointMake(48.26, 12.91) controlPoint1: CGPointMake(40.51, 0) controlPoint2: CGPointMake(47.16, 5.63)];
+        [clipPath addLineToPoint: CGPointMake(56.42, 7.13)];
+        [clipPath closePath];
+        [clipPath moveToPoint: CGPointMake(52.21, 29.99)];
+        [clipPath addCurveToPoint: CGPointMake(56.77, 40.72) controlPoint1: CGPointMake(53.6, 34.09) controlPoint2: CGPointMake(56.77, 40.72)];
+        [clipPath addCurveToPoint: CGPointMake(52.19, 48) controlPoint1: CGPointMake(58.59, 44.72) controlPoint2: CGPointMake(56.56, 48)];
+        [clipPath addLineToPoint: CGPointMake(26.1, 48)];
+        [clipPath addLineToPoint: CGPointMake(52.08, 29.59)];
+        [clipPath addCurveToPoint: CGPointMake(52.21, 29.99) controlPoint1: CGPointMake(52.12, 29.72) controlPoint2: CGPointMake(52.17, 29.86)];
+        [clipPath closePath];
+        [clipPath moveToPoint: CGPointMake(40.35, 56)];
+        [clipPath addCurveToPoint: CGPointMake(32.45, 64) controlPoint1: CGPointMake(40.35, 60.42) controlPoint2: CGPointMake(36.82, 64)];
+        [clipPath addCurveToPoint: CGPointMake(24.55, 56) controlPoint1: CGPointMake(28.09, 64) controlPoint2: CGPointMake(24.55, 60.42)];
+        [clipPath addLineToPoint: CGPointMake(40.35, 56)];
+        [clipPath closePath];
+        clipPath.usesEvenOddFillRule = YES;
+        [clipPath addClip];
+
+
+        //// Rectangle Drawing
+        UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 64, 64)];
+        [color setFill];
+        [rectanglePath fill];
+
+
+        CGContextEndTransparencyLayer(context);
+        CGContextRestoreGState(context);
+    }
 }
 
 + (void)drawIcon_0x177_32ptWithColor: (UIColor*)color
