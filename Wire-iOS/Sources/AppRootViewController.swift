@@ -230,7 +230,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             authenticationCoordinator!.delegate = appStateController
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
 
-            viewController = KeyboardAvoidingViewController(viewController: navigationController)
+            viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
             authenticationCoordinator = nil

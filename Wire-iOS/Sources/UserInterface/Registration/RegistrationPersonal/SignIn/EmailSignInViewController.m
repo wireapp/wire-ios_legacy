@@ -101,8 +101,9 @@
     self.emailField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.emailField.minimumFontSize = 15.0f;
     self.emailField.accessibilityIdentifier = @"EmailField";
+    self.emailField.textContentType = UITextContentTypeEmailAddress;
     self.emailField.delegate = self;
-    
+
     if (self.loginCredentials.emailAddress != nil) {
         // User was previously signed in so we prefill the credentials
         self.emailField.text = self.loginCredentials.emailAddress;
@@ -121,10 +122,6 @@
 {
     self.passwordField = [[RegistrationTextField alloc] initForAutoLayout];
 
-    if (@available(iOS 11, *)) {
-        self.passwordField.textContentType = UITextContentTypePassword;
-    }
-
     self.passwordField.placeholder = NSLocalizedString(@"password.placeholder", nil);
     self.passwordField.accessibilityLabel = NSLocalizedString(@"password.placeholder", nil);
     self.passwordField.secureTextEntry = YES;
@@ -132,7 +129,7 @@
     self.passwordField.accessibilityIdentifier = @"PasswordField";
     self.passwordField.returnKeyType = UIReturnKeyDone;
     self.passwordField.delegate = self;
-    
+
     [self.passwordField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [self.passwordField.confirmButton addTarget:self action:@selector(signIn:) forControlEvents:UIControlEventTouchUpInside];
     self.passwordField.confirmButton.accessibilityLabel = NSLocalizedString(@"signin.confirm", @"");

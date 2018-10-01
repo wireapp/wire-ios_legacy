@@ -33,7 +33,7 @@ class AccessoryTextField: UITextField {
     enum Kind: Equatable {
         case email
         case name
-        case password
+        case password(isNew: Bool)
         case unknown
     }
 
@@ -136,14 +136,21 @@ class AccessoryTextField: UITextField {
             autocorrectionType = .no
             autocapitalizationType = .none
             accessibilityIdentifier = "EmailField"
-        case .password:
+            textContentType = .emailAddress
+        case .password(let isNew):
             isSecureTextEntry = true
             accessibilityIdentifier = "PasswordField"
+            if #available(iOS 12, *) {
+                textContentType = isNew ? .newPassword : .password
+                passwordRules = textFieldValidator.passwordRules
+            }
         case .name:
             autocapitalizationType = .words
             accessibilityIdentifier = "NameField"
+            textContentType = .givenName
         case .unknown:
             keyboardType = .asciiCapable
+            textContentType = nil
         }
     }
     

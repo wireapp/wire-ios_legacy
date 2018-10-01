@@ -40,7 +40,6 @@
 #import "Wire-Swift.h"
 
 #import "RegistrationFormController.h"
-#import "KeyboardAvoidingViewController.h"
 
 #import "PhoneSignInViewController.h"
 #import "EmailSignInViewController.h"

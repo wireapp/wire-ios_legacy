@@ -47,9 +47,9 @@ class TextFieldValidator {
                 return .invalidEmail
             }
         case .password:
-            if text.count > 120 {
+            if text.count > maxPasswordLength {
                 return .tooLong(kind: kind)
-            } else if text.count < 8 {
+            } else if text.count < minPasswordLength {
                 return .tooShort(kind: kind)
             }
         case .name:
@@ -67,6 +67,18 @@ class TextFieldValidator {
         return .none
 
     }
+}
+
+extension TextFieldValidator {
+
+    var minPasswordLength: Int { return 8 }
+    var maxPasswordLength: Int { return 120 }
+
+    @available(iOS 12, *)
+    var passwordRules: UITextInputPasswordRules {
+        return UITextInputPasswordRules(descriptor: "minlength: \(minPasswordLength); maxlength: \(maxPasswordLength)")
+    }
+
 }
 
 extension TextFieldValidator.ValidationError: LocalizedError {
