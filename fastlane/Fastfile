@@ -57,15 +57,18 @@ platform :ios do
 
             pull_request_number = ENV["BUILD_SOURCEBRANCH"].split("/")[2] # For PRs the branch is in format "refs/pull/1/merge"
 
-            dependencies_url = ENV.fetch("DEPENDENCIES_BASE_URL") { "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master" }
-            sh "curl -O #{dependencies_url}/Dangerfile"
-            danger(
-                dangerfile: "Fastlane/Dangerfile",
-                github_api_token: ENV["GITHUB_ACCESS_TOKEN"],
-                pr: "https://github.com/wireapp/wire-ios/pull/#{pull_request_number}"
+            result = github_api(
+                server_url: "https://api.github.com",
+                api_token: ENV["GITHUB_ACCESS_TOKEN"],
+                http_method: "GET",
+                path: "/repos/wireapp/wire-ios/pulls/#{pull_request_number}"
             )
 
-            codecov << " -t #{ENV["CODECOV_TOKEN"]} -P #{pull_request_number}"
+            data = result[:json] 
+            head_branch = data["head"]["ref"]
+            head_commit = data["head"]["sha"]
+
+            codecov << " -t #{ENV["CODECOV_TOKEN"]} -B #{head_branch} -C #{head_commit} -P #{pull_request_number}"
         end
 
         sh codecov
