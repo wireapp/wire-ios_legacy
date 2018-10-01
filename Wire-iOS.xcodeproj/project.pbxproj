@@ -332,10 +332,10 @@
 		5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */; };
 		5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5CDA420EF739200CC98B0 /* DataTaskSession.swift */; };
 		5EF5CDAA20EF925000CC98B0 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */; };
+		5EFD4526215A78E800BEE703 /* IndexedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD4525215A78E800BEE703 /* IndexedListView.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C01212468E8007932A6 /* RegistrationSuccessEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */; };
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
-		5EFD4526215A78E800BEE703 /* IndexedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD4525215A78E800BEE703 /* IndexedListView.swift */; };
 		7C0BB6E61FE682A200386A19 /* AccountSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */; };
 		7C17ECA51F74F4540056600C /* ConversationCell+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */; };
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
@@ -1807,10 +1807,10 @@
 		5EF5C54B209B33E600676405 /* CGSize+AspectRatio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+AspectRatio.swift"; sourceTree = "<group>"; };
 		5EF5CDA420EF739200CC98B0 /* DataTaskSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskSession.swift; sourceTree = "<group>"; };
 		5EF5CDA620EF903A00CC98B0 /* MockDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
+		5EFD4525215A78E800BEE703 /* IndexedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedListView.swift; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C00212468E8007932A6 /* RegistrationSuccessEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationSuccessEventHandler.swift; sourceTree = "<group>"; };
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
-		5EFD4525215A78E800BEE703 /* IndexedListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedListView.swift; sourceTree = "<group>"; };
 		7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectionViewController.swift; sourceTree = "<group>"; };
 		7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Preview.swift"; sourceTree = "<group>"; };
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
@@ -3806,6 +3806,36 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		5E7F012D213E91F700C6F3E9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				168A16B01D9597C2005CFA6C /* Info.plist */,
+				168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */,
+				161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */,
+				165FDC481DD5D447009D75A2 /* Wire-iOS Share Extension-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5E7F012E213E921400C6F3E9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BF2ADF481E27C3DB00E81B1E /* Localizable.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		5E7F012F213E928300C6F3E9 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5E144FFC213E96F800B65E14 /* Views */,
+				5E144FFB213E937C00B65E14 /* Content */,
+				5E144FFA213E92CD00B65E14 /* View Controllers */,
+				5E144FF9213E92A700B65E14 /* Helpers */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
 		5E8DA74A211AEB6C00360979 /* Event Handlers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3916,37 +3946,9 @@
 				5E8DA783211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift */,
 				5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */,
 			);
-			path = "Pre-Login";
-		};
-		5E7F012D213E91F700C6F3E9 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				168A16B01D9597C2005CFA6C /* Info.plist */,
-				168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */,
-				161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */,
-				165FDC481DD5D447009D75A2 /* Wire-iOS Share Extension-Bridging-Header.h */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		5E7F012E213E921400C6F3E9 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				BF2ADF481E27C3DB00E81B1E /* Localizable.strings */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		5E7F012F213E928300C6F3E9 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				5E144FFC213E96F800B65E14 /* Views */,
-				5E144FFB213E937C00B65E14 /* Content */,
-				5E144FFA213E92CD00B65E14 /* View Controllers */,
-				5E144FF9213E92A700B65E14 /* Helpers */,
-			);
-			name = Sources;
-			sourceTree = "<group>";
+			name = "Pre-Login";
+			path = "Wire-iOS/Sources/UserInterface/Registration/Authentication/Event Handlers/Pre-Login";
+			sourceTree = SOURCE_ROOT;
 		};
 		5EA73D7A20D900A10001D106 /* Cells */ = {
 			isa = PBXGroup;
@@ -5055,7 +5057,6 @@
 				87775AB21D95138D000CAD4F /* avs-versions */,
 				872AC9C21B397E6A00575CF3 /* Cartfile */,
 				87A418BD1C0CAB1A006FA803 /* Cartfile.private */,
-				1E88CC4D1BEB63020020B853 /* Cartfile.resolved */,
 				5EDD254221412ED200C0E254 /* EmbeddedDependencies.plist */,
 			);
 			sourceTree = "<group>";
@@ -6280,7 +6281,6 @@
 				EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */,
 				EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */,
 				EF2126FC1FB9DFE300625A9B /* FormFlowViewController.m */,
-				EF2126FD1FB9DFE300625A9B /* RegistrationEmailFlowViewController.h */,
 				EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */,
 				EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */,
 				EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */,
@@ -8188,7 +8188,6 @@
 				EF7F74041FCC033D0059C13F /* EmailAdresssValidatorTests.swift in Sources */,
 				1E4B89E11B01E9DD0011BF43 /* NSString+EmoticonSubstitutionTests.m in Sources */,
 				EF6251D421392FFE00943708 /* MockTapGestureRecognizer.swift in Sources */,
-				7C9E291A2074F3F100827819 /* EmailVerificationStepViewControllerTests.swift in Sources */,
 				EF1EA4631FB0937000B53063 /* MockUser+filename.swift in Sources */,
 				AF65A25C1D7E202D00EBA38E /* ReactionsListViewControllerTests.swift in Sources */,
 				EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */,

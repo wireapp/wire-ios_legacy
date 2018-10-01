@@ -114,8 +114,8 @@ class EmailLinkVerificationViewController: BlueViewController, AuthenticationCoo
         let instructions = String(format: "registration.verify_email.instructions".localized, emailAddress)
         let attributedText = NSMutableAttributedString(string: instructions)
 
-        let emailAttributes: [NSAttributedStringKey: AnyObject] = [
-            NSAttributedStringKey.font: UIFont.normalMediumFont
+        let emailAttributes: [NSAttributedString.Key: AnyObject] = [
+            .font: UIFont.normalMediumFont
         ]
 
         attributedText.addAttributes(emailAttributes, to: emailAddress)
