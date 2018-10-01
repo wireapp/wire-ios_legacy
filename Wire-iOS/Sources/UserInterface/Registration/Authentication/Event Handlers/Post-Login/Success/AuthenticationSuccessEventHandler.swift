@@ -27,7 +27,7 @@ class AuthenticationClientRegistrationSuccessHandler: AuthenticationEventHandler
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        return [.hideLoadingView, .transition(.pendingInitialSync, resetStack: false)]
+        return [.hideLoadingView, .transition(.pendingInitialSync(next: nil), resetStack: false)]
     }
 
 }

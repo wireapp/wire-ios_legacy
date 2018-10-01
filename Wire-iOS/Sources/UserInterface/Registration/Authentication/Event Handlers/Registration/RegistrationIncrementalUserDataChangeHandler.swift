@@ -43,9 +43,6 @@ class RegistrationIncrementalUserDataChangeHandler: AuthenticationEventHandler {
         } else if unregisteredUser.name == nil {
             return requestIntermediateStep(.setName, with: unregisteredUser)
 
-        } else if unregisteredUser.profileImageData == nil {
-            return requestIntermediateStep(.setProfilePicture, with: unregisteredUser)
-
         } else {
             return handleRegistrationCompletion(with: unregisteredUser)
         }

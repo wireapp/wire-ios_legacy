@@ -33,7 +33,7 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
         }
 
         // Do not ask for credentials again (slow sync can be called multiple times)
-        guard case .pendingInitialSync = currentStep else {
+        guard case let .pendingInitialSync(nextRegistrationStep) = currentStep else {
             return [.hideLoadingView]
         }
 
@@ -47,10 +47,18 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
 
         switch (isRegistered, needsEmail) {
         case (true, false):
-            return [.hideLoadingView, .completeRegistrationFlow]
+            if let nextStep = nextRegistrationStep {
+                return [.hideLoadingView, .transition(nextStep, resetStack: true)]
+            } else {
+                return [.hideLoadingView, .completeRegistrationFlow]
+            }
 
         case (false, false):
-            return [.hideLoadingView, .completeLoginFlow]
+            if let nextStep = nextRegistrationStep {
+                return [.hideLoadingView, .transition(nextStep, resetStack: true)]
+            } else {
+                return [.hideLoadingView, .completeLoginFlow]
+            }
 
         default:
             break

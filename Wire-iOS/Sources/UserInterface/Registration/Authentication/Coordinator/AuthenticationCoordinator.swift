@@ -415,9 +415,7 @@ extension AuthenticationCoordinator {
 
         let consentValue = unregisteredUser.marketingConsent ?? false
         UIAlertController.newsletterSubscriptionDialogWasDisplayed = true
-
         userSession.submitMarketingConsent(with: consentValue)
-        userSession.profileUpdate.updateImage(imageData: unregisteredUser.profileImageData!)
     }
 
     // MARK: Login
@@ -674,7 +672,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        URLSession.shared.dataTask(with: URL(string: UnsplashRandomImageHiQualityURL)!) { (data, _, error) in
+        URLSession.shared.dataTask(with: .wr_randomProfilePictureSource) { (data, _, error) in
             if let data = data, error == nil {
                 DispatchQueue.main.async {
                     userSession.profileUpdate.updateImage(imageData: data)

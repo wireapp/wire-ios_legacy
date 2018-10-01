@@ -132,8 +132,6 @@
 #import "ContactsDataSource.h"
 #import "BadgeUserImageView.h"
 #import "LaunchImageViewController.h"
-#import "ProfilePictureStepViewController.h"
-#import "ProfilePictureStepViewController+Private.h"
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "RegistrationFormController.h"

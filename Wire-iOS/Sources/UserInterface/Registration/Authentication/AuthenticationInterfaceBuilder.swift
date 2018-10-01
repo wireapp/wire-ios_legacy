@@ -114,8 +114,6 @@ class AuthenticationInterfaceBuilder {
             return nil
         case .setName:
             return NameStepViewController()
-        case .setProfilePicture:
-            return ProfilePictureStepViewController(displayName: user.name)
         }
     }
 

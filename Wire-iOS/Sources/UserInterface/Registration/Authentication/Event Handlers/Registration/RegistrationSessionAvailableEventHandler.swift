@@ -27,13 +27,20 @@ class RegistrationSessionAvailableEventHandler: AuthenticationEventHandler {
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
+        let nextStep: AuthenticationFlowStep?
+
         // Only handle createUser step
-        guard case let .createUser(unregisteredUser) = currentStep else {
+        switch currentStep {
+        case .createUser:
+            nextStep = nil
+        case .teamCreation(.createTeam):
+            nextStep = .teamCreation(.inviteMembers)
+        default:
             return nil
         }
 
         // Send the post-registration fields and wait for initial sync
-        return [.hideLoadingView, .sendPostRegistrationFields(unregisteredUser), .transition(.pendingInitialSync, resetStack: false)]
+        return [.hideLoadingView, .transition(.pendingInitialSync(next: nextStep), resetStack: false)]
     }
 
 }

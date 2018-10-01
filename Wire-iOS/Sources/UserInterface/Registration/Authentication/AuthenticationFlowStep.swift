@@ -22,7 +22,7 @@ import Foundation
  * Steps of the authentication flow.
  */
 
-enum AuthenticationFlowStep: Equatable {
+indirect enum AuthenticationFlowStep: Equatable {
 
     // Initial Steps
     case start
@@ -45,7 +45,7 @@ enum AuthenticationFlowStep: Equatable {
     case registerEmailCredentials(ZMEmailCredentials, isResend: Bool)
     case pendingEmailLinkVerification(ZMEmailCredentials)
     case verifyEmailChangeCode(ZMEmailCredentials)
-    case pendingInitialSync
+    case pendingInitialSync(next: AuthenticationFlowStep?)
 
     // Registration
     case teamCreation(TeamCreationState)
@@ -118,7 +118,7 @@ enum AuthenticationFlowStep: Equatable {
  */
 
 enum IntermediateRegistrationStep: Equatable {
-    case start, reviewTermsOfService, provideMarketingConsent, setName, setProfilePicture
+    case start, reviewTermsOfService, provideMarketingConsent, setName
 
     var needsInterface: Bool {
         switch self {
