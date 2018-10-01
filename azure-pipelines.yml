@@ -21,6 +21,10 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testResultsFiles: 'test/*.xml'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: "SnapshotResults"
+    artifactName: "Snapshot failures"
 - script: |
     bundle exec fastlane post_test
   env:  
