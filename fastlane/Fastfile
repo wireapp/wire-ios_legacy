@@ -46,24 +46,29 @@ platform :ios do
         sh "chmod +x codecov"
         codecov = "./codecov -J '^Wire-iOS$' -D ../DerivedData -X xcodellvm"
 
-        # When not running on CircleCI we need to supply more parameters to Codecov.io script
-        if ENV["CIRCLECI"].nil?
+        if ENV["BUILD_REASON"] == "PullRequest"
             if ENV["CODECOV_TOKEN"].nil?
                 UI.user_error! "codecov.io token missing for current repository. Set it in CODECOV_TOKEN environment variable"
             end
-            codecov << " -t #{ENV["CODECOV_TOKEN"]} -B #{ENV["BUILD_SOURCEBRANCHNAME"]} -C #{ENV["BUILD_SOURCEVERSION"]}"
-        end
-        sh codecov
 
-        if ENV["BUILD_REASON"] == "PullRequest"
+            if ENV["BUILD_SOURCEBRANCH"].nil?
+                UI.user_error! "Source branch env variable missing. Set BUILD_SOURCEBRANCH to fix it"
+            end
+
+            pull_request_number = ENV["BUILD_SOURCEBRANCH"].split("/").[2] # For PRs the branch is in format "refs/pull/1/merge"
+
             dependencies_url = ENV.fetch("DEPENDENCIES_BASE_URL") { "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master" }
             sh "curl -O #{dependencies_url}/Dangerfile"
             danger(
                 dangerfile: "Fastlane/Dangerfile",
                 github_api_token: ENV["GITHUB_ACCESS_TOKEN"],
-                base: "develop",
-                head: ENV["BUILD_SOURCEBRANCHNAME"]
+                pr: "https://github.com/wireapp/wire-ios/pull/#{pull_request_number}"
             )
-        end 
+
+            codecov << " -t #{ENV["CODECOV_TOKEN"]} -P #{pull_request_number}"
+        end
+
+        sh codecov
+
     end
 end
