@@ -32,7 +32,7 @@ fileprivate extension VoiceChannel {
     
     var selfStream: ParticipantVideoState? {
         switch (isUnconnectedOutgoingVideoCall, videoState) {
-        case (true, _), (_, .started), (_, .badConnection):
+        case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
             return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: false)
         case (_, .paused):
             return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: true)
@@ -45,7 +45,7 @@ fileprivate extension VoiceChannel {
         let otherParticipants: [ParticipantVideoState] = participants.compactMap { user in
             guard let user = user as? ZMUser else { return nil }
             switch state(forParticipant: user) {
-            case .connected(videoState: .started), .connected(videoState: .badConnection):
+            case .connected(videoState: .started), .connected(videoState: .badConnection), .connected(videoState: .screenSharing):
                 return .init(stream: user.remoteIdentifier, isPaused: false)
             case .connected(videoState: .paused):
                 return .init(stream: user.remoteIdentifier, isPaused: true)
