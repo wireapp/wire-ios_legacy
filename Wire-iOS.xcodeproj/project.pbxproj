@@ -3793,8 +3793,7 @@
 				5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */,
 				F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */,
 				5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */,
-				EF2127271FB9E06300625A9B /* LandingViewController.swift */,
-				EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */,
+				5E9E8AA2216284320058D6E1 /* Landing */,
 				5E8DA763211B2CF000360979 /* Coordinator */,
 				5E8DA753211AF7BA00360979 /* Delegates */,
 				5E8DA74A211AEB6C00360979 /* Event Handlers */,
@@ -3948,6 +3947,15 @@
 			name = "Pre-Login";
 			path = "Wire-iOS/Sources/UserInterface/Registration/Authentication/Event Handlers/Pre-Login";
 			sourceTree = SOURCE_ROOT;
+		};
+		5E9E8AA2216284320058D6E1 /* Landing */ = {
+			isa = PBXGroup;
+			children = (
+				EF2127271FB9E06300625A9B /* LandingViewController.swift */,
+				EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */,
+			);
+			path = Landing;
+			sourceTree = "<group>";
 		};
 		5EA73D7A20D900A10001D106 /* Cells */ = {
 			isa = PBXGroup;
@@ -5159,6 +5167,7 @@
 				8FC85166199245760008B66B /* ThirdParty */,
 				8FC850F7199245760008B66B /* Developer */,
 				8FC85146199245760008B66B /* Managers */,
+				EF2126B41FB9DFE300625A9B /* Authentication */,
 				8FC8516F199245760008B66B /* UserInterface */,
 				87DCF4741D34E95B00BB420F /* Permissions */,
 				8FC850F3199245760008B66B /* AppDelegate+Hockey.h */,
@@ -5318,7 +5327,6 @@
 			children = (
 				16D49326203DCC59008DDFFA /* GroupDetails */,
 				7C5836621FD5AB98001CC843 /* Availability */,
-				EF2126B41FB9DFE300625A9B /* Registration */,
 				16A293D81F5FF9F500B4EB16 /* Skeleton */,
 				162936C11F4AD99C00D4F386 /* Blacklist */,
 				871BC1271D34F8F800DF0793 /* Components */,
@@ -6220,7 +6228,7 @@
 			path = InputBar;
 			sourceTree = "<group>";
 		};
-		EF2126B41FB9DFE300625A9B /* Registration */ = {
+		EF2126B41FB9DFE300625A9B /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
 				EF2126C01FB9DFE300625A9B /* NavigationController.h */,
@@ -6229,7 +6237,7 @@
 				EF2126B51FB9DFE300625A9B /* RegistrationTeam */,
 				EF2126B61FB9DFE300625A9B /* RegistrationPersonal */,
 			);
-			path = Registration;
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		EF2126B51FB9DFE300625A9B /* RegistrationTeam */ = {
