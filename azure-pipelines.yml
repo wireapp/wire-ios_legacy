@@ -10,17 +10,12 @@ steps:
     bundle exec fastlane prepare 
   env: 
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)
-    TERM: "xterm-color"
   displayName: "Setup environment"
 - script: |
     bundle exec fastlane build
-  env: 
-    TERM: "xterm-color"
   displayName: "Build"
 - script: |
     bundle exec fastlane test
-  env: 
-    TERM: "xterm-color"
   displayName: "Test"
 - task: PublishTestResults@2
   inputs:
