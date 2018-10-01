@@ -44,7 +44,7 @@ platform :ios do
     lane :post_test do
         sh "curl -s https://codecov.io/bash > codecov"
         sh "chmod +x codecov"
-        codecov = "./codecov -J '^Wire-iOS$' -D ../DerivedData -X xcodellvm"
+        codecov = "./codecov -J '^Wire-iOS$' -D ../DerivedData"
 
         if ENV["BUILD_REASON"] == "PullRequest"
             if ENV["CODECOV_TOKEN"].nil?
