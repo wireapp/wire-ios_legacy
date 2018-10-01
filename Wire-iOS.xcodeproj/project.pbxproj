@@ -271,6 +271,7 @@
 		5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */; };
 		5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */; };
 		5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */; };
+		5E9E8A9D21621FEC0058D6E1 /* AuthenticationActioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9E8A9C21621FEC0058D6E1 /* AuthenticationActioner.swift */; };
 		5EA73D7920D900830001D106 /* GroupOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */; };
 		5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */; };
 		5EA73D8020D900A10001D106 /* GroupDetailsOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */; };
@@ -1745,6 +1746,7 @@
 		5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Platform.swift"; sourceTree = "<group>"; };
 		5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockZiphyClient.swift; sourceTree = "<group>"; };
 		5E97C32F20F5F17200C806B4 /* ExtensionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionSettingsTests.swift; sourceTree = "<group>"; };
+		5E9E8A9C21621FEC0058D6E1 /* AuthenticationActioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationActioner.swift; sourceTree = "<group>"; };
 		5EA73D7820D900820001D106 /* GroupOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOptionsSectionController.swift; sourceTree = "<group>"; };
 		5EA73D7B20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsGuestOptionsCell.swift; sourceTree = "<group>"; };
 		5EA73D7C20D900A10001D106 /* GroupDetailsOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsOptionsCell.swift; sourceTree = "<group>"; };
@@ -3795,6 +3797,7 @@
 			isa = PBXGroup;
 			children = (
 				5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */,
+				F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */,
 				5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */,
 				EF2127271FB9E06300625A9B /* LandingViewController.swift */,
 				EF1F9A011FBB1FD800969DD1 /* LandingButton.swift */,
@@ -3865,6 +3868,7 @@
 			isa = PBXGroup;
 			children = (
 				5E53B0CD21187469009C7124 /* AuthenticationCoordinatedViewController.h */,
+				5E9E8A9C21621FEC0058D6E1 /* AuthenticationActioner.swift */,
 				5E8DA750211AEFC800360979 /* AuthenticationStatusProvider.swift */,
 				5E766D9E21147697005242B4 /* AuthenticationCoordinatorDelegate.swift */,
 			);
@@ -6439,7 +6443,6 @@
 			children = (
 				F16426FC1FCC5A1600D2ABFC /* ScreenDescriptions */,
 				F1199D3A1FC849440070FAC3 /* ViewDescriptions */,
-				F1199D2F1FC8490A0070FAC3 /* TeamCreationState.swift */,
 				F1199D2E1FC8490A0070FAC3 /* TeamCreationFlowController.swift */,
 				F1199D301FC8490A0070FAC3 /* TeamCreationStepController.swift */,
 			);
@@ -7309,6 +7312,7 @@
 				871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */,
 				D5168F2C200CBBF300F8222A /* Analytics+TeamInvites.swift in Sources */,
 				1648EEF32049A6F800CC6B37 /* DirectorySectionController.swift in Sources */,
+				5E9E8A9D21621FEC0058D6E1 /* AuthenticationActioner.swift in Sources */,
 				BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */,
 				16A94AEF2099DFEC008A5718 /* CallParticipantsViewController.swift in Sources */,
 				160D691C212AC94100096EAD /* ImageResource.swift in Sources */,

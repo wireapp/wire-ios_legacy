@@ -68,7 +68,7 @@ extension TeamCreationState {
         case .createTeam:
             return nil // transition handled by the responder chain
         case .inviteMembers:
-            return nil
+            return nil // last step
         }
     }
 

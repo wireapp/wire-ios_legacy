@@ -19,16 +19,18 @@
 import Foundation
 import SafariServices
 
-class SetEmailStepSecondaryView: SecondaryViewDescription {
+class SetEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
     let views: [ViewDescriptor] = []
     let learnMore: ButtonDescription
 
+    weak var actioner: AuthenticationActioner?
+
     init() {
         self.learnMore = ButtonDescription(title: "team.email.button.learn_more".localized, accessibilityIdentifier: "learn_more_button")
-//        learnMore.buttonTapped = { [weak controller] in
-//            let webview = BrowserViewController(url: URL.wr_emailInUseLearnMore.appendingLocaleParameter)
-//            controller?.present(webview, animated: true, completion: nil)
-//       }
+        learnMore.buttonTapped = { [weak self] in
+            let url = URL.wr_emailInUseLearnMore.appendingLocaleParameter
+            self?.actioner?.executeAction(.openURL(url))
+        }
     }
 
     func display(on error: Error) -> ViewDescriptor? {
@@ -47,7 +49,7 @@ final class SetEmailStepDescription: TeamCreationStepDescription {
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: SecondaryViewDescription?
+    let secondaryView: TeamCreationSecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()
@@ -56,6 +58,5 @@ final class SetEmailStepDescription: TeamCreationStepDescription {
         subtext = "team.email.subheadline".localized
         secondaryView = SetEmailStepSecondaryView()
     }
+
 }
-
-

@@ -24,7 +24,7 @@ final class SetFullNameStepDescription: TeamCreationStepDescription {
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: SecondaryViewDescription?
+    let secondaryView: TeamCreationSecondaryViewDescription?
 
     init() {
         backButton = BackButtonDescription()

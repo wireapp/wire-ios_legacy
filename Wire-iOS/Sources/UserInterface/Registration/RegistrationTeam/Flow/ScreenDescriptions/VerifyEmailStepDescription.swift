@@ -23,19 +23,21 @@ protocol VerifyEmailStepDescriptionDelegate: class {
     func changeEmail()
 }
 
-class VerifyEmailStepSecondaryView: SecondaryViewDescription {
-
+class VerifyEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
     let views: [ViewDescriptor]
+    weak var actioner: AuthenticationActioner?
 
     init(email: String) {
         let resendCode = ButtonDescription(title: "team.activation_code.button.resend".localized, accessibilityIdentifier: "resend_button")
 //        resendCode.buttonTapped = { [weak delegate] in
 //            delegate?.resendActivationCode(to: email)
 //        }
+
         let changeEmail = ButtonDescription(title: "team.activation_code.button.change_email".localized, accessibilityIdentifier: "change_email_button")
 //        changeEmail.buttonTapped = { [weak delegate] in
 //            delegate?.changeEmail()
 //        }
+        
         views = [resendCode, changeEmail]
     }
 }
@@ -46,7 +48,7 @@ final class VerifyEmailStepDescription: TeamCreationStepDescription {
     let mainView: ViewDescriptor & ValueSubmission
     let headline: String
     let subtext: String?
-    let secondaryView: SecondaryViewDescription?
+    let secondaryView: TeamCreationSecondaryViewDescription?
 
     init(email: String) {
         self.email = email

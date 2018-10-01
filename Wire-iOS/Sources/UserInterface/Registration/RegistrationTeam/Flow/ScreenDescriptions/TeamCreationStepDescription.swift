@@ -18,12 +18,14 @@
 
 import Foundation
 
+typealias TeamCreationSecondaryViewDescription = SecondaryViewDescription & AuthenticationActionable
+
 protocol TeamCreationStepDescription {
     var backButton: BackButtonDescription? { get }
     var mainView: ViewDescriptor & ValueSubmission { get }
     var headline: String { get }
     var subtext: String? { get }
-    var secondaryView: SecondaryViewDescription? { get }
+    var secondaryView: TeamCreationSecondaryViewDescription? { get }
     func shouldSkipFromNavigation() -> Bool
 }
 

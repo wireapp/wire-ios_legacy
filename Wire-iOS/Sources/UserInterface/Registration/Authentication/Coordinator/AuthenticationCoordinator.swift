@@ -131,7 +131,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
 
 // MARK: - Event Handling
 
-extension AuthenticationCoordinator: SessionManagerCreatedSessionObserver {
+extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreatedSessionObserver {
 
     func sessionManagerCreated(userSession: ZMUserSession) {
         log.info("Session manager created session: \(userSession)")

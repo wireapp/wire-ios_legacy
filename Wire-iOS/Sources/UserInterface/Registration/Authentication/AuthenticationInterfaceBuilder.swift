@@ -169,5 +169,4 @@ class AuthenticationInterfaceBuilder {
         return controller
     }
 
-
 }

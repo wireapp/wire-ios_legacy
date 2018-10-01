@@ -21,7 +21,11 @@ import Cartography
 
 final class TeamCreationStepController: AuthenticationStepViewController {
 
-    weak var authenticationCoordinator: AuthenticationCoordinator?
+    weak var authenticationCoordinator: AuthenticationCoordinator? {
+        didSet {
+            stepDescription.secondaryView?.actioner = authenticationCoordinator
+        }
+    }
 
     /// headline font size is fixed and not affected by dynamic type setting,
     static let headlineFont         = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
