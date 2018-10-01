@@ -22,7 +22,7 @@ steps:
   inputs:
     testResultsFiles: 'test/*.xml'
 - script: |
-    bundle exec fastlane test
+    bundle exec fastlane post_test
   env:  
     CODECOV_TOKEN: $(CODECOV_TOKEN)
     DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
