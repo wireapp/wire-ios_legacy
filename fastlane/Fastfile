@@ -44,7 +44,7 @@ platform :ios do
     lane :post_test do
         sh "curl -s https://codecov.io/bash > codecov"
         sh "chmod +x codecov"
-        codecov = "./codecov -J '^Wire-iOS$' -D ../DerivedData"
+        codecov = "./codecov -J '^Wire$' -D ../DerivedData"
 
         if ENV["BUILD_REASON"] == "PullRequest"
             if ENV["CODECOV_TOKEN"].nil?
@@ -57,18 +57,7 @@ platform :ios do
 
             pull_request_number = ENV["BUILD_SOURCEBRANCH"].split("/")[2] # For PRs the branch is in format "refs/pull/1/merge"
 
-            result = github_api(
-                server_url: "https://api.github.com",
-                api_token: ENV["GITHUB_ACCESS_TOKEN"],
-                http_method: "GET",
-                path: "/repos/wireapp/wire-ios/pulls/#{pull_request_number}"
-            )
-
-            data = result[:json] 
-            head_branch = data["head"]["ref"]
-            head_commit = data["head"]["sha"]
-
-            codecov << " -t #{ENV["CODECOV_TOKEN"]} -B #{head_branch} -C #{head_commit} -P #{pull_request_number}"
+            codecov << " -t #{ENV["CODECOV_TOKEN"]} -P #{pull_request_number}"
         end
 
         sh codecov
