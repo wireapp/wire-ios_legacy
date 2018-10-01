@@ -51,25 +51,19 @@ platform :ios do
             if ENV["CODECOV_TOKEN"].nil?
                 UI.user_error! "codecov.io token missing for current repository. Set it in CODECOV_TOKEN environment variable"
             end
-            current_branch = sh "git rev-parse --abbrev-ref HEAD"
-            if current_branch.nil? || current_branch.empty?
-                UI.user_error! "Cannot figure out current branch!"
-            end
-            current_commit = sh "git rev-parse --verify HEAD"
-            if current_commit.nil? || current_commit.empty?
-                UI.user_error! "Cannot figure out current commit!"
-            end
-            codecov << " -t #{ENV["CODECOV_TOKEN"]} -B #{current_branch.chomp} -C #{current_commit.chomp}"
+            codecov << " -t #{ENV["CODECOV_TOKEN"]} -B #{ENV["BUILD_SOURCEBRANCHNAME"]} -C #{ENV["BUILD_SOURCEVERSION"]}"
         end
         sh codecov
 
-        dependencies_url = ENV.fetch("DEPENDENCIES_BASE_URL") { "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master" }
-        sh "curl -O #{dependencies_url}/Dangerfile"
-        danger(
-            dangerfile: "Fastlane/Dangerfile",
-            github_api_token: ENV["GITHUB_ACCESS_TOKEN"]
-        )
+        if ENV["BUILD_REASON"] == "PullRequest"
+            dependencies_url = ENV.fetch("DEPENDENCIES_BASE_URL") { "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master" }
+            sh "curl -O #{dependencies_url}/Dangerfile"
+            danger(
+                dangerfile: "Fastlane/Dangerfile",
+                github_api_token: ENV["GITHUB_ACCESS_TOKEN"],
+                base: "develop",
+                head: ENV["BUILD_SOURCEBRANCHNAME"]
+            )
+        end 
     end
-
-
 end
