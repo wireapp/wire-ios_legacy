@@ -34,9 +34,10 @@ import Cartography
 
     @objc open fileprivate(set) weak var conversationViewController: ConversationViewController?
 
-    public init(conversation: ZMConversation, clientViewController: ZClientViewController) {
+    public init(conversation: ZMConversation, message: ZMConversationMessage?, clientViewController: ZClientViewController) {
         let conversationController = ConversationViewController()
         conversationController.conversation = conversation
+        conversationController.visibleMessage = message
         conversationController.zClientViewController = clientViewController
 
         networkStatusViewController = NetworkStatusViewController()

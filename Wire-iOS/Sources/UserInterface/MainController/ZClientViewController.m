@@ -53,10 +53,6 @@
 @end
 
 
-@interface ZClientViewController (ZMRequestsToOpenViewsDelegate) <ZMRequestsToOpenViewsDelegate>
-
-@end
-
 @interface ZClientViewController (NetworkAvailabilityObserver) <ZMNetworkAvailabilityObserver>
 
 @end
@@ -301,19 +297,25 @@
 - (void)selectConversation:(ZMConversation *)conversation
 {
     [self.conversationListViewController selectConversation:conversation
+                                            scrollToMessage:nil
                                                 focusOnView:NO
                                                    animated:NO];
 }
 
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
 {
-    [self selectConversation:conversation focusOnView:focus animated:animated completion:nil];
+    [self selectConversation:conversation scrollToMessage:nil focusOnView:focus animated:animated completion:nil];
 }
 
-- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(__nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
+{
+    [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
+}
+
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
     [self dismissAllModalControllersWithCallback:^{
-        [self.conversationListViewController selectConversation:conversation focusOnView:focus animated:animated completion:completion];
+        [self.conversationListViewController selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:completion];
     }];
 }
 
@@ -366,18 +368,18 @@
     [self pushContentViewController: nil focusOnView:NO animated:animated completion:completion];
 }
 
-- (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
+- (BOOL)loadConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
 {
-    return [self loadConversation:conversation focusOnView:focus animated:animated completion:nil];
+    return [self loadConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
 }
 
-- (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
+- (BOOL)loadConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
     ConversationRootViewController *conversationRootController = nil;
     if ([conversation isEqual:self.currentConversation]) {
         conversationRootController = (ConversationRootViewController *)self.conversationRootViewController;
     } else {
-        conversationRootController = [self conversationRootControllerForConversation:conversation];
+        conversationRootController = [[ConversationRootViewController alloc] initWithConversation:conversation message:message clientViewController:self];
     }
     
     self.currentConversation = conversation;
@@ -387,11 +389,6 @@
     [self pushContentViewController:conversationRootController focusOnView:focus animated:animated completion:completion];
     
     return NO;
-}
-
-- (ConversationRootViewController *)conversationRootControllerForConversation:(ZMConversation *)conversation
-{
-    return [[ConversationRootViewController alloc] initWithConversation:conversation clientViewController:self];
 }
 
 - (void)loadIncomingContactRequestsAndFocusOnView:(BOOL)focus animated:(BOOL)animated
@@ -536,7 +533,9 @@
 {
     // Need to reload conversation to apply color scheme changes
     if (self.currentConversation) {
-        ConversationRootViewController *currentConversationViewController = [self conversationRootControllerForConversation:self.currentConversation];
+        ConversationRootViewController *currentConversationViewController = [[ConversationRootViewController alloc] initWithConversation:self.currentConversation
+                                                                                                                                 message:nil
+                                                                                                                    clientViewController:self];
         [self pushContentViewController:currentConversationViewController focusOnView:NO animated:NO completion:nil];
     }
 }
@@ -677,29 +676,6 @@
 
 @end
 
-@implementation ZClientViewController (ZMRequestsToOpenViewsDelegate)
-
-- (void)showConversationListForUserSession:(ZMUserSession *)userSession
-{
-    [self transitionToListAnimated:YES completion:nil];
-}
-
-- (void)userSession:(ZMUserSession *)userSession showConversation:(ZMConversation *)conversation
-{
-    if (conversation.conversationType == ZMConversationTypeConnection) {
-        [self selectIncomingContactRequestsAndFocusOnView:YES];
-    }
-    else {
-        [self selectConversation:conversation focusOnView:YES animated:YES];
-    }
-}
-
-- (void)userSession:(ZMUserSession *)userSession showMessage:(ZMMessage *)message inConversation:(ZMConversation *)conversation
-{
-    [self selectConversation:conversation focusOnView:YES animated:YES];
-}
-
-@end
 
 @implementation ZClientViewController (NetworkAvailabilityObserver)
 

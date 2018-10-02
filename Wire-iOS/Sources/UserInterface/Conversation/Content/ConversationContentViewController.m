@@ -93,6 +93,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
 @property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
+@property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
 @end
 
 
@@ -101,10 +102,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
 {
+    return [self initWithConversation:conversation message:conversation.firstUnreadMessage];
+}
+
+- (instancetype)initWithConversation:(ZMConversation *)conversation message:(id<ZMConversationMessage>)message
+{
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
         _conversation = conversation;
+        self.messageVisibleOnLoad = message ?: conversation.firstUnreadMessage;
         self.cachedRowHeights = [NSMutableDictionary dictionary];
         self.messagePresenter = [[MessagePresenter alloc] init];
         self.messagePresenter.targetViewController = self;
@@ -239,8 +246,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if (! self.hasDoneInitialLayout) {
         self.hasDoneInitialLayout = YES;
         [self updateTableViewHeaderView];
-        if (self.conversationMessageWindowTableViewAdapter.firstUnreadMessage != nil) {
-            [self scrollToMessage:self.conversationMessageWindowTableViewAdapter.firstUnreadMessage animated:NO];
+        if (self.messageVisibleOnLoad != nil) {
+            [self scrollToMessage:self.messageVisibleOnLoad animated:NO];
         }
     }
 }

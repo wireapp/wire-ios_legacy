@@ -49,16 +49,16 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     weak var popoverPointToView: UIView?
 
 
-    fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
+    fileprivate weak var showContentDelegate: ShowContentDelegate? {
         didSet {
-            if let delegate = requestToOpenViewDelegate {
-                performWhenRequestsToOpenViewsDelegateAvailable?(delegate)
-                performWhenRequestsToOpenViewsDelegateAvailable = nil
+            if let delegate = showContentDelegate {
+                performWhenShowContentDelegateIsAvailable?(delegate)
+                performWhenShowContentDelegateIsAvailable = nil
             }
         }
     }
 
-    fileprivate var performWhenRequestsToOpenViewsDelegateAvailable: ((ZMRequestsToOpenViewsDelegate)->())?
+    fileprivate var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
 
     func updateOverlayWindowFrame() {
         self.overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
@@ -147,7 +147,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
             self.sessionManager?.foregroundNotificationResponder = self
-            self.sessionManager?.requestToOpenViewDelegate = self
+            self.sessionManager?.showContentDelegate = self
             self.sessionManager?.switchingDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
@@ -197,7 +197,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
         var viewController: UIViewController? = nil
-        requestToOpenViewDelegate = nil
+        showContentDelegate = nil
 
         switch appState {
         case .blacklisted:
@@ -274,7 +274,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
         if let viewController = viewController {
             transition(to: viewController, animated: true) {
-                self.requestToOpenViewDelegate = viewController as? ZMRequestsToOpenViewsDelegate
+                self.showContentDelegate = viewController as? ShowContentDelegate
                 completionHandler?()
             }
         } else {
@@ -411,34 +411,28 @@ extension AppRootViewController: AppStateControllerDelegate {
 
 }
 
-// MARK: - RequestToOpenViewsDelegate
+// MARK: - ShowContentDelegate
 
-extension AppRootViewController: ZMRequestsToOpenViewsDelegate {
+extension AppRootViewController: ShowContentDelegate {
 
-    public func showConversationList(for userSession: ZMUserSession!) {
-        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
-            delegate.showConversationList(for: userSession)
-        })
+    func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConversation(conversation, at: message)
+        }
     }
-
-    public func userSession(_ userSession: ZMUserSession!, show conversation: ZMConversation!) {
-        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
-            delegate.userSession(userSession, show: conversation)
-        })
+    
+    func showConversationList() {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConversationList()
+        }
     }
-
-    public func userSession(_ userSession: ZMUserSession!, show message: ZMMessage!, in conversation: ZMConversation!) {
-        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
-            delegate.userSession(userSession, show: message, in: conversation)
-        })
-    }
-
-    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate) -> ()) {
-        if let delegate = self.requestToOpenViewDelegate {
+    
+    internal func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
+        if let delegate = showContentDelegate {
             closure(delegate)
         }
         else {
-            self.performWhenRequestsToOpenViewsDelegateAvailable = closure
+            self.performWhenShowContentDelegateIsAvailable = closure
         }
     }
 }

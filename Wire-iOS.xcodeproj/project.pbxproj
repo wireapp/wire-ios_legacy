@@ -95,6 +95,7 @@
 		1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */; };
 		1682AEC520484B9B003A052A /* Themeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1682AEC420484B9B003A052A /* Themeable.swift */; };
 		1687ABA820EBB5F30007C240 /* ImageMessageCell+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */; };
+		1687C0FC2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1687C0FB2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift */; };
 		168A16AC1D9597C2005CFA6C /* ShareExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */; };
 		168A16AF1D9597C2005CFA6C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 168A16AD1D9597C2005CFA6C /* MainInterface.storyboard */; };
 		168A16B31D9597C2005CFA6C /* Wire Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -1483,6 +1484,7 @@
 		1682AEC420484B9B003A052A /* Themeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themeable.swift; sourceTree = "<group>"; };
 		1687ABA720EBB5F30007C240 /* ImageMessageCell+Configure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+Configure.swift"; sourceTree = "<group>"; };
 		1687ABA920EBCED80007C240 /* ZMUser+Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Images.swift"; sourceTree = "<group>"; };
+		1687C0FB2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+ShowContentDelegate.swift"; sourceTree = "<group>"; };
 		168A16A31D95964B005CFA6C /* NSString+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+URL.swift"; sourceTree = "<group>"; };
 		168A16A91D9597C2005CFA6C /* Wire Share Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wire Share Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		168A16AB1D9597C2005CFA6C /* ShareExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionViewController.swift; sourceTree = "<group>"; };
@@ -5270,6 +5272,7 @@
 				8FA197181AA5EEE500C64826 /* ZClientViewController+Internal.h */,
 				8FC851F0199245760008B66B /* ZClientViewController.m */,
 				877798AB205A8EF500898A5E /* ZClientViewController.swift */,
+				1687C0FB2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift */,
 			);
 			path = MainController;
 			sourceTree = "<group>";
@@ -7580,6 +7583,7 @@
 				EF6ACA7D21316E7D0064047B /* UIColor+Scheme.swift in Sources */,
 				D5D89782201A25E000FAF69C /* Analytics+Services.swift in Sources */,
 				8FC85498199245770008B66B /* MediaBar.m in Sources */,
+				1687C0FC2151435F003099DD /* ZClientViewController+ShowContentDelegate.swift in Sources */,
 				F1B5EAC72029AB9A0081D402 /* SimpleTextField.swift in Sources */,
 				16E2A0A61F6BF233005F4DB1 /* ZMConversation+Calling.swift in Sources */,
 				BFCF31DD1DA52ECE0039B3DC /* KeyboardHeight.swift in Sources */,

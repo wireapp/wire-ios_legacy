@@ -52,6 +52,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) BOOL focusOnNextSelection;
 @property (nonatomic) BOOL animateNextSelection;
+@property (nonatomic) id<ZMConversationMessage> scrollToMessageOnNextSelection;
 @property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
 @property (nonatomic) ConversationListCell *layoutCell;
 @property (nonatomic) ConversationCallController *startCallController;
@@ -223,6 +224,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
             
             // Actually load the new view controller and optionally focus on it
             [[ZClientViewController sharedZClientViewController] loadConversation:conversation
+                                                                  scrollToMessage:self.scrollToMessageOnNextSelection
                                                                       focusOnView:self.focusOnNextSelection
                                                                          animated:self.animateNextSelection
                                                                        completion:self.selectConversationCompletion];
@@ -242,6 +244,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
         [self ensureCurrentSelection];
     }
     
+    self.scrollToMessageOnNextSelection = nil;
     self.focusOnNextSelection = NO;
 }
 
@@ -276,17 +279,18 @@ static NSString * const CellReuseIdConversation = @"CellId";
     }
 }
 
-- (BOOL)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
+- (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
 {
-    return [self selectConversation:conversation focusOnView:focus animated:animated completion:nil];
+    return [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
 }
 
-- (BOOL)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
+- (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
     self.focusOnNextSelection = focus;
 
     self.selectConversationCompletion = completion;
     self.animateNextSelection = animated;
+    self.scrollToMessageOnNextSelection = message;
     
     // Tell the model to select the item
     return [self selectModelItem:conversation];

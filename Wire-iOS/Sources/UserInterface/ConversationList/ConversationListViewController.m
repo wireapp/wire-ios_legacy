@@ -470,22 +470,22 @@
 
 - (void)selectConversation:(ZMConversation *)conversation
 {
-    [self selectConversation:conversation focusOnView:NO animated:NO];
+    [self selectConversation:conversation scrollToMessage:nil focusOnView:NO animated:NO];
 }
 
-- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
 {
-    [self selectConversation:conversation focusOnView:focus animated:animated completion:nil];
+    [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
 }
 
-- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
     self.selectedConversation = conversation;
     
     @weakify(self);
     [self dismissPeoplePickerWithCompletionBlock:^{
         @strongify(self);
-        [self.listContentController selectConversation:self.selectedConversation focusOnView:focus animated:animated completion:completion];
+        [self.listContentController selectConversation:self.selectedConversation scrollToMessage:message focusOnView:focus animated:animated completion:completion];
     }];
 }
 
@@ -694,7 +694,7 @@
     } completionHandler:^{
         [self setState:ConversationListStateConversationList animated:YES completion:^{
             @strongify(self)
-            [self.listContentController selectConversation:conversation focusOnView:YES animated:YES];
+            [self.listContentController selectConversation:conversation scrollToMessage:nil focusOnView:YES animated:YES];
         }];
     }];
 }
