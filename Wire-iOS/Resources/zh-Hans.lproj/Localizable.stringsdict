@@ -138,7 +138,7 @@
         <string>新设备</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.text</key>
+    <key>conversation.silenced.status.message.generic_message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -149,10 +149,10 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d 新邮件</string>
+        <string>%d new messages</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.link</key>
+    <key>conversation.silenced.status.message.mention</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -163,63 +163,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d 新链接</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.image</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d 新图像</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.location</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d 新位置</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.audio</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d 新的音频消息</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.video</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d 新视频</string>
+        <string>%d mentions</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -233,7 +177,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d 个新招呼</string>
+        <string>%d pings</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -248,20 +192,6 @@
         <string>d</string>
         <key>other</key>
         <string>%d 个未接来电</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.file</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>other</key>
-        <string>%d 新文件</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call</key>

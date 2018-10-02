@@ -136,4 +136,11 @@ extension ZMSnapshotTestCase {
         viewController.view.frame = CGRect(x: 0, y: 0, width: 375, height: 812)
         verify(view: viewController.view)
     }
+    
+    func resetColorScheme() {
+        ColorScheme.default.variant = .light
+
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
+    }
 }

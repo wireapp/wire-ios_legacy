@@ -42,7 +42,7 @@
             )
         }
         
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let controller = UIAlertController(title: conversation.displayName, message: nil, preferredStyle: .actionSheet)
         conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
         present(controller)

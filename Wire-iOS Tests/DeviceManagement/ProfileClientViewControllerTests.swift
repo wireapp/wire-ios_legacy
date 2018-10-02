@@ -41,7 +41,7 @@ final class ProfileClientViewControllerTests: ZMSnapshotTestCase {
         user = nil
         client = nil
 
-        ColorScheme.default.variant = .light
+        resetColorScheme()
 
         super.tearDown()
     }

@@ -573,6 +573,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (NSArray<UIKeyCommand *> *)keyCommands
 {
     NSMutableArray *commands = [[NSMutableArray alloc] init];
+    
+    if (IS_IPAD) {
+        [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
+                                                modifierFlags:UIKeyModifierShift
+                                                       action:@selector(shiftReturnPressed)
+                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.newline", nil)]];
+    }
+    
     [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
                                             modifierFlags:UIKeyModifierCommand
                                                    action:@selector(commandReturnPressed)
@@ -601,6 +609,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)commandReturnPressed
 {
     [self sendText];
+}
+
+- (void)shiftReturnPressed
+{
+    [self.inputBar.textView replaceRange:self.inputBar.textView.selectedTextRange withText:@"\n"];
 }
 
 - (void)upArrowPressed

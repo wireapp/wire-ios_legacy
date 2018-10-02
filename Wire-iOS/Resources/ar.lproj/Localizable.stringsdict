@@ -238,148 +238,52 @@
         <string>أجهزة جديدة</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.text</key>
+    <key>conversation.silenced.status.message.generic_message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
       <key>d_number_of_new</key>
       <dict>
         <key>zero</key>
-        <string>%d رسائل نصية جديدة</string>
+        <string>%d new messages</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>رسالة نصية جديدة</string>
+        <string>1 new message</string>
         <key>two</key>
-        <string>%d رسائل نصية جديدة</string>
+        <string>%d new messages</string>
         <key>few</key>
-        <string>%d رسائل نصية جديدة</string>
+        <string>%d new messages</string>
         <key>many</key>
-        <string>%d رسائل نصية جديدة</string>
+        <string>%d new messages</string>
         <key>other</key>
-        <string>%d رسائل نصية جديدة</string>
+        <string>%d new messages</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.link</key>
+    <key>conversation.silenced.status.message.mention</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
       <key>d_number_of_new</key>
       <dict>
         <key>zero</key>
-        <string>%d روابط جديدة</string>
+        <string>%d mentions</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>رابط جديد</string>
+        <string>1 mention</string>
         <key>two</key>
-        <string>%d روابط جديدة</string>
+        <string>%d mentions</string>
         <key>few</key>
-        <string>%d روابط جديدة</string>
+        <string>%d mentions</string>
         <key>many</key>
-        <string>%d روابط جديدة</string>
+        <string>%d mentions</string>
         <key>other</key>
-        <string>%d روابط جديدة</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.image</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>zero</key>
-        <string>%d رسائل جديدة</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>صورة جديدة</string>
-        <key>two</key>
-        <string>%d رسائل جديدة</string>
-        <key>few</key>
-        <string>%d رسائل جديدة</string>
-        <key>many</key>
-        <string>%d رسائل جديدة</string>
-        <key>other</key>
-        <string>%d رسائل جديدة</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.location</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>zero</key>
-        <string>%d مواقع جديدة</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>موقع جديد</string>
-        <key>two</key>
-        <string>%d مواقع جديدة</string>
-        <key>few</key>
-        <string>%d مواقع جديدة</string>
-        <key>many</key>
-        <string>%d مواقع جديدة</string>
-        <key>other</key>
-        <string>%d مواقع جديدة</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.audio</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>zero</key>
-        <string>%d رسائل صوتية جديدة</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>رسالة صوتية جديدة</string>
-        <key>two</key>
-        <string>%d رسائل صوتية جديدة</string>
-        <key>few</key>
-        <string>%d رسائل صوتية جديدة</string>
-        <key>many</key>
-        <string>%d رسائل صوتية جديدة</string>
-        <key>other</key>
-        <string>%d رسائل صوتية جديدة</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.video</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>zero</key>
-        <string>%d فيديوهات جديدة</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>فيديو جديد</string>
-        <key>two</key>
-        <string>%d فيديوهات جديدة</string>
-        <key>few</key>
-        <string>%d فيديوهات جديدة</string>
-        <key>many</key>
-        <string>%d فيديوهات جديدة</string>
-        <key>other</key>
-        <string>%d فيديوهات جديدة</string>
+        <string>%d mentions</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -389,21 +293,21 @@
       <key>d_number_of_new</key>
       <dict>
         <key>zero</key>
-        <string>%d رنّة جديدة</string>
+        <string>%d pings</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>رنّة جديدة</string>
+        <string>1 ping</string>
         <key>two</key>
-        <string>%d رنّة جديدة</string>
+        <string>%d pings</string>
         <key>few</key>
-        <string>%d رنّة جديدة</string>
+        <string>%d pings</string>
         <key>many</key>
-        <string>%d رنّة جديدة</string>
+        <string>%d pings</string>
         <key>other</key>
-        <string>%d رنّة جديدة</string>
+        <string>%d pings</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -419,7 +323,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>مكالمة فائتة</string>
+        <string>1 missed call</string>
         <key>two</key>
         <string>%d مكالمات فائتة</string>
         <key>few</key>
@@ -428,30 +332,6 @@
         <string>%d مكالمات فائتة</string>
         <key>other</key>
         <string>%d مكالمات فائتة</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.file</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>zero</key>
-        <string>%d ملفات جديدة</string>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>ملف جديد</string>
-        <key>two</key>
-        <string>%d ملفات جديدة</string>
-        <key>few</key>
-        <string>%d ملفات جديدة</string>
-        <key>many</key>
-        <string>%d ملفات جديدة</string>
-        <key>other</key>
-        <string>%d ملفات جديدة</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call</key>

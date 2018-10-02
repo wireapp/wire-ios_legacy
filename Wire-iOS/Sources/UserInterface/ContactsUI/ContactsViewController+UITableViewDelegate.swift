@@ -20,6 +20,8 @@ import Foundation
 
 extension ContactsViewController: UITableViewDelegate {
     func headerTitle(section: Int) -> String? {
+        guard let tableView = tableView else { return nil }
+
         return dataSource?.tableView(tableView, titleForHeaderInSection: section)
     }
 
@@ -42,6 +44,10 @@ extension ContactsViewController: UITableViewDelegate {
         return ContactsSectionHeaderView.height
     }
 
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat.StartUI.CellHeight
+    }
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let user = dataSource?.user(at: indexPath) {
             dataSource?.select(user)
@@ -55,7 +61,7 @@ extension ContactsViewController: UITableViewDelegate {
             shouldSelect{
             return indexPath
         } else {
-            if let cell = self.tableView.cellForRow(at: indexPath) as? ContactsCell {
+            if let cell = tableView.cellForRow(at: indexPath) as? ContactsCell {
                 contentDelegate?.contactsViewController?(self, didSelect: cell, for: user)
             }
         }

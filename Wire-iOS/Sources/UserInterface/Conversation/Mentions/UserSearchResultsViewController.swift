@@ -19,30 +19,38 @@
 import UIKit
 import Cartography
 
-@objc protocol MentionsSearchResultsViewControllerDelegate {
-    func didSelectUserToMention(_ user: ZMUser)
+@objc protocol UserSearchResultsViewControllerDelegate {
+    func didSelect(user: UserType)
 }
 
-@objc protocol MentionsSearchResultsViewProtocol {
-    @discardableResult func search(in users: [ZMUser], with query: String) -> [ZMUser] 
-    func dismissIfVisible()
+@objc protocol Dismissable {
+    func dismiss()
 }
 
-class MentionsSearchResultsViewController: UIViewController {
+@objc protocol UserList {
+    var users: [UserType] { get set }
+}
+
+class UserSearchResultsViewController: UIViewController {
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    private var searchResults: [ZMUser] = []
+    private var searchResults: [UserType] = []
     private var query: String = ""
-    private var tableViewHeight: NSLayoutConstraint?
+    private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
     
-    @objc public weak var delegate: MentionsSearchResultsViewControllerDelegate?
+    @objc public weak var delegate: UserSearchResultsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupCollectionView()
         setupConstraints()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillChangeFrame(_:)),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
     }
     
     private func setupCollectionView() {
@@ -52,16 +60,15 @@ class MentionsSearchResultsViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = UIColor.white
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 1
-        layout.minimumInteritemSpacing = 1
-        
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+
         collectionView.collectionViewLayout = layout
 
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.32)
         view.addSubview(collectionView)
         
         view.accessibilityIdentifier = "mentions.list.container"
@@ -73,26 +80,38 @@ class MentionsSearchResultsViewController: UIViewController {
             collectionView.bottom == selfView.bottom
             collectionView.leading == selfView.leading
             collectionView.trailing == selfView.trailing
-            tableViewHeight = collectionView.height == 0
+            collectionViewHeight = collectionView.height == 0
         }
     }
     
-    @objc func reloadTable(with results: [ZMUser]) {
-        searchResults = results.reversed()
-        
-        let viewHeight = self.view.bounds.size.height
-        let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
-        tableViewHeight?.constant = minValue
-        collectionView.isScrollEnabled = (minValue == viewHeight)
+    @objc func reloadTable(with results: [UserType]) {
+        searchResults = results
+        resizeTable()
         
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
-        collectionView.scrollToItem(at: IndexPath(item: searchResults.count - 1, section: 0), at: .bottom, animated: false)
+        
+        scrollToLastItem()
 
-        if minValue > 0 {
+        if results.count > 0 {
             show()
         } else {
-            dismissIfVisible()
+            dismiss()
+        }
+    }
+    
+    private func resizeTable() {
+        let viewHeight = self.view.bounds.size.height
+        let minValue = min(viewHeight, CGFloat(searchResults.count) * rowHeight)
+        collectionViewHeight?.constant = minValue
+        collectionView.isScrollEnabled = (minValue == viewHeight)
+    }
+    
+    private func scrollToLastItem() {
+        let firstMatchIndexPath = IndexPath(item: searchResults.count - 1, section: 0)
+        
+        if collectionView.containsCell(at: firstMatchIndexPath) {
+            collectionView.scrollToItem(at: firstMatchIndexPath, at: .bottom, animated: false)
         }
     }
     
@@ -100,54 +119,35 @@ class MentionsSearchResultsViewController: UIViewController {
         self.view.isHidden = false
     }
     
+    @objc dynamic func keyboardWillChangeFrame(_ notification: Notification) {
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        resizeTable()
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+            self.scrollToLastItem()
+        }
+    }
+
 }
 
-extension MentionsSearchResultsViewController: MentionsSearchResultsViewProtocol {
-    
-    func dismissIfVisible() {
+extension UserSearchResultsViewController: Dismissable {
+    func dismiss() {
         self.view.isHidden = true
     }
-    
-    @discardableResult func search(in users: [ZMUser], with query: String) -> [ZMUser] {
-        
-        var results: [ZMUser] = []
-        
-        let usersToSearch = users.filter { user in
-            return !user.isSelfUser && !user.isServiceUser
+}
+
+extension UserSearchResultsViewController: UserList {
+    var users: [UserType] {
+        set {
+            reloadTable(with: newValue.reversed())
         }
-        
-        defer {
-            reloadTable(with: results)
+        get {
+            return searchResults.reversed()
         }
-        
-        if query == "" {
-            results = usersToSearch
-            return results
-        }
-        
-        let query = query.lowercased().normalized() as String
-        let rules: [ ((ZMUser) -> Bool) ] = [
-            { $0.name?.lowercased().normalized()?.hasPrefix(query) ?? false },
-            { $0.nameTokens.first(where: { $0.lowercased().normalized()?.hasPrefix(query) ?? false }) != nil },
-            { $0.handle?.lowercased().normalized()?.hasPrefix(query) ?? false },
-            { $0.name?.lowercased().normalized().contains(query) ?? false },
-            { $0.handle?.lowercased().normalized()?.contains(query) ?? false }
-        ]
-        
-        var foundUsers = Set<ZMUser>()
-        
-        rules.forEach { rule in
-            let matches = usersToSearch.filter({ rule($0) }).filter { !foundUsers.contains($0) }
-                .sorted(by: { $0.name < $1.name })
-            foundUsers = foundUsers.union(matches)
-            results = results + matches
-        }
-        
-        return results
     }
 }
 
-extension MentionsSearchResultsViewController: UICollectionViewDelegate {
+extension UserSearchResultsViewController: UICollectionViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -158,13 +158,13 @@ extension MentionsSearchResultsViewController: UICollectionViewDelegate {
     }
 }
 
-extension MentionsSearchResultsViewController: UICollectionViewDelegateFlowLayout {
+extension UserSearchResultsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: rowHeight)
     }
 }
 
-extension MentionsSearchResultsViewController: UICollectionViewDataSource {
+extension UserSearchResultsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let user = searchResults[indexPath.item]
@@ -175,13 +175,7 @@ extension MentionsSearchResultsViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.didSelectUserToMention(searchResults[indexPath.item])
-        dismissIfVisible()
-    }
-}
-
-extension ZMUser {
-    public var nameTokens: [String] {
-        return self.name?.components(separatedBy: CharacterSet.alphanumerics.inverted) ?? []
+        delegate?.didSelect(user: searchResults[indexPath.item])
+        dismiss()
     }
 }

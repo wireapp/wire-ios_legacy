@@ -563,7 +563,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (void) createMentionsResultsView {
     
-    self.mentionsSearchResultsViewController = [[MentionsSearchResultsViewController alloc] init];
+    self.mentionsSearchResultsViewController = [[UserSearchResultsViewController alloc] init];
     self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     // delegate here
     

@@ -23,6 +23,33 @@ extension ConversationInputBarViewController {
         return mentionsHandler != nil
     }
     
+    var canInsertMention: Bool {
+        guard isInMentionsFlow, let mentionsView = mentionsView, mentionsView.users.count > 0 else {
+            return false
+        }
+        return true
+    }
+    
+    func insertBestMatchMention() {
+        guard canInsertMention, let mentionsView = mentionsView else {
+            fatal("Cannot insert best mention")
+        }
+        
+        let bestSuggestion = mentionsView.users[0]
+        insertMention(for: bestSuggestion)
+    }
+    
+    func insertMention(for user: UserType) {
+        guard let handler = mentionsHandler else { return }
+        
+        let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
+
+        let (range, attributedText) = handler.replacement(forMention: user, in: text)
+
+        inputBar.textView.replace(range, withAttributedText: (attributedText && inputBar.textView.typingAttributes))
+        dismissMentionsIfNeeded()
+    }
+    
     @objc func configureMentionButton() {
         mentionButton.addTarget(self, action: #selector(ConversationInputBarViewController.mentionButtonTapped(sender:)), for: .touchUpInside)
     }
@@ -39,18 +66,18 @@ extension ConversationInputBarViewController {
     }
 }
 
-extension ConversationInputBarViewController: MentionsSearchResultsViewControllerDelegate {
-    func didSelectUserToMention(_ user: ZMUser) {
-        guard let handler = mentionsHandler else { return }
-
-        let text = inputBar.textView.attributedText ?? NSAttributedString(string: inputBar.textView.text)
-        inputBar.textView.attributedText = handler.replace(mention: user, in: text)
-        mentionsHandler = nil
-        mentionsView?.dismissIfVisible()
+extension ConversationInputBarViewController: UserSearchResultsViewControllerDelegate {
+    func didSelect(user: UserType) {
+        insertMention(for: user)
     }
 }
 
 extension ConversationInputBarViewController {
+    
+    func dismissMentionsIfNeeded() {
+        mentionsHandler = nil
+        mentionsView?.dismiss()
+    }
 
     func triggerMentionsIfNeeded(from textView: UITextView, with selection: UITextRange? = nil) {
         if let position = MentionsHandler.cursorPosition(in: textView, range: selection) {
@@ -58,11 +85,10 @@ extension ConversationInputBarViewController {
         }
 
         if let handler = mentionsHandler, let searchString = handler.searchString(in: textView.text) {
-            let participants = conversation.activeParticipants.array as! [ZMUser]
-            mentionsView?.search(in: participants, with: searchString)
+            let participants = conversation.activeParticipants.array as! [UserType]
+            mentionsView?.users = ZMUser.searchForMentions(in: participants, with: searchString)
         } else {
-            mentionsHandler = nil
-            mentionsView?.dismissIfVisible()
+            dismissMentionsIfNeeded()
         }
     }
 

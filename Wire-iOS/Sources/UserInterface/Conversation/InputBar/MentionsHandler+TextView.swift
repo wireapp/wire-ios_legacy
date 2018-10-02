@@ -18,15 +18,6 @@
 
 import Foundation
 
-fileprivate extension NSAttributedString {
-    func hasSpaceAt(position: Int) -> Bool {
-        guard wholeRange.contains(position) else { return false }
-        let scalars = attributedSubstring(from: NSRange(location: position, length: 1)).string.unicodeScalars
-        let justSpaces = scalars.filter(NSCharacterSet.whitespacesAndNewlines.contains)
-        return !justSpaces.isEmpty
-    }
-}
-
 extension MentionsHandler {
 
     static func cursorPosition(in textView: UITextView, range: UITextRange? = nil) -> Int? {
@@ -56,13 +47,18 @@ extension MentionsHandler {
         let selectionRange = textView.selectedRange
         let cursorPosition = selectionRange.location
 
-        let prefix = text.hasSpaceAt(position: cursorPosition - 1) ? "" : " "
-        let suffix = text.hasSpaceAt(position: cursorPosition) ? "" : " "
+        let prefix = needsSpace(text: text, position: cursorPosition - 1) ? " " : ""
+        let suffix = needsSpace(text: text, position: cursorPosition) ? " " : ""
 
         let result = prefix + "@" + suffix
 
         // We need to change the selection depending if we insert only '@' or ' @'
         let cursorOffset = prefix.isEmpty ? 1 : 2
         return (result, cursorOffset)
+    }
+
+    fileprivate static func needsSpace(text: NSAttributedString, position: Int) -> Bool {
+        guard text.wholeRange.contains(position) else { return false }
+        return !text.hasSpaceAt(position: position)
     }
 }

@@ -123,7 +123,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "5 new text messages")
+        XCTAssertEqual(status.string, "5 new messages")
     }
     
     func testStatusForMultipleTextMessagesInConversation() {
@@ -155,7 +155,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "@self test")
+        XCTAssertEqual(status.string, "1 mention, 5 new messages")
     }
     
     func testStatusForMultipleTextMessagesInConversation_LastRename() {
@@ -192,7 +192,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "5 new text messages, 5 new images")
+        XCTAssertEqual(status.string, "10 new messages")
     }
     
     func testStatusForMultipleVariousMessagesInConversation_silenced_mention() {
@@ -210,7 +210,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "1 mention, 5 new text messages")
+        XCTAssertEqual(status.string, "1 mention, 5 new messages")
     }
     
     func testStatusForSystemMessageILeft() {
@@ -398,5 +398,23 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "")
+    }
+    
+    func testThatTypingHasHigherPrioThanMentions() {
+        // GIVEN
+        let sut = self.createGroupConversation()
+        sut.managedObjectContext?.saveOrRollback()
+        
+        sut.managedObjectContext?.typingUsers.update([otherUser], in: sut)
+        
+        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
+        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        sut.lastReadServerTimeStamp = Date.distantPast
+        // WHEN
+        let status = sut.status
+        // THEN
+        XCTAssertEqual(status.isTyping, true)
+        XCTAssertEqual(status.messagesRequiringAttentionByType[.mention]!, 1)
+        XCTAssertEqual(status.description(for: sut).string, "Bruno: typing a message…")
     }
 }

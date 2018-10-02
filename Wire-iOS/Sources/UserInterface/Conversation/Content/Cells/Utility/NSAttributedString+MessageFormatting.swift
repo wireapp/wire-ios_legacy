@@ -20,6 +20,7 @@ import Foundation
 import Down
 import WireExtensionComponents
 import WireLinkPreview
+import WireUtilities
 
 
 extension NSAttributedString {
@@ -127,16 +128,8 @@ extension NSMutableAttributedString {
     
     func replaceEmoticons(excluding excludedRanges: [Range<Int>]) {
         beginEditing(); defer { endEditing() }
-        
-        var excludedIndexSet = IndexSet()
-        var includedIndexSet = IndexSet()
-        
-        excludedRanges.forEach { excludedIndexSet.insert(integersIn: $0) }
-        includedIndexSet.insert(integersIn: Range<Int>(wholeRange)!)
-        
-        let allowedIndexSet = includedIndexSet.symmetricDifference(excludedIndexSet)
-        
-        _ = allowedIndexSet
+
+        let allowedIndexSet = IndexSet(integersIn: Range<Int>(wholeRange)!, excluding: excludedRanges)
         
         for range in allowedIndexSet.rangeView {
             let range = NSRange(location: range.startIndex, length: range.endIndex - range.startIndex)
