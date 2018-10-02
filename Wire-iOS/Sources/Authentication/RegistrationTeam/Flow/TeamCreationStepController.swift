@@ -87,8 +87,8 @@ final class TeamCreationStepController: AuthenticationStepViewController {
         createConstraints()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         mainView.becomeFirstResponder()
     }
@@ -97,6 +97,7 @@ final class TeamCreationStepController: AuthenticationStepViewController {
         super.viewWillDisappear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         NotificationCenter.default.removeObserver(self)
+        mainView.resignFirstResponder()
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -283,8 +284,6 @@ final class TeamCreationStepController: AuthenticationStepViewController {
             (mainView as? TextContainer)?.text = nil
         case .showGuidanceDot:
             break
-        case .showAdditionalInfo:
-            break
         }
     }
 
@@ -324,4 +323,3 @@ extension TeamCreationStepController {
     }
 
 }
-

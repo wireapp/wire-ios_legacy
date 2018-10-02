@@ -53,8 +53,7 @@ extension AuthenticationCoordinator: UINavigationControllerDelegate {
 
         guard
             let currentViewController = self.currentViewController,
-            let keyboardViewController = viewController as? KeyboardAvoidingViewController,
-            let authenticationViewController = keyboardViewController.viewController as? AuthenticationStepViewController else {
+            let authenticationViewController = viewController as? AuthenticationStepViewController else {
             return
         }
 

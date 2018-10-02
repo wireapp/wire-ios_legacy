@@ -28,9 +28,7 @@ typedef NS_ENUM(NSUInteger, AuthenticationErrorFeedbackAction) {
     /// The view should display a guidance dot to indicate user input is invalid.
     AuthenticationErrorFeedbackActionShowGuidanceDot,
     /// The view should clear the input fields.
-    AuthenticationErrorFeedbackActionClearInputFields,
-    /// The view should show additional information about the error.
-    AuthenticationErrorFeedbackActionShowAdditionalInfo
+    AuthenticationErrorFeedbackActionClearInputFields
 };
 
 /**
@@ -49,5 +47,13 @@ typedef NS_ENUM(NSUInteger, AuthenticationErrorFeedbackAction) {
 
 @optional
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction NS_SWIFT_NAME(executeErrorFeedbackAction(_:));
+
+/**
+ * The view controller should display information about the specified error.
+ * @param error The error to present to the user.
+ */
+
+@optional
+- (void)displayError:(NSError * _Nonnull)error;
 
 @end

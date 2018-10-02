@@ -42,6 +42,7 @@ enum AuthenticationCoordinatorAction {
     case openURL(URL)
     case repeatAction
     case advanceTeamCreation(String)
+    case displayError(NSError)
 
     var retainsModal: Bool {
         switch self {

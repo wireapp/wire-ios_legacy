@@ -116,14 +116,12 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
         stepViewController.authenticationCoordinator = self
         currentViewController = stepViewController
 
-        let containerViewController = KeyboardAvoidingViewController(viewController: stepViewController)
-
         if resetStack {
             presenter?.backButtonEnabled = false
-            presenter?.setViewControllers([containerViewController], animated: true)
+            presenter?.setViewControllers([stepViewController], animated: true)
         } else {
             presenter?.backButtonEnabled = newState.allowsUnwind
-            presenter?.pushViewController(containerViewController, animated: true)
+            presenter?.pushViewController(stepViewController, animated: true)
         }
     }
 
@@ -248,6 +246,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .advanceTeamCreation(let newValue):
                 advanceTeamCreation(value: newValue)
+
+            case .displayError(let error):
+                currentViewController?.displayError?(error)
             }
         }
     }
