@@ -3944,9 +3944,8 @@
 				5E8DA783211C3F2D00360979 /* AuthenticationEmailLoginUnknownErrorHandler.swift */,
 				5E8DA785211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift */,
 			);
-			name = "Pre-Login";
-			path = "Wire-iOS/Sources/UserInterface/Registration/Authentication/Event Handlers/Pre-Login";
-			sourceTree = SOURCE_ROOT;
+			path = "Pre-Login";
+			sourceTree = "<group>";
 		};
 		5E9E8AA2216284320058D6E1 /* Landing */ = {
 			isa = PBXGroup;
