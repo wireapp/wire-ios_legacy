@@ -32,9 +32,9 @@ class RegistrationActivationErrorHandler: AuthenticationEventHandler {
 
         // Only handle errors during authentication requests
         switch currentStep {
-        case .sendActivationCode, .teamCreation(.sendEmailCode):
+        case .sendActivationCode:
             break
-        case .activateCredentials, .teamCreation(.verifyActivationCode):
+        case .activateCredentials:
             postAlertAction.append(.executeFeedbackAction(.clearInputFields))
         default:
             return nil

@@ -34,12 +34,11 @@ class SetEmailStepSecondaryView: TeamCreationSecondaryViewDescription {
     }
 
     func display(on error: Error) -> ViewDescriptor? {
-        let nsError = error as NSError
-        if UInt(nsError.code) == ZMUserSessionErrorCode.emailIsAlreadyRegistered.rawValue {
-            return learnMore
-        } else {
+        guard (error as NSError).userSessionErrorCode == .emailIsAlreadyRegistered else {
             return nil
         }
+
+        return learnMore
     }
 }
 

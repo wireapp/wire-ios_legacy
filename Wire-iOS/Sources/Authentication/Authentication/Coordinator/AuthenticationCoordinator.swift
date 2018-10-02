@@ -247,7 +247,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .advanceTeamCreation(let newValue):
                 advanceTeamCreation(value: newValue)
 
-            case .displayError(let error):
+            case .displayInlineError(let error):
                 currentViewController?.displayError?(error)
             }
         }

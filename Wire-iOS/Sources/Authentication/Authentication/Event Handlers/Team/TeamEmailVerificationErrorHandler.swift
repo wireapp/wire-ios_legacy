@@ -27,21 +27,31 @@ class TeamEmailVerificationErrorHandler: AuthenticationEventHandler {
     weak var statusProvider: AuthenticationStatusProvider?
 
     func handleEvent(currentStep: AuthenticationFlowStep, context: NSError) -> [AuthenticationCoordinatorAction]? {
+        let error = context
+
         // Only handle team creation errors
         guard case let .teamCreation(state) = currentStep else {
             return nil
         }
 
+        let errorNeedsAlert: Bool
+
         switch state {
-        case .setEmail, .verifyEmail:
-            break
+        case .sendEmailCode:
+            errorNeedsAlert = error.userSessionErrorCode != .emailIsAlreadyRegistered
+        case .verifyEmail:
+            errorNeedsAlert = true
         default:
             return nil
         }
 
-        // Display the error
-        let alert = AuthenticationCoordinatorErrorAlert(error: context, completionActions: [.executeFeedbackAction(.clearInputFields)])
-        return [.hideLoadingView, .presentErrorAlert(alert)]
+        // Display the error in the appropriate way
+        if errorNeedsAlert {
+            let alert = AuthenticationCoordinatorErrorAlert(error: error, completionActions: [.executeFeedbackAction(.clearInputFields)])
+            return [.hideLoadingView, .presentErrorAlert(alert)]
+        } else {
+            return [.hideLoadingView, .displayInlineError(error), .executeFeedbackAction(.clearInputFields)]
+        }
     }
 
 }
