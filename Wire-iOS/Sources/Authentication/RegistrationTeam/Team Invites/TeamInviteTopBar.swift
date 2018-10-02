@@ -65,6 +65,8 @@ final class TeamInviteTopBar: UIView {
     }
     
     private func createConstraints() {
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+
         let constraints: [NSLayoutConstraint] = [
             actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             actionButton.bottomAnchor.constraint(equalTo: safeBottomAnchor, constant: -12),
