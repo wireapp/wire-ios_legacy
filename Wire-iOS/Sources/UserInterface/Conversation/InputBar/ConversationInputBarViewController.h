@@ -71,8 +71,6 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic, weak, nullable) id<Dismissable, UserList> mentionsView;
 @property (nonatomic, strong, nullable) id textfieldObserverToken;
 
-@property (nonatomic, nonnull) id<AVAudioSessionType> audioSession;
-
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)bounceCameraIcon;
 

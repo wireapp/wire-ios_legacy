@@ -63,8 +63,6 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
-
-        sut.audioSession = MockAudioSession()
     }
 
     func DISABLE_testAudioRecorderTouchBegan() {
