@@ -50,8 +50,6 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
     var sut: ConversationInputBarViewController!
 
     override func tearDown() {
-        sut.audioRecordViewControllerDidCancel(sut.audioRecordViewController!)
-
         sut = nil
         super.tearDown()
     }
@@ -87,9 +85,6 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view)
-
-        // clean up
-        longPressEnded()
     }
 
     func testAudioRecorderTouchChanged() {
@@ -102,9 +97,6 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view)
-
-        // clean up
-        longPressEnded()
     }
 
     func testAudioRecorderTouchEnded() {
@@ -112,8 +104,7 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         // WHEN
         sut.audioButtonLongPressed(MockLongPressGestureRecognizer(location: .zero, state: .began))
-        let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .ended)
-        sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
+        longPressEnded()
         sut.view.layoutIfNeeded()
 
         // THEN
