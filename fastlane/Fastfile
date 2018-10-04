@@ -37,17 +37,19 @@ platform :ios do
             output_types: "",
             fail_build: false
         )
+
+        # let's not fail the step now, but just process the test output and re-run in post_test
         begin
-            trainer(
-                output_directory: "test", 
-                fail_build: false # This flag does nothing with 0.8.0 version, let's catch the exception instead
-            )
+            trainer(output_directory: "test")
         rescue => exception
         end
     end
 
     desc "Run post-test tasks"
     lane :post_test do
+        # Let's fail the build now when all the test results are already uploaded
+        trainer(output_directory: "test")
+
         sh "curl -s https://codecov.io/bash > codecov"
         sh "chmod +x codecov"
         codecov = "./codecov -J '^Wire$' -D ../DerivedData"
