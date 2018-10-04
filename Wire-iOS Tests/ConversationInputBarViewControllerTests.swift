@@ -66,8 +66,6 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
-
-        recordMode = true
     }
 
     func longPressChanged() {
