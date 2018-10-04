@@ -22,7 +22,6 @@ import Cartography
 @testable import Wire
 
 class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelegate {
-
     var shouldAccept = true
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool {
         return shouldAccept
@@ -33,7 +32,7 @@ class TestCharacterInputFieldDelegate: NSObject, CharacterInputFieldDelegate {
         didChangeText.append(to)
     }
     var didFillInput: Int = 0
-    func didFillInput(inputField: CharacterInputField) {
+    func didFillInput(inputField: CharacterInputField, text: String) {
         didFillInput = didFillInput + 1
     }
 }

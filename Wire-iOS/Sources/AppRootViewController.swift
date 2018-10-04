@@ -44,7 +44,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var authenticationCoordinator: AuthenticationCoordinator?
-    var flowController: TeamCreationFlowController!
 
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
