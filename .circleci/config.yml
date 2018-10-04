@@ -36,8 +36,8 @@ jobs:
   build:
     <<: *defaults
     branches:
-      ignore:
-        - develop
+      only:
+        - no-such-branch
     steps:
     - checkout
     - run: *setup_environment
