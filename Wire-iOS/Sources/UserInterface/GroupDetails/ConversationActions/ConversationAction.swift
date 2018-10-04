@@ -22,7 +22,7 @@ extension ZMConversation {
     enum Action {
         case delete
         case leave
-        case silence(isSilenced: Bool)
+        case configureNotifications
         case archive(isArchived: Bool)
         case cancelRequest
         case block(isBlocked: Bool)
@@ -73,7 +73,7 @@ extension ZMConversation {
         }
         
         if !isReadOnly {
-            actions.append(.silence(isSilenced: isSilenced))
+            actions.append(.configureNotifications)
         }
 
         actions.append(.archive(isArchived: isArchived))
@@ -111,7 +111,7 @@ extension ZMConversation.Action {
         case .leave: return "meta.menu.leave"
         case .markRead: return "meta.menu.mark_read"
         case .markUnread: return "meta.menu.mark_unread"
-        case .silence(isSilenced: let muted): return "meta.menu.silence.\(muted ? "unmute" : "mute")"
+        case .configureNotifications: return "meta.menu.configure_notifications"
         case .archive(isArchived: let archived): return "meta.menu.\(archived ? "unarchive" : "archive")"
         case .cancelRequest: return "meta.menu.cancel_connection_request"
         case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_button_title"

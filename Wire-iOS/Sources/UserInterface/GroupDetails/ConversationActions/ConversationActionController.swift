@@ -83,9 +83,9 @@
         case .markUnread: self.enqueue {
             self.conversation.markAsUnread()
             }
-        case .silence(isSilenced: let isSilenced): self.enqueue {
-            self.conversation.isSilenced = !isSilenced
-            }
+        case .configureNotifications: self.requestNotificationResult(for: self.conversation) { result in
+            self.handleNotificationResult(result, for: self.conversation)
+        }
         case .leave: self.request(LeaveResult.self) { result in
             self.handleLeaveResult(result, for: self.conversation)
             }
