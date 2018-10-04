@@ -37,7 +37,7 @@
 #import "Wire-Swift.h"
 
 
-@interface AddPhoneNumberViewController () <UINavigationControllerDelegate, FormStepDelegate, UserProfileUpdateObserver, ZMUserObserver>
+@interface AddPhoneNumberViewController ()
 
 @property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) NavigationController *rootNavigationController;
@@ -201,73 +201,11 @@
 
 - (IBAction)skip:(id)sender
 {
+    // TODO: Remove
     if ([self.formStepDelegate respondsToSelector:@selector(didSkipFormStep:)]) {
         [self.view endEditing:NO];
         [self.formStepDelegate didSkipFormStep:self];
     }
-}
-
-#pragma mark - FormStepProtocol
-
-- (void)didCompleteFormStep:(UIViewController *)viewController
-{
-}
-
-#pragma mark - PhoneVerificationStepViewControllerDelegate
-
-- (void)phoneVerificationStepDidRequestVerificationCode
-{
-}
-
-#pragma mark - NavigationControllerDelegate
-
-- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-                                   animationControllerForOperation:(UINavigationControllerOperation)operation
-                                                fromViewController:(UIViewController *)fromVC
-                                                  toViewController:(UIViewController *)toVC
-{
-    id <UIViewControllerAnimatedTransitioning> transition = nil;
-    
-    switch (operation) {
-        case UINavigationControllerOperationPop:
-            transition = self.popTransition;
-            break;
-        case UINavigationControllerOperationPush:
-            transition = self.pushTransition;
-        default:
-            break;
-    }
-    return transition;
-}
-
-#pragma mark - ZMUserObserver
-
-- (void)userDidChange:(UserChangeInfo *)note
-{
-    if (note.profileInformationChanged && ZMUser.selfUser.phoneNumber.length > 0) {
-        self.showLoadingView = NO;
-        
-        [self.formStepDelegate didCompleteFormStep:self];
-    }
-}
-
-#pragma mark - UserProfileUpdateObserver
-
-
-- (void)phoneNumberVerificationCodeRequestDidSucceed
-{
-}
-
-- (void)proceedToCodeVerification
-{
-}
-
-- (void)phoneNumberVerificationCodeRequestDidFail:(NSError *)error
-{
-}
-
-- (void)phoneNumberChangeDidFail:(NSError *)error
-{
 }
 
 @end

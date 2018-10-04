@@ -20,7 +20,7 @@
 import UIKit
 import Cartography
 
-@objcMembers class ClientUnregisterFlowViewController: FormFlowViewController, FormStepDelegate, AuthenticationCoordinatedViewController {
+@objcMembers class ClientUnregisterFlowViewController: UIViewController, AuthenticationCoordinatedViewController, UINavigationControllerDelegate {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?
@@ -76,7 +76,7 @@ import Cartography
     
     fileprivate func setupNavigationController() {
         let invitationController = ClientUnregisterInvitationViewController()
-        invitationController.formStepDelegate = self
+        // invitationController.formStepDelegate = self
         invitationController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         let rootNavigationController = NavigationController(rootViewController: invitationController)
@@ -109,7 +109,8 @@ import Cartography
     }
 
     // MARK: - FormStepDelegate
-    
+
+    // TODO: Remove
     func didCompleteFormStep(_ viewController: UIViewController!) {
         let clientsListController = ClientListViewController(clientsList: self.clients,
                                                              credentials: self.credentials,
@@ -128,7 +129,7 @@ import Cartography
     
     // MARK: - UINavigationControllerDelegate
     
-    override func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .pop:
             return self.popTransition
@@ -139,7 +140,7 @@ import Cartography
         }
     }
     
-    override func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if viewController is ClientListViewController {
             UIApplication.shared.wr_setStatusBarHidden(!UIScreen.hasNotch, with: animated ? .fade : .none)
             navigationController.setNavigationBarHidden(false, animated: animated)

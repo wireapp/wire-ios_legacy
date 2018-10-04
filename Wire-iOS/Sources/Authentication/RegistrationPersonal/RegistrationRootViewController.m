@@ -29,7 +29,7 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <FormStepDelegate, RegistrationFlowViewControllerDelegate, AuthenticationCoordinatedViewController, PhoneNumberStepViewControllerDelegate, EmailStepViewControllerDelegate>
+@interface RegistrationRootViewController () <AuthenticationCoordinatedViewController, PhoneNumberStepViewControllerDelegate, EmailStepViewControllerDelegate>
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) AuthenticationFlowType flowType;
@@ -216,40 +216,6 @@
     [SessionManager.shared select:[[SessionManager shared] firstAuthenticatedAccount]
                        completion:nil
                tearDownCompletion:nil];
-}
-
-#pragma mark - FormStepDelegate
-
-- (void)didCompleteFormStep:(UIViewController *)viewController
-{
-    [self.formStepDelegate didCompleteFormStep:viewController];
-}
-
-- (void)registrationFlowViewController:(FormFlowViewController *)viewController needsToSignInWith:(LoginCredentials *)loginCredentials
-{
-    [self presentLoginTab];
-    [self.signInViewController presentSignInViewControllerWithCredentials:loginCredentials];
-}
-
-#pragma mark - CompanyLoginControllerDelegate
-
-- (void)controller:(CompanyLoginController * _Nonnull)controller presentAlert:(UIAlertController * _Nonnull)presentAlert
-{
-    [self presentViewController:presentAlert animated:YES completion:nil];
-}
-
-- (void)controller:(CompanyLoginController *)controller showLoadingView:(BOOL)showLoadingView
-{
-    self.showLoadingView = showLoadingView;
-}
-
-- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
-{
-    if (self.registrationTabBarController.selectedIndex == 0) {
-        [self.flowViewController executeErrorFeedbackAction:feedbackAction];
-    } else if (self.registrationTabBarController.selectedIndex == 1) {
-        [self.signInViewController executeErrorFeedbackAction:feedbackAction];
-    }
 }
 
 #pragma mark - PhoneNumberStepViewControllerDelegate

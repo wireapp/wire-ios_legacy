@@ -52,6 +52,7 @@
     }];
 }
 
+// TODO: Remove
 - (void)didCompleteFormStep:(UIViewController *)viewController
 {
     // Reload data source
@@ -60,6 +61,7 @@
     [self dismissChildViewController:viewController];
 }
 
+// TODO: Remove
 - (void)didSkipFormStep:(UIViewController *)viewController
 {
     if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidNotShareContacts:)]) {

@@ -23,7 +23,6 @@
 @import WireExtensionComponents;
 
 #import "WireSyncEngine+iOS.h"
-#import "RegistrationStepViewController.h"
 #import "AddEmailPasswordViewController.h"
 #import "AddPhoneNumberViewController.h"
 #import "RegistrationRootViewController.h"
@@ -149,12 +148,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 + (RegistrationFlow)registrationFlow
 {
     return IS_IPAD ? RegistrationFlowEmail : RegistrationFlowPhone;
-}
-
-#pragma mark - FormStepProtocol
-
-- (void)didCompleteFormStep:(UIViewController *)viewController
-{
 }
 
 #pragma mark - NavigationControllerDelegate

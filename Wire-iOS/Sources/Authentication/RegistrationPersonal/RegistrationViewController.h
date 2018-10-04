@@ -19,7 +19,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FormStepDelegate.h"
 #import "RegistrationRootViewController.h"
 #import "WireSyncEngine+iOS.h"
 #import "AuthenticationCoordinatedViewController.h"

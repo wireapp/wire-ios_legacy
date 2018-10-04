@@ -148,7 +148,7 @@ extension SettingsCellDescriptorFactory {
                     let stepDelegate = DismissStepDelegate()
                     stepDelegate.strongCapture = stepDelegate
                     
-                    addController.formStepDelegate = stepDelegate
+//                    addController.formStepDelegate = stepDelegate
                     return addController
                 }
         },

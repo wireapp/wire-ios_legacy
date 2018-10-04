@@ -19,12 +19,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FormFlowViewController.h"
 #import "AuthenticationCoordinatedViewController.h"
 
 @class LoginCredentials, AuthenticationCoordinator;
 
-@interface SignInViewController : FormFlowViewController <AuthenticationCoordinatedViewController>
+@interface SignInViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 @property (nonatomic, nullable) LoginCredentials *loginCredentials;
 

@@ -19,9 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "RegistrationStepViewController.h"
-
-@interface ShareContactsViewController : RegistrationStepViewController
+@interface ShareContactsViewController : UIViewController
 
 @property (nonatomic) BOOL uploadAddressBookImmediately;
 @property (nonatomic) BOOL backgroundBlurDisabled;

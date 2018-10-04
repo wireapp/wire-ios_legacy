@@ -1145,13 +1145,11 @@
 		EF2127171FB9DFE300625A9B /* NoHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */; };
 		EF2127181FB9DFE300625A9B /* PhoneNumberStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */; };
 		EF21271B1FB9DFE300625A9B /* TermsOfUseStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126ED1FB9DFE300625A9B /* TermsOfUseStepViewController.m */; };
-		EF21271C1FB9DFE300625A9B /* RegistrationStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126EE1FB9DFE300625A9B /* RegistrationStepViewController.m */; };
 		EF21271D1FB9DFE300625A9B /* AddEmailPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F31FB9DFE300625A9B /* AddEmailPasswordViewController.m */; };
 		EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F41FB9DFE300625A9B /* AddEmailStepViewController.m */; };
 		EF21271F1FB9DFE300625A9B /* AddPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F61FB9DFE300625A9B /* AddPhoneNumberViewController.m */; };
 		EF2127201FB9DFE300625A9B /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F81FB9DFE300625A9B /* NavigationController.m */; };
 		EF2127211FB9DFE300625A9B /* GuidanceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */; };
-		EF2127221FB9DFE300625A9B /* FormFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FC1FB9DFE300625A9B /* FormFlowViewController.m */; };
 		EF2127231FB9DFE300625A9B /* RegistrationFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */; };
 		EF2127241FB9DFE300625A9B /* CountryCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */; };
 		EF2127261FB9DFE300625A9B /* RegistrationRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */; };
@@ -2873,7 +2871,6 @@
 		EF2126B81FB9DFE300625A9B /* RegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationViewController.m; sourceTree = "<group>"; };
 		EF2126B91FB9DFE300625A9B /* RegistrationTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationTextField.m; sourceTree = "<group>"; };
 		EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceDotView.m; sourceTree = "<group>"; };
-		EF2126BC1FB9DFE300625A9B /* FormFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormFlowViewController.h; sourceTree = "<group>"; };
 		EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberViewController.m; sourceTree = "<group>"; };
 		EF2126BE1FB9DFE300625A9B /* EmailFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailFormViewController.m; sourceTree = "<group>"; };
 		EF2126BF1FB9DFE300625A9B /* GuidanceLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuidanceLabel.h; sourceTree = "<group>"; };
@@ -2881,7 +2878,6 @@
 		EF2126C21FB9DFE300625A9B /* CountryCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountryCodeView.h; sourceTree = "<group>"; };
 		EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationFormController.h; sourceTree = "<group>"; };
 		EF2126C41FB9DFE300625A9B /* CheckmarkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckmarkViewController.m; sourceTree = "<group>"; };
-		EF2126C51FB9DFE300625A9B /* FormStepDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormStepDelegate.h; sourceTree = "<group>"; };
 		EF2126C61FB9DFE300625A9B /* RegistrationRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationRootViewController.h; sourceTree = "<group>"; };
 		EF2126C81FB9DFE300625A9B /* CountryCodes.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CountryCodes.plist; sourceTree = "<group>"; };
 		EF2126C91FB9DFE300625A9B /* Country.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
@@ -2906,7 +2902,6 @@
 		EF2126DE1FB9DFE300625A9B /* PhoneNumberStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberStepViewController.h; sourceTree = "<group>"; };
 		EF2126DF1FB9DFE300625A9B /* NoHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoHistoryViewController.h; sourceTree = "<group>"; };
 		EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailStepViewController.m; sourceTree = "<group>"; };
-		EF2126E31FB9DFE300625A9B /* RegistrationStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationStepViewController.h; sourceTree = "<group>"; };
 		EF2126E41FB9DFE300625A9B /* TermsOfUseStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsOfUseStepViewController.h; sourceTree = "<group>"; };
 		EF2126E51FB9DFE300625A9B /* NameStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameStepViewController.m; sourceTree = "<group>"; };
 		EF2126E61FB9DFE300625A9B /* VerificationCodeStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerificationCodeStepViewController.m; sourceTree = "<group>"; };
@@ -2914,7 +2909,6 @@
 		EF2126E81FB9DFE300625A9B /* NoHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoHistoryViewController.m; sourceTree = "<group>"; };
 		EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberStepViewController.m; sourceTree = "<group>"; };
 		EF2126ED1FB9DFE300625A9B /* TermsOfUseStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsOfUseStepViewController.m; sourceTree = "<group>"; };
-		EF2126EE1FB9DFE300625A9B /* RegistrationStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationStepViewController.m; sourceTree = "<group>"; };
 		EF2126EF1FB9DFE300625A9B /* VerificationCodeStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerificationCodeStepViewController.h; sourceTree = "<group>"; };
 		EF2126F01FB9DFE300625A9B /* NameStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameStepViewController.h; sourceTree = "<group>"; };
 		EF2126F21FB9DFE300625A9B /* AddPhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPhoneNumberViewController.h; sourceTree = "<group>"; };
@@ -2927,7 +2921,6 @@
 		EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuidanceLabel.m; sourceTree = "<group>"; };
 		EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailFormViewController.h; sourceTree = "<group>"; };
 		EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberViewController.h; sourceTree = "<group>"; };
-		EF2126FC1FB9DFE300625A9B /* FormFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormFlowViewController.m; sourceTree = "<group>"; };
 		EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationFormController.m; sourceTree = "<group>"; };
 		EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountryCodeView.m; sourceTree = "<group>"; };
 		EF2127011FB9DFE300625A9B /* RegistrationRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistrationRootViewController.m; sourceTree = "<group>"; };
@@ -6266,19 +6259,16 @@
 				EFE285432146B4DC00720737 /* RegistrationTextField+EdgeInset.swift */,
 				EF2126BA1FB9DFE300625A9B /* GuidanceDotView.m */,
 				EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */,
-				EF2126BC1FB9DFE300625A9B /* FormFlowViewController.h */,
 				EF2126BD1FB9DFE300625A9B /* PhoneNumberViewController.m */,
 				EF2126BE1FB9DFE300625A9B /* EmailFormViewController.m */,
 				EF2126BF1FB9DFE300625A9B /* GuidanceLabel.h */,
 				EF2126C21FB9DFE300625A9B /* CountryCodeView.h */,
 				EF2126C41FB9DFE300625A9B /* CheckmarkViewController.m */,
-				EF2126C51FB9DFE300625A9B /* FormStepDelegate.h */,
 				EF2126D11FB9DFE300625A9B /* GuidanceDotView.h */,
 				EF2126D41FB9DFE300625A9B /* CheckmarkView.h */,
 				EF2126F91FB9DFE300625A9B /* GuidanceLabel.m */,
 				EF2126FA1FB9DFE300625A9B /* EmailFormViewController.h */,
 				EF2126FB1FB9DFE300625A9B /* PhoneNumberViewController.h */,
-				EF2126FC1FB9DFE300625A9B /* FormFlowViewController.m */,
 				EF2126C31FB9DFE300625A9B /* RegistrationFormController.h */,
 				EF2126FE1FB9DFE300625A9B /* RegistrationFormController.m */,
 				EF2126FF1FB9DFE300625A9B /* CountryCodeView.m */,
@@ -6338,8 +6328,6 @@
 				D56A2D43207DFC9E00DB59F5 /* UIAlertController+Restore.swift */,
 				EF2126E71FB9DFE300625A9B /* EmailStepViewController.h */,
 				EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */,
-				EF2126E31FB9DFE300625A9B /* RegistrationStepViewController.h */,
-				EF2126EE1FB9DFE300625A9B /* RegistrationStepViewController.m */,
 				EF2126DE1FB9DFE300625A9B /* PhoneNumberStepViewController.h */,
 				EF2126E91FB9DFE300625A9B /* PhoneNumberStepViewController.m */,
 				EF24036D20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift */,
@@ -7360,7 +7348,6 @@
 				BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */,
 				16D49328203DCC88008DDFFA /* GroupDetailsViewController.swift in Sources */,
 				BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */,
-				EF2127221FB9DFE300625A9B /* FormFlowViewController.m in Sources */,
 				5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */,
 				871BC3621D34F94200DF0793 /* Settings.m in Sources */,
 				EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */,
@@ -7660,7 +7647,6 @@
 				5E9E8A9F21626A390058D6E1 /* TeamCredentialsVerifiedEventHandler.swift in Sources */,
 				AF36C5AB1E9F903800FADECC /* DraftNavigationController.swift in Sources */,
 				16A293DA1F5FFA2E00B4EB16 /* SkeletonViewController.swift in Sources */,
-				EF21271C1FB9DFE300625A9B /* RegistrationStepViewController.m in Sources */,
 				87F18BBC1E01577C00C69D9B /* FileMessageViewState.swift in Sources */,
 				EF4172B12110A6E300FF85C7 /* SplitViewController+rightView.swift in Sources */,
 				BF808B571DE71F3000718076 /* UserNameTakeOverViewController.swift in Sources */,

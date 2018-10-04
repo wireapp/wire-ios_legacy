@@ -20,7 +20,7 @@
 import UIKit
 import Cartography
 
-class ClientUnregisterInvitationViewController: RegistrationStepViewController {
+class ClientUnregisterInvitationViewController: UIViewController {
     var heroLabel : UILabel?
     var subtitleLabel : UILabel?
     var manageDevicesButton : UIButton?
@@ -132,9 +132,9 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     // MARK: - Actions
     
     @objc func openManageDevices(_ sender : UIButton!) {
-        if let formStepDelegate = self.formStepDelegate {
-            formStepDelegate.didCompleteFormStep(self)
-        }
+//        if let formStepDelegate = self.formStepDelegate {
+//            formStepDelegate.didCompleteFormStep(self)
+//        }
     }
     
     @objc func signOut(_ sender : UIButton!) {

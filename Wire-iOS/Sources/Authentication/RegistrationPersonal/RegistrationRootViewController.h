@@ -18,7 +18,6 @@
 
 
 #import <UIKit/UIKit.h>
-#import "FormFlowViewController.h"
 #import "NoHistoryViewController.h"
 #import "AuthenticationCoordinatedViewController.h"
 
@@ -32,7 +31,7 @@ typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RegistrationRootViewController : FormFlowViewController <AuthenticationCoordinatedViewController>
+@interface RegistrationRootViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 @property (nonatomic) BOOL showLogin;
 @property (nonatomic) BOOL shouldHideCancelButton;
