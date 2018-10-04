@@ -37,7 +37,13 @@ platform :ios do
             output_types: "",
             fail_build: false
         )
-        trainer(output_directory: "test")
+        begin
+            trainer(
+                output_directory: "test", 
+                fail_build: false # This flag does nothing with 0.8.0 version, let's catch the exception instead
+            )
+        rescue => exception
+        end
     end
 
     desc "Run post-test tasks"
