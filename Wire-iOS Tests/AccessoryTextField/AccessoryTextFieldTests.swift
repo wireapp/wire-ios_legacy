@@ -45,7 +45,6 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
     func testThatItShowsPlaceHolderText() {
         // GIVEN
 
-        FAIL_BUILD
         // WHEN
         sut.placeholder = "TEAM NAMES"
 
