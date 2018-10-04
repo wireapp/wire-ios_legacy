@@ -29,7 +29,6 @@
 - (void)presentShareContactsViewController
 {
     ShareContactsViewController *shareContactsViewController = [[ShareContactsViewController alloc] init];
-    shareContactsViewController.formStepDelegate = self;
     
     [self presentChildViewcontroller:shareContactsViewController];
 }

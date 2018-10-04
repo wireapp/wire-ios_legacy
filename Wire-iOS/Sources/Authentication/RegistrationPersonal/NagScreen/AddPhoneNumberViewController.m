@@ -44,33 +44,12 @@
 @property (nonatomic) PhoneNumberStepViewController *phoneNumberStepViewController;
 @property (nonatomic) PopTransition *popTransition;
 @property (nonatomic) PushTransition *pushTransition;
-@property (nonatomic) id userEditingToken;
-@property (nonatomic) id userObserverToken;
 @property (nonatomic) UIButton *closeButton;
 @property (nonatomic) UIButton *skipButton;
-@property (nonatomic, weak) id<UserProfile> userProfile;
 
 @end
 
 @implementation AddPhoneNumberViewController
-
-- (void)dealloc
-{
-    self.userEditingToken = nil;
-}
-
-- (instancetype)init
-{
-    self = [super init];
-    
-    if (self) {
-        self.userProfile = ZMUserSession.sharedSession.userProfile;
-        self.userEditingToken = [self.userProfile addObserver:self];
-        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
-    }
-    
-    return self;
-}
 
 - (BOOL)shouldAutorotate
 {
@@ -123,7 +102,6 @@
     self.phoneNumberStepViewController.heroLabel.attributedText = [self attributedHeroText];
     
     self.rootNavigationController = [[NavigationController alloc] initWithRootViewController:self.phoneNumberStepViewController.registrationFormViewController];
-    self.rootNavigationController.delegate = self;
     self.rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.rootNavigationController.view.opaque = NO;
     self.rootNavigationController.backButtonEnabled = self.showsNavigationBar;
@@ -202,10 +180,10 @@
 - (IBAction)skip:(id)sender
 {
     // TODO: Remove
-    if ([self.formStepDelegate respondsToSelector:@selector(didSkipFormStep:)]) {
-        [self.view endEditing:NO];
-        [self.formStepDelegate didSkipFormStep:self];
-    }
+//    if ([self.formStepDelegate respondsToSelector:@selector(didSkipFormStep:)]) {
+//        [self.view endEditing:NO];
+//        [self.formStepDelegate didSkipFormStep:self];
+//    }
 }
 
 @end

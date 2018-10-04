@@ -68,6 +68,12 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         }
     }
 
+    @objc(tabBarHidden) var isTabBarHidden = false {
+        didSet {
+            tabBar?.isHidden = isTabBarHidden
+        }
+    }
+
     var style: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             tabBar?.style = style
@@ -123,6 +129,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
         tabBar?.animatesTransition = isInteractive
+        tabBar?.isHidden = isTabBarHidden
         self.tabBar?.delegate = self
         self.tabBar?.isUserInteractionEnabled = self.isEnabled && items.count > 1
         self.view.addSubview(self.tabBar!)

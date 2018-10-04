@@ -23,7 +23,6 @@
 
 #import "PhoneNumberStepViewController.h"
 #import "RegistrationFormController.h"
-#import "FormStepDelegate.h"
 #import "Wire-Swift.h"
 
 @interface PhoneSignInViewController () <PhoneNumberStepViewControllerDelegate>

@@ -20,8 +20,9 @@
 #import <UIKit/UIKit.h>
 
 #import "RegistrationRootViewController.h"
-#import "WireSyncEngine+iOS.h"
 #import "AuthenticationCoordinatedViewController.h"
+#import "BlueViewController.h"
+#import "WireSyncEngine+iOS.h"
 
 @class ZMEmailCredentials;
 
@@ -32,7 +33,7 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
     RegistrationFlowPhone
 };
 
-@interface RegistrationViewController : UIViewController <AuthenticationCoordinatedViewController>
+@interface RegistrationViewController : BlueViewController <AuthenticationCoordinatedViewController>
 
 - (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow;
 

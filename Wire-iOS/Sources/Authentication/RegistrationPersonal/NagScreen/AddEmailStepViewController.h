@@ -19,7 +19,6 @@
 @import UIKit;
 @import WireSyncEngine;
 
-#import "RegistrationStepViewController.h"
 #import "AuthenticationCoordinatedViewController.h"
 
 @protocol AddEmailStepViewControllerDelegate <NSObject>

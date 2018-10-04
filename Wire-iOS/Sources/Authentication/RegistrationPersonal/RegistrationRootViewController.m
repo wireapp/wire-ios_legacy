@@ -55,11 +55,9 @@
 - (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow
 {
     self = [super initWithNibName:nil bundle:nil];
-
     if (self) {
         self.flowType = flow;
     }
-
     return self;
 }
 
@@ -87,8 +85,6 @@
     flowViewController.title = NSLocalizedString(@"registration.title", @"");
 
     switch (self.flowType) {
-        case AuthenticationFlowRegular:
-            break;
         case AuthenticationFlowOnlyLogin:
             self.showLogin = true;
             break;
@@ -99,6 +95,7 @@
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.registrationTabBarController.interactive = NO;
+    self.registrationTabBarController.tabBarHidden = YES;
 
     self.signInViewController = signInViewController;
     self.flowViewController = flowViewController;
@@ -107,6 +104,8 @@
 
     if (self.showLogin) {
         [self.registrationTabBarController selectIndex:1 animated:NO];
+    } else {
+        [self.registrationTabBarController selectIndex:0 animated:NO];
     }
     
     self.registrationTabBarController.style = ColorSchemeVariantDark;
@@ -125,6 +124,7 @@
 {
     [super viewWillAppear:animated];
     [self updateConstraintsForRegularLayout:self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular];
+    self.wr_navigationController.backButton.tintColor = [UIColor whiteColor];
     [self.view layoutIfNeeded];
 }
 
@@ -218,22 +218,16 @@
                tearDownCompletion:nil];
 }
 
-#pragma mark - PhoneNumberStepViewControllerDelegate
+#pragma mark - Registration Delegates
 
 - (void)phoneNumberStepViewControllerDidPickPhoneNumber:(NSString *)phoneNumber
 {
-    if (self.flowType == AuthenticationFlowOnlyRegistration) {
-        [self.authenticationCoordinator startRegistrationWithPhoneNumber:phoneNumber];
-    }
+    [self.authenticationCoordinator startRegistrationWithPhoneNumber:phoneNumber];
 }
-
-#pragma mark - EmailStepViewControllerDelegate
 
 - (void)emailStepViewControllerDidFinishWithInput:(EmailStepViewControllerInput *)input
 {
-    if (self.flowType == AuthenticationFlowOnlyRegistration) {
-        [self.authenticationCoordinator startRegistrationWithName:input.name email:input.emailAddress password:input.password];
-    }
+    [self.authenticationCoordinator startRegistrationWithName:input.name email:input.emailAddress password:input.password];
 }
 
 @end

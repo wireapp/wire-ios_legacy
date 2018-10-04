@@ -16,18 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import <UIKit/UIKit.h>
-#import "NoHistoryViewController.h"
+@import UIKit;
 #import "AuthenticationCoordinatedViewController.h"
 
 typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
-    AuthenticationFlowRegular,
-    AuthenticationFlowOnlyLogin,
+    AuthenticationFlowOnlyLogin = 0,
     AuthenticationFlowOnlyRegistration
 };
 
-@class ZMIncompleteRegistrationUser, LoginCredentials, AuthenticationCoordinator;
+@class LoginCredentials, AuthenticationCoordinator;
 
 NS_ASSUME_NONNULL_BEGIN
 

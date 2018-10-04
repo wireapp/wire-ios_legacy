@@ -45,21 +45,11 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface RegistrationViewController (UserSessionObserver) <SessionManagerCreatedSessionObserver, PostLoginAuthenticationObserver>
-
-@end
-
-@interface RegistrationViewController () <UINavigationControllerDelegate, FormStepDelegate>
+@interface RegistrationViewController () <UINavigationControllerDelegate>
 
 @property (nonatomic) BOOL registeredInThisSession;
 
 @property (nonatomic) RegistrationRootViewController *registrationRootViewController;
-@property (nonatomic) PopTransition *popTransition;
-@property (nonatomic) PushTransition *pushTransition;
-@property (nonatomic) UIImageView *backgroundImageView;
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) BOOL hasPushedPostRegistrationStep;
-@property (nonatomic) NSArray<UserClient *>* userClients;
 @property (nonatomic) AuthenticationFlowType flowType;
 
 @end
@@ -70,10 +60,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @synthesize authenticationCoordinator;
 
-- (instancetype)init
-{
-    return [self initWithAuthenticationFlow:AuthenticationFlowRegular];
-}
+ZM_EMPTY_ASSERTING_INIT()
 
 - (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow
 {
@@ -89,39 +76,31 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.view.tintColor = [UIColor whiteColor];
-    
-    self.popTransition = [[PopTransition alloc] init];
-    self.pushTransition = [[PushTransition alloc] init];
-
-    [self setupBackgroundViewController];
     [self setupNavigationController];
-    
-    [self updateViewConstraints];
+    [self setupConstraints];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:YES];
+    [self.wr_navigationController.backButton setTintColor:UIColor.whiteColor];
 }
 
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return NO;
 }
 
-- (void)setupBackgroundViewController
+- (UIStatusBarStyle)preferredStatusBarStyle
 {
-    self.backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LaunchImage"]];
-    [self.view addSubview:self.backgroundImageView];
+    return self.registrationRootViewController.preferredStatusBarStyle;
 }
 
 - (void)setupNavigationController
 {
     RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithAuthenticationFlow:self.flowType];
-    registrationRootViewController.formStepDelegate = self;
     registrationRootViewController.authenticationCoordinator = self.authenticationCoordinator;
     registrationRootViewController.showLogin = self.shouldShowLogin;
     registrationRootViewController.loginCredentials = self.loginCredentials;
@@ -133,42 +112,21 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.registrationRootViewController didMoveToParentViewController:self];
 }
 
-- (void)updateViewConstraints
+- (void)setupConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        [self.backgroundImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.registrationRootViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    }
+    NSArray<NSLayoutConstraint *> *constraints =
+  @[
+    [self.registrationRootViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+    [self.registrationRootViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    [self.registrationRootViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+    ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 + (RegistrationFlow)registrationFlow
 {
     return IS_IPAD ? RegistrationFlowEmail : RegistrationFlowPhone;
-}
-
-#pragma mark - NavigationControllerDelegate
-
-- (id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-                                   animationControllerForOperation:(UINavigationControllerOperation)operation
-                                                fromViewController:(UIViewController *)fromVC
-                                                  toViewController:(UIViewController *)toVC
-{
-    id <UIViewControllerAnimatedTransitioning> transition = nil;
-    
-    switch (operation) {
-        case UINavigationControllerOperationPop:
-            transition = self.popTransition;
-            break;
-        case UINavigationControllerOperationPush:
-            transition = self.pushTransition;
-        default:
-            break;
-    }
-    return transition;
 }
 
 #pragma mark - AuthenticationCoordinatedViewController

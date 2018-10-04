@@ -78,6 +78,11 @@
     return self.topViewController.prefersStatusBarHidden;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return self.topViewController.preferredStatusBarStyle;
+}
+
 - (void)setupBackButton
 {
     self.backButton = [[IconButton alloc] initWithStyle:IconButtonStyleNavigation variant:ColorSchemeVariantDark];
@@ -247,7 +252,7 @@
         self.backButton.alpha = shouldHideBackButton ? 0 : 1;
         [self.backButton setTitle:title.uppercasedWithCurrentLocale forState:UIControlStateNormal];
 
-        if (UIApplication.sharedApplication.statusBarStyle == UIStatusBarStyleDefault) {
+        if (self.topViewController.preferredStatusBarStyle == UIStatusBarStyleDefault) {
             self.backButton.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorGraphite];
         } else {
             self.backButton.tintColor = [UIColor whiteColor];
@@ -352,7 +357,6 @@
     [self.topViewController resignFirstResponder];
     [self popViewControllerAnimated:YES];
 }
-
 
 @end
 

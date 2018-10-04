@@ -47,7 +47,7 @@ class AuthenticationInterfaceBuilder {
             return LandingViewController()
 
         case .reauthenticate(let credentials, let numberOfAccounts):
-            let registrationViewController = RegistrationViewController()
+            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
             registrationViewController.shouldHideCancelButton = numberOfAccounts < 2
             registrationViewController.loginCredentials = credentials
             return registrationViewController
