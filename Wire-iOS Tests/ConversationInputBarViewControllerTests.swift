@@ -46,7 +46,7 @@ final class MockAudioSession: NSObject, AVAudioSessionType {
     var recordPermission: AVAudioSession.RecordPermission = .granted
 }
 
-// TODO: Investigate why these tests fail on CI.
+// TODO: Investigate why these tests cause other tests fail on CI.
 final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDataSnapshotTestCase {
     var sut: ConversationInputBarViewController!
 
@@ -122,6 +122,7 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
         
         // THEN
         verifyInAllPhoneWidths(view: sut.view)
+        verifyInAllTabletWidths(view: sut.view)
     }
 
 }

@@ -164,7 +164,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
             self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
         }
-        
     }
     return self;
 }
