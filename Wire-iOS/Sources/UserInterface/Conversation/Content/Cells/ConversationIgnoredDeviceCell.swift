@@ -67,10 +67,9 @@ import TTTAttributedLabel
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
         if URL == type(of: self).deviceListLink {
             if let systemMessageData = message.systemMessageData,
-                let users = systemMessageData.users,
-                let firstUserClient = users.first
+               let firstUser = systemMessageData.users.first
             {
-                ZClientViewController.shared()?.openClientListScreen(for: firstUserClient)
+                ZClientViewController.shared()?.openClientListScreen(for: firstUser)
             }
         }
     }

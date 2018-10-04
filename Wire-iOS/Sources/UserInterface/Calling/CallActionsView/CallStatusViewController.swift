@@ -57,7 +57,7 @@ final class CallStatusViewController: UIViewController {
     
     private func setupViews() {
         statusView.isAccessibilityElement = true
-        statusView.accessibilityTraits = UIAccessibilityTraitHeader
+        statusView.accessibilityTraits = .header
         statusView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(statusView)
     }
@@ -83,7 +83,7 @@ final class CallStatusViewController: UIViewController {
     
     private func startCallDurationTimer() {
         stopCallDurationTimer()
-        callDurationTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 0.1, repeats: true) { [statusView, configuration] _ in
+        callDurationTimer = .scheduledTimer(withTimeInterval: 0.1, repeats: true) { [statusView, configuration] _ in
             statusView.configuration = configuration
         }
     }

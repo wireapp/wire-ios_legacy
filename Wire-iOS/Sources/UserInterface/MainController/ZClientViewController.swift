@@ -22,10 +22,10 @@ import Foundation
 extension ZClientViewController {
     
     func setTopOverlay(to viewController: UIViewController?, animated: Bool = true) {
-        topOverlayViewController?.willMove(toParentViewController: nil)
+        topOverlayViewController?.willMove(toParent: nil)
         
         if let previousViewController = topOverlayViewController, let viewController = viewController {
-            addChildViewController(viewController)
+            addChild(viewController)
             viewController.view.frame = topOverlayContainer.bounds
             viewController.view.translatesAutoresizingMaskIntoConstraints = false
             
@@ -36,8 +36,8 @@ extension ZClientViewController {
                            options: .transitionCrossDissolve,
                            animations: { viewController.view.fitInSuperview() },
                            completion: { (finished) in
-                            viewController.didMove(toParentViewController: self)
-                            previousViewController.removeFromParentViewController()
+                            viewController.didMove(toParent: self)
+                            previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController
                             self.updateSplitViewTopConstraint()
                             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
@@ -45,7 +45,7 @@ extension ZClientViewController {
             } else {
                 topOverlayContainer.addSubview(viewController.view)
                 viewController.view.fitInSuperview()
-                viewController.didMove(toParentViewController: self)
+                viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
                 updateSplitViewTopConstraint()
@@ -62,25 +62,25 @@ extension ZClientViewController {
                 }) { _ in
                     heightConstraint.autoRemove()
                     
-                    self.topOverlayViewController?.removeFromParentViewController()
+                    self.topOverlayViewController?.removeFromParent()
                     previousViewController.view.removeFromSuperview()
                     self.topOverlayViewController = nil
                     self.updateSplitViewTopConstraint()
                 }
             } else {
-                self.topOverlayViewController?.removeFromParentViewController()
+                self.topOverlayViewController?.removeFromParent()
                 previousViewController.view.removeFromSuperview()
                 self.topOverlayViewController = nil
                 self.updateSplitViewTopConstraint()
             }
         } else if let viewController = viewController {
-            addChildViewController(viewController)
+            addChild(viewController)
             viewController.view.frame = topOverlayContainer.bounds
             viewController.view.translatesAutoresizingMaskIntoConstraints = false
             topOverlayContainer.addSubview(viewController.view)
             viewController.view.fitInSuperview()
             
-            viewController.didMove(toParentViewController: self)
+            viewController.didMove(toParent: self)
             
             let isRegularContainer = traitCollection.horizontalSizeClass == .regular
             

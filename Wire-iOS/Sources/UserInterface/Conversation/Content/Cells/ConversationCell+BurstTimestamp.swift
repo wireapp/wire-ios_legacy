@@ -30,7 +30,7 @@ public extension ConversationCell {
     @objc func scheduledTimerForUpdateBurstTimestamp() {
         guard let _ = layoutProperties, layoutProperties.showBurstTimestamp else { return }
 
-        burstTimestampTimer = .allVersionCompatibleScheduledTimer(withTimeInterval: 60, repeats: true) {
+        burstTimestampTimer = .scheduledTimer(withTimeInterval: 60, repeats: true) {
             [weak self] _ in
             self?.updateBurstTimestamp()
         }
@@ -39,7 +39,7 @@ public extension ConversationCell {
     @objc func willDisplayInTableView() {
         scheduledTimerForUpdateBurstTimestamp()
 
-        contentView.bringSubview(toFront: likeButton)
+        contentView.bringSubviewToFront(likeButton)
 
         if delegate != nil &&
             delegate.responds(to: #selector(ConversationCellDelegate.conversationCellShouldStartDestructionTimer)) &&
@@ -51,7 +51,7 @@ public extension ConversationCell {
             }
         }
 
-        messageContentView.bringSubview(toFront: countdownContainerView)
+        messageContentView.bringSubviewToFront(countdownContainerView)
     }
     
     @objc func cellDidEndBeingVisible() {

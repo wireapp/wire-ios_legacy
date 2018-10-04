@@ -49,12 +49,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self setupStyle];
 
     [self.mediaPreviewView.playButton addTarget:self action:@selector(playVideo:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.view autoSetDimension:ALDimensionHeight toSize:self.viewHeight relation:NSLayoutRelationEqual];
 
-    [self setupStyle];
+    
 }
 
 - (void)tearDown;

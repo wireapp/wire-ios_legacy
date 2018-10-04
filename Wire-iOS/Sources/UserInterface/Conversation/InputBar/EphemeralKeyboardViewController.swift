@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import Classy
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)
@@ -152,7 +151,7 @@ extension UIAlertController {
     }
 
     private func setupViews() {
-        CASStyler.default().styleItem(self)
+        
         picker.delegate = self
         picker.dataSource = self
         picker.tintColor = .red
@@ -217,6 +216,8 @@ class PickerView: UIPickerView, UIGestureRecognizerDelegate {
 
     init() {
         super.init(frame: .zero)
+        self.backgroundColor = .clear
+
         tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)

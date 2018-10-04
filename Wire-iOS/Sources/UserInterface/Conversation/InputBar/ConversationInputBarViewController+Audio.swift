@@ -39,7 +39,7 @@ extension ConversationInputBarViewController {
         object: .none)
 
         // If the app is locked and not yet reach the time to unlock and the app became active, reveal the keyboard (it was dismissed when app resign active)
-        NotificationCenter.default.addObserver(self, selector: #selector(revealRecordKeyboardWhenAppLocked), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(revealRecordKeyboardWhenAppLocked), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     @objc func revealRecordKeyboardWhenAppLocked() {
@@ -125,7 +125,7 @@ extension ConversationInputBarViewController {
     }
     
     fileprivate func showAudioRecordViewControllerIfGrantedAccess() -> Bool {
-        if AVAudioSession.sharedInstance().recordPermission() == .granted {
+        if AVAudioSession.sharedInstance().recordPermission == .granted {
             self.showAudioRecordViewController()
             return true
         } else {

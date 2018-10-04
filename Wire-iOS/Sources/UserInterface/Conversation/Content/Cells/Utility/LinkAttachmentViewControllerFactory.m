@@ -17,7 +17,6 @@
 // 
 
 
-#import <Classy/Classy.h>
 
 #import "LinkAttachmentViewControllerFactory.h"
 #import "MediaPreviewViewController.h"

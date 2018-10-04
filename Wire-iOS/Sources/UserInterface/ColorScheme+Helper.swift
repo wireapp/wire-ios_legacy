@@ -23,7 +23,7 @@ extension ColorScheme {
         return variant == .light ? .default : .lightContent
     }
 
-    @objc var indicatorStyle: UIScrollViewIndicatorStyle {
+    @objc var indicatorStyle: UIScrollView.IndicatorStyle {
         return variant == .light ? .default : .white
     }
 

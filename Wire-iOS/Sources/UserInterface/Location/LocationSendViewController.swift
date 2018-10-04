@@ -18,7 +18,6 @@
 
 
 import Cartography
-import Classy
 
 @objc public protocol LocationSendViewControllerDelegate: class {
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
@@ -57,7 +56,7 @@ import Classy
     }
     
     fileprivate func configureViews() {
-        sendButton.setTitle("location.send_button.title".localized.uppercased(), for: UIControlState())
+        sendButton.setTitle("location.send_button.title".localized.uppercased(), for: [])
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         sendButton.accessibilityIdentifier = "sendLocation"
         addressLabel.accessibilityIdentifier = "selectedAddress"

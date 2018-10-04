@@ -91,7 +91,7 @@
                                                          NSForegroundColorAttributeName: [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark] }];
     
     [attributedTerms addAttributes:@{ NSFontAttributeName : UIFont.largeSemiboldFont,
-                                      NSForegroundColorAttributeName : UIColor.accentColor,
+                                      NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark],
                                       NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     
     self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
@@ -141,11 +141,6 @@
 }
 
 #pragma mark - UITextViewDelegate
-
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
-{
-    return [self textView:textView shouldInteractWithURL:URL inRange:characterRange interaction:0];
-}
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
 {

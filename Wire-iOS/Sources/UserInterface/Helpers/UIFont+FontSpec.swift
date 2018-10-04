@@ -18,6 +18,14 @@
 
 import Foundation
 
+// MARK: - Avatar
+
+extension UIFont {
+    class var avatarInitial: UIFont {
+        return UIFont.systemFont(ofSize: 11, weight: .light)
+    }
+}
+
 // Objective-C compatiblity layer for the Swift only FontSpec
 @objc
 extension UIFont {

@@ -135,8 +135,10 @@ class VideoGridViewController: UIViewController {
         [thumbnailViewController].forEach{ $0.view.fitInSuperview() }
 
         constrain(view, muteIndicatorView) { view, muteIndicatorView in
+            let bottomOffset: CGFloat = UIScreen.safeArea.bottom + (UIScreen.hasNotch ? 8 : 24)
+            
             muteIndicatorView.centerX == view.centerX
-            muteIndicatorView.bottom == view.bottom - 24
+            muteIndicatorView.bottom == view.bottom - bottomOffset
             muteIndicatorView.height == CGFloat.MuteIndicator.containerHeight
         }
     }
@@ -222,7 +224,7 @@ class VideoGridViewController: UIViewController {
         gridView.layoutDirection = newAxis
     }
 
-    private func gridAxis(for traitCollection: UITraitCollection) -> UILayoutConstraintAxis {
+    private func gridAxis(for traitCollection: UITraitCollection) -> NSLayoutConstraint.Axis {
         let isLandscape = UIApplication.shared.statusBarOrientation.isLandscape
         switch (traitCollection.userInterfaceIdiom, traitCollection.horizontalSizeClass, isLandscape) {
         case (.pad, .regular, true): return .horizontal

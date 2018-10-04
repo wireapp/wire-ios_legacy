@@ -26,7 +26,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
     let message: ZMConversationMessage
     weak var messageActionDelegate: MessageActionResponder?
 
-    private let mapView = MKMapView()
+    private var mapView = MKMapView()
     private let containerView = UIView()
     private let addressContainerView = UIView()
     private let addressLabel = UILabel()
@@ -41,7 +41,8 @@ class LocationPreviewController: TintColorCorrectedViewController {
         self.message = message
         super.init(nibName: nil, bundle: nil)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.cas_styleClass = "container-view"
+        containerView.backgroundColor = .placeholderBackground
+
         configureViews()
         createConstraints()
     }
@@ -113,7 +114,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
             let span = MKCoordinateSpan(zoomLevel: Int(locationData.zoomLevel), viewSize: Float(view.frame.size.height))
             region = MKCoordinateRegion(center: locationData.coordinate, span: span)
         } else {
-            region = MKCoordinateRegionMakeWithDistance(locationData.coordinate, 250, 250)
+            region = MKCoordinateRegion(center: locationData.coordinate, latitudinalMeters: 250, longitudinalMeters: 250)
         }
 
         mapView.setRegion(region, animated: false)

@@ -81,17 +81,17 @@ enum DeviceNativeBoundsSize: CGSize {
 
 extension CGSize: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
-        let size = CGSizeFromString(value)
+        let size = NSCoder.cgSize(for: value)
         self.init(width: size.width, height: size.height)
     }
 
     public init(extendedGraphemeClusterLiteral value: String) {
-        let size = CGSizeFromString(value)
+        let size = NSCoder.cgSize(for: value)
         self.init(width: size.width, height: size.height)
     }
 
     public init(unicodeScalarLiteral value: String) {
-        let size = CGSizeFromString(value)
+        let size = NSCoder.cgSize(for: value)
         self.init(width: size.width, height: size.height)
     }
 }

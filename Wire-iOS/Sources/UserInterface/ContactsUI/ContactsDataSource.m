@@ -57,7 +57,9 @@ NS_ASSUME_NONNULL_END
 {
     self = [super init];
     if (self) {
-        self.searchDirectory = searchDirectory;
+        if ([ZMUserSession sharedSession]) {
+            self.searchDirectory = searchDirectory;
+        }
         self.sections = @[];
         self.mutableSelection = [NSMutableOrderedSet orderedSet];
     }

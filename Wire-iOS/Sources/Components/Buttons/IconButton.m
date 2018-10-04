@@ -17,7 +17,6 @@
 // 
 
 
-@import Classy;
 
 #import "IconButton.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -83,26 +82,6 @@
 
 
 @implementation IconButton
-
-+ (void)initialize
-{
-    if (self == [IconButton self]) {
-        CASObjectClassDescriptor *classDescriptor = [CASStyler.defaultStyler objectClassDescriptorForClass:self.class];
-
-        CASArgumentDescriptor *colorArg = [CASArgumentDescriptor argWithClass:UIColor.class];
-
-        NSDictionary *controlStateMap = @{ @"normal"       : @(UIControlStateNormal),
-                                           @"highlighted"  : @(UIControlStateHighlighted),
-                                           @"disabled"     : @(UIControlStateDisabled),
-                                           @"selected"     : @(UIControlStateSelected) };
-
-        CASArgumentDescriptor *stateArg = [CASArgumentDescriptor argWithName:@"state" valuesByName:controlStateMap];
-
-        [classDescriptor setArgumentDescriptors:@[colorArg, stateArg] setter:@selector(setIconColor:forState:) forPropertyKey:@"iconColor"];
-        [classDescriptor setArgumentDescriptors:@[colorArg, stateArg] setter:@selector(setBackgroundImageColor:forState:) forPropertyKey:@"backgroundImageColor"];
-        [classDescriptor setArgumentDescriptors:@[colorArg, stateArg] setter:@selector(setBorderColor:forState:) forPropertyKey:@"borderColor"];
-    }
-}
 
 - (instancetype)initWithStyle:(IconButtonStyle)style
 {

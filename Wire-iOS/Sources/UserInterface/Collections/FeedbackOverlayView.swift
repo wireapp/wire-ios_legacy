@@ -21,7 +21,13 @@ import Cartography
 
 public final class FeedbackOverlayView: UIView {
 
-    public let titleLabel = UILabel()
+    public let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallSemiboldFont
+        label.textColor = .textForeground
+
+        return label
+    }()
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,6 +36,7 @@ public final class FeedbackOverlayView: UIView {
         addSubview(titleLabel)
         constrainViews()
         alpha = 0.0
+        backgroundColor = .background
     }
     
     required public init?(coder aDecoder: NSCoder) {

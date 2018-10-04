@@ -21,7 +21,6 @@
 import Foundation
 import Cartography
 import MobileCoreServices
-import Classy
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -91,13 +90,9 @@ private let zmLog = ZMSLog(tag: "UI")
     func beginRecording() {
         self.delegate?.audioRecordViewControllerDidStartRecording(self)
 
-        if #available(iOS 10, *) {
-            let feedbackGenerator = UINotificationFeedbackGenerator()
-            feedbackGenerator.prepare()
-            feedbackGenerator.notificationOccurred(.success)
-        } else {
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        }
+        let feedbackGenerator = UINotificationFeedbackGenerator()
+        feedbackGenerator.prepare()
+        feedbackGenerator.notificationOccurred(.success)
 
         self.recorder.startRecording()
     }
@@ -150,12 +145,12 @@ private let zmLog = ZMSLog(tag: "UI")
         topTooltipLabel.font = FontSpec(.small, .none).font!
         topTooltipLabel.textColor = UIColor(scheme: .textDimmed)
         
-        cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        cancelButton.setIcon(.cancel, with: .tiny, for: [])
         cancelButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"
         updateRecordingState(recordingState)
-        CASStyler.default().styleItem(self)
+        
         
         buttonOverlay.buttonHandler = { [weak self] buttonType in
             guard let `self` = self else {

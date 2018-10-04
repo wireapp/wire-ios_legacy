@@ -26,9 +26,9 @@ class MessageDeletedCell: ConversationCell {
     
     var trashColor: UIColor? = UIColor(scheme: .iconNormal)
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        CASStyler.default().styleItem(self)
+        
         setupViews()
         createConstraints()
     }

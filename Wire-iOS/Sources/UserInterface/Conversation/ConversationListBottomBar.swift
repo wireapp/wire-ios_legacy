@@ -77,7 +77,7 @@ import Cartography
     private func createViews() {
         separator.backgroundColor = UIColor(scheme: .separator, variant: .light)
         
-        archivedButton.setIcon(.archive, with: .tiny, for: UIControlState())
+        archivedButton.setIcon(.archive, with: .tiny, for: [])
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
         archivedButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized
@@ -214,7 +214,7 @@ import Cartography
 // MARK: - Helper
 
 public extension UIView {
-    func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIViewAnimationOptions = UIViewAnimationOptions()) {
+    func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
         if !hide {
             alpha = 0
             isHidden = false
@@ -222,7 +222,7 @@ public extension UIView {
 
         let animations = { self.alpha = hide ? 0 : 1 }
         let completion: (Bool) -> Void = { _ in self.isHidden = hide }
-        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(), animations: animations, completion: completion)
+        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(), animations: animations, completion: completion)
     }
 }
 

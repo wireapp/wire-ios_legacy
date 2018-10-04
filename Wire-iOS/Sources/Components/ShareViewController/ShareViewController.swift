@@ -79,14 +79,17 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameWillChange(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+
+        self.createViews()
+        self.createConstraints()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     let containerView  = UIView()
     var shareablePreviewView: UIView?
@@ -102,12 +105,6 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         view.backgroundColor = UIColor(scheme: .separator)
         return view
     }()
-    
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        self.createViews()
-        self.createConstraints()
-    }
     
     override public var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

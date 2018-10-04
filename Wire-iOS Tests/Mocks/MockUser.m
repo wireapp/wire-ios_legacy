@@ -31,11 +31,12 @@ static id<UserType> mockSelfUser = nil;
     self = [super init];
     if (self) {
         _clients = [NSSet set];
+        self.isTeamMember = YES;
         for (NSString *key in jsonObject.allKeys) {
             id value = jsonObject[key];
             if (value == NSNull.null) { continue; }
             [self setValue:value forKey:key];
-        
+
         }
     }
     return self;
@@ -51,6 +52,11 @@ static id<UserType> mockSelfUser = nil;
 }
 
 + (NSArray *)mockUsers
+{
+    return [self realMockUsers];
+}
+
++ (NSArray *)realMockUsers
 {
     return [MockLoader mockObjectsOfClass:[self class] fromFile:@"people-01.json"];
 }
@@ -128,7 +134,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize totalCommonConnections;
 @synthesize smallProfileImageCacheKey;
 @synthesize mediumProfileImageCacheKey;
-
+@synthesize isTeamMember;
 
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
@@ -256,6 +262,11 @@ static id<UserType> mockSelfUser = nil;
 - (NSSet<UserClient *> *)clientsRequiringUserAttention
 {
     return [NSSet new];
+}
+
+- (ZMUser *)user
+{
+    return nil;
 }
 
 #pragma mark - ZMBareUserConnection

@@ -19,7 +19,7 @@
 import Foundation
 
 // Describes the icon to be shown for the conversation in the list.
-internal enum ConversationStatusIcon {
+enum ConversationStatusIcon {
     case none
     case pendingConnection
     
@@ -28,6 +28,7 @@ internal enum ConversationStatusIcon {
     case unreadMessages(count: Int)
     case unreadPing
     case missedCall
+    case mention
     
     case silenced
     
@@ -37,7 +38,7 @@ internal enum ConversationStatusIcon {
 }
 
 // Describes the status of the conversation.
-internal struct ConversationStatus {
+struct ConversationStatus {
     let isGroup: Bool
     
     let hasMessages: Bool
@@ -53,7 +54,10 @@ internal struct ConversationStatus {
 }
 
 // Describes the conversation message.
-internal enum StatusMessageType: Int {
+enum StatusMessageType: Int {
+    case mention
+    case missedCall
+    case knock
     case text
     case link
     case image
@@ -61,14 +65,22 @@ internal enum StatusMessageType: Int {
     case audio
     case video
     case file
-    case knock
     case addParticipants
     case removeParticipants
     case newConversation
-    case missedCall
 }
 
 extension StatusMessageType {
+    /// Types of statuses that can be included in a status summary.
+    static let summaryTypes: [StatusMessageType] = [.mention, .missedCall, .knock, .text, .link, .image, .location, .audio, .video, .file]
+
+    var parentSummaryType: StatusMessageType? {
+        switch self {
+        case .link, .image, .location, .audio, .video, .file: return .text
+        default: return nil
+        }
+    }
+
     private static let conversationSystemMessageTypeToStatusMessageType: [ZMSystemMessageType: StatusMessageType] = [
         .participantsAdded:   .addParticipants,
         .participantsRemoved: .removeParticipants,
@@ -77,8 +89,12 @@ extension StatusMessageType {
     ]
     
     init?(message: ZMConversationMessage) {
+        
         if message.isText, let textMessage = message.textMessageData {
-            if let _ = textMessage.linkPreview {
+            if textMessage.isMentioningSelf {
+                self = .mention
+            }
+            else if let _ = textMessage.linkPreview {
                 self = .link
             }
             else {
@@ -119,7 +135,7 @@ extension StatusMessageType {
 
 // Describes object that is able to match and describe the conversation.
 // Provides rich description and status icon.
-internal protocol ConversationStatusMatcher {
+protocol ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString?
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon
@@ -129,7 +145,7 @@ internal protocol ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] { get }
 }
 
-internal protocol TypedConversationStatusMatcher: ConversationStatusMatcher {
+protocol TypedConversationStatusMatcher: ConversationStatusMatcher {
     var matchedTypes: [StatusMessageType] { get }
 }
 
@@ -162,7 +178,7 @@ final class ContentSizeCategoryUpdater {
     init(callback: @escaping () -> ()) {
         self.callback = callback
         callback()
-        self.observer = NotificationCenter.default.addObserver(forName: Notification.Name.UIContentSizeCategoryDidChange,
+        self.observer = NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification,
                                                                object: nil,
                                                                queue: nil) { [weak self] _ in
                                                                 self?.callback()
@@ -171,8 +187,8 @@ final class ContentSizeCategoryUpdater {
 }
 
 final class ConversationStatusStyle {
-    private(set) var regularStyle: [NSAttributedStringKey: AnyObject] = [:]
-    private(set) var emphasisStyle: [NSAttributedStringKey: AnyObject] = [:]
+    private(set) var regularStyle: [NSAttributedString.Key: AnyObject] = [:]
+    private(set) var emphasisStyle: [NSAttributedString.Key: AnyObject] = [:]
     private var contentSizeStyleUpdater: ContentSizeCategoryUpdater!
     
     init() {
@@ -192,22 +208,22 @@ final class ConversationStatusStyle {
 fileprivate let statusStyle = ConversationStatusStyle()
 
 extension ConversationStatusMatcher {
-    static var regularStyle: [NSAttributedStringKey: AnyObject] {
+    static var regularStyle: [NSAttributedString.Key: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    static var emphasisStyle: [NSAttributedStringKey: AnyObject] {
+    static var emphasisStyle: [NSAttributedString.Key: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }
 
 // Accessors for ObjC
 extension ZMConversation {
-    @objc static func statusRegularStyle() -> [NSAttributedStringKey: AnyObject] {
+    @objc static func statusRegularStyle() -> [NSAttributedString.Key: AnyObject] {
         return statusStyle.regularStyle
     }
     
-    @objc static func statusEmphasisStyle() -> [NSAttributedStringKey: AnyObject] {
+    @objc static func statusEmphasisStyle() -> [NSAttributedString.Key: AnyObject] {
         return statusStyle.emphasisStyle
     }
 }
@@ -255,11 +271,14 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
 
-        switch conversation.voiceChannel?.state {
+        let state = conversation.voiceChannel?.state
+        switch state {
         case .incoming(_, false, _)?:
             return .activeCall(showJoin: true)
-        default:
+        case .answered?, .established?, .establishedDataChannel?:
             return .activeCall(showJoin: conversation.isSilenced)
+        default:
+            return .none
         }
     }
     
@@ -269,7 +288,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
 // "A, B, C: typing a message..."
 final internal class TypingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.isTyping
+        return status.isTyping && !status.isSilenced
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -310,36 +329,91 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
+
+extension ConversationStatus {
+    var hasSelfMention: Bool {
+        return (messagesRequiringAttentionByType[.mention] != nil)
+    }
+    
+    var latestMessageIsSelfMention: Bool {
+        return messagesRequiringAttention.last?.textMessageData?.isMentioningSelf ?? false
+    }
+    
+    var shouldSummarizeMessages: Bool {
+        if isSilenced {
+            // Always summarize for muted conversation
+            return true
+        } else if hasSelfMention {
+            // Summarize if there is at least one mention and another activity that can be inside a summary
+            return StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) } > 1
+        } else {
+            // Never summarize in other cases
+            return false
+        }
+    }
+}
+
+
 // In silenced "N (text|image|link|...) message, ..."
 // In not silenced: "[Sender:] <message text>"
 // Ephemeral: "Ephemeral message"
 final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
-    let matchedTypes: [StatusMessageType] = [.text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
+    var matchedTypes: [StatusMessageType] {
+        return StatusMessageType.summaryTypes
+    }
+
     let localizationSilencedRootPath = "conversation.silenced.status.message"
     let localizationRootPath = "conversation.status.message"
 
-    let matchedTypesDescriptions: [StatusMessageType: String] = [
-        .text:     "text",
-        .link:     "link",
-        .image:    "image",
-        .location: "location",
-        .audio:    "audio",
-        .video:    "video",
-        .file:     "file",
-        .knock:    "knock",
-        .missedCall: "missedcall"
+    let matchedSummaryTypesDescriptions: [StatusMessageType: String] = [
+        .mention:    "mention",
+        .missedCall: "missedcall",
+        .knock:      "knock",
+        .text:       "generic_message"
     ]
-    
+
+    let matchedTypesDescriptions: [StatusMessageType: String] = [
+        .mention:    "mention",
+        .missedCall: "missedcall",
+        .knock:      "knock",
+        .text:       "text",
+        .link:       "link",
+        .image:      "image",
+        .location:   "location",
+        .audio:      "audio",
+        .video:      "video",
+        .file:       "file"
+    ]
+
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
-        if status.isSilenced {
-            let resultString = matchedTypes.filter { status.messagesRequiringAttentionByType[$0] > 0 }.compactMap {
-                guard let localizationKey = matchedTypesDescriptions[$0] else {
-                    return .none
+        if status.shouldSummarizeMessages {
+            // Get the count of each category we can summarize, and group them under their parent type
+            let flattenedCount: [StatusMessageType: UInt] = matchedTypes
+                .reduce(into: [StatusMessageType: UInt]()) {
+                    guard let count = status.messagesRequiringAttentionByType[$1], count > 0 else {
+                        return
+                    }
+
+                    if let parentType = $1.parentSummaryType {
+                        $0[parentType, default: 0] += count
+                    } else {
+                        $0[$1, default: 0] += count
+                    }
                 }
-                
-                return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, status.messagesRequiringAttentionByType[$0] ?? 0)
-                }.joined(separator: ", ")
-            
+
+            // For each top-level summary type, generate the subtitle fragment
+            let localizedMatchedItems: [String] = flattenedCount.keys.lazy
+                .sorted { $0.rawValue < $1.rawValue }
+                .reduce(into: []) {
+                    guard let count = flattenedCount[$1], let localizationKey = matchedSummaryTypesDescriptions[$1] else {
+                        return
+                    }
+
+                    let string = String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count)
+                    $0.append(string)
+                }
+
+            let resultString = localizedMatchedItems.joined(separator: ", ")
             return resultString.capitalizingFirstLetter() && type(of: self).regularStyle
         }
         else {
@@ -360,8 +434,17 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             }
             
             let messageDescription: String
+
             if message.isEphemeral {
-                messageDescription = (localizationRootPath + ".ephemeral").localized
+                var typeSuffix = ".ephemeral"
+                if type == .mention {
+                    typeSuffix += status.isGroup ? ".mention.group" : ".mention"
+                } else if type == .knock {
+                    typeSuffix += status.isGroup ? ".knock.group" : ".knock"
+                } else if status.isGroup {
+                    typeSuffix += ".group"
+                }
+                messageDescription = (localizationRootPath + typeSuffix).localized
             }
             else {
                 var format = localizationRootPath + "." + localizationKey
@@ -374,7 +457,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 messageDescription = String(format: format.localized, message.textMessageData?.messageText ?? "")
             }
             
-            if status.isGroup {
+            if status.isGroup && !message.isEphemeral {
                 return ((sender.displayName(in: conversation) + ": ") && Swift.type(of: self).emphasisStyle) +
                         (messageDescription && Swift.type(of: self).regularStyle)
             }
@@ -385,6 +468,10 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+        if status.hasSelfMention {
+            return .mention
+        }
+        
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
@@ -588,7 +675,7 @@ private var allMatchers: [ConversationStatusMatcher] = {
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
     
-    return [SelfUserLeftMatcher(), BlockedMatcher(), CallingMatcher(), TypingMatcher(), silencedMatcher, newMessageMatcher, failedSendMatcher, groupActivityMatcher, StartConversationMatcher(), UnsernameMatcher()]
+    return [SelfUserLeftMatcher(), BlockedMatcher(), CallingMatcher(), silencedMatcher, TypingMatcher(), newMessageMatcher, failedSendMatcher, groupActivityMatcher, StartConversationMatcher(), UnsernameMatcher()]
 }()
 
 extension ConversationStatus {
@@ -614,7 +701,7 @@ extension ConversationStatus {
         return .none
     }
     
-    internal func description(for conversation: ZMConversation) -> NSAttributedString {
+    func description(for conversation: ZMConversation) -> NSAttributedString {
         let allMatchers = self.appliedMatchersForDescription(for: conversation)
         guard allMatchers.count > 0 else {
             return "" && [:]
@@ -623,7 +710,7 @@ extension ConversationStatus {
         return allStrings.joined(separator: " | " && CallingMatcher.regularStyle)
     }
     
-    internal func icon(for conversation: ZMConversation) -> ConversationStatusIcon {
+    func icon(for conversation: ZMConversation) -> ConversationStatusIcon {
         guard let topMatcher = self.appliedMatcherForIcon(for: conversation) else {
             return .none
         }
@@ -634,7 +721,7 @@ extension ConversationStatus {
 
 extension ZMConversation {
     
-    internal var status: ConversationStatus {
+    var status: ConversationStatus {
         let isBlocked = self.conversationType == .oneOnOne ? (self.firstActiveParticipantOtherThanSelf()?.isBlocked ?? false) : false
         
         var messagesRequiringAttention = self.unreadMessages

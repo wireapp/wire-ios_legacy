@@ -20,12 +20,11 @@
 import MapKit
 import Cartography
 import AddressBook
-import Classy
 
 /// Displays the location message
-@objcMembers public final class LocationMessageCell: ConversationCell {
+public final class LocationMessageCell: ConversationCell {
     
-    private let mapView = MKMapView()
+    private var mapView = MKMapView()
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .locationPin)
     private let addressContainerView = UIView()
@@ -37,13 +36,13 @@ import Classy
     var containerColor: UIColor? = .placeholderBackground
     var containerHeightConstraint: NSLayoutConstraint!
     
-    public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
-        containerView.cas_styleClass = "container-view"
-        CASStyler.default().styleItem(self)
+        containerView.backgroundColor = .placeholderBackground
+        
         configureViews()
         createConstraints()
     }
@@ -51,7 +50,7 @@ import Classy
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func configureViews() {
         mapView.isScrollEnabled = false
         mapView.isZoomEnabled = false
@@ -141,7 +140,7 @@ import Classy
             mapView.setCenterCoordinate(locationData.coordinate, zoomLevel: Int(locationData.zoomLevel))
         } else {
             // As the zoom level is optional we use a viewport of 250m x 250m if none is specified
-            let region = MKCoordinateRegionMakeWithDistance(locationData.coordinate, 250, 250)
+            let region = MKCoordinateRegion(center: locationData.coordinate, latitudinalMeters: 250, longitudinalMeters: 250)
             mapView.setRegion(region, animated: false)
         }
     }

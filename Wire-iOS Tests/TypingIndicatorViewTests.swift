@@ -19,7 +19,6 @@
 import XCTest
 
 @testable import Wire
-import Classy
 import Cartography
 
 class TypingIndicatorViewTests: ZMSnapshotTestCase {
@@ -31,8 +30,6 @@ class TypingIndicatorViewTests: ZMSnapshotTestCase {
         sut = TypingIndicatorView()
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.layer.speed = 0
-
-        CASStyler.default().styleItem(sut)
     }
 
     override func tearDown() {

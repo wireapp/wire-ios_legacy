@@ -128,8 +128,8 @@ import Cartography
             animation.fromValue = maskShape.path
             animation.toValue = path
             animation.duration = 0.25
-            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-            animation.fillMode = kCAFillModeForwards
+            animation.timingFunction = CAMediaTimingFunction(name: .linear)
+            animation.fillMode = .forwards
             maskShape.add(animation, forKey: animation.keyPath)
         }
         

@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 /// Displays the audio message with different states
 @objcMembers public final class AudioMessageCell: ConversationCell {
@@ -27,12 +26,12 @@ import Classy
     private let containerView = UIView()
     private let obfuscationView = ObfuscationView(icon: .microphone)
 
-    public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public required override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.containerView.translatesAutoresizingMaskIntoConstraints = false
         self.containerView.layer.cornerRadius = 4
-        self.containerView.cas_styleClass = "container-view"
+        containerView.backgroundColor = .placeholderBackground
         self.containerView.clipsToBounds = true
         
         self.audioMessageView.delegate = self

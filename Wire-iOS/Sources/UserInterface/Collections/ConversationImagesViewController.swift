@@ -19,7 +19,6 @@
 import Foundation
 import Cartography
 import WireSyncEngine
-import Classy
 
 typealias DismissAction = (_ completion: (()->())?)->()
 
@@ -159,9 +158,9 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
         
         if let navBarContainer = navBarContainer {
-            addChildViewController(navBarContainer)
+            addChild(navBarContainer)
             view.addSubview(navBarContainer.view)
-            navBarContainer.didMove(toParentViewController: self)
+            navBarContainer.didMove(toParent: self)
 
             constrain(view, navBarContainer.view) { view, navigationBar in
                 navigationBar.top == view.top
@@ -180,9 +179,9 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         pageViewController.dataSource = self
         pageViewController.setViewControllers([self.imageController(for: self.currentMessage)], direction: .forward, animated: false, completion: .none)
         
-        self.addChildViewController(pageViewController)
+        self.addChild(pageViewController)
         self.view.addSubview(pageViewController.view)
-        pageViewController.didMove(toParentViewController: self)
+        pageViewController.didMove(toParent: self)
     }
     
     fileprivate func logicalPreviousIndex(for index: Int) -> Int? {
@@ -305,7 +304,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         imageViewController.swipeToDismiss = self.swipeToDismiss
         imageViewController.showCloseButton = false
         imageViewController.dismissAction = self.dismissAction
-        CASStyler.default().styleItem(imageViewController)
+
         return imageViewController
     }
     
@@ -550,4 +549,3 @@ extension ConversationImagesViewController {
     }
 
 }
-

@@ -19,7 +19,6 @@
 
 import Foundation
 import Cartography
-import Classy
 
 fileprivate extension UIView {
 
@@ -60,7 +59,7 @@ protocol ChangeHandleTableViewCellDelegate: class {
         return textField
     }()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
@@ -209,7 +208,7 @@ struct HandleChangeState {
     init(state: HandleChangeState) {
         self.state = state
         super.init(style: .grouped)
-        CASStyler.default().styleItem(self)
+        
         setupViews()
     }
 
@@ -263,7 +262,7 @@ struct HandleChangeState {
 
     private func updateFooter() {
         footerLabel.attributedText = attributedFooterTitle
-        let size = footerLabel.sizeThatFits(CGSize(width: view.frame.width - 32, height: UIViewNoIntrinsicMetric))
+        let size = footerLabel.sizeThatFits(CGSize(width: view.frame.width - 32, height: UIView.noIntrinsicMetric))
         footerLabel.frame = CGRect(origin: CGPoint(x: 16, y: 0), size: size)
         tableView.tableFooterView = footerLabel
     }
@@ -295,6 +294,9 @@ struct HandleChangeState {
         return cell
     }
 
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
+    }
 }
 
 

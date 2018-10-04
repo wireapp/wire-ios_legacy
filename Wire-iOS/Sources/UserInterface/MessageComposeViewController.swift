@@ -50,7 +50,7 @@ final class MessageComposeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageComposeViewController.keyboardFrameWillChange(_:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(markdownBarView,
@@ -60,7 +60,7 @@ final class MessageComposeViewController: UIViewController {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -99,7 +99,7 @@ final class MessageComposeViewController: UIViewController {
         // setting the scroll views content inset to compensate (accounting for
         // the default text container inset (8,0,8,0))
         
-        messageTextView.contentInset = UIEdgeInsetsMake(16, 0, 48, -16)
+        messageTextView.contentInset = UIEdgeInsets(top: 16, left: 0, bottom: 48, right: -16)
         messageTextView.textContainer.lineFragmentPadding = 0
         messageTextView.backgroundColor = .clear
         messageTextView.delegate = self
@@ -160,7 +160,7 @@ final class MessageComposeViewController: UIViewController {
             draftsBackButton.setTitle(String(count), for: .normal)
         }
         draftsBackButton.titleImageSpacing = 2
-        draftsBackButton.imageEdgeInsets = UIEdgeInsetsMake(0, -4, 0, 0)
+        draftsBackButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
         draftsBackButton.sizeToFit()
         draftsBackButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
 
@@ -275,7 +275,7 @@ final class MessageComposeViewController: UIViewController {
     }
 
     @objc func keyboardFrameWillChange(_ notification: Notification) {
-        guard let endSize = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+        guard let endSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
             return
         }
         UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrame) in

@@ -25,9 +25,21 @@ import Cartography
 
 @objcMembers final public class ModalTopBar: UIView {
     
-    public let titleLabel = UILabel()
+    public let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .textForeground
+        label.font = .mediumSemiboldFont
+
+        return label
+    }()
+
     public let dismissButton = IconButton()
-    public let separatorView = UIView()
+    public let separatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(scheme: .separator)
+        return view
+    }()
+
     fileprivate let showsStatusBar: Bool
     weak var delegate: ModalTopBarDelegate?
     
@@ -41,6 +53,8 @@ import Cartography
         showsStatusBar = statusBar
         super.init(frame: CGRect.zero)
         configureViews()
+        backgroundColor = .background
+
         createConstraints()
     }
     
@@ -50,7 +64,8 @@ import Cartography
     
     fileprivate func configureViews() {
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
-        dismissButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        dismissButton.setIcon(.cancel, with: .tiny, for: [])
+        dismissButton.setIconColor(.iconNormal, for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
     }
@@ -81,9 +96,9 @@ import Cartography
     public override var intrinsicContentSize : CGSize {
         let insets = UIScreen.safeArea
         if insets.top > 20 {
-            return CGSize(width: UIViewNoIntrinsicMetric, height: 44 + insets.top)
+            return CGSize(width: UIView.noIntrinsicMetric, height: 44 + insets.top)
         }
-        return CGSize(width: UIViewNoIntrinsicMetric, height: showsStatusBar ? 64 : 44)
+        return CGSize(width: UIView.noIntrinsicMetric, height: showsStatusBar ? 64 : 44)
     }
     
 }
