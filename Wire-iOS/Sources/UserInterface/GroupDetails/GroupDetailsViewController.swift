@@ -26,7 +26,7 @@ import Cartography
     fileprivate let footerView = GroupDetailsFooterView()
     fileprivate let bottomSpacer = UIView()
     fileprivate var token: NSObjectProtocol?
-    fileprivate var actionController: ConversationActionController?
+    var actionController: ConversationActionController?
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
 

@@ -26,9 +26,6 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         sut = GroupDetailsViewController(conversation: otherUserConversation)
-
-        /// TODO: remove this after snapshot is created
-        recordMode = true
     }
     
     override func tearDown() {
@@ -38,5 +35,11 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     func testForInitState(){
         verify(view: sut.view)
+    }
+
+    func testForActionMenu() {
+        sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+
+        verifyAlertController((sut?.actionController?.alertController)!)
     }
 }
