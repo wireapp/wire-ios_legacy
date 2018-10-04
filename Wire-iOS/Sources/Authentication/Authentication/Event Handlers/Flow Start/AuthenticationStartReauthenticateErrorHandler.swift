@@ -50,8 +50,16 @@ class AuthenticationStartReauthenticateErrorHandler: AuthenticationEventHandler 
             return nil
         }
 
+        guard numberOfAccounts >= 1 else {
+            return nil
+        }
+
+        guard let loginCredentials = LoginCredentials(error: error) else {
+            return nil
+        }
+
         // Prepare the next step
-        let nextStep = AuthenticationFlowStep.reauthenticate(error: error, numberOfAccounts: numberOfAccounts)
+        let nextStep = AuthenticationFlowStep.reauthenticate(credentials: loginCredentials, numberOfAccounts: numberOfAccounts)
         return [.transition(nextStep, resetStack: true)]
     }
 

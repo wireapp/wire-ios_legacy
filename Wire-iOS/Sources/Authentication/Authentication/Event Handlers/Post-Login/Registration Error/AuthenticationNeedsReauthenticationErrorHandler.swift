@@ -36,9 +36,13 @@ class AuthenticationNeedsReauthenticationErrorHandler: AuthenticationEventHandle
         }
 
         let numberOfAccounts = statusProvider?.numberOfAccounts ?? 0
-        let nextStep = AuthenticationFlowStep.reauthenticate(error: error, numberOfAccounts: numberOfAccounts)
+        let nextStep = AuthenticationFlowStep.reauthenticate(credentials: nil, numberOfAccounts: numberOfAccounts)
 
-        return [.hideLoadingView, .transition(nextStep, resetStack: true)]
+        let alert = AuthenticationCoordinatorAlert(title: "registration.signin.alert.password_needed.title".localized,
+                                                   message: "registration.signin.alert.password_needed.message".localized,
+                                                   actions: [.ok])
+
+        return [.hideLoadingView, .transition(nextStep, resetStack: true), .presentAlert(alert)]
     }
 
 }

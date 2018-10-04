@@ -75,6 +75,10 @@ struct AuthenticationCoordinatorAlertAction {
     let coordinatorActions: [AuthenticationCoordinatorAction]
 }
 
+extension AuthenticationCoordinatorAlertAction {
+    static let ok: AuthenticationCoordinatorAlertAction = AuthenticationCoordinatorAlertAction(title: "general.ok".localized, coordinatorActions: [])
+}
+
 /**
  * A customizable alert to display inside the coordinator's presenter.
  */

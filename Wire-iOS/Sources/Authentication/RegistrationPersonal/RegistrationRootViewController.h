@@ -34,7 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RegistrationRootViewController : FormFlowViewController <AuthenticationCoordinatedViewController>
 
-@property (nonatomic) BOOL hasSignInError;
 @property (nonatomic) BOOL showLogin;
 @property (nonatomic) BOOL shouldHideCancelButton;
 

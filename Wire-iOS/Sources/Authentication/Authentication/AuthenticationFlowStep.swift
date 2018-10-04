@@ -27,7 +27,7 @@ indirect enum AuthenticationFlowStep: Equatable {
     // Initial Steps
     case start
     case landingScreen
-    case reauthenticate(error: NSError, numberOfAccounts: Int)
+    case reauthenticate(credentials: LoginCredentials?, numberOfAccounts: Int)
 
     // Sign-In
     case provideCredentials

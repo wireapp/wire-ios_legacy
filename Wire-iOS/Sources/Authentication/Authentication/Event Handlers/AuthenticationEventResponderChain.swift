@@ -104,8 +104,8 @@ class AuthenticationEventResponderChain {
     fileprivate func registerDefaultEventHandlers() {
         // flowStartHandlers
         registerHandler(AuthenticationStartMissingCredentialsErrorHandler(), to: &flowStartHandlers)
-        registerHandler(AuthenticationStartAddAccountEventHandler(), to: &flowStartHandlers)
         registerHandler(AuthenticationStartReauthenticateErrorHandler(), to: &flowStartHandlers)
+        registerHandler(AuthenticationStartAddAccountEventHandler(), to: &flowStartHandlers)
 
         // initialSyncHandlers
         registerHandler(AuthenticationInitialSyncEventHandler(), to: &initialSyncHandlers)

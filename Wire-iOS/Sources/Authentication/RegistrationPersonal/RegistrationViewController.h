@@ -37,9 +37,9 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 
 - (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow;
 
-@property (nonatomic)  NSError * __nullable signInError;
+@property (nonatomic)  LoginCredentials * __nullable loginCredentials;
 @property (nonatomic) BOOL shouldHideCancelButton;
-@property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
+@property (nonatomic) BOOL shouldShowLogin;
 
 + (RegistrationFlow)registrationFlow;
 

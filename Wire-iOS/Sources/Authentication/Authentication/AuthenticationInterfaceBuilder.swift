@@ -46,10 +46,10 @@ class AuthenticationInterfaceBuilder {
         case .landingScreen:
             return LandingViewController()
 
-        case .reauthenticate(let error, let numberOfAccounts):
+        case .reauthenticate(let credentials, let numberOfAccounts):
             let registrationViewController = RegistrationViewController()
             registrationViewController.shouldHideCancelButton = numberOfAccounts < 2
-            registrationViewController.signInError = error
+            registrationViewController.loginCredentials = credentials
             return registrationViewController
 
         case .provideCredentials:

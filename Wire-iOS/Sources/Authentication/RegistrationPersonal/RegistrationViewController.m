@@ -121,31 +121,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)setupNavigationController
 {
-    ZMUserSessionErrorCode userSessionErrorCode = self.signInError.userSessionErrorCode;
-    
-    BOOL addingAdditionalAccount = userSessionErrorCode == ZMUserSessionAddAccountRequested;
-    
-    BOOL needsToReauthenticate = userSessionErrorCode == ZMUserSessionClientDeletedRemotely ||
-                                 userSessionErrorCode == ZMUserSessionAccessTokenExpired ||
-                                userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient;
-
     RegistrationRootViewController *registrationRootViewController = [[RegistrationRootViewController alloc] initWithAuthenticationFlow:self.flowType];
     registrationRootViewController.formStepDelegate = self;
     registrationRootViewController.authenticationCoordinator = self.authenticationCoordinator;
-    registrationRootViewController.hasSignInError = self.signInError != nil && !addingAdditionalAccount;
-    registrationRootViewController.showLogin = needsToReauthenticate || addingAdditionalAccount;
-    registrationRootViewController.loginCredentials = [[LoginCredentials alloc] initWithError:self.signInError];
+    registrationRootViewController.showLogin = self.shouldShowLogin;
+    registrationRootViewController.loginCredentials = self.loginCredentials;
     registrationRootViewController.shouldHideCancelButton = self.shouldHideCancelButton;
     self.registrationRootViewController = registrationRootViewController;
     
     [self addChildViewController:self.registrationRootViewController];
     [self.view addSubview:self.registrationRootViewController.view];
     [self.registrationRootViewController didMoveToParentViewController:self];
-    
-    if (userSessionErrorCode == ZMUserSessionNeedsPasswordToRegisterClient) {
-        UIViewController *alertController = [UIAlertController passwordVerificationNeededControllerWithCompletion:nil];
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
 }
 
 - (void)updateViewConstraints
