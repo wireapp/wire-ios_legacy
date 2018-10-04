@@ -49,8 +49,11 @@ import Cartography
         collectionViewController = SectionCollectionViewController()
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
-        syncObserver = InitialSyncObserver(in: ZMUserSession.shared()!) { [weak self] completed in
-            self?.didCompleteInitialSync = completed
+
+        if let session = ZMUserSession.shared() {
+            syncObserver = InitialSyncObserver(in: session) { [weak self] completed in
+                self?.didCompleteInitialSync = completed
+            }
         }
     }
     
