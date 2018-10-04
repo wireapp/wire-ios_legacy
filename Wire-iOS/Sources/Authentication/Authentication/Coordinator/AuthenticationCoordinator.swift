@@ -383,7 +383,7 @@ extension AuthenticationCoordinator {
 
     func setMarketingConsent(_ consentValue: Bool) {
         switch stateController.currentStep {
-        case .createUser:
+        case .incrementalUserCreation:
             updateUnregisteredUser {
                 $0.marketingConsent = consentValue
             }
