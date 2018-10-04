@@ -30,8 +30,6 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
         sut.account = account
 
         sut.view.backgroundColor = .black
-
-        recordMode = true
     }
     
     override func tearDown() {
