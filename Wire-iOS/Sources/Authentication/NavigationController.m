@@ -172,8 +172,6 @@
 - (NSArray<UIViewController *> *)popToRootViewControllerAnimated:(BOOL)animated
 {
     NSArray<UIViewController *> *viewControllers = [super popToRootViewControllerAnimated:animated];
-    
-    [self takeFirstResponderDuringTransition];
     [self updateLogoAnimated:animated];
     [self updateBackButtonAnimated:animated];
     [self updateRightButtonAnimated:animated];
@@ -184,8 +182,11 @@
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated
 {
     UIViewController *poppedViewController = [super popViewControllerAnimated:animated];
+
+    if (self.viewControllers.count > 1) {
+        [self takeFirstResponderDuringTransition];
+    }
     
-    [self takeFirstResponderDuringTransition];
     [self updateLogoAnimated:animated];
     [self updateBackButtonAnimated:animated];
     [self updateRightButtonAnimated:animated];
