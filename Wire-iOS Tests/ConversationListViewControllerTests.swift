@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class ConversationListViewControllerTests: ZMSnapshotTestCase {
+final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationListViewController!
     
@@ -30,6 +30,8 @@ final class ConversationListViewControllerTests: ZMSnapshotTestCase {
         sut.account = account
 
         sut.view.backgroundColor = .black
+
+        recordMode = true
     }
     
     override func tearDown() {
@@ -37,7 +39,13 @@ final class ConversationListViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForNoConversations(){
+    func testForNoConversations() {
         verify(view: sut.view)
+    }
+
+    func testForActionMenu() {
+        sut.showActionMenu(for: self.otherUserConversation, from: sut.view)
+
+        verifyAlertController((sut?.actionsController?.alertController)!)
     }
 }

@@ -26,6 +26,7 @@
     private let conversation: ZMConversation
     unowned let target: UIViewController
     private var currentContext: PresentationContext?
+    var alertController: UIAlertController?
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
@@ -42,10 +43,12 @@
             )
         }
         
-        let controller = UIAlertController(title: conversation.displayName, message: nil, preferredStyle: .actionSheet)
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
         present(controller)
+
+        alertController = controller
     }
     
     func enqueue(_ block: @escaping () -> Void) {

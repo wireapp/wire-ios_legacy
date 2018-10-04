@@ -101,7 +101,6 @@
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
 @property (nonatomic) ConversationListOnboardingHint *onboardingHint;
-@property (nonatomic) ConversationActionController *actionsController;
 
 @property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
 @property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
@@ -499,13 +498,6 @@
 {
     [self.listContentController scrollToCurrentSelectionAnimated:animated];
 }
-
-- (void)showActionMenuForConversation:(ZMConversation *)conversation fromView:(UIView *)view
-{
-    self.actionsController = [[ConversationActionController alloc] initWithConversation:conversation target:self];
-    [self.actionsController presentMenuFromSourceView:view];
-}
-
 
 #pragma mark - Conversation Collection Vertical Pan Gesture Handling
 

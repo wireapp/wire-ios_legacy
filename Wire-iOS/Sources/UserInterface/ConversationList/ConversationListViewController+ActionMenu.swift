@@ -16,13 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class PermissionDeniedViewController;
-@class ConversationActionController;
+import Foundation
 
-@interface ConversationListViewController ()
-
-@property (nonatomic, nonnull) UILabel *noConversationLabel;
-@property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
-@property (nonatomic, nullable) ConversationActionController *actionsController;
-
-@end
+extension ConversationListViewController {
+    @objc(showActionMenuForConversation:fromView:)
+    func showActionMenu(for conversation: ZMConversation!, from view: UIView!) {
+        actionsController = ConversationActionController(conversation: conversation, target: self)
+        actionsController?.presentMenu(from: view)
+    }
+}
