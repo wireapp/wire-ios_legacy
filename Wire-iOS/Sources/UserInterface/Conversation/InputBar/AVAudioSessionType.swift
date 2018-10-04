@@ -18,6 +18,8 @@
 
 import Foundation
 
+
+/// A protocol for allow tests to mock recordPermission
 @objc protocol AVAudioSessionType: NSObjectProtocol {
     var recordPermission: AVAudioSession.RecordPermission { get }
 }
