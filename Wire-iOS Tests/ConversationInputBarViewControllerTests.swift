@@ -51,6 +51,8 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
     var sut: ConversationInputBarViewController!
 
     override func tearDown() {
+        sut.audioRecordViewControllerDidCancel(sut.audioRecordViewController!)
+
         sut = nil
         super.tearDown()
     }
@@ -59,13 +61,26 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
         super.setUp()
 
         sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.audioSession = MockAudioSession()
         sut.viewDidLoad()
 
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
+
+        recordMode = true
     }
 
-    func DISABLE_testAudioRecorderTouchBegan() {
+    func longPressChanged() {
+        let changedGestureRecognizer = MockLongPressGestureRecognizer(location: CGPoint(x: 0, y: 30), state: .changed)
+        sut.audioButtonLongPressed(changedGestureRecognizer)
+    }
+
+    func longPressEnded() {
+        let endedGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .ended)
+        sut.audioButtonLongPressed(endedGestureRecognizer)
+    }
+
+    func testAudioRecorderTouchBegan() {
         // GIVEN
 
         // WHEN
@@ -75,22 +90,27 @@ final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDa
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view)
+
+        // clean up
+        longPressEnded()
     }
 
-    func DISABLE_testAudioRecorderTouchChanged() {
+    func testAudioRecorderTouchChanged() {
         // GIVEN
 
         // WHEN
         sut.audioButtonLongPressed(MockLongPressGestureRecognizer(location: .zero, state: .began))
-        let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: CGPoint(x: 0, y: 30), state: .changed)
-        sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
+        longPressChanged()
         sut.view.layoutIfNeeded()
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view)
+
+        // clean up
+        longPressEnded()
     }
 
-    func DISABLE_testAudioRecorderTouchEnded() {
+    func testAudioRecorderTouchEnded() {
         // GIVEN
 
         // WHEN
