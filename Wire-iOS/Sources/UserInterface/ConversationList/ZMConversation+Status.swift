@@ -276,7 +276,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
         case .incoming(_, false, _)?:
             return .activeCall(showJoin: true)
         case .answered?, .established?, .establishedDataChannel?:
-            return .activeCall(showJoin: conversation.isSilenced)
+            return .activeCall(showJoin: conversation.mutedMessageTypes != .all)
         default:
             return .none
         }
@@ -758,6 +758,8 @@ extension ZMConversation {
             }
         }()
 
+        let isSilenced = mutedMessageTypes != .none
+        
         return ConversationStatus(
             isGroup: conversationType == .group,
             hasMessages: hasMessages,

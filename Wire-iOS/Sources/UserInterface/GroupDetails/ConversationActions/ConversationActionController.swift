@@ -84,7 +84,7 @@
             self.conversation.markAsUnread()
             }
         case .silence(isSilenced: let isSilenced): self.enqueue {
-            self.conversation.isSilenced = !isSilenced
+            self.conversation.mutedMessageTypes = isSilenced ? .all : .none
             }
         case .leave: self.request(LeaveResult.self) { result in
             self.handleLeaveResult(result, for: self.conversation)
@@ -101,6 +101,9 @@
             self.handleBlockResult(result, for: self.conversation)
             }
         case .remove: fatalError()
+        case .setMutedMessageTypes:
+            // TODO mentions: open menu
+            fatalError()
         }
     }
     
