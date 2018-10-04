@@ -26,7 +26,7 @@
     private let conversation: ZMConversation
     unowned let target: UIViewController
     private var currentContext: PresentationContext?
-    var alertController: UIAlertController?
+    weak var alertController: UIAlertController?
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
