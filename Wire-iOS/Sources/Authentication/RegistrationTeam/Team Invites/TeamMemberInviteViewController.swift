@@ -26,8 +26,7 @@ protocol TeamMemberInviteViewControllerDelegate: class {
 final class TeamMemberInviteViewController: AuthenticationStepViewController, TeamInviteTopbarDelegate {
 
     weak var authenticationCoordinator: AuthenticationCoordinator?
-    weak var delegate: TeamMemberInviteViewControllerDelegate?
-    
+
     private let topBarSpacerView = UIView()
     private let topBar = TeamInviteTopBar()
     private let tableView = UpsideDownTableView() // So the insertion animation pushes content to the top.
@@ -149,7 +148,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController, Te
         let inviteResult = invitationsCount == 0 ? Analytics.InviteResult.none : Analytics.InviteResult.invited(invitesCount: invitationsCount)
         
         Analytics.shared().tagTeamFinishedInviteStep(with: inviteResult)
-        delegate?.teamInviteViewControllerDidFinish(self)
+        authenticationCoordinator?.teamInviteViewControllerDidFinish(self)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
