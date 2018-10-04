@@ -42,7 +42,7 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     func testForActionMenu() {
-        sut.showActionMenu(for: self.otherUserConversation, from: sut.view)
+        sut.showActionMenu(for: otherUserConversation, from: sut.view)
 
         verifyAlertController((sut?.actionsController?.alertController)!)
     }
