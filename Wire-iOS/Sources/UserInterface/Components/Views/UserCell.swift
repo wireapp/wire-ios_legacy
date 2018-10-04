@@ -105,7 +105,7 @@ class UserCell: SeparatorCollectionViewCell {
         accessoryIconView.isHidden = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = FontSpec.init(.normal, .light).font!
+        titleLabel.font = .normalLightFont
         titleLabel.accessibilityIdentifier = "user_cell.name"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+@testable import Wire
 
 extension MockConversation {
 
@@ -25,7 +26,7 @@ extension MockConversation {
     }
 
     @objc var timeoutImage: UIImage? {
-        return WireStyleKit.imageOfWeek(with: UIColor.accent())
+        return WireStyleKit.imageOfWeek(with: .accent())
     }
 
 }

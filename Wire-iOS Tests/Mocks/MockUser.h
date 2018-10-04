@@ -26,6 +26,7 @@
 
 @interface MockUser : NSObject<UserType, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
++ (NSArray <MockUser *> *)realMockUsers;
 + (MockUser *)mockSelfUser;
 + (MockUser *)mockUserFor:(ZMUser *)user;
 + (ZMUser<ZMEditableUser> *)selfUserInUserSession:(ZMUserSession *)session;

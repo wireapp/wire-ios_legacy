@@ -57,13 +57,12 @@ extension Notification.Name {
     }
 
     func setText(_ newText: String, withMentions mentions: [Mention]) {
-        text = newText
-        let mutable = NSMutableAttributedString(attributedString: attributedText)
+        let mutable = NSMutableAttributedString(string: newText, attributes: currentAttributes)
 
         // We reverse to maintain correct ranges for subsequent inserts.
         for mention in mentions.reversed() {
             let attachment = MentionTextAttachment(user: mention.user)
-            let attributedString = NSAttributedString(attachment: attachment)
+            let attributedString = NSAttributedString(attachment: attachment) && typingAttributes
             mutable.replaceCharacters(in: mention.range, with: attributedString)
         }
         
@@ -74,7 +73,7 @@ extension Notification.Name {
         var locationOffset = 0
         let mentions: [Mention] = mentionAttachmentsWithRange(from: attributedText).map { tuple in
             let (attachment, range) = tuple
-            let length = attachment.attributedText.string.count
+            let length = attachment.attributedText.string.utf16.count
             let adjustedRange = NSRange(location: range.location + locationOffset, length: length)
             locationOffset += length - 1 // Adjust for the length 1 attachment that we replaced.
             
@@ -123,6 +122,17 @@ extension Notification.Name {
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
         }
+    }
+    
+    override func cut(_ sender: Any?) {
+        guard let selectedTextRange = selectedTextRange else { return }
+        
+        let copiedAttributedText = attributedText.attributedSubstring(from: selectedRange)
+        let copiedAttributedTextPlainText = replaceMentionAttachmentsWithPlainText(in: copiedAttributedText)
+        
+        UIPasteboard.general.setValue(copiedAttributedTextPlainText, forPasteboardType: kUTTypeUTF8PlainText as String)
+        
+        replace(selectedTextRange, withText: "")
     }
     
     override func copy(_ sender: Any?) {
@@ -176,6 +186,7 @@ extension Notification.Name {
         typingAttributes = currentAttributes
 
         NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: UITextView.textDidChangeNotification, object: nil)
+        setupGestureRecognizer()
     }
     
     required init?(coder aDecoder: NSCoder) {

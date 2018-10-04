@@ -20,48 +20,56 @@ import Foundation
 import Cartography
 
 extension ContactsViewController {
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-    }
-
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        showKeyboardIfNeeded()
-    }
-
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        searchHeaderViewController.tokenField.resignFirstResponder()
-    }
 
     @objc func createSearchHeader() {
-        searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
+        let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
         searchHeaderViewController.delegate = self
         searchHeaderViewController.allowsMultipleSelection = false
         searchHeaderViewController.view.backgroundColor = UIColor(scheme: .searchBarBackground, variant: .dark)
 
         addToSelf(searchHeaderViewController)
+
+        self.searchHeaderViewController = searchHeaderViewController
     }
 
     @objc func createTopContainerConstraints() {
-        constrain(self.view, topContainerView) {selfView, topContainerView in
+        constrain(self.view, topContainerView!) {selfView, topContainerView in
             topContainerView.leading == selfView.leading
             topContainerView.trailing == selfView.trailing
-            topContainerView.top == selfView.top + UIScreen.safeArea.top
+            topContainerView.top == selfView.topMargin
             topContainerHeightConstraint = topContainerView.height == 0
         }
 
-        topContainerHeightConstraint.isActive = false
+        topContainerHeightConstraint?.isActive = false
     }
 
     @objc func createSearchHeaderConstraints() {
-        constrain(searchHeaderViewController.view, self.view, topContainerView, separatorView) { searchHeader, selfView, topContainerView, separatorView in
+        guard let searchHeaderViewControllerView = searchHeaderViewController?.view,
+            let topContainerView = topContainerView,
+            let separatorView = separatorView else { return }
+
+        constrain(searchHeaderViewControllerView, self.view, topContainerView, separatorView) { searchHeader, selfView, topContainerView, separatorView in
             searchHeader.leading == selfView.leading
             searchHeader.trailing == selfView.trailing
-            searchHeader.top == topContainerView.bottom
+            searchHeaderTopConstraint = searchHeader.top == topContainerView.bottom
             searchHeader.bottom == separatorView.top
+        }
+
+        constrain(searchHeaderViewController!.view, self.view) {
+            searchHeader, selfView in
+            searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.top
+        }
+
+        searchHeaderTopConstraint?.isActive = false
+        searchHeaderWithNavigatorBarTopConstraint?.isActive = true
+    }
+
+
+    var numTableRows: UInt {
+        if let tableView = tableView {
+            return tableView.numberOfTotalRows()
+        } else {
+            return 0
         }
     }
 
@@ -76,15 +84,15 @@ extension ContactsViewController {
 
         let showEmptyResults = searchResultsReceived && !(numTableRows != 0)
         let showNoContactsLabel = !(numTableRows != 0) && (searchQueryCount == 0) && !(searchHeaderViewController?.tokenField.userDidConfirmInput ?? false)
-        noContactsLabel.isHidden = !showNoContactsLabel
-        bottomContainerView.isHidden = (searchQueryCount > 0) || showEmptyResults
+        noContactsLabel?.isHidden = !showNoContactsLabel
+        bottomContainerView?.isHidden = (searchQueryCount > 0) || showEmptyResults
 
         setEmptyResultsHidden(!showEmptyResults, animated: showEmptyResults)
     }
 
     func showKeyboardIfNeeded() {
         if numTableRows > Int(StartUIInitiallyShowsKeyboardConversationThreshold) {
-            searchHeaderViewController.tokenField.becomeFirstResponder()
+            searchHeaderViewController?.tokenField.becomeFirstResponder()
         }
     }
 }

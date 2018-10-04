@@ -31,9 +31,8 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
 
     override func tearDown() {
         sut = nil
+        resetColorScheme()
         super.tearDown()
-
-        ColorScheme.default.variant = .light
     }
 
     fileprivate func performTest(file: StaticString = #file, line: UInt = #line) {

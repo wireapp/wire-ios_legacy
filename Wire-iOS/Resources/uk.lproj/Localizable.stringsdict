@@ -198,7 +198,7 @@
         <string>нових пристроїв</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.text</key>
+    <key>conversation.silenced.status.message.generic_message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -209,16 +209,16 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>нове текстове повідомлення</string>
+        <string>1 new message</string>
         <key>few</key>
-        <string>%d нові текстові повідомлення</string>
+        <string>%d new messages</string>
         <key>many</key>
-        <string>%d нових текстових повідомлень</string>
+        <string>%d new messages</string>
         <key>other</key>
-        <string>%d нових текстових повідомлень</string>
+        <string>%d new messages</string>
       </dict>
     </dict>
-    <key>conversation.silenced.status.message.link</key>
+    <key>conversation.silenced.status.message.mention</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@d_number_of_new@</string>
@@ -229,93 +229,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>новий лінк</string>
+        <string>1 mention</string>
         <key>few</key>
-        <string>%d нові лінки</string>
+        <string>%d mentions</string>
         <key>many</key>
-        <string>%d нових лінків</string>
+        <string>%d mentions</string>
         <key>other</key>
-        <string>%d нових лінків</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.image</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>нова картинка</string>
-        <key>few</key>
-        <string>%d нові картинки</string>
-        <key>many</key>
-        <string>%d нових картинок</string>
-        <key>other</key>
-        <string>%d нових картинок</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.location</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>нове розташування</string>
-        <key>few</key>
-        <string>%d нові розташування</string>
-        <key>many</key>
-        <string>%d нових розташувань</string>
-        <key>other</key>
-        <string>%d нових розташувань</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.audio</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>нове аудіоповідомлення</string>
-        <key>few</key>
-        <string>%d нові аудіоповідомлення</string>
-        <key>many</key>
-        <string>%d нових аудіоповідомлень</string>
-        <key>other</key>
-        <string>%d нових аудіоповідомлень</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.video</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>нове відео</string>
-        <key>few</key>
-        <string>%d нові відео</string>
-        <key>many</key>
-        <string>%d нових відео</string>
-        <key>other</key>
-        <string>%d нових відео</string>
+        <string>%d mentions</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -329,13 +249,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>новий пінг</string>
+        <string>1 ping</string>
         <key>few</key>
-        <string>%d нові пінги</string>
+        <string>%d pings</string>
         <key>many</key>
-        <string>%d нових пінгів</string>
+        <string>%d pings</string>
         <key>other</key>
-        <string>%d нових пінгів</string>
+        <string>%d pings</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -349,33 +269,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>пропущений дзвінок</string>
+        <string>1 missed call</string>
         <key>few</key>
-        <string>%d пропущені дзвінки</string>
+        <string>%d пропущених дзвінків</string>
         <key>many</key>
         <string>%d пропущених дзвінків</string>
         <key>other</key>
         <string>%d пропущених дзвінків</string>
-      </dict>
-    </dict>
-    <key>conversation.silenced.status.message.file</key>
-    <dict>
-      <key>NSStringLocalizedFormatKey</key>
-      <string>%#@d_number_of_new@</string>
-      <key>d_number_of_new</key>
-      <dict>
-        <key>NSStringFormatSpecTypeKey</key>
-        <string>NSStringPluralRuleType</string>
-        <key>NSStringFormatValueTypeKey</key>
-        <string>d</string>
-        <key>one</key>
-        <string>новий файл</string>
-        <key>few</key>
-        <string>%d нові файли</string>
-        <key>many</key>
-        <string>%d нових файлів</string>
-        <key>other</key>
-        <string>%d нових файлів</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call</key>
@@ -389,13 +289,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Пропущений дзвінок</string>
         <key>few</key>
-        <string>Missed calls</string>
+        <string>Пропущені дзвінки</string>
         <key>many</key>
-        <string>Missed calls</string>
+        <string>Пропущених дзвінків</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>Пропущених дзвінків</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -409,13 +309,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Пропущений дзвінок від %2$@</string>
         <key>few</key>
-        <string>Missed calls from %2$@</string>
+        <string>Пропущені дзвінки від %2$@</string>
         <key>many</key>
-        <string>Missed calls from %2$@</string>
+        <string>Пропущених дзвінків від %2$@</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>Пропущених дзвінків від %2$@</string>
       </dict>
     </dict>
   </dict>

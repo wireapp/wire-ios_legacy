@@ -24,17 +24,13 @@ extension ContactsViewController {
         titleLabel?.font = .smallLightFont
         titleLabel?.textTransform = .upper
 
-        bottomContainerView.backgroundColor = .background
+        bottomContainerView?.backgroundColor = .background
 
-        noContactsLabel.font = .normalLightFont
-        noContactsLabel.textColor = UIColor(scheme: .textForeground, variant: .dark)
+        noContactsLabel?.font = .normalLightFont
+        noContactsLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }
 
-    var numTableRows: UInt {
-        if let tableView = tableView {
-            return tableView.numberOfTotalRows()
-        } else {
-            return 0
-        }
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

@@ -20,7 +20,7 @@ import Foundation
 
 @objc public class MentionsHandler: NSObject {
 
-    var mentionRegex: NSRegularExpression = {
+    fileprivate var mentionRegex: NSRegularExpression = {
         try! NSRegularExpression(pattern: "([\\s]|^)(@(\\S*))", options: [.anchorsMatchLines])
     }()
 
@@ -31,9 +31,9 @@ import Foundation
         guard let text = text else { return nil }
         let wholeRange = NSRange(location: 0, length: text.endIndex.encodedOffset)
         let matches = mentionRegex.matches(in: text, range: wholeRange)
-        // We need to offset the cursor position because it is at the end of entered text
-        let positionInMention = max(0, cursorPosition - 1)
-        guard let match = matches.first(where: { result in result.range.contains(positionInMention) }) else { return nil }
+        // Cursor is a separator between characters, we are interested in the character before the cursor
+        let characterPosition = max(0, cursorPosition - 1)
+        guard let match = matches.first(where: { result in result.range.contains(characterPosition) }) else { return nil }
         // Should be 4 matches:
         // 0. whole string
         // 1. space or start of string
@@ -42,6 +42,8 @@ import Foundation
         guard match.numberOfRanges == 4 else { return nil }
         mentionMatchRange = match.range(at: 2)
         searchQueryMatchRange = match.range(at: 3)
+        // Character to the left of the cursor position should be inside the mention
+        guard mentionMatchRange.contains(characterPosition) else { return nil }
     }
 
     func searchString(in text: String?) -> String? {
@@ -50,10 +52,16 @@ import Foundation
         return String(text[range])
     }
 
-    func replace(mention: UserType, in attributedString: NSAttributedString) -> NSAttributedString {
+    func replacement(forMention mention: UserType, in attributedString: NSAttributedString) -> (NSRange, NSAttributedString) {
         let mentionString = NSAttributedString(attachment: MentionTextAttachment(user: mention))
-        let mut = NSMutableAttributedString(attributedString: attributedString)
-        mut.replaceCharacters(in: mentionMatchRange, with: mentionString)
-        return mut
+        let characterAfterMention = mentionMatchRange.upperBound
+
+        // Add space after mention if it's not there
+        let endOfString = !attributedString.wholeRange.contains(characterAfterMention)
+        let suffix = endOfString || !attributedString.hasSpaceAt(position: characterAfterMention) ? " " : ""
+
+        return (mentionMatchRange, (mentionString + suffix))
     }
+
 }
+

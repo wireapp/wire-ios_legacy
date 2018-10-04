@@ -56,6 +56,8 @@ struct ConversationStatus {
 // Describes the conversation message.
 enum StatusMessageType: Int {
     case mention
+    case missedCall
+    case knock
     case text
     case link
     case image
@@ -63,14 +65,22 @@ enum StatusMessageType: Int {
     case audio
     case video
     case file
-    case knock
     case addParticipants
     case removeParticipants
     case newConversation
-    case missedCall
 }
 
 extension StatusMessageType {
+    /// Types of statuses that can be included in a status summary.
+    static let summaryTypes: [StatusMessageType] = [.mention, .missedCall, .knock, .text, .link, .image, .location, .audio, .video, .file]
+
+    var parentSummaryType: StatusMessageType? {
+        switch self {
+        case .link, .image, .location, .audio, .video, .file: return .text
+        default: return nil
+        }
+    }
+
     private static let conversationSystemMessageTypeToStatusMessageType: [ZMSystemMessageType: StatusMessageType] = [
         .participantsAdded:   .addParticipants,
         .participantsRemoved: .removeParticipants,
@@ -278,7 +288,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
 // "A, B, C: typing a message..."
 final internal class TypingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.isTyping
+        return status.isTyping && !status.isSilenced
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -305,7 +315,7 @@ final internal class TypingMatcher: ConversationStatusMatcher {
 // "Silenced"
 final internal class SilencedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.isSilenced && !status.hasSelfMention
+        return status.isSilenced
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -330,11 +340,15 @@ extension ConversationStatus {
     }
     
     var shouldSummarizeMessages: Bool {
-        if hasSelfMention {
-            return !latestMessageIsSelfMention
-        }
-        else {
-            return isSilenced
+        if isSilenced {
+            // Always summarize for muted conversation
+            return true
+        } else if hasSelfMention {
+            // Summarize if there is at least one mention and another activity that can be inside a summary
+            return StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) } > 1
+        } else {
+            // Never summarize in other cases
+            return false
         }
     }
 }
@@ -344,33 +358,62 @@ extension ConversationStatus {
 // In not silenced: "[Sender:] <message text>"
 // Ephemeral: "Ephemeral message"
 final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
-    let matchedTypes: [StatusMessageType] = [.mention, .text, .link, .image, .location, .audio, .video, .file, .knock, .missedCall]
+    var matchedTypes: [StatusMessageType] {
+        return StatusMessageType.summaryTypes
+    }
+
     let localizationSilencedRootPath = "conversation.silenced.status.message"
     let localizationRootPath = "conversation.status.message"
 
-    let matchedTypesDescriptions: [StatusMessageType: String] = [
-        .text:     "text",
-        .link:     "link",
-        .image:    "image",
-        .location: "location",
-        .audio:    "audio",
-        .video:    "video",
-        .file:     "file",
-        .knock:    "knock",
+    let matchedSummaryTypesDescriptions: [StatusMessageType: String] = [
+        .mention:    "mention",
         .missedCall: "missedcall",
-        .mention:  "mention"
+        .knock:      "knock",
+        .text:       "generic_message"
     ]
-    
+
+    let matchedTypesDescriptions: [StatusMessageType: String] = [
+        .mention:    "mention",
+        .missedCall: "missedcall",
+        .knock:      "knock",
+        .text:       "text",
+        .link:       "link",
+        .image:      "image",
+        .location:   "location",
+        .audio:      "audio",
+        .video:      "video",
+        .file:       "file"
+    ]
+
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         if status.shouldSummarizeMessages {
-            let resultString = matchedTypes.filter { status.messagesRequiringAttentionByType[$0] > 0 }.compactMap {
-                guard let localizationKey = matchedTypesDescriptions[$0] else {
-                    return .none
+            // Get the count of each category we can summarize, and group them under their parent type
+            let flattenedCount: [StatusMessageType: UInt] = matchedTypes
+                .reduce(into: [StatusMessageType: UInt]()) {
+                    guard let count = status.messagesRequiringAttentionByType[$1], count > 0 else {
+                        return
+                    }
+
+                    if let parentType = $1.parentSummaryType {
+                        $0[parentType, default: 0] += count
+                    } else {
+                        $0[$1, default: 0] += count
+                    }
                 }
-                
-                return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, status.messagesRequiringAttentionByType[$0] ?? 0)
-                }.joined(separator: ", ")
-            
+
+            // For each top-level summary type, generate the subtitle fragment
+            let localizedMatchedItems: [String] = flattenedCount.keys.lazy
+                .sorted { $0.rawValue < $1.rawValue }
+                .reduce(into: []) {
+                    guard let count = flattenedCount[$1], let localizationKey = matchedSummaryTypesDescriptions[$1] else {
+                        return
+                    }
+
+                    let string = String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count)
+                    $0.append(string)
+                }
+
+            let resultString = localizedMatchedItems.joined(separator: ", ")
             return resultString.capitalizingFirstLetter() && type(of: self).regularStyle
         }
         else {
@@ -391,8 +434,17 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             }
             
             let messageDescription: String
+
             if message.isEphemeral {
-                messageDescription = (localizationRootPath + ".ephemeral").localized
+                var typeSuffix = ".ephemeral"
+                if type == .mention {
+                    typeSuffix += status.isGroup ? ".mention.group" : ".mention"
+                } else if type == .knock {
+                    typeSuffix += status.isGroup ? ".knock.group" : ".knock"
+                } else if status.isGroup {
+                    typeSuffix += ".group"
+                }
+                messageDescription = (localizationRootPath + typeSuffix).localized
             }
             else {
                 var format = localizationRootPath + "." + localizationKey
@@ -405,7 +457,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                 messageDescription = String(format: format.localized, message.textMessageData?.messageText ?? "")
             }
             
-            if status.isGroup {
+            if status.isGroup && !message.isEphemeral {
                 return ((sender.displayName(in: conversation) + ": ") && Swift.type(of: self).emphasisStyle) +
                         (messageDescription && Swift.type(of: self).regularStyle)
             }
@@ -623,7 +675,7 @@ private var allMatchers: [ConversationStatusMatcher] = {
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
     
-    return [SelfUserLeftMatcher(), BlockedMatcher(), CallingMatcher(), TypingMatcher(), silencedMatcher, newMessageMatcher, failedSendMatcher, groupActivityMatcher, StartConversationMatcher(), UnsernameMatcher()]
+    return [SelfUserLeftMatcher(), BlockedMatcher(), CallingMatcher(), silencedMatcher, TypingMatcher(), newMessageMatcher, failedSendMatcher, groupActivityMatcher, StartConversationMatcher(), UnsernameMatcher()]
 }()
 
 extension ConversationStatus {

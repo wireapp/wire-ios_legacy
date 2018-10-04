@@ -20,6 +20,10 @@ import Foundation
 
 // MARK: SplitViewController reveal
 
+extension CharacterSet {
+    static var newlinesAndTabulation = CharacterSet(charactersIn: "\r\n\t")
+}
+
 extension ConversationInputBarViewController {
     func hideLeftView() {
         guard self.isIPadRegularPortrait(device: UIDevice.current, application: UIApplication.shared) else { return }
@@ -42,12 +46,42 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         updateRightAccessoryView()
     }
 
+    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return textAttachment.image == nil
+    }
+
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // send only if send key pressed
         if textView.returnKeyType == .send && (text == "\n") {
-            inputBar.textView.autocorrectLastWord()
-            sendText()
+            if UIDevice.current.type == .iPad,
+                canInsertMention {
+                insertBestMatchMention()
+            }
+            else {
+                inputBar.textView.autocorrectLastWord()
+                sendText()
+            }
             return false
+        }
+                
+        if UIDevice.current.type == .iPad,
+            text.count == 1,
+            text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
+            canInsertMention {
+            
+            insertBestMatchMention()
+            return false
+        }
+
+        // we are deleting text one by one
+        if text == "" && range.length == 1 {
+            if let cursor = textView.selectedTextRange, let deletionStart = textView.position(from: cursor.start, offset: -1) {
+                if cursor.start == cursor.end && // We have only caret, no selected text
+                    textView.attributedText.containsAttachments(in: range) { // Text to be deleted has text attachment
+                    textView.selectedTextRange = textView.textRange(from: deletionStart, to: cursor.start) // Select the text to be deleted and ignore the backspace
+                    return false
+                }
+            }
         }
 
         inputBar.textView.respondToChange(text, inRange: range)

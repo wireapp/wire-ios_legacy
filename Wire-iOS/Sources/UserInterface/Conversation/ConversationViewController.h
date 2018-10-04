@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak, nullable) ZClientViewController *zClientViewController;
 @property (nonatomic) ZMConversation *conversation;
+@property (nonatomic, nullable) id<ZMConversationMessage> visibleMessage;
 @property (nonatomic, getter=isFocused) BOOL focused;
 @property (nonatomic, readonly) ConversationCallController *startCallController;
 

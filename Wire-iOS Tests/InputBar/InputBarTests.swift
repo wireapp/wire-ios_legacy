@@ -93,6 +93,16 @@ class InputBarTests: ZMSnapshotTestCase {
         verifyInAllTabletWidths(view: sut)
     }
     
+    func testTruncatedMention() {
+        guard let userWithLongName = MockUser.realMockUsers()?.last else { return XCTFail() }
+        userWithLongName.name = "Matt loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name"
+        let text = "Hello @\(userWithLongName.name!)"
+        sut.textView.setText(text, withMentions: [Mention(range: (text as NSString).range(of: "@\(userWithLongName.name!)"), user: userWithLongName)])
+        
+        verifyInAllPhoneWidths(view: sut)
+        verifyInAllTabletWidths(view: sut)
+    }
+    
     func testButtonsWithTitle() {
         let buttonsWithText = buttons()
         

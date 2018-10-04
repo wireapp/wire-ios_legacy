@@ -1,0 +1,35 @@
+pool:
+   vmImage: 'macOS 10.13'
+
+trigger:
+  - develop
+  
+steps:
+- script: |
+    sudo xcode-select -switch /Applications/Xcode_10.app
+    bundle install --path ~/.gem
+    bundle exec fastlane prepare  
+    mkdir SnapshotResults
+  env:
+    GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
+  displayName: "Setup environment"
+- script: |
+    bundle exec fastlane build
+  displayName: "Build"
+- script: |
+    bundle exec fastlane test
+  displayName: "Test"
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: 'test/*.xml'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: "SnapshotResults"
+    artifactName: "Snapshot failures"
+- script: |
+    bundle exec fastlane post_test
+  env:  
+    CODECOV_TOKEN: $(CODECOV_TOKEN)
+    DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
+    GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
+  displayName: "Post Test"

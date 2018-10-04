@@ -171,7 +171,7 @@ extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewContro
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
-            ZClientViewController.shared()?.load(conversation, focusOnView: true, animated: true)
+            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
     

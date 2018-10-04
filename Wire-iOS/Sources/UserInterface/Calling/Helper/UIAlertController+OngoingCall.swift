@@ -22,7 +22,7 @@ extension UIAlertController {
 
     static func ongoingCallJoinCallConfirmation(forceAlertModal: Bool = false, completion: @escaping (Bool) -> Void) -> UIAlertController {
         return ongoingCallConfirmation(
-            titleKey: "call.alert.ongoing.join.alert_title",
+            titleKey: "call.alert.ongoing.alert_title",
             messageKey: "call.alert.ongoing.join.message",
             buttonTitleKey: "call.alert.ongoing.join.button",
             forceAlertModal: forceAlertModal,
@@ -32,7 +32,7 @@ extension UIAlertController {
     
     static func ongoingCallStartCallConfirmation(completion: @escaping (Bool) -> Void) -> UIAlertController {
         return ongoingCallConfirmation(
-            titleKey: "call.alert.ongoing.start.alert_title",
+            titleKey: "call.alert.ongoing.alert_title",
             messageKey: "call.alert.ongoing.start.message",
             buttonTitleKey: "call.alert.ongoing.start.button",
             forceAlertModal: false,

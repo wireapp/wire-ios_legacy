@@ -46,8 +46,6 @@ class ColorSchemeController: NSObject {
     }
 
     @objc func settingsColorSchemeDidChange(notification: Notification?) {
-        Message.invalidateMarkdownStyle()
-
         let colorScheme = ColorScheme.default
         switch Settings.shared().colorScheme {
         case .light:
@@ -55,6 +53,8 @@ class ColorSchemeController: NSObject {
         case .dark:
             colorScheme.variant = .dark
         }
+
+        NSAttributedString.invalidateMarkdownStyle()
 
         notifyColorSchemeChange()
     }
@@ -65,8 +65,8 @@ extension ColorSchemeController: ZMUserObserver {
         guard note.accentColorValueChanged else { return }
 
         let colorScheme = ColorScheme.default
-        let newAccentColor = UIColor.accent()
-        if !(colorScheme.accentColor == newAccentColor) {
+
+        if !colorScheme.isCurrentAccentColor(UIColor.accent()) {
             notifyColorSchemeChange()
         }
     }
