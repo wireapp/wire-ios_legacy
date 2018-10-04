@@ -84,7 +84,7 @@
             self.conversation.markAsUnread()
             }
         case .silence(isSilenced: let isSilenced): self.enqueue {
-            self.conversation.mutedMessageTypes = isSilenced ? .all : .none
+            self.conversation.mutedMessageTypes = isSilenced ? .none : .all 
             }
         case .leave: self.request(LeaveResult.self) { result in
             self.handleLeaveResult(result, for: self.conversation)
