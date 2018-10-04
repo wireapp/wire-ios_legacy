@@ -440,9 +440,19 @@ extension AppRootViewController: ShowContentDelegate {
 // MARK: - Foreground Notification Responder
 
 extension AppRootViewController: ForegroundNotificationResponder {
-    func shouldPresentForegroundNotification(for conversation: UUID) -> Bool {
-        guard let clientVC = ZClientViewController.shared() else { return true }
-        return !clientVC.isLastMessageVisible(for: conversation)
+    func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
+        guard
+            let selfUserID = userInfo.selfUserID,
+            let selectedAccount = sessionManager?.accountManager.selectedAccount,
+            selectedAccount.userIdentifier == selfUserID
+            else { return true }
+        
+        guard
+            let clientVC = ZClientViewController.shared(),
+            let convID = userInfo.conversationID
+            else { return true }
+
+        return !clientVC.isConversationListVisible && !clientVC.isLastMessageVisible(for: convID)
     }
 }
 
