@@ -18,18 +18,25 @@
 
 import Foundation
 
-enum NotificationResult {
+enum NotificationResult: CaseIterable {
     case everything, mentions, nothing, cancel
-    
-
     
     static var title: String {
         return "meta.menu.configure_notification.dialog_message".localized
     }
     
-    static var options: [NotificationResult] = [
-        .everything, .mentions, .nothing, .cancel
-    ]
+    var mutedMessageTypes: MutedMessageTypes? {
+        switch self {
+        case .everything:
+            return MutedMessageTypes.none
+        case .mentions:
+            return .nonMentions
+        case .nothing:
+            return .all
+        case .cancel:
+            return nil
+        }
+    }
     
     var title: String {
         return localizationKey.localized
@@ -53,7 +60,16 @@ enum NotificationResult {
     }
     
     func action(for conversation: ZMConversation, handler: @escaping (NotificationResult) -> Void) -> UIAlertAction {
-        let title = self.title //+ (conversation.muteStatus == self ? " ✓" : "")
+        let checkmarkText: String
+        
+        if let mutedMessageTypes = self.mutedMessageTypes, conversation.mutedMessageTypes == mutedMessageTypes {
+            checkmarkText = " ✓"
+        }
+        else {
+            checkmarkText = ""
+        }
+        
+        let title = self.title + checkmarkText
         return .init(title: title, style: style, handler: { _ in handler(self) })
     }
 }
@@ -62,12 +78,17 @@ extension ConversationActionController {
 
     func requestNotificationResult(for conversation: ZMConversation, handler: @escaping (NotificationResult) -> Void) {
         let controller = UIAlertController(title: NotificationResult.title, message: nil, preferredStyle: .actionSheet)
-        NotificationResult.options.map { $0.action(for: conversation, handler: handler) }.forEach(controller.addAction)
+        NotificationResult.allCases.map { $0.action(for: conversation, handler: handler) }.forEach(controller.addAction)
         present(controller)
     }
 
     func handleNotificationResult(_ result: NotificationResult, for conversation: ZMConversation) {
-        // TODO: update mute status
+        if let mutedMessageTypes = result.mutedMessageTypes {
+            ZMUserSession.shared()?.performChanges {
+                conversation.mutedMessageTypes = mutedMessageTypes
+            }
+        }
+
     }
 
 }
