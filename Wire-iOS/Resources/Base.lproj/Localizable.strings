@@ -615,6 +615,8 @@
 "meta.menu.archive" = "Archive";
 "meta.menu.unarchive" = "Unarchive";
 "meta.menu.delete" = "Delete Content…";
+"meta.menu.silence.mute" = "Mute";
+"meta.menu.silence.unmute" = "Unmute";
 "meta.menu.cancel" = "Cancel";
 "meta.menu.cancel_connection_request" = "Cancel Request…";
 "meta.menu.mark_unread" = "Mark as Unread";

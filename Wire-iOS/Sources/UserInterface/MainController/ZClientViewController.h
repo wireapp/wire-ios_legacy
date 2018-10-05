@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) BOOL isConversationViewVisible;
 
+@property (nonatomic, readonly) BOOL isConversationListVisible;
+
 @property (nonatomic) BOOL isComingFromRegistration;
 
 @property (nonatomic) BOOL needToShowDataUsagePermissionDialog;

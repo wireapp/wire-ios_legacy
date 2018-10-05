@@ -43,11 +43,6 @@ NSString * const ColorSchemeColorIconGuest = @"icon-guest";
 
 NSString * const ColorSchemeColorPopUpButtonOverlayShadow = @"popup-button-overlay-shadow";
 
-NSString * const ColorSchemeColorChatHeadBackground = @"chat-head-background";
-NSString * const ColorSchemeColorChatHeadBorder = @"chat-head-border";
-NSString * const ColorSchemeColorChatHeadTitleText = @"chat-head-title-text";
-NSString * const ColorSchemeColorChatHeadSubtitleText = @"chat-head-subtitle-text";
-
 NSString * const ColorSchemeColorButtonHighlighted = @"button-highlighted";
 NSString * const ColorSchemeColorButtonEmptyText = @"button-empty-text";
 NSString * const ColorSchemeColorButtonFaded = @"button-faded";
@@ -85,6 +80,8 @@ NSString * const ColorSchemeColorSectionText = @"section-text";
 
 NSString * const ColorSchemeColorTokenFieldBackground = @"token-field-background";
 NSString * const ColorSchemeColorTokenFieldTextPlaceHolder = @"token-field-text-placeholder";
+
+NSString * const ColorSchemeColorSelfMentionHighlight = @"self-mention-highlight";
 
 /// Generates the key name for the accent color that can be used to display the username.
 static NSString * ColorSchemeNameAccentColorForColor(ZMAccentColor color);
@@ -220,8 +217,6 @@ static NSString* light(NSString *colorString) {
     UIColor *white = [UIColor whiteColor];
     UIColor *white97 = [UIColor colorWithWhite:0.97 alpha:1];
     UIColor *white98 = [UIColor colorWithWhite:0.98 alpha:1];
-    UIColor *white90 = [UIColor colorWithWhite:0.9 alpha:1];
-    UIColor *white60 = [UIColor colorWithWhite:0.6 alpha:1];
     UIColor *whiteAlpha8 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.08)"];
     UIColor *whiteAlpha16 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.16)"];
     UIColor *whiteAlpha24 = [UIColor wr_colorFromString:@"rgb(255, 255, 255, 0.24)"];
@@ -246,6 +241,7 @@ static NSString* light(NSString *colorString) {
     UIColor *lightGraphiteAlpha24 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.24)"];
     UIColor *lightGraphiteAlpha48 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.48)"];
     UIColor *lightGraphiteAlpha64 = [UIColor wr_colorFromString:@"rgb(141, 152, 159, 0.64)"];
+    UIColor *amber = [UIColor wr_colorFromString:@"rgb(254, 191, 2)"];
 
     NSMutableDictionary *lightColors = [NSMutableDictionary dictionaryWithDictionary:
                                 @{ ColorSchemeColorTextForeground: graphite,
@@ -264,10 +260,6 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorIconBackgroundSelected: accentColor,
                                    ColorSchemeColorIconBackgroundSelectedNoAccent: graphite,
                                    ColorSchemeColorPopUpButtonOverlayShadow: blackAlpha24,
-                                   ColorSchemeColorChatHeadBackground: white,
-                                   ColorSchemeColorChatHeadBorder: white90,
-                                   ColorSchemeColorChatHeadTitleText: graphite,
-                                   ColorSchemeColorChatHeadSubtitleText: white60,
                                    ColorSchemeColorButtonHighlighted: whiteAlpha24,
                                    ColorSchemeColorButtonEmptyText: accentColor,
                                    ColorSchemeColorButtonFaded: graphiteAlpha40,
@@ -294,7 +286,8 @@ static NSString* light(NSString *colorString) {
                                    ColorSchemeColorTokenFieldTextPlaceHolder: lightGraphite,
                                    ColorSchemeColorCellSeparator: graphiteAlpha8,
                                    ColorSchemeColorSearchBarBackground: white,
-                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4]
+                                   ColorSchemeColorIconGuest: [backgroundGraphite colorWithAlphaComponent:0.4],
+                                   ColorSchemeColorSelfMentionHighlight: [amber colorWithAlphaComponent:0.48]
                                    }];
     
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {
@@ -319,10 +312,6 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorIconBackgroundSelected: white,
                                   ColorSchemeColorIconBackgroundSelectedNoAccent: white,
                                   ColorSchemeColorPopUpButtonOverlayShadow: black,
-                                  ColorSchemeColorChatHeadBackground: graphite,
-                                  ColorSchemeColorChatHeadBorder: graphite,
-                                  ColorSchemeColorChatHeadTitleText: white,
-                                  ColorSchemeColorChatHeadSubtitleText: whiteAlpha40,
                                   ColorSchemeColorButtonHighlighted: blackAlpha24,
                                   ColorSchemeColorButtonEmptyText: white,
                                   ColorSchemeColorButtonFaded: whiteAlpha40,
@@ -349,7 +338,8 @@ static NSString* light(NSString *colorString) {
                                   ColorSchemeColorTokenFieldTextPlaceHolder: whiteAlpha40,
                                   ColorSchemeColorCellSeparator: whiteAlpha8,
                                   ColorSchemeColorSearchBarBackground: whiteAlpha8,
-                                  ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64]
+                                  ColorSchemeColorIconGuest: [UIColor colorWithWhite:1.0 alpha:0.64],
+                                  ColorSchemeColorSelfMentionHighlight: [amber colorWithAlphaComponent:0.8]
                                   }];
 
     for (ZMAccentColor color = ZMAccentColorMin; color <= ZMAccentColorMax; color++) {

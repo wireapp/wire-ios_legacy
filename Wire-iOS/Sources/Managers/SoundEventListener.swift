@@ -104,7 +104,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             // * If this is the first message in the conversation, don't play the sound
             // * Message is new (recently sent)
             
-            let isSilencedConversation = message.conversation?.isSilenced ?? false
+            let isSilenced = message.isSilenced
             
             provideHapticFeedback(for: message)
 
@@ -112,7 +112,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
                   message.isRecentMessage &&
                   !message.isSentBySelfUser &&
                   !message.isFirstMessage &&
-                  !isSilencedConversation else {
+                  !isSilenced else {
                 continue
             }
             
@@ -130,10 +130,10 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
         for message in changeInfo.messages {
             
             let isRecentMessage = (message.serverTimestamp?.timeIntervalSinceNow ?? -Double.infinity) >= -1.0
-            let isSilencedConversation = message.conversation?.isSilenced ?? false
+            let isSilenced = message.isSilenced
             let isSentBySelfUser = message.sender?.isSelfUser ?? false
             
-            guard message.isKnock && isRecentMessage && !isSilencedConversation && !isSentBySelfUser else {
+            guard message.isKnock && isRecentMessage && !isSilenced && !isSentBySelfUser else {
                 continue
             }
             
@@ -160,7 +160,7 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
         
         switch callState {
         case .incoming(video: _, shouldRing: true, degraded: _):
-            guard let sessionManager = SessionManager.shared, !conversation.isSilenced else { return }
+            guard let sessionManager = SessionManager.shared, conversation.mutedMessageTypes == .none else { return }
             
             let otherNonIdleCalls = callCenter.nonIdleCalls.filter({ (key: UUID, callState: CallState) -> Bool in
                 return key != conversationId
