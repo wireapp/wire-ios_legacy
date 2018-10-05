@@ -114,7 +114,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForMultipleTextMessagesInConversation_silenced() {
         // GIVEN
         let sut = self.otherUserConversation!
-        sut.isSilenced = true
+        sut.mutedMessageTypes = [.all]
         for index in 1...5 {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
@@ -180,7 +180,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForMultipleVariousMessagesInConversation_silenced() {
         // GIVEN
         let sut = self.otherUserConversation!
-        sut.isSilenced = true
+        sut.mutedMessageTypes = [.all]
         for index in 1...5 {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
@@ -198,7 +198,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForMultipleVariousMessagesInConversation_silenced_mention() {
         // GIVEN
         let sut = self.otherUserConversation!
-        sut.isSilenced = true
+        sut.mutedMessageTypes = [.all]
         for index in 1...5 {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
