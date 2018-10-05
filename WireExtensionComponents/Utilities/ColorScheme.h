@@ -39,11 +39,6 @@ extern ColorSchemeColor ColorSchemeColorIconGuest;
 
 extern ColorSchemeColor ColorSchemeColorPopUpButtonOverlayShadow;
 
-extern ColorSchemeColor ColorSchemeColorChatHeadBackground;
-extern ColorSchemeColor ColorSchemeColorChatHeadBorder;
-extern ColorSchemeColor ColorSchemeColorChatHeadTitleText;
-extern ColorSchemeColor ColorSchemeColorChatHeadSubtitleText;
-
 extern ColorSchemeColor ColorSchemeColorButtonHighlighted;
 extern ColorSchemeColor ColorSchemeColorButtonFaded;
 
