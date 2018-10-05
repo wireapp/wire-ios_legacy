@@ -441,6 +441,11 @@ extension AppRootViewController: ShowContentDelegate {
 
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
+        
+        guard !(Settings.shared()?.chatHeadsDisabled ?? false) else {
+            return false
+        }
+        
         guard
             let selfUserID = userInfo.selfUserID,
             let selectedAccount = sessionManager?.accountManager.selectedAccount,
