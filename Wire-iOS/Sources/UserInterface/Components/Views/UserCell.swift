@@ -85,7 +85,7 @@ class UserCell: SeparatorCollectionViewCell {
         videoIconView.accessibilityIdentifier = "img.video"
         videoIconView.isHidden = true
         
-        verifiedIconView.image = WireStyleKit.imageOfShieldverified()
+        verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
         verifiedIconView.contentMode = .center
         verifiedIconView.accessibilityIdentifier = "img.shield"

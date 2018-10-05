@@ -37,7 +37,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 
 // Icons
 #import <WireExtensionComponents/ZetaIconTypes.h>
-#import <WireExtensionComponents/WireStyleKit.h>
 #import <WireExtensionComponents/UIImage+ZetaIconsNeue.h>
 
 // Utils

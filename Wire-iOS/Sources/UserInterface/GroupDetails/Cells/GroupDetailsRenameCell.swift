@@ -47,7 +47,7 @@ class GroupDetailsRenameCell : UICollectionViewCell {
     
     fileprivate func setup() {
         
-        verifiedIconView.image = WireStyleKit.imageOfShieldverified()
+        verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
         verifiedIconView.contentMode = .scaleAspectFit
         verifiedIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)

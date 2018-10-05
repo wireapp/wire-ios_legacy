@@ -572,6 +572,7 @@
 		879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879718971D1C767600163C07 /* AudioEffectsPickerViewController.swift */; };
 		8797A9B42046D687009865D5 /* GuestsBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8797A9B32046D687009865D5 /* GuestsBarController.swift */; };
 		879D6AFC1E69E20900DC07A1 /* ImageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */; };
+		879E5C8A2167B85C007CE4E7 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E5C892167B85B007CE4E7 /* WireStyleKit.swift */; };
 		879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E5E981F0104A6007A88A3 /* UITextView+Autocorrect.swift */; };
 		87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A15FCB1E07E8EB00AED79B /* CollectionsSectionSet.swift */; };
 		87A15FCE1E07EAB400AED79B /* AssetCollectionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A15FCD1E07EAB400AED79B /* AssetCollectionWrapper.swift */; };
@@ -677,8 +678,6 @@
 		87E4D2CA1FC6E39800F3C664 /* CharacterInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E4D2C91FC6E39800F3C664 /* CharacterInputField.swift */; };
 		87E56ED91E4E10CA0097D489 /* TextSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E56ED71E4E10CA0097D489 /* TextSearchResultCell.swift */; };
 		87E56EDA1E4E10CA0097D489 /* TextSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E56ED81E4E10CA0097D489 /* TextSearchViewController.swift */; };
-		87E7C9641BF5E43C001C5485 /* WireStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E7C9621BF5E422001C5485 /* WireStyleKit.m */; };
-		87E7C9651BF5E4E2001C5485 /* WireStyleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 87E7C9611BF5E422001C5485 /* WireStyleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		87EB6B871E2FCE080019B3C5 /* ZMConversationMessage+File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EB6B861E2FCE080019B3C5 /* ZMConversationMessage+File.swift */; };
 		87F18BB01E01533F00C69D9B /* CollectionFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BAF1E01533F00C69D9B /* CollectionFileCell.swift */; };
 		87F18BB61E0154FB00C69D9B /* FileTransferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BB51E0154FB00C69D9B /* FileTransferView.swift */; };
@@ -2095,6 +2094,7 @@
 		879718971D1C767600163C07 /* AudioEffectsPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffectsPickerViewController.swift; sourceTree = "<group>"; };
 		8797A9B32046D687009865D5 /* GuestsBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestsBarController.swift; sourceTree = "<group>"; };
 		879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageView.swift; sourceTree = "<group>"; };
+		879E5C892167B85B007CE4E7 /* WireStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireStyleKit.swift; sourceTree = "<group>"; };
 		879E5E981F0104A6007A88A3 /* UITextView+Autocorrect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Autocorrect.swift"; sourceTree = "<group>"; };
 		87A15FCB1E07E8EB00AED79B /* CollectionsSectionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsSectionSet.swift; sourceTree = "<group>"; };
 		87A15FCD1E07EAB400AED79B /* AssetCollectionWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCollectionWrapper.swift; sourceTree = "<group>"; };
@@ -2237,8 +2237,6 @@
 		87E4D2C91FC6E39800F3C664 /* CharacterInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInputField.swift; sourceTree = "<group>"; };
 		87E56ED71E4E10CA0097D489 /* TextSearchResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchResultCell.swift; sourceTree = "<group>"; };
 		87E56ED81E4E10CA0097D489 /* TextSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSearchViewController.swift; sourceTree = "<group>"; };
-		87E7C9611BF5E422001C5485 /* WireStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WireStyleKit.h; sourceTree = "<group>"; };
-		87E7C9621BF5E422001C5485 /* WireStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WireStyleKit.m; sourceTree = "<group>"; };
 		87EB6B861E2FCE080019B3C5 /* ZMConversationMessage+File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+File.swift"; sourceTree = "<group>"; };
 		87F18BAF1E01533F00C69D9B /* CollectionFileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionFileCell.swift; sourceTree = "<group>"; };
 		87F18BB51E0154FB00C69D9B /* FileTransferView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTransferView.swift; sourceTree = "<group>"; };
@@ -3397,8 +3395,7 @@
 		1E5E0CE81B6B8EDB003B0CAC /* Autogenerated */ = {
 			isa = PBXGroup;
 			children = (
-				87E7C9611BF5E422001C5485 /* WireStyleKit.h */,
-				87E7C9621BF5E422001C5485 /* WireStyleKit.m */,
+				879E5C892167B85B007CE4E7 /* WireStyleKit.swift */,
 			);
 			path = Autogenerated;
 			sourceTree = "<group>";
@@ -6229,7 +6226,6 @@
 				1E5E0D061B6B8EDB003B0CAC /* UIImage+ImageUtilities.h in Headers */,
 				D5168F43200F6F2300F8222A /* CABasicAnimation+Rotation.h in Headers */,
 				1E5E0CFD1B6B8EDB003B0CAC /* ZetaIconTypes.h in Headers */,
-				87E7C9651BF5E4E2001C5485 /* WireStyleKit.h in Headers */,
 				87B7DAB81E6973B0005F5140 /* UserImageView.h in Headers */,
 				1E5E0D021B6B8EDB003B0CAC /* UIColor+Mixing.h in Headers */,
 				1E5E0D041B6B8EDB003B0CAC /* UIControl+Wire.h in Headers */,
@@ -6805,6 +6801,7 @@
 				5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */,
 				A9B02232209B6E4E00DF25D8 /* Hockey.swift in Sources */,
 				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
+				879E5C8A2167B85C007CE4E7 /* WireStyleKit.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				5EEFC1A920C01CA9007E8A79 /* UIView+Rounded.swift in Sources */,
 				87AAE4171E422E2300E1D13A /* FontScheme.swift in Sources */,
@@ -6841,7 +6838,6 @@
 				5EEFC1A520C01C64007E8A79 /* ContinuousMaskLayer.swift in Sources */,
 				8763768A1E8413D900B2CCF0 /* RawRepresentable+AllValues.swift in Sources */,
 				164A55AD20ECFD7400AE62A6 /* UserImageView.swift in Sources */,
-				87E7C9641BF5E43C001C5485 /* WireStyleKit.m in Sources */,
 				7CE71D8D1FC453E300C43E19 /* SettingsPropertyName.swift in Sources */,
 				1E3FA0541B78B22100A9743D /* AvatarImageView.m in Sources */,
 				5EEFC1A720C01C85007E8A79 /* RoundedViewProtocol.swift in Sources */,

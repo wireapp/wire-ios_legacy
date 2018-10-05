@@ -361,7 +361,7 @@ extension PersonalAccountView {
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(withFrame: bounds, resizing: .aspectFit, color: .black)
+        WireStyleKit.drawSpace(frame: bounds, resizing: .aspectFit, color: .black)
         
         if let image = UIGraphicsGetImageFromCurrentImageContext() {
             UIGraphicsEndImageContext()
