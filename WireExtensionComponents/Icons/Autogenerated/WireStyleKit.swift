@@ -7879,7 +7879,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x100_32pt(color: color)
 
-        let imageOfIcon_0x100_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x100_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x100_32pt
@@ -7889,7 +7889,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x102_32pt(color: color)
 
-        let imageOfIcon_0x102_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x102_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x102_32pt
@@ -7899,7 +7899,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x104_32pt(color: color)
 
-        let imageOfIcon_0x104_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x104_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x104_32pt
@@ -7909,7 +7909,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x120_32pt(color: color)
 
-        let imageOfIcon_0x120_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x120_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x120_32pt
@@ -7919,7 +7919,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x125_32pt(color: color)
 
-        let imageOfIcon_0x125_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x125_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x125_32pt
@@ -7929,7 +7929,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x137_32pt(color: color)
 
-        let imageOfIcon_0x137_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x137_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x137_32pt
@@ -7939,7 +7939,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x143_32pt(color: color)
 
-        let imageOfIcon_0x143_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x143_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x143_32pt
@@ -7949,7 +7949,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x144_32pt(color: color)
 
-        let imageOfIcon_0x144_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x144_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x144_32pt
@@ -7959,7 +7959,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x145_32pt(color: color)
 
-        let imageOfIcon_0x145_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x145_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x145_32pt
@@ -7969,7 +7969,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x150_32pt(color: color)
 
-        let imageOfIcon_0x150_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x150_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x150_32pt
@@ -7979,7 +7979,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x158_32pt(color: color)
 
-        let imageOfIcon_0x158_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x158_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x158_32pt
@@ -7989,7 +7989,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x162_32pt(color: color)
 
-        let imageOfIcon_0x162_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x162_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x162_32pt
@@ -7999,7 +7999,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x177_32pt(color: color)
 
-        let imageOfIcon_0x177_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x177_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x177_32pt
@@ -8009,7 +8009,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x193_32pt(color: color)
 
-        let imageOfIcon_0x193_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x193_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x193_32pt
@@ -8019,7 +8019,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x194_32pt(color: color)
 
-        let imageOfIcon_0x194_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x194_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x194_32pt
@@ -8029,7 +8029,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x195_32pt(color: color)
 
-        let imageOfIcon_0x195_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x195_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x195_32pt
@@ -8039,7 +8039,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x197_32pt(color: color)
 
-        let imageOfIcon_0x197_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x197_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x197_32pt
@@ -8049,7 +8049,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x205_32pt(color: color)
 
-        let imageOfIcon_0x205_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x205_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x205_32pt
@@ -8059,7 +8059,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x212_32pt(color: color)
 
-        let imageOfIcon_0x212_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x212_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x212_32pt
@@ -8069,7 +8069,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x198_32pt(color: color)
 
-        let imageOfIcon_0x198_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x198_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x198_32pt
@@ -8079,7 +8079,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x217_32pt(color: color)
 
-        let imageOfIcon_0x217_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x217_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x217_32pt
@@ -8089,7 +8089,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x117_32pt(color: color)
 
-        let imageOfIcon_0x117_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x117_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x117_32pt
@@ -8099,7 +8099,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 48, height: 48), false, 0)
             WireStyleKit.drawIcon_0x126_24pt(color: color)
 
-        let imageOfIcon_0x126_24pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x126_24pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x126_24pt
@@ -8109,7 +8109,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 16, height: 16), false, 0)
             WireStyleKit.drawIcon_0x128_8pt(color: color)
 
-        let imageOfIcon_0x128_8pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x128_8pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x128_8pt
@@ -8119,7 +8119,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x163_32pt(color: color)
 
-        let imageOfIcon_0x163_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x163_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x163_32pt
@@ -8129,7 +8129,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x221_32pt(color: color)
 
-        let imageOfIcon_0x221_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x221_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x221_32pt
@@ -8139,7 +8139,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 40, height: 40), false, 0)
             WireStyleKit.drawInvite(color: color)
 
-        let imageOfInvite = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfInvite = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfInvite
@@ -8149,7 +8149,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x222_32pt(color: color)
 
-        let imageOfIcon_0x222_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x222_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x222_32pt
@@ -8159,7 +8159,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x123_32pt(color: color)
 
-        let imageOfIcon_0x123_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x123_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x123_32pt
@@ -8169,7 +8169,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x128_32pt(color: color)
 
-        let imageOfIcon_0x128_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x128_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x128_32pt
@@ -8179,7 +8179,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x113_32pt(color: color)
 
-        let imageOfIcon_0x113_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x113_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x113_32pt
@@ -8189,7 +8189,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x121_32pt(color: color)
 
-        let imageOfIcon_0x121_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x121_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x121_32pt
@@ -8199,7 +8199,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x111_32pt(color: color)
 
-        let imageOfIcon_0x111_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x111_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x111_32pt
@@ -8209,7 +8209,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x226_32pt(color: color)
 
-        let imageOfIcon_0x226_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x226_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x226_32pt
@@ -8219,7 +8219,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x164_32pt(color: color)
 
-        let imageOfIcon_0x164_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x164_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x164_32pt
@@ -8229,7 +8229,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 56, height: 56), false, 0)
             WireStyleKit.drawIcon_0x1420_28pt(color: color)
 
-        let imageOfIcon_0x1420_28pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x1420_28pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x1420_28pt
@@ -8239,7 +8239,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x110_32pt(color: color)
 
-        let imageOfIcon_0x110_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x110_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x110_32pt
@@ -8249,7 +8249,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x103_32pt(color: color)
 
-        let imageOfIcon_0x103_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x103_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x103_32pt
@@ -8259,7 +8259,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x211_32pt(color: color)
 
-        let imageOfIcon_0x211_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x211_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x211_32pt
@@ -8269,7 +8269,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x142_32pt(color: color)
 
-        let imageOfIcon_0x142_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x142_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x142_32pt
@@ -8279,7 +8279,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x152_32pt(color: color)
 
-        let imageOfIcon_0x152_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x152_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x152_32pt
@@ -8289,7 +8289,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x146_32pt(color: color)
 
-        let imageOfIcon_0x146_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x146_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x146_32pt
@@ -8299,7 +8299,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x227_32pt(color: color)
 
-        let imageOfIcon_0x227_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x227_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x227_32pt
@@ -8309,7 +8309,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x159_32pt(color: color)
 
-        let imageOfIcon_0x159_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x159_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x159_32pt
@@ -8319,7 +8319,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x228_32pt(color: color)
 
-        let imageOfIcon_0x228_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x228_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x228_32pt
@@ -8329,7 +8329,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x154_32pt(color: color)
 
-        let imageOfIcon_0x154_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x154_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x154_32pt
@@ -8339,7 +8339,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x148_32pt(color: color)
 
-        let imageOfIcon_0x148_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x148_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x148_32pt
@@ -8349,7 +8349,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x229_32pt(color: color)
 
-        let imageOfIcon_0x229_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x229_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x229_32pt
@@ -8359,7 +8359,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x230_32pt(color: color)
 
-        let imageOfIcon_0x230_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x230_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x230_32pt
@@ -8369,7 +8369,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x149_32pt(color: color)
 
-        let imageOfIcon_0x149_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x149_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x149_32pt
@@ -8379,7 +8379,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x240_32pt(color: color)
 
-        let imageOfIcon_0x240_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x240_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x240_32pt
@@ -8389,7 +8389,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x244_32pt(color: color)
 
-        let imageOfIcon_0x244_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x244_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x244_32pt
@@ -8399,7 +8399,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x246_32pt(color: color)
 
-        let imageOfIcon_0x246_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x246_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x246_32pt
@@ -8409,7 +8409,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x245_32pt(color: color)
 
-        let imageOfIcon_0x245_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x245_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x245_32pt
@@ -8419,7 +8419,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x242_32pt(color: color)
 
-        let imageOfIcon_0x242_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x242_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x242_32pt
@@ -8429,7 +8429,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x247_32pt(color: color)
 
-        let imageOfIcon_0x247_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x247_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x247_32pt
@@ -8439,7 +8439,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x243_32pt(color: color)
 
-        let imageOfIcon_0x243_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x243_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x243_32pt
@@ -8449,7 +8449,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x139_32pt(color: color)
 
-        let imageOfIcon_0x139_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x139_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x139_32pt
@@ -8459,7 +8459,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x183_32pt(color: color)
 
-        let imageOfIcon_0x183_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x183_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x183_32pt
@@ -8469,7 +8469,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x184_32pt(color: color)
 
-        let imageOfIcon_0x184_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x184_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x184_32pt
@@ -8479,7 +8479,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x202_32pt(color: color)
 
-        let imageOfIcon_0x202_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x202_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x202_32pt
@@ -8489,7 +8489,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x235_32pt(color: color)
 
-        let imageOfIcon_0x235_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x235_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x235_32pt
@@ -8499,7 +8499,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x237_32pt(color: color)
 
-        let imageOfIcon_0x237_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x237_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x237_32pt
@@ -8509,7 +8509,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x236_32pt(color: color)
 
-        let imageOfIcon_0x236_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x236_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x236_32pt
@@ -8519,7 +8519,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x238_32pt(color: color)
 
-        let imageOfIcon_0x238_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x238_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x238_32pt
@@ -8529,7 +8529,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x250_32pt(color: color)
 
-        let imageOfIcon_0x250_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x250_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x250_32pt
@@ -8539,7 +8539,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x251_32pt(color: color)
 
-        let imageOfIcon_0x251_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x251_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x251_32pt
@@ -8549,7 +8549,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x252_32pt(color: color)
 
-        let imageOfIcon_0x252_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x252_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x252_32pt
@@ -8559,7 +8559,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x253_32pt(color: color)
 
-        let imageOfIcon_0x253_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x253_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x253_32pt
@@ -8569,7 +8569,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x254_32pt(color: color)
 
-        let imageOfIcon_0x254_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x254_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x254_32pt
@@ -8579,7 +8579,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x255_32pt(color: color)
 
-        let imageOfIcon_0x255_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x255_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x255_32pt
@@ -8589,7 +8589,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x256_32pt(color: color)
 
-        let imageOfIcon_0x256_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x256_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x256_32pt
@@ -8599,7 +8599,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x124_32pt(color: color)
 
-        let imageOfIcon_0x124_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x124_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x124_32pt
@@ -8609,7 +8609,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x239_32pt(color: color)
 
-        let imageOfIcon_0x239_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x239_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x239_32pt
@@ -8619,7 +8619,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawSecond(color: color)
 
-        let imageOfSecond = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfSecond = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfSecond
@@ -8629,7 +8629,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawMinute(color: color)
 
-        let imageOfMinute = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfMinute = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfMinute
@@ -8639,7 +8639,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawHour(color: color)
 
-        let imageOfHour = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfHour = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfHour
@@ -8649,7 +8649,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawDay(color: color)
 
-        let imageOfDay = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfDay = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfDay
@@ -8659,7 +8659,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x737_32pt(color: color)
 
-        let imageOfIcon_0x737_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x737_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x737_32pt
@@ -8669,7 +8669,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x654_32pt(color: color)
 
-        let imageOfIcon_0x654_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x654_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x654_32pt
@@ -8679,7 +8679,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x643_32pt(color: color)
 
-        let imageOfIcon_0x643_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x643_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x643_32pt
@@ -8689,7 +8689,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x645_32pt(color: color)
 
-        let imageOfIcon_0x645_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x645_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x645_32pt
@@ -8699,7 +8699,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x644_32pt(color: color)
 
-        let imageOfIcon_0x644_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x644_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x644_32pt
@@ -8709,7 +8709,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x648_32pt(color: color)
 
-        let imageOfIcon_0x648_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x648_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x648_32pt
@@ -8719,7 +8719,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x637_32pt(color: color)
 
-        let imageOfIcon_0x637_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x637_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x637_32pt
@@ -8729,7 +8729,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x735_32pt(color: color)
 
-        let imageOfIcon_0x735_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x735_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x735_32pt
@@ -8739,7 +8739,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x659_32pt(color: color)
 
-        let imageOfIcon_0x659_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x659_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x659_32pt
@@ -8749,7 +8749,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x736_32pt(color: color)
 
-        let imageOfIcon_0x736_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x736_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x736_32pt
@@ -8759,7 +8759,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x260_32pt(color: color)
 
-        let imageOfIcon_0x260_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x260_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x260_32pt
@@ -8769,7 +8769,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x234_32pt(color: color)
 
-        let imageOfIcon_0x234_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x234_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x234_32pt
@@ -8779,7 +8779,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x261_32pt(color: color)
 
-        let imageOfIcon_0x261_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x261_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x261_32pt
@@ -8789,7 +8789,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x262_32pt(color: color)
 
-        let imageOfIcon_0x262_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x262_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x262_32pt
@@ -8799,7 +8799,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x263_32pt(color: color)
 
-        let imageOfIcon_0x263_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x263_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x263_32pt
@@ -8809,7 +8809,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x264_32pt(color: color)
 
-        let imageOfIcon_0x264_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x264_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x264_32pt
@@ -8819,7 +8819,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x265_32pt(color: color)
 
-        let imageOfIcon_0x265_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x265_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x265_32pt
@@ -8829,7 +8829,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x266_32pt(color: color)
 
-        let imageOfIcon_0x266_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x266_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x266_32pt
@@ -8839,7 +8839,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x267_32pt(color: color)
 
-        let imageOfIcon_0x267_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x267_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x267_32pt
@@ -8849,7 +8849,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x268_32pt(color: color)
 
-        let imageOfIcon_0x268_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x268_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x268_32pt
@@ -8859,7 +8859,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x738_32pt(color: color)
 
-        let imageOfIcon_0x738_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x738_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x738_32pt
@@ -8869,7 +8869,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x739_32pt(color: color)
 
-        let imageOfIcon_0x739_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x739_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x739_32pt
@@ -8879,7 +8879,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x740_32pt(color: color)
 
-        let imageOfIcon_0x740_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x740_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x740_32pt
@@ -8889,7 +8889,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x741_32pt(color: color)
 
-        let imageOfIcon_0x741_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x741_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x741_32pt
@@ -8899,7 +8899,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x742_32pt(color: color)
 
-        let imageOfIcon_0x742_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x742_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x742_32pt
@@ -8909,7 +8909,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x743_32pt(color: color)
 
-        let imageOfIcon_0x743_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x743_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x743_32pt
@@ -8919,7 +8919,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x744_32pt(color: color)
 
-        let imageOfIcon_0x744_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x744_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x744_32pt
@@ -8929,7 +8929,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x745_32pt(color: color)
 
-        let imageOfIcon_0x745_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x745_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x745_32pt
@@ -8939,7 +8939,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x746_32pt(color: color)
 
-        let imageOfIcon_0x746_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x746_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x746_32pt
@@ -8949,7 +8949,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x747_32pt(color: color)
 
-        let imageOfIcon_0x747_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x747_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x747_32pt
@@ -8959,7 +8959,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x269_32pt(color: color)
 
-        let imageOfIcon_0x269_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x269_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x269_32pt
@@ -8969,7 +8969,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x748_32pt(color: color)
 
-        let imageOfIcon_0x748_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x748_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x748_32pt
@@ -8979,7 +8979,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x749_32pt(color: color)
 
-        let imageOfIcon_0x749_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x749_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x749_32pt
@@ -8989,7 +8989,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x750_32pt(color: color)
 
-        let imageOfIcon_0x750_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x750_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x750_32pt
@@ -8999,7 +8999,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x751_32pt(color: color)
 
-        let imageOfIcon_0x751_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x751_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x751_32pt
@@ -9009,7 +9009,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x752_32pt(color: color)
 
-        let imageOfIcon_0x752_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x752_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x752_32pt
@@ -9019,7 +9019,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x753_32pt(color: color)
 
-        let imageOfIcon_0x753_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x753_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x753_32pt
@@ -9029,7 +9029,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x754_32pt(color: color)
 
-        let imageOfIcon_0x754_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x754_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x754_32pt
@@ -9039,7 +9039,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x755_32pt(color: color)
 
-        let imageOfIcon_0x755_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x755_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x755_32pt
@@ -9049,7 +9049,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x756_32pt(color: color)
 
-        let imageOfIcon_0x756_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x756_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x756_32pt
@@ -9059,7 +9059,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x757_32pt(color: color)
 
-        let imageOfIcon_0x757_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x757_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x757_32pt
@@ -9069,7 +9069,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawWeek(color: color)
 
-        let imageOfWeek = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfWeek = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfWeek
@@ -9079,7 +9079,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawMonth(color: color)
 
-        let imageOfMonth = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfMonth = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfMonth
@@ -9089,7 +9089,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawYear(color: color)
 
-        let imageOfYear = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfYear = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfYear
@@ -9099,7 +9099,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x758_32pt(color: color)
 
-        let imageOfIcon_0x758_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x758_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x758_32pt
@@ -9109,7 +9109,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x759_32pt(color: color)
 
-        let imageOfIcon_0x759_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x759_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x759_32pt
@@ -9119,7 +9119,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 64, height: 64), false, 0)
             WireStyleKit.drawIcon_0x760_32pt(color: color)
 
-        let imageOfIcon_0x760_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfIcon_0x760_32pt = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfIcon_0x760_32pt
@@ -9129,7 +9129,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 40, height: 40), false, 0)
             WireStyleKit.drawMissedcall(accent: accent)
 
-        let imageOfMissedcall = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfMissedcall = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfMissedcall
@@ -9139,7 +9139,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 72, height: 16), false, 0)
             WireStyleKit.drawYoutube(color: color)
 
-        let imageOfYoutube = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfYoutube = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfYoutube
@@ -9149,7 +9149,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 40, height: 40), false, 0)
             WireStyleKit.drawMissedcalllast(accent: accent)
 
-        let imageOfMissedcalllast = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfMissedcalllast = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfMissedcalllast
@@ -9159,7 +9159,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 84, height: 24), false, 0)
             WireStyleKit.drawVimeo(color: color)
 
-        let imageOfVimeo = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfVimeo = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfVimeo
@@ -9173,7 +9173,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 18, height: 18), false, 0)
             WireStyleKit.drawOngoingcall()
 
-        Cache.imageOfOngoingcall = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        Cache.imageOfOngoingcall = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return Cache.imageOfOngoingcall!
@@ -9183,7 +9183,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 18, height: 18), false, 0)
             WireStyleKit.drawJoinongoingcall(color: color)
 
-        let imageOfJoinongoingcall = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfJoinongoingcall = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfJoinongoingcall
@@ -9193,7 +9193,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 272, height: 224), false, 0)
             WireStyleKit.drawLogo(color: color)
 
-        let imageOfLogo = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfLogo = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfLogo
@@ -9203,7 +9203,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 174, height: 50), false, 0)
             WireStyleKit.drawWire(color: color)
 
-        let imageOfWire = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfWire = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfWire
@@ -9217,7 +9217,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 16, height: 16), false, 0)
             WireStyleKit.drawShieldverified()
 
-        Cache.imageOfShieldverified = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        Cache.imageOfShieldverified = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return Cache.imageOfShieldverified!
@@ -9231,7 +9231,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 16, height: 16), false, 0)
             WireStyleKit.drawShieldnotverified()
 
-        Cache.imageOfShieldnotverified = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        Cache.imageOfShieldnotverified = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return Cache.imageOfShieldnotverified!
@@ -9241,7 +9241,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 300, height: 388), false, 0)
             WireStyleKit.drawShield(color: color)
 
-        let imageOfShield = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfShield = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfShield
@@ -9271,7 +9271,7 @@ public class WireStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 18, height: 9), false, 0)
             WireStyleKit.drawTab(color: color)
 
-        let imageOfTab = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .tile)
+        let imageOfTab = UIGraphicsGetImageFromCurrentImageContext()!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
         UIGraphicsEndImageContext()
 
         return imageOfTab
