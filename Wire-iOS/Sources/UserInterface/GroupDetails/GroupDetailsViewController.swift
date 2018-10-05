@@ -144,7 +144,7 @@ import Cartography
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
-            actionController?.presentMenu(from: view)
+            actionController?.presentMenu(from: view, showConverationNameInMenuTitle: false)
         }
     }
     

@@ -33,9 +33,8 @@
         self.target = target
         super.init()
     }
-    
-    @objc(presentMenuFromSourceView:)
-    func presentMenu(from sourceView: UIView?) {
+
+    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool = true) {
         currentContext = sourceView.map {
             .init(
                 view: target.view,
@@ -43,7 +42,7 @@
             )
         }
         
-        let controller = UIAlertController(title: conversation.displayName, message: nil, preferredStyle: .actionSheet)
+        let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
         conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
         present(controller)
