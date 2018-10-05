@@ -79,6 +79,8 @@ extern ColorSchemeColor ColorSchemeColorSectionText;
 extern ColorSchemeColor ColorSchemeColorTokenFieldBackground;
 extern ColorSchemeColor ColorSchemeColorTokenFieldTextPlaceHolder;
 
+extern ColorSchemeColor ColorSchemeColorSelfMentionHighlight;
+
 typedef NS_ENUM(NSUInteger, ColorSchemeVariant) {
     ColorSchemeVariantLight,
     ColorSchemeVariantDark

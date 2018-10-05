@@ -76,7 +76,7 @@ extension NSMutableAttributedString {
         
         if user.isSelfUser {
             color = ColorScheme.default.color(named: .textForeground)
-            backgroundColor = .selfMentionHighlight(for: ColorScheme.default.variant)
+            backgroundColor = ColorScheme.default.color(named: .selfMentionHighlight)
         }
         else {
             color = .accent()
@@ -130,12 +130,5 @@ extension NSMutableAttributedString {
             
             self.replaceCharacters(in: mentionRange, with: replacementString)
         }
-    }
-}
-
-private extension UIColor {
-    static func selfMentionHighlight(for variant: ColorSchemeVariant) -> UIColor {
-        let alpha: CGFloat = variant == .light ? 0.48 : 0.8
-        return UIColor(red: 254/255.0, green: 191/255.0, blue: 2/255.0, alpha: alpha)
     }
 }
