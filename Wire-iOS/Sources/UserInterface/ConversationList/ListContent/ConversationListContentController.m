@@ -255,7 +255,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
         change.nameChanged ||
         change.unreadCountChanged ||
         change.connectionStateChanged ||
-        change.isSilencedChanged) {
+        change.mutedMessageTypesChanged) {
         
         [self updateCellForConversation:change.conversation];
     }
