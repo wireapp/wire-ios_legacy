@@ -347,7 +347,22 @@ extension UIViewController {
         }
 
         directorySection.suggestions = searchResult.directory
-        conversationsSection.groupConversations = searchResult.conversations
+
+        // Filter the 1 to 1 conversations which already exists in contacts section
+        let conversations = searchResult.conversations
+
+        let filteredGroups = conversations.filter{
+            if $0.conversationType != ZMConversationType.oneOnOne {
+                return true
+            }
+            if let user = $0.activeParticipants.array.first as? ZMUser {
+                return !teamContacts.contains(user)
+            }
+
+            return false
+        }
+
+        conversationsSection.groupConversations = filteredGroups
         servicesSection.services = searchResult.services
 
         sectionController.collectionView?.reloadData()
