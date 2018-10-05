@@ -93,29 +93,6 @@ class SoundEventListener : NSObject {
     }
 }
 
-extension ZMConversationMessage {
-    var isSilenced: Bool {
-        guard let conversation = self.conversation else {
-            return false
-        }
-        
-        if conversation.mutedMessageTypes == .none {
-            return false
-        }
-        
-        guard let textMessageData = self.textMessageData else {
-            return true
-        }
-        
-        if conversation.mutedMessageTypes == .nonMentions && textMessageData.isMentioningSelf {
-            return false
-        }
-        else {
-            return true
-        }
-    }
-}
-
 extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObserver {
     
     func didReceiveNewUnreadMessages(_ changeInfo: NewUnreadMessagesChangeInfo) {
