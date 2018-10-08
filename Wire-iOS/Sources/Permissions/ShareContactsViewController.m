@@ -177,7 +177,7 @@
     [AddressBookHelper.sharedHelper requestPermissions:^(BOOL success) {
         if (success) {
             [[AddressBookHelper sharedHelper] startRemoteSearchWithCheckingIfEnoughTimeSinceLast:self.uploadAddressBookImmediately];
-            // [self.formStepDelegate didCompleteFormStep:self];
+            [self.delegate shareContactsViewControllerDidFinish:self];
         } else {
             [self displayContactsAccessDeniedMessageAnimated:YES];
         }
