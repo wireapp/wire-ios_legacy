@@ -108,6 +108,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
         verify(otherUserConversation)
@@ -119,6 +120,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         let message = otherUserConversation.append(text: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
         verify(otherUserConversation)
@@ -131,6 +133,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         (message as! ZMClientMessage).sender = otherUser
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
         verify(otherUserConversation)
@@ -143,6 +146,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
         (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
         let message = otherUserConversation.append(text: "Hey there!")
         (message as! ZMClientMessage).sender = otherUser
+        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         // then
         verify(otherUserConversation)
