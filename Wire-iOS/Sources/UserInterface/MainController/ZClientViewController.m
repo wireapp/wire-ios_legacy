@@ -209,11 +209,12 @@
     }
     else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         if (self.presentedViewController) {
-            return self.presentedViewController.preferredStatusBarStyle;
+            if (![self.presentedViewController isKindOfClass:UIAlertController.class]) {
+                return self.presentedViewController.preferredStatusBarStyle;
+            }
         }
-        else {
-            return self.splitViewController.preferredStatusBarStyle;
-        }
+
+        return self.splitViewController.preferredStatusBarStyle;
     }
     else {
         return UIStatusBarStyleLightContent;

@@ -50,4 +50,9 @@
     [NSLayoutConstraint activateConstraints:constraints];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 @end
