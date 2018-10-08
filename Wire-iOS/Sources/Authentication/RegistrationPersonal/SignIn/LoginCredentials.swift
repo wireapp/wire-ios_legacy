@@ -47,5 +47,18 @@ public class LoginCredentials : NSObject {
             return nil
         }
     }
-    
+
+    public override func isEqual(_ object: Any?) -> Bool {
+        guard let otherCredentials = object as? LoginCredentials else {
+            return false
+        }
+
+        let emailEquals = self.emailAddress == otherCredentials.emailAddress
+        let phoneNumberEquals = self.phoneNumber == otherCredentials.phoneNumber
+        let passwordEquals = self.password == otherCredentials.password
+        let companyLoginEquals = self.usesCompanyLogin == otherCredentials.usesCompanyLogin
+
+        return emailEquals && phoneNumberEquals && passwordEquals && companyLoginEquals
+    }
+
 }
