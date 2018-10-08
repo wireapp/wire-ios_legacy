@@ -437,7 +437,7 @@ extension AuthenticationCoordinator {
     /// Sends the fields provided during registration that requires a registered user session.
     private func sendPostRegistrationFields(_ fields: AuthenticationPostRegistrationFields) {
         guard let userSession = statusProvider?.sharedUserSession else {
-            log.error("Could not save the marketing consent and , as there is no user session for the user.")
+            log.error("Could not save the marketing consent as there is no user session for the user.")
             return
         }
 
