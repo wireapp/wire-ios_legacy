@@ -523,14 +523,6 @@ extension AuthenticationCoordinator {
     // MARK: - Add Email And Password
 
     /**
-     * Skips the add e-mail and password step, if possible.
-     */
-
-    @objc func skipAddEmailAndPassword() {
-        // no-op
-    }
-
-    /**
      * Sets th e-mail and password credentials for the current user.
      */
 

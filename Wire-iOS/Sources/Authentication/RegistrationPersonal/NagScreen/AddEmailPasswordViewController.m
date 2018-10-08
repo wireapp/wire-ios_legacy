@@ -129,9 +129,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)skip
 {
-    if (self.canSkipStep) {
-        [self.authenticationCoordinator skipAddEmailAndPassword];
-    }
+    // TODO: Dismiss the view controller
 }
 
 - (void)addEmailStepDidFinishWithEmailCredentials:(ZMEmailCredentials *)credentials
