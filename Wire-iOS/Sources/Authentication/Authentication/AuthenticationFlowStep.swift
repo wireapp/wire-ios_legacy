@@ -44,7 +44,6 @@ indirect enum AuthenticationFlowStep: Equatable {
     case addEmailAndPassword(user: ZMUser, profile: UserProfileUpdateStatus, canSkip: Bool)
     case registerEmailCredentials(ZMEmailCredentials, isResend: Bool)
     case pendingEmailLinkVerification(ZMEmailCredentials)
-    case verifyEmailChangeCode(ZMEmailCredentials)
     case pendingInitialSync(next: AuthenticationFlowStep?)
 
     // Registration
@@ -96,7 +95,6 @@ indirect enum AuthenticationFlowStep: Equatable {
         case .addEmailAndPassword: return true
         case .pendingInitialSync: return false
         case .pendingEmailLinkVerification: return true
-        case .verifyEmailChangeCode: return false
 
         // Registration
         case .teamCreation(let teamState): return teamState.needsInterface
