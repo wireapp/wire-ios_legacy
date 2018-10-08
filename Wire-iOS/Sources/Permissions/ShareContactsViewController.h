@@ -19,7 +19,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ShareContactsViewControllerDelegate <NSObject>
+
+- (void)shareContactsViewControllerDidSkip:(UIViewController *)viewController;
+- (void)shareContactsViewControllerDidFinish:(UIViewController *)viewController;
+
+@end
+
 @interface ShareContactsViewController : UIViewController
+
+@property (nonatomic, weak) id<ShareContactsViewControllerDelegate> delegate;
 
 @property (nonatomic) BOOL uploadAddressBookImmediately;
 @property (nonatomic) BOOL backgroundBlurDisabled;
