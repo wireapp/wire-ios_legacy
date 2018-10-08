@@ -37,6 +37,7 @@ class AuthenticationStateControllerTests: XCTestCase {
     var delegate: MockAuthenticationStateControllerDelegate!
 
     override func setUp() {
+        super.setUp()
         delegate = MockAuthenticationStateControllerDelegate()
         stateController = AuthenticationStateController()
         stateController.delegate = delegate
@@ -45,6 +46,7 @@ class AuthenticationStateControllerTests: XCTestCase {
     override func tearDown() {
         delegate = nil
         stateController = nil
+        super.tearDown()
     }
 
     func testThatItProvidesCorrectInitialState() {
