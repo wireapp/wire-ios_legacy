@@ -49,13 +49,10 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
         case (true, false, nil):
             return [.hideLoadingView, .completeRegistrationFlow]
 
-        case (true, false, let nextStep?):
-            return [.hideLoadingView, .transition(nextStep, resetStack: true)]
-
         case (false, false, nil):
             return [.hideLoadingView, .completeLoginFlow]
 
-        case (false, false, let nextStep?):
+        case (_, false, let nextStep?):
             return [.hideLoadingView, .transition(nextStep, resetStack: true)]
 
         default:
