@@ -86,10 +86,6 @@ final public class BackgroundViewController: UIViewController {
         }
     }
     
-    public override func shouldDisplayNotification(from account: Account) -> Bool {
-        return !account.isActive
-    }
-    
     private func configureViews() {
         let factor = BackgroundViewController.backgroundScaleFactor
         imageView.contentMode = .scaleAspectFill

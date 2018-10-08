@@ -290,6 +290,29 @@ class CallInfoConfigurationTests: XCTestCase {
         assertEquals(fixture.oneToOneVideoEstablished, configuration)
     }
     
+    func testOneToOneVideoEstablishedWithScreenSharing() {
+        // given
+        let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
+        let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
+        let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
+        
+        mockVoiceChannel.mockCallState = .established
+        mockVoiceChannel.mockInitiator = otherUser
+        mockVoiceChannel.mockIsVideoCall = true
+        mockVoiceChannel.mockVideoState = .screenSharing
+        mockVoiceChannel.mockCallDuration = 10
+        
+        let permissions = MockCallPermissions()
+        permissions.canAcceptVideoCalls = true
+        permissions.isPendingVideoPermissionRequest = false
+        
+        // when
+        let configuration = CallInfoConfiguration(voiceChannel: mockVoiceChannel, preferedVideoPlaceholderState: .hidden, permissions: MockCallPermissions.videoAllowedForever, cameraType: .front, sortTimestamps: .init())
+        
+        // then
+        assertEquals(fixture.oneToOneVideoEstablished, configuration)
+    }
+    
     func testOneToOneVideoEstablishedDowngradedToAudio() {
         // given
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)

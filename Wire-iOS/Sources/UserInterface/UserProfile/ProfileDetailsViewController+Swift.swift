@@ -23,4 +23,11 @@ extension ProfileDetailsViewController {
         remainingTimeLabel.textColor = .textDimmed
         remainingTimeLabel.font = .mediumSemiboldFont
     }
+
+    //MARK: - action menu
+
+    @objc func presentMenuSheetController() {
+        actionsController = ConversationActionController(conversation: conversation, target: self)
+        actionsController.presentMenu(from: footerView)
+    }
 }

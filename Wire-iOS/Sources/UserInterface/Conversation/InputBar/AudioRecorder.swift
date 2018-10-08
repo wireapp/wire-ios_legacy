@@ -148,6 +148,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     deinit {
         token.apply(NotificationCenter.default.removeObserver)
         removeDisplayLink()
+        audioRecorder?.delegate = nil
     }
     
     private func setupDidEnterBackgroundObserver() {

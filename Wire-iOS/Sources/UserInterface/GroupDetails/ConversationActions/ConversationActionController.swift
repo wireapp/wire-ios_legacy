@@ -26,15 +26,15 @@
     private let conversation: ZMConversation
     unowned let target: UIViewController
     private var currentContext: PresentationContext?
+    weak var alertController: UIAlertController?
     
     @objc init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
         self.target = target
         super.init()
     }
-    
-    @objc(presentMenuFromSourceView:)
-    func presentMenu(from sourceView: UIView?) {
+
+    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool = true) {
         currentContext = sourceView.map {
             .init(
                 view: target.view,
@@ -42,10 +42,12 @@
             )
         }
         
-        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
         conversation.actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
         present(controller)
+
+        alertController = controller
     }
     
     func enqueue(_ block: @escaping () -> Void) {
@@ -83,8 +85,11 @@
         case .markUnread: self.enqueue {
             self.conversation.markAsUnread()
             }
+        case .configureNotifications: self.requestNotificationResult(for: self.conversation) { result in
+            self.handleNotificationResult(result, for: self.conversation)
+        }
         case .silence(isSilenced: let isSilenced): self.enqueue {
-            self.conversation.isSilenced = !isSilenced
+            self.conversation.mutedMessageTypes = isSilenced ? .none : .all 
             }
         case .leave: self.request(LeaveResult.self) { result in
             self.handleLeaveResult(result, for: self.conversation)

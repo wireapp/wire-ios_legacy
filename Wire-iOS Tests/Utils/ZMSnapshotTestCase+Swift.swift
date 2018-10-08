@@ -144,3 +144,28 @@ extension ZMSnapshotTestCase {
         NSAttributedString.invalidateParagraphStyle()
     }
 }
+
+// MARK: - UIAlertController
+extension ZMSnapshotTestCase {
+    func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
+        // Given
+        let window = UIWindow(frame: .init(x: 0, y: 0, width: 375, height: 667))
+        let container = UIViewController()
+        container.loadViewIfNeeded()
+        window.rootViewController = container
+        window.makeKeyAndVisible()
+        controller.loadViewIfNeeded()
+        controller.view.setNeedsLayout()
+        controller.view.layoutIfNeeded()
+
+        // When
+        let presentationExpectation = expectation(description: "It should be presented")
+        container.present(controller, animated: false) {
+            presentationExpectation.fulfill()
+        }
+
+        // Then
+        waitForExpectations(timeout: 2, handler: nil)
+        verify(view: controller.view, file: file, line: line)
+    }
+}

@@ -114,7 +114,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForMultipleTextMessagesInConversation_silenced() {
         // GIVEN
         let sut = self.otherUserConversation!
-        sut.isSilenced = true
+        sut.mutedMessageTypes = [.all]
         for index in 1...5 {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
@@ -149,6 +149,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+        sut.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadSelfMentionCountKey)
         
         sut.lastReadServerTimeStamp = Date.distantPast
         
@@ -180,7 +181,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForMultipleVariousMessagesInConversation_silenced() {
         // GIVEN
         let sut = self.otherUserConversation!
-        sut.isSilenced = true
+        sut.mutedMessageTypes = [.all]
         for index in 1...5 {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }
@@ -198,7 +199,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForMultipleVariousMessagesInConversation_silenced_mention() {
         // GIVEN
         let sut = self.otherUserConversation!
-        sut.isSilenced = true
+        sut.mutedMessageTypes = [.all]
         for index in 1...5 {
             (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
         }

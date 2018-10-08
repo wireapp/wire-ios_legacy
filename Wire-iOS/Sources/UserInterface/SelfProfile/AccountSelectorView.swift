@@ -149,3 +149,10 @@ final internal class AccountSelectorView: UIView {
     }
 
 }
+
+private extension Account {
+    
+    var isActive: Bool {
+        return SessionManager.shared?.accountManager.selectedAccount == self
+    }
+}
