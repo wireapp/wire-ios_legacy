@@ -318,7 +318,6 @@
 		5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */; };
 		5EE51CBD2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */; };
 		5EE73BE62122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */; };
-		5EE73BE82122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BE72122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift */; };
 		5EE73BEB212307D10032986D /* RegistrationActivationExistingAccountPolicyHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEA212307D10032986D /* RegistrationActivationExistingAccountPolicyHandler.swift */; };
 		5EE73BED21230BF30032986D /* RegistrationActivationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BEC21230BF30032986D /* RegistrationActivationErrorHandler.swift */; };
 		5EE73BF1212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE73BF0212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift */; };
@@ -1789,7 +1788,6 @@
 		5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityControllerTests.swift; sourceTree = "<group>"; };
 		5EE51CBC2099B915008BA4B1 /* ThumbnailCornerPinningBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCornerPinningBehavior.swift; sourceTree = "<group>"; };
 		5EE73BE52122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartAddAccountEventHandler.swift; sourceTree = "<group>"; };
-		5EE73BE72122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationSuccessPhoneRegistrationEventHandler.swift; sourceTree = "<group>"; };
 		5EE73BEA212307D10032986D /* RegistrationActivationExistingAccountPolicyHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationExistingAccountPolicyHandler.swift; sourceTree = "<group>"; };
 		5EE73BEC21230BF30032986D /* RegistrationActivationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationErrorHandler.swift; sourceTree = "<group>"; };
 		5EE73BF0212319BB0032986D /* RegistrationIncrementalUserDataChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationIncrementalUserDataChangeHandler.swift; sourceTree = "<group>"; };
@@ -3902,7 +3900,6 @@
 		5E8DA766211B2D8300360979 /* Success */ = {
 			isa = PBXGroup;
 			children = (
-				5EE73BE72122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift */,
 				5E8DA767211B2D9A00360979 /* AuthenticationSuccessEventHandler.swift */,
 			);
 			path = Success;
@@ -7742,7 +7739,6 @@
 				7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
 				EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */,
-				5EE73BE82122E52B0032986D /* AuthenticationSuccessPhoneRegistrationEventHandler.swift in Sources */,
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
 				5EC16B9020EB8C6F00955156 /* YouTubeService+DataTypes.swift in Sources */,
 				5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */,
