@@ -45,20 +45,18 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
         let isRegistered = statusProvider?.authenticatedUserWasRegisteredOnThisDevice ?? false
         let needsEmail = statusProvider?.authenticatedUserNeedsEmailCredentials ?? false
 
-        switch (isRegistered, needsEmail) {
-        case (true, false):
-            if let nextStep = nextRegistrationStep {
-                return [.hideLoadingView, .transition(nextStep, resetStack: true)]
-            } else {
-                return [.hideLoadingView, .completeRegistrationFlow]
-            }
+        switch (isRegistered, needsEmail, nextRegistrationStep) {
+        case (true, false, nil):
+            return [.hideLoadingView, .completeRegistrationFlow]
 
-        case (false, false):
-            if let nextStep = nextRegistrationStep {
-                return [.hideLoadingView, .transition(nextStep, resetStack: true)]
-            } else {
-                return [.hideLoadingView, .completeLoginFlow]
-            }
+        case (true, false, let nextStep?):
+            return [.hideLoadingView, .transition(nextStep, resetStack: true)]
+
+        case (false, false, nil):
+            return [.hideLoadingView, .completeLoginFlow]
+
+        case (false, false, let nextStep?):
+            return [.hideLoadingView, .transition(nextStep, resetStack: true)]
 
         default:
             break
