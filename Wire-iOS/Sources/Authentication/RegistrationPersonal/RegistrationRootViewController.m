@@ -218,6 +218,22 @@
                tearDownCompletion:nil];
 }
 
+- (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
+{
+    switch (self.flowType) {
+        case AuthenticationFlowOnlyLogin:
+            if ([self.signInViewController respondsToSelector:@selector(executeErrorFeedbackAction:)]) {
+                [self.signInViewController executeErrorFeedbackAction:feedbackAction];
+            }
+            break;
+        case AuthenticationFlowOnlyRegistration:
+            if ([self.flowViewController respondsToSelector:@selector(executeErrorFeedbackAction:)]) {
+                [self.flowViewController executeErrorFeedbackAction:feedbackAction];
+            }
+            break;
+    }
+}
+
 #pragma mark - Registration Delegates
 
 - (void)phoneNumberStepViewControllerDidPickPhoneNumber:(NSString *)phoneNumber
