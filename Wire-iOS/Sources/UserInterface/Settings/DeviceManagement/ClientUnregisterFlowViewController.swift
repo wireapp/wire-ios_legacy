@@ -20,7 +20,7 @@
 import UIKit
 import Cartography
 
-@objcMembers class ClientUnregisterFlowViewController: UIViewController, AuthenticationCoordinatedViewController, UINavigationControllerDelegate {
+@objcMembers class ClientUnregisterFlowViewController: UIViewController, AuthenticationCoordinatedViewController {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?
@@ -76,7 +76,7 @@ import Cartography
     
     fileprivate func setupNavigationController() {
         let invitationController = ClientUnregisterInvitationViewController()
-        // invitationController.formStepDelegate = self
+        invitationController.delegate = self
         invitationController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         let rootNavigationController = NavigationController(rootViewController: invitationController)
@@ -108,27 +108,12 @@ import Cartography
         }
     }
 
-    // MARK: - FormStepDelegate
+}
 
-    // TODO: Remove
-    func didCompleteFormStep(_ viewController: UIViewController!) {
-        let clientsListController = ClientListViewController(clientsList: self.clients,
-                                                             credentials: self.credentials,
-                                                             showTemporary: false,
-                                                             variant: .dark)
-        clientsListController.delegate = self
+// MARK: - UINavigationControllerDelegate
 
-        if isIPadRegular() {
-            let navigationController = UINavigationController(rootViewController: clientsListController)
-            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
-            self.present(navigationController, animated: true, completion: nil)
-        } else {
-            self.rootNavigationController?.pushViewController(clientsListController, animated: true)
-        }
-    }
-    
-    // MARK: - UINavigationControllerDelegate
-    
+extension ClientUnregisterFlowViewController: UINavigationControllerDelegate {
+
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .pop:
@@ -152,6 +137,30 @@ import Cartography
     }
 
 }
+
+// MARK: - ClientUnregisterInvitationViewControllerDelegate
+
+extension ClientUnregisterFlowViewController: ClientUnregisterInvitationViewControllerDelegate {
+
+    func userDidAcceptClientUnregisterInvitation() {
+        let clientsListController = ClientListViewController(clientsList: self.clients,
+                                                             credentials: self.credentials,
+                                                             showTemporary: false,
+                                                             variant: .dark)
+        clientsListController.delegate = self
+
+        if isIPadRegular() {
+            let navigationController = UINavigationController(rootViewController: clientsListController)
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.formSheet
+            self.present(navigationController, animated: true, completion: nil)
+        } else {
+            self.rootNavigationController?.pushViewController(clientsListController, animated: true)
+        }
+    }
+
+}
+
+// MARK: - ClientListViewControllerDelegate
 
 extension ClientUnregisterFlowViewController: ClientListViewControllerDelegate {
     func finishedDeleting(_ clientListViewController: ClientListViewController) {
