@@ -135,7 +135,6 @@ private let zmLog = ZMSLog(tag: "UI")
 
         super.init(nibName: nil, bundle: nil)
         self.title = "registration.devices.title".localized.uppercased()
-        self.edgesForExtendedLayout = []
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
@@ -212,15 +211,20 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     fileprivate func createConstraints() {
-        if let clientsTableView = self.clientsTableView {
-            constrain(self.view, clientsTableView, self.topSeparator) { selfView, clientsTableView, topSeparator in
-                clientsTableView.edges == selfView.edges
-                
-                topSeparator.left == clientsTableView.left
-                topSeparator.right == clientsTableView.right
-                topSeparator.top == clientsTableView.top
-            }
+        guard let clientsTableView = clientsTableView else {
+            return
         }
+
+        clientsTableView.translatesAutoresizingMaskIntoConstraints = false
+
+        let constraints: [NSLayoutConstraint] = [
+            clientsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            clientsTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            clientsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            clientsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ]
+
+        NSLayoutConstraint.activate(constraints)
     }
     
     fileprivate func convertSection(_ section: Int) -> Int {
@@ -469,8 +473,6 @@ private let zmLog = ZMSLog(tag: "UI")
 
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }
-
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
     }
 }
 

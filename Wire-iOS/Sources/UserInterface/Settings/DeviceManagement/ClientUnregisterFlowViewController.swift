@@ -18,13 +18,11 @@
 
 
 import UIKit
-import Cartography
 
-@objcMembers class ClientUnregisterFlowViewController: UIViewController, AuthenticationCoordinatedViewController {
+@objcMembers class ClientUnregisterFlowViewController: BlueViewController, AuthenticationCoordinatedViewController {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?
-    var backgroundImageView: UIImageView?
 
     var authenticationCoordinator: AuthenticationCoordinator?
 
@@ -52,12 +50,8 @@ import Cartography
         self.pushTransition = PushTransition()
     
         UIView.performWithoutAnimation {            
-            self.setupBackgroundImageView()
-            
             self.setupNavigationController()
-            
             self.createConstraints()
-            
             self.view?.isOpaque = false
         }
     }
@@ -67,13 +61,11 @@ import Cartography
         
         self.dismiss(animated: animated, completion: nil)
     }
-    
-    fileprivate func setupBackgroundImageView() {
-        let backgroundImageView = UIImageView(image: UIImage(named: "LaunchImage"))
-        self.backgroundImageView = backgroundImageView
-        self.view?.addSubview(backgroundImageView)
+
+    override var prefersStatusBarHidden: Bool {
+        return false
     }
-    
+
     fileprivate func setupNavigationController() {
         let invitationController = ClientUnregisterInvitationViewController()
         invitationController.delegate = self
@@ -83,7 +75,8 @@ import Cartography
         rootNavigationController.delegate = self
         rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = false
         rootNavigationController.setNavigationBarHidden(true, animated: false)
-        rootNavigationController.navigationBar.barStyle = UIBarStyle.default
+        rootNavigationController.navigationBar.barStyle = UIBarStyle.black
+        rootNavigationController.navigationBar.isTranslucent = true
         rootNavigationController.navigationBar.tintColor = UIColor.accent()
         rootNavigationController.backButtonEnabled = false
         rootNavigationController.rightButtonEnabled = false
@@ -95,17 +88,20 @@ import Cartography
     }
     
     fileprivate func createConstraints() {
-        if let rootNavigationController = self.rootNavigationController {
-            constrain(self.view, rootNavigationController.view) { selfView, navigationControllerView in
-                navigationControllerView.edges == selfView.edges
-            }
+        guard let rootNavigationController = rootNavigationController else {
+            return
         }
-        
-        if let backgroundImageView = self.backgroundImageView {
-            constrain(self.view, backgroundImageView) { selfView, backgroundImageView in
-                backgroundImageView.edges == selfView.edges
-            }
-        }
+
+        rootNavigationController.view.translatesAutoresizingMaskIntoConstraints = true
+
+        let constraints: [NSLayoutConstraint] = [
+            rootNavigationController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            rootNavigationController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            rootNavigationController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            rootNavigationController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+
+        NSLayoutConstraint.activate(constraints)
     }
 
 }
@@ -166,7 +162,7 @@ extension ClientUnregisterFlowViewController: ClientListViewControllerDelegate {
     func finishedDeleting(_ clientListViewController: ClientListViewController) {
 
         let completion: (() -> Swift.Void)? = { [weak self] in
-            self?.showLoadingView = true
+            self?.authenticationCoordinator?.executeAction(.showLoadingView)
         }
 
         if isIPadRegular() {
