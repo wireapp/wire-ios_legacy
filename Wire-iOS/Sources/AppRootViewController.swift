@@ -197,7 +197,6 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
         var viewController: UIViewController? = nil
-        requestToOpenViewDelegate = nil
         showContentDelegate = nil
 
         resetAuthenticationCoordinatorIfNeeded(for: appState)
