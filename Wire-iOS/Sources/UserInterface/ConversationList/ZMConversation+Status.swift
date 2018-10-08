@@ -324,7 +324,14 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        return .silenced
+        let mentionsNotMuted = !conversation.mutedMessageTypes.contains(.mentions)
+        let inTeam = (ZMUser.selfUser()?.isTeamMember == true)
+
+        if inTeam && mentionsNotMuted && status.hasSelfMention {
+            return .mention
+        } else {
+            return .silenced
+        }
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
