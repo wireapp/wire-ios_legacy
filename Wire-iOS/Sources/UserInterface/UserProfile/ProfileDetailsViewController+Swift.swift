@@ -28,6 +28,6 @@ extension ProfileDetailsViewController {
 
     @objc func presentMenuSheetController() {
         actionsController = ConversationActionController(conversation: conversation, target: self)
-        actionsController.presentMenu(from: footerView)
+        actionsController.presentMenu(from: footerView, showConverationNameInMenuTitle: false)
     }
 }
