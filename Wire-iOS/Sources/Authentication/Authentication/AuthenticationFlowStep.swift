@@ -60,12 +60,11 @@ indirect enum AuthenticationFlowStep: Equatable {
     /// Whether the step can be unwinded.
     var allowsUnwind: Bool {
         switch self {
-        case .landingScreen, .clientManagement, .noHistory, .addEmailAndPassword, .incrementalUserCreation: return false
-        case .enterLoginCode: return true
-        case .createCredentials: return true
-        case .enterActivationCode: return true
-        case .provideCredentials: return true
-        case .companyLogin: return true
+        case .landingScreen: return false
+        case .clientManagement: return false
+        case .noHistory: return false
+        case .addEmailAndPassword: return false
+        case .incrementalUserCreation: return false
         case .teamCreation(let teamState): return teamState.allowsUnwind
         default: return true
         }
