@@ -59,7 +59,7 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
         let combinator = CombinationTest(mutable: self.sut, mutators: [firstMutator, secondMutator])
 
         XCTAssertEqual(combinator.testAll {
-            let identifier = "\($0.combinationChain)"
+            let identifier = $0.combinationChain.map { $0.replacingOccurrences(of: " ", with: "_") }.joined(separator: "-")
             print("Testing combination " + identifier)
 
             $0.result.configure(with: $0.result.resultText!, queries: $0.result.queries)
