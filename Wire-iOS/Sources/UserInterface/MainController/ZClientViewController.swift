@@ -195,21 +195,3 @@ extension ZClientViewController {
         }
     }
 }
-
-extension ZClientViewController {
-    
-    /// Returns true if the most recent message for the given conversation is
-    /// visible on screen.
-    public func isLastMessageVisible(for conversation: UUID) -> Bool {
-        guard
-            let conversationRoot = conversationRootViewController as? ConversationRootViewController,
-            let conversationContent = conversationRoot.conversationViewController?.contentViewController
-            else { return true }
-        
-        let conversationIsLoaded = conversation == currentConversation.remoteIdentifier
-        let conversationIsVisible = isConversationViewVisible
-        let isScrolledToBottom = conversationContent.isScrolledToBottom
-        
-        return conversationIsLoaded && conversationIsVisible && isScrolledToBottom
-    }
-}
