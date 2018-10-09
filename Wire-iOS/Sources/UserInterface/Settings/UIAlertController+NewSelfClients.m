@@ -36,7 +36,9 @@
             deviceName = userClient.type;
         }
         
-        NSString *deviceDate = [userClient.activationDate wr_formattedDate];
+        NSString *formatKey = NSLocalizedString(@"registration.devices.activated", nil);
+        NSString *formattedDate = [userClient.activationDate wr_formattedDate];
+        NSString *deviceDate = [NSString stringWithFormat:formatKey, formattedDate];
         
         [deviceNamesAndDates addObject:[NSString stringWithFormat:@"%@\n%@", deviceName, deviceDate]];
     }
