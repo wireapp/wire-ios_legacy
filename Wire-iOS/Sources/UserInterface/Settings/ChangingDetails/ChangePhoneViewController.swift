@@ -145,12 +145,12 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     fileprivate func setupViews() {
         RegistrationTextFieldCell.register(in: tableView)
         SettingsButtonCell.register(in: tableView)
-        title = "self.settings.account_section.phone_number.change.title".localized
+        title = "self.settings.account_section.phone_number.change.title".localized(uppercased: true)
         
         view.backgroundColor = .clear
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.phone_number.change.save".localized,
+            title: "self.settings.account_section.phone_number.change.save".localized(uppercased: true),
             style: .done,
             target: self,
             action: #selector(saveButtonTapped)
@@ -169,7 +169,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         if let newNumber = state.newNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
             updateSaveButtonState(enabled: false)
-            showLoadingView = true
+            navigationController?.showLoadingView = true
         }
     }
     
@@ -226,7 +226,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 guard let `self` = self else { return }
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
-                self.showLoadingView = true
+                self.navigationController?.showLoadingView = true
             })
 
             present(alert, animated: true, completion: nil)
@@ -277,7 +277,7 @@ extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
 
 extension ChangePhoneViewController: UserProfileUpdateObserver {
     func phoneNumberVerificationCodeRequestDidSucceed() {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         if let newNumber = state.newNumber?.fullNumber {
             let confirmController = ConfirmPhoneViewController(newNumber: newNumber, delegate: self)
@@ -286,19 +286,19 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
     }
     
     func phoneNumberVerificationCodeRequestDidFail(_ error: Error!) {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         showAlert(forError: error)
     }
     
     func emailUpdateDidFail(_ error: Error!) {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         showAlert(forError: error)
     }
     
     func phoneNumberRemovalDidFail(_ error: Error!) {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         showAlert(forError: error)
     }
