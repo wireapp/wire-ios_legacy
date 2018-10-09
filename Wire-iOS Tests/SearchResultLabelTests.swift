@@ -26,7 +26,6 @@ class SearchResultLabelTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        recordMode = true
         accentColor = .violet
     }
 
