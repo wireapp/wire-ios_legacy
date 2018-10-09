@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 
-private let verifiedShieldImage = WireStyleKit.imageOfShieldverified()
+private let verifiedShieldImage = WireStyleKit.imageOfShieldverified
 
 
 final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {

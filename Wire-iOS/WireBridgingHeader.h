@@ -39,7 +39,6 @@
 #import "TextMessageCell+Internal.h"
 #import "ImageMessageCell.h"
 #import "ImageMessageCell+Internal.h"
-#import "WireStyleKit.h"
 #import "UIViewController+Errors.h"
 #import "ConversationViewController.h"
 #import "ConversationViewController+Private.h"

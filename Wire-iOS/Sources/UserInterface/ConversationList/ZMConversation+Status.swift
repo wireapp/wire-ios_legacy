@@ -51,6 +51,7 @@ struct ConversationStatus {
     let isOngoingCall: Bool
     let isBlocked: Bool
     let isSelfAnActiveMember: Bool
+    let hasSelfMention: Bool
 }
 
 // Describes the conversation message.
@@ -331,14 +332,7 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
 
 
 extension ConversationStatus {
-    var hasSelfMention: Bool {
-        return (messagesRequiringAttentionByType[.mention] != nil)
-    }
-    
-    var latestMessageIsSelfMention: Bool {
-        return messagesRequiringAttention.last?.textMessageData?.isMentioningSelf ?? false
-    }
-    
+        
     var shouldSummarizeMessages: Bool {
         if isSilenced {
             // Always summarize for muted conversation
@@ -770,7 +764,8 @@ extension ZMConversation {
             isSilenced: isSilenced,
             isOngoingCall: isOngoingCall,
             isBlocked: isBlocked,
-            isSelfAnActiveMember: isSelfAnActiveMember
+            isSelfAnActiveMember: isSelfAnActiveMember,
+            hasSelfMention: estimatedUnreadSelfMentionCount > 0
         )
     }
 }

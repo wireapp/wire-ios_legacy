@@ -26,7 +26,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIResponder+FirstResponder.h"
-#import "WireStyleKit.h"
 #import "Wire-Swift.h"
 
 
@@ -112,7 +111,8 @@
 
 - (void)setupLogo
 {
-    UIImage *logoImage = [WireStyleKit imageOfWireWithColor:[UIColor whiteColor]];
+    UIImage *logoImage = [[WireStyleKit imageOfWireWithColor:[UIColor whiteColor]] resizableImageWithCapInsets:UIEdgeInsetsZero
+                                                                                                  resizingMode:UIImageResizingModeStretch];
     self.logoImageView = [[UIImageView alloc] initWithImage:logoImage];
     self.logoImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:self.logoImageView];

@@ -62,7 +62,7 @@ class ConversationTitleView: TitleView {
 extension NSTextAttachment {
     static func verifiedShield() -> NSTextAttachment {
         let attachment = NSTextAttachment()
-        let shield = WireStyleKit.imageOfShieldverified()!
+        let shield = WireStyleKit.imageOfShieldverified
         attachment.image = shield
         let ratio = shield.size.width / shield.size.height
         let height: CGFloat = 12

@@ -16,13 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class PermissionDeniedViewController;
-@class ConversationActionController;
+import XCTest
+@testable import Wire
 
-@interface ConversationListViewController ()
+final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+    
+    var sut: GroupDetailsViewController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = GroupDetailsViewController(conversation: otherUserConversation)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
 
-@property (nonatomic, nonnull) UILabel *noConversationLabel;
-@property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
-@property (nonatomic, nullable) ConversationActionController *actionsController;
+    func testForInitState(){
+        verify(view: sut.view)
+    }
 
-@end
+    func testForActionMenu() {
+        sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+
+        verifyAlertController((sut?.actionController?.alertController)!)
+    }
+}

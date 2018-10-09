@@ -25,7 +25,6 @@
 @import WireExtensionComponents;
 #import "MediaPreviewData.h"
 #import "MediaThumbnail.h"
-#import "WireStyleKit.h"
 #import "LinkAttachment.h"
 #import "LinkAttachmentCache.h"
 #import "Wire-Swift.h"
