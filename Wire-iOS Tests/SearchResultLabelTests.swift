@@ -21,6 +21,7 @@ import XCTest
 import Cartography
 @testable import Wire
 
+
 class SearchResultLabelTests: ZMSnapshotTestCase {
     var sut: SearchResultLabel!
 
