@@ -57,19 +57,34 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
 
 final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
 
-    /*
+    func testThatNoAlertIsShowIfNoGuestOrService() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.areGuestOrServicePresent = false
+
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+
+        ///Show the alert
+        let sut = viewModel.setAllowGuests(false)
+
+        // Then
+        XCTAssertNil(sut)
+    }
+
     func testThatItRendersRemoveGuestsAndServicesWarning() {
         // Given
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
-        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        sut.view.layer.speed = 0
 
-        sut.
+        /// for ConversationOptionsViewModel's delegate
+        _ = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+
+        ///Show the alert
+        let sut = viewModel.setAllowGuests(false)
 
         // Then
-        verify(view: sut.view)
-    }*/
+        verifyAlertController(sut!)
+    }
 
     func testThatItRendersTeamOnly() {
         // Given

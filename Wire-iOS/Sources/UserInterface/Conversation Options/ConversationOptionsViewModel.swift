@@ -22,6 +22,7 @@ protocol ConversationOptionsViewModelConfiguration: class {
     var title: String { get }
     var allowGuests: Bool { get }
     var isCodeEnabled: Bool { get }
+    var areGuestOrServicePresent: Bool { get }
     var allowGuestsChangedHandler: ((Bool) -> Void)? { get set }
     func setAllowGuests(_ allowGuests: Bool, completion: @escaping (VoidResult) -> Void)
     func createConversationLink(completion: @escaping (Result<String>) -> Void)
@@ -32,7 +33,7 @@ protocol ConversationOptionsViewModelConfiguration: class {
 protocol ConversationOptionsViewModelDelegate: class {
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State)
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error)
-    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void)
+    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRevokingLink completion: @escaping (Bool) -> Void)
     func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String)
 }
@@ -198,7 +199,7 @@ class ConversationOptionsViewModel {
         }
     }
     
-    func setAllowGuests(_ allowGuests: Bool) {
+    @discardableResult func setAllowGuests(_ allowGuests: Bool) -> UIAlertController? {
         func _setAllowGuests() {
             let item = CancelableItem(delay: 0.4) { [weak self] in
                 self?.state.isLoading = true
@@ -220,20 +221,25 @@ class ConversationOptionsViewModel {
             }
         }
         
-        guard allowGuests != configuration.allowGuests else { return }
+        guard allowGuests != configuration.allowGuests else { return nil }
         
         // In case allow guests mode should be deactivated, ask the delegate
         // to confirm this action as all guests will be removed.
         if !allowGuests {
-            delegate?.viewModel(self, confirmRemovingGuests: { [weak self] remove in
-                guard let `self` = self else { return }
-                guard remove else { return self.updateRows() }
-                self.link = nil
-                _setAllowGuests()
-            })
+            // Make "remove guests and services" warning only appear if guests or services are present
+            if configuration.areGuestOrServicePresent {
+                return delegate?.viewModel(self, confirmRemovingGuests: { [weak self] remove in
+                    guard let `self` = self else { return }
+                    guard remove else { return self.updateRows() }
+                    self.link = nil
+                    _setAllowGuests()
+                })
+            }
         } else {
             _setAllowGuests()
         }
+
+        return nil
     }
     
 }
