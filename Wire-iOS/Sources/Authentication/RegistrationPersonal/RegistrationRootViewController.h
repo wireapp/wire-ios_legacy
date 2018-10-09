@@ -35,7 +35,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable) LoginCredentials *loginCredentials;
 
-- (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow;
+- (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil NS_UNAVAILABLE;
+
 - (void)presentLoginTab;
 - (void)presentRegistrationTab;
 

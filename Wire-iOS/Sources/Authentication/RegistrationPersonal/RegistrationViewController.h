@@ -35,7 +35,9 @@ typedef NS_ENUM(NSUInteger, RegistrationFlow) {
 
 @interface RegistrationViewController : BlueViewController <AuthenticationCoordinatedViewController>
 
-- (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow;
+- (instancetype)initWithAuthenticationFlow:(AuthenticationFlowType)flow NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString * _Nullable)nibNameOrNil bundle:(NSBundle * _Nullable)nibBundleOrNil NS_UNAVAILABLE;
 
 @property (nonatomic)  LoginCredentials * __nullable loginCredentials;
 @property (nonatomic) BOOL shouldHideCancelButton;
