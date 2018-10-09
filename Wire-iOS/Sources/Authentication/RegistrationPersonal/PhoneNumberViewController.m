@@ -124,20 +124,7 @@ static CGFloat PhoneNumberFieldTopMargin = 16;
 
 - (void)selectInitialCountry
 {
-    Country *initialCountry = nil;
-
-#if WIRESTAN
-    NSString *backendEnvironment = [[NSUserDefaults standardUserDefaults] stringForKey:@"ZMBackendEnvironmentType"];
-    if ([backendEnvironment isEqualToString:@"staging"]) {
-            initialCountry = [Country countryWirestan];
-    }
-    
-#endif
-    if (! initialCountry) {
-        initialCountry = [Country countryFromDevice];
-    }
-
-    self.country = initialCountry;
+    self.country = [Country defaultCountry];
 }
 
 - (void)updateViewConstraints

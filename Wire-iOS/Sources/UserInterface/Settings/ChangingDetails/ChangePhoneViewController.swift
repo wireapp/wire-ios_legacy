@@ -101,8 +101,8 @@ fileprivate struct ChangePhoneNumberState {
         }
     }
     
-    init(currentPhoneNumber: String = ZMUser.selfUser().phoneNumber!) {
-        self.currentNumber = PhoneNumber(fullNumber: currentPhoneNumber)
+    init(currentPhoneNumber: String? = ZMUser.selfUser().phoneNumber) {
+        self.currentNumber = currentPhoneNumber.flatMap(PhoneNumber.init(fullNumber:))
     }
     
 }
@@ -174,7 +174,9 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
+        if ZMUser.selfUser()?.phoneNumber == nil {
+            return 1
+        } else if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
             return Section.count
         } else {
             return 1
@@ -192,9 +194,12 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
             cell.textField.keyboardType = .phonePad
             cell.textField.leftAccessoryView = .countryCode
             cell.textField.accessibilityIdentifier = "PhoneNumberField"
+            cell.textField.placeholder = "registration.enter_phone_number.placeholder".localized
             if let current = state.visibleNumber {
                 cell.textField.countryCode = current.countryCode
                 cell.textField.text = current.numberWithoutCode
+            } else {
+                cell.textField.countryCode = Country.default.e164.uintValue
             }
             cell.textField.becomeFirstResponder()
             cell.textField.delegate = self
@@ -304,6 +309,7 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
     }
     
     func didRemovePhoneNumber() {
+        navigationController?.showLoadingView = false
         _ = navigationController?.popToPrevious(of: self)
     }
 
@@ -317,6 +323,7 @@ extension ChangePhoneViewController: ConfirmPhoneDelegate {
     }
     
     func didConfirmPhone(inController controller: ConfirmPhoneViewController) {
+        self.navigationController?.showLoadingView = false
         _ = navigationController?.popToPrevious(of: self)
     }
 }
