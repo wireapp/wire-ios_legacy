@@ -502,7 +502,7 @@
 
 - (BOOL)isConversationListVisible
 {
-    return IS_IPAD_LANDSCAPE_LAYOUT || self.splitViewController.leftViewControllerRevealed;
+    return IS_IPAD_LANDSCAPE_LAYOUT || (self.splitViewController.leftViewControllerRevealed && self.conversationListViewController.presentedViewController == NULL);
 }
 
 - (ZMUserSession *)context

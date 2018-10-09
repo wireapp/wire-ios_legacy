@@ -460,9 +460,12 @@ extension AppRootViewController: ForegroundNotificationResponder {
             return false
         }
         
+        guard clientVC.isConversationViewVisible else {
+            return true
+        }
+        
         // conversation view is visible for another conversation
         guard
-            clientVC.isConversationViewVisible,
             let convID = userInfo.conversationID,
             convID != clientVC.currentConversation.remoteIdentifier
             else { return false }
