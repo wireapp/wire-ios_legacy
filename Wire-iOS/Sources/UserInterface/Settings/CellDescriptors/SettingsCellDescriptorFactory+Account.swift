@@ -112,24 +112,15 @@ extension SettingsCellDescriptorFactory {
             isDestructive: false,
             presentationStyle: .navigation,
             presentationAction: { () -> (UIViewController?) in
-             if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
                 return ChangeEmailViewController()
-             } else {
-                let addEmailController = AddEmailPasswordViewController()
-                let stepDelegate = DismissStepDelegate()
-                stepDelegate.strongCapture = stepDelegate
-
-                // TODO: Integrate with new login controller
-                return addEmailController
-            }
-        },
+            },
             previewGenerator: { _ in
                 if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
                     return SettingsCellPreview.text(email)
                 } else {
                     return SettingsCellPreview.text("self.add_email_password".localized)
                 }
-        },
+            },
             accessoryViewMode: .alwaysHide
         )
     }
