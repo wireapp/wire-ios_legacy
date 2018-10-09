@@ -19,7 +19,7 @@
 import Foundation
 
 // Describes the icon to be shown for the conversation in the list.
-enum ConversationStatusIcon {
+enum ConversationStatusIcon: Equatable {
     case none
     case pendingConnection
     
