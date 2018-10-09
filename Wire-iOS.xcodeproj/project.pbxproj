@@ -1317,6 +1317,7 @@
 		F1CB5D3A215E1D2F001CCF5D /* UITextView+Replace.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CB5D39215E1D2F001CCF5D /* UITextView+Replace.swift */; };
 		F1CE2DF01EF0337F00631D8A /* PureLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */; };
 		F1F5E57C216CA6D4006BF3D5 /* ConversationStatusTests+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5E57B216CA6D4006BF3D5 /* ConversationStatusTests+Icon.swift */; };
+		F1F5E57E216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5E57D216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift */; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
 		F95E08B41D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E08B31D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift */; };
@@ -3079,6 +3080,7 @@
 		F1CB5D39215E1D2F001CCF5D /* UITextView+Replace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Replace.swift"; sourceTree = "<group>"; };
 		F1CE2DEF1EF0337F00631D8A /* PureLayout.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PureLayout.framework; path = Carthage/Build/iOS/PureLayout.framework; sourceTree = "<group>"; };
 		F1F5E57B216CA6D4006BF3D5 /* ConversationStatusTests+Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationStatusTests+Icon.swift"; sourceTree = "<group>"; };
+		F1F5E57D216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationStatusLineTests+Muting.swift"; sourceTree = "<group>"; };
 		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
 		F95E08B31D0EAFE80098A9EE /* TTTAttributedLabel+Links.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TTTAttributedLabel+Links.swift"; sourceTree = "<group>"; };
@@ -5508,6 +5510,7 @@
 				F1F5E57B216CA6D4006BF3D5 /* ConversationStatusTests+Icon.swift */,
 				8742FB7F1E8BD18900D046BC /* ConversationListAccessoryViewTests.swift */,
 				8742FB811E8BD23D00D046BC /* ConversationStatusLineTests.swift */,
+				F1F5E57D216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift */,
 				870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */,
 				876041531F5451B3003CB161 /* AccountViewTests.swift */,
 				EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */,
@@ -7756,6 +7759,7 @@
 				87AE8BDC207B99540058715E /* BackupPasswordViewControllerTests.swift in Sources */,
 				BF27AE4E1E9E513400809A2B /* MessageDraftTests.swift in Sources */,
 				5EC16BA120EBB93A00955156 /* MockProxyRequester.swift in Sources */,
+				F1F5E57E216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift in Sources */,
 				FE996D9C2032039100BDE573 /* LandingViewControllerTests.swift in Sources */,
 				876376881E840E9C00B2CCF0 /* ConversationStatusTests.swift in Sources */,
 				EF6251D621395F7F00943708 /* VideoGridViewControllerSnapshotTests.swift in Sources */,

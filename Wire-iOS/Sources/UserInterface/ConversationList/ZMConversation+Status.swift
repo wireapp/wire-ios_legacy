@@ -353,6 +353,9 @@ extension ConversationStatus {
         if completelyMuted {
             // Always summarize for completely muted conversation
             return true
+        } else if showingOnlyMentions && !hasSelfMention {
+            // Summarize when there is no mention
+            return true
         } else if hasSelfMention {
             // Summarize if there is at least one mention and another activity that can be inside a summary
             return StatusMessageType.summaryTypes.reduce(into: UInt(0)) { $0 += (messagesRequiringAttentionByType[$1] ?? 0) } > 1
