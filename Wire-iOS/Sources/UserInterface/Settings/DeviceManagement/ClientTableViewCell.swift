@@ -82,7 +82,7 @@ class ClientTableViewCell: UITableViewCell {
                     }
                 })
                 
-                self.activationLabel.text = activationDate.formattedDate
+                self.activationLabel.text = "registration.devices.activated".localized(args: activationDate.formattedDate)
             }
             else if let activationDate = userClient.activationDate {
                 self.activationLabel.text = activationDate.formattedDate
