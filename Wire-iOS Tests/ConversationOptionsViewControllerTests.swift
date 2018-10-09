@@ -30,6 +30,7 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
     var deleteResult: VoidResult = .success
     var createResult: Result<String>? = nil
     var isCodeEnabled = true
+    var areGuestOrServicePresent = true
     
     init(allowGuests: Bool, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
@@ -55,6 +56,20 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
 }
 
 final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
+
+    /*
+    func testThatItRendersRemoveGuestsAndServicesWarning() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+        let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+        sut.view.layer.speed = 0
+
+        sut.
+
+        // Then
+        verify(view: sut.view)
+    }*/
 
     func testThatItRendersTeamOnly() {
         // Given
