@@ -130,10 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Є нові повідомлення.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.title" = "Допоможіть нам зробити Wire кращим";
+"conversation_list.data_usage_permission_alert.message" = "Я згоден з тим, що Wire може створювати та використовувати анонімні звіти про використання програми та збої в роботі для покращення якості додатку. Я можу відкликати мою згоду в будь-який час.";
 "conversation_list.data_usage_permission_alert.disagree" = "Ні";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.agree" = "Я згоден(-а)";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в Контактах";
@@ -148,7 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "сповіщення вимкнено";
 "conversation_list.voiceover.status.typing" = "вводить текст";
 "conversation_list.voiceover.status.ping" = "пінг";
-"conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.mention" = "вас хтось згадав";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "заархівовано";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "перелік заархівованих розмов";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакти";
@@ -212,12 +212,12 @@
 "conversation.status.message.missedcall" = "Пропущений дзвінок";
 "conversation.status.message.missedcall.groups" = "Пропущений дзвінок від %@";
 "conversation.status.message.mention" = "%@";
-"conversation.status.message.ephemeral" = "Sent a message";
-"conversation.status.message.ephemeral.group" = "Someone sent a message";
-"conversation.status.message.ephemeral.mention" = "Mentioned you";
-"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral" = "Надіслав повідомлення";
+"conversation.status.message.ephemeral.group" = "Хтось надіслав повідомлення";
+"conversation.status.message.ephemeral.mention" = "Згадав вас";
+"conversation.status.message.ephemeral.mention.group" = "Хтось згадав вас";
 "conversation.status.message.ephemeral.knock" = "Надіслав(-ла) пінг";
-"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+"conversation.status.message.ephemeral.knock.group" = "Хтось надіслав пінг";
 
 "conversation.status.unsent" = "⚠️ Ненадіслане повідомлення";
 "conversation.status.you" = "Ви";
@@ -272,7 +272,7 @@
 "conversation.connection_view.in_address_book" = "в Контактах";
 
 "conversation.input_bar.shortcut.send" = "Надіслати повідомлення";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "Вставити розрив рядка";
 "conversation.input_bar.shortcut.edit_last_message" = "Редагувати останнє повідомлення";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Скасувати";
 
@@ -568,12 +568,12 @@
 "call.degraded.alert.message.unknown" = "Хтось почав використовувати новий пристрій.";
 "call.degraded.alert.action.continue" = "Подзвонити все-одно";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "Це завершить інший активний дзвінок.";
 
 "call.alert.ongoing.start.message" = "Інша розмова має активний дзвінок.\nДзвінок у цій розмові припинить його.";
 "call.alert.ongoing.join.message" = "Інша розмова має активний дзвінок.\nПриєднання до дзвінка у цій розмові припинить його.";
 "call.alert.ongoing.start.button" = "Подзвонити все одно";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "Приєднатися все-одно";
 
 // Call Actions (accessibility)
 
@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Позначити як непрочитане";
 "meta.menu.mark_read" = "Позначити як прочитане";
 "shortcut.mark_all_as_read.title" = "Позначити все як прочитане";
+"meta.menu.configure_notifications" = "Нотифікації…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Видалити вміст?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Скасувати";
 "meta.menu.delete_content.button_delete" = "Видалити";
 "meta.menu.delete_content.button_delete_and_leave" = "Видалити та вийти";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Повідомляти мене про:";
+"meta.menu.configure_notification.button_everything" = "Все";
+"meta.menu.configure_notification.button_mentions" = "Тільки згадки";
+"meta.menu.configure_notification.button_nothing" = "Нічого";
+"meta.menu.configure_notification.button_cancel" = "Скасувати";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Вийти з розмови?";
@@ -773,8 +781,8 @@
 "self.settings.add_account.error.title" = "Три акаунти вже активні";
 "self.settings.add_account.error.message" = "Тільки три акаунти можуть одночасно бути активними. Вийдіть з одного активного акаунта, щоб додати наступний.";
 
-"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.message" = "Цей акаунт має активний дзвінок.\nПереключення акаунтів завершить його.";
+"self.settings.switch_account.action" = "Все-одно переключити";
 
 // Settings - Account details
 "self.settings.account_section" = "Акаунт";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "Повідомлення";
 "compose.drafts.empty.title" = "Повідомлень немає";
 "compose.drafts.empty.subtitle" = "Доторкніться до +, щоб створити нове";
-"compose.drafts.compose.title" = "Напишіть текст повідомлення";
+"compose.drafts.compose.title" = "Напишіть повідомлення";
 "compose.drafts.compose.subject.placeholder" = "Торкніться, щоб написати тему";
 
 "compose.drafts.compose.delete.confirm.title" = "Підтвердити видалення";

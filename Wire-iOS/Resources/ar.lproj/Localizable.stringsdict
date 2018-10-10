@@ -245,21 +245,21 @@
       <key>d_number_of_new</key>
       <dict>
         <key>zero</key>
-        <string>%d new messages</string>
+        <string>%d messages</string>
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 new message</string>
+        <string>1 message</string>
         <key>two</key>
-        <string>%d new messages</string>
+        <string>%d messages</string>
         <key>few</key>
-        <string>%d new messages</string>
+        <string>%d messages</string>
         <key>many</key>
-        <string>%d new messages</string>
+        <string>%d messages</string>
         <key>other</key>
-        <string>%d new messages</string>
+        <string>%d messages</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>

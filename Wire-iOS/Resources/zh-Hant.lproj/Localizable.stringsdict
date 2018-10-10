@@ -149,7 +149,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d new messages</string>
+        <string>1則訊息</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -177,7 +177,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d pings</string>
+        <string>1個招呼</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
