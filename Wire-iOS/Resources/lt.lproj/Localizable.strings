@@ -130,10 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Turi naujų žinučių.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.title" = "Padėkite mums pagerinti \"Wire\"";
+"conversation_list.data_usage_permission_alert.message" = "Sutinku, kad \"Wire\" galėtų sukurti ir naudoti anoniminę vartojimo ir klaidų ataskaitą \"Wire\" aplikacijos tobulinimui. Aš galėsiu atšaukti sutikimą bet kada vėliau.";
 "conversation_list.data_usage_permission_alert.disagree" = "Ne";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.agree" = "Sutinku";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "konktaktuose";
@@ -148,7 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "nutildytas";
 "conversation_list.voiceover.status.typing" = "rašo";
 "conversation_list.voiceover.status.ping" = "skambtelėjimas";
-"conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.mention" = "jus paminėjo";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archyvuotas";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "archyvuotų susirašinėjimų sąrašas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktai";
@@ -212,12 +212,12 @@
 "conversation.status.message.missedcall" = "Praleistas skambutis";
 "conversation.status.message.missedcall.groups" = "Skambino %@";
 "conversation.status.message.mention" = "%@";
-"conversation.status.message.ephemeral" = "Sent a message";
-"conversation.status.message.ephemeral.group" = "Someone sent a message";
-"conversation.status.message.ephemeral.mention" = "Mentioned you";
-"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral" = "Atsiuntė jums žinutę";
+"conversation.status.message.ephemeral.group" = "Kažkas atsiuntė žinutę";
+"conversation.status.message.ephemeral.mention" = "Jus paminėjo";
+"conversation.status.message.ephemeral.mention.group" = "Kažkas jus paminėjo";
 "conversation.status.message.ephemeral.knock" = "Patikrinti ryšį";
-"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+"conversation.status.message.ephemeral.knock.group" = "Kažkas skambtelėjo";
 
 "conversation.status.unsent" = "⚠ Neišsiųsta žinutė";
 "conversation.status.you" = "Jūs";
@@ -272,7 +272,7 @@
 "conversation.connection_view.in_address_book" = "konktaktuose";
 
 "conversation.input_bar.shortcut.send" = "Siųsti žinutę";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "Įterpti naują eilutę";
 "conversation.input_bar.shortcut.edit_last_message" = "Keisti naujausią žinutę";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Atsisakyti";
 
@@ -549,7 +549,7 @@
 "call.status.incoming.user" = "%@ skambina…";
 "call.status.incoming" = "Skambinama…";
 "call.status.outgoing" = "Kviečiama…";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "Skambinate %@…";
 "call.status.reconnecting" = "Jungiamasi iš naujo…";
 "call.status.terminating" = "Baigiama…";
 "call.status.constant_bitrate" = "Pastovi sparta (bitais)";
@@ -568,12 +568,12 @@
 "call.degraded.alert.message.unknown" = "Kažkas pradėjo naudotis nauju įrenginiu.";
 "call.degraded.alert.action.continue" = "Vis tiek skambinti";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "Tai baigs kitą jūsų skambutį.";
 
 "call.alert.ongoing.start.message" = "Kitame susirašinėjime vyksta pokalbis.\nSkambindami čia baigsite aną pokalbį.";
 "call.alert.ongoing.join.message" = "Kitame susirašinėjime vyksta pokalbis.\nPrisijungę prie šio pokalbio baigsite aną.";
 "call.alert.ongoing.start.button" = "Vis tiek skambinti";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "Vis tiek jungtis";
 
 // Call Actions (accessibility)
 
@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Žymėti kaip neskaitytą";
 "meta.menu.mark_read" = "Žymėti kaip skaitytą";
 "shortcut.mark_all_as_read.title" = "Žymėti visus kaip skaitytus";
+"meta.menu.configure_notifications" = "Pranešimai…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Ištrinti turinį?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Atsisakyti";
 "meta.menu.delete_content.button_delete" = "Ištrinti";
 "meta.menu.delete_content.button_delete_and_leave" = "Ištrinti ir išeiti";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Pranešti apie:";
+"meta.menu.configure_notification.button_everything" = "Viską";
+"meta.menu.configure_notification.button_mentions" = "Tik paminėjimus";
+"meta.menu.configure_notification.button_nothing" = "Nieką";
+"meta.menu.configure_notification.button_cancel" = "Atsisakyti";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Išeiti iš susirašinėjimo?";
@@ -773,8 +781,8 @@
 "self.settings.add_account.error.title" = "Aktyvios trys paskyros";
 "self.settings.add_account.error.message" = "Vienu metu galite būti prisijungęs iki trijų paskyrų. Atsijunkite nuo vienos, kad galėtumėte pridėti kitą.";
 
-"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.message" = "Vyksta skambutis šioje paskyroje.\nKeičiant paskyras nutrauksite vykstantį skambutį.";
+"self.settings.switch_account.action" = "Vis tiek pakeisti";
 
 // Settings - Account details
 "self.settings.account_section" = "Paskyra";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "Žinutės";
 "compose.drafts.empty.title" = "Žinučių nėra";
 "compose.drafts.empty.subtitle" = "Bakstelėkit + naujos sukūrimui";
-"compose.drafts.compose.title" = "Rašyti žinutę";
+"compose.drafts.compose.title" = "Rašykite žinutę";
 "compose.drafts.compose.subject.placeholder" = "Spustelėkite temos nustatymui";
 
 "compose.drafts.compose.delete.confirm.title" = "Patvirtinkite ištrynimą";

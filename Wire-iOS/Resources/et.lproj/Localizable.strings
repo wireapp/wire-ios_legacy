@@ -130,10 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "On uusi sõnumeid.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.title" = "Aita Wire paremaks muuta";
+"conversation_list.data_usage_permission_alert.message" = "Nõustun, et Wire võib luua ja kasutada anonüümseid kasutus- ja veateateid, parandamaks Wire'i rakendust. Ma saan selle nõusoleku igal ajal tühistada.";
 "conversation_list.data_usage_permission_alert.disagree" = "Ei";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.agree" = "Nõustun";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
@@ -272,7 +272,7 @@
 "conversation.connection_view.in_address_book" = "seadme kontaktides";
 
 "conversation.input_bar.shortcut.send" = "Saada teade";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "Lisa reavahetus";
 "conversation.input_bar.shortcut.edit_last_message" = "Viimase sõnumi muutmine";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Tühista";
 
@@ -568,12 +568,12 @@
 "call.degraded.alert.message.unknown" = "Keegi hakkas uut seadet kasutama.";
 "call.degraded.alert.action.continue" = "Helista ikkagi";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "See lõpetab sinu teise kõne.";
 
 "call.alert.ongoing.start.message" = "Teises vestluses on hetkel aktiivne kõne.\nSiin helistades lõpetad käimasoleva kõne.";
 "call.alert.ongoing.join.message" = "Teises vestluses on aktiivne kõne.\nSelle kõnega liitumine lõpetab teise.";
 "call.alert.ongoing.start.button" = "Helista ikkagi";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "Liitu ikkagi";
 
 // Call Actions (accessibility)
 
@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Märgi mitteloetuks";
 "meta.menu.mark_read" = "Märgi loetuks";
 "shortcut.mark_all_as_read.title" = "Märgi kõik loetuks";
+"meta.menu.configure_notifications" = "Teavitused…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Kustuta sisu?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Tühista";
 "meta.menu.delete_content.button_delete" = "Kustuta";
 "meta.menu.delete_content.button_delete_and_leave" = "Kustuta ja lahku";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Teavita mind:";
+"meta.menu.configure_notification.button_everything" = "Kõik";
+"meta.menu.configure_notification.button_mentions" = "Ainult mainimised";
+"meta.menu.configure_notification.button_nothing" = "Ei midagi";
+"meta.menu.configure_notification.button_cancel" = "Tühista";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Lahku vestlusest?";
@@ -773,8 +781,8 @@
 "self.settings.add_account.error.title" = "Kolm aktiivset kontot";
 "self.settings.add_account.error.message" = "Korraga saad kasutada kolme kontot. Lisakonto kasutamiseks pead ühega olemasolevatest välja logima.";
 
-"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.message" = "Sellel kontol on käimasolev kõne.\nKontode vahetamine lõpetab käimasoleva kõne.";
+"self.settings.switch_account.action" = "Vaheta ikkagi";
 
 // Settings - Account details
 "self.settings.account_section" = "Konto";
