@@ -28,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class ConversationInputBarViewController;
 @class AudioRecordViewController;
 @class MentionsHandler;
-@class KeyboardBlockObserver;
 @protocol ZMConversationMessage;
 @protocol Dismissable;
 @protocol UserList;

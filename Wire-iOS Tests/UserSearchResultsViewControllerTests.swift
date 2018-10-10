@@ -83,6 +83,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         for name in usernames {
             let user = ZMUser.insertNewObject(in: uiMOC)
             user.remoteIdentifier = UUID()
+            user.teamIdentifier = nil
             user.name = name
             user.setHandle(name.lowercased())
             user.accentColorValue = .brightOrange
