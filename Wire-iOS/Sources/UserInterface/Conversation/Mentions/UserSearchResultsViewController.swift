@@ -42,10 +42,13 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
     private var query: String = ""
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
+    private var isKeyboardCollapsedFirstCalled = true
     public private(set) var isKeyboardCollapsed: Bool = true {
         didSet {
-            guard oldValue != isKeyboardCollapsed else { return }
+            guard oldValue != isKeyboardCollapsed || isKeyboardCollapsedFirstCalled else { return }
             collectionView.reloadData()
+
+            isKeyboardCollapsedFirstCalled = false
         }
     }
     
