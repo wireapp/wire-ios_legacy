@@ -186,12 +186,18 @@ extension PointOfView: CustomStringConvertible {
 
 public extension String {
     
-    // Returns the NSLocalizedString version of self
+    /// Returns the NSLocalizedString version of self
     public var localized: String {
         return NSLocalizedString(self, comment: "")
     }
+
+    /// Returns the text and uppercases it if needed.
+    public func localized(uppercased: Bool) -> String {
+        let text = NSLocalizedString(self, comment: "")
+        return uppercased ? text.localizedUppercase : text
+    }
    
-    // Used to generate localized strings with plural rules from the stringdict
+    /// Used to generate localized strings with plural rules from the stringdict
     public func localized(pov pointOfView: PointOfView = .none, args: CVarArg...) -> String {
         return withVaList(args) {
             return NSString(format: self.localized(pov: pointOfView), arguments: $0) as String

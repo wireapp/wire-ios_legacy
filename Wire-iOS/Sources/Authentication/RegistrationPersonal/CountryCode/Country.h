@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *displayName;
 @property (nonatomic, readonly) NSString *e164PrefixString;   // E.g. "+1", "+49", "+380"
 
+@property (class, nonatomic, readonly) Country *defaultCountry NS_SWIFT_NAME(default);
 
 + (instancetype)countryWithISO:(NSString *)ISO e164:(NSNumber *)e164;
 + (nullable instancetype)countryFromDevice;

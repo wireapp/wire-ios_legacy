@@ -101,8 +101,8 @@ fileprivate struct ChangePhoneNumberState {
         }
     }
     
-    init(currentPhoneNumber: String = ZMUser.selfUser().phoneNumber!) {
-        self.currentNumber = PhoneNumber(fullNumber: currentPhoneNumber)
+    init(currentPhoneNumber: String? = ZMUser.selfUser().phoneNumber) {
+        self.currentNumber = currentPhoneNumber.flatMap(PhoneNumber.init(fullNumber:))
     }
     
 }
@@ -145,12 +145,12 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
     fileprivate func setupViews() {
         RegistrationTextFieldCell.register(in: tableView)
         SettingsButtonCell.register(in: tableView)
-        title = "self.settings.account_section.phone_number.change.title".localized
+        title = "self.settings.account_section.phone_number.change.title".localized(uppercased: true)
         
         view.backgroundColor = .clear
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.phone_number.change.save".localized,
+            title: "self.settings.account_section.phone_number.change.save".localized(uppercased: true),
             style: .done,
             target: self,
             action: #selector(saveButtonTapped)
@@ -169,12 +169,14 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         if let newNumber = state.newNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
             updateSaveButtonState(enabled: false)
-            showLoadingView = true
+            navigationController?.showLoadingView = true
         }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
+        if ZMUser.selfUser()?.phoneNumber == nil {
+            return 1
+        } else if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
             return Section.count
         } else {
             return 1
@@ -190,11 +192,15 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         case .phoneNumber:
             let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
             cell.textField.keyboardType = .phonePad
+            cell.textField.textContentType = .telephoneNumber
             cell.textField.leftAccessoryView = .countryCode
             cell.textField.accessibilityIdentifier = "PhoneNumberField"
+            cell.textField.placeholder = "registration.enter_phone_number.placeholder".localized
             if let current = state.visibleNumber {
                 cell.textField.countryCode = current.countryCode
                 cell.textField.text = current.numberWithoutCode
+            } else {
+                cell.textField.countryCode = Country.default.e164.uintValue
             }
             cell.textField.becomeFirstResponder()
             cell.textField.delegate = self
@@ -226,7 +232,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 guard let `self` = self else { return }
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
-                self.showLoadingView = true
+                self.navigationController?.showLoadingView = true
             })
 
             present(alert, animated: true, completion: nil)
@@ -277,7 +283,7 @@ extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
 
 extension ChangePhoneViewController: UserProfileUpdateObserver {
     func phoneNumberVerificationCodeRequestDidSucceed() {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         if let newNumber = state.newNumber?.fullNumber {
             let confirmController = ConfirmPhoneViewController(newNumber: newNumber, delegate: self)
@@ -286,24 +292,25 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
     }
     
     func phoneNumberVerificationCodeRequestDidFail(_ error: Error!) {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         showAlert(forError: error)
     }
     
     func emailUpdateDidFail(_ error: Error!) {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         showAlert(forError: error)
     }
     
     func phoneNumberRemovalDidFail(_ error: Error!) {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         showAlert(forError: error)
     }
     
     func didRemovePhoneNumber() {
+        navigationController?.showLoadingView = false
         _ = navigationController?.popToPrevious(of: self)
     }
 
@@ -317,6 +324,7 @@ extension ChangePhoneViewController: ConfirmPhoneDelegate {
     }
     
     func didConfirmPhone(inController controller: ConfirmPhoneViewController) {
+        self.navigationController?.showLoadingView = false
         _ = navigationController?.popToPrevious(of: self)
     }
 }

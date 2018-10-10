@@ -25,6 +25,24 @@
 NS_ASSUME_NONNULL_BEGIN
 @implementation Country
 
++ (Country *)defaultCountry
+{
+    Country *defaultCountry = nil;
+
+#if WIRESTAN
+    NSString *backendEnvironment = [[NSUserDefaults standardUserDefaults] stringForKey:@"ZMBackendEnvironmentType"];
+    if ([backendEnvironment isEqualToString:@"staging"]) {
+        defaultCountry = [Country countryWirestan];
+    }
+
+#endif
+    if (!defaultCountry) {
+        defaultCountry = [Country countryFromDevice] ?: [Country countryWithISO:@"us" e164:@1];
+    }
+
+    return defaultCountry;
+}
+
 + (nullable instancetype)countryFromDevice
 {
     CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
@@ -102,6 +120,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
     NSDictionary *countryCodeDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"CountryCodes" ofType:@"plist"]];
     NSMutableArray *countries = [NSMutableArray array];
+
+    #if WIRESTAN
+    [countries addObject:Country.countryWirestan];
+    #endif
     
     for (NSDictionary *countryData in [countryCodeDict objectForKey:@"countryCodes"]) {
         [countries addObject:[Country countryWithISO:[countryData valueForKey:@"iso"] e164:[countryData valueForKey:@"e164"]]];
