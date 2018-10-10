@@ -153,6 +153,14 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
             self.scrollToLastItem()
         }
     }
+  
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: nil) { _ in
+            self.collectionView.reloadData()
+        }
+    }
 }
 
 extension UserSearchResultsViewController: Dismissable {
@@ -196,6 +204,7 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         cell.configure(with: user)
         cell.showSeparator = false
+        cell.avatarSpacing = UIView.conversationLayoutMargins.left
 
         // hightlight the lowest cell if keyboard is collapsed
         if isKeyboardCollapsed {
