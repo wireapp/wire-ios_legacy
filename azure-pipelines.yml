@@ -45,7 +45,7 @@ steps:
     destinationTypeOption: 'simulators'
     destinationPlatformOption: 'iOS'
     useXcpretty: true
-    publishJUnitResults: 'build/reports/junit.xml'
+    publishJUnitResults: true
   displayName: "Test"
 - task: PublishBuildArtifacts@1
   inputs:
