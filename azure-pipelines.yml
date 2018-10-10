@@ -37,6 +37,7 @@ steps:
     scheme: "$(scheme)"
     sdk: "$(sdk)"
     configuration: '$(configuration)'
+    args: "-enableCodeCoverage YES"
     xcodeVersion: 'default'
     packageApp: false
     xcWorkspacePath: "$(project)"
