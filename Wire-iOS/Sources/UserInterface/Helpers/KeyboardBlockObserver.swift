@@ -41,6 +41,10 @@ final class KeyboardBlockObserver: NSObject {
         func animate(_ animations: @escaping () -> Void) {
             UIView.animate(withDuration: animationDuration, animations: animations)
         }
+
+        func isKeyboardCollapsed(window: UIWindow) -> Bool {
+            return self.frame.maxY > window.frame.maxY
+        }
     }
     
     typealias ChangeBlock = (ChangeInfo) -> Void

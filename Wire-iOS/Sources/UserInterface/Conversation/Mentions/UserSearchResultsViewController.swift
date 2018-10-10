@@ -38,9 +38,18 @@ class UserSearchResultsViewController: UIViewController {
     private var query: String = ""
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
+    private var isKeyboardCollapsed = true {
+        didSet {
+            guard oldValue != isKeyboardCollapsed else { return }
+            print("🍔 isKeyboardCollapsed = \(isKeyboardCollapsed)")
+            collectionView.reloadData()
+        }
+    }
     
     @objc public weak var delegate: UserSearchResultsViewControllerDelegate?
-    
+
+    private var keyboardObserver: KeyboardBlockObserver?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,7 +60,19 @@ class UserSearchResultsViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame(_:)),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+
+        setupKeyboardObserver()
     }
+
+    private func setupKeyboardObserver() {
+        keyboardObserver = KeyboardBlockObserver { [weak self] info in
+            guard let weakSelf = self, let window = weakSelf.view.window else { return }
+//            print("🎹 info.kind = \(info.kind), frame = \(info.frame), w = \(window.frame)")
+
+            weakSelf.isKeyboardCollapsed = info.isKeyboardCollapsed(window: window)
+        }
+    }
+
     
     private func setupCollectionView() {
         view.isHidden = true
@@ -127,7 +148,6 @@ class UserSearchResultsViewController: UIViewController {
             self.scrollToLastItem()
         }
     }
-
 }
 
 extension UserSearchResultsViewController: Dismissable {
@@ -171,6 +191,18 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         cell.configure(with: user)
         cell.showSeparator = false
+
+        // hightlight the lowest cell if keyboard is collapsed
+        if isKeyboardCollapsed {
+            if indexPath.item == searchResults.count - 1 {
+                cell.backgroundColor = .contentBackground
+            } else {
+                cell.backgroundColor = .background
+            }
+        } else {
+            cell.backgroundColor = .background
+        }
+
         return cell
     }
     
