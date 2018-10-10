@@ -21,12 +21,13 @@ steps:
   inputs:
     testResultsFiles: 'test/*.xml'
   condition: succeededOrFailed()
+  displayName: "Publish test results"
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: "SnapshotResults"
     artifactName: "Snapshot failures"
   condition: failed()
-  displayName: "Save failed snapshots as  build artifacts"
+  displayName: "Store failed snapshots"
 - script: |
     fastlane post_test
   env:  
