@@ -51,6 +51,7 @@ steps:
   inputs:
     pathtoPublish: "SnapshotResults"
     artifactName: "Snapshot failures"
+    condition: failed()
 - script: |
     bundle exec fastlane post_test
   env:  
