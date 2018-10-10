@@ -52,7 +52,7 @@ steps:
     artifactName: "Snapshot failures"
   condition: failed()
 - script: |
-    bundle exec fastlane post_test
+    fastlane post_test
   env:  
     CODECOV_TOKEN: $(CODECOV_TOKEN)
     DEPENDENCIES_BASE_URL: "https://raw.githubusercontent.com/wireapp/wire-ios-shared-resources/master"
