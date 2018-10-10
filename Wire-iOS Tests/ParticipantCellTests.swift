@@ -130,7 +130,7 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     }
     
     func testThatItRendersNewConversationCellWithParticipantsAndNameWithOverflow() {
-        let sut = cell(for: .newConversation, text: "FAIL", fillUsers: .overflow)
+        let sut = cell(for: .newConversation, text: "Italy Trip", fillUsers: .overflow)
         verify(view: sut.prepareForSnapshots())
     }
     
