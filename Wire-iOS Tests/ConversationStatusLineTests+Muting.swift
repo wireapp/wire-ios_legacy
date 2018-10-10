@@ -39,7 +39,7 @@ class ConversationStatusLineTests_Muting: CoreDataSnapshotTestCase {
     }
 
     func appendImage(to conversation: ZMConversation) {
-        (conversation.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (conversation.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
         conversation.lastReadServerTimeStamp = Date.distantPast
     }
 

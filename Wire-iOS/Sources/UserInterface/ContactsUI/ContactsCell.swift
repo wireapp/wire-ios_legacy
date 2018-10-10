@@ -70,6 +70,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     }()
 
     let avatarSpacer = UIView()
+    let buttonSpacer = UIView()
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -139,13 +140,16 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
 
+        buttonSpacer.addSubview(actionButton)
+        buttonSpacer.translatesAutoresizingMaskIntoConstraints = false
+
         titleStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         titleStackView.axis = .vertical
         titleStackView.distribution = .equalSpacing
         titleStackView.alignment = .leading
         titleStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleStackView, actionButton])
+        contentStackView = UIStackView(arrangedSubviews: [avatarSpacer, titleStackView, buttonSpacer])
         contentStackView.axis = .horizontal
         contentStackView.distribution = .fill
         contentStackView.alignment = .center
@@ -171,6 +175,9 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     }
 
     func createConstraints() {
+
+        let buttonMargin: CGFloat = 16
+
         NSLayoutConstraint.activate([
             avatar.widthAnchor.constraint(equalToConstant: 28),
             avatar.heightAnchor.constraint(equalToConstant: 28),
@@ -181,11 +188,17 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -buttonMargin)
             ])
 
-        constrain(actionButton){ actionButton in
+        constrain(actionButton, buttonSpacer){ actionButton, buttonSpacer in
+            buttonSpacer.top == actionButton.top
+            buttonSpacer.bottom == actionButton.bottom
+
             actionButtonWidthConstraint = actionButton.width == actionButtonWidth
+            buttonSpacer.trailing == actionButton.trailing
+            buttonSpacer.leading == actionButton.leading - buttonMargin
+
         }
     }
 
