@@ -25,6 +25,9 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     var serviceUser: ZMUser!
     
     override func setUp() {
+        // show guest icon in cells
+        selfUserInTeam = true
+
         super.setUp()
         
         serviceUser = ZMUser.insertNewObject(in: uiMOC)
