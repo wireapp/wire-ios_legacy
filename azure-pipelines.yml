@@ -3,49 +3,19 @@ pool:
 
 trigger:
   - develop
-
-variables:
-  scheme: "Wire-iOS"
-  sdk: "iphonesimulator"
-  configuration: "Debug"
-  project: "Wire-iOS.xcodeproj"
   
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.app
-    ./setup.sh 
+    fastlane prepare 
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"
-- task: Xcode@5
-  inputs:
-    actions: "build-for-testing"
-    scheme: "$(scheme)"
-    sdk: "$(sdk)"
-    configuration: '$(configuration)'
-    xcodeVersion: 'default'
-    packageApp: false
-    xcWorkspacePath: "$(project)"
-    destinationSimulators: 'iPhone 7'
-    destinationTypeOption: 'simulators'
-    destinationPlatformOption: 'iOS'
-    useXcpretty: true
+- script: |
+    fastlane build
   displayName: "Build"
-- task: Xcode@5
-  inputs:
-    actions: "test-without-building"
-    scheme: "$(scheme)"
-    sdk: "$(sdk)"
-    configuration: '$(configuration)'
-    args: "-enableCodeCoverage YES"
-    xcodeVersion: 'default'
-    packageApp: false
-    xcWorkspacePath: "$(project)"
-    destinationSimulators: 'iPhone 7'
-    destinationTypeOption: 'simulators'
-    destinationPlatformOption: 'iOS'
-    useXcpretty: true
-    publishJUnitResults: true
+- script: |
+    fastlane test
   displayName: "Test"
 - task: PublishBuildArtifacts@1
   inputs:
