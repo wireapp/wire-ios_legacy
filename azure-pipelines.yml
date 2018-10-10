@@ -3,25 +3,50 @@ pool:
 
 trigger:
   - develop
+
+variables:
+  scheme: "Wire-iOS"
+  sdk: "iphonesimulator"
+  configuration: "Debug"
+  project: "Wire-iOS.xcodeproj"
   
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.app
-    bundle install --path ~/.gem
-    bundle exec fastlane prepare  
+    ./setup.sh 
     mkdir SnapshotResults
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"
-- script: |
-    bundle exec fastlane build
-  displayName: "Build"
-- script: |
-    bundle exec fastlane test
-  displayName: "Test"
-- task: PublishTestResults@2
+- task: Xcode@5
   inputs:
-    testResultsFiles: 'test/*.xml'
+    actions: "build-for-testing"
+    scheme: "$(scheme)"
+    sdk: "$(sdk)"
+    configuration: '$(configuration)'
+    xcodeVersion: 'default'
+    packageApp: false
+    xcWorkspacePath: "$(project)"
+    destinationSimulators: 'iPhone 7'
+    destinationTypeOption: 'simulators'
+    destinationPlatformOption: 'iOS'
+    useXcpretty: true
+  displayName: "Build"
+- task: Xcode@5
+  inputs:
+    actions: "test-without-building"
+    scheme: "$(scheme)"
+    sdk: "$(sdk)"
+    configuration: '$(configuration)'
+    xcodeVersion: 'default'
+    packageApp: false
+    xcWorkspacePath: "$(project)"
+    destinationSimulators: 'iPhone 7'
+    destinationTypeOption: 'simulators'
+    destinationPlatformOption: 'iOS'
+    useXcpretty: true
+    publishJUnitResults: 'build/reports/junit.xml'
+  displayName: "Test"
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: "SnapshotResults"
