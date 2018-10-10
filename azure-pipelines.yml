@@ -14,7 +14,6 @@ steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.app
     ./setup.sh 
-    mkdir SnapshotResults
   env:
     GITHUB_ACCESS_TOKEN: $(GITHUB_ACCESS_TOKEN)   
   displayName: "Setup environment"
@@ -51,7 +50,7 @@ steps:
   inputs:
     pathtoPublish: "SnapshotResults"
     artifactName: "Snapshot failures"
-    condition: failed()
+  condition: failed()
 - script: |
     bundle exec fastlane post_test
   env:  
