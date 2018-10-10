@@ -14,13 +14,12 @@ platform :ios do
         scan(
             scheme: "Wire-iOS",
             build_for_testing: true,
-            clean: true,
             devices: ["iPhone 7"],
             code_coverage: true,
-            output_directory: "build",
-            output_types: "junit",
-            buildlog_path: "build",
             derived_data_path: "DerivedData",
+            buildlog_path: "build",
+            output_directory: "build",
+            output_types: "junit"
         )
     end
 
@@ -31,9 +30,10 @@ platform :ios do
             test_without_building: true,
             devices: ["iPhone 7"],
             code_coverage: true,
-            buildlog_path: "test",
             derived_data_path: "DerivedData",
-            output_types: "junit",
+            buildlog_path: "test",
+            output_directory: "test",
+            output_types: "junit"
         )
     end
 
