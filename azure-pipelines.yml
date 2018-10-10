@@ -17,6 +17,10 @@ steps:
 - script: |
     fastlane test
   displayName: "Test"
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: 'test/*.xml'
+  condition: succeededOrFailed()
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: "SnapshotResults"
