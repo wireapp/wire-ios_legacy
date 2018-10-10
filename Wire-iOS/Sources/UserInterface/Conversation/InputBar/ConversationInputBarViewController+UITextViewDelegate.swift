@@ -63,8 +63,16 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             }
             return false
         }
-                
-        if UIDevice.current.type == .iPad,
+
+        /// press tab or enter to insert mention if iPhone keyboard is collapsed
+        let mentionsViewKeyboardCollapsed: Bool
+        if let isKeyboardCollapsed = mentionsView?.isKeyboardCollapsed {
+            mentionsViewKeyboardCollapsed = isKeyboardCollapsed
+        } else {
+            mentionsViewKeyboardCollapsed = false
+        }
+
+        if UIDevice.current.type == .iPad || mentionsViewKeyboardCollapsed,
             text.count == 1,
             text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
             canInsertMention {

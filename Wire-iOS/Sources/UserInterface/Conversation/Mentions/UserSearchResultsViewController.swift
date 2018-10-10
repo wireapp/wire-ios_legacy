@@ -27,21 +27,24 @@ import Cartography
     func dismiss()
 }
 
+@objc protocol KeyboardCollapseObserver {
+    var isKeyboardCollapsed: Bool { get }
+}
+
 @objc protocol UserList {
     var users: [UserType] { get set }
 }
 
-class UserSearchResultsViewController: UIViewController {
+class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserver {
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var searchResults: [UserType] = []
     private var query: String = ""
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
-    private var isKeyboardCollapsed = true {
+    public private(set) var isKeyboardCollapsed: Bool = true {
         didSet {
             guard oldValue != isKeyboardCollapsed else { return }
-            print("🍔 isKeyboardCollapsed = \(isKeyboardCollapsed)")
             collectionView.reloadData()
         }
     }
@@ -66,13 +69,12 @@ class UserSearchResultsViewController: UIViewController {
 
     private func setupKeyboardObserver() {
         keyboardObserver = KeyboardBlockObserver { [weak self] info in
-            guard let weakSelf = self, let window = weakSelf.view.window else { return }
-//            print("🎹 info.kind = \(info.kind), frame = \(info.frame), w = \(window.frame)")
-
-            weakSelf.isKeyboardCollapsed = info.isKeyboardCollapsed(window: window)
+            guard let weakSelf = self else { return }
+            if let isKeyboardCollapsed = info.isKeyboardCollapsed {
+                weakSelf.isKeyboardCollapsed = isKeyboardCollapsed
+            }
         }
     }
-
     
     private func setupCollectionView() {
         view.isHidden = true
