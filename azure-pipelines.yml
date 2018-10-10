@@ -45,7 +45,7 @@ steps:
     pathtoPublish: "test"
     artifactName: "Test logs"
   condition: succeededOrFailed()
-  displayName: "Store test logs"
+  displayName: "Store test log"
 
 - script: |
     fastlane post_test
