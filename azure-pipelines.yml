@@ -22,6 +22,7 @@ steps:
     pathtoPublish: "SnapshotResults"
     artifactName: "Snapshot failures"
   condition: failed()
+  displayName: "Save failed snapshots as  build artifacts"
 - script: |
     fastlane post_test
   env:  
