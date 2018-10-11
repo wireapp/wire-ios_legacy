@@ -45,7 +45,6 @@ class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-//        MockUser.setMockSelf(MockUser.mockUsers()?.last)
         MockUser.mockSelf()?.name = "Tarja Turunen"
         MockUser.mockSelf()?.accentColorValue = .strongBlue
 
