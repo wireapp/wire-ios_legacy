@@ -58,7 +58,7 @@ class AppStateController : NSObject {
     }
 
     func calculateAppState() -> AppState {
-        guard !isRunningTests || isRunningSelfUnitTest else { return .unauthenticated(error: nil) }
+        guard !isRunningTests || isRunningSelfUnitTest else { return .headless }
 
         if !hasEnteredForeground {
             return .headless
