@@ -1242,7 +1242,6 @@
 "registration.devices.active_list_header" = "Ativo";
 "registration.devices.current_list_header" = "Atual";
 "registration.devices.active_list_subtitle" = "Se você não reconhecer um dispositivo acima, remova-o e redefina sua senha.";
-"registration.devices.activated_in" = "Ativado em";
 "registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 

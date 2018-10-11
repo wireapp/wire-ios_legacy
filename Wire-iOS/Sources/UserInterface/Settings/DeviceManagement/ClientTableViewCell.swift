@@ -68,38 +68,8 @@ class ClientTableViewCell: UITableViewCell {
             self.updateLabel()
             
             self.activationLabel.text = ""
-            
-            if let activationDate = userClient.activationDate {
-                let formattedDate = activationDate.formattedDate
-                
-                // no location data
-                if userClient.activationLatitude == 0 && userClient.activationLongitude == 0 {
-                    self.activationLabel.text = "registration.devices.activated".localized(args: formattedDate)
-                }
-                else {
-                    let localClient = self.userClient
-                    
-                    CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
-                        guard
-                            error == nil,
-                            localClient == self.userClient,
-                            let placemark = placemarks?.first
-                            else { return }
-                        
-                        if #available(iOS 11, *), let address = placemark.postalAddress {
-                            self.activationLabel.text = "\("registration.devices.activated_in".localized) \(address.city), \(address.country.uppercased()) — \(formattedDate)"
-                        }
-                        else if
-                            let address = placemark.addressDictionary,
-                            // the is a workaround for a bug: the dictionary key is "Country" but the constant
-                            // here is "country"...
-                            let country = address[CNPostalAddressCountryKey.capitalizingFirstLetter()] as? String,
-                            let city    = address[CNPostalAddressCityKey.capitalizingFirstLetter()] as? String
-                        {
-                            self.activationLabel.text = "\("registration.devices.activated_in".localized) \(city), \(country.uppercased()) — \(formattedDate)"
-                        }
-                    })
-                }
+            if let date = userClient.activationDate?.formattedDate {
+                self.activationLabel.text = "registration.devices.activated".localized(args: date)
             }
             
             self.updateFingerprint()
