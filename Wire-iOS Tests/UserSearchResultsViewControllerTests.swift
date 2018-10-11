@@ -25,7 +25,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     var serviceUser: ZMUser!
     
     override func setUp() {
-        // show guest icon in cells
+        // self user should not be a team member in order to show guest icon in the user cells
         selfUserInTeam = true
 
         super.setUp()
@@ -38,6 +38,9 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         serviceUser.serviceIdentifier = UUID.create().transportString()
         serviceUser.providerIdentifier = UUID.create().transportString()
         uiMOC.saveOrRollback()
+
+        XCTAssert(ZMUser.selfUser().isTeamMember, "selfUser should be a team member to generate snapshots with guest icon")
+
     }
     
     func createSUT() {
@@ -53,6 +56,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         sut = nil
         serviceUser = nil
         resetColorScheme()
+
         super.tearDown()
     }
     
@@ -80,7 +84,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         verify(view: view)
     }
 
-    func mockSearchResultUsers() -> [UserType] {
+    func mockSearchResultUsers(file: StaticString = #file, line: UInt = #line) -> [UserType] {
         var allUsers: [ZMUser] = []
 
         for name in usernames {
@@ -90,6 +94,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
             user.name = name
             user.setHandle(name.lowercased())
             user.accentColorValue = .brightOrange
+            XCTAssertFalse(user.isTeamMember, "user should not be a team member to generate snapshots with guest icon", file: file, line: line)
             uiMOC.saveOrRollback()
             allUsers.append(user)
         }

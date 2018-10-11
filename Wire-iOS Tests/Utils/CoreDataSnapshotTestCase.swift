@@ -33,12 +33,18 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         super.setUp()
         snapshotBackgroundColor = .white
         setupTestObjects()
+
+        MockUser.setMockSelf(selfUser)
+
     }
 
     override open func tearDown() {
         selfUser = nil
         otherUser = nil
         otherUserConversation = nil
+
+        MockUser.setMockSelf(nil)
+
         super.tearDown()
     }
 
