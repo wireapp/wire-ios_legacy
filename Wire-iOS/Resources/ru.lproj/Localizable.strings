@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Активное";
 "registration.devices.current_list_header" = "Текущее";
 "registration.devices.active_list_subtitle" = "Если не распознаете устройство выше, удалите его и переустановите пароль.";
-"registration.devices.activated_in" = "Активирован в";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Войти c email";

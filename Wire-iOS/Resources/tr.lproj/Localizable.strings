@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Etkin";
 "registration.devices.current_list_header" = "Şu anki";
 "registration.devices.active_list_subtitle" = "Yukarıdaki cihazı tanımıyorsanız, onu silin ve parolanızı sıfırlayın.";
-"registration.devices.activated_in" = "Etkinleştirildi";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";

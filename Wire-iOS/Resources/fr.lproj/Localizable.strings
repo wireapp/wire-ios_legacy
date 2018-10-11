@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Actif";
 "registration.devices.current_list_header" = "Actuel";
 "registration.devices.active_list_subtitle" = "Si vous ne reconnaissez pas l’un des appareils ci-dessus, supprimez-le et changez votre mot de passe.";
-"registration.devices.activated_in" = "Activé à";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID :";
 
 "signin.use_email.label" = "Connexion avec votre adresse email";

@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Activo";
 "registration.devices.current_list_header" = "Este dispositivo";
 "registration.devices.active_list_subtitle" = "Si no reconoces un dispositivo de la lista, elimínalo y cambia la contraseña de Wire.";
-"registration.devices.activated_in" = "Activado en";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";

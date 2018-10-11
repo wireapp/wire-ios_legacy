@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "アクティブ";
 "registration.devices.current_list_header" = "最新";
 "registration.devices.active_list_subtitle" = "もし上のデバイスを知らない場合は、それを削除して、パスワードをリセットしてください。";
-"registration.devices.activated_in" = "アクティベートする";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "メールアドレス でログイン";

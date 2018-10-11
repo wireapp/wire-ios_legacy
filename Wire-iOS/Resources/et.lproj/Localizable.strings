@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Aktiivsed";
 "registration.devices.current_list_header" = "Praegune";
 "registration.devices.active_list_subtitle" = "Kui sa mõnda toodud seadmetest ei tunne ära, eemalda see ja muuda oma parool.";
-"registration.devices.activated_in" = "Aktiveeritud";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Logi sisse e-posti aadresiga";

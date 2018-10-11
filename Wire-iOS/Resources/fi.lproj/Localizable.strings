@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Aktiivinen";
 "registration.devices.current_list_header" = "Nykyinen";
 "registration.devices.active_list_subtitle" = "Jos et tunnista yllä olevaa laitetta, poista se ja vaihda salasanasi.";
-"registration.devices.activated_in" = "Aktivoitu paikassa";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";

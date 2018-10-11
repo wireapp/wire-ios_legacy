@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "其他已启用的设备";
 "registration.devices.current_list_header" = "当前设备";
 "registration.devices.active_list_subtitle" = "如果您不能识别以上设备，请立即移除并重设密码。";
-"registration.devices.activated_in" = "启动于";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";

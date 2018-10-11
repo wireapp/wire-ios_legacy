@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "其他已啟用的設備";
 "registration.devices.current_list_header" = "此設備";
 "registration.devices.active_list_subtitle" = "若您不認可該設備，請將它移除，並且重設您的密碼。";
-"registration.devices.activated_in" = "啟動於";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "以電子郵件登入";
