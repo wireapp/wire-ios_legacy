@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "未読にする";
 "meta.menu.mark_read" = "既読にする";
 "shortcut.mark_all_as_read.title" = "すべて既読にする";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "コンテンツを削除しますか?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "キャンセル";
 "meta.menu.delete_content.button_delete" = "削除";
 "meta.menu.delete_content.button_delete_and_leave" = "削除して退出";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "キャンセル";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "会話から退室しますか？";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "メッセージ";
 "compose.drafts.empty.title" = "メッセージがありません";
 "compose.drafts.empty.subtitle" = "+をタップして１つ作成する";
-"compose.drafts.compose.title" = "メッセージを作成";
+"compose.drafts.compose.title" = "メッセージを入力します";
 "compose.drafts.compose.subject.placeholder" = "タップして件名をセット";
 
 "compose.drafts.compose.delete.confirm.title" = "削除を確認する";

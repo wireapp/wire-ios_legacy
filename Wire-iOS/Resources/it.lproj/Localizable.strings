@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Segna come non letto";
 "meta.menu.mark_read" = "Segna come letto";
 "shortcut.mark_all_as_read.title" = "Segna tutti come letti";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Eliminare il contenuto?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Annulla";
 "meta.menu.delete_content.button_delete" = "Elimina";
 "meta.menu.delete_content.button_delete_and_leave" = "Elimina e abbandona";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "Annulla";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Abbandonare la conversazione?";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "Messaggi";
 "compose.drafts.empty.title" = "Nessun messaggio";
 "compose.drafts.empty.subtitle" = "Tocca + per comporne uno";
-"compose.drafts.compose.title" = "Scrivi un messaggio";
+"compose.drafts.compose.title" = "Digita un messaggio";
 "compose.drafts.compose.subject.placeholder" = "Tocca per impostare un argomento";
 
 "compose.drafts.compose.delete.confirm.title" = "Conferma l'eliminazione";

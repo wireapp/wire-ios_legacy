@@ -14,14 +14,12 @@ platform :ios do
         scan(
             scheme: "Wire-iOS",
             build_for_testing: true,
-            clean: true,
             devices: ["iPhone 7"],
             code_coverage: true,
-            output_directory: "build",
-            output_types: "junit",
-            buildlog_path: "build",
             derived_data_path: "DerivedData",
-            formatter: "xcpretty-json-formatter"
+            buildlog_path: "build",
+            output_directory: "build",
+            output_types: "junit"
         )
     end
 
@@ -32,24 +30,15 @@ platform :ios do
             test_without_building: true,
             devices: ["iPhone 7"],
             code_coverage: true,
-            buildlog_path: "test",
             derived_data_path: "DerivedData",
-            output_types: "",
-            fail_build: false
+            buildlog_path: "test",
+            output_directory: "test",
+            output_types: "junit"
         )
-
-        # let's not fail the step now, but just process the test output and re-run in post_test
-        begin
-            trainer(output_directory: "test")
-        rescue => exception
-        end
     end
 
     desc "Run post-test tasks"
     lane :post_test do
-        # Let's fail the build now when all the test results are already uploaded
-        trainer(output_directory: "test")
-
         sh "curl -s https://codecov.io/bash > codecov"
         sh "chmod +x codecov"
         codecov = "./codecov -J '^Wire$' -D ../DerivedData"

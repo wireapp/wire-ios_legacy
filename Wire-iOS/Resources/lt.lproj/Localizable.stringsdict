@@ -209,13 +209,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 new message</string>
+        <string>1 žinutė</string>
         <key>few</key>
-        <string>%d new messages</string>
+        <string>%d žinutės</string>
         <key>many</key>
-        <string>%d new messages</string>
+        <string>%d žinutės</string>
         <key>other</key>
-        <string>%d new messages</string>
+        <string>%d žinučių</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -229,13 +229,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 mention</string>
+        <string>1 paminėjimas</string>
         <key>few</key>
-        <string>%d mentions</string>
+        <string>%d paminėjimai</string>
         <key>many</key>
-        <string>%d mentions</string>
+        <string>%d paminėjimai</string>
         <key>other</key>
-        <string>%d mentions</string>
+        <string>%d paminėjimų</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -249,13 +249,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 ping</string>
+        <string>1 skambtelėjimas</string>
         <key>few</key>
-        <string>%d pings</string>
+        <string>%d skambtelėjimai</string>
         <key>many</key>
-        <string>%d pings</string>
+        <string>%d skambtelėjimai</string>
         <key>other</key>
-        <string>%d pings</string>
+        <string>%d skambtelėjimų</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -269,13 +269,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 missed call</string>
+        <string>1 praleistas skambutis</string>
         <key>few</key>
         <string>%d praleisti skambučiai</string>
         <key>many</key>
         <string>%d praleisti skambučiai</string>
         <key>other</key>
-        <string>%d praleisti skambučiai</string>
+        <string>%d praleistų skambučių</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call</key>
@@ -289,13 +289,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Praleistas skambutis</string>
         <key>few</key>
-        <string>Missed calls</string>
+        <string>Praleisti skambučiai</string>
         <key>many</key>
-        <string>Missed calls</string>
+        <string>Praleisti skambučiai</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>Praleisti skambučiai</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -309,13 +309,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Skambino %2$@</string>
         <key>few</key>
-        <string>Missed calls from %2$@</string>
+        <string>Skambino %2$@</string>
         <key>many</key>
-        <string>Missed calls from %2$@</string>
+        <string>Skambino %2$@</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>Skambino %2$@</string>
       </dict>
     </dict>
   </dict>

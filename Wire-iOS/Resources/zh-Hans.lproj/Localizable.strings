@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "标记为未读";
 "meta.menu.mark_read" = "标记为已读";
 "shortcut.mark_all_as_read.title" = "标记所有为已读";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "删除内容？";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "取消";
 "meta.menu.delete_content.button_delete" = "删除";
 "meta.menu.delete_content.button_delete_and_leave" = "删除并离开";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "取消";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "离开聊天室？";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "短消息";
 "compose.drafts.empty.title" = "无消息";
 "compose.drafts.empty.subtitle" = "点击 + 来新建";
-"compose.drafts.compose.title" = "写短信";
+"compose.drafts.compose.title" = "键入一条消息";
 "compose.drafts.compose.subject.placeholder" = "点击设置主题";
 
 "compose.drafts.compose.delete.confirm.title" = "确认删除";

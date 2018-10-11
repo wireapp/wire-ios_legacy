@@ -198,23 +198,23 @@
 
 "conversation.status.typing" = "Набирает сообщение…";
 "conversation.status.typing.group" = "%@: набирает сообщение…";
-"conversation.status.silenced" = "Выкл. уведомления";
+"conversation.status.silenced" = "Без звука";
 "conversation.status.blocked" = "Заблокирован(а)";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Поделился(-лась) ссылкой";
 "conversation.status.message.image" = "Поделился(-лась) картинкой";
 "conversation.status.message.location" = "Поделился(-лась) местоположением";
-"conversation.status.message.audio" = "Поделился(-лась) аудио сообщением";
+"conversation.status.message.audio" = "Поделился(-лась) аудиосообщением";
 "conversation.status.message.video" = "Поделился(-лась) видео";
 "conversation.status.message.file" = "Поделился(-лась) файлом";
 "conversation.status.message.knock" = "Отправил(а) пинг";
 "conversation.status.message.missedcall" = "Пропущенный звонок";
 "conversation.status.message.missedcall.groups" = "Пропущенный вызов от %@";
 "conversation.status.message.mention" = "%@";
-"conversation.status.message.ephemeral" = "Прислал сообщение";
+"conversation.status.message.ephemeral" = "Отправил(а) вам сообщение";
 "conversation.status.message.ephemeral.group" = "Кто-то прислал сообщение";
-"conversation.status.message.ephemeral.mention" = "Упомянул вас";
+"conversation.status.message.ephemeral.mention" = "Вас упомянули";
 "conversation.status.message.ephemeral.mention.group" = "Вас упомянули";
 "conversation.status.message.ephemeral.knock" = "Отправил(а) пинг";
 "conversation.status.message.ephemeral.knock.group" = "Новый пинг";
@@ -250,7 +250,7 @@
 "conversation.displayname.emptygroup" = "Пустая группа";
 
 "conversation.input_bar.verified" = "Верифицировано";
-"conversation.input_bar.placeholder" = "Наберите сообщение";
+"conversation.input_bar.placeholder" = "Введите сообщение";
 "conversation.input_bar.placeholder_ephemeral" = "Временное сообщение";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведите вверх для отправки";
@@ -298,7 +298,7 @@
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
-"image_confirmer.cancel" = "Отменить";
+"image_confirmer.cancel" = "Отмена";
 "image.add_sketch" = "Добавить скетч";
 "image.edit_image" = "Редактировать изображение";
 
@@ -468,7 +468,7 @@
 "content.message.like" = "Нравится";
 "content.message.unlike" = "Не нравится";
 "content.message.forward" = "Поделиться";
-"content.message.go_to_conversation" = "Показать в разговоре";
+"content.message.go_to_conversation" = "Показать";
 "content.message.forward.to" = "Поиск…";
 "content.message.open" = "Открыть";
 "content.message.copy" = "Копировать";
@@ -522,7 +522,7 @@
 "voice.accept_button.title" = "Принять";
 "voice.decline_button.title" = "Отклонить";
 "voice.hang_up_button.title" = "Повесить трубку";
-"voice.mute_button.title" = "Выкл.звук";
+"voice.mute_button.title" = "Микрофон";
 "voice.video_button.title" = "Видео";
 "voice.flip_video_button.title" = "Перевернуть";
 "voice.speaker_button.title" = "Динамик";
@@ -578,8 +578,8 @@
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Входящий вызов от %@";
-"call.actions.label.toggle_mute_on" = "Выкл. звук";
-"call.actions.label.toggle_mute_off" = "Вкл.звук";
+"call.actions.label.toggle_mute_on" = "Отключить уведомления";
+"call.actions.label.toggle_mute_off" = "Включить уведомления";
 "call.actions.label.flip_camera" = "Смена камеры";
 "call.actions.label.toggle_speaker_on" = "Включить динамик";
 "call.actions.label.toggle_speaker_off" = "Выключить динамик";
@@ -615,13 +615,14 @@
 "meta.menu.archive" = "Архивировать";
 "meta.menu.unarchive" = "Разархивировать";
 "meta.menu.delete" = "Удалить содержимое…";
-"meta.menu.silence.mute" = "Выкл. звук";
-"meta.menu.silence.unmute" = "Вкл.звук";
+"meta.menu.silence.mute" = "Отключить уведомления";
+"meta.menu.silence.unmute" = "Включить уведомления";
 "meta.menu.cancel" = "Отменить";
 "meta.menu.cancel_connection_request" = "Отменить запрос…";
 "meta.menu.mark_unread" = "Отметить как непрочитанное";
 "meta.menu.mark_read" = "Отметить как прочитанное";
 "shortcut.mark_all_as_read.title" = "Отметить все как прочитанные";
+"meta.menu.configure_notifications" = "Уведомления…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Удалить содержимое?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Отменить";
 "meta.menu.delete_content.button_delete" = "Удалить";
 "meta.menu.delete_content.button_delete_and_leave" = "Удалить и покинуть";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Уведомлять меня о:";
+"meta.menu.configure_notification.button_everything" = "Все";
+"meta.menu.configure_notification.button_mentions" = "Только упоминания";
+"meta.menu.configure_notification.button_nothing" = "Ничего";
+"meta.menu.configure_notification.button_cancel" = "Отмена";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Покинуть разговор?";
@@ -963,12 +971,12 @@
 "self.settings.advanced.title" = "Дополнительные настройки";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отчет для отладки звонка";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает отделу поддержки Wire диагностировать проблемы, связанные со звонками.";
-"self.settings.advanced.reset_push_token.title" = "Обновить токен Push уведомления";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает службе поддержки Wire диагностировать проблемы, связанные с вызовами.";
+"self.settings.advanced.reset_push_token.title" = "Обновить токен push-уведомлений";
 "self.settings.advanced.reset_push_token.subtitle" = "При возникновении проблем с push-уведомлениями, служба поддержки Wire может попросить вас обновить токен.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен был обновлен";
 "self.settings.advanced.reset_push_token_alert.message" = "Уведомления будут восстановлены в течение нескольких секунд.";
-"self.settings.advanced.version_technical_details.title" = "Технические детали версии";
+"self.settings.advanced.version_technical_details.title" = "Техническая информация версии";
 
 // data usage permissions options
 "self.settings.account.data_usage_permissions.title" = "Разрешение на использование данных";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "Сообщения";
 "compose.drafts.empty.title" = "Сообщений нет";
 "compose.drafts.empty.subtitle" = "Нажмите + чтобы создать";
-"compose.drafts.compose.title" = "Написать сообщение";
+"compose.drafts.compose.title" = "Введите сообщение";
 "compose.drafts.compose.subject.placeholder" = "Нажмите, чтобы выбрать тему";
 
 "compose.drafts.compose.delete.confirm.title" = "Подтвердить удаление";

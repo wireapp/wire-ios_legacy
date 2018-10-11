@@ -130,10 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tem novas mensagens.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.title" = "Ajude-nos a tornar o Wire melhor";
+"conversation_list.data_usage_permission_alert.message" = "Concordo que o Wire pode criar e usar relatórios anônimos de uso e erro para aprimorar o aplicativo Wire. Eu posso revogar esse consentimento a qualquer momento.";
 "conversation_list.data_usage_permission_alert.disagree" = "Não";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.agree" = "Eu Concordo";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "nos Contatos";
@@ -212,12 +212,12 @@
 "conversation.status.message.missedcall" = "Chamada não atendida";
 "conversation.status.message.missedcall.groups" = "Chamada não atendida de %@";
 "conversation.status.message.mention" = "%@";
-"conversation.status.message.ephemeral" = "Sent a message";
-"conversation.status.message.ephemeral.group" = "Someone sent a message";
-"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral" = "Enviou uma mensagem";
+"conversation.status.message.ephemeral.group" = "Alguém mandou uma mensagem";
+"conversation.status.message.ephemeral.mention" = "Mencionou você";
 "conversation.status.message.ephemeral.mention.group" = "Alguém mencionou você";
 "conversation.status.message.ephemeral.knock" = "Pingou";
-"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+"conversation.status.message.ephemeral.knock.group" = "Alguém pingou";
 
 "conversation.status.unsent" = "⚠️ Mensagem não enviada";
 "conversation.status.you" = "Você";
@@ -272,7 +272,7 @@
 "conversation.connection_view.in_address_book" = "nos Contatos";
 
 "conversation.input_bar.shortcut.send" = "Enviar mensagem";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "Inserir quebra de linha";
 "conversation.input_bar.shortcut.edit_last_message" = "Editar Última Mensagem";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancelar";
 
@@ -568,12 +568,12 @@
 "call.degraded.alert.message.unknown" = "Alguém começou a usar um novo dispositivo.";
 "call.degraded.alert.action.continue" = "Chame de qualquer maneira";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "Isso desligará sua outra ligação.";
 
 "call.alert.ongoing.start.message" = "Uma chamada está ativa em outra conversa. \nChamar aqui irá desligar a outra chamada.";
 "call.alert.ongoing.join.message" = "Uma chamada está ativa em outra conversa.\nJuntar-se a esta chamada irá desligar a outra.";
 "call.alert.ongoing.start.button" = "Chame de qualquer maneira";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "Junte-se de qualquer maneira";
 
 // Call Actions (accessibility)
 
@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Marcar como Não Lida";
 "meta.menu.mark_read" = "Marcar como Lida";
 "shortcut.mark_all_as_read.title" = "Marcar Todas como Lidas";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Excluir conteúdo?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Cancelar";
 "meta.menu.delete_content.button_delete" = "Apagar";
 "meta.menu.delete_content.button_delete_and_leave" = "Apagar e sair";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "Cancelar";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Sair da conversa?";
@@ -773,8 +781,8 @@
 "self.settings.add_account.error.title" = "Três contas de ativas";
 "self.settings.add_account.error.message" = "Você apenas pode estar conectado com três contas de uma vez. Saia de uma para adicionar outra.";
 
-"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.message" = "Uma chamada está ativa nesta conta.\nMudar de conta irá desligar a chamada atual.";
+"self.settings.switch_account.action" = "Mudar de qualquer maneira";
 
 // Settings - Account details
 "self.settings.account_section" = "Conta";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "Mensagens";
 "compose.drafts.empty.title" = "Sem mensagens";
 "compose.drafts.empty.subtitle" = "Toque em + para compor um";
-"compose.drafts.compose.title" = "Escreva uma mensagem";
+"compose.drafts.compose.title" = "Digite uma mensagem";
 "compose.drafts.compose.subject.placeholder" = "Toque para definir um assunto";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirmar Exclusão";

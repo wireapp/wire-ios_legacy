@@ -74,7 +74,7 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadOneImage() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -90,7 +90,7 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
         let sut = self.otherUserConversation!
         (sut.appendKnock() as! ZMMessage).sender = self.otherUser
         (sut.append(text: "test") as! ZMMessage).sender = self.otherUser
-        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status
@@ -139,9 +139,9 @@ class ConversationStatusTests: CoreDataSnapshotTestCase {
     func testThatItReturnsStatusForConversationWithUnreadManyImages() {
         // GIVEN
         let sut = self.otherUserConversation!
-        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
-        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
-        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
+        (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").jpegData(compressionQuality: 1.0)!) as! ZMMessage).sender = self.otherUser
         sut.lastReadServerTimeStamp = Date.distantPast
         // WHEN
         let status = sut.status

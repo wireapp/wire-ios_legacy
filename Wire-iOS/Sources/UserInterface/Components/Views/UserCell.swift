@@ -41,10 +41,23 @@ class UserCell: SeparatorCollectionViewCell {
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
     
+    fileprivate var avatarSpacerWidthConstraint: NSLayoutConstraint?
+    
     weak var user: UserType? = nil
     
     static let boldFont: UIFont = .smallRegularFont
     static let lightFont: UIFont = .smallLightFont
+    static let defaultAvatarSpacing: CGFloat = 64
+    
+    /// Specify a custom avatar spacing
+    var avatarSpacing: CGFloat? {
+        get {
+            return avatarSpacerWidthConstraint?.constant
+        }
+        set {
+            avatarSpacerWidthConstraint?.constant = newValue ?? UserCell.defaultAvatarSpacing
+        }
+    }
 
     override var isSelected: Bool {
         didSet {
@@ -145,12 +158,15 @@ class UserCell: SeparatorCollectionViewCell {
     }
     
     func createConstraints() {
+        let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: UserCell.defaultAvatarSpacing)
+        self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
+        
         NSLayoutConstraint.activate([
             checkmarkIconView.widthAnchor.constraint(equalToConstant: 24),
             checkmarkIconView.heightAnchor.constraint(equalToConstant: 24),
             avatar.widthAnchor.constraint(equalToConstant: 28),
             avatar.heightAnchor.constraint(equalToConstant: 28),
-            avatarSpacer.widthAnchor.constraint(equalToConstant: 64),
+            avatarSpacerWidthConstraint,
             avatarSpacer.heightAnchor.constraint(equalTo: avatar.heightAnchor),
             avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor),
             avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),

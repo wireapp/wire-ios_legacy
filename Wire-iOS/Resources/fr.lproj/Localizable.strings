@@ -130,10 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Nouveaux messages.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.title" = "Aidez-nous à améliorer Wire";
+"conversation_list.data_usage_permission_alert.message" = "Wire peut créer et utiliser des rapports d'utilisation et d'erreurs anonymes afin d'améliorer l'application. Vous pouvez révoquer votre autorisation à tout moment.";
 "conversation_list.data_usage_permission_alert.disagree" = "Non";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.agree" = "J'accepte";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "dans les contacts";
@@ -148,7 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "silencieux";
 "conversation_list.voiceover.status.typing" = "écrit";
 "conversation_list.voiceover.status.ping" = "fait un signe";
-"conversation_list.voiceover.status.mention" = "you are mentioned";
+"conversation_list.voiceover.status.mention" = "vous avez été mentionné";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivé";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "liste des conversations archivées";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacts";
@@ -212,12 +212,12 @@
 "conversation.status.message.missedcall" = "Appel manqué";
 "conversation.status.message.missedcall.groups" = "Appel manqué de %@";
 "conversation.status.message.mention" = "%@";
-"conversation.status.message.ephemeral" = "Sent a message";
-"conversation.status.message.ephemeral.group" = "Someone sent a message";
-"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral" = "A envoyé un message";
+"conversation.status.message.ephemeral.group" = "Quelqu'un a envoyé un message";
+"conversation.status.message.ephemeral.mention" = "Vous a mentionné";
 "conversation.status.message.ephemeral.mention.group" = "Quelqu'un vous a mentionné";
 "conversation.status.message.ephemeral.knock" = "A fait un signe";
-"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+"conversation.status.message.ephemeral.knock.group" = "Quelqu'un a envoyé un ping";
 
 "conversation.status.unsent" = "⚠️ Message non envoyé";
 "conversation.status.you" = "Vous";
@@ -272,7 +272,7 @@
 "conversation.connection_view.in_address_book" = "dans les contacts";
 
 "conversation.input_bar.shortcut.send" = "Envoyer un message";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "Nouvelle ligne";
 "conversation.input_bar.shortcut.edit_last_message" = "Modifier le dernier message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Annuler";
 
@@ -549,7 +549,7 @@
 "call.status.incoming.user" = "%@ appelle…";
 "call.status.incoming" = "Appel…";
 "call.status.outgoing" = "Sonnerie…";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "Appel à %@…";
 "call.status.reconnecting" = "Reconnexion …";
 "call.status.terminating" = "Fin de l'appel…";
 "call.status.constant_bitrate" = "Échantillonnage constant (CBR)";
@@ -568,12 +568,12 @@
 "call.degraded.alert.message.unknown" = "Quelqu'un utilise un nouvel appareil.";
 "call.degraded.alert.action.continue" = "Appeler quand même";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "Cela mettra fin à votre autre appel.";
 
 "call.alert.ongoing.start.message" = "Un appel est en cours dans une autre conversation.\nAppeler ici raccrochera l'autre appel.";
 "call.alert.ongoing.join.message" = "Un appel est en cours dans une autre conversation.\nJoindre cet appel raccrochera l'autre appel.";
 "call.alert.ongoing.start.button" = "Appeler quand même";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "Répondre quand même";
 
 // Call Actions (accessibility)
 
@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Marquer comme non lu";
 "meta.menu.mark_read" = "Marquer comme lu";
 "shortcut.mark_all_as_read.title" = "Tout marquer comme lu";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Supprimer le contenu ?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Annuler";
 "meta.menu.delete_content.button_delete" = "Supprimer";
 "meta.menu.delete_content.button_delete_and_leave" = "Effacer et quitter";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Recevoir une notification:";
+"meta.menu.configure_notification.button_everything" = "Toujours";
+"meta.menu.configure_notification.button_mentions" = "Quand on me Mentionne";
+"meta.menu.configure_notification.button_nothing" = "Jamais";
+"meta.menu.configure_notification.button_cancel" = "Annuler";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Quitter la conversation ?";
@@ -773,8 +781,8 @@
 "self.settings.add_account.error.title" = "Trois comptes actifs";
 "self.settings.add_account.error.message" = "Vous ne pouvez vous connecter qu'à trois comptes à la fois. Déconnectez-vous de l'un d'entre eux pour en ajouter un autre.";
 
-"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.message" = "Vous êtes actuellement dans un appel avec ce compte.\nChanger de compte raccrochera l'autre appel.";
+"self.settings.switch_account.action" = "Changer quand même";
 
 // Settings - Account details
 "self.settings.account_section" = "Compte";

@@ -169,9 +169,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 uus sõnum</string>
+        <string>1 sõnum</string>
         <key>other</key>
-        <string>%d uut sõnumit</string>
+        <string>%d sõnumit</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>

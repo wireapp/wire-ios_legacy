@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Als ungelesen markieren";
 "meta.menu.mark_read" = "Als gelesen markieren";
 "shortcut.mark_all_as_read.title" = "Alle als gelesen markieren";
+"meta.menu.configure_notifications" = "Benachrichtigungen…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Gesprächsverlauf löschen?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Abbrechen";
 "meta.menu.delete_content.button_delete" = "Löschen";
 "meta.menu.delete_content.button_delete_and_leave" = "Löschen und verlassen";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Benachrichtigungen über:";
+"meta.menu.configure_notification.button_everything" = "Alles";
+"meta.menu.configure_notification.button_mentions" = "Nur Erwähnungen";
+"meta.menu.configure_notification.button_nothing" = "Nichts";
+"meta.menu.configure_notification.button_cancel" = "Abbrechen";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Unterhaltung verlassen?";

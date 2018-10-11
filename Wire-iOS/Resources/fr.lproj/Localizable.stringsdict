@@ -169,9 +169,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 new message</string>
+        <string>1 message</string>
         <key>other</key>
-        <string>%d new messages</string>
+        <string>%d messages</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -217,7 +217,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 missed call</string>
+        <string>1 appel manqué</string>
         <key>other</key>
         <string>%d appels manqués</string>
       </dict>
@@ -233,7 +233,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Appel manqué</string>
         <key>other</key>
         <string>Appels manqués</string>
       </dict>
@@ -249,7 +249,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Appel manqué de %2$@</string>
         <key>other</key>
         <string>Appels manqués de %2$@</string>
       </dict>

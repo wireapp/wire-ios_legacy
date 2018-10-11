@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "تحديد كغير مقروء";
 "meta.menu.mark_read" = "تحديد كمقروء";
 "shortcut.mark_all_as_read.title" = "تحديد الكل كمقروء";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "حذف المحتوى؟";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "إلغاء";
 "meta.menu.delete_content.button_delete" = "حذف";
 "meta.menu.delete_content.button_delete_and_leave" = "حذف ومغادرة";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "إلغاء";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "مُغادرة المُحادثة؟";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "الرسائل";
 "compose.drafts.empty.title" = "لا توجد رسائل";
 "compose.drafts.empty.subtitle" = "انقر + لإنشاء واحدة";
-"compose.drafts.compose.title" = "كتابة رسالة";
+"compose.drafts.compose.title" = "اكتب رسالة";
 "compose.drafts.compose.subject.placeholder" = "انقر لتعيين موضوع";
 
 "compose.drafts.compose.delete.confirm.title" = "تأكيد الحذف";

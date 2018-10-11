@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Markeer als ongelezen";
 "meta.menu.mark_read" = "Markeren als gelezen";
 "shortcut.mark_all_as_read.title" = "Alles markeren als gelezen";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Inhoud verwijderen?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Annuleer";
 "meta.menu.delete_content.button_delete" = "Verwijderen";
 "meta.menu.delete_content.button_delete_and_leave" = "Verwijder en verlaat";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "Annuleer";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Gesprek verlaten?";
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "Berichten";
 "compose.drafts.empty.title" = "Geen berichten";
 "compose.drafts.empty.subtitle" = "Tap + om er een optestellen";
-"compose.drafts.compose.title" = "Schrijf een bericht";
+"compose.drafts.compose.title" = "Type een bericht";
 "compose.drafts.compose.subject.placeholder" = "Tap om een onderwerp toe te voegen";
 
 "compose.drafts.compose.delete.confirm.title" = "Verwijderen bevestigen";

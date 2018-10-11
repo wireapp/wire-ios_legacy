@@ -209,13 +209,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 new message</string>
+        <string>1 повідомлення</string>
         <key>few</key>
-        <string>%d new messages</string>
+        <string>%d повідомлення</string>
         <key>many</key>
-        <string>%d new messages</string>
+        <string>%d повідомлень</string>
         <key>other</key>
-        <string>%d new messages</string>
+        <string>%d повідомлень</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -229,13 +229,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 mention</string>
+        <string>1 згадка</string>
         <key>few</key>
-        <string>%d mentions</string>
+        <string>%d згадки</string>
         <key>many</key>
-        <string>%d mentions</string>
+        <string>%d згадок</string>
         <key>other</key>
-        <string>%d mentions</string>
+        <string>%d згадок</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -249,13 +249,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 ping</string>
+        <string>1 пінг</string>
         <key>few</key>
-        <string>%d pings</string>
+        <string>%d пінги</string>
         <key>many</key>
-        <string>%d pings</string>
+        <string>%d пінгів</string>
         <key>other</key>
-        <string>%d pings</string>
+        <string>%d пінгів</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -269,9 +269,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 missed call</string>
+        <string>1 пропущений дзвінок</string>
         <key>few</key>
-        <string>%d пропущених дзвінків</string>
+        <string>%d пропущені дзвінки</string>
         <key>many</key>
         <string>%d пропущених дзвінків</string>
         <key>other</key>

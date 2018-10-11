@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "¿Eliminar chat?";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Cancelar";
 "meta.menu.delete_content.button_delete" = "Eliminar";
 "meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "Cancelar";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "¿Abandonar el chat?";
