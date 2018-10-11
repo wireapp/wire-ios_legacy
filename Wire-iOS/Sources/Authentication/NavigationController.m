@@ -116,8 +116,7 @@
 
 - (void)setupLogo
 {
-    UIImage *logoImage = [[WireStyleKit imageOfWireWithColor:[UIColor whiteColor]] resizableImageWithCapInsets:UIEdgeInsetsZero
-                                                                                                  resizingMode:UIImageResizingModeStretch];
+    UIImage *logoImage = [WireStyleKit imageOfWireWithColor:[UIColor whiteColor]];
     self.logoImageView = [[UIImageView alloc] initWithImage:logoImage];
     self.logoImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:self.logoImageView];
@@ -205,6 +204,7 @@
         temporaryResponder.keyboardAppearance = activeTextField.keyboardAppearance;
         temporaryResponder.keyboardType = activeTextField.keyboardType;
         temporaryResponder.autocorrectionType = activeTextField.autocorrectionType;
+        temporaryResponder.secureTextEntry = activeTextField.secureTextEntry;
         
         [self.view addSubview:temporaryResponder];
         [temporaryResponder becomeFirstResponder];

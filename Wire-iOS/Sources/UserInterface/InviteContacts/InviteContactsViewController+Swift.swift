@@ -69,4 +69,17 @@ extension InviteContactsViewController {
 
         titleLabel?.textColor = UIColor(scheme: .textForeground, variant: .dark)
     }
+
+    @objc(inviteUser:fromView:)
+    func invite(user: ZMSearchUser, from view: UIView) {
+
+        // Prevent the overlapped visual artifact when opening a conversation
+        if let navigationController = self.navigationController, self == navigationController.topViewController && navigationController.viewControllers.count >= 2 {
+            navigationController.popToRootViewController(animated: false) {
+                self.inviteUserOrOpenConversation(user, from:view)
+            }
+        } else {
+            inviteUserOrOpenConversation(user, from:view)
+        }
+    }
 }

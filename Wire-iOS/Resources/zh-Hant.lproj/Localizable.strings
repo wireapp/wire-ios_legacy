@@ -28,7 +28,7 @@
 "general.done" = "完成";
 "general.confirm" = "確認";
 "general.skip" = "現在略過";
-"general.accept" = "接聽";
+"general.accept" = "同意";
 "general.decline" = "不了，謝謝";
 "general.failure" = "出了點問題";
 "general.service" = "服務";
@@ -130,10 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "有新訊息。";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
-"conversation_list.data_usage_permission_alert.disagree" = "不好";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.title" = "幫助我們改善Wire";
+"conversation_list.data_usage_permission_alert.message" = "我同意Wire可以創建並使用匿名使用及錯誤報告以改進軟體品質。 我可以隨時撤銷此授權。";
+"conversation_list.data_usage_permission_alert.disagree" = "不同意";
+"conversation_list.data_usage_permission_alert.agree" = "我同意";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "在聯絡人中";
@@ -212,12 +212,12 @@
 "conversation.status.message.missedcall" = "未接來電";
 "conversation.status.message.missedcall.groups" = "錯過%@的來電";
 "conversation.status.message.mention" = "%@";
-"conversation.status.message.ephemeral" = "Sent a message";
-"conversation.status.message.ephemeral.group" = "Someone sent a message";
-"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral" = "發送一則消息";
+"conversation.status.message.ephemeral.group" = "某人傳送了一則訊息";
+"conversation.status.message.ephemeral.mention" = "提及您";
 "conversation.status.message.ephemeral.mention.group" = "某人提及你";
 "conversation.status.message.ephemeral.knock" = "打了聲招呼";
-"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
+"conversation.status.message.ephemeral.knock.group" = "有了打了聲招呼";
 
 "conversation.status.unsent" = "⚠️ 未發信息";
 "conversation.status.you" = "您";
@@ -272,7 +272,7 @@
 "conversation.connection_view.in_address_book" = "在連絡人中";
 
 "conversation.input_bar.shortcut.send" = "發送訊息";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "插入換行";
 "conversation.input_bar.shortcut.edit_last_message" = "編輯最新訊息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
@@ -568,12 +568,12 @@
 "call.degraded.alert.message.unknown" = "某人開始使用了新設備。";
 "call.degraded.alert.action.continue" = "仍然要通話";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "這將結束你的其他通話。";
 
 "call.alert.ongoing.start.message" = "在其他對話裏有另一通話。 \n現在打電話會掛斷該通話。";
 "call.alert.ongoing.join.message" = "在其他對話裏有另一通話。 \n加入這個通話會掛斷該通話。";
 "call.alert.ongoing.start.button" = "仍然要通話";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "仍要加入";
 
 // Call Actions (accessibility)
 
@@ -622,6 +622,7 @@
 "meta.menu.mark_unread" = "標示為未讀";
 "meta.menu.mark_read" = "標示成已讀";
 "shortcut.mark_all_as_read.title" = "將全部標記為已讀";
+"meta.menu.configure_notifications" = "通知…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "確定刪除內容？";
@@ -630,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "取消";
 "meta.menu.delete_content.button_delete" = "刪除";
 "meta.menu.delete_content.button_delete_and_leave" = "刪除並離開";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "通知我關於：";
+"meta.menu.configure_notification.button_everything" = "所有";
+"meta.menu.configure_notification.button_mentions" = "僅用於提及";
+"meta.menu.configure_notification.button_nothing" = "無";
+"meta.menu.configure_notification.button_cancel" = "取消";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "確定離開聊天室？";
@@ -773,8 +781,8 @@
 "self.settings.add_account.error.title" = "已啓動三個賬號";
 "self.settings.add_account.error.message" = "您只能同時登錄三個帳號。請先登出任何一個賬號，然後加入新賬號。";
 
-"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.message" = "此帳戶中有一個通話進行中。\n切換帳戶將掛斷該通話。";
+"self.settings.switch_account.action" = "仍要切換";
 
 // Settings - Account details
 "self.settings.account_section" = "帳號";
@@ -1004,7 +1012,7 @@
 "self.settings.history_backup.password.cancel" = "取消";
 "self.settings.history_backup.password.next" = "下一步";
 "self.settings.history_backup.password.placeholder" = "至少8個字元";
-"self.settings.history_backup.password.description" = "將使用您的密碼壓縮和加密備份。";
+"self.settings.history_backup.password.description" = "備份會被壓縮，並使用你輸入的密碼加密。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -1223,7 +1231,7 @@
 "registration.address_book_access_denied.maybe_later_button.title" = "現在略過";
 
 "registration.push_access_denied.hero.title" = "別錯過來電或訊息。";
-"registration.push_access_denied.hero.paragraph1" = "開啟手機「設定」的通知權限。";
+"registration.push_access_denied.hero.paragraph1" = "在手機「設定」允許通知。";
 "registration.push_access_denied.settings_button.title" = "開啟設定";
 "registration.push_access_denied.maybe_later_button.title" = "現在略過";
 
@@ -1386,7 +1394,7 @@
 "compose.drafts.title" = "訊息";
 "compose.drafts.empty.title" = "沒有訊息";
 "compose.drafts.empty.subtitle" = "按+撰寫";
-"compose.drafts.compose.title" = "撰寫訊息";
+"compose.drafts.compose.title" = "請輸入訊息";
 "compose.drafts.compose.subject.placeholder" = "按此設定主題";
 
 "compose.drafts.compose.delete.confirm.title" = "確認刪除";

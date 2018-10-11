@@ -21,6 +21,11 @@ import XCTest
 @testable import Wire
 
 class ConversationStatusLineTests: CoreDataSnapshotTestCase {
+
+    override func setUp() {
+        selfUserInTeam = true
+        super.setUp()
+    }
     
     override var needsCaches: Bool {
         return true
@@ -110,22 +115,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // THEN
         XCTAssertEqual(status.string, "")
     }
-    
-    func testStatusForMultipleTextMessagesInConversation_silenced() {
-        // GIVEN
-        let sut = self.otherUserConversation!
-        sut.mutedMessageTypes = [.all]
-        for index in 1...5 {
-            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
-        }
-        sut.lastReadServerTimeStamp = Date.distantPast
-
-        // WHEN
-        let status = sut.status.description(for: sut)
-        // THEN
-        XCTAssertEqual(status.string, "5 new messages")
-    }
-    
+        
     func testStatusForMultipleTextMessagesInConversation() {
         // GIVEN
         let sut = self.otherUserConversation!
@@ -156,7 +146,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "1 mention, 5 new messages")
+        XCTAssertEqual(status.string, "1 mention, 5 messages")
     }
     
     func testStatusForMultipleTextMessagesInConversation_LastRename() {
@@ -176,42 +166,6 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let status = sut.status.description(for: sut)
         // THEN
         XCTAssertEqual(status.string, "test 5")
-    }
-    
-    func testStatusForMultipleVariousMessagesInConversation_silenced() {
-        // GIVEN
-        let sut = self.otherUserConversation!
-        sut.mutedMessageTypes = [.all]
-        for index in 1...5 {
-            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
-        }
-        for _ in 1...5 {
-            (sut.append(imageFromData: self.image(inTestBundleNamed: "unsplash_burger.jpg").pngData()!) as! ZMMessage).sender = self.otherUser
-        }
-        sut.lastReadServerTimeStamp = Date.distantPast
-
-        // WHEN
-        let status = sut.status.description(for: sut)
-        // THEN
-        XCTAssertEqual(status.string, "10 new messages")
-    }
-    
-    func testStatusForMultipleVariousMessagesInConversation_silenced_mention() {
-        // GIVEN
-        let sut = self.otherUserConversation!
-        sut.mutedMessageTypes = [.all]
-        for index in 1...5 {
-            (sut.append(text: "test \(index)") as! ZMMessage).sender = self.otherUser
-        }
-        let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
-        (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
-        
-        sut.lastReadServerTimeStamp = Date.distantPast
-        
-        // WHEN
-        let status = sut.status.description(for: sut)
-        // THEN
-        XCTAssertEqual(status.string, "1 mention, 5 new messages")
     }
     
     func testStatusForSystemMessageILeft() {

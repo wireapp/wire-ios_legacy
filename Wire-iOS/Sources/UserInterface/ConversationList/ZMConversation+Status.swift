@@ -19,7 +19,7 @@
 import Foundation
 
 // Describes the icon to be shown for the conversation in the list.
-enum ConversationStatusIcon {
+enum ConversationStatusIcon: Equatable {
     case none
     case pendingConnection
     
@@ -47,7 +47,7 @@ struct ConversationStatus {
     let messagesRequiringAttention: [ZMConversationMessage]
     let messagesRequiringAttentionByType: [StatusMessageType: UInt]
     let isTyping: Bool
-    let isSilenced: Bool
+    let mutedMessageTypes: MutedMessageTypes
     let isOngoingCall: Bool
     let isBlocked: Bool
     let isSelfAnActiveMember: Bool
@@ -289,7 +289,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
 // "A, B, C: typing a message..."
 final internal class TypingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.isTyping && !status.isSilenced
+        return status.isTyping && status.showingAllMessages
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -316,7 +316,7 @@ final internal class TypingMatcher: ConversationStatusMatcher {
 // "Silenced"
 final internal class SilencedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
-        return status.isSilenced
+        return !status.showingAllMessages
     }
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -324,7 +324,11 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        return .silenced
+        if status.hasSelfMention && status.showingOnlyMentions {
+            return .mention
+        } else {
+            return .silenced
+        }
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -332,10 +336,25 @@ final internal class SilencedMatcher: ConversationStatusMatcher {
 
 
 extension ConversationStatus {
+
+    var showingAllMessages: Bool {
+        return mutedMessageTypes == .none
+    }
+
+    var showingOnlyMentions: Bool {
+        return mutedMessageTypes == .nonMentions
+    }
+
+    var completelyMuted: Bool {
+        return mutedMessageTypes == .all
+    }
         
     var shouldSummarizeMessages: Bool {
-        if isSilenced {
-            // Always summarize for muted conversation
+        if completelyMuted {
+            // Always summarize for completely muted conversation
+            return true
+        } else if showingOnlyMentions && !hasSelfMention {
+            // Summarize when there is no mention
             return true
         } else if hasSelfMention {
             // Summarize if there is at least one mention and another activity that can be inside a summary
@@ -462,10 +481,11 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
+        
         if status.hasSelfMention {
             return .mention
         }
-        
+
         guard let message = status.messagesRequiringAttention.reversed().first(where: {
                 if let _ = $0.sender,
                     let type = StatusMessageType(message: $0),
@@ -751,8 +771,6 @@ extension ZMConversation {
             default: return true
             }
         }()
-
-        let isSilenced = mutedMessageTypes != .none
         
         return ConversationStatus(
             isGroup: conversationType == .group,
@@ -761,7 +779,7 @@ extension ZMConversation {
             messagesRequiringAttention: messagesRequiringAttention,
             messagesRequiringAttentionByType: messagesRequiringAttentionByType,
             isTyping: typingUsers().count > 0,
-            isSilenced: isSilenced,
+            mutedMessageTypes: mutedMessageTypes,
             isOngoingCall: isOngoingCall,
             isBlocked: isBlocked,
             isSelfAnActiveMember: isSelfAnActiveMember,

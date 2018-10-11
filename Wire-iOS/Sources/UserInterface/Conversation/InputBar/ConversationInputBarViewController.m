@@ -367,7 +367,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
 
     [self.inputBar.rightAccessoryStackView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
-    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];
+    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
 
     [self.ephemeralIndicatorButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorLightGraphite]
                                         forState:UIControlStateDisabled];
@@ -414,7 +414,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
 
-    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];
+    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
 }
 
 - (void)createTypingIndicatorView

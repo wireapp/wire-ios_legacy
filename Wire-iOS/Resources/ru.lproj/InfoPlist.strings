@@ -17,7 +17,7 @@
  */
 
 "NSContactsUsageDescription" = "Мы используем данные о ваших контактах, чтобы вы могли найти людей, которых знаете. Мы анонимизируем всю информацию и не делимся ею с кем-либо еще.";
-"NSMicrophoneUsageDescription" = "Разрешить Wire доступ к микрофону для совершения звонков и отправки аудио сообщений.";
+"NSMicrophoneUsageDescription" = "Разрешить Wire доступ к микрофону для совершения звонков и отправки аудиосообщений.";
 "NSLocationWhenInUseUsageDescription" = "Разрешить Wire доступ к вашему местоположению, чтобы вы могли отправлять ваше местоположение другим людям.";
 "NSCameraUsageDescription" = "Разрешить Wire доступ к камере для размещения видео звонков и отправки фотографий.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */

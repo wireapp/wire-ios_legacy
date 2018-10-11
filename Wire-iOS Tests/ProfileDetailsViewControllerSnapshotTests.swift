@@ -16,18 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension ProfileDetailsViewController {
-    @objc func setupStyle() {
-        remainingTimeLabel.textColor = .textDimmed
-        remainingTimeLabel.font = .mediumSemiboldFont
+final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+    
+    var sut: ProfileDetailsViewController!
+    
+    override func setUp() {
+        super.setUp()
+        sut = ProfileDetailsViewController(user: self.otherUser, conversation: self.otherUserConversation, context: .oneToOneConversation)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
     }
 
-    //MARK: - action menu
+    func testForInitState(){
+        verify(view: sut.view)
+    }
 
-    @objc func presentMenuSheetController() {
-        actionsController = ConversationActionController(conversation: conversation, target: self)
-        actionsController.presentMenu(from: footerView, showConverationNameInMenuTitle: false)
+    func testForActionMenu() {
+        sut.presentMenuSheetController()
+
+        verifyAlertController((sut?.actionsController?.alertController)!)
     }
 }

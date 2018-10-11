@@ -26,7 +26,7 @@ github "wireapp/wire-ios-request-strategy" "04b50649247ef4528cf94be17f0544d4a9c3
 github "wireapp/wire-ios-share-engine" "10044bf9043ad1e56d9964bd31baac3e88f8403f"
 github "wireapp/wire-ios-sync-engine" "af9b3c5907d2df0c37f57ae8c589fd523a795f0d"
 github "wireapp/wire-ios-system" "24.0.0"
-github "wireapp/wire-ios-testing" "17.0.0"
+github "wireapp/wire-ios-testing" "17.1.0"
 github "wireapp/wire-ios-transport" "42.0.1"
 github "wireapp/wire-ios-utilities" "26.1.1"
 github "wireapp/wire-ios-ziphy" "12.0.0"

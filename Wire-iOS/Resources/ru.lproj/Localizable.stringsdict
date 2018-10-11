@@ -209,13 +209,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 новое сообщение</string>
+        <string>1 сообщение</string>
         <key>few</key>
-        <string>%d новых сообщения</string>
+        <string>%d сообщения</string>
         <key>many</key>
-        <string>%d новых сообщений</string>
+        <string>%d сообщений</string>
         <key>other</key>
-        <string>%d новых сообщений</string>
+        <string>%d сообщений</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>

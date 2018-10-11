@@ -431,23 +431,36 @@ extension AppRootViewController: ShowContentDelegate {
 
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
-        
+        // user wants to see fg notifications
         guard !(Settings.shared()?.chatHeadsDisabled ?? false) else {
             return false
         }
         
+        // the concerned account is active
         guard
             let selfUserID = userInfo.selfUserID,
-            let selectedAccount = sessionManager?.accountManager.selectedAccount,
-            selectedAccount.userIdentifier == selfUserID
+            selfUserID == sessionManager?.accountManager.selectedAccount?.userIdentifier
             else { return true }
         
-        guard
-            let clientVC = ZClientViewController.shared(),
-            let convID = userInfo.conversationID
-            else { return true }
+        guard let clientVC = ZClientViewController.shared() else {
+            return true
+        }
 
-        return !clientVC.isConversationListVisible && !clientVC.isLastMessageVisible(for: convID)
+        if clientVC.isConversationListVisible {
+            return false
+        }
+        
+        guard clientVC.isConversationViewVisible else {
+            return true
+        }
+        
+        // conversation view is visible for another conversation
+        guard
+            let convID = userInfo.conversationID,
+            convID != clientVC.currentConversation.remoteIdentifier
+            else { return false }
+        
+        return true
     }
 }
 
