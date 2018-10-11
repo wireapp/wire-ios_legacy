@@ -54,6 +54,8 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         selfUser = ZMUser.insertNewObject(in: uiMOC)
         selfUser.remoteIdentifier = UUID()
         selfUser.name = "selfUser"
+        selfUser.accentColorValue = .vividRed
+
         ZMUser.boxSelfUser(selfUser, inContextUserInfo: uiMOC)
         if selfUserInTeam {
             let selfUser = ZMUser.selfUser(in: self.uiMOC)
