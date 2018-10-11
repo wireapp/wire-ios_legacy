@@ -18,7 +18,6 @@
 
 
 #import "ZMSnapshotTestCase.h"
-@import PureLayout;
 #import <WireSyncEngine/WireSyncEngine.h>
 #import "UIColor+WAZExtensions.h"
 #import "ColorScheme.h"
@@ -57,6 +56,20 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     }].set;
 }
 
+@implementation UIView (LayoutDebugging)
+
+- (BOOL)hasAmbiguousLayoutInHierarchy
+{
+    for (UIView *child in self.subviews) {
+        if (child.hasAmbiguousLayoutInHierarchy) {
+            return YES;
+        }
+    }
+
+    return self.hasAmbiguousLayout;
+}
+
+@end
 
 @interface ZMSnapshotTestCase ()
 @property (nonatomic) NSURL *documentsDirectory;
@@ -177,13 +190,13 @@ static NSSet<NSNumber *> *phoneWidths(void) {
 
 - (void)assertAmbigousLayout:(UIView *)view file:(const char[])file line:(NSUInteger)line
 {
-    if (view.hasAmbiguousLayout) {
+    if (view.hasAmbiguousLayoutInHierarchy) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
         NSString *description = [NSString stringWithFormat:@"Ambigous layout in view: %@ trace: \n%@", view, [view performSelector:@selector(_autolayoutTrace)]];
 #pragma clang diagnostic pop
         NSString *filePath = [NSString stringWithFormat:@"%s", file];
-        [self recordFailureWithDescription:description inFile:filePath atLine:line expected:YES];
+        [self recordFailureWithDescription:description inFile:filePath atLine:line expected:NO];
     }
 }
 
@@ -193,7 +206,18 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     container.backgroundColor = self.snapshotBackgroundColor;
     
     [container addSubview:view];
-    [view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+  @[
+    [view.leadingAnchor constraintEqualToAnchor:container.leadingAnchor],
+    [view.topAnchor constraintEqualToAnchor:container.topAnchor],
+    [view.trailingAnchor constraintEqualToAnchor:container.trailingAnchor],
+    [view.bottomAnchor constraintEqualToAnchor:container.bottomAnchor],
+    ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
     return container;
 }
 
@@ -234,7 +258,7 @@ static NSSet<NSNumber *> *phoneWidths(void) {
     if (CGRectIsEmpty(view.frame)) {
         NSString *description = @"View frame can not be empty";
         NSString *filePath = [NSString stringWithFormat:@"%s", file];
-        [self recordFailureWithDescription:description inFile:filePath atLine:line expected:YES];
+        [self recordFailureWithDescription:description inFile:filePath atLine:line expected:NO];
         return YES;
     }
     
@@ -265,8 +289,10 @@ static NSSet<NSNumber *> *phoneWidths(void) {
 - (void)verifyView:(UIView *)view extraLayoutPass:(BOOL)extraLayoutPass width:(CGFloat)width file:(const char[])file line:(NSUInteger)line
 {
     UIView *container = [self containerViewWithView:view];
-    
-    [container autoSetDimension:ALDimensionWidth toSize:width];
+
+    container.translatesAutoresizingMaskIntoConstraints = NO;
+    [container.widthAnchor constraintEqualToConstant:width].active = YES;
+
     [container setNeedsLayout];
     [container layoutIfNeeded];
     [container setNeedsLayout];
