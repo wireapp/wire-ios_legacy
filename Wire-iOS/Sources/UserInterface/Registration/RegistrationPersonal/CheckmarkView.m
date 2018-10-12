@@ -21,10 +21,9 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 
-@import PureLayout;
-
 @interface CheckmarkView ()
 @property (nonatomic) UIView *circleView;
+@property (nonatomic) UIImageView *checkmarkImageView;
 @end
 
 @implementation CheckmarkView
@@ -33,21 +32,41 @@
 {
     self = [super init];
     if (nil != self) {
-        self.circleView = [[UIView alloc] initForAutoLayout];
+        self.circleView = [UIView new];
         self.circleView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
         [self addSubview:self.circleView];
 
-        UIImageView *checkmarkImageView = [[UIImageView alloc] initWithImage:[UIImage imageForIcon:ZetaIconTypeCheckmark
-                                                                                          iconSize:ZetaIconSizeLarge
-                                                                                             color:[UIColor whiteColor]]];
-        checkmarkImageView.translatesAutoresizingMaskIntoConstraints = NO;
-        checkmarkImageView.contentMode = UIViewContentModeCenter;
-        [self addSubview:checkmarkImageView];
+        self.checkmarkImageView = [[UIImageView alloc] initWithImage:[UIImage imageForIcon:ZetaIconTypeCheckmark
+                                                                                  iconSize:ZetaIconSizeLarge
+                                                                                     color:[UIColor whiteColor]]];
 
-        [self.circleView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [checkmarkImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+        self.checkmarkImageView.contentMode = UIViewContentModeCenter;
+        [self addSubview:self.checkmarkImageView];
     }
     return self;
+}
+
+- (void)createConstraints
+{
+    self.circleView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.checkmarkImageView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // circleView
+      [self.circleView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+      [self.circleView.topAnchor constraintEqualToAnchor:self.topAnchor],
+      [self.circleView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+      [self.circleView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+
+      // checkmarkImageView
+      [self.checkmarkImageView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+      [self.checkmarkImageView.topAnchor constraintEqualToAnchor:self.topAnchor],
+      [self.checkmarkImageView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+      [self.checkmarkImageView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)layoutSubviews
