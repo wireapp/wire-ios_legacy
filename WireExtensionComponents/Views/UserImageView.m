@@ -74,7 +74,7 @@
     self.accessibilityElementsHidden = YES;
     
     [self createIndicator];
-    [self createConstraints];
+    [self configureConstraints];
 }
 
 - (CGSize)intrinsicContentSize
@@ -139,7 +139,7 @@
     [self addSubview:self.indicator];
 }
 
-- (void)createConstraints
+- (void)configureConstraints
 {
     [self setContentHuggingPriority:1000 forAxis:UILayoutConstraintAxisVertical];
     [self setContentHuggingPriority:1000 forAxis:UILayoutConstraintAxisHorizontal];
