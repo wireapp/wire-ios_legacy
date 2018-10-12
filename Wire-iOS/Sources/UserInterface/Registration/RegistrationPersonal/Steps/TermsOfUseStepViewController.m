@@ -19,7 +19,6 @@
 
 #import "TermsOfUseStepViewController.h"
 
-@import PureLayout;
 @import SafariServices;
 
 #import "UIColor+WAZExtensions.h"
@@ -62,7 +61,7 @@
 }
 
 - (void)createContainerView {
-    self.containerView = [[UIView alloc] initForAutoLayout];
+    self.containerView = [UIView new];
     self.containerView.backgroundColor = [UIColor clearColor];
     
     [self.view addSubview:self.containerView];
@@ -70,7 +69,7 @@
 
 - (void)createTitleLabel
 {
-    self.titleLabel = [[UILabel alloc] initForAutoLayout];
+    self.titleLabel = [UILabel new];
     self.titleLabel.font = UIFont.largeSemiboldFont;
     self.titleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.titleLabel.text = NSLocalizedString(@"registration.terms_of_use.title", nil);
@@ -94,7 +93,7 @@
                                       NSForegroundColorAttributeName : [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark],
                                       NSLinkAttributeName : self.termsOfServiceURL } range:termsOfUseLinkRange];
     
-    self.termsOfUseText = [[WebLinkTextView alloc] initForAutoLayout];
+    self.termsOfUseText = [WebLinkTextView new];
     self.termsOfUseText.linkTextAttributes = @{};
     self.termsOfUseText.delegate = self;
     self.termsOfUseText.attributedText = [[NSAttributedString alloc] initWithAttributedString:attributedTerms];
