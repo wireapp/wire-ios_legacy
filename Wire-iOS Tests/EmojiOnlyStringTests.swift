@@ -87,10 +87,11 @@ class EmojiOnlyStringTests: XCTestCase {
     
     func testThatLangaugeStringIsNotDetected() {
         // given
-        let langaugeStrings = ["ḀẀẶỳ", "ठःअठी३", "勺卉善爨", "Ёжик"]
+        let langaugeStrings = ["ḀẀẶỳ", "ठःअठी३", "勺卉善爨", "Ёжик", "はい"
+        ]
         // then
         langaugeStrings.forEach {
-            XCTAssertFalse($0.wr_containsOnlyEmojiWithSpaces())
+            XCTAssertFalse($0.wr_containsOnlyEmojiWithSpaces(), "\($0) has emojis")
             XCTAssertFalse($0.containsEmoji)
         }
     }
