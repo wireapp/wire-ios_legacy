@@ -125,6 +125,7 @@
       [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor],
       [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
       [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+      [self.containerView.widthAnchor constraintEqualToAnchor:self.containerView.heightAnchor],
 
       // imageView
       [self.imageView.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor],
