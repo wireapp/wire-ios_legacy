@@ -25,7 +25,7 @@ class EmojiOnlyStringTests: XCTestCase {
     
     func testThatCommonEmojisAreDetected() {
         // given
-        let commonEmoji = ["©️", "ℹ️", "☘️", "⏰️", "➰️", "♥️", "🀄️", "🇨🇭",
+        let commonEmoji = ["©️", "ℹ️", "☘️", "⏰️", "➰️", "♥️", "🀄️", "🇨🇭", "⭔", "⭕",
                            "😜", "🙏", "🌝", "😘", "👍", "💩", "😂", "😍", "😁",
                            "❤︎", "❤️", "🈚︎",  "🀄︎", //emoji variation
                            "👩", "👩🏻", "👩🏼", "👩🏽", "👩🏾", "👩🏿", //Fitzpatrick modifiers
@@ -87,12 +87,19 @@ class EmojiOnlyStringTests: XCTestCase {
     
     func testThatLangaugeStringIsNotDetected() {
         // given
-        let langaugeStrings = ["ḀẀẶỳ", "ठःअठी३", "勺卉善爨", "Ёжик", "はい"
+        let langaugeStrings = ["ḀẀẶỳ", "ठःअठी३", "勺卉善爨", "Ёжик",
+                               //"ⰀⰁ", //Glagolitic, start from U0x2C0x, containsEmoji return true for this language
+                               //"⿆", //Kangxi Radicals, start from U0x2F0x it is not a emoji, but CharacterSet.symbols contains it.
+                               "はい",// Hiragana, start from U0x304x
+                               "ブ",// Katakana, start from U0x304x
+                               "ㄅㄆㄇ", //Bopomofo, start from U0x310x
+                               //"Ⴀჟჯჰ", // Georgian, updated in uncodie 11.0
+                               "ქართული" // Georgian, updated in uncodie 11.0
         ]
         // then
         langaugeStrings.forEach {
             XCTAssertFalse($0.wr_containsOnlyEmojiWithSpaces(), "\($0) has emojis")
-            XCTAssertFalse($0.containsEmoji)
+            XCTAssertFalse($0.containsEmoji, "\($0) contains emojis")
         }
     }
     

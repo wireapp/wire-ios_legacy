@@ -30,7 +30,7 @@ extension Unicode.Scalar {
     var isEmojiComponentOrMiscSymbol: Bool {
         switch self.value {
         case 0x200D,       // Zero width joiner
-        0x2030...0x329F,   // Misc symbols
+        0x2030...0x2BFF,   // Misc symbols
         Unicode.Scalar.cancelTag,
         0xFE00...0xFE0F:   // Variation Selectors
             return true
