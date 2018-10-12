@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Aktyvūs";
 "registration.devices.current_list_header" = "Esamas";
 "registration.devices.active_list_subtitle" = "Jeigu jūs neatpažįstate aukščiau esančio įrenginio, pašalinkite jį ir atstatykite savo slaptažodį.";
-"registration.devices.activated_in" = "Aktyvuota";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Prisijungti el. paštu";

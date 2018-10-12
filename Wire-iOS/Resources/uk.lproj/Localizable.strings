@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Активні";
 "registration.devices.current_list_header" = "Поточний";
 "registration.devices.active_list_subtitle" = "Якщо ви не впізнаєте пристрою вище, видаліть його і виконайте скидання паролю.";
-"registration.devices.activated_in" = "Активований:";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Увійти через Email";

@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "نشط";
 "registration.devices.current_list_header" = "الحالي";
 "registration.devices.active_list_subtitle" = "إذا كنت لا تتعرف على الجهاز أعلاه، قم بإزالته وإعادة تعيين كلمة المرور الخاصة بك.";
-"registration.devices.activated_in" = "تم تنشيطه في";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "المُعرّف:";
 
 "signin.use_email.label" = "Login with Email";

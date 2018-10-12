@@ -60,6 +60,7 @@ class UserSearchResultsViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = UIColor(scheme: .barBackground)
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
