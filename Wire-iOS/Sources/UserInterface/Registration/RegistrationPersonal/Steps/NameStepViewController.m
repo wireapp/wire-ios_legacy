@@ -19,8 +19,6 @@
 
 #import "NameStepViewController.h"
 
-@import PureLayout;
-
 #import "RegistrationTextField.h"
 #import "Constants.h"
 #import "Wire-Swift.h"
@@ -33,7 +31,6 @@
 
 @property (nonatomic) UILabel *heroLabel;
 @property (nonatomic) RegistrationTextField *nameField;
-@property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 
 @end
@@ -63,8 +60,7 @@
     
     [self createHeroLabel];
     [self createNameField];
-    
-    [self updateViewConstraints];
+    [self createConstraints];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -76,7 +72,7 @@
 
 - (void)createHeroLabel
 {
-    self.heroLabel = [[UILabel alloc] initForAutoLayout];
+    self.heroLabel = [UILabel new];
     self.heroLabel.font = UIFont.largeLightFont;
     self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
@@ -87,7 +83,7 @@
 
 - (void)createNameField
 {
-    self.nameField = [[RegistrationTextField alloc] initForAutoLayout];
+    self.nameField = [RegistrationTextField new];
     self.nameField.keyboardType = UIKeyboardTypeDefault;
     self.nameField.delegate = self;
     
@@ -97,23 +93,28 @@
     [self.view addSubview:self.nameField];
 }
 
-- (void)updateViewConstraints
+- (void)createConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        CGFloat inset = 28.0;
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        
-        [self.nameField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-        [self.nameField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.nameField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [[self.nameField.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset] setActive:YES];
-        [self.nameField autoSetDimension:ALDimensionHeight toSize:40];
-    }
+    self.heroLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.nameField.translatesAutoresizingMaskIntoConstraints = NO;
+
+    CGFloat inset = 28.0;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // heroLabel
+      [self.heroLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:inset],
+      [self.heroLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-inset],
+
+      // nameField
+      [self.nameField.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:inset],
+      [self.nameField.topAnchor constraintEqualToAnchor:self.heroLabel.bottomAnchor constant:24],
+      [self.nameField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-inset],
+      [self.nameField.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset],
+      [self.nameField.heightAnchor constraintEqualToConstant:40],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 #pragma mark - Actions

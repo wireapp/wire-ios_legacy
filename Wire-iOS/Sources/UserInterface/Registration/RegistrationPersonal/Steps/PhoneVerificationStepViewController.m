@@ -19,8 +19,6 @@
 
 #import "PhoneVerificationStepViewController.h"
 
-@import PureLayout;
-
 #import "RegistrationTextField.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WR_ColorScheme.h"
@@ -37,7 +35,6 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 
 @interface PhoneVerificationStepViewController () <RegistrationTextFieldDelegate, ZMTimerClient>
 
-@property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) RegistrationTextField *phoneVerificationField;
 @property (nonatomic) UILabel *instructionLabel;
 @property (nonatomic) UILabel *resendLabel;
@@ -92,7 +89,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     [self createResendLabel];
 
     self.view.opaque = NO;
-    [self updateViewConstraints];
+    [self createConstraints];
     
     self.lastSentDate = [NSDate date];
     [self updateResendArea];
@@ -109,7 +106,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 
 - (void)createInstructionLabel
 {
-    self.instructionLabel = [[UILabel alloc] init];
+    self.instructionLabel = [UILabel new];
     self.instructionLabel.font = UIFont.largeThinFont;
     self.instructionLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.phoneNumber];
@@ -121,7 +118,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 
 - (void)createResendLabel
 {
-    self.resendLabel = [[UILabel alloc] initForAutoLayout];
+    self.resendLabel = [UILabel new];
     self.resendLabel.backgroundColor = [UIColor clearColor];
     self.resendLabel.font = UIFont.smallLightFont;
     self.resendLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
@@ -144,7 +141,7 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
 
 - (void)createPhoneVerificationField
 {
-    self.phoneVerificationField = [[RegistrationTextField alloc] initForAutoLayout];
+    self.phoneVerificationField = [RegistrationTextField new];
     self.phoneVerificationField.leftAccessoryView = RegistrationTextFieldLeftAccessoryViewNone;
     self.phoneVerificationField.textAlignment = NSTextAlignmentCenter;
     self.phoneVerificationField.accessibilityIdentifier = @"verificationField";
@@ -157,34 +154,41 @@ const NSTimeInterval PhoneVerificationResendInterval = 30.0f;
     [self.view addSubview:self.phoneVerificationField];
 }
 
-- (void)updateViewConstraints
+- (void)createConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        CGFloat inset = 28.0;
-        [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.instructionLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        
-        [self.phoneVerificationField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.instructionLabel withOffset:24];
-        [self.phoneVerificationField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.phoneVerificationField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [self.phoneVerificationField autoSetDimension:ALDimensionHeight toSize:40];
-        
-        [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.phoneVerificationField withOffset:24];
-        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [[self.resendButton.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
-        
-        
-        [self.resendLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.phoneVerificationField withOffset:24];
-        [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-        [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-        [[self.resendLabel.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
-        
-    }
+    self.instructionLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.phoneVerificationField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.resendButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.resendLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    CGFloat inset = 28.0;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // instructionLabel
+      [self.instructionLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:inset],
+      [self.instructionLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-inset],
+
+      // phoneVerificationField
+      [self.phoneVerificationField.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:inset],
+      [self.phoneVerificationField.topAnchor constraintEqualToAnchor:self.instructionLabel.bottomAnchor constant:24],
+      [self.phoneVerificationField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-inset],
+      [self.phoneVerificationField.heightAnchor constraintEqualToConstant:40],
+
+      // resendButton
+      [self.resendButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:inset],
+      [self.resendButton.topAnchor constraintEqualToAnchor:self.phoneVerificationField.bottomAnchor constant:24],
+      [self.resendButton.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-inset],
+      [self.resendButton.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24],
+
+      // resendLabel
+      [self.resendLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:inset],
+      [self.resendLabel.topAnchor constraintEqualToAnchor:self.phoneVerificationField.bottomAnchor constant:24],
+      [self.resendLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-inset],
+      [self.resendLabel.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)updateResendArea
