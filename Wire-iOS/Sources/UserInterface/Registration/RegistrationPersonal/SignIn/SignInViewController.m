@@ -19,9 +19,6 @@
 
 #import "SignInViewController.h"
 #import "SignInViewController+internal.h"
-
-@import PureLayout;
-
 #import "Constants.h"
 #import "PhoneSignInViewController.h"
 #import "EmailSignInViewController.h"
@@ -69,13 +66,13 @@
 {
     [super viewDidLoad];
     
-    self.viewControllerContainer = [[UIView alloc] initForAutoLayout];
+    self.viewControllerContainer = [UIView new];
     [self.view addSubview:self.viewControllerContainer];
     
-    self.buttonContainer = [[UIView alloc] initForAutoLayout];
+    self.buttonContainer = [UIView new];
     [self.view addSubview:self.buttonContainer];
     
-    self.emailSignInButton = [[Button alloc] initForAutoLayout];
+    self.emailSignInButton = [Button new];
     self.emailSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
     self.emailSignInButton.titleLabel.font = UIFont.smallLightFont;
     [self.emailSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
@@ -85,7 +82,7 @@
     [self.emailSignInButton setTitle:NSLocalizedString(@"registration.signin.email_button.title", nil).uppercasedWithCurrentLocale forState:UIControlStateNormal];
     [self.buttonContainer addSubview:self.emailSignInButton];
     
-    self.phoneSignInButton = [[Button alloc] initForAutoLayout];
+    self.phoneSignInButton = [Button new];
     self.phoneSignInButton.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
     self.phoneSignInButton.titleLabel.font = UIFont.smallLightFont;
     [self.phoneSignInButton setBorderColor:UIColor.whiteColor forState:UIControlStateNormal];
@@ -115,26 +112,41 @@
 
 - (void)setupConstraints
 {
-    [self.buttonContainer autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.buttonContainer autoSetDimension:ALDimensionHeight toSize:IS_IPAD_FULLSCREEN ? 80 : 64];
-    [self.buttonContainer autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    
-    [self.emailSignInButton autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    [self.emailSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [self.emailSignInButton autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.phoneSignInButton withOffset:-16];
-    
-    [self.phoneSignInButton autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.phoneSignInButton autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    
-    [self.buttonContainer autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.viewControllerContainer];
-    [self.viewControllerContainer autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
+    self.buttonContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    self.emailSignInButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.phoneSignInButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.viewControllerContainer.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // buttonContainer
+      [self.buttonContainer.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.buttonContainer.heightAnchor constraintEqualToConstant:IS_IPAD_FULLSCREEN ? 80 : 64],
+      [self.buttonContainer.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+
+      // emailSignInButton
+      [self.emailSignInButton.leadingAnchor constraintEqualToAnchor:self.buttonContainer.leadingAnchor],
+      [self.emailSignInButton.centerYAnchor constraintEqualToAnchor:self.buttonContainer.centerYAnchor],
+
+      // phoneSignInButton
+      [self.phoneSignInButton.leadingAnchor constraintEqualToAnchor:self.emailSignInButton.trailingAnchor constant:16],
+      [self.phoneSignInButton.trailingAnchor constraintEqualToAnchor:self.buttonContainer.trailingAnchor],
+      [self.phoneSignInButton.centerYAnchor constraintEqualToAnchor:self.buttonContainer.centerYAnchor],
+
+      // viewControllerContainer
+      [self.viewControllerContainer.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.viewControllerContainer.topAnchor constraintEqualToAnchor:self.buttonContainer.bottomAnchor],
+      [self.viewControllerContainer.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.viewControllerContainer.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)setupAccessibilityElements
 {
-    self.buttonContainer.accessibilityTraits = UIAccessibilityTraitHeader;
-    self.buttonContainer.accessibilityTraits |= UIAccessibilityTraitTabBar;
-    
+    self.buttonContainer.accessibilityTraits = UIAccessibilityTraitHeader | UIAccessibilityTraitTabBar;
+
     self.emailSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_email.label", @"");
     self.phoneSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_phone.label", @"");
 }
@@ -187,8 +199,18 @@
     self.presentedSignInViewController = viewController;
     [self addChildViewController:viewController];
     [self.viewControllerContainer addSubview:viewController.view];
+
     viewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [viewController.view autoPinEdgesToSuperviewEdges];
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      [viewController.view.leadingAnchor constraintEqualToAnchor:self.viewControllerContainer.leadingAnchor],
+      [viewController.view.topAnchor constraintEqualToAnchor:self.viewControllerContainer.topAnchor],
+      [viewController.view.trailingAnchor constraintEqualToAnchor:self.viewControllerContainer.trailingAnchor],
+      [viewController.view.bottomAnchor constraintEqualToAnchor:self.viewControllerContainer.bottomAnchor]
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
     [viewController didMoveToParentViewController:self];
 }
 
