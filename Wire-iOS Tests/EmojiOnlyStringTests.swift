@@ -87,7 +87,7 @@ class EmojiOnlyStringTests: XCTestCase {
     
     func testThatLangaugeStringIsNotDetected() {
         // given
-        let langaugeStrings = ["ḀẀẶỳ", "ठःअठी३", "勺卉善爨", "Ёжик",
+        let langaugeStrings = ["ḀẀẶỳ", "ठःअठी३", "勺卉善爨", "Ёжик", "한국어",
                                //"ⰀⰁ", //Glagolitic, start from U0x2C0x, containsEmoji return true for this language
                                //"⿆", //Kangxi Radicals, start from U0x2F0x it is not a emoji, but CharacterSet.symbols contains it.
                                "はい",// Hiragana, start from U0x304x
