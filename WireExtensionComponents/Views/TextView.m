@@ -21,7 +21,6 @@
 
 #import "TextView.h"
 
-@import PureLayout;
 #import "MediaAsset.h"
 #import "UILabel+TextTransform.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
