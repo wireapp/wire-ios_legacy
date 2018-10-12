@@ -19,8 +19,6 @@
 
 #import "PhoneNumberStepViewController.h"
 
-@import PureLayout;
-
 #import "RegistrationTextField.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Constants.h"
@@ -36,7 +34,6 @@
 
 @property (nonatomic, copy, readwrite) NSString *phoneNumber;
 @property (nonatomic) UILabel *heroLabel;
-@property (nonatomic) BOOL initialConstraintsCreated;
 @property (nonatomic) ZMIncompleteRegistrationUser *unregisteredUser;
 @property (nonatomic, readonly) BOOL phoneNumberIsEditable;
 
@@ -89,7 +86,7 @@
     [self createHeroLabel];
     [self createPhoneNumberViewController];
     
-    [self updateViewConstraints];
+    [self createConstraints];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -101,7 +98,7 @@
 
 - (void)createHeroLabel
 {
-    self.heroLabel = [[UILabel alloc] initForAutoLayout];
+    self.heroLabel = [UILabel new];
     self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
     
@@ -110,7 +107,7 @@
 
 - (void)createPhoneNumberViewController
 {
-    self.phoneNumberViewController = [[PhoneNumberViewController alloc] init];
+    self.phoneNumberViewController = [PhoneNumberViewController new];
     [self.phoneNumberViewController willMoveToParentViewController:self];
     [self.view addSubview:self.phoneNumberViewController.view];
     [self addChildViewController:self.phoneNumberViewController];
@@ -123,23 +120,29 @@
     self.phoneNumberViewController.editable = self.phoneNumberIsEditable;
 }
 
-- (void)updateViewConstraints
+- (void)createConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{            
-            [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:75 relation:NSLayoutRelationGreaterThanOrEqual];
-        }];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
-        
-        [self.phoneNumberViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
-        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
-        [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:51];
-    }
+    self.heroLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.phoneNumberViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSLayoutConstraint *heroTop = [self.heroLabel.topAnchor constraintGreaterThanOrEqualToAnchor:self.view.topAnchor constant:75];
+    heroTop.priority = UILayoutPriorityDefaultLow;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // heroLabel
+      [self.heroLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      heroTop,
+      [self.heroLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+
+      // phoneNumberViewController
+      [self.phoneNumberViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      [self.phoneNumberViewController.view.topAnchor constraintEqualToAnchor:self.heroLabel.bottomAnchor constant:24],
+      [self.phoneNumberViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+      [self.phoneNumberViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-51],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)takeFirstResponder
