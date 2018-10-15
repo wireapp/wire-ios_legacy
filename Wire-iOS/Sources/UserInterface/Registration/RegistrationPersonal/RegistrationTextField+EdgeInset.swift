@@ -21,6 +21,6 @@ import Foundation
 extension RegistrationTextField {
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         let editingRect: CGRect = super.editingRect(forBounds: bounds)
-        return UIEdgeInsetsInsetRect(editingRect, textInsets)
+        return editingRect.inset(by: textInsets)
     }
 }

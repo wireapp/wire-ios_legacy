@@ -254,7 +254,7 @@ extension BaseAccountView: ZMUserObserver {
         
         
         self.isAccessibilityElement = true
-        self.accessibilityTraits = UIAccessibilityTraitButton
+        self.accessibilityTraits = .button
         self.shouldGroupAccessibilityChildren = true
         self.accessibilityIdentifier = "personal team"
         
@@ -344,7 +344,7 @@ extension PersonalAccountView {
         }
         
         maskLayer.contentsScale = UIScreen.main.scale
-        maskLayer.contentsGravity = "center"
+        maskLayer.contentsGravity = .center
         self.updateClippingLayer()
         self.updateImage()
 
@@ -361,7 +361,7 @@ extension PersonalAccountView {
         }
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(withFrame: bounds, resizing: .aspectFit, color: .black)
+        WireStyleKit.drawSpace(frame: bounds, resizing: .aspectFit, color: .black)
         
         if let image = UIGraphicsGetImageFromCurrentImageContext() {
             UIGraphicsEndImageContext()
@@ -413,7 +413,7 @@ extension PersonalAccountView {
         super.init(account: account, user: user)
         
         isAccessibilityElement = true
-        accessibilityTraits = UIAccessibilityTraitButton
+        accessibilityTraits = .button
         shouldGroupAccessibilityChildren = true
         
         imageView.contentMode = .scaleAspectFill

@@ -39,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @return YES if it actually switched views, NO if nothing changed (ie: we were already looking at the conversation)
  */
-- (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (BOOL)loadConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+- (BOOL)loadConversation:(ZMConversation *)conversation scrollToMessage:(nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
+- (BOOL)loadConversation:(ZMConversation *)conversation scrollToMessage:(nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
 
 - (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated;
 - (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated completion:(nullable dispatch_block_t)completion;

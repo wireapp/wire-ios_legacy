@@ -64,7 +64,7 @@ class CheckAnimationView: UIView
         checkAnimationLayer.bounds = CGRect(x: 0, y: 0, width: 48, height: 48)
         checkAnimationLayer.position = CGPoint(x: -1, y: -3)
         checkAnimationLayer.anchorPoint = CGPoint(x: 0, y: 0)
-        checkAnimationLayer.contentsGravity = kCAGravityCenter
+        checkAnimationLayer.contentsGravity = .center
 
             // CheckAnimation Sublayers
             //
@@ -76,7 +76,7 @@ class CheckAnimationView: UIView
             rectangleLayer.bounds = CGRect(x: 0, y: 0, width: 45.127417, height: 29)
             rectangleLayer.position = CGPoint(x: 20.69676, y: 35.932799)
             rectangleLayer.anchorPoint = CGPoint(x: 0, y: 1)
-            rectangleLayer.contentsGravity = kCAGravityCenter
+            rectangleLayer.contentsGravity = .center
             rectangleLayer.transform = CATransform3D( m11: 0.565685, m12: -0.565685, m13: 0, m14: 0,
                                                   m21: 0.565685, m22: 0.565685, m23: 0, m24: 0,
                                                   m31: 0, m32: 0, m33: 1, m34: 0,
@@ -91,7 +91,7 @@ class CheckAnimationView: UIView
                 strokeDrawAnimation.beginTime = self.layer.convertTime(CACurrentMediaTime(), from: nil) + 0.15
                 strokeDrawAnimation.duration = 1.719
                 strokeDrawAnimation.speed = 2.5
-                strokeDrawAnimation.fillMode = kCAFillModeForwards
+                strokeDrawAnimation.fillMode = .forwards
                 strokeDrawAnimation.isRemovedOnCompletion = false
                 strokeDrawAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0.7, 0.002841, 0.3, 1)
                 strokeDrawAnimation.keyPath = "strokeStart"
@@ -106,9 +106,9 @@ class CheckAnimationView: UIView
                 let transformScaleYAnimation = CABasicAnimation()
                 transformScaleYAnimation.beginTime = self.layer.convertTime(CACurrentMediaTime(), from: nil) + 0.005
                 transformScaleYAnimation.duration = 0.812599
-                transformScaleYAnimation.fillMode = kCAFillModeForwards
+                transformScaleYAnimation.fillMode = .forwards
                 transformScaleYAnimation.isRemovedOnCompletion = false
-                transformScaleYAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                transformScaleYAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
                 transformScaleYAnimation.keyPath = "transform.scale.y"
                 transformScaleYAnimation.toValue = 1
 
@@ -119,9 +119,9 @@ class CheckAnimationView: UIView
                 let transformScaleXAnimation = CABasicAnimation()
                 transformScaleXAnimation.beginTime = self.layer.convertTime(CACurrentMediaTime(), from: nil) + 0.005
                 transformScaleXAnimation.duration = 0.812599
-                transformScaleXAnimation.fillMode = kCAFillModeForwards
+                transformScaleXAnimation.fillMode = .forwards
                 transformScaleXAnimation.isRemovedOnCompletion = false
-                transformScaleXAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                transformScaleXAnimation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
                 transformScaleXAnimation.keyPath = "transform.scale.x"
                 transformScaleXAnimation.toValue = 1
 
@@ -129,7 +129,7 @@ class CheckAnimationView: UIView
             rectangleLayer.path = rectanglePath
             rectangleLayer.fillColor = fillColor.cgColor
             rectangleLayer.strokeColor = strokeColor.cgColor
-            rectangleLayer.fillRule = kCAFillRuleEvenOdd
+            rectangleLayer.fillRule = .evenOdd
             rectangleLayer.lineWidth = 4
             rectangleLayer.strokeStart = 0.9
             rectangleLayer.strokeEnd = 0.9

@@ -107,9 +107,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         stackView.distribution = .fill
         stackView.spacing = DeviceNativeBoundsSize.nativeScreenBoundOfThisDevice == .iPhone3_5Inch ? 6 : 16
 
-        addChildViewController(statusViewController)
+        addChild(statusViewController)
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
-        statusViewController.didMove(toParentViewController: self)
+        statusViewController.didMove(toParent: self)
     }
 
     private func createConstraints() {

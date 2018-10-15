@@ -70,8 +70,8 @@ extension IconButton {
         icon: ZetaIconType,
         size: ZetaIconSize = .tiny,
         accessibilityId: String,
-        backgroundColor: [UIControlState: UIColor],
-        iconColor: [UIControlState: UIColor],
+        backgroundColor: [UIControl.State: UIColor],
+        iconColor: [UIControl.State: UIColor],
         width: CGFloat? = nil
         ) {
         self.init()
@@ -99,7 +99,7 @@ extension IconButton {
     
 }
 
-extension UIControlState: Hashable {
+extension UIControl.State: Hashable {
     public var hashValue: Int {
         get {
             return Int(self.rawValue)

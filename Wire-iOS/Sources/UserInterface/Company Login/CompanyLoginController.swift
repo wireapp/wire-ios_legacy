@@ -97,7 +97,7 @@ import Foundation
         requester.delegate = self
 
         token = NotificationCenter.default.addObserver(
-            forName: .UIApplicationWillEnterForeground,
+            forName: UIApplication.willEnterForegroundNotification,
             object: nil,
             queue: .main,
             using: { [internalDetectLoginCode] _ in internalDetectLoginCode(false) }

@@ -20,10 +20,10 @@ import XCTest
 @testable import Wire
 
 final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
-    let mockState: UIGestureRecognizerState
+    let mockState: UIGestureRecognizer.State
     var mockLocation: CGPoint?
 
-    init(location: CGPoint?, state: UIGestureRecognizerState) {
+    init(location: CGPoint?, state: UIGestureRecognizer.State) {
         mockLocation = location
         mockState = state
 
@@ -34,7 +34,7 @@ final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
         return mockLocation ?? super.location(in: view)
     }
 
-    override var state: UIGestureRecognizerState {
+    override var state: UIGestureRecognizer.State {
         get {
             return mockState
         }
@@ -42,37 +42,41 @@ final class MockLongPressGestureRecognizer: UILongPressGestureRecognizer {
     }
 }
 
-final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
-    
+final class MockAudioSession: NSObject, AVAudioSessionType {
+    var recordPermission: AVAudioSession.RecordPermission = .granted
+}
+
+final class ConversationInputBarViewControllerAudioRecorderSnapshotTests: CoreDataSnapshotTestCase {
     var sut: ConversationInputBarViewController!
 
     override func tearDown() {
-        // Commented out intentionally - if this is nil'ed then
-        // OptionsViewControllerTests.testThatItRendersRevokeLinkConfirmationAlert()
-        // is crashing when running a full test suite
-//        sut = nil
+        sut = nil
         super.tearDown()
     }
 
-    func prepareSut() {
-        sut = ConversationInputBarViewController(conversation: nil)
+    override func setUp() {
+        super.setUp()
 
-        sut.view.layoutIfNeeded()
-        sut.view.layer.speed = 0
-
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.audioSession = MockAudioSession()
         sut.viewDidLoad()
-    }
 
-    func testNormalState(){
-        prepareSut()
-        self.verifyInAllPhoneWidths(view: sut.view)
-    }
-
-    func testAudioRecorderTouchBegan(){
-        // GIVEN
-        prepareSut()
         sut.createAudioRecord()
         sut.view.layoutIfNeeded()
+    }
+
+    func longPressChanged() {
+        let changedGestureRecognizer = MockLongPressGestureRecognizer(location: CGPoint(x: 0, y: 30), state: .changed)
+        sut.audioButtonLongPressed(changedGestureRecognizer)
+    }
+
+    func longPressEnded() {
+        let endedGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .ended)
+        sut.audioButtonLongPressed(endedGestureRecognizer)
+    }
+
+    func testAudioRecorderTouchBegan() {
+        // GIVEN
 
         // WHEN
         let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .began)
@@ -83,32 +87,24 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
-    func testAudioRecorderTouchChanged(){
+    func testAudioRecorderTouchChanged() {
         // GIVEN
-        prepareSut()
-        sut.createAudioRecord()
-        sut.view.layoutIfNeeded()
 
         // WHEN
         sut.audioButtonLongPressed(MockLongPressGestureRecognizer(location: .zero, state: .began))
-        let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: CGPoint(x: 0, y: 30), state: .changed)
-        sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
+        longPressChanged()
         sut.view.layoutIfNeeded()
 
         // THEN
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 
-    func testAudioRecorderTouchEnded(){
+    func testAudioRecorderTouchEnded() {
         // GIVEN
-        prepareSut()
-        sut.createAudioRecord()
-        sut.view.layoutIfNeeded()
 
         // WHEN
         sut.audioButtonLongPressed(MockLongPressGestureRecognizer(location: .zero, state: .began))
-        let mockLongPressGestureRecognizer = MockLongPressGestureRecognizer(location: .zero, state: .ended)
-        sut.audioButtonLongPressed(mockLongPressGestureRecognizer)
+        longPressEnded()
         sut.view.layoutIfNeeded()
 
         // THEN
@@ -116,11 +112,33 @@ final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
     }
 }
 
+final class ConversationInputBarViewControllerTests: CoreDataSnapshotTestCase {
+    
+    var sut: ConversationInputBarViewController!
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testNormalState(){
+        // GIVEN
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
+        
+        // THEN
+        verifyInAllPhoneWidths(view: sut.view)
+        verifyInAllTabletWidths(view: sut.view)
+    }
+
+}
+
 // MARK: - Ephemeral indicator button
 extension ConversationInputBarViewControllerTests {
     func testEphemeralIndicatorButton(){
         // GIVEN
-        prepareSut()
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
 
         // WHEN
         sut.mode = .timeoutConfguration
@@ -132,8 +150,9 @@ extension ConversationInputBarViewControllerTests {
 
     func testEphemeralTimeNone(){
         // GIVEN
-        prepareSut()
-
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+        sut.viewDidLoad()
+        
         // WHEN
         sut.mode = .timeoutConfguration
         otherUserConversation.messageDestructionTimeout = .local(.none)

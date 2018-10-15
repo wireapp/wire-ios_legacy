@@ -76,11 +76,8 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 
 @property (nonatomic) ProfileViewControllerContext context;
 @property (nonatomic) id<UserType, AccentColorProvider> bareUser;
-@property (nonatomic) ZMConversation *conversation;
-@property (nonatomic) ConversationActionController *actionsController;
 
 @property (nonatomic) UserImageView *userImageView;
-@property (nonatomic) UIView *footerView;
 @property (nonatomic) UIView *stackViewContainer;
 @property (nonatomic) GuestLabelIndicator *teamsGuestIndicator;
 @property (nonatomic) BOOL showGuestLabel;
@@ -419,12 +416,6 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
         default:
             break;
     }
-}
-
-- (void)presentMenuSheetController
-{
-    self.actionsController = [[ConversationActionController alloc] initWithConversation:self.conversation target:self];
-    [self.actionsController presentMenuFromSourceView:self.footerView];
 }
 
 - (void)presentAddParticipantsViewController

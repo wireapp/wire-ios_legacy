@@ -26,7 +26,7 @@ import Cartography
     fileprivate let footerView = GroupDetailsFooterView()
     fileprivate let bottomSpacer = UIView()
     fileprivate var token: NSObjectProtocol?
-    fileprivate var actionController: ConversationActionController?
+    var actionController: ConversationActionController?
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
 
@@ -49,8 +49,11 @@ import Cartography
         collectionViewController = SectionCollectionViewController()
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
-        syncObserver = InitialSyncObserver(in: ZMUserSession.shared()!) { [weak self] completed in
-            self?.didCompleteInitialSync = completed
+
+        if let session = ZMUserSession.shared() {
+            syncObserver = InitialSyncObserver(in: session) { [weak self] completed in
+                self?.didCompleteInitialSync = completed
+            }
         }
     }
     
@@ -141,7 +144,7 @@ import Cartography
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
-            actionController?.presentMenu(from: view)
+            actionController?.presentMenu(from: view, showConverationNameInMenuTitle: false)
         }
     }
     
@@ -171,7 +174,7 @@ extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewContro
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
-            ZClientViewController.shared()?.load(conversation, focusOnView: true, animated: true)
+            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
     

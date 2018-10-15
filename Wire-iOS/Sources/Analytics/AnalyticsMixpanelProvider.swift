@@ -88,7 +88,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.defaults = defaults
 
         if !MixpanelAPIKey.isEmpty {
-            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey, optOutTrackingByDefault: true)
+            mixpanelInstance = Mixpanel.initialize(token: MixpanelAPIKey, automaticPushTracking: false, optOutTrackingByDefault: true)
         }
         super.init()
         mixpanelInstance?.distinctId = mixpanelDistinctId
@@ -123,7 +123,11 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
             return id
         }
     }
-    
+
+    public func flush(completion: (() -> Void)?) {
+        mixpanelInstance?.flush(completion: completion)
+    }
+
     public var isOptedOut: Bool {
         get {
             return mixpanelInstance?.hasOptedOutTracking() ?? true
@@ -150,7 +154,7 @@ final class AnalyticsMixpanelProvider: NSObject, AnalyticsProvider {
         self.setSuperProperty(name, value: stringValue as NSObject?)
     }
     
-    func setSuperProperty(_ name: String, value: NSObject?) {
+    func setSuperProperty(_ name: String, value: Any?) {
         guard let mixpanelInstance = self.mixpanelInstance else {
             return
         }

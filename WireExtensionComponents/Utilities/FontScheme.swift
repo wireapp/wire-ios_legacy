@@ -72,7 +72,7 @@ extension FontWeight {
     ]
     
     public func fontWeight(accessibilityBoldText: Bool? = nil) -> UIFont.Weight {
-        let boldTextEnabled = accessibilityBoldText ?? UIAccessibilityIsBoldTextEnabled()
+        let boldTextEnabled = accessibilityBoldText ?? UIAccessibility.isBoldTextEnabled
         let mapping = boldTextEnabled ? type(of: self).accessibilityWeightMapping : type(of: self).weightMapping
         return mapping[self]!
     }
@@ -85,7 +85,7 @@ extension FontWeight {
 }
 
 extension UIFont {
-    static func systemFont(ofSize size: CGFloat, contentSizeCategory: UIContentSizeCategory, weight: FontWeight) -> UIFont {
+    public static func systemFont(ofSize size: CGFloat, contentSizeCategory: UIContentSizeCategory, weight: FontWeight) -> UIFont {
         if #available(iOSApplicationExtension 8.2, *) {
             return self.systemFont(ofSize: round(size * UIFont.wr_preferredContentSizeMultiplier(for: contentSizeCategory)), weight: weight.fontWeight())
         } else {
@@ -106,28 +106,6 @@ extension UIFont {
             }()
             
             return "System\(weightSpecifier) \(self.pointSize)"
-        }
-    }
-}
-
-extension UIFont {
-    @objc public var isItalic: Bool {
-        return fontDescriptor.symbolicTraits.contains(.traitItalic)
-    }
-    
-    @objc public func italicFont() -> UIFont {
-        
-        if isItalic {
-            return self
-        } else {
-            var symbolicTraits = fontDescriptor.symbolicTraits
-            symbolicTraits.insert([.traitItalic])
-            
-            if let newFontDescriptor = fontDescriptor.withSymbolicTraits(symbolicTraits) {
-                return UIFont(descriptor: newFontDescriptor, size: pointSize)
-            } else {
-                return self
-            }
         }
     }
 }

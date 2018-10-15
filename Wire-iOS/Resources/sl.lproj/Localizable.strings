@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Ima nova sporočila.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "Ne";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "v stikih";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "silenced";
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "stiki";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "Je pingal(-a)";
 "conversation.status.message.missedcall" = "Zgrešen klic";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
-"conversation.status.message.ephemeral" = "Časovno sporočilo";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.knock" = "Je pingal(-a)";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ Neposlano sporočilo";
 "conversation.status.you" = "Ti";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "v stikih";
 
 "conversation.input_bar.shortcut.send" = "Pošlji sporočilo";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Prekliči";
 
@@ -390,7 +400,6 @@
 
 "content.system.call.you" = "Ti";
 "content.system.call.called" = "%@ je klical(-a)";
-"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ je klical(-a)";
 
 "content.system.renamed_conv.title" = "%@ je preimenoval(-a) pogovor";
@@ -540,6 +549,7 @@
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Klicanje…";
 "call.status.outgoing" = "Zvonjenje…";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Stalna bitna hitrost";
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "Nekdo je začel(-a) z uporabo nove naprave.";
 "call.degraded.alert.action.continue" = "Vseeno pokliči";
 
-"call.alert.ongoing.start.alert_title" = "Start Call?";
-"call.alert.ongoing.join.alert_title" = "Join Call?";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
-"call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.button" = "Join Anyway";
+"call.alert.ongoing.start.button" = "Vseeno pokliči";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -613,6 +622,7 @@
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Izbriši vsebino?";
@@ -621,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Prekliči";
 "meta.menu.delete_content.button_delete" = "Izbriši";
 "meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "Prekliči";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Zapusti pogovor?";
@@ -743,6 +760,11 @@
 "about.website.title" = "Wire spletna stran";
 "about.copyright.title" = "© Wire Swiss GmbH";
 
+// Licenses screen
+"about.license.project_header" = "Podrobnosti";
+"about.license.open_project_button" = "View Project Page";
+"about.license.license_header" = "Acknowledgements";
+
 // Self new devices
 "self.new_device_alert.title" = "Vaš račun je bil uporabljen na:";
 "self.new_device_alert.message" = "\n%@\n\nIf you don’t recognize the device above, remove it and reset your password.";
@@ -759,8 +781,8 @@
 "self.settings.add_account.error.title" = "Three accounts active";
 "self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
-"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch account";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "Račun";
@@ -1228,7 +1250,7 @@
 "registration.devices.active_list_header" = "Aktivno";
 "registration.devices.current_list_header" = "Trenutna";
 "registration.devices.active_list_subtitle" = "Če ne prepoznate zgornje naprave, jo odstranite in ponastavite vaše geslo.";
-"registration.devices.activated_in" = "Aktivirana na";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";

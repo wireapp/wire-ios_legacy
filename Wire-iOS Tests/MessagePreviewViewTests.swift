@@ -61,7 +61,7 @@ class MessagePreviewViewTests: ZMSnapshotTestCase {
         let textMessageData = MockTextMessageData()
         textMessageData.linkPreview = article
         textMessageData.linkPreviewImageCacheKey = "image-id-unsplash_matterhorn.jpg"
-        textMessageData.imageData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
+        textMessageData.imageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         textMessageData.linkPreviewHasImage = true
         message.backingTextMessageData = textMessageData
         
@@ -75,7 +75,7 @@ class MessagePreviewViewTests: ZMSnapshotTestCase {
         let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.mimeType = "video/mp4"
         message.backingFileMessageData.filename = "vacation.mp4"
-        message.backingFileMessageData.imagePreviewData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
+        message.backingFileMessageData.imagePreviewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         
         let previewView = message.previewView()!
         XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))

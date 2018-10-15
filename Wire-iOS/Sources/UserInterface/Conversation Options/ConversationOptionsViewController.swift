@@ -60,7 +60,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     private func setupViews() {
         view.addSubview(tableView)
         CellConfiguration.prepare(tableView)
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 80
         tableView.separatorStyle = .none
@@ -89,13 +89,16 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         navigationController?.showLoadingView = state.isLoading
         title = state.title
     }
-    
+
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error) {
         present(UIAlertController.checkYourConnection(), animated: false)
     }
-    
-    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) {
-        present(UIAlertController.confirmRemovingGuests(completion), animated: true)
+
+    func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController? {
+        let alertController = UIAlertController.confirmRemovingGuests(completion)
+        present(alertController, animated: true)
+
+        return alertController
     }
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRevokingLink completion: @escaping (Bool) -> Void) {

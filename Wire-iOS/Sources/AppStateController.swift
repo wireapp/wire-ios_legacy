@@ -48,7 +48,7 @@ class AppStateController : NSObject {
     
     override init() {
         super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         appState = calculateAppState()
     }
@@ -58,7 +58,7 @@ class AppStateController : NSObject {
     }
 
     func calculateAppState() -> AppState {
-        guard !isRunningTests || isRunningSelfUnitTest else { return .unauthenticated(error: nil) }
+        guard !isRunningTests || isRunningSelfUnitTest else { return .headless }
 
         if !hasEnteredForeground {
             return .headless

@@ -31,7 +31,7 @@ public final class MarkdownBarView: UIView {
     weak var delegate: MarkdownBarViewDelegate?
     
     private let stackView =  UIStackView()
-    private let accentColor = ColorScheme.default.accentColor
+    private let accentColor: UIColor = UIColor.accent()
     private let normalColor = UIColor(scheme: .iconNormal)
     
     public let headerButton         = PopUpIconButton()
@@ -59,7 +59,7 @@ public final class MarkdownBarView: UIView {
     }
     
     override public var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 56)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
     private func setupViews() {

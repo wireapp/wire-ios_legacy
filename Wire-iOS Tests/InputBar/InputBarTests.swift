@@ -29,16 +29,16 @@ class InputBarTests: ZMSnapshotTestCase {
     
     let buttons = { () -> [UIButton] in
         let b1 = IconButton()
-        b1.setIcon(.paperclip, with: .tiny, for: UIControlState())
+        b1.setIcon(.paperclip, with: .tiny, for: [])
         
         let b2 = IconButton()
-        b2.setIcon(.photo, with: .tiny, for: UIControlState())
+        b2.setIcon(.photo, with: .tiny, for: [])
         
         let b3 = IconButton()
-        b3.setIcon(.brush, with: .tiny, for: UIControlState())
+        b3.setIcon(.brush, with: .tiny, for: [])
         
         let b4 = IconButton()
-        b4.setIcon(.ping, with: .tiny, for: UIControlState())
+        b4.setIcon(.ping, with: .tiny, for: [])
 
         return [b1, b2, b3, b4]
     }
@@ -93,13 +93,23 @@ class InputBarTests: ZMSnapshotTestCase {
         verifyInAllTabletWidths(view: sut)
     }
     
+    func testTruncatedMention() {
+        guard let userWithLongName = MockUser.realMockUsers()?.last else { return XCTFail() }
+        userWithLongName.name = "Matt loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name"
+        let text = "Hello @\(userWithLongName.name!)"
+        sut.textView.setText(text, withMentions: [Mention(range: (text as NSString).range(of: "@\(userWithLongName.name!)"), user: userWithLongName)])
+        
+        verifyInAllPhoneWidths(view: sut)
+        verifyInAllTabletWidths(view: sut)
+    }
+    
     func testButtonsWithTitle() {
         let buttonsWithText = buttons()
         
         for button in buttonsWithText {
-            button.setTitle("NEW", for: UIControlState())
+            button.setTitle("NEW", for: [])
             button.titleLabel!.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
-            button.setTitleColor(UIColor.red, for: UIControlState())
+            button.setTitleColor(UIColor.red, for: [])
         }
         
         let inputBar = InputBar(buttons: buttonsWithText)
@@ -138,20 +148,19 @@ class InputBarTests: ZMSnapshotTestCase {
         sut.textView.text = ""
         sut.setInputBarState(.markingDown(ephemeral: .message), animated: false)
         sut.updateEphemeralState()
-        
 
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersCorrectlyInEditState() {
-        sut.setInputBarState(.editing(originalText: "This text is being edited"), animated: false)
-        
+        sut.setInputBarState(.editing(originalText: "This text is being edited", mentions: []), animated: false)
+        sut.textView.resignFirstResponder() // make sure to avoid cursor being visible
+
         verifyInAllPhoneWidths(view: sut)
     }
     
     func testThatItRendersCorrectlyInEditState_LongText() {
-        sut.setInputBarState(.editing(originalText: longText), animated: false)
-
+        sut.setInputBarState(.editing(originalText: longText, mentions: []), animated: false)
         
         verifyInAllPhoneWidths(view: sut)
     }

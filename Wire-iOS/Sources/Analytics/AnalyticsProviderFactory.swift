@@ -34,7 +34,7 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
         self.userDefaults = userDefaults
     }
   
-    @objc public func analyticsProvider() -> AnalyticsProvider? {
+    public func analyticsProvider() -> AnalyticsProvider? {
         if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
             zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()

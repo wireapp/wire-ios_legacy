@@ -119,9 +119,9 @@ final public class CollectionImageCell: CollectionCell {
     var saveableImage : SavableImage?
     
     @objc func save(_ sender: AnyObject!) {
-        guard let imageMessageData = self.message?.imageMessageData else { return }
+        guard let imageMessageData = self.message?.imageMessageData, let imageData = imageMessageData.imageData else { return }
         
-        saveableImage = SavableImage(data: imageMessageData.imageData, isGIF: imageMessageData.isAnimatedGIF)
+        saveableImage = SavableImage(data: imageData, isGIF: imageMessageData.isAnimatedGIF)
         saveableImage?.saveToLibrary { [weak self] _ in
             self?.saveableImage = nil
         }

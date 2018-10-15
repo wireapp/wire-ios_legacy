@@ -44,7 +44,7 @@ extension UIViewController {
     }
 
     @objc public func takeFirstResponder() {
-        if UIAccessibilityIsVoiceOverRunning() {
+        if UIAccessibility.isVoiceOverRunning {
             return
         }
     }
@@ -161,7 +161,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         guard toViewController != fromViewController else { return }
         
         let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
-        let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
+        let direction = forward ? UIPageViewController.NavigationDirection.forward : .reverse
         
         pageViewController.setViewControllers([toViewController], direction: direction, animated: isInteractive) { [delegate, tabBar] complete in
             guard complete else { return }

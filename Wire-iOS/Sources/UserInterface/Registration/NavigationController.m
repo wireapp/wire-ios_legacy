@@ -26,7 +26,6 @@
 #import "UIImage+ZetaIconsNeue.h"
 #import "UIColor+WAZExtensions.h"
 #import "UIResponder+FirstResponder.h"
-#import "WireStyleKit.h"
 #import "Wire-Swift.h"
 
 
@@ -199,6 +198,7 @@
         temporaryResponder.keyboardAppearance = activeTextField.keyboardAppearance;
         temporaryResponder.keyboardType = activeTextField.keyboardType;
         temporaryResponder.autocorrectionType = activeTextField.autocorrectionType;
+        temporaryResponder.secureTextEntry = activeTextField.secureTextEntry;
         
         [self.view addSubview:temporaryResponder];
         [temporaryResponder becomeFirstResponder];

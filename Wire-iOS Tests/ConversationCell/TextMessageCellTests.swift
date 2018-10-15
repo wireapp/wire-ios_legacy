@@ -54,6 +54,12 @@ class TextMessageCellTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
+    func testThatOrangeHeartEmoji() {
+        sut.setSelected(true, animated: false)
+        sut.configure(for: mockMessage("🧡", state: .sent), layoutProperties: layoutProperties)
+        verify(view: sut.prepareForSnapshot())
+    }
+
     func testThatItRendersATextMessage_Sent() {
         sut.setSelected(true, animated: false)
         sut.configure(for: mockMessage(state: .sent), layoutProperties: layoutProperties)
@@ -301,7 +307,7 @@ extension TextMessageCellTests {
 
 // MARK: - Helpers
 
-private extension TextMessageCell {
+extension TextMessageCell {
 
     func prepareForSnapshot() -> UIView {
         self.backgroundColor = .clear

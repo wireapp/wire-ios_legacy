@@ -56,11 +56,7 @@ extension ConversationTableViewDataSource {
         layoutProperties.showDayBurstTimestamp = shouldShowDaySeparator(for: message, at: index)
         layoutProperties.topPadding            = topPadding(for: message, at: index, showingSender:layoutProperties.showSender, showingTimestamp:layoutProperties.showBurstTimestamp)
         layoutProperties.alwaysShowDeliveryState = shouldShowAlwaysDeliveryState(for: message)
-        
-        if let textMessageData = message.textMessageData {
-            layoutProperties.linkAttachments = Message.linkAttachments(textMessageData)
-        }
-        
+      
         return layoutProperties
     }
     

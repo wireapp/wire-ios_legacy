@@ -37,7 +37,7 @@ internal class TextSearchResultCell: UITableViewCell {
         return roundedTextBadge
     }()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         userImageView.userSession = ZMUserSession.shared()
@@ -133,6 +133,7 @@ internal class TextSearchResultCell: UITableViewCell {
         
         resultCountView.isHidden = totalMatches <= 1
         resultCountView.textLabel.text = "\(totalMatches)"
+        resultCountView.updateCollapseConstraints(isCollapsed: false)
     }
     
     public func configure(with newMessage: ZMConversationMessage, queries newQueries: [String]) {

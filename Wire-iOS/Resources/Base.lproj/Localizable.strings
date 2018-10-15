@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Has new messages.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Help us make Wire better";
-"conversation_list.date_usage_permission_alert.message" = "Sending anonymous usage and crash reports helps us to improve our products and services. We do not use this information for anything else.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
+"conversation_list.data_usage_permission_alert.disagree" = "No";
+"conversation_list.data_usage_permission_alert.agree" = "I Agree";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Contacts";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "silenced";
 "conversation_list.voiceover.status.typing" = "typing";
 "conversation_list.voiceover.status.ping" = "ping";
+"conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacts";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "Pinged";
 "conversation.status.message.missedcall" = "Missed call";
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
-"conversation.status.message.ephemeral" = "Timed message";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral.group" = "Someone sent a message";
+"conversation.status.message.ephemeral.mention" = "Mentioned you";
+"conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
+"conversation.status.message.ephemeral.knock" = "Pinged";
+"conversation.status.message.ephemeral.knock.group" = "Someone pinged";
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "You";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "in Contacts";
 
 "conversation.input_bar.shortcut.send" = "Send Message";
+"conversation.input_bar.shortcut.newline" = "Insert line break";
 "conversation.input_bar.shortcut.edit_last_message" = "Edit Last Message";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Cancel";
 
@@ -390,7 +400,6 @@
 
 "content.system.call.you" = "You";
 "content.system.call.called" = "%@ called";
-"content.system.call.missed-call" = "Missed call from %@";
 "content.system.call.called-you" = "%@ called";
 
 "content.system.renamed_conv.title" = "%@ renamed the conversation";
@@ -540,6 +549,7 @@
 "call.status.incoming.user" = "%@ is calling…";
 "call.status.incoming" = "Calling…";
 "call.status.outgoing" = "Ringing…";
+"call.status.outgoing.user" = "Calling %@…";
 "call.status.reconnecting" = "Reconnecting…";
 "call.status.terminating" = "Hanging up…";
 "call.status.constant_bitrate" = "Constant Bit Rate";
@@ -558,13 +568,12 @@
 "call.degraded.alert.message.unknown" = "Someone started using a new device.";
 "call.degraded.alert.action.continue" = "Call anyway";
 
-"call.alert.ongoing.start.alert_title" = "Start Call?";
-"call.alert.ongoing.join.alert_title" = "Join Call?";
+"call.alert.ongoing.alert_title" = "This will end your other call.";
 
 "call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
-"call.alert.ongoing.start.button" = "Call Anyway";
-"call.alert.ongoing.join.button" = "Join Anyway";
+"call.alert.ongoing.start.button" = "Call anyway";
+"call.alert.ongoing.join.button" = "Join anyway";
 
 // Call Actions (accessibility)
 
@@ -613,6 +622,7 @@
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
+"meta.menu.configure_notifications" = "Notifications…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Delete content?";
@@ -621,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Cancel";
 "meta.menu.delete_content.button_delete" = "Delete";
 "meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Notify me about:";
+"meta.menu.configure_notification.button_everything" = "Everything";
+"meta.menu.configure_notification.button_mentions" = "Only Mentions";
+"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_cancel" = "Cancel";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Leave conversation?";
@@ -764,8 +781,8 @@
 "self.settings.add_account.error.title" = "Three accounts active";
 "self.settings.add_account.error.message" = "You can only be logged in with three accounts at once. Log out from one to add another.";
 
-"self.settings.switch_account.title" = "Switching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch account";
+"self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
+"self.settings.switch_account.action" = "Switch anyway";
 
 // Settings - Account details
 "self.settings.account_section" = "Account";
@@ -1233,7 +1250,7 @@
 "registration.devices.active_list_header" = "Active";
 "registration.devices.current_list_header" = "Current";
 "registration.devices.active_list_subtitle" = "If you don’t recognize a device above, remove it and reset your password.";
-"registration.devices.activated_in" = "Activated in";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";
@@ -1377,7 +1394,7 @@
 "compose.drafts.title" = "Messages";
 "compose.drafts.empty.title" = "No messages";
 "compose.drafts.empty.subtitle" = "Tap + to compose one";
-"compose.drafts.compose.title" = "Write a message";
+"compose.drafts.compose.title" = "Type a message";
 "compose.drafts.compose.subject.placeholder" = "Tap to set a subject";
 
 "compose.drafts.compose.delete.confirm.title" = "Confirm Deletion";

@@ -23,13 +23,14 @@
 
 @implementation LinkAttachment
 
-- (instancetype)initWithURL:(NSURL *)URL range:(NSRange)range
+- (instancetype)initWithURL:(NSURL *)URL range:(NSRange)range string:(NSString *)string
 {
     self = [super init];
     
     if (self) {
         _URL = URL;
         _range = range;
+        _string = string;
         _type = [self linkAttachmentTypeForURL:URL];
     }
     

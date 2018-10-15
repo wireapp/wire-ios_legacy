@@ -41,10 +41,23 @@ class UserCell: SeparatorCollectionViewCell {
     var titleStackView : UIStackView!
     var iconStackView : UIStackView!
     
+    fileprivate var avatarSpacerWidthConstraint: NSLayoutConstraint?
+    
     weak var user: UserType? = nil
     
-    fileprivate static let boldFont: UIFont! = FontSpec.init(.small, .regular).font!
-    fileprivate static let lightFont: UIFont! = FontSpec.init(.small, .light).font!
+    static let boldFont: UIFont = .smallRegularFont
+    static let lightFont: UIFont = .smallLightFont
+    static let defaultAvatarSpacing: CGFloat = 64
+    
+    /// Specify a custom avatar spacing
+    var avatarSpacing: CGFloat? {
+        get {
+            return avatarSpacerWidthConstraint?.constant
+        }
+        set {
+            avatarSpacerWidthConstraint?.constant = newValue ?? UserCell.defaultAvatarSpacing
+        }
+    }
 
     override var isSelected: Bool {
         didSet {
@@ -85,7 +98,7 @@ class UserCell: SeparatorCollectionViewCell {
         videoIconView.accessibilityIdentifier = "img.video"
         videoIconView.isHidden = true
         
-        verifiedIconView.image = WireStyleKit.imageOfShieldverified()
+        verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
         verifiedIconView.contentMode = .center
         verifiedIconView.accessibilityIdentifier = "img.shield"
@@ -105,7 +118,7 @@ class UserCell: SeparatorCollectionViewCell {
         accessoryIconView.isHidden = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = FontSpec.init(.normal, .light).font!
+        titleLabel.font = .normalLightFont
         titleLabel.accessibilityIdentifier = "user_cell.name"
         
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -113,7 +126,7 @@ class UserCell: SeparatorCollectionViewCell {
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
         avatar.userSession = ZMUserSession.shared()
-        avatar.initials.font = UIFont.systemFont(ofSize: 11, weight: .light)
+        avatar.initials.font = .avatarInitial
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
@@ -145,12 +158,15 @@ class UserCell: SeparatorCollectionViewCell {
     }
     
     func createConstraints() {
+        let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: UserCell.defaultAvatarSpacing)
+        self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
+        
         NSLayoutConstraint.activate([
             checkmarkIconView.widthAnchor.constraint(equalToConstant: 24),
             checkmarkIconView.heightAnchor.constraint(equalToConstant: 24),
             avatar.widthAnchor.constraint(equalToConstant: 28),
             avatar.heightAnchor.constraint(equalToConstant: 28),
-            avatarSpacer.widthAnchor.constraint(equalToConstant: 64),
+            avatarSpacerWidthConstraint,
             avatarSpacer.heightAnchor.constraint(equalTo: avatar.heightAnchor),
             avatarSpacer.centerXAnchor.constraint(equalTo: avatar.centerXAnchor),
             avatarSpacer.centerYAnchor.constraint(equalTo: avatar.centerYAnchor),
@@ -212,6 +228,8 @@ class UserCell: SeparatorCollectionViewCell {
 
 // MARK: - Subtitle
 
+extension UserCell: UserCellSubtitleProtocol {}
+
 extension UserCell {
     
     func subtitle(for user: UserType) -> NSAttributedString? {
@@ -221,46 +239,14 @@ extension UserCell {
             return subtitle(forRegularUser: user)
         }
     }
-    
-    private func subtitle(forRegularUser user: UserType) -> NSAttributedString {
-        var components: [NSAttributedString?] = []
-        
-        if let handle = user.handle, !handle.isEmpty {
-            components.append("@\(handle)" && UserCell.boldFont)
-        }
-        
-        WirelessExpirationTimeFormatter.shared.string(for: user).apply {
-            components.append($0 && UserCell.boldFont)
-        }
-        
-        if let user = user as? ZMUser, let addressBookName = user.addressBookEntry?.cachedName {
-            let formatter = UserCell.correlationFormatter(for: colorSchemeVariant)
-            components.append(formatter.correlationText(for: user, addressBookName: addressBookName))
-        }
-        
-        return components.compactMap({ $0 }).joined(separator: " · " && UserCell.lightFont)
-    }
-    
+
     private func subtitle(forServiceUser service: SearchServiceUser) -> NSAttributedString? {
         guard let summary = service.summary else { return nil }
         
         return summary && UserCell.boldFont
     }
-    
-    private static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
-    private class func correlationFormatter(for colorSchemeVariant: ColorSchemeVariant) -> AddressBookCorrelationFormatter {
-        if let formatter = correlationFormatters[colorSchemeVariant] {
-            return formatter
-        }
-        
-        let color = UIColor(scheme: .sectionText, variant: colorSchemeVariant)
-        let formatter = AddressBookCorrelationFormatter(lightFont: lightFont, boldFont: boldFont, color: color)
-        
-        correlationFormatters[colorSchemeVariant] = formatter
-        
-        return formatter
-    }
-    
+
+    static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
 }
 
 // MARK: - Availability

@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Hat neue Nachrichten.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Hilf uns, Wire zu verbessern";
-"conversation_list.date_usage_permission_alert.message" = "Anonymisierte Nutzungs- und Fehlerberichte helfen uns, unsere Produkte und Dienstleistungen zu verbessern. Wir verwenden diese Informationen nicht für andere Zwecke.";
+"conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
+"conversation_list.data_usage_permission_alert.message" = "Ich willige ein, dass Wire anonymisierte Nutzungs- und Fehlerberichte erstellen und verwenden darf, um die Wire-App zu verbessern. Ich kann diese Einwilligung jederzeit widerrufen.";
+"conversation_list.data_usage_permission_alert.disagree" = "Nein";
+"conversation_list.data_usage_permission_alert.agree" = "Ich willige ein";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "in Kontakte";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "Schweigen";
 "conversation_list.voiceover.status.typing" = "tippt";
 "conversation_list.voiceover.status.ping" = "Ping";
+"conversation_list.voiceover.status.mention" = "du wurdest erwähnt";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivierte";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "Liste der archivierten Unterhaltungen";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "Kontakte";
@@ -208,7 +211,13 @@
 "conversation.status.message.knock" = "hat gepingt";
 "conversation.status.message.missedcall" = "Verpasster Anruf";
 "conversation.status.message.missedcall.groups" = "Verpasster Anruf von %@";
+"conversation.status.message.mention" = "%@";
 "conversation.status.message.ephemeral" = "Temporäre Nachricht";
+"conversation.status.message.ephemeral.group" = "Jemand hat eine Nachricht gesendet";
+"conversation.status.message.ephemeral.mention" = "Hat dich erwähnt";
+"conversation.status.message.ephemeral.mention.group" = "Jemand hat dich erwähnt";
+"conversation.status.message.ephemeral.knock" = "hat gepingt";
+"conversation.status.message.ephemeral.knock.group" = "Jemand hat gepingt";
 
 "conversation.status.unsent" = "⚠️ Nicht gesendete Nachricht";
 "conversation.status.you" = "Du";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "in Kontakte";
 
 "conversation.input_bar.shortcut.send" = "Nachricht senden";
+"conversation.input_bar.shortcut.newline" = "Zeilenumbruch einfügen";
 "conversation.input_bar.shortcut.edit_last_message" = "Letzte Nachricht bearbeiten";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Abbrechen";
 
@@ -390,7 +400,6 @@
 
 "content.system.call.you" = "Du";
 "content.system.call.called" = "%@ hat angerufen";
-"content.system.call.missed-call" = "Verpasster Anruf von %@";
 "content.system.call.called-you" = "%@ hast angerufen";
 
 "content.system.renamed_conv.title" = "%@ hat das Gespräch umbenannt";
@@ -540,6 +549,7 @@
 "call.status.incoming.user" = "%@ ruft an…";
 "call.status.incoming" = "Ruft an…";
 "call.status.outgoing" = "Klingeln…";
+"call.status.outgoing.user" = "%@ anrufen…";
 "call.status.reconnecting" = "Erneut verbinden…";
 "call.status.terminating" = "Auflegen…";
 "call.status.constant_bitrate" = "Konstante Bitrate";
@@ -558,8 +568,7 @@
 "call.degraded.alert.message.unknown" = "Jemand verwendet ein neues Gerät.";
 "call.degraded.alert.action.continue" = "Trotzdem anrufen";
 
-"call.alert.ongoing.start.alert_title" = "Anrufen?";
-"call.alert.ongoing.join.alert_title" = "Anruf beitreten?";
+"call.alert.ongoing.alert_title" = "Dies wird den anderen Anruf beenden.";
 
 "call.alert.ongoing.start.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nEin Anruf hier beendet den anderen.";
 "call.alert.ongoing.join.message" = "In einer anderen Unterhaltung ist ein Anruf aktiv.\nDiesen Anruf anzunehmen, beendet den anderen.";
@@ -613,6 +622,7 @@
 "meta.menu.mark_unread" = "Als ungelesen markieren";
 "meta.menu.mark_read" = "Als gelesen markieren";
 "shortcut.mark_all_as_read.title" = "Alle als gelesen markieren";
+"meta.menu.configure_notifications" = "Benachrichtigungen…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Gesprächsverlauf löschen?";
@@ -621,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Abbrechen";
 "meta.menu.delete_content.button_delete" = "Löschen";
 "meta.menu.delete_content.button_delete_and_leave" = "Löschen und verlassen";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Benachrichtigungen über:";
+"meta.menu.configure_notification.button_everything" = "Alles";
+"meta.menu.configure_notification.button_mentions" = "Nur Erwähnungen";
+"meta.menu.configure_notification.button_nothing" = "Nichts";
+"meta.menu.configure_notification.button_cancel" = "Abbrechen";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Unterhaltung verlassen?";
@@ -743,6 +760,11 @@
 "about.website.title" = "Wire-Webseite";
 "about.copyright.title" = "© Wire Swiss GmbH";
 
+// Licenses screen
+"about.license.project_header" = "Details";
+"about.license.open_project_button" = "Projektseite anzeigen";
+"about.license.license_header" = "Kenntnisnahme";
+
 // Self new devices
 "self.new_device_alert.title" = "Dein Benutzerkonto wurde verwendet:";
 "self.new_device_alert.message" = "\n%@\n\nWenn Sie das oben genannte Gerät nicht erkennen, entfernen Sie es und setzen Sie Ihr Passwort zurück.";
@@ -759,8 +781,8 @@
 "self.settings.add_account.error.title" = "Drei Benutzerkonten sind aktiv";
 "self.settings.add_account.error.message" = "Du kannst zugleich mit drei Benutzerkonten angemeldet sein. Logge dich aus einem aus, um ein neues Konto hinzuzufügen.";
 
-"self.settings.switch_account.title" = "Ein Wechsel des Kontos wird den aktuellen Anruf beenden.";
-"self.settings.switch_account.action" = "Konto wechseln";
+"self.settings.switch_account.message" = "In diesem Konto ist ein Anruf aktiv.\nEin Wechsel der Konten beendet den aktuellen Anruf.";
+"self.settings.switch_account.action" = "Trotzdem wechseln";
 
 // Settings - Account details
 "self.settings.account_section" = "Benutzerkonto";
@@ -1228,7 +1250,7 @@
 "registration.devices.active_list_header" = "Aktiv";
 "registration.devices.current_list_header" = "Dieses Gerät";
 "registration.devices.active_list_subtitle" = "Falls du eines dieser Geräte nicht erkennst, entferne es und setze dein Passwort zurück.";
-"registration.devices.activated_in" = "Aktiviert in";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Mit E-Mail anmelden";

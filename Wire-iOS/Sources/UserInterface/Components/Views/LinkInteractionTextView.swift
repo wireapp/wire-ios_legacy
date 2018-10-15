@@ -35,6 +35,10 @@ import UIKit
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         delegate = self
+        
+        if #available(iOS 11.0, *) {
+            textDragDelegate = self
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -75,7 +79,7 @@ import UIKit
     /// link in the specified range is a markdown link.
     fileprivate func showAlertIfNeeded(for url: URL, in range: NSRange) -> Bool {
         // only show alert if the link is a markdown link
-        guard attributedText.ranges(of: .link, inRange: range) == [range] else { return false }
+        guard attributedText.ranges(containing: .link, inRange: range) == [range] else { return false }
         ZClientViewController.shared()?.present(confirmationAlert(for: url), animated: true, completion: nil)
         return true
     }
@@ -105,4 +109,24 @@ extension LinkInteractionTextView: UITextViewDelegate {
             return !showAlertIfNeeded(for: URL, in: characterRange)
         }
     }
+}
+
+@available(iOS 11.0, *)
+extension LinkInteractionTextView: UITextDragDelegate {
+    
+    public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+        
+        func isMentionLink(_ attributeTuple: (NSAttributedString.Key, Any)) -> Bool {
+            return attributeTuple.0 == NSAttributedString.Key.link && (attributeTuple.1 as? NSURL)?.scheme ==  Mention.mentionScheme
+        }
+        
+        if let attributes = textStyling(at: dragRequest.dragRange.start, in: .forward) {
+            if attributes.contains(where: isMentionLink) {
+                return []
+            }
+        }
+        
+        return dragRequest.suggestedItems
+    }
+    
 }

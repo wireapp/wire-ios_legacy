@@ -130,8 +130,10 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Есть новые сообщения.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.date_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
-"conversation_list.date_usage_permission_alert.message" = "Отправка анонимных отчетов об использовании и сбоях помогает нам улучшать наши продукты и сервисы. Мы не используем эту информацию ни для чего другого.";
+"conversation_list.data_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
+"conversation_list.data_usage_permission_alert.message" = "Я согласен с тем, что Wire может создавать и использовать анонимные отчеты об использовании и ошибках для улучшения приложения Wire. Я могу отозвать это согласие в любое время.";
+"conversation_list.data_usage_permission_alert.disagree" = "Нет";
+"conversation_list.data_usage_permission_alert.agree" = "Принимаю";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
@@ -146,6 +148,7 @@
 "conversation_list.voiceover.status.silenced" = "тишина";
 "conversation_list.voiceover.status.typing" = "печатает";
 "conversation_list.voiceover.status.ping" = "пинг";
+"conversation_list.voiceover.status.mention" = "вас упомянули";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "Архивные";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "список архивных разговоров";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакты";
@@ -195,20 +198,26 @@
 
 "conversation.status.typing" = "Набирает сообщение…";
 "conversation.status.typing.group" = "%@: набирает сообщение…";
-"conversation.status.silenced" = "Выкл. уведомления";
+"conversation.status.silenced" = "Без звука";
 "conversation.status.blocked" = "Заблокирован(а)";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Поделился(-лась) ссылкой";
 "conversation.status.message.image" = "Поделился(-лась) картинкой";
 "conversation.status.message.location" = "Поделился(-лась) местоположением";
-"conversation.status.message.audio" = "Поделился(-лась) аудио сообщением";
+"conversation.status.message.audio" = "Поделился(-лась) аудиосообщением";
 "conversation.status.message.video" = "Поделился(-лась) видео";
 "conversation.status.message.file" = "Поделился(-лась) файлом";
 "conversation.status.message.knock" = "Отправил(а) пинг";
 "conversation.status.message.missedcall" = "Пропущенный звонок";
 "conversation.status.message.missedcall.groups" = "Пропущенный вызов от %@";
-"conversation.status.message.ephemeral" = "Временное сообщение";
+"conversation.status.message.mention" = "%@";
+"conversation.status.message.ephemeral" = "Отправил(а) вам сообщение";
+"conversation.status.message.ephemeral.group" = "Кто-то прислал сообщение";
+"conversation.status.message.ephemeral.mention" = "Вас упомянули";
+"conversation.status.message.ephemeral.mention.group" = "Вас упомянули";
+"conversation.status.message.ephemeral.knock" = "Отправил(а) пинг";
+"conversation.status.message.ephemeral.knock.group" = "Новый пинг";
 
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
 "conversation.status.you" = "Вы";
@@ -241,7 +250,7 @@
 "conversation.displayname.emptygroup" = "Пустая группа";
 
 "conversation.input_bar.verified" = "Верифицировано";
-"conversation.input_bar.placeholder" = "Наберите сообщение";
+"conversation.input_bar.placeholder" = "Введите сообщение";
 "conversation.input_bar.placeholder_ephemeral" = "Временное сообщение";
 
 "conversation.input_bar.audio_message.tooltip.pull_send" = "Проведите вверх для отправки";
@@ -263,6 +272,7 @@
 "conversation.connection_view.in_address_book" = "в контактах";
 
 "conversation.input_bar.shortcut.send" = "Отправить сообщение";
+"conversation.input_bar.shortcut.newline" = "Вставить разрыв строки";
 "conversation.input_bar.shortcut.edit_last_message" = "Изм. последнее сообщение";
 "conversation.input_bar.shortcut.cancel_editing_message" = "Отмена";
 
@@ -282,13 +292,13 @@
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Во время разговора вы не можете сделать снимок.";
 
 "conversation.guests_present" = "Присутствуют гости";
-"conversation.services_present" = "Services are active";
-"conversation.guests_services_present" = "Guests and services are present";
+"conversation.services_present" = "Сервисы активны";
+"conversation.guests_services_present" = "Присутствуют гости и сервисы";
 "conversation.action.search" = "Поиск";
 
 // Image confirmation dialogue
 "image_confirmer.confirm" = "OK";
-"image_confirmer.cancel" = "Отменить";
+"image_confirmer.cancel" = "Отмена";
 "image.add_sketch" = "Добавить скетч";
 "image.edit_image" = "Редактировать изображение";
 
@@ -390,7 +400,6 @@
 
 "content.system.call.you" = "Вы";
 "content.system.call.called" = "%@ звонил(-а)";
-"content.system.call.missed-call" = "Пропущенный вызов от %@";
 "content.system.call.called-you" = "%@ звонил";
 
 "content.system.renamed_conv.title" = "%@ переименовал беседу";
@@ -459,7 +468,7 @@
 "content.message.like" = "Нравится";
 "content.message.unlike" = "Не нравится";
 "content.message.forward" = "Поделиться";
-"content.message.go_to_conversation" = "Показать в разговоре";
+"content.message.go_to_conversation" = "Показать";
 "content.message.forward.to" = "Поиск…";
 "content.message.open" = "Открыть";
 "content.message.copy" = "Копировать";
@@ -513,7 +522,7 @@
 "voice.accept_button.title" = "Принять";
 "voice.decline_button.title" = "Отклонить";
 "voice.hang_up_button.title" = "Повесить трубку";
-"voice.mute_button.title" = "Выкл.звук";
+"voice.mute_button.title" = "Микрофон";
 "voice.video_button.title" = "Видео";
 "voice.flip_video_button.title" = "Перевернуть";
 "voice.speaker_button.title" = "Динамик";
@@ -540,6 +549,7 @@
 "call.status.incoming.user" = "%@ звонит…";
 "call.status.incoming" = "Звонит…";
 "call.status.outgoing" = "Звонит…";
+"call.status.outgoing.user" = "Вызывает %@…";
 "call.status.reconnecting" = "Переподключение…";
 "call.status.terminating" = "Разъединение…";
 "call.status.constant_bitrate" = "Постоянный битрейт";
@@ -558,19 +568,18 @@
 "call.degraded.alert.message.unknown" = "Используется новое устройство.";
 "call.degraded.alert.action.continue" = "Все равно позвонить";
 
-"call.alert.ongoing.start.alert_title" = "Начать вызов?";
-"call.alert.ongoing.join.alert_title" = "Присоединиться к вызову?";
+"call.alert.ongoing.alert_title" = "Это действие завершит другой ваш вызов.";
 
 "call.alert.ongoing.start.message" = "Уже есть активный вызов в другой беседе.\nВызов в этой беседе прервет его.";
 "call.alert.ongoing.join.message" = "Уже есть активный вызов в другой беседе.\nОн будет прерван в случае начала нового вызова.";
 "call.alert.ongoing.start.button" = "Все равно позвонить";
-"call.alert.ongoing.join.button" = "Начать в любом случае";
+"call.alert.ongoing.join.button" = "Все равно присоединиться";
 
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Входящий вызов от %@";
-"call.actions.label.toggle_mute_on" = "Выкл. звук";
-"call.actions.label.toggle_mute_off" = "Вкл.звук";
+"call.actions.label.toggle_mute_on" = "Отключить уведомления";
+"call.actions.label.toggle_mute_off" = "Включить уведомления";
 "call.actions.label.flip_camera" = "Смена камеры";
 "call.actions.label.toggle_speaker_on" = "Включить динамик";
 "call.actions.label.toggle_speaker_off" = "Выключить динамик";
@@ -606,13 +615,14 @@
 "meta.menu.archive" = "Архивировать";
 "meta.menu.unarchive" = "Разархивировать";
 "meta.menu.delete" = "Удалить содержимое…";
-"meta.menu.silence.mute" = "Выкл. звук";
-"meta.menu.silence.unmute" = "Вкл.звук";
+"meta.menu.silence.mute" = "Отключить уведомления";
+"meta.menu.silence.unmute" = "Включить уведомления";
 "meta.menu.cancel" = "Отменить";
 "meta.menu.cancel_connection_request" = "Отменить запрос…";
 "meta.menu.mark_unread" = "Отметить как непрочитанное";
 "meta.menu.mark_read" = "Отметить как прочитанное";
 "shortcut.mark_all_as_read.title" = "Отметить все как прочитанные";
+"meta.menu.configure_notifications" = "Уведомления…";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Удалить содержимое?";
@@ -621,6 +631,13 @@
 "meta.menu.delete_content.button_cancel" = "Отменить";
 "meta.menu.delete_content.button_delete" = "Удалить";
 "meta.menu.delete_content.button_delete_and_leave" = "Удалить и покинуть";
+
+// Configure conversation notifications
+"meta.menu.configure_notification.dialog_message" = "Уведомлять меня о:";
+"meta.menu.configure_notification.button_everything" = "Все";
+"meta.menu.configure_notification.button_mentions" = "Только упоминания";
+"meta.menu.configure_notification.button_nothing" = "Ничего";
+"meta.menu.configure_notification.button_cancel" = "Отмена";
 
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Покинуть разговор?";
@@ -743,6 +760,11 @@
 "about.website.title" = "Веб-сайт Wire";
 "about.copyright.title" = "© Wire Swiss GmbH";
 
+// Licenses screen
+"about.license.project_header" = "Подробнее";
+"about.license.open_project_button" = "Просмотреть страницу проекта";
+"about.license.license_header" = "Благодарности";
+
 // Self new devices
 "self.new_device_alert.title" = "Ваша учетная запись использовалась на:";
 "self.new_device_alert.message" = "\n%@\n\nЕсли вам не знакомо это устройство, удалите его и сбросьте свой пароль.";
@@ -759,14 +781,14 @@
 "self.settings.add_account.error.title" = "Три активных аккаунта";
 "self.settings.add_account.error.message" = "Можно авторизоваться не более чем в трех аккаунтах одновременно. Выйдите из одного для добавления другого.";
 
-"self.settings.switch_account.title" = "Переключение аккаунтов приведет к завершению текущего вызова.";
-"self.settings.switch_account.action" = "Сменить аккаунт";
+"self.settings.switch_account.message" = "В этой учетной записи активен вызов.\nПереключение учетных записей приведет к завершению текущего вызова.";
+"self.settings.switch_account.action" = "Все равно переключиться";
 
 // Settings - Account details
 "self.settings.account_section" = "Аккаунт";
 
 "self.settings.account_details_group.info.title" = "Информация";
-"self.settings.account_details_group.personal.title" = "Личные";
+"self.settings.account_details_group.personal.title" = "Personal";
 
 "self.settings.account_section.name.title" = "Имя";
 "self.settings.account_section.email.title" = "Email";
@@ -949,12 +971,12 @@
 "self.settings.advanced.title" = "Дополнительные настройки";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отчет для отладки звонка";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает отделу поддержки Wire диагностировать проблемы, связанные со звонками.";
-"self.settings.advanced.reset_push_token.title" = "Обновить токен Push уведомления";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает службе поддержки Wire диагностировать проблемы, связанные с вызовами.";
+"self.settings.advanced.reset_push_token.title" = "Обновить токен push-уведомлений";
 "self.settings.advanced.reset_push_token.subtitle" = "При возникновении проблем с push-уведомлениями, служба поддержки Wire может попросить вас обновить токен.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен был обновлен";
 "self.settings.advanced.reset_push_token_alert.message" = "Уведомления будут восстановлены в течение нескольких секунд.";
-"self.settings.advanced.version_technical_details.title" = "Технические детали версии";
+"self.settings.advanced.version_technical_details.title" = "Техническая информация версии";
 
 // data usage permissions options
 "self.settings.account.data_usage_permissions.title" = "Разрешение на использование данных";
@@ -1016,7 +1038,7 @@
 // Landing screen
 
 "landing.app_name" = "Wire";
-"landing.create_account.title" = "Личные";
+"landing.create_account.title" = "Personal";
 "landing.create_account.subtitle" = "создать учетную запись";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "создать команду";
@@ -1126,7 +1148,7 @@
 "registration.cancel_action.title" = "Отменить";
 
 "registration.no_history.hero" = "Вы впервые используете Wire на этом устройстве.";
-"registration.no_history.subtitle" = "Из соображений конфиденциальности история ваших разговоров не будет показана здесь.";
+"registration.no_history.subtitle" = "История разговоров не отображается из соображений конфиденциальности.";
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Восстановить из резервной копии";
 
@@ -1203,7 +1225,7 @@
 "registration.share_contacts.skip_button.title" = "Не сейчас";
 
 "registration.address_book_access_denied.hero.title" = "У Wire нет доступа к вашим контактам.";
-"registration.address_book_access_denied.hero.paragraph1" = "Wire поможет вам найти ваших друзей, если поделитесь вашими контактами.";
+"registration.address_book_access_denied.hero.paragraph1" = "Wire помогает найти друзей, если вы делитесь своими контактами.";
 "registration.address_book_access_denied.hero.paragraph2" = "Чтобы гарантировать доступ, зайдите в Настройки и разрешите доступ к Контактам.";
 "registration.address_book_access_denied.settings_button.title" = "Настройки";
 "registration.address_book_access_denied.maybe_later_button.title" = "Возможно, позже";
@@ -1228,7 +1250,7 @@
 "registration.devices.active_list_header" = "Активное";
 "registration.devices.current_list_header" = "Текущее";
 "registration.devices.active_list_subtitle" = "Если не распознаете устройство выше, удалите его и переустановите пароль.";
-"registration.devices.activated_in" = "Активирован в";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Войти c email";
@@ -1372,7 +1394,7 @@
 "compose.drafts.title" = "Сообщения";
 "compose.drafts.empty.title" = "Сообщений нет";
 "compose.drafts.empty.subtitle" = "Нажмите + чтобы создать";
-"compose.drafts.compose.title" = "Написать сообщение";
+"compose.drafts.compose.title" = "Введите сообщение";
 "compose.drafts.compose.subject.placeholder" = "Нажмите, чтобы выбрать тему";
 
 "compose.drafts.compose.delete.confirm.title" = "Подтвердить удаление";

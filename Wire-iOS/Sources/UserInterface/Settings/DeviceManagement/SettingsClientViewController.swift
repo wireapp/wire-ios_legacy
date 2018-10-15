@@ -130,7 +130,7 @@ class SettingsClientViewController: UIViewController,
         let tableView = UITableView(frame: CGRect.zero, style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.backgroundColor = UIColor.clear
         tableView.separatorColor = separatorColor

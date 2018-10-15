@@ -30,7 +30,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.layoutMargins = self.layoutMargins
         
         let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
@@ -135,5 +135,37 @@ extension ZMSnapshotTestCase {
         viewController.viewSafeAreaInsetsDidChange()
         viewController.view.frame = CGRect(x: 0, y: 0, width: 375, height: 812)
         verify(view: viewController.view)
+    }
+    
+    func resetColorScheme() {
+        ColorScheme.default.variant = .light
+
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
+    }
+}
+
+// MARK: - UIAlertController
+extension ZMSnapshotTestCase {
+    func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
+        // Given
+        let window = UIWindow(frame: .init(x: 0, y: 0, width: 375, height: 667))
+        let container = UIViewController()
+        container.loadViewIfNeeded()
+        window.rootViewController = container
+        window.makeKeyAndVisible()
+        controller.loadViewIfNeeded()
+        controller.view.setNeedsLayout()
+        controller.view.layoutIfNeeded()
+
+        // When
+        let presentationExpectation = expectation(description: "It should be presented")
+        container.present(controller, animated: false) {
+            presentationExpectation.fulfill()
+        }
+
+        // Then
+        waitForExpectations(timeout: 2, handler: nil)
+        verify(view: controller.view, file: file, line: line)
     }
 }

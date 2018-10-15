@@ -45,7 +45,6 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, assign) BOOL alwaysShowDeliveryState;
 @property (nonatomic, assign) BOOL showUnreadMarker;
 @property (nonatomic, assign) CGFloat topPadding;
-@property (nonatomic, strong) NSArray<LinkAttachment *> *linkAttachments;
 
 @end
 
@@ -54,7 +53,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
 @optional
 /// Called on touch up inside event on the user image (@c fromImage)
-- (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view;
+- (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame;
 - (void)conversationCellDidTapResendMessage:(ConversationCell *)cell;
 - (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId;
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
