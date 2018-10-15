@@ -5,7 +5,6 @@ trigger:
   branches:
     include:
     - develop
-    - release/*
   
 steps:
 - script: |
