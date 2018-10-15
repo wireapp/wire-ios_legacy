@@ -3,7 +3,10 @@ pool:
 
 trigger:
   batch: true
-    
+  branches:
+    include:
+      *
+
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.app
