@@ -29,7 +29,7 @@
 
 #import "Wire-Swift.h"
 
-@interface RegistrationRootViewController () <AuthenticationCoordinatedViewController, PhoneNumberStepViewControllerDelegate, EmailStepViewControllerDelegate>
+@interface RegistrationRootViewController () <AuthenticationCoordinatedViewController, PhoneNumberStepViewControllerDelegate, EmailStepViewControllerDelegate, TabBarControllerDelegate>
 
 @property (nonatomic) TabBarController *registrationTabBarController;
 @property (nonatomic) AuthenticationFlowType flowType;
@@ -86,16 +86,23 @@
 
     switch (self.flowType) {
         case AuthenticationFlowOnlyLogin:
+        case AuthenticationFlowLogin:
             self.showLogin = true;
             break;
-        case AuthenticationFlowOnlyRegistration:
+        case AuthenticationFlowRegistration:
             self.showLogin = false;
             break;
     }
     
     self.registrationTabBarController = [[TabBarController alloc] initWithViewControllers:@[flowViewController, signInViewController]];
     self.registrationTabBarController.interactive = NO;
-    self.registrationTabBarController.tabBarHidden = YES;
+    self.registrationTabBarController.delegate = self;
+
+    if (self.flowType == AuthenticationFlowOnlyLogin) {
+        self.registrationTabBarController.tabBarHidden = YES;
+    } else {
+        self.registrationTabBarController.tabBarHidden = NO;
+    }
 
     self.signInViewController = signInViewController;
     self.flowViewController = flowViewController;
@@ -222,11 +229,12 @@
 {
     switch (self.flowType) {
         case AuthenticationFlowOnlyLogin:
+        case AuthenticationFlowLogin:
             if ([self.signInViewController respondsToSelector:@selector(executeErrorFeedbackAction:)]) {
                 [self.signInViewController executeErrorFeedbackAction:feedbackAction];
             }
             break;
-        case AuthenticationFlowOnlyRegistration:
+        case AuthenticationFlowRegistration:
             if ([self.flowViewController respondsToSelector:@selector(executeErrorFeedbackAction:)]) {
                 [self.flowViewController executeErrorFeedbackAction:feedbackAction];
             }
@@ -235,6 +243,17 @@
 }
 
 #pragma mark - Registration Delegates
+
+- (void)tabBarController:(TabBarController *)controller tabBarDidSelectIndex:(NSInteger)tabBarDidSelectIndex
+{
+    [self.authenticationCoordinator permuteCredentialProvidingFlowType];
+
+    if (tabBarDidSelectIndex == 0) {
+        self.flowType = AuthenticationFlowRegistration;
+    } else {
+        self.flowType = AuthenticationFlowOnlyLogin;
+    }
+}
 
 - (void)phoneNumberStepViewControllerDidPickPhoneNumber:(NSString *)phoneNumber
 {

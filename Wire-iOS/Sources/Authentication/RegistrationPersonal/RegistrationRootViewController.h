@@ -21,7 +21,8 @@
 
 typedef NS_ENUM(NSUInteger, AuthenticationFlowType) {
     AuthenticationFlowOnlyLogin = 0,
-    AuthenticationFlowOnlyRegistration
+    AuthenticationFlowLogin,
+    AuthenticationFlowRegistration
 };
 
 @class LoginCredentials, AuthenticationCoordinator;

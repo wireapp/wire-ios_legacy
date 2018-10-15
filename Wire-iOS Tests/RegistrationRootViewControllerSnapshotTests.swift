@@ -28,13 +28,21 @@ final class RegistrationRootViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     func testForInitStatePhoneRegistration() {
         // Given
-        let sut = RegistrationRootViewController(authenticationFlow: .onlyRegistration)
+        let sut = RegistrationRootViewController(authenticationFlow: .registration)
         
         // Then
         verify(view: sut.view)
     }
 
-    func testForInitStateEmailLogin() {
+    func testForInitStateLogin() {
+        // Given
+        let sut = RegistrationRootViewController(authenticationFlow: .login)
+
+        // Then
+        verify(view: sut.view)
+    }
+
+    func testForInitStateOnlyLogin() {
         // Given
         let sut = RegistrationRootViewController(authenticationFlow: .onlyLogin)
 
