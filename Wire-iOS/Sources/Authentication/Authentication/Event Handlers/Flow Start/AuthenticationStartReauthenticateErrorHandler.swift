@@ -54,7 +54,7 @@ class AuthenticationStartReauthenticateErrorHandler: AuthenticationEventHandler 
             return nil
         }
 
-        guard let loginCredentials = LoginCredentials(error: error) else {
+        guard let loginCredentials = error.userInfo[ZMUserLoginCredentialsKey] as? LoginCredentials else {
             return nil
         }
 

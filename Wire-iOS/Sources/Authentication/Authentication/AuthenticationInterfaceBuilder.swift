@@ -53,12 +53,12 @@ class AuthenticationInterfaceBuilder {
             return registrationViewController
 
         case .provideCredentials:
-            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
+            let loginViewController = RegistrationViewController(authenticationFlow: .login)
             loginViewController.shouldHideCancelButton = true
             return loginViewController
 
         case .createCredentials:
-            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
+            let registrationViewController = RegistrationViewController(authenticationFlow: .registration)
             registrationViewController.shouldHideCancelButton = true
             return registrationViewController
 

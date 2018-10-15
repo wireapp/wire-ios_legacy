@@ -36,10 +36,10 @@ class AuthenticationStateController {
     weak var delegate: AuthenticationStateControllerDelegate?
 
     /// The current step in the stack.
-    var currentStep: AuthenticationFlowStep
+    private(set) var currentStep: AuthenticationFlowStep
 
     /// The stack of all previously executed actions. The last element is the current step.
-    var stack: [AuthenticationFlowStep]
+    private(set) var stack: [AuthenticationFlowStep]
 
     // MARK: - Initialization
 
@@ -49,6 +49,19 @@ class AuthenticationStateController {
     }
 
     // MARK: - Transitions
+
+    /**
+     * Replaces the current step with another step.
+     * This is useful for cases where the user can switch between flows using a tab bar.
+     * - parameter newStep: The new step of the authentication.
+     * - warning: This is not recommended, as we should have a unique UI for each state.
+     */
+
+    func replaceCurrentStep(with newStep: AuthenticationFlowStep) {
+        log.warn("Replacing the step directly for \(newStep). This is not recommended and will be removed in a future version.")
+        currentStep = newStep
+        stack[stack.endIndex - 1] = newStep
+    }
 
     /**
      * Transitions to the next step in the stack.

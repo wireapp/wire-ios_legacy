@@ -48,9 +48,9 @@ class TeamEmailVerificationErrorHandler: AuthenticationEventHandler {
         // Display the error in the appropriate way
         if errorNeedsAlert {
             let alert = AuthenticationCoordinatorErrorAlert(error: error, completionActions: [.executeFeedbackAction(.clearInputFields)])
-            return [.hideLoadingView, .presentErrorAlert(alert)]
+            return [.hideLoadingView, .unwindState(withInterface: false), .presentErrorAlert(alert)]
         } else {
-            return [.hideLoadingView, .displayInlineError(error), .executeFeedbackAction(.clearInputFields)]
+            return [.hideLoadingView, .unwindState(withInterface: false), .displayInlineError(error), .executeFeedbackAction(.clearInputFields)]
         }
     }
 

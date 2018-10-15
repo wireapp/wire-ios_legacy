@@ -145,7 +145,6 @@ class AccessoryTextField: UITextField, TextContainer {
                 passwordRules = textFieldValidator.passwordRules
             }
             autocapitalizationType = .words
-            accessibilityIdentifier = "NameField"
             textContentType = .organizationName
         case .name(let isTeam):
             autocapitalizationType = .words

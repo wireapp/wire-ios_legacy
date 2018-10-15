@@ -93,6 +93,11 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     }
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)createBackgroundImageView
 {
     UIImage *backgroundImage = [UIImage imageNamed:@"LaunchImage"];

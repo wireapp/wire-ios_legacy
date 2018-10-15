@@ -90,7 +90,7 @@
     ZetaIconType iconType = [UIApplication isLeftToRightLayout] ? ZetaIconTypeChevronLeft : ZetaIconTypeChevronRight;
 
     [self.backButton setIcon:iconType withSize:ZetaIconSizeSmall forState:UIControlStateNormal];
-    self.backButton.accessibilityIdentifier = @"BackToWelcomeButton";
+    self.backButton.accessibilityIdentifier = @"backButton";
     self.backButton.accessibilityLabel = NSLocalizedString(@"general.back", @"");
     [self.view addSubview:self.backButton];
 

@@ -297,6 +297,35 @@ extension AuthenticationCoordinator {
         eventResponderChain.handleEvent(ofType: .flowStart(error, numberOfAccounts))
     }
 
+    /**
+     * Creates a new unregistered user for starting a registration flow.
+     */
+
+    func makeUnregisteredUser() -> UnregisteredUser {
+        let user = UnregisteredUser()
+        user.accentColorValue = UIColor.indexedAccentColor()
+        return user
+    }
+
+    /**
+     * Attempts to switch the from login to registration or registration to login.
+     * - note: This only works if the flow is on the `provideCredentials` or `createCredentials` step.
+     */
+
+    @objc func permuteCredentialProvidingFlowType() {
+        switch stateController.currentStep {
+        case .provideCredentials:
+            let unregisteredUser = makeUnregisteredUser()
+            stateController.replaceCurrentStep(with: .createCredentials(unregisteredUser))
+
+        case .createCredentials:
+            stateController.replaceCurrentStep(with: .provideCredentials)
+
+        default:
+            log.error("Cannot permute credential providing flow from step \(stateController.currentStep).")
+        }
+    }
+
     // MARK: Registration Code
 
     /**
