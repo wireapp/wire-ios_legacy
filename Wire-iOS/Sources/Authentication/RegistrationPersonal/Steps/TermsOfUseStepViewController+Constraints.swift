@@ -86,12 +86,14 @@ extension TermsOfUseStepViewController {
 
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
-        NSLayoutConstraint.activate([
+        containerViewEdges = [
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.topAnchor.constraint(equalTo: safeTopAnchor),
             containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: safeBottomAnchor)
-        ])
+        ]
+
+        NSLayoutConstraint.activate(containerViewEdges)
     }
 
     var isiPad: Bool {
