@@ -5,7 +5,10 @@ trigger:
   batch: true
   branches:
     include:
-      *
+    - develop
+    - release/*
+    - feature/*
+    - fix/*
 
 steps:
 - script: |
