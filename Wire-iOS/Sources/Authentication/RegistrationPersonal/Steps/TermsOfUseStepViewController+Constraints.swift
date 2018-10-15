@@ -70,7 +70,7 @@ extension TermsOfUseStepViewController {
             termsOfUseText.top == titleLabel.bottom + 5
 
             agreeButton.top == termsOfUseText.bottom + 24
-            agreeButton.bottom == containerView.bottom - horizontalInset
+            agreeButton.bottom == containerView.bottom - 24
             agreeButton.height == 40
 
             align(right: titleLabel, termsOfUseText, agreeButton)
@@ -84,9 +84,14 @@ extension TermsOfUseStepViewController {
             self.containerViewCenter = containerView.center == selfView.center
         }
 
-        constrain(containerView, self.view) { containerView, selfView in
-            self.containerViewEdges = containerView.edges == selfView.edges
-        }
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.topAnchor.constraint(equalTo: safeTopAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: safeBottomAnchor)
+        ])
     }
 
     var isiPad: Bool {
