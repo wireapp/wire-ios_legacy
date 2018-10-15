@@ -21,6 +21,8 @@ import Foundation
 extension ConversationMessageWindowTableViewAdapter {
     
     @objc func registerTableCellClasses() {
+        tableView.register(cell: NewImageMessageCell.self)
+        tableView.register(cell: NewTextMessageCell.self)
         tableView.register(TextMessageCell.self, forCellReuseIdentifier: ConversationTextCellId)
         tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
         tableView.register(ConversationRenamedCell.self, forCellReuseIdentifier: ConversationNameChangedCellId)
@@ -52,6 +54,23 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let message = messageWindow.messages[indexPath.row] as? ZMConversationMessage  else {
             return UITableViewCell()
+        }
+        
+        if message.isImage {
+            let properties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)!
+            let description = CommonCellDescription(layout: properties)
+            let cell = tableView.dequeueReusableCell(withIdentifier: description.reuseIdentifier, for: indexPath) as! TableViewCellDescriptionAdapter<NewImageMessageCell>
+            cell.configure(with: message)
+            return cell
+        }
+        
+        if message.isText {
+            let properties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)!
+            let commonDescription = CommonCellDescription(layout: properties)
+            let description = TextCellDescription(commonDescription, attachment: message.textMessageData?.linkPreview != nil ? .linkPreview : .none)
+            let cell = tableView.dequeueReusableCell(withIdentifier: description.reuseIdentifier, for: indexPath) as! TableViewCellDescriptionAdapter<NewTextMessageCell>
+            cell.configure(with: message)
+            return cell
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: message.cellIdentifier, for: indexPath)

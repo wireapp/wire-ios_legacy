@@ -98,17 +98,18 @@ import Cartography
 
     private func createConstraints() {
         constrain(self, label, leftSeparator, rightSeparator) { view, label, leftSeparator, rightSeparator in
+            view.height == 40
+            
             leftSeparator.leading == view.leading
-            leftSeparator.trailing == label.leading - inset
+            leftSeparator.width == UIView.conversationLayoutMargins.left - inset
             leftSeparator.centerY == view.centerY
+            
+            label.centerY == view.centerY
+            label.leading == leftSeparator.trailing + inset
 
             rightSeparator.leading == label.trailing + inset
             rightSeparator.trailing == view.trailing
             rightSeparator.centerY == view.centerY
-
-            label.centerY == view.centerY
-            label.leading == view.leadingMargin
-            label.trailing <= view.trailingMargin ~ 500.0
 
             heightConstraints = [
                 leftSeparator.height == separatorHeight,

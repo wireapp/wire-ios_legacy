@@ -189,11 +189,14 @@
 #import "UIColor+Mixing.h"
 #import "MessageType.h"
 #import "NSString+EmoticonSubstitution.h"
+#import "ZMConversationMessageWindow+Formatting.h"
 
 // Audio player
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
+#import "AudioTrackViewController.h"
+#import "AudioPlaylistViewController.h"
 
 // Media
 #import "MediaPreviewData.h"
