@@ -107,11 +107,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface UIView (LayoutDebugging)
-
-/// Returns whether the view or one of its subviews has an ambiguous layout.
-@property (nonatomic, readonly) BOOL hasAmbiguousLayoutInHierarchy;
-
-@end
-
 NS_ASSUME_NONNULL_END
