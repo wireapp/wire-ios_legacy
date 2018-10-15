@@ -2,7 +2,10 @@ pool:
    vmImage: 'macOS 10.13'
 
 trigger:
-  - develop
+  branches:
+    include:
+    - develop
+    - release/*
   
 steps:
 - script: |
