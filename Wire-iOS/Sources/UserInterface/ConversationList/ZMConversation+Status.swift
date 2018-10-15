@@ -272,15 +272,15 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
 
-        let state = conversation.voiceChannel?.state
-        switch state {
-        case .incoming(_, false, _)?:
-            return .activeCall(showJoin: true)
-        case .answered?, .established?, .establishedDataChannel?:
-            return .activeCall(showJoin: conversation.mutedMessageTypes != .all)
-        default:
+        if conversation.mutedMessageTypes != .none {
             return .none
+        } else if conversation.canJoinCall {
+            return .activeCall(showJoin: true)
+        } else if conversation.isCallOngoing {
+            return .activeCall(showJoin: false)
         }
+        
+        return .none
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
