@@ -1132,7 +1132,6 @@
 		EF21270E1FB9DFE300625A9B /* CountryCodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CC1FB9DFE300625A9B /* CountryCodeTableViewController.m */; };
 		EF21270F1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CF1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m */; };
 		EF2127101FB9DFE300625A9B /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126D61FB9DFE300625A9B /* SignInViewController.m */; };
-		EF2127111FB9DFE300625A9B /* LoginCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2126D71FB9DFE300625A9B /* LoginCredentials.swift */; };
 		EF2127121FB9DFE300625A9B /* PhoneSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */; };
 		EF2127131FB9DFE300625A9B /* EmailSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126DC1FB9DFE300625A9B /* EmailSignInViewController.m */; };
 		EF2127141FB9DFE300625A9B /* EmailStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126E01FB9DFE300625A9B /* EmailStepViewController.m */; };
@@ -2891,7 +2890,6 @@
 		EF2126D31FB9DFE300625A9B /* RegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistrationViewController.h; sourceTree = "<group>"; };
 		EF2126D41FB9DFE300625A9B /* CheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckmarkView.h; sourceTree = "<group>"; };
 		EF2126D61FB9DFE300625A9B /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
-		EF2126D71FB9DFE300625A9B /* LoginCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginCredentials.swift; sourceTree = "<group>"; };
 		EF2126D81FB9DFE300625A9B /* EmailSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailSignInViewController.h; sourceTree = "<group>"; };
 		EF2126D91FB9DFE300625A9B /* PhoneSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneSignInViewController.m; sourceTree = "<group>"; };
 		EF2126DA1FB9DFE300625A9B /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
@@ -6299,7 +6297,6 @@
 		EF2126D51FB9DFE300625A9B /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
-				EF2126D71FB9DFE300625A9B /* LoginCredentials.swift */,
 				D51735702017640D00B473CE /* UIAlertController+PasswordVerification.swift */,
 				EF2126DA1FB9DFE300625A9B /* SignInViewController.h */,
 				EF1EF1C420627305004DB245 /* SignInViewController+internal.h */,
@@ -7404,7 +7401,6 @@
 				8FC853A5199245770008B66B /* main.m in Sources */,
 				162936C31F4AD9B800D4F386 /* BlacklistViewController.swift in Sources */,
 				87934E121C451C1100186A85 /* FingerprintTableViewCell.swift in Sources */,
-				EF2127111FB9DFE300625A9B /* LoginCredentials.swift in Sources */,
 				EF2127091FB9DFE300625A9B /* EmailFormViewController.m in Sources */,
 				BFE41865209B1C1F00503C7C /* CallStatusViewController.swift in Sources */,
 				EEE104052126F68A003C779B /* CameraController.swift in Sources */,
