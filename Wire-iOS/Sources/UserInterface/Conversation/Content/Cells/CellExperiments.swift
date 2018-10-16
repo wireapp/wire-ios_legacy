@@ -59,6 +59,8 @@ protocol ConfigurableCell {
     init(from description: Description)
     
     func configure(with content: Content)
+    
+    var isSelected: Bool { get set }
 }
 
 struct CodableBox<T: Codable>: Codable {
@@ -97,6 +99,13 @@ struct CommonCellDescription: OptionSet, CellDescription {
     }
     
 }
+
+//struct CellLayout {
+//    
+//    []
+//    
+//    
+//}
 
 class SenderView: UIView {
     
@@ -279,7 +288,7 @@ extension UIView {
 
 class TableViewCellDescriptionAdapter<C: ConfigurableCell> : UITableViewCell where C : UIView {
     
-    let cellView: C
+    var cellView: C
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         guard let description = C.Description(from: reuseIdentifier) else {
@@ -290,6 +299,11 @@ class TableViewCellDescriptionAdapter<C: ConfigurableCell> : UITableViewCell whe
         self.cellView.translatesAutoresizingMaskIntoConstraints = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.focusStyle = .custom
+        self.selectionStyle = .none
+        self.backgroundColor = .clear
+        self.isOpaque = false
 
         contentView.addSubview(cellView)
         
@@ -308,6 +322,21 @@ class TableViewCellDescriptionAdapter<C: ConfigurableCell> : UITableViewCell whe
     func configure(with content: C.Content) {
         cellView.configure(with: content)
     }
+        
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        UIView.animate(withDuration: 0.35, animations: {
+            self.cellView.isSelected = selected
+            self.layoutIfNeeded()
+        })
+    }
+    
+//    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+//        super.setHighlighted(highlighted, animated: animated)
+//        cellView.isSelected = highlighted
+//    }
+    
     
 }
 

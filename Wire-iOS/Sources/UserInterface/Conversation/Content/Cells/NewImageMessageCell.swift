@@ -18,72 +18,72 @@
 
 import Foundation
 
-class NewImageMessageCell: UIView, ConfigurableCell {
+class ImageMessageContentView: UIView {
     
-    typealias Content = ZMConversationMessage
-    typealias Description = CommonCellDescription
-    
-    var senderView: SenderView?
-    var burstTimestampView: ConversationCellBurstTimestampView?
     var imageView = ImageResourceView()
     var imageAspectConstraint: NSLayoutConstraint?
-    var imageWidthConstraint: NSLayoutConstraint?
-    var imageHeightConstraint: NSLayoutConstraint?
+    var imageWidthConstraint: NSLayoutConstraint
+    var imageHeightConstraint: NSLayoutConstraint
     
-    required init(from description: CommonCellDescription) {
-        super.init(frame: .zero)
-        
-        var layout: [(UIView, UIEdgeInsets)] = []
-        
-        if description.contains(.showBurstTimestamp) {
-            let burstTimestampView = ConversationCellBurstTimestampView()
-            layout.append((burstTimestampView, UIEdgeInsets.zero))
-            self.burstTimestampView = burstTimestampView
-        }
-        
-        if description.contains(.showSender) {
-            let senderView = SenderView()
-            layout.append((senderView, UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)))
-            self.senderView = senderView
-        }
-        
-        imageView.contentMode = .scaleAspectFit
+    init() {
         imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
         imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
-        imageWidthConstraint?.priority = .defaultLow
-        imageHeightConstraint?.priority = .defaultLow
         
-        NSLayoutConstraint.activate([imageWidthConstraint!, imageHeightConstraint!])
+        super.init(frame: .zero)
         
-        layout.append((FlexibleContainer(imageView, flexibleInsets: FlexibleContainer.FlexibleInsets(top: false, left: false, right: true, bottom: false)), UIView.conversationLayoutMargins))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageWidthConstraint.priority = .defaultLow
+        imageHeightConstraint.priority = .defaultLow
         
-        layout.forEach({ (view, _) in
-            view.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(view)
-        })
+        addSubview(imageView)
         
-        createConstraints(layout)
+        NSLayoutConstraint.activate([
+            imageWidthConstraint,
+            imageHeightConstraint,
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            imageView.topAnchor.constraint(equalTo: topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor)])
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with content: ZMConversationMessage) {
+    func configure(with content: ZMImageMessageData) {
+        imageAspectConstraint.apply({ imageView.removeConstraint($0) })
+        imageAspectConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: content.originalSize.height / content.originalSize.width)
+        imageAspectConstraint?.isActive = true
+        imageWidthConstraint.constant = content.originalSize.width
+        imageHeightConstraint.constant = content.originalSize.height
+        imageView.setImageResource(content.image)
+    }
+    
+}
+
+class NewImageMessageCell: MessageCell, ConfigurableCell {
+    
+    typealias Content = ZMConversationMessage
+    typealias Description = CommonCellDescription
+    
+    let imageMessageContentView: ImageMessageContentView
+
+    required init(from description: CommonCellDescription) {
+        imageMessageContentView = ImageMessageContentView()
+        
+        super.init(from: description, content: imageMessageContentView)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func configure(with content: ZMConversationMessage) {
+        super.configure(with: content)
+        
         guard let imageMessageData = content.imageMessageData else { return }
         
-        if let sender = content.sender {
-            senderView?.configure(with: sender)
-        }
-        
-        burstTimestampView?.label.text = Message.formattedReceivedDate(for: content).uppercased()
-        burstTimestampView?.isSeparatorExpanded = true
-        
-        imageAspectConstraint.apply({ imageView.removeConstraint($0) })
-        imageAspectConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: imageMessageData.originalSize.height / imageMessageData.originalSize.width)
-        imageAspectConstraint?.isActive = true
-        imageWidthConstraint?.constant = imageMessageData.originalSize.width
-        imageHeightConstraint?.constant = imageMessageData.originalSize.height
-        imageView.setImageResource(imageMessageData.image)
+        imageMessageContentView.configure(with: imageMessageData)
     }
 }

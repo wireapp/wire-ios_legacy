@@ -88,6 +88,7 @@ extension ZMSystemMessageData {
     
     fileprivate var forceShowTimestamp: Bool = false
     private var isConfigured: Bool = false
+    fileprivate var hiddenConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         
@@ -114,6 +115,8 @@ extension ZMSystemMessageData {
         statusLabel.accessibilityLabel = "DeliveryStatus"
         statusLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
         statusLabel.numberOfLines = 0
+        statusLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        statusLabel.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         statusLabel.linkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
                                       NSAttributedString.Key.foregroundColor: UIColor(for: .vividRed)]
         statusLabel.activeLinkAttributes = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as NSNumber,
@@ -127,7 +130,7 @@ extension ZMSystemMessageData {
     private func createConstraints() {
         constrain(self, reactionsView, statusLabel, labelClipView) { selfView, reactionsView, statusLabel, labelClipView in
 
-            selfView.height >= 28 ~ 750.0
+            selfView.height >= 28 ~ 350.0
             
             labelClipView.leading == selfView.leadingMargin
             labelClipView.trailing == selfView.trailingMargin
@@ -142,6 +145,9 @@ extension ZMSystemMessageData {
             reactionsView.trailing == selfView.trailingMargin
             reactionsView.centerY == selfView.centerY
         }
+        
+        hiddenConstraint = self.heightAnchor.constraint(equalToConstant: 0)
+//        hiddenConstraint?.priority = UILayoutPriority(351)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -176,6 +182,26 @@ extension ZMSystemMessageData {
             self.configureTimestamp(message, animated: animated)
             self.tapGestureRecogniser.isEnabled = false
         }
+    }
+    
+    func setHidden(_ isHidden: Bool, animated: Bool) {
+        self.hiddenConstraint?.isActive = isHidden
+        self.alpha = isHidden ? 0 : 1
+        
+//        let changes = {
+//            self.hiddenConstraint?.isActive = isHidden
+//            self.alpha = isHidden ? 0 : 1
+////            self.layoutIfNeeded()
+//        }
+//
+//        if animated {
+//            UIView.animate(withDuration: 0.35) {
+//                changes()
+//            }
+//        } else {
+//            layer.removeAllAnimations()
+//            changes()
+//        }
     }
     
     fileprivate func showReactionsView(_ show: Bool, animated: Bool) {
