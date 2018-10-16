@@ -36,7 +36,7 @@ class GroupDetailsNotificationsOptionsCell: GroupDetailsOptionsCell {
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
-        icon = UIImage(for: .mention, iconSize: .tiny,
+        icon = UIImage(for: .alerts, iconSize: .tiny,
                        color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
     }
 
