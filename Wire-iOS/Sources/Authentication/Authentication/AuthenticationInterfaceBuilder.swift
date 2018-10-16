@@ -70,7 +70,8 @@ class AuthenticationInterfaceBuilder {
             return NoHistoryViewController(contextType: type)
 
         case .enterLoginCode(let phoneNumber):
-            return VerificationCodeStepViewController(credential: phoneNumber)
+            let verification = VerificationCodeStepViewController(credential: phoneNumber)
+            return AdaptiveFormViewController(childViewController: verification)
 
         case .addEmailAndPassword(_, _, let canSkip):
             let addEmailPasswordViewController = AddEmailPasswordViewController()
