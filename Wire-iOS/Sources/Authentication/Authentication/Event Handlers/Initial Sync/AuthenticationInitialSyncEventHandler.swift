@@ -47,7 +47,7 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
 
         switch (isRegistered, needsEmail, nextRegistrationStep) {
         case (true, false, nil):
-            return [.hideLoadingView, .completeRegistrationFlow]
+            return [.hideLoadingView, .assignRandomProfileImage, .completeRegistrationFlow]
 
         case (false, false, nil):
             return [.hideLoadingView, .completeLoginFlow]

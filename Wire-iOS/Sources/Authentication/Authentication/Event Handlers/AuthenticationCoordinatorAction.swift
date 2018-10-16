@@ -43,6 +43,7 @@ enum AuthenticationCoordinatorAction {
     case repeatAction
     case advanceTeamCreation(String)
     case displayInlineError(NSError)
+    case assignRandomProfileImage
 
     var retainsModal: Bool {
         switch self {

@@ -133,7 +133,6 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
     func sessionManagerCreated(userSession: ZMUserSession) {
         log.info("Session manager created session: \(userSession)")
-        assignRandomProfileImage()
         currentPostRegistrationFields().apply(sendPostRegistrationFields)
         initialSyncObserver = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
     }
@@ -249,6 +248,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
             case .displayInlineError(let error):
                 currentViewController?.displayError?(error)
+
+            case .assignRandomProfileImage:
+                assignRandomProfileImage()
             }
         }
     }
