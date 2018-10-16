@@ -572,7 +572,6 @@
 		879718981D1C767600163C07 /* AudioEffectsPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879718971D1C767600163C07 /* AudioEffectsPickerViewController.swift */; };
 		8797A9B42046D687009865D5 /* GuestsBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8797A9B32046D687009865D5 /* GuestsBarController.swift */; };
 		879D6AFC1E69E20900DC07A1 /* ImageMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */; };
-		879E5C8A2167B85C007CE4E7 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E5C892167B85B007CE4E7 /* WireStyleKit.swift */; };
 		879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 879E5E981F0104A6007A88A3 /* UITextView+Autocorrect.swift */; };
 		87A15FCC1E07E8EB00AED79B /* CollectionsSectionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A15FCB1E07E8EB00AED79B /* CollectionsSectionSet.swift */; };
 		87A15FCE1E07EAB400AED79B /* AssetCollectionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A15FCD1E07EAB400AED79B /* AssetCollectionWrapper.swift */; };
@@ -1041,6 +1040,7 @@
 		EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB8A2CF1F628D1100958881 /* Settings+Account.swift */; };
 		EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */; };
 		EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */; };
+		EEC7E822217620ED00E32835 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC7E821217620ED00E32835 /* WireStyleKit.swift */; };
 		EECDB2542029D7DA00D0D268 /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECDB2532029D7D900D0D268 /* Down.framework */; };
 		EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */; };
 		EEE104052126F68A003C779B /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE104042126F68A003C779B /* CameraController.swift */; };
@@ -2101,7 +2101,6 @@
 		879718971D1C767600163C07 /* AudioEffectsPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffectsPickerViewController.swift; sourceTree = "<group>"; };
 		8797A9B32046D687009865D5 /* GuestsBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestsBarController.swift; sourceTree = "<group>"; };
 		879D6AFB1E69E20900DC07A1 /* ImageMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageView.swift; sourceTree = "<group>"; };
-		879E5C892167B85B007CE4E7 /* WireStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireStyleKit.swift; sourceTree = "<group>"; };
 		879E5E981F0104A6007A88A3 /* UITextView+Autocorrect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Autocorrect.swift"; sourceTree = "<group>"; };
 		87A15FCB1E07E8EB00AED79B /* CollectionsSectionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionsSectionSet.swift; sourceTree = "<group>"; };
 		87A15FCD1E07EAB400AED79B /* AssetCollectionWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetCollectionWrapper.swift; sourceTree = "<group>"; };
@@ -2742,6 +2741,7 @@
 		EEB8A2CF1F628D1100958881 /* Settings+Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Account.swift"; sourceTree = "<group>"; };
 		EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ImageType.swift"; sourceTree = "<group>"; };
 		EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSData_ImageTypeTests.swift; sourceTree = "<group>"; };
+		EEC7E821217620ED00E32835 /* WireStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireStyleKit.swift; sourceTree = "<group>"; };
 		EECDB2532029D7D900D0D268 /* Down.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Down.framework; path = Carthage/Build/iOS/Down.framework; sourceTree = "<group>"; };
 		EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorage.swift; sourceTree = "<group>"; };
 		EEE104042126F68A003C779B /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
@@ -3409,7 +3409,7 @@
 		1E5E0CE81B6B8EDB003B0CAC /* Autogenerated */ = {
 			isa = PBXGroup;
 			children = (
-				879E5C892167B85B007CE4E7 /* WireStyleKit.swift */,
+				EEC7E821217620ED00E32835 /* WireStyleKit.swift */,
 			);
 			path = Autogenerated;
 			sourceTree = "<group>";
@@ -6822,7 +6822,7 @@
 				5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */,
 				A9B02232209B6E4E00DF25D8 /* Hockey.swift in Sources */,
 				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
-				879E5C8A2167B85C007CE4E7 /* WireStyleKit.swift in Sources */,
+				EEC7E822217620ED00E32835 /* WireStyleKit.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				5EEFC1A920C01CA9007E8A79 /* UIView+Rounded.swift in Sources */,
 				87AAE4171E422E2300E1D13A /* FontScheme.swift in Sources */,
