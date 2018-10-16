@@ -1,9 +1,6 @@
 pool:
    vmImage: 'macOS 10.13'
 
-trigger:
-  - develop
-  
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.app
