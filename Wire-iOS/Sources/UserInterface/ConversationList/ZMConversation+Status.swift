@@ -276,9 +276,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     
     public static func icon(for state: CallState?, conversation: ZMConversation?) -> ConversationStatusIcon {
         
-        guard let conversation = conversation,
-            conversation.mutedMessageTypes == .none,
-            let state = state else {
+        guard let conversation = conversation, let state = state else {
             return .none
         }
         
