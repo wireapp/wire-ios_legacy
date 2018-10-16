@@ -19,6 +19,6 @@
 #import "BlueViewController.h"
 #import "AuthenticationCoordinatedViewController.h"
 
-@interface NameStepViewController : BlueViewController <AuthenticationCoordinatedViewController>
+@interface NameStepViewController : UIViewController <AuthenticationCoordinatedViewController>
 
 @end

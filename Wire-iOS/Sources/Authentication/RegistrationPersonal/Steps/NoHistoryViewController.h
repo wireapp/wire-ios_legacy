@@ -18,7 +18,6 @@
 
 
 #import "AuthenticationCoordinatedViewController.h"
-#import "BlueViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,7 +26,7 @@ typedef NS_ENUM(NSUInteger, ContextType) {
     ContextTypeLoggedOut
 };
 
-@interface NoHistoryViewController : BlueViewController <AuthenticationCoordinatedViewController>
+@interface NoHistoryViewController : UIViewController <AuthenticationCoordinatedViewController>
 - (instancetype)initWithContextType:(ContextType)contextType;
 
 @property (nonatomic, readonly) ContextType contextType;

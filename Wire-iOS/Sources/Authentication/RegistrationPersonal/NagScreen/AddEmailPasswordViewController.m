@@ -36,7 +36,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface AddEmailPasswordViewController () <AddEmailStepViewControllerDelegate>
 
 @property (nonatomic) IconButton *closeButton;
-@property (nonatomic) UIImageView *backgroundImageView;
 @property (nonatomic) AddEmailStepViewController *addEmailStepViewController;
 
 @end
@@ -50,7 +49,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super viewDidLoad];
 
-    [self createBackgroundImageView];
     [self createEmailStepController];
     [self createCloseButton];
 
@@ -62,14 +60,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 #pragma mark - Interface Configuration
-
-- (void)createBackgroundImageView
-{
-    UIImage *backgroundImage = [UIImage imageNamed:@"LaunchImage"];
-    self.backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
-    self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.backgroundImageView];
-}
 
 - (void)createEmailStepController
 {
@@ -99,12 +89,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     NSArray<NSLayoutConstraint *> *constraints =
     @[
-      // Background image
-      [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-      [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-      [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-      [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-
       // Add e-mail step
       [self.addEmailStepViewController.view.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor],
       [self.addEmailStepViewController.view.topAnchor constraintEqualToAnchor:self.safeTopAnchor],

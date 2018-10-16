@@ -19,7 +19,7 @@
 
 import UIKit
 
-@objcMembers class ClientUnregisterFlowViewController: BlueViewController, AuthenticationCoordinatedViewController {
+@objcMembers class ClientUnregisterFlowViewController: UIViewController, AuthenticationCoordinatedViewController {
     var popTransition: PopTransition?
     var pushTransition: PushTransition?
     var rootNavigationController: NavigationController?
