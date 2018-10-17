@@ -18,7 +18,7 @@
 
 import UIKit
 
-class EmailLinkVerificationViewController: BlueViewController, AuthenticationCoordinatedViewController {
+class EmailLinkVerificationViewController: UIViewController, AuthenticationCoordinatedViewController {
 
     weak var authenticationCoordinator: AuthenticationCoordinator?
 

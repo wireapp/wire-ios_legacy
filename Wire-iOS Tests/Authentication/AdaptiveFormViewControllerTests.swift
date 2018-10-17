@@ -19,21 +19,28 @@
 import XCTest
 @testable import Wire
 
-class VerificationCodeStepViewControllerTests: ZMSnapshotTestCase {
+class AdaptiveFormViewControllerTests: ZMSnapshotTestCase {
+
+    var child: VerificationCodeStepViewController?
 
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = UIColor.black.withAlphaComponent(0.5)
+        child = VerificationCodeStepViewController(credential: "user@example.com")
     }
 
-    func testThatItRendersInstructionsWithPhoneNumber() {
-        let sut = VerificationCodeStepViewController(credential: "+4912345678900")
-        verifyInAllDeviceSizes(view: sut.view)
+    override func tearDown() {
+        child = nil
+        super.tearDown()
     }
 
-    func testThatItRendersInstructionsWithEmailAddress() {
-        let sut = VerificationCodeStepViewController(credential: "test@wire.com")
-        verifyInAllDeviceSizes(view: sut.view)
+    func testThatItHasCorrectLayout() {
+        // GIVEN
+        let sut = AdaptiveFormViewController(childViewController: child!)
+
+        // THEN
+        verifyInAllDeviceSizes(view: sut.view) { _, isPad in
+            sut.updateConstraints(usingRegularLayout: isPad)
+        }
     }
 
 }

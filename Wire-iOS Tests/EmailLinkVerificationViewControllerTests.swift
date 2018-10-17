@@ -23,6 +23,7 @@ class EmailLinkVerificationViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        snapshotBackgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
 
     func testThatItRendersInstructionsWithEmailAddress() {

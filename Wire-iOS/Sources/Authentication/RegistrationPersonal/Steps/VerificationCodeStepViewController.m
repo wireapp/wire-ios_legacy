@@ -41,7 +41,6 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 @property (nonatomic) UILabel *instructionLabel;
 @property (nonatomic) UILabel *resendLabel;
 @property (nonatomic) UIButton *resendButton;
-@property (nonatomic) UIImageView *backgroundImageView;
 
 @property (nonatomic) NSDate *lastSentDate;
 @property (nonatomic) ZMTimer *timer;
@@ -71,7 +70,6 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 {
     [super viewDidLoad];
 
-    [self createBackgroundImageView];
     [self createInstructionLabel];
     [self createVerificationField];
     [self createResendButton];
@@ -96,14 +94,6 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
-}
-
-- (void)createBackgroundImageView
-{
-    UIImage *backgroundImage = [UIImage imageNamed:@"LaunchImage"];
-    self.backgroundImageView = [[UIImageView alloc] initWithImage:backgroundImage];
-    self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.backgroundImageView];
 }
 
 - (void)createInstructionLabel
@@ -177,14 +167,6 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
     [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
     [self.resendLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
     [[self.resendLabel.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-24] setActive:YES];
-
-    [NSLayoutConstraint activateConstraints:
-     @[
-       [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-       [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-       [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-       [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-       ]];
 }
 
 - (void)updateResendArea
