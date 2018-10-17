@@ -477,6 +477,22 @@ extension AuthenticationCoordinator {
         userSession.submitMarketingConsent(with: fields.marketingConsent)
     }
 
+    /// Auto-assigns a random profile image to the user.
+    func assignRandomProfileImage() {
+        guard let userSession = statusProvider?.sharedUserSession else {
+            log.error("Not assigning a random profile picture, because the user session does not exist.")
+            return
+        }
+
+        URLSession.shared.dataTask(with: .wr_randomProfilePictureSource) { (data, _, error) in
+            if let data = data, error == nil {
+                DispatchQueue.main.async {
+                    userSession.profileUpdate.updateImage(imageData: data)
+                }
+            }
+            }.resume()
+    }
+
     // MARK: Login
 
     /**
@@ -731,20 +747,6 @@ extension AuthenticationCoordinator {
         registrationStatus.sendActivationCode(to: .email(emailAddress))
     }
 
-    func assignRandomProfileImage() {
-        guard let userSession = statusProvider?.sharedUserSession else {
-            log.error("Not assigning a random profile picture, because the user session does not exist.")
-            return
-        }
-
-        URLSession.shared.dataTask(with: .wr_randomProfilePictureSource) { (data, _, error) in
-            if let data = data, error == nil {
-                DispatchQueue.main.async {
-                    userSession.profileUpdate.updateImage(imageData: data)
-                }
-            }
-        }.resume()
-    }
 
     func repeatAction() {
         switch stateController.currentStep {
