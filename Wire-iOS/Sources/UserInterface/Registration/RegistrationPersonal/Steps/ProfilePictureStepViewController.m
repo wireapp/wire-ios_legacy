@@ -173,11 +173,11 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
       [self.selectOwnPictureButton.heightAnchor constraintEqualToConstant:40],
 
       // keepDefaultPictureButton
-      [self.selectOwnPictureButton.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:inset],
-      [self.selectOwnPictureButton.topAnchor constraintEqualToAnchor:self.selectOwnPictureButton.bottomAnchor constant:24],
-      [self.selectOwnPictureButton.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-inset],
-      [self.selectOwnPictureButton.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-inset],
-      [self.selectOwnPictureButton.heightAnchor constraintEqualToConstant:40],
+      [self.keepDefaultPictureButton.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:inset],
+      [self.keepDefaultPictureButton.topAnchor constraintEqualToAnchor:self.selectOwnPictureButton.bottomAnchor constant:8],
+      [self.keepDefaultPictureButton.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-inset],
+      [self.keepDefaultPictureButton.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-inset],
+      [self.keepDefaultPictureButton.heightAnchor constraintEqualToConstant:40],
 
       // profilePictureImageView
       [self.profilePictureImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
