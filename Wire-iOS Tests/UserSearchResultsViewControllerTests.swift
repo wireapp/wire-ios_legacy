@@ -25,7 +25,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     var serviceUser: ZMUser!
     
     override func setUp() {
-        // self user should not be a team member in order to show guest icon in the user cells
+        // self user should be a team member and other participants should be guests, in order to show guest icon in the user cells
         selfUserInTeam = true
 
         super.setUp()
