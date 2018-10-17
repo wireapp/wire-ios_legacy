@@ -67,28 +67,9 @@ class ClientTableViewCell: UITableViewCell {
             
             self.updateLabel()
             
-            if let activationDate = userClient.activationDate, userClient.activationLocationLatitude != 0 && userClient.activationLocationLongitude != 0 {
-                
-                let localClient = self.userClient
-                CLGeocoder().reverseGeocodeLocation(userClient.activationLocation, completionHandler: { (placemarks: [CLPlacemark]?, error: Error?) -> Void in
-                    
-                    if let placemark = placemarks?.first,
-                        let addressCountry = placemark.addressDictionary?[CNPostalAddressCountryKey] as? String,
-                        let addressCity = placemark.addressDictionary?[CNPostalAddressCityKey],
-                        localClient == self.userClient &&
-                            error == nil {
-                        
-                        self.activationLabel.text = "\("registration.devices.activated_in".localized) \(addressCity), \(addressCountry.uppercased()) — \(String(describing: activationDate.formattedDate))"
-                    }
-                })
-                
-                self.activationLabel.text = activationDate.formattedDate
-            }
-            else if let activationDate = userClient.activationDate {
-                self.activationLabel.text = activationDate.formattedDate
-            }
-            else {
-                self.activationLabel.text = ""
+            self.activationLabel.text = ""
+            if let date = userClient.activationDate?.formattedDate {
+                self.activationLabel.text = "registration.devices.activated".localized(args: date)
             }
             
             self.updateFingerprint()

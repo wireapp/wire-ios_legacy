@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Actief";
 "registration.devices.current_list_header" = "Huidig";
 "registration.devices.active_list_subtitle" = "Als je een van de bovengenoemde apparaten niet kent, verwijder deze dan en wijzig je wachtwoord.";
-"registration.devices.activated_in" = "Geactiveerd in";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login met Email";

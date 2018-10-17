@@ -828,11 +828,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self updateOutgoingConnectionVisibility];
         [self.contentViewController updateTableViewHeaderView];
         [self updateInputBarVisibility];
-        [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
-    } else {
-        [self.guestsBarController configureTitleWithState: self.conversation.guestBarState];
     }
-    
+
+    [self updateGuestsBarVisibilityAndShowIfNeeded:NO];
+
     if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged) {
         [self setupNavigatiomItem];
     }

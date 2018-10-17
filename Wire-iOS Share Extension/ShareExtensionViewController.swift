@@ -123,7 +123,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
-        try? recreateSharingSession(account: currentAccount)
+        updateAccount(currentAccount)
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
@@ -146,6 +146,11 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
     }
 
+    private var authenticatedAccounts: [Account] {
+        guard let accountManager = accountManager else { return [] }
+        return accountManager.accounts.filter(\.isAuthenticated)
+    }
+    
     private func recreateSharingSession(account: Account?) throws {
         guard let applicationGroupIdentifier = applicationGroupIdentifier,
             let hostBundleIdentifier = hostBundleIdentifier,
@@ -176,7 +181,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     override func presentationAnimationDidFinish() {
-        guard let sharingSession = sharingSession, sharingSession.canShare else {
+        if authenticatedAccounts.count == 0 {
             return presentNotSignedInMessage()
         }
     }
@@ -362,8 +367,17 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     func updateAccount(_ account: Account?) {
-        guard let account = account, account != currentAccount else { return }
 
+        var account = account
+        let authenticated = authenticatedAccounts
+        
+        // If the current account is not authenticated (e.g. device removed from another client)
+        // and there are other accounts authenticated, it switches to the first available.
+        
+        if let firstLogged = authenticated.first, account == currentAccount, account?.isAuthenticated == false {
+            account = firstLogged
+        }
+        
         do {
             try recreateSharingSession(account: account)
         } catch let error as SharingSession.InitializationError {
@@ -378,8 +392,10 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
         
         currentAccount = account
-        accountItem.value = account.shareExtensionDisplayName
+        accountItem.value = account?.shareExtensionDisplayName ?? ""
         conversationItem.value = "share_extension.conversation_selection.empty.value".localized
+        
+        guard account != currentAccount else { return }
         postContent?.target = nil
         extensionActivity?.conversation = nil
     }

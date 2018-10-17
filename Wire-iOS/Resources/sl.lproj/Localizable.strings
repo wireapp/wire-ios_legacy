@@ -1250,7 +1250,7 @@
 "registration.devices.active_list_header" = "Aktivno";
 "registration.devices.current_list_header" = "Trenutna";
 "registration.devices.active_list_subtitle" = "Če ne prepoznate zgornje naprave, jo odstranite in ponastavite vaše geslo.";
-"registration.devices.activated_in" = "Aktivirana na";
+"registration.devices.activated"  = "Activated %@";
 "registration.devices.id" = "ID:";
 
 "signin.use_email.label" = "Login with Email";
