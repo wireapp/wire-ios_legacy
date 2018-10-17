@@ -19,8 +19,6 @@
 
 #import "PhoneNumberStepViewController.h"
 
-@import PureLayout;
-
 #import "RegistrationTextField.h"
 #import "UIImage+ZetaIconsNeue.h"
 #import "Constants.h"
@@ -64,7 +62,7 @@
 
 - (void)createHeroLabel
 {
-    self.heroLabel = [[UILabel alloc] initForAutoLayout];
+    self.heroLabel = [UILabel new];
     self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
     
@@ -73,7 +71,7 @@
 
 - (void)createPhoneNumberViewController
 {
-    self.phoneNumberViewController = [[PhoneNumberViewController alloc] init];
+    self.phoneNumberViewController = [PhoneNumberViewController new];
     [self.phoneNumberViewController willMoveToParentViewController:self];
     [self.view addSubview:self.phoneNumberViewController.view];
     [self addChildViewController:self.phoneNumberViewController];

@@ -19,8 +19,6 @@
 
 #import "NameStepViewController.h"
 
-@import PureLayout;
-
 #import "RegistrationTextField.h"
 #import "Constants.h"
 #import "Wire-Swift.h"
@@ -72,7 +70,7 @@
 
 - (void)createHeroLabel
 {
-    self.heroLabel = [[UILabel alloc] initForAutoLayout];
+    self.heroLabel = [UILabel new];
     self.heroLabel.font = UIFont.largeLightFont;
     self.heroLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.heroLabel.numberOfLines = 0;
@@ -83,7 +81,7 @@
 
 - (void)createNameField
 {
-    self.nameField = [[RegistrationTextField alloc] initForAutoLayout];
+    self.nameField = [RegistrationTextField new];
     self.nameField.keyboardType = UIKeyboardTypeDefault;
     self.nameField.delegate = self;
     

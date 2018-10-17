@@ -16,10 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-@import PureLayout;
-
-
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "CrossfadeTransition.h"
@@ -162,7 +158,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 @property (nonatomic) NSLayoutConstraint *rightViewWidthConstraint;
 
 @property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
-@property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
 
 @property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
 
@@ -208,23 +203,37 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (void)setupInitialConstraints
 {
-    [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        self.leftViewOffsetConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        self.rightViewOffsetConstraint = [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    }];
-    
-    self.leftViewWidthConstraint = [self.leftView autoSetDimension:ALDimensionWidth toSize:0];
-    self.rightViewWidthConstraint = [self.rightView autoSetDimension:ALDimensionWidth toSize:0];
-    
-    self.pinLeftViewOffsetConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.sideBySideConstraint = [self.rightView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.leftView];
+    self.leftView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.rightView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    self.leftViewOffsetConstraint = [self.leftView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
+    self.leftViewOffsetConstraint.priority = UILayoutPriorityDefaultHigh;
+
+    self.rightViewOffsetConstraint = [self.rightView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
+    self.rightViewOffsetConstraint.priority = UILayoutPriorityDefaultHigh;
+
+    self.leftViewWidthConstraint = [self.leftView.widthAnchor constraintEqualToConstant:0];
+    self.rightViewWidthConstraint = [self.rightView.widthAnchor constraintEqualToConstant:0];
+
+    self.sideBySideConstraint = [self.rightView.leadingAnchor constraintEqualToAnchor:self.leftView.trailingAnchor];
     self.sideBySideConstraint.active = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // leftView
+      [self.leftView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.leftView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+      self.leftViewOffsetConstraint,
+      self.leftViewWidthConstraint,
+
+      // rightView
+      [self.rightView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.rightView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+      self.rightViewOffsetConstraint,
+      self.rightViewWidthConstraint,
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -340,8 +349,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (void)updateActiveConstraints
 {
-    [[self constraintsInactiveForCurrentLayout] autoRemoveConstraints];
-    [[self constraintsActiveForCurrentLayout] autoInstallConstraints];
+    [NSLayoutConstraint deactivateConstraints:[self constraintsInactiveForCurrentLayout]];
+    [NSLayoutConstraint activateConstraints:[self constraintsActiveForCurrentLayout]];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -369,7 +378,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     NSMutableSet *constraints = [NSMutableSet set];
     
     if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape) {
-        [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
+        [constraints addObjectsFromArray:@[self.leftViewOffsetConstraint, self.sideBySideConstraint]];
     }
     
     [constraints addObjectsFromArray:@[self.leftViewWidthConstraint]];
@@ -382,7 +391,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     NSMutableSet *constraints = [NSMutableSet set];
     
     if (self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
-        [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
+        [constraints addObjectsFromArray:@[self.leftViewOffsetConstraint, self.sideBySideConstraint]];
     }
         
     return [constraints allObjects];

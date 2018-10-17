@@ -16,10 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@import WireSyncEngine;
 
 #import "UserImageView.h"
-@import PureLayout;
-@import WireSyncEngine;
 #import "UIImage+ImageUtilities.h"
 #import "UIImage+ZetaIconsNeue.h"
 
@@ -75,7 +74,7 @@
     self.accessibilityElementsHidden = YES;
     
     [self createIndicator];
-    [self createConstraints];
+    [self configureConstraints];
 }
 
 - (CGSize)intrinsicContentSize
@@ -132,7 +131,7 @@
 
 - (void)createIndicator
 {
-    self.indicator = [[RoundedView alloc ] initForAutoLayout];
+    self.indicator = [RoundedView new];
     self.indicator.backgroundColor = UIColor.redColor;
     self.indicator.hidden = YES;
     [self.indicator toggleCircle];
@@ -140,15 +139,22 @@
     [self addSubview:self.indicator];
 }
 
-- (void)createConstraints
+- (void)configureConstraints
 {
     [self setContentHuggingPriority:1000 forAxis:UILayoutConstraintAxisVertical];
     [self setContentHuggingPriority:1000 forAxis:UILayoutConstraintAxisHorizontal];
-    
-    [self.indicator autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.indicator autoPinEdgeToSuperviewEdge:ALEdgeRight];
-    [self.indicator autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.containerView withMultiplier:1.0f / 3.0f];
-    [self.indicator autoMatchDimension:ALDimensionHeight toDimension:ALDimensionWidth ofView:self.indicator];
+
+    self.indicator.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+  @[
+    [self.indicator.topAnchor constraintEqualToAnchor:self.topAnchor],
+    [self.indicator.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+    [self.indicator.widthAnchor constraintEqualToAnchor:self.containerView.widthAnchor multiplier:1/3],
+    [self.indicator.heightAnchor constraintEqualToAnchor:self.indicator.heightAnchor]
+    ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)updateIndicatorColor

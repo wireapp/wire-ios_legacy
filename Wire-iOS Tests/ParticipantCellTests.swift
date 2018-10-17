@@ -25,6 +25,9 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+
+        selfUserInTeam = true
+        MockUser.mockSelf()?.accentColorValue = .strongBlue
     }
 
     // MARK: - Started a Conversation
@@ -235,7 +238,6 @@ class ParticipantsCellTests: CoreDataSnapshotTestCase {
         uiMOC.markAsUIContext()
         let member = Member.getOrCreateMember(for: selfUser, in: team!, context: uiMOC)
         member.permissions = .member
-        MockUser.mockSelf().isTeamMember = true
         let users = Array(message.users).filter { $0 != selfUser }
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
         conversation?.allowGuests = allowGuests

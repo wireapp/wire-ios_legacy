@@ -20,7 +20,7 @@
 
 #import "SignInViewController.h"
 #import "SignInViewController+internal.h"
-
+#import "Constants.h"
 #import "PhoneSignInViewController.h"
 #import "EmailSignInViewController.h"
 #import "Wire-Swift.h"
@@ -64,10 +64,10 @@
 {
     [super viewDidLoad];
     
-    self.viewControllerContainer = [[UIView alloc] initForAutoLayout];
+    self.viewControllerContainer = [UIView new];
     [self.view addSubview:self.viewControllerContainer];
     
-    self.buttonContainer = [[UIView alloc] initForAutoLayout];
+    self.buttonContainer = [UIView new];
     [self.view addSubview:self.buttonContainer];
     
     [self createEmailSignInButton];
@@ -120,9 +120,8 @@
 
 - (void)setupAccessibilityElements
 {
-    self.buttonContainer.accessibilityTraits = UIAccessibilityTraitHeader;
-    self.buttonContainer.accessibilityTraits |= UIAccessibilityTraitTabBar;
-    
+    self.buttonContainer.accessibilityTraits = UIAccessibilityTraitHeader | UIAccessibilityTraitTabBar;
+
     self.emailSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_email.label", @"");
     self.phoneSignInButton.accessibilityLabel = NSLocalizedString(@"signin.use_phone.label", @"");
 }
@@ -193,8 +192,18 @@
     self.presentedSignInViewController = viewController;
     [self addChildViewController:viewController];
     [self.viewControllerContainer addSubview:viewController.view];
+
     viewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [viewController.view autoPinEdgesToSuperviewEdges];
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      [viewController.view.leadingAnchor constraintEqualToAnchor:self.viewControllerContainer.leadingAnchor],
+      [viewController.view.topAnchor constraintEqualToAnchor:self.viewControllerContainer.topAnchor],
+      [viewController.view.trailingAnchor constraintEqualToAnchor:self.viewControllerContainer.trailingAnchor],
+      [viewController.view.bottomAnchor constraintEqualToAnchor:self.viewControllerContainer.bottomAnchor]
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
     [viewController didMoveToParentViewController:self];
 }
 

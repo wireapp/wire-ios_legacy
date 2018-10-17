@@ -16,7 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@import PureLayout;
+#import "EmailSignInViewController.h"
+
 @import WireExtensionComponents;
 @import OnePasswordExtension;
 
@@ -31,6 +32,7 @@
 @property (nonatomic) RegistrationTextField *passwordField;
 @property (nonatomic) ButtonWithLargerHitArea *forgotPasswordButton;
 @property (nonatomic) ButtonWithLargerHitArea *companyLoginButton;
+@property (nonatomic) UIStackView *buttonsStackView;
 
 /// After a login try we set this property to @c YES to reset both field accessories after a field change on any of those
 @property (nonatomic) BOOL needsToResetBothFieldAccessories;
@@ -52,11 +54,7 @@
         
     [self createEmailField];
     [self createPasswordField];
-    [self createForgotPasswordButton];
-
-    if (self.canStartCompanyLoginFlow) {
-        [self createCompanyLoginButton];
-    }
+    [self createButtons];
 
     [self createConstraints];
 }
@@ -86,7 +84,7 @@
 
 - (void)createEmailField
 {
-    self.emailField = [[RegistrationTextField alloc] initForAutoLayout];
+    self.emailField = [RegistrationTextField new];
 
     if (@available(iOS 11, *)) {
         self.emailField.textContentType = UITextContentTypeUsername;
@@ -120,7 +118,7 @@
 
 - (void)createPasswordField
 {
-    self.passwordField = [[RegistrationTextField alloc] initForAutoLayout];
+    self.passwordField = [RegistrationTextField new];
 
     self.passwordField.placeholder = NSLocalizedString(@"password.placeholder", nil);
     self.passwordField.accessibilityLabel = NSLocalizedString(@"password.placeholder", nil);
@@ -169,7 +167,6 @@
     [self.forgotPasswordButton addTarget:self action:@selector(resetPassword:) forControlEvents:UIControlEventTouchUpInside];
 
     self.forgotPasswordButton.accessibilityTraits |= UIAccessibilityTraitLink;
-    [self.view addSubview:self.forgotPasswordButton];
 }
 
 - (void)createCompanyLoginButton
@@ -184,33 +181,59 @@
     [self.companyLoginButton addTarget:self action:@selector(companyLoginButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     self.companyLoginButton.accessibilityTraits |= UIAccessibilityTraitLink;
-    [self.view addSubview:self.companyLoginButton];
 }
+
+- (void)createButtons
+{
+    [self createForgotPasswordButton];
+
+    NSArray<__kindof UIView *> *buttons;
+
+    if (self.canStartCompanyLoginFlow) {
+        [self createCompanyLoginButton];
+        buttons = @[self.forgotPasswordButton, self.companyLoginButton];
+    } else {
+        buttons = @[self.forgotPasswordButton];
+    }
+
+    // Stack View
+    self.buttonsStackView = [[UIStackView alloc] initWithArrangedSubviews:buttons];
+    self.buttonsStackView.axis = UILayoutConstraintAxisHorizontal;
+    self.buttonsStackView.alignment = UIStackViewAlignmentFill;
+    self.buttonsStackView.distribution = UIStackViewDistributionEqualSpacing;
+
+    [self.view addSubview:self.buttonsStackView];
+}
+
 
 - (void)createConstraints
 {
-    [self.emailField autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.emailField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-    [self.emailField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-    [self.emailField autoSetDimension:ALDimensionHeight toSize:40];
-    
-    [self.passwordField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.emailField withOffset:8];
-    [self.passwordField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-    [self.passwordField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-    [self.passwordField autoSetDimension:ALDimensionHeight toSize:40];
-    
-    if (self.canStartCompanyLoginFlow) {
-        [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
-        [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
-        [self.forgotPasswordButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view withOffset:28];
-        [self.companyLoginButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
-        [self.companyLoginButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
-        [self.companyLoginButton autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view withOffset:-28];
-    } else {
-        [self.forgotPasswordButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.passwordField withOffset:13];
-        [self.forgotPasswordButton autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:13];
-        [self.forgotPasswordButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    }
+    self.emailField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.passwordField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.buttonsStackView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // emailField
+      [self.emailField.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      [self.emailField.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.emailField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+      [self.emailField.heightAnchor constraintEqualToConstant:40],
+
+      // passwordField
+      [self.passwordField.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      [self.passwordField.topAnchor constraintEqualToAnchor:self.emailField.bottomAnchor constant:8],
+      [self.passwordField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+      [self.passwordField.heightAnchor constraintEqualToConstant:40],
+
+      // buttonsStackView
+      [self.buttonsStackView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      [self.buttonsStackView.topAnchor constraintEqualToAnchor:self.passwordField.bottomAnchor constant:13],
+      [self.buttonsStackView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+      [self.buttonsStackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-13],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 #pragma mark - Properties

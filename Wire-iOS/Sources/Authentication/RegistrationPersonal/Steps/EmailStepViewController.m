@@ -19,8 +19,6 @@
 
 #import "EmailStepViewController.h"
 
-@import PureLayout;
-
 #import "IconButton.h"
 #import "EmailFormViewController.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -82,8 +80,17 @@
 
 - (void)createInitialConstraints
 {
-    [self.emailFormViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(32, 28, 0, 28) excludingEdge:ALEdgeBottom];
-    [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:10];
+    self.emailFormViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      [self.emailFormViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      [self.emailFormViewController.view.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:32],
+      [self.emailFormViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+      [self.emailFormViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-10],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 -(void)reset

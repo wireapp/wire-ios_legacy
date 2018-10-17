@@ -98,7 +98,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
 - (void)createInstructionLabel
 {
-    self.instructionLabel = [[UILabel alloc] init];
+    self.instructionLabel = [UILabel new];
     self.instructionLabel.font = UIFont.largeThinFont;
     self.instructionLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"registration.verify_phone_number.instructions", nil), self.credential];
@@ -110,7 +110,7 @@ const NSTimeInterval VerificationCodeResendInterval = 30.0f;
 
 - (void)createResendLabel
 {
-    self.resendLabel = [[UILabel alloc] initForAutoLayout];
+    self.resendLabel = [UILabel new];
     self.resendLabel.backgroundColor = [UIColor clearColor];
     self.resendLabel.font = UIFont.smallLightFont;
     self.resendLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
