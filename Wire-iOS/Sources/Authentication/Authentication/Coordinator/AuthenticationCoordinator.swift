@@ -279,6 +279,18 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
         presenter?.present(alert, animated: true)
     }
 
+    /// Repeats the current action.
+    func repeatAction() {
+        switch stateController.currentStep {
+        case .teamCreation(.verifyEmail):
+            resendTeamEmailCode()
+        case .enterLoginCode, .enterActivationCode:
+            resendVerificationCode()
+        default:
+            return
+        }
+    }
+
 }
 
 // MARK: - Actions
@@ -745,18 +757,6 @@ extension AuthenticationCoordinator {
         stateController.transition(to: .teamCreation(nextTeamState))
 
         registrationStatus.sendActivationCode(to: .email(emailAddress))
-    }
-
-
-    func repeatAction() {
-        switch stateController.currentStep {
-        case .teamCreation(.verifyEmail):
-            resendTeamEmailCode()
-        case .enterLoginCode, .enterActivationCode:
-            resendVerificationCode()
-        default:
-            return
-        }
     }
 
 }
