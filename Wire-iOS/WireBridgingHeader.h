@@ -93,8 +93,6 @@
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
 #import "RegistrationViewController.h"
-#import "FormFlowViewController.h"
-#import "RegistrationStepViewController.h"
 #import "SignInViewController.h"
 #import "SignInViewController+internal.h"
 #import "NavigationController.h"
@@ -130,8 +128,6 @@
 #import "ContactsDataSource.h"
 #import "BadgeUserImageView.h"
 #import "LaunchImageViewController.h"
-#import "ProfilePictureStepViewController.h"
-#import "ProfilePictureStepViewController+Private.h"
 #import "StartUIViewController.h"
 #import "Button.h"
 #import "RegistrationFormController.h"
@@ -139,6 +135,9 @@
 #import "NoHistoryViewController.h"
 #import "TermsOfUseStepViewController.h"
 #import "TermsOfUseStepViewController+Private.h"
+#import "VerificationCodeStepViewController.h"
+#import "NameStepViewController.h"
+#import "BlueViewController.h"
 #import "PermissionDeniedViewController.h"
 #import "ShareContactsViewController.h"
 
@@ -153,6 +152,7 @@
 #import "PassthroughTouchesView.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "URLSchemeHelper.h"
+#import "AuthenticationCoordinatedViewController.h"
 
 // Utils
 #import "Analytics.h"

@@ -19,32 +19,63 @@
 import UIKit
 import Cartography
 
+enum ChangeEmailFlowType {
+    case changeExistingEmail
+    case setInitialEmail
+}
+
 struct ChangeEmailState {
-    let currentEmail: String
+    let flowType: ChangeEmailFlowType
+    let currentEmail: String?
     var newEmail: String?
+    var newPassword: String?
     
-    var visibleEmail: String {
+    var visibleEmail: String? {
         return newEmail ?? currentEmail
     }
     
     var validatedEmail: String? {
-        var validatedEmail = newEmail as AnyObject?
-        let pointer = AutoreleasingUnsafeMutablePointer<AnyObject?>(&validatedEmail)
-        do {
-            try ZMUser.editableSelf().validateValue(pointer, forKey: #keyPath(ZMUser.emailAddress))
-            return validatedEmail as? String
-        } catch {
+        guard let newEmail = self.newEmail else { return nil }
+
+        switch UnregisteredUser.normalizedEmailAddress(newEmail) {
+        case .valid(let value):
+            return value
+        default:
             return nil
         }
     }
-    
-    var isValid: Bool {
-        guard let email = validatedEmail, !email.isEmpty else { return false }
-        return email != currentEmail
+
+    var validatedPassword: String? {
+        guard let newPassword = self.newPassword else { return nil }
+
+        switch UnregisteredUser.normalizedPassword(newPassword) {
+        case .valid(let value):
+            return value
+        default:
+            return nil
+        }
+    }
+
+    var validatedCredentials: ZMEmailCredentials? {
+        guard let email = validatedEmail, let password = validatedPassword else {
+            return nil
+        }
+
+        return ZMEmailCredentials(email: email, password: password)
     }
     
-    init(currentEmail: String = ZMUser.selfUser().emailAddress!) {
+    var isValid: Bool {
+        switch flowType {
+        case .changeExistingEmail:
+            return validatedEmail != nil
+        case .setInitialEmail:
+            return validatedCredentials != nil
+        }
+    }
+    
+    init(currentEmail: String? = ZMUser.selfUser().emailAddress) {
         self.currentEmail = currentEmail
+        flowType = currentEmail != nil ? .changeExistingEmail : .setInitialEmail
     }
 
 }
@@ -54,6 +85,11 @@ struct ChangeEmailState {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     var state = ChangeEmailState()
     private var observerToken: Any?
+
+    enum Cell: Int {
+        case emailField
+        case passwordField
+    }
 
     init() {
         super.init(style: .grouped)
@@ -77,12 +113,12 @@ struct ChangeEmailState {
     internal func setupViews() {
         RegistrationTextFieldCell.register(in: tableView)
         
-        title = "self.settings.account_section.email.change.title".localized.localizedUppercase
+        title = "self.settings.account_section.email.change.title".localized(uppercased: true)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.email.change.save".localized.localizedUppercase,
+            title: "self.settings.account_section.email.change.save".localized(uppercased: true),
             style: .done,
             target: self,
             action: #selector(saveButtonTapped)
@@ -100,11 +136,25 @@ struct ChangeEmailState {
     }
     
     @objc func saveButtonTapped(sender: UIBarButtonItem) {
-        guard let email = state.newEmail else { return }
+        requestEmailUpdate(showLoadingView: true)
+    }
+
+    func requestEmailUpdate(showLoadingView: Bool) {
+        let updateBlock: () throws -> Void
+
+        switch state.flowType {
+        case .setInitialEmail:
+            guard let credentials = state.validatedCredentials else { return }
+            updateBlock = { try self.userProfile?.requestSettingEmailAndPassword(credentials: credentials) }
+        case .changeExistingEmail:
+            guard let email = state.validatedEmail else { return }
+            updateBlock = { try self.userProfile?.requestEmailChange(email: email) }
+        }
+
         do {
-            try userProfile?.requestEmailChange(email: email)
+            try updateBlock()
             updateSaveButtonState(enabled: false)
-            showLoadingView = true
+            navigationController?.showLoadingView = showLoadingView
         } catch { }
     }
     
@@ -113,18 +163,44 @@ struct ChangeEmailState {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch state.flowType {
+        case .changeExistingEmail: return 1
+        case .setInitialEmail: return 2
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RegistrationTextFieldCell.zm_reuseIdentifier, for: indexPath) as! RegistrationTextFieldCell
-        cell.textField.accessibilityIdentifier = "EmailField"
-        cell.textField.keyboardType = .emailAddress
-        cell.textField.text = state.visibleEmail
-        cell.textField.becomeFirstResponder()
+
+        switch Cell(rawValue: indexPath.row)! {
+        case .emailField:
+            cell.textField.accessibilityIdentifier = "EmailField"
+            cell.textField.placeholder = "email.placeholder".localized
+            cell.textField.text = state.visibleEmail
+            cell.textField.keyboardType = .emailAddress
+            cell.textField.textContentType = .emailAddress
+            cell.textField.becomeFirstResponder()
+
+        case .passwordField:
+            cell.textField.accessibilityIdentifier = "PasswordField"
+            cell.textField.placeholder = "password.placeholder".localized
+            cell.textField.isSecureTextEntry = true
+            cell.textField.text = nil
+
+            if #available(iOS 12, *) {
+                cell.textField.textContentType = .newPassword
+            } else if #available(iOS 11, *) {
+                cell.textField.textContentType = .password
+            }
+        }
+
         cell.delegate = self
         updateSaveButtonState()
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
 
 }
@@ -132,13 +208,13 @@ struct ChangeEmailState {
 extension ChangeEmailViewController: UserProfileUpdateObserver {
     
     func emailUpdateDidFail(_ error: Error!) {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         showAlert(forError: error)
     }
     
-    func didSentVerificationEmail() {
-        showLoadingView = false
+    func didSendVerificationEmail() {
+        navigationController?.showLoadingView = false
         updateSaveButtonState()
         if let newEmail = state.newEmail {
             let confirmController = ConfirmEmailViewController(newEmail: newEmail, delegate: self)
@@ -153,15 +229,23 @@ extension ChangeEmailViewController: ConfirmEmailDelegate {
     }
     
     func resendVerification(inController controller: ConfirmEmailViewController) {
-        if let validatedEmail = state.validatedEmail {
-            try? userProfile?.requestEmailChange(email: validatedEmail)            
-        }
+        requestEmailUpdate(showLoadingView: false)
     }
 }
 
 extension ChangeEmailViewController: RegistrationTextFieldCellDelegate {
     func tableViewCellDidChangeText(cell: RegistrationTextFieldCell, text: String) {
-        state.newEmail = text
+        guard let index = tableView.indexPath(for: cell), let cellType = Cell(rawValue: index.row) else {
+            return
+        }
+
+        switch cellType {
+        case .emailField:
+            state.newEmail = text
+        case .passwordField:
+            state.newPassword = text
+        }
+
         updateSaveButtonState()
     }
 }

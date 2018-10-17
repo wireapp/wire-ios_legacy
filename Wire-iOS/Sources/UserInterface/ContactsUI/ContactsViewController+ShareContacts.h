@@ -18,9 +18,8 @@
 
 
 #import "ContactsViewController.h"
-#import "FormStepDelegate.h"
 
-@interface ContactsViewController (ShareContacts) <FormStepDelegate>
+@interface ContactsViewController (ShareContacts)
 
 - (void)presentShareContactsViewController;
 
