@@ -22,10 +22,11 @@ typealias ViewLayout = (UIView, UIEdgeInsets)
 
 class MessageCell: UIView {
     
+    let contentView: UIView
     var senderView: SenderView?
     var burstTimestampView: ConversationCellBurstTimestampView?
     let toolboxView: MessageToolboxView = MessageToolboxView()
-    var ephemeralCountdownView: DestructionCountdownView?
+    let ephemeralCountdownView: DestructionCountdownView = DestructionCountdownView()
     
     var isSelected: Bool = false {
         didSet {
@@ -33,18 +34,20 @@ class MessageCell: UIView {
         }
     }
     
-    init(from description: CommonCellDescription, content: UIView, fullWidthContent: UIView? = nil) {
+    init(from configuration: MessageCellConfiguration, content: UIView, fullWidthContent: UIView? = nil) {
+        contentView = content
+        
         super.init(frame: .zero)
         
         var layout: [(UIView, UIEdgeInsets)] = []
         
-        if description.contains(.showBurstTimestamp) {
+        if configuration.contains(.showBurstTimestamp) {
             let burstTimestampView = ConversationCellBurstTimestampView()
             layout.append((burstTimestampView, UIEdgeInsets.zero))
             self.burstTimestampView = burstTimestampView
         }
         
-        if description.contains(.showSender) {
+        if configuration.contains(.showSender) {
             let senderView = SenderView()
             layout.append((senderView, UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)))
             self.senderView = senderView
@@ -62,6 +65,23 @@ class MessageCell: UIView {
             view.translatesAutoresizingMaskIntoConstraints = false
             addSubview(view)
         })
+        
+        let ephemeralCountdownContainer = UIView()
+        ephemeralCountdownContainer.translatesAutoresizingMaskIntoConstraints = false
+        ephemeralCountdownContainer.addSubview(ephemeralCountdownView)
+        addSubview(ephemeralCountdownContainer)
+        
+        ephemeralCountdownView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            ephemeralCountdownContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            ephemeralCountdownContainer.trailingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            ephemeralCountdownContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4), // TODO jacob
+            ephemeralCountdownView.centerXAnchor.constraint(equalTo: ephemeralCountdownContainer.centerXAnchor),
+            ephemeralCountdownView.topAnchor.constraint(equalTo: ephemeralCountdownContainer.topAnchor),
+            ephemeralCountdownView.bottomAnchor.constraint(equalTo: ephemeralCountdownContainer.bottomAnchor),
+            ephemeralCountdownView.widthAnchor.constraint(equalToConstant: 8),
+            ephemeralCountdownView.heightAnchor.constraint(equalToConstant: 8)])
         
         createConstraints(layout)
     }
@@ -89,6 +109,10 @@ class TextMessageContentView: UIView {
     let textView: LinkInteractionTextView = LinkInteractionTextView()
     var articleView: ArticleView?
     var mediaPreviewController: MediaPreviewViewController?
+    
+    override var firstBaselineAnchor: NSLayoutYAxisAnchor {
+        return textView.firstBaselineAnchor
+    }
     
     required init(from description: TextCellDescription) {
         super.init(frame: .zero)
@@ -158,7 +182,7 @@ class NewTextMessageCell: MessageCell, ConfigurableCell {
         
         textContentView = TextMessageContentView(from: description)
         
-        super.init(from: description.common, content: textContentView, fullWidthContent: audioTrackViewController?.view)
+        super.init(from: description.messageCelldescription.configuration, content: textContentView, fullWidthContent: audioTrackViewController?.view)
     }
     
     required init?(coder aDecoder: NSCoder) {

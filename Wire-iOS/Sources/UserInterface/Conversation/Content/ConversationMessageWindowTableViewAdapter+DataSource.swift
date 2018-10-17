@@ -58,7 +58,7 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         
         if message.isImage {
             let properties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)!
-            let description = CommonCellDescription(layout: properties)
+            let description = MessageCellDescription(layout: properties)
             let cell = tableView.dequeueReusableCell(withIdentifier: description.reuseIdentifier, for: indexPath) as! TableViewCellDescriptionAdapter<NewImageMessageCell>
             cell.configure(with: message)
             return cell
@@ -66,8 +66,8 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
         
         if message.isText {
             let properties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)!
-            let commonDescription = CommonCellDescription(layout: properties)
-            let description = TextCellDescription(commonDescription, attachment: message.textMessageData?.linkPreview != nil ? .linkPreview : .none)
+            let messageCellDescription = MessageCellDescription(layout: properties)
+            let description = TextCellDescription(messageCellDescription, attachment: message.textMessageData?.linkPreview != nil ? .linkPreview : .none)
             let cell = tableView.dequeueReusableCell(withIdentifier: description.reuseIdentifier, for: indexPath) as! TableViewCellDescriptionAdapter<NewTextMessageCell>
             cell.configure(with: message)
             return cell

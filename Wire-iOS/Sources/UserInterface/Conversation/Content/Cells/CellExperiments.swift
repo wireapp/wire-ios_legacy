@@ -67,45 +67,45 @@ struct CodableBox<T: Codable>: Codable {
     var value: T
 }
 
-struct CommonCellDescription: OptionSet, CellDescription {
+struct MessageCellConfiguration: OptionSet, Codable {
     
     var rawValue: Int
     
-    static var variants: [CommonCellDescription] = [.none, .showSender, .showBurstTimestamp, .all]
+    static var allCases: [MessageCellConfiguration] = [.none, .showSender, .showBurstTimestamp, .all]
     
-    static let none = CommonCellDescription(rawValue: 0)
-    static let showSender = CommonCellDescription(rawValue: 1 << 0)
-    static let showBurstTimestamp = CommonCellDescription(rawValue: 1 << 1)
-    static let all: CommonCellDescription = [.showSender, .showBurstTimestamp]
-    
-    
-    init(layout: ConversationCellLayoutProperties) {
-        
-        var description = CommonCellDescription()
-        
-        if layout.showBurstTimestamp {
-            description.insert(.showBurstTimestamp)
-        }
-        
-        if layout.showSender {
-            description.insert(.showSender)
-        }
-        
-        self = description
-    }
-    
-    init(rawValue: Int) {
-        self.rawValue = rawValue
-    }
+    static let none = MessageCellConfiguration(rawValue: 0)
+    static let showSender = MessageCellConfiguration(rawValue: 1 << 0)
+    static let showBurstTimestamp = MessageCellConfiguration(rawValue: 1 << 1)
+    static let all: MessageCellConfiguration = [.showSender, .showBurstTimestamp]
     
 }
 
-//struct CellLayout {
-//    
-//    []
-//    
-//    
-//}
+struct MessageCellDescription: CellDescription {
+    
+    var configuration: MessageCellConfiguration
+    
+    static var variants: [MessageCellDescription] = MessageCellConfiguration.allCases.map(MessageCellDescription.init)
+    
+    init(_ configuration: MessageCellConfiguration) {
+        self.configuration = configuration
+    }
+    
+    init(layout: ConversationCellLayoutProperties) {
+        
+        var configuration = MessageCellConfiguration()
+        
+        if layout.showBurstTimestamp {
+            configuration.insert(.showBurstTimestamp)
+        }
+        
+        if layout.showSender {
+            configuration.insert(.showSender)
+        }
+        
+        self.configuration = configuration
+    }
+    
+}
 
 class SenderView: UIView {
     
@@ -176,7 +176,7 @@ class SenderView: UIView {
 
 struct TextCellDescription: CellDescription {
     
-    enum Attachment: Int, Codable {
+    enum Attachment: Int, Codable, CaseIterable {
         case none
         case linkPreview
         case youtube
@@ -185,73 +185,23 @@ struct TextCellDescription: CellDescription {
     
     static var variants: [TextCellDescription] {
         
-        var muu: [TextCellDescription] = []
+        var textCellDescriptions: [TextCellDescription] = []
         
-        CommonCellDescription.variants.forEach { foo in
-            Attachment.allValues.forEach { maa in
-                muu.append(TextCellDescription(foo, attachment: maa))
+        MessageCellDescription.variants.forEach { messageCelldescription in
+            Attachment.allCases.forEach { attachment in
+                textCellDescriptions.append(TextCellDescription(messageCelldescription, attachment: attachment))
             }
         }
         
-        return muu
+        return textCellDescriptions
     }
     
-    var common: CommonCellDescription
+    var messageCelldescription: MessageCellDescription
     var attachment: Attachment = .none
     
-    init(_ common: CommonCellDescription, attachment: Attachment) {
-        self.common = common
+    init(_ messageCelldescription: MessageCellDescription, attachment: Attachment) {
+        self.messageCelldescription = messageCelldescription
         self.attachment = attachment
-    }
-    
-}
-
-class FlexibleContainer: UIView {
-    
-    struct FlexibleInsets {
-        let top: Bool
-        let left: Bool
-        let right: Bool
-        let bottom: Bool
-    }
-    
-    init(_ view: UIView, flexibleInsets: FlexibleInsets) {
-        super.init(frame: .zero)
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(view)
-        
-        var constraints: [NSLayoutConstraint] = []
-        
-        if flexibleInsets.left {
-            constraints += [view.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor)]
-        } else {
-            constraints += [view.leadingAnchor.constraint(equalTo: leadingAnchor)]
-        }
-        
-        if flexibleInsets.right {
-            constraints += [view.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor)]
-        } else {
-            constraints += [view.trailingAnchor.constraint(equalTo: trailingAnchor)]
-        }
-        
-        if flexibleInsets.top {
-            constraints += [view.topAnchor.constraint(greaterThanOrEqualTo: topAnchor)]
-        } else {
-            constraints += [view.topAnchor.constraint(equalTo: topAnchor)]
-        }
-        
-        if flexibleInsets.bottom {
-            constraints += [view.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)]
-        } else {
-            constraints += [view.bottomAnchor.constraint(equalTo: bottomAnchor)]
-        }
-        
-        NSLayoutConstraint.activate(constraints)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }

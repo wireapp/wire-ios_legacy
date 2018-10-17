@@ -65,14 +65,14 @@ class ImageMessageContentView: UIView {
 class NewImageMessageCell: MessageCell, ConfigurableCell {
     
     typealias Content = ZMConversationMessage
-    typealias Description = CommonCellDescription
+    typealias Description = MessageCellDescription
     
     let imageMessageContentView: ImageMessageContentView
 
-    required init(from description: CommonCellDescription) {
+    required init(from description: MessageCellDescription) {
         imageMessageContentView = ImageMessageContentView()
         
-        super.init(from: description, content: imageMessageContentView)
+        super.init(from: description.configuration, content: imageMessageContentView)
     }
     
     required init?(coder aDecoder: NSCoder) {
