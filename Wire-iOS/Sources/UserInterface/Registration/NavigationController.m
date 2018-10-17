@@ -110,6 +110,7 @@
     UIImage *logoImage = [WireStyleKit imageOfWireWithColor:[UIColor whiteColor]];
     self.logoImageView = [[UIImageView alloc] initWithImage:logoImage];
     self.logoImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.logoImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.logoImageView];
 }
 
