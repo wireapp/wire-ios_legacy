@@ -23,6 +23,7 @@ class VerificationCodeStepViewControllerTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        snapshotBackgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
 
     func testThatItRendersInstructionsWithPhoneNumber() {
