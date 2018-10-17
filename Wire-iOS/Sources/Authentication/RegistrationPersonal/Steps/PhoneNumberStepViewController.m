@@ -84,16 +84,27 @@
 
 - (void)configureConstraints
 {
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:75 relation:NSLayoutRelationGreaterThanOrEqual];
-    }];
-    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
-    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
+    self.heroLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.phoneNumberViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [self.phoneNumberViewController.view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-    [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:28];
-    [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:28];
-    [self.phoneNumberViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:51];
+    NSLayoutConstraint *heroTop = [self.heroLabel.topAnchor constraintGreaterThanOrEqualToAnchor:self.view.topAnchor constant:75];
+    heroTop.priority = UILayoutPriorityDefaultLow;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // heroLabel
+      [self.heroLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      heroTop,
+      [self.heroLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+
+      // phoneNumberViewController
+      [self.phoneNumberViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      [self.phoneNumberViewController.view.topAnchor constraintEqualToAnchor:self.heroLabel.bottomAnchor constant:24],
+      [self.phoneNumberViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+      [self.phoneNumberViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-51],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)takeFirstResponder

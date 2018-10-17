@@ -93,15 +93,26 @@
 
 - (void)configureConstraints
 {
-    CGFloat inset = 28.0;
-    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-    [self.heroLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
+    self.heroLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.nameField.translatesAutoresizingMaskIntoConstraints = NO;
 
-    [self.nameField autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.heroLabel withOffset:24];
-    [self.nameField autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-    [self.nameField autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-    [[self.nameField.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset] setActive:YES];
-    [self.nameField autoSetDimension:ALDimensionHeight toSize:40];
+    CGFloat inset = 28.0;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // heroLabel
+      [self.heroLabel.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:inset],
+      [self.heroLabel.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-inset],
+
+      // nameField
+      [self.nameField.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:inset],
+      [self.nameField.topAnchor constraintEqualToAnchor:self.heroLabel.bottomAnchor constant:24],
+      [self.nameField.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-inset],
+      [self.nameField.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor constant:-inset],
+      [self.nameField.heightAnchor constraintEqualToConstant:40],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 #pragma mark - Actions
