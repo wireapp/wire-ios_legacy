@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-/*
+
 import XCTest
 import WireLinkPreview
 @testable import Wire
@@ -197,4 +197,3 @@ class ArticleViewTests: ZMSnapshotTestCase {
         self.verifyInAllPhoneWidths(view: self.sut)
     }
 }
-*/
