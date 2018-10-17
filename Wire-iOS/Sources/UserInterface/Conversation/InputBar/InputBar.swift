@@ -105,7 +105,7 @@ private struct InputBarConstants {
 @objcMembers public final class InputBar: UIView {
 
     private let inputBarVerticalInset: CGFloat = 34
-    public static let rightIconSIze: CGFloat = 32
+    public static let rightIconSize: CGFloat = 32
 
 
     let textView = MarkdownTextView(with: DownStyle.compact)
@@ -113,13 +113,12 @@ private struct InputBarConstants {
     public let rightAccessoryStackView: UIStackView = {
         let stackView = UIStackView()
 
-        let rightInset = (UIView.conversationLayoutMargins.left - rightIconSIze) / 2
+        let rightInset = (UIView.conversationLayoutMargins.left - rightIconSize) / 2
 
         stackView.spacing = 16
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fill
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
         stackView.isLayoutMarginsRelativeArrangement = true
 
         return stackView
@@ -134,7 +133,6 @@ private struct InputBarConstants {
     public let buttonsView: InputBarButtonsView
     public let editingView = InputBarEditView()
     public let markdownView = MarkdownBarView()
-    
     
     public var editingBackgroundColor = UIColor.brightYellow
     public var barBackgroundColor: UIColor? = UIColor(scheme: .barBackground)
@@ -153,6 +151,8 @@ private struct InputBarConstants {
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
     fileprivate let notificationCenter = NotificationCenter.default
+    
+    fileprivate var leftAccessoryViewWidthConstraint: NSLayoutConstraint?
     
     var isEditing: Bool {
         return inputBarState.isEditing
@@ -221,6 +221,7 @@ private struct InputBarConstants {
         
 
         setupViews()
+        updateRightAccessoryStackViewLayoutMargins()
         createConstraints()
         
         notificationCenter.addObserver(markdownView, selector: #selector(markdownView.textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
@@ -262,7 +263,7 @@ private struct InputBarConstants {
             leftAccessoryView.leading == leftAccessoryView.superview!.leading
             leftAccessoryView.top == leftAccessoryView.superview!.top
             leftAccessoryView.bottom == buttonContainer.top
-            leftAccessoryView.width == UIView.conversationLayoutMargins.left
+            leftAccessoryViewWidthConstraint = leftAccessoryView.width == UIView.conversationLayoutMargins.left
 
             rightAccessoryView.trailing == rightAccessoryView.superview!.trailing
             rightAccessoryView.top == rightAccessoryView.superview!.top
@@ -305,6 +306,24 @@ private struct InputBarConstants {
             innerContainer.trailing == container.trailing
             self.rowTopInsetConstraint = innerContainer.top == container.top - constants.buttonsBarHeight
         }
+    }
+    
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+        
+        updateLeftAccessoryViewWidth()
+        updateRightAccessoryStackViewLayoutMargins()
+    }
+    
+    fileprivate func updateLeftAccessoryViewWidth() {
+        leftAccessoryViewWidthConstraint?.constant = UIView.conversationLayoutMargins.left
+    }
+    
+    fileprivate func updateRightAccessoryStackViewLayoutMargins() {
+        let rightInset = (UIView.conversationLayoutMargins.left - InputBar.rightIconSize) / 2
+        rightAccessoryStackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
     }
     
     @objc fileprivate func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {

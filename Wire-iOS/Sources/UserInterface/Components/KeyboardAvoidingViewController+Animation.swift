@@ -59,8 +59,7 @@ extension KeyboardAvoidingViewController {
             else { return }
         
         let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
-        let bottomOffset: CGFloat = -keyboardFrameInView.size.height
-        
+        let bottomOffset: CGFloat = -abs(keyboardFrameInView.size.height)
         guard bottomEdgeConstraint.constant != bottomOffset else { return }
         
         // When the keyboard is dismissed and then quickly revealed again, then

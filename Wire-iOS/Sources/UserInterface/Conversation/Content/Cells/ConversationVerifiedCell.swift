@@ -23,7 +23,7 @@ import Foundation
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         
-        self.leftIconView.image = WireStyleKit.imageOfShieldverified()
+        self.leftIconView.image = WireStyleKit.imageOfShieldverified
         
         self.updateLabel()
     }

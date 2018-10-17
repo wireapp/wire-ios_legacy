@@ -60,7 +60,7 @@
     return YES;
 }
 
-- (void)inviteUser:(ZMSearchUser *)user fromView:(UIView *)view
+- (void)inviteUserOrOpenConversation:(ZMSearchUser *)user fromView:(UIView *)view
 {
     if (user.isConnected) {
         [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation

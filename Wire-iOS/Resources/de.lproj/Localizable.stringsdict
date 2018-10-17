@@ -169,9 +169,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 neue Nachricht</string>
+        <string>1 Nachricht</string>
         <key>other</key>
-        <string>%d neue Nachrichten</string>
+        <string>%d Nachrichten</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>

@@ -22,7 +22,7 @@ import Cartography
 extension ConversationInputBarViewController {
     func createSendButtonConstraints() {
         constrain(sendButton, sendButton.superview!) { sendButton, superView in
-            sendButton.width == InputBar.rightIconSIze
+            sendButton.width == InputBar.rightIconSize
             sendButton.height == sendButton.width
         }
     }

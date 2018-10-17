@@ -58,6 +58,17 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
         verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
 
+    func testForOpenButtonWithALongUsername() {
+
+        let user = MockUser.mockUsers()[0]
+        user.name = "A very long username which should be clipped at tail"
+        sut.user = user
+
+        sut.actionButton.setTitle(buttonTitles[0], for: .normal)
+
+        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
+    }
+
     func testForNoSubtitle() {
 
         let user = MockUser.mockUsers()[0]

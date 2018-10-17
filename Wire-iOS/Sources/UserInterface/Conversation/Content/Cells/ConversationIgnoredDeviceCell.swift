@@ -26,7 +26,7 @@ import TTTAttributedLabel
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         
-        self.leftIconView.image = WireStyleKit.imageOfShieldnotverified()
+        self.leftIconView.image = WireStyleKit.imageOfShieldnotverified
         
         self.updateLabel()
     }

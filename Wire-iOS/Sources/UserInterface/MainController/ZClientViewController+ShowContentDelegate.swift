@@ -18,9 +18,22 @@
 
 import Foundation
 
-extension ProfileDetailsViewController {
-    @objc func setupStyle() {
-        remainingTimeLabel.textColor = .textDimmed
-        remainingTimeLabel.font = .mediumSemiboldFont
+extension ZClientViewController: ShowContentDelegate {
+    
+    public func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
+        switch conversation.conversationType {
+        case .connection:
+            selectIncomingContactRequestsAndFocus(onView: true)
+        case .group, .oneOnOne:
+            select(conversation, scrollTo: message, focusOnView: true, animated: true)
+        default:
+            break
+        }
     }
+    
+    public func showConversationList() {
+        transitionToList(animated: true, completion: nil)
+    }
+    
+    
 }

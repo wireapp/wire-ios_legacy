@@ -23,6 +23,7 @@ import WireTesting
 /// of mock objects.
 open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
+    var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     var otherUserConversation: ZMConversation!
@@ -48,6 +49,14 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         selfUser.remoteIdentifier = UUID()
         selfUser.name = "selfUser"
         ZMUser.boxSelfUser(selfUser, inContextUserInfo: uiMOC)
+        if selfUserInTeam {
+            let selfUser = ZMUser.selfUser(in: self.uiMOC)
+            let team = Team.insertNewObject(in: uiMOC)
+            team.remoteIdentifier = UUID()
+            let member = Member.insertNewObject(in: uiMOC)
+            member.user = selfUser
+            member.team = team
+        }
 
         otherUser = ZMUser.insertNewObject(in: uiMOC)
         otherUser.remoteIdentifier = UUID()
