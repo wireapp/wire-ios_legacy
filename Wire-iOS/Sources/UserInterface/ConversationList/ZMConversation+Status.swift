@@ -271,14 +271,18 @@ final internal class CallingMatcher: ConversationStatusMatcher {
     }
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon {
-        return CallingMatcher.icon(for: conversation.voiceChannel?.state)
+        return CallingMatcher.icon(for: conversation.voiceChannel?.state, conversation: conversation)
     }
     
-    public static func icon(for state: CallState?) -> ConversationStatusIcon {
+    public static func icon(for state: CallState?, conversation: ZMConversation?) -> ConversationStatusIcon {
         
-        guard let state = state else { return .none }
+        guard let conversation = conversation, let state = state else {
+            return .none
+        }
         
-        if state.canJoinCall() {
+        if case CallState.incoming(video: _, shouldRing: false, degraded: _) = state {
+            return .activeCall(showJoin: true)
+        } else if state.canJoinCall && conversation.mutedMessageTypes != .none {
             return .activeCall(showJoin: true)
         } else if state.isCallOngoing {
             return .activeCall(showJoin: false)
@@ -771,7 +775,7 @@ extension ZMConversation {
             guard let state = voiceChannel?.state else { return false }
             switch state {
             case .none, .terminating: return false
-            case .incoming: return conversationType == .group
+            case .incoming: return true
             default: return true
             }
         }()
