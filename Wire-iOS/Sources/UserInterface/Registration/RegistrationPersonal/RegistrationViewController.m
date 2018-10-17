@@ -19,7 +19,6 @@
 
 #import "RegistrationViewController.h"
 
-@import PureLayout;
 @import WireExtensionComponents;
 
 #import "WireSyncEngine+iOS.h"
@@ -114,7 +113,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setupBackgroundViewController];
     [self setupNavigationController];
     
-    [self updateViewConstraints];
+    [self createConstraints];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -180,16 +179,26 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)updateViewConstraints
+- (void)createConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        [self.backgroundImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self.keyboardAvoidingViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    }
+    self.backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // backgroundImageView
+      [self.backgroundImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.backgroundImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.backgroundImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.backgroundImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+
+      // keyboardAvoidingViewController
+      [self.keyboardAvoidingViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.keyboardAvoidingViewController.view.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.keyboardAvoidingViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.keyboardAvoidingViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 + (RegistrationFlow)registrationFlow

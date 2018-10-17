@@ -19,7 +19,6 @@
 
 #import "PhoneSignInViewController.h"
 
-@import PureLayout;
 @import WireSyncEngine;
 
 #import "NavigationController.h"
@@ -59,6 +58,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [super viewDidLoad];
     
     [self createPhoneNumberStepViewController];
+    [self createConstraints];
     
     self.view.opaque = NO;
     self.title = NSLocalizedString(@"registration.title", @"");
@@ -86,15 +86,28 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createPhoneNumberStepViewController
 {
     PhoneNumberStepViewController *phoneNumberStepViewController = [[PhoneNumberStepViewController alloc] initWithPhoneNumber:self.loginCredentials.phoneNumber isEditable:YES];
-    phoneNumberStepViewController.formStepDelegate = self;
-    phoneNumberStepViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
     self.phoneNumberStepViewController = phoneNumberStepViewController;
     self.phoneNumberStepViewController.phoneNumberViewController.phoneNumberField.confirmButton.accessibilityLabel = NSLocalizedString(@"signin.confirm", @"");
     
     [self addChildViewController:phoneNumberStepViewController];
     [self.view addSubview:phoneNumberStepViewController.view];
     [phoneNumberStepViewController didMoveToParentViewController:self];
-    [phoneNumberStepViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+}
+
+- (void)createConstraints
+{
+    self.phoneNumberStepViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      [self.phoneNumberStepViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.phoneNumberStepViewController.view.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.phoneNumberStepViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.phoneNumberStepViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)takeFirstResponder

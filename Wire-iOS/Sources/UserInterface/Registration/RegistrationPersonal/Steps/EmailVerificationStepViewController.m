@@ -19,8 +19,6 @@
 
 #import "EmailVerificationStepViewController.h"
 
-@import PureLayout;
-
 #import "NavigationController.h"
 #import "CheckmarkViewController.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -67,7 +65,7 @@
     [self createResendInstructions];
     [self createResendButton];
 
-    [self updateViewConstraints];
+    [self createConstraints];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -87,22 +85,23 @@
     self.registrationNavigationController.wr_navigationController.logoEnabled = YES;
 }
 
+#pragma mark - UI Setup
+
 - (void)createContainerView
 {
-    self.containerView = [[UIView alloc] initForAutoLayout];
+    self.containerView = [UIView new];
     [self.view addSubview:self.containerView];
 }
 
 - (void)createMailIconView
 {
     self.mailIconView = [[UIImageView alloc] initWithImage:[UIImage imageForIcon:ZetaIconTypeEnvelope iconSize:ZetaIconSizeLarge color:[UIColor whiteColor]]];
-    self.mailIconView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.containerView addSubview:self.mailIconView];
 }
 
 - (void)createInstructionsLabel
 {
-    self.instructionsLabel = [[UILabel alloc] initForAutoLayout];
+    self.instructionsLabel = [UILabel new];
     self.instructionsLabel.numberOfLines = 0;
     self.instructionsLabel.textAlignment = NSTextAlignmentCenter;
     self.instructionsLabel.font = UIFont.normalLightFont;
@@ -124,7 +123,7 @@
 
 - (void)createResendInstructions
 {
-    self.resendInstructionsLabel = [[UILabel alloc] initForAutoLayout];
+    self.resendInstructionsLabel = [UILabel new];
     self.resendInstructionsLabel.numberOfLines = 0;
     self.resendInstructionsLabel.textAlignment = NSTextAlignmentCenter;
     self.resendInstructionsLabel.font = UIFont.normalLightFont;
@@ -145,33 +144,44 @@
     [self.containerView addSubview:self.resendButton];
 }
 
-- (void)updateViewConstraints
+- (void)createConstraints
 {
-    [super updateViewConstraints];
+    self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.mailIconView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.instructionsLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.resendInstructionsLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.resendButton.translatesAutoresizingMaskIntoConstraints = NO;
 
-    if (!self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        [self.containerView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:28];
-        [self.containerView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:28];
-        
-        [self.mailIconView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-        [self.mailIconView autoAlignAxisToSuperviewAxis:ALAxisVertical];
-        
-        [self.instructionsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.mailIconView withOffset:32];
-        [self.instructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.instructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        
-        [self.resendInstructionsLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.instructionsLabel withOffset:32];
-        [self.resendInstructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.resendInstructionsLabel autoPinEdgeToSuperviewEdge:ALEdgeRight];
-        [self.resendInstructionsLabel autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    
-        [self.resendButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.resendInstructionsLabel withOffset:0];
-        [self.resendButton autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-        [self.resendButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    }
+    NSArray<NSLayoutConstraint *> *constraints =
+  @[
+    // containerView
+    [self.containerView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+    [self.containerView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+    [self.containerView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+    [self.containerView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+
+    // mailIconView
+    [self.mailIconView.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+    [self.mailIconView.centerXAnchor constraintEqualToAnchor:self.containerView.centerXAnchor],
+
+    // instructionsLabel
+    [self.instructionsLabel.topAnchor constraintEqualToAnchor:self.mailIconView.bottomAnchor constant:32],
+    [self.instructionsLabel.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor],
+    [self.instructionsLabel.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor],
+
+    // resendInstructionsLabel
+    [self.resendInstructionsLabel.topAnchor constraintEqualToAnchor:self.instructionsLabel.bottomAnchor constant:32],
+    [self.resendInstructionsLabel.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor],
+    [self.resendInstructionsLabel.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor],
+    [self.resendInstructionsLabel.centerXAnchor constraintEqualToAnchor:self.containerView.centerXAnchor],
+
+    // resendButton
+    [self.resendButton.topAnchor constraintEqualToAnchor:self.resendInstructionsLabel.bottomAnchor constant:0],
+    [self.resendButton.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor],
+    [self.resendButton.centerXAnchor constraintEqualToAnchor:self.containerView.centerXAnchor]
+    ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 #pragma mark - Actions

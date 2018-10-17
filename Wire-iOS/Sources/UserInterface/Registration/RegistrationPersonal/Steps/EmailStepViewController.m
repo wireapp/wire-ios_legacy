@@ -19,8 +19,6 @@
 
 #import "EmailStepViewController.h"
 
-@import PureLayout;
-
 #import "IconButton.h"
 #import "EmailFormViewController.h"
 #import "UIImage+ZetaIconsNeue.h"
@@ -80,7 +78,6 @@
 - (void)createEmailFormViewController
 {
     self.emailFormViewController = [[EmailFormViewController alloc] initWithNameFieldEnabled:YES];
-    self.emailFormViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.emailFormViewController.passwordField.confirmButton addTarget:self action:@selector(verifyFieldsAndContinue:) forControlEvents:UIControlEventTouchUpInside];
     [self addChildViewController:self.emailFormViewController];
     [self.view addSubview:self.emailFormViewController.view];
@@ -89,8 +86,17 @@
 
 - (void)createInitialConstraints
 {
-    [self.emailFormViewController.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(32, 28, 0, 28) excludingEdge:ALEdgeBottom];
-    [self.emailFormViewController.view autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:10];
+    self.emailFormViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      [self.emailFormViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],
+      [self.emailFormViewController.view.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:32],
+      [self.emailFormViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28],
+      [self.emailFormViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-10],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 -(void)reset

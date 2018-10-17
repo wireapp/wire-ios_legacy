@@ -20,8 +20,6 @@
 #import "AvatarImageView.h"
 #import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
-@import PureLayout;
-
 @interface AvatarImageView ()
 
 @property (nonatomic) RoundedView *containerView;
@@ -59,16 +57,12 @@
 - (void)setup
 {
     _shape = AvatarImageViewShapeCircle;
-    _showInitials = YES;
     [self createContainerView];
     [self createImageView];
     [self createInitials];
-    
-    [self.containerView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.imageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.imageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.imageView];
-    [self.initials autoCenterInSuperview];
-    
+
+    self.showInitials = YES;
+    [self createConstraints];
     [self updateCornerRadius];
 }
 
@@ -98,14 +92,14 @@
 
 - (void)createContainerView
 {
-    self.containerView = [[RoundedView alloc] initForAutoLayout];
+    self.containerView = [RoundedView new];
     self.containerView.clipsToBounds = YES;
     [self addSubview:self.containerView];
 }
 
 - (void)createImageView
 {
-    self.imageView = [[UIImageView alloc] initForAutoLayout];
+    self.imageView = [UIImageView new];
     self.imageView.layer.borderColor = [UIColor clearColor].CGColor;
     self.imageView.opaque = NO;
     [self.containerView addSubview:self.imageView];
@@ -113,21 +107,48 @@
 
 - (void)createInitials
 {
-    self.initials = [[UILabel alloc] initForAutoLayout];
+    self.initials = [UILabel new];
     self.initials.opaque = NO;
     [self.containerView addSubview:self.initials];
 }
 
+- (void)createConstraints
+{
+    self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.initials.translatesAutoresizingMaskIntoConstraints = NO;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // containerView
+      [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+      [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor],
+      [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+      [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
+      [self.containerView.widthAnchor constraintEqualToAnchor:self.containerView.heightAnchor],
+
+      // imageView
+      [self.imageView.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor],
+      [self.imageView.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+      [self.imageView.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor],
+      [self.imageView.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor],
+
+      // initials
+      [self.initials.centerXAnchor constraintEqualToAnchor:self.containerView.centerXAnchor],
+      [self.initials.centerYAnchor constraintEqualToAnchor:self.containerView.centerYAnchor]
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
+}
+
+- (BOOL)showInitials
+{
+    return self.initials.isHidden;
+}
+
 - (void)setShowInitials:(BOOL)showInitials
 {
-    _showInitials = showInitials;
-    if (self.showInitials) {
-        [self addSubview:self.initials];
-        [self.initials autoCenterInSuperview];
-    }
-    else {
-        [self.initials removeFromSuperview];
-    }
+    self.initials.hidden = !showInitials;
 }
 
 @end

@@ -33,12 +33,18 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         super.setUp()
         snapshotBackgroundColor = .white
         setupTestObjects()
+
+        MockUser.setMockSelf(selfUser)
+
     }
 
     override open func tearDown() {
         selfUser = nil
         otherUser = nil
         otherUserConversation = nil
+
+        MockUser.setMockSelf(nil)
+
         super.tearDown()
     }
 
@@ -48,6 +54,8 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         selfUser = ZMUser.insertNewObject(in: uiMOC)
         selfUser.remoteIdentifier = UUID()
         selfUser.name = "selfUser"
+        selfUser.accentColorValue = .vividRed
+
         ZMUser.boxSelfUser(selfUser, inContextUserInfo: uiMOC)
         if selfUserInTeam {
             let selfUser = ZMUser.selfUser(in: self.uiMOC)

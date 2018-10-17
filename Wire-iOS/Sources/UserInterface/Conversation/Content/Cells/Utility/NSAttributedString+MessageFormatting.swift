@@ -138,7 +138,7 @@ extension NSMutableAttributedString {
     }
     
     func changeFontSizeIfMessageContainsOnlyEmoticons() {
-        if string.containsOnlyEmojiWithSpaces {
+        if (string as String).containsOnlyEmojiWithSpaces {
             setAttributes([.font: UIFont.systemFont(ofSize: 40)], range: wholeRange)
         }
     }

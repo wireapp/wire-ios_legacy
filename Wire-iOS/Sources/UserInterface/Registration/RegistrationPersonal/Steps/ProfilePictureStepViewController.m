@@ -20,7 +20,6 @@
 #import "ProfilePictureStepViewController.h"
 #import "ProfilePictureStepViewController+Private.h"
 
-@import PureLayout;
 @import MobileCoreServices;
 
 #import "UIColor+WAZExtensions.h"
@@ -52,6 +51,9 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 @property (nonatomic) UIImage *defaultProfilePictureImage;
 @property (nonatomic) UIView *contentView;
 @property (nonatomic) UIView *overlayView;
+
+@property (nonatomic) NSArray<NSLayoutConstraint *> *compactContentConstraints;
+@property (nonatomic) NSArray<NSLayoutConstraint *> *regularContentConstraints;
 
 @end
 
@@ -93,13 +95,13 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 - (void)createContentView
 {
-    self.contentView = [[UIView alloc] initForAutoLayout];
+    self.contentView = [UIView new];
     [self.view addSubview:self.contentView];
 }
 
 - (void)createImageView
 {
-    self.profilePictureImageView = [[UIImageView alloc] initForAutoLayout];
+    self.profilePictureImageView = [UIImageView new];
     self.profilePictureImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.profilePictureImageView.clipsToBounds = YES;
     [self.view addSubview:self.profilePictureImageView];
@@ -107,14 +109,14 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
 
 - (void)createOverlayView
 {
-    self.overlayView = [[UIView alloc] initForAutoLayout];
+    self.overlayView = [UIView new];
     self.overlayView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
     [self.profilePictureImageView addSubview:self.overlayView];
 }
 
 - (void)createSubtitleLabel
 {
-    self.subtitleLabel = [[UILabel alloc] initForAutoLayout];
+    self.subtitleLabel = [UILabel new];
     self.subtitleLabel.font = UIFont.largeLightFont;
     self.subtitleLabel.textColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
     self.subtitleLabel.numberOfLines = 0;
@@ -145,34 +147,88 @@ NSString * const UnsplashRandomImageLowQualityURL = @"https://source.unsplash.co
     [self.contentView addSubview:self.keepDefaultPictureButton];
 }
 
+#pragma mark - Layout Constraints
+
 - (void)createConstraints
 {
-    CGFloat inset = 28.0;
-    [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-    [self.subtitleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-    
-    [self.selectOwnPictureButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.subtitleLabel withOffset:24];
-    [self.selectOwnPictureButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:inset];
-    [self.selectOwnPictureButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:inset];
-    [self.selectOwnPictureButton autoSetDimension:ALDimensionHeight toSize:40];
-    
-    [self.keepDefaultPictureButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.selectOwnPictureButton withOffset:8];
-    [self.keepDefaultPictureButton autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, inset, inset, inset) excludingEdge:ALEdgeTop];
-    [self.keepDefaultPictureButton autoSetDimension:ALDimensionHeight toSize:40];
-    
-    [self.profilePictureImageView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    [self.overlayView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.selectOwnPictureButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.keepDefaultPictureButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.profilePictureImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.overlayView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
 
-    if (IS_IPAD_FULLSCREEN) {
-        [self.contentView autoSetDimension:ALDimensionWidth toSize:self.parentViewController.maximumFormSize.width];
-        [self.contentView autoSetDimension:ALDimensionHeight toSize:self.parentViewController.maximumFormSize.height];
-        [self.contentView autoCenterInSuperview];
+    CGFloat inset = 28.0;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // subtitleLabel
+      [self.subtitleLabel.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:inset],
+      [self.subtitleLabel.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-inset],
+
+      // selectOwnPictureButton
+      [self.selectOwnPictureButton.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:inset],
+      [self.selectOwnPictureButton.topAnchor constraintEqualToAnchor:self.subtitleLabel.bottomAnchor constant:24],
+      [self.selectOwnPictureButton.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-inset],
+      [self.selectOwnPictureButton.heightAnchor constraintEqualToConstant:40],
+
+      // keepDefaultPictureButton
+      [self.keepDefaultPictureButton.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:inset],
+      [self.keepDefaultPictureButton.topAnchor constraintEqualToAnchor:self.selectOwnPictureButton.bottomAnchor constant:8],
+      [self.keepDefaultPictureButton.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-inset],
+      [self.keepDefaultPictureButton.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-inset],
+      [self.keepDefaultPictureButton.heightAnchor constraintEqualToConstant:40],
+
+      // profilePictureImageView
+      [self.profilePictureImageView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.profilePictureImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+      [self.profilePictureImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.profilePictureImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+
+      // overlayView
+      [self.overlayView.leadingAnchor constraintEqualToAnchor:self.profilePictureImageView.leadingAnchor],
+      [self.overlayView.topAnchor constraintEqualToAnchor:self.profilePictureImageView.topAnchor],
+      [self.overlayView.trailingAnchor constraintEqualToAnchor:self.profilePictureImageView.trailingAnchor],
+      [self.overlayView.bottomAnchor constraintEqualToAnchor:self.profilePictureImageView.bottomAnchor],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
+
+    self.compactContentConstraints =
+    @[
+      [self.contentView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+      [self.contentView.topAnchor constraintEqualToAnchor:self.safeTopAnchor],
+      [self.contentView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+      [self.contentView.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor],
+      ];
+
+    self.regularContentConstraints =
+    @[
+      [self.contentView.widthAnchor constraintEqualToConstant:self.parentViewController.maximumFormSize.width],
+      [self.contentView.heightAnchor constraintEqualToConstant:self.parentViewController.maximumFormSize.height],
+      [self.contentView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+      [self.contentView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+      ];
+
+    BOOL isRegular = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+    [self updateConstraintsForRegularLayout:isRegular];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+{
+    [super traitCollectionDidChange:previousTraitCollection];
+    BOOL isRegular = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+    [self updateConstraintsForRegularLayout:isRegular];
+}
+
+- (void)updateConstraintsForRegularLayout:(BOOL)isRegular
+{
+    if (isRegular) {
+        [NSLayoutConstraint deactivateConstraints:self.compactContentConstraints];
+        [NSLayoutConstraint activateConstraints:self.regularContentConstraints];
     } else {
-        
-        [[self.contentView.bottomAnchor constraintEqualToAnchor:self.safeBottomAnchor] setActive:YES];
-        [[self.contentView.topAnchor constraintEqualToAnchor:self.safeTopAnchor] setActive:YES];
-        [self.contentView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        [self.contentView autoPinEdgeToSuperviewEdge:ALEdgeRight];
+        [NSLayoutConstraint deactivateConstraints:self.regularContentConstraints];
+        [NSLayoutConstraint activateConstraints:self.compactContentConstraints];
     }
 }
 

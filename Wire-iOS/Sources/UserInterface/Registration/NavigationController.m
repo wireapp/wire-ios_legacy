@@ -19,7 +19,6 @@
 
 #import "NavigationController.h"
 
-@import PureLayout;
 @import WireExtensionComponents;
 
 
@@ -37,8 +36,6 @@
 @property (nonatomic) Button *rightTitledButton;
 @property (nonatomic) IconButton *rightIconedButton;
 @property (nonatomic, assign) BOOL rightButtonIsTitledOne;  // YES for rightTitledButton, NO for rightIconedButton
-
-@property (nonatomic) BOOL initialConstraintsCreated;
 
 @end
 
@@ -67,9 +64,8 @@
     
     [self updateLogoAnimated:NO];
     [self updateBackButtonAnimated:NO];
-    
-    
-    [self updateViewConstraints];
+
+    [self createConstraints];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -117,37 +113,40 @@
     [self.view addSubview:self.logoImageView];
 }
 
-- (void)updateViewConstraints
+- (void)createConstraints
 {
-    [super updateViewConstraints];
-    
-    if (! self.initialConstraintsCreated) {
-        self.initialConstraintsCreated = YES;
-        
-        UIEdgeInsets safeArea = UIScreen.safeArea;
-        
-        CGFloat topMargin = 32 + safeArea.top;
-        CGFloat leftMargin = 28 + safeArea.left;
-        CGFloat rightMargin = 28 + safeArea.right;
-        CGFloat buttonSize = 32;
-        
-        [self.logoImageView autoSetDimensionsToSize:CGSizeMake(76, 22)];
-        [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin + 3];
-        [self.logoImageView autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin - 2];
-        
-        [self.backButton autoSetDimension:ALDimensionHeight toSize:buttonSize];
-        [self.backButton autoSetDimension:ALDimensionWidth toSize:buttonSize relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin];
-        [self.backButton autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:leftMargin];
-        
-        [self.rightTitledButton autoSetDimension:ALDimensionHeight toSize:28];
-        [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin];
-        [self.rightTitledButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:leftMargin];
-        
-        [self.rightIconedButton autoSetDimensionsToSize:CGSizeMake(buttonSize, buttonSize)];
-        [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:topMargin];
-        [self.rightIconedButton autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:rightMargin];
-    }
+    CGFloat topMargin = 32;
+    CGFloat leftMargin = 28;
+    CGFloat rightMargin = 28;
+    CGFloat buttonSize = 32;
+
+    NSArray<NSLayoutConstraint *> *constraints =
+    @[
+      // logoImageView
+      [self.logoImageView.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor constant:leftMargin],
+      [self.logoImageView.topAnchor constraintEqualToAnchor:self.safeTopAnchor constant:topMargin],
+      [self.logoImageView.widthAnchor constraintEqualToConstant:76],
+      [self.logoImageView.heightAnchor constraintEqualToConstant:22],
+
+      // backButton
+      [self.backButton.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor constant:leftMargin],
+      [self.backButton.topAnchor constraintEqualToAnchor:self.safeTopAnchor constant:topMargin],
+      [self.logoImageView.widthAnchor constraintEqualToConstant:buttonSize],
+      [self.logoImageView.heightAnchor constraintEqualToConstant:buttonSize],
+
+      // rightTitledButton
+      [self.rightTitledButton.topAnchor constraintEqualToAnchor:self.safeTopAnchor constant:topMargin],
+      [self.rightTitledButton.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor constant:rightMargin],
+      [self.rightTitledButton.heightAnchor constraintEqualToConstant:28],
+
+      // rightIconedButton
+      [self.rightIconedButton.topAnchor constraintEqualToAnchor:self.safeTopAnchor constant:topMargin],
+      [self.rightIconedButton.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor constant:rightMargin],
+      [self.rightIconedButton.heightAnchor constraintEqualToConstant:buttonSize],
+      [self.rightIconedButton.heightAnchor constraintEqualToConstant:buttonSize],
+      ];
+
+    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
