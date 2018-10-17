@@ -205,53 +205,53 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersGroupConversationWithIncomingCall() {
         let conversation = createGroupConversation()
-        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false))
         verify(conversation: conversation, icon: icon)
     }
 
     func testThatItRendersGroupConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = createGroupConversation()
         conversation.mutedMessageTypes = .mentions
-        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false))
         verify(conversation: conversation, icon: icon)
     }
     
     func testThatItRendersGroupConversationWithIncomingCall_SilencedAll() {
         let conversation = createGroupConversation()
         conversation.mutedMessageTypes = .all
-        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false))
         verify(conversation: conversation, icon: icon)
     }
     
     func testThatItRendersGroupConversationWithOngoingCall() {
         let conversation = createGroupConversation()
-        let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
+        let icon = CallingMatcher.icon(for: .outgoing(degraded: false))
         verify(conversation: conversation, icon: icon)
     }
 
     func testThatItRendersOneOnOneConversationWithIncomingCall() {
         let conversation = otherUserConversation
-        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false))
         verify(conversation: conversation, icon: icon)
     }
     
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedExceptMentions() {
         let conversation = otherUserConversation
         conversation?.mutedMessageTypes = .mentions
-        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false))
         verify(conversation: conversation, icon: icon)
     }
     
     func testThatItRendersOneOnOneConversationWithIncomingCall_SilencedAll() {
         let conversation = otherUserConversation
         conversation?.mutedMessageTypes = .all
-        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)
+        let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false))
         verify(conversation: conversation, icon: icon)
     }
     
     func testThatItRendersOneOnOneConversationWithOngoingCall() {
         let conversation = otherUserConversation
-        let icon = CallingMatcher.icon(for: .outgoing(degraded: false), conversation: conversation)
+        let icon = CallingMatcher.icon(for: .outgoing(degraded: false))
         verify(conversation: conversation, icon: icon)
     }
 
@@ -259,9 +259,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     func verify(conversation: ZMConversation?, icon: ConversationStatusIcon) {
         guard let conversation = conversation else { XCTFail(); return }
         sut.conversation = conversation
-        if conversation.mutedMessageTypes == .none {
-            sut.itemView.rightAccessory.icon = icon
-        }
+        sut.itemView.rightAccessory.icon = icon
         sut.prepareForSnapshot()
         verify(view: sut)
     }

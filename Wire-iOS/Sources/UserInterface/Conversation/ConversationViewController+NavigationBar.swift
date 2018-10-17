@@ -277,9 +277,9 @@ extension ZMConversation {
 
 extension CallState {
     
-    func canJoinCall(conversationType: ZMConversationType) -> Bool {
+    func canJoinCall(conversationType: ZMConversationType? = nil) -> Bool {
         switch (self, conversationType) {
-        case (.incoming, .group): return true
+        case (.incoming, nil), (.incoming, .group?): return true
         default: return false
         }
     }
