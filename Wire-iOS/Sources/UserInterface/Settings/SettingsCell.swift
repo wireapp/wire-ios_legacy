@@ -371,15 +371,30 @@ protocol SettingsCellType: class {
         textInput.textColor = UIColor.lightGray
         contentView.addSubview(textInput)
 
+        createConstraints()
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
+        contentView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    func createConstraints(){
         let trailingBoundaryView = accessoryView ?? contentView
         constrain(contentView, textInput, trailingBoundaryView) { contentView, textInput, trailingBoundaryView in
             textInput.top == contentView.top - 8
             textInput.bottom == contentView.bottom + 8
             textInput.trailing == trailingBoundaryView.trailing - 16
         }
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
-        contentView.addGestureRecognizer(tapGestureRecognizer)
+
+        //prevent cellNameLabel overlaps textInput
+        NSLayoutConstraint.activate([
+            cellNameLabel.trailingAnchor.constraint(equalTo: textInput.leadingAnchor)
+        ])
+
+
+
+        ///TODO: mv to super
+        cellNameLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
+        textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
     }
     
     override func setupAccessibiltyElements() {
