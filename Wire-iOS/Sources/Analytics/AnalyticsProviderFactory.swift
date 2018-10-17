@@ -39,12 +39,6 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
             zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
         }
-        else if UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics {
-            zmLog.info("Creating analyticsProvider: AnalyticsMixpanelProvider")
-            let provider = AnalyticsMixpanelProvider(defaults: userDefaults)
-            provider.isOptedOut = false
-            return provider
-        }
         else {
             zmLog.info("Creating analyticsProvider: no provider")
             return nil
