@@ -39,7 +39,6 @@ extension NoHistoryViewController {
         let gotItText = self.localizableString(forPart: "got_it")!
         okButton.setTitle(gotItText.localized, for: .normal)
         okButton.addCallback(for: .touchUpInside) { [unowned self] _ in
-            self.showLoadingView = true
             self.authenticationCoordinator?.completeBackupStep()
         }
         

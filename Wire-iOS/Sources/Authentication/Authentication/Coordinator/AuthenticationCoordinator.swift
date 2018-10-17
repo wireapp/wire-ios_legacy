@@ -611,6 +611,7 @@ extension AuthenticationCoordinator {
      */
 
     @objc func completeBackupStep() {
+        presenter?.showLoadingView = true
         unauthenticatedSession.continueAfterBackupImportStep()
     }
 
