@@ -40,21 +40,20 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
         // Check the registration status
         let isRegistered = statusProvider?.authenticatedUserWasRegisteredOnThisDevice == true
 
-        switch isRegistered {
-        case true:
-            if let nextStep = nextRegistrationStep {
-                return [.hideLoadingView, .assignRandomProfileImage, .transition(nextStep, resetStack: true)]
-            } else {
-                return [.hideLoadingView, .assignRandomProfileImage, .completeRegistrationFlow]
-            }
+        // Build the list of actions
+        var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
 
-        case false:
-            if let nextStep = nextRegistrationStep {
-                return [.hideLoadingView, .transition(nextStep, resetStack: true)]
-            } else {
-                return [.hideLoadingView, .completeLoginFlow]
-            }
+        if isRegistered {
+            actions.append(.assignRandomProfileImage)
         }
+
+        if let nextStep = nextRegistrationStep {
+            actions.append(.transition(nextStep, resetStack: true))
+        } else {
+            actions.append(isRegistered ? .completeRegistrationFlow : .completeLoginFlow)
+        }
+
+        return actions
     }
 
 }
