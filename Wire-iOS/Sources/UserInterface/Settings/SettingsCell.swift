@@ -42,7 +42,7 @@ protocol SettingsCellType: class {
     public let cellNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalLightFont
-    label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
         return label
     }()
@@ -391,7 +391,6 @@ protocol SettingsCellType: class {
             textInput.trailing == trailingBoundaryView.trailing - textInputSpacing
         }
 
-        //prevent cellNameLabel overlaps textInput
         NSLayoutConstraint.activate([
             cellNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: textInput.leadingAnchor, constant: -textInputSpacing)
         ])
