@@ -25,6 +25,8 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
+        MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+
         sut = SettingsTextCell()
 
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
@@ -36,8 +38,7 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         sut.descriptor = cellDescriptor
         cellDescriptor.featureCell(sut)
 
-        /// TODO: remove this after snapshot is created
-        recordMode = true
+        sut.backgroundColor = .black
     }
     
     override func tearDown() {
@@ -45,7 +46,9 @@ final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(view: sut)
+    func testForNameElementWithALongName(){
+        let mockTableView = sut.wrapInTableView()
+        mockTableView.backgroundColor = .black
+        verify(view: mockTableView)
     }
 }
