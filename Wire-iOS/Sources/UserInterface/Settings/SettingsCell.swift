@@ -42,6 +42,8 @@ protocol SettingsCellType: class {
     public let cellNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalLightFont
+    label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
         return label
     }()
     let valueLabel = UILabel()
@@ -378,22 +380,21 @@ protocol SettingsCellType: class {
     }
 
     func createConstraints(){
+        let textInputSpacing = CGFloat(16)
+
         let trailingBoundaryView = accessoryView ?? contentView
         constrain(contentView, textInput, trailingBoundaryView) { contentView, textInput, trailingBoundaryView in
             textInput.top == contentView.top - 8
             textInput.bottom == contentView.bottom + 8
-            textInput.trailing == trailingBoundaryView.trailing - 16
+            textInput.trailing == trailingBoundaryView.trailing - textInputSpacing
         }
 
         //prevent cellNameLabel overlaps textInput
         NSLayoutConstraint.activate([
-            cellNameLabel.trailingAnchor.constraint(equalTo: textInput.leadingAnchor)
+            cellNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: textInput.leadingAnchor, constant: -textInputSpacing)
         ])
 
 
-
-        ///TODO: mv to super
-        cellNameLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
         textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
     }
     
