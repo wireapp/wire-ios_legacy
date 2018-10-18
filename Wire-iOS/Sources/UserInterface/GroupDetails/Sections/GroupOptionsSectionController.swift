@@ -21,6 +21,7 @@ import Foundation
 protocol GroupOptionsSectionControllerDelegate: class {
     func presentTimeoutOptions(animated: Bool)
     func presentGuestOptions(animated: Bool)
+    func presentNotificationsOptions(animated: Bool)
 }
 
 class GroupOptionsSectionController: GroupDetailsSectionController {
@@ -114,8 +115,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
         case .timeout:
             delegate?.presentTimeoutOptions(animated: true)
         case .notifications:
-            // TODO: present screen
-            break
+            delegate?.presentNotificationsOptions(animated: true)
         }
 
     }

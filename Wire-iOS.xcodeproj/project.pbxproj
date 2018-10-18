@@ -1041,6 +1041,7 @@
 		EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */; };
 		EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */; };
 		EEC7E822217620ED00E32835 /* WireStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC7E821217620ED00E32835 /* WireStyleKit.swift */; };
+		EEC7E82A2178B55100E32835 /* ConversationNotificationOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC7E8292178B55100E32835 /* ConversationNotificationOptionsViewController.swift */; };
 		EECDB2542029D7DA00D0D268 /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EECDB2532029D7D900D0D268 /* Down.framework */; };
 		EECDB2562029F5AB00D0D268 /* MarkdownTextStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */; };
 		EEE104052126F68A003C779B /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE104042126F68A003C779B /* CameraController.swift */; };
@@ -2742,6 +2743,7 @@
 		EEBE8C5B1F681694009D78C9 /* NSData+ImageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+ImageType.swift"; sourceTree = "<group>"; };
 		EEBE8C5D1F68171F009D78C9 /* NSData_ImageTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSData_ImageTypeTests.swift; sourceTree = "<group>"; };
 		EEC7E821217620ED00E32835 /* WireStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WireStyleKit.swift; sourceTree = "<group>"; };
+		EEC7E8292178B55100E32835 /* ConversationNotificationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationNotificationOptionsViewController.swift; sourceTree = "<group>"; };
 		EECDB2532029D7D900D0D268 /* Down.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Down.framework; path = Carthage/Build/iOS/Down.framework; sourceTree = "<group>"; };
 		EECDB2552029F5AB00D0D268 /* MarkdownTextStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorage.swift; sourceTree = "<group>"; };
 		EEE104042126F68A003C779B /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
@@ -5885,6 +5887,7 @@
 		D5C34E8F203D75CA004A0986 /* Conversation Options */ = {
 			isa = PBXGroup;
 			children = (
+				EEC7E8292178B55100E32835 /* ConversationNotificationOptionsViewController.swift */,
 				5EA73D8B20D901E70001D106 /* ConversationTimeoutOptionsViewController.swift */,
 				D5C34E8D203D75C5004A0986 /* ConversationOptionsViewController.swift */,
 				D53D390B2057F8ED00B87DAD /* TintCorrectedActivityController.swift */,
@@ -7081,6 +7084,7 @@
 				871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */,
 				8FC85459199245770008B66B /* InvisibleInputAccessoryView.m in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
+				EEC7E82A2178B55100E32835 /* ConversationNotificationOptionsViewController.swift in Sources */,
 				AF36C5A51E9F6C4F00FADECC /* DraftMessageCell.swift in Sources */,
 				BFD37A0F2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift in Sources */,
 				AF58EC881E9FCDE700EB94CD /* CoreDataTableViewController.swift in Sources */,
