@@ -19,13 +19,22 @@
 import XCTest
 @testable import Wire
 
-final class SettingsTextCellSnapshotTests: ZMSnapshotTestCase {
+final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: SettingsTextCell!
     
     override func setUp() {
         super.setUp()
         sut = SettingsTextCell()
+
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
+
+        let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
+
+        let cellDescriptor = settingsCellDescriptorFactory.nameElement()
+
+        sut.descriptor = cellDescriptor
+        cellDescriptor.featureCell(sut)
 
         /// TODO: remove this after snapshot is created
         recordMode = true

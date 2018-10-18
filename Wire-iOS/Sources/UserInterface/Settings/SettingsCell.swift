@@ -371,6 +371,8 @@ protocol SettingsCellType: class {
         textInput.delegate = self
         textInput.textAlignment = .right
         textInput.textColor = UIColor.lightGray
+        textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
+
         contentView.addSubview(textInput)
 
         createConstraints()
@@ -394,8 +396,6 @@ protocol SettingsCellType: class {
             cellNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: textInput.leadingAnchor, constant: -textInputSpacing)
         ])
 
-
-        textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
     }
     
     override func setupAccessibiltyElements() {
