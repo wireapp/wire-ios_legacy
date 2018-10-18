@@ -39,7 +39,7 @@ class TeamEmailVerificationErrorHandler: AuthenticationEventHandler {
         switch state {
         case .sendEmailCode:
             errorNeedsAlert = error.userSessionErrorCode != .emailIsAlreadyRegistered
-        case .verifyEmail:
+        case .verifyActivationCode:
             errorNeedsAlert = true
         default:
             return nil
