@@ -50,7 +50,12 @@ class TailEditingTextField: UITextField {
         if let isContainsNormalSpace = (self.text?.contains(type(of: self).normalSpace)), isContainsNormalSpace {
             self.text = self.text?.replacingOccurrences(of: type(of: self).normalSpace, with: type(of: self).nonBreakingSpace)
         } else {
-            self.text = self.text
+            // For iOS 11+, the hack for fixing text field width is no longer necessary.
+            // The hack would cause Chinese input method failed to input.
+            if #available(iOS 11, *) {
+            } else {
+                self.text = self.text
+            }
         }
     }
     
