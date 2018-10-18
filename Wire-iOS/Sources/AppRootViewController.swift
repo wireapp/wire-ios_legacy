@@ -562,20 +562,6 @@ public extension SessionManager {
         return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
 
-    @objc(removeAccountWithCredentials:)
-    func removeAccount(with credentials: LoginCredentials) {
-        guard let accountToRemove = accountManager.accounts.first(where: { $0.loginCredentials == credentials }) else {
-            return
-        }
-
-        guard let fallbackAccount = firstAuthenticatedAccount(excludingCredentials: credentials) else {
-            return
-        }
-
-        delete(account: accountToRemove)
-        select(fallbackAccount)
-    }
-
 }
 
 extension AppRootViewController: SessionManagerURLHandlerDelegate {

@@ -220,9 +220,9 @@
 
 - (void)cancelAddAccount
 {
-    if (self.loginCredentials) {
-        [SessionManager.shared removeAccountWithCredentials:self.loginCredentials];
-    }
+    [SessionManager.shared select:[[SessionManager shared] firstAuthenticatedAccountExcludingCredentials:self.loginCredentials]
+                       completion:nil
+               tearDownCompletion:nil];
 }
 
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction
