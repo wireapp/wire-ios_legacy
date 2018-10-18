@@ -146,7 +146,7 @@
     [self.cancelButton setIcon:ZetaIconTypeCancel withSize:ZetaIconSizeTiny forState:UIControlStateNormal];
     [self.cancelButton setIconColor:UIColor.whiteColor forState:UIControlStateNormal];
     self.cancelButton.accessibilityIdentifier = @"cancelAddAccount";
-    self.cancelButton.hidden = self.shouldHideCancelButton || [[SessionManager shared] firstAuthenticatedAccount] == nil;
+    self.cancelButton.hidden = self.shouldHideCancelButton || [[SessionManager shared] firstAuthenticatedAccountExcludingCredentials:self.loginCredentials] == nil;
     self.cancelButton.accessibilityLabel = NSLocalizedString(@"registration.launch_back_button.label", @"");
 
     [self.cancelButton addTarget:self action:@selector(cancelAddAccount) forControlEvents:UIControlEventTouchUpInside];
@@ -220,9 +220,9 @@
 
 - (void)cancelAddAccount
 {
-    [SessionManager.shared select:[[SessionManager shared] firstAuthenticatedAccount]
-                       completion:nil
-               tearDownCompletion:nil];
+    if (self.loginCredentials) {
+        [SessionManager.shared removeAccountWithCredentials:self.loginCredentials];
+    }
 }
 
 - (void)executeErrorFeedbackAction:(AuthenticationErrorFeedbackAction)feedbackAction

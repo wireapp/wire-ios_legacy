@@ -536,26 +536,44 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 extension AppRootViewController: PopoverPresenter { }
 
 public extension SessionManager {
-    
-    @objc var firstAuthenticatedAccount: Account? {
-        
+
+    @objc(firstAuthenticatedAccountExcludingCredentials:)
+    func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
-            if selectedAccount.isAuthenticated {
+            if selectedAccount.isAuthenticated && selectedAccount.loginCredentials != credentials {
                 return selectedAccount
             }
         }
-        
+
         for account in accountManager.accounts {
-            if account.isAuthenticated && account != accountManager.selectedAccount {
+            if account.isAuthenticated && account != accountManager.selectedAccount && account.loginCredentials != credentials {
                 return account
             }
         }
-        
+
         return nil
+    }
+
+    @objc var firstAuthenticatedAccount: Account? {
+        return firstAuthenticatedAccount(excludingCredentials: nil)
     }
 
     @objc static var numberOfAccounts: Int {
         return SessionManager.shared?.accountManager.accounts.count ?? 0
+    }
+
+    @objc(removeAccountWithCredentials:)
+    func removeAccount(with credentials: LoginCredentials) {
+        guard let accountToRemove = accountManager.accounts.first(where: { $0.loginCredentials == credentials }) else {
+            return
+        }
+
+        guard let fallbackAccount = firstAuthenticatedAccount(excludingCredentials: credentials) else {
+            return
+        }
+
+        delete(account: accountToRemove)
+        select(fallbackAccount)
     }
 
 }
