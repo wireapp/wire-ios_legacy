@@ -63,9 +63,9 @@ final class AccessoryTextFieldTests: ZMSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
 
-    func testThatItShowsPasswordInputedAndConfrimButtonIsEnabled() {
+    func testThatItShowsPasswordInputedAndConfirmButtonIsEnabled() {
         // GIVEN
-        sut.kind = .password
+        sut.kind = .password(isNew: false)
 
         // WHEN
         sut.text = "Password"

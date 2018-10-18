@@ -93,6 +93,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     func testForLightThemeWrappedInNavigationController(){
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
+        navWrapperController.navigationBar.tintColor = UIColor.accent()
 
         self.verify(view: navWrapperController.view)
     }
@@ -116,6 +117,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     func testForEditMode(){
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
+        navWrapperController.navigationBar.tintColor = UIColor.accent()
         let editButton = sut.navigationItem.rightBarButtonItem!
         UIApplication.shared.sendAction(editButton.action!, to: editButton.target, from: nil, for: nil)
 

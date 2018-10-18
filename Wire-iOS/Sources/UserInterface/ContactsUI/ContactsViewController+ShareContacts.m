@@ -22,15 +22,17 @@
 #import "ContactsDataSource.h"
 #import "Wire-Swift.h"
 
+@interface ContactsViewController (ShareContactsDelegate)  <ShareContactsViewControllerDelegate>
 
+@end
 
 @implementation ContactsViewController (ShareContacts)
 
 - (void)presentShareContactsViewController
 {
     ShareContactsViewController *shareContactsViewController = [[ShareContactsViewController alloc] init];
-    shareContactsViewController.formStepDelegate = self;
-    
+    shareContactsViewController.delegate = self;
+
     [self presentChildViewcontroller:shareContactsViewController];
 }
 
@@ -52,7 +54,13 @@
     }];
 }
 
-- (void)didCompleteFormStep:(UIViewController *)viewController
+@end
+
+#pragma mark - ShareContactsViewControllerDelegate
+
+@implementation ContactsViewController (ShareContactsDelegate)
+
+- (void)shareContactsViewControllerDidFinish:(UIViewController *)viewController
 {
     // Reload data source
     [self.dataSource searchWithQuery:@""];
@@ -60,7 +68,7 @@
     [self dismissChildViewController:viewController];
 }
 
-- (void)didSkipFormStep:(UIViewController *)viewController
+- (void)shareContactsViewControllerDidSkip:(UIViewController *)viewController
 {
     if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidNotShareContacts:)]) {
         [self.delegate contactsViewControllerDidNotShareContacts:self];

@@ -35,4 +35,3 @@
 #import "Message+Private.h"
 #import "MockConversation.h"
 #import "MockConversationFactory.h"
-#import "EmailVerificationStepViewController.h"

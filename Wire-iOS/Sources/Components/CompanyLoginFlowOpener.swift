@@ -19,11 +19,19 @@
 import Foundation
 import SafariServices
 
+protocol CompanyLoginFlowHandlerDelegate: class {
+    /// Called when the user cancels the company login flow.
+    func userDidCancelCompanyLoginFlow()
+}
+
 /**
  * Handles opening URLs to validate company login authentication.
  */
 
 class CompanyLoginFlowHandler {
+
+    /// The delegate of the flow handler.
+    weak var delegate: CompanyLoginFlowHandlerDelegate?
 
     /// Whether we allow the in-app browser. Defaults to `true`.
     var enableInAppBrowser: Bool = true
@@ -98,6 +106,10 @@ class CompanyLoginFlowHandler {
 
     private func openSafariEmbed(at url: URL) {
         let safariViewController = BrowserViewController(url: url)
+        safariViewController.completion = {
+            self.delegate?.userDidCancelCompanyLoginFlow()
+        }
+
         activeWebBrowser = safariViewController
         UIApplication.shared.wr_topmostController()?.present(safariViewController, animated: true, completion: nil)
     }

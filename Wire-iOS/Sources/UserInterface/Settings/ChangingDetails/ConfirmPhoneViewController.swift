@@ -80,7 +80,7 @@ protocol ConfirmPhoneDelegate: class {
         RegistrationTextFieldCell.register(in: tableView)
         SettingsButtonCell.register(in: tableView)
         
-        title = "self.settings.account_section.phone_number.change.verify.title".localized
+        title = "self.settings.account_section.phone_number.change.verify.title".localized(uppercased: true)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
         
@@ -88,7 +88,7 @@ protocol ConfirmPhoneDelegate: class {
         tableView.estimatedSectionHeaderHeight = 60
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "self.settings.account_section.phone_number.change.verify.save".localized,
+            title: "self.settings.account_section.phone_number.change.verify.save".localized(uppercased: true),
             style: .done,
             target: self,
             action: #selector(saveButtonTapped)
@@ -123,7 +123,7 @@ protocol ConfirmPhoneDelegate: class {
         if let verificationCode = verificationCode {
             let credentials = ZMPhoneCredentials(phoneNumber: newNumber, verificationCode: verificationCode)
             userProfile?.requestPhoneNumberChange(credentials: credentials)
-            showLoadingView = true
+            navigationController?.showLoadingView = true
         }
     }
     
@@ -215,7 +215,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
             // we need to check if the notification really happened because
             // the phone got changed to what we expected
             if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, currentPhoneNumber == newNumber {
-                showLoadingView = false
+                navigationController?.showLoadingView = false
                 delegate?.didConfirmPhone(inController: self)
             }
         }
@@ -224,7 +224,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
 
 extension ConfirmPhoneViewController: UserProfileUpdateObserver {
     func phoneNumberChangeDidFail(_ error: Error!) {
-        showLoadingView = false
+        navigationController?.showLoadingView = false
         showAlert(forError: error)
     }
 }

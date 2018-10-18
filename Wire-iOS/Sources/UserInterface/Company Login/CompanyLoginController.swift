@@ -28,6 +28,12 @@ import Foundation
     /// when performing a required task.
     func controller(_ controller: CompanyLoginController, showLoadingView: Bool)
 
+    /// Called when the company login controller starts the company login flow.
+    func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController)
+
+    /// Called when the company login controller cancels the company login flow.
+    func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController)
+
 }
 
 ///
@@ -38,7 +44,7 @@ import Foundation
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
 /// `SharedIdentitySessionRequestDetector` can be provided.
 ///
-@objc public final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate {
+@objc public final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, CompanyLoginFlowHandlerDelegate {
 
     @objc weak var delegate: CompanyLoginControllerDelegate?
 
@@ -87,6 +93,7 @@ import Foundation
         super.init()
         setupObservers()
         flowHandler.enableInAppBrowser = true
+        flowHandler.delegate = self
     }
 
     deinit {
@@ -127,7 +134,10 @@ import Foundation
     /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
     @objc func internalDetectLoginCode(onlyNew: Bool) {
         guard isAutoDetectionEnabled else { return }
-        detector.detectCopiedRequestCode { [presentLoginAlert] result in
+        detector.detectCopiedRequestCode { [isAutoDetectionEnabled, presentLoginAlert] result in
+            // This might have changed in the meantime.
+            guard isAutoDetectionEnabled else { return }
+
             guard let result = result, !onlyNew || result.isNew else { return }
             presentLoginAlert(result.code)
         }
@@ -143,9 +153,6 @@ import Foundation
 
     /// Presents the SSO login alert with an optional prefilled code.
     private func presentLoginAlert(prefilledCode: String?) {
-        // This might have changed in the meantime.
-        guard isAutoDetectionEnabled else { return }
-        
         let alertController = UIAlertController.companyLogin(
             prefilledCode: prefilledCode,
             validator: CompanyLoginRequestDetector.isValidRequestCode,
@@ -205,7 +212,12 @@ import Foundation
     // MARK: - Flow
 
     public func companyLoginRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {
+        delegate?.controllerDidStartCompanyLoginFlow(self)
         flowHandler.open(authenticationURL: url)
+    }
+
+    func userDidCancelCompanyLoginFlow() {
+        delegate?.controllerDidCancelCompanyLoginFlow(self)
     }
 
 }

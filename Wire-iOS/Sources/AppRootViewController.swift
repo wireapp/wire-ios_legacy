@@ -43,7 +43,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
-    var flowController: TeamCreationFlowController!
+    var authenticationCoordinator: AuthenticationCoordinator?
 
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
@@ -199,6 +199,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         var viewController: UIViewController? = nil
         showContentDelegate = nil
 
+        resetAuthenticationCoordinatorIfNeeded(for: appState)
+
         switch appState {
         case .blacklisted:
             viewController = BlacklistViewController()
@@ -210,45 +212,24 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
 
-            // check if needs to reauthenticate
-            var needsToReauthenticate = false
-            var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
-            if let error = error {
-                let errorCode = (error as NSError).userSessionErrorCode
-                needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
-                    .accessTokenExpired,
-                    .needsPasswordToRegisterClient,
-                    .needsToRegisterEmailToRegisterClient,
-                ].contains(errorCode)
+            // Only execute handle events if there is no current flow
+            guard authenticationCoordinator == nil else {
+                break
+            }
 
-                addingNewAccount = [
-                    ZMUserSessionErrorCode.addAccountRequested
-                    ].contains(errorCode)
-            }
-            
-            if needsToReauthenticate {
-                let registrationViewController = RegistrationViewController()
-                registrationViewController.delegate = appStateController
-                registrationViewController.shouldHideCancelButton = SessionManager.numberOfAccounts <= 1
-                registrationViewController.signInError = error
-                viewController = registrationViewController
-            }
-            else if addingNewAccount {
-                // When we show the landing controller we want it to be nested in navigation controller
-                let landingViewController = LandingViewController()
-                landingViewController.delegate = self
-                
-                let navigationController = NavigationController(rootViewController: landingViewController)
-                navigationController.backButtonEnabled = false
-                navigationController.logoEnabled = false
-                navigationController.isNavigationBarHidden = true
-                
-                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
-                
-                flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
-                flowController.registrationDelegate = appStateController
-                viewController = navigationController
-            }
+            let navigationController = NavigationController()
+            navigationController.backButtonEnabled = false
+            navigationController.logoEnabled = false
+            navigationController.isNavigationBarHidden = true
+
+            authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
+                                                                  unauthenticatedSession: UnauthenticatedSession.sharedSession!,
+                                                                  sessionManager: SessionManager.shared!)
+
+            authenticationCoordinator!.delegate = appStateController
+            authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
+
+            viewController = KeyboardAvoidingViewController(viewController: navigationController)
 
         case .authenticated(completedRegistration: let completedRegistration):
             UIColor.setAccentOverride(.undefined)
@@ -279,6 +260,15 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             }
         } else {
             completionHandler?()
+        }
+    }
+
+    private func resetAuthenticationCoordinatorIfNeeded(for state: AppState) {
+        switch state {
+        case .unauthenticated:
+            break // do not reset the authentication coordinator for unauthenticated state
+        default:
+            authenticationCoordinator = nil // reset the authentication coordinator when we no longer need it
         }
     }
 
@@ -518,44 +508,6 @@ extension AppRootViewController {
     }
 }
 
-// MARK: - Transition form LandingViewController to RegistrationViewController
-
-extension AppRootViewController: LandingViewControllerDelegate {
-    func landingViewControllerDidChooseCreateTeam() {
-        flowController.startFlow()
-    }
-
-    func landingViewControllerDidChooseLogin() {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-            loginViewController.delegate = appStateController
-            loginViewController.shouldHideCancelButton = true
-            navigationController.pushViewController(loginViewController, animated: true)
-        }
-    }
-
-    func landingViewControllerDidChooseCreateAccount() {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
-            registrationViewController.delegate = appStateController
-            registrationViewController.shouldHideCancelButton = true
-            navigationController.pushViewController(registrationViewController, animated: true)
-        }
-    }
-    
-    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType) {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let registrationViewController = RegistrationViewController(authenticationFlow: .regular)
-            registrationViewController.delegate = appStateController
-            registrationViewController.shouldHideCancelButton = true
-            registrationViewController.loadViewIfNeeded()
-            registrationViewController.presentNoHistoryViewController(context, animated: false)
-            navigationController.pushViewController(registrationViewController, animated: true)
-        }
-    }
-    
-}
-
 // MARK: - Ask user if they want want switch account if there's an ongoing call
 
 extension AppRootViewController: SessionManagerSwitchingDelegate {
@@ -639,6 +591,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
         case .companyLoginFailure(let error):
             defer {
+                authenticationCoordinator?.cancelCompanyLogin()
                 notifyCompanyLoginCompletion()
             }
             
