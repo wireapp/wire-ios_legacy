@@ -26,7 +26,7 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        MockUser.mockSelf()?.name = "Tarja Turunen"
+        MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
 
         sut = ConversationListViewController()
         let account = Account(userName: "", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
