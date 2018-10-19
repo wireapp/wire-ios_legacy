@@ -27,20 +27,35 @@ import Cartography
     func dismiss()
 }
 
+@objc protocol KeyboardCollapseObserver {
+    var isKeyboardCollapsed: Bool { get }
+}
+
 @objc protocol UserList {
     var users: [UserType] { get set }
 }
 
-class UserSearchResultsViewController: UIViewController {
+class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserver {
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var searchResults: [UserType] = []
     private var query: String = ""
     private var collectionViewHeight: NSLayoutConstraint?
     private let rowHeight: CGFloat = 56.0
+    private var isKeyboardCollapsedFirstCalled = true
+    public private(set) var isKeyboardCollapsed: Bool = true {
+        didSet {
+            guard oldValue != isKeyboardCollapsed || isKeyboardCollapsedFirstCalled else { return }
+            collectionView.reloadData()
+
+            isKeyboardCollapsedFirstCalled = false
+        }
+    }
     
     @objc public weak var delegate: UserSearchResultsViewControllerDelegate?
-    
+
+    private var keyboardObserver: KeyboardBlockObserver?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,6 +66,17 @@ class UserSearchResultsViewController: UIViewController {
                                                selector: #selector(keyboardWillChangeFrame(_:)),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
+
+        setupKeyboardObserver()
+    }
+
+    private func setupKeyboardObserver() {
+        keyboardObserver = KeyboardBlockObserver { [weak self] info in
+            guard let weakSelf = self else { return }
+            if let isKeyboardCollapsed = info.isKeyboardCollapsed {
+                weakSelf.isKeyboardCollapsed = isKeyboardCollapsed
+            }
+        }
     }
     
     private func setupCollectionView() {
@@ -128,7 +154,7 @@ class UserSearchResultsViewController: UIViewController {
             self.scrollToLastItem()
         }
     }
-    
+  
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
@@ -180,6 +206,18 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
         cell.configure(with: user)
         cell.showSeparator = false
         cell.avatarSpacing = UIView.conversationLayoutMargins.left
+
+        // hightlight the lowest cell if keyboard is collapsed
+        if isKeyboardCollapsed {
+            if indexPath.item == searchResults.count - 1 {
+                cell.backgroundColor = .contentBackground
+            } else {
+                cell.backgroundColor = .background
+            }
+        } else {
+            cell.backgroundColor = .background
+        }
+
         return cell
     }
     

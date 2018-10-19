@@ -17,9 +17,6 @@
 // 
 
 
-@import PureLayout;
-
-
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "CrossfadeTransition.h"
@@ -155,15 +152,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @interface SplitViewController () <UIGestureRecognizerDelegate>
 
-@property (nonatomic) NSLayoutConstraint *leftViewOffsetConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewOffsetConstraint;
-
-@property (nonatomic) NSLayoutConstraint *leftViewWidthConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewWidthConstraint;
-
-@property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
-@property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
-
 @property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
 
 @property (nonatomic) UITraitCollection *futureTraitCollection;
@@ -204,27 +192,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [super viewWillLayoutSubviews];
     
     [self updateForSize:self.view.bounds.size];
-}
-
-- (void)setupInitialConstraints
-{
-    [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeTop];
-    [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeBottom];
-    
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        self.leftViewOffsetConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-        self.rightViewOffsetConstraint = [self.rightView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    }];
-    
-    self.leftViewWidthConstraint = [self.leftView autoSetDimension:ALDimensionWidth toSize:0];
-    self.rightViewWidthConstraint = [self.rightView autoSetDimension:ALDimensionWidth toSize:0];
-    
-    self.pinLeftViewOffsetConstraint = [self.leftView autoPinEdgeToSuperviewEdge:ALEdgeLeft];
-    self.sideBySideConstraint = [self.rightView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.leftView];
-    self.sideBySideConstraint.active = NO;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -338,11 +305,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (void)updateActiveConstraints
-{
-    [[self constraintsInactiveForCurrentLayout] autoRemoveConstraints];
-    [[self constraintsActiveForCurrentLayout] autoInstallConstraints];
-}
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {

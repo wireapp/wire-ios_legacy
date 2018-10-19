@@ -102,7 +102,7 @@ public extension ConversationViewController {
     @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.activeParticipants.count != 0 else { return [] }
 
-        if conversation.canJoinCall {
+        if conversation.canJoinCall && conversation.mutedMessageTypes != .none {
             return [joinCallButton]
         } else if conversation.isCallOngoing {
             return []
@@ -247,7 +247,7 @@ extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
     @objc var canJoinCall: Bool {
-        return voiceChannel?.state.canJoinCall(conversationType: conversationType) ?? false
+        return voiceChannel?.state.canJoinCall ?? false
     }
 
     var canStartVideoCall: Bool {
@@ -277,9 +277,9 @@ extension ZMConversation {
 
 extension CallState {
     
-    func canJoinCall(conversationType: ZMConversationType) -> Bool {
-        switch (self, conversationType) {
-        case (.incoming, .group): return true
+    var canJoinCall: Bool {
+        switch self {
+        case .incoming: return true
         default: return false
         }
     }

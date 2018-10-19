@@ -73,3 +73,4 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         snapshotWithNavigationBarWithBackButton()
     }
 }
+

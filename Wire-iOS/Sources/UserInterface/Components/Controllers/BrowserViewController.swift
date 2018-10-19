@@ -22,6 +22,7 @@ import SafariServices
 @objcMembers class BrowserViewController: SFSafariViewController {
 
     @objc var completion: (() -> Void)?
+    @objc var onDismiss: (() -> Void)?
 
     // MARK: - Tint Color
 
@@ -49,6 +50,13 @@ import SafariServices
         overrider.restore()
         UIApplication.shared.wr_setStatusBarStyle(originalStatusBarStyle, animated: true)
         UIApplication.shared.wr_setStatusBarHidden(originalStatusBarVisibility, with: .fade)
+    }
+
+    override func dismiss(animated flag: Bool, completion defaultBlock: (() -> Void)? = nil) {
+        super.dismiss(animated: flag) {
+            self.onDismiss?()
+            defaultBlock?()
+        }
     }
 
     override var prefersStatusBarHidden: Bool {

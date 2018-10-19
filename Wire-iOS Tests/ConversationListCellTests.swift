@@ -259,9 +259,7 @@ class ConversationListCellTests: CoreDataSnapshotTestCase {
     func verify(conversation: ZMConversation?, icon: ConversationStatusIcon) {
         guard let conversation = conversation else { XCTFail(); return }
         sut.conversation = conversation
-        if conversation.mutedMessageTypes == .none {
-            sut.itemView.rightAccessory.icon = icon
-        }
+        sut.itemView.rightAccessory.icon = icon
         sut.prepareForSnapshot()
         verify(view: sut)
     }

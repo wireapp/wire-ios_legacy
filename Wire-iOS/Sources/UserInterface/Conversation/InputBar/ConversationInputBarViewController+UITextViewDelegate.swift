@@ -50,6 +50,15 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         return textAttachment.image == nil
     }
 
+    var isMentionsViewKeyboardCollapsed: Bool {
+        /// press tab or enter to insert mention if iPhone keyboard is collapsed
+        if let isKeyboardCollapsed = mentionsView?.isKeyboardCollapsed {
+            return isKeyboardCollapsed
+        } else {
+            return false
+        }
+    }
+
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // send only if send key pressed
         if textView.returnKeyType == .send && (text == "\n") {
@@ -63,11 +72,11 @@ extension ConversationInputBarViewController: UITextViewDelegate {
             }
             return false
         }
-                
-        if UIDevice.current.type == .iPad,
-            text.count == 1,
+
+        if text.count == 1,
             text.containsCharacters(from: CharacterSet.newlinesAndTabulation),
-            canInsertMention {
+            canInsertMention,
+            UIDevice.current.type == .iPad || isMentionsViewKeyboardCollapsed {
             
             insertBestMatchMention()
             return false

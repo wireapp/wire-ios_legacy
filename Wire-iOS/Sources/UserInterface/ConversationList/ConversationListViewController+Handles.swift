@@ -117,12 +117,20 @@ extension ConversationListViewController: UserProfileUpdateObserver {
 
     public func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
-        if let userSession = ZMUserSession.shared() {
-            UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self) { marketingConsent in
-                ZMUser.selfUser().setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
-            }
+        if let userSession = ZMUserSession.shared(), let selfUser = ZMUser.selfUser() {
+            selfUser.fetchMarketingConsent(in: userSession, completion: { result in
+                switch result {
+                case .failure:
+                    UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self) { marketingConsent in
+                        selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
+                    }
+
+                case .success:
+                    // The user already gave a marketing consent, no need to ask for it again.
+                    return
+                }
+            })
         }
-        UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
 
         // When the user have to set user name, i.e. the user is a invited team user, show data usage permission dialog
         self.isComingFromSetUsername = true

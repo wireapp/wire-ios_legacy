@@ -79,6 +79,7 @@
                 break;
                 
             case ZMUserSessionInvalidPhoneNumberVerificationCode:
+            case ZMUserSessionInvalidActivationCode:
                 message = NSLocalizedString(@"error.user.phone_code_invalid", @"");
                 break;
                 

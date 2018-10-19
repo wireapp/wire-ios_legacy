@@ -75,4 +75,41 @@ extension UIView {
         }
     }
 
+    @objc var safeBottomAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11, *) {
+            return safeAreaLayoutGuide.bottomAnchor
+        }
+        else {
+            return bottomAnchor
+        }
+    }
+
+    @objc var safeTopAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11, *) {
+            return safeAreaLayoutGuide.topAnchor
+        }
+        else {
+            return topAnchor
+        }
+    }
+
+    @objc var safeCenterYAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11, *) {
+            return safeAreaLayoutGuide.centerYAnchor
+        }
+        else {
+            return centerYAnchor
+        }
+    }
+
+    @objc var safeCenterXAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11, *) {
+            return safeAreaLayoutGuide.centerXAnchor
+        }
+        else {
+            return centerXAnchor
+        }
+    }
+
+
 }

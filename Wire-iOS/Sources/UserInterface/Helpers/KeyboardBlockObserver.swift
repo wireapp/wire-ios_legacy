@@ -28,7 +28,8 @@ final class KeyboardBlockObserver: NSObject {
         let frame: CGRect
         let animationDuration: TimeInterval
         let kind: Kind
-        
+        let isKeyboardCollapsed: Bool?
+
         init?(_ note: Notification, kind: Kind) {
             guard let info = note.userInfo else { return nil }
             guard let frameValue = info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
@@ -36,6 +37,17 @@ final class KeyboardBlockObserver: NSObject {
             frame = frameValue.cgRectValue
             animationDuration = duration
             self.kind = kind
+
+            if let beginFrameValue = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                /// key board is collapsed if init height is 0
+                if frameValue.cgRectValue.height == 0 {
+                    isKeyboardCollapsed = true
+                } else {
+                    isKeyboardCollapsed = beginFrameValue.height > frameValue.cgRectValue.height && kind == .hide
+                }
+            } else {
+                isKeyboardCollapsed = nil
+            }
         }
         
         func animate(_ animations: @escaping () -> Void) {

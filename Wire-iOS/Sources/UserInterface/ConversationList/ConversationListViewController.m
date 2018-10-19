@@ -245,11 +245,12 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     if (self.presentedViewController != nil) {
-        return self.presentedViewController.preferredStatusBarStyle;
+        if (![self.presentedViewController isKindOfClass:UIAlertController.class]) {
+            return self.presentedViewController.preferredStatusBarStyle;
+        }
     }
-    else {
-        return UIStatusBarStyleLightContent;
-    }
+
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)createNoConversationLabel;
