@@ -1299,6 +1299,7 @@
 		EFC8E21B212C6BF700BE7BBE /* ConversationCell+Snapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8E21A212C6BF700BE7BBE /* ConversationCell+Snapshot.swift */; };
 		EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		EFCDA974209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */; };
+		EFD003542179CE3C008C20D3 /* SplitViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */; };
 		EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */; };
 		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */; };
 		EFDE37FA2139889C0095DCA4 /* MuteIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE37F92139889B0095DCA4 /* MuteIndicatorView.swift */; };
@@ -3084,6 +3085,7 @@
 		EFC8E218212C6AF500BE7BBE /* PingCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingCellTests.swift; sourceTree = "<group>"; };
 		EFC8E21A212C6BF700BE7BBE /* ConversationCell+Snapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationCell+Snapshot.swift"; sourceTree = "<group>"; };
 		EFCDA973209A0F6D004682EA /* ImageMessageCell+ImageBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageMessageCell+ImageBorder.swift"; sourceTree = "<group>"; };
+		EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+OrientationAndSize.swift"; sourceTree = "<group>"; };
 		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+FilesPopover.swift"; sourceTree = "<group>"; };
 		EFDE37F92139889B0095DCA4 /* MuteIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MuteIndicatorView.swift; sourceTree = "<group>"; };
@@ -4259,6 +4261,7 @@
 				871BC1451D34F8F800DF0793 /* SplitViewController.h */,
 				EF60FC4220652F9F0017D083 /* SplitViewController+internal.h */,
 				871BC1461D34F8F800DF0793 /* SplitViewController.m */,
+				EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */,
 				EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */,
 				EF4172B02110A6E300FF85C7 /* SplitViewController+rightView.swift */,
 				87A1F9DA200CEDCA0040E9A9 /* ClearBackgroundNavigationController.swift */,
@@ -8018,6 +8021,7 @@
 				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,
 				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,
 				8775BF232008E0A400A8AD93 /* ServiceDetailViewController.swift in Sources */,
+				EFD003542179CE3C008C20D3 /* SplitViewController+Constraint.swift in Sources */,
 				BF79B0FC20A98B60001BF4FE /* SelfVideoPreviewView.swift in Sources */,
 				5E8C38B8212FDD68002AE12B /* ObservableSessionManager.swift in Sources */,
 				16E311D81A6024F400FF2C9E /* ImageMessageCell.m in Sources */,
