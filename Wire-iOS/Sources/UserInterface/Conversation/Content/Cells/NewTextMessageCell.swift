@@ -160,9 +160,7 @@ class NewTextMessageCell: MessageCell, ConfigurableCell {
         return mapping
     }()
         
-    required init(reuseIdentifier: String) {
-        guard let configuration = NewTextMessageCell.mapping[reuseIdentifier] else { fatal("Unknown reuse identifier \(reuseIdentifier)") }
-        
+    required init(from configuration: TextMessageCellConfiguration) {        
         textContentView = TextMessageContentView(from: configuration)
         
         super.init(from: configuration.configuration, content: textContentView, fullWidthContent: audioTrackViewController?.view)

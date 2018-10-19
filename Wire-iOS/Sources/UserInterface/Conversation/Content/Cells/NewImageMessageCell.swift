@@ -112,9 +112,7 @@ class NewImageMessageCell: MessageCell, ConfigurableCell {
     
     let imageMessageContentView: ImageMessageContentView
         
-    required init(reuseIdentifier: String) {
-        guard let configuration = NewImageMessageCell.mapping[reuseIdentifier] else { fatal("Unknown reuse identifier: \(reuseIdentifier)") }
-        
+    required init(from configuration: ImageMessageCellConfiguration) {
         imageMessageContentView = ImageMessageContentView()
         
         super.init(from: configuration.configuration, content: imageMessageContentView)

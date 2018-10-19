@@ -34,7 +34,8 @@ protocol ConfigurableCell: class {
     static var mapping: [String: Configuration] { get }
     static func reuseIdentifier(for configuration: Configuration) -> String
     
-    init(reuseIdentifier: String)
+//    init(reuseIdentifier: String)
+    init(from configuration: Configuration)
     
     func configure(with content: Content)
     
@@ -57,9 +58,15 @@ extension ConfigurableCell {
         return Array(mapping.keys)
     }
     
-    init(from configuration: Configuration) {
-        self.init(reuseIdentifier: Self.reuseIdentifier(for: configuration))
+    init(reuseIdentifier: String) {
+        guard let configuration = Self.mapping[reuseIdentifier] else { fatal("Unknown reuse identifier: \(reuseIdentifier)") }
+        
+        self.init(from: configuration)
     }
+    
+//    init(from configuration: Configuration) {
+//        self.init(reuseIdentifier: Self.reuseIdentifier(for: configuration))
+//    }
     
 }
 
