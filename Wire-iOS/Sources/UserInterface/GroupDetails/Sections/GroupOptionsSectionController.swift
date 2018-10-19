@@ -36,7 +36,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
             switch self {
             case .guests: return GroupDetailsGuestOptionsCell.zm_reuseIdentifier
             case .timeout: return GroupDetailsTimeoutOptionsCell.zm_reuseIdentifier
-            case .notifications: return GroupDetailsNotificationsOptionsCell.zm_reuseIdentifier
+            case .notifications: return GroupDetailsNotificationOptionsCell.zm_reuseIdentifier
             }
         }
 
@@ -84,7 +84,7 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
         super.prepareForUse(in: collectionView)
         collectionView.flatMap(GroupDetailsGuestOptionsCell.register)
         collectionView.flatMap(GroupDetailsTimeoutOptionsCell.register)
-        collectionView.flatMap(GroupDetailsNotificationsOptionsCell.register)
+        collectionView.flatMap(GroupDetailsNotificationOptionsCell.register)
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

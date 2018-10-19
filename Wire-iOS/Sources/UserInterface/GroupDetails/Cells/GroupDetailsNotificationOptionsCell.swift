@@ -18,7 +18,7 @@
 
 import Foundation
 
-class GroupDetailsNotificationsOptionsCell: GroupDetailsOptionsCell {
+class GroupDetailsNotificationOptionsCell: GroupDetailsOptionsCell {
     
     override func setUp() {
         super.setUp()
