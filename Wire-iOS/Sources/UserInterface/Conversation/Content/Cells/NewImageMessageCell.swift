@@ -95,7 +95,7 @@ class ImageMessageContentView: UIView {
     
 }
 
-class NewImageMessageCell: MessageCell, ConfigurableCell, Reusable {
+class NewImageMessageCell: MessageCell, ConfigurableCell {
     
     typealias Content = ImageMessageCellDescription
     typealias Configuration = ImageMessageCellConfiguration

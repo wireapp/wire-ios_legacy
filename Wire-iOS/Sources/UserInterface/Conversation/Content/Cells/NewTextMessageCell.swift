@@ -141,7 +141,7 @@ class TextMessageContentView: UIView {
     
 }
 
-class NewTextMessageCell: MessageCell, ConfigurableCell, Reusable {
+class NewTextMessageCell: MessageCell, ConfigurableCell {
     
     typealias Content = TextMessageCellDescription
     typealias Configuration = TextMessageCellConfiguration
