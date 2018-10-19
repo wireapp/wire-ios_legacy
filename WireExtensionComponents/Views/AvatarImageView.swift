@@ -58,25 +58,25 @@ open class AvatarImageView: UIControl {
     }
 
     /// The background color for the image.
-    public var imageBackgroundColor: UIColor? {
+    @objc public var imageBackgroundColor: UIColor? {
         get { return imageView.backgroundColor }
         set { imageView.backgroundColor = newValue }
     }
 
     /// The font to use of the initials label.
-    public var initialsFont: UIFont {
+    @objc public var initialsFont: UIFont {
         get { return initialsLabel.font }
         set { initialsLabel.font = newValue }
     }
 
     /// The color to use for the initials label.
-    public var initialsColor: UIColor {
+    @objc public var initialsColor: UIColor {
         get { return initialsLabel.textColor }
         set { initialsLabel.textColor = newValue }
     }
 
     /// The view that contains the avatar.
-    public let container = RoundedView()
+    @objc public let container = RoundedView()
 
     private let imageView = UIImageView()
     private let initialsLabel = UILabel()

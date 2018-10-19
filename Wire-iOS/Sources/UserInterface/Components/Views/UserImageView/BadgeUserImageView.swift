@@ -25,21 +25,21 @@ import WireExtensionComponents
 @objc class BadgeUserImageView: UserImageView {
 
     /// The size of the badge icon.
-    var badgeIconSize: ZetaIconSize = .tiny {
+    @objc var badgeIconSize: ZetaIconSize = .tiny {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }
     }
 
     /// The color of the badge.
-    var badgeColor: UIColor = .white {
+    @objc var badgeColor: UIColor = .white {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }
     }
 
     /// The badge icon.
-    var badgeIcon: ZetaIconType = .none {
+    @objc var badgeIcon: ZetaIconType = .none {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }

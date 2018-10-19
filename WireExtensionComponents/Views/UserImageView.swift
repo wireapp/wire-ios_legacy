@@ -38,7 +38,7 @@ import WireSyncEngine
     // MARK: - Interface Properties
 
     /// The size of the avatar.
-    public var size: Size {
+    @objc public var size: Size {
         didSet {
             updateUserImage()
         }
@@ -101,6 +101,7 @@ import WireSyncEngine
         badgeIndicator.backgroundColor = .red
         badgeIndicator.isHidden = true
         badgeIndicator.shape = .circle
+        addSubview(badgeIndicator)
     }
 
     private func configureConstraints() {
