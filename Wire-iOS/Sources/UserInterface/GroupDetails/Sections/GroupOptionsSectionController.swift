@@ -28,9 +28,9 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
 
     private enum Option: Int {
 
-        case guests = 0
-        case timeout = 1
-        case notifications = 2
+        case notifications = 0
+        case guests = 1
+        case timeout = 2
 
         var cellReuseIdentifier: String {
             switch self {
