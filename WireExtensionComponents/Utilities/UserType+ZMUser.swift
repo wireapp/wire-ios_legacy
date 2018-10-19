@@ -31,4 +31,9 @@ extension UserType {
         }
     }
 
+    /// The accent color of the user, if one is available.
+    public var accentColor: UIColor? {
+        return (self as? AccentColorProvider)?.accentColor
+    }
+
 }

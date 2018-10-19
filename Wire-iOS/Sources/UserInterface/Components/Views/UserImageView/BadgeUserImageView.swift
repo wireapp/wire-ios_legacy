@@ -50,7 +50,7 @@ import WireExtensionComponents
 
     // MARK: - Initialization
 
-    override init(size: UserImageView.Size) {
+    override init(size: UserImageView.Size = .small) {
         super.init(size: size)
         configureSubviews()
         configureConstraints()

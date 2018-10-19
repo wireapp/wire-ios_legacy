@@ -24,9 +24,6 @@ import WireSyncEngine
 
 @objc open class UserImageView: AvatarImageView, ZMUserObserver {
 
-    /// The type of remote user that can have their avatar displayed.
-    public typealias RemoteUser = UserType & AccentColorProvider
-
     /**
      * The different sizes for the avatar image.
      */
@@ -41,7 +38,11 @@ import WireSyncEngine
     // MARK: - Interface Properties
 
     /// The size of the avatar.
-    public let size: Size
+    public var size: Size {
+        didSet {
+            updateUserImage()
+        }
+    }
 
     /// Whether the image should be desaturated, e.g. for unconnected users.
     @objc public var shouldDesaturate: Bool = true
@@ -65,7 +66,7 @@ import WireSyncEngine
     }
 
     /// The user to display the avatar of.
-    @objc public var user: RemoteUser? {
+    @objc public var user: UserType? {
         didSet {
             updateUser()
         }
@@ -75,7 +76,7 @@ import WireSyncEngine
 
     // MARK: - Initialization
 
-    public init(size: Size) {
+    public init(size: Size = .small) {
         self.size = size
         super.init(frame: .zero)
         configureSubviews()
@@ -119,22 +120,22 @@ import WireSyncEngine
     // MARK: - Interface
 
     /// Returns the appropriate border width for the user.
-    private func borderWidth(for user: RemoteUser) -> CGFloat {
+    private func borderWidth(for user: UserType) -> CGFloat {
         return user.isServiceUser ? 0.5 : 0
     }
 
     /// Returns the appropriate border color for the user.
-    private func borderColor(for user: RemoteUser) -> CGColor? {
+    private func borderColor(for user: UserType) -> CGColor? {
         return user.isServiceUser ? UIColor.black.withAlphaComponent(0.08).cgColor : nil
     }
 
     /// Returns the placeholder background color for the user.
-    private func containerBackgroundColor(for user: RemoteUser) -> UIColor {
+    private func containerBackgroundColor(for user: UserType) -> UIColor {
         return user.isServiceUser ? .white : .clear
     }
 
     /// Returns the appropriate avatar shape for the user.
-    private func shape(for user: RemoteUser) -> AvatarImageView.Shape {
+    private func shape(for user: UserType) -> AvatarImageView.Shape {
         return user.isServiceUser ? .relative : .circle
     }
 
@@ -147,7 +148,7 @@ import WireSyncEngine
      * - parameter animated: Whether to animate the change.
      */
 
-    func setAvatar(_ avatar: Avatar, user: RemoteUser, animated: Bool) {
+    func setAvatar(_ avatar: Avatar, user: UserType, animated: Bool) {
         let updateBlock = {
             self.avatar = avatar
             let isWireless = user.zmUser?.isWirelessUser == true
@@ -229,7 +230,7 @@ import WireSyncEngine
     }
 
     /// Updates the interface to reflect if the user is a service user or not.
-    private func updateForServiceUserIfNeeded(_ user: RemoteUser) {
+    private func updateForServiceUserIfNeeded(_ user: UserType) {
         shape = shape(for: user)
         container.layer.borderColor = borderColor(for: user)
         container.layer.borderWidth = borderWidth(for: user)

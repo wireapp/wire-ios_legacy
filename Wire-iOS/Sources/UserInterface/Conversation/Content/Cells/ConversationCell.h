@@ -30,6 +30,7 @@
 @class ConversationCellBurstTimestampView;
 @class AdditionalMenuItem;
 @class MenuConfigurationProperties;
+@class UserImageView;
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;

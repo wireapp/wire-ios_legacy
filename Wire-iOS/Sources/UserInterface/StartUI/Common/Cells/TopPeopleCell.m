@@ -19,7 +19,6 @@
 
 #import "TopPeopleCell.h"
 @import PureLayout;
-#import "BadgeUserImageView.h"
 #import "Constants.h"
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"

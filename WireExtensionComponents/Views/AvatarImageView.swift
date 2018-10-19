@@ -44,7 +44,7 @@ open class AvatarImageView: UIControl {
     // MARK: - Properties
 
     /// The avatar to display.
-    public internal(set) var avatar: Avatar? {
+    public var avatar: Avatar? {
         didSet {
             updateAvatar()
         }
@@ -61,6 +61,18 @@ open class AvatarImageView: UIControl {
     public var imageBackgroundColor: UIColor? {
         get { return imageView.backgroundColor }
         set { imageView.backgroundColor = newValue }
+    }
+
+    /// The font to use of the initials label.
+    public var initialsFont: UIFont {
+        get { return initialsLabel.font }
+        set { initialsLabel.font = newValue }
+    }
+
+    /// The color to use for the initials label.
+    public var initialsColor: UIColor {
+        get { return initialsLabel.textColor }
+        set { initialsLabel.textColor = newValue }
     }
 
     /// The view that contains the avatar.
@@ -127,6 +139,19 @@ open class AvatarImageView: UIControl {
             initialsLabel.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             initialsLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
         ])
+    }
+
+    /**
+     * Updates the image constraints hugging and resistance priorities.
+     * - parameter resistance: The compression resistance priority.
+     * - parameter hugging: The content hugging priority.
+     */
+
+    public func setImageConstraint(resistance: Float, hugging: Float) {
+        imageView.setContentHuggingPriority(UILayoutPriority(rawValue: hugging), for: .vertical)
+        imageView.setContentHuggingPriority(UILayoutPriority(rawValue: hugging), for: .horizontal)
+        imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: resistance), for: .vertical)
+        imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: resistance), for: .horizontal)
     }
 
     // MARK: - Events
