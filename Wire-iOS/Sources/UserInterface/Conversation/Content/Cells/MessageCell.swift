@@ -91,13 +91,12 @@ class MessageCell: UIView {
     }
     
     
-    func configure(with message: ZMConversationMessage) {
+    func configure(with message: ZMConversationMessage, context: MessageCellContext) {
         if let sender = message.sender {
             senderView?.configure(with: sender)
         }
-                
-        burstTimestampView?.label.text = Message.formattedReceivedDate(for: message).uppercased()
-        burstTimestampView?.isSeparatorExpanded = true
+        
+        burstTimestampView?.configure(with: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)
         toolboxView.configureForMessage(message, forceShowTimestamp: false, animated: false)
         toolboxView.setHidden(!isSelected, animated: false)
         ephemeralCountdownView.isHidden = !message.isEphemeral

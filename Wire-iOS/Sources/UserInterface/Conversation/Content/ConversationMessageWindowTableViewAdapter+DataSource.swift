@@ -56,7 +56,7 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let description = messageWindow.description(for: message)
+        let description = messageWindow.description(for: message, firstUnreadMessage: firstUnreadMessage)
         
         return description.cell(tableView: tableView, at: indexPath)
         

@@ -54,6 +54,7 @@ struct TextMessageCellConfiguration: Equatable {
 
 struct TextMessageCellDescription: CellDescription {
     
+    let context: MessageCellContext
     let message: ZMConversationMessage
     let configuration: TextMessageCellConfiguration
     
@@ -64,6 +65,7 @@ struct TextMessageCellDescription: CellDescription {
             configuration.insert(.showSender)
         }
         
+        self.context = context
         self.message = message
         self.configuration = TextMessageCellConfiguration(configuration: configuration, attachment: .none)
     }
@@ -171,7 +173,7 @@ class NewTextMessageCell: MessageCell, ConfigurableCell {
     }
     
     func configure(with content: TextMessageCellDescription) {
-        super.configure(with: content.message)
+        super.configure(with: content.message, context: content.context)
         
         guard let textMessageData = content.message.textMessageData else { return }
         

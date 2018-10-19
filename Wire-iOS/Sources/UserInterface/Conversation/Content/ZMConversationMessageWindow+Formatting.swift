@@ -23,13 +23,15 @@ struct MessageCellContext {
     let isSameSenderAsPrevious: Bool
     let isLastMessageSentBySelfUser: Bool
     let isTimeIntervalSinceLastMessageSignificant: Bool
+    let isFirstMessageOfTheDay: Bool
+    let isFirstUnreadMessage: Bool
     
 }
 
 extension ZMConversationMessageWindow {
     
-    func description(for message: ZMConversationMessage) -> CellDescription {
-        let context = self.context(for: message)
+    func description(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> CellDescription {
+        let context = self.context(for: message, firstUnreadMessage: firstUnreadMessage)
         
         if message.isText {
             return TextMessageCellDescription(message: message, context: context)
@@ -53,7 +55,7 @@ extension ZMConversationMessageWindow {
         return true
     }
     
-    fileprivate func context(for message: ZMConversationMessage) -> MessageCellContext {
+    fileprivate func context(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> MessageCellContext {
         let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
         let isTimeIntervalSinceLastMessageSignificant: Bool
         
@@ -65,7 +67,9 @@ extension ZMConversationMessageWindow {
         
         return MessageCellContext(isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message),
                                   isLastMessageSentBySelfUser: isLastMessageSentBySelfUser(message),
-                                  isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant)
+                                  isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
+                                  isFirstMessageOfTheDay: isFirstMessageOfTheDay(for: message),
+                                  isFirstUnreadMessage: message.isEqual(firstUnreadMessage))
     }
     
     fileprivate func timeIntervalToPreviousMessage(from message: ZMConversationMessage) -> TimeInterval? {
@@ -78,6 +82,11 @@ extension ZMConversationMessageWindow {
     
     fileprivate func isLastMessageSentBySelfUser(_ message: ZMConversationMessage) -> Bool {
         return message.isEqual(message.conversation?.lastMessageSent(by: ZMUser.selfUser(), limit: 10))
+    }
+    
+    fileprivate func isFirstMessageOfTheDay(for message: ZMConversationMessage) -> Bool {
+        guard let previous = messagePrevious(to: message)?.serverTimestamp, let current = message.serverTimestamp else { return false }
+        return !Calendar.current.isDate(current, inSameDayAs: previous)
     }
     
 }

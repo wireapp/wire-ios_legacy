@@ -35,9 +35,11 @@ struct ImageMessageCellConfiguration: Equatable {
 struct ImageMessageCellDescription: CellDescription {
     
     let message: ZMConversationMessage
+    let context: MessageCellContext
     let configuration: ImageMessageCellConfiguration
     
     init (message: ZMConversationMessage, context: MessageCellContext) {
+        self.context =  context
         self.message = message
         self.configuration = ImageMessageCellConfiguration(MessageCellConfiguration(context: context))
     }
@@ -123,7 +125,7 @@ class NewImageMessageCell: MessageCell, ConfigurableCell {
     }
     
     func configure(with content: ImageMessageCellDescription) {
-        super.configure(with: content.message)
+        super.configure(with: content.message, context: content.context)
         
         guard let imageMessageData = content.message.imageMessageData else { return }
         

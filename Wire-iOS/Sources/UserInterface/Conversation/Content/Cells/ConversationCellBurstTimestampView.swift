@@ -20,12 +20,9 @@
 import Cartography
 
 @objcMembers final public class ConversationCellBurstTimestampView: UIView {
-
+    
     public let unreadDot = UIView()
-    public let label: UILabel = {
-        let label = UILabel()
-        return label
-    }()
+    public let label: UILabel = UILabel()
 
     public var separatorColor: UIColor?
     public var separatorColorExpanded: UIColor?
@@ -38,6 +35,8 @@ import Cartography
     private let unreadDotHeight: CGFloat = 8
     private var heightConstraints = [NSLayoutConstraint]()
     private var accentColorObserver: AccentColorChangeHandler?
+    private let burstNormalFont = UIFont.smallLightFont
+    private let burstBoldFont = UIFont.smallSemiboldFont
 
     public var isShowingUnreadDot: Bool = true {
         didSet {
@@ -133,5 +132,21 @@ import Cartography
         label.textColor = UIColor(scheme: .textForeground)
         separatorColor = UIColor(scheme: .separator)
         separatorColorExpanded = UIColor(scheme: .paleSeparator)
+    }
+    
+    func configure(with timestamp: Date, includeDayOfWeek: Bool, showUnreadDot: Bool) {
+        if includeDayOfWeek {
+            isSeparatorExpanded = true
+            isSeparatorHidden = false
+            label.font = burstBoldFont
+            label.text = timestamp.olderThanOneWeekdateFormatter.string(from: timestamp).uppercased()
+        } else {
+            isSeparatorExpanded = false
+            isSeparatorHidden = false
+            label.font = burstNormalFont
+            label.text = timestamp.formattedDate.uppercased()
+        }
+        
+        isShowingUnreadDot = showUnreadDot
     }
 }
