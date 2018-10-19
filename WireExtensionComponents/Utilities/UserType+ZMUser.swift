@@ -32,21 +32,8 @@ extension UserType {
     }
 
     /// The accent color of the user, if one is available.
-    var indexedAccentColor: UIColor? {
-//        let getAccentColor = #selector(getter: AccentColorProvider.accentColor)
-//
-//        guard self.responds(to: getAccentColor) else {
-//            return .red
-//        }
-//
-//        guard let color = self.perform(getAccentColor)?.takeUnretainedValue() as? UIColor else {
-//            return .red
-//        }
-//
-//        return color
-
-        print("Provider: \((self as AnyObject) as? AccentColorProvider)")
-        return ((self as AnyObject) as? AccentColorProvider)?.accentColor
+    var indexedAccentColor: UIColor {
+        return (self as? AccentColorProvider)?.accentColor ?? .defaultAccent
     }
 
 }
