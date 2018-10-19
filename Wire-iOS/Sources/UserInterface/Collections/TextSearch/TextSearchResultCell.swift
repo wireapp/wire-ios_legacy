@@ -41,6 +41,7 @@ internal class TextSearchResultCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         userImageView.userSession = ZMUserSession.shared()
+        userImageView.initialsFont = .systemFont(ofSize: 11, weight: .light)
 
         accessibilityIdentifier = "search result cell"
         

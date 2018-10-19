@@ -82,8 +82,6 @@ import WireExtensionComponents
         ])
     }
 
-    // MARK: - Interface
-
     // MARK: - Updates
 
     override func updateUser() {
@@ -114,6 +112,8 @@ import WireExtensionComponents
             badgeIcon = .none
         }
     }
+
+    // MARK: - Interface
 
     /**
      * Updates the icon view with the specified icon, with an optional animation.

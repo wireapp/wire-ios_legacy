@@ -167,12 +167,6 @@ open class AvatarImageView: UIControl {
         imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: resistance), for: .horizontal)
     }
 
-    // MARK: - Events
-
-    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        sendActions(for: .touchUpInside)
-    }
-
     // MARK: - Content
 
     /// Updates the displayed avatar.

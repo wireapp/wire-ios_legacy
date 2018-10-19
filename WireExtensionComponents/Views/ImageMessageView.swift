@@ -122,7 +122,8 @@ import FLAnimatedImage
         self.imageView.clipsToBounds = true
         
         self.userNameLabel.font = UIFont.systemFont(ofSize: 12, contentSizeCategory: .small, weight: .medium)
-                
+        self.userImageView.initialsFont = UIFont.systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
+
         constrain(self, self.imageView, self.userImageView, self.userImageViewContainer, self.userNameLabel) { selfView, imageView, userImageView, userImageViewContainer, userNameLabel in
             userImageViewContainer.leading == selfView.leading
             userImageViewContainer.width == 48
