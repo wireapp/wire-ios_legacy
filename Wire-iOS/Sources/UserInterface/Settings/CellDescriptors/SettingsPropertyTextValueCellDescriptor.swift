@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireUtilities
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -42,7 +43,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
         cell.titleText = self.title
         if let textCell = cell as? SettingsTextCell,
             let stringValue = self.settingsProperty.rawValue() as? String {
-                textCell.textInput.text = stringValue
+            textCell.textInput.text = stringValue
         }
     }
     
@@ -53,7 +54,15 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
                 try self.settingsProperty << SettingsPropertyValue.string(value: stringValue)
             }
             catch let error as NSError {
-                UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.showAlert(forError: error)
+
+                // specific error message for name string is too short
+                if error.domain == ZMObjectValidationErrorDomain &&
+                    error.code == ZMManagedObjectValidationErrorCode.objectValidationErrorCodeStringTooShort.rawValue {
+                    UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.showAlert(forMessage: "name.guidance.tooshort".localized)
+                } else {
+                    UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.showAlert(forError: error)
+                }
+
             }
             catch let generalError {
                 zmLog.error("Error setting property: \(generalError)")
