@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsViewController!
     
@@ -39,7 +39,26 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     func testForActionMenu() {
         sut.detailsView(GroupDetailsFooterView(), performAction: .more)
-
         verifyAlertController((sut?.actionController?.alertController)!)
+    }
+    
+    func testForInitState_NonTeam() {
+        nonTeamTest {
+            verify(view: self.sut.view)
+        }
+    }
+    
+    func testForActionMenu_NonTeam() {
+        nonTeamTest {
+            self.sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            verifyAlertController((self.sut?.actionController?.alertController)!)
+        }
+    }
+    
+    private func nonTeamTest(_ block: () -> Void) {
+        let mockSelf = MockUser.mockSelf()
+        mockSelf?.isTeamMember = false
+        block()
+        mockSelf?.isTeamMember = true
     }
 }

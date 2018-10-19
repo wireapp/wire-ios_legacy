@@ -74,7 +74,7 @@ extension ZMConversation {
         }
         
         if !isReadOnly {
-            if ZMUser.selfUser()?.hasTeam ?? false {
+            if ZMUser.selfUser()?.isTeamMember ?? false {
                 actions.append(.configureNotifications)
             }
             else {
