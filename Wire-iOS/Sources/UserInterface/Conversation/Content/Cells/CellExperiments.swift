@@ -34,7 +34,6 @@ protocol ConfigurableCell: class {
     static var mapping: [String: Configuration] { get }
     static func reuseIdentifier(for configuration: Configuration) -> String
     
-//    init(reuseIdentifier: String)
     init(from configuration: Configuration)
     
     func configure(with content: Content)
@@ -64,43 +63,7 @@ extension ConfigurableCell {
         self.init(from: configuration)
     }
     
-//    init(from configuration: Configuration) {
-//        self.init(reuseIdentifier: Self.reuseIdentifier(for: configuration))
-//    }
-    
 }
-
-struct MessageCellConfiguration: OptionSet {
-    
-    var rawValue: Int
-    
-    static var allCases: [MessageCellConfiguration] = [.none, .showSender, .showBurstTimestamp, .all]
-    
-    static let none = MessageCellConfiguration(rawValue: 0)
-    static let showSender = MessageCellConfiguration(rawValue: 1 << 0)
-    static let showBurstTimestamp = MessageCellConfiguration(rawValue: 1 << 1)
-    static let all: MessageCellConfiguration = [.showSender, .showBurstTimestamp]
-    
-    init(context: MessageCellContext) {
-        var configuration = MessageCellConfiguration()
-        
-        if !context.isSameSenderAsPrevious {
-            configuration.insert(.showSender)
-        }
-        
-        if context.isTimeIntervalSinceLastMessageSignificant {
-            configuration.insert(.showBurstTimestamp)
-        }
-        
-        self.rawValue = configuration.rawValue
-    }
-    
-    init(rawValue: Int) {
-        self.rawValue = rawValue
-    }
-    
-}
-
 
 struct UnknownMessageCellDescription: CellDescription {
     

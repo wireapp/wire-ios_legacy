@@ -36,7 +36,13 @@ extension ZMConversationMessageWindow {
         if message.isText {
             return TextMessageCellDescription(message: message, context: context)
         } else if message.isImage {
-            return ImageMessageCellDescription(message: message, context: context)
+            return DefaultMessageCellDescription<NewImageMessageCell>(message: message, context: context)
+        } else if message.isVideo {
+            return DefaultMessageCellDescription<NewVideoMessageCell>(message: message, context: context)
+        } else if (message.isAudio) {
+            return DefaultMessageCellDescription<NewAudioMessageCell>(message: message, context: context)
+        } else if (message.isFile) {
+            return DefaultMessageCellDescription<NewFileMessageCell>(message: message, context: context)
         } else {
             return UnknownMessageCellDescription()
         }

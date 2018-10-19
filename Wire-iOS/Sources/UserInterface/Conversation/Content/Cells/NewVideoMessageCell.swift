@@ -18,7 +18,7 @@
 
 import Foundation
 
-class NewImageMessageCell: MessageCell, ConfigurableCell {
+class NewVideoMessageCell: MessageCell, ConfigurableCell {
     
     typealias Content = DefaultMessageCellDescription
     typealias Configuration = DefaultMessageCellConfiguration
@@ -27,18 +27,18 @@ class NewImageMessageCell: MessageCell, ConfigurableCell {
         var mapping: [String : DefaultMessageCellConfiguration] = [:]
         
         for (index, variant) in DefaultMessageCellConfiguration.variants.enumerated() {
-            mapping["\(NSStringFromClass(NewImageMessageCell.self))_\(index)"] = variant
+            mapping["\(NSStringFromClass(NewVideoMessageCell.self))_\(index)"] = variant
         }
         
         return mapping
     }()
     
-    let imageMessageContentView: ImageMessageContentView
-        
+    let videoMessageView: VideoMessageView
+    
     required init(from configuration: DefaultMessageCellConfiguration) {
-        imageMessageContentView = ImageMessageContentView()
+        videoMessageView = VideoMessageView()
         
-        super.init(from: configuration.configuration, content: imageMessageContentView)
+        super.init(from: configuration.configuration, content: videoMessageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,9 +48,7 @@ class NewImageMessageCell: MessageCell, ConfigurableCell {
     func configure(with content: DefaultMessageCellContent) {
         super.configure(with: content.message, context: content.context)
         
-        guard let imageMessageData = content.message.imageMessageData else { return }
-        
-        imageMessageContentView.configure(with: imageMessageData)
+        videoMessageView.configure(for: content.message, isInitial: false)
     }
     
 }

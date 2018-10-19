@@ -83,6 +83,9 @@
 		166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F22179D3CF00300F45 /* SenderCellComponent.swift */; };
 		166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F52179E63F00300F45 /* ImageMessageContentView.swift */; };
 		166264F82179E6B400300F45 /* TextMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F72179E6B400300F45 /* TextMessageContentView.swift */; };
+		166264FA217A17D100300F45 /* NewVideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F9217A17D100300F45 /* NewVideoMessageCell.swift */; };
+		166264FC217A20CB00300F45 /* NewAudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */; };
+		166264FE217A22B100300F45 /* NewFileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FD217A22B100300F45 /* NewFileMessageCell.swift */; };
 		166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */; };
 		166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D51DC8AC0C00D7BF1C /* String+Image.swift */; };
 		16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */; };
@@ -1528,6 +1531,9 @@
 		166264F22179D3CF00300F45 /* SenderCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCellComponent.swift; sourceTree = "<group>"; };
 		166264F52179E63F00300F45 /* ImageMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageContentView.swift; sourceTree = "<group>"; };
 		166264F72179E6B400300F45 /* TextMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageContentView.swift; sourceTree = "<group>"; };
+		166264F9217A17D100300F45 /* NewVideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVideoMessageCell.swift; sourceTree = "<group>"; };
+		166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAudioMessageCell.swift; sourceTree = "<group>"; };
+		166264FD217A22B100300F45 /* NewFileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFileMessageCell.swift; sourceTree = "<group>"; };
 		166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToolbarView.swift; sourceTree = "<group>"; };
 		166390D51DC8AC0C00D7BF1C /* String+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Image.swift"; sourceTree = "<group>"; };
 		16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySearchViewController.swift; sourceTree = "<group>"; };
@@ -5503,6 +5509,9 @@
 				166264CD216F9F0700300F45 /* CellExperiments.swift */,
 				166264EA2174CA5900300F45 /* NewTextMessageCell.swift */,
 				166264EC2174CA7800300F45 /* NewImageMessageCell.swift */,
+				166264F9217A17D100300F45 /* NewVideoMessageCell.swift */,
+				166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */,
+				166264FD217A22B100300F45 /* NewFileMessageCell.swift */,
 				166264EF2178D9A000300F45 /* MessageCell.swift */,
 			);
 			path = Cells;
@@ -7398,6 +7407,7 @@
 				8FC85459199245770008B66B /* InvisibleInputAccessoryView.m in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
 				EEC7E82A2178B55100E32835 /* ConversationNotificationOptionsViewController.swift in Sources */,
+				166264FC217A20CB00300F45 /* NewAudioMessageCell.swift in Sources */,
 				AF36C5A51E9F6C4F00FADECC /* DraftMessageCell.swift in Sources */,
 				BFD37A0F2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift in Sources */,
 				AF58EC881E9FCDE700EB94CD /* CoreDataTableViewController.swift in Sources */,
@@ -7508,6 +7518,7 @@
 				166264CE216F9F0700300F45 /* CellExperiments.swift in Sources */,
 				BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */,
 				872B3283209B208D005AC615 /* CallTopOverlayController.swift in Sources */,
+				166264FA217A17D100300F45 /* NewVideoMessageCell.swift in Sources */,
 				871BC2511D34F8F800DF0793 /* MediaPreviewData.m in Sources */,
 				EF297DDA2131FF310002983A /* ConversationInputBarViewController+Style.swift in Sources */,
 				5EAE50332099B424003DAAC6 /* PinnableThumbnailViewController.swift in Sources */,
@@ -7745,6 +7756,7 @@
 				871BC23A1D34F8F800DF0793 /* KeyboardFrameObserver+iOS.m in Sources */,
 				EF24036E20A1D581002813BE /* TermsOfUseStepViewController+Constraints.swift in Sources */,
 				8F41CFC9199297C600E3B032 /* Message+UI.m in Sources */,
+				166264FE217A22B100300F45 /* NewFileMessageCell.swift in Sources */,
 				EF2127031FB9DFE300625A9B /* CheckmarkView.m in Sources */,
 				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,

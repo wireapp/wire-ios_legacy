@@ -20,6 +20,74 @@ import Foundation
 
 typealias ViewLayout = (UIView, UIEdgeInsets)
 
+struct DefaultMessageCellConfiguration: Equatable {
+    
+    var configuration: MessageCellConfiguration
+    
+    static var variants: [DefaultMessageCellConfiguration] = MessageCellConfiguration.allCases.map({
+        return DefaultMessageCellConfiguration($0)
+    })
+    
+    init(_ configuration: MessageCellConfiguration) {
+        self.configuration = configuration
+    }
+    
+}
+
+struct DefaultMessageCellContent {
+    let message: ZMConversationMessage
+    let context: MessageCellContext
+}
+
+struct DefaultMessageCellDescription<T: ConfigurableCell & UIView>: CellDescription where T.Content == DefaultMessageCellContent, T.Configuration == DefaultMessageCellConfiguration {
+    
+    let content: DefaultMessageCellContent
+    let configuration: DefaultMessageCellConfiguration
+    
+    init (message: ZMConversationMessage, context: MessageCellContext) {
+        self.content = DefaultMessageCellContent(message: message, context: context)
+        self.configuration = DefaultMessageCellConfiguration(MessageCellConfiguration(context: context))
+    }
+    
+    func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        let cell: TableViewConfigurableCellAdapter<T> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
+        cell.configure(with: content)
+        return cell
+    }
+    
+}
+
+struct MessageCellConfiguration: OptionSet {
+    
+    var rawValue: Int
+    
+    static var allCases: [MessageCellConfiguration] = [.none, .showSender, .showBurstTimestamp, .all]
+    
+    static let none = MessageCellConfiguration(rawValue: 0)
+    static let showSender = MessageCellConfiguration(rawValue: 1 << 0)
+    static let showBurstTimestamp = MessageCellConfiguration(rawValue: 1 << 1)
+    static let all: MessageCellConfiguration = [.showSender, .showBurstTimestamp]
+    
+    init(context: MessageCellContext) {
+        var configuration = MessageCellConfiguration()
+        
+        if !context.isSameSenderAsPrevious {
+            configuration.insert(.showSender)
+        }
+        
+        if context.isTimeIntervalSinceLastMessageSignificant {
+            configuration.insert(.showBurstTimestamp)
+        }
+        
+        self.rawValue = configuration.rawValue
+    }
+    
+    init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    
+}
+
 class MessageCell: UIView {
     
     let contentView: UIView

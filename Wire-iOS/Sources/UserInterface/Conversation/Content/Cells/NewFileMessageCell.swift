@@ -18,7 +18,9 @@
 
 import Foundation
 
-class NewImageMessageCell: MessageCell, ConfigurableCell {
+import Foundation
+
+class NewFileMessageCell: MessageCell, ConfigurableCell {
     
     typealias Content = DefaultMessageCellDescription
     typealias Configuration = DefaultMessageCellConfiguration
@@ -27,18 +29,18 @@ class NewImageMessageCell: MessageCell, ConfigurableCell {
         var mapping: [String : DefaultMessageCellConfiguration] = [:]
         
         for (index, variant) in DefaultMessageCellConfiguration.variants.enumerated() {
-            mapping["\(NSStringFromClass(NewImageMessageCell.self))_\(index)"] = variant
+            mapping["\(NSStringFromClass(NewFileMessageCell.self))_\(index)"] = variant
         }
         
         return mapping
     }()
     
-    let imageMessageContentView: ImageMessageContentView
-        
+    let fileMessageView: FileTransferView
+    
     required init(from configuration: DefaultMessageCellConfiguration) {
-        imageMessageContentView = ImageMessageContentView()
+        fileMessageView = FileTransferView()
         
-        super.init(from: configuration.configuration, content: imageMessageContentView)
+        super.init(from: configuration.configuration, content: fileMessageView)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,9 +50,7 @@ class NewImageMessageCell: MessageCell, ConfigurableCell {
     func configure(with content: DefaultMessageCellContent) {
         super.configure(with: content.message, context: content.context)
         
-        guard let imageMessageData = content.message.imageMessageData else { return }
-        
-        imageMessageContentView.configure(with: imageMessageData)
+        fileMessageView.configure(for: content.message, isInitial: false)
     }
     
 }
