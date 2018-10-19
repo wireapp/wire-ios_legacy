@@ -74,7 +74,6 @@
 {
     self.contentView = [[UIView alloc] initForAutoLayout];
     [self addSubview:self.contentView];
-    self.contentView.layoutMargins = UIView.directionAwareConversationLayoutMargins;
 
     self.containerView = [[UIView alloc] initForAutoLayout];
     self.containerView.clipsToBounds = YES;
@@ -109,7 +108,7 @@
 - (void)setupLayout
 {
     [self.contentView autoPinEdgesToSuperviewEdges];
-    [self.containerView autoPinEdgesToSuperviewMargins];
+    [self.containerView autoPinEdgesToSuperviewEdges];
 
     [self.previewImageView autoPinEdgesToSuperviewEdges];
     [self.overlayView autoPinEdgesToSuperviewEdges];

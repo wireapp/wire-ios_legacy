@@ -54,18 +54,43 @@ struct TextMessageCellDescription: CellDescription {
     
     let context: MessageCellContext
     let message: ZMConversationMessage
+    let formattedText: NSAttributedString
+    let linkAttachment: LinkAttachment?
     let configuration: TextMessageCellConfiguration
     
     init (message: ZMConversationMessage, context: MessageCellContext) {
+        guard let textMessageData = message.textMessageData else { fatal("Boom" )} // TODO jacob move textMessageData into initializer
+        
         var configuration = MessageCellConfiguration(context: context)
         
         if message.updatedAt != nil {
             configuration.insert(.showSender)
         }
+    
+        var lastLinkAttachment: LinkAttachment = LinkAttachment(url: URL(fileURLWithPath: "/"), range: NSRange(location: 0, length: 0), string: "")
+        let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastLinkAttachment)
+        var linkAttachment: LinkAttachment? = lastLinkAttachment
+        
+        var attachment: TextMessageCellConfiguration.Attachment = .none
+        if textMessageData.linkPreview != nil {
+            attachment = .linkPreview
+            linkAttachment = nil
+        } else {
+            switch lastLinkAttachment.type {
+            case .none:
+                attachment = .none
+            case .soundcloudSet, .soundcloudTrack:
+                attachment = .soundcloud
+            case .youtubeVideo:
+                attachment = .youtube
+            }
+        }
         
         self.context = context
         self.message = message
-        self.configuration = TextMessageCellConfiguration(configuration: configuration, attachment: .none)
+        self.formattedText = formattedText
+        self.linkAttachment = linkAttachment
+        self.configuration = TextMessageCellConfiguration(configuration: configuration, attachment: attachment)
     }
     
     func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
@@ -110,7 +135,10 @@ class NewTextMessageCell: MessageCell, ConfigurableCell {
         
         guard let textMessageData = content.message.textMessageData else { return }
         
-        textContentView.configure(with: textMessageData, isObfuscated: content.message.isObfuscated)
+        textContentView.configure(with: content.formattedText,
+                                  textMessageData: textMessageData,
+                                  linkAttachment: content.linkAttachment,
+                                  isObfuscated: content.message.isObfuscated)
     }
     
 }

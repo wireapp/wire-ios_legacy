@@ -41,7 +41,9 @@ class TextMessageContentView: UIView {
             self.articleView = articleView
             layout.append((articleView, .zero))
         case .youtube:
-            mediaPreviewController = MediaPreviewViewController()
+            let mediaPreviewController = MediaPreviewViewController()
+            self.mediaPreviewController = mediaPreviewController
+            layout.append((mediaPreviewController.view, .zero))
         default:
             break
         }
@@ -70,11 +72,14 @@ class TextMessageContentView: UIView {
         textView.setContentCompressionResistancePriority(.required, for: .vertical)
     }
     
-    func configure(with textMessageData: ZMTextMessageData, isObfuscated: Bool) {
-        var lastLinkAttachment: LinkAttachment = LinkAttachment(url: URL(fileURLWithPath: "/"), range: NSRange(location: 0, length: 0), string: "")
-        let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: isObfuscated, linkAttachment: &lastLinkAttachment)
-        textView.attributedText = formattedText
+    func configure(with text: NSAttributedString, textMessageData: ZMTextMessageData, linkAttachment: LinkAttachment?, isObfuscated: Bool) { // TODO jacob clean this up
+        textView.attributedText = text // TODO handle isObfuscated
         articleView?.configure(withTextMessageData: textMessageData, obfuscated: isObfuscated)
+        
+        if let linkAttachment = linkAttachment {
+            mediaPreviewController?.linkAttachment = linkAttachment
+            mediaPreviewController?.fetchAttachment()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
