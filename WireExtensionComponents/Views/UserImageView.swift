@@ -225,15 +225,14 @@ import WireSyncEngine
         let defaultAvatar = Avatar.text(initials.localizedUppercase)
         setAvatar(defaultAvatar, user: user, animated: false)
 
-        guard let userSession = self.userSession else {
-            return
+        if let userSession = self.userSession {
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
         }
-
-        userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
 
         updateForServiceUserIfNeeded(user)
         updateIndicatorColor()
         updateUserImage()
+
     }
 
     /// Updates the color of the badge indicator.
