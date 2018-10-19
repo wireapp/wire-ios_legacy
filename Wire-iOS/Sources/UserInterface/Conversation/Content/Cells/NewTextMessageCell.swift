@@ -154,7 +154,7 @@ class NewTextMessageCell: MessageCell, ConfigurableCell {
         var mapping: [String : TextMessageCellConfiguration] = [:]
         
         for (index, variant) in TextMessageCellConfiguration.variants.enumerated() {
-            mapping["\(reuseIdentifier)_\(index)"] = variant
+            mapping["\(NSStringFromClass(NewTextMessageCell.self))_\(index)"] = variant
         }
         
         return mapping

@@ -23,7 +23,7 @@ typealias ViewLayout = (UIView, UIEdgeInsets)
 class MessageCell: UIView {
     
     let contentView: UIView
-    var senderView: SenderView?
+    var senderView: SenderCellComponent?
     var burstTimestampView: ConversationCellBurstTimestampView?
     let toolboxView: MessageToolboxView = MessageToolboxView()
     let ephemeralCountdownView: DestructionCountdownView = DestructionCountdownView()
@@ -48,7 +48,7 @@ class MessageCell: UIView {
         }
         
         if configuration.contains(.showSender) {
-            let senderView = SenderView()
+            let senderView = SenderCellComponent()
             layout.append((senderView, UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)))
             self.senderView = senderView
         }
@@ -100,6 +100,7 @@ class MessageCell: UIView {
         burstTimestampView?.isSeparatorExpanded = true
         toolboxView.configureForMessage(message, forceShowTimestamp: false, animated: false)
         toolboxView.setHidden(!isSelected, animated: false)
+        ephemeralCountdownView.isHidden = !message.isEphemeral
     }
     
 }

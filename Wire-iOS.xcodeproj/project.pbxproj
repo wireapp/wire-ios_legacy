@@ -80,6 +80,7 @@
 		166264EB2174CA5900300F45 /* NewTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EA2174CA5900300F45 /* NewTextMessageCell.swift */; };
 		166264ED2174CA7800300F45 /* NewImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EC2174CA7800300F45 /* NewImageMessageCell.swift */; };
 		166264F02178D9A000300F45 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EF2178D9A000300F45 /* MessageCell.swift */; };
+		166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F22179D3CF00300F45 /* SenderCellComponent.swift */; };
 		166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */; };
 		166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D51DC8AC0C00D7BF1C /* String+Image.swift */; };
 		16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */; };
@@ -1478,6 +1479,7 @@
 		166264EA2174CA5900300F45 /* NewTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTextMessageCell.swift; sourceTree = "<group>"; };
 		166264EC2174CA7800300F45 /* NewImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewImageMessageCell.swift; sourceTree = "<group>"; };
 		166264EF2178D9A000300F45 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		166264F22179D3CF00300F45 /* SenderCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCellComponent.swift; sourceTree = "<group>"; };
 		166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToolbarView.swift; sourceTree = "<group>"; };
 		166390D51DC8AC0C00D7BF1C /* String+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Image.swift"; sourceTree = "<group>"; };
 		16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySearchViewController.swift; sourceTree = "<group>"; };
@@ -3229,6 +3231,14 @@
 				EF297DE121320AC20002983A /* InviteContactsViewController+Swift.swift */,
 			);
 			path = InviteContacts;
+			sourceTree = "<group>";
+		};
+		166264F12179D33D00300F45 /* CellComponents */ = {
+			isa = PBXGroup;
+			children = (
+				166264F22179D3CF00300F45 /* SenderCellComponent.swift */,
+			);
+			path = CellComponents;
 			sourceTree = "<group>";
 		};
 		16829EE02010D62300F579A0 /* InviteTeamMember */ = {
@@ -5187,6 +5197,7 @@
 				87F18BB41E0154C000C69D9B /* FileTransfer */,
 				874448871C22FCE500E7B947 /* Utility */,
 				7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */,
+				166264F12179D33D00300F45 /* CellComponents */,
 				7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */,
 				7CD0746020D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift */,
 				872C823F214BF01100236A76 /* TextMessageCell+Mentions.swift */,
@@ -6920,6 +6931,7 @@
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
 				1648EEF12049A69800CC6B37 /* GroupConversationSectionController.swift in Sources */,
 				BF515F941D9D1C1900C786FB /* EmojiSectionViewController.swift in Sources */,
+				166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */,
 				878D7C8E1E65DB6500770E84 /* ConversationContentViewController+PinchZoom.m in Sources */,
 				BFE3FEEA209747D6003D9AB5 /* CallStatusView.swift in Sources */,
 				8756FE341CEB62F800EF58A6 /* AudioMessageCell.swift in Sources */,

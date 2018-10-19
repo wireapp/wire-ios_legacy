@@ -104,7 +104,7 @@ class NewImageMessageCell: MessageCell, ConfigurableCell {
         var mapping: [String : ImageMessageCellConfiguration] = [:]
         
         for (index, variant) in ImageMessageCellConfiguration.variants.enumerated() {
-            mapping["\(reuseIdentifier)_\(index)"] = variant
+            mapping["\(NSStringFromClass(NewImageMessageCell.self))_\(index)"] = variant
         }
         
         return mapping
