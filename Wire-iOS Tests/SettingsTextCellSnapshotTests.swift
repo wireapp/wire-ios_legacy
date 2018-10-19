@@ -19,20 +19,26 @@
 import XCTest
 @testable import Wire
 
-final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
+final class SettingsTextCellSnapshotTests: CoreDataSnapshotTestCase {
     
-    var sut: ConversationListViewController!
+    var sut: SettingsTextCell!
     
     override func setUp() {
         super.setUp()
-
         MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
 
-        sut = ConversationListViewController()
-        let account = Account(userName: "", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
-        sut.account = account
+        sut = SettingsTextCell()
 
-        sut.view.backgroundColor = .black
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
+
+        let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory)
+
+        let cellDescriptor = settingsCellDescriptorFactory.nameElement()
+
+        sut.descriptor = cellDescriptor
+        cellDescriptor.featureCell(sut)
+
+        sut.backgroundColor = .black
     }
     
     override func tearDown() {
@@ -40,13 +46,9 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForNoConversations() {
-        verify(view: sut.view)
-    }
-
-    func testForActionMenu() {
-        sut.showActionMenu(for: otherUserConversation, from: sut.view)
-
-        verifyAlertController((sut?.actionsController?.alertController)!)
+    func testForNameElementWithALongName(){
+        let mockTableView = sut.wrapInTableView()
+        mockTableView.backgroundColor = .black
+        verify(view: mockTableView)
     }
 }

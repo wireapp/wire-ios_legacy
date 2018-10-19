@@ -42,6 +42,8 @@ protocol SettingsCellType: class {
     public let cellNameLabel: UILabel = {
         let label = UILabel()
         label.font = .normalLightFont
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+
         return label
     }()
     let valueLabel = UILabel()
@@ -369,17 +371,30 @@ protocol SettingsCellType: class {
         textInput.delegate = self
         textInput.textAlignment = .right
         textInput.textColor = UIColor.lightGray
+        textInput.setContentCompressionResistancePriority(UILayoutPriority.defaultLow, for: .horizontal)
+
         contentView.addSubview(textInput)
+
+        createConstraints()
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
+        contentView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    func createConstraints(){
+        let textInputSpacing = CGFloat(16)
 
         let trailingBoundaryView = accessoryView ?? contentView
         constrain(contentView, textInput, trailingBoundaryView) { contentView, textInput, trailingBoundaryView in
             textInput.top == contentView.top - 8
             textInput.bottom == contentView.bottom + 8
-            textInput.trailing == trailingBoundaryView.trailing - 16
+            textInput.trailing == trailingBoundaryView.trailing - textInputSpacing
         }
-        
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCellSelected(_:)))
-        contentView.addGestureRecognizer(tapGestureRecognizer)
+
+        NSLayoutConstraint.activate([
+            cellNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: textInput.leadingAnchor, constant: -textInputSpacing)
+        ])
+
     }
     
     override func setupAccessibiltyElements() {
