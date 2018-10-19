@@ -73,13 +73,12 @@ import Foundation
     /// Create a new `CompanyLoginController` instance using the standard detector and requester.
     @objc(initWithDefaultEnvironment) public convenience init?(withDefaultEnvironment: ()) {
         guard CompanyLoginController.isCompanyLoginEnabled else { return nil } // Disable on public builds
-
-        let environment = ZMBackendEnvironment(userDefaults: .standard)
+        
         let callbackScheme = wr_companyLoginURLScheme()
         requireInternal(nil != callbackScheme, "no valid callback scheme")
 
         let requester = CompanyLoginRequester(
-            backendHost: environment.backendURL.host!,
+            backendHost: BackendEnvironment.shared.backendURL.host!,
             callbackScheme: callbackScheme ?? CompanyLoginController.fallbackURLScheme
         )
         self.init(detector: .shared, requester: requester)

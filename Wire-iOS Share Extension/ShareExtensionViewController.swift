@@ -148,7 +148,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     private var authenticatedAccounts: [Account] {
         guard let accountManager = accountManager else { return [] }
-        return accountManager.accounts.filter(\.isAuthenticated)
+        return accountManager.accounts.filter { $0.isAuthenticated(with: BackendEnvironment.shared) }
     }
     
     private func recreateSharingSession(account: Account?) throws {
@@ -374,7 +374,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         // If the current account is not authenticated (e.g. device removed from another client)
         // and there are other accounts authenticated, it switches to the first available.
         
-        if let firstLogged = authenticated.first, account == currentAccount, account?.isAuthenticated == false {
+        if let firstLogged = authenticated.first, account == currentAccount, account?.isAuthenticated(with: BackendEnvironment.shared) == false {
             account = firstLogged
         }
         

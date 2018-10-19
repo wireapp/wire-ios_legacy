@@ -551,6 +551,7 @@
 		8750B1CB2124236200B807A9 /* InviteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8750B1CA2124236200B807A9 /* InviteButton.swift */; };
 		8751A6CB1FF6573D00804A58 /* QuickActionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8751A6CA1FF6573D00804A58 /* QuickActionsManager.swift */; };
 		8751BA442069455E00DF8667 /* BackupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8751BA432069455E00DF8667 /* BackupViewController.swift */; };
+		8756C48E217A312C00627F1F /* BackendEnvironment+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756C48D217A312C00627F1F /* BackendEnvironment+Shared.swift */; };
 		8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8756CA131D2EBE1F002E7CB7 /* LaunchImageViewController.m */; };
 		8756FE341CEB62F800EF58A6 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */; };
 		875753D1211DC61C00A80F5E /* EmptySearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875753D0211DC61C00A80F5E /* EmptySearchResultsView.swift */; };
@@ -3565,6 +3566,7 @@
 			isa = PBXGroup;
 			children = (
 				1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */,
+				8756C48D217A312C00627F1F /* BackendEnvironment+Shared.swift */,
 				5E2B13E520E67206002F27E2 /* CollectionLayouts */,
 				1EE9DCA51B5F9A6D00E347DF /* Views */,
 				1E5E0CE71B6B8EDB003B0CAC /* Icons */,
@@ -7081,6 +7083,7 @@
 				CE8E4FB31DF066EE0009F437 /* AudioProcessing.swift in Sources */,
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
 				87B7DAB91E6973B0005F5140 /* UserImageView.m in Sources */,
+				8756C48E217A312C00627F1F /* BackendEnvironment+Shared.swift in Sources */,
 				8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */,
 				164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */,
 				54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */,
