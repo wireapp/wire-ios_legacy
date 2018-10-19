@@ -126,7 +126,6 @@
 #import "ProfileDetailsViewController.h"
 #import "ProfileDetailsViewController+Internal.h"
 #import "ContactsDataSource.h"
-#import "BadgeUserImageView.h"
 #import "LaunchImageViewController.h"
 #import "StartUIViewController.h"
 #import "Button.h"

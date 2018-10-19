@@ -22,7 +22,7 @@ import WireSyncEngine
  * A view that displays the avatar for a remote user.
  */
 
-public class UserImageView: AvatarImageView {
+@objc open class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// The type of remote user that can have their avatar displayed.
     public typealias RemoteUser = UserType & AccentColorProvider
@@ -31,7 +31,7 @@ public class UserImageView: AvatarImageView {
      * The different sizes for the avatar image.
      */
 
-    public enum Size: Int {
+    @objc(UserImageViewSize) public enum Size: Int {
         case tiny = 16
         case small = 32
         case normal = 64
@@ -44,7 +44,7 @@ public class UserImageView: AvatarImageView {
     public let size: Size
 
     /// Whether the image should be desaturated, e.g. for unconnected users.
-    public var shouldDesaturate: Bool = true
+    @objc public var shouldDesaturate: Bool = true
 
     /// Whether the badge indicator is enabled.
     public var indicatorEnabled: Bool = false {
@@ -58,14 +58,14 @@ public class UserImageView: AvatarImageView {
     // MARK: - Remote User
 
     /// The user session to use to download images.
-    public var userSession: ZMUserSession? {
+    @objc public var userSession: ZMUserSession? {
         didSet {
             updateUser()
         }
     }
 
     /// The user to display the avatar of.
-    public var user: RemoteUser? {
+    @objc public var user: RemoteUser? {
         didSet {
             updateUser()
         }
@@ -90,7 +90,7 @@ public class UserImageView: AvatarImageView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override var intrinsicContentSize: CGSize {
+    open override var intrinsicContentSize: CGSize {
         return CGSize(width: size.rawValue, height: size.rawValue)
     }
 
@@ -116,11 +116,7 @@ public class UserImageView: AvatarImageView {
         ])
     }
 
-}
-
-// MARK: - Interface
-
-extension UserImageView {
+    // MARK: - Interface
 
     /// Returns the appropriate border width for the user.
     private func borderWidth(for user: RemoteUser) -> CGFloat {
@@ -142,25 +138,7 @@ extension UserImageView {
         return user.isServiceUser ? .relative : .circle
     }
 
-}
-
-// MARK: - Changing the Content
-
-extension UserType {
-
-    /// Whether the user is wireless.
-    var isWireless: Bool {
-        let getter = #selector(getter: ZMUser.isWirelessUser)
-        if self.responds(to: getter) {
-            return perform(getter)?.takeUnretainedValue() as? Bool ?? false
-        }
-
-        return false
-    }
-
-}
-
-extension UserImageView {
+    // MARK: - Changing the Content
 
     /**
      * Sets the avatar for the user with an optional animation.
@@ -172,12 +150,13 @@ extension UserImageView {
     func setAvatar(_ avatar: Avatar, user: RemoteUser, animated: Bool) {
         let updateBlock = {
             self.avatar = avatar
+            let isWireless = user.zmUser?.isWirelessUser == true
 
             switch avatar {
             case .image:
                 self.container.backgroundColor = self.containerBackgroundColor(for: user)
             default:
-                if user.isConnected || user.isSelfUser || user.isTeamMember || user.isWireless {
+                if user.isConnected || user.isSelfUser || user.isTeamMember || isWireless {
                     self.container.backgroundColor = user.accentColor
                 } else {
                     self.container.backgroundColor = UIColor(white: 0.8, alpha: 1)
@@ -208,13 +187,9 @@ extension UserImageView {
         })
     }
 
-}
+    // MARK: - Updates
 
-// MARK: - Updates
-
-extension UserImageView: ZMUserObserver {
-
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
+    open func userDidChange(_ changeInfo: UserChangeInfo) {
         // Check for potential image changes
         if size == .big{
             if changeInfo.imageMediumDataChanged || changeInfo.connectionStateChanged {
@@ -233,7 +208,7 @@ extension UserImageView: ZMUserObserver {
     }
 
     /// Called when the user or user session changes.
-    private func updateUser() {
+    open func updateUser() {
         guard let userSession = self.userSession, let user = self.user, let initials = user.initials else {
             return
         }

@@ -19,7 +19,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "UserImageView.h"
 #import "WireSyncEngine+iOS.h"
 #import "MessageAction.h"
 #import "MessageType.h"
@@ -65,7 +64,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCell:(ConversationCell *)cell openParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
 @end
 
-@interface ConversationCell : UITableViewCell <UserImageViewDelegate>
+@interface ConversationCell : UITableViewCell
 
 @property (nonatomic, readonly) ConversationCellLayoutProperties *layoutProperties;
 

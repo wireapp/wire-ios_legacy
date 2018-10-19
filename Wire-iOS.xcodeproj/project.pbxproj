@@ -236,6 +236,8 @@
 		5E67169C2176296E00522E61 /* AdaptiveFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E67169B2176296E00522E61 /* AdaptiveFormViewController.swift */; };
 		5E67169E21762F7300522E61 /* AdaptiveFormViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E67169D21762F7300522E61 /* AdaptiveFormViewControllerTests.swift */; };
 		5E672C8F2178D85200522E61 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C8E2178D85200522E61 /* AvatarImageView.swift */; };
+		5E672C922179C3E300522E61 /* BadgeUserImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C902179C3DB00522E61 /* BadgeUserImageView.swift */; };
+		5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E672C932179D41100522E61 /* UserType+ZMUser.swift */; };
 		5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */; };
 		5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */; };
 		5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */; };
@@ -444,7 +446,6 @@
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.m */; };
 		871BC2701D34F8F800DF0793 /* StackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D51D34F8F800DF0793 /* StackView.m */; };
 		871BC2711D34F8F800DF0793 /* SwipeMenuCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D71D34F8F800DF0793 /* SwipeMenuCollectionCell.m */; };
-		871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */; };
 		871BC27A1D34F8F800DF0793 /* WebLinkTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */; };
 		871BC27D1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */; };
 		871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */; };
@@ -1701,6 +1702,8 @@
 		5E67169B2176296E00522E61 /* AdaptiveFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveFormViewController.swift; sourceTree = "<group>"; };
 		5E67169D21762F7300522E61 /* AdaptiveFormViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveFormViewControllerTests.swift; sourceTree = "<group>"; };
 		5E672C8E2178D85200522E61 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
+		5E672C902179C3DB00522E61 /* BadgeUserImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeUserImageView.swift; sourceTree = "<group>"; };
+		5E672C932179D41100522E61 /* UserType+ZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserType+ZMUser.swift"; sourceTree = "<group>"; };
 		5E678060204E8BEB002F63FB /* CallQualityPresentationTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityPresentationTransition.swift; sourceTree = "<group>"; };
 		5E766D9821144DFC005242B4 /* AuthenticationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinator.swift; sourceTree = "<group>"; };
 		5E766D9A211472C0005242B4 /* AuthenticationFlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFlowStep.swift; sourceTree = "<group>"; };
@@ -1947,8 +1950,6 @@
 		871BC1D51D34F8F800DF0793 /* StackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackView.m; sourceTree = "<group>"; };
 		871BC1D61D34F8F800DF0793 /* SwipeMenuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeMenuCollectionCell.h; sourceTree = "<group>"; };
 		871BC1D71D34F8F800DF0793 /* SwipeMenuCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeMenuCollectionCell.m; sourceTree = "<group>"; };
-		871BC1DD1D34F8F800DF0793 /* BadgeUserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeUserImageView.h; sourceTree = "<group>"; };
-		871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BadgeUserImageView.m; sourceTree = "<group>"; };
 		871BC1E91D34F8F800DF0793 /* WebLinkTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebLinkTextView.h; sourceTree = "<group>"; };
 		871BC1EA1D34F8F800DF0793 /* WebLinkTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebLinkTextView.m; sourceTree = "<group>"; };
 		871BC1EF1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAMediaTimingFunction+AdditionalEquations.h"; sourceTree = "<group>"; };
@@ -3526,6 +3527,7 @@
 				876CC8981E966C5C00F6BABC /* IteratorProtocol+Histogram.swift */,
 				7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */,
 				A9B02231209B6E4E00DF25D8 /* Hockey.swift */,
+				5E672C932179D41100522E61 /* UserType+ZMUser.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -4361,8 +4363,7 @@
 		871BC1DC1D34F8F800DF0793 /* UserImageView */ = {
 			isa = PBXGroup;
 			children = (
-				871BC1DD1D34F8F800DF0793 /* BadgeUserImageView.h */,
-				871BC1DE1D34F8F800DF0793 /* BadgeUserImageView.m */,
+				5E672C902179C3DB00522E61 /* BadgeUserImageView.swift */,
 			);
 			path = UserImageView;
 			sourceTree = "<group>";
@@ -7106,6 +7107,7 @@
 				5ED26CD320E7D08E00EB9ED4 /* VerticalColumnPositioningContext.swift in Sources */,
 				876CC8991E966C5C00F6BABC /* IteratorProtocol+Histogram.swift in Sources */,
 				CE06C9401DF5C3D900497685 /* AVAsset+VideoConvert.m in Sources */,
+				5E672C942179D41100522E61 /* UserType+ZMUser.swift in Sources */,
 				5E672C8F2178D85200522E61 /* AvatarImageView.swift in Sources */,
 				EF1F99F71FBB06C000969DD1 /* UILabel+TextTransform.m in Sources */,
 				1677FD341BBC19A400491481 /* ColorScheme.m in Sources */,
@@ -7139,6 +7141,7 @@
 				87240380215B8EBA0094363B /* ZMUser+Mention.swift in Sources */,
 				871BC2911D34F8F800DF0793 /* UIView+RemoveAnimations.m in Sources */,
 				5E8DA755211AF8E200360979 /* AuthenticationInitialSyncEventHandler.swift in Sources */,
+				5E672C922179C3E300522E61 /* BadgeUserImageView.swift in Sources */,
 				5EE73BE62122C6DC0032986D /* AuthenticationStartAddAccountEventHandler.swift in Sources */,
 				EEF28EED1F16692A007642E2 /* InputBarSecondaryButtonsView.swift in Sources */,
 				871BC23B1D34F8F800DF0793 /* KeyboardFrameObserver.m in Sources */,
@@ -7957,7 +7960,6 @@
 				875753D1211DC61C00A80F5E /* EmptySearchResultsView.swift in Sources */,
 				54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */,
 				87F18BC41E02E4C200C69D9B /* CollectionAudioCell.swift in Sources */,
-				871BC2741D34F8F800DF0793 /* BadgeUserImageView.m in Sources */,
 				871BC35A1D34F94200DF0793 /* AudioTrackViewController.m in Sources */,
 				BF999B601C0C984C008D5414 /* ProfileDevicesViewController.m in Sources */,
 				EF24036A20A198CC002813BE /* UIImagePickerController+iPadPopover.swift in Sources */,

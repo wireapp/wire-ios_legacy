@@ -22,7 +22,7 @@ import UIKit
  * A view that displays the avatar of a user, either as text initials or as an image.
  */
 
-public class AvatarImageView: UIControl {
+open class AvatarImageView: UIControl {
 
     /**
      * The different, mutually-exclusive forms of avatars
@@ -63,7 +63,9 @@ public class AvatarImageView: UIControl {
         set { imageView.backgroundColor = newValue }
     }
 
-    let container = RoundedView()
+    /// The view that contains the avatar.
+    public let container = RoundedView()
+
     private let imageView = UIImageView()
     private let initialsLabel = UILabel()
 
@@ -129,7 +131,7 @@ public class AvatarImageView: UIControl {
 
     // MARK: - Events
 
-    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         sendActions(for: .touchUpInside)
     }
 
