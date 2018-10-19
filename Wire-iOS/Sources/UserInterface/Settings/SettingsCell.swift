@@ -392,7 +392,7 @@ protocol SettingsCellType: class {
         }
 
         NSLayoutConstraint.activate([
-            cellNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: textInput.leadingAnchor, constant: -textInputSpacing)
+            cellNameLabel.trailingAnchor.constraint(equalTo: textInput.leadingAnchor, constant: -textInputSpacing)
         ])
 
     }
