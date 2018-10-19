@@ -27,11 +27,11 @@ class GroupDetailsNotificationOptionsCell: GroupDetailsOptionsCell {
     }
     
     override func configure(with conversation: ZMConversation) {
-        guard let status = conversation.mutedMessageTypes.notificationString else {
+        guard let key = conversation.mutedMessageTypes.localizationKey else {
             return assertionFailure("Invalid muted message type.")
         }
         
-        self.status = status
+        self.status = key.localized
     }
     
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
@@ -40,15 +40,4 @@ class GroupDetailsNotificationOptionsCell: GroupDetailsOptionsCell {
                        color: UIColor(scheme: .textForeground, variant: colorSchemeVariant))
     }
 
-}
-
-extension MutedMessageTypes {
-    var notificationString: String? {
-        switch self {
-        case .none:         return "Everything"
-        case .nonMentions:  return "Only Mentions"
-        case .all:          return "Nothing"
-        default:            return nil
-        }
-    }
 }

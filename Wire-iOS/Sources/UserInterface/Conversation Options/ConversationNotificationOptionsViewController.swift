@@ -160,7 +160,7 @@ extension ConversationNotificationOptionsViewController: ZMConversationObserver 
 }
 
 
-private extension MutedMessageTypes {
+extension MutedMessageTypes {
     
     var localizationKey: String? {
         let base = "meta.menu.configure_notification.button_"
