@@ -52,51 +52,6 @@ struct ImageMessageCellDescription: CellDescription {
     
 }
 
-
-class ImageMessageContentView: UIView {
-    
-    var imageView = ImageResourceView()
-    var imageAspectConstraint: NSLayoutConstraint?
-    var imageWidthConstraint: NSLayoutConstraint
-    var imageHeightConstraint: NSLayoutConstraint
-    
-    init() {
-        imageWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: 0)
-        imageHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 0)
-        
-        super.init(frame: .zero)
-        
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageWidthConstraint.priority = .defaultLow
-        imageHeightConstraint.priority = .defaultLow
-        
-        addSubview(imageView)
-        
-        NSLayoutConstraint.activate([
-            imageWidthConstraint,
-            imageHeightConstraint,
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
-            imageView.topAnchor.constraint(equalTo: topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor)])
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(with content: ZMImageMessageData) {
-        imageAspectConstraint.apply({ imageView.removeConstraint($0) })
-        imageAspectConstraint = imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: content.originalSize.height / content.originalSize.width)
-        imageAspectConstraint?.isActive = true
-        imageWidthConstraint.constant = content.originalSize.width
-        imageHeightConstraint.constant = content.originalSize.height
-        imageView.setImageResource(content.image)
-    }
-    
-}
-
 class NewImageMessageCell: MessageCell, ConfigurableCell {
     
     typealias Content = ImageMessageCellDescription

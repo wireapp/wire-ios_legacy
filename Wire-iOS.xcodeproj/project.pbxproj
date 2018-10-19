@@ -81,6 +81,8 @@
 		166264ED2174CA7800300F45 /* NewImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EC2174CA7800300F45 /* NewImageMessageCell.swift */; };
 		166264F02178D9A000300F45 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EF2178D9A000300F45 /* MessageCell.swift */; };
 		166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F22179D3CF00300F45 /* SenderCellComponent.swift */; };
+		166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F52179E63F00300F45 /* ImageMessageContentView.swift */; };
+		166264F82179E6B400300F45 /* TextMessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F72179E6B400300F45 /* TextMessageContentView.swift */; };
 		166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */; };
 		166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D51DC8AC0C00D7BF1C /* String+Image.swift */; };
 		16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */; };
@@ -1480,6 +1482,8 @@
 		166264EC2174CA7800300F45 /* NewImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewImageMessageCell.swift; sourceTree = "<group>"; };
 		166264EF2178D9A000300F45 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		166264F22179D3CF00300F45 /* SenderCellComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderCellComponent.swift; sourceTree = "<group>"; };
+		166264F52179E63F00300F45 /* ImageMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMessageContentView.swift; sourceTree = "<group>"; };
+		166264F72179E6B400300F45 /* TextMessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageContentView.swift; sourceTree = "<group>"; };
 		166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToolbarView.swift; sourceTree = "<group>"; };
 		166390D51DC8AC0C00D7BF1C /* String+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Image.swift"; sourceTree = "<group>"; };
 		16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySearchViewController.swift; sourceTree = "<group>"; };
@@ -3239,6 +3243,15 @@
 				166264F22179D3CF00300F45 /* SenderCellComponent.swift */,
 			);
 			path = CellComponents;
+			sourceTree = "<group>";
+		};
+		166264F42179E62200300F45 /* MessageContent */ = {
+			isa = PBXGroup;
+			children = (
+				166264F52179E63F00300F45 /* ImageMessageContentView.swift */,
+				166264F72179E6B400300F45 /* TextMessageContentView.swift */,
+			);
+			path = MessageContent;
 			sourceTree = "<group>";
 		};
 		16829EE02010D62300F579A0 /* InviteTeamMember */ = {
@@ -5199,6 +5212,7 @@
 				7C17ECA41F74F4540056600C /* ConversationCell+Preview.swift */,
 				166264F12179D33D00300F45 /* CellComponents */,
 				7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */,
+				166264F42179E62200300F45 /* MessageContent */,
 				7CD0746020D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift */,
 				872C823F214BF01100236A76 /* TextMessageCell+Mentions.swift */,
 				166264CD216F9F0700300F45 /* CellExperiments.swift */,
@@ -6940,6 +6954,7 @@
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
+				166264F82179E6B400300F45 /* TextMessageContentView.swift in Sources */,
 				16E2A0A01F6BEDE7005F4DB1 /* ProximityMonitorManager.swift in Sources */,
 				1651F9B81D352B7B00A9FAE8 /* ArticleView.swift in Sources */,
 				EF218AC520A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift in Sources */,
@@ -7241,6 +7256,7 @@
 				871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */,
 				D5168F572010F25400F8222A /* Token.m in Sources */,
 				5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */,
+				166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */,
 				EF2C59ED20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift in Sources */,
 				8742C2EA1E5309FC00329FB6 /* NSAttributedString+Highlight.swift in Sources */,
 				876113E41DD1DD6B007F5969 /* SketchToolbar.swift in Sources */,

@@ -18,8 +18,6 @@
 
 import Foundation
 
-
-
 struct TextMessageCellConfiguration: Equatable {
     
     enum Attachment: Int, Codable, CaseIterable {
@@ -74,71 +72,6 @@ struct TextMessageCellDescription: CellDescription {
         let cell: TableViewConfigurableCellAdapter<NewTextMessageCell> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
         cell.configure(with: self)
         return cell
-    }
-    
-}
-
-class TextMessageContentView: UIView {
-    
-    let textView: LinkInteractionTextView = LinkInteractionTextView()
-    var articleView: ArticleView?
-    var mediaPreviewController: MediaPreviewViewController?
-    
-    override var firstBaselineAnchor: NSLayoutYAxisAnchor {
-        return textView.firstBaselineAnchor
-    }
-    
-    required init(from description: TextMessageCellConfiguration) {
-        super.init(frame: .zero)
-        
-        var layout: [(UIView, UIEdgeInsets)] = []
-        
-        layout.append((textView, .zero))
-        
-        switch description.attachment {
-        case .linkPreview:
-            let articleView = ArticleView(withImagePlaceholder: true)
-            self.articleView = articleView
-            layout.append((articleView, .zero))
-        case .youtube:
-            mediaPreviewController = MediaPreviewViewController()
-        default:
-            break
-        }
-        
-        layout.forEach({ (view, _) in
-            view.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(view)
-        })
-        
-        createConstraints(layout)
-        setupViews()
-    }
-    
-    func setupViews() {
-        textView.isEditable = false
-        textView.isSelectable = true
-        textView.backgroundColor = UIColor(scheme: .contentBackground)
-        textView.isScrollEnabled = false
-        textView.textContainerInset = UIEdgeInsets.zero
-        textView.textContainer.lineFragmentPadding = 0
-        textView.isUserInteractionEnabled = true
-        textView.accessibilityIdentifier = "Message"
-        textView.accessibilityElementsHidden = false
-        textView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
-        textView.setContentHuggingPriority(.required, for: .vertical)
-        textView.setContentCompressionResistancePriority(.required, for: .vertical)
-    }
-    
-    func configure(with textMessageData: ZMTextMessageData, isObfuscated: Bool) {
-        var lastLinkAttachment: LinkAttachment = LinkAttachment(url: URL(fileURLWithPath: "/"), range: NSRange(location: 0, length: 0), string: "")
-        let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: isObfuscated, linkAttachment: &lastLinkAttachment)
-        textView.attributedText = formattedText
-        articleView?.configure(withTextMessageData: textMessageData, obfuscated: isObfuscated)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }
