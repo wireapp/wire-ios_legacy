@@ -41,28 +41,24 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         sut.detailsView(GroupDetailsFooterView(), performAction: .more)
         verifyAlertController((sut?.actionController?.alertController)!)
     }
-}
-
-class GroupDetailsViewControllerSnapshotTests_NonTeam: GroupDetailsViewControllerSnapshotTests {
-    
-    override func setUp() {
-        let mockSelf = MockUser.mockSelf()
-        mockSelf?.isTeamMember = false
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        let mockSelf = MockUser.mockSelf()
-        mockSelf?.isTeamMember = true
-        super.tearDown()
-    }
     
     func testForInitState_NonTeam() {
-        verify(view: sut.view)
+        nonTeamTest {
+            verify(view: self.sut.view)
+        }
     }
     
     func testForActionMenu_NonTeam() {
-        sut.detailsView(GroupDetailsFooterView(), performAction: .more)
-        verifyAlertController((sut?.actionController?.alertController)!)
+        nonTeamTest {
+            self.sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            verifyAlertController((self.sut?.actionController?.alertController)!)
+        }
+    }
+    
+    private func nonTeamTest(_ block: () -> Void) {
+        let mockSelf = MockUser.mockSelf()
+        mockSelf?.isTeamMember = false
+        block()
+        mockSelf?.isTeamMember = true
     }
 }
