@@ -111,9 +111,10 @@ open class AvatarImageView: UIControl {
     private func configureSubviews() {
         isOpaque = false
         imageView.isOpaque = false
+        container.backgroundColor = .yellow
 
         initialsLabel.textColor = .white
-        initialsLabel.font = .systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
+        initialsLabel.font = .systemFont(ofSize: 17)
 
         container.clipsToBounds = true
 
