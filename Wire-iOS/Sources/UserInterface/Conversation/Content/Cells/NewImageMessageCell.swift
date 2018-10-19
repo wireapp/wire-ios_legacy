@@ -97,6 +97,9 @@ class ImageMessageContentView: UIView {
 
 class NewImageMessageCell: MessageCell, ConfigurableCell, Reusable {
     
+    typealias Content = ImageMessageCellDescription
+    typealias Configuration = ImageMessageCellConfiguration
+    
     static var mapping : [String : ImageMessageCellConfiguration] = {
         var mapping: [String : ImageMessageCellConfiguration] = [:]
         
@@ -107,21 +110,8 @@ class NewImageMessageCell: MessageCell, ConfigurableCell, Reusable {
         return mapping
     }()
     
-    static var reuseIdentifiers: [String] {
-        return Array(mapping.keys)
-    }
-    
-    typealias Content = ImageMessageCellDescription
-    typealias Configuration = ImageMessageCellConfiguration
-    
     let imageMessageContentView: ImageMessageContentView
-    
-    required init(from configuration: MessageCellConfiguration) {
-        imageMessageContentView = ImageMessageContentView()
-
-        super.init(from: configuration, content: imageMessageContentView)
-    }
-    
+        
     required init(reuseIdentifier: String) {
         guard let configuration = NewImageMessageCell.mapping[reuseIdentifier] else { fatal("Unknown reuse identifier: \(reuseIdentifier)") }
         
@@ -129,10 +119,6 @@ class NewImageMessageCell: MessageCell, ConfigurableCell, Reusable {
         
         super.init(from: configuration.configuration, content: imageMessageContentView)
     }
-    
-//    convenience init(description: MessageCellConfiguration) {
-//        self.init(reuseIdentifier: description.reuseIdentifier)
-//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -146,13 +132,4 @@ class NewImageMessageCell: MessageCell, ConfigurableCell, Reusable {
         imageMessageContentView.configure(with: imageMessageData)
     }
     
-    static func reuseIdentifier(for configuration: ImageMessageCellConfiguration) -> String {
-        let foo = mapping.first { (keyValuePair) -> Bool in
-            return configuration == keyValuePair.value
-        }
-        
-        guard let reuseIdentifier = foo?.key else { fatal("Unknown cell description: \(configuration)") }
-        
-        return reuseIdentifier
-    }
 }

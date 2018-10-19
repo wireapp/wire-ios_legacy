@@ -159,11 +159,7 @@ class NewTextMessageCell: MessageCell, ConfigurableCell, Reusable {
         
         return mapping
     }()
-    
-    static var reuseIdentifiers: [String] {
-        return Array(mapping.keys)
-    }
-    
+        
     required init(reuseIdentifier: String) {
         guard let configuration = NewTextMessageCell.mapping[reuseIdentifier] else { fatal("Unknown reuse identifier \(reuseIdentifier)") }
         
@@ -171,13 +167,7 @@ class NewTextMessageCell: MessageCell, ConfigurableCell, Reusable {
         
         super.init(from: configuration.configuration, content: textContentView, fullWidthContent: audioTrackViewController?.view)
     }
-    
-    convenience init(from description: TextMessageCellDescription) {
-        self.init(reuseIdentifier: NewTextMessageCell.reuseIdentifier(for: description.configuration))
         
-        configure(with: description)
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -188,16 +178,6 @@ class NewTextMessageCell: MessageCell, ConfigurableCell, Reusable {
         guard let textMessageData = content.message.textMessageData else { return }
         
         textContentView.configure(with: textMessageData, isObfuscated: content.message.isObfuscated)
-    }
-    
-    static func reuseIdentifier(for configuration: TextMessageCellConfiguration) -> String {
-        let foo = mapping.first { (keyValuePair) -> Bool in
-            return configuration == keyValuePair.value
-        }
-        
-        guard let reuseIdentifier = foo?.key else { fatal("Unknown cell configuration: \(configuration)") }
-        
-        return reuseIdentifier
     }
     
 }

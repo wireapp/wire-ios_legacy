@@ -25,12 +25,13 @@ protocol CellDescription {
 
 }
 
-protocol ConfigurableCell {
+protocol ConfigurableCell: class {
     
     associatedtype Content
-    associatedtype Configuration
+    associatedtype Configuration: Equatable
     
     static var reuseIdentifiers: [String] { get }
+    static var mapping: [String: Configuration] { get }
     static func reuseIdentifier(for configuration: Configuration) -> String
     
     init(reuseIdentifier: String)
@@ -38,6 +39,28 @@ protocol ConfigurableCell {
     func configure(with content: Content)
     
     var isSelected: Bool { get set }
+}
+
+extension ConfigurableCell {
+    
+    static func reuseIdentifier(for configuration: Configuration) -> String {
+        let foo = mapping.first { (keyValuePair) -> Bool in
+            return configuration == keyValuePair.value
+        }
+        
+        guard let reuseIdentifier = foo?.key else { fatal("Unknown cell configuration: \(configuration)") }
+        
+        return reuseIdentifier
+    }
+    
+    static var reuseIdentifiers: [String] {
+        return Array(mapping.keys)
+    }
+    
+    init(from configuration: Configuration) {
+        self.init(reuseIdentifier: Self.reuseIdentifier(for: configuration))
+    }
+    
 }
 
 struct MessageCellConfiguration: OptionSet {
