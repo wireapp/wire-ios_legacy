@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "CrossfadeTransition.h"
@@ -151,14 +152,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @interface SplitViewController () <UIGestureRecognizerDelegate>
 
-@property (nonatomic) NSLayoutConstraint *leftViewOffsetConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewOffsetConstraint;
-
-@property (nonatomic) NSLayoutConstraint *leftViewWidthConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewWidthConstraint;
-
-@property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
-
 @property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
 
 @property (nonatomic) UITraitCollection *futureTraitCollection;
@@ -199,41 +192,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [super viewWillLayoutSubviews];
     
     [self updateForSize:self.view.bounds.size];
-}
-
-- (void)setupInitialConstraints
-{
-    self.leftView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.rightView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    self.leftViewOffsetConstraint = [self.leftView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
-    self.leftViewOffsetConstraint.priority = UILayoutPriorityDefaultHigh;
-
-    self.rightViewOffsetConstraint = [self.rightView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
-    self.rightViewOffsetConstraint.priority = UILayoutPriorityDefaultHigh;
-
-    self.leftViewWidthConstraint = [self.leftView.widthAnchor constraintEqualToConstant:0];
-    self.rightViewWidthConstraint = [self.rightView.widthAnchor constraintEqualToConstant:0];
-
-    self.sideBySideConstraint = [self.rightView.leadingAnchor constraintEqualToAnchor:self.leftView.trailingAnchor];
-    self.sideBySideConstraint.active = NO;
-
-    NSArray<NSLayoutConstraint *> *constraints =
-    @[
-      // leftView
-      [self.leftView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-      [self.leftView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-      self.leftViewOffsetConstraint,
-      self.leftViewWidthConstraint,
-
-      // rightView
-      [self.rightView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-      [self.rightView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-      self.rightViewOffsetConstraint,
-      self.rightViewWidthConstraint,
-      ];
-
-    [NSLayoutConstraint activateConstraints:constraints];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -347,11 +305,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (void)updateActiveConstraints
-{
-    [NSLayoutConstraint deactivateConstraints:[self constraintsInactiveForCurrentLayout]];
-    [NSLayoutConstraint activateConstraints:[self constraintsActiveForCurrentLayout]];
-}
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
@@ -378,7 +331,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     NSMutableSet *constraints = [NSMutableSet set];
     
     if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape) {
-        [constraints addObjectsFromArray:@[self.leftViewOffsetConstraint, self.sideBySideConstraint]];
+        [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
     }
     
     [constraints addObjectsFromArray:@[self.leftViewWidthConstraint]];
@@ -391,7 +344,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     NSMutableSet *constraints = [NSMutableSet set];
     
     if (self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
-        [constraints addObjectsFromArray:@[self.leftViewOffsetConstraint, self.sideBySideConstraint]];
+        [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
     }
         
     return [constraints allObjects];

@@ -23,7 +23,19 @@
 
 @property (nonatomic) CGFloat openPercentage;
 
+@property (nonatomic) NSLayoutConstraint *leftViewOffsetConstraint;
+@property (nonatomic) NSLayoutConstraint *rightViewOffsetConstraint;
+
+@property (nonatomic) NSLayoutConstraint *leftViewWidthConstraint;
+@property (nonatomic) NSLayoutConstraint *rightViewWidthConstraint;
+
+@property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
+@property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
+
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer;
 - (void)resetOpenPercentage;
+
+- (NSArray *)constraintsInactiveForCurrentLayout;
+- (NSArray *)constraintsActiveForCurrentLayout;
 
 @end
