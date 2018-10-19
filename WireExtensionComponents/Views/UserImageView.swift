@@ -138,8 +138,19 @@ import WireSyncEngine
     }
 
     /// Returns the placeholder background color for the user.
-    private func containerBackgroundColor(for user: UserType) -> UIColor {
-        return user.isServiceUser ? .white : .clear
+    private func containerBackgroundColor(for user: UserType) -> UIColor? {
+        let isWireless = user.zmUser?.isWirelessUser == true
+
+        switch self.avatar {
+        case .image?, nil:
+            return user.isServiceUser ? .white : .clear
+        case .text?:
+            if user.isConnected || user.isSelfUser || user.isTeamMember || isWireless {
+                return user.indexedAccentColor
+            } else {
+                return UIColor(white: 0.8, alpha: 1)
+            }
+        }
     }
 
     /// Returns the appropriate avatar shape for the user.
@@ -159,18 +170,7 @@ import WireSyncEngine
     func setAvatar(_ avatar: Avatar, user: UserType, animated: Bool) {
         let updateBlock = {
             self.avatar = avatar
-            let isWireless = user.zmUser?.isWirelessUser == true
-
-            switch avatar {
-            case .image:
-                self.container.backgroundColor = self.containerBackgroundColor(for: user)
-            default:
-                if user.isConnected || user.isSelfUser || user.isTeamMember || isWireless {
-                    self.container.backgroundColor = user.accentColor
-                } else {
-                    self.container.backgroundColor = UIColor(white: 0.8, alpha: 1)
-                }
-            }
+            self.container.backgroundColor = self.containerBackgroundColor(for: user)
         }
 
         if animated {
@@ -232,12 +232,11 @@ import WireSyncEngine
         updateForServiceUserIfNeeded(user)
         updateIndicatorColor()
         updateUserImage()
-
     }
 
     /// Updates the color of the badge indicator.
     private func updateIndicatorColor() {
-        self.badgeIndicator.backgroundColor = user?.accentColor
+        self.badgeIndicator.backgroundColor = user?.indexedAccentColor
     }
 
     /// Updates the interface to reflect if the user is a service user or not.
@@ -245,7 +244,7 @@ import WireSyncEngine
         shape = shape(for: user)
         container.layer.borderColor = borderColor(for: user)
         container.layer.borderWidth = borderWidth(for: user)
-        imageBackgroundColor = containerBackgroundColor(for: user)
+        container.backgroundColor = containerBackgroundColor(for: user)
     }
 
 }

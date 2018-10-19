@@ -57,10 +57,17 @@ open class AvatarImageView: UIControl {
         }
     }
 
+    /// Whether to allow initials.
+    public var allowsInitials: Bool = true {
+        didSet {
+            updateAvatar()
+        }
+    }
+
     /// The background color for the image.
     @objc public var imageBackgroundColor: UIColor? {
-        get { return imageView.backgroundColor }
-        set { imageView.backgroundColor = newValue }
+        get { return container.backgroundColor }
+        set { container.backgroundColor = newValue }
     }
 
     /// The font to use of the initials label.
@@ -177,6 +184,11 @@ open class AvatarImageView: UIControl {
             initialsLabel.isHidden = true
 
         case .text(let text)?:
+            guard allowsInitials else {
+                avatar = nil
+                return
+            }
+
             imageView.image = nil
             initialsLabel.text = text
             imageView.isHidden = true

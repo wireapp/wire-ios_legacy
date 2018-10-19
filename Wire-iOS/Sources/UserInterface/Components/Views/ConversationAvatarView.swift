@@ -150,8 +150,7 @@ final public class ConversationAvatarView: UIView {
                     $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
                 }
 
-                // TODO: Figure out what it's doing
-                // $0.showInitials = mode.showInitials
+                $0.allowsInitials = mode.showInitials
                 $0.shape = mode.shape
                 index = index + 1
             }
