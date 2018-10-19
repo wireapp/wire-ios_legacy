@@ -18,6 +18,39 @@
 
 import Foundation
 
+struct ImageMessageCellConfiguration: Equatable {
+    
+    var configuration: MessageCellConfiguration
+    
+    static var variants: [ImageMessageCellConfiguration] = MessageCellConfiguration.allCases.map({
+        return ImageMessageCellConfiguration($0)
+    })
+    
+    init(_ configuration: MessageCellConfiguration) {
+        self.configuration = configuration
+    }
+    
+}
+
+struct ImageMessageCellDescription: CellDescription {
+    
+    let message: ZMConversationMessage
+    let configuration: ImageMessageCellConfiguration
+    
+    init (message: ZMConversationMessage, context: MessageCellContext) {
+        self.message = message
+        self.configuration = ImageMessageCellConfiguration(MessageCellConfiguration(context: context))
+    }
+    
+    func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        let cell: TableViewConfigurableCellAdapter<NewImageMessageCell> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
+        cell.configure(with: self)
+        return cell
+    }
+    
+}
+
+
 class ImageMessageContentView: UIView {
     
     var imageView = ImageResourceView()
@@ -62,28 +95,64 @@ class ImageMessageContentView: UIView {
     
 }
 
-class NewImageMessageCell: MessageCell, ConfigurableCell {
+class NewImageMessageCell: MessageCell, ConfigurableCell, Reusable {
     
-    typealias Content = ZMConversationMessage
-    typealias Description = MessageCellDescription
+    static var mapping : [String : ImageMessageCellConfiguration] = {
+        var mapping: [String : ImageMessageCellConfiguration] = [:]
+        
+        for (index, variant) in ImageMessageCellConfiguration.variants.enumerated() {
+            mapping["\(reuseIdentifier)_\(index)"] = variant
+        }
+        
+        return mapping
+    }()
+    
+    static var reuseIdentifiers: [String] {
+        return Array(mapping.keys)
+    }
+    
+    typealias Content = ImageMessageCellDescription
+    typealias Configuration = ImageMessageCellConfiguration
     
     let imageMessageContentView: ImageMessageContentView
+    
+    required init(from configuration: MessageCellConfiguration) {
+        imageMessageContentView = ImageMessageContentView()
 
-    required init(from description: MessageCellDescription) {
+        super.init(from: configuration, content: imageMessageContentView)
+    }
+    
+    required init(reuseIdentifier: String) {
+        guard let configuration = NewImageMessageCell.mapping[reuseIdentifier] else { fatal("Unknown reuse identifier: \(reuseIdentifier)") }
+        
         imageMessageContentView = ImageMessageContentView()
         
-        super.init(from: description.configuration, content: imageMessageContentView)
+        super.init(from: configuration.configuration, content: imageMessageContentView)
     }
+    
+//    convenience init(description: MessageCellConfiguration) {
+//        self.init(reuseIdentifier: description.reuseIdentifier)
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configure(with content: ZMConversationMessage) {
-        super.configure(with: content)
+    func configure(with content: ImageMessageCellDescription) {
+        super.configure(with: content.message)
         
-        guard let imageMessageData = content.imageMessageData else { return }
+        guard let imageMessageData = content.message.imageMessageData else { return }
         
         imageMessageContentView.configure(with: imageMessageData)
+    }
+    
+    static func reuseIdentifier(for configuration: ImageMessageCellConfiguration) -> String {
+        let foo = mapping.first { (keyValuePair) -> Bool in
+            return configuration == keyValuePair.value
+        }
+        
+        guard let reuseIdentifier = foo?.key else { fatal("Unknown cell description: \(configuration)") }
+        
+        return reuseIdentifier
     }
 }

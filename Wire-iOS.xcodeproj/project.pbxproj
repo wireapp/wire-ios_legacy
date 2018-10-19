@@ -79,6 +79,7 @@
 		166264D0217093C500300F45 /* NewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264CF217093C500300F45 /* NewCellTests.swift */; };
 		166264EB2174CA5900300F45 /* NewTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EA2174CA5900300F45 /* NewTextMessageCell.swift */; };
 		166264ED2174CA7800300F45 /* NewImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EC2174CA7800300F45 /* NewImageMessageCell.swift */; };
+		166264F02178D9A000300F45 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EF2178D9A000300F45 /* MessageCell.swift */; };
 		166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */; };
 		166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D51DC8AC0C00D7BF1C /* String+Image.swift */; };
 		16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */; };
@@ -1476,6 +1477,7 @@
 		166264CF217093C500300F45 /* NewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCellTests.swift; sourceTree = "<group>"; };
 		166264EA2174CA5900300F45 /* NewTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTextMessageCell.swift; sourceTree = "<group>"; };
 		166264EC2174CA7800300F45 /* NewImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewImageMessageCell.swift; sourceTree = "<group>"; };
+		166264EF2178D9A000300F45 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToolbarView.swift; sourceTree = "<group>"; };
 		166390D51DC8AC0C00D7BF1C /* String+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Image.swift"; sourceTree = "<group>"; };
 		16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySearchViewController.swift; sourceTree = "<group>"; };
@@ -5191,6 +5193,7 @@
 				166264CD216F9F0700300F45 /* CellExperiments.swift */,
 				166264EA2174CA5900300F45 /* NewTextMessageCell.swift */,
 				166264EC2174CA7800300F45 /* NewImageMessageCell.swift */,
+				166264EF2178D9A000300F45 /* MessageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -7206,6 +7209,7 @@
 				EF24036C20A1A2EF002813BE /* ConversationInputBarViewController+ImagePicker.swift in Sources */,
 				DB7FEC921B8729AD00BA72DE /* ConversationInputBarSendController.m in Sources */,
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
+				166264F02178D9A000300F45 /* MessageCell.swift in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
 				5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */,
 				873C5FEA1C10426A00D5132A /* ClientUnregisterInvitationViewController.swift in Sources */,

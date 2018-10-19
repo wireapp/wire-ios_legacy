@@ -56,40 +56,54 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if message.isImage {
-            let properties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)!
-            let description = MessageCellDescription(layout: properties)
-            let cell = tableView.dequeueReusableCell(withIdentifier: description.reuseIdentifier, for: indexPath) as! TableViewCellDescriptionAdapter<NewImageMessageCell>
-            cell.configure(with: message)
-            return cell
-        }
+        let description = messageWindow.description(for: message)
         
-        if message.isText {
-            let properties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)!
-            let messageCellDescription = MessageCellDescription(layout: properties)
-            let description = TextCellDescription(messageCellDescription, attachment: message.textMessageData?.linkPreview != nil ? .linkPreview : .none)
-            let cell = tableView.dequeueReusableCell(withIdentifier: description.reuseIdentifier, for: indexPath) as! TableViewCellDescriptionAdapter<NewTextMessageCell>
-            cell.configure(with: message)
-            return cell
-        }
+        return description.cell(tableView: tableView, at: indexPath)
+        
+//        let description = messageWindow.cellDescription(for: message)
+//        
+//        return description.cell(for: tableview)
+//        
+//        if message.isImage {
+//            description.cell(from: tableView)
+//            let cell = tableView.dequeueConfigurableCell(for: message, for: indexPath)
+//            cell.configure(with: message)
+//        }
+//        
+//        if message.isImage {
+//            let properties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)!
+//            let description = MessageCellDescription(layout: properties)
+//            let cell = tableView.dequeueReusableCell(withIdentifier: description.reuseIdentifier, for: indexPath) as! TableViewCellDescriptionAdapter<NewImageMessageCell>
+//            cell.configure(with: message)
+//            return cell
+//        }
+//        
+//        if message.isText {
+//            let properties = messageWindow.layoutProperties(for: message, firstUnreadMessage: firstUnreadMessage)!
+//            let messageCellDescription = MessageCellDescription(layout: properties)
+//            let description = TextCellDescription(messageCellDescription, attachment: message.textMessageData?.linkPreview != nil ? .linkPreview : .none)
+//            let cell = tableView.dequeueReusableCell(withIdentifier: description.reuseIdentifier, for: indexPath) as! TableViewCellDescriptionAdapter<NewTextMessageCell>
+//            cell.configure(with: message)
+//            return cell
+//        }
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: message.cellIdentifier, for: indexPath)
-
-        // Newly created cells will have a size of {320, 44}, which leads to layout problems when they contain `UICollectionViews`.
-        // This is needed as long as `ParticipantsCell` contains a `UICollectionView`.
-        var bounds = cell.bounds
-        bounds.size.width = tableView.bounds.size.width
-        cell.bounds = bounds
-
-        guard let conversationCell = cell as? ConversationCell else { return cell }
-
-        conversationCell.searchQueries = searchQueries
-        conversationCell.delegate = conversationCellDelegate
-        // Configuration of the cell is not possible when `ZMUserSession` is not available.
-        if let _ = ZMUserSession.shared() {
-            configureConversationCell(conversationCell, with: message)
-        }
-        return conversationCell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: message.cellIdentifier, for: indexPath)
+//
+//        // Newly created cells will have a size of {320, 44}, which leads to layout problems when they contain `UICollectionViews`.
+//        // This is needed as long as `ParticipantsCell` contains a `UICollectionView`.
+//        var bounds = cell.bounds
+//        bounds.size.width = tableView.bounds.size.width
+//        cell.bounds = bounds
+//
+//        guard let conversationCell = cell as? ConversationCell else { return cell }
+//
+//        conversationCell.searchQueries = searchQueries
+//        conversationCell.delegate = conversationCellDelegate
+//        // Configuration of the cell is not possible when `ZMUserSession` is not available.
+//        if let _ = ZMUserSession.shared() {
+//            configureConversationCell(conversationCell, with: message)
+//        }
+//        return conversationCell
     }
 }
 

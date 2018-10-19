@@ -18,7 +18,28 @@
 
 import Foundation
 
+struct MessageCellContext {
+    
+    let isSameSenderAsPrevious: Bool
+    let isLastMessageSentBySelfUser: Bool
+    let isTimeIntervalSinceLastMessageSignificant: Bool
+    
+}
+
 extension ZMConversationMessageWindow {
+    
+    func description(for message: ZMConversationMessage) -> CellDescription {
+        let context = self.context(for: message)
+        
+        if message.isText {
+            return TextMessageCellDescription(message: message, context: context)
+        } else if message.isImage {
+            return ImageMessageCellDescription(message: message, context: context)
+        } else {
+            return UnknownMessageCellDescription()
+        }
+    }
+    
     @objc func isPreviousSenderSame(forMessage message: ZMConversationMessage?) -> Bool {
         guard let message = message,
               messages.index(of: message) != NSNotFound,
@@ -31,4 +52,32 @@ extension ZMConversationMessageWindow {
 
         return true
     }
+    
+    fileprivate func context(for message: ZMConversationMessage) -> MessageCellContext {
+        let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
+        let isTimeIntervalSinceLastMessageSignificant: Bool
+        
+        if let timeIntervalToPreviousMessage = timeIntervalToPreviousMessage(from: message) {
+            isTimeIntervalSinceLastMessageSignificant = timeIntervalToPreviousMessage > significantTimeInterval
+        } else {
+            isTimeIntervalSinceLastMessageSignificant = false
+        }
+        
+        return MessageCellContext(isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message),
+                                  isLastMessageSentBySelfUser: isLastMessageSentBySelfUser(message),
+                                  isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant)
+    }
+    
+    fileprivate func timeIntervalToPreviousMessage(from message: ZMConversationMessage) -> TimeInterval? {
+        guard let currentMessageTimestamp = message.serverTimestamp, let previousMessageTimestamp = messagePrevious(to: message)?.serverTimestamp else {
+            return nil
+        }
+        
+        return currentMessageTimestamp.timeIntervalSince(previousMessageTimestamp)
+    }
+    
+    fileprivate func isLastMessageSentBySelfUser(_ message: ZMConversationMessage) -> Bool {
+        return message.isEqual(message.conversation?.lastMessageSent(by: ZMUser.selfUser(), limit: 10))
+    }
+    
 }

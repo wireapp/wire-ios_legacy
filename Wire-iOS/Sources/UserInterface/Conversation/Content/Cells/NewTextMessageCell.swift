@@ -18,88 +18,60 @@
 
 import Foundation
 
-typealias ViewLayout = (UIView, UIEdgeInsets)
 
-class MessageCell: UIView {
+
+struct TextMessageCellConfiguration: Equatable {
     
-    let contentView: UIView
-    var senderView: SenderView?
-    var burstTimestampView: ConversationCellBurstTimestampView?
-    let toolboxView: MessageToolboxView = MessageToolboxView()
-    let ephemeralCountdownView: DestructionCountdownView = DestructionCountdownView()
-    
-    var isSelected: Bool = false {
-        didSet {
-            toolboxView.setHidden(!isSelected, animated: true)
-        }
+    enum Attachment: Int, Codable, CaseIterable {
+        case none
+        case linkPreview
+        case youtube
+        case soundcloud
     }
     
-    init(from configuration: MessageCellConfiguration, content: UIView, fullWidthContent: UIView? = nil) {
-        contentView = content
+    var attachment: Attachment = .none
+    var configuration: MessageCellConfiguration
+    
+    static var variants: [TextMessageCellConfiguration] {
         
-        super.init(frame: .zero)
+        var variants: [TextMessageCellConfiguration] = []
         
-        var layout: [(UIView, UIEdgeInsets)] = []
-        
-        if configuration.contains(.showBurstTimestamp) {
-            let burstTimestampView = ConversationCellBurstTimestampView()
-            layout.append((burstTimestampView, UIEdgeInsets.zero))
-            self.burstTimestampView = burstTimestampView
+        MessageCellConfiguration.allCases.forEach { configuration in
+            Attachment.allCases.forEach { attachment in
+                variants.append(TextMessageCellConfiguration(configuration: configuration, attachment: attachment))
+            }
         }
         
-        if configuration.contains(.showSender) {
-            let senderView = SenderView()
-            layout.append((senderView, UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)))
-            self.senderView = senderView
-        }
-        
-        layout.append((content, UIView.conversationLayoutMargins))
-        
-        if let fullWithContent = fullWidthContent {
-            layout.append((fullWithContent, .zero))
-        }
-        
-        layout.append((toolboxView, UIView.conversationLayoutMargins))
-        
-        layout.forEach({ (view, _) in
-            view.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(view)
-        })
-        
-        let ephemeralCountdownContainer = UIView()
-        ephemeralCountdownContainer.translatesAutoresizingMaskIntoConstraints = false
-        ephemeralCountdownContainer.addSubview(ephemeralCountdownView)
-        addSubview(ephemeralCountdownContainer)
-        
-        ephemeralCountdownView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            ephemeralCountdownContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            ephemeralCountdownContainer.trailingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            ephemeralCountdownContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4), // TODO jacob
-            ephemeralCountdownView.centerXAnchor.constraint(equalTo: ephemeralCountdownContainer.centerXAnchor),
-            ephemeralCountdownView.topAnchor.constraint(equalTo: ephemeralCountdownContainer.topAnchor),
-            ephemeralCountdownView.bottomAnchor.constraint(equalTo: ephemeralCountdownContainer.bottomAnchor),
-            ephemeralCountdownView.widthAnchor.constraint(equalToConstant: 8),
-            ephemeralCountdownView.heightAnchor.constraint(equalToConstant: 8)])
-        
-        createConstraints(layout)
+        return variants
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    init(configuration: MessageCellConfiguration, attachment: Attachment) {
+        self.configuration = configuration
+        self.attachment = attachment
     }
     
+}
+
+struct TextMessageCellDescription: CellDescription {
     
-    func configure(with message: ZMConversationMessage) {
-        if let sender = message.sender {
-            senderView?.configure(with: sender)
+    let message: ZMConversationMessage
+    let configuration: TextMessageCellConfiguration
+    
+    init (message: ZMConversationMessage, context: MessageCellContext) {
+        var configuration = MessageCellConfiguration(context: context)
+        
+        if message.updatedAt != nil {
+            configuration.insert(.showSender)
         }
         
-        burstTimestampView?.label.text = Message.formattedReceivedDate(for: message).uppercased()
-        burstTimestampView?.isSeparatorExpanded = true
-        toolboxView.configureForMessage(message, forceShowTimestamp: false, animated: false)
-        toolboxView.setHidden(!isSelected, animated: false)
+        self.message = message
+        self.configuration = TextMessageCellConfiguration(configuration: configuration, attachment: .none)
+    }
+    
+    func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        let cell: TableViewConfigurableCellAdapter<NewTextMessageCell> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
+        cell.configure(with: self)
+        return cell
     }
     
 }
@@ -114,7 +86,7 @@ class TextMessageContentView: UIView {
         return textView.firstBaselineAnchor
     }
     
-    required init(from description: TextCellDescription) {
+    required init(from description: TextMessageCellConfiguration) {
         super.init(frame: .zero)
         
         var layout: [(UIView, UIEdgeInsets)] = []
@@ -169,32 +141,63 @@ class TextMessageContentView: UIView {
     
 }
 
-class NewTextMessageCell: MessageCell, ConfigurableCell {
+class NewTextMessageCell: MessageCell, ConfigurableCell, Reusable {
     
-    typealias Content = ZMConversationMessage
-    typealias Description = TextCellDescription
+    typealias Content = TextMessageCellDescription
+    typealias Configuration = TextMessageCellConfiguration
     
     let textContentView: TextMessageContentView
     var audioTrackViewController: AudioTrackViewController?
     var audioPlaylistViewController: AudioPlaylistViewController?
     
-    required init(from description: TextCellDescription) {
+    static var mapping : [String : TextMessageCellConfiguration] = {
+        var mapping: [String : TextMessageCellConfiguration] = [:]
         
-        textContentView = TextMessageContentView(from: description)
+        for (index, variant) in TextMessageCellConfiguration.variants.enumerated() {
+            mapping["\(reuseIdentifier)_\(index)"] = variant
+        }
         
-        super.init(from: description.messageCelldescription.configuration, content: textContentView, fullWidthContent: audioTrackViewController?.view)
+        return mapping
+    }()
+    
+    static var reuseIdentifiers: [String] {
+        return Array(mapping.keys)
+    }
+    
+    required init(reuseIdentifier: String) {
+        guard let configuration = NewTextMessageCell.mapping[reuseIdentifier] else { fatal("Unknown reuse identifier \(reuseIdentifier)") }
+        
+        textContentView = TextMessageContentView(from: configuration)
+        
+        super.init(from: configuration.configuration, content: textContentView, fullWidthContent: audioTrackViewController?.view)
+    }
+    
+    convenience init(from description: TextMessageCellDescription) {
+        self.init(reuseIdentifier: NewTextMessageCell.reuseIdentifier(for: description.configuration))
+        
+        configure(with: description)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func configure(with content: ZMConversationMessage) {
-        super.configure(with: content)
+    func configure(with content: TextMessageCellDescription) {
+        super.configure(with: content.message)
         
-        guard let textMessageData = content.textMessageData else { return }
+        guard let textMessageData = content.message.textMessageData else { return }
         
-        textContentView.configure(with: textMessageData, isObfuscated: content.isObfuscated)
+        textContentView.configure(with: textMessageData, isObfuscated: content.message.isObfuscated)
+    }
+    
+    static func reuseIdentifier(for configuration: TextMessageCellConfiguration) -> String {
+        let foo = mapping.first { (keyValuePair) -> Bool in
+            return configuration == keyValuePair.value
+        }
+        
+        guard let reuseIdentifier = foo?.key else { fatal("Unknown cell configuration: \(configuration)") }
+        
+        return reuseIdentifier
     }
     
 }
