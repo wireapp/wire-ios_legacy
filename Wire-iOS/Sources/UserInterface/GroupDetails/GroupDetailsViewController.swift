@@ -114,7 +114,9 @@ import Cartography
         self.renameGroupSectionController = renameGroupSectionController
         
         let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
-        sections.append(optionsSectionController)
+        if optionsSectionController.hasOptions {
+            sections.append(optionsSectionController)            
+        }
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {

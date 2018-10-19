@@ -51,6 +51,10 @@ class GroupOptionsSectionController: GroupDetailsSectionController {
     private let syncCompleted: Bool
     private let options: [Option]
     
+    var hasOptions: Bool {
+        return !options.isEmpty
+    }
+    
     init(conversation: ZMConversation, delegate: GroupOptionsSectionControllerDelegate, syncCompleted: Bool) {
         self.delegate = delegate
         self.conversation = conversation
