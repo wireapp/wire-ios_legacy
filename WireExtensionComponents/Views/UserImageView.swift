@@ -76,6 +76,13 @@ import WireSyncEngine
 
     // MARK: - Initialization
 
+    public override init(frame: CGRect) {
+        self.size = .small
+        super.init(frame: .zero)
+        configureSubviews()
+        configureConstraints()
+    }
+
     public init(size: Size = .small) {
         self.size = size
         super.init(frame: .zero)
@@ -211,14 +218,18 @@ import WireSyncEngine
 
     /// Called when the user or user session changes.
     open func updateUser() {
-        guard let userSession = self.userSession, let user = self.user, let initials = user.initials else {
+        guard let user = self.user, let initials = user.initials else {
+            return
+        }
+
+        let defaultAvatar = Avatar.text(initials.localizedUppercase)
+        setAvatar(defaultAvatar, user: user, animated: false)
+
+        guard let userSession = self.userSession else {
             return
         }
 
         userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
-
-        let defaultAvatar = Avatar.text(initials.localizedUppercase)
-        setAvatar(defaultAvatar, user: user, animated: false)
 
         updateForServiceUserIfNeeded(user)
         updateIndicatorColor()

@@ -75,6 +75,12 @@ open class AvatarImageView: UIControl {
         set { initialsLabel.textColor = newValue }
     }
 
+    open override var contentMode: UIView.ContentMode {
+        didSet {
+            imageView.contentMode = contentMode
+        }
+    }
+
     /// The view that contains the avatar.
     @objc public let container = RoundedView()
 
@@ -98,7 +104,6 @@ open class AvatarImageView: UIControl {
     private func configureSubviews() {
         isOpaque = false
         imageView.isOpaque = false
-        imageView.contentMode = .scaleAspectFill
 
         initialsLabel.textColor = .white
         initialsLabel.font = .systemFont(ofSize: 11, contentSizeCategory: .small, weight: .light)
