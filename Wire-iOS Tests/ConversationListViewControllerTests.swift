@@ -45,8 +45,16 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     func testForActionMenu() {
-        sut.showActionMenu(for: otherUserConversation, from: sut.view)
+        teamTest {
+            sut.showActionMenu(for: otherUserConversation, from: sut.view)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
+    }
 
-        verifyAlertController((sut?.actionsController?.alertController)!)
+    func testForActionMenu_NoTeam() {
+        nonTeamTest {
+            sut.showActionMenu(for: otherUserConversation, from: sut.view)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
     }
 }

@@ -32,7 +32,6 @@
 #import "IconButton.h"
 #import "Constants.h"
 #import "UIColor+WAZExtensions.h"
-#import "UserImageView.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "UIViewController+WR_Additions.h"
 
@@ -168,13 +167,11 @@ typedef NS_ENUM(NSUInteger, ProfileUserAction) {
 - (void)createUserImageView
 {
     self.userImageView = [[UserImageView alloc] init];
-    self.userImageView.initials.font = [UIFont systemFontOfSize:80 weight:UIFontWeightThin];
+    self.userImageView.initialsFont = [UIFont systemFontOfSize:80 weight:UIFontWeightThin];
     self.userImageView.userSession = [ZMUserSession sharedSession];
     self.userImageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.userImageView.size = UserImageViewSizeBig;
     self.userImageView.user = self.bareUser;
-    self.userImageView.imageView.layer.borderWidth = 1;
-    self.userImageView.imageView.layer.borderColor = [UIColor colorWithWhite:0 alpha:0.08].CGColor;
 }
 
 - (void)createGuestIndicator

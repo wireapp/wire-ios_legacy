@@ -122,9 +122,9 @@ extension Mode {
         }
     }
     
-    var shape: AvatarImageViewShape {
+    var shape: AvatarImageView.Shape {
         switch self {
-        case .one(serviceUser: true): return .roundedRelative
+        case .one(serviceUser: true): return .relative
         default: return .rectangle
         }
     }
@@ -146,11 +146,11 @@ final public class ConversationAvatarView: UIView {
                 }
                 else {
                     $0.user = nil
-                    $0.containerView.isOpaque = false
-                    $0.containerView.backgroundColor = UIColor(white: 0, alpha: 0.24)
+                    $0.container.isOpaque = false
+                    $0.container.backgroundColor = UIColor(white: 0, alpha: 0.24)
                 }
-                
-                $0.showInitials = mode.showInitials
+
+                $0.allowsInitials = mode.showInitials
                 $0.shape = mode.shape
                 index = index + 1
             }
@@ -211,7 +211,7 @@ final public class ConversationAvatarView: UIView {
     let clippingView = UIView()
     let imageViewLeftTop: UserImageView = {
         let userImageView = UserImageView()
-        userImageView.initials.font = .mediumSemiboldFont
+        userImageView.initialsFont = .mediumSemiboldFont
 
         return userImageView
     }()

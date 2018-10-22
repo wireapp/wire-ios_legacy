@@ -126,7 +126,7 @@ class UserCell: SeparatorCollectionViewCell {
         subtitleLabel.accessibilityIdentifier = "user_cell.username"
         
         avatar.userSession = ZMUserSession.shared()
-        avatar.initials.font = .avatarInitial
+        avatar.initialsFont = .avatarInitial
         avatar.size = .small
         avatar.translatesAutoresizingMaskIntoConstraints = false
 
