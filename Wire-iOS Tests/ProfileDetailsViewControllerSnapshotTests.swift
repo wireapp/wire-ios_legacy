@@ -38,8 +38,16 @@ final class ProfileDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase 
     }
 
     func testForActionMenu() {
-        sut.presentMenuSheetController()
+        teamTest {
+            sut.presentMenuSheetController()
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
+    }
 
-        verifyAlertController((sut?.actionsController?.alertController)!)
+    func testForActionMenu_NoTeam() {
+        nonTeamTest {
+            sut.presentMenuSheetController()
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
     }
 }
