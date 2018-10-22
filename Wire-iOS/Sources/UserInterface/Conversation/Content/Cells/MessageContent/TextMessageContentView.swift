@@ -53,7 +53,7 @@ class TextMessageContentView: UIView {
             addSubview(view)
         })
         
-        createConstraints(layout)
+        arrangeSubviews(layout)
         setupViews()
     }
     

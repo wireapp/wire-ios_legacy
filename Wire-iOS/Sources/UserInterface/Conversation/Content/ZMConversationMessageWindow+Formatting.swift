@@ -28,6 +28,14 @@ struct MessageCellContext {
     
 }
 
+struct UnknownMessageCellDescription: CellDescription { // TODO jacob replace with something else (placeholder for now)
+    
+    func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: ConversationUnknownMessageCellId, for: indexPath)
+    }
+    
+}
+
 extension ZMConversationMessageWindow {
     
     func description(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> CellDescription {

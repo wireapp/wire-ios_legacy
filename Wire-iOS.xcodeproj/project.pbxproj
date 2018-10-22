@@ -75,7 +75,6 @@
 		165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
 		1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */; };
-		166264CE216F9F0700300F45 /* CellExperiments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264CD216F9F0700300F45 /* CellExperiments.swift */; };
 		166264D0217093C500300F45 /* NewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264CF217093C500300F45 /* NewCellTests.swift */; };
 		166264EB2174CA5900300F45 /* NewTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EA2174CA5900300F45 /* NewTextMessageCell.swift */; };
 		166264ED2174CA7800300F45 /* NewImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EC2174CA7800300F45 /* NewImageMessageCell.swift */; };
@@ -86,6 +85,9 @@
 		166264FA217A17D100300F45 /* NewVideoMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264F9217A17D100300F45 /* NewVideoMessageCell.swift */; };
 		166264FC217A20CB00300F45 /* NewAudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */; };
 		166264FE217A22B100300F45 /* NewFileMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FD217A22B100300F45 /* NewFileMessageCell.swift */; };
+		16626500217DAC4F00300F45 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264FF217DAC4F00300F45 /* ConfigurableCell.swift */; };
+		16626502217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */; };
+		16626504217DAE7400300F45 /* UIView+ArrangeSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16626503217DAE7400300F45 /* UIView+ArrangeSubviews.swift */; };
 		166390D41DC34CAB00D7BF1C /* ImageToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */; };
 		166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166390D51DC8AC0C00D7BF1C /* String+Image.swift */; };
 		16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */; };
@@ -1523,7 +1525,6 @@
 		165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSItemProvider+Helper.m"; sourceTree = "<group>"; };
 		1660F2371FBC6E2D00A0EE54 /* silence.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = silence.m4a; sourceTree = "<group>"; };
 		1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerController.swift; sourceTree = "<group>"; };
-		166264CD216F9F0700300F45 /* CellExperiments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellExperiments.swift; sourceTree = "<group>"; };
 		166264CF217093C500300F45 /* NewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCellTests.swift; sourceTree = "<group>"; };
 		166264EA2174CA5900300F45 /* NewTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTextMessageCell.swift; sourceTree = "<group>"; };
 		166264EC2174CA7800300F45 /* NewImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewImageMessageCell.swift; sourceTree = "<group>"; };
@@ -1534,6 +1535,9 @@
 		166264F9217A17D100300F45 /* NewVideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVideoMessageCell.swift; sourceTree = "<group>"; };
 		166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAudioMessageCell.swift; sourceTree = "<group>"; };
 		166264FD217A22B100300F45 /* NewFileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFileMessageCell.swift; sourceTree = "<group>"; };
+		166264FF217DAC4F00300F45 /* ConfigurableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
+		16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableCellTableViewAdapter.swift; sourceTree = "<group>"; };
+		16626503217DAE7400300F45 /* UIView+ArrangeSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ArrangeSubviews.swift"; sourceTree = "<group>"; };
 		166390D31DC34CAB00D7BF1C /* ImageToolbarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageToolbarView.swift; sourceTree = "<group>"; };
 		166390D51DC8AC0C00D7BF1C /* String+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Image.swift"; sourceTree = "<group>"; };
 		16719A0F1D99647D00AA6B63 /* GiphySearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphySearchViewController.swift; sourceTree = "<group>"; };
@@ -4457,6 +4461,7 @@
 				871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */,
 				164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */,
 				BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */,
+				16626503217DAE7400300F45 /* UIView+ArrangeSubviews.swift */,
 				871BC2031D34F8F800DF0793 /* UIImage+Transform.h */,
 				871BC2041D34F8F800DF0793 /* UIImage+Transform.m */,
 				871BC2051D34F8F800DF0793 /* UIImagePickerController+GetImage.h */,
@@ -5506,7 +5511,8 @@
 				166264F42179E62200300F45 /* MessageContent */,
 				7CD0746020D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift */,
 				872C823F214BF01100236A76 /* TextMessageCell+Mentions.swift */,
-				166264CD216F9F0700300F45 /* CellExperiments.swift */,
+				166264FF217DAC4F00300F45 /* ConfigurableCell.swift */,
+				16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */,
 				166264EA2174CA5900300F45 /* NewTextMessageCell.swift */,
 				166264EC2174CA7800300F45 /* NewImageMessageCell.swift */,
 				166264F9217A17D100300F45 /* NewVideoMessageCell.swift */,
@@ -7404,6 +7410,7 @@
 				D54224C820513EC100526A57 /* IconActionCell.swift in Sources */,
 				F1CB5D27215A3011001CCF5D /* NSAttributedString+Space.swift in Sources */,
 				871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */,
+				16626500217DAC4F00300F45 /* ConfigurableCell.swift in Sources */,
 				8FC85459199245770008B66B /* InvisibleInputAccessoryView.m in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,
 				EEC7E82A2178B55100E32835 /* ConversationNotificationOptionsViewController.swift in Sources */,
@@ -7416,6 +7423,7 @@
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
 				8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */,
 				876EECB31F5078D200E269F3 /* AccountSelectorController.swift in Sources */,
+				16626502217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift in Sources */,
 				161B75C820B6BCB50002B0F7 /* ZMUserSession+Calling.swift in Sources */,
 				871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */,
 				160D6920212C78E800096EAD /* CallQualityController.swift in Sources */,
@@ -7515,7 +7523,6 @@
 				5E8DA786211C458600360979 /* AuthenticationEmailFallbackErrorHandler.swift in Sources */,
 				EF6777062073C6C20062F122 /* OfflineBar.swift in Sources */,
 				F16426F61FCC0FE200D2ABFC /* UIColor+Hex.swift in Sources */,
-				166264CE216F9F0700300F45 /* CellExperiments.swift in Sources */,
 				BFFD439E1DE47FFA00505C8C /* UIView+RightToLeft.swift in Sources */,
 				872B3283209B208D005AC615 /* CallTopOverlayController.swift in Sources */,
 				166264FA217A17D100300F45 /* NewVideoMessageCell.swift in Sources */,
@@ -8029,6 +8036,7 @@
 				16A94AFB209C553A008A5718 /* CallViewController.swift in Sources */,
 				5E65A7A721304B6B008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift in Sources */,
 				87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */,
+				16626504217DAE7400300F45 /* UIView+ArrangeSubviews.swift in Sources */,
 				7CED30721FD97748009F0DAC /* IconStringsBuilder.swift in Sources */,
 				EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */,
 				871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */,

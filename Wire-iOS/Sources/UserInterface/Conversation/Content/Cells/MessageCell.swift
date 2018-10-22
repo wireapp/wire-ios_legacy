@@ -18,8 +18,6 @@
 
 import Foundation
 
-typealias ViewLayout = (UIView, UIEdgeInsets)
-
 struct DefaultMessageCellConfiguration: Equatable {
     
     var configuration: MessageCellConfiguration
@@ -50,7 +48,7 @@ struct DefaultMessageCellDescription<T: ConfigurableCell & UIView>: CellDescript
     }
     
     func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let cell: TableViewConfigurableCellAdapter<T> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
+        let cell: ConfigurableCellTableViewAdapter<T> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
         cell.configure(with: content)
         return cell
     }
@@ -151,7 +149,7 @@ class MessageCell: UIView {
             ephemeralCountdownView.widthAnchor.constraint(equalToConstant: 8),
             ephemeralCountdownView.heightAnchor.constraint(equalToConstant: 8)])
         
-        createConstraints(layout)
+        arrangeSubviews(layout)
     }
     
     required init?(coder aDecoder: NSCoder) {

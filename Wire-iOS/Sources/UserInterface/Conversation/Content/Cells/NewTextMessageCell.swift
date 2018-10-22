@@ -94,7 +94,7 @@ struct TextMessageCellDescription: CellDescription {
     }
     
     func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let cell: TableViewConfigurableCellAdapter<NewTextMessageCell> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
+        let cell: ConfigurableCellTableViewAdapter<NewTextMessageCell> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
         cell.configure(with: self)
         return cell
     }
