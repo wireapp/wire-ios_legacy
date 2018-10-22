@@ -33,13 +33,23 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(view: sut.view)
+    func testForInitState() {
+        teamTest {
+            verify(view: sut.view)
+        }
+    }
+
+    func testForInitState_NoTeam() {
+        nonTeamTest {
+            verify(view: sut.view)
+        }
     }
 
     func testForActionMenu() {
-        sut.detailsView(GroupDetailsFooterView(), performAction: .more)
-        verifyAlertController((sut?.actionController?.alertController)!)
+        teamTest {
+            sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            verifyAlertController((sut?.actionController?.alertController)!)
+        }
     }
     
     func testForInitState_NonTeam() {
@@ -50,15 +60,8 @@ class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     func testForActionMenu_NonTeam() {
         nonTeamTest {
-            self.sut.detailsView(GroupDetailsFooterView(), performAction: .more)
-            verifyAlertController((self.sut?.actionController?.alertController)!)
+            sut.detailsView(GroupDetailsFooterView(), performAction: .more)
+            verifyAlertController((sut?.actionController?.alertController)!)
         }
-    }
-    
-    private func nonTeamTest(_ block: () -> Void) {
-        let mockSelf = MockUser.mockSelf()
-        mockSelf?.isTeamMember = false
-        block()
-        mockSelf?.isTeamMember = true
     }
 }
