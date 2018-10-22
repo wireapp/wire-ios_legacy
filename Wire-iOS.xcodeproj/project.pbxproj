@@ -75,7 +75,7 @@
 		165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
 		1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */; };
-		166264D0217093C500300F45 /* NewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264CF217093C500300F45 /* NewCellTests.swift */; };
+		166264D0217093C500300F45 /* NewImageMesssageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264CF217093C500300F45 /* NewImageMesssageCellTests.swift */; };
 		166264EB2174CA5900300F45 /* NewTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EA2174CA5900300F45 /* NewTextMessageCell.swift */; };
 		166264ED2174CA7800300F45 /* NewImageMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EC2174CA7800300F45 /* NewImageMessageCell.swift */; };
 		166264F02178D9A000300F45 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166264EF2178D9A000300F45 /* MessageCell.swift */; };
@@ -1525,7 +1525,7 @@
 		165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSItemProvider+Helper.m"; sourceTree = "<group>"; };
 		1660F2371FBC6E2D00A0EE54 /* silence.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = silence.m4a; sourceTree = "<group>"; };
 		1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerController.swift; sourceTree = "<group>"; };
-		166264CF217093C500300F45 /* NewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCellTests.swift; sourceTree = "<group>"; };
+		166264CF217093C500300F45 /* NewImageMesssageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewImageMesssageCellTests.swift; sourceTree = "<group>"; };
 		166264EA2174CA5900300F45 /* NewTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTextMessageCell.swift; sourceTree = "<group>"; };
 		166264EC2174CA7800300F45 /* NewImageMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewImageMessageCell.swift; sourceTree = "<group>"; };
 		166264EF2178D9A000300F45 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
@@ -5768,7 +5768,7 @@
 				BFAD3A1B1CD1078500F0FBED /* Resources */,
 				BF079A3520EF9E6F00B152DD /* ConversationListCellTests.swift */,
 				5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */,
-				166264CF217093C500300F45 /* NewCellTests.swift */,
+				166264CF217093C500300F45 /* NewImageMesssageCellTests.swift */,
 				5EA73D8E20D903900001D106 /* GroupDetailsTimeoutOptionsCellTests.swift */,
 				EEE60E2B2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift */,
 				D58192042091F34E003BA7EC /* CallActionsViewTests.swift */,
@@ -8345,7 +8345,7 @@
 				BF808B511DE605DF00718076 /* ChangeHandleViewControllerTests.swift in Sources */,
 				873DC9591D4796C100C1C9B0 /* CameraKeyboardViewControllerTests.swift in Sources */,
 				1658C19A20A1F00500148F6D /* CallInfoTestFixture.swift in Sources */,
-				166264D0217093C500300F45 /* NewCellTests.swift in Sources */,
+				166264D0217093C500300F45 /* NewImageMesssageCellTests.swift in Sources */,
 				16C02A12204EE5EC00811912 /* GroupConversationCellTests.swift in Sources */,
 				5E33F0D520ADA94B00414EA6 /* MockCallPermissions.swift in Sources */,
 				BFAF4CAF1CEB791B00780537 /* AudioRecordViewControllerTests.swift in Sources */,
