@@ -730,6 +730,8 @@
 "group_details.guest_options_cell.enabled" = "Aktiv";
 "group_details.guest_options_cell.disabled" = "Slået fra";
 "group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.notification_options_cell.title" = "Notifications";
+"group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when you are mentioned.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile

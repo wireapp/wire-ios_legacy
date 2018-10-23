@@ -54,6 +54,7 @@
 @property (nonatomic, readwrite) BOOL canManageTeam;
 @property (nonatomic, readwrite) BOOL hasTeam;
 @property (nonatomic, readwrite) NSString *expirationDisplayString;
+@property (nonatomic, readwrite) BOOL isWirelessUser;
 @property (nonatomic) ZMUser * user;
 
 @property (nonatomic) NSSet <id<UserClientType>> * clients;

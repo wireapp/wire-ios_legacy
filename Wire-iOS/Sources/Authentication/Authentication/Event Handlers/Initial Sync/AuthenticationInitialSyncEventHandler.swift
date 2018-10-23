@@ -37,30 +37,23 @@ class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandle
             return [.hideLoadingView]
         }
 
-        guard let selfUser = statusProvider?.selfUser, let profile = statusProvider?.selfUserProfile else {
-            return nil
+        // Check the registration status
+        let isRegistered = statusProvider?.authenticatedUserWasRegisteredOnThisDevice == true
+
+        // Build the list of actions
+        var actions: [AuthenticationCoordinatorAction] = [.hideLoadingView]
+
+        if isRegistered {
+            actions.append(.assignRandomProfileImage)
         }
 
-        // Check if the user needs email and password
-        let isRegistered = statusProvider?.authenticatedUserWasRegisteredOnThisDevice ?? false
-        let needsEmail = statusProvider?.authenticatedUserNeedsEmailCredentials ?? false
-
-        switch (isRegistered, needsEmail, nextRegistrationStep) {
-        case (true, false, nil):
-            return [.hideLoadingView, .assignRandomProfileImage, .completeRegistrationFlow]
-
-        case (false, false, nil):
-            return [.hideLoadingView, .completeLoginFlow]
-
-        case (_, false, let nextStep?):
-            return [.hideLoadingView, .transition(nextStep, resetStack: true)]
-
-        default:
-            break
+        if let nextStep = nextRegistrationStep {
+            actions.append(.transition(nextStep, resetStack: true))
+        } else {
+            actions.append(isRegistered ? .completeRegistrationFlow : .completeLoginFlow)
         }
 
-        let nextStep = AuthenticationFlowStep.addEmailAndPassword(user: selfUser, profile: profile, canSkip: false)
-        return [.hideLoadingView, .transition(nextStep, resetStack: true)]
+        return actions
     }
 
 }

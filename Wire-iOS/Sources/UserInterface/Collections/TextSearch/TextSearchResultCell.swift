@@ -41,8 +41,8 @@ internal class TextSearchResultCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         userImageView.userSession = ZMUserSession.shared()
-        userImageView.initials.font = UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.light)
-        
+        userImageView.initialsFont = .systemFont(ofSize: 11, weight: .light)
+
         accessibilityIdentifier = "search result cell"
         
         contentView.addSubview(footerView)

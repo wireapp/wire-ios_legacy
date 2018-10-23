@@ -20,7 +20,7 @@
 import Foundation
 import SafariServices
 
-@objcMembers class SettingsCellDescriptorFactory: NSObject {
+class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"
     let settingsPropertyFactory: SettingsPropertyFactory
     

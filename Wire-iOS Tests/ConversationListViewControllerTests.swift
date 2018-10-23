@@ -26,7 +26,7 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        MockUser.mockSelf()?.name = "Tarja Turunen"
+        MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
 
         sut = ConversationListViewController()
         let account = Account(userName: "", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
@@ -45,8 +45,16 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     func testForActionMenu() {
-        sut.showActionMenu(for: otherUserConversation, from: sut.view)
+        teamTest {
+            sut.showActionMenu(for: otherUserConversation, from: sut.view)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
+    }
 
-        verifyAlertController((sut?.actionsController?.alertController)!)
+    func testForActionMenu_NoTeam() {
+        nonTeamTest {
+            sut.showActionMenu(for: otherUserConversation, from: sut.view)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
     }
 }

@@ -537,22 +537,26 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 extension AppRootViewController: PopoverPresenter { }
 
 public extension SessionManager {
-    
-    @objc var firstAuthenticatedAccount: Account? {
-        
+
+    @objc(firstAuthenticatedAccountExcludingCredentials:)
+    func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
-            if selectedAccount.isAuthenticated(with: BackendEnvironment.shared) {
+            if selectedAccount.isAuthenticated(with: BackendEnvironment.shared) && selectedAccount.loginCredentials != credentials {
                 return selectedAccount
             }
         }
-        
+
         for account in accountManager.accounts {
-            if account.isAuthenticated(with: BackendEnvironment.shared) && account != accountManager.selectedAccount {
+            if account.isAuthenticated(with: BackendEnvironment.shared) && account != accountManager.selectedAccount && account.loginCredentials != credentials {
                 return account
             }
         }
-        
+
         return nil
+    }
+
+    @objc var firstAuthenticatedAccount: Account? {
+        return firstAuthenticatedAccount(excludingCredentials: nil)
     }
 
     @objc static var numberOfAccounts: Int {

@@ -36,7 +36,9 @@ class AuthenticationNeedsReauthenticationErrorHandler: AuthenticationEventHandle
         }
 
         let numberOfAccounts = statusProvider?.numberOfAccounts ?? 0
-        let nextStep = AuthenticationFlowStep.reauthenticate(credentials: nil, numberOfAccounts: numberOfAccounts)
+        let credentials = error.userInfo[ZMUserLoginCredentialsKey] as? LoginCredentials
+
+        let nextStep = AuthenticationFlowStep.reauthenticate(credentials: credentials, numberOfAccounts: numberOfAccounts)
 
         let alert = AuthenticationCoordinatorAlert(title: "registration.signin.alert.password_needed.title".localized,
                                                    message: "registration.signin.alert.password_needed.message".localized,
