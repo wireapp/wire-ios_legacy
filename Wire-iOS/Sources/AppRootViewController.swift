@@ -541,13 +541,13 @@ public extension SessionManager {
     @objc(firstAuthenticatedAccountExcludingCredentials:)
     func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
-            if selectedAccount.isAuthenticated(with: BackendEnvironment.shared) && selectedAccount.loginCredentials != credentials {
+            if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
                 return selectedAccount
             }
         }
 
         for account in accountManager.accounts {
-            if account.isAuthenticated(with: BackendEnvironment.shared) && account != accountManager.selectedAccount && account.loginCredentials != credentials {
+            if BackendEnvironment.shared.isAuthenticated(account) && account != accountManager.selectedAccount && account.loginCredentials != credentials {
                 return account
             }
         }

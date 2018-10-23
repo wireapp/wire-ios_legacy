@@ -551,7 +551,6 @@
 		8750B1CB2124236200B807A9 /* InviteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8750B1CA2124236200B807A9 /* InviteButton.swift */; };
 		8751A6CB1FF6573D00804A58 /* QuickActionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8751A6CA1FF6573D00804A58 /* QuickActionsManager.swift */; };
 		8751BA442069455E00DF8667 /* BackupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8751BA432069455E00DF8667 /* BackupViewController.swift */; };
-		8756C48E217A312C00627F1F /* BackendEnvironment+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756C48D217A312C00627F1F /* BackendEnvironment+Shared.swift */; };
 		8756CA141D2EBE1F002E7CB7 /* LaunchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8756CA131D2EBE1F002E7CB7 /* LaunchImageViewController.m */; };
 		8756FE341CEB62F800EF58A6 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8756FE331CEB62F800EF58A6 /* AudioMessageCell.swift */; };
 		875753D1211DC61C00A80F5E /* EmptySearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875753D0211DC61C00A80F5E /* EmptySearchResultsView.swift */; };
@@ -647,6 +646,7 @@
 		87AAE4251E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AAE4241E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift */; };
 		87AAE4291E43682E00E1D13A /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87AAE4281E43682E00E1D13A /* LocalAuthentication.framework */; };
 		87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */; };
+		87AC33AE217F4FE500069C79 /* BackendEnvironment+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */; };
 		87AC77DB1DE48C01009F6D56 /* Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC77DA1DE48C01009F6D56 /* Copyable.swift */; };
 		87AC9F561C0749FB00E1ED6F /* TailEditingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */; };
 		87AD89F71CB5179C002C6EC1 /* FileTransferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */; };
@@ -2226,6 +2226,7 @@
 		87AAE4241E4347F000E1D13A /* ConversationContentViewController+PeekPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+PeekPop.swift"; sourceTree = "<group>"; };
 		87AAE4281E43682E00E1D13A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		87AB6DB51D9AB47400ADAD38 /* SettingsStyleNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsStyleNavigationController.swift; sourceTree = "<group>"; };
+		87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BackendEnvironment+Shared.swift"; sourceTree = "<group>"; };
 		87AC77DA1DE48C01009F6D56 /* Copyable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Copyable.swift; sourceTree = "<group>"; };
 		87AC9F551C0749FB00E1ED6F /* TailEditingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TailEditingTextField.swift; sourceTree = "<group>"; };
 		87AD89F61CB5179C002C6EC1 /* FileTransferCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTransferCell.swift; sourceTree = "<group>"; };
@@ -3572,7 +3573,7 @@
 			isa = PBXGroup;
 			children = (
 				1EE85C541B5F96FC008E084B /* WireExtensionComponents.h */,
-				8756C48D217A312C00627F1F /* BackendEnvironment+Shared.swift */,
+				87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */,
 				5E2B13E520E67206002F27E2 /* CollectionLayouts */,
 				1EE9DCA51B5F9A6D00E347DF /* Views */,
 				1E5E0CE71B6B8EDB003B0CAC /* Icons */,
@@ -7075,6 +7076,7 @@
 				5E52376920E7F12B00649241 /* EasingAnimation.swift in Sources */,
 				A9B02232209B6E4E00DF25D8 /* Hockey.swift in Sources */,
 				CE8E4FAC1DF066750009F437 /* FilePreviewGenerator.swift in Sources */,
+				87AC33AE217F4FE500069C79 /* BackendEnvironment+Shared.swift in Sources */,
 				EEC7E822217620ED00E32835 /* WireStyleKit.swift in Sources */,
 				87F18BC81E02E7BF00C69D9B /* Reusable.swift in Sources */,
 				5EEFC1A920C01CA9007E8A79 /* UIView+Rounded.swift in Sources */,
@@ -7087,7 +7089,6 @@
 				D5197FC1207BAD2100F4622B /* SpinnerSubtitleView.swift in Sources */,
 				CE8E4FB31DF066EE0009F437 /* AudioProcessing.swift in Sources */,
 				8786071E1D33E3FF00971A19 /* KeyValueObserver.m in Sources */,
-				8756C48E217A312C00627F1F /* BackendEnvironment+Shared.swift in Sources */,
 				8784D4591E818AA4007A6867 /* CGFloat+Hairline.swift in Sources */,
 				164A55AE20EF8F4600AE62A6 /* ZMUser+Images.swift in Sources */,
 				54F7C2831D7467FA004D8087 /* AutomationHelper.swift in Sources */,
