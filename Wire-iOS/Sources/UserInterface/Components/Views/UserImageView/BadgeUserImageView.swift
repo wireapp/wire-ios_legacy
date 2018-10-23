@@ -50,6 +50,10 @@ import WireExtensionComponents
 
     // MARK: - Initialization
 
+    @objc convenience init() {
+        self.init(size: .small)
+    }
+    
     override init(size: UserImageView.Size = .small) {
         super.init(size: size)
         configureSubviews()
