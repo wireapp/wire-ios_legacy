@@ -227,6 +227,10 @@
 		5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */; };
 		5E33F0D320AD63A100414EA6 /* CallPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0D220AD63A100414EA6 /* CallPermissions.swift */; };
 		5E33F0D520ADA94B00414EA6 /* MockCallPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0D420ADA94B00414EA6 /* MockCallPermissions.swift */; };
+		5E35F731217F140400D3F4FE /* SenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F730217F140400D3F4FE /* SenderTableViewCell.swift */; };
+		5E35F733217F147A00D3F4FE /* ConversationMessageSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */; };
+		5E35F736217F417200D3F4FE /* BurstTimestampTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F735217F417200D3F4FE /* BurstTimestampTableViewCell.swift */; };
+		5E35F738217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F737217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift */; };
 		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
 		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
@@ -1713,6 +1717,10 @@
 		5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissionsConfiguration.swift; sourceTree = "<group>"; };
 		5E33F0D220AD63A100414EA6 /* CallPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissions.swift; sourceTree = "<group>"; };
 		5E33F0D420ADA94B00414EA6 /* MockCallPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallPermissions.swift; sourceTree = "<group>"; };
+		5E35F730217F140400D3F4FE /* SenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderTableViewCell.swift; sourceTree = "<group>"; };
+		5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSectionController.swift; sourceTree = "<group>"; };
+		5E35F735217F417200D3F4FE /* BurstTimestampTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurstTimestampTableViewCell.swift; sourceTree = "<group>"; };
+		5E35F737217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBasedConversationMessageSectionDescriptor.swift; sourceTree = "<group>"; };
 		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -3751,6 +3759,33 @@
 			path = Permissions;
 			sourceTree = "<group>";
 		};
+		5E35F72F217F124000D3F4FE /* ConfigurableCell */ = {
+			isa = PBXGroup;
+			children = (
+				5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */,
+				5E35F737217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift */,
+				166264FF217DAC4F00300F45 /* ConfigurableCell.swift */,
+				16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */,
+				166264EA2174CA5900300F45 /* NewTextMessageCell.swift */,
+				166264EC2174CA7800300F45 /* NewImageMessageCell.swift */,
+				166264F9217A17D100300F45 /* NewVideoMessageCell.swift */,
+				166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */,
+				166264FD217A22B100300F45 /* NewFileMessageCell.swift */,
+				166264EF2178D9A000300F45 /* MessageCell.swift */,
+				5E35F734217F415700D3F4FE /* Components */,
+			);
+			path = ConfigurableCell;
+			sourceTree = "<group>";
+		};
+		5E35F734217F415700D3F4FE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				5E35F730217F140400D3F4FE /* SenderTableViewCell.swift */,
+				5E35F735217F417200D3F4FE /* BurstTimestampTableViewCell.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		5E3A6C23206A4DDF00907484 /* Previews */ = {
 			isa = PBXGroup;
 			children = (
@@ -5511,14 +5546,7 @@
 				166264F42179E62200300F45 /* MessageContent */,
 				7CD0746020D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift */,
 				872C823F214BF01100236A76 /* TextMessageCell+Mentions.swift */,
-				166264FF217DAC4F00300F45 /* ConfigurableCell.swift */,
-				16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */,
-				166264EA2174CA5900300F45 /* NewTextMessageCell.swift */,
-				166264EC2174CA7800300F45 /* NewImageMessageCell.swift */,
-				166264F9217A17D100300F45 /* NewVideoMessageCell.swift */,
-				166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */,
-				166264FD217A22B100300F45 /* NewFileMessageCell.swift */,
-				166264EF2178D9A000300F45 /* MessageCell.swift */,
+				5E35F72F217F124000D3F4FE /* ConfigurableCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -7233,6 +7261,7 @@
 				8756FE341CEB62F800EF58A6 /* AudioMessageCell.swift in Sources */,
 				5E8DA75A211B075E00360979 /* AuthenticationNoCredentialsErrorHandler.swift in Sources */,
 				876B94821D7D8C870063AE89 /* UIView+SlideInState.swift in Sources */,
+				5E35F736217F417200D3F4FE /* BurstTimestampTableViewCell.swift in Sources */,
 				BFAF4CAD1CEB670F00780537 /* AudioRecordViewController.swift in Sources */,
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
@@ -7733,6 +7762,7 @@
 				5E4B1385204FE58D00ED5DF1 /* TimeInterval+Days.swift in Sources */,
 				EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */,
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
+				5E35F738217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift in Sources */,
 				871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */,
 				871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */,
 				BFE41863209B15F800503C7C /* Calling+Logs.swift in Sources */,
@@ -7794,6 +7824,7 @@
 				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
 				EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */,
 				7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */,
+				5E35F733217F147A00D3F4FE /* ConversationMessageSectionController.swift in Sources */,
 				87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */,
 				EF21271E1FB9DFE300625A9B /* AddEmailStepViewController.m in Sources */,
 				87BEB03E1D3E44DE00DE9575 /* CameraCell.swift in Sources */,
@@ -7983,6 +8014,7 @@
 				87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */,
 				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
+				5E35F731217F140400D3F4FE /* SenderTableViewCell.swift in Sources */,
 				BF8ECC331E5AED6C0015177D /* UIMenuItem+MessageActions.swift in Sources */,
 				DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,

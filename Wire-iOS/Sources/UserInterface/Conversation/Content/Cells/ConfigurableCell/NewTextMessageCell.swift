@@ -18,47 +18,27 @@
 
 import Foundation
 
-struct TextMessageCellConfiguration: Equatable {
-    
-    enum Attachment: Int, Codable, CaseIterable {
-        case none
-        case linkPreview
-        case youtube
-        case soundcloud
-    }
-    
-    var attachment: Attachment = .none
-    var configuration: MessageCellConfiguration
-    
-    static var variants: [TextMessageCellConfiguration] {
-        
-        var variants: [TextMessageCellConfiguration] = []
-        
-        MessageCellConfiguration.allCases.forEach { configuration in
-            Attachment.allCases.forEach { attachment in
-                variants.append(TextMessageCellConfiguration(configuration: configuration, attachment: attachment))
-            }
-        }
-        
-        return variants
-    }
-    
-    init(configuration: MessageCellConfiguration, attachment: Attachment) {
-        self.configuration = configuration
-        self.attachment = attachment
-    }
-    
-}
+struct TextMessageCellDescription: CellDescription, ConversationMessageSectionDescription {
 
-struct TextMessageCellDescription: CellDescription {
-    
+    enum Attachment {
+        case linkPreview(LinkAttachment)
+        case youtube(Me)
+        case soundcloud
+
+
+    }
+
     let context: MessageCellContext
     let message: ZMConversationMessage
     let formattedText: NSAttributedString
     let linkAttachment: LinkAttachment?
-    let configuration: TextMessageCellConfiguration
-    
-    init (message: ZMConversationMessage, context: MessageCellContext) {
+    let attachment: Attachment
+
+    var numberOfCells: Int {
+        return 1
+    }
+
+    init(message: ZMConversationMessage, context: MessageCellContext) {
         guard let textMessageData = message.textMessageData else { fatal("Boom" )} // TODO jacob move textMessageData into initializer
         
         var configuration = MessageCellConfiguration(context: context)
@@ -71,7 +51,7 @@ struct TextMessageCellDescription: CellDescription {
         let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastLinkAttachment)
         var linkAttachment: LinkAttachment? = lastLinkAttachment
         
-        var attachment: TextMessageCellConfiguration.Attachment = .none
+        var attachment: Attachment = .none
         if textMessageData.linkPreview != nil {
             attachment = .linkPreview
             linkAttachment = nil
@@ -90,10 +70,11 @@ struct TextMessageCellDescription: CellDescription {
         self.message = message
         self.formattedText = formattedText
         self.linkAttachment = linkAttachment
-        self.configuration = TextMessageCellConfiguration(configuration: configuration, attachment: attachment)
+        self.attachment = attachment
     }
     
     func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+
         let cell: ConfigurableCellTableViewAdapter<NewTextMessageCell> = tableView.dequeueConfigurableCell(configuration: configuration, for: indexPath)
         cell.configure(with: self)
         return cell

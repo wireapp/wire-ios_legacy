@@ -22,6 +22,7 @@
 #import "WireSyncEngine+iOS.h"
 
 @protocol ConversationCellDelegate;
+@class ConversationMessageSectionController;
 
 @interface ConversationMessageWindowTableViewAdapter : NSObject
 
@@ -34,4 +35,7 @@
 - (instancetype)initWithTableView:(UITableView *)tableView messageWindow:(ZMConversationMessageWindow *)messageWindow;
 - (void)expandMessageWindow;
 - (void)reconfigureVisibleCellsWithDeletedIndexPaths:(NSSet<NSIndexPath *>*)deletedIndexPaths;
+
+- (ConversationMessageSectionController *)sectionControllerAtIndex:(NSInteger)index;
+
 @end

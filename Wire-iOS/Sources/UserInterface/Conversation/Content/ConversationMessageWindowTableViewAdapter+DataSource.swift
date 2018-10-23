@@ -47,23 +47,36 @@ extension ConversationMessageWindowTableViewAdapter {
         tableView.register(MessageDeletedCell.self, forCellReuseIdentifier: ConversationMessageDeletedCellId)
         tableView.register(UnknownMessageCell.self, forCellReuseIdentifier: ConversationUnknownMessageCellId)
         tableView.register(MessageTimerUpdateCell.self, forCellReuseIdentifier: ConversationMessageTimerUpdateCellId)
+        tableView.register(SenderTableViewCell.self, forCellReuseIdentifier: "Sender")
+        tableView.register(SenderTableViewCell.self, forCellReuseIdentifier: "Sender")
     }
 }
 
 extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    @objc(buildSectionControllerForMessage:)
+    func buildSectionController(for message: ZMConversationMessage) -> ConversationMessageSectionController {
+        let descriptor = messageWindow.description(for: message, firstUnreadMessage: firstUnreadMessage)
+        return ConversationMessageSectionController(sectionDescription: descriptor)
+    }
+
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return self.messageWindow.messages.count
+    }
+
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let sectionController = self.sectionController(at: section)!
+        return sectionController.numberOfCells
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let message = messageWindow.messages[indexPath.row] as? ZMConversationMessage  else {
-            return UITableViewCell()
-        }
-        
-        let description = messageWindow.description(for: message, firstUnreadMessage: firstUnreadMessage)
-        
-        return description.cell(tableView: tableView, at: indexPath)
-        
+        let sectionController = self.sectionController(at: indexPath.section)!
+        return sectionController.makeCell(for: tableView, at: indexPath)
+
+//        let description = messageWindow.description(for: message, firstUnreadMessage: firstUnreadMessage)
+//
+//        return description.cell(tableView: tableView, at: indexPath)
+
 //        let description = messageWindow.cellDescription(for: message)
 //        
 //        return description.cell(for: tableview)

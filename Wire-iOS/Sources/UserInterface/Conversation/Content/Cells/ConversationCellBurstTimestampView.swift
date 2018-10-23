@@ -149,4 +149,8 @@ import Cartography
         
         isShowingUnreadDot = showUnreadDot
     }
+
+    func prepareForReuse() {
+        label.text = nil
+    }
 }

@@ -48,6 +48,7 @@ static NSString *const ConversationMessageTimerUpdateCellId = @"ConversationMess
 @property (nonatomic) ZMConversationMessageWindow * _Nonnull messageWindow;
 @property (nonatomic) id _Nonnull messageWindowObserverToken;
 @property (nonatomic) BOOL expandingWindow;
+@property (nonatomic, strong) NSCache<id<ZMConversationMessage>, ConversationMessageSectionController *> *sectionControllers;
 
 NS_ASSUME_NONNULL_END
 

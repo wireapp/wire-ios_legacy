@@ -28,7 +28,13 @@ struct MessageCellContext {
     
 }
 
-struct UnknownMessageCellDescription: CellDescription { // TODO jacob replace with something else (placeholder for now)
+struct UnknownMessageCellDescription: CellDescription, ConversationMessageSectionDescription {
+    static var childCells: [String : UIView] = [:]
+    // TODO jacob replace with something else (placeholder for now)
+
+    var numberOfCells: Int {
+        return 1
+    }
     
     func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: ConversationUnknownMessageCellId, for: indexPath)
@@ -38,20 +44,20 @@ struct UnknownMessageCellDescription: CellDescription { // TODO jacob replace wi
 
 extension ZMConversationMessageWindow {
     
-    func description(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> CellDescription {
+    func description(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageSectionDescription {
         let context = self.context(for: message, firstUnreadMessage: firstUnreadMessage)
         
         if message.isText {
             return TextMessageCellDescription(message: message, context: context)
-        } else if message.isImage {
-            return DefaultMessageCellDescription<NewImageMessageCell>(message: message, context: context)
-        } else if message.isVideo {
-            return DefaultMessageCellDescription<NewVideoMessageCell>(message: message, context: context)
-        } else if (message.isAudio) {
-            return DefaultMessageCellDescription<NewAudioMessageCell>(message: message, context: context)
-        } else if (message.isFile) {
-            return DefaultMessageCellDescription<NewFileMessageCell>(message: message, context: context)
-        } else {
+//        } else if message.isImage {
+//            return DefaultMessageCellDescription<NewImageMessageCell>(message: message, context: context)
+//        } else if message.isVideo {
+//            return DefaultMessageCellDescription<NewVideoMessageCell>(message: message, context: context)
+//        } else if (message.isAudio) {
+//            return DefaultMessageCellDescription<NewAudioMessageCell>(message: message, context: context)
+//        } else if (message.isFile) {
+//            return DefaultMessageCellDescription<NewFileMessageCell>(message: message, context: context)
+       } else {
             return UnknownMessageCellDescription()
         }
     }

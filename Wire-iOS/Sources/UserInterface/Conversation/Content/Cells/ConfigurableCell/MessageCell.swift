@@ -62,9 +62,12 @@ struct MessageCellConfiguration: OptionSet {
     static var allCases: [MessageCellConfiguration] = [.none, .showSender, .showBurstTimestamp, .all]
     
     static let none = MessageCellConfiguration(rawValue: 0)
+
     static let showSender = MessageCellConfiguration(rawValue: 1 << 0)
     static let showBurstTimestamp = MessageCellConfiguration(rawValue: 1 << 1)
-    static let all: MessageCellConfiguration = [.showSender, .showBurstTimestamp]
+    static let showQuotedMessage = MessageCellConfiguration(rawValue: 1 << 2)
+
+    static let all: MessageCellConfiguration = [.showSender, .showBurstTimestamp, .showQuotedMessage]
     
     init(context: MessageCellContext) {
         var configuration = MessageCellConfiguration()
@@ -85,6 +88,8 @@ struct MessageCellConfiguration: OptionSet {
     }
     
 }
+
+class MessageContentCell: UIView
 
 class MessageCell: UIView {
     
