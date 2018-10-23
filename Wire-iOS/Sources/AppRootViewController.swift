@@ -142,6 +142,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             analytics: analytics,
             delegate: appStateController,
             application: UIApplication.shared,
+            environment: BackendEnvironment.shared,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
@@ -540,13 +541,13 @@ public extension SessionManager {
     @objc(firstAuthenticatedAccountExcludingCredentials:)
     func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
-            if selectedAccount.isAuthenticated && selectedAccount.loginCredentials != credentials {
+            if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
                 return selectedAccount
             }
         }
 
         for account in accountManager.accounts {
-            if account.isAuthenticated && account != accountManager.selectedAccount && account.loginCredentials != credentials {
+            if BackendEnvironment.shared.isAuthenticated(account) && account != accountManager.selectedAccount && account.loginCredentials != credentials {
                 return account
             }
         }
