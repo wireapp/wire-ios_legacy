@@ -50,7 +50,7 @@ import WireExtensionComponents
 
     // MARK: - Initialization
 
-    @objc convenience init() {
+    @objc override convenience init(frame: CGRect) {
         self.init(size: .small)
     }
     
