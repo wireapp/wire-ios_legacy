@@ -18,7 +18,7 @@
 
 
 #import <WireSyncEngine/WireSyncEngine.h>
-
+#import "AccentColorProvider.h"
 
 @class ZMConversation;
 @class ZMUser;
@@ -28,20 +28,8 @@
 
 FOUNDATION_EXPORT ZMUser *BareUserToUser(id bareUser);
 
-
-
-@interface ZMSearchUser (Additions)
-
-@property (nonatomic, readonly) UIColor *accentColor;
-
-@end
-
-
-
-
 @interface ZMUser (Additions)
 
-@property (nonatomic, readonly) UIColor *accentColor;
 @property (nonatomic, readonly) UIColor *nameAccentColor;
 
 /// Returns the current self user
