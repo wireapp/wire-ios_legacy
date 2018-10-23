@@ -21,11 +21,12 @@ import Foundation
 extension ConversationMessageWindowTableViewAdapter {
     
     @objc func registerTableCellClasses() {
-        tableView.register(cell: NewImageMessageCell.self)
-        tableView.register(cell: NewTextMessageCell.self)
-        tableView.register(cell: NewVideoMessageCell.self)
-        tableView.register(cell: NewAudioMessageCell.self)
-        tableView.register(cell: NewFileMessageCell.self)
+        tableView.register(cell: UnknownMessageCellDescription.self)
+//        tableView.register(cell: NewImageMessageCell.self)
+//        tableView.register(cell: NewTextMessageCell.self)
+//        tableView.register(cell: NewVideoMessageCell.self)
+//        tableView.register(cell: NewAudioMessageCell.self)
+//        tableView.register(cell: NewFileMessageCell.self)
         
         tableView.register(TextMessageCell.self, forCellReuseIdentifier: ConversationTextCellId)
         tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
@@ -56,8 +57,7 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
 
     @objc(buildSectionControllerForMessage:)
     func buildSectionController(for message: ZMConversationMessage) -> ConversationMessageSectionController {
-        let descriptor = messageWindow.description(for: message, firstUnreadMessage: firstUnreadMessage)
-        return ConversationMessageSectionController(sectionDescription: descriptor)
+        return messageWindow.sectionController(for: message, firstUnreadMessage: firstUnreadMessage)
     }
 
     public func numberOfSections(in tableView: UITableView) -> Int {

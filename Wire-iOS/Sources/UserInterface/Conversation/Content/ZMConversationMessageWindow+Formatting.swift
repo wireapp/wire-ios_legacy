@@ -28,27 +28,30 @@ struct MessageCellContext {
     
 }
 
-struct UnknownMessageCellDescription: CellDescription, ConversationMessageSectionDescription {
-    static var childCells: [String : UIView] = [:]
-    // TODO jacob replace with something else (placeholder for now)
+extension CustomMessageView: ConversationMessageCell {
+    func configure(with object: String) {
+        messageText = object
+    }
+}
 
-    var numberOfCells: Int {
-        return 1
+struct UnknownMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = CustomMessageView
+    let configuration: String
+
+    init() {
+        self.configuration = "content.system.unknown_message.body".localized
     }
-    
-    func cell(tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCell(withIdentifier: ConversationUnknownMessageCellId, for: indexPath)
-    }
-    
+
 }
 
 extension ZMConversationMessageWindow {
     
-    func description(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageSectionDescription {
-        let context = self.context(for: message, firstUnreadMessage: firstUnreadMessage)
+    func sectionController(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageSectionController {
+        let controller = ConversationMessageSectionController()
+        //let context = self.context(for: message, firstUnreadMessage: firstUnreadMessage)
         
-        if message.isText {
-            return TextMessageCellDescription(message: message, context: context)
+//        if message.isText {
+//            return TextMessageCellDescription(message: message, context: context)
 //        } else if message.isImage {
 //            return DefaultMessageCellDescription<NewImageMessageCell>(message: message, context: context)
 //        } else if message.isVideo {
@@ -57,9 +60,10 @@ extension ZMConversationMessageWindow {
 //            return DefaultMessageCellDescription<NewAudioMessageCell>(message: message, context: context)
 //        } else if (message.isFile) {
 //            return DefaultMessageCellDescription<NewFileMessageCell>(message: message, context: context)
-       } else {
-            return UnknownMessageCellDescription()
-        }
+ //      } else {
+        //      }
+        controller.add(description: UnknownMessageCellDescription())
+        return controller
     }
     
     @objc func isPreviousSenderSame(forMessage message: ZMConversationMessage?) -> Bool {

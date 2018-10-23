@@ -18,72 +18,72 @@
 
 import Foundation
 
-class TextMessageContentView: UIView {
-    
-    let textView: LinkInteractionTextView = LinkInteractionTextView()
-    var articleView: ArticleView?
-    var mediaPreviewController: MediaPreviewViewController?
-    
-    override var firstBaselineAnchor: NSLayoutYAxisAnchor {
-        return textView.firstBaselineAnchor
-    }
-    
-    required init(from description: TextMessageCellConfiguration) {
-        super.init(frame: .zero)
-        
-        var layout: [(UIView, UIEdgeInsets)] = []
-        
-        layout.append((textView, .zero))
-        
-        switch description.attachment {
-        case .linkPreview:
-            let articleView = ArticleView(withImagePlaceholder: true)
-            self.articleView = articleView
-            layout.append((articleView, .zero))
-        case .youtube:
-            let mediaPreviewController = MediaPreviewViewController()
-            self.mediaPreviewController = mediaPreviewController
-            layout.append((mediaPreviewController.view, .zero))
-        default:
-            break
-        }
-        
-        layout.forEach({ (view, _) in
-            view.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(view)
-        })
-        
-        arrangeSubviews(layout)
-        setupViews()
-    }
-    
-    func setupViews() {
-        textView.isEditable = false
-        textView.isSelectable = true
-        textView.backgroundColor = UIColor(scheme: .contentBackground)
-        textView.isScrollEnabled = false
-        textView.textContainerInset = UIEdgeInsets.zero
-        textView.textContainer.lineFragmentPadding = 0
-        textView.isUserInteractionEnabled = true
-        textView.accessibilityIdentifier = "Message"
-        textView.accessibilityElementsHidden = false
-        textView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
-        textView.setContentHuggingPriority(.required, for: .vertical)
-        textView.setContentCompressionResistancePriority(.required, for: .vertical)
-    }
-    
-    func configure(with text: NSAttributedString, textMessageData: ZMTextMessageData, linkAttachment: LinkAttachment?, isObfuscated: Bool) { // TODO jacob clean this up
-        textView.attributedText = text // TODO handle isObfuscated
-        articleView?.configure(withTextMessageData: textMessageData, obfuscated: isObfuscated)
-        
-        if let linkAttachment = linkAttachment {
-            mediaPreviewController?.linkAttachment = linkAttachment
-            mediaPreviewController?.fetchAttachment()
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
+//class TextMessageContentView: UIView {
+//    
+//    let textView: LinkInteractionTextView = LinkInteractionTextView()
+//    var articleView: ArticleView?
+//    var mediaPreviewController: MediaPreviewViewController?
+//    
+//    override var firstBaselineAnchor: NSLayoutYAxisAnchor {
+//        return textView.firstBaselineAnchor
+//    }
+//    
+//    required init(from description: TextMessageCellConfiguration) {
+//        super.init(frame: .zero)
+//        
+//        var layout: [(UIView, UIEdgeInsets)] = []
+//        
+//        layout.append((textView, .zero))
+//        
+//        switch description.attachment {
+//        case .linkPreview:
+//            let articleView = ArticleView(withImagePlaceholder: true)
+//            self.articleView = articleView
+//            layout.append((articleView, .zero))
+//        case .youtube:
+//            let mediaPreviewController = MediaPreviewViewController()
+//            self.mediaPreviewController = mediaPreviewController
+//            layout.append((mediaPreviewController.view, .zero))
+//        default:
+//            break
+//        }
+//        
+//        layout.forEach({ (view, _) in
+//            view.translatesAutoresizingMaskIntoConstraints = false
+//            addSubview(view)
+//        })
+//        
+//        arrangeSubviews(layout)
+//        setupViews()
+//    }
+//    
+//    func setupViews() {
+//        textView.isEditable = false
+//        textView.isSelectable = true
+//        textView.backgroundColor = UIColor(scheme: .contentBackground)
+//        textView.isScrollEnabled = false
+//        textView.textContainerInset = UIEdgeInsets.zero
+//        textView.textContainer.lineFragmentPadding = 0
+//        textView.isUserInteractionEnabled = true
+//        textView.accessibilityIdentifier = "Message"
+//        textView.accessibilityElementsHidden = false
+//        textView.dataDetectorTypes = [.link, .address, .phoneNumber, .flightNumber, .calendarEvent, .shipmentTrackingNumber]
+//        textView.setContentHuggingPriority(.required, for: .vertical)
+//        textView.setContentCompressionResistancePriority(.required, for: .vertical)
+//    }
+//    
+//    func configure(with text: NSAttributedString, textMessageData: ZMTextMessageData, linkAttachment: LinkAttachment?, isObfuscated: Bool) { // TODO jacob clean this up
+//        textView.attributedText = text // TODO handle isObfuscated
+//        articleView?.configure(withTextMessageData: textMessageData, obfuscated: isObfuscated)
+//        
+//        if let linkAttachment = linkAttachment {
+//            mediaPreviewController?.linkAttachment = linkAttachment
+//            mediaPreviewController?.fetchAttachment()
+//        }
+//    }
+//    
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//}

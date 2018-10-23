@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConfigurableCellTableViewAdapter<C: ConfigurableCell> : UITableViewCell where C : UIView {
+class ConfigurableCellTableViewAdapter<C: UIView & ConversationMessageCell>: UITableViewCell {
     
     var cellView: C
     
@@ -28,7 +28,7 @@ class ConfigurableCellTableViewAdapter<C: ConfigurableCell> : UITableViewCell wh
             preconditionFailure("Missing cell reuseIdentifier")
         }
         
-        self.cellView = C(reuseIdentifier: reuseIdentifier)
+        self.cellView = C(frame: .zero)
         self.cellView.translatesAutoresizingMaskIntoConstraints = false
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,8 +52,8 @@ class ConfigurableCellTableViewAdapter<C: ConfigurableCell> : UITableViewCell wh
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with content: C.Content) {
-        cellView.configure(with: content)
+    func configure(with object: C.Configuration) {
+        cellView.configure(with: object)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -68,17 +68,19 @@ class ConfigurableCellTableViewAdapter<C: ConfigurableCell> : UITableViewCell wh
 }
 
 extension UITableView {
-    
-    func register<C: ConfigurableCell>(cell: C.Type) where C : UIView {
-        cell.reuseIdentifiers.forEach { reuseIdentifier in
-            register(ConfigurableCellTableViewAdapter<C>.self, forCellReuseIdentifier: reuseIdentifier)
-        }
+
+    func register<C: ConversationMessageCellDescription>(cell: C.Type) {
+        let reuseIdentifier = String(describing: C.View.self)
+        register(ConfigurableCellTableViewAdapter<C.View>.self, forCellReuseIdentifier: reuseIdentifier)
     }
-    
-    func dequeueConfigurableCell<C: ConfigurableCell>(configuration: C.Configuration, for indexPath: IndexPath) -> ConfigurableCellTableViewAdapter<C> {
-        let cell = dequeueReusableCell(withIdentifier: C.reuseIdentifier(for: configuration), for: indexPath)
-        
-        return (cell as Any) as! ConfigurableCellTableViewAdapter<C>
+
+    func dequeueConversationCell<C: ConversationMessageCellDescription>(for type: C.Type, configuration: C.View.Configuration, for indexPath: IndexPath) -> UITableViewCell {
+        let reuseIdentifier = String(describing: C.View.self)
+
+        let cell = dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as Any as! ConfigurableCellTableViewAdapter<C.View>
+        cell.configure(with: configuration)
+
+        return cell
     }
     
 }

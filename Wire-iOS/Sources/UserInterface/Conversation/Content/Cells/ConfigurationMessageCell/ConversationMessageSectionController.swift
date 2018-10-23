@@ -25,22 +25,28 @@ import Foundation
  * the view of the message (timestamp, reply, content...) will be displayed as individual cells,
  * to reduce the number of cells that are instanciated at a given time.
  *
- * To achieve this, each section controller is assigned a session description, who is responsible for
- * registering the cells, dequeing them from the table or collection view and configure them with a message.
+ * To achieve this, each section controller is assigned a cell description, that is responsible dequeing
+ * the cells from the table or collection view and configure them with a message.
  */
 
 @objc class ConversationMessageSectionController: NSObject {
 
     /// The view descriptor of the section.
-    let sectionDescription: ConversationMessageSectionDescription
+    var cellDescriptions: [AnyConversationMessageCellDescription] = []
 
-    init(sectionDescription: ConversationMessageSectionDescription) {
-        self.sectionDescription = sectionDescription
+    /**
+     * Adds a cell description to the section.
+     * - parameter description: The cell to add to the message section.
+     */
+
+    func add<T: ConversationMessageCellDescription>(description: T) {
+        cellDescriptions.append(AnyConversationMessageCellDescription(description))
     }
+
 
     /// The number of child cells in the section that compose the message.
     var numberOfCells: Int {
-        return sectionDescription.numberOfCells
+        return cellDescriptions.count
     }
 
     /**
@@ -53,7 +59,8 @@ import Foundation
      */
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        return sectionDescription.cell(tableView: tableView, at: indexPath)
+        let description = self.cellDescriptions[indexPath.row]
+        return description.makeCell(for: tableView, at: indexPath)
     }
 
 }
