@@ -137,8 +137,6 @@
       // backButton
       [self.backButton.leadingAnchor constraintEqualToAnchor:self.view.safeLeadingAnchor constant:leftMargin],
       [self.backButton.topAnchor constraintEqualToAnchor:self.safeTopAnchor constant:topMargin],
-      [self.logoImageView.widthAnchor constraintEqualToConstant:buttonSize],
-      [self.logoImageView.heightAnchor constraintEqualToConstant:buttonSize],
 
       // rightTitledButton
       [self.rightTitledButton.topAnchor constraintEqualToAnchor:self.safeTopAnchor constant:topMargin],
@@ -149,7 +147,7 @@
       [self.rightIconedButton.topAnchor constraintEqualToAnchor:self.safeTopAnchor constant:topMargin],
       [self.rightIconedButton.trailingAnchor constraintEqualToAnchor:self.view.safeTrailingAnchor constant:rightMargin],
       [self.rightIconedButton.heightAnchor constraintEqualToConstant:buttonSize],
-      [self.rightIconedButton.heightAnchor constraintEqualToConstant:buttonSize],
+      [self.rightIconedButton.widthAnchor constraintEqualToConstant:buttonSize],
       ];
 
     [NSLayoutConstraint activateConstraints:constraints];
