@@ -108,7 +108,7 @@
     }
 }
 
-- (ConversationMessageSectionController *)sectionControllerAtIndex:(NSInteger)sectionIndex
+- (ConversationMessageSectionController *)sectionControllerAtIndex:(NSInteger)sectionIndex inTableView:(UITableView *)tableView;
 {
     id<ZMConversationMessage> message = [self.messageWindow.messages objectAtIndex:sectionIndex];
     ConversationMessageSectionController *cachedEntry = [self.sectionControllers objectForKey:message];
@@ -119,7 +119,22 @@
 
     ConversationMessageSectionController *sectionController = [self buildSectionControllerForMessage:message];
     [self.sectionControllers setObject:sectionController forKey:message];
+
+    for (AnyConversationMessageCellDescription *cellDescription in sectionController.cellDescriptions) {
+        [self registerCellIfNeeded:cellDescription inTableView:tableView];
+    }
+
     return sectionController;
+}
+
+- (void)registerCellIfNeeded:(AnyConversationMessageCellDescription *)cellDescription inTableView:(UITableView *)tableView
+{
+    if ([self.registeredCells containsObject:cellDescription.baseType]) {
+        return;
+    }
+
+    [cellDescription registerInTableView:tableView];
+    [self.registeredCells addObject:cellDescription.baseType];
 }
 
 - (void)setEditingMessage:(id <ZMConversationMessage>)editingMessage

@@ -23,6 +23,7 @@
 
 @protocol ConversationCellDelegate;
 @class ConversationMessageSectionController;
+@class AnyConversationMessageCellDescription;
 
 @interface ConversationMessageWindowTableViewAdapter : NSObject
 
@@ -36,6 +37,7 @@
 - (void)expandMessageWindow;
 - (void)reconfigureVisibleCellsWithDeletedIndexPaths:(NSSet<NSIndexPath *>*)deletedIndexPaths;
 
-- (ConversationMessageSectionController *)sectionControllerAtIndex:(NSInteger)index;
+- (ConversationMessageSectionController *)sectionControllerAtIndex:(NSInteger)index inTableView:(UITableView *)tableView;
+- (void)registerCellIfNeeded:(AnyConversationMessageCellDescription *)cellDescription inTableView:(UITableView *)tableView;
 
 @end

@@ -21,7 +21,6 @@ import Foundation
 extension ConversationMessageWindowTableViewAdapter {
     
     @objc func registerTableCellClasses() {
-        tableView.register(cell: UnknownMessageCellDescription.self)
 //        tableView.register(cell: NewImageMessageCell.self)
 //        tableView.register(cell: NewTextMessageCell.self)
 //        tableView.register(cell: NewVideoMessageCell.self)
@@ -48,8 +47,6 @@ extension ConversationMessageWindowTableViewAdapter {
         tableView.register(MessageDeletedCell.self, forCellReuseIdentifier: ConversationMessageDeletedCellId)
         tableView.register(UnknownMessageCell.self, forCellReuseIdentifier: ConversationUnknownMessageCellId)
         tableView.register(MessageTimerUpdateCell.self, forCellReuseIdentifier: ConversationMessageTimerUpdateCellId)
-        tableView.register(SenderTableViewCell.self, forCellReuseIdentifier: "Sender")
-        tableView.register(SenderTableViewCell.self, forCellReuseIdentifier: "Sender")
     }
 }
 
@@ -65,12 +62,12 @@ extension ConversationMessageWindowTableViewAdapter: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionController = self.sectionController(at: section)!
+        let sectionController = self.sectionController(at: section, in: tableView)!
         return sectionController.numberOfCells
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let sectionController = self.sectionController(at: indexPath.section)!
+        let sectionController = self.sectionController(at: indexPath.section, in: tableView)!
         return sectionController.makeCell(for: tableView, at: indexPath)
 
 //        let description = messageWindow.description(for: message, firstUnreadMessage: firstUnreadMessage)

@@ -34,7 +34,7 @@ extension CustomMessageView: ConversationMessageCell {
     }
 }
 
-struct UnknownMessageCellDescription: ConversationMessageCellDescription {
+class UnknownMessageCellDescription: ConversationMessageCellDescription {
     typealias View = CustomMessageView
     let configuration: String
 
@@ -47,23 +47,8 @@ struct UnknownMessageCellDescription: ConversationMessageCellDescription {
 extension ZMConversationMessageWindow {
     
     func sectionController(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageSectionController {
-        let controller = ConversationMessageSectionController()
-        //let context = self.context(for: message, firstUnreadMessage: firstUnreadMessage)
-        
-//        if message.isText {
-//            return TextMessageCellDescription(message: message, context: context)
-//        } else if message.isImage {
-//            return DefaultMessageCellDescription<NewImageMessageCell>(message: message, context: context)
-//        } else if message.isVideo {
-//            return DefaultMessageCellDescription<NewVideoMessageCell>(message: message, context: context)
-//        } else if (message.isAudio) {
-//            return DefaultMessageCellDescription<NewAudioMessageCell>(message: message, context: context)
-//        } else if (message.isFile) {
-//            return DefaultMessageCellDescription<NewFileMessageCell>(message: message, context: context)
- //      } else {
-        //      }
-        controller.add(description: UnknownMessageCellDescription())
-        return controller
+        let context = self.context(for: message, firstUnreadMessage: firstUnreadMessage)
+        return ConversationMessageSectionBuilder.buildSection(for: message, context: context)
     }
     
     @objc func isPreviousSenderSame(forMessage message: ZMConversationMessage?) -> Bool {
@@ -79,7 +64,7 @@ extension ZMConversationMessageWindow {
         return true
     }
     
-    fileprivate func context(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> MessageCellContext {
+    fileprivate func context(for message: ZMConversationMessage, firstUnreadMessage: ZMConversationMessage?) -> ConversationMessageContext {
         let significantTimeInterval: TimeInterval = 60 * 45; // 45 minutes
         let isTimeIntervalSinceLastMessageSignificant: Bool
         
@@ -89,11 +74,13 @@ extension ZMConversationMessageWindow {
             isTimeIntervalSinceLastMessageSignificant = false
         }
         
-        return MessageCellContext(isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message),
-                                  isLastMessageSentBySelfUser: isLastMessageSentBySelfUser(message),
-                                  isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
-                                  isFirstMessageOfTheDay: isFirstMessageOfTheDay(for: message),
-                                  isFirstUnreadMessage: message.isEqual(firstUnreadMessage))
+        return ConversationMessageContext(
+            isSameSenderAsPrevious: isPreviousSenderSame(forMessage: message),
+            isLastMessageSentBySelfUser: isLastMessageSentBySelfUser(message),
+            isTimeIntervalSinceLastMessageSignificant: isTimeIntervalSinceLastMessageSignificant,
+            isFirstMessageOfTheDay: isFirstMessageOfTheDay(for: message),
+            isFirstUnreadMessage: message.isEqual(firstUnreadMessage)
+        )
     }
     
     fileprivate func timeIntervalToPreviousMessage(from message: ZMConversationMessage) -> TimeInterval? {

@@ -32,7 +32,7 @@ import Foundation
 @objc class ConversationMessageSectionController: NSObject {
 
     /// The view descriptor of the section.
-    var cellDescriptions: [AnyConversationMessageCellDescription] = []
+    @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
 
     /**
      * Adds a cell description to the section.

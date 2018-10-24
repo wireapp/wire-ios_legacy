@@ -45,7 +45,7 @@ protocol ConversationMessageCell {
  * the view type it declares as the contents of the cell.
  */
 
-protocol ConversationMessageCellDescription {
+protocol ConversationMessageCellDescription: class {
     /// The view that will be displayed for the cell.
     associatedtype View: ConversationMessageCell & UIView
 
@@ -57,13 +57,32 @@ protocol ConversationMessageCellDescription {
  * A type erased box containing a conversation message cell description.
  */
 
-struct AnyConversationMessageCellDescription {
+@objc class AnyConversationMessageCellDescription: NSObject {
     private let cellGenerator: (UITableView, IndexPath) -> UITableViewCell
+    private let registrationBlock: (UITableView) -> Void
+    private let baseTypeGetter: () -> AnyClass
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
+        registrationBlock = { tableView in
+            tableView.register(cell: T.self)
+        }
+
         cellGenerator = { tableView, indexPath in
             return tableView.dequeueConversationCell(for: T.self, configuration: description.configuration, for: indexPath)
         }
+
+        baseTypeGetter = {
+            return T.self
+        }
+    }
+
+    @objc var baseType: AnyClass {
+        return baseTypeGetter()
+    }
+
+    @objc(registerInTableView:)
+    func register(in tableView: UITableView) {
+        registrationBlock(tableView)
     }
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
