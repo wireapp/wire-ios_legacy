@@ -44,7 +44,12 @@ extension ConversationListCell {
 
         let leftMarginConvList: CGFloat = 64
 
+
+        [itemView, menuDotsView, menuView].forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
+
+
         itemView.pinEdgesToSuperviewEdges()
+
 
         if let superview = menuDotsView.superview {
             let menuDotsViewEdges = [
@@ -52,7 +57,10 @@ extension ConversationListCell {
 
                 superview.topAnchor.constraint(equalTo: menuDotsView.topAnchor),
                 superview.trailingAnchor.constraint(equalTo: menuDotsView.trailingAnchor),
-                superview.bottomAnchor.constraint(equalTo: menuDotsView.bottomAnchor)
+                superview.bottomAnchor.constraint(equalTo: menuDotsView.bottomAnchor),
+
+                ///TODO missing left inset
+//                menuView.widthAnchor.constraint(equalTo: menuDotsView.widthAnchor)
             ]
 
             NSLayoutConstraint.activate(menuDotsViewEdges)
