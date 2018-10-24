@@ -109,6 +109,8 @@ open class AvatarImageView: UIControl {
     }
 
     private func configureSubviews() {
+        contentMode = .scaleAspectFill
+        
         isOpaque = false
         imageView.isOpaque = false
         container.backgroundColor = .yellow
