@@ -85,6 +85,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 - (void)setupSwipeMenuCollectionCell
 {
+    self.hasCreatedSwipeMenuConstraints = NO;
     self.canOpenDrawer = YES;
     self.overscrollFraction = 0.6f;
     self.maxVisualDrawerOffset = 48;

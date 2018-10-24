@@ -20,36 +20,43 @@ import Foundation
 
 extension SwipeMenuCollectionCell {
     open override func updateConstraints() {
-        defer { super.updateConstraints() }
 
-        guard !hasCreatedSwipeMenuConstraints else { return }
-        guard let swipeView = swipeView  else { return }
+        if hasCreatedSwipeMenuConstraints {
+            super.updateConstraints()
+            return
+        }
+
+        guard let swipeView = swipeView else {
+            super.updateConstraints()
+            return
+        }
         hasCreatedSwipeMenuConstraints = true
 
-        swipeViewHorizontalConstraint = swipeView.leftAnchor.constraint(equalTo: swipeView.leftAnchor)
+        swipeViewHorizontalConstraint = swipeView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0)
         menuViewToSwipeViewLeftConstraint = menuView.rightAnchor.constraint(equalTo: swipeView.leftAnchor)
 
         ///TODO: do not use priority and break this constraint
         maxMenuViewToSwipeViewLeftConstraint = menuView.rightAnchor.constraint(equalTo: self.leftAnchor, constant: maxVisualDrawerOffset)
         maxMenuViewToSwipeViewLeftConstraint.priority = .defaultLow
 
-        let swipeViewConstraints : [NSLayoutConstraint] = [
+        let constraints : [NSLayoutConstraint] = [
             swipeViewHorizontalConstraint!,
             contentView.widthAnchor.constraint(equalTo: swipeView.widthAnchor),
             contentView.heightAnchor.constraint(equalTo: swipeView.heightAnchor),
             contentView.centerYAnchor.constraint(equalTo: swipeView.centerYAnchor),
 
-            separatorLine.widthAnchor.constraint(equalToConstant: UIScreen.hairline),
-            separatorLine.heightAnchor.constraint(equalToConstant: 25),
-            separatorLine.centerYAnchor.constraint(equalTo: swipeView.centerYAnchor),
-            separatorLine.rightAnchor.constraint(equalTo: menuView.rightAnchor),
-
-            menuView.topAnchor.constraint(equalTo: swipeView.topAnchor),
-            menuView.bottomAnchor.constraint(equalTo: swipeView.bottomAnchor),
-            menuViewToSwipeViewLeftConstraint!,
-            maxMenuViewToSwipeViewLeftConstraint!
+//            separatorLine.widthAnchor.constraint(equalToConstant: UIScreen.hairline),
+//            separatorLine.heightAnchor.constraint(equalToConstant: 25),
+//            separatorLine.centerYAnchor.constraint(equalTo: swipeView.centerYAnchor),
+//            separatorLine.rightAnchor.constraint(equalTo: menuView.rightAnchor),
+//
+//            menuView.topAnchor.constraint(equalTo: swipeView.topAnchor),
+//            menuView.bottomAnchor.constraint(equalTo: swipeView.bottomAnchor),
+//            menuViewToSwipeViewLeftConstraint!,
+//            maxMenuViewToSwipeViewLeftConstraint!
         ]
 
-        NSLayoutConstraint.activate(swipeViewConstraints)
+        NSLayoutConstraint.activate(constraints)
+        super.updateConstraints()
     }
 }

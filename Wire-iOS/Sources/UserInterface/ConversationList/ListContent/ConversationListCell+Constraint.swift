@@ -36,9 +36,10 @@ extension UIView {
 
 extension ConversationListCell {
     override open func updateConstraints() {
-        defer { super.updateConstraints() }
-
-        guard !hasCreatedInitialConstraints else { return }
+        if hasCreatedInitialConstraints {
+            super.updateConstraints()
+            return
+        }
         hasCreatedInitialConstraints = true
 
         let leftMarginConvList: CGFloat = 64
@@ -56,5 +57,7 @@ extension ConversationListCell {
 
             NSLayoutConstraint.activate(menuDotsViewEdges)
         }
+
+        super.updateConstraints()
     }
 }
