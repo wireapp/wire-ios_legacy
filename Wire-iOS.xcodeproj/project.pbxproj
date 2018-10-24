@@ -370,6 +370,7 @@
 		7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */; };
 		7CC085461F7AA30F0010F96B /* DotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC085451F7AA30F0010F96B /* DotView.swift */; };
 		7CCBE24D1FC72FE500CBD55D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBE24C1FC72FE500CBD55D /* SharedConstants.swift */; };
+		7CD0154A218053FF00DE7E3F /* NSString+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* NSString+URL.swift */; };
 		7CD0746120D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0746020D8FF8B00BC0A26 /* MessageTimerUpdateCell.swift */; };
 		7CD0747620D94BC500BC0A26 /* MessageTimerSystemMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD0747120D94A6A00BC0A26 /* MessageTimerSystemMessageTests.swift */; };
 		7CE71D8D1FC453E300C43E19 /* SettingsPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */; };
@@ -6900,7 +6901,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications\n\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"YES\" > \"${SCRIPT_OUTPUT_FILE_0}\"";
+			shellScript = "$SRCROOT/Scripts/copyExtraAudioNotifications\n\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"YES\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 		};
 		5EDD253F21400FD700C0E254 /* Update Licenses File */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -7045,6 +7046,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CB082DC1FB2137100972488 /* ShareExtensionNetworkObserver.swift in Sources */,
+				7CD0154A218053FF00DE7E3F /* NSString+URL.swift in Sources */,
 				BF96A6CA1E2FD3340057974A /* NSExtensionContext+Attachments.swift in Sources */,
 				BF6EC90A1EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift in Sources */,
 				BF96A6C61E2FA1790057974A /* UnsentSendable.swift in Sources */,

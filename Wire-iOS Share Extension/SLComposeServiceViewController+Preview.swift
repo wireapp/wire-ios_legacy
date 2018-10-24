@@ -91,20 +91,16 @@ extension SLComposeServiceViewController {
     
     func appendLinkFromTextIfNeeded() -> [AttachmentType: [NSItemProvider]]? {
         
-        let types: NSTextCheckingResult.CheckingType = .link
-        
-        guard let text = self.contentText, let detect = try? NSDataDetector(types: types.rawValue) else {
+        guard let text = self.contentText,
+            var attachments = self.extensionContext?.attachments else {
             return nil
         }
         
-        let matches = detect.matches(in: text, options: .reportCompletion, range: NSMakeRange(0, text.count))
+        let matches = text.URLsInString
         
-        guard var attachments = self.extensionContext?.attachments else {
-            return nil
-        }
-        
-        if let item = NSItemProvider(contentsOf: matches.first?.url),
-            attachments.filter(\.hasURL).count == 0, matches.count > 0 {
+        if let match = matches.first,
+            let item = NSItemProvider(contentsOf: match),
+            attachments.filter(\.hasURL).count == 0 {
             attachments.append(item)
         }
         
