@@ -34,6 +34,9 @@ import Foundation
     /// The view descriptor of the section.
     @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
 
+    /// Whether we need to use inverted indices. This is `true` when the table view is upside down.
+    @objc var useInvertedIndices = false
+
     /**
      * Adds a cell description to the section.
      * - parameter description: The cell to add to the message section.
@@ -59,8 +62,22 @@ import Foundation
      */
 
     func makeCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        let description = self.cellDescriptions[indexPath.row]
-        return description.makeCell(for: tableView, at: indexPath)
+        let description = cellDescription(at: indexPath.row)
+        let cell = description.makeCell(for: tableView, at: indexPath)
+        return cell
+    }
+
+    /**
+     * Returns the cell description at the specified index, taking the upside down table into account.
+     * - parameter row: The raw row index as specified by the table.
+     */
+
+    func cellDescription(at row: Int) -> AnyConversationMessageCellDescription {
+        if useInvertedIndices {
+            return cellDescriptions[(cellDescriptions.count - 1) - row]
+        } else {
+            return cellDescriptions[row]
+        }
     }
 
 }

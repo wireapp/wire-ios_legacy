@@ -70,7 +70,7 @@ extension NSAttributedString {
     }
     
     @objc
-    static func format(message: ZMTextMessageData, isObfuscated: Bool, linkAttachment: UnsafeMutablePointer<LinkAttachment>?) -> NSAttributedString {
+    static func format(message: ZMTextMessageData, isObfuscated: Bool, linkAttachment: UnsafeMutablePointer<LinkAttachment?>?) -> NSAttributedString {
         
         var plainText = message.messageText ?? ""
         

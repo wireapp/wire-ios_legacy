@@ -80,6 +80,8 @@ class ConversationMessageSectionBuilder {
 
         if message.isKnock {
             addPing(in: section, for: message)
+        } else if message.isText {
+            addTextMessageAndAttachments(in: section, for: message)
         } else {
             section.add(description: UnknownMessageCellDescription())
         }
@@ -107,6 +109,31 @@ class ConversationMessageSectionBuilder {
 
         let pingCell = ConversationPingCellDescription(message: message, sender: sender)
         section.add(description: pingCell)
+    }
+
+    private static func addTextMessageAndAttachments(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
+        guard let textMessageData = message.textMessageData else {
+            return
+        }
+
+        var lastKnownLinkAttachment: LinkAttachment?
+        let messageText = NSAttributedString.format(message: textMessageData, isObfuscated: message.isObfuscated, linkAttachment: &lastKnownLinkAttachment)
+
+        // Text
+        let textCell = ConversationTextMessageCellDescription(attributedString: messageText)
+        section.add(description: textCell)
+
+        // Link Attachment
+//        if let attachment = lastKnownLinkAttachment {
+//            // TODO: add link attachment
+//        }
+
+        // Link Preview
+//        if let linkPreview = textMessageData.linkPreview {
+//            // TODO: add link preview
+//        }
+
+
     }
 
 }

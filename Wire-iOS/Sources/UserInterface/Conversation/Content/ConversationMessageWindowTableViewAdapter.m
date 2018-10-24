@@ -118,6 +118,8 @@
     }
 
     ConversationMessageSectionController *sectionController = [self buildSectionControllerForMessage:message];
+    sectionController.useInvertedIndices = YES;
+
     [self.sectionControllers setObject:sectionController forKey:message];
 
     for (AnyConversationMessageCellDescription *cellDescription in sectionController.cellDescriptions) {

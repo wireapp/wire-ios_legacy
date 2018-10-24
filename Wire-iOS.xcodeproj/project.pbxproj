@@ -233,6 +233,7 @@
 		5E35F74121804A9E00D3F4FE /* ConversationSenderMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F74021804A9E00D3F4FE /* ConversationSenderMessageCell.swift */; };
 		5E35F74321804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F74221804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift */; };
 		5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */; };
+		5E35F7482180A26900D3F4FE /* ConversationTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7472180A26900D3F4FE /* ConversationTextMessageCell.swift */; };
 		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
 		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
@@ -1725,6 +1726,7 @@
 		5E35F74021804A9E00D3F4FE /* ConversationSenderMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSenderMessageCell.swift; sourceTree = "<group>"; };
 		5E35F74221804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSectionBuilder.swift; sourceTree = "<group>"; };
 		5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPingCell.swift; sourceTree = "<group>"; };
+		5E35F7472180A26900D3F4FE /* ConversationTextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTextMessageCell.swift; sourceTree = "<group>"; };
 		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -3777,6 +3779,7 @@
 				166264FB217A20CB00300F45 /* NewAudioMessageCell.swift */,
 				166264FD217A22B100300F45 /* NewFileMessageCell.swift */,
 				166264EF2178D9A000300F45 /* MessageCell.swift */,
+				5E35F7462180A25100D3F4FE /* Content */,
 				5E35F734217F415700D3F4FE /* Components */,
 			);
 			path = ConfigurationMessageCell;
@@ -3790,6 +3793,14 @@
 				5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		5E35F7462180A25100D3F4FE /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				5E35F7472180A26900D3F4FE /* ConversationTextMessageCell.swift */,
+			);
+			path = Content;
 			sourceTree = "<group>";
 		};
 		5E3A6C23206A4DDF00907484 /* Previews */ = {
@@ -7585,6 +7596,7 @@
 				87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */,
 				BFE731E020A58EFD0088BA22 /* VideoState+Helper.swift in Sources */,
 				871BC3581D34F94200DF0793 /* AudioTrackPlayer.m in Sources */,
+				5E35F7482180A26900D3F4FE /* ConversationTextMessageCell.swift in Sources */,
 				5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */,
 				8FC85427199245770008B66B /* ZetaKeyValueValidation.m in Sources */,
 				871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */,
