@@ -109,6 +109,8 @@ open class AvatarImageView: UIControl {
     }
 
     private func configureSubviews() {
+        contentMode = .scaleAspectFill
+        
         isOpaque = false
         imageView.isOpaque = false
         container.backgroundColor = .yellow
@@ -117,6 +119,7 @@ open class AvatarImageView: UIControl {
         initialsLabel.font = .systemFont(ofSize: 17)
 
         container.clipsToBounds = true
+        container.isUserInteractionEnabled = false
 
         imageView.isAccessibilityElement = false
         initialsLabel.isAccessibilityElement = false
@@ -179,10 +182,7 @@ open class AvatarImageView: UIControl {
             initialsLabel.isHidden = true
 
         case .text(let text)?:
-            guard allowsInitials else {
-                avatar = nil
-                return
-            }
+            guard allowsInitials else { fallthrough }
 
             imageView.image = nil
             initialsLabel.text = text
