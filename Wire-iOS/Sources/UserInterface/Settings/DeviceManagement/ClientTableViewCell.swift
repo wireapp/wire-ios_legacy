@@ -30,6 +30,9 @@ class ClientTableViewCell: UITableViewCell {
     let fingerprintLabel = UILabel(frame: CGRect.zero)
     let verifiedLabel = UILabel(frame: CGRect.zero)
     
+    private let activationLabelFont = UIFont.smallLightFont
+    private let activationLabelDateFont = UIFont.smallSemiboldFont
+    
     var showVerified: Bool = false {
         didSet {
             self.updateVerifiedLabel()
@@ -69,7 +72,10 @@ class ClientTableViewCell: UITableViewCell {
             
             self.activationLabel.text = ""
             if let date = userClient.activationDate?.formattedDate {
-                self.activationLabel.text = "registration.devices.activated".localized(args: date)
+                let text = "registration.devices.activated".localized(args: date)
+                var attrText = NSAttributedString(string: text) && activationLabelFont
+                attrText = attrText.adding(font: activationLabelDateFont, to: date)
+                self.activationLabel.attributedText = attrText
             }
             
             self.updateFingerprint()
@@ -160,7 +166,6 @@ class ClientTableViewCell: UITableViewCell {
     func setupStyle() {
         nameLabel.font = .normalSemiboldFont
         labelLabel.font = .smallSemiboldFont
-        activationLabel.font = .smallLightFont
         verifiedLabel.font = .smallFont
         fingerprintLabelFont = .smallLightFont
         fingerprintLabelBoldFont = .smallSemiboldFont
