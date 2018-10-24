@@ -72,7 +72,7 @@ protocol ConversationMessageCellDescription: class {
         }
 
         cellGenerator = { tableView, indexPath in
-            return tableView.dequeueConversationCell(for: T.self, configuration: description.configuration, for: indexPath)
+            return tableView.dequeueConversationCell(for: T.self, configuration: description.configuration, for: indexPath, fullWidth: description.isFullWidth)
         }
 
         baseTypeGetter = {
