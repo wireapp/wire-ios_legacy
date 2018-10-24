@@ -117,6 +117,7 @@ open class AvatarImageView: UIControl {
         initialsLabel.font = .systemFont(ofSize: 17)
 
         container.clipsToBounds = true
+        container.isUserInteractionEnabled = false
 
         imageView.isAccessibilityElement = false
         initialsLabel.isAccessibilityElement = false
