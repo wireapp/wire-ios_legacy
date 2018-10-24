@@ -182,10 +182,7 @@ open class AvatarImageView: UIControl {
             initialsLabel.isHidden = true
 
         case .text(let text)?:
-            guard allowsInitials else {
-                avatar = nil
-                return
-            }
+            guard allowsInitials else { fallthrough }
 
             imageView.image = nil
             initialsLabel.text = text
