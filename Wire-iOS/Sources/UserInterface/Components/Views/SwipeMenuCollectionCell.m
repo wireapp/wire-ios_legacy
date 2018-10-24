@@ -311,19 +311,6 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     }
 }
 
-/// Checks on the @c maxVisualDrawerOffset and switches the prio's of the constraint
-- (void)checkAndUpdateMaxVisualDrawerOffsetConstraints:(CGFloat)visualDrawerOffset
-{
-    if (visualDrawerOffset > self.maxVisualDrawerOffset) {
-        self.menuViewToSwipeViewLeftConstraint.active = NO;
-        self.maxMenuViewToSwipeViewLeftConstraint.active = YES;
-    }
-    else {
-        self.menuViewToSwipeViewLeftConstraint.active = YES;
-        self.maxMenuViewToSwipeViewLeftConstraint.active = NO;
-    }
-}
-
 - (void)setDrawerOpen:(BOOL)open animated:(BOOL)animated
 {
     if (open && self.visualDrawerOffset == self.drawerWidth) {
