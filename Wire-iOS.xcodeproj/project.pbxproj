@@ -227,15 +227,12 @@
 		5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */; };
 		5E33F0D320AD63A100414EA6 /* CallPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0D220AD63A100414EA6 /* CallPermissions.swift */; };
 		5E33F0D520ADA94B00414EA6 /* MockCallPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E33F0D420ADA94B00414EA6 /* MockCallPermissions.swift */; };
-		5E35F731217F140400D3F4FE /* SenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F730217F140400D3F4FE /* SenderTableViewCell.swift */; };
 		5E35F733217F147A00D3F4FE /* ConversationMessageSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */; };
 		5E35F736217F417200D3F4FE /* BurstTimestampTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F735217F417200D3F4FE /* BurstTimestampTableViewCell.swift */; };
-		5E35F738217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F737217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift */; };
-		5E35F73A217F6A1900D3F4FE /* ConversationMessageDecorationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F739217F6A1900D3F4FE /* ConversationMessageDecorationController.swift */; };
 		5E35F73C217F6B7900D3F4FE /* ReplyInputBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F73B217F6B7900D3F4FE /* ReplyInputBarCell.swift */; };
-		5E35F73F217F7D1700D3F4FE /* ConversationMessageSenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F73E217F7D1700D3F4FE /* ConversationMessageSenderView.swift */; };
 		5E35F74121804A9E00D3F4FE /* ConversationSenderMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F74021804A9E00D3F4FE /* ConversationSenderMessageCell.swift */; };
 		5E35F74321804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F74221804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift */; };
+		5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */; };
 		5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C21206A3AD500907484 /* ConversationActionController.swift */; };
 		5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */; };
 		5E3FB06C206BC7AC0075E910 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AACE731C0CAEBD00E62C43 /* TabBar.swift */; };
@@ -1722,15 +1719,12 @@
 		5E33F0CF20AD629D00414EA6 /* CallPermissionsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissionsConfiguration.swift; sourceTree = "<group>"; };
 		5E33F0D220AD63A100414EA6 /* CallPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPermissions.swift; sourceTree = "<group>"; };
 		5E33F0D420ADA94B00414EA6 /* MockCallPermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallPermissions.swift; sourceTree = "<group>"; };
-		5E35F730217F140400D3F4FE /* SenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderTableViewCell.swift; sourceTree = "<group>"; };
 		5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSectionController.swift; sourceTree = "<group>"; };
 		5E35F735217F417200D3F4FE /* BurstTimestampTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurstTimestampTableViewCell.swift; sourceTree = "<group>"; };
-		5E35F737217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBasedConversationMessageSectionDescriptor.swift; sourceTree = "<group>"; };
-		5E35F739217F6A1900D3F4FE /* ConversationMessageDecorationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageDecorationController.swift; sourceTree = "<group>"; };
 		5E35F73B217F6B7900D3F4FE /* ReplyInputBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyInputBarCell.swift; sourceTree = "<group>"; };
-		5E35F73E217F7D1700D3F4FE /* ConversationMessageSenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSenderView.swift; sourceTree = "<group>"; };
 		5E35F74021804A9E00D3F4FE /* ConversationSenderMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSenderMessageCell.swift; sourceTree = "<group>"; };
 		5E35F74221804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageSectionBuilder.swift; sourceTree = "<group>"; };
+		5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationPingCell.swift; sourceTree = "<group>"; };
 		5E3A6C21206A3AD500907484 /* ConversationActionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationActionController.swift; sourceTree = "<group>"; };
 		5E3A6C24206A4E4A00907484 /* LocationPreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewController.swift; sourceTree = "<group>"; };
 		5E3C0C65206B9EE900B0499C /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
@@ -3775,8 +3769,6 @@
 				166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */,
 				5E35F74221804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift */,
 				5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */,
-				5E35F737217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift */,
-				5E35F73D217F7CC100D3F4FE /* Decorations */,
 				16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */,
 				166264EA2174CA5900300F45 /* NewTextMessageCell.swift */,
 				166264EC2174CA7800300F45 /* NewImageMessageCell.swift */,
@@ -3793,20 +3785,11 @@
 		5E35F734217F415700D3F4FE /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				5E35F730217F140400D3F4FE /* SenderTableViewCell.swift */,
 				5E35F735217F417200D3F4FE /* BurstTimestampTableViewCell.swift */,
 				5E35F74021804A9E00D3F4FE /* ConversationSenderMessageCell.swift */,
+				5E35F7442180779D00D3F4FE /* ConversationPingCell.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		5E35F73D217F7CC100D3F4FE /* Decorations */ = {
-			isa = PBXGroup;
-			children = (
-				5E35F739217F6A1900D3F4FE /* ConversationMessageDecorationController.swift */,
-				5E35F73E217F7D1700D3F4FE /* ConversationMessageSenderView.swift */,
-			);
-			path = Decorations;
 			sourceTree = "<group>";
 		};
 		5E3A6C23206A4DDF00907484 /* Previews */ = {
@@ -7449,7 +7432,6 @@
 				BFA25DCB1D9AB88A0086DEBD /* Emojis.swift in Sources */,
 				16D49328203DCC88008DDFFA /* GroupDetailsViewController.swift in Sources */,
 				BFCF31D51D9E91880039B3DC /* RecentlyUsedEmojis.swift in Sources */,
-				5E35F73F217F7D1700D3F4FE /* ConversationMessageSenderView.swift in Sources */,
 				5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */,
 				871BC3621D34F94200DF0793 /* Settings.m in Sources */,
 				EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */,
@@ -7787,7 +7769,6 @@
 				5E4B1385204FE58D00ED5DF1 /* TimeInterval+Days.swift in Sources */,
 				EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */,
 				16B2DE2E1CCFB3B0000D7C30 /* InputBar.swift in Sources */,
-				5E35F738217F46C000D3F4FE /* ContentBasedConversationMessageSectionDescriptor.swift in Sources */,
 				871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */,
 				871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */,
 				BFE41863209B15F800503C7C /* Calling+Logs.swift in Sources */,
@@ -7880,6 +7861,7 @@
 				160C311F1E4C78480012E4BC /* UnknownMessageCell.swift in Sources */,
 				EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */,
 				87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */,
+				5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */,
 				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
 				5EBC343720EE434700AFB6DF /* ImageDownloadCache.swift in Sources */,
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
@@ -8039,7 +8021,6 @@
 				87D38F9C1E5D9EE0004C5730 /* Analytics+Settings.swift in Sources */,
 				BFAC71FE20A1CE0D002711C4 /* VideoConfiguration.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
-				5E35F731217F140400D3F4FE /* SenderTableViewCell.swift in Sources */,
 				BF8ECC331E5AED6C0015177D /* UIMenuItem+MessageActions.swift in Sources */,
 				DBD990561B39BEDF000ACF94 /* MentionsCollectionView.m in Sources */,
 				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,
@@ -8095,7 +8076,6 @@
 				87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */,
 				16626504217DAE7400300F45 /* UIView+ArrangeSubviews.swift in Sources */,
 				7CED30721FD97748009F0DAC /* IconStringsBuilder.swift in Sources */,
-				5E35F73A217F6A1900D3F4FE /* ConversationMessageDecorationController.swift in Sources */,
 				EFABC92420208D80001F9866 /* UIViewController+removeUserConfirmationUI.swift in Sources */,
 				871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */,
 				876E0C8B1EC5ED69007EF34E /* CameraPicker.swift in Sources */,

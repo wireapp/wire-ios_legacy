@@ -48,6 +48,10 @@ class ReplyCellDescriptor: ConversationMessageCellDescription {
     typealias View = ReplyCellView
     let configuration: ReplyCellConfiguration
 
+    var isFullWidth: Bool {
+        return false
+    }
+
     init(configuration: ReplyCellConfiguration) {
         self.configuration = configuration
     }

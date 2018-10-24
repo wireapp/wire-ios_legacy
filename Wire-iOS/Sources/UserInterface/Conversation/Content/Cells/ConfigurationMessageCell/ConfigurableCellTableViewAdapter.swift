@@ -44,8 +44,8 @@ class ConfigurableCellTableViewAdapter<C: UIView & ConversationMessageCell>: UIT
             contentView.leadingAnchor.constraint(equalTo: cellView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: cellView.trailingAnchor),
             contentView.topAnchor.constraint(equalTo: cellView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor)
-            ])
+            contentView.bottomAnchor.constraint(equalTo: cellView.bottomAnchor, constant: 8)
+        ])
     }
     
     required init?(coder aDecoder: NSCoder) {

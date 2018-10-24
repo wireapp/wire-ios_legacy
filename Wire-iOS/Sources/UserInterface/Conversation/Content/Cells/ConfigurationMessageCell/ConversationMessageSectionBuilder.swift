@@ -33,9 +33,7 @@ class ConversationMessageSectionBuilder {
         let section = ConversationMessageSectionController()
 
         // Burst timestamp
-        if context.isTimeIntervalSinceLastMessageSignificant {
-//            section.add(description: <#T##ConversationMessageCellDescription#>)
-        }
+        addBurstTimestampIfNeeded(in: section, for: message, context: context)
 
         // Sender
         addSenderIfNeeded(in: section, for: message, context: context)
@@ -48,11 +46,27 @@ class ConversationMessageSectionBuilder {
         return section
     }
 
+    private static func addBurstTimestampIfNeeded(in section: ConversationMessageSectionController,
+                                                  for message: ZMConversationMessage,
+                                                  context: ConversationMessageContext) {
+
+        guard context.isTimeIntervalSinceLastMessageSignificant else {
+            return
+        }
+
+        let timestampCell = BurstTimestampSenderMessageCellDescription(message: message, context: context)
+        section.add(description: timestampCell)
+    }
+
     private static func addSenderIfNeeded(in section: ConversationMessageSectionController,
                                           for message: ZMConversationMessage,
                                           context: ConversationMessageContext) {
 
         guard !context.isSameSenderAsPrevious, let sender = message.sender else {
+            return
+        }
+
+        guard !message.isKnock else {
             return
         }
 
@@ -64,7 +78,12 @@ class ConversationMessageSectionBuilder {
                                    for message: ZMConversationMessage,
                                    context: ConversationMessageContext) {
 
-        section.add(description: UnknownMessageCellDescription())
+        if message.isKnock {
+            addPing(in: section, for: message)
+        } else {
+            section.add(description: UnknownMessageCellDescription())
+        }
+
 
         //        if message.isText {
         //            return TextMessageCellDescription(message: message, context: context)
@@ -77,6 +96,17 @@ class ConversationMessageSectionBuilder {
         //        } else if (message.isFile) {
         //            return DefaultMessageCellDescription<NewFileMessageCell>(message: message, context: context)
 
+    }
+
+    // MARK: - Content Cells
+
+    private static func addPing(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
+        guard let sender = message.sender else {
+            return
+        }
+
+        let pingCell = ConversationPingCellDescription(message: message, sender: sender)
+        section.add(description: pingCell)
     }
 
 }

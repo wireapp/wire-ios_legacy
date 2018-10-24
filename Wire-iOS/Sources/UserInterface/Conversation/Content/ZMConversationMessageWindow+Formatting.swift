@@ -38,6 +38,10 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     typealias View = CustomMessageView
     let configuration: String
 
+    var isFullWidth: Bool {
+        return false
+    }
+
     init() {
         self.configuration = "content.system.unknown_message.body".localized
     }

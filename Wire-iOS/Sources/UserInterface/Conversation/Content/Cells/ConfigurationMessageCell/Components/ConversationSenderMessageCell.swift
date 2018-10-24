@@ -64,6 +64,10 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     typealias View = ConversationSenderMessageCell
     let configuration: View.Configuration
 
+    var isFullWidth: Bool {
+        return true
+    }
+
     init(sender: UserType) {
         self.configuration = View.Configuration(user: sender)
     }

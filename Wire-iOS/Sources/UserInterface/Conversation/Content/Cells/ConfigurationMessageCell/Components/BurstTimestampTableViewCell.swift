@@ -18,12 +18,18 @@
 
 import UIKit
 
-class BurstTimestampTableViewCell: UITableViewCell {
+class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
-    private let component = ConversationCellBurstTimestampView()
+    struct Configuration {
+        let date: Date
+        let includeDayOfWeek: Bool
+        let showUnreadDot: Bool
+    }
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    private let timestampView = ConversationCellBurstTimestampView()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureSubviews()
         configureConstraints()
     }
@@ -35,30 +41,43 @@ class BurstTimestampTableViewCell: UITableViewCell {
     }
 
     private func configureSubviews() {
-        contentView.addSubview(component)
+        addSubview(timestampView)
     }
 
     private func configureConstraints() {
-        component.translatesAutoresizingMaskIntoConstraints = false
+        timestampView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            component.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            component.topAnchor.constraint(equalTo: contentView.topAnchor),
-            component.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            component.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            timestampView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            timestampView.topAnchor.constraint(equalTo: topAnchor),
+            timestampView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            timestampView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 
     // MARK: - Cell
 
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        component.prepareForReuse()
+    var isSelected: Bool = false
+
+    func configure(with object: Configuration) {
+        timestampView.configure(with: object.date, includeDayOfWeek: object.includeDayOfWeek, showUnreadDot: object.showUnreadDot)
     }
 
-    func configure(with message: ZMConversationMessage, context: MessageCellContext) {
-        component.configure(with: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)
+}
+
+class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = BurstTimestampSenderMessageCell
+    let configuration: View.Configuration
+
+    var isFullWidth: Bool {
+        return true
     }
 
+    init(message: ZMConversationMessage, context: ConversationMessageContext) {
+        self.configuration = View.Configuration(date: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)
+    }
 
+    init(configuration: View.Configuration) {
+        self.configuration = configuration
+    }
 }

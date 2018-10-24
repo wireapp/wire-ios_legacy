@@ -49,6 +49,9 @@ protocol ConversationMessageCellDescription: class {
     /// The view that will be displayed for the cell.
     associatedtype View: ConversationMessageCell & UIView
 
+    /// Whether the view occupies the entire width of the cell.
+    var isFullWidth: Bool { get }
+
     /// The configuration object that will be used to populate the cell.
     var configuration: View.Configuration { get }
 }
@@ -61,6 +64,7 @@ protocol ConversationMessageCellDescription: class {
     private let cellGenerator: (UITableView, IndexPath) -> UITableViewCell
     private let registrationBlock: (UITableView) -> Void
     private let baseTypeGetter: () -> AnyClass
+    private let fullWidthGetter: () -> Bool
 
     init<T: ConversationMessageCellDescription>(_ description: T) {
         registrationBlock = { tableView in
@@ -74,10 +78,18 @@ protocol ConversationMessageCellDescription: class {
         baseTypeGetter = {
             return T.self
         }
+
+        fullWidthGetter = {
+            return description.isFullWidth
+        }
     }
 
     @objc var baseType: AnyClass {
         return baseTypeGetter()
+    }
+
+    var isFullWidth: Bool {
+        return fullWidthGetter()
     }
 
     @objc(registerInTableView:)
