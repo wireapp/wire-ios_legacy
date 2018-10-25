@@ -20,15 +20,6 @@
 import Foundation
 
 public extension NSString {
-    func containsURL() -> Bool {
-        do {
-            let urlDetector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-            let matches = urlDetector.matches(in: self as String, options: [], range: NSMakeRange(0, self.length))
-            return matches.count > 0
-        } catch _ as NSError {
-            return false
-        }
-    }
 
     // MARK: - URL Formatting
 
@@ -42,5 +33,26 @@ public extension NSString {
 
     func removingURLScheme(_ scheme: String) -> String {
         return replacingOccurrences(of: scheme + "://", with: "", options: .anchored, range: NSMakeRange(0, self.length))
+    }
+}
+
+public extension String {
+    
+    var containsURL: Bool {
+        return URLMatchesInString.count > 0
+    }
+    
+    var URLsInString: [URL?] {
+        return URLMatchesInString.map(\.url)
+    }
+    
+    private var URLMatchesInString: [NSTextCheckingResult] {
+        do {
+            let urlDetector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = urlDetector.matches(in: self, options: [], range: NSMakeRange(0, self.count))
+            return matches
+        } catch _ as NSError {
+            return []
+        }
     }
 }
