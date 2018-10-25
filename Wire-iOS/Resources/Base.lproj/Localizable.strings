@@ -221,6 +221,7 @@
 
 "conversation.status.unsent" = "⚠️ Unsent message";
 "conversation.status.you" = "You";
+"conversation.status.someone" = "Someone";
 "conversation.status.added_multiple" = "People added";
 "conversation.status.you_was_added" = "%@ added you";
 "conversation.status.added_users" = "%@ added %@";

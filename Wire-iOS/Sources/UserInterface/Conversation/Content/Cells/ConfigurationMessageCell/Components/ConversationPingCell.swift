@@ -18,80 +18,17 @@
 
 import Foundation
 
-class ConversationPingCell: UIView, ConversationMessageCell {
+class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
         let pingColor: UIColor
         let pingText: NSAttributedString
     }
 
-    private let imageContainer = UIView()
-    private let pingImageView = UIImageView()
-    private let pingLabel = UILabel()
-
-    private var containerWidthConstraint: NSLayoutConstraint!
-    private var labelTrailingConstraint: NSLayoutConstraint!
-
-    var isSelected: Bool = false
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureSubviews()
-        configureConstraints()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        configureSubviews()
-        configureConstraints()
-    }
-
-    private func configureSubviews() {
-        pingImageView.contentMode = .center
-        imageContainer.addSubview(pingImageView)
-        addSubview(imageContainer)
-        addSubview(pingLabel)
-    }
-
-    private func configureConstraints() {
-        imageContainer.translatesAutoresizingMaskIntoConstraints = false
-        pingImageView.translatesAutoresizingMaskIntoConstraints = false
-        pingLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        containerWidthConstraint = imageContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
-        labelTrailingConstraint = pingLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right)
-
-        NSLayoutConstraint.activate([
-            // imageContainer
-            containerWidthConstraint,
-            imageContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageContainer.topAnchor.constraint(equalTo: topAnchor),
-            imageContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-            imageContainer.heightAnchor.constraint(equalTo: pingImageView.heightAnchor),
-
-            // pingImageView
-            pingImageView.widthAnchor.constraint(equalToConstant: 32),
-            pingImageView.heightAnchor.constraint(equalToConstant: 32),
-            pingImageView.centerXAnchor.constraint(equalTo: imageContainer.centerXAnchor),
-            pingImageView.centerYAnchor.constraint(equalTo: imageContainer.centerYAnchor),
-
-            // pingLabel
-            pingLabel.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor),
-            pingLabel.topAnchor.constraint(equalTo: topAnchor),
-            pingLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            labelTrailingConstraint
-        ])
-    }
-
     func configure(with object: Configuration) {
-        pingLabel.attributedText = object.pingText
-        pingImageView.image = UIImage(for: .ping, fontSize: 20, color: object.pingColor)
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        containerWidthConstraint.constant = UIView.conversationLayoutMargins.left
-        labelTrailingConstraint.constant = -UIView.conversationLayoutMargins.right
+        attributedText = object.pingText
+        imageView.image = UIImage(for: .ping, fontSize: 20, color: object.pingColor)
+        lineView.isHidden = true
     }
 
 }
@@ -109,6 +46,8 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
         let pingText = "content.ping.text".localized(pov: sender.pov, args: senderText)
 
         let text = NSAttributedString(string: pingText, attributes: [.font: UIFont.mediumFont])
+            .adding(font: .mediumSemiboldFont, to: senderText)
+
         let pingColor: UIColor = message.isObfuscated ? .accentDimmedFlat : sender.accentColor
         self.configuration = View.Configuration(pingColor: pingColor, pingText: text)
     }

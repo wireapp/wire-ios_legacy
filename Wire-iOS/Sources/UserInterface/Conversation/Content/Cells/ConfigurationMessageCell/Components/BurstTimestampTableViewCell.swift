@@ -18,13 +18,30 @@
 
 import UIKit
 
-class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
+struct BurstTimestampSenderMessageCellConfiguration {
+    let date: Date
+    let includeDayOfWeek: Bool
+    let showUnreadDot: Bool
+}
 
-    struct Configuration {
-        let date: Date
-        let includeDayOfWeek: Bool
-        let showUnreadDot: Bool
+class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = BurstTimestampSenderMessageCell
+    let configuration: View.Configuration
+
+    var isFullWidth: Bool {
+        return true
     }
+
+    init(message: ZMConversationMessage, context: ConversationMessageContext) {
+        self.configuration = View.Configuration(date: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)
+    }
+
+    init(configuration: View.Configuration) {
+        self.configuration = configuration
+    }
+}
+
+class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
     private let timestampView = ConversationCellBurstTimestampView()
 
@@ -59,25 +76,8 @@ class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
     var isSelected: Bool = false
 
-    func configure(with object: Configuration) {
+    func configure(with object: BurstTimestampSenderMessageCellConfiguration) {
         timestampView.configure(with: object.date, includeDayOfWeek: object.includeDayOfWeek, showUnreadDot: object.showUnreadDot)
     }
 
-}
-
-class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescription {
-    typealias View = BurstTimestampSenderMessageCell
-    let configuration: View.Configuration
-
-    var isFullWidth: Bool {
-        return true
-    }
-
-    init(message: ZMConversationMessage, context: ConversationMessageContext) {
-        self.configuration = View.Configuration(date: message.serverTimestamp ?? Date(), includeDayOfWeek: context.isFirstMessageOfTheDay, showUnreadDot: context.isFirstUnreadMessage)
-    }
-
-    init(configuration: View.Configuration) {
-        self.configuration = configuration
-    }
 }

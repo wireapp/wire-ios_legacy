@@ -21,13 +21,6 @@ import Foundation
 extension ConversationMessageWindowTableViewAdapter {
     
     @objc func registerTableCellClasses() {
-//        tableView.register(cell: NewImageMessageCell.self)
-//        tableView.register(cell: NewTextMessageCell.self)
-//        tableView.register(cell: NewVideoMessageCell.self)
-//        tableView.register(cell: NewAudioMessageCell.self)
-//        tableView.register(cell: NewFileMessageCell.self)
-        
-        tableView.register(TextMessageCell.self, forCellReuseIdentifier: ConversationTextCellId)
         tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
         tableView.register(ConversationRenamedCell.self, forCellReuseIdentifier: ConversationNameChangedCellId)
         tableView.register(PingCell.self, forCellReuseIdentifier: ConversationPingCellId)
@@ -125,9 +118,7 @@ extension ZMConversationMessage {
     var cellIdentifier: String {
         var cellIdentifier = ConversationUnknownMessageCellId
 
-        if isText {
-            cellIdentifier = ConversationTextCellId
-        } else if isVideo {
+        if isVideo {
             cellIdentifier = ConversationVideoMessageCellId
         } else if isAudio {
             cellIdentifier = ConversationAudioMessageCellId
@@ -137,8 +128,6 @@ extension ZMConversationMessage {
             cellIdentifier = ConversationFileTransferCellId
         } else if isImage {
             cellIdentifier = ConversationImageCellId
-        } else if isKnock {
-            cellIdentifier = ConversationPingCellId
         } else if isSystem, let systemMessageType = systemMessageData?.systemMessageType {
             switch systemMessageType {
             case .connectionRequest:

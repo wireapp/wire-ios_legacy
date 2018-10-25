@@ -82,10 +82,11 @@ class ConversationMessageSectionBuilder {
             addPing(in: section, for: message)
         } else if message.isText {
             addTextMessageAndAttachments(in: section, for: message)
+        } else if message.isSystem {
+            addSystemMessage(in: section, for: message)
         } else {
             section.add(description: UnknownMessageCellDescription())
         }
-
 
         //        if message.isText {
         //            return TextMessageCellDescription(message: message, context: context)
@@ -111,6 +112,27 @@ class ConversationMessageSectionBuilder {
         section.add(description: pingCell)
     }
 
+    private static func addSystemMessage(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
+        guard let systemMessageData = message.systemMessageData, let sender = message.sender else {
+            return
+        }
+
+        switch systemMessageData.systemMessageType {
+        case .conversationNameChanged:
+            guard let newName = systemMessageData.text else {
+                fallthrough
+            }
+
+            let renamedCell = ConversationRenamedSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, newName: newName)
+            section.add(description: renamedCell)
+
+        default:
+            section.add(description: UnknownMessageCellDescription())
+//            let systemCell = ConversationSystemMessageCellDescription(message: message, data: systemMessageData)
+//            section.add(description: systemCell)
+        }
+    }
+
     private static func addTextMessageAndAttachments(in section: ConversationMessageSectionController, for message: ZMConversationMessage) {
         guard let textMessageData = message.textMessageData else {
             return
@@ -124,9 +146,12 @@ class ConversationMessageSectionBuilder {
         section.add(description: textCell)
 
         // Link Attachment
-//        if let attachment = lastKnownLinkAttachment {
-//            // TODO: add link attachment
-//        }
+        if let attachment = lastKnownLinkAttachment, attachment.type != .none {
+            if let viewController = LinkAttachmentViewControllerFactory.sharedInstance().viewController(for: attachment, message: message) {
+                let attachmentCell = ConversationLinkAttachmentCellDescription(contentViewController: viewController, linkAttachmentType: attachment.type)
+                section.add(description: attachmentCell)
+            }
+        }
 
         // Link Preview
 //        if let linkPreview = textMessageData.linkPreview {
