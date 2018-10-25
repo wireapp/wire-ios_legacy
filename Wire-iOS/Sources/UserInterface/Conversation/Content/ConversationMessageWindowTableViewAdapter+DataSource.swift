@@ -23,16 +23,16 @@ extension ConversationMessageWindowTableViewAdapter {
     @objc func registerTableCellClasses() {
         tableView.register(ConnectionRequestCell.self, forCellReuseIdentifier: ConversationConnectionRequestCellId)
         tableView.register(ConversationNewDeviceCell.self, forCellReuseIdentifier: ConversationNewDeviceCellId)
-        tableView.register(ConversationVerifiedCell.self, forCellReuseIdentifier: ConversationVerifiedCellId)
         tableView.register(MissingMessagesCell.self, forCellReuseIdentifier: ConversationMissingMessagesCellId)
         tableView.register(ConversationIgnoredDeviceCell.self, forCellReuseIdentifier: ConversationIgnoredDeviceCellId)
         tableView.register(CannotDecryptCell.self, forCellReuseIdentifier: ConversationCannotDecryptCellId)
+
+        tableView.register(ParticipantsCell.self, forCellReuseIdentifier: ParticipantsCell.zm_reuseIdentifier)
 
         tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
         tableView.register(FileTransferCell.self, forCellReuseIdentifier: ConversationFileTransferCellId)
         tableView.register(VideoMessageCell.self, forCellReuseIdentifier: ConversationVideoMessageCellId)
         tableView.register(AudioMessageCell.self, forCellReuseIdentifier: ConversationAudioMessageCellId)
-        tableView.register(ParticipantsCell.self, forCellReuseIdentifier: ParticipantsCell.zm_reuseIdentifier)
         tableView.register(LocationMessageCell.self, forCellReuseIdentifier: ConversationLocationMessageCellId)
     }
 }
