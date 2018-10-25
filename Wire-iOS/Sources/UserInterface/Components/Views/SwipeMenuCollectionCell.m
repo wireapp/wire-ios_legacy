@@ -101,7 +101,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     self.separatorLine = [[UIView alloc] init];
     self.separatorLine.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
     [self.swipeView addSubview:self.separatorLine];
-    self.separatorLine.hidden = self.separatorLineViewDisabled; ///NO, YES
+    self.separatorLine.hidden = self.separatorLineViewDisabled;
     
     self.revealDrawerGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onDrawerScroll:)];
     self.revealDrawerGestureRecognizer.delegate = self;
@@ -121,7 +121,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
 
 - (void)setSeparatorLineViewDisabled:(BOOL)separatorLineViewDisabled
 {
-    _separatorLineViewDisabled = separatorLineViewDisabled; /// yes
+    _separatorLineViewDisabled = separatorLineViewDisabled;
     self.separatorLine.hidden = separatorLineViewDisabled;
 }
 
@@ -322,9 +322,7 @@ NSString * const SwipeMenuCollectionCellIDToCloseKey = @"IDToClose";
     }
 
     dispatch_block_t action = ^() {
-        self.visualDrawerOffset = 0; //open ? self.drawerWidth : 0;
-//        [self checkAndUpdateMaxVisualDrawerOffsetConstraints:self.visualDrawerOffset];
-        [self disableMaxVisualDrawerOffsetConstraints];
+        self.visualDrawerOffset = 0;
         [self layoutIfNeeded];
     };
 
