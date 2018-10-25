@@ -58,7 +58,8 @@ class SenderCellComponent: UIView {
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         authorLabel.font = .normalLightFont
         authorLabel.accessibilityIdentifier = "author.name"
-        
+        authorLabel.numberOfLines = 1
+
         avatar.userSession = ZMUserSession.shared()
         avatar.initials.font = .avatarInitial
         avatar.size = .small
@@ -90,7 +91,7 @@ class SenderCellComponent: UIView {
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             ])
     }
     

@@ -22,8 +22,8 @@ import TTTAttributedLabel
 class ConversationSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
 
     struct Configuration {
-        let icon: UIImage
-        let attributedText: NSAttributedString
+        let icon: UIImage?
+        let attributedText: NSAttributedString?
         let showLine: Bool
     }
 
@@ -130,20 +130,6 @@ class ConversationSystemMessageCellDescription: ConversationMessageCellDescripti
         }
     }
 
-//
-//
-//    private func attributedTitle(for message: ZMConversationMessage) -> NSAttributedString? {
-//
-//    }
-//
-//    private func attributedName(for systemMessage: ZMSystemMessageData) -> NSAttributedString? {
-//        guard let name = systemMessage.text, let font = nameLabelFont, let color = labelTextColor  else { return nil }
-//        return name && font && color
-//    }
-//
-//
-
-
 }
 
 class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDescription {
@@ -165,4 +151,27 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
         configuration = View.Configuration(attributedText: title, newConversationName: conversationName)
     }
 
+}
+
+class ConversationCallSystemMessageCellDescription: ConversationMessageCellDescription {
+    typealias View = ConversationSystemMessageCell
+    let configuration: View.Configuration
+
+    var isFullWidth: Bool {
+        return true
+    }
+
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, missed: Bool) {
+        let viewModel = CallCellViewModel(
+            icon: missed ? .endCall : .phone,
+            iconColor: UIColor(for: missed ? .vividRed : .strongLimeGreen),
+            systemMessageType: data.systemMessageType,
+            font: .mediumFont,
+            boldFont: .mediumSemiboldFont,
+            textColor: .textForeground,
+            message: message
+        )
+
+        configuration = View.Configuration(icon: viewModel.image(), attributedText: viewModel.attributedTitle(), showLine: false)
+    }
 }

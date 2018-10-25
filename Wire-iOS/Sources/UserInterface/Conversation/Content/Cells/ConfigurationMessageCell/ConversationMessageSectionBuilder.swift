@@ -66,11 +66,11 @@ class ConversationMessageSectionBuilder {
             return
         }
 
-        guard !message.isKnock else {
+        guard !message.isKnock, !message.isSystem else {
             return
         }
 
-        let senderCell = ConversationSenderMessageCellDescription(sender: sender)
+        let senderCell = ConversationSenderMessageCellDescription(sender: sender, showTrash: false)
         section.add(description: senderCell)
     }
 
@@ -125,6 +125,18 @@ class ConversationMessageSectionBuilder {
 
             let renamedCell = ConversationRenamedSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, newName: newName)
             section.add(description: renamedCell)
+
+        case .missedCall:
+            let missedCallCell = ConversationCallSystemMessageCellDescription(message: message, data: systemMessageData, missed: true)
+            section.add(description: missedCallCell)
+
+        case .performedCall:
+            let callCell = ConversationCallSystemMessageCellDescription(message: message, data: systemMessageData, missed: false)
+            section.add(description: callCell)
+
+        case .messageDeletedForEveryone:
+            let senderCell = ConversationSenderMessageCellDescription(sender: sender, showTrash: true)
+            section.add(description: senderCell)
 
         default:
             section.add(description: UnknownMessageCellDescription())

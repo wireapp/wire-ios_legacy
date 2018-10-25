@@ -3777,8 +3777,8 @@
 			isa = PBXGroup;
 			children = (
 				166264FF217DAC4F00300F45 /* ConversationMessageCell.swift */,
-				5E35F74221804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift */,
 				5E35F732217F147A00D3F4FE /* ConversationMessageSectionController.swift */,
+				5E35F74221804BDD00D3F4FE /* ConversationMessageSectionBuilder.swift */,
 				16626501217DACBE00300F45 /* ConfigurableCellTableViewAdapter.swift */,
 				166264EA2174CA5900300F45 /* NewTextMessageCell.swift */,
 				166264EC2174CA7800300F45 /* NewImageMessageCell.swift */,

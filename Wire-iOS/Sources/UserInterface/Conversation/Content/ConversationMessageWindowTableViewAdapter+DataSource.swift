@@ -21,25 +21,22 @@ import Foundation
 extension ConversationMessageWindowTableViewAdapter {
     
     @objc func registerTableCellClasses() {
-        tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
-        tableView.register(ConversationRenamedCell.self, forCellReuseIdentifier: ConversationNameChangedCellId)
-        tableView.register(PingCell.self, forCellReuseIdentifier: ConversationPingCellId)
-        tableView.register(PerformedCallCell.self, forCellReuseIdentifier: ConversationPerformedCallCellId)
-        tableView.register(MissedCallCell.self, forCellReuseIdentifier: ConversationMissedCallCellId)
         tableView.register(ConnectionRequestCell.self, forCellReuseIdentifier: ConversationConnectionRequestCellId)
         tableView.register(ConversationNewDeviceCell.self, forCellReuseIdentifier: ConversationNewDeviceCellId)
         tableView.register(ConversationVerifiedCell.self, forCellReuseIdentifier: ConversationVerifiedCellId)
         tableView.register(MissingMessagesCell.self, forCellReuseIdentifier: ConversationMissingMessagesCellId)
         tableView.register(ConversationIgnoredDeviceCell.self, forCellReuseIdentifier: ConversationIgnoredDeviceCellId)
         tableView.register(CannotDecryptCell.self, forCellReuseIdentifier: ConversationCannotDecryptCellId)
+        tableView.register(MessageTimerUpdateCell.self, forCellReuseIdentifier: ConversationMessageTimerUpdateCellId)
+
+        tableView.register(MessageDeletedCell.self, forCellReuseIdentifier: ConversationMessageDeletedCellId)
+
+        tableView.register(ImageMessageCell.self, forCellReuseIdentifier: ConversationImageCellId)
         tableView.register(FileTransferCell.self, forCellReuseIdentifier: ConversationFileTransferCellId)
         tableView.register(VideoMessageCell.self, forCellReuseIdentifier: ConversationVideoMessageCellId)
         tableView.register(AudioMessageCell.self, forCellReuseIdentifier: ConversationAudioMessageCellId)
         tableView.register(ParticipantsCell.self, forCellReuseIdentifier: ParticipantsCell.zm_reuseIdentifier)
         tableView.register(LocationMessageCell.self, forCellReuseIdentifier: ConversationLocationMessageCellId)
-        tableView.register(MessageDeletedCell.self, forCellReuseIdentifier: ConversationMessageDeletedCellId)
-        tableView.register(UnknownMessageCell.self, forCellReuseIdentifier: ConversationUnknownMessageCellId)
-        tableView.register(MessageTimerUpdateCell.self, forCellReuseIdentifier: ConversationMessageTimerUpdateCellId)
     }
 }
 
