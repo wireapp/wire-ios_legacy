@@ -132,8 +132,6 @@ extension ZMConversationMessage {
                 cellIdentifier = ConversationNewDeviceCellId
             case .ignoredClient:
                 cellIdentifier = ConversationIgnoredDeviceCellId
-            case .conversationIsSecure:
-                cellIdentifier = ConversationVerifiedCellId
             case .potentialGap, .reactivatedDevice:
                 cellIdentifier = ConversationMissingMessagesCellId
             case .decryptionFailed, .decryptionFailed_RemoteIdentityChanged:

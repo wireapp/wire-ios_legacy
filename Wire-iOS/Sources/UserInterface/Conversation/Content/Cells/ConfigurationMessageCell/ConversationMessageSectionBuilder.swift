@@ -146,6 +146,10 @@ class ConversationMessageSectionBuilder {
             let timerCell = ConversationMessageTimerCellDescription(message: message, data: systemMessageData, timer: timer, sender: sender)
             section.add(description: timerCell)
 
+        case .conversationIsSecure:
+            let shieldCell = ConversationVeritfiedSystemMessageSectionDescription()
+            section.add(description: shieldCell)
+
         default:
             section.add(description: UnknownMessageCellDescription())
 //            let systemCell = ConversationSystemMessageCellDescription(message: message, data: systemMessageData)

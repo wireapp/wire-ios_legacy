@@ -212,3 +212,21 @@ public extension String {
     static let breakingSpace = " "           // classic whitespace
     static let nonBreakingSpace = "\u{00A0}" // &#160;
 }
+
+class ConversationVeritfiedSystemMessageSectionDescription: ConversationMessageCellDescription {
+    typealias View = ConversationSystemMessageCell
+    let configuration: View.Configuration
+
+    var isFullWidth: Bool {
+        return true
+    }
+
+    init() {
+        let title = NSAttributedString(
+            string: "content.system.is_verified".localized,
+            attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.textForeground]
+        )
+
+        configuration = View.Configuration(icon: WireStyleKit.imageOfShieldverified, attributedText: title, showLine: true)
+    }
+}
