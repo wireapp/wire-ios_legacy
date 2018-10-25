@@ -30,7 +30,7 @@ struct Password {
 }
 
 extension BackupViewController {
-    func requestPassword(completion: @escaping (Password?) -> Void) {
+    func requestBackupPassword(completion: @escaping (Password?) -> Void) {
         let passwordController = BackupPasswordViewController { controller, password in
             controller.dismiss(animated: true) {
                 completion(password)

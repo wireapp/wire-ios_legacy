@@ -19,18 +19,13 @@
 
 import Foundation
 
-enum Either<TLeft, TRight> {
-    case left(TLeft)
-    case right(TRight)
-}
-
 class RequestPasswordViewController: UIAlertController {
     
-    var callback: ((Either<String, NSError>) -> ())? = .none
+    var callback: ((Result<String>) -> ())? = .none
     
     var okAction: UIAlertAction? = .none
     
-    static func requestPasswordController(_ callback: @escaping (Either<String, NSError>) -> ()) -> RequestPasswordViewController {
+    static func requestPasswordController(_ callback: @escaping (Result<String>) -> ()) -> RequestPasswordViewController {
         
         let title = NSLocalizedString("self.settings.account_details.remove_device.title", comment: "")
         let message = NSLocalizedString("self.settings.account_details.remove_device.message", comment: "")
@@ -49,12 +44,12 @@ class RequestPasswordViewController: UIAlertController {
         let okAction = UIAlertAction(title: okTitle, style: .default) { [unowned controller] (action: UIAlertAction) -> Void in
             if let passwordField = controller.textFields?[0] {
                 let password = passwordField.text ?? ""
-                controller.callback?(Either.left(password))
+                controller.callback?(.success(password))
             }
         }
         
         let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel) { [unowned controller] (action: UIAlertAction) -> Void in
-            controller.callback?(Either.right(NSError(domain: "\(type(of: controller))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
+            controller.callback?(.failure(NSError(domain: "\(type(of: controller))", code: 0, userInfo: [NSLocalizedDescriptionKey: "User cancelled input"])))
         }
         
         controller.okAction = okAction

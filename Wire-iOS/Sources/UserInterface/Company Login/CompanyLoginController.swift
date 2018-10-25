@@ -60,7 +60,7 @@ import Foundation
     private static let fallbackURLScheme = "wire-sso"
 
     // Whether performing a company login is supported on the current build.
-    @objc(companyLoginEnabled) static public let isCompanyLoginEnabled = DeveloperMenuState.developerMenuEnabled()
+    @objc(companyLoginEnabled) static public let isCompanyLoginEnabled = true
 
     private var token: Any?
     private var pollingTimer: Timer?
