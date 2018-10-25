@@ -40,19 +40,19 @@ public enum EphemeralState: Equatable {
 
 public enum InputBarState: Equatable {
     case writing(ephemeral: EphemeralState)
-    case editing(originalText: String)
+    case editing(originalText: String, mentions: [Mention])
     case markingDown(ephemeral: EphemeralState)
 
     var isWriting: Bool {
         switch self {
-        case .writing(ephemeral: _): return true
+        case .writing: return true
         default: return false
         }
     }
 
     var isEditing: Bool {
         switch self {
-        case .editing(originalText: _): return true
+        case .editing: return true
         default: return false
         }
     }
@@ -105,7 +105,7 @@ private struct InputBarConstants {
 @objcMembers public final class InputBar: UIView {
 
     private let inputBarVerticalInset: CGFloat = 34
-    public static let rightIconSIze: CGFloat = 32
+    public static let rightIconSize: CGFloat = 32
 
 
     let textView = MarkdownTextView(with: DownStyle.compact)
@@ -113,13 +113,12 @@ private struct InputBarConstants {
     public let rightAccessoryStackView: UIStackView = {
         let stackView = UIStackView()
 
-        let rightInset = (UIView.conversationLayoutMargins.left - rightIconSIze) / 2
+        let rightInset = (UIView.conversationLayoutMargins.left - rightIconSize) / 2
 
         stackView.spacing = 16
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fill
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
         stackView.isLayoutMarginsRelativeArrangement = true
 
         return stackView
@@ -134,7 +133,6 @@ private struct InputBarConstants {
     public let buttonsView: InputBarButtonsView
     public let editingView = InputBarEditView()
     public let markdownView = MarkdownBarView()
-    
     
     public var editingBackgroundColor = UIColor.brightYellow
     public var barBackgroundColor: UIColor? = UIColor(scheme: .barBackground)
@@ -153,6 +151,8 @@ private struct InputBarConstants {
     fileprivate let buttonRowSeparator = UIView()
     fileprivate let constants = InputBarConstants()
     fileprivate let notificationCenter = NotificationCenter.default
+    
+    fileprivate var leftAccessoryViewWidthConstraint: NSLayoutConstraint?
     
     var isEditing: Bool {
         return inputBarState.isEditing
@@ -187,7 +187,7 @@ private struct InputBarConstants {
     
     override public var bounds: CGRect {
         didSet {
-            invisibleInputAccessoryView?.intrinsicContentSize = CGSize(width: UIViewNoIntrinsicMetric, height: bounds.height)
+            invisibleInputAccessoryView?.intrinsicContentSize = CGSize(width: UIView.noIntrinsicMetric, height: bounds.height)
         }
     }
         
@@ -221,12 +221,13 @@ private struct InputBarConstants {
         
 
         setupViews()
+        updateRightAccessoryStackViewLayoutMargins()
         createConstraints()
         
         notificationCenter.addObserver(markdownView, selector: #selector(markdownView.textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
-        notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: textView)
-        notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextView.textDidChangeNotification, object: textView)
+        notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: UITextView.textDidBeginEditingNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(textViewDidEndEditing), name: UITextView.textDidEndEditingNotification, object: nil)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -238,8 +239,8 @@ private struct InputBarConstants {
         updatePlaceholder()
         textView.lineFragmentPadding = 0
         textView.textAlignment = .natural
-        textView.textContainerInset = UIEdgeInsetsMake(inputBarVerticalInset / 2, 0, inputBarVerticalInset / 2, 4)
-        textView.placeholderTextContainerInset = UIEdgeInsetsMake(21, 10, 21, 0)
+        textView.textContainerInset = UIEdgeInsets(top: inputBarVerticalInset / 2, left: 0, bottom: inputBarVerticalInset / 2, right: 4)
+        textView.placeholderTextContainerInset = UIEdgeInsets(top: 21, left: 10, bottom: 21, right: 0)
         textView.keyboardType = .default
         textView.keyboardAppearance = ColorScheme.default.keyboardAppearance
         textView.placeholderTextTransform = .upper
@@ -262,7 +263,7 @@ private struct InputBarConstants {
             leftAccessoryView.leading == leftAccessoryView.superview!.leading
             leftAccessoryView.top == leftAccessoryView.superview!.top
             leftAccessoryView.bottom == buttonContainer.top
-            leftAccessoryView.width == UIView.conversationLayoutMargins.left
+            leftAccessoryViewWidthConstraint = leftAccessoryView.width == UIView.conversationLayoutMargins.left
 
             rightAccessoryView.trailing == rightAccessoryView.superview!.trailing
             rightAccessoryView.top == rightAccessoryView.superview!.top
@@ -307,6 +308,24 @@ private struct InputBarConstants {
         }
     }
     
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+        
+        updateLeftAccessoryViewWidth()
+        updateRightAccessoryStackViewLayoutMargins()
+    }
+    
+    fileprivate func updateLeftAccessoryViewWidth() {
+        leftAccessoryViewWidthConstraint?.constant = UIView.conversationLayoutMargins.left
+    }
+    
+    fileprivate func updateRightAccessoryStackViewLayoutMargins() {
+        let rightInset = (UIView.conversationLayoutMargins.left - InputBar.rightIconSize) / 2
+        rightAccessoryStackView.layoutMargins = UIEdgeInsets(top: 0, left: rightInset, bottom: 0, right: rightInset)
+    }
+    
     @objc fileprivate func didTapBackground(_ gestureRecognizer: UITapGestureRecognizer!) {
         guard gestureRecognizer.state == .recognized else { return }
         buttonsView.showRow(0, animated: true)
@@ -332,8 +351,7 @@ private struct InputBarConstants {
         } else if inputBarState.isEphemeral {
             placeholder  = NSAttributedString(string: "conversation.input_bar.placeholder_ephemeral".localized) && ephemeralColor
         }
-        
-        if case .editing = state {
+        if state.isEditing {
             return nil
         } else {
             return placeholder
@@ -377,8 +395,8 @@ private struct InputBarConstants {
                 if let oldState = oldState, oldState.isEditing {
                     self.textView.text = nil
                 }
-            case .editing(let text):
-                self.setInputBarText(text)
+            case .editing(let text, let mentions):
+                self.setInputBarText(text, mentions: mentions)
                 self.secondaryButtonsView.setEditBarView()
             
             case .markingDown:
@@ -386,11 +404,11 @@ private struct InputBarConstants {
             }
         }
         
-        let completion: (Bool) -> Void = { _ in
+        let completion: () -> Void = {
             self.updateColors()
             self.updatePlaceholderColors()
 
-            if case .editing(_) = state {
+            if state.isEditing {
                 self.textView.becomeFirstResponder()
             }
         }
@@ -399,11 +417,12 @@ private struct InputBarConstants {
             UIView.wr_animate(easing: .easeInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
                 self.updateColors()
+                completion()
             }
         } else {
             layoutIfNeeded()
             textViewChanges()
-            completion(true)
+            completion()
         }
     }
 
@@ -454,8 +473,8 @@ private struct InputBarConstants {
 
     // MARK: – Editing View State
 
-    public func setInputBarText(_ text: String) {
-        textView.text = text
+    public func setInputBarText(_ text: String, mentions: [Mention]) {
+        textView.setText(text, withMentions: mentions)
         textView.setContentOffset(.zero, animated: false)
         textView.undoManager?.removeAllActions()
         updateEditViewState()
@@ -469,7 +488,7 @@ private struct InputBarConstants {
     }
 
     fileprivate func updateEditViewState() {
-        if case .editing(let text) = inputBarState {
+        if case .editing(let text, _) = inputBarState {
             let canUndo = textView.undoManager?.canUndo ?? false
             editingView.undoButton.isEnabled = canUndo
 

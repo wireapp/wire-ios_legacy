@@ -59,7 +59,7 @@ protocol ChangeHandleTableViewCellDelegate: class {
         return textField
     }()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         createConstraints()
@@ -262,7 +262,7 @@ struct HandleChangeState {
 
     private func updateFooter() {
         footerLabel.attributedText = attributedFooterTitle
-        let size = footerLabel.sizeThatFits(CGSize(width: view.frame.width - 32, height: UIViewNoIntrinsicMetric))
+        let size = footerLabel.sizeThatFits(CGSize(width: view.frame.width - 32, height: UIView.noIntrinsicMetric))
         footerLabel.frame = CGRect(origin: CGPoint(x: 16, y: 0), size: size)
         tableView.tableFooterView = footerLabel
     }

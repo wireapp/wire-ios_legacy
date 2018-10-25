@@ -65,12 +65,12 @@ extension ConversationInputBarViewController {
         createEphemeralKeyboardViewController()
         ephemeralKeyboardViewController?.modalPresentationStyle = .popover
         ephemeralKeyboardViewController?.preferredContentSize = CGSize.IPadPopover.pickerSize
+        let pointToView = ephemeralIndicatorButton.isHidden ? hourglassButton : ephemeralIndicatorButton
 
         if let popover = ephemeralKeyboardViewController?.popoverPresentationController,
             let presentInView = self.parent?.view,
-            let backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor,
-            let pointToView = ephemeralIndicatorButton.isHidden ? hourglassButton : ephemeralIndicatorButton {
-            popover.config(from: self,
+            let backgroundColor = ephemeralKeyboardViewController?.view.backgroundColor {
+                popover.config(from: self,
                            pointToView: pointToView,
                            sourceView: presentInView)
 
@@ -83,8 +83,7 @@ extension ConversationInputBarViewController {
     }
 
     @objc public func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
-        guard let conversation = self.conversation,
-              let timerValue = conversation.destructionTimeout else {
+        guard let timerValue = conversation.destructionTimeout else {
             button.setTitle("", for: .normal)
             return
         }

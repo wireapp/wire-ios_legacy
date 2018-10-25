@@ -70,7 +70,7 @@ import TTTAttributedLabel
         return 2
     }
 
-    public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         setupViews()
@@ -93,8 +93,8 @@ import TTTAttributedLabel
         labelView.extendsLinkTouchArea = true
         
         labelView.linkAttributes = [
-            NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue,
-            NSAttributedStringKey.foregroundColor.rawValue: ZMUser.selfUser().accentColor
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
+            NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
         ]
         
         labelView.delegate = self

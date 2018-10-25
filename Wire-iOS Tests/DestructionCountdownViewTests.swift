@@ -31,7 +31,7 @@ class DestructionCountdownViewTests: ZMSnapshotTestCase {
     }
 
     override func tearDown() {
-        ColorScheme.default.variant = .light
+        resetColorScheme()
         sut = nil
         super.tearDown()
     }

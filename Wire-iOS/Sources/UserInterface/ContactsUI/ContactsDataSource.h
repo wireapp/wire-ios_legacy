@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ContactsDataSource : NSObject<UITableViewDataSource>
 
-@property (nonatomic, readonly) SearchDirectory *searchDirectory;
+@property (nonatomic, readonly, nullable) SearchDirectory *searchDirectory;
 @property (nonatomic, nullable) NSArray *ungroupedSearchResults;
 @property (nonatomic, copy, nonnull) NSString *searchQuery;
 @property (nonatomic) NSOrderedSet *selection;

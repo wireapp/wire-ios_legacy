@@ -43,22 +43,22 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
-    var flowController: TeamCreationFlowController!
+    var authenticationCoordinator: AuthenticationCoordinator?
 
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
 
 
-    fileprivate weak var requestToOpenViewDelegate: ZMRequestsToOpenViewsDelegate? {
+    fileprivate weak var showContentDelegate: ShowContentDelegate? {
         didSet {
-            if let delegate = requestToOpenViewDelegate {
-                performWhenRequestsToOpenViewsDelegateAvailable?(delegate)
-                performWhenRequestsToOpenViewsDelegateAvailable = nil
+            if let delegate = showContentDelegate {
+                performWhenShowContentDelegateIsAvailable?(delegate)
+                performWhenShowContentDelegateIsAvailable = nil
             }
         }
     }
 
-    fileprivate var performWhenRequestsToOpenViewsDelegateAvailable: ((ZMRequestsToOpenViewsDelegate)->())?
+    fileprivate var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
 
     func updateOverlayWindowFrame() {
         self.overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
@@ -107,10 +107,10 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             fileBackupExcluder.excludeLibraryFolderInSharedContainer(sharedContainerURL: sharedContainerURL)
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: Notification.Name.UIContentSizeCategoryDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onContentSizeCategoryChange), name: UIContentSizeCategory.didChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onUserGrantedAudioPermissions), name: Notification.Name.UserGrantedAudioPermissions, object: nil)
 
         transition(to: .headless)
@@ -142,12 +142,13 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             analytics: analytics,
             delegate: appStateController,
             application: UIApplication.shared,
+            environment: BackendEnvironment.shared,
             blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
-            self.sessionManager?.localNotificationResponder = self
-            self.sessionManager?.requestToOpenViewDelegate = self
+            self.sessionManager?.foregroundNotificationResponder = self
+            self.sessionManager?.showContentDelegate = self
             self.sessionManager?.switchingDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
@@ -157,7 +158,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
                                                            application: UIApplication.shared)
                 
             sessionManager.urlHandler.delegate = self
-            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+            if let url = launchOptions[UIApplication.LaunchOptionsKey.url] as? URL {
                 sessionManager.urlHandler.openURL(url, options: [:])
             }
         }
@@ -171,9 +172,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             transitionGroup.enter()
 
             DispatchQueue.main.async {
-                self.prepare(for: appState, completionHandler: {
-                    transitionGroup.leave()
-                })
+                self.applicationWillTransition(to: appState)
+                transitionGroup.leave()
             }
 
             transitionGroup.wait()
@@ -187,6 +187,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             DispatchQueue.main.async {
                 self.transition(to: appState, completionHandler: {
                     transitionGroup.leave()
+                    self.applicationDidTransition(to: appState)
                     completion?()
                 })
             }
@@ -197,7 +198,9 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
         var viewController: UIViewController? = nil
-        requestToOpenViewDelegate = nil
+        showContentDelegate = nil
+
+        resetAuthenticationCoordinatorIfNeeded(for: appState)
 
         switch appState {
         case .blacklisted:
@@ -210,45 +213,24 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             UIColor.setAccentOverride(ZMUser.pickRandomAcceptableAccentColor())
             mainWindow.tintColor = UIColor.accent()
 
-            // check if needs to reauthenticate
-            var needsToReauthenticate = false
-            var addingNewAccount = (SessionManager.shared?.accountManager.accounts.count == 0)
-            if let error = error {
-                let errorCode = (error as NSError).userSessionErrorCode
-                needsToReauthenticate = [ZMUserSessionErrorCode.clientDeletedRemotely,
-                    .accessTokenExpired,
-                    .needsPasswordToRegisterClient,
-                    .needsToRegisterEmailToRegisterClient,
-                ].contains(errorCode)
+            // Only execute handle events if there is no current flow
+            guard authenticationCoordinator == nil else {
+                break
+            }
 
-                addingNewAccount = [
-                    ZMUserSessionErrorCode.addAccountRequested
-                    ].contains(errorCode)
-            }
-            
-            if needsToReauthenticate {
-                let registrationViewController = RegistrationViewController()
-                registrationViewController.delegate = appStateController
-                registrationViewController.shouldHideCancelButton = SessionManager.numberOfAccounts <= 1
-                registrationViewController.signInError = error
-                viewController = registrationViewController
-            }
-            else if addingNewAccount {
-                // When we show the landing controller we want it to be nested in navigation controller
-                let landingViewController = LandingViewController()
-                landingViewController.delegate = self
-                
-                let navigationController = NavigationController(rootViewController: landingViewController)
-                navigationController.backButtonEnabled = false
-                navigationController.logoEnabled = false
-                navigationController.isNavigationBarHidden = true
-                
-                guard let registrationStatus = SessionManager.shared?.unauthenticatedSession?.registrationStatus else { fatal("Could not get registration status") }
-                
-                flowController = TeamCreationFlowController(navigationController: navigationController, registrationStatus: registrationStatus)
-                flowController.registrationDelegate = appStateController
-                viewController = navigationController
-            }
+            let navigationController = NavigationController()
+            navigationController.backButtonEnabled = false
+            navigationController.logoEnabled = false
+            navigationController.isNavigationBarHidden = true
+
+            authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
+                                                                  unauthenticatedSession: UnauthenticatedSession.sharedSession!,
+                                                                  sessionManager: SessionManager.shared!)
+
+            authenticationCoordinator!.delegate = appStateController
+            authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
+
+            viewController = KeyboardAvoidingViewController(viewController: navigationController)
 
         case .authenticated(completedRegistration: let completedRegistration):
             UIColor.setAccentOverride(.undefined)
@@ -274,7 +256,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
 
         if let viewController = viewController {
             transition(to: viewController, animated: true) {
-                self.requestToOpenViewDelegate = viewController as? ZMRequestsToOpenViewsDelegate
+                self.showContentDelegate = viewController as? ShowContentDelegate
                 completionHandler?()
             }
         } else {
@@ -282,9 +264,18 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         }
     }
 
+    private func resetAuthenticationCoordinatorIfNeeded(for state: AppState) {
+        switch state {
+        case .unauthenticated:
+            break // do not reset the authentication coordinator for unauthenticated state
+        default:
+            authenticationCoordinator = nil // reset the authentication coordinator when we no longer need it
+        }
+    }
+
     private func dismissModalsFromAllChildren(of viewController: UIViewController?) {
         guard let viewController = viewController else { return }
-        for child in viewController.childViewControllers {
+        for child in viewController.children {
             if child.presentedViewController != nil {
                 child.dismiss(animated: false, completion: nil)
             }
@@ -297,31 +288,31 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         // If we have some modal view controllers presented in any of the (grand)children
         // of this controller they stay in memory and leak on iOS 10.
         dismissModalsFromAllChildren(of: visibleViewController)
-        visibleViewController?.willMove(toParentViewController: nil)
+        visibleViewController?.willMove(toParent: nil)
 
         if let previousViewController = visibleViewController, animated {
 
-            addChildViewController(viewController)
+            addChild(viewController)
             transition(from: previousViewController,
                        to: viewController,
                        duration: 0.5,
                        options: .transitionCrossDissolve,
                        animations: nil,
                        completion: { (finished) in
-                    viewController.didMove(toParentViewController: self)
-                    previousViewController.removeFromParentViewController()
+                    viewController.didMove(toParent: self)
+                    previousViewController.removeFromParent()
                     self.visibleViewController = viewController
                     UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                     completionHandler?()
             })
         } else {
             UIView.performWithoutAnimation {
-                visibleViewController?.removeFromParentViewController()
-                addChildViewController(viewController)
+                visibleViewController?.removeFromParent()
+                addChild(viewController)
                 viewController.view.frame = view.bounds
                 viewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
                 view.addSubview(viewController.view)
-                viewController.didMove(toParentViewController: self)
+                viewController.didMove(toParent: self)
                 visibleViewController = viewController
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
@@ -329,7 +320,7 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
         }
     }
 
-    func prepare(for appState: AppState, completionHandler: @escaping () -> Void) {
+    func applicationWillTransition(to appState: AppState) {
 
         if appState == .authenticated(completedRegistration: false) {
             callWindow.callController.transitionToLoggedInSession()
@@ -337,7 +328,15 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
             overlayWindow.rootViewController = NotificationWindowRootViewController()
         }
 
-        completionHandler()
+        let colorScheme = ColorScheme.default
+        colorScheme.setAccentColor(.accent())
+        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
+    }
+    
+    func applicationDidTransition(to appState: AppState) {
+        if appState == .authenticated(completedRegistration: false) {
+            callWindow.callController.presentCallCurrentlyInProgress()
+        }
     }
 
     func configureMediaManager() {
@@ -345,8 +344,8 @@ var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplicatio
     }
 
     @objc func onContentSizeCategoryChange() {
-        Message.invalidateMarkdownStyle()
-        NSAttributedString.wr_flushCellParagraphStyleCache()
+        NSAttributedString.invalidateParagraphStyle()
+        NSAttributedString.invalidateMarkdownStyle()
         ConversationListCell.invalidateCachedCellSize()
         defaultFontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
         type(of: self).configureAppearance()
@@ -403,45 +402,72 @@ extension AppRootViewController: AppStateControllerDelegate {
 
 }
 
-// MARK: - RequestToOpenViewsDelegate
+// MARK: - ShowContentDelegate
 
-extension AppRootViewController: ZMRequestsToOpenViewsDelegate {
+extension AppRootViewController: ShowContentDelegate {
 
-    public func showConversationList(for userSession: ZMUserSession!) {
-        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
-            delegate.showConversationList(for: userSession)
-        })
+    func showConversation(_ conversation: ZMConversation, at message: ZMConversationMessage?) {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConversation(conversation, at: message)
+        }
     }
-
-    public func userSession(_ userSession: ZMUserSession!, show conversation: ZMConversation!) {
-        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
-            delegate.userSession(userSession, show: conversation)
-        })
+    
+    func showConversationList() {
+        whenShowContentDelegateIsAvailable { delegate in
+            delegate.showConversationList()
+        }
     }
-
-    public func userSession(_ userSession: ZMUserSession!, show message: ZMMessage!, in conversation: ZMConversation!) {
-        whenRequestsToOpenViewsDelegateAvailable(do: { delegate in
-            delegate.userSession(userSession, show: message, in: conversation)
-        })
-    }
-
-    internal func whenRequestsToOpenViewsDelegateAvailable(do closure: @escaping (ZMRequestsToOpenViewsDelegate) -> ()) {
-        if let delegate = self.requestToOpenViewDelegate {
+    
+    internal func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
+        if let delegate = showContentDelegate {
             closure(delegate)
         }
         else {
-            self.performWhenRequestsToOpenViewsDelegateAvailable = closure
+            self.performWhenShowContentDelegateIsAvailable = closure
         }
+    }
+}
+
+// MARK: - Foreground Notification Responder
+
+extension AppRootViewController: ForegroundNotificationResponder {
+    func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
+        // user wants to see fg notifications
+        guard !(Settings.shared()?.chatHeadsDisabled ?? false) else {
+            return false
+        }
+        
+        // the concerned account is active
+        guard
+            let selfUserID = userInfo.selfUserID,
+            selfUserID == sessionManager?.accountManager.selectedAccount?.userIdentifier
+            else { return true }
+        
+        guard let clientVC = ZClientViewController.shared() else {
+            return true
+        }
+
+        if clientVC.isConversationListVisible {
+            return false
+        }
+        
+        guard clientVC.isConversationViewVisible else {
+            return true
+        }
+        
+        // conversation view is visible for another conversation
+        guard
+            let convID = userInfo.conversationID,
+            convID != clientVC.currentConversation.remoteIdentifier
+            else { return false }
+        
+        return true
     }
 }
 
 // MARK: - Application Icon Badge Number
 
-extension AppRootViewController: LocalNotificationResponder {
-
-    func processLocal(_ notification: ZMLocalNotification, forSession session: ZMUserSession) {
-        (self.overlayWindow.rootViewController as! NotificationWindowRootViewController).show(notification)
-    }
+extension AppRootViewController {
 
     @objc fileprivate func applicationWillEnterForeground() {
         updateOverlayWindowFrame()
@@ -483,44 +509,6 @@ extension AppRootViewController {
     }
 }
 
-// MARK: - Transition form LandingViewController to RegistrationViewController
-
-extension AppRootViewController: LandingViewControllerDelegate {
-    func landingViewControllerDidChooseCreateTeam() {
-        flowController.startFlow()
-    }
-
-    func landingViewControllerDidChooseLogin() {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let loginViewController = RegistrationViewController(authenticationFlow: .onlyLogin)
-            loginViewController.delegate = appStateController
-            loginViewController.shouldHideCancelButton = true
-            navigationController.pushViewController(loginViewController, animated: true)
-        }
-    }
-
-    func landingViewControllerDidChooseCreateAccount() {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let registrationViewController = RegistrationViewController(authenticationFlow: .onlyRegistration)
-            registrationViewController.delegate = appStateController
-            registrationViewController.shouldHideCancelButton = true
-            navigationController.pushViewController(registrationViewController, animated: true)
-        }
-    }
-    
-    func landingViewControllerNeedsToPresentNoHistoryFlow(with context: ContextType) {
-        if let navigationController = self.visibleViewController as? NavigationController {
-            let registrationViewController = RegistrationViewController(authenticationFlow: .regular)
-            registrationViewController.delegate = appStateController
-            registrationViewController.shouldHideCancelButton = true
-            registrationViewController.loadViewIfNeeded()
-            registrationViewController.presentNoHistoryViewController(context, animated: false)
-            navigationController.pushViewController(registrationViewController, animated: true)
-        }
-    }
-    
-}
-
 // MARK: - Ask user if they want want switch account if there's an ongoing call
 
 extension AppRootViewController: SessionManagerSwitchingDelegate {
@@ -530,8 +518,12 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
         guard let session = ZMUserSession.shared(), session.isCallOngoing else { return completion(true) }
         guard let topmostController = UIApplication.shared.wr_topmostController() else { return completion(false) }
         
-        let alert = UIAlertController(title: "self.settings.switch_account.title".localized, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized, style: .default, handler: { [weak self] (action) in
+        let alert = UIAlertController(title: "call.alert.ongoing.alert_title".localized,
+                                      message: "self.settings.switch_account.message".localized,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "self.settings.switch_account.action".localized,
+                                      style: .default,
+                                      handler: { [weak self] (action) in
             self?.sessionManager?.activeUserSession?.callCenter?.endAllCalls()
             completion(true)
         }))
@@ -545,22 +537,26 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
 extension AppRootViewController: PopoverPresenter { }
 
 public extension SessionManager {
-    
-    @objc var firstAuthenticatedAccount: Account? {
-        
+
+    @objc(firstAuthenticatedAccountExcludingCredentials:)
+    func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
-            if selectedAccount.isAuthenticated {
+            if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
                 return selectedAccount
             }
         }
-        
+
         for account in accountManager.accounts {
-            if account.isAuthenticated && account != accountManager.selectedAccount {
+            if BackendEnvironment.shared.isAuthenticated(account) && account != accountManager.selectedAccount && account.loginCredentials != credentials {
                 return account
             }
         }
-        
+
         return nil
+    }
+
+    @objc var firstAuthenticatedAccount: Account? {
+        return firstAuthenticatedAccount(excludingCredentials: nil)
     }
 
     @objc static var numberOfAccounts: Int {
@@ -600,6 +596,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
 
         case .companyLoginFailure(let error):
             defer {
+                authenticationCoordinator?.cancelCompanyLogin()
                 notifyCompanyLoginCompletion()
             }
             

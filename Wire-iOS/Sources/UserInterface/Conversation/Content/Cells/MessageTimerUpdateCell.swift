@@ -38,7 +38,7 @@ class MessageTimerUpdateCell: IconSystemCell {
         let name = sender.displayName
         let youString = "content.system.message_timer.you_part".localized
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
-        let boldAttributes: [NSAttributedStringKey: AnyObject] = [.font: labelBoldFont]
+        let boldAttributes: [NSAttributedString.Key: AnyObject] = [.font: labelBoldFont]
         
         if timeoutValue == .none {
             if sender.isSelfUser {

@@ -45,7 +45,7 @@ import UIKit
         backIndicatorTransitionMaskImage = UIImage(for: .backArrow, iconSize: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
     }
     
-    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedStringKey : Any] {
+    static func titleTextAttributes(for variant: ColorSchemeVariant) -> [NSAttributedString.Key : Any] {
         return [.font: UIFont.systemFont(ofSize: 11, weight: UIFont.Weight.semibold),
                 .foregroundColor: UIColor(scheme: .textForeground, variant: variant),
                 .baselineOffset: 1.0]

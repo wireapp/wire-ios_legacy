@@ -76,7 +76,7 @@ open class CameraKeyboardViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.assetLibrary.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: NSNotification.Name.SplitLayoutObservableDidChangeToLayoutSize, object: self.splitLayoutObservable)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         if let userSession = ZMUserSession.shared() {
             self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
@@ -113,8 +113,8 @@ open class CameraKeyboardViewController: UIViewController {
         self.goBackButton.translatesAutoresizingMaskIntoConstraints = false
         self.goBackButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.goBackButton.circular = true
-        self.goBackButton.setIcon(.backArrow, with: .tiny, for: UIControlState())
-        self.goBackButton.setIconColor(UIColor.white, for: UIControlState())
+        self.goBackButton.setIcon(.backArrow, with: .tiny, for: [])
+        self.goBackButton.setIconColor(UIColor.white, for: [])
         self.goBackButton.accessibilityIdentifier = "goBackButton"
         self.goBackButton.addTarget(self, action: #selector(goBackPressed(_:)), for: .touchUpInside)
         self.goBackButton.applyRTLTransformIfNeeded()
@@ -122,8 +122,8 @@ open class CameraKeyboardViewController: UIViewController {
         self.cameraRollButton.translatesAutoresizingMaskIntoConstraints = false
         self.cameraRollButton.backgroundColor = UIColor(white: 0, alpha: 0.88)
         self.cameraRollButton.circular = true
-        self.cameraRollButton.setIcon(.photo, with: .tiny, for: UIControlState())
-        self.cameraRollButton.setIconColor(UIColor.white, for: UIControlState())
+        self.cameraRollButton.setIcon(.photo, with: .tiny, for: [])
+        self.cameraRollButton.setIconColor(UIColor.white, for: [])
         self.cameraRollButton.accessibilityIdentifier = "cameraRollButton"
         self.cameraRollButton.addTarget(self, action: #selector(openCameraRollPressed(_:)), for: .touchUpInside)
 
@@ -237,7 +237,7 @@ open class CameraKeyboardViewController: UIViewController {
 
             manager.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                 if let image = image {
-                    let data = UIImageJPEGRepresentation(image, 0.9)
+                    let data = image.jpegData(compressionQuality: 0.9)
                     completeBlock(data, info?["PHImageFileUTIKey"] as? String)
                 } else {
                     options.isSynchronous = true
@@ -251,7 +251,7 @@ open class CameraKeyboardViewController: UIViewController {
                         })
 
                         if let image = image {
-                            let data = UIImageJPEGRepresentation(image, 0.9)
+                            let data = image.jpegData(compressionQuality: 0.9)
                             completeBlock(data, info?["PHImageFileUTIKey"] as? String)
                         } else {
                             zmLog.error("Failure: cannot fetch image")
@@ -351,7 +351,7 @@ open class CameraKeyboardViewController: UIViewController {
         if permissions.isPhotoLibraryAuthorized {
             self.collectionViewLayout.minimumLineSpacing = 1
             self.collectionViewLayout.minimumInteritemSpacing = 0.5
-            self.collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 1)
+            self.collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 1)
             self.cameraRollButton.isHidden = false
         } else {
             self.collectionViewLayout.minimumLineSpacing = 0

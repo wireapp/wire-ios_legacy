@@ -25,7 +25,7 @@
 "share_extension.conversation_selection.title" = "Разговор:";
 "share_extension.send_button.title" = "Отправить";
 "share_extension.conversation_selection.empty.value" = "Выбрать";
-"share_extension.input.placeholder" = "Наберите сообщение";
+"share_extension.input.placeholder" = "Введите сообщение";
 "share_extension.sending_progress.title" = "Отправка...";
 "share_extension.preparing.title" = "Подготовка…";
 "share_extension.no_internet_connection.title" = "Отсутствует подключение к интернету";

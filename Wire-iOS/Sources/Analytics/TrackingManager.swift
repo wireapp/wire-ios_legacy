@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import Mixpanel
 import HockeySDK
 import WireExtensionComponents
 

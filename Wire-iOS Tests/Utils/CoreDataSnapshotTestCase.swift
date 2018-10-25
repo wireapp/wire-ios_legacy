@@ -23,21 +23,32 @@ import WireTesting
 /// of mock objects.
 open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
+    var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     var otherUserConversation: ZMConversation!
+    var team: Team?
+    var teamMember: Member?
     let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian", "Brett", "Hannah", "Ana", "Paula"]
 
     override open func setUp() {
         super.setUp()
         snapshotBackgroundColor = .white
         setupTestObjects()
+
+        MockUser.setMockSelf(selfUser)
+
     }
 
     override open func tearDown() {
         selfUser = nil
         otherUser = nil
         otherUserConversation = nil
+        teamMember = nil
+        team = nil
+
+        MockUser.setMockSelf(nil)
+
         super.tearDown()
     }
 
@@ -47,7 +58,17 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         selfUser = ZMUser.insertNewObject(in: uiMOC)
         selfUser.remoteIdentifier = UUID()
         selfUser.name = "selfUser"
+        selfUser.accentColorValue = .vividRed
+
         ZMUser.boxSelfUser(selfUser, inContextUserInfo: uiMOC)
+        if selfUserInTeam {
+            let selfUser = ZMUser.selfUser(in: self.uiMOC)
+            let team = Team.insertNewObject(in: uiMOC)
+            team.remoteIdentifier = UUID()
+            let member = Member.insertNewObject(in: uiMOC)
+            member.user = selfUser
+            member.team = team
+        }
 
         otherUser = ZMUser.insertNewObject(in: uiMOC)
         otherUser.remoteIdentifier = UUID()
@@ -64,6 +85,24 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         connection.conversation = otherUserConversation
 
         uiMOC.saveOrRollback()
+    }
+
+    private func updateTeamStatus(wasInTeam: Bool) {
+        guard wasInTeam != selfUserInTeam else {
+            return
+        }
+
+        if selfUserInTeam {
+            let selfUser = ZMUser.selfUser(in: self.uiMOC)
+            let team = Team.insertNewObject(in: uiMOC)
+            team.remoteIdentifier = UUID()
+            let member = Member.insertNewObject(in: uiMOC)
+            member.user = selfUser
+            member.team = team
+        } else {
+            teamMember = nil
+            team = nil
+        }
     }
 
     func createGroupConversation() -> ZMConversation {
@@ -86,6 +125,20 @@ open class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         user.serviceIdentifier = UUID.create().transportString()
         user.providerIdentifier = UUID.create().transportString()
         return user
+    }
+
+    func nonTeamTest(_ block: () -> Void) {
+        let wasInTeam = selfUserInTeam
+        selfUserInTeam = false
+        updateTeamStatus(wasInTeam: wasInTeam)
+        block()
+    }
+
+    func teamTest(_ block: () -> Void) {
+        let wasInTeam = selfUserInTeam
+        selfUserInTeam = true
+        updateTeamStatus(wasInTeam: wasInTeam)
+        block()
     }
 
 }

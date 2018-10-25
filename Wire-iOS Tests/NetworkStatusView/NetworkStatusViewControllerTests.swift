@@ -93,8 +93,8 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockApplication.statusBarOrientation = orientation
 
         let traitCollection = UITraitCollection(horizontalSizeClass: horizontalSizeClass)
-        mockConversationList.setOverrideTraitCollection(traitCollection, forChildViewController: sutList)
-        mockConversationRoot.setOverrideTraitCollection(traitCollection, forChildViewController: sutRoot)
+        mockConversationList.setOverrideTraitCollection(traitCollection, forChild: sutList)
+        mockConversationRoot.setOverrideTraitCollection(traitCollection, forChild: sutRoot)
 
     }
 
@@ -170,7 +170,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         // Portrait
 
         // WHEN
-        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
+        NotificationCenter.default.post(name: UIApplication.didChangeStatusBarOrientationNotification, object: nil)
 
         // THEN
         checkResult(listState: .online, rootState: .offlineExpanded)
@@ -179,7 +179,7 @@ final class NetworkStatusViewControllerTests: XCTestCase {
         mockApplication.statusBarOrientation = .landscapeLeft
 
         // WHEN
-        NotificationCenter.default.post(name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: nil)
+        NotificationCenter.default.post(name: UIApplication.didChangeStatusBarOrientationNotification, object: nil)
 
         // THEN
         checkResult(listState: .online, rootState: .offlineExpanded)

@@ -23,13 +23,9 @@
 @class ActiveVoiceChannelViewController;
 @class BarController;
 @class AppLockViewController;
-@class ChatHeadsViewController;
 
 @interface NotificationWindowRootViewController : UIViewController
 
 @property (nonatomic, readonly, nullable) AppLockViewController *appLockViewController;
-@property (nonatomic, readonly, nullable) ChatHeadsViewController *chatHeadsViewController;
-
-- (void)show:(nonnull ZMLocalNotification *)notification;
 
 @end

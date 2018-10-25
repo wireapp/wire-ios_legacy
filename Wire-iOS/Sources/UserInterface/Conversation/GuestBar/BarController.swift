@@ -48,9 +48,9 @@ class BarController: UIViewController {
             return leftWeight < rightWeight
         }
         
-        addChildViewController(bar)
+        addChild(bar)
         updateStackView()
-        bar.didMove(toParentViewController: self)
+        bar.didMove(toParent: self)
     }
     
     @objc(dismissBar:)
@@ -58,7 +58,7 @@ class BarController: UIViewController {
         guard let index = bars.index(of: bar) else {
             return
         }
-        bar.willMove(toParentViewController: nil)
+        bar.willMove(toParent: nil)
         bars.remove(at: index)
         
         UIView.animate(withDuration: 0.35) {
@@ -66,7 +66,7 @@ class BarController: UIViewController {
             bar.view.removeFromSuperview()
         }
 
-        bar.removeFromParentViewController()
+        bar.removeFromParent()
     }
     
     private func updateStackView() {

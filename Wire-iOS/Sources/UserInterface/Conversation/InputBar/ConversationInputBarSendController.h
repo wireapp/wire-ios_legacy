@@ -19,10 +19,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class Mention;
 @class ZMConversation;
 @protocol ZMConversationMessage;
 @class ConversationInputBarSendController;
-
 
 @protocol ConversationInputBarSendControllerDelegate <NSObject>
 
@@ -38,8 +38,7 @@
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
 - (void)sendMessageWithImageData:(NSData *)imageData completion:(dispatch_block_t)completionHandler;
-- (void)sendTextMessage:(NSString *)text;
-- (void)sendTextMessage:(NSString *)text withImageData:(NSData *)data;
-- (void)sendMentionsToUsersInMessage:(NSString *)text;
+- (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions;
+- (void)sendTextMessage:(NSString *)text mentions:(NSArray <Mention *>*)mentions withImageData:(NSData *)data;
 
 @end

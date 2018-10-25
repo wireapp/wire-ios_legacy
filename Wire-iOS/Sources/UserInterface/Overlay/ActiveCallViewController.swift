@@ -36,12 +36,12 @@ class ActiveCallViewController : UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        addChildViewController(visibleVoiceChannelViewController)
+        addChild(visibleVoiceChannelViewController)
         
         visibleVoiceChannelViewController.view.frame = view.bounds
         visibleVoiceChannelViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         view.addSubview(visibleVoiceChannelViewController.view)
-        visibleVoiceChannelViewController.didMove(toParentViewController: self)
+        visibleVoiceChannelViewController.didMove(toParent: self)
         
         zmLog.debug(String(format: "Presenting CallViewController: %p", visibleVoiceChannelViewController))
     }
@@ -102,7 +102,7 @@ class ActiveCallViewController : UIViewController {
         
         toViewController.view.frame = view.bounds
         toViewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        addChildViewController(toViewController)
+        addChild(toViewController)
         
         transition(from: fromViewController,
                    to: toViewController,
@@ -111,8 +111,8 @@ class ActiveCallViewController : UIViewController {
                    animations: nil,
                    completion:
             { (finished) in
-                toViewController.didMove(toParentViewController: self)
-                fromViewController.removeFromParentViewController()
+                toViewController.didMove(toParent: self)
+                fromViewController.removeFromParent()
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
     }

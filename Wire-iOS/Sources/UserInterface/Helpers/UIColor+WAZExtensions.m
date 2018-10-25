@@ -30,11 +30,6 @@ static ZMAccentColor overridenAccentColor = ZMAccentColorUndefined;
 
 @implementation UIColor (WAZExtensions)
 
-+ (instancetype)accentColor
-{
-	return [self colorForZMAccentColor:[self indexedAccentColor]];
-}
-
 + (void)setAccentColor:(ZMAccentColor)accentColor
 {
     id<ZMEditableUser> editableSelf = [ZMUser editableSelfUser];

@@ -31,7 +31,7 @@ class BlacklistViewController : LaunchImageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self](_) in
+        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { [weak self](_) in
             self?.showAlert()
         }
     }

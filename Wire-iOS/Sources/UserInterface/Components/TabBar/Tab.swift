@@ -50,7 +50,7 @@ class Tab: Button {
 
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 48)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 48)
     }
     
     private func updateColors() {

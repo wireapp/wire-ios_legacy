@@ -79,7 +79,7 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameWillChange(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
 
         self.createViews()

@@ -19,14 +19,17 @@
 import XCTest
 @testable import Wire
 
-final class ConversationListViewControllerTests: ZMSnapshotTestCase {
+final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     
     var sut: ConversationListViewController!
     
     override func setUp() {
         super.setUp()
+
+        MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+
         sut = ConversationListViewController()
-        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: UIImageJPEGRepresentation(self.image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9))
+        let account = Account(userName: "", userIdentifier: UUID(), teamName: nil, imageData: self.image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9))
         sut.account = account
 
         sut.view.backgroundColor = .black
@@ -37,7 +40,21 @@ final class ConversationListViewControllerTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForNoConversations(){
+    func testForNoConversations() {
         verify(view: sut.view)
+    }
+
+    func testForActionMenu() {
+        teamTest {
+            sut.showActionMenu(for: otherUserConversation, from: sut.view)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
+    }
+
+    func testForActionMenu_NoTeam() {
+        nonTeamTest {
+            sut.showActionMenu(for: otherUserConversation, from: sut.view)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
     }
 }

@@ -145,7 +145,7 @@ private let zmLog = ZMSLog(tag: "UI")
         topTooltipLabel.font = FontSpec(.small, .none).font!
         topTooltipLabel.textColor = UIColor(scheme: .textDimmed)
         
-        cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        cancelButton.setIcon(.cancel, with: .tiny, for: [])
         cancelButton.setIconColor(UIColor(scheme: .textForeground), for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
         cancelButton.accessibilityLabel = "audioRecorderCancel"

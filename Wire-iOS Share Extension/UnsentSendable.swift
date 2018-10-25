@@ -145,7 +145,7 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
                 ]
                 
                 if let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) {
-                    self?.imageData = UIImageJPEGRepresentation(UIImage(cgImage: scaledImage), 0.9)
+                    self?.imageData = UIImage(cgImage: scaledImage).jpegData(compressionQuality: 0.9)
                 }
                 
                 completion()
@@ -159,7 +159,7 @@ class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
                     error?.log(message: "Unable to load image from attachment")
                     
                     if let image = image {
-                        self?.imageData = UIImageJPEGRepresentation(image, 0.9)
+                        self?.imageData = image.jpegData(compressionQuality: 0.9)
                     }
                     
                     completion()

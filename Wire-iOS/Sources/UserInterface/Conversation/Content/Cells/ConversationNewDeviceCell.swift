@@ -26,15 +26,15 @@ import TTTAttributedLabel
     override func configure(for message: ZMConversationMessage!, layoutProperties: ConversationCellLayoutProperties!) {
         super.configure(for: message, layoutProperties: layoutProperties)
         
-        self.leftIconView.image = WireStyleKit.imageOfShieldnotverified()
+        self.leftIconView.image = WireStyleKit.imageOfShieldnotverified
         
         self.updateLabel()
     }
     
     struct TextAttributes {
-        let senderAttributes : [NSAttributedStringKey: AnyObject]
-        let startedUsingAttributes : [NSAttributedStringKey: AnyObject]
-        let linkAttributes : [NSAttributedStringKey: AnyObject]
+        let senderAttributes : [NSAttributedString.Key: AnyObject]
+        let startedUsingAttributes : [NSAttributedString.Key: AnyObject]
+        let linkAttributes : [NSAttributedString.Key: AnyObject]
         
         init(boldFont: UIFont, normalFont: UIFont, textColor: UIColor, link: URL) {
             senderAttributes = [.font: boldFont, .foregroundColor: textColor]
@@ -56,7 +56,7 @@ import TTTAttributedLabel
             a.displayName.compare(b.displayName) == ComparisonResult.orderedAscending
         })
         
-        if let addedUsers = systemMessageData.addedUsers, addedUsers.count > 0 {
+        if !systemMessageData.addedUsers.isEmpty {
             configureForAddedUsers(with: textAttributes)
         }
         else if let user = users.first , user.isSelfUser && systemMessageData.systemMessageType == .usingNewDevice {
@@ -125,10 +125,8 @@ import TTTAttributedLabel
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWithURL URL: Foundation.URL!) {
         if URL == type(of: self).userClientLink {
-            if let systemMessageData = message.systemMessageData,
-                let conversation = message.conversation,
-                let addedUsers = systemMessageData.addedUsers,
-                addedUsers.count > 0 {
+            if let systemMessageData = message.systemMessageData, !systemMessageData.addedUsers.isEmpty,
+               let conversation = message.conversation  {
                 ZClientViewController.shared()?.openDetailScreen(for: conversation)
             }
             else if let systemMessageData = message.systemMessageData,

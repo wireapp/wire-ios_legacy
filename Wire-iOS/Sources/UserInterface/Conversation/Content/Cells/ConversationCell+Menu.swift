@@ -47,8 +47,8 @@ public extension ConversationCell {
     // MARK: - Helper
     
     private func registerMenuObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(menuWillShow), name: .UIMenuControllerWillShowMenu, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide), name: .UIMenuControllerDidHideMenu, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(menuWillShow), name: UIMenuController.willShowMenuNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide), name: UIMenuController.didHideMenuNotification, object: nil)
     }
     
     private static func items(for message: ZMConversationMessage, with properties: MenuConfigurationProperties) -> [UIMenuItem] {
@@ -77,13 +77,13 @@ public extension ConversationCell {
     @objc private func menuWillShow(_ note: Notification) {
         showsMenu = true
         menuConfigurationProperties().selectedMenuBlock?(true, true)
-        NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillShowMenu, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIMenuController.willShowMenuNotification, object: nil)
     }
     
     @objc private func menuDidHide(_ note: Notification) {
         showsMenu = false
         menuConfigurationProperties().selectedMenuBlock?(false, true)
-        NotificationCenter.default.removeObserver(self, name: .UIMenuControllerDidHideMenu, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
     }
     
     @objc func deleteMessage(_ sender: Any) {

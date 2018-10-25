@@ -189,7 +189,7 @@ class SettingsPropertyTests: XCTestCase {
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
         let key = "IntegerKey"
-        XCTAssertNil(settings.value(for: key, in: account))
+        XCTAssertNil(settings.value(for: key, in: account) as Int?)
         
         // when
         settings.setValue(42, for: key, in: account)
@@ -204,7 +204,7 @@ class SettingsPropertyTests: XCTestCase {
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
         let key = "BooleanKey"
-        XCTAssertNil(settings.value(for: key, in: account))
+        XCTAssertNil(settings.value(for: key, in: account) as Bool?)
         
         // when
         settings.setValue(true, for: key, in: account)

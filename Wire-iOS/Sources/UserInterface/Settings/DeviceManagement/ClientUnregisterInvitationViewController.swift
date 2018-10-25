@@ -20,12 +20,19 @@
 import UIKit
 import Cartography
 
-class ClientUnregisterInvitationViewController: RegistrationStepViewController {
+protocol ClientUnregisterInvitationViewControllerDelegate: class {
+    /// Called when the user tapped the button to unregister clients.
+    func userDidAcceptClientUnregisterInvitation()
+}
+
+class ClientUnregisterInvitationViewController: UIViewController {
     var heroLabel : UILabel?
     var subtitleLabel : UILabel?
     var manageDevicesButton : UIButton?
     var signOutButton : UIButton?
     var containerView : UIView?
+
+    weak var delegate: ClientUnregisterInvitationViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +80,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     
     fileprivate func createDeleteDevicesButton() {
         let manageDevicesButton = Button(style: .fullMonochrome)
-        manageDevicesButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.manage_button.title", comment:""), for: UIControlState())
+        manageDevicesButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.manage_button.title", comment:""), for: [])
         manageDevicesButton.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.openManageDevices(_:)), for: .touchUpInside)
         self.manageDevicesButton = manageDevicesButton
         self.containerView?.addSubview(manageDevicesButton)
@@ -82,7 +89,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     fileprivate func createSignOutButton() {
         
         let signOutButton = Button(style: .emptyMonochrome)
-        signOutButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.sign_out_button.title", comment:""), for: UIControlState())
+        signOutButton.setTitle(NSLocalizedString("registration.signin.too_many_devices.sign_out_button.title", comment:""), for: [])
         signOutButton.addTarget(self, action: #selector(ClientUnregisterInvitationViewController.signOut(_:)), for: .touchUpInside)
         signOutButton.isHidden = true // for the moment not supported
         self.signOutButton = signOutButton
@@ -132,9 +139,7 @@ class ClientUnregisterInvitationViewController: RegistrationStepViewController {
     // MARK: - Actions
     
     @objc func openManageDevices(_ sender : UIButton!) {
-        if let formStepDelegate = self.formStepDelegate {
-            formStepDelegate.didCompleteFormStep(self)
-        }
+        delegate?.userDidAcceptClientUnregisterInvitation()
     }
     
     @objc func signOut(_ sender : UIButton!) {

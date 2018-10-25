@@ -24,7 +24,7 @@ import MessageUI
     
     private struct Action {
         let text: String
-        let type: UIAlertActionStyle
+        let type: UIAlertAction.Style
         let action: (() -> Void)?
     }
     

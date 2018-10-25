@@ -29,7 +29,7 @@ final class UserImageViewContainer: UIView {
         }
     }
     
-    init(size: UserImageViewSize, maxSize: CGFloat, yOffset: CGFloat) {
+    init(size: UserImageView.Size, maxSize: CGFloat, yOffset: CGFloat) {
         userImageView = UserImageView(size: size)
         self.maxSize = maxSize
         self.yOffset = yOffset
@@ -53,10 +53,8 @@ final class UserImageViewContainer: UIView {
         userImageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .horizontal)
         userImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .vertical)
         userImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .horizontal)
-        userImageView.imageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .vertical)
-        userImageView.imageView.setContentHuggingPriority(UILayoutPriority(rawValue: priority), for: .horizontal)
-        userImageView.imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .vertical)
-        userImageView.imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: priority), for: .horizontal)
+        
+        userImageView.setImageConstraint(resistance: priority, hugging: priority)
     }
     
     private func createConstraints() {

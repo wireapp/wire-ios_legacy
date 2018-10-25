@@ -44,7 +44,7 @@ extension UIViewController {
     }
 
     @objc public func takeFirstResponder() {
-        if UIAccessibilityIsVoiceOverRunning() {
+        if UIAccessibility.isVoiceOverRunning {
             return
         }
     }
@@ -65,6 +65,12 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
             pageViewController.dataSource = isInteractive ? self : nil
             pageViewController.delegate = isInteractive ? self : nil
             tabBar?.animatesTransition = isInteractive
+        }
+    }
+
+    @objc(tabBarHidden) var isTabBarHidden = false {
+        didSet {
+            tabBar?.isHidden = isTabBarHidden
         }
     }
 
@@ -123,6 +129,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         let items = self.viewControllers.map({ viewController in viewController.tabBarItem! })
         self.tabBar = TabBar(items: items, style: self.style, selectedIndex: selectedIndex)
         tabBar?.animatesTransition = isInteractive
+        tabBar?.isHidden = isTabBarHidden
         self.tabBar?.delegate = self
         self.tabBar?.isUserInteractionEnabled = self.isEnabled && items.count > 1
         self.view.addSubview(self.tabBar!)
@@ -161,7 +168,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         guard toViewController != fromViewController else { return }
         
         let forward = viewControllers.index(of: toViewController) > fromViewController.flatMap(viewControllers.index)
-        let direction = forward ? UIPageViewControllerNavigationDirection.forward : .reverse
+        let direction = forward ? UIPageViewController.NavigationDirection.forward : .reverse
         
         pageViewController.setViewControllers([toViewController], direction: direction, animated: isInteractive) { [delegate, tabBar] complete in
             guard complete else { return }

@@ -16,11 +16,39 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+static NSString * const _Nonnull ContactsViewControllerCellID = @"ContactsCell";
+static NSString * const _Nonnull ContactsViewControllerSectionHeaderID = @"ContactsSectionHeaderView";
+
+@class IconButton;
+@class SearchHeaderViewController;
+
 @interface ContactsViewController ()
 
-@property (nonatomic) UILabel *titleLabel;
-@property (nonatomic) UIView *bottomContainerView;
-@property (nonatomic) UIView *bottomContainerSeparatorView;
-@property (nonatomic) UILabel *noContactsLabel;
+@property (nonatomic) BOOL searchResultsReceived;
+
+@property (nonatomic, nullable) UILabel *titleLabel;
+@property (nonatomic, nullable) UIView *bottomContainerView;
+@property (nonatomic, nullable) UIView *bottomContainerSeparatorView;
+@property (nonatomic, nullable) UILabel *noContactsLabel;
+@property (nonatomic, nullable) NSArray *actionButtonTitles;
+@property (nonatomic, nullable) IconButton *cancelButton;
+@property (nonatomic, nullable) SearchHeaderViewController *searchHeaderViewController;
+@property (nonatomic, nullable) UIView *topContainerView;
+@property (nonatomic, nullable) UIView *separatorView;
+@property (nonatomic, readwrite, nullable) UITableView *tableView;
+
+@property (nonatomic, nullable) NSLayoutConstraint *closeButtonHeightConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *titleLabelHeightConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *titleLabelTopConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *titleLabelBottomConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *closeButtonTopConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *closeButtonBottomConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *topContainerHeightConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *searchHeaderTopConstraint;
+@property (nonatomic, nullable) NSLayoutConstraint *searchHeaderWithNavigatorBarTopConstraint;
+
+@property (nonatomic, nullable) NSLayoutConstraint *bottomEdgeConstraint;
+
+- (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end

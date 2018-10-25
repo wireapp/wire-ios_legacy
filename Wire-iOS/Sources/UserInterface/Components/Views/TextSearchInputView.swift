@@ -69,7 +69,7 @@ public protocol TextSearchInputViewDelegate: class {
         searchInput.keyboardAppearance = ColorScheme.default.keyboardAppearance
         searchInput.layer.cornerRadius = 4
         searchInput.backgroundColor = UIColor(scheme: .tokenFieldBackground)
-        searchInput.textContainerInset = UIEdgeInsetsMake(10, 40, 10, 8)
+        searchInput.textContainerInset = UIEdgeInsets(top: 10, left: 40, bottom: 10, right: 8)
         searchInput.font = .normalFont
         searchInput.textColor = .textForeground
         
@@ -100,7 +100,7 @@ public protocol TextSearchInputViewDelegate: class {
             
             selfView.height <= 100
             
-            searchInput.edges == inset(selfView.edges, UIEdgeInsetsMake(8, 8, 8, 8))
+            searchInput.edges == inset(selfView.edges, UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
 
             placeholderLabel.leading == searchInput.leading + 48
             placeholderLabel.top == searchInput.top

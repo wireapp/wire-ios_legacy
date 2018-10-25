@@ -1,4 +1,4 @@
-////
+//
 // Wire
 // Copyright (C) 2018 Wire Swiss GmbH
 //
@@ -20,6 +20,7 @@ import Foundation
 import Down
 
 extension NSMutableAttributedString {
+    
     @objc
     static func markdown(from text: String, style: DownStyle) -> NSMutableAttributedString {
         let down = Down(markdownString: text)
@@ -37,4 +38,5 @@ extension NSMutableAttributedString {
         
         return result
     }
+    
 }

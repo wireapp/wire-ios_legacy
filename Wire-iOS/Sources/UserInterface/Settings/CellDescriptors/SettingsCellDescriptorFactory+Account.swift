@@ -50,11 +50,13 @@ extension SettingsCellDescriptorFactory {
     func infoSection() -> SettingsSectionDescriptorType {
         var cellDescriptors = [nameElement(), handleElement()]
         
-        if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
-            cellDescriptors.append(phoneElement())
+        if !ZMUser.selfUser()!.usesCompanyLogin {
+            if !ZMUser.selfUser().hasTeam || !(ZMUser.selfUser().phoneNumber?.isEmpty ?? true) {
+                cellDescriptors.append(phoneElement())
+            }
+            
+            cellDescriptors.append(emailElement())
         }
-        
-        cellDescriptors.append(emailElement())
         return SettingsSectionDescriptor(
             cellDescriptors: cellDescriptors,
             header: "self.settings.account_details_group.info.title".localized,
@@ -112,25 +114,15 @@ extension SettingsCellDescriptorFactory {
             isDestructive: false,
             presentationStyle: .navigation,
             presentationAction: { () -> (UIViewController?) in
-             if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
                 return ChangeEmailViewController()
-             } else {
-                let addEmailController = AddEmailPasswordViewController()
-                addEmailController.showsNavigationBar = false
-                let stepDelegate = DismissStepDelegate()
-                stepDelegate.strongCapture = stepDelegate
-                
-                addEmailController.formStepDelegate = stepDelegate
-                return addEmailController
-            }
-        },
+            },
             previewGenerator: { _ in
                 if let email = ZMUser.selfUser().emailAddress, !email.isEmpty {
                     return SettingsCellPreview.text(email)
                 } else {
                     return SettingsCellPreview.text("self.add_email_password".localized)
                 }
-        },
+            },
             accessoryViewMode: .alwaysHide
         )
     }
@@ -140,19 +132,9 @@ extension SettingsCellDescriptorFactory {
             title: "self.settings.account_section.phone.title".localized,
             isDestructive: false,
             presentationStyle: .navigation,
-            presentationAction: { () -> (UIViewController?) in
-                if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
-                    return ChangePhoneViewController()
-                } else {
-                    let addController = AddPhoneNumberViewController()
-                    addController.showsNavigationBar = false
-                    let stepDelegate = DismissStepDelegate()
-                    stepDelegate.strongCapture = stepDelegate
-                    
-                    addController.formStepDelegate = stepDelegate
-                    return addController
-                }
-        },
+            presentationAction: {
+                return ChangePhoneViewController()
+            },
             previewGenerator: { _ in
                 if let phoneNumber = ZMUser.selfUser().phoneNumber, !phoneNumber.isEmpty {
                     return SettingsCellPreview.text(phoneNumber)

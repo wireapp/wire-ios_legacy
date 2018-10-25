@@ -23,7 +23,7 @@ import Cartography
 class FingerprintTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     let fingerprintLabel = CopyableLabel()
-    let spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let spinner = UIActivityIndicatorView(style: .gray)
 
     var variant: ColorSchemeVariant? {
         didSet {
@@ -58,7 +58,7 @@ class FingerprintTableViewCell: UITableViewCell {
         }
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         self.titleLabel.text = NSLocalizedString("self.settings.account_details.key_fingerprint.title", comment: "")
         self.titleLabel.accessibilityIdentifier = "fingerprint title"
         self.fingerprintLabel.numberOfLines = 0

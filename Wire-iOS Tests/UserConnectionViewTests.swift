@@ -67,6 +67,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
         mockUser.isPendingApprovalByOtherUser = true
         mockUser.isPendingApprovalBySelfUser = false
         mockUser.isConnected = false
+        mockUser.isTeamMember = false
         
         let connectionView = UserConnectionView(user: user)
         connectionView.layoutForTest()
@@ -91,8 +92,7 @@ final class UserConnectionViewTests: ZMSnapshotTestCase {
     func testWithUserName() {
         let sut = sutForUser()
         sut.layoutForTest()
-        verify(view: sut)
-        
+        verify(view: sut)        
     }
 
     func testWithoutUserName() {

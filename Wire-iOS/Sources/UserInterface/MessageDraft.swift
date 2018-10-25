@@ -58,7 +58,7 @@ import Down
         
         if let attributedMessage = attributedMessage, !attributedMessage.string.isEmpty {
             let parser = AttributedStringParser()
-            text += parser.parse(attributedString: attributedMessage.withDecodedMarkdownIDs)
+            text += parser.parse(attributedString: attributedMessage.withDecodedMarkdownIDs).string
         }
         else if let message = message, !message.isEmpty {
             text += message
@@ -95,14 +95,16 @@ extension MessageDraft: Shareable {
         Don't forget to return the height of the view in `height(forPreviewView:)`.
      */
     public func previewView() -> UIView? {
-        return nil
+        return UIView()
     }
 }
 
 
 fileprivate func send(draft: MessageDraft, to: [AnyObject]) {
+    guard let text = draft.shareableText() else { return }
+    
     let conversations = to as! [ZMConversation]
     conversations.forEachNonEphemeral {
-        _ = $0.appendMessage(withText: draft.shareableText())
+        _ = $0.append(text: text)
     }
 }

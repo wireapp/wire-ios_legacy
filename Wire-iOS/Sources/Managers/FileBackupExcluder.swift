@@ -38,12 +38,12 @@ final internal class FileBackupExcluder: NSObject {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(FileBackupExcluder.applicationWillEnterForeground(_:)),
-                                               name: .UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: .none)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(FileBackupExcluder.applicationWillResignActive(_:)),
-                                               name: .UIApplicationWillResignActive,
+                                               name: UIApplication.willResignActiveNotification,
                                                object: .none)
         
         self.excludeFilesFromBackup()

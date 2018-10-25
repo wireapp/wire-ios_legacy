@@ -255,13 +255,4 @@ fileprivate extension UITableViewCell {
         return view
     }
 
-    func prepareForSnapshots() -> UITableView {
-        bounds.size = systemLayoutSizeFitting(
-            CGSize(width: 375, height: 0),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-        return wrapInTableView()
-    }
-
 }

@@ -114,7 +114,7 @@ class LocationPreviewController: TintColorCorrectedViewController {
             let span = MKCoordinateSpan(zoomLevel: Int(locationData.zoomLevel), viewSize: Float(view.frame.size.height))
             region = MKCoordinateRegion(center: locationData.coordinate, span: span)
         } else {
-            region = MKCoordinateRegionMakeWithDistance(locationData.coordinate, 250, 250)
+            region = MKCoordinateRegion(center: locationData.coordinate, latitudinalMeters: 250, longitudinalMeters: 250)
         }
 
         mapView.setRegion(region, animated: false)

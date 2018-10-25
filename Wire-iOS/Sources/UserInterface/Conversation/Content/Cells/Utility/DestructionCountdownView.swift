@@ -105,7 +105,7 @@ import Cartography
         elapsedTimeAnimation.duration = duration
         elapsedTimeAnimation.fromValue = currentProgress
         elapsedTimeAnimation.toValue = 1
-        elapsedTimeAnimation.fillMode = kCAFillModeForwards
+        elapsedTimeAnimation.fillMode = .forwards
         elapsedTimeAnimation.isRemovedOnCompletion = false
 
         elapsedTimeLayer.add(elapsedTimeAnimation, forKey: elapsedTimeAnimationKey)

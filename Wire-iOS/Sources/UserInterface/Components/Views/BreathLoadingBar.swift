@@ -72,8 +72,8 @@ class BreathLoadingBar: UIView {
 
         backgroundColor = UIColor.accent()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: .UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -139,7 +139,7 @@ class BreathLoadingBar: UIView {
         anim.values = [CGFloat.SyncBar.minOpacity, CGFloat.SyncBar.maxOpacity, CGFloat.SyncBar.minOpacity]
         anim.isRemovedOnCompletion = false
         anim.autoreverses = false
-        anim.fillMode = kCAFillModeForwards
+        anim.fillMode = .forwards
         anim.repeatCount = .infinity
         anim.duration = animationDuration
         anim.timingFunction = CAMediaTimingFunction.easeInOutSine()

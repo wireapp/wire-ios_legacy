@@ -21,14 +21,14 @@ import Foundation
 import WireLinkPreview
 
 @objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
-    
-    var messageText: String = ""
+    var messageText: String? = ""
     var linkPreview: LinkPreview? = nil
     var imageData: Data? = nil
     var linkPreviewHasImage: Bool = false
     var linkPreviewImageCacheKey: String? = nil
+    var mentions = [Mention]()
     
-    func fetchLinkPreviewImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
+    func fetchLinkPreviewImageData(with queue: DispatchQueue, completionHandler: @escaping ((Data?) -> Void)) {
         completionHandler(imageData)
     }
     
@@ -39,25 +39,24 @@ import WireLinkPreview
 
 @objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {
 
-    var messageTimer: NSNumber!
+    var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
-    var users: Set<ZMUser>! = Set()
-    var clients: Set<AnyHashable>! = Set()
-    var addedUsers: Set<ZMUser>! = Set()
-    var removedUsers: Set<ZMUser>! = Set()
-    var text: String! = ""
+    var users: Set<ZMUser> = Set()
+    var clients: Set<AnyHashable> = Set()
+    var addedUsers: Set<ZMUser> = Set()
+    var removedUsers: Set<ZMUser> = Set()
+    var text: String? = ""
     var needsUpdatingUsers: Bool = false
     var userIsTheSender: Bool = false
 
     var duration: TimeInterval = 0
     var childMessages = Set<AnyHashable>()
-    var parentMessage: ZMSystemMessageData! = nil
+    var parentMessage: ZMSystemMessageData? = nil
     
     init(systemMessageType: ZMSystemMessageType) {
         self.systemMessageType = systemMessageType
     }
 }
-
 
 @objc protocol MockFileMessageDataType: ZMFileMessageData {
     var mimeType: String? { get set }
@@ -192,13 +191,13 @@ extension MockFileMessageData: MockFileMessageDataType { }
     
     var isDownloaded: Bool = true
     var isAnimatedGIF: Bool = false
-    var imageType: String! = String()
+    var imageType: String? = String()
     
-    var imageData: Data { return mockImageData }
-    var imageDataIdentifier: String { return mockImageDataIdentifier }
+    var imageData: Data? { return mockImageData }
+    var imageDataIdentifier: String? { return mockImageDataIdentifier }
     var originalSize: CGSize { return mockOriginalSize }
     
-    func fetchImageData(with queue: DispatchQueue!, completionHandler: ((Data?) -> Void)!) {
+    func fetchImageData(with queue: DispatchQueue, completionHandler: @escaping ((Data?) -> Void)) {
         completionHandler(imageData)
     }
     

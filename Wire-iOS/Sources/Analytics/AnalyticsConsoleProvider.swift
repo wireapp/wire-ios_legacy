@@ -33,7 +33,6 @@ fileprivate let tag = "<ANALYTICS>:"
 }
 
 extension AnalyticsConsoleProvider: AnalyticsProvider {
-
     public var isOptedOut : Bool {
         get {
             return optedOut
@@ -73,9 +72,12 @@ extension AnalyticsConsoleProvider: AnalyticsProvider {
         print(loggingData: loggingDict)
     }
     
-    func setSuperProperty(_ name: String, value: NSObject?) {
+    func setSuperProperty(_ name: String, value: Any?) {
         print(loggingData: ["superProperty_\(name)" : value ?? "nil"])
     }
 
+    func flush(completion: (() -> Void)?) {
+        completion?()
+    }
 }
 

@@ -72,7 +72,7 @@ import Cartography
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -157,7 +157,7 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
     
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
         guard change.isArchivedChanged || change.conversationListIndicatorChanged || change.nameChanged ||
-            change.unreadCountChanged || change.connectionStateChanged || change.isSilencedChanged else { return }
+            change.unreadCountChanged || change.connectionStateChanged || change.mutedMessageTypesChanged else { return }
         for case let cell as ConversationListCell in collectionView.visibleCells where cell.conversation == change.conversation {
             cell.updateAppearance()
         }

@@ -67,7 +67,7 @@ final internal class SelfProfileViewController: UIViewController {
         super.init(nibName: .none, bundle: .none)
                 
         profileView.source = self
-        profileView.imageView.delegate = self
+        profileView.imageView.addTarget(self, action: #selector(userDidTapProfileImage), for: .touchUpInside)
         
         settingsController.tableView.isScrollEnabled = false
         
@@ -94,9 +94,9 @@ final internal class SelfProfileViewController: UIViewController {
         profileContainerView.addSubview(profileView)
         view.addSubview(profileContainerView)
         
-        settingsController.willMove(toParentViewController: self)
+        settingsController.willMove(toParent: self)
         view.addSubview(settingsController.view)
-        addChildViewController(settingsController)
+        addChild(settingsController)
         
         settingsController.view.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         settingsController.view.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
@@ -181,10 +181,7 @@ final internal class SelfProfileViewController: UIViewController {
         }
     }
     
-}
-
-extension SelfProfileViewController: UserImageViewDelegate {
-    func userImageViewTouchUp(inside userImageView: UserImageView) {
+    @objc func userDidTapProfileImage(sender: UserImageView) {
         let profileImageController = ProfileSelfPictureViewController()
         self.present(profileImageController, animated: true, completion: .none)
     }

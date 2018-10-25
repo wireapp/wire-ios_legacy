@@ -20,7 +20,7 @@
 import XCTest
 @testable import Wire
 
-extension UILayoutConstraintAxis : CustomStringConvertible {
+extension NSLayoutConstraint.Axis : CustomStringConvertible {
     public var description: String {
         switch self {
         case .horizontal : return "horizontal"
@@ -38,7 +38,7 @@ final class LandingViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         sut = LandingViewController(device: mockDevice)
-        mockParentViewControler.addChildViewController(sut)
+        mockParentViewControler.addChild(sut)
     }
     
     override func tearDown() {
@@ -52,13 +52,13 @@ final class LandingViewControllerTests: XCTestCase {
         // GIVEN
         mockDevice.userInterfaceIdiom = .pad
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)
         XCTAssertEqual(sut.buttonStackView.axis, .horizontal, "buttonStackView.axis is \(sut.buttonStackView.axis)")
         
         // WHEN
         traitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)
         
         // THEN
@@ -69,13 +69,13 @@ final class LandingViewControllerTests: XCTestCase {
         // GIVEN
         mockDevice.userInterfaceIdiom = .phone
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)
         XCTAssertEqual(sut.buttonStackView.axis, .vertical, "buttonStackView.axis is \(sut.buttonStackView.axis)")
 
         // WHEN
         traitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChildViewController: sut)
+        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)
 
         // THEN

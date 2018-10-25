@@ -46,7 +46,7 @@ final public class CameraPicker: NSObject {
             return
         }
         
-        var sourceType = UIImagePickerControllerSourceType.camera
+        var sourceType = UIImagePickerController.SourceType.camera
         
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
             sourceType = .photoLibrary
@@ -91,9 +91,9 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
         self.finishPicking()
     }
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        guard let mediaType = info[UIImagePickerControllerMediaType] as? String else {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        guard let mediaType = info[.mediaType] as? String else {
             self.finishPicking()
             return
         }
@@ -103,7 +103,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
         
         switch mediaType {
         case kUTTypeMovie.string:
-            guard let videoURL = info[UIImagePickerControllerMediaURL] as? URL else {
+            guard let videoURL = info[.mediaURL] as? URL else {
                 zmLog.error("Video not provided form \(picker): info \(info)")
                 self.finishPicking()
                 return
@@ -120,8 +120,8 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
             try! fileManager.moveItem(at: videoURL, to: videoTempURL)
             
             if (picker.sourceType == .camera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempPath)) {
-                let selector = "video:didFinishSavingWithError:contextInfo:"
-                UISaveVideoAtPathToSavedPhotosAlbum(videoTempPath, self, Selector(selector), nil)
+                let selector = #selector(self.video(_:didFinishSavingWithError:contextInfo:))
+                UISaveVideoAtPathToSavedPhotosAlbum(videoTempPath, self, selector, nil)
             }
             
             picker.showLoadingView = true
@@ -142,7 +142,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
                 }
             }
         case kUTTypeImage.string:
-            guard let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
                 self.finishPicking()
                 return
             }
@@ -157,7 +157,7 @@ extension CameraPicker: UIImagePickerControllerDelegate, UINavigationControllerD
         }
     }
     
-    func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
+    @objc func video(_ videoPath: NSString, didFinishSavingWithError error: NSError?, contextInfo info: AnyObject) {
         if let error = error {
             zmLog.error("Cannot save video: \(error)")
         }

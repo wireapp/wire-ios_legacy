@@ -28,8 +28,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <WireExtensionComponents/PublicHeader.h>
 
 // Views
-#import <WireExtensionComponents/AvatarImageView.h>
-#import <WireExtensionComponents/UserImageView.h>
 #import <WireExtensionComponents/TextView.h>
 #import <WireExtensionComponents/ProgressSpinner.h>
 #import <WireExtensionComponents/UIViewController+LoadingView.h>
@@ -37,7 +35,6 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 
 // Icons
 #import <WireExtensionComponents/ZetaIconTypes.h>
-#import <WireExtensionComponents/WireStyleKit.h>
 #import <WireExtensionComponents/UIImage+ZetaIconsNeue.h>
 
 // Utils
@@ -58,4 +55,4 @@ FOUNDATION_EXPORT const unsigned char WireExtensionComponentsVersionString[];
 #import <WireExtensionComponents/UIColor+WR_ColorScheme.h>
 #import <WireExtensionComponents/UILabel+TextTransform.h>
 #import <WireExtensionComponents/CABasicAnimation+Rotation.h>
-
+#import <WireExtensionComponents/AccentColorProvider.h>

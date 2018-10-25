@@ -28,7 +28,7 @@ class ConversationSelectionViewController : UITableViewController {
     
     fileprivate var allConversations : [Conversation]
     fileprivate var visibleConversations : [Conversation]
-    fileprivate let verifiedShieldImage = WireStyleKit.imageOfShieldverified()
+    fileprivate let verifiedShieldImage = WireStyleKit.imageOfShieldverified
     
     var selectionHandler : ((_ conversation: Conversation) -> Void)?
     

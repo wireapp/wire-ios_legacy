@@ -93,6 +93,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
 @property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
+@property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
 @end
 
 
@@ -101,10 +102,16 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
 {
+    return [self initWithConversation:conversation message:conversation.firstUnreadMessage];
+}
+
+- (instancetype)initWithConversation:(ZMConversation *)conversation message:(id<ZMConversationMessage>)message
+{
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
         _conversation = conversation;
+        self.messageVisibleOnLoad = message ?: conversation.firstUnreadMessage;
         self.cachedRowHeights = [NSMutableDictionary dictionary];
         self.messagePresenter = [[MessagePresenter alloc] init];
         self.messagePresenter.targetViewController = self;
@@ -171,6 +178,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     UIPinchGestureRecognizer *pinchImageGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(onPinchZoom:)];
     pinchImageGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:pinchImageGestureRecognizer];
+    
+    [self createMentionsResultsView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -237,8 +246,8 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
     if (! self.hasDoneInitialLayout) {
         self.hasDoneInitialLayout = YES;
         [self updateTableViewHeaderView];
-        if (self.conversationMessageWindowTableViewAdapter.firstUnreadMessage != nil) {
-            [self scrollToMessage:self.conversationMessageWindowTableViewAdapter.firstUnreadMessage animated:NO];
+        if (self.messageVisibleOnLoad != nil) {
+            [self scrollToMessage:self.messageVisibleOnLoad animated:NO];
         }
     }
 }
@@ -559,6 +568,18 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 #pragma mark - Custom UI, utilities
 
+- (void) createMentionsResultsView {
+    
+    self.mentionsSearchResultsViewController = [[UserSearchResultsViewController alloc] init];
+    self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    // delegate here
+    
+    [self addChildViewController:self.mentionsSearchResultsViewController];
+    [self.view addSubview:self.mentionsSearchResultsViewController.view];
+    
+    [self.mentionsSearchResultsViewController.view autoPinEdgesToSuperviewEdges];
+}
+
 - (void)removeHighlightsAndMenu
 {
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
@@ -739,14 +760,14 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 @implementation ConversationContentViewController (ConversationCellDelegate)
 
-- (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view
+- (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame
 {
     if (!cell || !view) {
         return;
     }
 
-    if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:)]) {
-        [self.delegate didTapOnUserAvatar:user view:view];
+    if ([self.delegate respondsToSelector:@selector(didTapOnUserAvatar:view:frame:)]) {
+        [self.delegate didTapOnUserAvatar:user view:view frame:frame];
     }
 }
 

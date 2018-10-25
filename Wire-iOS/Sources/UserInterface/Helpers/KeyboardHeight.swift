@@ -23,7 +23,7 @@
     public static var current: CGFloat {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
-            return UIInterfaceOrientationIsPortrait(UIApplication.shared.statusBarOrientation) ? 264 : 352
+            return UIApplication.shared.statusBarOrientation.isPortrait ? 264 : 352
         default:
             return phoneKeyboardHeight()
         }

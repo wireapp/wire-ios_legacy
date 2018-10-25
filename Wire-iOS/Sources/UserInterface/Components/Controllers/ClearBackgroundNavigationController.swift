@@ -108,7 +108,7 @@ class ClearBackgroundNavigationController: UINavigationController {
 
 extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController,
-                              animationControllerFor operation: UINavigationControllerOperation,
+                              animationControllerFor operation: UINavigationController.Operation,
                               from fromVC: UIViewController,
                               to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if self.useDefaultPopGesture {

@@ -66,7 +66,7 @@ class TabBar: UIView {
         
         super.init(frame: CGRect.zero)
 
-        self.accessibilityTraits = UIAccessibilityTraitTabBar
+        self.accessibilityTraits = .tabBar
 
         setupViews()
         createConstraints()

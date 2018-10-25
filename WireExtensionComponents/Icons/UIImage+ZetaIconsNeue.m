@@ -18,6 +18,7 @@
 
 
 #import <WireExtensionComponents/WireExtensionComponents.h>
+#import <WireExtensionComponents/WireExtensionComponents-Swift.h>
 
 static CGFloat const ZetaIconDefaultSizes[] = {32, 16};
 

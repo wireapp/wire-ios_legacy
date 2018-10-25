@@ -117,36 +117,36 @@ private let zmLog = ZMSLog(tag: "UI")
         
         [self.audioPreviewView, self.timeLabel, self.tipLabel].forEach(self.topContainer.addSubview)
         
-        self.recordButton.setIcon(.recordDot, with: .tiny, for: UIControlState())
+        self.recordButton.setIcon(.recordDot, with: .tiny, for: [])
         self.recordButton.accessibilityLabel = "record"
         self.recordButton.addTarget(self, action: #selector(recordButtonPressed(_:)), for: .touchUpInside)
         self.recordButton.setBackgroundImageColor(UIColor(for: .vividRed), for: .normal)
-        self.recordButton.setIconColor(UIColor.white, for: UIControlState())
+        self.recordButton.setIconColor(UIColor.white, for: [])
         self.recordButton.layer.masksToBounds = true
         
-        self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: UIControlState())
+        self.stopRecordButton.setIcon(.stopRecording, with: .tiny, for: [])
         self.stopRecordButton.accessibilityLabel = "stopRecording"
         self.stopRecordButton.addTarget(self, action: #selector(stopRecordButtonPressed(_:)), for: .touchUpInside)
         self.stopRecordButton.setBackgroundImageColor(UIColor(for: .vividRed), for: .normal)
-        self.stopRecordButton.setIconColor(UIColor.white, for: UIControlState())
+        self.stopRecordButton.setIconColor(UIColor.white, for: [])
         self.stopRecordButton.layer.masksToBounds = true
         
-        self.confirmButton.setIcon(.checkmark, with: .tiny, for: UIControlState())
+        self.confirmButton.setIcon(.checkmark, with: .tiny, for: [])
         self.confirmButton.accessibilityLabel = "confirmRecording"
         self.confirmButton.addTarget(self, action: #selector(confirmButtonPressed(_:)), for: .touchUpInside)
         self.confirmButton.setBackgroundImageColor(UIColor(for: .strongLimeGreen), for: .normal)
-        self.confirmButton.setIconColor(UIColor.white, for: UIControlState())
+        self.confirmButton.setIconColor(UIColor.white, for: [])
         self.confirmButton.layer.masksToBounds = true
         
-        self.redoButton.setIcon(.undo, with: .tiny, for: UIControlState())
+        self.redoButton.setIcon(.undo, with: .tiny, for: [])
         self.redoButton.accessibilityLabel = "redoRecording"
         self.redoButton.addTarget(self, action: #selector(redoButtonPressed(_:)), for: .touchUpInside)
-        self.redoButton.setIconColor(UIColor.white, for: UIControlState())
+        self.redoButton.setIconColor(UIColor.white, for: [])
         
-        self.cancelButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        self.cancelButton.setIcon(.cancel, with: .tiny, for: [])
         self.cancelButton.accessibilityLabel = "cancelRecording"
         self.cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
-        self.cancelButton.setIconColor(UIColor.white, for: UIControlState())
+        self.cancelButton.setIconColor(UIColor.white, for: [])
         
         [self.recordButton, self.stopRecordButton, self.confirmButton, self.redoButton, self.cancelButton].forEach(self.bottomToolbar.addSubview)
         
@@ -365,7 +365,7 @@ private let zmLog = ZMSLog(tag: "UI")
             
             let newEffectPickerViewController = AudioEffectsPickerViewController(recordingPath: noizeReducePath, duration: self.recorder.currentDuration)
             newEffectPickerViewController.delegate = self
-            self.addChildViewController(newEffectPickerViewController)
+            self.addChild(newEffectPickerViewController)
             newEffectPickerViewController.view.alpha = 0
             
             UIView.transition(with: self.view, duration: 0.35, options: [.curveEaseIn], animations: {
@@ -376,7 +376,7 @@ private let zmLog = ZMSLog(tag: "UI")
                 }
                 newEffectPickerViewController.view.alpha = 1
             }) { _ in
-                newEffectPickerViewController.didMove(toParentViewController: self)
+                newEffectPickerViewController.didMove(toParent: self)
             }
             
             self.effectPickerViewController = newEffectPickerViewController
@@ -385,8 +385,8 @@ private let zmLog = ZMSLog(tag: "UI")
     
     fileprivate func closeEffectsPicker(animated: Bool) {
         if let picker = self.effectPickerViewController {
-            picker.willMove(toParentViewController: nil)
-            picker.removeFromParentViewController()
+            picker.willMove(toParent: nil)
+            picker.removeFromParent()
             self.effectPickerViewController = .none
         }
     }

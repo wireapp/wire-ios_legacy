@@ -93,7 +93,7 @@ class ConversationTimeoutOptionsViewController: UIViewController {
         collectionViewLayout.minimumLineSpacing = 0
 
         CheckmarkCell.register(in: collectionView)
-        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader")
+        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
 
     }
 
@@ -120,7 +120,7 @@ extension ConversationTimeoutOptionsViewController: UICollectionViewDelegateFlow
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
         return view
     }
 

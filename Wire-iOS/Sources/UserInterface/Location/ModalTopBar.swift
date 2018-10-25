@@ -64,7 +64,7 @@ import Cartography
     
     fileprivate func configureViews() {
         [titleLabel, dismissButton, separatorView].forEach(addSubview)
-        dismissButton.setIcon(.cancel, with: .tiny, for: UIControlState())
+        dismissButton.setIcon(.cancel, with: .tiny, for: [])
         dismissButton.setIconColor(.iconNormal, for: .normal)
         dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
         dismissButton.hitAreaPadding = CGSize(width: 20, height: 20)
@@ -96,9 +96,9 @@ import Cartography
     public override var intrinsicContentSize : CGSize {
         let insets = UIScreen.safeArea
         if insets.top > 20 {
-            return CGSize(width: UIViewNoIntrinsicMetric, height: 44 + insets.top)
+            return CGSize(width: UIView.noIntrinsicMetric, height: 44 + insets.top)
         }
-        return CGSize(width: UIViewNoIntrinsicMetric, height: showsStatusBar ? 64 : 44)
+        return CGSize(width: UIView.noIntrinsicMetric, height: showsStatusBar ? 64 : 44)
     }
     
 }

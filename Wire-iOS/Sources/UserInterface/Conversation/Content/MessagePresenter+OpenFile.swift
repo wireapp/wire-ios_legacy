@@ -17,10 +17,41 @@
 //
 
 import Foundation
+import AVKit
 
 fileprivate let zmLog = ZMSLog(tag: "MessagePresenter")
 
 extension MessagePresenter {
+
+    /// init method for injecting MediaPlaybackManager for testing
+    ///
+    /// - Parameter mediaPlaybackManager: for testing only
+    convenience init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared().mediaPlaybackManager) {
+        self.init()
+
+        self.mediaPlaybackManager = mediaPlaybackManager
+    }
+}
+
+// MARK: - AVPlayerViewController dismissial
+extension MessagePresenter {
+
+    fileprivate func observePlayerDismissial() {
+        videoPlayerObserver = NotificationCenter.default.addObserver(forName: .dismissingAVPlayer, object: nil, queue: OperationQueue.main) { notification in
+            self.mediaPlayerController?.tearDown()
+
+            UIViewController.attemptRotationToDeviceOrientation()
+
+            if let videoPlayerObserver = self.videoPlayerObserver {
+                NotificationCenter.default.removeObserver(videoPlayerObserver)
+                self.videoPlayerObserver = nil
+            }
+        }
+    }
+}
+
+extension MessagePresenter {
+
     @objc func openFileMessage(_ message: ZMConversationMessage, targetView: UIView) {
 
         let fileURL = message.fileMessageData?.fileURL
@@ -43,13 +74,14 @@ extension MessagePresenter {
 
         } else if let fileMessageData = message.fileMessageData, fileMessageData.isVideo,
                   let fileURL = fileURL,
-                  let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
+                  let mediaPlaybackManager = mediaPlaybackManager {
             let player = AVPlayer(url: fileURL)
-            let playerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
-            let playerViewController = AVPlayerViewControllerWithoutStatusBar()
+            mediaPlayerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
+            let playerViewController = AVPlayerViewController()
             playerViewController.player = player
-            playerViewController.wr_playerController = playerController
-            
+
+            observePlayerDismissial()
+
             targetViewController?.present(playerViewController, animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 player.play()
@@ -58,5 +90,4 @@ extension MessagePresenter {
             openDocumentController(for: message, targetView: targetView, withPreview: true)
         }
     }
-
 }

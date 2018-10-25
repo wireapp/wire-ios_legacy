@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-public class RoundedBadge: UIView {
+public class RoundedBadge: UIButton {
     public let containedView: UIView
     public var trailingConstraint: NSLayoutConstraint!
     public var widthGreaterThanHeightConstraint: NSLayoutConstraint!

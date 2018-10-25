@@ -18,9 +18,9 @@
 
 import UIKit
 
-extension UIViewAnimationOptions {
+extension UIView.AnimationOptions {
 
-    static let systemPresentationCurve = UIViewAnimationOptions(rawValue: 7 << 16)
-    static let systemDismissalCurve = UIViewAnimationOptions(rawValue: 6 << 16)
+    static let systemPresentationCurve = UIView.AnimationOptions(rawValue: 7 << 16)
+    static let systemDismissalCurve = UIView.AnimationOptions(rawValue: 6 << 16)
 
 }

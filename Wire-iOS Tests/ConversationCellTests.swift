@@ -30,8 +30,10 @@ final class ConversationCellTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
-        super.tearDown()
         ColorScheme.default.variant = .light
+        NSAttributedString.invalidateMarkdownStyle()
+        NSAttributedString.invalidateParagraphStyle()
+        super.tearDown()
     }
 
     func testThatBurstTimestampViewColorIsCorrectInLightTheme() {

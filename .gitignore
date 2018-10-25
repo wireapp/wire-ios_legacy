@@ -22,3 +22,6 @@ Wire-iOS/ComponentsVersions.plist
 SnapshotResults
 Wire-iOS/Resources/Licenses.generated.plist
 Scripts/**/.build
+/fastlane/report.xml
+/test
+/fastlane/README.md

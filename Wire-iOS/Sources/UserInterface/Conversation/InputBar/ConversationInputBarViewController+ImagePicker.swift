@@ -21,7 +21,7 @@ import Foundation
 extension ConversationInputBarViewController {
 
     @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:pointToView:)
-    func presentImagePicker(with sourceType: UIImagePickerControllerSourceType,
+    func presentImagePicker(with sourceType: UIImagePickerController.SourceType,
                             mediaTypes: [String],
                             allowsEditing: Bool,
                             pointToView: UIView?) {

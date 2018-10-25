@@ -88,7 +88,7 @@ final class CallViewControllerGestureTests: XCTestCase {
     }
 
     func tapOnSut() {
-        sut.touchesBegan(Set(), with: nil)
+        sut.handleSingleTap(UITapGestureRecognizer(target: nil, action: nil))
     }
 
     func testThatOverlayDismissesAfterTapped() {

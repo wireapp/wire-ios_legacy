@@ -18,7 +18,6 @@
 
 
 #import "ZMConversationMessageWindow+Formatting.h"
-#import "Message+Formatting.h"
 #import "ConversationCell.h"
 #import "Wire-Swift.h"
 
@@ -37,10 +36,6 @@ static NSTimeInterval const BurstSeparatorTimeDifference = 60 * 45; // 45 minute
     layoutProperties.showDayBurstTimestamp = [self shouldShowDaySeparatorForMessage:message];
     layoutProperties.topPadding       = [self topPaddingForMessage:message showingSender:layoutProperties.showSender showingTimestamp:layoutProperties.showBurstTimestamp];
     layoutProperties.alwaysShowDeliveryState = [self shouldShowAlwaysDeliveryStateForMessage:message];
-    
-    if ([Message isTextMessage:message]) {
-        layoutProperties.linkAttachments = [Message linkAttachments:message.textMessageData];
-    }
     
     return layoutProperties;
 }

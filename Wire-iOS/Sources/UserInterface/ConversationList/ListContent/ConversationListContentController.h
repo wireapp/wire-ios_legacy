@@ -22,6 +22,7 @@
 
 @class ZMConversation;
 @class ConversationListContentController;
+@protocol ZMConversationMessage;
 
 
 @protocol ConversationListContentDelegate <NSObject>
@@ -50,8 +51,8 @@
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout NS_UNAVAILABLE;
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
-- (BOOL)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (BOOL)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
+- (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
+- (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus;
 
 - (void)deselectAll;

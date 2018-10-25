@@ -34,8 +34,8 @@ enum YouTubeServiceError: Error {
 
     let requester: ProxiedURLRequester?
 
-    var currentRequester: ProxiedURLRequester {
-        return requester ?? ZMUserSession.shared()!
+    var currentRequester: ProxiedURLRequester? {
+        return requester ?? ZMUserSession.shared()
     }
 
     /// The shared YouTube service, that always uses the current user session.
@@ -56,7 +56,7 @@ enum YouTubeServiceError: Error {
 
         let path = "/v3/videos?id=\(videoID)&part=snippet"
 
-        currentRequester.doRequest(withPath: path, method: .methodGET, type: .youTube) {
+        currentRequester?.doRequest(withPath: path, method: .methodGET, type: .youTube) {
             self.handleVideoLookupResponse($0, $1, $2, completion: completion)
         }
 

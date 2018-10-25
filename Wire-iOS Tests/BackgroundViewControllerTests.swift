@@ -40,7 +40,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItShowsUserWithImage() {
         // GIVEN
-        selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
+        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view // make sure view is loaded
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
@@ -64,7 +64,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImageRemoved() {
         // GIVEN
-        selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
+        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
@@ -77,7 +77,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImage() {
         // GIVEN
-        selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
+        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
@@ -95,7 +95,7 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
-        selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_burger.jpg"))
+        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_burger.jpg").pngData()
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: false)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         // THEN
@@ -104,11 +104,11 @@ class BackgroundViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatItUpdatesForUserImageUpdate_fromUserImage() {
         // GIVEN
-        selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"))
+        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         _ = sut.view
         // WHEN
-        selfUser.imageMediumData = UIImagePNGRepresentation(image(inTestBundleNamed: "unsplash_burger.jpg"))
+        selfUser.imageMediumData = image(inTestBundleNamed: "unsplash_burger.jpg").pngData()
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: false)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
         // THEN

@@ -25,7 +25,7 @@ final class MockApplication: ApplicationProtocol {
         grantedHandler(true)
     }
 
-    var applicationState: UIApplicationState = .active
+    var applicationState: UIApplication.State = .active
 
     var statusBarOrientation: UIInterfaceOrientation = .unknown
 }

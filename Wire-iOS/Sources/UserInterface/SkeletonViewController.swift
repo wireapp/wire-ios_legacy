@@ -99,7 +99,7 @@ class ListSkeletonCell : UITableViewCell {
     
     private let skeletonCellView : ListSkeletonCellView
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         skeletonCellView = ListSkeletonCellView()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -135,7 +135,7 @@ class ListSkeletonContentView : UITableView, UITableViewDataSource {
         
         self.dataSource = self
         self.backgroundColor = .clear
-        self.rowHeight = UITableViewAutomaticDimension
+        self.rowHeight = UITableView.automaticDimension
         self.estimatedRowHeight = 28
         self.separatorColor = .clear
         self.isScrollEnabled = false
@@ -272,13 +272,13 @@ class SkeletonViewController: UIViewController {
         
         customSplitViewController.view.backgroundColor = .clear
         customSplitViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        addChildViewController(customSplitViewController)
+        addChild(customSplitViewController)
         
         [backgroundImageView, blurEffectView, customSplitViewController.view].forEach(self.view.addSubview)
 
         createConstraints()
         
-        customSplitViewController.didMove(toParentViewController: self)
+        customSplitViewController.didMove(toParent: self)
         
         let listViewController = UIViewController()
         listViewController.view = listView

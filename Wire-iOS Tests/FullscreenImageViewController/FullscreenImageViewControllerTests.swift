@@ -46,7 +46,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         // THEN
         XCTAssertEqual(sut.scrollView.minimumZoomScale, sut.view.bounds.size.width / image.size.width)
 
-        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
+        XCTAssertLessThanOrEqual(abs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
     }
 
     func testThatDoubleTapZoomToScreenFitWhenTheImageIsSmallerThanTheView() {
@@ -58,7 +58,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
 
         XCTAssertEqual(maxZoomScale, sut.view.frame.width / 70.0)
 
-        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - 1), kZoomScaleDelta)
+        XCTAssertLessThanOrEqual(abs(sut.scrollView.zoomScale - 1), kZoomScaleDelta)
 
         // WHEN
         doubleTap(fullscreenImageViewController: sut)
@@ -71,7 +71,7 @@ final class FullscreenImageViewControllerTests: XCTestCase {
         // GIVEN
         sut = createFullscreenImageViewControllerForTest(imageFileName: "unsplash_matterhorn.jpg")
 
-        XCTAssertLessThanOrEqual(fabs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
+        XCTAssertLessThanOrEqual(abs(sut.scrollView.zoomScale - sut.scrollView.minimumZoomScale), kZoomScaleDelta)
 
         // WHEN
         doubleTap(fullscreenImageViewController: sut)

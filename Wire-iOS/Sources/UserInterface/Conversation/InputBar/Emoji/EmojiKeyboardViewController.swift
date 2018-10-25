@@ -92,9 +92,9 @@ protocol EmojiKeyboardViewControllerDelegate: class {
         view.backgroundColor = colorScheme.color(named: .textForeground)
         view.addSubview(collectionView)
 
-        addChildViewController(sectionViewController)
+        addChild(sectionViewController)
         view.addSubview(sectionViewController.view)
-        sectionViewController.didMove(toParentViewController: self)
+        sectionViewController.didMove(toParent: self)
 
         backspaceButton.addTarget(self, action: #selector(backspaceTapped), for: .touchUpInside)
         backspaceButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(backspaceLongPressed)))

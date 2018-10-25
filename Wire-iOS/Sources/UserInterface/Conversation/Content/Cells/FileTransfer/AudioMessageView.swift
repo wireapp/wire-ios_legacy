@@ -135,7 +135,7 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     public override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 56)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
     private func createConstraints() {
@@ -292,18 +292,18 @@ private let zmLog = ZMSLog(tag: "UI")
         self.playButton.backgroundColor = FileMessageViewState.normalColor
         
         if audioTrackPlayer.isPlaying {
-            self.playButton.setIcon(.pause, with: .tiny, for: UIControlState())
+            self.playButton.setIcon(.pause, with: .tiny, for: [])
             self.playButton.accessibilityValue = "pause"
         }
         else {
-            self.playButton.setIcon(.play, with: .tiny, for: UIControlState())
+            self.playButton.setIcon(.play, with: .tiny, for: [])
             self.playButton.accessibilityValue = "play"
         }
     }
     
     private func updateInactivePlayer() {
         self.playButton.backgroundColor = FileMessageViewState.normalColor
-        self.playButton.setIcon(.play, with: .tiny, for: UIControlState())
+        self.playButton.setIcon(.play, with: .tiny, for: [])
         self.playButton.accessibilityValue = "play"
         
         self.playerProgressView.setProgress(0, animated: false)
@@ -316,7 +316,7 @@ private let zmLog = ZMSLog(tag: "UI")
         let progress: Float
         var animated = animated
         
-        if fabs(1 - audioTrackPlayer.progress) < 0.01 {
+        if abs(1 - audioTrackPlayer.progress) < 0.01 {
             progress = 0
             animated = false
         }
@@ -483,10 +483,10 @@ private let zmLog = ZMSLog(tag: "UI")
     private func setAudioOutput(earpiece: Bool) {
         do {
             if earpiece {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default)
                 AVSMediaManager.sharedInstance().playbackRoute = .builtIn
             } else {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
                 AVSMediaManager.sharedInstance().playbackRoute = .speaker
             }
         } catch {

@@ -18,4 +18,6 @@
 
 @interface InviteContactsViewController ()
 
+- (void)inviteUserOrOpenConversation:(ZMSearchUser *)user fromView:(UIView *)view;
+
 @end

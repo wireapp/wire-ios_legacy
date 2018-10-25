@@ -24,14 +24,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT NSString * MixpanelAPIKey;
 FOUNDATION_EXPORT BOOL UseAnalytics;
 
 /// A simple vendor-independent interface to tracking analytics from the UIs.
 @interface Analytics : NSObject <AnalyticsType>
-
-/// Opt the user out of sending analytics data
-@property (nonatomic, assign) BOOL isOptedOut;
 
 @property (nonatomic, readonly) AnalyticsSessionSummaryEvent *sessionSummary;
 

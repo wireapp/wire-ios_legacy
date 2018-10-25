@@ -24,7 +24,7 @@ class NSData_ImageTypeTests: XCTestCase {
     func testThatItIdentifiesJPEG() {
         
         // given
-        guard let jpeg = UIImageJPEGRepresentation(#imageLiteral(resourceName: "wire-logo-shield"), 1.0) else {
+        guard let jpeg = #imageLiteral(resourceName: "wire-logo-shield").jpegData(compressionQuality: 1.0) else {
             XCTFail()
             return
         }
@@ -38,7 +38,7 @@ class NSData_ImageTypeTests: XCTestCase {
     func testThatItDoesNotIdentifyJPEG() {
         
         // given
-        guard let png = UIImagePNGRepresentation(#imageLiteral(resourceName: "wire-logo-shield")) else {
+        guard let png = #imageLiteral(resourceName: "wire-logo-shield").pngData() else {
             XCTFail()
             return
         }

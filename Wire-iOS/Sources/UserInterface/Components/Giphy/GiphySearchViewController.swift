@@ -169,7 +169,7 @@ import Ziphy
         cell.representation = representation
         cell.backgroundColor = UIColor(for: ZMUser.pickRandomAccentColor())
         cell.isAccessibilityElement = true
-        cell.accessibilityTraits |= UIAccessibilityTraitImage
+        cell.accessibilityTraits.insert(.image)
         cell.accessibilityLabel = ziph.title
 
         searchResultsController.fetchImageData(for: ziph, imageType: .preview) { result in

@@ -27,6 +27,12 @@ extension UIColor {
         return accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
     }
 
+    @objc (accentColor)
+    class func accent() -> UIColor {
+        return UIColor(for: indexedAccentColor())
+    }
+
+
     @objc static func buttonEmptyText(variant: ColorSchemeVariant) -> UIColor {
         switch variant {
         case .dark:

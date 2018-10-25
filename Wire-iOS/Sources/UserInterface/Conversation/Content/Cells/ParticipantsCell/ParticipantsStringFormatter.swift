@@ -18,7 +18,7 @@
 
 import Foundation
 
-private typealias Attributes = [NSAttributedStringKey : AnyObject]
+private typealias Attributes = [NSAttributedString.Key : AnyObject]
 
 private extension ConversationActionType {
     func formatKey(senderIsSelfUser: Bool) -> String {

@@ -109,6 +109,10 @@ extension URL {
         return URL(string: "https://wire.com/support/email-in-use")!
     }
 
+    static var wr_randomProfilePictureSource: URL {
+        return URL(string: "https://source.unsplash.com/800x800/?landscape")!
+    }
+
     static func wr_termsOfServicesURL(forTeamAccount isTeamAccount: Bool) -> URL {
         if isTeamAccount {
             return URL(string: "https://wire.com/legal/terms/teams")!

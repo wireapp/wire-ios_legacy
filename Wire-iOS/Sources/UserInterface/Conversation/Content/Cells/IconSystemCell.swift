@@ -61,7 +61,7 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
         return false
     }
 
-    public required override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public required override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         labelView = type(of: self).userRegularLabel ? UILabel(frame: .zero) : TTTAttributedLabel(frame: .zero)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -85,8 +85,8 @@ open class IconSystemCell: ConversationCell, TTTAttributedLabelDelegate {
             label.extendsLinkTouchArea = true
 
             label.linkAttributes = [
-                NSAttributedStringKey.underlineStyle.rawValue: NSUnderlineStyle.styleNone.rawValue,
-                NSAttributedStringKey.foregroundColor.rawValue: ZMUser.selfUser().accentColor
+                NSAttributedString.Key.underlineStyle: NSUnderlineStyle().rawValue as NSNumber,
+                NSAttributedString.Key.foregroundColor: ZMUser.selfUser().accentColor
             ]
 
             label.delegate = self

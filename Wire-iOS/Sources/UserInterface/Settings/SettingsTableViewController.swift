@@ -36,12 +36,12 @@ class SettingsBaseTableViewController: UIViewController {
     final fileprivate class IntrinsicSizeTableView: UITableView {
         override var intrinsicContentSize: CGSize {
             get {
-                return CGSize(width: UIViewNoIntrinsicMetric, height: self.contentSize.height)
+                return CGSize(width: UIView.noIntrinsicMetric, height: self.contentSize.height)
             }
         }
     }
     
-    init(style: UITableViewStyle) {
+    init(style: UITableView.Style) {
         tableView = IntrinsicSizeTableView(frame: .zero, style: style)
         super.init(nibName: nil, bundle: nil)
         self.edgesForExtendedLayout = UIRectEdge()
@@ -75,7 +75,7 @@ class SettingsBaseTableViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.clipsToBounds = true
         tableView.tableFooterView = UIView()
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 56
         view.addSubview(tableView)
         view.addSubview(footerContainer)

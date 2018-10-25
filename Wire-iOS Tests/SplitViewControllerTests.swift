@@ -20,11 +20,11 @@ import XCTest
 @testable import Wire
 
 final class MockPanGestureRecognizer: UIPanGestureRecognizer {
-    let mockState: UIGestureRecognizerState
+    let mockState: UIGestureRecognizer.State
     var mockLocation: CGPoint?
     var mockTranslation: CGPoint?
 
-    init(location: CGPoint?, translation: CGPoint?, state: UIGestureRecognizerState) {
+    init(location: CGPoint?, translation: CGPoint?, state: UIGestureRecognizer.State) {
         mockLocation = location
         mockTranslation = translation
         mockState = state
@@ -46,7 +46,7 @@ final class MockPanGestureRecognizer: UIPanGestureRecognizer {
         return super.translation(in: view)
     }
 
-    override var state: UIGestureRecognizerState {
+    override var state: UIGestureRecognizer.State {
         get {
             return mockState
         }
@@ -99,7 +99,7 @@ final class SplitViewControllerTests: XCTestCase {
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: iPadWidth, height: iPadHeight))
 
         let regularTraitCollection = UITraitCollection(horizontalSizeClass: .regular)
-        mockParentViewController.setOverrideTraitCollection(regularTraitCollection, forChildViewController: sut)
+        mockParentViewController.setOverrideTraitCollection(regularTraitCollection, forChild: sut)
         sut.view.layoutIfNeeded()
 
         let leftViewWidth = sut.leftView.frame.width
@@ -112,7 +112,7 @@ final class SplitViewControllerTests: XCTestCase {
         let compactWidth = round(iPadWidth / 3)
         sut.view.frame = CGRect(origin: .zero, size: CGSize(width: compactWidth, height: iPadHeight))
         let compactTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChildViewController: sut)
+        mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChild: sut)
         sut.view.layoutIfNeeded()
 
         // THEN
@@ -125,7 +125,7 @@ final class SplitViewControllerTests: XCTestCase {
         sut.rightViewController = UIViewController()
 
         let compactTraitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChildViewController: sut)
+        mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChild: sut)
 
         sut.isLeftViewControllerRevealed = isLeftViewControllerRevealed
         sut.setLeftViewControllerRevealed(isLeftViewControllerRevealed, animated: animated, completion: nil)

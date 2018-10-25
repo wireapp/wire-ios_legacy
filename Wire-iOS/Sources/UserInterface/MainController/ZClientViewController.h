@@ -28,6 +28,8 @@
 @class MediaPlaybackManager;
 @class ProximityMonitorManager;
 
+@protocol ZMConversationMessage;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZClientViewController : UIViewController
@@ -37,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) ZMConversation *currentConversation;
 
 @property (nonatomic, readonly) BOOL isConversationViewVisible;
+
+@property (nonatomic, readonly) BOOL isConversationListVisible;
 
 @property (nonatomic) BOOL isComingFromRegistration;
 
@@ -58,7 +62,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @return YES if it will actually switch, NO if the conversation is already selected.
  */
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(__nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
 - (void)selectConversation:(ZMConversation *)conversation
+           scrollToMessage:(__nullable id<ZMConversationMessage>)message
                focusOnView:(BOOL)focus
                   animated:(BOOL)animated
                 completion:(__nullable dispatch_block_t)completion;

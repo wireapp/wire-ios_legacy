@@ -32,10 +32,11 @@ typedef NS_ENUM(NSUInteger, LinkAttachmentType) {
 @interface LinkAttachment : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithURL:(NSURL *)URL range:(NSRange)range NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithURL:(NSURL *)URL range:(NSRange)range string:(NSString *)string NS_DESIGNATED_INITIALIZER;
 
 /// Returns the range of the URL in the text which it's a part of.
 @property (nonatomic, readonly) NSRange range;
+@property (nonatomic, readonly) NSString *string;
 @property (nonatomic, readonly) LinkAttachmentType type;
 @property (nonatomic, readonly) NSURL *URL;
 

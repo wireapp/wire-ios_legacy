@@ -71,14 +71,14 @@ import Cartography
     func configureViews() {
         translatesAutoresizingMaskIntoConstraints = false
         audioButton.isUserInteractionEnabled = false
-        audioButton.setIcon(.microphone, with: .tiny, for: UIControlState())
+        audioButton.setIcon(.microphone, with: .tiny, for: [])
         audioButton.accessibilityIdentifier = "audioRecorderRecord"
         
-        playButton.setIcon(.play, with: .tiny, for: UIControlState())
+        playButton.setIcon(.play, with: .tiny, for: [])
         playButton.accessibilityIdentifier = "audioRecorderPlay"
         playButton.accessibilityValue = PlayingState.idle.description
 
-        sendButton.setIcon(.checkmark, with: .tiny, for: UIControlState())
+        sendButton.setIcon(.checkmark, with: .tiny, for: [])
         sendButton.accessibilityIdentifier = "audioRecorderSend"
         
         [backgroundView, audioButton, sendButton, playButton].forEach(addSubview)
@@ -113,10 +113,10 @@ import Cartography
         alpha = state.alpha
         
         let blendedGray = grayColor.removeAlphaByBlending(with: superviewColor)!
-        sendButton.setIconColor(state.colorWithColors(greenColor, highlightedColor: brightColor), for: UIControlState())
+        sendButton.setIconColor(state.colorWithColors(greenColor, highlightedColor: brightColor), for: [])
         backgroundView.backgroundColor = state.colorWithColors(blendedGray, highlightedColor: greenColor)
-        audioButton.setIconColor(state.colorWithColors(darkColor, highlightedColor: brightColor), for: UIControlState())
-        playButton.setIconColor(darkColor, for: UIControlState())
+        audioButton.setIconColor(state.colorWithColors(darkColor, highlightedColor: brightColor), for: [])
+        playButton.setIconColor(darkColor, for: [])
     }
     
     func updateWithRecordingState(_ state: AudioRecordState) {
@@ -128,7 +128,7 @@ import Cartography
     
     func updateWithPlayingState(_ state: PlayingState) {
         let icon: ZetaIconType = state == .idle ? .play : .stop
-        playButton.setIcon(icon, with: .tiny, for: UIControlState())
+        playButton.setIcon(icon, with: .tiny, for: [])
         playButton.accessibilityValue = state.description
     }
     

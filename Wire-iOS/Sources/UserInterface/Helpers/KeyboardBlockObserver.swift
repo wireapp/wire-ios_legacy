@@ -28,14 +28,26 @@ final class KeyboardBlockObserver: NSObject {
         let frame: CGRect
         let animationDuration: TimeInterval
         let kind: Kind
-        
+        let isKeyboardCollapsed: Bool?
+
         init?(_ note: Notification, kind: Kind) {
             guard let info = note.userInfo else { return nil }
-            guard let frameValue = info[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-                let duration = info[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval else { return nil }
+            guard let frameValue = info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+                let duration = info[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return nil }
             frame = frameValue.cgRectValue
             animationDuration = duration
             self.kind = kind
+
+            if let beginFrameValue = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                /// key board is collapsed if init height is 0
+                if frameValue.cgRectValue.height == 0 {
+                    isKeyboardCollapsed = true
+                } else {
+                    isKeyboardCollapsed = beginFrameValue.height > frameValue.cgRectValue.height && kind == .hide
+                }
+            } else {
+                isKeyboardCollapsed = nil
+            }
         }
         
         func animate(_ animations: @escaping () -> Void) {
@@ -59,9 +71,9 @@ final class KeyboardBlockObserver: NSObject {
     }
     
     private func registerKeyboardObservers() {
-        center.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
-        center.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        center.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     @objc private func keyboardWillShow(_ note: Notification) {

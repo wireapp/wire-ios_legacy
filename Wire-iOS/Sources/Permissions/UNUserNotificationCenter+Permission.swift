@@ -28,7 +28,7 @@ import Foundation
      * - parameter handler: A block that accepts one boolean argument, whose
      * value is true iff the pushes are disabled.
      */
-    @objc func checkPushesDisabled(_ handler: @escaping (Bool) -> Void) {
+    func checkPushesDisabled(_ handler: @escaping (Bool) -> Void) {
         let notRegistered = !UIApplication.shared.isRegisteredForRemoteNotifications
 
         getNotificationSettings { settings in

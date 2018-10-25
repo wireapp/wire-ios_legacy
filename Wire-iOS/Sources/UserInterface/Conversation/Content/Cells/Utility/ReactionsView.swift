@@ -56,7 +56,7 @@ import Cartography
         avatars = (1...3).map({ index in
             let userImage = UserImageView(size: .tiny)
             userImage.userSession = ZMUserSession.shared()
-            userImage.initials.font = UIFont.systemFont(ofSize: 8, weight: UIFont.Weight.light)
+            userImage.initialsFont = UIFont.systemFont(ofSize: 8, weight: UIFont.Weight.light)
             userImage.isHidden = true
             
             constrain(userImage) { userImage in

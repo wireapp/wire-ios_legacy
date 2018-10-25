@@ -26,7 +26,6 @@
 #import "Message+UI.h"
 #import "UIColor+WR_ColorScheme.h"
 #import "Wire-Swift.h"
-#import "UserImageView.h"
 #import "AccentColorChangeHandler.h"
 #import "Analytics.h"
 #import "UIResponder+FirstResponder.h"
@@ -158,10 +157,10 @@ static const CGFloat BurstContainerExpandedHeight = 40;
     [self.marginContainer addSubview:self.authorImageContainer];
     
     self.authorImageView = [[UserImageView alloc] init];
-    self.authorImageView.initials.font = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
+    self.authorImageView.initialsFont = [UIFont systemFontOfSize:11 weight:UIFontWeightLight];
     self.authorImageView.userSession = [ZMUserSession sharedSession];
     self.authorImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.authorImageView.delegate = self;
+    [self.authorImageView addTarget:self action:@selector(userTappedAvatarView:) forControlEvents:UIControlEventTouchUpInside];
     
     self.authorImageView.layer.shouldRasterize = YES;
     self.authorImageView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
@@ -522,14 +521,26 @@ static const CGFloat BurstContainerExpandedHeight = 40;
 
 #pragma mark - UserImageView delegate
 
-- (void)userImageViewTouchUpInside:(UserImageView *)userImageView
+- (void)userTappedAvatarView:(UserImageView *)userImageView
 {
     if (! userImageView) {
         return;
     }
     
-    if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:)]) {
-        [self.delegate conversationCell:self userTapped:BareUserToUser(userImageView.user) inView:userImageView];
+    // Edge case prevention:
+    // If the keyboard (input field has focus) is up and the user is tapping directly on an avatar, we ignore this tap. This
+    // solves us the problem of the repositioning the popover after the keyboard destroys the layout and the we would re-position
+    // the popover again
+    
+    if (! IS_IPAD || IS_IPAD_LANDSCAPE_LAYOUT) {
+        return;
+    }
+
+    if ([self.delegate respondsToSelector:@selector(conversationCell:userTapped:inView:frame:)]) {
+        [self.delegate conversationCell:self
+                             userTapped:BareUserToUser(userImageView.user)
+                                 inView:userImageView
+                                  frame:userImageView.bounds];
     }
 }
 

@@ -62,6 +62,10 @@ final class CallWindowRootViewController: UIViewController {
         callController?.targetViewController = self
     }
     
+    func presentCallCurrentlyInProgress() {
+        callController?.updateState()
+    }
+    
     private func topmostViewController() -> UIViewController? {
         guard let topmost = UIApplication.shared.wr_topmostViewController() else { return nil }
         guard topmost != self, !topmost.isKind(of: CallWindowRootViewController.self) else { return nil }

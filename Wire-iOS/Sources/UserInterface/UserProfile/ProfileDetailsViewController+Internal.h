@@ -16,8 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+@class ConversationActionController;
+
 @interface ProfileDetailsViewController ()
 
 @property (nonatomic) UILabel *remainingTimeLabel;
+@property (nonatomic) ConversationActionController *actionsController;
+@property (nonatomic) ZMConversation *conversation;
+@property (nonatomic) UIView *footerView;
 
 @end

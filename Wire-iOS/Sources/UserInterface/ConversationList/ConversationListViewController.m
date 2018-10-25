@@ -67,9 +67,6 @@
 @interface ConversationListViewController (Archive) <ArchivedListViewControllerDelegate>
 @end
 
-@interface ConversationListViewController (PermissionDenied) <PermissionDeniedViewControllerDelegate>
-@end
-
 @interface ConversationListViewController (InitialSyncObserver) <ZMInitialSyncCompletionObserver>
 @end
 
@@ -104,9 +101,6 @@
 @property (nonatomic) UIView *contentContainer;
 @property (nonatomic) UIView *conversationListContainer;
 @property (nonatomic) ConversationListOnboardingHint *onboardingHint;
-@property (nonatomic) ConversationActionController *actionsController;
-
-@property (nonatomic) PermissionDeniedViewController *pushPermissionDeniedViewController;
 
 @property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
 @property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
@@ -251,11 +245,12 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     if (self.presentedViewController != nil) {
-        return self.presentedViewController.preferredStatusBarStyle;
+        if (![self.presentedViewController isKindOfClass:UIAlertController.class]) {
+            return self.presentedViewController.preferredStatusBarStyle;
+        }
     }
-    else {
-        return UIStatusBarStyleLightContent;
-    }
+
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)createNoConversationLabel;
@@ -475,22 +470,22 @@
 
 - (void)selectConversation:(ZMConversation *)conversation
 {
-    [self selectConversation:conversation focusOnView:NO animated:NO];
+    [self selectConversation:conversation scrollToMessage:nil focusOnView:NO animated:NO];
 }
 
-- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
 {
-    [self selectConversation:conversation focusOnView:focus animated:animated completion:nil];
+    [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
 }
 
-- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
     self.selectedConversation = conversation;
     
     @weakify(self);
     [self dismissPeoplePickerWithCompletionBlock:^{
         @strongify(self);
-        [self.listContentController selectConversation:self.selectedConversation focusOnView:focus animated:animated completion:completion];
+        [self.listContentController selectConversation:self.selectedConversation scrollToMessage:message focusOnView:focus animated:animated completion:completion];
     }];
 }
 
@@ -503,76 +498,6 @@
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated
 {
     [self.listContentController scrollToCurrentSelectionAnimated:animated];
-}
-
-- (void)showActionMenuForConversation:(ZMConversation *)conversation fromView:(UIView *)view
-{
-    self.actionsController = [[ConversationActionController alloc] initWithConversation:conversation target:self];
-    [self.actionsController presentMenuFromSourceView:view];
-}
-
-#pragma mark - Push permissions
-
-- (void)showPushPermissionDeniedDialogIfNeeded
-{
-    // We only want to present the notification takeover when the user already has a handle
-    // and is not coming from the registration flow (where we alreday ask for permissions).
-    if (! self.isComingFromRegistration || nil == ZMUser.selfUser.handle) {
-        return;
-    }
-
-    if (AutomationHelper.sharedHelper.skipFirstLoginAlerts || self.usernameTakeoverViewController != nil) {
-        return;
-    }
-    
-    BOOL pushAlertHappenedMoreThan1DayBefore = [[Settings sharedSettings] lastPushAlertDate] == nil ||
-    fabs([[[Settings sharedSettings] lastPushAlertDate] timeIntervalSinceNow]) > 60 * 60 * 24;
-    
-    if (!pushAlertHappenedMoreThan1DayBefore) {
-        return;
-    }
-    
-    [[UNUserNotificationCenter currentNotificationCenter] checkPushesDisabled:^(BOOL pushesDisabled) {
-        if (pushesDisabled) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-            [[Settings sharedSettings] setLastPushAlertDate:[NSDate date]];
-            PermissionDeniedViewController *permissions = [PermissionDeniedViewController pushDeniedViewController];
-            permissions.delegate = self;
-            
-            [self addChildViewController:permissions];
-            [self.view addSubview:permissions.view];
-            [permissions didMoveToParentViewController:self];
-            
-            [permissions.view autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-            self.pushPermissionDeniedViewController = permissions;
-            
-            self.contentContainer.alpha = 0.0f;
-        }
-    }];
-}
-
-- (void)closePushPermissionDialogIfNotNeeded
-{
-    [[UNUserNotificationCenter currentNotificationCenter] checkPushesDisabled:^(BOOL pushesDisabled) {
-        if (!pushesDisabled && self.pushPermissionDeniedViewController != nil) {
-            [self closePushPermissionDeniedDialog];
-        }
-    }];
-}
-
-- (void)closePushPermissionDeniedDialog
-{
-    [self.pushPermissionDeniedViewController willMoveToParentViewController:nil];
-    [self.pushPermissionDeniedViewController.view removeFromSuperview];
-    [self.pushPermissionDeniedViewController removeFromParentViewController];
-    self.pushPermissionDeniedViewController = nil;
-    
-    self.contentContainer.alpha = 1.0f;
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)notif
-{
-    [self closePushPermissionDialogIfNotNeeded];
 }
 
 #pragma mark - Conversation Collection Vertical Pan Gesture Handling
@@ -762,7 +687,7 @@
     } completionHandler:^{
         [self setState:ConversationListStateConversationList animated:YES completion:^{
             @strongify(self)
-            [self.listContentController selectConversation:conversation focusOnView:YES animated:YES];
+            [self.listContentController selectConversation:conversation scrollToMessage:nil focusOnView:YES animated:YES];
         }];
     }];
 }

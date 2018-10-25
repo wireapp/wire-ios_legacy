@@ -264,9 +264,9 @@ class CallQualityView : UIStackView {
         scoreButton.setTitleColor(.white, for: .highlighted)
         scoreButton.setTitleColor(.white, for: .selected)
         scoreButton.addTarget(self, action: #selector(onClick), for: .primaryActionTriggered)
-        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreBackground, for: UIControlState.normal)
-        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: UIControlState.highlighted)
-        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: UIControlState.selected)
+        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreBackground, for: .normal)
+        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: .highlighted)
+        scoreButton.setBackgroundImageColor(UIColor.CallQuality.scoreHighlight, for: .selected)
         scoreButton.accessibilityIdentifier = "score_\(buttonScore)"
         
         scoreButton.accessibilityLabel = labelText

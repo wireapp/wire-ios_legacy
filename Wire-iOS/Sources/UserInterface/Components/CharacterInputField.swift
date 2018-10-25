@@ -22,12 +22,17 @@ import Cartography
 public protocol CharacterInputFieldDelegate: NSObjectProtocol {
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool
     func didChangeText(_ inputField: CharacterInputField, to: String)
-    func didFillInput(inputField: CharacterInputField)
+    func didFillInput(inputField: CharacterInputField, text: String)
+}
+
+
+protocol TextContainer: class {
+    var text: String? { get set }
 }
 
 /// Custom input field implementation. Allows entering the characters from @c characterSet up to @c maxLength characters
 /// Allows pasting the text.
-public class CharacterInputField: UIControl, UITextInputTraits {
+public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     fileprivate var storage = String() {
         didSet {
             if storage.count > maxLength {
@@ -83,8 +88,8 @@ public class CharacterInputField: UIControl, UITextInputTraits {
             self.delegate?.didChangeText(self, to: storage)
         }
         
-        if !wasFilled && self.isFilled {
-            self.delegate?.didFillInput(inputField: self)
+        if let text = self.text, !wasFilled && self.isFilled {
+            self.delegate?.didFillInput(inputField: self, text: text)
         }
     }
     
@@ -240,9 +245,9 @@ public class CharacterInputField: UIControl, UITextInputTraits {
         return storage.count >= maxLength
     }
     
-    public var text: String {
+    public var text: String? {
         set {
-            storage = prepare(string: newValue)
+            storage = prepare(string: newValue ?? "")
         }
         get {
             return storage

@@ -63,7 +63,7 @@ class NetworkStatusViewController : UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: NSNotification.Name.UIApplicationDidChangeStatusBarOrientation, object: .none)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateStateForIPad), name: UIApplication.didChangeStatusBarOrientationNotification, object: .none)
     }
 
     required init?(coder aDecoder: NSCoder) {

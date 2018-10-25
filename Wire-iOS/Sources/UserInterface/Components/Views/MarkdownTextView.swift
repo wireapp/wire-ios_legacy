@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import MobileCoreServices
 import Down
 
 extension Notification.Name {
@@ -43,15 +44,72 @@ extension Notification.Name {
     
     /// The string containing markdown syntax for the corresponding
     /// attributed text.
-    var preparedText: String {
-        return self.parser.parse(attributedString: self.attributedText)
+    var preparedText: (String, [Mention]) {
+        let markdownText = parser.parse(attributedString: attributedText)
+        let mentions = self.mentions(from: markdownText)
+        let markdownTextWithMentions = replaceMentionAttachmentsWithPlainText(in: markdownText)
+        
+        return (markdownTextWithMentions as String, mentions)
     }
     
+    func setDraftMessage(_ draft: DraftMessage) {
+        setText(draft.text, withMentions: draft.mentions)
+    }
+
+    func setText(_ newText: String, withMentions mentions: [Mention]) {
+        let mutable = NSMutableAttributedString(string: newText, attributes: currentAttributes)
+
+        // We reverse to maintain correct ranges for subsequent inserts.
+        for mention in mentions.reversed() {
+            let attachment = MentionTextAttachment(user: mention.user)
+            let attributedString = NSAttributedString(attachment: attachment) && typingAttributes
+            mutable.replaceCharacters(in: mention.range, with: attributedString)
+        }
+        
+        attributedText = mutable
+    }
+    
+    private func mentions(from attributedText: NSAttributedString) -> [Mention] {
+        var locationOffset = 0
+        let mentions: [Mention] = mentionAttachmentsWithRange(from: attributedText).map { tuple in
+            let (attachment, range) = tuple
+            let length = attachment.attributedText.string.utf16.count
+            let adjustedRange = NSRange(location: range.location + locationOffset, length: length)
+            locationOffset += length - 1 // Adjust for the length 1 attachment that we replaced.
+            
+            return Mention(range: adjustedRange, user: attachment.user)
+        }
+        return mentions
+    }
+    
+    private func replaceMentionAttachmentsWithPlainText(in attributedText: NSAttributedString) -> String {
+        let textWithPlainTextMentions = NSMutableString(string: attributedText.string)
+        
+        // We reverse to maintain correct ranges for subsequent inserts.
+        let mentionRanges = mentionAttachmentsWithRange(from: attributedText).map ({ attachment, range in
+            (range, attachment.attributedText.string)
+        }).reversed()
+        
+        mentionRanges.forEach(textWithPlainTextMentions.replaceCharacters)
+        
+        return textWithPlainTextMentions as String
+    }
+    
+    private func mentionAttachmentsWithRange(from attributedText: NSAttributedString) -> [(MentionTextAttachment, NSRange)] {
+        var result = [(MentionTextAttachment, NSRange)]()
+        attributedText.enumerateAttributes(in: attributedText.wholeRange, options: []) { attributes, range, _ in
+            if let attachment = attributes[.attachment] as? MentionTextAttachment {
+                result.append((attachment, range))
+            }
+        }
+        return result
+    }
+
     /// Set when newline is entered, used for auto list item creation.
     private var newlineFlag = false
     
     /// The current attributes to be applied when typing.
-    fileprivate var currentAttributes: [NSAttributedStringKey : Any] = [:]
+    fileprivate var currentAttributes: [NSAttributedString.Key : Any] = [:]
 
     /// The currently active markdown. This determines which attributes
     /// are applied when typing.
@@ -60,10 +118,28 @@ extension Notification.Name {
             if oldValue != activeMarkdown {
                 currentAttributes = attributes(for: activeMarkdown)
                 markdownTextStorage.currentMarkdown = activeMarkdown
-                updateTypingAttributes(with: currentAttributes)
+                typingAttributes = currentAttributes
                 NotificationCenter.default.post(name: .MarkdownTextViewDidChangeActiveMarkdown, object: self)
             }
         }
+    }
+    
+    override func cut(_ sender: Any?) {
+        guard let selectedTextRange = selectedTextRange else { return }
+        
+        let copiedAttributedText = attributedText.attributedSubstring(from: selectedRange)
+        let copiedAttributedTextPlainText = replaceMentionAttachmentsWithPlainText(in: copiedAttributedText)
+        
+        UIPasteboard.general.setValue(copiedAttributedTextPlainText, forPasteboardType: kUTTypeUTF8PlainText as String)
+        
+        replace(selectedTextRange, withText: "")
+    }
+    
+    override func copy(_ sender: Any?) {
+        let copiedAttributedText = attributedText.attributedSubstring(from: selectedRange)
+        let copiedAttributedTextPlainText = replaceMentionAttachmentsWithPlainText(in: copiedAttributedText)
+    
+        UIPasteboard.general.setValue(copiedAttributedTextPlainText, forPasteboardType: kUTTypeUTF8PlainText as String)
     }
     
     public override var selectedTextRange: UITextRange? {
@@ -107,9 +183,10 @@ extension Notification.Name {
         super.init(frame: .zero, textContainer: textContainer)
         
         currentAttributes = attributes(for: activeMarkdown)
-        updateTypingAttributes(with: currentAttributes)
+        typingAttributes = currentAttributes
 
-        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: .UITextViewTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: UITextView.textDidChangeNotification, object: nil)
+        setupGestureRecognizer()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -138,23 +215,11 @@ extension Notification.Name {
             }
         }
         
-        updateTypingAttributes(with: currentAttributes)
+        typingAttributes = currentAttributes
     }
     
     // MARK: - Private Interface
-    
-    /// Calling this method ensures that the current attributes are applied
-    /// to newly typed text. Since iOS11, typing attributes are automatically
-    /// cleared when selection & text changes, so we have to keep setting it
-    /// to provide continuity.
-    private func updateTypingAttributes(with newAttributes: [NSAttributedStringKey: Any]) {
-        var attributes = [String: Any]()
-        for (key, value) in newAttributes {
-            attributes[key.rawValue] = value
-        }
-        typingAttributes = attributes
-    }
-    
+
     /// Called after each text change has been committed. We use this opportunity
     /// to insert new list items in the case a newline was entered, as well as
     /// to validate any potential list items on the currently selected line.
@@ -226,7 +291,7 @@ extension Notification.Name {
     // MARK: - Attribute Manipulation
     
     /// Returns the attributes for the given markdown.
-    private func attributes(for markdown: Markdown) -> [NSAttributedStringKey : Any] {
+    private func attributes(for markdown: Markdown) -> [NSAttributedString.Key : Any] {
         
         // the idea is to query for specific markdown & adjust the attributes
         // incrementally
@@ -297,7 +362,7 @@ extension Notification.Name {
         
         for (md, mdRange) in exisitngMarkdownRanges {
             let updatedAttributes = attributes(for: transform(md))
-            markdownTextStorage.setAttributes(updatedAttributes, range: mdRange)
+            markdownTextStorage.addAttributes(updatedAttributes, range: mdRange)
         }
     }
     
@@ -413,9 +478,9 @@ extension Notification.Name {
         let prefix = nextListPrefix(type: type)
         
         // insert prefix with no md
-        updateTypingAttributes(with: attributes(for: .none))
+        typingAttributes = attributes(for: .none)
         replaceText(in: lineStart, with: prefix, restoringSelection: selection)
-        updateTypingAttributes(with: currentAttributes)
+        typingAttributes = currentAttributes
         
         // add list md to whole line
         guard let newLineRange = currentLineRange else { return }

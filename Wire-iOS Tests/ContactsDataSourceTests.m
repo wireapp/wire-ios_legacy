@@ -49,8 +49,8 @@
 - (void)testThatDataSourceHasCorrectNumberOfSectionsForSmallNumberOfUsers
 {
     // GIVEN
-    NSArray *mockUsers = [MockLoader mockObjectsOfClass:[MockUser class] fromFile:@"people-01.json"];
-    
+    NSArray *mockUsers = [MockUser mockUsers];
+
     // WHEN
     self.dataSource.ungroupedSearchResults = mockUsers;
     

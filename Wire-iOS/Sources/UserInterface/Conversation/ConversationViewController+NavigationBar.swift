@@ -39,7 +39,7 @@ public extension ConversationViewController {
     var audioCallButton: UIBarButtonItem {
         let button = UIBarButtonItem(icon: .callAudio, target: self, action: #selector(ConversationViewController.voiceCallItemTapped(_:)))
         button.accessibilityIdentifier = "audioCallBarButton"
-        button.accessibilityTraits |= UIAccessibilityTraitStartsMediaSession
+        button.accessibilityTraits.insert(.startsMediaSession)
         button.accessibilityLabel = "call.actions.label.make_audio_call".localized
         return button
     }
@@ -47,7 +47,7 @@ public extension ConversationViewController {
     var videoCallButton: UIBarButtonItem {
         let button = UIBarButtonItem(icon: .callVideo, target: self, action: #selector(ConversationViewController.videoCallItemTapped(_:)))
         button.accessibilityIdentifier = "videoCallBarButton"
-        button.accessibilityTraits |= UIAccessibilityTraitStartsMediaSession
+        button.accessibilityTraits.insert(.startsMediaSession)
         button.accessibilityLabel = "call.actions.label.make_video_call".localized
         return button
     }
@@ -58,7 +58,7 @@ public extension ConversationViewController {
         button.adjustBackgroundImageWhenHighlighted = true
         button.setTitle("conversation_list.right_accessory.join_button.title".localized.uppercased(), for: .normal)
         button.accessibilityLabel = "conversation.join_call.voiceover".localized
-        button.accessibilityTraits |= UIAccessibilityTraitStartsMediaSession
+        button.accessibilityTraits.insert(.startsMediaSession)
         button.titleLabel?.font = FontSpec(.small, .semibold).font
         button.backgroundColor = UIColor(for: .strongLimeGreen)
         button.addTarget(self, action: #selector(joinCallButtonTapped), for: .touchUpInside)
@@ -102,7 +102,7 @@ public extension ConversationViewController {
     @objc public func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.activeParticipants.count != 0 else { return [] }
 
-        if conversation.canJoinCall {
+        if conversation.canJoinCall && conversation.mutedMessageTypes != .none {
             return [joinCallButton]
         } else if conversation.isCallOngoing {
             return []
@@ -247,10 +247,7 @@ extension ZMConversation {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
     @objc var canJoinCall: Bool {
-        switch (voiceChannel?.state, conversationType) {
-        case (.incoming?, .group): return true
-        default: return false
-        }
+        return voiceChannel?.state.canJoinCall ?? false
     }
 
     var canStartVideoCall: Bool {
@@ -274,8 +271,22 @@ extension ZMConversation {
     }
 
     var isCallOngoing: Bool {
-        switch voiceChannel?.state {
-        case .none?, .incoming?: return false
+        return voiceChannel?.state.isCallOngoing ?? true
+    }
+}
+
+extension CallState {
+    
+    var canJoinCall: Bool {
+        switch self {
+        case .incoming: return true
+        default: return false
+        }
+    }
+    
+    var isCallOngoing: Bool {
+        switch self {
+        case .none, .incoming: return false
         default: return true
         }
     }

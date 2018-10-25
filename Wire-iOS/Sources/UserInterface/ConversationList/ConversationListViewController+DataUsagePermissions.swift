@@ -34,16 +34,15 @@ extension ConversationListViewController {
               (isComingFromSetUsername && ZMUser.selfUser().isTeamMember) ||
               !userAcceptedAnalytics else { return }
 
-        let alertController = UIAlertController(title: "conversation_list.date_usage_permission_alert.title".localized, message: "conversation_list.date_usage_permission_alert.message".localized, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "conversation_list.data_usage_permission_alert.title".localized, message: "conversation_list.data_usage_permission_alert.message".localized, preferredStyle: .alert)
 
-        alertController.addAction(UIAlertAction(title: "general.accept".localized, style: .default, handler: { (_) in
-            TrackingManager.shared.disableCrashAndAnalyticsSharing = false
-        }))
-
-        alertController.addAction(UIAlertAction(title: "general.skip".localized, style: .cancel, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "conversation_list.data_usage_permission_alert.disagree".localized, style: .cancel, handler: { (_) in
             TrackingManager.shared.disableCrashAndAnalyticsSharing = true
         }))
-
+        
+        alertController.addAction(UIAlertAction(title: "conversation_list.data_usage_permission_alert.agree".localized, style: .default, handler: { (_) in
+            TrackingManager.shared.disableCrashAndAnalyticsSharing = false
+        }))
 
         ZClientViewController.shared()?.present(alertController, animated: true) { [weak self] in
             self?.dataUsagePermissionDialogDisplayed = true

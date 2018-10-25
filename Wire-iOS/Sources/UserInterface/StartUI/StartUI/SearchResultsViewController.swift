@@ -74,11 +74,11 @@ public enum SearchResultsViewControllerSection : Int {
 extension UIViewController {
     class ControllerHierarchyIterator: IteratorProtocol {
         private var current: UIViewController
-        
+
         init(controller: UIViewController) {
             current = controller
         }
-        
+
         func next() -> UIViewController? {
             var candidate: UIViewController? = .none
             if let controller = current.navigationController {
@@ -96,10 +96,10 @@ extension UIViewController {
             return candidate
         }
     }
-    
+
     func isContainedInPopover() -> Bool {
         var hierarchy = ControllerHierarchyIterator(controller: self)
-        
+
         return hierarchy.any {
             if let arrowDirection = $0.popoverPresentationController?.arrowDirection,
                 arrowDirection != .unknown {
@@ -113,9 +113,9 @@ extension UIViewController {
 }
 
 @objcMembers public class SearchResultsViewController : UIViewController {
-    
+
     var searchResultsView: SearchResultsView?
-    let searchDirectory: SearchDirectory
+    var searchDirectory: SearchDirectory!
     let userSelection: UserSelection
 
     let sectionController: SectionCollectionViewController
@@ -127,7 +127,7 @@ extension UIViewController {
     let servicesSection: SearchServicesSectionController
     let inviteTeamMemberSection: InviteTeamMemberSection
     let createGroupSection = CreateGroupSection()
-    
+
     var pendingSearchTask: SearchTask? = nil
     var isAddingParticipants: Bool
     var searchGroup: SearchGroup = .people {
@@ -135,33 +135,32 @@ extension UIViewController {
             updateVisibleSections()
         }
     }
-    
+
     public var filterConversation: ZMConversation? = nil
     public let shouldIncludeGuests: Bool
-    
+
     public weak var delegate: SearchResultsViewControllerDelegate? = nil
-    
+
     public var mode: SearchResultsViewControllerMode = .search {
         didSet {
             updateVisibleSections()
         }
     }
-    
+
     deinit {
-        searchDirectory.tearDown()
+        searchDirectory?.tearDown()
     }
-    
+
     @objc
     public init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
-        self.searchDirectory = SearchDirectory(userSession: ZMUserSession.shared()!)
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
         self.shouldIncludeGuests = shouldIncludeGuests
-        
+
         let team = ZMUser.selfUser().team
         let teamName = team?.name
-    
+
         sectionController = SectionCollectionViewController()
         contactsSection = ContactsSectionController()
         contactsSection.selection = userSelection
@@ -174,11 +173,16 @@ extension UIViewController {
         servicesSection = SearchServicesSectionController(canSelfUserManageTeam: ZMUser.selfUser().canManageTeam)
         conversationsSection = GroupConversationsSectionController()
         conversationsSection.title = team != nil ? "peoplepicker.header.team_conversations".localized(args: teamName ?? "") : "peoplepicker.header.conversations".localized
-        topPeopleSection = TopPeopleSectionController(topConversationsDirectory: ZMUserSession.shared()!.topConversationsDirectory)
+        if let session = ZMUserSession.shared() {
+            searchDirectory = SearchDirectory(userSession: session)
+            topPeopleSection = TopPeopleSectionController(topConversationsDirectory: session.topConversationsDirectory)
+        } else {
+            topPeopleSection = TopPeopleSectionController(topConversationsDirectory:nil)
+        }
         inviteTeamMemberSection = InviteTeamMemberSection(team: team)
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         contactsSection.delegate = self
         teamMemberAndContactsSection.delegate = self
         directorySection.delegate = self
@@ -188,11 +192,11 @@ extension UIViewController {
         createGroupSection.delegate = self
         inviteTeamMemberSection.delegate = self
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     public override func loadView() {
         searchResultsView  = SearchResultsView()
         searchResultsView?.isContainedInPopover = isContainedInPopover()
@@ -207,33 +211,33 @@ extension UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         sectionController.collectionView = searchResultsView?.collectionView
-        
+
         updateVisibleSections()
-        
+
         searchResultsView?.emptyResultContainer.isHidden = !isResultEmpty
     }
-    
+
     @objc
     public func cancelPreviousSearch() {
         pendingSearchTask?.cancel()
         pendingSearchTask = nil
     }
-    
+
     private func performSearch(query: String, options: SearchOptions) {
         pendingSearchTask?.cancel()
         searchResultsView?.emptyResultContainer.isHidden = true
 
         let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
-        let task = searchDirectory.perform(request)
-        
-        task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
-        task.start()
-        
-        pendingSearchTask = task
+        if let task = searchDirectory?.perform(request) {
+            task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
+            task.start()
+
+            pendingSearchTask = task
+        }
     }
-    
+
     @objc
     public func searchForUsers(withQuery query: String) {
         self.performSearch(query: query, options: [.conversations, .contacts, .teamMembers, .directory])
@@ -248,38 +252,37 @@ extension UIViewController {
     public func searchForServices(withQuery query: String) {
         self.performSearch(query: query, options: [.services])
     }
-    
+
     @objc
     func searchContactList() {
         pendingSearchTask?.cancel()
-        
+
         let request = SearchRequest(query: "", searchOptions: [.contacts, .teamMembers], team: ZMUser.selfUser().team)
-        let task = searchDirectory.perform(request)
-        
-        task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
-        task.start()
-        
-        pendingSearchTask = task
+        if let task = searchDirectory?.perform(request) {
+            task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
+            task.start()
+            pendingSearchTask = task
+        }
     }
-    
+
     var isResultEmpty: Bool = true {
         didSet {
             searchResultsView?.emptyResultContainer.isHidden = !isResultEmpty
         }
     }
-    
+
     func handleSearchResult(result: SearchResult, isCompleted: Bool) {
         self.updateSections(withSearchResult: result)
-        
+
         if isCompleted {
             isResultEmpty = sectionController.visibleSections.isEmpty
         }
     }
-    
+
     func updateVisibleSections() {
         var sections : [CollectionViewSectionController]
         let team = ZMUser.selfUser().team
-        
+
         switch(self.searchGroup, isAddingParticipants) {
         case (.services, _):
             sections = [servicesSection]
@@ -314,22 +317,22 @@ extension UIViewController {
                 sections = [createGroupSection, inviteTeamMemberSection, teamMemberAndContactsSection]
             }
         }
-        
+
         sectionController.sections = sections
     }
 
     func updateSections(withSearchResult searchResult: SearchResult) {
-        
+
         var contacts = searchResult.contacts
         var teamContacts = searchResult.teamMembers.compactMap({ $0.user })
-        
+
         if let filteredParticpants = filterConversation?.activeParticipants {
             contacts = contacts.filter({ !filteredParticpants.contains($0) })
             teamContacts = teamContacts.filter({ !filteredParticpants.contains($0) })
         }
-        
+
         contactsSection.contacts = contacts
-        
+
         // Access mode is not set, or the guests are allowed.
         if shouldIncludeGuests {
             teamMemberAndContactsSection.contacts = Set(teamContacts + contacts).sorted {
@@ -337,19 +340,19 @@ extension UIViewController {
                 let name1 = $1.name ?? ""
 
                 return name0.compare(name1) == .orderedAscending
-                }
+            }
         }
         else {
             teamMemberAndContactsSection.contacts = teamContacts
         }
-        
+
         directorySection.suggestions = searchResult.directory
         conversationsSection.groupConversations = searchResult.conversations
         servicesSection.services = searchResult.services
-        
+
         sectionController.collectionView?.reloadData()
     }
-    
+
     func sectionFor(controller: CollectionViewSectionController) -> SearchResultsViewControllerSection {
         if controller === topPeopleSection {
             return .topPeople
@@ -367,11 +370,11 @@ extension UIViewController {
             return .unknown
         }
     }
-    
+
 }
 
 extension SearchResultsViewController : SearchSectionControllerDelegate {
-    
+
     func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectUser user: UserType, at indexPath: IndexPath) {
         if let user = user as? ZMUser {
             delegate?.searchResultsViewController(self, didTapOnUser: user, indexPath: indexPath, section: sectionFor(controller: searchSectionController))
@@ -383,11 +386,11 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
             delegate?.searchResultsViewController(self, didTapOnUser: searchUser, indexPath: indexPath, section: sectionFor(controller: searchSectionController))
         }
     }
-    
+
     func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectConversation conversation: ZMConversation, at indexPath: IndexPath) {
         delegate?.searchResultsViewController(self, didTapOnConversation: conversation)
     }
-    
+
     func searchSectionController(_ searchSectionController: CollectionViewSectionController, didSelectRow row: CreateGroupSection.Row, at indexPath: IndexPath) {
         switch row {
         case .createGroup:
@@ -395,9 +398,9 @@ extension SearchResultsViewController : SearchSectionControllerDelegate {
         case .createGuestRoom:
             delegate?.searchResultsViewController(self, wantsToPerformAction: .createGuestRoom)
         }
-        
+
     }
-    
+
 }
 
 extension SearchResultsViewController : InviteTeamMemberSectionDelegate {

@@ -34,16 +34,14 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
         self.userDefaults = userDefaults
     }
   
-    @objc public func analyticsProvider() -> AnalyticsProvider? {
+    public func analyticsProvider() -> AnalyticsProvider? {
         if self.useConsoleAnalytics || UserDefaults.standard.bool(forKey: ZMEnableConsoleLog) {
             zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
         }
         else if UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics {
-            zmLog.info("Creating analyticsProvider: AnalyticsMixpanelProvider")
-            let provider = AnalyticsMixpanelProvider(defaults: userDefaults)
-            provider.isOptedOut = false
-            return provider
+            // Create & return valid provider, when available.
+            return nil
         }
         else {
             zmLog.info("Creating analyticsProvider: no provider")

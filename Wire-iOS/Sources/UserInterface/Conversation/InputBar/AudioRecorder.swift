@@ -91,29 +91,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     public let format: AudioRecorderFormat
     public var state: AudioRecorderState = .recording
     
-    lazy var audioRecorder : AVAudioRecorder? = { [weak self] in
-        guard let `self` = self else { return nil }
-        let fileName = String.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
-        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-        self.fileURL = fileURL
-        let settings = [
-            AVFormatIDKey : self.format.audioFormat(),
-            AVSampleRateKey : 32000,
-            AVNumberOfChannelsKey : 1,
-        ]
-        
-        let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: settings)
-
-        audioRecorder?.isMeteringEnabled = true
-        audioRecorder?.delegate = self
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleInterruption),
-                                               name: .AVAudioSessionInterruption,
-                                               object: AVAudioSession.sharedInstance())
-
-        return audioRecorder
-    }()
+    var audioRecorder : AVAudioRecorder?
     
     var displayLink: CADisplayLink?
     var audioPlayer : AVAudioPlayer?
@@ -148,11 +126,38 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     deinit {
         token.apply(NotificationCenter.default.removeObserver)
         removeDisplayLink()
+        audioRecorder?.delegate = nil
+    }
+    
+    func createAudioRecorderIfNeeded() {
+        guard self.audioRecorder == nil else {
+            return
+        }
+        let fileName = String.filenameForSelfUser().appendingPathExtension(self.format.fileExtension())!
+        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
+        self.fileURL = fileURL
+        let settings = [
+            AVFormatIDKey : self.format.audioFormat(),
+            AVSampleRateKey : 32000,
+            AVNumberOfChannelsKey : 1,
+            ]
+        
+        let audioRecorder = try? AVAudioRecorder(url: fileURL!, settings: settings)
+        
+        audioRecorder?.isMeteringEnabled = true
+        audioRecorder?.delegate = self
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleInterruption),
+                                               name: AVAudioSession.interruptionNotification,
+                                               object: AVAudioSession.sharedInstance())
+        
+        self.audioRecorder = audioRecorder
     }
     
     private func setupDidEnterBackgroundObserver() {
         token = NotificationCenter.default.addObserver(
-            forName: .UIApplicationDidEnterBackground,
+            forName: UIApplication.didEnterBackgroundNotification,
             object: nil,
             queue: .main,
             using: { _ in UIApplication.shared.isIdleTimerDisabled = false }
@@ -164,7 +169,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     @objc func handleInterruption(_ notification: Notification) {
         guard let info = notification.userInfo,
             let typeValue = info[AVAudioSessionInterruptionTypeKey] as? UInt,
-            let type = AVAudioSessionInterruptionType(rawValue: typeValue) else {
+            let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
                 return
         }
         if type == .began {
@@ -175,6 +180,8 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     // MARK: Recording
     
     public func startRecording() {
+        createAudioRecorderIfNeeded()
+        
         guard let audioRecorder = self.audioRecorder else { return }
 
         AVSMediaManager.sharedInstance().startRecording {
@@ -223,7 +230,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
     
     fileprivate func setupDisplayLink() {
         displayLink = CADisplayLink(target: self, selector: #selector(displayLinkDidFire))
-        displayLink?.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        displayLink?.add(to: .current, forMode: .common)
     }
     
     fileprivate func removeDisplayLink() {
@@ -262,7 +269,7 @@ public final class AudioRecorder: NSObject, AudioRecorderType {
         guard let audioRecorder = self.audioRecorder else { return }
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
         } catch let error {
             zmLog.error("Failed change audio category for playback: \(error)")
         }

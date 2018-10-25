@@ -32,7 +32,7 @@ import CoreLocation
     weak var delegate: LocationSelectionViewControllerDelegate?
     public let locationButton: IconButton = {
         let button = IconButton()
-        button.setIcon(.location, with: .tiny, for: UIControlState())
+        button.setIcon(.location, with: .tiny, for: [])
         button.borderWidth = 0.5
         button.setBorderColor(.separator, for: .normal)
         button.circular = true
@@ -94,8 +94,8 @@ import CoreLocation
     }
     
     fileprivate func configureViews() {
-        addChildViewController(sendViewController)
-        sendViewController.didMove(toParentViewController: self)
+        addChild(sendViewController)
+        sendViewController.didMove(toParent: self)
         [mapView, sendViewController.view, toolBar, locationButton].forEach(view.addSubview)
         locationButton.addTarget(self, action: #selector(locationButtonTapped), for: .touchUpInside)
 
@@ -147,7 +147,7 @@ import CoreLocation
     
     fileprivate func zoomToUserLocation(_ animated: Bool) {
         guard userLocationAuthorized else { return presentUnauthorizedAlert() }
-        let region = MKCoordinateRegionMakeWithDistance(mapView.userLocation.coordinate, 50, 50)
+        let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, latitudinalMeters: 50, longitudinalMeters: 50)
         mapView.setRegion(region, animated: animated)
     }
     
@@ -160,7 +160,7 @@ import CoreLocation
         let alertController = UIAlertController(title: localize("title"), message: localize("message"), preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: localize("cancel"), style: .cancel , handler: nil)
         let settingsAction = UIAlertAction(title: localize("settings"), style: .default) { _ in
-            guard let url = URL(string: UIApplicationOpenSettingsURLString) else { return }
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(url)
         }
         

@@ -100,7 +100,7 @@ private let zmLog = ZMSLog(tag: "UI")
     var credentials: ZMEmailCredentials?
     var clientsObserverToken: Any?
     var userObserverToken : NSObjectProtocol?
-
+    
     var leftBarButtonItem: UIBarButtonItem? {
         if self.isIPadRegular() {
             return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ClientListViewController.backPressed(_:)))
@@ -135,7 +135,6 @@ private let zmLog = ZMSLog(tag: "UI")
 
         super.init(nibName: nil, bundle: nil)
         self.title = "registration.devices.title".localized.uppercased()
-        self.edgesForExtendedLayout = []
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
@@ -201,7 +200,7 @@ private let zmLog = ZMSLog(tag: "UI")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 80
         tableView.register(ClientTableViewCell.self, forCellReuseIdentifier: ClientTableViewCell.zm_reuseIdentifier)
         tableView.isEditing = self.editingList
@@ -212,15 +211,20 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     fileprivate func createConstraints() {
-        if let clientsTableView = self.clientsTableView {
-            constrain(self.view, clientsTableView, self.topSeparator) { selfView, clientsTableView, topSeparator in
-                clientsTableView.edges == selfView.edges
-                
-                topSeparator.left == clientsTableView.left
-                topSeparator.right == clientsTableView.right
-                topSeparator.top == clientsTableView.top
-            }
+        guard let clientsTableView = clientsTableView else {
+            return
         }
+
+        clientsTableView.translatesAutoresizingMaskIntoConstraints = false
+
+        let constraints: [NSLayoutConstraint] = [
+            clientsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            clientsTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            clientsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            clientsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ]
+
+        NSLayoutConstraint.activate(constraints)
     }
     
     fileprivate func convertSection(_ section: Int) -> Int {
@@ -246,51 +250,35 @@ private let zmLog = ZMSLog(tag: "UI")
         self.navigationController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
-    func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials) {
-        showLoadingView = true
-        ZMUserSession.shared()?.delete([userClient], with: credentials);
-
+    func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials?) {
+        userClient.remove(over: self, credentials: self.credentials)
         delegate?.finishedDeleting(self)
     }
-
-    func displayError(_ message: String) {
-        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: NSLocalizedString("general.ok", comment: ""), style: .default) { [unowned alert] (_) -> Void in
-            alert.dismiss(animated: true, completion: .none)
-        }
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: .none)
-    }
-
+    
     // MARK: - ZMClientRegistrationObserver
 
-    func finishedFetching(_ userClients: [UserClient]!) {
+    func finishedFetching(_ userClients: [UserClient]) {
         self.showLoadingView = false
         
         self.clients = userClients.filter { !$0.isSelfClient() }
     }
     
-    func failedToFetchClientsWithError(_ error: Error!) {
+    func failedToFetchClientsWithError(_ error: Error) {
         self.showLoadingView = false
         
-        zmLog.error("Clients request failed: \(error?.localizedDescription ?? "nil")")
+        zmLog.error("Clients request failed: \(error.localizedDescription)")
         
         self.displayError(NSLocalizedString("error.user.unkown_error", comment: ""))
     }
     
-    func finishedDeleting(_ remainingClients: [UserClient]!) {
-        self.showLoadingView = false
+    func finishedDeleting(_ remainingClients: [UserClient]) {
+        clients = remainingClients
 
-        self.clients = remainingClients
-
-        self.editingList = false
+        editingList = false
     }
     
-    func failedToDeleteClientsWithError(_ error: Error!) {
-        self.showLoadingView = false
-        self.credentials = .none
-        
-        self.displayError(NSLocalizedString("self.settings.account_details.remove_device.password.error", comment: ""))
+    func failedToDeleteClientsWithError(_ error: Error) {
+
     }
     
     // MARK: - UITableViewDataSource & UITableViewDelegate
@@ -385,40 +373,19 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch self.convertSection((indexPath as NSIndexPath).section) {
         case 1:
             
             let userClient = self.sortedClients[indexPath.row]
             
-            if let credentials = self.credentials {
-                self.deleteUserClient(userClient, credentials: credentials)
-            }
-            else {
-                let passwordRequest = RequestPasswordViewController.requestPasswordController() { (result: Either<String, NSError>) -> () in
-                    switch result {
-                    case .left(let passwordString):
-                        if let email = ZMUser.selfUser()?.emailAddress {
-                            let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
-                            self.credentials = newCredentials
-                            self.deleteUserClient(userClient, credentials: newCredentials)
-                        } else {
-                            if DeveloperMenuState.developerMenuEnabled() {
-                                DebugAlert.showGeneric(message: "No email set!")
-                            }
-                        }
-                    case .right(let error):
-                        zmLog.error("Error: \(error)")
-                    }
-                }
-                self.present(passwordRequest, animated: true, completion: .none)
-            }
+            self.deleteUserClient(userClient, credentials: credentials)
         default: break
         }
         
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         switch self.convertSection((indexPath as NSIndexPath).section) {
         case 0:
             return .none
@@ -469,8 +436,6 @@ private let zmLog = ZMSLog(tag: "UI")
 
             self.navigationItem.setLeftBarButton(leftBarButtonItem, animated: true)
         }
-
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.accent()
     }
 }
 

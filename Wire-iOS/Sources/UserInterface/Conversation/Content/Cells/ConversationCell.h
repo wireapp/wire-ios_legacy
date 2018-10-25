@@ -19,7 +19,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "UserImageView.h"
 #import "WireSyncEngine+iOS.h"
 #import "MessageAction.h"
 #import "MessageType.h"
@@ -31,6 +30,7 @@
 @class ConversationCellBurstTimestampView;
 @class AdditionalMenuItem;
 @class MenuConfigurationProperties;
+@class UserImageView;
 
 extern const CGFloat ConversationCellSelectedOpacity;
 extern const NSTimeInterval ConversationCellSelectionAnimationDuration;
@@ -45,7 +45,6 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 @property (nonatomic, assign) BOOL alwaysShowDeliveryState;
 @property (nonatomic, assign) BOOL showUnreadMarker;
 @property (nonatomic, assign) CGFloat topPadding;
-@property (nonatomic, strong) NSArray<LinkAttachment *> *linkAttachments;
 
 @end
 
@@ -54,7 +53,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 
 @optional
 /// Called on touch up inside event on the user image (@c fromImage)
-- (void)conversationCell:(ConversationCell *)cell userTapped:(ZMUser *)user inView:(UIView *)view;
+- (void)conversationCell:(ConversationCell *)cell userTapped:(id<UserType>)user inView:(UIView *)view frame:(CGRect)frame;
 - (void)conversationCellDidTapResendMessage:(ConversationCell *)cell;
 - (void)conversationCell:(ConversationCell *)cell didSelectAction:(MessageAction)actionId;
 - (void)conversationCell:(ConversationCell *)cell didSelectURL:(NSURL *)url;
@@ -66,7 +65,7 @@ typedef void (^SelectedMenuBlock)(BOOL selected, BOOL animated);
 - (void)conversationCell:(ConversationCell *)cell openParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
 @end
 
-@interface ConversationCell : UITableViewCell <UserImageViewDelegate>
+@interface ConversationCell : UITableViewCell
 
 @property (nonatomic, readonly) ConversationCellLayoutProperties *layoutProperties;
 

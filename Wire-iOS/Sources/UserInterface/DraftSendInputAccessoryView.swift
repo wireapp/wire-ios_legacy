@@ -75,7 +75,7 @@ final class DraftSendInputAccessoryView: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIViewNoIntrinsicMetric, height: 60)
+        return CGSize(width: UIView.noIntrinsicMetric, height: 60)
     }
 
 }

@@ -133,7 +133,7 @@ final internal class AccountSelectorView: UIView {
     init() {
         super.init(frame: .zero)
         
-        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil, using: { [weak self] _ in
+        applicationDidBecomeActiveToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil, using: { [weak self] _ in
             self?.update(with: SessionManager.shared?.accountManager.accounts)
         })
         
@@ -148,4 +148,11 @@ final internal class AccountSelectorView: UIView {
         self.accounts = accounts
     }
 
+}
+
+private extension Account {
+    
+    var isActive: Bool {
+        return SessionManager.shared?.accountManager.selectedAccount == self
+    }
 }

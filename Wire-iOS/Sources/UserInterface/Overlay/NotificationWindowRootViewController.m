@@ -43,7 +43,6 @@
 @interface NotificationWindowRootViewController ()
 
 @property (nonatomic) AppLockViewController *appLockViewController;
-@property (nonatomic) ChatHeadsViewController *chatHeadsViewController;
 
 @end
 
@@ -65,10 +64,6 @@
         [self.appLockViewController wr_removeFromParentViewController];
     }
 
-    self.chatHeadsViewController = [[ChatHeadsViewController alloc] init];
-    self.chatHeadsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addViewController:self.chatHeadsViewController toView:self.view];
-
     self.appLockViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self addViewController:self.appLockViewController toView:self.view];
 
@@ -78,20 +73,11 @@
 - (void)setupConstraints
 {
     [self.appLockViewController.view autoPinEdgesToSuperviewEdges];
-    [self.chatHeadsViewController.view autoPinEdgesToSuperviewEdges];
 }
 
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
-}
-
-
-#pragma mark - In app custom notifications
-
-- (void)show:(ZMLocalNotification*)notification
-{
-    [self.chatHeadsViewController tryToDisplayNotification:notification];
 }
 
 #pragma mark - Rotation handling (should match up with root)

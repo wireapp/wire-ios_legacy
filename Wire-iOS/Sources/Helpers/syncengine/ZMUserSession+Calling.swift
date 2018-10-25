@@ -35,7 +35,7 @@ extension ZMUserSession {
             
             switch callState {
             case .incoming(video: _, shouldRing: true, degraded: _):
-                return !conversation.isSilenced && callNotificationStyle != .callKit
+                return conversation.mutedMessageTypes == .none && callNotificationStyle != .callKit
             default:
                 return false
             }

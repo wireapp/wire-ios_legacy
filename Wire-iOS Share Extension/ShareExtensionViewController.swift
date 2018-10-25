@@ -123,7 +123,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupHockeyIfNeeded()
         navigationController?.view.backgroundColor = .white
-        try? recreateSharingSession(account: currentAccount)
+        updateAccount(currentAccount)
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
@@ -146,6 +146,11 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         item.titleView = UIImageView(image: UIImage(forLogoWith: .black, iconSize: .small))
     }
 
+    private var authenticatedAccounts: [Account] {
+        guard let accountManager = accountManager else { return [] }
+        return accountManager.accounts.filter { BackendEnvironment.shared.isAuthenticated($0) }
+    }
+    
     private func recreateSharingSession(account: Account?) throws {
         guard let applicationGroupIdentifier = applicationGroupIdentifier,
             let hostBundleIdentifier = hostBundleIdentifier,
@@ -176,7 +181,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     override func presentationAnimationDidFinish() {
-        guard let sharingSession = sharingSession, sharingSession.canShare else {
+        if authenticatedAccounts.count == 0 {
             return presentNotSignedInMessage()
         }
     }
@@ -206,10 +211,12 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
 
         urlItems.first?.fetchURL { url in
-            guard let url = url, !url.isFileURL else { return }
-            let separator = self.textView.text.isEmpty ? "" : "\n"
-            self.textView.text = self.textView.text + separator + url.absoluteString
-            self.textView.delegate?.textViewDidChange?(self.textView)
+            DispatchQueue.main.async {
+                guard let url = url, !url.isFileURL else { return }
+                let separator = self.textView.text.isEmpty ? "" : "\n"
+                self.textView.text = self.textView.text + separator + url.absoluteString
+                self.textView.delegate?.textViewDidChange?(self.textView)
+            }
         }
     }
 
@@ -316,7 +323,7 @@ class ShareExtensionViewController: SLComposeServiceViewController {
 
     /// Fetches the preview image for the given website.
     private func fetchWebsitePreview(for url: URL) {
-        sharingSession?.downloadLinkPreviews(inText: url.absoluteString) { previews in
+        sharingSession?.downloadLinkPreviews(inText: url.absoluteString, excluding: []) { previews in
             if let imageData = previews.first?.imageData.first {
                 let image = UIImage(data: imageData)
                 DispatchQueue.main.async {
@@ -360,8 +367,19 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     }
     
     func updateAccount(_ account: Account?) {
-        guard let account = account, account != currentAccount else { return }
 
+        var account = account
+        let authenticated = authenticatedAccounts
+        
+        // If the current account is not authenticated (e.g. device removed from another client)
+        // and there are other accounts authenticated, it switches to the first available.
+        
+        let accountAuthenticated = account.flatMap(BackendEnvironment.shared.isAuthenticated) ?? false
+        
+        if let firstLogged = authenticated.first, account == currentAccount, accountAuthenticated == false {
+            account = firstLogged
+        }
+        
         do {
             try recreateSharingSession(account: account)
         } catch let error as SharingSession.InitializationError {
@@ -376,8 +394,10 @@ class ShareExtensionViewController: SLComposeServiceViewController {
         }
         
         currentAccount = account
-        accountItem.value = account.shareExtensionDisplayName
+        accountItem.value = account?.shareExtensionDisplayName ?? ""
         conversationItem.value = "share_extension.conversation_selection.empty.value".localized
+        
+        guard account != currentAccount else { return }
         postContent?.target = nil
         extensionActivity?.conversation = nil
     }

@@ -53,12 +53,12 @@ public extension ZMConversation {
     }
     
     private func timeoutImage(for timeout: MessageDestructionTimeoutValue, withColor color: UIColor = UIColor.accent()) -> UIImage? {
-        if timeout.isYears    { return WireStyleKit.imageOfYear(with: color) }
-        if timeout.isWeeks    { return WireStyleKit.imageOfWeek(with: color) }
-        if timeout.isDays     { return WireStyleKit.imageOfDay(with: color) }
-        if timeout.isHours    { return WireStyleKit.imageOfHour(with: color) }
-        if timeout.isMinutes  { return WireStyleKit.imageOfMinute(with: color) }
-        if timeout.isSeconds  { return WireStyleKit.imageOfSecond(with: color) }
+        if timeout.isYears    { return WireStyleKit.imageOfYear(color: color) }
+        if timeout.isWeeks    { return WireStyleKit.imageOfWeek(color: color) }
+        if timeout.isDays     { return WireStyleKit.imageOfDay(color: color) }
+        if timeout.isHours    { return WireStyleKit.imageOfHour(color: color) }
+        if timeout.isMinutes  { return WireStyleKit.imageOfMinute(color: color) }
+        if timeout.isSeconds  { return WireStyleKit.imageOfSecond(color: color) }
         return nil
     }
 }

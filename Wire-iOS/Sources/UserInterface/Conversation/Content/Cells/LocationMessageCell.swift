@@ -36,7 +36,7 @@ public final class LocationMessageCell: ConversationCell {
     var containerColor: UIColor? = .placeholderBackground
     var containerHeightConstraint: NSLayoutConstraint!
     
-    public override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.layer.cornerRadius = 4
@@ -140,7 +140,7 @@ public final class LocationMessageCell: ConversationCell {
             mapView.setCenterCoordinate(locationData.coordinate, zoomLevel: Int(locationData.zoomLevel))
         } else {
             // As the zoom level is optional we use a viewport of 250m x 250m if none is specified
-            let region = MKCoordinateRegionMakeWithDistance(locationData.coordinate, 250, 250)
+            let region = MKCoordinateRegion(center: locationData.coordinate, latitudinalMeters: 250, longitudinalMeters: 250)
             mapView.setRegion(region, animated: false)
         }
     }

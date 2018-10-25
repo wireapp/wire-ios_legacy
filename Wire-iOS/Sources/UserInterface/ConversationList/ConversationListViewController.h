@@ -48,8 +48,8 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 @property (nonatomic, readonly) ConversationListState state;
 
 /// Select a conversation and move the focus to the conversation view.
-- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
+- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
 
 - (void)selectInboxAndFocusOnView:(BOOL)focus;
 

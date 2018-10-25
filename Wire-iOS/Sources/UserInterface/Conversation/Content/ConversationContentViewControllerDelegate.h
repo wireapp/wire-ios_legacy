@@ -24,7 +24,7 @@
 @class ZMMessage;
 @class ConversationContentViewController;
 @protocol MediaPlayer;
-
+@protocol UserType;
 
 
 @protocol ConversationContentViewControllerDelegate <NSObject>
@@ -55,6 +55,6 @@ didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
 
 @optional
 
-- (void)didTapOnUserAvatar:(ZMUser *)user view:(UIView *)view;
+- (void)didTapOnUserAvatar:(id<UserType>)user view:(UIView *)view frame:(CGRect)frame;
 
 @end

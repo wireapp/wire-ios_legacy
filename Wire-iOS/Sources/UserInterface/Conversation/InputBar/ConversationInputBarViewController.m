@@ -46,13 +46,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface ConversationInputBarViewController (Commands)
-
-- (void)runCommand:(NSArray *)args;
-
-@end
-
-
 
 @interface ConversationInputBarViewController (CameraViewController)
 - (void)cameraButtonPressed:(id)sender;
@@ -118,6 +111,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) IconButton *emojiButton;
 @property (nonatomic) IconButton *markdownButton;
 @property (nonatomic) IconButton *gifButton;
+@property (nonatomic) IconButton *mentionButton;
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
@@ -152,6 +146,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self = [super init];
     if (self) {
+        [self setupAudioSession];
+
         if (conversation != nil) {
             self.conversation = conversation;
             self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
@@ -170,6 +166,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             self.notificationFeedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
             self.impactFeedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
         }
+        
     }
     return self;
 }
@@ -204,13 +201,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self createHourglassButton];
     [self createTypingIndicatorView];
     
-    if (self.conversation.hasDraftMessageText) {
-        self.inputBar.textView.text = self.conversation.draftMessageText;
+    if (self.conversation.hasDraftMessage) {
+        [self.inputBar.textView setDraftMessage:self.conversation.draftMessage];
     }
-    
+
     [self configureAudioButton:self.audioButton];
     [self configureEmojiButton:self.emojiButton];
     [self configureMarkdownButton];
+    [self configureMentionButton];
     [self configureEphemeralKeyboardButton:self.hourglassButton];
     [self configureEphemeralKeyboardButton:self.ephemeralIndicatorButton];
     
@@ -306,10 +304,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.gifButton = [[IconButton alloc] init];
     self.gifButton.hitAreaPadding = CGSizeZero;
     self.gifButton.accessibilityIdentifier = @"gifButton";
-    
-    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.videoButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton]];
+
+    self.mentionButton = [[IconButton alloc] init];
+    self.mentionButton.hitAreaPadding = CGSizeZero;
+    self.mentionButton.accessibilityIdentifier = @"mentionButton";
+
+    self.inputBar = [[InputBar alloc] initWithButtons:@[self.photoButton, self.mentionButton, self.sketchButton, self.gifButton, self.audioButton, self.pingButton, self.uploadFileButton, self.locationButton, self.videoButton]];
     self.inputBar.translatesAutoresizingMaskIntoConstraints = NO;
     self.inputBar.textView.delegate = self;
+    [self registerForTextFieldSelectionChange];
     
     [self.view addSubview:self.inputBar];
     [self.inputBar autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeBottom];
@@ -364,7 +367,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = YES;
 
     [self.inputBar.rightAccessoryStackView insertArrangedSubview:self.ephemeralIndicatorButton atIndex:0];
-    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];
+    [self.ephemeralIndicatorButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
 
     [self.ephemeralIndicatorButton setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorLightGraphite]
                                         forState:UIControlStateDisabled];
@@ -411,7 +414,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.hourglassButton.accessibilityIdentifier = @"ephemeralTimeSelectionButton";
     [self.inputBar.rightAccessoryStackView addArrangedSubview:self.hourglassButton];
 
-    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSIze, InputBar.rightIconSIze)];
+    [self.hourglassButton autoSetDimensionsToSize:CGSizeMake(InputBar.rightIconSize, InputBar.rightIconSize)];
 }
 
 - (void)createTypingIndicatorView
@@ -514,7 +517,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.gifButton setIcon:ZetaIconTypeGif
                    withSize:ZetaIconSizeTiny
                    forState:UIControlStateNormal];
- 
+
+    [self.mentionButton setIcon:ZetaIconTypeMention
+                   withSize:ZetaIconSizeTiny
+                   forState:UIControlStateNormal];
+
     [self.sendButton setIcon:ZetaIconTypeSend
                     withSize:ZetaIconSizeTiny
                     forState:UIControlStateNormal];
@@ -569,6 +576,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (NSArray<UIKeyCommand *> *)keyCommands
 {
     NSMutableArray *commands = [[NSMutableArray alloc] init];
+    
+    if (IS_IPAD) {
+        [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
+                                                modifierFlags:UIKeyModifierShift
+                                                       action:@selector(shiftReturnPressed)
+                                         discoverabilityTitle:NSLocalizedString(@"conversation.input_bar.shortcut.newline", nil)]];
+    }
+    
     [commands addObject:[UIKeyCommand keyCommandWithInput:@"\r"
                                             modifierFlags:UIKeyModifierCommand
                                                    action:@selector(commandReturnPressed)
@@ -596,10 +611,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)commandReturnPressed
 {
-    NSString *candidateText = self.inputBar.textView.preparedText;
-    if (nil != candidateText) {
-        [self sendOrEditText:candidateText];
-    }
+    [self sendText];
+}
+
+- (void)shiftReturnPressed
+{
+    [self.inputBar.textView replaceRange:self.inputBar.textView.selectedTextRange withText:@"\n"];
 }
 
 - (void)upArrowPressed
@@ -776,34 +793,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)sendOrEditText:(NSString *)text
-{
-    NSString *candidateText = [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-    BOOL conversationWasNotDeleted = self.conversation.managedObjectContext != nil;
-    
-    if (self.inputBar.isEditing && nil != self.editingMessage) {
-        NSString *previousText = [self.editingMessage.textMessageData.messageText stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
-        if (![candidateText isEqualToString:previousText]) {
-            [self sendEditedMessageAndUpdateStateWithText:candidateText];
-        }
-        
-        return;
-    }
-    
-    if (candidateText.length && conversationWasNotDeleted) {
-        
-        [self clearInputBar];
-        
-        NSArray *args = candidateText.args;
-        if(args.count > 0) {
-            [self runCommand:args];
-        }
-        else {
-            [self.sendController sendTextMessage:candidateText];
-        }
-    }
-}
-
 #pragma mark - Animations
 
 - (void)bounceCameraIcon;
@@ -971,25 +960,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)sendButtonPressed:(id)sender
 {
     [self.inputBar.textView autocorrectLastWord];
-    if([self checkMessageLength]){
-        [self sendOrEditText:self.inputBar.textView.preparedText];
-    }
-}
-
--(BOOL)checkMessageLength
-{
-    BOOL allowed = self.inputBar.textView.text.length <= (NSUInteger)SharedConstants.maximumMessageLength;
-    
-    if(!allowed) {
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"conversation.input_bar.message_too_long.message", nil), SharedConstants.maximumMessageLength];
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"conversation.input_bar.message_too_long.title", nil)
-                                                                       message:message
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    
-    return allowed;
+    [self sendText];
 }
 
 @end
@@ -1055,20 +1026,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 
-@implementation ConversationInputBarViewController (Commands)
-
-- (void)runCommand:(NSArray *)args
-{
-    if (args.count == 0) {
-        return;
-    }
-    
-    [self.sendController sendTextMessage:[NSString stringWithFormat:@"/%@", [args componentsJoinedByString:@" "]]];
-}
-
-@end
-
-
 @implementation ConversationInputBarViewController (ZMTypingChangeObserver)
 
 - (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSSet<ZMUser *> *)typingUsers
@@ -1121,8 +1078,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self clearInputBar];
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    
-    
     NSString *messageText = nil;
     
     if ([searchTerm isEqualToString:@""]) {
@@ -1131,7 +1086,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
     }
     
-    [self.sendController sendTextMessage:messageText withImageData:imageData];
+    [self.sendController sendTextMessage:messageText mentions:@[] withImageData:imageData];
 }
 
 @end

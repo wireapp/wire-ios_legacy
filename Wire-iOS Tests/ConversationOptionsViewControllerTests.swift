@@ -30,6 +30,7 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
     var deleteResult: VoidResult = .success
     var createResult: Result<String>? = nil
     var isCodeEnabled = true
+    var areGuestOrServicePresent = true
     
     init(allowGuests: Bool, title: String = "", setAllowGuests: SetHandler? = nil) {
         self.allowGuests = allowGuests
@@ -55,6 +56,35 @@ class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfigurati
 }
 
 final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
+
+    func testThatNoAlertIsShowIfNoGuestOrService() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        config.areGuestOrServicePresent = false
+
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+
+        ///Show the alert
+        let sut = viewModel.setAllowGuests(false)
+
+        // Then
+        XCTAssertNil(sut)
+    }
+
+    func testThatItRendersRemoveGuestsAndServicesWarning() {
+        // Given
+        let config = MockOptionsViewModelConfiguration(allowGuests: true)
+        let viewModel = ConversationOptionsViewModel(configuration: config)
+
+        /// for ConversationOptionsViewModel's delegate
+        _ = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
+
+        ///Show the alert
+        let sut = viewModel.setAllowGuests(false)
+
+        // Then
+        verifyAlertController(sut!)
+    }
 
     func testThatItRendersTeamOnly() {
         // Given
@@ -252,28 +282,5 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         // When & Then
         let sut = UIAlertController.confirmRevokingLink { _ in }
         verifyAlertController(sut)
-    }
-    
-    private func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
-        // Given
-        let window = UIWindow(frame: .init(x: 0, y: 0, width: 375, height: 667))
-        let container = UIViewController()
-        container.loadViewIfNeeded()
-        window.rootViewController = container
-        window.makeKeyAndVisible()
-        controller.loadViewIfNeeded()
-        controller.view.setNeedsLayout()
-        controller.view.layoutIfNeeded()
-        
-        // When
-        let presentationExpectation = expectation(description: "It should be presented")
-        container.present(controller, animated: false) {
-            presentationExpectation.fulfill()
-        }
-        
-        // Then
-        waitForExpectations(timeout: 2, handler: nil)
-        verify(view: controller.view, file: file, line: line)
-    }
-    
+    }    
 }

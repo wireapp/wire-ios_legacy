@@ -167,9 +167,9 @@ import Cartography
         
         colorPickerController.view.addSubview(separatorLine)
         colorPickerController.delegate = self
-        colorPickerController.willMove(toParentViewController: self)
+        colorPickerController.willMove(toParent: self)
         view.addSubview(colorPickerController.view)
-        addChildViewController(colorPickerController)
+        addChild(colorPickerController)
         colorPickerController.selectedColorIndex = UInt(colorPickerController.sketchColors.index(of: UIColor.accent()) ?? 0)
     }
     
@@ -275,7 +275,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     func showEmojiKeyboard(animated: Bool) {
         guard !isEmojiKeyboardInTransition else { return }
         
-        emojiKeyboardViewController.willMove(toParentViewController: self)
+        emojiKeyboardViewController.willMove(toParent: self)
         view.addSubview(emojiKeyboardViewController.view)
         
         constrain(view, emojiKeyboardViewController.view) { container, emojiKeyboardView in
@@ -285,7 +285,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
             emojiKeyboardView.bottom == container.bottom
         }
         
-        addChildViewController(emojiKeyboardViewController)
+        addChild(emojiKeyboardViewController)
         
         if (animated) {
             isEmojiKeyboardInTransition = true
@@ -296,7 +296,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
             
             UIView.animate(withDuration: 0.25,
                            delay: 0,
-                           options: UIViewAnimationOptions(rawValue: UInt(7)),
+                           options: UIView.AnimationOptions(rawValue: UInt(7)),
                            animations: {
                             self.emojiKeyboardViewController.view.transform = CGAffineTransform.identity
                 },
@@ -307,13 +307,13 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     }
     
     func hideEmojiKeyboard(animated: Bool) {
-        guard childViewControllers.contains(emojiKeyboardViewController), !isEmojiKeyboardInTransition else { return }
+        guard children.contains(emojiKeyboardViewController), !isEmojiKeyboardInTransition else { return }
         
-        emojiKeyboardViewController.willMove(toParentViewController: nil)
+        emojiKeyboardViewController.willMove(toParent: nil)
         
         let removeEmojiKeyboardViewController = {
             self.emojiKeyboardViewController.view.removeFromSuperview()
-            self.emojiKeyboardViewController.removeFromParentViewController()
+            self.emojiKeyboardViewController.removeFromParent()
         }
         
         if (animated) {
@@ -322,7 +322,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
             
             UIView.animate(withDuration: 0.25,
                            delay: 0,
-                           options: UIViewAnimationOptions(rawValue: UInt(7)),
+                           options: UIView.AnimationOptions(rawValue: UInt(7)),
                            animations: {
                             let offscreen = CGAffineTransform(translationX: 0, y: self.emojiKeyboardViewController.view.bounds.size.height)
                             self.emojiKeyboardViewController.view.transform = offscreen
@@ -342,7 +342,7 @@ extension CanvasViewController : EmojiKeyboardViewControllerDelegate {
     
     func emojiKeyboardViewController(_ viewController: EmojiKeyboardViewController, didSelectEmoji emoji: String) {
         
-        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 82)]
+        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 82)]
         
         if let image = emoji.image(renderedWithAttributes: attributes)?.imageWithAlphaTrimmed {
             canvas.insert(image: image, at: CGPoint(x: canvas.center.x - image.size.width / 2, y: canvas.center.y - image.size.height / 2))
@@ -360,7 +360,8 @@ extension CanvasViewController : UIImagePickerControllerDelegate {
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
         UIImagePickerController.image(fromMediaInfo: info) { image in
             if let image = image, let cgImage = image.cgImage {
                 self.canvas.referenceImage = UIImage(cgImage: cgImage, scale: 2, orientation: image.imageOrientation)

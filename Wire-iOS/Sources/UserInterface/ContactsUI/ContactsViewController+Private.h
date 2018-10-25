@@ -20,7 +20,7 @@
 #import "ContactsViewController.h"
 #import "ContactsDataSource.h"
 
-@interface ContactsViewController (Private) <ContactsDataSourceDelegate>
+@interface ContactsViewController (Private)
 
 @property (nonatomic, readonly) UITableView *tableView;
 

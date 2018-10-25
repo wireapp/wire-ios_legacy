@@ -39,7 +39,7 @@ public extension ConversationCell {
     @objc func willDisplayInTableView() {
         scheduledTimerForUpdateBurstTimestamp()
 
-        contentView.bringSubview(toFront: likeButton)
+        contentView.bringSubviewToFront(likeButton)
 
         if delegate != nil &&
             delegate.responds(to: #selector(ConversationCellDelegate.conversationCellShouldStartDestructionTimer)) &&
@@ -51,7 +51,7 @@ public extension ConversationCell {
             }
         }
 
-        messageContentView.bringSubview(toFront: countdownContainerView)
+        messageContentView.bringSubviewToFront(countdownContainerView)
     }
     
     @objc func cellDidEndBeingVisible() {

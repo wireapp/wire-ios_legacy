@@ -21,6 +21,11 @@ import XCTest
 
 class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
     
+    override func tearDown() {
+        resetColorScheme()
+        super.tearDown()
+    }
+    
     func testThatItRendersALotOfUsers() {
         // given
         let users = (0..<20).map { createUser(name: "User #\($0)") }

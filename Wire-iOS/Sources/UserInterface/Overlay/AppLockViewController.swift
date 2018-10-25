@@ -49,17 +49,17 @@ extension Notification.Name {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppLockViewController.applicationWillResignActive),
-                                               name: .UIApplicationWillResignActive,
+                                               name: UIApplication.willResignActiveNotification,
                                                object: .none)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppLockViewController.applicationDidEnterBackground),
-                                               name: .UIApplicationDidEnterBackground,
+                                               name: UIApplication.didEnterBackgroundNotification,
                                                object: .none)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(AppLockViewController.applicationDidBecomeActive),
-                                               name: .UIApplicationDidBecomeActive,
+                                               name: UIApplication.didBecomeActiveNotification,
                                                object: .none)
     }
     

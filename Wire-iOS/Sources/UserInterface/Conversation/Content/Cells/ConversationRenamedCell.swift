@@ -25,7 +25,7 @@ import Cartography
     var nameLabelFont: UIFont? = .normalSemiboldFont
     private let nameLabel = UILabel()
 
-    public required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         nameLabel.numberOfLines = 0
         messageContentView.addSubview(nameLabel)

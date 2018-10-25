@@ -24,8 +24,7 @@ extension NSExtensionContext {
     /// Get all the attachments to this post.
     var attachments : [NSItemProvider] {
         guard let items = inputItems as? [NSExtensionItem] else { return [] }
-        return items.compactMap { $0.attachments as? [NSItemProvider] } // remove optional
-            .flatMap { $0 } // flattens array
+        return items.flatMap { $0.attachments ?? [] }
     }
 
 }

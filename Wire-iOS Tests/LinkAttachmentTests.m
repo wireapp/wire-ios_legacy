@@ -36,7 +36,7 @@
     NSRange range = NSMakeRange(0, link.length);
 
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
 
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeNone);
@@ -49,7 +49,7 @@
     NSRange range = NSMakeRange(0, link.length);
     
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeYoutubeVideo);
@@ -62,7 +62,7 @@
     NSRange range = NSMakeRange(0, link.length);
 
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeYoutubeVideo);
@@ -75,7 +75,7 @@
     NSRange range = NSMakeRange(0, link.length);
     
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeYoutubeVideo);
@@ -88,7 +88,7 @@
     NSRange range = NSMakeRange(0, link.length);
     
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeYoutubeVideo);
@@ -103,7 +103,7 @@
     NSRange range = NSMakeRange(0, link.length);
     
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeNone);
@@ -118,7 +118,7 @@
     NSRange range = NSMakeRange(0, link.length);
     
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeNone);
@@ -131,7 +131,7 @@
     NSRange range = NSMakeRange(0, link.length);
     
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeSoundcloudTrack);
@@ -144,7 +144,7 @@
     NSRange range = NSMakeRange(0, link.length);
     
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeSoundcloudTrack);
@@ -159,7 +159,7 @@
     NSRange range = NSMakeRange(0, link.length);
     
     // When
-    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range];
+    LinkAttachment *linkAttachment = [[LinkAttachment alloc] initWithURL:[NSURL URLWithString:link] range:range string:link];
     
     // Then
     XCTAssertEqual(linkAttachment.type, LinkAttachmentTypeSoundcloudSet);

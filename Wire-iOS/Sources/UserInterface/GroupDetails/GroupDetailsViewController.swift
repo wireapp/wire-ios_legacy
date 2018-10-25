@@ -26,7 +26,7 @@ import Cartography
     fileprivate let footerView = GroupDetailsFooterView()
     fileprivate let bottomSpacer = UIView()
     fileprivate var token: NSObjectProtocol?
-    fileprivate var actionController: ConversationActionController?
+    var actionController: ConversationActionController?
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
 
@@ -49,8 +49,11 @@ import Cartography
         collectionViewController = SectionCollectionViewController()
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
-        syncObserver = InitialSyncObserver(in: ZMUserSession.shared()!) { [weak self] completed in
-            self?.didCompleteInitialSync = completed
+
+        if let session = ZMUserSession.shared() {
+            syncObserver = InitialSyncObserver(in: session) { [weak self] completed in
+                self?.didCompleteInitialSync = completed
+            }
         }
     }
     
@@ -111,7 +114,9 @@ import Cartography
         self.renameGroupSectionController = renameGroupSectionController
         
         let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
-        sections.append(optionsSectionController)
+        if optionsSectionController.hasOptions {
+            sections.append(optionsSectionController)            
+        }
 
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
@@ -127,7 +132,14 @@ import Cartography
     }
     
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
-        guard changeInfo.participantsChanged || changeInfo.nameChanged || changeInfo.allowGuestsChanged || changeInfo.destructionTimeoutChanged else { return }
+        guard
+            changeInfo.participantsChanged ||
+            changeInfo.nameChanged ||
+            changeInfo.allowGuestsChanged ||
+            changeInfo.destructionTimeoutChanged ||
+            changeInfo.mutedMessageTypesChanged
+            else { return }
+        
         collectionViewController.sections = computeVisibleSections()
         footerView.update(for: conversation)
     }
@@ -141,7 +153,7 @@ import Cartography
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
-            actionController?.presentMenu(from: view)
+            actionController?.presentMenu(from: view, showConverationNameInMenuTitle: false)
         }
     }
     
@@ -171,7 +183,7 @@ extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewContro
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
-            ZClientViewController.shared()?.load(conversation, focusOnView: true, animated: true)
+            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
     
@@ -196,12 +208,18 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
     
     @objc(presentGuestOptionsAnimated:)
     func presentGuestOptions(animated: Bool) {
-        let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
+        let menu = ConversationOptionsViewController(conversation: conversation, userSession: .shared()!)
         navigationController?.pushViewController(menu, animated: animated)
     }
 
     func presentTimeoutOptions(animated: Bool) {
-        let menu = ConversationTimeoutOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
+        let menu = ConversationTimeoutOptionsViewController(conversation: conversation, userSession: .shared()!)
+        menu.dismisser = self
+        navigationController?.pushViewController(menu, animated: animated)
+    }
+    
+    func presentNotificationsOptions(animated: Bool) {
+        let menu = ConversationNotificationOptionsViewController(conversation: conversation, userSession: .shared()!)
         menu.dismisser = self
         navigationController?.pushViewController(menu, animated: animated)
     }

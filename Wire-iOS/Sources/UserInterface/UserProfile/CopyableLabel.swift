@@ -55,14 +55,14 @@ class CopyableLabel: UILabel {
             view == self,
             becomeFirstResponder() else { return }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide), name: .UIMenuControllerDidHideMenu, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide), name: UIMenuController.didHideMenuNotification, object: nil)
         UIMenuController.shared.setTargetRect(view.frame, in: superview)
         UIMenuController.shared.setMenuVisible(true, animated: true)
         fade(dimmed: true)
     }
 
     @objc private func menuDidHide(_ note: Notification) {
-        NotificationCenter.default.removeObserver(self, name: .UIMenuControllerDidHideMenu, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
         fade(dimmed: false)
     }
 

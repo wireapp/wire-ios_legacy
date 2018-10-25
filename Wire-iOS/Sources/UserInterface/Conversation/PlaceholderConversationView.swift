@@ -29,7 +29,7 @@ import Cartography
 
         self.backgroundColor = UIColor(scheme: .background)
         
-        let image = WireStyleKit.imageOfShield(with: UIColor(rgb: 0xbac8d1, alpha: 0.24))
+        let image = WireStyleKit.imageOfShield(color: UIColor(rgb: 0xbac8d1, alpha: 0.24))
         shieldImageView = UIImageView(image: image)
         self.addSubview(shieldImageView)
         

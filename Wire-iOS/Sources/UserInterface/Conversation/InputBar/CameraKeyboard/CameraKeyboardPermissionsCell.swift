@@ -52,7 +52,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell {
         settingsButton.setTitleColor(.white, for: .normal)
         settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: UIFont.Weight.semibold)
         settingsButton.setTitle("keyboard_photos_access.denied.keyboard.settings".localized, for: .normal)
-        settingsButton.contentEdgeInsets = UIEdgeInsetsMake(10, 30, 10, 30)
+        settingsButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 30, bottom: 10, right: 30)
         settingsButton.layer.cornerRadius = 4.0
         settingsButton.layer.masksToBounds = true
         settingsButton.addTarget(self, action: #selector(CameraKeyboardPermissionsCell.openSettings), for: .touchUpInside)
@@ -92,7 +92,7 @@ open class CameraKeyboardPermissionsCell: UICollectionViewCell {
     }
     
     @objc private func openSettings() {
-        guard let url = URL(string:UIApplicationOpenSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
+        guard let url = URL(string:UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else { return }
         UIApplication.shared.open(url)
     }
     

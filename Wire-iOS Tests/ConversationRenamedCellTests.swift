@@ -62,20 +62,3 @@ class ConversationRenamedCellTests: CoreDataSnapshotTestCase {
 
 }
 
-
-private extension UITableViewCell {
-
-    func prepareForSnapshots() -> UIView {
-        setNeedsLayout()
-        layoutIfNeeded()
-
-        bounds.size = systemLayoutSizeFitting(
-            CGSize(width: 375, height: 0),
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        )
-
-        return wrapInTableView()
-    }
-    
-}

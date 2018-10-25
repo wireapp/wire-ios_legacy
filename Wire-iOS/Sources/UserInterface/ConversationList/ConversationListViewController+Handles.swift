@@ -32,9 +32,9 @@ extension ConversationListViewController {
         usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: name)
         usernameTakeoverViewController.delegate = self
 
-        addChildViewController(usernameTakeoverViewController)
+        addChild(usernameTakeoverViewController)
         view.addSubview(usernameTakeoverViewController.view)
-        usernameTakeoverViewController.didMove(toParentViewController: self)
+        usernameTakeoverViewController.didMove(toParent: self)
         contentContainer.alpha = 0
 
         constrain(view, usernameTakeoverViewController.view) { view, takeover in
@@ -47,9 +47,9 @@ extension ConversationListViewController {
 
     func removeUsernameTakeover() {
         guard let takeover = usernameTakeoverViewController else { return }
-        takeover.willMove(toParentViewController: nil)
+        takeover.willMove(toParent: nil)
         takeover.view.removeFromSuperview()
-        takeover.removeFromParentViewController()
+        takeover.removeFromParent()
         contentContainer.alpha = 1
         usernameTakeoverViewController = nil
         removeUserProfileObserver()
@@ -117,12 +117,20 @@ extension ConversationListViewController: UserProfileUpdateObserver {
 
     public func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
-        if let userSession = ZMUserSession.shared() {
-            UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self) { marketingConsent in
-                ZMUser.selfUser().setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
-            }
+        if let userSession = ZMUserSession.shared(), let selfUser = ZMUser.selfUser() {
+            selfUser.fetchMarketingConsent(in: userSession, completion: { result in
+                switch result {
+                case .failure:
+                    UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self) { marketingConsent in
+                        selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
+                    }
+
+                case .success:
+                    // The user already gave a marketing consent, no need to ask for it again.
+                    return
+                }
+            })
         }
-        UIAlertController.newsletterSubscriptionDialogWasDisplayed = false
 
         // When the user have to set user name, i.e. the user is a invited team user, show data usage permission dialog
         self.isComingFromSetUsername = true

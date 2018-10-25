@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 @objcMembers final public class CollectionLoadingCell: UICollectionViewCell {
-    let loadingView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let loadingView = UIActivityIndicatorView(style: .gray)
     
     public override init(frame: CGRect) {
         super.init(frame: frame)

@@ -33,7 +33,7 @@ class VideoMessageCellTests: ZMSnapshotTestCase {
         let fileMessage = MockMessageFactory.fileTransferMessage()
         fileMessage?.backingFileMessageData.mimeType = "video/mp4"
         fileMessage?.backingFileMessageData.filename = "vacation.mp4"
-        fileMessage?.backingFileMessageData.imagePreviewData = UIImageJPEGRepresentation(image(inTestBundleNamed: "unsplash_matterhorn.jpg"), 0.9)
+        fileMessage?.backingFileMessageData.imagePreviewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         
         if let config = config {
             config(fileMessage!)

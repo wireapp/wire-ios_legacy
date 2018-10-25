@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 extension Cartography.Point {
-    func edge(with value: NSLayoutAttribute) -> Cartography.Edge? {
+    func edge(with value: NSLayoutConstraint.Attribute) -> Cartography.Edge? {
         return self.properties.filter { $0.attribute == value }.first as? Edge
     }
     

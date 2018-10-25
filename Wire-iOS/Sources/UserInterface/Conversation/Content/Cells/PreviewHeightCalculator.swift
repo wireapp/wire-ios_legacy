@@ -36,7 +36,7 @@ import Foundation
     }
     
     static func compressedSizeForView(_ view: UIView) -> CGFloat {
-        return view.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height;
+        return view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height;
     }
     
     static func heightForVideo() -> CGFloat {

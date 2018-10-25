@@ -16,14 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import AVKit;
-@import AVFoundation;
+#import "MessagePresenter.h"
 
+@class MediaPlaybackManager;
 
-@class MediaPlayerController;
+@interface MessagePresenter ()
 
-@interface AVPlayerViewControllerWithoutStatusBar : AVPlayerViewController
-
-@property (nonatomic) MediaPlayerController *wr_playerController;
+@property (nonatomic, nullable) MediaPlayerController *mediaPlayerController;
+@property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
+@property (nonatomic, nullable) id<NSObject> videoPlayerObserver;
 
 @end

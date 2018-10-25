@@ -38,6 +38,7 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         variant: .dark
     )
 
+    private var userHasSetFillMode: Bool = false
     private var snapshotView: UIView?
 
     init(identifier: String) {
@@ -70,7 +71,6 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
     private func createPreviewView() {
         let preview = AVSVideoView()
         preview.userid = identifier
-        preview.shouldFill = true
         preview.translatesAutoresizingMaskIntoConstraints = false
         if let snapshotView = snapshotView {
             insertSubview(preview, belowSubview: snapshotView)
@@ -78,13 +78,14 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
             addSubview(preview)
         }
         preview.fitInSuperview()
+        preview.shouldFill = true
 
         previewView = preview
     }
 
     public func switchFillMode() {
         guard let previewView = previewView else { return }
-
+        userHasSetFillMode = true
         previewView.shouldFill = !previewView.shouldFill
     }
     
@@ -94,6 +95,14 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
         snapshotView.translatesAutoresizingMaskIntoConstraints = false
         snapshotView.fitInSuperview()
         self.snapshotView = snapshotView
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if !userHasSetFillMode {
+            previewView?.shouldFill = (previewView?.videoSize.aspectRatio == previewView?.frame.size.aspectRatio)
+        }
     }
 
     private func updateState(animated: Bool = false) {

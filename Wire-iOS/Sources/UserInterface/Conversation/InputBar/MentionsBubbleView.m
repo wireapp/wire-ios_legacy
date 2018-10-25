@@ -18,8 +18,7 @@
 
 
 #import "MentionsBubbleView.h"
-#import <WireExtensionComponents/WireStyleKit.h>
-
+@import WireExtensionComponents;
 
 @implementation MentionsBubbleView
 

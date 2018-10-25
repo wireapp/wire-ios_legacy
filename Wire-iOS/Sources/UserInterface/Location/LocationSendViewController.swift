@@ -56,7 +56,7 @@ import Cartography
     }
     
     fileprivate func configureViews() {
-        sendButton.setTitle("location.send_button.title".localized.uppercased(), for: UIControlState())
+        sendButton.setTitle("location.send_button.title".localized.uppercased(), for: [])
         sendButton.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         sendButton.accessibilityIdentifier = "sendLocation"
         addressLabel.accessibilityIdentifier = "selectedAddress"

@@ -59,8 +59,8 @@ open class CollectionCell: UICollectionViewCell {
 
     override open var intrinsicContentSize: CGSize {
         get {
-            let width = self.desiredWidth ?? UIViewNoIntrinsicMetric
-            let height = self.desiredHeight ?? UIViewNoIntrinsicMetric
+            let width = self.desiredWidth ?? UIView.noIntrinsicMetric
+            let height = self.desiredHeight ?? UIView.noIntrinsicMetric
             
             return CGSize(width: width, height: height)
         }

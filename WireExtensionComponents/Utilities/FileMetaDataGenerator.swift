@@ -28,7 +28,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
     @objc static public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in
-            let thumbnail = preview != nil ? UIImageJPEGRepresentation(preview!, 0.9) : nil
+            let thumbnail = preview != nil ? preview!.jpegData(compressionQuality: 0.9) : nil
             
             if AVURLAsset.wr_isAudioVisualUTI(uti) {
                 let asset = AVURLAsset(url: url)
@@ -96,16 +96,16 @@ func audioSamplesFromAsset(_ asset: AVAsset, maxSamples: UInt64) -> [Float]? {
             var audioBufferList = AudioBufferList(mNumberBuffers: 1, mBuffers: AudioBuffer(mNumberChannels: 0, mDataByteSize: 0, mData: nil))
             var buffer : CMBlockBuffer?
             var bufferSize = 0
-            CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, &bufferSize, nil, 0, nil, nil, 0, nil)
+            CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer, bufferListSizeNeededOut: &bufferSize, bufferListOut: nil, bufferListSize: 0, blockBufferAllocator: nil, blockBufferMemoryAllocator: nil, flags: 0, blockBufferOut: nil)
             
             CMSampleBufferGetAudioBufferListWithRetainedBlockBuffer(sampleBuffer,
-                                                                    nil,
-                                                                    &audioBufferList,
-                                                                    bufferSize,
-                                                                    nil,
-                                                                    nil,
-                                                                    kCMSampleBufferFlag_AudioBufferList_Assure16ByteAlignment,
-                                                                    &buffer)
+                                                                    bufferListSizeNeededOut: nil,
+                                                                    bufferListOut: &audioBufferList,
+                                                                    bufferListSize: bufferSize,
+                                                                    blockBufferAllocator: nil,
+                                                                    blockBufferMemoryAllocator: nil,
+                                                                    flags: kCMSampleBufferFlag_AudioBufferList_Assure16ByteAlignment,
+                                                                    blockBufferOut: &buffer)
             
             let abl = UnsafeMutableAudioBufferListPointer(&audioBufferList)
             var maxAmplitude : Int16 = 0
