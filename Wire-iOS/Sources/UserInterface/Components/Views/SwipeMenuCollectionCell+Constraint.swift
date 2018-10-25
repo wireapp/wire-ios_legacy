@@ -42,8 +42,6 @@ extension SwipeMenuCollectionCell {
         maxMenuViewToSwipeViewLeftConstraint = menuView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: maxVisualDrawerOffset)
         maxMenuViewToSwipeViewLeftConstraint.priority = .defaultLow
 
-//        menuView.clipsToBounds = true ///TODO:
-
         [swipeView, separatorLine, menuView].forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
 
         let constraints : [NSLayoutConstraint] = [
@@ -61,7 +59,6 @@ extension SwipeMenuCollectionCell {
             menuView.topAnchor.constraint(equalTo: swipeView.topAnchor),
             menuView.bottomAnchor.constraint(equalTo: swipeView.bottomAnchor),
             menuViewToSwipeViewLeftConstraint!,
-            //            maxMenuViewToSwipeViewLeftConstraint!
         ]
 
         NSLayoutConstraint.activate(constraints)

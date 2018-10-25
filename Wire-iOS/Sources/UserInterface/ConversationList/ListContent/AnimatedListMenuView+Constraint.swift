@@ -21,19 +21,53 @@ import Foundation
 extension AnimatedListMenuView {
     open override func updateConstraints() {
         super.updateConstraints()
-        if !initialConstraintsCreated {
-            let dotWidth: CGFloat = 4
-            let dotSize: CGSize? = [dotWidth, dotWidth]
-            leftDotView.autoAlignAxis(toSuperviewAxis: ALAxisHorizontal)
-            centerDotView.autoAlignAxis(toSuperviewAxis: ALAxisHorizontal)
-            rightDotView.autoAlignAxis(toSuperviewAxis: ALAxisHorizontal)
-            leftDotView.autoSetDimensions(to: dotSize)
-            centerDotView.autoSetDimensions(to: dotSize)
-            rightDotView.autoSetDimensions(to: dotSize)
-            rightDotView.autoPinEdge(toSuperviewEdge: ALEdgeRight, withInset: 8)
-            centerToRightDistanceConstraint = centerDotView.autoPinEdge(ALEdgeRight, toEdge: ALEdgeLeft, ofView: rightDotView, withOffset: centerToRightDistance(forProgress: progress))
-            leftToCenterDistanceConstraint = leftDotView.autoPinEdge(ALEdgeRight, toEdge: ALEdgeLeft, ofView: centerDotView, withOffset: leftToCenterDistance(forProgress: progress))
-            initialConstraintsCreated = true
+
+        if initialConstraintsCreated {
+            return
         }
+
+//        self.clipsToBounds = true
+
+        let dotWidth: CGFloat = 4
+
+        let dotViews = [leftDotView, centerDotView, rightDotView]
+
+        dotViews.forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
+
+
+        centerToRightDistanceConstraint = centerDotView.rightAnchor.constraint(equalTo: rightDotView.leftAnchor, constant: centerToRightDistance(forProgress: progress))
+
+        leftToCenterDistanceConstraint = leftDotView.rightAnchor.constraint(equalTo: centerDotView.leftAnchor, constant: leftToCenterDistance(forProgress: progress))
+
+        let leftDotLeftConstraint = leftDotView.leftAnchor.constraint(equalTo: self.leftAnchor)
+//        leftDotLeftConstraint.priority = .defaultLow
+
+        dotViews.forEach{$0.setDimensions(length: dotWidth)}
+
+        let subviewConstraints : [NSLayoutConstraint] = [
+            leftDotView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            centerDotView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            rightDotView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+
+            rightDotView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8),
+            leftDotLeftConstraint,
+
+            centerToRightDistanceConstraint,
+            leftToCenterDistanceConstraint
+        ]
+        NSLayoutConstraint.activate(subviewConstraints)
+
+        initialConstraintsCreated = true
     }
+
+    @objc
+    func centerToRightDistance(forProgress progress: CGFloat) -> CGFloat {
+        return -(4 + (10 * (1 - progress)))
+    }
+
+    @objc
+    func leftToCenterDistance(forProgress progress: CGFloat) -> CGFloat {
+        return -(4 + (20 * (1 - progress)))
+    }
+
 }

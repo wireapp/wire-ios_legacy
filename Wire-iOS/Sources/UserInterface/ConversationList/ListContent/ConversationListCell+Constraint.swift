@@ -19,6 +19,19 @@
 import Foundation
 
 extension UIView {
+    func setDimensions(length: CGFloat) {
+        setDimensions(width: length, height: length)
+    }
+
+    func setDimensions(width: CGFloat, height: CGFloat) {
+        let constraints = [
+            widthAnchor.constraint(equalToConstant: width),
+            heightAnchor.constraint(equalToConstant: height)
+        ]
+
+        NSLayoutConstraint.activate(constraints)
+    }
+
     func pinEdgesToSuperviewEdges() {
         guard let superview = self.superview else { return }
 
@@ -35,8 +48,9 @@ extension UIView {
 
 extension ConversationListCell {
     override open func updateConstraints() {
+        super.updateConstraints()
+
         if hasCreatedInitialConstraints {
-            super.updateConstraints()
             return
         }
         hasCreatedInitialConstraints = true
@@ -59,12 +73,10 @@ extension ConversationListCell {
                 superview.bottomAnchor.constraint(equalTo: menuDotsView.bottomAnchor),
 
                 ///TODO missing left inset
-//                menuView.widthAnchor.constraint(equalTo: menuDotsView.widthAnchor)
+                menuView.widthAnchor.constraint(equalTo: menuDotsView.widthAnchor)
             ]
 
             NSLayoutConstraint.activate(menuDotsViewEdges)
         }
-
-        super.updateConstraints()
     }
 }

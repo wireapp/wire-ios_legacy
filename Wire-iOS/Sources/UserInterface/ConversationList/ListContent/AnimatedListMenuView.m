@@ -19,12 +19,9 @@
 
 #import "AnimatedListMenuView.h"
 #import "AnimatedListMenuView+Internal.h"
+#import "Wire-Swift.h"
 
-@interface DotView : UIView
-
-@end
-
-@implementation DotView
+@implementation MenuDotView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -56,13 +53,13 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.leftDotView = [[DotView alloc] init];
+        self.leftDotView = [[MenuDotView alloc] init];
         [self addSubview:self.leftDotView];
         
-        self.centerDotView = [[DotView alloc] init];
+        self.centerDotView = [[MenuDotView alloc] init];
         [self addSubview:self.centerDotView];
         
-        self.rightDotView = [[DotView alloc] init];
+        self.rightDotView = [[MenuDotView alloc] init];
         [self addSubview:self.rightDotView];
     }
     return self;
@@ -90,16 +87,6 @@
             [self layoutIfNeeded];
         }];
     }
-}
-
-- (CGFloat)centerToRightDistanceForProgress:(CGFloat)progress
-{
-    return -(4 + (10 * (1 - progress)));
-}
-
-- (CGFloat)leftToCenterDistanceForProgress:(CGFloat)progress
-{
-    return -(4 + (20 * (1 - progress)));
 }
 
 @end

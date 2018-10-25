@@ -16,15 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class DotView;
+@interface MenuDotView : UIView
+
+@end
 
 @interface AnimatedListMenuView ()
 
-@property (nonatomic) DotView *leftDotView;
-@property (nonatomic) DotView *centerDotView;
-@property (nonatomic) DotView *rightDotView;
+@property (nonatomic, nonnull) MenuDotView *leftDotView;
+@property (nonatomic, nonnull) MenuDotView *centerDotView;
+@property (nonatomic, nonnull) MenuDotView *rightDotView;
 @property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) NSLayoutConstraint *centerToRightDistanceConstraint;
-@property (nonatomic) NSLayoutConstraint *leftToCenterDistanceConstraint;
+@property (nonatomic, nonnull) NSLayoutConstraint *centerToRightDistanceConstraint;
+@property (nonatomic, nonnull) NSLayoutConstraint *leftToCenterDistanceConstraint;
 
 @end
