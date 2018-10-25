@@ -265,6 +265,8 @@
 "conversation.input_bar.audio_message.keyboard.record_tip" = "Tap to record\nYou can  %@  it after that";
 "conversation.input_bar.audio_message.keyboard.filter_tip" = "Choose a filter above";
 
+"conversation.input_bar.close_reply" = "Cancel reply";
+
 "conversation.call.many_participants_confirmation.title" = "Start a call";
 "conversation.call.many_participants_confirmation.message" = "This will call %d people";
 "conversation.call.many_participants_confirmation.call" = "Call";
@@ -473,6 +475,7 @@
 "content.message.open" = "Open";
 "content.message.copy" = "Copy";
 "content.message.download" = "Download";
+"content.message.reply" = "Reply";
 
 "content.message.open_link_alert.title" = "Visit Link";
 "content.message.open_link_alert.message" = "This will take you to\n%@";

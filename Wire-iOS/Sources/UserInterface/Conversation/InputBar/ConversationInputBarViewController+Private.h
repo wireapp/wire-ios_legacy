@@ -19,7 +19,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class Mention;
 @class AudioRecordKeyboardViewController;
 @class CameraKeyboardViewController;
 @class ConversationInputBarSendController;
@@ -37,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) EphemeralKeyboardViewController *ephemeralKeyboardViewController;
 @property (nonatomic, nonnull)  ConversationInputBarSendController *sendController;
 @property (nonatomic, nullable) id <ZMConversationMessage> editingMessage;
+@property (nonatomic, nullable) id <ZMConversationMessage> replyingToMessage;
 
 @property (nonatomic) UIImpactFeedbackGenerator *impactFeedbackGenerator;
 

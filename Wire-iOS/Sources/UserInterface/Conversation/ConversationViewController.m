@@ -585,6 +585,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
+- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(id<ZMConversationMessage>)message
+{
+    [contentViewController createReplyComposingViewForMessage:message];
+    [self.inputBarController replyToMessage:message];
+}
+
 - (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UITableViewCell *)cell
 {
     if ([self.inputBarController.inputBar.textView isFirstResponder]) {
@@ -722,8 +728,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationViewController (InputBar)
 
-- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions
+- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text mentions:(NSArray<Mention *> *)mentions replyingToMessage:(nullable id<ZMConversationMessage>)message
 {
+    // TODO: attach reply if necessary
     [self.inputBarController.sendController sendTextMessage:text mentions:mentions];
 }
 

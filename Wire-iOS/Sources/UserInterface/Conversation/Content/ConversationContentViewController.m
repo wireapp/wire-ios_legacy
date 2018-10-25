@@ -467,6 +467,11 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
                 }];
             }
                 break;
+            case MessageActionReply:
+            {
+                [self.delegate conversationContentViewController:self didTriggerReplyingToMessage:cell.message];
+            }
+                break;
         }
     };
 
@@ -568,7 +573,7 @@ const static int ConversationContentViewControllerMessagePrefetchDepth = 10;
 
 #pragma mark - Custom UI, utilities
 
-- (void) createMentionsResultsView {
+- (void)createMentionsResultsView {
     
     self.mentionsSearchResultsViewController = [[UserSearchResultsViewController alloc] init];
     self.mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;

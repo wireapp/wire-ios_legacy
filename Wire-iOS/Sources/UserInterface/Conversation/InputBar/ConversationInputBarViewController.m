@@ -626,7 +626,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
--(void)escapePressed
+- (void)escapePressed
 {
     [self endEditingMessageIfNeeded];
 }
